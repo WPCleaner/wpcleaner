@@ -1,0 +1,53 @@
+/*
+ *  WikipediaCleaner: A tool to help on Wikipedia maintenance tasks.
+ *  Copyright (C) 2007  Nicolas Vervelle
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package org.wikipediacleaner.api.data;
+
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.utils.Configuration;
+
+
+/**
+ * 
+ */
+public class DataManager {
+
+  /**
+   * @param wikipedia Wikipedia.
+   * @param title Page title.
+   * @param revisionId Revision id.
+   * @return The requested page.
+   */
+  public static Page getPage(EnumWikipedia wikipedia, String title, String revisionId) {
+
+    // Retrieve page
+    Page page = new Page(wikipedia, title);
+    page.setRevisionId(revisionId);
+
+    // Manage comments
+    Configuration config = Configuration.getConfiguration();
+    Object comment = config.getPojo(
+        Configuration.POJO_PAGE_COMMENTS, page.getTitle(), PageComment.class);
+    if (comment instanceof PageComment) {
+      page.setComment((PageComment) comment);
+    }
+
+    return page;
+  }
+
+}
