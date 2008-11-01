@@ -374,6 +374,7 @@ public class MediaWikiAPI implements API {
   public void retrieveLinks(Page page)
       throws APIException {
     HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    properties.put("pllimit", "max");
     properties.put("prop", "links");
     properties.put("titles", page.getTitle());
     try {
@@ -399,19 +400,34 @@ public class MediaWikiAPI implements API {
     properties.put("gpllimit", "max");
     properties.put("prop", "info");
     properties.put("titles", page.getTitle());
-    try {
-      ArrayList<Page> redirects = new ArrayList<Page>();
-      constructLinksWithRedirects(
-          page,
-          getRoot(properties, MAX_ATTEMPTS),
-          "/api/query/pages/page",
-          redirects);
-      if (!redirects.isEmpty()) {
-        initializeRedirect(redirects);
+    boolean keepLinks = false;
+    boolean gplcontinue = false;
+    ArrayList<Page> redirects = new ArrayList<Page>();
+    do {
+      try {
+        Element root = getRoot(properties, MAX_ATTEMPTS);
+        constructLinksWithRedirects(
+            page, root,
+            "/api/query/pages/page",
+            redirects, keepLinks);
+        XPath xpaContinue = XPath.newInstance("/api/query-continue/links");
+        XPath xpaGplContinue = XPath.newInstance("./@gplcontinue");
+        List results = xpaContinue.selectNodes(root);
+        Iterator iter = results.iterator();
+        keepLinks = true;
+        gplcontinue = false;
+        while (iter.hasNext()) {
+          Element currentNode = (Element) iter.next();
+          gplcontinue = true;
+          properties.put("gplcontinue", xpaGplContinue.valueOf(currentNode));
+        }
+      } catch (JDOMException e) {
+        log.error("Error retrieving page content", e);
+        throw new APIException("Error parsing XML", e);
       }
-    } catch (JDOMParseException e) {
-      log.error("Error retrieving page content", e);
-      throw new APIException("Error parsing XML", e);
+    } while (gplcontinue);
+    if (!redirects.isEmpty()) {
+      initializeRedirect(redirects);
     }
   }
 
@@ -456,7 +472,6 @@ public class MediaWikiAPI implements API {
           properties.remove("bltitle");
           blcontinue = true;
           properties.put("blcontinue", xpaBlContinue.valueOf(currentNode));
-          
         }
       } catch (JDOMException e) {
         log.error("Error backlinks for page " + page.getTitle(), e);
@@ -876,7 +891,8 @@ public class MediaWikiAPI implements API {
    */
   private void constructLinksWithRedirects(
       Page page, Element root, String query,
-      ArrayList<Page> redirects)
+      ArrayList<Page> redirects,
+      boolean keepExistingLinks)
       throws APIException {
     if (page == null) {
       throw new APIException("Page is null");
@@ -886,7 +902,11 @@ public class MediaWikiAPI implements API {
       XPath xpa = XPath.newInstance(query);
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
-      links = new ArrayList<Page>(results.size());
+      if (keepExistingLinks) {
+        links = page.getLinks();
+      } else {
+        links = new ArrayList<Page>(results.size());
+      }
       XPath xpaNs = XPath.newInstance("./@ns");
       XPath xpaTitle = XPath.newInstance("./@title");
       XPath xpaRevisionId = XPath.newInstance("./@lastrevid");
