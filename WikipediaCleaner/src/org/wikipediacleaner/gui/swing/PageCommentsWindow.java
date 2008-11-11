@@ -144,7 +144,7 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     constraints.gridx = 0;
     constraints.weightx = 0;
     panel.add(labelComments, constraints);
-    constraints.gridwidth = 5;
+    constraints.gridwidth = 2;
     constraints.gridx++;
     constraints.weightx = 1;
     panel.add(txtComments, constraints);
@@ -154,6 +154,7 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     // Maximum number of backlinks
     txtMaxMain = new JFormattedTextField(NumberFormat.getIntegerInstance());
     txtMaxMain.setFocusLostBehavior(JFormattedTextField.COMMIT);
+    txtMaxMain.setColumns(4);
     if ((page != null) &&
         (page.getComment() != null) &&
         (page.getComment().getMaxMainArticles() != null)) {
@@ -169,13 +170,16 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     constraints.weightx = 0;
     panel.add(labelMaxMain, constraints);
     constraints.gridx++;
-    constraints.weightx = 0.5;
+    constraints.weightx = 0;
     panel.add(txtMaxMain, constraints);
     constraints.gridx++;
-    constraints.weightx = 0;
+    constraints.weightx = 1;
     panel.add(labelMain, constraints);
+    constraints.gridy++;
+    
     txtMax = new JFormattedTextField(NumberFormat.getIntegerInstance());
     txtMax.setFocusLostBehavior(JFormattedTextField.COMMIT);
+    txtMax.setColumns(4);
     if ((page != null) &&
         (page.getComment() != null) &&
         (page.getComment().getMaxArticles() != null)) {
@@ -187,15 +191,16 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     Integer all = (page != null) ? page.getBacklinksCount() : null;
     JLabel labelAll = new JLabel((all != null) ? "/ " + all.toString() : "");
     labelAll.setHorizontalAlignment(SwingConstants.LEADING);
-    constraints.gridx++;
+    constraints.gridx = 0;
     constraints.weightx = 0;
     panel.add(labelMax, constraints);
     constraints.gridx++;
-    constraints.weightx = 0.5;
+    constraints.weightx = 0;
     panel.add(txtMax, constraints);
     constraints.gridx++;
-    constraints.weightx = 0;
+    constraints.weightx = 1;
     panel.add(labelAll, constraints);
+    constraints.gridy++;
 
     // Empty panel
     JPanel emptyPanel = new JPanel();
