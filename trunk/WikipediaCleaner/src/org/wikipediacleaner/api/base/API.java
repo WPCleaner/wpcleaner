@@ -132,6 +132,14 @@ public interface API {
   public QueryResult addNewSection(String page, String title, String contents, String editToken, boolean forceWatch) throws APIException;
 
   /**
+   * Purge page cache on Wikipedia.
+   * 
+   * @param page Page.
+   * @throws APIException
+   */
+  public void purgePageCache(Page page) throws APIException;
+  
+  /**
    * Retrieves the links of <code>page</code>.
    * 
    * @param page The page.

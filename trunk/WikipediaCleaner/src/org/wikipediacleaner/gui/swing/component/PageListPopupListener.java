@@ -127,6 +127,7 @@ public class PageListPopupListener extends MouseAdapter {
     MenuCreator.addViewToMenu(popup, link, wikipedia);
     MenuCreator.addDisambiguationToMenu(popup, link, wikipedia);
     MenuCreator.addReloadLinksToMenu(popup, link, window);
+    //MenuCreator.addPurgeCacheToMenu(popup, link, window);
     popup.add(new JSeparator());
     MenuCreator.addFindTextToMenu(popup, link, textPane);
     MenuCreator.addAnalyzeTemplatesToMenu(popup, page, link, wikipedia);

@@ -69,6 +69,7 @@ public class MediaWikiAPI implements API {
   private final static String ACTION_API_EXPAND = "expandtemplates";
   private final static String ACTION_API_LOGIN  = "login";
   private final static String ACTION_API_PARSE  = "parse";
+  private final static String ACTION_API_PURGE  = "purge";
   private final static String ACTION_API_QUERY  = "query";
 
   private final static int MAX_PAGES_PER_QUERY = 50;
@@ -364,6 +365,23 @@ public class MediaWikiAPI implements API {
       throw new APIException("Error parsing XML", e);
     }
     return result;
+  }
+
+  /**
+   * Purge the cache of <code>page</code>.
+   * 
+   * @param page The page.
+   */
+  public void purgePageCache(Page page)
+      throws APIException {
+    HashMap<String, String> properties = getProperties(ACTION_API_PURGE, true);
+    properties.put("titles", page.getTitle());
+    try {
+      checkForError(getRoot(properties, MAX_ATTEMPTS));
+    } catch (JDOMParseException e) {
+      log.error("Error purging page cache", e);
+      throw new APIException("Error parsing XML", e);
+    }
   }
 
   /**
