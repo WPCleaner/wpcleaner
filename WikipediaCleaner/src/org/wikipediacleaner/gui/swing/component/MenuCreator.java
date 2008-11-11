@@ -43,6 +43,7 @@ import org.wikipediacleaner.gui.swing.action.FindTextAction;
 import org.wikipediacleaner.gui.swing.action.FullPageAnalysisAction;
 import org.wikipediacleaner.gui.swing.action.MarkLinkAction;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
+import org.wikipediacleaner.gui.swing.action.PurgeCacheAction;
 import org.wikipediacleaner.gui.swing.action.RedLinksAnalysisAction;
 import org.wikipediacleaner.gui.swing.action.ReloadLinksAction;
 import org.wikipediacleaner.gui.swing.action.RemoveAllLinksAction;
@@ -688,6 +689,23 @@ public class MenuCreator {
     if (page != null) {
       JMenuItem menuItem = new JMenuItem(GT._("Reload links"));
       ActionListener action = new ReloadLinksAction(page, window);
+      menuItem.addActionListener(action);
+      popup.add(menuItem);
+    }
+  }
+
+  /**
+   * Add submenus for purging page cache. 
+   * 
+   * @param popup Popup menu.
+   * @param page Page.
+   * @param window Window.
+   */
+  public static void addPurgeCacheToMenu(
+      JPopupMenu popup, Page page, BasicWindow window) {
+    if (page != null) {
+      JMenuItem menuItem = new JMenuItem(GT._("Purge cache"));
+      ActionListener action = new PurgeCacheAction(page, window);
       menuItem.addActionListener(action);
       popup.add(menuItem);
     }
