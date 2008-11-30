@@ -36,7 +36,7 @@ public class NewSectionWorker extends BasicWorker {
   private final String editToken;
   private final boolean forceWatch;
 
-  public NewSectionWorker(BasicWindow window, String page, String section, String editToken, String text, boolean forceWatch) {
+  public NewSectionWorker(BasicWindow window, String page, String section, String text, String editToken, boolean forceWatch) {
     super(window);
     this.page = page;
     this.section = section;
