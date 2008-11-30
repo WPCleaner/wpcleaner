@@ -1315,8 +1315,9 @@ public class MediaWikiAPI implements API {
    * Check for errors reported by the API.
    * 
    * @param root Document root.
+   * @throws APIException
    */
-  private void checkForError(Element root) {
+  private void checkForError(Element root) throws APIException {
     if (root == null) {
       return;
     }
@@ -1331,7 +1332,9 @@ public class MediaWikiAPI implements API {
         XPath xpaInfo = XPath.newInstance("./@info");
         while (iterErrors.hasNext()) {
           Element currentNode = (Element) iterErrors.next();
-          log.warn("Error reported: " + xpaCode.valueOf(currentNode) + " - " + xpaInfo.valueOf(currentNode));
+          String text = "Error reported: " + xpaCode.valueOf(currentNode) + " - " + xpaInfo.valueOf(currentNode);
+          log.warn(text);
+          throw new APIException(text);
         }
       }
     } catch (JDOMException e) {
