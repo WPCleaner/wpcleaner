@@ -28,13 +28,12 @@ import java.util.GregorianCalendar;
  */
 public final class Version {
 
-  public final static String VERSION = "0.83";
-  public final static Date   DATE = new GregorianCalendar(2008, Calendar.NOVEMBER, 1).getTime();
+  public final static String VERSION = "0.84";
+  public final static Date   DATE = new GregorianCalendar(2008, Calendar.NOVEMBER, 30).getTime();
 
   public final static String MESSAGE =
     "<html>" +
-    "This is one of the first versions using MediaWiki API for editing pages.<br/>" +
-    "I have only done quick testing to be able to release a version fixing the problem with SUL accounts.<br/><br/>" +
+    "I hope you'll like WikiCleaner.<br/><br/>" +
     "Please, report any problem you find to me." +
     "</html>";
   public final static boolean HIGHLIGHT = false;
