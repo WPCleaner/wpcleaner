@@ -34,7 +34,7 @@ public final class Version {
   public final static String MESSAGE =
     "<html>" +
     "I hope you'll like WikiCleaner.<br/><br/>" +
-    "There's still a problem with 'bad token': from time to time (usually first one?), an edit doesn't work." +
+    "There's still a problem with 'bad token': from time to time (usually first one?), an edit doesn't work.<br/>" +
     "Please, report any other problem you find to me." +
     "</html>";
   public final static boolean HIGHLIGHT = false;
