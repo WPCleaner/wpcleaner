@@ -89,6 +89,7 @@ public class PageUtilities {
     StringBuilder expression = new StringBuilder();
     expression.append("\\[\\["); // [[
     expression.append("\\:?"); // Possible :
+    expression.append("(?:" + link.getWikipedia().getCode() + "\\:)?"); // Possible <lang>:
     expression.append("(\\s*"); // Possible white characters
     addPatternForTitle(expression, title);
     expression.append("\\s*"); // Possible white characters
