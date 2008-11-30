@@ -223,7 +223,7 @@ public class MediaWikiAPI implements API {
     HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("prop", "revisions|info");
     properties.put("titles", page.getTitle());
-    properties.put("rvprop", "content|ids");
+    properties.put("rvprop", "content|ids|timestamp");
     properties.put("intoken", "edit");
     try {
       boolean redirect = constructContents(

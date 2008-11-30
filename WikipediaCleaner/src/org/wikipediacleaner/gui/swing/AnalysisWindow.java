@@ -127,6 +127,7 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
   private JButton buttonRedo;
   private JButton buttonFullAnalysisRedirect;
   private JButton buttonDisambiguationRedirect;
+  private JLabel lblLastModified;
 
   JList listLinks;
   PageListModel modelLinks;
@@ -427,6 +428,8 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
     buttonDisambiguationRedirect.setActionCommand(ACTION_DISAMBIGUATION_REDIR);
     buttonDisambiguationRedirect.addActionListener(this);
     buttonTextPanel.add(buttonDisambiguationRedirect);
+    lblLastModified = Utilities.createJLabel(GT._("Last modified: "));
+    buttonTextPanel.add(lblLastModified);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
     constraints.weightx = 1;
@@ -1071,6 +1074,12 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
     if (SwingUtilities.isEventDispatchThread()) {
       textContents.setPage(page);
       textContents.setText(page.getContents());
+      if ((page.getContentsTimestamp() != null) && (!page.getContentsTimestamp().equals(""))) {
+        lblLastModified.setText(GT._("Last modified: ") + page.getContentsTimestamp());
+        lblLastModified.setVisible(true);
+      } else {
+        lblLastModified.setVisible(false);
+      }
       updateComponentState();
     } else {
       try {
