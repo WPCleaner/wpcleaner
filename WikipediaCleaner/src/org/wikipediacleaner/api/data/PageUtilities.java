@@ -88,6 +88,7 @@ public class PageUtilities {
     // Create the regular expression
     StringBuilder expression = new StringBuilder();
     expression.append("\\[\\["); // [[
+    expression.append("\\:?"); // Possible :
     expression.append("(\\s*"); // Possible white characters
     addPatternForTitle(expression, title);
     expression.append("\\s*"); // Possible white characters
