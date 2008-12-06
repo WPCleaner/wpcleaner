@@ -58,4 +58,6 @@ class WikiRu {
     new TemplateMatch("Другое значение", "1", "{{PAGENAME}}", true, false),
     new TemplateMatch("Однофамильцы", "1", "{{PAGENAME}}", true, false)
   };
+  
+  final static String checkWikiProject = "Википедия:Страницы с ошибками в викитексте";
 }

@@ -60,6 +60,7 @@ public enum EnumWikipedia {
    * - Disambiguation project page giving the list of pages to work on.
    * - Array of disambiguation templates.
    * - Array of special templates.
+   * - Project Check Wikipedia.
    */
 
   CA( WikiCa.code, WikiCa.name,
@@ -68,63 +69,72 @@ public enum EnumWikipedia {
       WikiCa.logged, WikiCa.message,
       WikiCa.wikt, WikiCa.wiktMatches,
       WikiCa.dabLinkTemplates, WikiCa.needHelpTemplates, WikiCa.helpRequestedTemplates,
-      WikiCa.dabList, WikiCa.dabMatches),
+      WikiCa.dabList, WikiCa.dabMatches,
+      WikiCa.checkWikiProject),
   EN( WikiEn.code, WikiEn.name,
       WikiEn.apiUrl, WikiEn.indexUrl,
       WikiEn.helpUrl, WikiEn.helpLink, WikiEn.orientation,
       WikiEn.logged, WikiEn.message,
       WikiEn.wikt, WikiEn.wiktMatches,
       WikiEn.dabLinkTemplates, WikiEn.needHelpTemplates, WikiEn.helpRequestedTemplates,
-      WikiEn.dabList, WikiEn.dabMatches),
+      WikiEn.dabList, WikiEn.dabMatches,
+      WikiEn.checkWikiProject),
   ES( WikiEs.code, WikiEs.name,
       WikiEs.apiUrl, WikiEs.indexUrl,
       WikiEs.helpUrl, WikiEs.helpLink, WikiEs.orientation,
       WikiEs.logged, WikiEs.message,
       WikiEs.wikt, WikiEs.wiktMatches,
       WikiEs.dabLinkTemplates, WikiEs.needHelpTemplates, WikiEs.helpRequestedTemplates,
-      WikiEs.dabList, WikiEs.dabMatches),
+      WikiEs.dabList, WikiEs.dabMatches,
+      WikiEs.checkWikiProject),
   FR( WikiFr.code, WikiFr.name,
       WikiFr.apiUrl, WikiFr.indexUrl,
       WikiFr.helpUrl, WikiFr.helpLink, WikiFr.orientation,
       WikiFr.logged, WikiFr.message,
       WikiFr.wikt, WikiFr.wiktMatches,
       WikiFr.dabLinkTemplates, WikiFr.needHelpTemplates, WikiFr.helpRequestedTemplates,
-      WikiFr.dabList, WikiFr.dabMatches),
+      WikiFr.dabList, WikiFr.dabMatches,
+      WikiFr.checkWikiProject),
   HE( WikiHe.code, WikiHe.name,
       WikiHe.apiUrl, WikiHe.indexUrl,
       WikiHe.helpUrl, WikiHe.helpLink, WikiHe.orientation,
       WikiHe.logged, WikiHe.message,
       WikiHe.wikt, WikiHe.wiktMatches,
       WikiHe.dabLinkTemplates, WikiHe.needHelpTemplates, WikiHe.helpRequestedTemplates,
-      WikiHe.dabList, WikiHe.dabMatches),
+      WikiHe.dabList, WikiHe.dabMatches,
+      WikiHe.checkWikiProject),
   NL( WikiNl.code, WikiNl.name,
       WikiNl.apiUrl, WikiNl.indexUrl,
       WikiNl.helpUrl, WikiNl.helpLink, WikiNl.orientation,
       WikiNl.logged, WikiNl.message,
       WikiNl.wikt, WikiNl.wiktMatches,
       WikiNl.dabLinkTemplates, WikiNl.needHelpTemplates, WikiNl.helpRequestedTemplates,
-      WikiNl.dabList, WikiNl.dabMatches),
+      WikiNl.dabList, WikiNl.dabMatches,
+      WikiNl.checkWikiProject),
   NO( WikiNo.code, WikiNo.name,
       WikiNo.apiUrl, WikiNo.indexUrl,
       WikiNo.helpUrl, WikiNo.helpLink, WikiNo.orientation,
       WikiNo.logged, WikiNo.message,
       WikiNo.wikt, WikiNo.wiktMatches,
       WikiNo.dabLinkTemplates, WikiNo.needHelpTemplates, WikiNo.helpRequestedTemplates,
-      WikiNo.dabList, WikiNo.dabMatches),
+      WikiNo.dabList, WikiNo.dabMatches,
+      WikiNo.checkWikiProject),
   PL( WikiPl.code, WikiPl.name,
       WikiPl.apiUrl, WikiPl.indexUrl,
       WikiPl.helpUrl, WikiPl.helpLink, WikiPl.orientation,
       WikiPl.logged, WikiPl.message,
       WikiPl.wikt, WikiPl.wiktMatches,
       WikiPl.dabLinkTemplates, WikiPl.needHelpTemplates, WikiPl.helpRequestedTemplates,
-      WikiPl.dabList, WikiPl.dabMatches),
+      WikiPl.dabList, WikiPl.dabMatches,
+      WikiPl.checkWikiProject),
   RU( WikiRu.code, WikiRu.name,
       WikiRu.apiUrl, WikiRu.indexUrl,
       WikiRu.helpUrl, WikiRu.helpLink, WikiRu.orientation,
       WikiRu.logged, WikiRu.message,
       WikiRu.wikt, WikiRu.wiktMatches,
       WikiRu.dabLinkTemplates, WikiRu.needHelpTemplates, WikiRu.helpRequestedTemplates,
-      WikiRu.dabList, WikiRu.dabMatches);
+      WikiRu.dabList, WikiRu.dabMatches,
+      WikiRu.checkWikiProject);
 
   private final String code;
   private final String title;
@@ -143,6 +153,7 @@ public enum EnumWikipedia {
   private final String disambiguationList;
   private ArrayList<Page> disambiguationTemplates2;
   private final TemplateMatch[] disambiguationMatches;
+  private final String checkWikiProject;
 
   private List<Namespace> namespaces;
 
@@ -162,6 +173,7 @@ public enum EnumWikipedia {
    * @param templatesForHelpRequested Templates used to find pages where help is requested.
    * @param disambiguationList Page containing the list of disambiguation pages to work on.
    * @param templateMatches List of templates to analyze when looking for links.
+   * @param checkWikiProject Project Check Wikipedia.
    */
   EnumWikipedia(
       String code,
@@ -179,7 +191,8 @@ public enum EnumWikipedia {
       String[] templatesForNeedingHelp,
       String[] templatesForHelpRequested,
       String disambiguationList,
-      TemplateMatch[] templateMatches) {
+      TemplateMatch[] templateMatches,
+      String checkWikiProject) {
     this.code = code;
     this.title = title;
     this.apiUrl = apiUrl;
@@ -196,6 +209,7 @@ public enum EnumWikipedia {
     this.templatesForHelpRequested = templatesForHelpRequested;
     this.disambiguationList = disambiguationList;
     this.disambiguationMatches = templateMatches;
+    this.checkWikiProject = checkWikiProject;
   }
 
   /**
@@ -443,6 +457,13 @@ public enum EnumWikipedia {
     return disambiguationMatches[index];
   }
 
+  /**
+   * @return Check Wikipedia Project page.
+   */
+  public String getCheckWikiProject() {
+    return checkWikiProject;
+  }
+  
   /**
    * @return List of namespaces
    */

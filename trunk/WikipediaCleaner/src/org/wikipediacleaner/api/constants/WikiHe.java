@@ -54,4 +54,6 @@ class WikiHe {
 
   final static String dabList = "ויקיפדיה:מיזמי ויקיפדיה/מיזם דפי פירושונים";
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
+  
+  final static String checkWikiProject = "ויקיפדיה:Check Wikipedia";
 }

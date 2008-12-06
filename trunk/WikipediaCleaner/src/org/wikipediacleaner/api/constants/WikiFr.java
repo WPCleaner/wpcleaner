@@ -84,4 +84,6 @@ class WikiFr {
     new TemplateMatch("Voir homophones", "1,2,3,4,5,6,7", "{{PAGENAME}} (homophonie)", true, false),
     new TemplateMatch("Voir paronymes", "1,2,3,4", "{{PAGENAME}} (paronymie)", true, false),
   };
+  
+  final static String checkWikiProject = "Wikipédia:WikiProject Check Wikipedia";
 }

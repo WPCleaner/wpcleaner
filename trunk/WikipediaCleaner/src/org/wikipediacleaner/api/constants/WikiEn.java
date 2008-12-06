@@ -65,4 +65,6 @@ class WikiEn {
     new TemplateMatch("Otherpeople2", "1", "", true, false),
     new TemplateMatch("Page d", "1", "", true, false),
   };
+  
+  final static String checkWikiProject = "Wikipedia:WikiProject Check Wikipedia";
 }

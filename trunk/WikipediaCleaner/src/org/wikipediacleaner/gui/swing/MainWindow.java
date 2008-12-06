@@ -73,6 +73,7 @@ public class MainWindow
   implements ActionListener, ItemListener {
 
   private final static String ACTION_ABOUT          = "ABOUT";
+  private final static String ACTION_CHECK_WIKI     = "CHECK WIKI";
   private final static String ACTION_CURRENT_LIST   = "CURRENT LIST";
   private final static String ACTION_DISAMBIGUATION = "DISAMBIGUATION";
   private final static String ACTION_FULL_ANALYSIS  = "FULL ANALYSIS";
@@ -99,9 +100,10 @@ public class MainWindow
   private JButton buttonHelp;
 
   JTextField textPagename;
-  private JButton buttonFullAnalysis;
-  private JButton buttonDisambiguation;
+  private JButton buttonCheckWiki;
   private JButton buttonCurrentList;
+  private JButton buttonDisambiguation;
+  private JButton buttonFullAnalysis;
   private JButton buttonHelpRequested;
   private JButton buttonRandomPage;
   private JButton buttonWatchedPages;
@@ -197,6 +199,9 @@ public class MainWindow
     buttonHelpRequested.setEnabled(logged &&
                                    (wikipedia != null) &&
                                    (wikipedia.getTemplatesForHelpRequested() != null));
+    buttonCheckWiki.setEnabled(logged && false &&
+                               (wikipedia != null) &&
+                               (wikipedia.getCheckWikiProject() != null));
     buttonRandomPage.setEnabled(logged);
     buttonWatchedPages.setEnabled(logged);
   }
@@ -428,6 +433,17 @@ public class MainWindow
     panel.add(buttonHelpRequested, constraints);
     constraints.gridy++;
 
+    // Check Wiki Project button
+    buttonCheckWiki = Utilities.createJButton(GT._("Project check wikipedia"));
+    buttonCheckWiki.setActionCommand(ACTION_CHECK_WIKI);
+    buttonCheckWiki.addActionListener(this);
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridwidth = 2;
+    constraints.gridx = 0;
+    constraints.weightx = 1;
+    panel.add(buttonCheckWiki, constraints);
+    constraints.gridy++;
+    
     // Random page button
     buttonRandomPage = Utilities.createJButton(GT._("&Random page"));
     buttonRandomPage.setActionCommand(ACTION_RANDOM_PAGE);
@@ -523,6 +539,8 @@ public class MainWindow
       Controller.runOptions();
     } else if (ACTION_HELP_REQUESTED.equals(e.getActionCommand())) {
       actionHelpRequestedOn();
+    } else if (ACTION_CHECK_WIKI.equals(e.getActionCommand())) {
+      actionCheckWiki();
     }
   }
 
@@ -745,9 +763,16 @@ public class MainWindow
    */
   private void actionHelpRequestedOn() {
     EnumWikipedia wikipedia = getWikipedia();
-    new EmbeddedInWorker(this, wikipedia).start();
+    new EmbeddedInWorker(this, wikipedia, wikipedia.getTemplatesForHelpRequested()).start();
   }
 
+  /**
+   * Action called when Check Wiki is pressed. 
+   */
+  private void actionCheckWiki() {
+    //TODO
+  }
+  
   /**
    * Action called when Random page button is pressed.
    */
