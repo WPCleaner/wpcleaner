@@ -54,4 +54,6 @@ class WikiCa {
 
   final static String dabList = null; //"Wikiproyecto:Corrección de errores menores"
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
+  
+  final static String checkWikiProject = "Viquipèdia:WikiProject Check Wikipedia";
 }

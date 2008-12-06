@@ -38,10 +38,10 @@ public class EmbeddedInWorker extends BasicWorker {
   private final ArrayList<Page> embeddedInList;
   private final ArrayList<Page> pages;
 
-  public EmbeddedInWorker(BasicWindow window, EnumWikipedia wikipedia) {
+  public EmbeddedInWorker(BasicWindow window, EnumWikipedia wikipedia, ArrayList<Page> pages) {
     super(window);
     this.wikipedia = wikipedia;
-    this.pages = wikipedia.getTemplatesForHelpRequested();
+    this.pages = pages;
     embeddedInList = new ArrayList<Page>();
   }
 

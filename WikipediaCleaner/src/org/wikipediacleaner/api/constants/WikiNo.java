@@ -54,4 +54,6 @@ class WikiNo {
 
   final static String dabList = null;
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
+  
+  final static String checkWikiProject = "Wikipedia:WikiProject Check Wikipedia";
 }
