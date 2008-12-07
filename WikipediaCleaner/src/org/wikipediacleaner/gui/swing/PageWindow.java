@@ -28,7 +28,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -98,7 +97,7 @@ public abstract class PageWindow
     if (textPagename != null) {
       return textPagename.getText();
     }
-    return "";
+    return pageName;
   }
 
   /**
@@ -113,6 +112,13 @@ public abstract class PageWindow
    */
   protected void setPageLoaded() {
     pageLoaded = true;
+  }
+
+  /**
+   * @return Default comment.
+   */
+  protected String getDefaultComment() {
+    return getWikipedia().getUpdatePageMessage();
   }
 
   /**
@@ -382,7 +388,7 @@ public abstract class PageWindow
     chkAutomaticComment.addItemListener(this);
     panel.add(chkAutomaticComment, constraints);
     constraints.gridx++;
-    textComment = new JTextField(getWikipedia().getUpdatePageMessage());
+    textComment = new JTextField(getDefaultComment());
     constraints.weightx = 1;
     panel.add(textComment, constraints);
   }
@@ -422,6 +428,12 @@ public abstract class PageWindow
     panel.add(lblLastModified);
   }
 
+  /**
+   * Add a component for the Text.
+   * 
+   * @param panel Container.
+   * @param constraints Constraints.
+   */
   protected void addTextContents(JPanel panel, GridBagConstraints constraints) {
     if (textContents != null) {
       Configuration config = Configuration.getConfiguration();
@@ -487,17 +499,11 @@ public abstract class PageWindow
       }
       updateComponentState();
     } else {
-      try {
-        SwingUtilities.invokeAndWait(new Runnable() {
-          public void run() {
-            setContents();
-          }
-        });
-      } catch (InterruptedException e) {
-        logError("Error when setting contents", e);
-      } catch (InvocationTargetException e) {
-        logError("Error when setting contents", e);
-      }
+      SwingUtilities.invokeLater(new Runnable() {
+        public void run() {
+          setContents();
+        }
+      });
     }
   }
 
@@ -575,7 +581,7 @@ public abstract class PageWindow
         (source == chkAutomaticComment)) {
       textComment.setEnabled(!chkAutomaticComment.isSelected());
       if (chkAutomaticComment.isSelected()) {
-        textComment.setText(getWikipedia().getUpdatePageMessage());
+        textComment.setText(getDefaultComment());
       }
     }
   }
