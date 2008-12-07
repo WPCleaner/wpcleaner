@@ -148,6 +148,15 @@ public class Controller {
   }
 
   /**
+   * Run Check Wiki project.
+   * 
+   * @param wikipedia Wikipedia
+   */
+  public static void runCheckWikiProject(EnumWikipedia wikipedia) {
+    CheckWikiProjectWindow.createCheckWikiProjectWindow(wikipedia);
+  }
+
+  /**
    * Open the options window.
    */
   public static void runOptions() {

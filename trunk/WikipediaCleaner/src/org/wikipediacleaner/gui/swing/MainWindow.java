@@ -183,6 +183,7 @@ public class MainWindow
   @Override
   protected void updateComponentState() {
     EnumWikipedia wikipedia = getWikipedia();
+    Configuration config = Configuration.getConfiguration();
 
     comboWikipedia.setEnabled(!logged);
     comboLanguage.setEnabled(!logged);
@@ -199,7 +200,8 @@ public class MainWindow
     buttonHelpRequested.setEnabled(logged &&
                                    (wikipedia != null) &&
                                    (wikipedia.getTemplatesForHelpRequested() != null));
-    buttonCheckWiki.setEnabled(logged && false &&
+    buttonCheckWiki.setEnabled(logged &&
+                               config.getBoolean(Configuration.BOOLEAN_ADVANCED_FEATURES, false) &&
                                (wikipedia != null) &&
                                (wikipedia.getCheckWikiProject() != null));
     buttonRandomPage.setEnabled(logged);
@@ -770,7 +772,7 @@ public class MainWindow
    * Action called when Check Wiki is pressed. 
    */
   private void actionCheckWiki() {
-    //TODO
+    Controller.runCheckWikiProject(getWikipedia());
   }
   
   /**
