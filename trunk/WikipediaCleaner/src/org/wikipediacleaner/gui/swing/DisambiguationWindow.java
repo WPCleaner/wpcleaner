@@ -18,7 +18,6 @@
 
 package org.wikipediacleaner.gui.swing;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -49,7 +48,6 @@ import javax.swing.WindowConstants;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CompositeComparator;
-import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
@@ -207,14 +205,6 @@ public class DisambiguationWindow extends PageWindow {
   }
 
   /**
-   * Update component state.
-   */
-  @Override
-  protected void updateComponentState() {
-    getTextContents().setEnabled(pageLoaded);
-  }
-
-  /**
    * @return Page components.
    */
   private Component createPageComponents() {
@@ -248,15 +238,9 @@ public class DisambiguationWindow extends PageWindow {
     constraints.weighty = 0;
 
     // Contents
-    getTextContents().setBackground(Color.WHITE);
-    getTextContents().setEditable(true);
-    JScrollPane scrollContents = new JScrollPane(getTextContents());
-    scrollContents.setMinimumSize(new Dimension(100, 100));
-    scrollContents.setPreferredSize(new Dimension(1000, 500));
-    scrollContents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     constraints.fill = GridBagConstraints.BOTH;
     constraints.weighty = 1;
-    panel.add(scrollContents, constraints);
+    addTextContents(panel, constraints);
     constraints.gridy++;
 
     // Semi-Automatic changes
@@ -452,10 +436,9 @@ public class DisambiguationWindow extends PageWindow {
   /**
    * Clean page. 
    */
-  void clean() {
-    pageLoaded = false;
-    getTextContents().setText(null);
-    page = DataManager.getPage(getWikipedia(), getTextPageName(), null);
+  @Override
+  protected void clean() {
+    super.clean();
     modelLinks.clear();
     updateComponentState();
   }
@@ -465,38 +448,36 @@ public class DisambiguationWindow extends PageWindow {
    */
   @Override
   protected void actionReload() {
-    if (page == null) {
-      page = DataManager.getPage(getWikipedia(), getTextPageName(), null);
-    }
     clean();
-    DisambiguationAnalysisWorker reloadWorker = new DisambiguationAnalysisWorker(this, page);
-    reloadWorker.setListener(new DefaultBasicWorkerListener() {
-      @Override
-      public void beforeStart(
-          @SuppressWarnings("unused") BasicWorker worker) {
-        modelLinks.setShowDisambiguation(true);
-        modelLinks.setShowOther(true);
-      }
-      @Override
-      public void beforeFinished(
-          @SuppressWarnings("unused") BasicWorker worker) {
-        pageLoaded = true;
-      }
-      @Override
-      public void afterFinished(
-          @SuppressWarnings("unused") BasicWorker worker,
-          @SuppressWarnings("unused") boolean ok) {
-        setContents();
-        ArrayList<Page> links = page.getBackLinksWithRedirects();
-        for (Page p : links) {
-          modelLinks.addElement(p);
-        }
-        int countMain = page.getBacklinksCountInMainNamespace();
-        int countTotal = page.getBacklinksCount();
-        linkCount.setText("" + countMain + " / " + countTotal);
-      }
-    });
+    DisambiguationAnalysisWorker reloadWorker = new DisambiguationAnalysisWorker(this, getPage());
+    setupReloadWorker(reloadWorker);
     reloadWorker.start();
+  }
+
+  /**
+   * Callback called at the end of the Reload Worker.
+   */
+  @Override
+  protected void afterFinishedReloadWorker() {
+    super.afterFinishedReloadWorker();
+    Page page = getPage();
+    ArrayList<Page> links = page.getBackLinksWithRedirects();
+    for (Page p : links) {
+      modelLinks.addElement(p);
+    }
+    int countMain = page.getBacklinksCountInMainNamespace();
+    int countTotal = page.getBacklinksCount();
+    linkCount.setText("" + countMain + " / " + countTotal);
+  }
+
+  /**
+   * Callback called before the start of the Reload Worker. 
+   */
+  @Override
+  protected void beforeStartReloadWorker() {
+    super.beforeStartReloadWorker();
+    modelLinks.setShowDisambiguation(true);
+    modelLinks.setShowOther(true);
   }
 
   /**
@@ -603,7 +584,7 @@ public class DisambiguationWindow extends PageWindow {
     AutomaticDisambiguationWorker dabWorker = new AutomaticDisambiguationWorker(
         this, pages, replacements, getWikipedia(),
         getWikipedia().getUpdatePageMessage(),
-        "[[" + page.getTitle() + "]]");
+        "[[" + getPage().getTitle() + "]]");
     dabWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(

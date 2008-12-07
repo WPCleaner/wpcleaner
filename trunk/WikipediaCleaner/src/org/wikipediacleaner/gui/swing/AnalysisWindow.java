@@ -18,7 +18,6 @@
 
 package org.wikipediacleaner.gui.swing;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -27,8 +26,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -54,17 +51,13 @@ import javax.swing.event.ListSelectionListener;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CompositeComparator;
-import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.api.data.PageUtilities;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
-import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
-import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
 import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
@@ -80,19 +73,13 @@ import org.wikipediacleaner.utils.Configuration;
 public class AnalysisWindow extends PageWindow {
 
   private final static String ACTION_DISAMBIGUATION_LINK  = "DISAMBIGUATION LINK";
-  private final static String ACTION_DISAMBIGUATION_REDIR = "DISAMBIGUATION REDIR";
   private final static String ACTION_FULL_ANALYSIS_LINK   = "FULL ANALYSIS LINK";
-  private final static String ACTION_FULL_ANALYSIS_REDIR  = "FULL ANALYSIS REDIR";
   private final static String ACTION_NEXT_OCCURENCE       = "NEXT OCCURENCE";
   private final static String ACTION_VALIDATE             = "VALIDATE";
   private final static String ACTION_WATCH_LINK           = "WATCH LINK";
 
   private JButton buttonNext;
   private JButton buttonValidate;
-  private JButton buttonUndo;
-  private JButton buttonRedo;
-  private JButton buttonFullAnalysisRedirect;
-  private JButton buttonDisambiguationRedirect;
 
   JList listLinks;
   PageListModel modelLinks;
@@ -198,13 +185,8 @@ public class AnalysisWindow extends PageWindow {
    */
   @Override
   protected void updateComponentState() {
-    boolean redirect = (page != null) && (page.isRedirect());
-    buttonNext.setEnabled(pageLoaded);
-    buttonValidate.setEnabled(pageLoaded);
-    buttonFullAnalysisRedirect.setEnabled(redirect);
-    buttonFullAnalysisRedirect.setVisible(redirect);
-    buttonDisambiguationRedirect.setEnabled(redirect);
-    buttonDisambiguationRedirect.setVisible(redirect);
+    buttonNext.setEnabled(isPageLoaded());
+    buttonValidate.setEnabled(isPageLoaded());
     super.updateComponentState();
   }
 
@@ -296,7 +278,6 @@ public class AnalysisWindow extends PageWindow {
    */
   private Component createContentsComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
-    Configuration config = Configuration.getConfiguration();
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -335,20 +316,8 @@ public class AnalysisWindow extends PageWindow {
     buttonValidate.setActionCommand(ACTION_VALIDATE);
     buttonValidate.addActionListener(this);
     buttonTextPanel.add(buttonValidate);
-    buttonUndo = Utilities.createJButton(GT._("Undo"));
-    buttonTextPanel.add(buttonUndo);
-    buttonRedo = Utilities.createJButton(GT._("Redo"));
-    buttonTextPanel.add(buttonRedo);
-    buttonFullAnalysisRedirect = Utilities.createJButton(GT._(
-        "Full analysis of redirect"));
-    buttonFullAnalysisRedirect.setActionCommand(ACTION_FULL_ANALYSIS_REDIR);
-    buttonFullAnalysisRedirect.addActionListener(this);
-    buttonTextPanel.add(buttonFullAnalysisRedirect);
-    buttonDisambiguationRedirect = Utilities.createJButton(GT._(
-        "Disambiguation analysis of redirect"));
-    buttonDisambiguationRedirect.setActionCommand(ACTION_DISAMBIGUATION_REDIR);
-    buttonDisambiguationRedirect.addActionListener(this);
-    buttonTextPanel.add(buttonDisambiguationRedirect);
+    addButtonUndoRedo(buttonTextPanel);
+    addButtonRedirect(buttonTextPanel);
     addLblLastModified(buttonTextPanel);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
@@ -358,34 +327,11 @@ public class AnalysisWindow extends PageWindow {
     constraints.gridy++;
 
     // Contents
-    getTextContents().setBackground(Color.WHITE);
-    getTextContents().setEditable(true);
-    getTextContents().setUndoLevels(config.getInt(
-        Configuration.INTEGER_ANALYSIS_UNDO_LVL,
-        Configuration.DEFAULT_ANALYSIS_UNDO_LVL));
-    getTextContents().setUndoButton(buttonUndo);
-    getTextContents().setRedoButton(buttonRedo);
-    getTextContents().addPropertyChangeListener(
-        MediaWikiPane.PROPERTY_MODIFIED,
-        new PropertyChangeListener() {
-
-          /* (non-Javadoc)
-           * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-           */
-          public void propertyChange(@SuppressWarnings("unused") PropertyChangeEvent evt) {
-            updateComponentState();
-          }
-          
-        });
-    JScrollPane scrollContents = new JScrollPane(getTextContents());
-    scrollContents.setMinimumSize(new Dimension(100, 100));
-    scrollContents.setPreferredSize(new Dimension(1000, 500));
-    scrollContents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     constraints.fill = GridBagConstraints.BOTH;
     constraints.gridx = 0;
     constraints.weightx = 1;
     constraints.weighty = 1;
-    panel.add(scrollContents, constraints);
+    addTextContents(panel, constraints);
     constraints.gridy++;
 
     return panel;
@@ -585,12 +531,8 @@ public class AnalysisWindow extends PageWindow {
       actionWatchLink();
     } else if (ACTION_DISAMBIGUATION_LINK.equals(e.getActionCommand())) {
       actionDisambiguationLink();
-    } else if (ACTION_DISAMBIGUATION_REDIR.equals(e.getActionCommand())) {
-      actionDisambiguationRedir();
     } else if (ACTION_FULL_ANALYSIS_LINK.equals(e.getActionCommand())) {
       actionFullAnalysisLink();
-    } else if (ACTION_FULL_ANALYSIS_REDIR.equals(e.getActionCommand())) {
-      actionFullAnalysisRedir();
     } else if (ACTION_NEXT_OCCURENCE.equals(e.getActionCommand())) {
       actionNextOccurence();
     }
@@ -599,11 +541,10 @@ public class AnalysisWindow extends PageWindow {
   /**
    * Clean page. 
    */
-  void clean() {
-    pageLoaded = false;
-    getTextContents().setText(null);
-    page = DataManager.getPage(getWikipedia(), getTextPageName(), null);
-    popupListenerLinks.setPage(page);
+  @Override
+  protected void clean() {
+    super.clean();
+    popupListenerLinks.setPage(getPage());
     modelLinks.clear();
     updateComponentState();
   }
@@ -613,48 +554,54 @@ public class AnalysisWindow extends PageWindow {
    */
   @Override
   protected void actionReload() {
-    if (page == null) {
-      page = DataManager.getPage(getWikipedia(), getTextPageName(), null);
-    }
     clean();
-    FullAnalysisWorker reloadWorker = new FullAnalysisWorker(this, page);
-    reloadWorker.setListener(new DefaultBasicWorkerListener() {
-      @Override
-      public void beforeStart(
-          @SuppressWarnings("unused") BasicWorker worker) {
-        modelLinks.setShowDisambiguation(true);
-        modelLinks.setShowMissing(true);
-        modelLinks.setShowOther(true);
-        modelLinks.setShowRedirect(true);
-      }
-      @Override
-      public void beforeFinished(
-          @SuppressWarnings("unused") BasicWorker worker) {
-        pageLoaded = true;
-        modelLinks.setShowDisambiguation(menuItemShowDisambiguation.isSelected());
-        modelLinks.setShowMissing(menuItemShowMissing.isSelected());
-        modelLinks.setShowOther(menuItemShowOther.isSelected());
-        modelLinks.setShowRedirect(menuItemShowRedirect.isSelected());
-      }
-      @Override
-      public void afterFinished(
-          @SuppressWarnings("unused") BasicWorker worker,
-          @SuppressWarnings("unused") boolean ok) {
-        setContents();
-        if ((page != null) && (page.getLinks() != null)) {
-          ArrayList<Page> links = page.getLinks();
-          for (Page p : links) {
-            modelLinks.addElement(p);
-          }
-          countOccurences(page.getContents());
-        }
-        selectLinks(0);
-        modelLinks.updateLinkCount();
-        createFixRedirectsMenu();
-        updateComponentState();
-      }
-    });
+    FullAnalysisWorker reloadWorker = new FullAnalysisWorker(this, getPage());
+    setupReloadWorker(reloadWorker);
     reloadWorker.start();
+  }
+
+  /**
+   * Callback called at the end of the Reload Worker.
+   */
+  @Override
+  protected void afterFinishedReloadWorker() {
+    super.afterFinishedReloadWorker();
+    Page page = getPage();
+    if ((page != null) && (page.getLinks() != null)) {
+      ArrayList<Page> links = page.getLinks();
+      for (Page p : links) {
+        modelLinks.addElement(p);
+      }
+      countOccurences(page.getContents());
+    }
+    selectLinks(0);
+    modelLinks.updateLinkCount();
+    createFixRedirectsMenu();
+    updateComponentState();
+  }
+
+  /**
+   * Callback called before the end of the Reload Worker.
+   */
+  @Override
+  protected void beforeFinishedReloadWorker() {
+    super.beforeFinishedReloadWorker();
+    modelLinks.setShowDisambiguation(menuItemShowDisambiguation.isSelected());
+    modelLinks.setShowMissing(menuItemShowMissing.isSelected());
+    modelLinks.setShowOther(menuItemShowOther.isSelected());
+    modelLinks.setShowRedirect(menuItemShowRedirect.isSelected());
+  }
+
+  /**
+   * Callback called before the start of the Reload Worker. 
+   */
+  @Override
+  protected void beforeStartReloadWorker() {
+    super.beforeStartReloadWorker();
+    modelLinks.setShowDisambiguation(true);
+    modelLinks.setShowMissing(true);
+    modelLinks.setShowOther(true);
+    modelLinks.setShowRedirect(true);
   }
 
   /**
@@ -714,16 +661,6 @@ public class AnalysisWindow extends PageWindow {
   }
 
   /**
-   * Action called when Disambiguation Redirect button is pressed.
-   */
-  private void actionDisambiguationRedir() {
-    if (page != null) {
-      Controller.runDisambiguationAnalysis(
-          page.getRedirectTitle(), getWikipedia());
-    }
-  }
-
-  /**
    * Action called when Full analysis button is pressed.
    */
   private void actionFullAnalysisLink() {
@@ -734,22 +671,12 @@ public class AnalysisWindow extends PageWindow {
   }
 
   /**
-   * Action called when Full analysis Redirect button is pressed.
-   */
-  private void actionFullAnalysisRedir() {
-    if (page != null) {
-      Controller.runFullAnalysis(
-          page.getRedirectTitle(),
-          getWikipedia());
-    }
-  }
-
-  /**
    * Count pages occurences.
    * 
    * @param text Page text.
    */
   void countOccurences(String text) {
+    Page page = getPage();
     if ((page != null) && (page.getLinks() != null)) {
       for (Page p : page.getLinks()) {
         if (p != null) {
