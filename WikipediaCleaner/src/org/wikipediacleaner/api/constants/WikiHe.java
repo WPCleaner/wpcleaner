@@ -42,7 +42,6 @@ class WikiHe {
 
   final static ComponentOrientation orientation = ComponentOrientation.RIGHT_TO_LEFT;
 
-  final static String logged   = "הכניסה הושלמה בהצלחה";
   final static String message  = "תיקון הפניה לדף פירושונים";
 
   final static String wikt     = null;

@@ -50,7 +50,6 @@ public enum EnumWikipedia {
    * - full URL of the help page.
    * - Internal link to the help page.
    * - Component orientation.
-   * - "Login successful" text.
    * - "Disambiguation correction" text.
    * - Wiktionary interwiki.
    * - Wiktionary templates.
@@ -66,7 +65,7 @@ public enum EnumWikipedia {
   CA( WikiCa.code, WikiCa.name,
       WikiCa.apiUrl, WikiCa.indexUrl,
       WikiCa.helpUrl, WikiCa.helpLink, WikiCa.orientation,
-      WikiCa.logged, WikiCa.message,
+      WikiCa.message,
       WikiCa.wikt, WikiCa.wiktMatches,
       WikiCa.dabLinkTemplates, WikiCa.needHelpTemplates, WikiCa.helpRequestedTemplates,
       WikiCa.dabList, WikiCa.dabMatches,
@@ -74,7 +73,7 @@ public enum EnumWikipedia {
   EN( WikiEn.code, WikiEn.name,
       WikiEn.apiUrl, WikiEn.indexUrl,
       WikiEn.helpUrl, WikiEn.helpLink, WikiEn.orientation,
-      WikiEn.logged, WikiEn.message,
+      WikiEn.message,
       WikiEn.wikt, WikiEn.wiktMatches,
       WikiEn.dabLinkTemplates, WikiEn.needHelpTemplates, WikiEn.helpRequestedTemplates,
       WikiEn.dabList, WikiEn.dabMatches,
@@ -82,7 +81,7 @@ public enum EnumWikipedia {
   ES( WikiEs.code, WikiEs.name,
       WikiEs.apiUrl, WikiEs.indexUrl,
       WikiEs.helpUrl, WikiEs.helpLink, WikiEs.orientation,
-      WikiEs.logged, WikiEs.message,
+      WikiEs.message,
       WikiEs.wikt, WikiEs.wiktMatches,
       WikiEs.dabLinkTemplates, WikiEs.needHelpTemplates, WikiEs.helpRequestedTemplates,
       WikiEs.dabList, WikiEs.dabMatches,
@@ -90,7 +89,7 @@ public enum EnumWikipedia {
   FR( WikiFr.code, WikiFr.name,
       WikiFr.apiUrl, WikiFr.indexUrl,
       WikiFr.helpUrl, WikiFr.helpLink, WikiFr.orientation,
-      WikiFr.logged, WikiFr.message,
+      WikiFr.message,
       WikiFr.wikt, WikiFr.wiktMatches,
       WikiFr.dabLinkTemplates, WikiFr.needHelpTemplates, WikiFr.helpRequestedTemplates,
       WikiFr.dabList, WikiFr.dabMatches,
@@ -98,7 +97,7 @@ public enum EnumWikipedia {
   HE( WikiHe.code, WikiHe.name,
       WikiHe.apiUrl, WikiHe.indexUrl,
       WikiHe.helpUrl, WikiHe.helpLink, WikiHe.orientation,
-      WikiHe.logged, WikiHe.message,
+      WikiHe.message,
       WikiHe.wikt, WikiHe.wiktMatches,
       WikiHe.dabLinkTemplates, WikiHe.needHelpTemplates, WikiHe.helpRequestedTemplates,
       WikiHe.dabList, WikiHe.dabMatches,
@@ -106,7 +105,7 @@ public enum EnumWikipedia {
   NL( WikiNl.code, WikiNl.name,
       WikiNl.apiUrl, WikiNl.indexUrl,
       WikiNl.helpUrl, WikiNl.helpLink, WikiNl.orientation,
-      WikiNl.logged, WikiNl.message,
+      WikiNl.message,
       WikiNl.wikt, WikiNl.wiktMatches,
       WikiNl.dabLinkTemplates, WikiNl.needHelpTemplates, WikiNl.helpRequestedTemplates,
       WikiNl.dabList, WikiNl.dabMatches,
@@ -114,7 +113,7 @@ public enum EnumWikipedia {
   NO( WikiNo.code, WikiNo.name,
       WikiNo.apiUrl, WikiNo.indexUrl,
       WikiNo.helpUrl, WikiNo.helpLink, WikiNo.orientation,
-      WikiNo.logged, WikiNo.message,
+      WikiNo.message,
       WikiNo.wikt, WikiNo.wiktMatches,
       WikiNo.dabLinkTemplates, WikiNo.needHelpTemplates, WikiNo.helpRequestedTemplates,
       WikiNo.dabList, WikiNo.dabMatches,
@@ -122,7 +121,7 @@ public enum EnumWikipedia {
   PL( WikiPl.code, WikiPl.name,
       WikiPl.apiUrl, WikiPl.indexUrl,
       WikiPl.helpUrl, WikiPl.helpLink, WikiPl.orientation,
-      WikiPl.logged, WikiPl.message,
+      WikiPl.message,
       WikiPl.wikt, WikiPl.wiktMatches,
       WikiPl.dabLinkTemplates, WikiPl.needHelpTemplates, WikiPl.helpRequestedTemplates,
       WikiPl.dabList, WikiPl.dabMatches,
@@ -130,7 +129,7 @@ public enum EnumWikipedia {
   RU( WikiRu.code, WikiRu.name,
       WikiRu.apiUrl, WikiRu.indexUrl,
       WikiRu.helpUrl, WikiRu.helpLink, WikiRu.orientation,
-      WikiRu.logged, WikiRu.message,
+      WikiRu.message,
       WikiRu.wikt, WikiRu.wiktMatches,
       WikiRu.dabLinkTemplates, WikiRu.needHelpTemplates, WikiRu.helpRequestedTemplates,
       WikiRu.dabList, WikiRu.dabMatches,
@@ -143,7 +142,6 @@ public enum EnumWikipedia {
   private final String helpUrl;
   private final String helpPage;
   private final ComponentOrientation componentOrientation;
-  private final String loginSuccessfulText;
   private final String disambiguationText;
   private final String wiktionaryInterwiki;
   private final TemplateMatch[] wiktionaryMatches;
@@ -164,7 +162,6 @@ public enum EnumWikipedia {
    * @param wikiUrl URL of the wiki.
    * @param helpUrl URL of the help page.
    * @param helpPage Help page.
-   * @param loginSuccessfullText Text indicating successful login.
    * @param disambiguationText Text indicating disambiguation repairing.
    * @param wiktionaryInterwiki Interwiki link to wiktionary.
    * @param wiktionaryMatches List of templates for wiktionary.
@@ -183,7 +180,6 @@ public enum EnumWikipedia {
       String helpUrl,
       String helpPage,
       ComponentOrientation componentOrientation,
-      String loginSuccessfullText,
       String disambiguationText,
       String wiktionaryInterwiki,
       TemplateMatch[] wiktionaryMatches,
@@ -200,7 +196,6 @@ public enum EnumWikipedia {
     this.helpUrl = helpUrl;
     this.helpPage = helpPage;
     this.componentOrientation = componentOrientation;
-    this.loginSuccessfulText = loginSuccessfullText;
     this.disambiguationText = disambiguationText;
     this.wiktionaryInterwiki = wiktionaryInterwiki;
     this.wiktionaryMatches = wiktionaryMatches;
@@ -291,13 +286,6 @@ public enum EnumWikipedia {
    */
   public ComponentOrientation getComponentOrientation() {
     return componentOrientation;
-  }
-
-  /**
-   * @return Text indicating successful login.
-   */
-  public String getLoginSuccessfulString() {
-    return loginSuccessfulText;
   }
 
   /**

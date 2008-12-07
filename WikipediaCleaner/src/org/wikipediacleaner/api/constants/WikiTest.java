@@ -42,7 +42,6 @@ class WikiTest {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String logged   = "Login successful";
   final static String message  = "Repairing link to disambiguation page - [[Wikipedia:Disambiguation pages with links|You can help!]]";
 
   final static String wikt     = null;

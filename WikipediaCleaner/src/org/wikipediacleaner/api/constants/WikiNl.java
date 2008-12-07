@@ -42,7 +42,6 @@ class WikiNl {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String logged   = "Aanmelden gelukt";
   final static String message  = "Link naar doorverwijspagina aangepast. [[Wikipedia:Links naar doorverwijspagina's|Help mee!]]";
 
   final static String wikt     = null;

@@ -42,7 +42,6 @@ class WikiPl {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String logged   = "Zalogowano";
   final static String message  = "Naprawa linku do [[Wikipedia:Strony ujednoznaczniające z linkami|strony ujednoznaczniającej]]";
 
   final static String wikt     = null;

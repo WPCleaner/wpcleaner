@@ -42,7 +42,6 @@ class WikiCa {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String logged   = "S'ha iniciat la sessió amb èxit";
   final static String message  = "Corregint enllaç a una pàgina de desambiguació";
 
   final static String wikt     = null;
