@@ -42,7 +42,6 @@ class WikiRu {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String logged   = "Успешная регистрация";
   final static String message  = "Толкование ссылок на страницу значений. [[Wikipedia:Исправление ссылок на страницы значений|толковать]]";
 
   final static String wikt     = null;

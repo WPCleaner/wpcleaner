@@ -42,7 +42,6 @@ class WikiEs {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String logged   = "Sesión iniciada con éxito";
   final static String message  = "Corrigiendo error, ¡[[Wikiproyecto:Corrección_de_errores_menores|Puedes ayudar]]!";
 
   final static String wikt     = null;

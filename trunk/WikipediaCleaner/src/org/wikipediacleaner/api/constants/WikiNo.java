@@ -42,7 +42,6 @@ class WikiNo {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String logged   = "Du er nå logget inn";
   final static String message  = "Endrer lenke til pekerside";
 
   final static String wikt     = null;
