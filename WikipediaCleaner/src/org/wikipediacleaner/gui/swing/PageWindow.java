@@ -18,12 +18,16 @@
 
 package org.wikipediacleaner.gui.swing;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,10 +39,13 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -58,10 +65,17 @@ public abstract class PageWindow
   extends BasicWindow
   implements ActionListener, ItemListener {
 
-  protected Page page;
+  private Page page;
   private String pageName;
 
-  protected boolean pageLoaded = false;
+  private boolean pageLoaded = false;
+
+  /**
+   * @return Page.
+   */
+  protected Page getPage() {
+    return page;
+  }
 
   /**
    * @return Page name.
@@ -88,10 +102,82 @@ public abstract class PageWindow
   }
 
   /**
-   * @return Text contents component.
+   * @return Flag indicating if the page is loaded.
    */
-  protected MediaWikiPane getTextContents() {
-    return textContents;
+  protected boolean isPageLoaded() {
+    return pageLoaded;
+  }
+
+  /**
+   * Indicates that the page is loaded. 
+   */
+  protected void setPageLoaded() {
+    pageLoaded = true;
+  }
+
+  /**
+   * Clean page. 
+   */
+  protected void clean() {
+    pageLoaded = false;
+    getTextContents().setText(null);
+    page = DataManager.getPage(getWikipedia(), getTextPageName(), null);
+    updateComponentState();
+  }
+
+  /* ====================================================================== */
+  /* Workers                                                                */
+  /* ====================================================================== */
+
+  /**
+   * Setup the Reloade Worker.
+   * 
+   * @param reloadWorker Reload Worker.
+   */
+  protected void setupReloadWorker(BasicWorker reloadWorker) {
+    if (reloadWorker == null) {
+      return;
+    }
+    reloadWorker.setListener(new DefaultBasicWorkerListener() {
+      @Override
+      public void beforeStart(
+          @SuppressWarnings("unused") BasicWorker worker) {
+        beforeStartReloadWorker();
+      }
+      @Override
+      public void beforeFinished(
+          @SuppressWarnings("unused") BasicWorker worker) {
+        beforeFinishedReloadWorker();
+      }
+      @Override
+      public void afterFinished(
+          @SuppressWarnings("unused") BasicWorker worker,
+          @SuppressWarnings("unused") boolean ok) {
+        afterFinishedReloadWorker();
+      }
+    });
+  }
+
+  /**
+   * Callback called at the end of the Reload Worker.
+   */
+  protected void afterFinishedReloadWorker() {
+    setContents();
+    updateComponentState();
+  }
+
+  /**
+   * Callback called before the end of the Reload Worker.
+   */
+  protected void beforeFinishedReloadWorker() {
+    setPageLoaded();
+  }
+
+  /**
+   * Callback called before the start of the Reload Worker. 
+   */
+  protected void beforeStartReloadWorker() {
+    //
   }
 
   /* ====================================================================== */
@@ -99,11 +185,15 @@ public abstract class PageWindow
   /* ====================================================================== */
 
   private JLabel textPagename;
-  private JButton buttonReload;
-  private JButton buttonView;
-  private JButton buttonSend;
-  private JButton buttonWatch;
   private JButton buttonDisambiguation;
+  private JButton buttonDisambiguationRedirect;
+  private JButton buttonFullAnalysisRedirect;
+  private JButton buttonRedo;
+  private JButton buttonUndo;
+  private JButton buttonReload;
+  private JButton buttonSend;
+  private JButton buttonView;
+  private JButton buttonWatch;
   private JButton buttonFullAnalysis;
   private JTextField textComment;
   private JCheckBox chkAutomaticComment;
@@ -118,6 +208,7 @@ public abstract class PageWindow
    */
   @Override
   protected void updateComponentState() {
+    boolean redirect = (page != null) && (page.isRedirect());
     if (textContents != null) {
       textContents.setEnabled(pageLoaded);
     }
@@ -126,6 +217,14 @@ public abstract class PageWindow
     }
     if ((buttonSend != null) && (textContents != null)) {
       buttonSend.setEnabled(pageLoaded && textContents.isModified());
+    }
+    if (buttonFullAnalysisRedirect != null) {
+      buttonFullAnalysisRedirect.setEnabled(redirect);
+      buttonFullAnalysisRedirect.setVisible(redirect);
+    }
+    if (buttonDisambiguationRedirect != null) {
+      buttonDisambiguationRedirect.setEnabled(redirect);
+      buttonDisambiguationRedirect.setVisible(redirect);
     }
     if (chkEditTalkPage != null) {
       chkEditTalkPage.setEnabled(pageLoaded && (page != null) && (page.isArticle()));
@@ -183,6 +282,24 @@ public abstract class PageWindow
   }
 
   /**
+   * Add a component for the Redirect buttons.
+   * 
+   * @param panel Container.
+   */
+  protected void addButtonRedirect(JPanel panel) {
+    buttonFullAnalysisRedirect = Utilities.createJButton(GT._(
+        "Full analysis of redirect"));
+    buttonFullAnalysisRedirect.setActionCommand(ACTION_FULL_ANALYSIS_REDIR);
+    buttonFullAnalysisRedirect.addActionListener(this);
+    panel.add(buttonFullAnalysisRedirect);
+    buttonDisambiguationRedirect = Utilities.createJButton(GT._(
+        "Disambiguation analysis of redirect"));
+    buttonDisambiguationRedirect.setActionCommand(ACTION_DISAMBIGUATION_REDIR);
+    buttonDisambiguationRedirect.addActionListener(this);
+    panel.add(buttonDisambiguationRedirect);
+  }
+
+  /**
    * Add a component for the Reload button.
    * 
    * @param panel Container.
@@ -207,6 +324,22 @@ public abstract class PageWindow
       buttonSend.setActionCommand(ACTION_SEND);
       buttonSend.addActionListener(this);
       panel.add(buttonSend);
+    }
+  }
+
+  /**
+   * Add a component for the Undo / Redo buttons.
+   * 
+   * @param panel Container.
+   */
+  protected void addButtonUndoRedo(JPanel panel) {
+    buttonUndo = Utilities.createJButton(GT._("Undo"));
+    panel.add(buttonUndo);
+    buttonRedo = Utilities.createJButton(GT._("Redo"));
+    panel.add(buttonRedo);
+    if (textContents != null) {
+      textContents.setUndoButton(buttonUndo);
+      textContents.setRedoButton(buttonRedo);
     }
   }
 
@@ -289,6 +422,36 @@ public abstract class PageWindow
     panel.add(lblLastModified);
   }
 
+  protected void addTextContents(JPanel panel, GridBagConstraints constraints) {
+    if (textContents != null) {
+      Configuration config = Configuration.getConfiguration();
+      textContents.setBackground(Color.WHITE);
+      textContents.setEditable(true);
+      if (buttonUndo != null) {
+        textContents.setUndoLevels(config.getInt(
+            Configuration.INTEGER_ANALYSIS_UNDO_LVL,
+            Configuration.DEFAULT_ANALYSIS_UNDO_LVL));
+      }
+      textContents.addPropertyChangeListener(
+          MediaWikiPane.PROPERTY_MODIFIED,
+          new PropertyChangeListener() {
+  
+            /* (non-Javadoc)
+             * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+             */
+            public void propertyChange(@SuppressWarnings("unused") PropertyChangeEvent evt) {
+              updateComponentState();
+            }
+            
+          });
+      JScrollPane scrollContents = new JScrollPane(getTextContents());
+      scrollContents.setMinimumSize(new Dimension(100, 100));
+      scrollContents.setPreferredSize(new Dimension(1000, 500));
+      scrollContents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+      panel.add(scrollContents, constraints);
+    }
+  }
+
   /**
    * Create the text contents component.
    * 
@@ -298,6 +461,13 @@ public abstract class PageWindow
     if (textContents == null) {
       textContents = new MediaWikiPane(getWikipedia(), page, window);
     }
+  }
+
+  /**
+   * @return Text contents component.
+   */
+  protected MediaWikiPane getTextContents() {
+    return textContents;
   }
 
   /**
@@ -415,9 +585,11 @@ public abstract class PageWindow
   /* ====================================================================== */
 
   private final static String ACTION_DISAMBIGUATION_PAGE  = "DISAMBIGUATION PAGE";
+  private final static String ACTION_DISAMBIGUATION_REDIR = "DISAMBIGUATION REDIR";
   private final static String ACTION_EXPAND_TEMPLATES     = "EXPAND TEMPLATES";
   private final static String ACTION_EXPAND_PREVIEW       = "EXPAND PREVIEW";
   private final static String ACTION_FULL_ANALYSIS_PAGE   = "FULL ANALYSIS PAGE";
+  private final static String ACTION_FULL_ANALYSIS_REDIR  = "FULL ANALYSIS REDIR";
   private final static String ACTION_PREVIEW              = "PREVIEW";
   private final static String ACTION_RELOAD               = "RELOAD";
   private final static String ACTION_SEND                 = "SEND";
@@ -434,12 +606,16 @@ public abstract class PageWindow
 
     if (ACTION_DISAMBIGUATION_PAGE.equals(e.getActionCommand())) {
       actionDisambiguation();
+    } else if (ACTION_DISAMBIGUATION_REDIR.equals(e.getActionCommand())) {
+      actionDisambiguationRedir();
     } else if (ACTION_EXPAND_TEMPLATES.equals(e.getActionCommand())) {
       actionExpandTemplates();
     } else if (ACTION_EXPAND_PREVIEW.equals(e.getActionCommand())) {
       actionExpandTemplatesPreview();
     } else if (ACTION_FULL_ANALYSIS_PAGE.equals(e.getActionCommand())) {
       actionFullAnalysis();
+    } else if (ACTION_FULL_ANALYSIS_REDIR.equals(e.getActionCommand())) {
+      actionFullAnalysisRedir();
     } else if (ACTION_PREVIEW.equals(e.getActionCommand())) {
       actionPreview();
     } else if (ACTION_RELOAD.equals(e.getActionCommand())) {
@@ -458,6 +634,16 @@ public abstract class PageWindow
    */
   private void actionDisambiguation() {
     Controller.runDisambiguationAnalysis(getPageName(), getWikipedia());
+  }
+
+  /**
+   * Action called when Disambiguation Redirect button is pressed.
+   */
+  private void actionDisambiguationRedir() {
+    if (page != null) {
+      Controller.runDisambiguationAnalysis(
+          page.getRedirectTitle(), getWikipedia());
+    }
   }
 
   /**
@@ -487,6 +673,17 @@ public abstract class PageWindow
    */
   private void actionFullAnalysis() {
     Controller.runFullAnalysis(getPageName(), getWikipedia());
+  }
+
+  /**
+   * Action called when Full analysis Redirect button is pressed.
+   */
+  private void actionFullAnalysisRedir() {
+    if (page != null) {
+      Controller.runFullAnalysis(
+          page.getRedirectTitle(),
+          getWikipedia());
+    }
   }
 
   /**
