@@ -22,17 +22,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -40,7 +36,6 @@ import java.util.List;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -52,10 +47,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
-import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -66,7 +58,6 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.api.data.PageUtilities;
-import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -79,7 +70,6 @@ import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
 import org.wikipediacleaner.gui.swing.component.PageListPopupListener;
 import org.wikipediacleaner.gui.swing.worker.FullAnalysisWorker;
-import org.wikipediacleaner.gui.swing.worker.SendWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 
@@ -87,47 +77,22 @@ import org.wikipediacleaner.utils.Configuration;
 /**
  * Analysis window.
  */
-public class AnalysisWindow extends BasicWindow implements ActionListener, ItemListener {
+public class AnalysisWindow extends PageWindow {
 
   private final static String ACTION_DISAMBIGUATION_LINK  = "DISAMBIGUATION LINK";
-  private final static String ACTION_DISAMBIGUATION_PAGE  = "DISAMBIGUATION PAGE";
   private final static String ACTION_DISAMBIGUATION_REDIR = "DISAMBIGUATION REDIR";
-  private final static String ACTION_EXPAND_TEMPLATES     = "EXPAND TEMPLATES";
-  private final static String ACTION_EXPAND_PREVIEW       = "EXPAND PREVIEW";
   private final static String ACTION_FULL_ANALYSIS_LINK   = "FULL ANALYSIS LINK";
   private final static String ACTION_FULL_ANALYSIS_REDIR  = "FULL ANALYSIS REDIR";
   private final static String ACTION_NEXT_OCCURENCE       = "NEXT OCCURENCE";
-  private final static String ACTION_PREVIEW              = "PREVIEW";
-  private final static String ACTION_RELOAD               = "RELOAD";
-  private final static String ACTION_SEND                 = "SEND";
   private final static String ACTION_VALIDATE             = "VALIDATE";
-  private final static String ACTION_VIEW                 = "VIEW";
-  private final static String ACTION_WATCH                = "WATCH";
   private final static String ACTION_WATCH_LINK           = "WATCH LINK";
 
-  String pageName;
-  Page   page;
-
-  private JLabel textPagename;
-  private JButton buttonReload;
-  private JButton buttonView;
-  private JButton buttonSend;
-  private JButton buttonWatch;
-  private JButton buttonDisambiguation;
-  private JTextField textComment;
-  private JCheckBox chkAutomaticComment;
-  JCheckBox chkCloseAfterSend;
-  JCheckBox chkEditTalkPage;
-
-  MediaWikiPane textContents;
-  private JMenu menuFixRedirects;
   private JButton buttonNext;
   private JButton buttonValidate;
   private JButton buttonUndo;
   private JButton buttonRedo;
   private JButton buttonFullAnalysisRedirect;
   private JButton buttonDisambiguationRedirect;
-  private JLabel lblLastModified;
 
   JList listLinks;
   PageListModel modelLinks;
@@ -143,8 +108,6 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
   private JButton buttonFullAnalysisLink;
   private JButton buttonDisambiguationLink;
   private JButton buttonWatchLink;
-
-  boolean pageLoaded = false;
 
   /**
    * Create and display a AnalysisWindow.
@@ -166,7 +129,7 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
             if (window instanceof AnalysisWindow) {
               Configuration config = Configuration.getConfiguration();
               AnalysisWindow analysis = (AnalysisWindow) window;
-              analysis.pageName = page;
+              analysis.setPageName(page);
               analysis.modelLinks = new PageListModel();
               analysis.modelLinks.setShowDisambiguation(config.getBoolean(
                   Configuration.BOOLEAN_ANALYSIS_DISAMBIG_PAGES,
@@ -193,7 +156,7 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
                   Configuration.BOOLEAN_ANALYSIS_COUNT_REDIRECT,
                   Configuration.DEFAULT_ANALYSIS_COUNT_REDIRECT));
               analysis.modelLinks.setComparator(PageComparator.getNamespaceFirstComparator());
-              analysis.textContents = new MediaWikiPane(wikipedia, analysis.page, window);
+              analysis.createTextContents(window);
             }
           }
           @Override
@@ -211,7 +174,7 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
    */
   @Override
   public String getTitle() {
-    return GT._("Analysis - {0}", pageName);
+    return GT._("Analysis - {0}", getPageName());
   }
 
   /**
@@ -228,6 +191,21 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
     modelLinks.setLinkCountLabel(linkCount);
     menuBar.add(linkCount);
     return menuBar;
+  }
+
+  /**
+   * Update component state.
+   */
+  @Override
+  protected void updateComponentState() {
+    boolean redirect = (page != null) && (page.isRedirect());
+    buttonNext.setEnabled(pageLoaded);
+    buttonValidate.setEnabled(pageLoaded);
+    buttonFullAnalysisRedirect.setEnabled(redirect);
+    buttonFullAnalysisRedirect.setVisible(redirect);
+    buttonDisambiguationRedirect.setEnabled(redirect);
+    buttonDisambiguationRedirect.setVisible(redirect);
+    super.updateComponentState();
   }
 
   /**
@@ -276,56 +254,22 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
   }
 
   /**
-   * Update component state.
-   */
-  @Override
-  protected void updateComponentState() {
-    boolean redirect = (page != null) && (page.isRedirect());
-    textContents.setEnabled(pageLoaded);
-    if (buttonView != null) {
-      buttonView.setEnabled(pageLoaded);
-    }
-    buttonSend.setEnabled(pageLoaded && textContents.isModified());
-    buttonNext.setEnabled(pageLoaded);
-    buttonValidate.setEnabled(pageLoaded);
-    buttonFullAnalysisRedirect.setEnabled(redirect);
-    buttonFullAnalysisRedirect.setVisible(redirect);
-    buttonDisambiguationRedirect.setEnabled(redirect);
-    buttonDisambiguationRedirect.setVisible(redirect);
-    chkEditTalkPage.setEnabled(pageLoaded && (page != null) && (page.isArticle()));
-    textComment.setEnabled(!chkAutomaticComment.isSelected());
-    menuFixRedirects.setEnabled(menuFixRedirects.getItemCount() > 0);
-  }
-
-  /**
    * @return Page components.
    */
   private Component createPageComponents() {
-    Configuration config = Configuration.getConfiguration();
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     JPanel panelInformation = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
     JPanel panelComment = new JPanel(new GridBagLayout());
 
     // Page name
-    textPagename = new JLabel(pageName);
-    JLabel labelPagename = Utilities.createJLabel(GT._("&Page :"));
-    labelPagename.setLabelFor(textPagename);
-    labelPagename.setHorizontalAlignment(SwingConstants.TRAILING);
-    panelInformation.add(labelPagename);
-    panelInformation.add(textPagename);
+    addTextPageName(panelInformation);
 
     // Check box for closing after sending
-    chkCloseAfterSend = Utilities.createJCheckBox(
-        GT._("&Close after sending"),
-        config.getBoolean(Configuration.BOOLEAN_CLOSE_FULL, Configuration.DEFAULT_CLOSE_FULL));
-    panelInformation.add(chkCloseAfterSend);
+    addChkCloseAfterSend(panelInformation);
 
     // Check box for adding a note on the talk page
-    chkEditTalkPage = Utilities.createJCheckBox(
-        GT._("&Add a note on talk page"), false);
-    textContents.setCheckBoxAddNote(chkEditTalkPage);
-    panelInformation.add(chkEditTalkPage);
+    addChkEditTalkPage(panelInformation);
 
     // Comment
     GridBagConstraints constraints = new GridBagConstraints();
@@ -339,13 +283,7 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
     constraints.ipady = 0;
     constraints.weightx = 0;
     constraints.weighty = 0;
-    chkAutomaticComment = Utilities.createJCheckBox(GT._("Automatic comment"), true);
-    chkAutomaticComment.addItemListener(this);
-    panelComment.add(chkAutomaticComment, constraints);
-    constraints.gridx++;
-    textComment = new JTextField(getWikipedia().getUpdatePageMessage());
-    constraints.weightx = 1;
-    panelComment.add(textComment, constraints);
+    addChkAutomaticComment(panelComment, constraints);
 
     panel.add(panelInformation);
     panel.add(panelComment);
@@ -375,28 +313,11 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
 
     // Command buttons
     JPanel panelCommand = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 0));
-    buttonReload = Utilities.createJButton(GT._("&Reload"));
-    buttonReload.setActionCommand(ACTION_RELOAD);
-    buttonReload.addActionListener(this);
-    panelCommand.add(buttonReload);
-    if (Utilities.isDesktopSupported()) {
-      buttonView = Utilities.createJButton(GT._("&External Viewer"));
-      buttonView.setActionCommand(ACTION_VIEW);
-      buttonView.addActionListener(this);
-      panelCommand.add(buttonView);
-    }
-    buttonSend = Utilities.createJButton(GT._("&Send"));
-    buttonSend.setActionCommand(ACTION_SEND);
-    buttonSend.addActionListener(this);
-    panelCommand.add(buttonSend);
-    buttonWatch = Utilities.createJButton(GT._("Add to &Watch list"));
-    buttonWatch.setActionCommand(ACTION_WATCH);
-    buttonWatch.addActionListener(this);
-    panelCommand.add(buttonWatch);
-    buttonDisambiguation = Utilities.createJButton(GT._("Disambiguation"));
-    buttonDisambiguation.setActionCommand(ACTION_DISAMBIGUATION_PAGE);
-    buttonDisambiguation.addActionListener(this);
-    panelCommand.add(buttonDisambiguation);
+    addButtonReload(panelCommand);
+    addButtonView(panelCommand);
+    addButtonSend(panelCommand);
+    addButtonWatch(panelCommand);
+    addButtonDisambiguation(panelCommand);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
     constraints.weightx = 1;
@@ -428,8 +349,7 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
     buttonDisambiguationRedirect.setActionCommand(ACTION_DISAMBIGUATION_REDIR);
     buttonDisambiguationRedirect.addActionListener(this);
     buttonTextPanel.add(buttonDisambiguationRedirect);
-    lblLastModified = Utilities.createJLabel(GT._("Last modified: "));
-    buttonTextPanel.add(lblLastModified);
+    addLblLastModified(buttonTextPanel);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
     constraints.weightx = 1;
@@ -438,14 +358,14 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
     constraints.gridy++;
 
     // Contents
-    textContents.setBackground(Color.WHITE);
-    textContents.setEditable(true);
-    textContents.setUndoLevels(config.getInt(
+    getTextContents().setBackground(Color.WHITE);
+    getTextContents().setEditable(true);
+    getTextContents().setUndoLevels(config.getInt(
         Configuration.INTEGER_ANALYSIS_UNDO_LVL,
         Configuration.DEFAULT_ANALYSIS_UNDO_LVL));
-    textContents.setUndoButton(buttonUndo);
-    textContents.setRedoButton(buttonRedo);
-    textContents.addPropertyChangeListener(
+    getTextContents().setUndoButton(buttonUndo);
+    getTextContents().setRedoButton(buttonRedo);
+    getTextContents().addPropertyChangeListener(
         MediaWikiPane.PROPERTY_MODIFIED,
         new PropertyChangeListener() {
 
@@ -457,7 +377,7 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
           }
           
         });
-    JScrollPane scrollContents = new JScrollPane(textContents);
+    JScrollPane scrollContents = new JScrollPane(getTextContents());
     scrollContents.setMinimumSize(new Dimension(100, 100));
     scrollContents.setPreferredSize(new Dimension(1000, 500));
     scrollContents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -469,32 +389,6 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
     constraints.gridy++;
 
     return panel;
-  }
-
-  /**
-   * @return Tools menu.
-   */
-  private JMenu createToolsMenu() {
-    JMenu menu = Utilities.createJMenu(GT._("&Tools"));
-    JMenuItem menuItem = null;
-    menu.add(createFixRedirectsMenu());
-
-    menuItem = Utilities.createJMenuItem(GT._("&Preview"));
-    menuItem.setActionCommand(ACTION_PREVIEW);
-    menuItem.addActionListener(this);
-    menu.add(menuItem);
-
-    menuItem = Utilities.createJMenuItem(GT._("&Expand templates"));
-    menuItem.setActionCommand(ACTION_EXPAND_TEMPLATES);
-    menuItem.addActionListener(this);
-    menu.add(menuItem);
-
-    menuItem = Utilities.createJMenuItem(GT._("Expand templates &and Preview"));
-    menuItem.setActionCommand(ACTION_EXPAND_PREVIEW);
-    menuItem.addActionListener(this);
-    menu.add(menuItem);
- 
-    return menu;
   }
 
   /**
@@ -553,31 +447,6 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
   }
 
   /**
-   * @return Fix redirects menu.
-   */
-  JMenu createFixRedirectsMenu() {
-    if (menuFixRedirects == null) {
-      menuFixRedirects = Utilities.createJMenu(GT._("Fix &redirects"));
-    } else {
-      menuFixRedirects.removeAll();
-    }
-    if ((page != null) && (page.getLinks() != null)) {
-      for (Page p : page.getLinks()) {
-        if (p.isRedirect() && !Boolean.TRUE.equals(p.isDisambiguationPage())) {
-          ArrayList<Page> redirects = p.getRedirects();
-          Page to = redirects.get(redirects.size() - 1);
-          String text = GT._(
-              "Link \"{0}\" to \"{1}\"", new Object[] { p.getTitle(), to.getTitle() });
-          JMenuItem menuItem = new JMenuItem(text);
-          menuItem.addActionListener(new ReplaceAllLinksAction(textContents, p, to.getTitle()));
-          menuFixRedirects.add(menuItem);
-        }
-      }
-    }
-    return menuFixRedirects;
-  }
-
-  /**
    * @return Links components.
    */
   private Component createLinksComponents() {
@@ -631,7 +500,7 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
     PageListCellRenderer listCellRenderer = new PageListCellRenderer();
     listCellRenderer.showCountOccurence(true);
     listLinks.setCellRenderer(listCellRenderer);
-    popupListenerLinks = new PageListPopupListener(getWikipedia(), textContents, this);
+    popupListenerLinks = new PageListPopupListener(getWikipedia(), getTextContents(), this);
     listLinks.addMouseListener(popupListenerLinks);
     listLinks.addMouseListener(new PageListAnalyzeListener(getWikipedia()));
     listLinks.addListSelectionListener(new AnalysisListSelectionListener());
@@ -662,9 +531,9 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
             }
           }
         }
-        ArrayList<Page> oldPages = textContents.getInternalLinks();
+        ArrayList<Page> oldPages = getTextContents().getInternalLinks();
         if (!pages.equals(oldPages)) {
-          textContents.setInternalLinks(pages);
+          getTextContents().setInternalLinks(pages);
         }
       }
     }
@@ -673,10 +542,12 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
   /* (non-Javadoc)
    * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
    */
+  @Override
   public void itemStateChanged(ItemEvent e) {
     if ((e == null) || (e.getSource() == null)) {
       return;
     }
+    super.itemStateChanged(e);
     Object source = e.getSource();
     boolean selected = (e.getStateChange() == ItemEvent.SELECTED);
     if (source == menuItemShowDisambiguation) {
@@ -695,50 +566,31 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
       modelLinks.setCountOther(selected);
     } else if (source == menuItemCountRedirect) {
       modelLinks.setCountRedirect(selected);
-    } else if (source == chkAutomaticComment) {
-      textComment.setEnabled(!chkAutomaticComment.isSelected());
-      if (chkAutomaticComment.isSelected()) {
-        textComment.setText(getWikipedia().getUpdatePageMessage());
-      }
     }
   }
 
   /* (non-Javadoc)
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(ActionEvent e) {
     if (e == null) {
       return;
     }
 
-    if (ACTION_RELOAD.equals(e.getActionCommand())) {
-      actionReload();
-    } else if (ACTION_SEND.equals(e.getActionCommand())) {
-      actionSend();
-    } else if (ACTION_VALIDATE.equals(e.getActionCommand())) {
+    super.actionPerformed(e);
+    if (ACTION_VALIDATE.equals(e.getActionCommand())) {
       actionValidate();
-    } else if (ACTION_VIEW.equals(e.getActionCommand())) {
-      actionView();
-    } else if (ACTION_WATCH.equals(e.getActionCommand())) {
-      actionWatch();
     } else if (ACTION_WATCH_LINK.equals(e.getActionCommand())) {
       actionWatchLink();
     } else if (ACTION_DISAMBIGUATION_LINK.equals(e.getActionCommand())) {
       actionDisambiguationLink();
-    } else if (ACTION_DISAMBIGUATION_PAGE.equals(e.getActionCommand())) {
-      actionDisambiguation();
     } else if (ACTION_DISAMBIGUATION_REDIR.equals(e.getActionCommand())) {
       actionDisambiguationRedir();
     } else if (ACTION_FULL_ANALYSIS_LINK.equals(e.getActionCommand())) {
       actionFullAnalysisLink();
     } else if (ACTION_FULL_ANALYSIS_REDIR.equals(e.getActionCommand())) {
       actionFullAnalysisRedir();
-    } else if (ACTION_EXPAND_TEMPLATES.equals(e.getActionCommand())) {
-      actionExpandTemplates();
-    } else if (ACTION_EXPAND_PREVIEW.equals(e.getActionCommand())) {
-      actionExpandTemplatesPreview();
-    } else if (ACTION_PREVIEW.equals(e.getActionCommand())) {
-      actionPreview();
     } else if (ACTION_NEXT_OCCURENCE.equals(e.getActionCommand())) {
       actionNextOccurence();
     }
@@ -749,8 +601,8 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
    */
   void clean() {
     pageLoaded = false;
-    textContents.setText(null);
-    page = DataManager.getPage(getWikipedia(), textPagename.getText(), null);
+    getTextContents().setText(null);
+    page = DataManager.getPage(getWikipedia(), getTextPageName(), null);
     popupListenerLinks.setPage(page);
     modelLinks.clear();
     updateComponentState();
@@ -759,9 +611,10 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
   /**
    * Action called when Reload button is pressed. 
    */
-  void actionReload() {
+  @Override
+  protected void actionReload() {
     if (page == null) {
-      page = DataManager.getPage(getWikipedia(), textPagename.getText(), null);
+      page = DataManager.getPage(getWikipedia(), getTextPageName(), null);
     }
     clean();
     FullAnalysisWorker reloadWorker = new FullAnalysisWorker(this, page);
@@ -825,73 +678,6 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
   }
 
   /**
-   * Action called when View button is pressed. 
-   */
-  private void actionView() {
-    Utilities.browseURL(getWikipedia(), pageName);
-  }
-
-  /**
-   * Action called when Send button is pressed.
-   */
-  private void actionSend() {
-    if (chkEditTalkPage.isSelected() &&
-        (page != null) && (page.getTalkPage(getWikipedia().getNamespaces()) != null)) {
-      Controller.runNewSection(
-          page.getTalkPage(getWikipedia().getNamespaces()),
-          textContents.getText(),
-          page.getEditToken(),
-          getWikipedia());
-    }
-    Configuration config = Configuration.getConfiguration();
-    final boolean hideWindow = config.getBoolean(
-        Configuration.BOOLEAN_ANALYSIS_HIDE_SENDING,
-        Configuration.DEFAULT_ANALYSIS_HIDE_SENDING);
-    final int oldState = getParentComponent().getExtendedState();
-    if (hideWindow) {
-      getParentComponent().setExtendedState(Frame.ICONIFIED);
-    }
-    getParentComponent().setTitle(GT._("Sending {0}", page.getTitle()));
-    SendWorker sendWorker = new SendWorker(
-        this, page, textContents.getText(),
-        textComment.getText(), getWikipedia());
-    sendWorker.setListener(new DefaultBasicWorkerListener() {
-      @Override
-      public void afterFinished(
-          BasicWorker worker,
-          @SuppressWarnings("unused") boolean ok) {
-        if (!worker.shouldContinue()) {
-          return;
-        }
-        if (chkCloseAfterSend.isSelected()) {
-          dispose();
-        } else {
-          worker.getWindow().setWindowTitle(getTitle());
-          worker.getWindow().setExtendedState(oldState);
-          actionReload();
-        }
-      }
-    });
-    sendWorker.start();
-  }
-
-  /**
-   * Action called when Watch button is pressed. 
-   */
-  private void actionWatch() {
-    if (displayYesNoWarning(
-        GT._("Would you like to add this page on your local Watch list ?")) == JOptionPane.YES_OPTION) {
-      Configuration config = Configuration.getConfiguration();
-      ArrayList<String> watch = config.getStringArrayList(Configuration.ARRAY_WATCH_PAGES);
-      if (!watch.contains(page.getTitle())) {
-        watch.add(page.getTitle());
-        Collections.sort(watch);
-        config.setStringArrayList(Configuration.ARRAY_WATCH_PAGES, watch);
-      }
-    }
-  }
-
-  /**
    * Action called when Watch link button is pressed. 
    */
   private void actionWatchLink() {
@@ -915,13 +701,6 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
         config.setStringArrayList(Configuration.ARRAY_WATCH_PAGES, watch);
       }
     }
-  }
-
-  /**
-   * Action called when Disambiguation button is pressed.
-   */
-  private void actionDisambiguation() {
-    Controller.runDisambiguationAnalysis(pageName, getWikipedia());
   }
 
   /**
@@ -966,33 +745,6 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
   }
 
   /**
-   * Action called when Expand Templates menu is selected. 
-   */
-  void actionExpandTemplates() {
-    Controller.runExpandTemplates(
-        pageName, textContents.getText(),
-        true, false, getWikipedia());
-  }
-
-  /**
-   * Action called when Expand Templates / Preview menu is selected. 
-   */
-  void actionExpandTemplatesPreview() {
-    Controller.runExpandTemplates(
-        pageName, textContents.getText(),
-        true, true, getWikipedia());
-  }
-
-  /**
-   * Action called when Preview menu is selected. 
-   */
-  void actionPreview() {
-    Controller.runExpandTemplates(
-        pageName, textContents.getText(),
-        false, true, getWikipedia());
-  }
-
-  /**
    * Count pages occurences.
    * 
    * @param text Page text.
@@ -1031,8 +783,8 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
    * Action called when Validate button is pressed.
    */
   private void actionValidate() {
-    textContents.resetAttributes();
-    countOccurences(textContents.getText());
+    getTextContents().resetAttributes();
+    countOccurences(getTextContents().getText());
     listLinks.repaint();
 
     // If the selected links are fixed, select the next one
@@ -1056,43 +808,14 @@ public class AnalysisWindow extends BasicWindow implements ActionListener, ItemL
     }
 
     modelLinks.updateLinkCount();
-    textContents.requestFocusInWindow();
+    getTextContents().requestFocusInWindow();
   }
 
   /**
    * Action called when Next Occurence button is pressed. 
    */
   private void actionNextOccurence() {
-    textContents.selectNextOccurence();
-    textContents.requestFocusInWindow();
-  }
-
-  /**
-   * Set the contents.
-   */
-  void setContents() {
-    if (SwingUtilities.isEventDispatchThread()) {
-      textContents.setPage(page);
-      textContents.setText(page.getContents());
-      if ((page.getContentsTimestamp() != null) && (!page.getContentsTimestamp().equals(""))) {
-        lblLastModified.setText(GT._("Last modified: ") + page.getContentsTimestamp());
-        lblLastModified.setVisible(true);
-      } else {
-        lblLastModified.setVisible(false);
-      }
-      updateComponentState();
-    } else {
-      try {
-        SwingUtilities.invokeAndWait(new Runnable() {
-          public void run() {
-            setContents();
-          }
-        });
-      } catch (InterruptedException e) {
-        logError("Error when setting contents", e);
-      } catch (InvocationTargetException e) {
-        logError("Error when setting contents", e);
-      }
-    }
+    getTextContents().selectNextOccurence();
+    getTextContents().requestFocusInWindow();
   }
 }

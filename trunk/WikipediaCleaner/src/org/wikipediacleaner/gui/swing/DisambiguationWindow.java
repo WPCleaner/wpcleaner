@@ -26,9 +26,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -47,8 +45,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -62,14 +58,12 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
 import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
 import org.wikipediacleaner.gui.swing.component.PageListPopupListener;
 import org.wikipediacleaner.gui.swing.worker.AutomaticDisambiguationWorker;
 import org.wikipediacleaner.gui.swing.worker.DisambiguationAnalysisWorker;
-import org.wikipediacleaner.gui.swing.worker.SendWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 
@@ -77,33 +71,16 @@ import org.wikipediacleaner.utils.Configuration;
 /**
  * Disambiguation window.
  */
-public class DisambiguationWindow extends BasicWindow implements ActionListener {
+public class DisambiguationWindow extends PageWindow {
 
   private final static String ACTION_ADD_AUTOMATIC_FIXING = "ADD AUTOMATIC FIXING";
   private final static String ACTION_CLR_AUTOMATIC_FIXING = "CLR AUTOMATIC FIXING";
   private final static String ACTION_DISAMBIGUATION_LINK  = "DISAMBIGUATION LINK";
   private final static String ACTION_FULL_ANALYSIS_LINK   = "FULL ANALYSIS LINK";
-  private final static String ACTION_FULL_ANALYSIS_PAGE   = "FULL ANALYSIS PAGE";
   private final static String ACTION_MDF_AUTOMATIC_FIXING = "MDF AUTOMATIC FIXING";
   private final static String ACTION_NEXT_LINKS           = "NEXT LINKS";
-  private final static String ACTION_RELOAD               = "RELOAD";
   private final static String ACTION_RMV_AUTOMATIC_FIXING = "RMV AUTOMATIC FIXING";
   private final static String ACTION_RUN_AUTOMATIC_FIXING = "RUN AUTOMATIC FIXING";
-  private final static String ACTION_SEND                 = "SEND";
-  private final static String ACTION_VIEW                 = "VIEW";
-  private final static String ACTION_WATCH                = "WATCH";
-
-  String pageName;
-  Page   page;
-
-  private JLabel textPagename;
-  private JButton buttonReload;
-  private JButton buttonView;
-  private JButton buttonSend;
-  private JButton buttonWatch;
-  private JButton buttonFullAnalysis;
-
-  MediaWikiPane textContents;
 
   private JList listAutomaticFixing;
   private DefaultListModel modelAutomaticFixing;
@@ -119,8 +96,6 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
   private JButton buttonFullAnalysisLink;
   private JButton buttonDisambiguationLink;
   private JButton buttonSelectNextLinks;
-
-  boolean pageLoaded = false;
 
   /**
    * Create and display a DisambiguationWindow.
@@ -141,7 +116,7 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
           public void initializeWindow(BasicWindow window) {
             if (window instanceof DisambiguationWindow) {
               DisambiguationWindow disambig = (DisambiguationWindow) window;
-              disambig.pageName = page;
+              disambig.setPageName(page);
               disambig.modelLinks = new PageListModel();
               disambig.modelLinks.setComparator(PageComparator.getTemplateFirstComparator());
               disambig.modelLinks.setShowDisambiguation(true);
@@ -163,7 +138,7 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
    */
   @Override
   public String getTitle() {
-    return GT._("Disambiguation - {0}", pageName);
+    return GT._("Disambiguation - {0}", getPageName());
   }
 
   /**
@@ -172,6 +147,7 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
   @Override
   protected JMenuBar createMenuBar() {
     JMenuBar menuBar = new JMenuBar();
+    menuBar.add(createToolsMenu());
     menuBar.add(createSortMenu());
     menuBar.add(Box.createHorizontalGlue());
     return menuBar;
@@ -227,7 +203,7 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
    * Creates internal elements. 
    */
   private void createElements() {
-    textContents = new MediaWikiPane(getWikipedia(), page, this);
+    createTextContents(this);
   }
 
   /**
@@ -235,7 +211,7 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
    */
   @Override
   protected void updateComponentState() {
-    textContents.setEnabled(pageLoaded);
+    getTextContents().setEnabled(pageLoaded);
   }
 
   /**
@@ -243,47 +219,12 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
    */
   private Component createPageComponents() {
     JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-
-    // Page name
-    textPagename = new JLabel(pageName);
-    JLabel labelPagename = Utilities.createJLabel(GT._("&Page :"));
-    labelPagename.setLabelFor(textPagename);
-    labelPagename.setHorizontalAlignment(SwingConstants.TRAILING);
-    panel.add(labelPagename);
-    panel.add(textPagename);
-
-    // Update button
-    buttonReload = Utilities.createJButton(GT._("&Reload"));
-    buttonReload.setActionCommand(ACTION_RELOAD);
-    buttonReload.addActionListener(this);
-    panel.add(buttonReload);
-
-    // View button
-    if (Utilities.isDesktopSupported()) {
-      buttonView = Utilities.createJButton(GT._("&External Viewer"));
-      buttonView.setActionCommand(ACTION_VIEW);
-      buttonView.addActionListener(this);
-      panel.add(buttonView);
-    }
-
-    // Send button
-    buttonSend = Utilities.createJButton(GT._("&Send"));
-    buttonSend.setActionCommand(ACTION_SEND);
-    buttonSend.addActionListener(this);
-    panel.add(buttonSend);
-
-    // Watch button
-    buttonWatch = Utilities.createJButton(GT._("Add to &Watch list"));
-    buttonWatch.setActionCommand(ACTION_WATCH);
-    buttonWatch.addActionListener(this);
-    panel.add(buttonWatch);
-
-    // Full analysis button
-    buttonFullAnalysis = Utilities.createJButton(GT._("Full analysis"));
-    buttonFullAnalysis.setActionCommand(ACTION_FULL_ANALYSIS_PAGE);
-    buttonFullAnalysis.addActionListener(this);
-    panel.add(buttonFullAnalysis);
-
+    addTextPageName(panel);
+    addButtonReload(panel);
+    addButtonView(panel);
+    addButtonSend(panel);
+    addButtonWatch(panel);
+    addButtonFullAnalysis(panel);
     return panel;
   }
 
@@ -307,9 +248,9 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
     constraints.weighty = 0;
 
     // Contents
-    textContents.setBackground(Color.WHITE);
-    textContents.setEditable(true);
-    JScrollPane scrollContents = new JScrollPane(textContents);
+    getTextContents().setBackground(Color.WHITE);
+    getTextContents().setEditable(true);
+    JScrollPane scrollContents = new JScrollPane(getTextContents());
     scrollContents.setMinimumSize(new Dimension(100, 100));
     scrollContents.setPreferredSize(new Dimension(1000, 500));
     scrollContents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -434,7 +375,7 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
     constraints.weighty = 1;
     listLinks = new JList(modelLinks);
     listLinks.setCellRenderer(new PageListCellRenderer());
-    listLinks.addMouseListener(new PageListPopupListener(getWikipedia(), textContents, this));
+    listLinks.addMouseListener(new PageListPopupListener(getWikipedia(), getTextContents(), this));
     listLinks.addMouseListener(new PageListAnalyzeListener(getWikipedia()));
     JScrollPane scrollLinks = new JScrollPane(listLinks);
     scrollLinks.setMinimumSize(new Dimension(100, 100));
@@ -482,22 +423,14 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
   /* (non-Javadoc)
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
+  @Override
   public void actionPerformed(ActionEvent e) {
     if (e == null) {
       return;
     }
 
-    if (ACTION_RELOAD.equals(e.getActionCommand())) {
-      actionReload();
-    } else if (ACTION_SEND.equals(e.getActionCommand())) {
-      actionSend();
-    } else if (ACTION_VIEW.equals(e.getActionCommand())) {
-      actionView();
-    } else if (ACTION_WATCH.equals(e.getActionCommand())) {
-      actionWatch();
-    } else if (ACTION_FULL_ANALYSIS_PAGE.equals(e.getActionCommand())) {
-      actionFullAnalysis();
-    } else if (ACTION_FULL_ANALYSIS_LINK.equals(e.getActionCommand())) {
+    super.actionPerformed(e);
+    if (ACTION_FULL_ANALYSIS_LINK.equals(e.getActionCommand())) {
       actionFullAnalysisLink();
     } else if (ACTION_DISAMBIGUATION_LINK.equals(e.getActionCommand())) {
       actionDisambiguationLink();
@@ -521,8 +454,8 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
    */
   void clean() {
     pageLoaded = false;
-    textContents.setText(null);
-    page = DataManager.getPage(getWikipedia(), textPagename.getText(), null);
+    getTextContents().setText(null);
+    page = DataManager.getPage(getWikipedia(), getTextPageName(), null);
     modelLinks.clear();
     updateComponentState();
   }
@@ -530,9 +463,10 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
   /**
    * Action called when Reload button is pressed. 
    */
-  void actionReload() {
+  @Override
+  protected void actionReload() {
     if (page == null) {
-      page = DataManager.getPage(getWikipedia(), textPagename.getText(), null);
+      page = DataManager.getPage(getWikipedia(), getTextPageName(), null);
     }
     clean();
     DisambiguationAnalysisWorker reloadWorker = new DisambiguationAnalysisWorker(this, page);
@@ -563,13 +497,6 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
       }
     });
     reloadWorker.start();
-  }
-
-  /**
-   * Action called when View button is pressed. 
-   */
-  private void actionView() {
-    Utilities.browseURL(getWikipedia(), pageName);
   }
 
   /**
@@ -692,50 +619,6 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
   }
 
   /**
-   * Action called when Send button is pressed.
-   */
-  private void actionSend() {
-    SendWorker sendWorker = new SendWorker(
-        this, page, textContents.getText(),
-        getWikipedia().getUpdatePageMessage(), getWikipedia());
-    sendWorker.setListener(new DefaultBasicWorkerListener() {
-      @Override
-      public void afterFinished(
-          BasicWorker worker,
-          @SuppressWarnings("unused") boolean ok) {
-        if (!worker.shouldContinue()) {
-          return;
-        }
-        actionReload();
-      }
-    });
-    sendWorker.start();
-  }
-
-  /**
-   * Action called when Watch button is pressed. 
-   */
-  private void actionWatch() {
-    if (displayYesNoWarning(
-        GT._("Would you like to add this page on your local Watch list ?")) == JOptionPane.YES_OPTION) {
-      Configuration config = Configuration.getConfiguration();
-      ArrayList<String> watch = config.getStringArrayList(Configuration.ARRAY_WATCH_PAGES);
-      if (!watch.contains(page.getTitle())) {
-        watch.add(page.getTitle());
-        Collections.sort(watch);
-        config.setStringArrayList(Configuration.ARRAY_WATCH_PAGES, watch);
-      }
-    }
-  }
-
-  /**
-   * Action called when Full analysis button is pressed.
-   */
-  private void actionFullAnalysis() {
-    Controller.runFullAnalysis(pageName, getWikipedia());
-  }
-
-  /**
    * Action called when Full analysis button is pressed.
    */
   private void actionFullAnalysisLink() {
@@ -771,21 +654,6 @@ public class DisambiguationWindow extends BasicWindow implements ActionListener 
       listLinks.ensureIndexIsVisible(indices[count - 1]);
     } else {
       listLinks.ensureIndexIsVisible(0);
-    }
-  }
-
-  /**
-   * Set the contents.
-   */
-  void setContents() {
-    if (SwingUtilities.isEventDispatchThread()) {
-      textContents.setText(page.getContents());
-    } else {
-      SwingUtilities.invokeLater(new Runnable() {
-        public void run() {
-          setContents();
-        }
-      });
     }
   }
 }
