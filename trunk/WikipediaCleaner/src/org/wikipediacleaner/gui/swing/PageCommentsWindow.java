@@ -53,9 +53,11 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public class PageCommentsWindow extends BasicWindow implements ActionListener {
 
-  private final static String ACTION_CANCEL   = "CANCEL";
-  private final static String ACTION_OK       = "OK";
-  private final static String ACTION_REMOVE   = "REMOVE";
+  private final static String ACTION_CANCEL        = "CANCEL";
+  private final static String ACTION_COPY_MAX_MAIN = "COPY MAX MAIN";
+  private final static String ACTION_COPY_MAX      = "COPY MAX";
+  private final static String ACTION_OK            = "OK";
+  private final static String ACTION_REMOVE        = "REMOVE";
 
   Page   page;
 
@@ -64,6 +66,8 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
   private JFormattedTextField txtMax;
 
   private JButton buttonCancel;
+  private JButton buttonCopyMaxMain;
+  private JButton buttonCopyMax;
   private JButton buttonOk;
   private JButton buttonRemove;
 
@@ -144,7 +148,7 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     constraints.gridx = 0;
     constraints.weightx = 0;
     panel.add(labelComments, constraints);
-    constraints.gridwidth = 2;
+    constraints.gridwidth = 3;
     constraints.gridx++;
     constraints.weightx = 1;
     panel.add(txtComments, constraints);
@@ -166,12 +170,19 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     Integer main = (page != null) ? page.getBacklinksCountInMainNamespace() : null;
     JLabel labelMain = new JLabel((main != null) ? "/ " + main.toString() : "");
     labelMain.setHorizontalAlignment(SwingConstants.LEADING);
+    buttonCopyMaxMain = Utilities.createJButton("<-");
+    buttonCopyMaxMain.setActionCommand(ACTION_COPY_MAX_MAIN);
+    buttonCopyMaxMain.addActionListener(this);
+    buttonCopyMaxMain.setEnabled(main != null);
     constraints.gridx = 0;
     constraints.weightx = 0;
     panel.add(labelMaxMain, constraints);
     constraints.gridx++;
     constraints.weightx = 0;
     panel.add(txtMaxMain, constraints);
+    constraints.gridx++;
+    constraints.weightx = 0;
+    panel.add(buttonCopyMaxMain, constraints);
     constraints.gridx++;
     constraints.weightx = 1;
     panel.add(labelMain, constraints);
@@ -191,12 +202,19 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     Integer all = (page != null) ? page.getBacklinksCount() : null;
     JLabel labelAll = new JLabel((all != null) ? "/ " + all.toString() : "");
     labelAll.setHorizontalAlignment(SwingConstants.LEADING);
+    buttonCopyMax = Utilities.createJButton("<-");
+    buttonCopyMax.setActionCommand(ACTION_COPY_MAX);
+    buttonCopyMax.addActionListener(this);
+    buttonCopyMax.setEnabled(main != null);
     constraints.gridx = 0;
     constraints.weightx = 0;
     panel.add(labelMax, constraints);
     constraints.gridx++;
     constraints.weightx = 0;
     panel.add(txtMax, constraints);
+    constraints.gridx++;
+    constraints.weightx = 0;
+    panel.add(buttonCopyMax, constraints);
     constraints.gridx++;
     constraints.weightx = 1;
     panel.add(labelAll, constraints);
@@ -259,6 +277,16 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
       actionRemove();
     } else if (ACTION_CANCEL.equals(e.getActionCommand())) {
       actionCancel();
+    } else if (ACTION_COPY_MAX.equals(e.getActionCommand())) {
+      Integer max = page.getBacklinksCount();
+      if (max != null) {
+        txtMax.setText(max.toString());
+      }
+    } else if (ACTION_COPY_MAX_MAIN.equals(e.getActionCommand())) {
+      Integer max = page.getBacklinksCountInMainNamespace();
+      if (max != null) {
+        txtMaxMain.setText(max.toString());
+      }
     }
   }
 
