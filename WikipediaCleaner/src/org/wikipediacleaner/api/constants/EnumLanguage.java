@@ -36,6 +36,7 @@ public enum EnumLanguage {
   ES   ("es"   , "Spanish"),
   FR   ("fr"   , "Français"),
   HE   ("he"   , "Hebrew"),
+  IS   ("is"   , "Icelandic"),
   IT   ("it"   , "Italian"),
   NB   ("nb"   , "Norwegian Bokmal"),
   NL   ("nl"   , "Dutch"),
