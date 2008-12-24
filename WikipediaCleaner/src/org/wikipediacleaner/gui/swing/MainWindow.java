@@ -204,6 +204,7 @@ public class MainWindow
                                config.getBoolean(Configuration.BOOLEAN_ADVANCED_FEATURES, false) &&
                                (wikipedia != null) &&
                                (wikipedia.getCheckWikiProject() != null));
+    buttonCheckWiki.setVisible(false); //TODO
     buttonRandomPage.setEnabled(logged);
     buttonWatchedPages.setEnabled(logged);
   }
