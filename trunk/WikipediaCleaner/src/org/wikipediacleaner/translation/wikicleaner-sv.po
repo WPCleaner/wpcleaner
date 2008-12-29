@@ -8,26 +8,26 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2008-12-24 12:39+0100\n"
-"PO-Revision-Date: 2008-06-02 12:02+0000\n"
+"PO-Revision-Date: 2008-11-30 16:27+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-07-30 20:44+0000\n"
+"X-Launchpad-Export-Date: 2008-12-29 09:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
-msgstr ""
+msgstr "Namnrymd"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:253
 msgid "Title"
-msgstr ""
+msgstr "Rubrik"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:294
 msgid "Revision Id"
-msgstr ""
+msgstr "Revision Id"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:335
 msgid "Page Id"
@@ -35,7 +35,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:385
 msgid "Template"
-msgstr ""
+msgstr "Mall"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:423
 msgid "Redirect"
@@ -43,7 +43,7 @@ msgstr "Omdirigera"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:457
 msgid "Occurrence"
-msgstr ""
+msgstr "Frekvens"
 
 #: org/wikipediacleaner/api/execution/BacklinksWRCallable.java:49
 #: org/wikipediacleaner/api/execution/LinksWRCallable.java:49

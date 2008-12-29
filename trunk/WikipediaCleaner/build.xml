@@ -34,7 +34,7 @@
   <property name="WikiCleaner.libs.logging.lic"    value="LICENSE_commons-logging.txt" />
   <property name="WikiCleaner.libs.saxpath.jar"    value="saxpath.jar" />
 
-  <property name="all.languages" value="da,de,es,fr,he,is,it,nb,nl,oc,pl,pt_BR,sv" />
+  <property name="all.languages" value="da,de,es,fr,he,is,it,nb,nl,oc,pl,pt_BR,sv,tr" />
 
   <!-- NOTE:
        gettext.path can be used if gettext tools are not in the path
