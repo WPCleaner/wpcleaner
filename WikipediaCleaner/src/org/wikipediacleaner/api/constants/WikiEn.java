@@ -48,7 +48,6 @@ class WikiEn {
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
 
   final static String[] dabLinkTemplates = new String[] {
-    "page d",
   };
   final static String[] needHelpTemplates = new String[] {
     "dn",
@@ -62,7 +61,6 @@ class WikiEn {
     new TemplateMatch("Ambiguous link", "1", "", false, true),
     new TemplateMatch("Dn", "1", "", false, true),
     new TemplateMatch("Otherpeople2", "1", "", true, false),
-    new TemplateMatch("Page d", "1", "", true, false),
   };
   
   final static String checkWikiProject = "Wikipedia:WikiProject Check Wikipedia";
