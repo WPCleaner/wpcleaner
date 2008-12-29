@@ -43,7 +43,8 @@ public enum EnumLanguage {
   OC   ("oc"   , "Occitan"),
   PL   ("pl"   , "Polish"),
   PT_BR("pt_BR", "Brazilian Portuguese"),
-  SV   ("sv"   , "Swedish");
+  SV   ("sv"   , "Swedish"),
+  TR   ("tr"   , "Turkish");
 
   private final String code;
   private final String language;
