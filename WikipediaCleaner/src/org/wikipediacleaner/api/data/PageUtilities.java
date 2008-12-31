@@ -90,10 +90,12 @@ public class PageUtilities {
     expression.append("\\[\\["); // [[
     expression.append("\\:?"); // Possible :
     expression.append("(?:" + link.getWikipedia().getCode() + "\\:)?"); // Possible <lang>:
-    expression.append("(\\s*"); // Possible white characters
+    expression.append("(");
+    addPatternForWhiteSpaces(expression);
     addPatternForTitle(expression, title);
-    expression.append("\\s*"); // Possible white characters
+    addPatternForWhiteSpaces(expression);
     expression.append("(\\|([^\\|\\]]*))?"); // Possible text
+    // TODO: Check if possessive quantifier could speed up pattern matching.
     expression.append(")\\]\\]"); // ]]
     //System.err.println("Regular expression: " + expression.toString());
     Pattern pattern = Pattern.compile(expression.toString());
@@ -115,15 +117,16 @@ public class PageUtilities {
     // Create the regular expression
     StringBuilder expression = new StringBuilder();
     expression.append("\\{\\{"); // {{
-    expression.append("(\\s*"); // Possible white characters
+    expression.append("(");
+    addPatternForWhiteSpaces(expression);
     addPatternForTitle(expression, title);
-    expression.append("\\s*"); // Possible white characters
+    addPatternForWhiteSpaces(expression);
     expression.append("(?:\\|(" +
                         "(?:" +
-                          "(?:[^\\{\\}]" + /*"*" +*/ ")" + // Parameters text
+                          "(?:[^\\{\\}]" + "*+" + ")" + // Parameters text
                           "|" +
                           "(?:\\{\\{\\!\\}\\})" + // Special {{!}}
-                        ")*" +
+                        ")*?" +
                       "))?"); // Possible parameters
     expression.append(")\\}\\}"); // }}
     Pattern pattern = Pattern.compile(expression.toString());
@@ -208,5 +211,13 @@ public class PageUtilities {
       }
       begin = space;
     }
+  }
+
+  /**
+   * @param expression Pattern being created.
+   */
+  public static void addPatternForWhiteSpaces(StringBuilder expression) {
+    expression.append("\\s*+"); // Possible white characters
+    // Note: the possessive quantifier '+' is being used to find all white spaces
   }
 }
