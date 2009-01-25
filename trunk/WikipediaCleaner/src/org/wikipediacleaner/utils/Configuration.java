@@ -56,6 +56,7 @@ public class Configuration implements WindowListener {
   public  final static String  ARRAY_WATCH_PAGES         = "WatchPages";
 
   // Pojo properties
+  public  final static String  POJO_AUTOMATIC_FIXING     = "AutomaticFixing";
   public  final static String  POJO_PAGE_COMMENTS        = "PageComments";
 
   // Integer properties
@@ -215,20 +216,32 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * Remove a node.
+   * 
+   * @param prefs Preferences.
+   * @param property Node name.
+   */
+  private void removeNode(Preferences prefs, String property) {
+    if (prefs != null) {
+      try {
+        if (prefs.nodeExists(property)) {
+          Preferences node = prefs.node(property);
+          node.removeNode();
+        }
+      } catch (BackingStoreException e) {
+        //
+      }
+    }
+  }
+
+  /**
    * @param property Property name.
    * @param value Property value.
    */
   public void setProperties(String property, Properties value) {
     if (preferences != null) {
       // First, remove the old properties
-      try {
-        if (preferences.nodeExists(property)) {
-          Preferences node = preferences.node(property);
-          node.removeNode();
-        }
-      } catch (BackingStoreException e) {
-        //
-      }
+      removeNode(preferences, property);
 
       // Create the new ones
       Preferences node = preferences.node(property);
@@ -267,14 +280,7 @@ public class Configuration implements WindowListener {
   public void setStringArrayList(String property, ArrayList<String> values) {
     if (preferences != null) {
       // First, remove the old array list
-      try {
-        if (preferences.nodeExists(property)) {
-          Preferences node = preferences.node(property);
-          node.removeNode();
-        }
-      } catch (BackingStoreException e) {
-        //
-      }
+      removeNode(preferences, property);
 
       // Create the new one
       Preferences node = preferences.node(property);
@@ -288,40 +294,13 @@ public class Configuration implements WindowListener {
 
   /**
    * @param property Property name.
-   * @return List of property values.
-   */
-  public ArrayList<Object> getPojoArrayList(String property, Class valuesClass) {
-    ArrayList<Object> result = new ArrayList<Object>();
-    if ((preferences != null) && (property != null) && (valuesClass != null)) {
-      try {
-        Preferences node = preferences.node(property);
-        String[] children = node.keys();
-        for (int i = 0; i < children.length; i++) {
-          result.add(getPojo(property, children[i], valuesClass));
-        }
-      } catch (BackingStoreException e) {
-        //
-      }
-    }
-    return result;
-  }
-
-  /**
-   * @param property Property name.
    * @param values Property values.
    * @param idName Name of the field used as an Id.
    */
   public void setPojoMap(String property, Map<String, Object> values, String idName) {
     if (preferences != null) {
       // First, remove the old array list
-      try {
-        if (preferences.nodeExists(property)) {
-          Preferences node = preferences.node(property);
-          node.removeNode();
-        }
-      } catch (BackingStoreException e) {
-        //
-      }
+      removeNode(preferences, property);
       
       // Create the new one
       if (values != null) {
@@ -424,14 +403,7 @@ public class Configuration implements WindowListener {
       try {
         // Remove the old object
         Preferences globalNode = preferences.node(property);
-        try {
-          if (globalNode.nodeExists(id)) {
-            Preferences node = globalNode.node(id);
-            node.removeNode();
-          }
-        } catch (BackingStoreException e) {
-          //
-        }
+        removeNode(globalNode, id);
         
         // Add the new object
         Method[] methods = value.getClass().getMethods();
@@ -457,6 +429,131 @@ public class Configuration implements WindowListener {
               node.putLong(attributeName, (Long) attrib);
             } else if (Float.class.isAssignableFrom(returnType)) {
               node.putFloat(attributeName, (Float) attrib);
+            }
+          }
+        }
+      } catch (IllegalAccessException e) {
+        //
+      } catch (InvocationTargetException e) {
+        //
+      } catch (ClassCastException e) {
+        //
+      }
+    }
+  }
+
+
+  /**
+   * @param property Property name.
+   * @param name Pojo name.
+   * @param valueClass Pojo class.
+   * @return Pojo.
+   */
+  public Object[] getPojoArray(String property, String name, Class valueClass) {
+    try {
+      if ((preferences != null) && (property != null) && (name != null) && (valueClass != null)) {
+        if (!preferences.nodeExists(property)) {
+          return null;
+        }
+        Preferences globalNode = preferences.node(property);
+        if (!globalNode.nodeExists(name)) {
+          return null;
+        }
+        Preferences pageNode = globalNode.node(name);
+        ArrayList<Object> results = new ArrayList<Object>();
+        int i = 0;
+        while (pageNode.nodeExists(Integer.toString(i))) {
+          Preferences node = pageNode.node(Integer.toString(i));
+          Object result = valueClass.newInstance();
+          Method[] methods = valueClass.getMethods();
+          for (Method m : methods) {
+            if (Modifier.isPublic(m.getModifiers()) &&
+                m.getName().startsWith("set") &&
+                (m.getGenericParameterTypes().length == 1)) {
+              String parameterName = "" + Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
+              boolean exist = false;
+              for (String key : node.keys()) {
+                if (parameterName.equals(key)) {
+                  exist = true;
+                }
+              }
+              if (exist) {
+                Class parameterType = m.getParameterTypes()[0];
+                if (String.class.isAssignableFrom(parameterType)) {
+                  m.invoke(result, node.get(parameterName, null));
+                } else if (Integer.class.isAssignableFrom(parameterType)) {
+                  m.invoke(result, node.getInt(parameterName, 0));
+                } else if (Boolean.class.isAssignableFrom(parameterType)) {
+                  m.invoke(result, node.getBoolean(parameterName, true));
+                } else if (Double.class.isAssignableFrom(parameterType)) {
+                  m.invoke(result, node.getDouble(parameterName, 0));
+                } else if (Long.class.isAssignableFrom(parameterType)) {
+                  m.invoke(result, node.getLong(parameterName, 0));
+                } else if (Float.class.isAssignableFrom(parameterType)) {
+                  m.invoke(result, node.getFloat(parameterName, 0));
+                }
+              }
+            }
+          }
+          results.add(result);
+          i++;
+        }
+        return results.toArray();
+      }
+    } catch (BackingStoreException e) {
+      //
+    } catch (InstantiationException e) {
+      //
+    } catch (IllegalAccessException e) {
+      //
+    } catch (InvocationTargetException e) {
+      //
+    } catch (IllegalArgumentException e) {
+      // Happens with names ending with a slash
+    }
+    return null;
+  }
+
+  /**
+   * @param property Property name.
+   * @param value Property value.
+   * @param id Id of the value.
+   */
+  public void addPojoArray(String property, Object[] values, String id) {
+    if ((preferences != null) && (property != null) && (values != null) && (id != null)) {
+      try {
+        // Remove the old object
+        Preferences globalNode = preferences.node(property);
+        removeNode(globalNode, id);
+        
+        // Add the new objects
+        Preferences pageNode = globalNode.node(id);
+        for (int i = 0; i < values.length; i++) {
+          Object value = values[i];
+          Preferences node = pageNode.node(Integer.toString(i));
+          Method[] methods = value.getClass().getMethods();
+          for (Method m : methods) {
+            if (Modifier.isPublic(m.getModifiers()) &&
+                m.getName().startsWith("get") &&
+                (m.getGenericParameterTypes().length == 0)) {
+              String attributeName = "" + Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
+              Class returnType = m.getReturnType();
+              Object attrib = m.invoke(value, (Object[]) null);
+              if (attrib == null) {
+                node.remove(attributeName);
+              } else if (String.class.isAssignableFrom(returnType)) {
+                node.put(attributeName, (String) attrib);
+              } else if (Integer.class.isAssignableFrom(returnType)) {
+                node.putInt(attributeName, (Integer) attrib);
+              } else if (Boolean.class.isAssignableFrom(returnType)) {
+                node.putBoolean(attributeName, (Boolean) attrib);
+              } else if (Double.class.isAssignableFrom(returnType)) {
+                node.putDouble(attributeName, (Double) attrib);
+              } else if (Long.class.isAssignableFrom(returnType)) {
+                node.putLong(attributeName, (Long) attrib);
+              } else if (Float.class.isAssignableFrom(returnType)) {
+                node.putFloat(attributeName, (Float) attrib);
+              }
             }
           }
         }
