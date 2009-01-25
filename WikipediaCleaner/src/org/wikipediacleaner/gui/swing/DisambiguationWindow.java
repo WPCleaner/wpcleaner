@@ -47,6 +47,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.AutomaticFixing;
 import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
@@ -71,14 +72,17 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public class DisambiguationWindow extends PageWindow {
 
-  private final static String ACTION_ADD_AUTOMATIC_FIXING = "ADD AUTOMATIC FIXING";
-  private final static String ACTION_CLR_AUTOMATIC_FIXING = "CLR AUTOMATIC FIXING";
-  private final static String ACTION_DISAMBIGUATION_LINK  = "DISAMBIGUATION LINK";
-  private final static String ACTION_FULL_ANALYSIS_LINK   = "FULL ANALYSIS LINK";
-  private final static String ACTION_MDF_AUTOMATIC_FIXING = "MDF AUTOMATIC FIXING";
-  private final static String ACTION_NEXT_LINKS           = "NEXT LINKS";
-  private final static String ACTION_RMV_AUTOMATIC_FIXING = "RMV AUTOMATIC FIXING";
-  private final static String ACTION_RUN_AUTOMATIC_FIXING = "RUN AUTOMATIC FIXING";
+  private final static String ACTION_ADD_AUTOMATIC_FIXING  = "ADD AUTOMATIC FIXING";
+  private final static String ACTION_CLR_AUTOMATIC_FIXING  = "CLR AUTOMATIC FIXING";
+  private final static String ACTION_DISAMBIGUATION_LINK   = "DISAMBIGUATION LINK";
+  private final static String ACTION_FULL_ANALYSIS_LINK    = "FULL ANALYSIS LINK";
+  private final static String ACTION_MDF_AUTOMATIC_FIXING  = "MDF AUTOMATIC FIXING";
+  private final static String ACTION_NEXT_LINKS            = "NEXT LINKS";
+  private final static String ACTION_RMV_AUTOMATIC_FIXING  = "RMV AUTOMATIC FIXING";
+  private final static String ACTION_RUN_AUTOMATIC_FIXING  = "RUN AUTOMATIC FIXING";
+  private final static String ACTION_SAVE_AUTOMATIC_FIXING = "SAVE AUTOMATIC FIXING";
+
+  //public final static Integer WINDOW_VERSION = Integer.valueOf(2);
 
   private JList listAutomaticFixing;
   private DefaultListModel modelAutomaticFixing;
@@ -87,6 +91,7 @@ public class DisambiguationWindow extends PageWindow {
   private JButton buttonRmvAutomaticFixing;
   private JButton buttonClrAutomaticFixing;
   private JButton buttonRunAutomaticFixing;
+  private JButton buttonSaveAutomaticFixing;
 
   JList listLinks;
   PageListModel modelLinks;
@@ -309,6 +314,10 @@ public class DisambiguationWindow extends PageWindow {
     buttonRunAutomaticFixing.setActionCommand(ACTION_RUN_AUTOMATIC_FIXING);
     buttonRunAutomaticFixing.addActionListener(this);
     panelButtons.add(buttonRunAutomaticFixing);
+    buttonSaveAutomaticFixing = Utilities.createJButton(GT._("Save"));
+    buttonSaveAutomaticFixing.setActionCommand(ACTION_SAVE_AUTOMATIC_FIXING);
+    buttonSaveAutomaticFixing.addActionListener(this);
+    panelButtons.add(buttonSaveAutomaticFixing);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridwidth = 2;
     constraints.gridx = 0;
@@ -430,6 +439,8 @@ public class DisambiguationWindow extends PageWindow {
       actionClrAutomaticFixing();
     } else if (ACTION_RUN_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
       actionRunAutomaticFixing();
+    } else if (ACTION_SAVE_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
+      actionSaveAutomaticFixing();
     }
   }
 
@@ -468,6 +479,17 @@ public class DisambiguationWindow extends PageWindow {
     int countMain = page.getBacklinksCountInMainNamespace();
     int countTotal = page.getBacklinksCount();
     linkCount.setText("" + countMain + " / " + countTotal);
+    
+    // Update automatic fixing
+    Configuration config = Configuration.getConfiguration();
+    Object[] automaticFixing = config.getPojoArray(
+        Configuration.POJO_AUTOMATIC_FIXING, page.getTitle(), AutomaticFixing.class);
+    if (automaticFixing != null) {
+      modelAutomaticFixing.clear();
+      for (int i = 0; i < automaticFixing.length; i++) {
+        modelAutomaticFixing.addElement(automaticFixing[i]);
+      }
+    }
   }
 
   /**
@@ -600,6 +622,14 @@ public class DisambiguationWindow extends PageWindow {
   }
 
   /**
+   * Action called when Save Automatic Fixing button is pressed. 
+   */
+  private void actionSaveAutomaticFixing() {
+    Configuration config = Configuration.getConfiguration();
+    config.addPojoArray(Configuration.POJO_AUTOMATIC_FIXING, modelAutomaticFixing.toArray(), getPage().getTitle());
+  }
+
+  /**
    * Action called when Full analysis button is pressed.
    */
   private void actionFullAnalysisLink() {
@@ -636,42 +666,5 @@ public class DisambiguationWindow extends PageWindow {
     } else {
       listLinks.ensureIndexIsVisible(0);
     }
-  }
-}
-
-/**
- * Utility class to memorize automatic fixing parameters
- */
-class AutomaticFixing {
-  private String originalText;
-  private String replacementText;
-
-  public AutomaticFixing(String from, String to) {
-    originalText = from;
-    replacementText = to;
-  }
-
-  public String getOriginalText() {
-    return originalText;
-  }
-
-  public void setOriginalText(String text) {
-    originalText = text;
-  }
-
-  public String getReplacementText() {
-    return replacementText;
-  }
-
-  public void setReplacementText(String text) {
-    replacementText = text;
-  }
-
-  /* (non-Javadoc)
-   * @see java.lang.Object#toString()
-   */
-  @Override
-  public String toString() {
-    return "[" + originalText + "] -> [" + replacementText + "]";
   }
 }
