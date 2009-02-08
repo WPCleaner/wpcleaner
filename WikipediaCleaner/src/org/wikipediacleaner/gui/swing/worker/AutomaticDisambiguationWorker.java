@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.util.HashMap;
 import java.util.Properties;
 
 import org.wikipediacleaner.api.MediaWiki;
@@ -33,24 +34,22 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 public class AutomaticDisambiguationWorker extends BasicWorker {
 
   private final Page[] pages;
-  private final Properties replacements;
+  private final HashMap<String, Properties> replacements;
   private final EnumWikipedia wikipedia;
   private final String comment;
-  private final String details;
   private final StringBuffer description;
   private final boolean showDescription;
 
   public AutomaticDisambiguationWorker(
       BasicWindow window, Page[] pages,
-      Properties replacements,
-      EnumWikipedia wikipedia, String comment, String details,
+      HashMap<String, Properties> replacements,
+      EnumWikipedia wikipedia, String comment,
       boolean showDescription) {
     super(window);
     this.pages = pages.clone();
     this.replacements = replacements;
     this.wikipedia = wikipedia;
     this.comment = comment;
-    this.details = details;
     this.showDescription = showDescription;
     this.description = (showDescription ? new StringBuffer() : null);
   }
@@ -62,7 +61,7 @@ public class AutomaticDisambiguationWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.replaceText(pages, replacements, wikipedia, comment, details, description);
+      mw.replaceText(pages, replacements, wikipedia, comment, description);
       if ((showDescription) && (description.length() > 0)) {
         System.out.println(description);
       }

@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Map.Entry;
@@ -97,7 +98,9 @@ public class MediaWiki extends MediaWikiController {
    * Replace text in a list of pages.
    * 
    * @param pages List of pages.
-   * @param replacements List of text replacements.
+   * @param replacements List of text replacements
+   *        Key: Additional comments used for the modification.
+   *        Value: Text replacements.
    * @param wikipedia Wikipedia.
    * @param comment Comment used for the modification.
    * @param details Additional comments used for the modification.
@@ -105,8 +108,8 @@ public class MediaWiki extends MediaWikiController {
    * @throws APIException
    */
   public int replaceText(
-      Page[] pages, Properties replacements,
-      EnumWikipedia wikipedia, String comment, String details,
+      Page[] pages, HashMap<String, Properties> replacements,
+      EnumWikipedia wikipedia, String comment,
       StringBuffer description) throws APIException {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
       return 0;
@@ -116,6 +119,7 @@ public class MediaWiki extends MediaWikiController {
     }
     int count = 0;
     final API api = APIFactory.getAPI();
+    StringBuffer details = new StringBuffer();
     while (hasRemainingTask() && !shouldStop()) {
       Object result = getNextResult();
       if ((result != null) && (result instanceof Page)) {
@@ -124,26 +128,39 @@ public class MediaWiki extends MediaWikiController {
         String oldContents = page.getContents();
         if (oldContents != null) {
           String newContents = oldContents;
-          for (Entry<Object, Object> replacement : replacements.entrySet()) {
-            String from = replacement.getKey().toString();
-            String to = replacement.getValue().toString();
-            String tmpContents = newContents;
-            newContents = tmpContents.replaceAll(Pattern.quote(from), to);
-            if ((description != null) && (!newContents.equals(tmpContents))) {
-              if (!changed) {
-                description.append(GT._("Page {0}:", page.getTitle()));
-                description.append("\n");
-                changed = true;
+          details.setLength(0);
+          for (Entry<String, Properties> replacement : replacements.entrySet()) {
+            boolean replacementUsed = false;
+            for (Entry<Object, Object> replacementValue : replacement.getValue().entrySet()) {
+              String from = replacementValue.getKey().toString();
+              String to = replacementValue.getValue().toString();
+              String tmpContents = newContents;
+              newContents = tmpContents.replaceAll(Pattern.quote(from), to);
+              if (!newContents.equals(tmpContents)) {
+                if (description != null) {
+                  if (!changed) {
+                    description.append(GT._("Page {0}:", page.getTitle()));
+                    description.append("\n");
+                    changed = true;
+                  }
+                  description.append(" - ");
+                  description.append(from);
+                  description.append(" => ");
+                  description.append(to);
+                }
+                if (!replacementUsed) {
+                  replacementUsed = true;
+                  if (details.length() > 0) {
+                    details.append(", ");
+                  }
+                  details.append(replacement.getKey());
+                }
               }
-              description.append(" - ");
-              description.append(from);
-              description.append(" => ");
-              description.append(to);
             }
           }
           if (!oldContents.equals(newContents)) {
             count++;
-            api.updatePage(page, newContents, wikipedia.createUpdatePageComment(comment, details));
+            api.updatePage(page, newContents, wikipedia.createUpdatePageComment(comment, details.toString()));
           }
         }
       }
