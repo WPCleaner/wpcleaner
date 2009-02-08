@@ -580,13 +580,13 @@ public class DisambiguationWindow extends PageWindow {
     }
     int answer = Utilities.displayYesNoWarning(
         getParentComponent(),
-        GT._("!!! WARNING !!!\n" +
-             "This function will do all the replacements in all selected pages.\n" +
-             "It may modify a lot of pages in a short period of time.\n" +
-             "On some Wikipedia projects, you may need the bot status for doing this.\n" +
-             "Please, check if you need the bot status by reading the rules of Wikipedia.\n" +
-             "Also, verify again the texts you have inputed before running this function.\n" +
-             "Do you want to continue ?"));
+        GT._("!!! WARNING !!!") + "\n" +
+        GT._("This function will do all the replacements in all selected pages.") + "\n" +
+        GT._("It may modify a lot of pages in a short period of time.") + "\n" +
+        GT._("On some Wikipedia projects, you may need the bot status for doing this.") + "\n" +
+        GT._("Please, check if you need the bot status by reading the rules of Wikipedia.") + "\n" +
+        GT._("Also, verify again the texts you have inputed before running this function.") + "\n" +
+        GT._("Do you want to continue ?"));
     if (answer != JOptionPane.YES_OPTION) {
       return;
     }
@@ -606,7 +606,7 @@ public class DisambiguationWindow extends PageWindow {
     AutomaticDisambiguationWorker dabWorker = new AutomaticDisambiguationWorker(
         this, pages, replacements, getWikipedia(),
         getWikipedia().getUpdatePageMessage(),
-        "[[" + getPage().getTitle() + "]]");
+        "[[" + getPage().getTitle() + "]]", true);
     dabWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(
