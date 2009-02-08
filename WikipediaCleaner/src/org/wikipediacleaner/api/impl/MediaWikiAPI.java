@@ -1238,8 +1238,12 @@ public class MediaWikiAPI implements API {
               String value = property.getValue();
               method.addParameter(key, value);
               if (debugUrl != null) {
-                if (value.indexOf('\n') > 0) {
-                  value = value.substring(0, value.indexOf('\n')) + "...";
+                int start = 0;
+                while ((start < value.length()) && Character.isWhitespace(value.charAt(start))) {
+                  start++;
+                }
+                if (value.indexOf('\n', start) > 0) {
+                  value = value.substring(start, value.indexOf('\n', start)) + "...";
                 }
                 debugUrl.append(
                     (first ? "?" : "&") +
