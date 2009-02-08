@@ -19,6 +19,7 @@
 package org.wikipediacleaner.gui.swing.worker;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.APIException;
@@ -67,11 +68,19 @@ public class DisambiguationListWorker extends BasicWorker {
       Page page = DataManager.getPage(wikipedia, wikipedia.getDisambiguationList(), null);
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       mw.retrieveAllLinks(page);
-      mw.retrieveDisambiguationInformation(page.getLinks(), false);
+      ArrayList<Page> pages = new ArrayList<Page>();
+      Iterator<Page> iter = page.getLinks().iterator();
+      while (iter.hasNext()) {
+        Page link = iter.next();
+        if ((link != null) && link.isInMainNamespace()) {
+          pages.add(link);
+        }
+      }
+      mw.retrieveDisambiguationInformation(pages, false);
       if (!shouldContinue()) {
         return null;
       }
-      disambiguationList.addAll(page.getLinks());
+      disambiguationList.addAll(pages);
     } catch (APIException e) {
       return e;
     }
