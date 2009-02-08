@@ -712,7 +712,11 @@ public class MediaWikiAPI implements API {
       Iterator<Page> iter = pages.get(i).getRedirectIteratorWithPage();
       while (iter.hasNext()) {
         Page page = iter.next();
-        tmpPages.add(page);
+        if (page.isInMainNamespace()) {
+          tmpPages.add(page);
+        } else {
+          page.setDisambiguationPage(Boolean.FALSE);
+        }
       }
     }
     StringBuffer titles = new StringBuffer();
