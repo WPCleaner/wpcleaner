@@ -37,17 +37,22 @@ public class AutomaticDisambiguationWorker extends BasicWorker {
   private final EnumWikipedia wikipedia;
   private final String comment;
   private final String details;
+  private final StringBuffer description;
+  private final boolean showDescription;
 
   public AutomaticDisambiguationWorker(
       BasicWindow window, Page[] pages,
       Properties replacements,
-      EnumWikipedia wikipedia, String comment, String details) {
+      EnumWikipedia wikipedia, String comment, String details,
+      boolean showDescription) {
     super(window);
     this.pages = pages.clone();
     this.replacements = replacements;
     this.wikipedia = wikipedia;
     this.comment = comment;
     this.details = details;
+    this.showDescription = showDescription;
+    this.description = (showDescription ? new StringBuffer() : null);
   }
 
   /* (non-Javadoc)
@@ -57,7 +62,10 @@ public class AutomaticDisambiguationWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.replaceText(pages, replacements, wikipedia, comment, details);
+      mw.replaceText(pages, replacements, wikipedia, comment, details, description);
+      if ((showDescription) && (description.length() > 0)) {
+        System.out.println(description);
+      }
     } catch (APIException e) {
       return e;
     }

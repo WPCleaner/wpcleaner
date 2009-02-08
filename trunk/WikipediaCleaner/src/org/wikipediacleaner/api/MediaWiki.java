@@ -36,6 +36,7 @@ import org.wikipediacleaner.api.execution.EmbeddedInCallable;
 import org.wikipediacleaner.api.execution.ExpandTemplatesCallable;
 import org.wikipediacleaner.api.execution.LinksWRCallable;
 import org.wikipediacleaner.api.execution.ParseTextCallable;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -100,11 +101,13 @@ public class MediaWiki extends MediaWikiController {
    * @param wikipedia Wikipedia.
    * @param comment Comment used for the modification.
    * @param details Additional comments used for the modification.
+   * @param description Out: description of changes made.
    * @throws APIException
    */
   public int replaceText(
       Page[] pages, Properties replacements,
-      EnumWikipedia wikipedia, String comment, String details) throws APIException {
+      EnumWikipedia wikipedia, String comment, String details,
+      StringBuffer description) throws APIException {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
       return 0;
     }
@@ -116,6 +119,7 @@ public class MediaWiki extends MediaWikiController {
     while (hasRemainingTask() && !shouldStop()) {
       Object result = getNextResult();
       if ((result != null) && (result instanceof Page)) {
+        boolean changed = false;
         Page page = (Page) result;
         String oldContents = page.getContents();
         if (oldContents != null) {
@@ -123,7 +127,19 @@ public class MediaWiki extends MediaWikiController {
           for (Entry<Object, Object> replacement : replacements.entrySet()) {
             String from = replacement.getKey().toString();
             String to = replacement.getValue().toString();
-            newContents = newContents.replaceAll(Pattern.quote(from), to);
+            String tmpContents = newContents;
+            newContents = tmpContents.replaceAll(Pattern.quote(from), to);
+            if ((description != null) && (!newContents.equals(tmpContents))) {
+              if (!changed) {
+                description.append(GT._("Page {0}:", page.getTitle()));
+                description.append("\n");
+                changed = true;
+              }
+              description.append(" - ");
+              description.append(from);
+              description.append(" => ");
+              description.append(to);
+            }
           }
           if (!oldContents.equals(newContents)) {
             count++;
