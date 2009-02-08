@@ -26,6 +26,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -594,19 +595,22 @@ public class DisambiguationWindow extends PageWindow {
     for (int i = 0; i < values.length; i++) {
       pages[i] = (Page) values[i];
     }
-    Properties replacements = new Properties();
+    Properties replacement = new Properties();
     for (int i = 0; i < modelAutomaticFixing.getSize(); i++) {
       Object value = modelAutomaticFixing.get(i);
       if (value instanceof AutomaticFixing) {
-        AutomaticFixing replacement = (AutomaticFixing) value;
-        replacements.setProperty(
-            replacement.getOriginalText(), replacement.getReplacementText());
+        AutomaticFixing replacementValue = (AutomaticFixing) value;
+        replacement.setProperty(
+            replacementValue.getOriginalText(),
+            replacementValue.getReplacementText());
       }
     }
+    HashMap<String, Properties> replacements = new HashMap<String, Properties>();
+    replacements.put("[[" + getPage().getTitle() + "]]", replacement);
     AutomaticDisambiguationWorker dabWorker = new AutomaticDisambiguationWorker(
         this, pages, replacements, getWikipedia(),
         getWikipedia().getUpdatePageMessage(),
-        "[[" + getPage().getTitle() + "]]", true);
+        true);
     dabWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(
