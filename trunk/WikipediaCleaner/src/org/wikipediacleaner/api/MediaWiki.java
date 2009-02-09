@@ -147,6 +147,7 @@ public class MediaWiki extends MediaWikiController {
                   description.append(from);
                   description.append(" => ");
                   description.append(to);
+                  description.append("\n");
                 }
                 if (!replacementUsed) {
                   replacementUsed = true;
