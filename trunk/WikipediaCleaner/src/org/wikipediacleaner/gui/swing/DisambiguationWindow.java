@@ -26,6 +26,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -630,7 +632,26 @@ public class DisambiguationWindow extends PageWindow {
    */
   private void actionSaveAutomaticFixing() {
     Configuration config = Configuration.getConfiguration();
-    config.addPojoArray(Configuration.POJO_AUTOMATIC_FIXING, modelAutomaticFixing.toArray(), getPage().getTitle());
+    Object[] replacements = modelAutomaticFixing.toArray();
+    Arrays.sort(replacements, new Comparator<Object>() {
+
+      public int compare(Object o1, Object o2) {
+        AutomaticFixing a1 = (o1 instanceof AutomaticFixing) ? (AutomaticFixing) o1 : null;
+        AutomaticFixing a2 = (o2 instanceof AutomaticFixing) ? (AutomaticFixing) o2 : null;
+        if (a2 == null) {
+          if (a1 == null) {
+            return 0;
+          }
+          return -1;
+        }
+        if (a1 == null) {
+          return 1;
+        }
+        return a1.getOriginalText().compareTo(a2.getOriginalText());
+      }
+      
+    });
+    config.addPojoArray(Configuration.POJO_AUTOMATIC_FIXING, replacements, getPage().getTitle());
   }
 
   /**
