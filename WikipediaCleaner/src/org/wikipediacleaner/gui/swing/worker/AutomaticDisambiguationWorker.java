@@ -25,8 +25,10 @@ import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
+import org.wikipediacleaner.i18n.GT;
 
 /**
  * SwingWorker for automatic disambiguation. 
@@ -62,6 +64,11 @@ public class AutomaticDisambiguationWorker extends BasicWorker {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       mw.replaceText(pages, replacements, wikipedia, comment, description);
+      if (showDescription) {
+        InformationWindow.createInformationWindow(
+            GT._("The following modifications have been done :"),
+            description.toString(), wikipedia);
+      }
       if ((showDescription) && (description.length() > 0)) {
         System.out.println(description);
       }

@@ -1,0 +1,186 @@
+/*
+ *  WikipediaCleaner: A tool to help on Wikipedia maintenance tasks.
+ *  Copyright (C) 2007  Nicolas Vervelle
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package org.wikipediacleaner.gui.swing;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
+import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.i18n.GT;
+
+
+/**
+ * A window to show information.
+ */
+public class InformationWindow
+  extends BasicWindow
+  implements ActionListener {
+
+  private final static String ACTION_CLOSE  = "CLOSE";
+
+  String title;
+  String information;
+  JLabel lblTitle;
+  JTextPane textInformation;
+  private JButton buttonClose;
+
+  /**
+   * Create and display an InformationWindow.
+   * 
+   * @param title Title.
+   * @param information Information.
+   * @param wikipedia Wikipedia.
+   */
+  public static void createInformationWindow(
+      final String title,
+      final String information,
+      final EnumWikipedia wikipedia) {
+    createWindow(
+        "InformationWindow",
+        wikipedia,
+        WindowConstants.DISPOSE_ON_CLOSE,
+        InformationWindow.class,
+        new DefaultBasicWindowListener() {
+          @Override
+          public void initializeWindow(BasicWindow window) {
+            if (window instanceof InformationWindow) {
+              InformationWindow info = (InformationWindow) window;
+              info.title = title;
+              info.information = information;
+            }
+          }
+          @Override
+          public void displayWindow(BasicWindow window) {
+            if (window instanceof InformationWindow) {
+              InformationWindow info = (InformationWindow) window;
+              info.lblTitle.setText(info.title);
+              info.textInformation.setText(info.information);
+            }
+          }
+          
+        });
+  }
+
+  /* (non-Javadoc)
+   * @see org.wikipediacleaner.gui.swing.basic.BasicWindow#getTitle()
+   */
+  @Override
+  public String getTitle() {
+    return GT._("Informations");
+  }
+
+  /**
+   * @return Window components.
+   */
+  @Override
+  protected Component createComponents() {
+    JPanel panel = new JPanel(new GridBagLayout());
+
+    // Initialize constraints
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridheight = 1;
+    constraints.gridwidth = 1;
+    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.insets = new Insets(2, 2, 2, 2);
+    constraints.ipadx = 0;
+    constraints.ipady = 0;
+    constraints.weightx = 0;
+    constraints.weighty = 0;
+
+    // Title
+    lblTitle = Utilities.createJLabel(title);
+    lblTitle.setHorizontalAlignment(SwingConstants.LEADING);
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    panel.add(lblTitle, constraints);
+    constraints.gridy++;
+
+    // Informations
+    textInformation = new JTextPane();
+    textInformation.setBackground(Color.WHITE);
+    textInformation.setEditable(false);
+    lblTitle.setLabelFor(textInformation);
+    JScrollPane scrollInformation = new JScrollPane(textInformation);
+    scrollInformation.setMinimumSize(new Dimension(100, 100));
+    scrollInformation.setPreferredSize(new Dimension(500, 500));
+    scrollInformation.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    constraints.fill = GridBagConstraints.BOTH;
+    constraints.gridx = 0;
+    constraints.weighty = 1;
+    constraints.weightx = 1;
+    panel.add(scrollInformation, constraints);
+    constraints.gridy++;
+
+    // Buttons
+    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    buttonClose = Utilities.createJButton(GT._("&Close"));
+    buttonClose.setActionCommand(ACTION_CLOSE);
+    buttonClose.addActionListener(this);
+    buttonPanel.add(buttonClose);
+    constraints.fill = GridBagConstraints.NONE;
+    constraints.gridx = 0;
+    constraints.weightx = 1;
+    constraints.weighty = 0;
+    panel.add(buttonPanel, constraints);
+    constraints.gridy++;
+
+    return panel;
+  }
+
+  /* (non-Javadoc)
+   * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+   */
+  public void actionPerformed(ActionEvent e) {
+    if (e == null) {
+      return;
+    }
+
+    if (ACTION_CLOSE.equals(e.getActionCommand())) {
+      actionClose();
+    }
+  }
+
+  /**
+   * Action called when Close button is pressed.
+   */
+  private void actionClose() {
+    dispose();
+  }
+}
