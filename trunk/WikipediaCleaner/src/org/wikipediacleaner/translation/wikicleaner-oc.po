@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-01-25 15:31+0100\n"
+"POT-Creation-Date: 2009-02-09 23:02+0100\n"
 "PO-Revision-Date: 2008-06-02 11:57+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
@@ -16,6 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2008-07-30 20:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#: org/wikipediacleaner/api/MediaWiki.java:142
+#, fuzzy, java-format
+msgid "Page {0}:"
+msgstr "&Pagina :"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
@@ -77,6 +82,7 @@ msgid "About"
 msgstr "A prepaus"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:279
+#: org/wikipediacleaner/gui/swing/InformationWindow.java:153
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:225
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:218
 msgid "&Close"
@@ -88,7 +94,7 @@ msgid "Analysis - {0}"
 msgstr "Analisi - {0}"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:177
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:361
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:364
 msgid "Link count"
 msgstr "Compte de ligams"
 
@@ -103,7 +109,7 @@ msgid "&Validate"
 msgstr "&Validar"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:344
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:406
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:409
 msgid "Sort"
 msgstr "Triar"
 
@@ -149,14 +155,14 @@ msgid "Count other pages"
 msgstr "Comptar las autras paginas"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:415
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:381
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:384
 #: org/wikipediacleaner/gui/swing/MainWindow.java:396
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:169
 msgid "&Full analysis"
 msgstr "Analisi &complèta"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:425
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:391
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:394
 #: org/wikipediacleaner/gui/swing/MainWindow.java:407
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:179
 msgid "&Disambiguation"
@@ -185,75 +191,87 @@ msgstr ""
 "Avètz seleccionat {0} paginas.\n"
 "Volètz analizar las {0} paginas ?"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:144
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:147
 #, java-format
 msgid "Disambiguation - {0}"
 msgstr "Omonimia - {0}"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:266
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:269
 msgid "Automatic disambiguation fixing"
 msgstr "Correccion d'omonimia automatica"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:297
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:300
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:550
 msgid "Add"
 msgstr "Apondre"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:301
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:304
 msgid "Modify"
 msgstr "Modificar"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:305
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:308
 msgid "Remove"
 msgstr "Suprimir"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:309
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:312
 msgid "Clear"
 msgstr "Netejar"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:313
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:316
 msgid "Fix selected pages"
 msgstr "Corregir las paginas seleccionadas"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:317
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:320
 msgid "Save"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:350
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:353
 msgid "Select &next links"
 msgstr "Seleccionar los ligams seguents"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:572
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:575
 msgid "You must select the pages on which running automatic disambiguation."
 msgstr ""
 "Vos cal seleccionar las paginas sus lasqualas executar la correccion "
 "automatica"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:578
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:581
 msgid "You must input the initial and destination texts."
 msgstr "Vos cal picar lo tèxt inicial e lo tèxt de remplaçament"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:583
-msgid ""
-"!!! WARNING !!!\n"
-"This function will do all the replacements in all selected pages.\n"
-"It may modify a lot of pages in a short period of time.\n"
-"On some Wikipedia projects, you may need the bot status for doing this.\n"
-"Please, check if you need the bot status by reading the rules of Wikipedia.\n"
-"Also, verify again the texts you have inputed before running this function.\n"
-"Do you want to continue ?"
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:586
+msgid "!!! WARNING !!!"
 msgstr ""
-"!!! ATENCION !!!\n"
-"Aquesta foncion efectuarà los remplaçaments dins totas las paginas "
-"seleccionadas.\n"
-"Pòt modificar fòrça paginas en pauc de temps.\n"
-"Sus d'unes projèctes Wikipèdia, pòt èsser necessari d'aver l'estatut de Bòt "
-"per far aquò.\n"
-"Mercés de verificar s'avètz besonh de l'estatut de Bòt en legir las règlas "
-"de Wikipèdia.\n"
-"Mercés tanben de verificar tornamai los tèxtes qu'avètz picats abans "
-"d'executar aquesta foncion.\n"
-"Volètz contunhar ?"
+
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:587
+msgid "This function will do all the replacements in all selected pages."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:588
+msgid "It may modify a lot of pages in a short period of time."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:589
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
+msgid ""
+"Please, check if you need the bot status by reading the rules of Wikipedia."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:591
+msgid ""
+"Also, verify again the texts you have inputed before running this function."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:592
+msgid "Do you want to continue ?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/InformationWindow.java:104
+msgid "Informations"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:134
 #, java-format
@@ -933,7 +951,11 @@ msgstr ""
 msgid "{0} links in Main Namespace / {1} total links"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:56
+#: org/wikipediacleaner/gui/swing/worker/AutomaticDisambiguationWorker.java:69
+msgid "The following modifications have been done :"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:57
 msgid "Current disambiguation list"
 msgstr ""
 
@@ -952,3 +974,26 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:59
 msgid "Updating page contents"
 msgstr ""
+
+#~ msgid ""
+#~ "!!! WARNING !!!\n"
+#~ "This function will do all the replacements in all selected pages.\n"
+#~ "It may modify a lot of pages in a short period of time.\n"
+#~ "On some Wikipedia projects, you may need the bot status for doing this.\n"
+#~ "Please, check if you need the bot status by reading the rules of "
+#~ "Wikipedia.\n"
+#~ "Also, verify again the texts you have inputed before running this "
+#~ "function.\n"
+#~ "Do you want to continue ?"
+#~ msgstr ""
+#~ "!!! ATENCION !!!\n"
+#~ "Aquesta foncion efectuarà los remplaçaments dins totas las paginas "
+#~ "seleccionadas.\n"
+#~ "Pòt modificar fòrça paginas en pauc de temps.\n"
+#~ "Sus d'unes projèctes Wikipèdia, pòt èsser necessari d'aver l'estatut de "
+#~ "Bòt per far aquò.\n"
+#~ "Mercés de verificar s'avètz besonh de l'estatut de Bòt en legir las "
+#~ "règlas de Wikipèdia.\n"
+#~ "Mercés tanben de verificar tornamai los tèxtes qu'avètz picats abans "
+#~ "d'executar aquesta foncion.\n"
+#~ "Volètz contunhar ?"
