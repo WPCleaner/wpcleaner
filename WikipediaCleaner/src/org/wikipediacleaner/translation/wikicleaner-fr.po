@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-01-25 15:31+0100\n"
+"POT-Creation-Date: 2009-02-09 23:02+0100\n"
 "PO-Revision-Date: 2008-06-02 11:41+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -20,6 +20,11 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: ../../..\n"
+
+#: org/wikipediacleaner/api/MediaWiki.java:142
+#, fuzzy, java-format
+msgid "Page {0}:"
+msgstr "&Page :"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
@@ -81,6 +86,7 @@ msgid "About"
 msgstr "À propos"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:279
+#: org/wikipediacleaner/gui/swing/InformationWindow.java:153
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:225
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:218
 msgid "&Close"
@@ -92,7 +98,7 @@ msgid "Analysis - {0}"
 msgstr "Analyse - {0}"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:177
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:361
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:364
 msgid "Link count"
 msgstr "Compte de liens"
 
@@ -107,7 +113,7 @@ msgid "&Validate"
 msgstr "&Valider"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:344
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:406
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:409
 msgid "Sort"
 msgstr "Trier"
 
@@ -153,14 +159,14 @@ msgid "Count other pages"
 msgstr "Compter les autres pages"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:415
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:381
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:384
 #: org/wikipediacleaner/gui/swing/MainWindow.java:396
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:169
 msgid "&Full analysis"
 msgstr "Analyse &complète"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:425
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:391
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:394
 #: org/wikipediacleaner/gui/swing/MainWindow.java:407
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:179
 msgid "&Disambiguation"
@@ -189,75 +195,87 @@ msgstr ""
 "Vous avez sélectionné {0} pages.\n"
 "Voulez-vous analyser les {0} pages ?"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:144
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:147
 #, java-format
 msgid "Disambiguation - {0}"
 msgstr "Homonymie - {0}"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:266
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:269
 msgid "Automatic disambiguation fixing"
 msgstr "Correction d'homonymie automatique"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:297
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:300
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:550
 msgid "Add"
 msgstr "Ajouter"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:301
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:304
 msgid "Modify"
 msgstr "Modifier"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:305
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:308
 msgid "Remove"
 msgstr "Supprimer"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:309
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:312
 msgid "Clear"
 msgstr "Vider"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:313
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:316
 msgid "Fix selected pages"
 msgstr "Corriger les pages sélectionnées"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:317
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:320
 msgid "Save"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:350
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:353
 msgid "Select &next links"
 msgstr "Sélectionner les liens suivants"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:572
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:575
 msgid "You must select the pages on which running automatic disambiguation."
 msgstr ""
 "Vous devez sélectionner les pages sur lesquelles exécuter la correction "
 "automatique"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:578
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:581
 msgid "You must input the initial and destination texts."
 msgstr "Vous devez saisir le texte initial et le texte de remplacement"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:583
-msgid ""
-"!!! WARNING !!!\n"
-"This function will do all the replacements in all selected pages.\n"
-"It may modify a lot of pages in a short period of time.\n"
-"On some Wikipedia projects, you may need the bot status for doing this.\n"
-"Please, check if you need the bot status by reading the rules of Wikipedia.\n"
-"Also, verify again the texts you have inputed before running this function.\n"
-"Do you want to continue ?"
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:586
+msgid "!!! WARNING !!!"
 msgstr ""
-"!!! ATTENTION !!!\n"
-"Cette fonction effectuera les remplacements dans toutes les pages "
-"sélectionnées.\n"
-"Elle peut modifier beaucoup de pages en peu de temps.\n"
-"Sur certains projets Wikipédia, il peut être nécessaire d'avoir le statut de "
-"Bot pour faire çà.\n"
-"Merci de vérifier si vous avez besoin du statut de Bot en lisant les règles "
-"de Wikipédia.\n"
-"Merci aussi de vérifier à nouveau les textes que vous avez saisis avant "
-"d'exécuter cette fonction.\n"
-"Voulez-vous continuer ?"
+
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:587
+msgid "This function will do all the replacements in all selected pages."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:588
+msgid "It may modify a lot of pages in a short period of time."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:589
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
+msgid ""
+"Please, check if you need the bot status by reading the rules of Wikipedia."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:591
+msgid ""
+"Also, verify again the texts you have inputed before running this function."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:592
+msgid "Do you want to continue ?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/InformationWindow.java:104
+msgid "Informations"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:134
 #, java-format
@@ -950,7 +968,11 @@ msgstr "Rechercher dans les modèles"
 msgid "{0} links in Main Namespace / {1} total links"
 msgstr "{0} dans l''espace principal / {1} liens au total"
 
-#: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:56
+#: org/wikipediacleaner/gui/swing/worker/AutomaticDisambiguationWorker.java:69
+msgid "The following modifications have been done :"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:57
 msgid "Current disambiguation list"
 msgstr "Liste d'homonymies à traiter"
 
@@ -969,6 +991,29 @@ msgstr "Récupération d'une page aléatoire"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:59
 msgid "Updating page contents"
 msgstr "Mise à jour du contenu de la page"
+
+#~ msgid ""
+#~ "!!! WARNING !!!\n"
+#~ "This function will do all the replacements in all selected pages.\n"
+#~ "It may modify a lot of pages in a short period of time.\n"
+#~ "On some Wikipedia projects, you may need the bot status for doing this.\n"
+#~ "Please, check if you need the bot status by reading the rules of "
+#~ "Wikipedia.\n"
+#~ "Also, verify again the texts you have inputed before running this "
+#~ "function.\n"
+#~ "Do you want to continue ?"
+#~ msgstr ""
+#~ "!!! ATTENTION !!!\n"
+#~ "Cette fonction effectuera les remplacements dans toutes les pages "
+#~ "sélectionnées.\n"
+#~ "Elle peut modifier beaucoup de pages en peu de temps.\n"
+#~ "Sur certains projets Wikipédia, il peut être nécessaire d'avoir le statut "
+#~ "de Bot pour faire çà.\n"
+#~ "Merci de vérifier si vous avez besoin du statut de Bot en lisant les "
+#~ "règles de Wikipédia.\n"
+#~ "Merci aussi de vérifier à nouveau les textes que vous avez saisis avant "
+#~ "d'exécuter cette fonction.\n"
+#~ "Voulez-vous continuer ?"
 
 #~ msgid ""
 #~ "The page {0} has been modified on Wikipedia since you have loaded the "
