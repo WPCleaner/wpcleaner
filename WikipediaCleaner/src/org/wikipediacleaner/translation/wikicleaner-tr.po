@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2009-02-09 23:02+0100\n"
-"PO-Revision-Date: 2008-12-27 20:08+0000\n"
+"PO-Revision-Date: 2009-01-10 15:17+0000\n"
 "Last-Translator: zeugma <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-12-29 09:52+0000\n"
+"X-Launchpad-Export-Date: 2009-02-14 08:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:142
-#, fuzzy, java-format
+#, java-format
 msgid "Page {0}:"
-msgstr "&Sayfa :"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
@@ -247,7 +247,8 @@ msgid "It may modify a lot of pages in a short period of time."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:589
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
@@ -296,7 +297,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:272
 msgid "Lan&guage"
-msgstr ""
+msgstr "&Lisan"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:286
 msgid "&User name :"
@@ -316,7 +317,7 @@ msgstr "&Giriş"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:330
 msgid "L&ogout"
-msgstr ""
+msgstr "&Çıkış"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:334
 msgid "&Help"
@@ -431,16 +432,16 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:124
 msgid "Comment"
-msgstr ""
+msgstr "Açıklama"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:141
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:160
 msgid "&Title"
-msgstr ""
+msgstr "&Başlık"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:153
 msgid "&Signature"
-msgstr ""
+msgstr "&İmza"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:160
 msgid "&Force watching page"
@@ -454,15 +455,15 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:631
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:258
 msgid "&Cancel"
-msgstr ""
+msgstr "&İptal"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:141
 msgid "Options"
-msgstr ""
+msgstr "Seçenekler"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:164
 msgid "General"
-msgstr ""
+msgstr "Genel"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:165
 #: org/wikipediacleaner/gui/swing/PageWindow.java:283
@@ -475,7 +476,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:178
 msgid "General options"
-msgstr ""
+msgstr "Genel seçenekler"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:198
 msgid "Close disambiguation window after sending"
@@ -515,7 +516,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:321
 msgid "Signature :"
-msgstr ""
+msgstr "İmza :"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:355
 msgid "Full Analysis window options"
@@ -559,23 +560,23 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:554
 msgid "Delete"
-msgstr ""
+msgstr "Sil"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:567
 msgid "Details"
-msgstr ""
+msgstr "Ayrıntılar"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:581
 msgid "Up"
-msgstr ""
+msgstr "Yukarı"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:585
 msgid "Down"
-msgstr ""
+msgstr "Aşağı"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:619
 msgid "&Apply"
-msgstr ""
+msgstr "&Uygula"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:637
 msgid "&Restore defaults"
@@ -589,11 +590,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:125
 #: org/wikipediacleaner/gui/swing/PageListTableModel.java:150
 msgid "Comments"
-msgstr ""
+msgstr "Açıklamalar"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:145
 msgid "Comments :"
-msgstr ""
+msgstr "Açıklamalar :"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:167
 msgid "Max backlinks in Main :"
@@ -605,7 +606,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:246
 msgid "&OK"
-msgstr ""
+msgstr "&Tamam"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:252
 msgid "&Remove page comments"
@@ -613,7 +614,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:188
 msgid "&Update page information"
-msgstr ""
+msgstr "&Sayfa bilgisini güncelle"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:197
 msgid "Set page &comments"
@@ -625,7 +626,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:216
 msgid "&Add page"
-msgstr ""
+msgstr "&Sayfa ekle"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:276
 msgid ""
@@ -651,15 +652,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
 msgid "&Reload"
-msgstr ""
+msgstr "&Tekrar Yükle"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:329
 msgid "&Send"
-msgstr ""
+msgstr "&Gönder"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:342
 msgid "Undo"
-msgstr ""
+msgstr "Geri al"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:344
 msgid "Redo"
@@ -697,11 +698,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:545
 msgid "&Tools"
-msgstr ""
+msgstr "&Araçlar"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:549
 msgid "&Preview"
-msgstr ""
+msgstr "&Önizleme"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:554
 msgid "&Expand templates"
@@ -737,7 +738,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:221
 msgid "&Update"
-msgstr ""
+msgstr "&Güncelle"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:147
 #, java-format
@@ -767,7 +768,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:324
 msgid "Search"
-msgstr ""
+msgstr "Arama"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:355
 msgid "&Begins with"
@@ -899,11 +900,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:528
 msgid "Analyze"
-msgstr ""
+msgstr "Analiz"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:565
 msgid "Analyze page"
-msgstr ""
+msgstr "Sayfa analizi"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:588
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:625
@@ -926,7 +927,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:724
 msgid "Find text"
-msgstr ""
+msgstr "Metin bul"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:742
 msgid "Search in templates"

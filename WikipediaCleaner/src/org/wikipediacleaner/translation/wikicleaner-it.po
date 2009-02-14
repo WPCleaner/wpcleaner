@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2009-02-09 23:02+0100\n"
-"PO-Revision-Date: 2008-06-02 11:43+0000\n"
+"PO-Revision-Date: 2008-11-30 16:28+0000\n"
 "Last-Translator: Luca Livraghi <luca.91@hotmail.it>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-07-30 20:44+0000\n"
+"X-Launchpad-Export-Date: 2009-02-14 08:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:142
-#, fuzzy, java-format
+#, java-format
 msgid "Page {0}:"
-msgstr "&Pagina :"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
@@ -64,9 +64,8 @@ msgid "Retrieving disambiguation informations"
 msgstr "Recupero informazioni di disambiguazione"
 
 #: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:49
-#, fuzzy
 msgid "Retrieving page usage"
-msgstr "Recupero namespace"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/ExpandTemplatesCallable.java:51
 msgid "Expanding templates"
@@ -178,9 +177,9 @@ msgid "Would you like to add these pages on your local Watch list ?"
 msgstr "Vuoi aggiungere queste pagine negli osservati speciali?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:82
-#, fuzzy, java-format
+#, java-format
 msgid "Project - {0}"
-msgstr "Anteprima - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/Controller.java:229
 #, java-format
@@ -252,7 +251,8 @@ msgid "It may modify a lot of pages in a short period of time."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:589
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
@@ -342,12 +342,11 @@ msgstr "Lista Disambiguazione &Attuale"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:429
 msgid "Help requested on..."
-msgstr ""
+msgstr "Aiuto richiesto su..."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:440
-#, fuzzy
 msgid "Project check wikipedia"
-msgstr "Altre Wikipedia"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:451
 msgid "&Random page"
@@ -732,7 +731,7 @@ msgstr "Espandi template &e Anteprima"
 #: org/wikipediacleaner/gui/swing/PageWindow.java:731
 #, java-format
 msgid "Sending {0}"
-msgstr ""
+msgstr "Inviando {0}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:767
 msgid "Would you like to add this page on your local Watch list ?"
@@ -830,9 +829,8 @@ msgid "String to find"
 msgstr "Stringa per cercare"
 
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:66
-#, fuzzy
 msgid "Purging page cache"
-msgstr "Recupero namespace"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:68
 msgid "Analyzing links for redirect pages"
@@ -966,7 +964,7 @@ msgstr "Lista di disambiguazione attuale"
 
 #: org/wikipediacleaner/gui/swing/worker/EmbeddedInWorker.java:57
 msgid "Help requested on pages"
-msgstr ""
+msgstr "Aiuto richiesto su pagine"
 
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:65
 msgid "Adding comment"
@@ -980,38 +978,35 @@ msgstr "Ottenendo pagina casuale"
 msgid "Updating page contents"
 msgstr "Aggiornamento contenuti pagina"
 
+#, java-format
+#~ msgid ""
+#~ "The page {0} has been modified on Wikipedia since you have loaded the page.\n"
+#~ "To avoid modification conflicts, you need to reload the page and make your "
+#~ "modifications again.\n"
+#~ "(Local revision: {1}, Wikipedia revision: {2})"
+#~ msgstr ""
+#~ "La pagina {0} è stata modificata su Wikipedia da quando hai caricato la "
+#~ "pagina.\n"
+#~ "Per impedire conflitti di modificazione, devi ricaricare la pagina e rifare "
+#~ "le tue modifiche.\n"
+#~ "(Revisione locale: {1}, revisione wikipedia: {2})"
+
 #~ msgid ""
 #~ "!!! WARNING !!!\n"
 #~ "This function will do all the replacements in all selected pages.\n"
 #~ "It may modify a lot of pages in a short period of time.\n"
 #~ "On some Wikipedia projects, you may need the bot status for doing this.\n"
-#~ "Please, check if you need the bot status by reading the rules of "
-#~ "Wikipedia.\n"
-#~ "Also, verify again the texts you have inputed before running this "
-#~ "function.\n"
+#~ "Please, check if you need the bot status by reading the rules of Wikipedia.\n"
+#~ "Also, verify again the texts you have inputed before running this function.\n"
 #~ "Do you want to continue ?"
 #~ msgstr ""
 #~ "!!! ATTENZIONE !!!\n"
-#~ "Questa funzione farà tutti i rimpiazzamenti in tutte le pagine "
-#~ "selezionate.\n"
+#~ "Questa funzione farà tutti i rimpiazzamenti in tutte le pagine selezionate.\n"
 #~ "Potrà modificare molte pagine in un piccolo periodo di tempo.\n"
-#~ "In qualche progetto Wikipedia, potresti necessitare dello status di bot "
-#~ "per farlo.\n"
-#~ "Per favore, controllare se necessiti dello status di bot leggendo le "
-#~ "regole di Wikipedia.\n"
-#~ "Inoltre, verifica anche i testi che hai inserito prima di far partire "
-#~ "questa funzione.\n"
+#~ "In qualche progetto Wikipedia, potresti necessitare dello status di bot per "
+#~ "farlo.\n"
+#~ "Per favore, controllare se necessiti dello status di bot leggendo le regole "
+#~ "di Wikipedia.\n"
+#~ "Inoltre, verifica anche i testi che hai inserito prima di far partire questa "
+#~ "funzione.\n"
 #~ "Vuoi continuare?"
-
-#~ msgid ""
-#~ "The page {0} has been modified on Wikipedia since you have loaded the "
-#~ "page.\n"
-#~ "To avoid modification conflicts, you need to reload the page and make "
-#~ "your modifications again.\n"
-#~ "(Local revision: {1}, Wikipedia revision: {2})"
-#~ msgstr ""
-#~ "La pagina {0} è stata modificata su Wikipedia da quando hai caricato la "
-#~ "pagina.\n"
-#~ "Per impedire conflitti di modificazione, devi ricaricare la pagina e "
-#~ "rifare le tue modifiche.\n"
-#~ "(Revisione locale: {1}, revisione wikipedia: {2})"
