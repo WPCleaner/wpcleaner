@@ -73,6 +73,7 @@ public class MainWindow
   implements ActionListener, ItemListener {
 
   private final static String ACTION_ABOUT          = "ABOUT";
+  private final static String ACTION_BOT_TOOLS      = "BOT TOOLS";
   private final static String ACTION_CHECK_WIKI     = "CHECK WIKI";
   private final static String ACTION_CURRENT_LIST   = "CURRENT LIST";
   private final static String ACTION_DISAMBIGUATION = "DISAMBIGUATION";
@@ -107,6 +108,7 @@ public class MainWindow
   private JButton buttonHelpRequested;
   private JButton buttonRandomPage;
   private JButton buttonWatchedPages;
+  private JButton buttonBotTools;
   private JButton buttonOptions;
   private JButton buttonIdea;
   private JButton buttonAbout;
@@ -207,6 +209,7 @@ public class MainWindow
     buttonCheckWiki.setVisible(false); //TODO
     buttonRandomPage.setEnabled(logged);
     buttonWatchedPages.setEnabled(logged);
+    buttonBotTools.setEnabled(logged);
   }
 
   /**
@@ -469,6 +472,17 @@ public class MainWindow
     panel.add(buttonWatchedPages, constraints);
     constraints.gridy++;
 
+    // Bot tools button
+    /*buttonBotTools = Utilities.createJButton(GT._("Bot tools"));
+    buttonBotTools.setActionCommand(ACTION_BOT_TOOLS);
+    buttonBotTools.addActionListener(this);
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridwidth = 2;
+    constraints.gridx = 0;
+    constraints.weightx = 1;
+    panel.add(buttonBotTools, constraints);
+    constraints.gridy++;*/
+    
     // Empty panel
     JPanel emptyPanel = new JPanel();
     emptyPanel.setMinimumSize(new Dimension(0, 0));
@@ -544,6 +558,8 @@ public class MainWindow
       actionHelpRequestedOn();
     } else if (ACTION_CHECK_WIKI.equals(e.getActionCommand())) {
       actionCheckWiki();
+    } else if (ACTION_BOT_TOOLS.equals(e.getActionCommand())) {
+      actionBotTools();
     }
   }
 
@@ -774,6 +790,13 @@ public class MainWindow
    */
   private void actionCheckWiki() {
     Controller.runCheckWikiProject(getWikipedia());
+  }
+
+  /**
+   * Action called when Bot Tools is pressed. 
+   */
+  private void actionBotTools() {
+    Controller.runBotTools(getWikipedia());
   }
   
   /**
