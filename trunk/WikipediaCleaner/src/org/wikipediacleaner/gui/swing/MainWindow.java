@@ -473,10 +473,10 @@ public class MainWindow
     constraints.gridy++;
 
     // Bot tools button
-    /*buttonBotTools = Utilities.createJButton(GT._("Bot tools"));
+    buttonBotTools = Utilities.createJButton(GT._("Bot tools"));
     buttonBotTools.setActionCommand(ACTION_BOT_TOOLS);
     buttonBotTools.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
+    /*constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridwidth = 2;
     constraints.gridx = 0;
     constraints.weightx = 1;
