@@ -38,6 +38,7 @@ public enum EnumLanguage {
   HE   ("he"   , "Hebrew"),
   IS   ("is"   , "Icelandic"),
   IT   ("it"   , "Italian"),
+  KO   ("ko"   , "Korean"),
   NB   ("nb"   , "Norwegian Bokmal"),
   NL   ("nl"   , "Dutch"),
   OC   ("oc"   , "Occitan"),
