@@ -157,6 +157,15 @@ public class Controller {
   }
 
   /**
+   * Run Bot tools.
+   * 
+   * @param wikipedia Wikipedia
+   */
+  public static void runBotTools(EnumWikipedia wikipedia) {
+    BotToolsWindow.createBotToolsWindow(wikipedia);
+  }
+
+  /**
    * Open the options window.
    */
   public static void runOptions() {
