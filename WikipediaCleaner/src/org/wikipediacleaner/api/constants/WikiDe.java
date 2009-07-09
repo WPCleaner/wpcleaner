@@ -51,7 +51,7 @@ class WikiDe {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String dabList = "Wikipedia:WikiProjekt Begriffsklärungsseiten/Arbeitslisten/Top-BKS de:Wikipedia:WikiProjekt Begriffsklärungsseiten/Arbeitslisten/NeueVerlinkteBKS";
+  final static String dabList = "Wikipedia:WikiProjekt Begriffsklärungsseiten/Arbeitslisten/Top-BKS"; // + "Wikipedia:WikiProjekt Begriffsklärungsseiten/Arbeitslisten/NeueVerlinkteBKS"
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
   final static String checkWikiProject = "Wikipedia:WikiProject Check Wikipedia";
