@@ -336,7 +336,7 @@
     <condition property="uptodate-po-${WikiCleaner_lang_value}">
       <uptodate targetfile="${WikiCleaner.po.dir}/${WikiCleaner_lang_value}.po.tstamp">
         <srcfiles file="${WikiCleaner.po.dir}/WikiCleaner.pot"/>
-        <srcfiles file="${WikiCleaner.po.dir}/wikicleaner-${WikiCleaner_lang_value}.po"/>
+        <srcfiles file="${WikiCleaner.po.dir}/${WikiCleaner_lang_value}.po"/>
       </uptodate>
     </condition>
   </target>
@@ -347,10 +347,10 @@
     <echo message="Updating wikicleaner-${WikiCleaner_lang_value}.po gettext file for WikiCleaner ..."/>
     <delete file="${WikiCleaner.po.dir}/${WikiCleaner_lang_value}.po.tstamp"/>
     <exec executable="${gettext.msgmerge}" dir="${basedir}/${WikiCleaner.po.dir}">
-      <arg line="-U wikicleaner-${WikiCleaner_lang_value}.po WikiCleaner.pot"/>
+      <arg line="-U ${WikiCleaner_lang_value}.po WikiCleaner.pot"/>
     </exec>
     <touch file="${WikiCleaner.po.dir}/${WikiCleaner_lang_value}.po.tstamp"/>
-    <delete file="${WikiCleaner.po.dir}/wikicleaner-${WikiCleaner_lang_value}.po~"/>
+    <delete file="${WikiCleaner.po.dir}/${WikiCleaner_lang_value}.po~"/>
   </target>
 
   <!-- Manage catalog files -->
@@ -372,7 +372,7 @@
   <target name="check-uptodate-catalog">
     <mkdir dir="${WikiCleaner.classes.dir}/org/wikipediacleaner/i18n"/>
     <condition property="uptodate-catalog-${WikiCleaner_lang_value}">
-      <uptodate srcfile="${WikiCleaner.po.dir}/wikicleaner-${WikiCleaner_lang_value}.po"
+      <uptodate srcfile="${WikiCleaner.po.dir}/${WikiCleaner_lang_value}.po"
                 targetfile="${WikiCleaner.classes.dir}/org/wikipediacleaner/i18n/Messages_${WikiCleaner_lang_value}.class"/>
     </condition>
   </target>
@@ -390,7 +390,7 @@
       <arg value="${basedir}/${WikiCleaner.classes.dir}"/>
       <arg value="-r"/>
       <arg value="org.wikipediacleaner.i18n.Messages"/>
-      <arg value="wikicleaner-${WikiCleaner_lang_value}.po"/>
+      <arg value="${WikiCleaner_lang_value}.po"/>
     </exec>
   </target>
 
