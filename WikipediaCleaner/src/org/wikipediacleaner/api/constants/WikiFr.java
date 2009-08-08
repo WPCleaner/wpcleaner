@@ -64,6 +64,7 @@ class WikiFr {
 
   final static String dabList = "Projet:Liens vers les pages d'homonymie/Export à traiter";
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
+    new TemplateMatch("A", "1", "", false, false),
     new TemplateMatch("Article détaillé", "1,2,3,4,5,6,7,8,9,10", "", false, false),
     new TemplateMatch("Dn", "1", "", false, true),
     new TemplateMatch("Jumelage", "1,2", "", false, false),
