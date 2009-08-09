@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -40,9 +41,12 @@ import javax.swing.table.TableColumnModel;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageComment;
 import org.wikipediacleaner.api.data.ProgressionValue;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
+import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateInfoWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -68,6 +72,8 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   PageListTableModel modelPages;
   JTable tablePages;
 
+  JLabel  labelLinksCount;
+  
   private JButton buttonFullAnalysis;
   private JButton buttonDisambiguation;
   private JButton buttonRemove;
@@ -165,6 +171,15 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     panel.add(scrollPages, constraints);
     constraints.gridy++;
 
+    // Links count
+    labelLinksCount = Utilities.createJLabel(GT._("Backlinks"));
+    updateBacklinksCount();
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.weightx = 1;
+    constraints.weighty = 0;
+    panel.add(labelLinksCount, constraints);
+    constraints.gridy++;
+    
     // Full analysis button
     buttonFullAnalysis = Utilities.createJButton(GT._("&Full analysis"));
     buttonFullAnalysis.setActionCommand(ACTION_FULL_ANALYSIS);
@@ -323,9 +338,70 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     if ((tmpPages == null) || (tmpPages.length == 0)) {
       return;
     }
-    new UpdateInfoWorker(this, tmpPages).start();
+    final UpdateInfoWorker updateWorker = new UpdateInfoWorker(this, tmpPages);
+    updateWorker.setListener(new DefaultBasicWorkerListener() {
+
+      /* (non-Javadoc)
+       * @see org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener#afterFinished(org.wikipediacleaner.gui.swing.basic.BasicWorker, boolean)
+       */
+      @Override
+      public void afterFinished(BasicWorker worker, boolean ok) {
+        super.afterFinished(worker, ok);
+        updateBacklinksCount();
+      }
+      
+    });
+    updateWorker.start();
   }
 
+  /**
+   * Update the total count of backlinks.
+   */
+  void updateBacklinksCount() {
+    int backlinksMain = 0;
+    int backlinks = 0;
+    int maxMain = 0;
+    int max = 0;
+    int actualMain = 0;
+    int actual = 0;
+    for (Page page : pages) {
+      if (page != null) {
+        PageComment comment = page.getComment();
+        Integer tmpLinks = page.getBacklinksCountInMainNamespace();
+        if (tmpLinks != null) {
+          backlinksMain += tmpLinks.intValue();
+          if ((comment != null) && (comment.getMaxMainArticles() != null)) {
+            maxMain += comment.getMaxMainArticles().intValue();
+            actualMain += tmpLinks.intValue();
+          }
+        }
+        tmpLinks = page.getBacklinksCount();
+        if (tmpLinks != null) {
+          backlinks += tmpLinks.intValue();
+          if ((comment != null) && (comment.getMaxArticles() != null)) {
+            max += comment.getMaxArticles().intValue();
+            actual += tmpLinks.intValue();
+          }
+        }
+      }
+    }
+    String txtMain = null;
+    if ((actualMain > 0) || (maxMain > 0)) {
+      txtMain = "" + backlinksMain + " (" + actualMain + "/" + maxMain + ")";
+    } else {
+      txtMain = "" + backlinksMain;
+    }
+    String txtAll  = null;
+    if ((actual > 0) || (max > 0)) {
+      txtAll = "" + backlinks + " (" + actual + "/" + max + ")";
+    } else {
+      txtAll = "" + backlinks;
+    }
+    labelLinksCount.setText(GT._(
+        "Backlinks - Main namespace: {0}, All namespaces: {1}",
+        new Object[] { txtMain, txtAll }));
+  }
+  
   /**
    * @return Selected pages.
    */
