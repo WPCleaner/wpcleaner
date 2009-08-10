@@ -204,8 +204,7 @@ public class MainWindow
                                    (wikipedia.getTemplatesForHelpRequested() != null));
     buttonCheckWiki.setEnabled(logged &&
                                config.getBoolean(Configuration.BOOLEAN_ADVANCED_FEATURES, false) &&
-                               (wikipedia != null) &&
-                               (wikipedia.getCheckWikiProject() != null));
+                               (wikipedia != null));
     buttonCheckWiki.setVisible(false); //TODO
     buttonRandomPage.setEnabled(logged);
     buttonWatchedPages.setEnabled(logged);
@@ -789,6 +788,15 @@ public class MainWindow
    * Action called when Check Wiki is pressed. 
    */
   private void actionCheckWiki() {
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia == null) {
+      return;
+    }
+    if (wikipedia.getCheckWikiProject() == null) {
+      displayWarning(
+          GT._("There's no known Check Wikipedia Project for this Wikipedia."));
+      return;
+    }
     Controller.runCheckWikiProject(getWikipedia());
   }
 
