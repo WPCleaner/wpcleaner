@@ -900,6 +900,10 @@ public class MainWindow
         ArrayList<Namespace> namespaces = new ArrayList<Namespace>();
         api.getNamespaces(namespaces);
         wikipedia.setNamespaces(namespaces);
+        
+        // Retrieving disambiguation templates
+        setText(GT._("Retrieving disambiguation templates"));
+        wikipedia.initDisambiguationTemplates(api);
       } catch (APIException e) {
         return e;
       }
