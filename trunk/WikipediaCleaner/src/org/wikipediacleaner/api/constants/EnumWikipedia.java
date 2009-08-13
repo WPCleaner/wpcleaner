@@ -165,7 +165,7 @@ public enum EnumWikipedia {
   private final String[] templatesForNeedingHelp;
   private final String[] templatesForHelpRequested;
   private final String disambiguationList;
-  private ArrayList<Page> disambiguationTemplates2;
+  private ArrayList<Page> disambiguationTemplates;
   private final TemplateMatch[] disambiguationMatches;
   private final String checkWikiProject;
 
@@ -421,11 +421,10 @@ public enum EnumWikipedia {
   }
 
   /**
-   * @param pageName Page name.
-   * @return Flag indicating if <code>page</code> is a disambiguation template.
+   * @param api Wikipédia API.
    */
-  public boolean isDisambiguationTemplate(String pageName, API api) {
-    if (disambiguationTemplates2 == null) {
+  public void initDisambiguationTemplates(API api) {
+    if (disambiguationTemplates == null) {
       synchronized(api) {
         Page page = DataManager.getPage(this, "Mediawiki:Disambiguationspage", null);
         try {
@@ -433,11 +432,22 @@ public enum EnumWikipedia {
         } catch (APIException e) {
           // Error retrieving Disambiguation templates list
         }
-        disambiguationTemplates2 = page.getLinks();
+        disambiguationTemplates = page.getLinks();
       }
     }
-    if (disambiguationTemplates2 != null) {
-      for (Page page : disambiguationTemplates2) {
+  }
+  
+  /**
+   * @param pageName Page name.
+   * @param api Wikipédia API.
+   * @return Flag indicating if <code>page</code> is a disambiguation template.
+   */
+  public boolean isDisambiguationTemplate(String pageName, API api) {
+    if (disambiguationTemplates == null) {
+      initDisambiguationTemplates(api);
+    }
+    if (disambiguationTemplates != null) {
+      for (Page page : disambiguationTemplates) {
         if (Page.areSameTitle(page.getTitle(), pageName)) {
           return true;
         }
