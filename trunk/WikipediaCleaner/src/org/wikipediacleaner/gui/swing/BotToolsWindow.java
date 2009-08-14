@@ -54,8 +54,6 @@ public class BotToolsWindow
   /**
    * Create and display a BotToolsWindow.
    * 
-   * @param title Title.
-   * @param information Information.
    * @param wikipedia Wikipedia.
    */
   public static void createBotToolsWindow(

@@ -516,7 +516,7 @@ public class Configuration implements WindowListener {
 
   /**
    * @param property Property name.
-   * @param value Property value.
+   * @param values Property value.
    * @param id Id of the value.
    */
   public void addPojoArray(String property, Object[] values, String id) {

@@ -103,7 +103,6 @@ public class MediaWiki extends MediaWikiController {
    *        Value: Text replacements.
    * @param wikipedia Wikipedia.
    * @param comment Comment used for the modification.
-   * @param details Additional comments used for the modification.
    * @param description Out: description of changes made.
    * @throws APIException
    */
