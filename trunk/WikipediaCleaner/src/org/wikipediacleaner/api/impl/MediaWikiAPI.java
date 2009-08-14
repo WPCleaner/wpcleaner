@@ -241,6 +241,34 @@ public class MediaWikiAPI implements API {
     }
   }
 
+  public void retrieveContentsWithoutRedirects(ArrayList<Page> pages)
+      throws APIException {
+    HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    properties.put("prop", "revisions");
+    properties.put("rvprop", "content");
+    StringBuffer titles = new StringBuffer();
+    for (int i = 0; i < pages.size();) {
+      titles.setLength(0);
+      for (int j = 0; (j < MAX_PAGES_PER_QUERY) && (i < pages.size()); i++, j++) {
+        Page p = pages.get(i);
+        if (j > 0) {
+          titles.append("|");
+        }
+        titles.append(p.getTitle());
+      }
+      properties.put("titles", titles.toString());
+      try {
+        constructContents(
+            pages,
+            getRoot(properties, MAX_ATTEMPTS),
+            "/api/query/pages/page");
+      } catch (JDOMParseException e) {
+        log.error("Error retrieving redirects", e);
+        throw new APIException("Error parsing XML", e);
+      }
+    }
+  }
+  
   /**
    * Expand templates in a text.
    * 
@@ -446,6 +474,7 @@ public class MediaWikiAPI implements API {
     } while (gplcontinue);
     if (!redirects.isEmpty()) {
       initializeRedirect(redirects);
+      retrieveContentsWithoutRedirects(redirects);
     }
   }
 
@@ -1048,6 +1077,42 @@ public class MediaWikiAPI implements API {
       throw new APIException("Error parsing XML result", e);
     }
     return redirect;
+  }
+
+  /**
+   * @param pages Pages.
+   * @param root Root element.
+   * @param query XPath query to retrieve the contents 
+   * @throws APIException
+   */
+  private void constructContents(ArrayList<Page> pages, Element root, String query)
+      throws APIException {
+    if (pages == null) {
+      throw new APIException("Pages is null");
+    }
+    try {
+      XPath xpaPage = XPath.newInstance(query);
+      XPath xpaTitle = XPath.newInstance("./@title");
+      XPath xpaRev = XPath.newInstance("./revisions/rev");
+      XPath xpaContents = XPath.newInstance(".");
+      List resultPages = xpaPage.selectNodes(root);
+      Iterator iterPages = resultPages.iterator();
+      while (iterPages.hasNext()) {
+        Element currentPage = (Element) iterPages.next();
+        String title = xpaTitle.valueOf(currentPage);
+        Element currentRev = (Element) xpaRev.selectSingleNode(currentPage);
+        String contents = xpaContents.valueOf(currentRev);
+        
+        for (Page page : pages) {
+          if (Page.areSameTitle(page.getTitle(), title)) {
+            page.setContents(contents);
+          }
+        }
+      }
+    } catch (JDOMException e) {
+      log.error("Error contents for pages", e);
+      throw new APIException("Error parsing XML result", e);
+    }
   }
 
   /**

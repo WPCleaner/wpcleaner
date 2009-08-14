@@ -45,7 +45,6 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import org.wikipediacleaner.api.data.DataManager;
-import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -526,13 +525,7 @@ public abstract class PageWindow
     if ((page != null) && (page.getLinks() != null)) {
       for (Page p : page.getLinks()) {
         if (p.isRedirect() && !Boolean.TRUE.equals(p.isDisambiguationPage())) {
-          ArrayList<Page> redirects = p.getRedirects();
-          Page to = redirects.get(redirects.size() - 1);
-          String newTitle = to.getTitle();
-          if ((to.getNamespace() != null) &&
-              (to.getNamespace() == Namespace.CATEGORY)) {
-            newTitle = ":" + newTitle;
-          }
+          String newTitle = p.getRedirectDestination();
           String text = GT._(
               "Link \"{0}\" to \"{1}\"", new Object[] { p.getTitle(), newTitle });
           JMenuItem menuItem = new JMenuItem(text);
