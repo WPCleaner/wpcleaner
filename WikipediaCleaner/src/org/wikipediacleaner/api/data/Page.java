@@ -327,6 +327,71 @@ public class Page implements Comparable<Page> {
   }
 
   /**
+   * @return Redirection destination.
+   */
+  public String getRedirectDestination() {
+    if ((redirects == null) || (redirects.isEmpty())) {
+      return getTitle();
+    }
+    Page to = redirects.get(redirects.size() - 1);
+    String toTitle = to.getTitle();
+    String pageContents = contents;
+    if ((pageContents != null) && (pageContents.length() > 0)) {
+      boolean redirectFound = false;
+      int startIndex = 0;
+      while ((!redirectFound) && (startIndex < pageContents.length())) {
+        boolean ok = true;
+        int endIndex = pageContents.indexOf('\n', startIndex);
+        if (endIndex < 0) {
+          endIndex = pageContents.length();
+        }
+        // Removing white spaces
+        if (ok) {
+          while ((startIndex < endIndex) &&
+                 Character.isWhitespace(pageContents.charAt(startIndex))) {
+            startIndex++;
+          }
+        }
+        // Removing REDIRECT
+        if (ok) {
+          final String r1 = "#REDIRECTION";
+          final String r2 = "#REDIRECT";
+          if (r1.equalsIgnoreCase(pageContents.substring(startIndex, startIndex + r1.length()))) {
+            startIndex += r1.length();
+          } else if (r2.equalsIgnoreCase(pageContents.substring(startIndex, startIndex + r2.length()))) {
+            startIndex += r2.length();
+          } else {
+            ok = false;
+          }
+        }
+        // Removing white spaces
+        if (ok) {
+          while ((startIndex < endIndex) &&
+                 Character.isWhitespace(pageContents.charAt(startIndex))) {
+            startIndex++;
+          }
+        }
+        if (ok && pageContents.startsWith("[[", startIndex)) {
+          redirectFound = true;
+          startIndex += "[[".length();
+          int endRedirect = pageContents.indexOf("]]", startIndex);
+          int sharp = pageContents.indexOf("#", startIndex);
+          if ((endRedirect > 0) && (sharp > 0) && (sharp < endRedirect)) {
+            toTitle += pageContents.substring(sharp, endRedirect);
+          }
+        }
+        startIndex = endIndex + 1;
+      }
+    }
+    if ((to.getNamespace() != null) &&
+        (to.getNamespace() == Namespace.CATEGORY) &&
+        (!toTitle.startsWith(":"))) {
+      toTitle = ":" + toTitle;
+    }
+    return toTitle;
+  }
+  
+  /**
    * @param redirect Redirection.
    */
   public void setRedirects(ArrayList<Page> redirect) {
