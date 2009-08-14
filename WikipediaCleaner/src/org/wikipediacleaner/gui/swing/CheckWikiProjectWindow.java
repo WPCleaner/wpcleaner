@@ -45,7 +45,6 @@ public class CheckWikiProjectWindow extends PageWindow {
   /**
    * Create and display a CheckWikiProjectWindow.
    * 
-   * @param page Page name.
    * @param wikipedia Wikipedia.
    */
   public static void createCheckWikiProjectWindow(
