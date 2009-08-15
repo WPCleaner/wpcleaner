@@ -26,13 +26,16 @@ import java.awt.Insets;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
+import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.CheckWikiProjectWorker;
 import org.wikipediacleaner.i18n.GT;
 
@@ -139,6 +142,12 @@ public class CheckWikiProjectWindow extends PageWindow {
     JPanel panelInformation = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
     JPanel panelComment = new JPanel(new GridBagLayout());
 
+    // TODO
+    JLabel labelNotFinished = Utilities.createJLabel(GT._(
+        "This screen is not functional yet !"));
+    labelNotFinished.setHorizontalAlignment(SwingConstants.CENTER);
+    panel.add(labelNotFinished);
+
     // Check box for closing after sending
     addChkCloseAfterSend(panelInformation);
 
@@ -243,8 +252,25 @@ public class CheckWikiProjectWindow extends PageWindow {
           endIndex++;
         }
         if (endIndex > beginIndex) {
-          //TODO
           System.err.println("Found error number " + contents.substring(beginIndex, endIndex));
+          int nextChapter = contents.indexOf("\n=", endIndex);
+          int nextError = contents.indexOf(beginError, endIndex);
+          endIndex = Math.min(
+              (nextChapter < 0) ? contents.length() : nextChapter,
+              (nextError < 0) ? contents.length() : nextError);
+          while (beginIndex < endIndex) {
+            beginIndex = contents.indexOf("\n", beginIndex);
+            if ((beginIndex < 0) || (beginIndex >= endIndex)) {
+              beginIndex = endIndex;
+            } else {
+              beginIndex++;
+              if (contents.startsWith("| [[:", beginIndex)) {
+                beginIndex += 5;
+                System.err.println("    possible error: " + contents.substring(beginIndex, contents.indexOf("]]", beginIndex)));
+              }
+            }
+          }
+          //TODO
         }
       }
     }
