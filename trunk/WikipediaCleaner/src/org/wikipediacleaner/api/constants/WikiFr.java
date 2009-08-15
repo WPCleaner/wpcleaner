@@ -79,8 +79,10 @@ class WikiFr {
     new TemplateMatch("Page h'", "1", "", true, false),
     new TemplateMatch("Page l", "1", "", true, false),
     new TemplateMatch("Paronyme", "1,2,3,4", "", true, false),
+    new TemplateMatch("Voir homonyme", "1", "", true, false),
     new TemplateMatch("Voir homonymie", "1,2,3,4,5", "{{PAGENAME}} (homonymie)", true, false),
     new TemplateMatch("Voir homonymes", "1,2,3,4,5", "{{PAGENAME}} (homonymie)", true, false),
+    new TemplateMatch("Voir homophone", "1,2,3,4,5,6,7", "{{PAGENAME}} (homophonie)", true, false),
     new TemplateMatch("Voir homophones", "1,2,3,4,5,6,7", "{{PAGENAME}} (homophonie)", true, false),
     new TemplateMatch("Voir paronymes", "1,2,3,4", "{{PAGENAME}} (paronymie)", true, false),
   };
