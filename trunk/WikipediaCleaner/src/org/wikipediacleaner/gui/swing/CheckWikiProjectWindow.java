@@ -50,7 +50,7 @@ public class CheckWikiProjectWindow extends PageWindow {
   public static void createCheckWikiProjectWindow(
       final EnumWikipedia wikipedia) {
     createWindow(
-        "AnalysisWindow",
+        "CheckWikiWindow",
         wikipedia,
         WindowConstants.DISPOSE_ON_CLOSE,
         CheckWikiProjectWindow.class,
@@ -216,6 +216,40 @@ public class CheckWikiProjectWindow extends PageWindow {
     return "[[" + getWikipedia().getCheckWikiProject() + "]]";
   }
 
+  /* (non-Javadoc)
+   * @see org.wikipediacleaner.gui.swing.PageWindow#afterFinishedReloadWorker()
+   */
+  @Override
+  protected void afterFinishedReloadWorker() {
+    super.afterFinishedReloadWorker();
+    analyzeCheckWiki();
+  }
+
+  /**
+   * Analyze the Check Wiki page contents.
+   */
+  private void analyzeCheckWiki() {
+    String contents = getPage().getContents();
+    int beginIndex = 0;
+    final String beginError = "<!-- error number ";
+    while (beginIndex < contents.length()) {
+      beginIndex = contents.indexOf(beginError, beginIndex);
+      if (beginIndex < 0) {
+        beginIndex = contents.length();
+      } else {
+        beginIndex += beginError.length();
+        int endIndex = beginIndex;
+        while (Character.isDigit(contents.charAt(endIndex))) {
+          endIndex++;
+        }
+        if (endIndex > beginIndex) {
+          //TODO
+          System.err.println("Found error number " + contents.substring(beginIndex, endIndex));
+        }
+      }
+    }
+  }
+  
   /**
    * Action called when Reload button is pressed. 
    */
