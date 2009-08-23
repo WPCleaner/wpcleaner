@@ -47,13 +47,15 @@ public interface API {
    * @param wikipedia Wikipedia URL.
    * @param username User name.
    * @param password Password.
+   * @param login Flag indicating if login should be done.
    * @return Login status.
    * @throws APIException
    */
   public LoginResult login(
       EnumWikipedia wikipedia,
       String username,
-      String password) throws APIException;
+      String password,
+      boolean login) throws APIException;
 
   /**
    * Logout.

@@ -76,6 +76,7 @@ public class MainWindow
   private final static String ACTION_BOT_TOOLS      = "BOT TOOLS";
   private final static String ACTION_CHECK_WIKI     = "CHECK WIKI";
   private final static String ACTION_CURRENT_LIST   = "CURRENT LIST";
+  private final static String ACTION_DEMO           = "DEMO";
   private final static String ACTION_DISAMBIGUATION = "DISAMBIGUATION";
   private final static String ACTION_FULL_ANALYSIS  = "FULL ANALYSIS";
   private final static String ACTION_HELP           = "HELP";
@@ -97,6 +98,7 @@ public class MainWindow
   private char echoPassword = '*';
   private JCheckBox chckSavePassword;
   private JButton buttonLogin;
+  private JButton buttonDemo;
   private JButton buttonLogout;
   private JButton buttonHelp;
 
@@ -193,6 +195,7 @@ public class MainWindow
     textPassword.setEnabled(!logged);
     textPassword.setEchoChar(logged ? ' ' : echoPassword);
     buttonLogin.setEnabled(!logged);
+    buttonDemo.setEnabled(!logged);
     buttonLogout.setEnabled(logged);
 
     textPagename.setEnabled(logged);
@@ -323,12 +326,16 @@ public class MainWindow
     panel.add(chckSavePassword, constraints);
     constraints.gridy++;
 
-    // Login/Logout buttons
+    // Login/Demo/Logout buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     buttonLogin = Utilities.createJButton(GT._("&Login"));
     buttonLogin.setActionCommand(ACTION_LOGIN);
     buttonLogin.addActionListener(this);
     buttonPanel.add(buttonLogin);
+    buttonDemo = Utilities.createJButton(GT._("&Demo"));
+    buttonDemo.setActionCommand(ACTION_DEMO);
+    buttonDemo.addActionListener(this);
+    buttonPanel.add(buttonDemo);
     buttonLogout = Utilities.createJButton(GT._("L&ogout"));
     buttonLogout.setActionCommand(ACTION_LOGOUT);
     buttonLogout.addActionListener(this);
@@ -531,6 +538,8 @@ public class MainWindow
 
     if (ACTION_LOGIN.equals(e.getActionCommand())) {
       actionLogin();
+    } else if (ACTION_DEMO.equals(e.getActionCommand())) {
+      actionDemo();
     } else if (ACTION_LOGOUT.equals(e.getActionCommand())) {
       actionLogout();
     } else if (ACTION_HELP.equals(e.getActionCommand())) {
@@ -566,6 +575,28 @@ public class MainWindow
    * Action called when Login button is pressed.
    */
   private void actionLogin() {
+    actionLoginDemo(true);
+  }
+  
+  /**
+   * Action called when Demo button is pressed. 
+   */
+  private void actionDemo() {
+    int answer = displayYesNoWarning(GT._(
+        "Demo mode is only available for testing WikiCleaner.\n" +
+        "You won't be able to modify pages on Wikipedia in Demo mode.\n" +
+        "Do you want to continue ?"));
+    if (answer == JOptionPane.YES_OPTION) {
+      actionLoginDemo(false);
+    }
+  }
+
+  /**
+   * Action called when Login or Demo button is pressed.
+   * 
+   * @param login Flag indicating if login is required.
+   */
+  private void actionLoginDemo(boolean login) {
 
     // Check that correct values are entered in Wikipedia combo
     if ((comboWikipedia == null) || (comboWikipedia.getSelectedIndex() == -1)) {
@@ -615,36 +646,40 @@ public class MainWindow
     GT.setCurrentLanguage(language);
 
     // Check that correct values are entered for user name
-    if ((textUsername == null) ||
-        (textUsername.getText() == null) ||
-        ("".equals(textUsername.getText().trim()))) {
-      displayWarning(
-          GT._("You must input your user name before login"),
-          textUsername);
-      return;
+    if (login) {
+      if ((textUsername == null) ||
+          (textUsername.getText() == null) ||
+          ("".equals(textUsername.getText().trim()))) {
+        displayWarning(
+            GT._("You must input your user name before login"),
+            textUsername);
+        return;
+      }
     }
 
     // Check that correct values are entered for password
-    boolean passwordOk = true;
-    if (textPassword == null) {
-      passwordOk = false;
-    }
-    if (passwordOk) {
-      char[] password = textPassword.getPassword();
-      if ((password == null) || (password.length == 0)) {
+    if (login) {
+      boolean passwordOk = true;
+      if (textPassword == null) {
         passwordOk = false;
       }
-      if (password != null) {
-        for (int i = 0; i < password.length; i++) {
-          password[i] = '\0';
+      if (passwordOk) {
+        char[] password = textPassword.getPassword();
+        if ((password == null) || (password.length == 0)) {
+          passwordOk = false;
+        }
+        if (password != null) {
+          for (int i = 0; i < password.length; i++) {
+            password[i] = '\0';
+          }
         }
       }
-    }
-    if (!passwordOk) {
-      displayWarning(
-          GT._("You must input your password before login"),
-          textPassword);
-      return;
+      if (!passwordOk) {
+        displayWarning(
+            GT._("You must input your password before login"),
+            textPassword);
+        return;
+      }
     }
 
     // Login
@@ -653,7 +688,8 @@ public class MainWindow
         (EnumLanguage) comboLanguage.getSelectedItem(),
         textUsername.getText(),
         textPassword.getPassword(),
-        chckSavePassword.isSelected()).start();
+        chckSavePassword.isSelected(),
+        login).start();
   }
 
   /**
@@ -842,6 +878,7 @@ public class MainWindow
     private final String username;
     private final char[] password;
     private final boolean savePassword;
+    private final boolean login;
 
     public LoginWorker(
         BasicWindow window,
@@ -849,13 +886,15 @@ public class MainWindow
         EnumLanguage language,
         String username,
         char[] password,
-        boolean savePassword) {
+        boolean savePassword,
+        boolean login) {
       super(window);
       this.wikipedia = wikipedia;
       this.language = language;
       this.username = username.trim();
       this.password = password;
       this.savePassword = savePassword;
+      this.login = login;
     }
 
     /* (non-Javadoc)
@@ -881,9 +920,11 @@ public class MainWindow
         setText(GT._("Retrieving MediaWiki API"));
         API api = APIFactory.getAPI();
         setText(GT._("Login"));
-        LoginResult result = api.login(wikipedia, username, new String(password));
-        if (!result.isLoginSuccessful()) {
-          throw new APIException("Login unsuccessful: " + result.toString());
+        LoginResult result = api.login(wikipedia, username, new String(password), login);
+        if (login) {
+          if ((result == null) || (!result.isLoginSuccessful())) {
+            throw new APIException("Login unsuccessful: " + ((result != null) ? result.toString() : ""));
+          }
         }
         logged = true;
 
@@ -891,8 +932,10 @@ public class MainWindow
         Configuration configuration = Configuration.getConfiguration();
         configuration.setWikipedia(wikipedia);
         configuration.setLanguage(language);
-        configuration.setString(Configuration.STRING_USER_NAME, username);
-        configuration.setString(Configuration.STRING_PASSWORD , savePassword ? password : null);
+        if (login) {
+          configuration.setString(Configuration.STRING_USER_NAME, username);
+          configuration.setString(Configuration.STRING_PASSWORD , savePassword ? password : null);
+        }
         Configuration.getConfiguration().save();
 
         // Retrieving namespaces
