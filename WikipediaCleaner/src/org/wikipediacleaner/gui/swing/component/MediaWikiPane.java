@@ -742,8 +742,8 @@ public class MediaWikiPane
         // Analyzing text
         String value = getText(start, end - start);
         boolean falseComment = false;
-        while ((value.indexOf("<!--") > 0) && !falseComment) {
-          start = value.indexOf("<!--");
+        while (((start = value.indexOf("<!--")) > 0) && !falseComment) {
+          //start = value.indexOf("<!--");
           end = value.indexOf("-->", start + 4);
           if ((start != -1) && (end != -1)) {
             end += 3;
