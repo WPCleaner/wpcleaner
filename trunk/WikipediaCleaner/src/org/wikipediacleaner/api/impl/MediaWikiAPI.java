@@ -112,12 +112,14 @@ public class MediaWikiAPI implements API {
    * @param wikipedia Wikipedia URL.
    * @param username1 User name.
    * @param password1 Password.
+   * @param login Flag indicating if login should be done.
    * @return Login status.
    */
   public LoginResult login(
       EnumWikipedia wikipedia,
       String username1,
-      String password1) throws APIException {
+      String password1,
+      boolean login) throws APIException {
 
     // Login
     this.username = username1;
@@ -127,17 +129,19 @@ public class MediaWikiAPI implements API {
     lgtoken = null;
     lgusername = null;
     lguserid = null;
-    HashMap<String, String> properties = getProperties(ACTION_API_LOGIN, true);
-    properties.put("lgname", username);
-    properties.put("lgpassword", password);
     LoginResult result = null;
-    try {
-      result = constructLogin(
-          getRoot(properties, 1),
-          "/api/login");
-    } catch (JDOMParseException e) {
-      log.error("Exception in MediaWikiAPI.login()", e);
-      throw new APIException("Couldn't login");
+    if (login) {
+      HashMap<String, String> properties = getProperties(ACTION_API_LOGIN, true);
+      properties.put("lgname", username);
+      properties.put("lgpassword", password);
+      try {
+        result = constructLogin(
+            getRoot(properties, 1),
+            "/api/login");
+      } catch (JDOMParseException e) {
+        log.error("Exception in MediaWikiAPI.login()", e);
+        throw new APIException("Couldn't login");
+      }
     }
 
     // Retrieve data
@@ -224,7 +228,9 @@ public class MediaWikiAPI implements API {
     properties.put("prop", "revisions|info");
     properties.put("titles", page.getTitle());
     properties.put("rvprop", "content|ids|timestamp");
-    properties.put("intoken", "edit");
+    if (lgtoken != null) {
+      properties.put("intoken", "edit");
+    }
     try {
       boolean redirect = constructContents(
           page,
@@ -332,6 +338,9 @@ public class MediaWikiAPI implements API {
     if (comment == null) {
       throw new APIException("Comment is null");
     }
+    if (lgtoken == null) {
+      throw new APIException("You must be logged in to update pages");
+    }
     QueryResult result = null;
     HashMap<String, String> properties = getProperties(ACTION_API_EDIT, true);
     properties.put("basetimestamp", page.getContentsTimestamp());
@@ -372,6 +381,9 @@ public class MediaWikiAPI implements API {
     }
     if (contents == null) {
       throw new APIException("Contents is null");
+    }
+    if (lgtoken == null) {
+      throw new APIException("You must be logged in to update pages");
     }
     QueryResult result = null;
     HashMap<String, String> properties = getProperties(ACTION_API_EDIT, true);
