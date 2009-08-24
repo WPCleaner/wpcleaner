@@ -144,8 +144,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
       }
       attrText = null;
     }
-    if ((!(attrPage instanceof Page)) ||
-        ((!(attrText instanceof String)) && (attrText != null))) {
+    if ((!(attrPage instanceof Page)) || (!(attrText instanceof String))) {
 
       // Trying to find if the click has been made in an external link [http://...]
       try {
@@ -193,22 +192,33 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
           if ((previousEndLink == -1) || (previousEndLink < previousStartLink)) {
             if ((nextStartLink == -1) || (nextStartLink > nextEndLink)) {
               String foundText = text.substring(previousStartLink + 2, nextEndLink);
-              int separator = foundText.indexOf('|');
-              if (separator != -1) {
-                foundText = foundText.substring(0, separator);
+              int separatorIndex = foundText.indexOf("|");
+              if (separatorIndex == -1) {
+                separatorIndex = foundText.length();
               }
               if (foundText.length() > 0) {
-                String title = "Template:" + foundText;
+                String template = foundText.substring(0, separatorIndex);
+                String title = "Template:" + template;
+                String params = foundText.substring(separatorIndex + 1);
                 Page page = DataManager.getPage(wikipedia, title, null);
                 JPopupMenu popup = new JPopupMenu();
                 JMenuItem menuItem = new JMenuItem(page.getTitle());
                 menuItem.setEnabled(false);
                 popup.add(menuItem);
                 MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
-                popup.add(new JSeparator());
-                MenuCreator.addAnalyzeToMenu(popup, page, wikipedia);
-                MenuCreator.addViewToMenu(popup, page, wikipedia);
-                MenuCreator.addDisambiguationToMenu(popup, page, wikipedia);
+                if (attrPage instanceof Page) {
+                  popup.add(new JSeparator());
+                  MenuCreator.addReplaceTemplateToMenu(
+                      popup, template, params, (Page) attrPage,
+                      null /*TODO*/, element, textPane, wikipedia);
+                  MenuCreator.addAnalyzeToMenu(popup, (Page) attrPage, wikipedia);
+                  MenuCreator.addViewToMenu(popup, (Page) attrPage, wikipedia);
+                  MenuCreator.addDisambiguationToMenu(popup, (Page) attrPage, wikipedia);
+                  MenuCreator.addReloadLinksToMenu(popup, (Page) attrPage, window);
+                } else {
+                  MenuCreator.addAnalyzeToMenu(popup, page, wikipedia);
+                  MenuCreator.addViewToMenu(popup, page, wikipedia);
+                }
                 popup.show(textPane, x, y);
                 return;
               }
@@ -229,9 +239,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
     menuItem.setEnabled(false);
     popup.add(menuItem);
     MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
-    if (text != null) {
-      popup.add(new JSeparator());
-    }
+    popup.add(new JSeparator());
 
     // Create sub menus
     MenuCreator.addReplaceLinkToMenu(popup, page, text, element, textPane);

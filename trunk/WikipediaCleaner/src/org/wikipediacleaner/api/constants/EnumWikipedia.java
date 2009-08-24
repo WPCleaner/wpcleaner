@@ -472,6 +472,19 @@ public enum EnumWikipedia {
   }
 
   /**
+   * @param templateTitle Template's title.
+   * @return Disambiguation template.
+   */
+  public TemplateMatch getDisambiguationMatch(String templateTitle) {
+    for (TemplateMatch tm : disambiguationMatches) {
+      if ((tm != null) && (Page.areSameTitle(tm.getName(), templateTitle))) {
+        return tm;
+      }
+    }
+    return null;
+  }
+
+  /**
    * @return Check Wikipedia Project page.
    */
   public String getCheckWikiProject() {

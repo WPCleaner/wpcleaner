@@ -143,12 +143,26 @@ public class PageUtilities {
    */
   public static ArrayList<TemplateParameter> analyzeTemplateParameters(
       TemplateMatch template, Matcher matcher, Page page) {
-    String[] parameters = null;
+    String text = null;
     if (matcher.group(matcher.groupCount()) != null) {
-      parameters = matcher.group(matcher.groupCount()).split("\\|");
+      text = matcher.group(matcher.groupCount());
     } else {
-      parameters = template.getDefaultParameters().split("\\|");
+      text = template.getDefaultParameters();
     }
+    return analyzeTemplateParameters(template, text, page);
+  }
+
+  /**
+   * Retrieve template parameters.
+   * 
+   * @param template Template matcher.
+   * @param text Text.
+   * @param page Page.
+   * @return Template parameters.
+   */
+  public static ArrayList<TemplateParameter> analyzeTemplateParameters(
+      TemplateMatch template, String text, Page page) {
+    String[] parameters = text.split("\\|");
     if ((parameters == null) || (parameters.length == 0)) {
       return null;
     }
