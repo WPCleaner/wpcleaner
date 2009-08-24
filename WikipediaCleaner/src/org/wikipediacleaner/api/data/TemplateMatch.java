@@ -29,6 +29,7 @@ public class TemplateMatch {
   private final String defaultParameters;
   private final boolean good;
   private final boolean helpNeeded;
+  private final TemplateReplacement[] replacements;
 
   public TemplateMatch(
       String template,
@@ -36,11 +37,22 @@ public class TemplateMatch {
       String defaultParameters,
       boolean good,
       boolean helpNeeded) {
+    this(template, parameter, defaultParameters, good, helpNeeded, null);
+  }
+
+  public TemplateMatch(
+      String template,
+      String parameter,
+      String defaultParameters,
+      boolean good,
+      boolean helpNeeded,
+      TemplateReplacement[] replacements) {
     this.name = template;
     this.parameters = parameter.split(",");
     this.defaultParameters = defaultParameters;
     this.good = good;
     this.helpNeeded = helpNeeded;
+    this.replacements = replacements;
   }
 
   public String getName() {
@@ -65,5 +77,16 @@ public class TemplateMatch {
 
   public boolean isHelpNeeded() {
     return helpNeeded;
+  }
+  
+  public TemplateReplacement getReplacement(String parameter) {
+    if ((replacements != null) && (parameter != null)) {
+      for (TemplateReplacement replacement : replacements) {
+        if (parameter.equals(replacement.getOriginalParameter())) {
+          return replacement;
+        }
+      }
+    }
+    return null;
   }
 }
