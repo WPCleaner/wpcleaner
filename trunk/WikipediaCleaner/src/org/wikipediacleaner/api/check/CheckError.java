@@ -94,9 +94,7 @@ public class CheckError {
     if ((errors != null) && (page != null)) {
       for (CheckError error : errors) {
         if (error.algorithm != null) {
-          System.err.println("Testing error: " + error.toString());
           if (error.algorithm.analyze(page)) {
-            System.err.println(" --> Found");
             errorsFound.add(error.algorithm);
           }
         }
@@ -189,7 +187,10 @@ public class CheckError {
    * @param page Page.
    */
   private void addPage(String page) {
-    errors.add(DataManager.getPage(wikipedia, page, null));
+    Page tmpPage = DataManager.getPage(wikipedia, page, null);
+    if (!errors.contains(tmpPage)) {
+      errors.add(tmpPage);
+    }
   }
 
   /* (non-Javadoc)
