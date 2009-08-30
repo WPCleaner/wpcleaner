@@ -208,7 +208,7 @@ public class MainWindow
     buttonCheckWiki.setEnabled(logged &&
                                config.getBoolean(Configuration.BOOLEAN_ADVANCED_FEATURES, false) &&
                                (wikipedia != null));
-    buttonCheckWiki.setVisible(false); //TODO
+    //buttonCheckWiki.setVisible(false); //TODO
     buttonRandomPage.setEnabled(logged);
     buttonWatchedPages.setEnabled(logged);
     buttonBotTools.setEnabled(logged);

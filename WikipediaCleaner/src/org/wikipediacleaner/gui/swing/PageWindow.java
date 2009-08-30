@@ -126,7 +126,9 @@ public abstract class PageWindow
    */
   protected void clean() {
     pageLoaded = false;
-    getTextContents().setText(null);
+    if (getTextContents() != null) {
+      getTextContents().setText(null);
+    }
     page = DataManager.getPage(getWikipedia(), getTextPageName(), null);
     updateComponentState();
   }
@@ -412,10 +414,12 @@ public abstract class PageWindow
    * @param panel Container.
    */
   protected void addChkEditTalkPage(JPanel panel) {
-    chkEditTalkPage = Utilities.createJCheckBox(
-        GT._("&Add a note on talk page"), false);
-    getTextContents().setCheckBoxAddNote(chkEditTalkPage);
-    panel.add(chkEditTalkPage);
+    if (getTextContents() != null) {
+      chkEditTalkPage = Utilities.createJCheckBox(
+          GT._("&Add a note on talk page"), false);
+      getTextContents().setCheckBoxAddNote(chkEditTalkPage);
+      panel.add(chkEditTalkPage);
+    }
   }
 
   /**
@@ -487,8 +491,10 @@ public abstract class PageWindow
    */
   void setContents() {
     if (SwingUtilities.isEventDispatchThread()) {
-      getTextContents().setPage(page);
-      getTextContents().setText(page.getContents());
+      if (getTextContents() != null) {
+        getTextContents().setPage(page);
+        getTextContents().setText(page.getContents());
+      }
       if (lblLastModified != null) {
         if ((page.getContentsTimestamp() != null) && (!page.getContentsTimestamp().equals(""))) {
           lblLastModified.setText(GT._("Last modified: ") + page.getContentsTimestamp());

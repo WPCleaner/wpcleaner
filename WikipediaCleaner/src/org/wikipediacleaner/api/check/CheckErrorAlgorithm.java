@@ -1,6 +1,6 @@
 /*
  *  WikipediaCleaner: A tool to help on Wikipedia maintenance tasks.
- *  Copyright (C) 2007  Nicolas Vervelle
+ *  Copyright (C) 2008  Nicolas Vervelle
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,26 +16,27 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.wikipediacleaner;
+package org.wikipediacleaner.api.check;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import org.wikipediacleaner.api.data.Page;
 
 
 /**
- * A simple class keeping version informations. 
+ * Interface implemented by all errors detected by the check wikipedia project.
  */
-public final class Version {
+public interface CheckErrorAlgorithm {
 
-  public final static String VERSION = "0.93";
-  public final static Date   DATE = new GregorianCalendar(2009, Calendar.AUGUST, 30).getTime();
+  /**
+   * @return Description of the error.
+   * (See Check Wikipedia project for the description of errors)
+   */
+  public String getErrorDescription();
 
-  public final static String MESSAGE =
-    "<html>" +
-    "I hope you'll like WikiCleaner.<br><br>" +
-    "There's still a problem with 'bad token': from time to time (usually first one?), an edit doesn't work.<br>" +
-    "Please, report any other problem you find to me." +
-    "</html>";
-  public final static boolean HIGHLIGHT = false;
+  /**
+   * Analyze a page to check if errors are present.
+   * 
+   * @param page Page.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyze(Page page);
 }
