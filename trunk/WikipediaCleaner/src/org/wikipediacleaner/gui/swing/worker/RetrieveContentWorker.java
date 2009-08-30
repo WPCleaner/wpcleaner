@@ -18,22 +18,36 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import org.wikipediacleaner.api.MediaWiki;
+import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 
 /**
  * SwingWorker for reloading the page. 
  */
-public class CheckWikiProjectWorker extends RetrieveContentWorker {
+public class RetrieveContentWorker extends BasicWorker {
 
-  /**
-   * Constructor.
-   * 
-   * @param window Window.
-   * @param page Page.
+  private final Page page;
+
+  public RetrieveContentWorker(BasicWindow window, Page page) {
+    super(window);
+    this.page = page;
+  }
+
+  /* (non-Javadoc)
+   * @see org.wikipediacleaner.gui.swing.utils.SwingWorker#construct()
    */
-  public CheckWikiProjectWorker(BasicWindow window, Page page) {
-    super(window, page);
-    //
+  @Override
+  public Object construct() {
+    try {
+      MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
+      mw.retrieveContents(page, true, false);
+      setText("Analyzing data");
+    } catch (APIException e) {
+      return e;
+    }
+    return null;
   }
 }
