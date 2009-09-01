@@ -18,29 +18,44 @@
 
 package org.wikipediacleaner.api.check;
 
-import java.util.ArrayList;
-
-import org.wikipediacleaner.api.data.Page;
-
 
 /**
- * Interface implemented by all errors detected by the check wikipedia project.
+ * A class for memorizing informations about errors detected.
  */
-public interface CheckErrorAlgorithm {
+public class CheckErrorResult {
+
+  private final int startPosition;
+  private final int endPosition;
 
   /**
-   * @return Description of the error.
-   * (See Check Wikipedia project for the description of errors)
-   */
-  public String getErrorDescription();
-
-  /**
-   * Analyze a page to check if errors are present.
+   * Constructor.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param errors Errors found in the page.
-   * @return Flag indicating if the error was found.
+   * @param startPosition Start of the error.
+   * @param endPosition End of the error.
    */
-  public boolean analyze(Page page, String contents, ArrayList<CheckErrorResult> errors);
+  public CheckErrorResult(int startPosition, int endPosition) {
+    this.startPosition = startPosition;
+    this.endPosition = endPosition;
+  }
+
+  /**
+   * @return Start of the error.
+   */
+  public int getStartPosition() {
+    return startPosition;
+  }
+
+  /**
+   * @return End of the error.
+   */
+  public int getEndPosition() {
+    return endPosition;
+  }
+
+  /**
+   * @return Length of the error.
+   */
+  public int getLength() {
+    return endPosition - startPosition;
+  }
 }

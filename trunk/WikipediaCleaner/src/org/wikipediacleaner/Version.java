@@ -28,8 +28,8 @@ import java.util.GregorianCalendar;
  */
 public final class Version {
 
-  public final static String VERSION = "0.93";
-  public final static Date   DATE = new GregorianCalendar(2009, Calendar.AUGUST, 30).getTime();
+  public final static String VERSION = "0.94";
+  public final static Date   DATE = new GregorianCalendar(2009, Calendar.SEPTEMBER, 1).getTime();
 
   public final static String MESSAGE =
     "<html>" +
