@@ -82,23 +82,44 @@ public class CheckError {
   }
 
   /**
-   * Analyze a page to find errors.
+   * Analyze a page to find error types.
    * 
-   * @param errors Possible errors.
+   * @param errors Possible error types.
    * @param page Page to be analyzed.
-   * @return Errors found in the page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Error types found in the page.
    */
   public static ArrayList<CheckErrorAlgorithm> analyzeErrors(
-      ArrayList<CheckError> errors, Page page) {
+      ArrayList<CheckError> errors, Page page, String contents) {
     ArrayList<CheckErrorAlgorithm> errorsFound = new ArrayList<CheckErrorAlgorithm>();
     if ((errors != null) && (page != null)) {
+      if (contents == null) {
+        contents = page.getContents();
+      }
       for (CheckError error : errors) {
         if (error.algorithm != null) {
-          if (error.algorithm.analyze(page)) {
+          if (error.algorithm.analyze(page, contents, null)) {
             errorsFound.add(error.algorithm);
           }
         }
       }
+    }
+    return errorsFound;
+  }
+
+  /**
+   * Analyze a page to find errors of a given type.
+   * 
+   * @param algorithm Algorithm.
+   * @param page Page to be analyzed.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Errors found in the page.
+   */
+  public static ArrayList<CheckErrorResult> analyzeError(
+      CheckErrorAlgorithm algorithm, Page page, String contents) {
+    ArrayList<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
+    if (algorithm != null) {
+      algorithm.analyze(page, contents, errorsFound);
     }
     return errorsFound;
   }

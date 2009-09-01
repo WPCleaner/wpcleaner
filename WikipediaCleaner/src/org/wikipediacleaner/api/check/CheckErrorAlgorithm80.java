@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.check;
 
+import java.util.ArrayList;
+
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.i18n.GT;
 
@@ -36,38 +38,63 @@ public class CheckErrorAlgorithm80 extends CheckErrorAlgorithmBase {
   }
 
   /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#analyze(org.wikipediacleaner.api.data.Page)
+   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#analyze(org.wikipediacleaner.api.data.Page, java.lang.String, java.util.ArrayList)
    */
-  public boolean analyze(Page page) {
+  public boolean analyze(Page page, String contents, ArrayList<CheckErrorResult> errors) {
     boolean result = false;
-    result |= analyzeProtocol("[http://", page);
-    result |= analyzeProtocol("[ftp://", page);
-    result |= analyzeProtocol("[https://", page);
+    result |= analyzeProtocol("[http://", page, contents, errors);
+    result |= analyzeProtocol("[ftp://", page, contents, errors);
+    result |= analyzeProtocol("[https://", page, contents, errors);
     return result;
   }
 
-  private boolean analyzeProtocol(String protocol, Page page) {
+  /**
+   * Check for errors for on protocol.
+   * 
+   * @param protocol Protocol.
+   * @param page Page.
+   * @param contents Page contents.
+   * @return
+   */
+  private boolean analyzeProtocol(
+      String protocol, Page page, String contents,
+      ArrayList<CheckErrorResult> errors) {
+    if ((page == null) || (contents == null)) {
+      return false;
+    }
+    int startIndex = 0;
     boolean result = false;
-    if ((page != null) && (page.getContents() != null)) {
-      String contents = page.getContents();
-      int currentIndex = 0;
-      while ((!result) && (currentIndex < contents.length())) {
-        int startIndex = contents.indexOf(protocol, currentIndex);
-        if (startIndex < 0) {
-          currentIndex = contents.length();
-        } else {
-          int endIndex = contents.indexOf("]", startIndex);
-          if ((endIndex < 0)) {
-            currentIndex = contents.length();
-            result = true;
+    while (startIndex < contents.length()) {
+      startIndex = contents.indexOf(protocol, startIndex);
+      if (startIndex >= 0) {
+        int endIndex = contents.indexOf("]", startIndex);
+        int lineIndex = contents.indexOf("\n", startIndex);
+        if (endIndex < 0) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          if (lineIndex < 0) {
+            errors.add(new CheckErrorResult(startIndex, contents.length()));
+            startIndex = contents.length();
           } else {
-            currentIndex = endIndex + 1;
-            int lineIndex = contents.indexOf("\n", startIndex);
-            if ((lineIndex >= 0) && (lineIndex < endIndex)) {
-              result = true;
+            errors.add(new CheckErrorResult(startIndex, lineIndex));
+            startIndex = lineIndex + 1;
+          }
+        } else {
+          if ((lineIndex >= 0) && (lineIndex < endIndex)) {
+            if (errors == null) {
+              return true;
             }
+            result = true;
+            errors.add(new CheckErrorResult(startIndex, lineIndex));
+            startIndex = lineIndex + 1;
+          } else {
+            startIndex = endIndex;
           }
         }
+      } else {
+        startIndex = contents.length();
       }
     }
     return result;

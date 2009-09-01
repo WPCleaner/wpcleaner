@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.check;
 
+import java.util.ArrayList;
+
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.i18n.GT;
 
@@ -36,13 +38,28 @@ public class CheckErrorAlgorithm48 extends CheckErrorAlgorithmBase {
   }
 
   /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#analyze(org.wikipediacleaner.api.data.Page)
+   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#analyze(org.wikipediacleaner.api.data.Page, java.lang.String, java.util.ArrayList)
    */
-  public boolean analyze(Page page) {
+  public boolean analyze(Page page, String contents, ArrayList<CheckErrorResult> errors) {
+    if ((page == null) || (contents == null)) {
+      return false;
+    }
+    int startIndex = 0;
+    String search = "[[" + page.getTitle() + "]]"; // TODO: more possibilities (lowercase, space, pipe)
     boolean result = false;
-    if ((page != null) && (page.getContents() != null)) {
-      String contents = page.getContents();
-      result |= (contents.indexOf("[[" + page.getTitle() + "]]") > 0);
+    while (startIndex < contents.length()) {
+      startIndex = contents.indexOf(search, startIndex);
+      if (startIndex >= 0) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        int endIndex = startIndex + search.length();
+        errors.add(new CheckErrorResult(startIndex, endIndex));
+        startIndex = endIndex;
+      } else {
+        startIndex = contents.length();
+      }
     }
     return result;
   }

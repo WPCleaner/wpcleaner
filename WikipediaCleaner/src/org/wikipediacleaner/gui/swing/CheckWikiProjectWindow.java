@@ -46,9 +46,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.text.StyledDocument;
 
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -56,6 +60,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
 import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
 import org.wikipediacleaner.gui.swing.worker.CheckWikiProjectWorker;
 import org.wikipediacleaner.gui.swing.worker.RetrieveContentWorker;
@@ -232,7 +237,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     listAllErrors = new JComboBox(modelAllErrors);
     listAllErrors.addActionListener(new ActionListener() {
       public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
-        actionSelectError();
+        actionSelectErrorType();
       }
     });
     constraints.gridx++;
@@ -345,6 +350,16 @@ public class CheckWikiProjectWindow extends PageWindow {
     modelErrors = new DefaultListModel();
     listErrors = new JList(modelErrors);
     listErrors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    listErrors.addListSelectionListener(new ListSelectionListener() {
+
+      public void valueChanged(ListSelectionEvent e) {
+        if (e.getValueIsAdjusting()) {
+          return;
+        }
+        actionSelectError();
+      }
+      
+    });
     JScrollPane scrollErrors = new JScrollPane(listErrors);
     scrollErrors.setMinimumSize(new Dimension(200, 200));
     scrollErrors.setPreferredSize(new Dimension(200, 300));
@@ -403,9 +418,9 @@ public class CheckWikiProjectWindow extends PageWindow {
   }
 
   /**
-   * Action called when an Error is selected.
+   * Action called when an error type is selected.
    */
-  void actionSelectError() {
+  void actionSelectErrorType() {
     Object selection = listAllErrors.getSelectedItem();
     modelPages.clear();
     if (selection instanceof CheckError) {
@@ -452,11 +467,43 @@ public class CheckWikiProjectWindow extends PageWindow {
   void actionPageSelected() {
     textPage.setPage(selectedPage);
     textPage.setText(selectedPage.getContents());
-    ArrayList<CheckErrorAlgorithm> errorsFound = CheckError.analyzeErrors(errors, selectedPage);
+    ArrayList<CheckErrorAlgorithm> errorsFound = CheckError.analyzeErrors(
+        errors, selectedPage, selectedPage.getContents());
     modelErrors.clear();
     if (errorsFound != null) {
       for (CheckErrorAlgorithm algorithm : errorsFound) {
         modelErrors.addElement(algorithm);
+      }
+    }
+  }
+
+  /**
+   * Action called when an error is selected. 
+   */
+  void actionSelectError() {
+    Object selection = listErrors.getSelectedValue();
+    if (selection instanceof CheckErrorAlgorithm) {
+      CheckErrorAlgorithm algorithm = (CheckErrorAlgorithm) selection;
+      String contents = textPage.getText();
+      ArrayList<CheckErrorResult> errorsFound = CheckError.analyzeError(
+          algorithm, selectedPage, contents);
+      boolean visible = false;
+      if (errorsFound != null) {
+        for (CheckErrorResult error : errorsFound) {
+          StyledDocument document = textPage.getStyledDocument();
+          if (document != null) {
+            document.setCharacterAttributes(
+                error.getStartPosition(),
+                error.getLength(),
+                textPage.getStyle(MediaWikiConstants.STYLE_DISAMBIGUATION_LINK),
+                true);
+            if (!visible) {
+              textPage.setCaretPosition(error.getStartPosition());
+              textPage.moveCaretPosition(error.getEndPosition());
+              visible = true;
+            }
+          }
+        }
       }
     }
   }
