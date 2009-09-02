@@ -21,6 +21,7 @@ package org.wikipediacleaner.gui.swing;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -54,6 +55,7 @@ import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -72,6 +74,8 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckWikiProjectWindow extends PageWindow {
 
+  private Page projectPage;
+
   private ArrayList<CheckError> errors;
   private JComboBox listAllErrors;
   private DefaultComboBoxModel modelAllErrors;
@@ -80,10 +84,8 @@ public class CheckWikiProjectWindow extends PageWindow {
   private DefaultListModel modelPages;
   private JCheckBox chkShowFullList;
 
-  private Page selectedPage;
   private JList listErrors;
   private DefaultListModel modelErrors;
-  private MediaWikiPane textPage;
 
   /**
    * Create and display a CheckWikiProjectWindow.
@@ -98,13 +100,6 @@ public class CheckWikiProjectWindow extends PageWindow {
         WindowConstants.DISPOSE_ON_CLOSE,
         CheckWikiProjectWindow.class,
         new DefaultBasicWindowListener() {
-          @Override
-          public void initializeWindow(BasicWindow window) {
-            if (window instanceof CheckWikiProjectWindow) {
-              CheckWikiProjectWindow analysis = (CheckWikiProjectWindow) window;
-              analysis.setPageName(wikipedia.getCheckWikiProject());
-            }
-          }
           @Override
           public void displayWindow(BasicWindow window) {
             if (window instanceof CheckWikiProjectWindow) {
@@ -139,6 +134,10 @@ public class CheckWikiProjectWindow extends PageWindow {
    */
   @Override
   protected Component createComponents() {
+    projectPage = DataManager.getPage(
+        getWikipedia(),
+        getWikipedia().getCheckWikiProject(), null);
+
     JPanel panel = new JPanel(new GridBagLayout());
 
     // Initialize constraints
@@ -346,6 +345,17 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.weightx = 1;
     constraints.weighty = 0;
 
+    // Buttons
+    JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    addButtonSend(panelButtons);
+    addButtonView(panelButtons);
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridwidth = 2;
+    constraints.weightx = 1;
+    constraints.weighty = 0;
+    panel.add(panelButtons, constraints);
+    constraints.gridy++;
+
     // Errors list
     modelErrors = new DefaultListModel();
     listErrors = new JList(modelErrors);
@@ -365,6 +375,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     scrollErrors.setPreferredSize(new Dimension(200, 300));
     scrollErrors.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     constraints.fill = GridBagConstraints.BOTH;
+    constraints.gridwidth = 1;
     constraints.gridx = 0;
     constraints.weightx = 0;
     constraints.weighty = 1;
@@ -372,15 +383,16 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.gridx++;
 
     // Page contents
-    textPage = new MediaWikiPane(getWikipedia(), null, this);
-    JScrollPane scrollPage = new JScrollPane(textPage);
+    createTextContents(this);
+    /*JScrollPane scrollPage = new JScrollPane(getTextContents());
     scrollPage.setMinimumSize(new Dimension(200, 200));
     scrollPage.setPreferredSize(new Dimension(1000, 500));
-    scrollPage.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    scrollPage.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);*/
     constraints.fill = GridBagConstraints.BOTH;
     constraints.weightx = 1;
     constraints.weighty = 1;
-    panel.add(scrollPage, constraints);
+    //panel.add(scrollPage, constraints);
+    addTextContents(panel, constraints);
     constraints.gridy++;
 
     return panel;
@@ -407,12 +419,14 @@ public class CheckWikiProjectWindow extends PageWindow {
    * Analyze the Check Wiki page contents.
    */
   private void analyzeCheckWiki() {
-    String contents = getPage().getContents();
+    String contents = projectPage.getContents();
     errors = CheckError.initCheckErrors(getWikipedia(), contents);
     if (modelAllErrors != null) {
       modelAllErrors.removeAllElements();
-      for (CheckError error : errors) {
-        modelAllErrors.addElement(error);
+      if (errors != null) {
+        for (CheckError error : errors) {
+          modelAllErrors.addElement(error);
+        }
       }
     }
   }
@@ -443,8 +457,8 @@ public class CheckWikiProjectWindow extends PageWindow {
   void actionSelectPage() {
     Object selection = listPages.getSelectedValue();
     if (selection instanceof Page) {
-      selectedPage = (Page) selection;
-      RetrieveContentWorker contentWorker = new RetrieveContentWorker(this, selectedPage);
+      setPage((Page) selection);
+      RetrieveContentWorker contentWorker = new RetrieveContentWorker(this, getPage());
       contentWorker.setListener(new DefaultBasicWorkerListener() {
 
         /* (non-Javadoc)
@@ -465,10 +479,12 @@ public class CheckWikiProjectWindow extends PageWindow {
    * Action called when a page is selected (after page is loaded).
    */
   void actionPageSelected() {
-    textPage.setPage(selectedPage);
-    textPage.setText(selectedPage.getContents());
+    MediaWikiPane textPage = getTextContents();
+    textPage.setPage(getPage());
+    textPage.setText(getPage().getContents());
+    textPage.setModified(false);
     ArrayList<CheckErrorAlgorithm> errorsFound = CheckError.analyzeErrors(
-        errors, selectedPage, selectedPage.getContents());
+        errors, getPage(), getPage().getContents());
     modelErrors.clear();
     if (errorsFound != null) {
       for (CheckErrorAlgorithm algorithm : errorsFound) {
@@ -490,9 +506,11 @@ public class CheckWikiProjectWindow extends PageWindow {
     Object selection = listErrors.getSelectedValue();
     if (selection instanceof CheckErrorAlgorithm) {
       CheckErrorAlgorithm algorithm = (CheckErrorAlgorithm) selection;
+      MediaWikiPane textPage = getTextContents();
+      boolean modified = textPage.isModified();
       String contents = textPage.getText();
       ArrayList<CheckErrorResult> errorsFound = CheckError.analyzeError(
-          algorithm, selectedPage, contents);
+          algorithm, getPage(), contents);
       boolean visible = false;
       if (errorsFound != null) {
         for (CheckErrorResult error : errorsFound) {
@@ -511,6 +529,8 @@ public class CheckWikiProjectWindow extends PageWindow {
           }
         }
       }
+      textPage.setModified(modified);
+      updateComponentState();
     }
   }
 
@@ -520,7 +540,7 @@ public class CheckWikiProjectWindow extends PageWindow {
   @Override
   protected void actionReload() {
     clean();
-    CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(this, getPage());
+    CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(this, projectPage);
     setupReloadWorker(reloadWorker);
     reloadWorker.start();
   }
