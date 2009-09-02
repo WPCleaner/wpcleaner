@@ -25,16 +25,16 @@ import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * Algorithm for analyzing error 46 of check wikipedia project.
- * Error 46: Square brackets not correct begin
+ * Algorithm for analyzing error 47 of check wikipedia project.
+ * Error 47: Template not correct begin
  */
-public class CheckErrorAlgorithm46 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm47 extends CheckErrorAlgorithmBase {
 
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#getErrorDescription()
    */
   public String getErrorDescription() {
-    return GT._("Square brackets not correct begin");
+    return GT._("Template not correct begin");
   }
 
   /* (non-Javadoc)
@@ -46,8 +46,8 @@ public class CheckErrorAlgorithm46 extends CheckErrorAlgorithmBase {
     }
     int startIndex = 0;
     boolean result = false;
-    int beginIndex = contents.indexOf("[[", startIndex);
-    int endIndex = contents.indexOf("]]", startIndex);
+    int beginIndex = contents.indexOf("{{", startIndex);
+    int endIndex = contents.indexOf("}}", startIndex);
     int count = 0;
     while (startIndex < contents.length()) {
       if ((beginIndex < 0) && (endIndex < 0)) {
@@ -55,7 +55,7 @@ public class CheckErrorAlgorithm46 extends CheckErrorAlgorithmBase {
       } else if ((beginIndex >= 0) && ((beginIndex < endIndex) || (endIndex < 0))) {
         count++;
         startIndex = beginIndex + 2;
-        beginIndex = contents.indexOf("[[", startIndex);
+        beginIndex = contents.indexOf("{{", startIndex);
       } else {
         count--;
         if (count < 0) {
@@ -67,7 +67,7 @@ public class CheckErrorAlgorithm46 extends CheckErrorAlgorithmBase {
           count = 0;
         }
         startIndex = endIndex + 2;
-        endIndex = contents.indexOf("]]", startIndex);
+        endIndex = contents.indexOf("}}", startIndex);
       }
     }
     return result;

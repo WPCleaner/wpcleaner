@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-02 19:02+0200\n"
+"POT-Creation-Date: 2009-09-02 19:32+0200\n"
 "PO-Revision-Date: 2009-05-02 11:38+0000\n"
 "Last-Translator: kwj2772 <kwj2772@gmail.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -33,6 +33,10 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm46.java:37
 msgid "Square brackets not correct begin"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm47.java:37
+msgid "Template not correct begin"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm48.java:37
