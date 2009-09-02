@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-30 14:55+0200\n"
+"POT-Creation-Date: 2009-09-02 19:02+0200\n"
 "PO-Revision-Date: 2008-06-02 11:28+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -22,20 +22,24 @@ msgstr ""
 msgid "Page {0}:"
 msgstr "&Side :"
 
-#: org/wikipediacleaner/api/check/CheckError.java:206
+#: org/wikipediacleaner/api/check/CheckError.java:228
 #, java-format
 msgid "Error n°{0} ({1}) - {2}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:211
+#: org/wikipediacleaner/api/check/CheckError.java:233
 msgid "Error unkown from WikiCleaner"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm48.java:35
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm46.java:37
+msgid "Square brackets not correct begin"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm48.java:37
 msgid "Title linked in text"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm80.java:35
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm80.java:37
 msgid "External link with line break"
 msgstr ""
 
@@ -227,33 +231,33 @@ msgstr ""
 msgid "Semi-automatic disambiguation fixing"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:118
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:123
 #, fuzzy
 msgid "Check Wikipedia"
 msgstr "&Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:154
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:159
 msgid "This screen is not functional yet !"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:224
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:229
 msgid "List of errors detected :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:252
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:257
 #, fuzzy
 msgid "Pages"
 msgstr "&Side :"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:268
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:273
 msgid "Load full list"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:279
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:284
 msgid "Show full list"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:329
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:334
 msgid "Selected page"
 msgstr ""
 
