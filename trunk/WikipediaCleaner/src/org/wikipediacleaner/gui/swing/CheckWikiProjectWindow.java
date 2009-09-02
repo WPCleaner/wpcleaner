@@ -475,6 +475,12 @@ public class CheckWikiProjectWindow extends PageWindow {
         modelErrors.addElement(algorithm);
       }
     }
+    int index = modelErrors.indexOf(listAllErrors.getSelectedItem());
+    if (index >= 0) {
+      listErrors.setSelectedIndex(index);
+    } else if (modelErrors.getSize() > 0) {
+      listErrors.setSelectedIndex(0);
+    }
   }
 
   /**
