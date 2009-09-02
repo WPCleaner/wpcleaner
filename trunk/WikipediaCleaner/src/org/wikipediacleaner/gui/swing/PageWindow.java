@@ -77,6 +77,13 @@ public abstract class PageWindow
   }
 
   /**
+   * @param page Page.
+   */
+  protected void setPage(Page page) {
+    this.page = page;
+  }
+
+  /**
    * @return Page name.
    */
   protected String getPageName() {
