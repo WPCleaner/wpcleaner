@@ -25,16 +25,16 @@ import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * Algorithm for analyzing error 48 of check wikipedia project.
- * Error 48: Title linked in text
+ * Algorithm for analyzing error 2 of check wikipedia project.
+ * Error 2: Article with false <br/>
  */
-public class CheckErrorAlgorithm48 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm2 extends CheckErrorAlgorithmBase {
 
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#getErrorDescription()
    */
   public String getErrorDescription() {
-    return GT._("Title linked in text");
+    return GT._("Article with false <br/>");
   }
 
   /* (non-Javadoc)
@@ -44,7 +44,10 @@ public class CheckErrorAlgorithm48 extends CheckErrorAlgorithmBase {
     if ((page == null) || (contents == null)) {
       return false;
     }
-    String search = "[[" + page.getTitle() + "]]"; // TODO: more possibilities (lowercase, space, pipe)
-    return simpleTextSearch(page, contents, errors, search);
+    boolean result = false;
+    result |= simpleTextSearch(page, contents, errors, "<br\\>");
+    result |= simpleTextSearch(page, contents, errors, "<\\br>");
+    result |= simpleTextSearch(page, contents, errors, "<br.>");
+    return result;
   }
 }

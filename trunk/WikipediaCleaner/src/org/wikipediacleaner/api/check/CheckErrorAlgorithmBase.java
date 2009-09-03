@@ -18,6 +18,10 @@
 
 package org.wikipediacleaner.api.check;
 
+import java.util.ArrayList;
+
+import org.wikipediacleaner.api.data.Page;
+
 
 /**
  * Abstract base class for analyzing errors.
@@ -32,4 +36,32 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     return getErrorDescription();
   }
 
+  /**
+   * Search for simple text in page.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param errors Errors found in the page.
+   * @param search Text to be searched.
+   * @return Flag indicating if the error was found.
+   */
+  protected boolean simpleTextSearch(Page page, String contents, ArrayList<CheckErrorResult> errors, String search) {
+    int startIndex = 0;
+    boolean result = false;
+    while (startIndex < contents.length()) {
+      startIndex = contents.indexOf(search, startIndex);
+      if (startIndex >= 0) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        int endIndex = startIndex + search.length();
+        errors.add(new CheckErrorResult(startIndex, endIndex));
+        startIndex = endIndex;
+      } else {
+        startIndex = contents.length();
+      }
+    }
+    return result;
+  }
 }
