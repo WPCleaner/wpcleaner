@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-04 19:04+0200\n"
+"POT-Creation-Date: 2009-09-04 23:07+0200\n"
 "PO-Revision-Date: 2009-04-26 05:39+0000\n"
 "Last-Translator: Hartmut Holzgraefe <hartmut@php.net>\n"
 "Language-Team: German <de@li.org>\n"
@@ -29,6 +29,10 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:233
 msgid "Error unkown from WikiCleaner"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm10.java:37
+msgid "Square brackets not correct end"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm2.java:37
