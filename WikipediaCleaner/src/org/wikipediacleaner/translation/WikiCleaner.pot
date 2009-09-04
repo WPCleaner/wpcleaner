@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-04 18:49+0200\n"
+"POT-Creation-Date: 2009-09-04 19:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -60,6 +60,10 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm80.java:37
 msgid "External link with line break"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm81.java:37
+msgid "Reference duplication"
 msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
