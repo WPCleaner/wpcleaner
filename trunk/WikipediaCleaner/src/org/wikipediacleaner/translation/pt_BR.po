@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-04 18:49+0200\n"
+"POT-Creation-Date: 2009-09-04 19:04+0200\n"
 "PO-Revision-Date: 2008-07-24 02:38+0000\n"
 "Last-Translator: Ricardo Ichizo <n1ghtcr4wler@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -61,6 +61,10 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm80.java:37
 msgid "External link with line break"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm81.java:37
+msgid "Reference duplication"
 msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
