@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-03 18:44+0200\n"
+"POT-Creation-Date: 2009-09-04 18:25+0200\n"
 "PO-Revision-Date: 2008-11-30 16:28+0000\n"
 "Last-Translator: Luca Livraghi <luca.91@hotmail.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -33,6 +33,10 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm2.java:37
 msgid "Article with false <br/>"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:37
+msgid "Double pipe in one link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm46.java:37
