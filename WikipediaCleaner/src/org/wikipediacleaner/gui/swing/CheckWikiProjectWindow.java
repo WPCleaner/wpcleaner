@@ -512,10 +512,11 @@ public class CheckWikiProjectWindow extends PageWindow {
       ArrayList<CheckErrorResult> errorsFound = CheckError.analyzeError(
           algorithm, getPage(), contents);
       boolean visible = false;
-      if (errorsFound != null) {
-        for (CheckErrorResult error : errorsFound) {
-          StyledDocument document = textPage.getStyledDocument();
-          if (document != null) {
+      textPage.resetAttributes();
+      StyledDocument document = textPage.getStyledDocument();
+      if (document != null) {
+        if (errorsFound != null) {
+          for (CheckErrorResult error : errorsFound) {
             document.setCharacterAttributes(
                 error.getStartPosition(),
                 error.getLength(),

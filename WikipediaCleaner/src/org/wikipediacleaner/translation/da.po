@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-04 18:25+0200\n"
+"POT-Creation-Date: 2009-09-04 18:49+0200\n"
 "PO-Revision-Date: 2008-06-02 11:28+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -37,6 +37,14 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:37
 msgid "Double pipe in one link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm34.java:37
+msgid "Template programming element"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm43.java:37
+msgid "Template not correct end"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm46.java:37
