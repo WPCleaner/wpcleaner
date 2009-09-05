@@ -448,6 +448,8 @@ public class CheckWikiProjectWindow extends PageWindow {
         Page page = error.getPage(numPage, chkShowFullList.isSelected());
         modelPages.addElement(page);
       }
+      setPageLoaded(false);
+      actionSelectPage();
     }
   }
 
@@ -466,12 +468,18 @@ public class CheckWikiProjectWindow extends PageWindow {
          */
         @Override
         public void beforeFinished(BasicWorker worker) {
+          setPageLoaded(true);
           super.beforeFinished(worker);
           actionPageSelected();
         }
         //
       });
       contentWorker.start();
+    } else {
+      setPage(null);
+      setPageLoaded(false);
+      actionPageSelected();
+      updateComponentState();
     }
   }
 
@@ -480,22 +488,30 @@ public class CheckWikiProjectWindow extends PageWindow {
    */
   void actionPageSelected() {
     MediaWikiPane textPage = getTextContents();
-    textPage.setPage(getPage());
-    textPage.setText(getPage().getContents());
-    textPage.setModified(false);
-    ArrayList<CheckErrorAlgorithm> errorsFound = CheckError.analyzeErrors(
-        errors, getPage(), getPage().getContents());
-    modelErrors.clear();
-    if (errorsFound != null) {
-      for (CheckErrorAlgorithm algorithm : errorsFound) {
-        modelErrors.addElement(algorithm);
+    Page page = getPage();
+    if (page != null) {
+      textPage.setPage(page);
+      textPage.setText(page.getContents());
+      textPage.setModified(false);
+      ArrayList<CheckErrorAlgorithm> errorsFound = CheckError.analyzeErrors(
+          errors, page, page.getContents());
+      modelErrors.clear();
+      if (errorsFound != null) {
+        for (CheckErrorAlgorithm algorithm : errorsFound) {
+          modelErrors.addElement(algorithm);
+        }
       }
-    }
-    int index = modelErrors.indexOf(listAllErrors.getSelectedItem());
-    if (index >= 0) {
-      listErrors.setSelectedIndex(index);
-    } else if (modelErrors.getSize() > 0) {
-      listErrors.setSelectedIndex(0);
+      int index = modelErrors.indexOf(listAllErrors.getSelectedItem());
+      if (index >= 0) {
+        listErrors.setSelectedIndex(index);
+      } else if (modelErrors.getSize() > 0) {
+        listErrors.setSelectedIndex(0);
+      }
+    } else {
+      textPage.setPage((Page) null);
+      textPage.setText("");
+      textPage.setModified(false);
+      modelErrors.clear();
     }
   }
 

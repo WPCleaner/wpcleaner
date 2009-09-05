@@ -87,6 +87,9 @@ public abstract class PageWindow
    * @return Page name.
    */
   protected String getPageName() {
+    if ((pageName == null) && (page != null)) {
+      return page.getTitle();
+    }
     return pageName;
   }
 
@@ -119,6 +122,15 @@ public abstract class PageWindow
    */
   protected void setPageLoaded() {
     pageLoaded = true;
+  }
+
+  /**
+   * Indicates if the page is loaded.
+   * 
+   * @param loaded Flag indicating if the page is loaded.
+   */
+  protected void setPageLoaded(boolean loaded) {
+    pageLoaded = loaded;
   }
 
   /**
