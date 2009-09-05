@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-05 12:59+0200\n"
+"POT-Creation-Date: 2009-09-05 15:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,6 +64,10 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm48.java:37
 msgid "Title linked in text"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm64.java:37
+msgid "Link equal to linktext"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm8.java:37
