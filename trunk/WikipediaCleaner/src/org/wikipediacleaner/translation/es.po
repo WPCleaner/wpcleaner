@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-05 12:59+0200\n"
+"POT-Creation-Date: 2009-09-05 15:40+0200\n"
 "PO-Revision-Date: 2009-09-05 13:22+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -66,6 +66,10 @@ msgstr "Número de llaves incorrecto"
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm48.java:37
 msgid "Title linked in text"
 msgstr "Enlace a la propia página"
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm64.java:37
+msgid "Link equal to linktext"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm8.java:37
 msgid "Headline should end with \"=\""
@@ -259,7 +263,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
-msgid "Please, check if you need the bot status by reading the rules of Wikipedia."
+msgid ""
+"Please, check if you need the bot status by reading the rules of Wikipedia."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:114
@@ -359,7 +364,8 @@ msgid "It may modify a lot of pages in a short period of time."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:591
-msgid "Also, verify again the texts you have inputed before running this function."
+msgid ""
+"Also, verify again the texts you have inputed before running this function."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:592
@@ -470,7 +476,9 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:604
 msgid "You must select which Wikipedia you want to work on before login"
-msgstr "Debe seleccionar la Wikipedia en que desea trabajar antes de iniciar la sesión"
+msgstr ""
+"Debe seleccionar la Wikipedia en que desea trabajar antes de iniciar la "
+"sesión"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:616
 msgid "You can learn how to add other Wikipedia at the following URL:"
@@ -498,19 +506,24 @@ msgstr "Puede leer la ayuda sobre Wikipedia Cleaner en la siguiente URL:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:737
 msgid "You can submit bug reports or feature requests at the following URL:"
-msgstr "Puede enviar informes de error o peticiones de nuevas características en la siguiente URL:"
+msgstr ""
+"Puede enviar informes de error o peticiones de nuevas características en la "
+"siguiente URL:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:749
 msgid ""
-"The password will be saved on your disk, so anyone having access to your computer may be able to get it.\n"
+"The password will be saved on your disk, so anyone having access to your "
+"computer may be able to get it.\n"
 "Are you sure that you want to save it ?"
 msgstr ""
-"La contraseña se guardará en su disco, de modo que cualquier persona que tenga acceso a su computadora puede ser capaz de conseguirla.\n"
+"La contraseña se guardará en su disco, de modo que cualquier persona que "
+"tenga acceso a su computadora puede ser capaz de conseguirla.\n"
 "¿Estás seguro de que desea guardarlo?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:766
 msgid "You must input a page name for running a full analysis"
-msgstr "Debe introsucir un nombre de la página para ejecutar un análisis completo"
+msgstr ""
+"Debe introsucir un nombre de la página para ejecutar un análisis completo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:786
 msgid "You must input a page name for running a disambiguation analysis"
@@ -1102,4 +1115,3 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:59
 msgid "Updating page contents"
 msgstr ""
-

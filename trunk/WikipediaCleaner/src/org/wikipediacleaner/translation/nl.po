@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-05 12:59+0200\n"
+"POT-Creation-Date: 2009-09-05 15:40+0200\n"
 "PO-Revision-Date: 2009-09-05 13:27+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -66,6 +66,10 @@ msgstr "Template heeft geen correct begin"
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm48.java:37
 msgid "Title linked in text"
 msgstr "Titel in tekst"
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm64.java:37
+msgid "Link equal to linktext"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm8.java:37
 msgid "Headline should end with \"=\""
@@ -263,7 +267,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
-msgid "Please, check if you need the bot status by reading the rules of Wikipedia."
+msgid ""
+"Please, check if you need the bot status by reading the rules of Wikipedia."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:114
@@ -362,7 +367,8 @@ msgid "It may modify a lot of pages in a short period of time."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:591
-msgid "Also, verify again the texts you have inputed before running this function."
+msgid ""
+"Also, verify again the texts you have inputed before running this function."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:592
@@ -509,7 +515,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:749
 msgid ""
-"The password will be saved on your disk, so anyone having access to your computer may be able to get it.\n"
+"The password will be saved on your disk, so anyone having access to your "
+"computer may be able to get it.\n"
 "Are you sure that you want to save it ?"
 msgstr ""
 
@@ -1118,4 +1125,3 @@ msgstr ""
 #, fuzzy
 #~ msgid "Project - {0}"
 #~ msgstr "Voorbeeld - {0}"
-
