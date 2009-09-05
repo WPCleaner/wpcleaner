@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-05 12:50+0200\n"
+"POT-Creation-Date: 2009-09-05 12:59+0200\n"
 "PO-Revision-Date: 2008-07-24 02:38+0000\n"
 "Last-Translator: Ricardo Ichizo <n1ghtcr4wler@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -33,6 +33,10 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm10.java:37
 msgid "Square brackets not correct end"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm19.java:37
+msgid "Headlines start with one \"=\""
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm2.java:37

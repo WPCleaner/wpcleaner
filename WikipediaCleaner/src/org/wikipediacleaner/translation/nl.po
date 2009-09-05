@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-05 12:50+0200\n"
-"PO-Revision-Date: 2008-06-02 11:44+0000\n"
-"Last-Translator: Ward De Ridder <ward.ubuntu@gmail.com>\n"
+"POT-Creation-Date: 2009-09-05 12:59+0200\n"
+"PO-Revision-Date: 2009-09-05 13:27+0100\n"
+"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,15 +33,19 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm10.java:37
 msgid "Square brackets not correct end"
-msgstr ""
+msgstr "Foute links"
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm19.java:37
+msgid "Headlines start with one \"=\""
+msgstr "Eerstegraads koppen"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm2.java:37
 msgid "Article with false <br/>"
-msgstr ""
+msgstr "Verkeerde"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:37
 msgid "Double pipe in one link"
-msgstr ""
+msgstr "Dubbele pipe-teken gevonden in een link"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm34.java:37
 msgid "Template programming element"
@@ -49,23 +53,23 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm43.java:37
 msgid "Template not correct end"
-msgstr ""
+msgstr "Template gevonden zonder correcte einde"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm46.java:37
 msgid "Square brackets not correct begin"
-msgstr ""
+msgstr "Missende begin blokhaken"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm47.java:37
 msgid "Template not correct begin"
-msgstr ""
+msgstr "Template heeft geen correct begin"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm48.java:37
 msgid "Title linked in text"
-msgstr ""
+msgstr "Titel in tekst"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm8.java:37
 msgid "Headline should end with \"=\""
-msgstr ""
+msgstr "Kop gevonden die niet eindigt op \"=\""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm80.java:37
 msgid "External link with line break"
@@ -259,8 +263,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
-msgid ""
-"Please, check if you need the bot status by reading the rules of Wikipedia."
+msgid "Please, check if you need the bot status by reading the rules of Wikipedia."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:114
@@ -359,8 +362,7 @@ msgid "It may modify a lot of pages in a short period of time."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:591
-msgid ""
-"Also, verify again the texts you have inputed before running this function."
+msgid "Also, verify again the texts you have inputed before running this function."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:592
@@ -507,8 +509,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:749
 msgid ""
-"The password will be saved on your disk, so anyone having access to your "
-"computer may be able to get it.\n"
+"The password will be saved on your disk, so anyone having access to your computer may be able to get it.\n"
 "Are you sure that you want to save it ?"
 msgstr ""
 
@@ -1117,3 +1118,4 @@ msgstr ""
 #, fuzzy
 #~ msgid "Project - {0}"
 #~ msgstr "Voorbeeld - {0}"
+
