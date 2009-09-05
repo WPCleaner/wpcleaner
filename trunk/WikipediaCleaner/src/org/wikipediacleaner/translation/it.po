@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-05 12:50+0200\n"
-"PO-Revision-Date: 2008-11-30 16:28+0000\n"
-"Last-Translator: Luca Livraghi <luca.91@hotmail.it>\n"
+"POT-Creation-Date: 2009-09-05 12:59+0200\n"
+"PO-Revision-Date: 2009-09-05 13:31+0100\n"
+"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,47 +33,51 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm10.java:37
 msgid "Square brackets not correct end"
-msgstr ""
+msgstr "Doppie quadre non chiuse"
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm19.java:37
+msgid "Headlines start with one \"=\""
+msgstr "Sezioni che iniziano con un solo \"=\""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm2.java:37
 msgid "Article with false <br/>"
-msgstr ""
+msgstr "Voci con falsi <br/>"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:37
 msgid "Double pipe in one link"
-msgstr ""
+msgstr "Wikilink con doppia pipe"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm34.java:37
 msgid "Template programming element"
-msgstr ""
+msgstr "Elementi di programmazione dei template"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm43.java:37
 msgid "Template not correct end"
-msgstr ""
+msgstr "Template senza graffe di chiusura"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm46.java:37
 msgid "Square brackets not correct begin"
-msgstr ""
+msgstr "Doppie quadre non aperte"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm47.java:37
 msgid "Template not correct begin"
-msgstr ""
+msgstr "Template senza graffe di apertura"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm48.java:37
 msgid "Title linked in text"
-msgstr ""
+msgstr "Wikilink al titolo della voce"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm8.java:37
 msgid "Headline should end with \"=\""
-msgstr ""
+msgstr "Titolo di sezione che non finisce con \"=\""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm80.java:37
 msgid "External link with line break"
-msgstr ""
+msgstr "Collegamenti esterni con a capo"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm81.java:37
 msgid "Reference duplication"
-msgstr ""
+msgstr "Nota doppia"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
@@ -255,8 +259,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
-msgid ""
-"Please, check if you need the bot status by reading the rules of Wikipedia."
+msgid "Please, check if you need the bot status by reading the rules of Wikipedia."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:114
@@ -343,9 +346,7 @@ msgstr "Seleziona i &prossimi link"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:575
 msgid "You must select the pages on which running automatic disambiguation."
-msgstr ""
-"Devi selezionare le pagine su cui sta lavorando la disambiguazione "
-"automatica."
+msgstr "Devi selezionare le pagine su cui sta lavorando la disambiguazione automatica."
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:581
 msgid "You must input the initial and destination texts."
@@ -360,8 +361,7 @@ msgid "It may modify a lot of pages in a short period of time."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:591
-msgid ""
-"Also, verify again the texts you have inputed before running this function."
+msgid "Also, verify again the texts you have inputed before running this function."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:592
@@ -500,18 +500,14 @@ msgstr "Puoi leggere l'aiuto di Wikipedia Cleaner al seguente URL:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:737
 msgid "You can submit bug reports or feature requests at the following URL:"
-msgstr ""
-"Puoi iscriverti al rapporto Bug o alla richiesta di caratteristiche al "
-"seguente indirizzo:"
+msgstr "Puoi iscriverti al rapporto Bug o alla richiesta di caratteristiche al seguente indirizzo:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:749
 msgid ""
-"The password will be saved on your disk, so anyone having access to your "
-"computer may be able to get it.\n"
+"The password will be saved on your disk, so anyone having access to your computer may be able to get it.\n"
 "Are you sure that you want to save it ?"
 msgstr ""
-"La password verrà salvata sul tuo disco, in questo modo ognuno che ha "
-"accesso al tuo computer potrebbe essere capace di ottenerla.\n"
+"La password verrà salvata sul tuo disco, in questo modo ognuno che ha accesso al tuo computer potrebbe essere capace di ottenerla.\n"
 "Sei sicuro di volerla salvare?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:766
@@ -520,20 +516,16 @@ msgstr "Devi inserire un nome pagina per far partire una analisi completa"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:786
 msgid "You must input a page name for running a disambiguation analysis"
-msgstr ""
-"Devi inserire un nome pagina per far partire una analisi delle "
-"disambiguazioni"
+msgstr "Devi inserire un nome pagina per far partire una analisi delle disambiguazioni"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:809
 msgid "There's no known list of disambiguation pages for this Wikipedia."
-msgstr ""
-"Non c'è nessuna lista di disambiguazione conosciuta per questa Wikipedia."
+msgstr "Non c'è nessuna lista di disambiguazione conosciuta per questa Wikipedia."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:833
 #, fuzzy
 msgid "There's no known Check Wikipedia Project for this Wikipedia."
-msgstr ""
-"Non c'è nessuna lista di disambiguazione conosciuta per questa Wikipedia."
+msgstr "Non c'è nessuna lista di disambiguazione conosciuta per questa Wikipedia."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:867
 msgid "Watched pages"
@@ -776,9 +768,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:311
 msgid "Enter the page title you want to add to your local watch list"
-msgstr ""
-"Inserisci il titolo della pagina che vuoi aggiungere ai tuoi osservati "
-"speciali"
+msgstr "Inserisci il titolo della pagina che vuoi aggiungere ai tuoi osservati speciali"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
@@ -1118,3 +1108,4 @@ msgstr "Ottenendo pagina casuale"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:59
 msgid "Updating page contents"
 msgstr "Aggiornamento contenuti pagina"
+
