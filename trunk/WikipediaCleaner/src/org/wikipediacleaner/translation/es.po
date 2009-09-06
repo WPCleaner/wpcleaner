@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-05 15:40+0200\n"
+"POT-Creation-Date: 2009-09-06 13:26+0200\n"
 "PO-Revision-Date: 2009-09-05 13:22+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -43,6 +43,15 @@ msgstr "Cabeceras: La primera viene dada por \"=\""
 msgid "Article with false <br/>"
 msgstr "Artículos con <br> incorrecto"
 
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm26.java:37
+msgid "HTML text style element <b>"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm28.java:37
+#, fuzzy
+msgid "Table not correct end"
+msgstr "Plantilla sin cerrar correctamente"
+
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:37
 msgid "Double pipe in one link"
 msgstr "Separador doble en un enlace"
@@ -50,6 +59,14 @@ msgstr "Separador doble en un enlace"
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm34.java:37
 msgid "Template programming element"
 msgstr "Elemento programador de plantilla"
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm38.java:37
+msgid "HTML text style element <i>"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm39.java:37
+msgid "HTML text style element <p>"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm43.java:37
 msgid "Template not correct end"

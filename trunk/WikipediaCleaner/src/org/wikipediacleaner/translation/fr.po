@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-05 15:40+0200\n"
+"POT-Creation-Date: 2009-09-06 13:26+0200\n"
 "PO-Revision-Date: 2009-09-05 13:07+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -47,6 +47,15 @@ msgstr "Titre de niveau 1 commençant par un seul « = »"
 msgid "Article with false <br/>"
 msgstr "Syntaxe erronée de saut de ligne"
 
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm26.java:37
+msgid "HTML text style element <b>"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm28.java:37
+#, fuzzy
+msgid "Table not correct end"
+msgstr "Modèle mal fermé"
+
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:37
 msgid "Double pipe in one link"
 msgstr "Lien interne avec deux barres verticales"
@@ -54,6 +63,14 @@ msgstr "Lien interne avec deux barres verticales"
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm34.java:37
 msgid "Template programming element"
 msgstr "Éléments de programmation de modèles"
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm38.java:37
+msgid "HTML text style element <i>"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm39.java:37
+msgid "HTML text style element <p>"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm43.java:37
 msgid "Template not correct end"
