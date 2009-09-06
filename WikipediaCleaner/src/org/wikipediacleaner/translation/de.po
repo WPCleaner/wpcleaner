@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-05 15:40+0200\n"
+"POT-Creation-Date: 2009-09-06 13:26+0200\n"
 "PO-Revision-Date: 2009-09-05 13:18+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -43,6 +43,15 @@ msgstr "Überschriften beginnen mit einem „=“"
 msgid "Article with false <br/>"
 msgstr "Artikel mit nicht standardkonformen manuellen Zeilenumbrüchen"
 
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm26.java:37
+msgid "HTML text style element <b>"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm28.java:37
+#, fuzzy
+msgid "Table not correct end"
+msgstr "Vorlage ohne korrektes Ende"
+
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:37
 msgid "Double pipe in one link"
 msgstr "Doppelter senkrechter Strich in einem Link"
@@ -50,6 +59,14 @@ msgstr "Doppelter senkrechter Strich in einem Link"
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm34.java:37
 msgid "Template programming element"
 msgstr "Reste aus Vorlagenprogrammierung"
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm38.java:37
+msgid "HTML text style element <i>"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm39.java:37
+msgid "HTML text style element <p>"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm43.java:37
 msgid "Template not correct end"

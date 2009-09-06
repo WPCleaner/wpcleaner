@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-05 15:40+0200\n"
+"POT-Creation-Date: 2009-09-06 13:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,12 +42,28 @@ msgstr ""
 msgid "Article with false <br/>"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm26.java:37
+msgid "HTML text style element <b>"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm28.java:37
+msgid "Table not correct end"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:37
 msgid "Double pipe in one link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm34.java:37
 msgid "Template programming element"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm38.java:37
+msgid "HTML text style element <i>"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm39.java:37
+msgid "HTML text style element <p>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm43.java:37
