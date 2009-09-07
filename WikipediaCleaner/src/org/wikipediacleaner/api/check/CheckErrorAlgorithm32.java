@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.check;
 
 import java.util.ArrayList;
 
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.i18n.GT;
 
@@ -50,6 +51,11 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
     int endIndex = 0;
     int pipe1Index = 0;
     int pipe2Index = 0;
+    Namespace fileNamespace = Namespace.getNamespace(Namespace.IMAGE, page.getWikipedia().getNamespaces());
+    String localFileNamespace = null;
+    if (fileNamespace != null) {
+      localFileNamespace = fileNamespace.getTitle();
+    }
     while (startIndex < contents.length()) {
       // Update of begin index
       if ((beginIndex >= 0) && (beginIndex < startIndex)) {
@@ -91,7 +97,8 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
             if (pipe2Index < endIndex) {
               if ((beginIndex2 < 0) || (beginIndex2 > endIndex)) {
                 if ((!contents.startsWith("File:", beginIndex)) &&
-                    (!contents.startsWith("Image:", beginIndex))) {
+                    (!contents.startsWith("Image:", beginIndex)) &&
+                    ((localFileNamespace == null) || (!contents.startsWith(localFileNamespace, beginIndex)))) {
                   if (errors == null) {
                     return true;
                   }
