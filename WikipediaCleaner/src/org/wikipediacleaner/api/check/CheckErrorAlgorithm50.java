@@ -45,8 +45,8 @@ public class CheckErrorAlgorithm50 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
-    result |= simpleTextSearch(page, contents, errors, "&mdash;");
-    result |= simpleTextSearch(page, contents, errors, "&ndash;");
+    result |= simpleTextSearch(page, contents, errors, "&mdash;", "—");
+    result |= simpleTextSearch(page, contents, errors, "&ndash;", "–");
     return result;
   }
 }
