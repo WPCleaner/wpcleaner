@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-06 13:26+0200\n"
+"POT-Creation-Date: 2009-09-08 19:08+0200\n"
 "PO-Revision-Date: 2008-06-02 11:57+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
@@ -51,7 +51,7 @@ msgstr ""
 msgid "Table not correct end"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:37
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:38
 msgid "Double pipe in one link"
 msgstr ""
 
@@ -81,6 +81,10 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm48.java:37
 msgid "Title linked in text"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm50.java:37
+msgid "en dash or em dash"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm64.java:37
