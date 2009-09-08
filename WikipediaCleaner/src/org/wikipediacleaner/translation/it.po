@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-06 13:26+0200\n"
+"POT-Creation-Date: 2009-09-08 19:08+0200\n"
 "PO-Revision-Date: 2009-09-05 13:31+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -52,7 +52,7 @@ msgstr ""
 msgid "Table not correct end"
 msgstr "Template senza graffe di chiusura"
 
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:37
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:38
 msgid "Double pipe in one link"
 msgstr "Wikilink con doppia pipe"
 
@@ -83,6 +83,10 @@ msgstr "Template senza graffe di apertura"
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm48.java:37
 msgid "Title linked in text"
 msgstr "Wikilink al titolo della voce"
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm50.java:37
+msgid "en dash or em dash"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm64.java:37
 msgid "Link equal to linktext"
