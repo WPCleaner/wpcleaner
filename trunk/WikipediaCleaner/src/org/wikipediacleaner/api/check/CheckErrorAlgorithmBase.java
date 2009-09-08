@@ -46,6 +46,22 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Flag indicating if the error was found.
    */
   protected boolean simpleTextSearch(Page page, String contents, ArrayList<CheckErrorResult> errors, String search) {
+    return simpleTextSearch(page, contents, errors, search, null);
+  }
+
+  /**
+   * Search for simple text in page.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param errors Errors found in the page.
+   * @param search Text to be searched.
+   * @param replacement Text proposed as a replacement.
+   * @return Flag indicating if the error was found.
+   */
+  protected boolean simpleTextSearch(
+      Page page, String contents, ArrayList<CheckErrorResult> errors,
+      String search, String replacement) {
     int startIndex = 0;
     boolean result = false;
     while (startIndex < contents.length()) {
@@ -56,7 +72,11 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
         }
         result = true;
         int endIndex = startIndex + search.length();
-        errors.add(new CheckErrorResult(startIndex, endIndex));
+        CheckErrorResult errorResult = new CheckErrorResult(startIndex, endIndex);
+        if (replacement != null) {
+          errorResult.addReplacement(replacement);
+        }
+        errors.add(errorResult);
         startIndex = endIndex;
       } else {
         startIndex = contents.length();

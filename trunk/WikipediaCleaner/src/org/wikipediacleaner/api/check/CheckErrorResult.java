@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.check;
 
+import java.util.ArrayList;
+
 
 /**
  * A class for memorizing informations about errors detected.
@@ -26,6 +28,8 @@ public class CheckErrorResult {
 
   private final int startPosition;
   private final int endPosition;
+
+  private ArrayList<String> replacements;
 
   /**
    * Constructor.
@@ -36,6 +40,7 @@ public class CheckErrorResult {
   public CheckErrorResult(int startPosition, int endPosition) {
     this.startPosition = startPosition;
     this.endPosition = endPosition;
+    this.replacements = null;
   }
 
   /**
@@ -57,5 +62,26 @@ public class CheckErrorResult {
    */
   public int getLength() {
     return endPosition - startPosition;
+  }
+
+  /**
+   * Add a possible replacement for the error.
+   * 
+   * @param replacement Possible replacement.
+   */
+  public void addReplacement(String replacement) {
+    if (replacements == null) {
+      replacements = new ArrayList<String>();
+    }
+    if (!replacements.contains(replacement)) {
+      replacements.add(replacement);
+    }
+  }
+
+  /**
+   * @return Possible replacements.
+   */
+  public ArrayList<String> getReplacements() {
+    return replacements;
   }
 }
