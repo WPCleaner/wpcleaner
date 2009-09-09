@@ -32,6 +32,7 @@ import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
 
+import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -113,6 +114,17 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
     if (element == null) {
       return;
     }
+
+    // Manage Informations
+    Object attrInfo = element.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_INFO);
+    if (attrInfo instanceof CheckErrorResult) { // TODO: more generic
+      CheckErrorResult info = (CheckErrorResult) attrInfo;
+      JPopupMenu popup = new JPopupMenu();
+      MenuCreator.addInfoToMenu(popup, element, textPane, position, info);
+      popup.show(textPane, x, y);
+      return;
+    }
+
     Object attrPage = element.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_PAGE);
     Object attrText = element.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_TEXT);
     if (!(attrPage instanceof Page)) {

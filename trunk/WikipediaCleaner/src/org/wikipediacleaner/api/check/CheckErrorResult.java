@@ -26,6 +26,7 @@ import java.util.ArrayList;
  */
 public class CheckErrorResult {
 
+  private final String errorType;
   private final int startPosition;
   private final int endPosition;
 
@@ -34,13 +35,22 @@ public class CheckErrorResult {
   /**
    * Constructor.
    * 
+   * @param errorType Type of error.
    * @param startPosition Start of the error.
    * @param endPosition End of the error.
    */
-  public CheckErrorResult(int startPosition, int endPosition) {
+  public CheckErrorResult(String errorType, int startPosition, int endPosition) {
+    this.errorType = errorType;
     this.startPosition = startPosition;
     this.endPosition = endPosition;
     this.replacements = null;
+  }
+
+  /**
+   * @return Type of error.
+   */
+  public String getErrorType() {
+    return errorType;
   }
 
   /**

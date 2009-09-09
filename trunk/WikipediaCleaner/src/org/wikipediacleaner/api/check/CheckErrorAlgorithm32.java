@@ -103,7 +103,7 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
                     return true;
                   }
                   result = true;
-                  errors.add(new CheckErrorResult(beginIndex, endIndex));
+                  errors.add(new CheckErrorResult(getErrorDescription(), beginIndex, endIndex));
                 }
                 if (beginIndex2 < 0) {
                   startIndex = contents.length();
@@ -135,7 +135,7 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
                   return true;
                 }
                 result = true;
-                errors.add(new CheckErrorResult(beginIndex, endIndex));
+                errors.add(new CheckErrorResult(getErrorDescription(), beginIndex, endIndex));
                 if (beginIndex2 < 0) {
                   startIndex = contents.length();
                 } else {

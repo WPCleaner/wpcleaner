@@ -63,7 +63,7 @@ public class CheckErrorAlgorithm10 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
-          errors.add(new CheckErrorResult(beginIndex, beginIndex + 2));
+          errors.add(new CheckErrorResult(getErrorDescription(), beginIndex, beginIndex + 2));
           count = 0;
         }
         startIndex = beginIndex;

@@ -49,6 +49,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyledDocument;
 
 import org.wikipediacleaner.api.check.CheckError;
@@ -538,6 +539,12 @@ public class CheckWikiProjectWindow extends PageWindow {
                 error.getLength(),
                 textPage.getStyle(MediaWikiConstants.STYLE_DISAMBIGUATION_LINK),
                 true);
+            SimpleAttributeSet attributes = new SimpleAttributeSet();
+            attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_INFO, error);
+            document.setCharacterAttributes(
+                error.getStartPosition(),
+                error.getLength(),
+                attributes, false);
             if (!visible) {
               textPage.setCaretPosition(error.getStartPosition());
               textPage.moveCaretPosition(error.getEndPosition());
