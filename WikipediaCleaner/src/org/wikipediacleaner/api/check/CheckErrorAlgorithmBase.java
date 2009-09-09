@@ -72,7 +72,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
         }
         result = true;
         int endIndex = startIndex + search.length();
-        CheckErrorResult errorResult = new CheckErrorResult(startIndex, endIndex);
+        CheckErrorResult errorResult = new CheckErrorResult(getErrorDescription(), startIndex, endIndex);
         if (replacement != null) {
           errorResult.addReplacement(replacement);
         }

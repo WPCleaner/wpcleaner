@@ -75,10 +75,10 @@ public class CheckErrorAlgorithm80 extends CheckErrorAlgorithmBase {
           }
           result = true;
           if (lineIndex < 0) {
-            errors.add(new CheckErrorResult(startIndex, contents.length()));
+            errors.add(new CheckErrorResult(getErrorDescription(), startIndex, contents.length()));
             startIndex = contents.length();
           } else {
-            errors.add(new CheckErrorResult(startIndex, lineIndex));
+            errors.add(new CheckErrorResult(getErrorDescription(), startIndex, lineIndex));
             startIndex = lineIndex + 1;
           }
         } else {
@@ -87,7 +87,7 @@ public class CheckErrorAlgorithm80 extends CheckErrorAlgorithmBase {
               return true;
             }
             result = true;
-            errors.add(new CheckErrorResult(startIndex, lineIndex));
+            errors.add(new CheckErrorResult(getErrorDescription(), startIndex, lineIndex));
             startIndex = lineIndex + 1;
           } else {
             startIndex = endIndex;

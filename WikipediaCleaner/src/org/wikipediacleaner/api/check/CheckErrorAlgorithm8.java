@@ -75,7 +75,7 @@ public class CheckErrorAlgorithm8 extends CheckErrorAlgorithmBase {
               return true;
             }
             result = true;
-            errors.add(new CheckErrorResult(titleIndex, endLineIndex));
+            errors.add(new CheckErrorResult(getErrorDescription(), titleIndex, endLineIndex));
           }
           startIndex = endLineIndex + 1;
         } else {

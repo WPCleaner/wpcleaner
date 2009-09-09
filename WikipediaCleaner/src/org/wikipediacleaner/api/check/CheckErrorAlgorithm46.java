@@ -63,7 +63,7 @@ public class CheckErrorAlgorithm46 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
-          errors.add(new CheckErrorResult(endIndex, endIndex + 2));
+          errors.add(new CheckErrorResult(getErrorDescription(), endIndex, endIndex + 2));
           count = 0;
         }
         startIndex = endIndex + 2;

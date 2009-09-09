@@ -62,8 +62,8 @@ public class CheckErrorAlgorithm81 extends CheckErrorAlgorithmBase {
           return true;
         }
         result = true;
-        errors.add(new CheckErrorResult(beginIndex, endIndex));
-        errors.add(new CheckErrorResult(duplicateIndex, duplicateIndex + endIndex - beginIndex));
+        errors.add(new CheckErrorResult(getErrorDescription(), beginIndex, endIndex));
+        errors.add(new CheckErrorResult(getErrorDescription(), duplicateIndex, duplicateIndex + endIndex - beginIndex));
       }
       startIndex = endIndex;
     }
