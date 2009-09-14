@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.5+" codebase="http://site4145.mutu.sivit.org/WikipediaCleaner" href="WikipediaCleaner.jnlp">
+<jnlp spec="1.5+" codebase="http://site4145.mutu.sivit.org/WikiCleaner" href="WikiCleaner.jnlp">
   <information>
-    <title>Wikipedia Cleaner</title>
+    <title>Wiki Cleaner</title>
     <vendor>User:NicoV</vendor>
     <description>Wikipedia Cleaner</description>
     <description kind="short">A tool for Wikipedia maintenance</description>
