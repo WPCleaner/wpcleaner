@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="http://site4145.mutu.sivit.org/WikiCleaner" href="WikiCleaner2.jnlp">
+  <information>
+    <title>Wiki Cleaner (test)</title>
+    <vendor>User:NicoV</vendor>
+    <description>Wikipedia Cleaner (test)</description>
+    <description kind="short">A tool for Wikipedia maintenance</description>
+    <shortcut>
+      <desktop/>
+    </shortcut>
+  </information>
+  <security>
+    <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5.0+" java-vm-args="-Xmx512M"/>
+    <jar href="WikipediaCleaner.jar" download="eager"/>
+    <jar href="commons-codec-1.3.jar" download="lazy"/>
+    <jar href="commons-logging-1.1.jar" download="lazy"/>
+    <jar href="commons-httpclient-3.0.1.jar" download="lazy"/>
+    <jar href="jaxen-core.jar" download="lazy"/>
+    <jar href="jaxen-jdom.jar" download="lazy"/>
+    <jar href="jdom.jar" download="lazy"/>
+    <jar href="saxpath.jar" download="lazy"/>
+  </resources>
+  <application-desc main-class="org.wikipediacleaner.WikipediaCleaner"/>
+</jnlp>
