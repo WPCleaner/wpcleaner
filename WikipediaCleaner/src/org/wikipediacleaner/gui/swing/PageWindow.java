@@ -755,7 +755,8 @@ public abstract class PageWindow
     getParentComponent().setTitle(GT._("Sending {0}", page.getTitle()));
     SendWorker sendWorker = new SendWorker(
         this, page, getTextContents().getText(),
-        textComment.getText(), getWikipedia());
+        (textComment != null) ? textComment.getText() : getWikipedia().getUpdatePageMessage(),
+        getWikipedia());
     sendWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(
