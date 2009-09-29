@@ -91,7 +91,7 @@
     <!-- Copy various files for JNLP release -->
     <copy file="${WikiCleaner.res.dir}/.htaccess"
           todir="${WikiCleaner.jnlp.dir}" />
-    <copy file="${WikiCleaner.res.dir}/WikipediaCleaner.jnlp"
+    <copy file="${WikiCleaner.res.dir}/WikiCleaner.jnlp"
           todir="${WikiCleaner.jnlp.dir}" />
     <copy file="${WikiCleaner.libs.cobra.dir}/${WikiCleaner.libs.cobra.lic}"
           tofile="${WikiCleaner.classes.dir}/cobra.license" />
