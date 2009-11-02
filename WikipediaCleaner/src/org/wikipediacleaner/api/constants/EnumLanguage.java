@@ -30,6 +30,7 @@ import org.wikipediacleaner.i18n.Messages;
  */
 public enum EnumLanguage {
 
+  CS   ("cs"   , "Czech"),
   DA   ("da"   , "Danish"),
   DE   ("de"   , "German"),
   EN   ("en"   , "English"),
