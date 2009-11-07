@@ -24,25 +24,25 @@ import org.wikipediacleaner.api.data.TemplateMatch;
 
 
 /**
- * Configuration for <a href="http://ru.wikipedia.org/w/index.php">Russian wikipedia</a>.
+ * Configuration for <a href="http://zh.wikipedia.org/w/index.php">Chinese wikipedia</a>.
  */
-class WikiRu {
+class WikiZh {
 
-  private final static String baseUrl = "http://ru.wikipedia.org/w/";
+  private final static String baseUrl = "http://zh.wikipedia.org/w/";
 
-  final static String code     = "ru";
-  final static String name     = "Википедия";
+  final static String code     = "zh";
+  final static String name     = "维基百科";
 
   final static String apiUrl   = baseUrl + "api.php";
   final static String queryUrl = baseUrl + "query.php";
   final static String indexUrl = baseUrl + "index.php";
 
-  final static String helpUrl  = WikiEn.helpUrl;
-  final static String helpLink = WikiEn.helpLink;
+  final static String helpUrl  = "http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation";
+  final static String helpLink = ":en:User:NicoV/Wikipedia Cleaner/Documentation";
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "[[:ru:Wikipedia:Исправление ссылок на страницы значений|Толкование ссылок на страницу значений]]";
+  final static String message  = "修复消歧义页中的链接 - [[:zh:Wikipedia:消歧义页的链接，你可以提供帮助!]]";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
@@ -51,12 +51,9 @@ class WikiRu {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String dabList = "Википедия:Исправление ссылок на страницы значений";
+  final static String dabList = null;
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
-    new TemplateMatch("Другие значения", "1", "{{PAGENAME}} (значения)", true, false),
-    new TemplateMatch("Другое значение", "1", "{{PAGENAME}}", true, false),
-    new TemplateMatch("Однофамильцы", "1", "{{PAGENAME}}", true, false)
   };
   
-  final static String checkWikiProject = "Википедия:Страницы с ошибками в викитексте";
+  final static String checkWikiProject = "Wikipedia:专题/错误检查";
 }
