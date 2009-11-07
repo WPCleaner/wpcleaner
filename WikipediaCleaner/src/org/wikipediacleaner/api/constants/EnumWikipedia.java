@@ -142,6 +142,14 @@ public enum EnumWikipedia {
       WikiPl.dabLinkTemplates, WikiPl.needHelpTemplates, WikiPl.helpRequestedTemplates,
       WikiPl.dabList, WikiPl.dabMatches,
       WikiPl.checkWikiProject),
+  RU( WikiRu.code, WikiRu.name,
+      WikiRu.apiUrl, WikiRu.indexUrl,
+      WikiRu.helpUrl, WikiRu.helpLink, WikiRu.orientation,
+      WikiRu.message,
+      WikiRu.wikt, WikiRu.wiktMatches,
+      WikiRu.dabLinkTemplates, WikiRu.needHelpTemplates, WikiRu.helpRequestedTemplates,
+      WikiRu.dabList, WikiRu.dabMatches,
+      WikiRu.checkWikiProject),
   SL( WikiSl.code, WikiSl.name,
       WikiSl.apiUrl, WikiSl.indexUrl,
       WikiSl.helpUrl, WikiSl.helpLink, WikiSl.orientation,
@@ -150,14 +158,14 @@ public enum EnumWikipedia {
       WikiSl.dabLinkTemplates, WikiSl.needHelpTemplates, WikiSl.helpRequestedTemplates,
       WikiSl.dabList, WikiSl.dabMatches,
       WikiSl.checkWikiProject),
-  RU( WikiRu.code, WikiRu.name,
-      WikiRu.apiUrl, WikiRu.indexUrl,
-      WikiRu.helpUrl, WikiRu.helpLink, WikiRu.orientation,
-      WikiRu.message,
-      WikiRu.wikt, WikiRu.wiktMatches,
-      WikiRu.dabLinkTemplates, WikiRu.needHelpTemplates, WikiRu.helpRequestedTemplates,
-      WikiRu.dabList, WikiRu.dabMatches,
-      WikiRu.checkWikiProject);
+  ZH( WikiZh.code, WikiZh.name,
+      WikiZh.apiUrl, WikiZh.indexUrl,
+      WikiZh.helpUrl, WikiZh.helpLink, WikiZh.orientation,
+      WikiZh.message,
+      WikiZh.wikt, WikiZh.wiktMatches,
+      WikiZh.dabLinkTemplates, WikiZh.needHelpTemplates, WikiZh.helpRequestedTemplates,
+      WikiZh.dabList, WikiZh.dabMatches,
+      WikiZh.checkWikiProject);
 
   private final String code;
   private final String title;
