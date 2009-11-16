@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2009-09-09 21:37+0200\n"
-"PO-Revision-Date: 2009-10-12 15:19+0000\n"
+"PO-Revision-Date: 2009-11-03 13:28+0000\n"
 "Last-Translator: Kuvaly <kuvaly@seznam.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-11-02 07:48+0000\n"
+"X-Launchpad-Export-Date: 2009-11-16 19:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:141
@@ -37,7 +37,7 @@ msgstr "Čtvercové závorky nemají korektní konec"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm19.java:37
 msgid "Headlines start with one \"=\""
-msgstr "Nadpis záčíná jednou \"=\""
+msgstr "Nadpis začíná jednou \"=\""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm2.java:37
 msgid "Article with false <br/>"
@@ -57,19 +57,19 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm34.java:37
 msgid "Template programming element"
-msgstr ""
+msgstr "Element programování šablony"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm38.java:37
 msgid "HTML text style element <i>"
-msgstr ""
+msgstr "HTML element <i>"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm39.java:37
 msgid "HTML text style element <p>"
-msgstr ""
+msgstr "HTML element <p>"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm43.java:37
 msgid "Template not correct end"
-msgstr ""
+msgstr "Šablona nemá korektní konec"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm46.java:37
 msgid "Square brackets not correct begin"
@@ -278,7 +278,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:589
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
