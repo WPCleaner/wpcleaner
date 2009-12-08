@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2009-09-09 21:37+0200\n"
-"PO-Revision-Date: 2009-09-05 13:07+0100\n"
-"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
+"PO-Revision-Date: 2009-11-29 23:26+0000\n"
+"Last-Translator: Sorkin <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-07-22 17:44+0000\n"
+"X-Launchpad-Export-Date: 2009-12-08 17:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -52,9 +52,8 @@ msgid "HTML text style element <b>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm28.java:37
-#, fuzzy
 msgid "Table not correct end"
-msgstr "Modèle mal fermé"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:38
 msgid "Double pipe in one link"
@@ -271,35 +270,40 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:99
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:586
 msgid "!!! WARNING !!!"
-msgstr ""
+msgstr "!!! ATTENTION !!!"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:100
 msgid "Functions available here are considered as bot tools."
 msgstr ""
+"Les fonctions disponibles ici sont considérées comme des outils de bots."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:101
 msgid "They may modify a lot of pages in a short period of time."
-msgstr ""
+msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:589
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
+"Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
+"faire cela."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
 msgstr ""
+"Veillez vérifier si vous avez besoin du statut de bot en lisant les règles "
+"de Wikipédia."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:114
 msgid "Semi-automatic disambiguation fixing"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:119
-#, fuzzy
 msgid "Check Wikipedia"
-msgstr "Autre Wikipédia"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:159
 msgid "This screen is not functional yet !"
@@ -315,16 +319,15 @@ msgstr "Pages"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:273
 msgid "Load full list"
-msgstr ""
+msgstr "Charger la liste complète"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:284
 msgid "Show full list"
-msgstr ""
+msgstr "Montrer la liste complète"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:334
-#, fuzzy
 msgid "Selected page"
-msgstr "Corriger les pages sélectionnées"
+msgstr "Page sélectionnée"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:238
 #, java-format
@@ -367,7 +370,7 @@ msgstr "Corriger les pages sélectionnées"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:320
 msgid "Save"
-msgstr ""
+msgstr "Enregistrer"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:353
 msgid "Select &next links"
@@ -398,7 +401,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:592
 msgid "Do you want to continue ?"
-msgstr ""
+msgstr "Voulez-vous continuer ?"
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:104
 msgid "Informations"
@@ -586,9 +589,8 @@ msgid "Retrieving namespaces"
 msgstr "Récupération des espaces de nom"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:948
-#, fuzzy
 msgid "Retrieving disambiguation templates"
-msgstr "Récupération des informations d'homonymie"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:114
 #, java-format
@@ -920,7 +922,7 @@ msgstr "&Mettre à jour"
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:147
 #, java-format
 msgid "Red links Analysis - {0}"
-msgstr ""
+msgstr "Analyse des liens rouges - {0}"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:212
 msgid "Re&place"
@@ -1029,14 +1031,14 @@ msgid "Current chapter"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:199
-#, fuzzy, java-format
+#, java-format
 msgid "Link parameter {0} to"
-msgstr "Lier à {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:200
-#, fuzzy, java-format
+#, java-format
 msgid "Replace parameter {0} with"
-msgstr "Remplacer par"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:342
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:512
@@ -1060,7 +1062,7 @@ msgstr "Remplacer par {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:492
 msgid "Red links analysis"
-msgstr ""
+msgstr "Analyse des liens rouges"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:604
 msgid "Remove link"
