@@ -8,24 +8,24 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2009-09-09 21:37+0200\n"
-"PO-Revision-Date: 2009-12-16 20:24+0000\n"
+"PO-Revision-Date: 2009-12-18 11:58+0000\n"
 "Last-Translator: sillentdx <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-12-17 00:40+0000\n"
+"X-Launchpad-Export-Date: 2009-12-18 19:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:141
 #, java-format
 msgid "Page {0}:"
-msgstr ""
+msgstr "Oldal {0}:"
 
 #: org/wikipediacleaner/api/check/CheckError.java:228
 #, java-format
 msgid "Error n°{0} ({1}) - {2}"
-msgstr ""
+msgstr "Hiba n°{0} ({1}) - {2}"
 
 #: org/wikipediacleaner/api/check/CheckError.java:233
 msgid "Error unkown from WikiCleaner"
@@ -53,7 +53,7 @@ msgstr "Lezáratlan táblázat"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:38
 msgid "Double pipe in one link"
-msgstr ""
+msgstr "Két vonal egy wikilinkben"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm34.java:37
 msgid "Template programming element"
@@ -85,11 +85,11 @@ msgstr "Cím a szövegben"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm50.java:37
 msgid "en dash or em dash"
-msgstr ""
+msgstr "&ndash vagy &mdash a  „–” vagy  a „—” helyett"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm64.java:37
 msgid "Link equal to linktext"
-msgstr ""
+msgstr "Wikilink azonos szöveggel és céllal"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm8.java:37
 msgid "Headline should end with \"=\""
@@ -138,11 +138,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/execution/ContentsCallable.java:52
 msgid "Retrieving contents"
-msgstr ""
+msgstr "Tartalom letöltése"
 
 #: org/wikipediacleaner/api/execution/DisambiguationStatusCallable.java:51
 msgid "Retrieving disambiguation informations"
-msgstr ""
+msgstr "Egyértelmüsítő lapok információinak letöltése"
 
 #: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:49
 msgid "Retrieving page usage"
@@ -150,11 +150,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/execution/ExpandTemplatesCallable.java:51
 msgid "Expanding templates"
-msgstr ""
+msgstr "Sablonok kibontása"
 
 #: org/wikipediacleaner/api/execution/ParseTextCallable.java:51
 msgid "Parsing text"
-msgstr ""
+msgstr "Szöveg feldolgozása"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:66
 #: org/wikipediacleaner/gui/swing/MainWindow.java:515
@@ -177,7 +177,7 @@ msgstr "Elemzés - {0}"
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:177
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:364
 msgid "Link count"
-msgstr ""
+msgstr "Hivatkozások mutatása"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:311
 msgid "&Next occurrence"
@@ -202,17 +202,17 @@ msgstr "&Beállítások"
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:360
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:384
 msgid "Show &disambiguation pages"
-msgstr ""
+msgstr "Egyértelműsítő lapok mutatása"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:364
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:393
 msgid "Show &missing pages"
-msgstr ""
+msgstr "Hiányzó oldalak mutatása"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:368
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:402
 msgid "Show &redirect pages"
-msgstr ""
+msgstr "Átírányítások mutatása"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:372
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:411
@@ -225,15 +225,15 @@ msgstr "Egyértelműsítő lapok számlálása"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:381
 msgid "Count missing pages"
-msgstr ""
+msgstr "Hiányzó oldalak megszámlálása"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:385
 msgid "Count redirect pages"
-msgstr ""
+msgstr "Átirányítások megszámlálása"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:389
 msgid "Count other pages"
-msgstr ""
+msgstr "Egyéb oldalak megszámlálása"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:415
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:384
@@ -256,7 +256,7 @@ msgstr "Lap figyelése"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:636
 msgid "Would you like to add these pages on your local Watch list ?"
-msgstr ""
+msgstr "Hozzá akarod adni ezeket az oldalakat a helyi Figyelsőlistádhoz?"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:74
 #: org/wikipediacleaner/gui/swing/MainWindow.java:482
@@ -270,15 +270,16 @@ msgstr "!!! FIGYELEM !!!"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:100
 msgid "Functions available here are considered as bot tools."
-msgstr ""
+msgstr "Ezek a funkciók bot eszközöknek számítanak."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:101
 msgid "They may modify a lot of pages in a short period of time."
-msgstr ""
+msgstr "Rövid idő alatt sok lapot módosíthat."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:589
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
@@ -289,7 +290,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:114
 msgid "Semi-automatic disambiguation fixing"
-msgstr ""
+msgstr "Félautomata egyértelműsítő lap javítás"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:119
 msgid "Check Wikipedia"
@@ -297,7 +298,7 @@ msgstr "Wiképédia ellenőrzése"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:159
 msgid "This screen is not functional yet !"
-msgstr ""
+msgstr "Ez még nem működik!"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:229
 msgid "List of errors detected :"
@@ -331,11 +332,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:147
 #, java-format
 msgid "Disambiguation - {0}"
-msgstr ""
+msgstr "Egyértelműsítő lap - {0}"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:269
 msgid "Automatic disambiguation fixing"
-msgstr ""
+msgstr "Automata egyértelműsítő lap javítás"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:300
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:550
@@ -364,23 +365,25 @@ msgstr "Mentés"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:353
 msgid "Select &next links"
-msgstr ""
+msgstr "Következő hivatkozások kijelölése"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:575
 msgid "You must select the pages on which running automatic disambiguation."
 msgstr ""
+"Ki kell választanod azokat a lapokat amiken futtatni akarod az automatikus "
+"egyértelműsítő lap javítást."
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:581
 msgid "You must input the initial and destination texts."
-msgstr ""
+msgstr "Be kell írnod az eredeti és a kívánt szöveget."
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:587
 msgid "This function will do all the replacements in all selected pages."
-msgstr ""
+msgstr "Ez a funkció mindet lecseréli az összes kiválasztott oldalon."
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:588
 msgid "It may modify a lot of pages in a short period of time."
-msgstr ""
+msgstr "Sok oldalt módosíthat rövid idő alatt."
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:591
 msgid ""
@@ -455,7 +458,7 @@ msgstr "&Súgó"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:375
 msgid "Work"
-msgstr ""
+msgstr "Munka"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:393
 #: org/wikipediacleaner/gui/swing/PageWindow.java:275
@@ -464,7 +467,7 @@ msgstr "&Lap:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:427
 msgid "&Current Disambiguation List"
-msgstr ""
+msgstr "&Jelenlegi egyértelműsítő lap lista"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:438
 msgid "Help requested on..."
@@ -503,7 +506,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:616
 msgid "You can learn how to add other Wikipedia at the following URL:"
-msgstr ""
+msgstr "Ezt a hivatkozást követve új Wikipédiákat adhatsz hozzá:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:627
 msgid "You must select a language before login"
@@ -511,7 +514,7 @@ msgstr "Mielőtt bejelentkezel ki kell választanod egy nyelvet"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:639
 msgid "You can learn how to add other languages at the following URL:"
-msgstr ""
+msgstr "Ezt a hivatkozást követve új nyelveket adhatsz hozzá:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:654
 msgid "You must input your user name before login"
@@ -523,11 +526,13 @@ msgstr "A bejelentkezéshez be kell írnod a jelszavad"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:720
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
-msgstr ""
+msgstr "Ezt a hivatkozást követve elérheted a Wikipedia Cleaner súgóját:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:737
 msgid "You can submit bug reports or feature requests at the following URL:"
 msgstr ""
+"A hibákat jelentését vagy az új funkciók javasolását a következő oldalon "
+"teheted meg:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:749
 msgid ""
@@ -535,14 +540,18 @@ msgid ""
 "computer may be able to get it.\n"
 "Are you sure that you want to save it ?"
 msgstr ""
+"A jelszó a merevlemezre lesz elmentve, szóval bárki aki hozzáfér a "
+"számítógépedhez megtudhatja.\n"
+"Biztos, hogy el akarod menteni?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:766
 msgid "You must input a page name for running a full analysis"
-msgstr ""
+msgstr "Tejles elemzés előtt be kell írnod a lap nevét"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:786
 msgid "You must input a page name for running a disambiguation analysis"
 msgstr ""
+"Be kell írnod az oldal nevén amin ellenőrizni akarod a egyértelműsítő lapok"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:809
 msgid "There's no known list of disambiguation pages for this Wikipedia."
@@ -564,7 +573,7 @@ msgstr "Figyelt lapok"
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:48
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:57
 msgid "Retrieving MediaWiki API"
-msgstr ""
+msgstr "MediaWiki API letöltése"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:942
 msgid "Retrieving namespaces"
@@ -572,12 +581,12 @@ msgstr "Névterek letöltése"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:948
 msgid "Retrieving disambiguation templates"
-msgstr ""
+msgstr "Egyértelműsítő lapok sablonjainak letöltése"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:114
 #, java-format
 msgid "New section in {0}"
-msgstr ""
+msgstr "Új fejezet it: {0}"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:124
 msgid "Comment"
@@ -598,7 +607,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:202
 msgid "Article contents"
-msgstr ""
+msgstr "Szócikk tartalma"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:214
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:631
@@ -617,7 +626,7 @@ msgstr "Általános"
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:165
 #: org/wikipediacleaner/gui/swing/PageWindow.java:304
 msgid "Full analysis"
-msgstr "Teljes analízis"
+msgstr "Teljes elemzés"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:166
 msgid "Sorting"
@@ -629,11 +638,11 @@ msgstr "Általános beállítások"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:198
 msgid "Close disambiguation window after sending"
-msgstr ""
+msgstr "Egyértelműsítő lapok ablakának bezárása a küldés után"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:209
 msgid "Restore window position"
-msgstr ""
+msgstr "Ablak helyének megjegyzése"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:220
 msgid "Save window position"
@@ -641,23 +650,23 @@ msgstr "Ablak helyének megjegyzése"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:231
 msgid "Use short notation [[Xxxxx (yyy)|]]"
-msgstr ""
+msgstr "Rövid megjegyzés használata [[Xxxxx (yyy)|]]"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:242
 msgid "Use advanced features (experimental)"
-msgstr ""
+msgstr "Haladó funkciók alakalmazása (kísérleti)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:253
 msgid "Display WikiCleaner link in update comments"
-msgstr ""
+msgstr "A WikiCleaner linkjének mutatása az összefoglalóban"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:267
 msgid "Maximum number of items in a menu :"
-msgstr ""
+msgstr "Maximum számú tárgy egy menüben:"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:285
 msgid "Maximum number of simultaneous analysis :"
-msgstr ""
+msgstr "Maximum számú egyidejű elemzés:"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:303
 msgid "Maximum number of interrogation threads :"
@@ -677,15 +686,15 @@ msgstr "Küldés után a teljes elemzés ablakának bezárása"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:420
 msgid "Count &disambiguation pages"
-msgstr ""
+msgstr "Egyértelmüsítő lapok számlálása"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:429
 msgid "Count &missing pages"
-msgstr ""
+msgstr "Hiányzó lapok számlálása"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:438
 msgid "Count &redirect pages"
-msgstr ""
+msgstr "Átirányítások számlálása"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:447
 msgid "Count &other pages"
@@ -697,7 +706,7 @@ msgstr "&Ablak elrejtése a küldés után"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:468
 msgid "Number of links selected :"
-msgstr ""
+msgstr "Kiválasztott hivatkozások száma:"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:486
 msgid "Undo levels :"
@@ -705,7 +714,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:533
 msgid "Sort orders"
-msgstr ""
+msgstr "Rendezés szabályai"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:554
 msgid "Delete"
@@ -729,7 +738,7 @@ msgstr "&Alkalmaz"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:637
 msgid "&Restore defaults"
-msgstr ""
+msgstr "Alapbeállítások visszaállítása"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:104
 #, java-format
@@ -767,7 +776,7 @@ msgstr "Ide mutató linkek"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:203
 msgid "&Update page information"
-msgstr ""
+msgstr "&Oldal frissítése"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:212
 msgid "Set page &comments"
@@ -800,11 +809,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:290
 msgid "Disambiguation"
-msgstr ""
+msgstr "Egyértelmüsítő lap"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:318
 msgid "Full analysis of redirect"
-msgstr ""
+msgstr "Az átirányítások teljes elemzése"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:323
 msgid "Disambiguation analysis of redirect"
@@ -828,11 +837,11 @@ msgstr "Ismét"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:380
 msgid "&External Viewer"
-msgstr ""
+msgstr "&Külső néző"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:408
 msgid "Automatic comment"
-msgstr ""
+msgstr "Automatikus megjegyzése"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:425
 msgid "&Close after sending"
@@ -840,7 +849,7 @@ msgstr "&Bezárás küldés után"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:438
 msgid "&Add a note on talk page"
-msgstr ""
+msgstr "&Megjegyzés hozzáadása a vitalapra"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:450
 #: org/wikipediacleaner/gui/swing/PageWindow.java:519
@@ -849,7 +858,7 @@ msgstr "Utolsó módosítás idelye: "
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:546
 msgid "Fix &redirects"
-msgstr ""
+msgstr "Átirányítások javítása"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:555
 #, java-format
@@ -866,11 +875,11 @@ msgstr "&Előnézet"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:578
 msgid "&Expand templates"
-msgstr ""
+msgstr "&Sablonok kibontása"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:583
 msgid "Expand templates &and Preview"
-msgstr ""
+msgstr "Sablonok kibontása és előnézet"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:755
 #, java-format
@@ -884,7 +893,7 @@ msgstr "Hozzá akarod adni ezt az oldalt a Figyelőlistádhoz ?"
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:130
 #, java-format
 msgid "Expand Templates and Preview - {0}"
-msgstr ""
+msgstr "Sablonok kibontása és előnézet - {0}"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:131
 #, java-format
@@ -894,7 +903,7 @@ msgstr "Előnézet - {0}"
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:134
 #, java-format
 msgid "Expand Templates - {0}"
-msgstr ""
+msgstr "Sablonok kibontása - {0}"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:221
 msgid "&Update"
@@ -907,16 +916,16 @@ msgstr "Piros linkek elemzése - {0}"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:212
 msgid "Re&place"
-msgstr ""
+msgstr "Csere"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:231
 msgid "Pages concerned"
-msgstr ""
+msgstr "Érintett lapok"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:248
 #, java-format
 msgid "&Apply only to {0}"
-msgstr ""
+msgstr "&Alkalmazás csak erre: {0}"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:268
 msgid "&Reload page list"
@@ -924,7 +933,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:309
 msgid "Possible pages"
-msgstr ""
+msgstr "Lehetséges lapok"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:324
 msgid "Search"
@@ -944,7 +953,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:399
 msgid "&Search for possible pages"
-msgstr ""
+msgstr "&Lehetséges lapok kersése"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:101
 #, java-format
@@ -966,15 +975,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:221
 msgid "Displaying templates found"
-msgstr ""
+msgstr "Talált sablonok mutatása"
 
 #: org/wikipediacleaner/gui/swing/action/FindTextAction.java:66
 msgid "String to find"
-msgstr ""
+msgstr "Keresett szöveg"
 
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:66
 msgid "Purging page cache"
-msgstr ""
+msgstr "Oldal gyorsítótárának (cache) ürítése"
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:68
 msgid "Analyzing links for redirect pages"
@@ -1009,7 +1018,7 @@ msgstr "Csere ezzel:"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:152
 msgid "Current chapter"
-msgstr ""
+msgstr "Jelenlegi fejezet"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:199
 #, java-format
@@ -1047,11 +1056,11 @@ msgstr "Piros linkek elemzése"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:604
 msgid "Remove link"
-msgstr ""
+msgstr "Hivatkozás eltávolítása"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:620
 msgid "Remove all links"
-msgstr ""
+msgstr "Összes hivatkozás eltávolítása"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:646
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:657
@@ -1062,7 +1071,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:690
 #, java-format
 msgid "Using '{{'{0}'}}'"
-msgstr ""
+msgstr "'{{'{0}'}}' alaklmazása"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:688
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:699
@@ -1075,13 +1084,13 @@ msgstr "Elemzés"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:761
 msgid "Analyze page"
-msgstr ""
+msgstr "Lap elemzése"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:784
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:821
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:838
 msgid "External Viewer"
-msgstr ""
+msgstr "Külső néző"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:856
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:861
@@ -1094,7 +1103,7 @@ msgstr "Linkek újratöltése"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:903
 msgid "Purge cache"
-msgstr ""
+msgstr "Gyorsítótár (cache) ürítése"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:920
 msgid "Find text"
@@ -1102,7 +1111,7 @@ msgstr "Szöveg keresése"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:938
 msgid "Search in templates"
-msgstr ""
+msgstr "Keresés a sablonokban"
 
 #: org/wikipediacleaner/gui/swing/component/PageListModel.java:317
 #, java-format
@@ -1111,7 +1120,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/AutomaticDisambiguationWorker.java:69
 msgid "The following modifications have been done :"
-msgstr ""
+msgstr "A következő változtatások történtek:"
 
 #: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:57
 msgid "Current disambiguation list"
@@ -1123,12 +1132,12 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:65
 msgid "Adding comment"
-msgstr ""
+msgstr "Megjegyzés hozzáadása"
 
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:50
 msgid "Getting random page"
-msgstr ""
+msgstr "Véletlen lap betöltése"
 
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:59
 msgid "Updating page contents"
-msgstr ""
+msgstr "Oldal frissítése"
