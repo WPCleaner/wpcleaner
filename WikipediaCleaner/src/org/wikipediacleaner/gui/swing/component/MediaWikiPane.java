@@ -353,7 +353,8 @@ public class MediaWikiPane
 
     Style redirectLink = addStyle(MediaWikiConstants.STYLE_REDIRECT_LINK, root);
     StyleConstants.setBold(redirectLink, true);
-    StyleConstants.setForeground(redirectLink, Color.ORANGE);
+    StyleConstants.setItalic(redirectLink, true);
+    StyleConstants.setForeground(redirectLink, Color.CYAN);
     redirectLink.addAttribute(MediaWikiConstants.ATTRIBUTE_TYPE, MediaWikiConstants.VALUE_REDIRECT_LINK);
 
     Style missingLink = addStyle(MediaWikiConstants.STYLE_MISSING_LINK, root);
