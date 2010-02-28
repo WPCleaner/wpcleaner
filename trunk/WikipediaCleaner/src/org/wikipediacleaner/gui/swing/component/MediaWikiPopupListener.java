@@ -158,7 +158,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
     }
     if ((!(attrPage instanceof Page)) || (!(attrText instanceof String))) {
 
-      // Trying to find if the click has been made in an external link [http://...]
+      // Trying to find if the click has been made in an internal [[...]] or external link [http://...]
       try {
         String text = element.getDocument().getText(
             element.getStartOffset(),
@@ -172,6 +172,24 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
           if ((previousEndLink == -1) || (previousEndLink < previousStartLink)) {
             if ((nextStartLink == -1) || (nextStartLink > nextEndLink)) {
               String foundText = text.substring(previousStartLink + 1, nextEndLink);
+              if ((previousStartLink > 0) &&
+                  (text.charAt(previousStartLink) == '[') &&
+                  (text.charAt(previousStartLink - 1) == '[') &&
+                  (nextEndLink + 1 < text.length()) &&
+                  (text.charAt(nextEndLink) == ']') &&
+                  (text.charAt(nextEndLink + 1) == ']')) {
+                int separator = foundText.indexOf('|');
+                if (separator != -1) {
+                  foundText = foundText.substring(0, separator);
+                }
+                if (foundText.length() > 0) {
+                  JPopupMenu popup = new JPopupMenu();
+                  MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
+                  MenuCreator.addViewToMenu(popup, foundText, wikipedia);
+                  popup.show(textPane, x, y);
+                  return;
+                }
+              }
               int separator = foundText.indexOf(' ');
               if (separator != -1) {
                 foundText = foundText.substring(0, separator);
@@ -179,7 +197,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
               if (foundText.length() > 0) {
                 JPopupMenu popup = new JPopupMenu();
                 MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
-                MenuCreator.addViewToMenu(popup, foundText);
+                MenuCreator.addViewToMenu(popup, foundText, null);
                 popup.show(textPane, x, y);
                 return;
               }
