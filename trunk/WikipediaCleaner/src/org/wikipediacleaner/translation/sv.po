@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-09 21:37+0200\n"
+"POT-Creation-Date: 2010-03-02 20:37+0100\n"
 "PO-Revision-Date: 2008-11-30 16:27+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -556,7 +556,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:64
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:63
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:48
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:57
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:56
 msgid "Retrieving MediaWiki API"
 msgstr ""
 
@@ -869,7 +869,7 @@ msgstr ""
 msgid "Sending {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:791
+#: org/wikipediacleaner/gui/swing/PageWindow.java:792
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr ""
 
@@ -1071,28 +1071,28 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:784
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:821
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:838
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:839
 msgid "External Viewer"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:856
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:861
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:857
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:862
 msgid "Disambiguation analysis"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:886
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:887
 msgid "Reload links"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:903
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:904
 msgid "Purge cache"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:920
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:921
 msgid "Find text"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:938
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:939
 msgid "Search in templates"
 msgstr ""
 
@@ -1123,4 +1123,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:59
 msgid "Updating page contents"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:64
+msgid "Error 'badtoken' detected: Retrying"
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-09 21:37+0200\n"
+"POT-Creation-Date: 2010-03-02 20:37+0100\n"
 "PO-Revision-Date: 2008-12-24 00:31+0000\n"
 "Last-Translator: Jóna Þórunn Ragnarsdóttir <Unknown>\n"
 "Language-Team: Icelandic <is@li.org>\n"
@@ -568,7 +568,7 @@ msgstr "Vaktaðar síður"
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:64
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:63
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:48
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:57
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:56
 msgid "Retrieving MediaWiki API"
 msgstr "Sæki MediaWiki API"
 
@@ -885,7 +885,7 @@ msgstr "Útvíkka snið &og forskoða"
 msgid "Sending {0}"
 msgstr "Sendi {0}"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:791
+#: org/wikipediacleaner/gui/swing/PageWindow.java:792
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr "Viltu bæta þessari síðu við á vaktlistann?"
 
@@ -1087,28 +1087,28 @@ msgstr "Lýsa síðu"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:784
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:821
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:838
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:839
 msgid "External Viewer"
 msgstr "Útvær skoðari"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:856
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:861
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:857
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:862
 msgid "Disambiguation analysis"
 msgstr "Aðgreiningalýsing"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:886
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:887
 msgid "Reload links"
 msgstr "Endurhlaða tenglum"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:903
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:904
 msgid "Purge cache"
 msgstr "Tæma síðuminni"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:920
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:921
 msgid "Find text"
 msgstr "Finna texta"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:938
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:939
 msgid "Search in templates"
 msgstr "Leita í sniðum"
 
@@ -1140,6 +1140,10 @@ msgstr "Sæki handahófsvalda síðu"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:59
 msgid "Updating page contents"
 msgstr "Uppfæri síðuinnihald"
+
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:64
+msgid "Error 'badtoken' detected: Retrying"
+msgstr ""
 
 #, fuzzy
 #~ msgid "Project - {0}"

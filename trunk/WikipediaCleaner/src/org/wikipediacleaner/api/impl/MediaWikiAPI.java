@@ -1419,7 +1419,7 @@ public class MediaWikiAPI implements API {
           Element currentNode = (Element) iterErrors.next();
           String text = "Error reported: " + xpaCode.valueOf(currentNode) + " - " + xpaInfo.valueOf(currentNode);
           log.warn(text);
-          throw new APIException(text);
+          throw new APIException(text, xpaCode.valueOf(currentNode));
         }
       }
     } catch (JDOMException e) {

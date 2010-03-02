@@ -28,13 +28,13 @@ import java.util.GregorianCalendar;
  */
 public final class Version {
 
-  public final static String VERSION = "0.98";
-  public final static Date   DATE = new GregorianCalendar(2009, Calendar.SEPTEMBER, 29).getTime();
+  public final static String VERSION = "0.99";
+  public final static Date   DATE = new GregorianCalendar(2010, Calendar.MARCH, 2).getTime();
 
   public final static String MESSAGE =
     "<html>" +
     "I hope you'll like WikiCleaner.<br><br>" +
-    "There's still a problem with 'bad token': from time to time (usually first one?), an edit doesn't work.<br>" +
+    "I have added a fix for the problem with 'bad token': a new token is requested and the update is done again.<br><br>" +
     "Please, report any other problem you find to me." +
     "</html>";
   public final static boolean HIGHLIGHT = false;
