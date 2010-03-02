@@ -53,13 +53,23 @@ public class SendWorker extends BasicWorker {
    */
   @Override
   public Object construct() {
+    setText(GT._("Retrieving MediaWiki API"));
+    API api = APIFactory.getAPI();
     try {
-      setText(GT._("Retrieving MediaWiki API"));
-      API api = APIFactory.getAPI();
       setText(GT._("Updating page contents"));
       api.updatePage(page, text, wikipedia.createUpdatePageComment(comment, null));
     } catch (APIException e) {
-      return e;
+      if (APIException.ERROR_BAD_TOKEN.equals(e.getErrorCode())) {
+        try {
+          setText(GT._("Error 'badtoken' detected: Retrying"));
+          api.retrieveContents(page);
+          api.updatePage(page, text, wikipedia.createUpdatePageComment(comment, null));
+        } catch (APIException e2) {
+          return e2;
+        }
+      } else {
+        return e;
+      }
     }
     return null;
   }

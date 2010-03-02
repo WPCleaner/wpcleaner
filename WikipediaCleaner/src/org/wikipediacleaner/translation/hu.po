@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-09 21:37+0200\n"
+"POT-Creation-Date: 2010-03-02 20:37+0100\n"
 "PO-Revision-Date: 2009-12-18 11:58+0000\n"
 "Last-Translator: sillentdx <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -278,8 +278,7 @@ msgstr "Rövid idő alatt sok lapot módosíthat."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:589
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
@@ -571,7 +570,7 @@ msgstr "Figyelt lapok"
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:64
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:63
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:48
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:57
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:56
 msgid "Retrieving MediaWiki API"
 msgstr "MediaWiki API letöltése"
 
@@ -886,7 +885,7 @@ msgstr "Sablonok kibontása és előnézet"
 msgid "Sending {0}"
 msgstr "Küldés {0}"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:791
+#: org/wikipediacleaner/gui/swing/PageWindow.java:792
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr "Hozzá akarod adni ezt az oldalt a Figyelőlistádhoz ?"
 
@@ -1088,28 +1087,28 @@ msgstr "Lap elemzése"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:784
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:821
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:838
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:839
 msgid "External Viewer"
 msgstr "Külső néző"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:856
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:861
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:857
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:862
 msgid "Disambiguation analysis"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:886
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:887
 msgid "Reload links"
 msgstr "Linkek újratöltése"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:903
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:904
 msgid "Purge cache"
 msgstr "Gyorsítótár (cache) ürítése"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:920
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:921
 msgid "Find text"
 msgstr "Szöveg keresése"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:938
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:939
 msgid "Search in templates"
 msgstr "Keresés a sablonokban"
 
@@ -1141,3 +1140,7 @@ msgstr "Véletlen lap betöltése"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:59
 msgid "Updating page contents"
 msgstr "Oldal frissítése"
+
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:64
+msgid "Error 'badtoken' detected: Retrying"
+msgstr ""
