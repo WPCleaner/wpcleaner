@@ -160,7 +160,16 @@ public class MediaWiki extends MediaWikiController {
           }
           if (!oldContents.equals(newContents)) {
             count++;
-            api.updatePage(page, newContents, wikipedia.createUpdatePageComment(comment, details.toString()));
+            try {
+              api.updatePage(page, newContents, wikipedia.createUpdatePageComment(comment, details.toString()));
+            } catch (APIException e) {
+              if (APIException.ERROR_BAD_TOKEN.equals(e.getErrorCode())) {
+                api.retrieveContents(page);
+                api.updatePage(page, newContents, wikipedia.createUpdatePageComment(comment, details.toString()));
+              } else {
+                throw e;
+              }
+            }
           }
         }
       }
