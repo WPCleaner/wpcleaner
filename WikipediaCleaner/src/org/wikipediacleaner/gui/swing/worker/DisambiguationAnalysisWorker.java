@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.util.ArrayList;
+
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.data.Page;
@@ -43,8 +45,18 @@ public class DisambiguationAnalysisWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveContents(page, false, false);
-      mw.retrieveAllBacklinks(page);
+      mw.retrieveContents(page, false, false, true);
+      mw.retrieveAllBacklinks(page, true);
+      ArrayList<Page> pageAndRedirects = new ArrayList<Page>();
+      pageAndRedirects.add(page);
+      for (Page backlink : page.getBackLinksWithRedirects()) {
+        if ((backlink != null) && (backlink.isRedirect())) {
+          pageAndRedirects.add(backlink);
+          mw.retrieveContents(backlink, false, false, false);
+        }
+      }
+      mw.retrieveDisambiguationInformation(pageAndRedirects, null, false, false);
+      mw.retrieveAllLinks(page, null, true);
     } catch (APIException e) {
       return e;
     }

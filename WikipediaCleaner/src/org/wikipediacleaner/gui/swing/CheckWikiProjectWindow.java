@@ -136,8 +136,8 @@ public class CheckWikiProjectWindow extends PageWindow {
   @Override
   protected Component createComponents() {
     projectPage = DataManager.getPage(
-        getWikipedia(),
-        getWikipedia().getCheckWikiProject(), null);
+        getWikipedia(), getWikipedia().getCheckWikiProject(),
+        null, null);
 
     JPanel panel = new JPanel(new GridBagLayout());
 

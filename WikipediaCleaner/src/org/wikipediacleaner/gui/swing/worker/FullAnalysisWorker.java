@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.util.ArrayList;
+
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.data.Page;
@@ -30,10 +32,12 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 public class FullAnalysisWorker extends BasicWorker {
 
   private final Page page;
+  private final ArrayList<Page> knownPages;
 
-  public FullAnalysisWorker(BasicWindow window, Page page) {
+  public FullAnalysisWorker(BasicWindow window, Page page, ArrayList<Page> knownPages) {
     super(window);
     this.page = page;
+    this.knownPages = knownPages;
   }
 
   /* (non-Javadoc)
@@ -43,13 +47,14 @@ public class FullAnalysisWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveContents(page, false, false);
-      mw.retrieveAllLinks(page);
-      mw.retrieveDisambiguationInformation(page.getLinks(), true);
+      mw.retrieveContents(page, false, false, true);
+      mw.retrieveAllLinks(page, knownPages, true);
+      mw.retrieveDisambiguationInformation(page.getLinks(), knownPages, true, true);
       for (Page link : page.getLinks()) {
         if (Boolean.TRUE.equals(link.isDisambiguationPage()) &&
-            link.hasWiktionaryTemplate()) {
-          mw.retrieveContents(link, false, false);
+            link.hasWiktionaryTemplate() &&
+            (link.getContents() == null)) {
+          mw.retrieveContents(link, false, false, true);
         }
       }
       mw.block(true);

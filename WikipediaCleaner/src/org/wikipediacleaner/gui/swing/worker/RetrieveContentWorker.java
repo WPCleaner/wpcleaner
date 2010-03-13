@@ -43,7 +43,7 @@ public class RetrieveContentWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveContents(page, true, false);
+      mw.retrieveContents(page, true, false, true);
       setText("Analyzing data");
     } catch (APIException e) {
       return e;

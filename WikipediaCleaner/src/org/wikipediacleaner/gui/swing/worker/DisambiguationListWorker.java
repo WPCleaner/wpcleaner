@@ -65,9 +65,11 @@ public class DisambiguationListWorker extends BasicWorker {
   @Override
   public Object construct() {
     try {
-      Page page = DataManager.getPage(wikipedia, wikipedia.getDisambiguationList(), null);
+      Page page = DataManager.getPage(
+          wikipedia, wikipedia.getDisambiguationList(),
+          null, null);
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveAllLinks(page);
+      mw.retrieveAllLinks(page, null, true);
       ArrayList<Page> pages = new ArrayList<Page>();
       Iterator<Page> iter = page.getLinks().iterator();
       while (iter.hasNext()) {
@@ -76,7 +78,7 @@ public class DisambiguationListWorker extends BasicWorker {
           pages.add(link);
         }
       }
-      mw.retrieveDisambiguationInformation(pages, false);
+      mw.retrieveDisambiguationInformation(pages, null, false, true);
       if (!shouldContinue()) {
         return null;
       }

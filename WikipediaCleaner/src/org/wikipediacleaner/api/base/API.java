@@ -85,9 +85,10 @@ public interface API {
    * Retrieves the contents of <code>page</code>.
    * 
    * @param page Page.
+   * @param withRedirects Flag indicating if redirects information should be retrieved.
    * @throws APIException
    */
-  public void retrieveContents(Page page) throws APIException;
+  public void retrieveContents(Page page, boolean withRedirects) throws APIException;
 
   /**
    * Expand templates in a text.
@@ -153,9 +154,11 @@ public interface API {
    * Retrieves the links of <code>page</code> and initialize redirect status.
    * 
    * @param page Page.
+   * @param knownPages Already known pages.
    * @throws APIException
    */
-  public void retrieveLinksWithRedirects(Page page) throws APIException;
+  public void retrieveLinksWithRedirects(
+      Page page, ArrayList<Page> knownPages) throws APIException;
 
   /**
    * Retrieves the back links of <code>page</code>.

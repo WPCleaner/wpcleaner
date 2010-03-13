@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-02 20:37+0100\n"
+"POT-Creation-Date: 2010-03-13 20:05+0100\n"
 "PO-Revision-Date: 2008-07-24 02:38+0000\n"
 "Last-Translator: Ricardo Ichizo <n1ghtcr4wler@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -171,94 +171,94 @@ msgstr "Sobre"
 msgid "&Close"
 msgstr "&Fechar"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:164
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:169
 #, java-format
 msgid "Analysis - {0}"
 msgstr "Análise - {0}"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:177
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:182
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:364
 msgid "Link count"
 msgstr "Contador de vínculo"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:311
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:316
 msgid "&Next occurrence"
 msgstr "&Próxima ocorrência"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:315
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:320
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:210
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:625
 msgid "&Validate"
 msgstr "&Validar"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:344
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:349
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:409
 msgid "Sort"
 msgstr "Classificar"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:358
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:363
 #: org/wikipediacleaner/gui/swing/MainWindow.java:507
 msgid "&Options"
 msgstr "&Opções"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:360
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:365
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:384
 msgid "Show &disambiguation pages"
 msgstr "Mostrar &páginas em desambiguação"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:364
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:369
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:393
 msgid "Show &missing pages"
 msgstr "Mostrar &páginas faltando"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:368
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:373
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:402
 #, fuzzy
 msgid "Show &redirect pages"
 msgstr "Visualizar &páginas redirecionadas"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:372
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:377
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:411
 msgid "Show &other pages"
 msgstr "Mostrar &outras páginas"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:377
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:382
 msgid "Count disambiguation pages"
 msgstr "Contador de páginas em desambiguação"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:381
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:386
 #, fuzzy
 msgid "Count missing pages"
 msgstr "Contar páginas em falta"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:385
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:390
 msgid "Count redirect pages"
 msgstr "Contar páginas redirecionadas"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:389
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:394
 msgid "Count other pages"
 msgstr "Contar outras páginas"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:415
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:420
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:384
 #: org/wikipediacleaner/gui/swing/MainWindow.java:405
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:184
 msgid "&Full analysis"
 msgstr "&Análise completa"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:425
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:430
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:394
 #: org/wikipediacleaner/gui/swing/MainWindow.java:416
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:194
 msgid "&Disambiguation"
 msgstr "&Desambiguação"
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:434
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:439
 #: org/wikipediacleaner/gui/swing/PageWindow.java:394
 msgid "Add to &Watch list"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:636
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:642
 msgid "Would you like to add these pages on your local Watch list ?"
 msgstr ""
 
@@ -327,7 +327,7 @@ msgstr ""
 msgid "Selected page"
 msgstr "Corrigir páginas selecionadas"
 
-#: org/wikipediacleaner/gui/swing/Controller.java:238
+#: org/wikipediacleaner/gui/swing/Controller.java:242
 #, java-format
 msgid ""
 "You have selected {0} pages.\n"
@@ -1101,29 +1101,29 @@ msgid "Analyze page"
 msgstr "Analizar página"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:784
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:821
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:839
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:822
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:840
 msgid "External Viewer"
 msgstr "Visualizador externo"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:857
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:862
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:858
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:863
 msgid "Disambiguation analysis"
 msgstr "Análise de desambiguação"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:887
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:888
 msgid "Reload links"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:904
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:905
 msgid "Purge cache"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:921
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:922
 msgid "Find text"
 msgstr "Encontrar texto"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:939
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:940
 msgid "Search in templates"
 msgstr "Procurar em templates"
 
@@ -1133,7 +1133,8 @@ msgid "{0} links in Main Namespace / {1} total links"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/AutomaticDisambiguationWorker.java:69
-msgid "The following modifications have been done :"
+#, java-format
+msgid "The following modifications have been done ({0} pages):"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:57

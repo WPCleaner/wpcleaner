@@ -148,7 +148,7 @@ public abstract class PageWindow
     if (getTextContents() != null) {
       getTextContents().setText(null);
     }
-    page = DataManager.getPage(getWikipedia(), getTextPageName(), null);
+    page = DataManager.getPage(getWikipedia(), getTextPageName(), null, null);
     updateComponentState();
   }
 
@@ -702,7 +702,7 @@ public abstract class PageWindow
    * Action called when Full analysis button is pressed.
    */
   private void actionFullAnalysis() {
-    Controller.runFullAnalysis(getPageName(), getWikipedia());
+    Controller.runFullAnalysis(getPageName(), null, getWikipedia());
   }
 
   /**
@@ -711,7 +711,7 @@ public abstract class PageWindow
   private void actionFullAnalysisRedir() {
     if (page != null) {
       Controller.runFullAnalysis(
-          page.getRedirectTitle(),
+          page.getRedirectTitle(), null,
           getWikipedia());
     }
   }

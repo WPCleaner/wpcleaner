@@ -19,6 +19,7 @@
 package org.wikipediacleaner.gui.swing;
 
 import java.awt.Component;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -39,12 +40,13 @@ public class Controller {
    * Run a full analysis on one page.
    * 
    * @param page Page.
+   * @param knownPages Pages already loaded.
    * @param wikipedia Wikipedia
    */
   public static void runFullAnalysis(
-      String page, EnumWikipedia wikipedia) {
+      String page, ArrayList<Page> knownPages, EnumWikipedia wikipedia) {
     if (page != null) {
-      AnalysisWindow.createAnalysisWindow(page, wikipedia);
+      AnalysisWindow.createAnalysisWindow(page, knownPages, wikipedia);
     }
   }
 
@@ -53,10 +55,12 @@ public class Controller {
    * 
    * @param parentComponent Parent component.
    * @param pages Array of pages.
+   * @param knownPages Pages already loaded.
    * @param wikipedia Wikipedia
    */
   public static void runFullAnalysis(
       Component parentComponent, Object[] pages,
+      ArrayList<Page> knownPages,
       EnumWikipedia wikipedia) {
     if (pages == null) {
       return;
@@ -65,7 +69,7 @@ public class Controller {
     for (int i = 0; i < pagesCount; i++) {
       Object page = pages[i];
       if (page != null) {
-        runFullAnalysis(page.toString(), wikipedia);
+        runFullAnalysis(page.toString(), knownPages, wikipedia);
       }
     }
   }

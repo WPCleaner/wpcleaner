@@ -208,7 +208,7 @@ public class CheckError {
    * @param page Page.
    */
   private void addPage(String page) {
-    Page tmpPage = DataManager.getPage(wikipedia, page, null);
+    Page tmpPage = DataManager.getPage(wikipedia, page, null, null);
     if (!errors.contains(tmpPage)) {
       errors.add(tmpPage);
     }

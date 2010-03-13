@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.execution;
 
+import java.util.ArrayList;
+
 import org.wikipediacleaner.api.MediaWikiListener;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
@@ -31,15 +33,20 @@ import org.wikipediacleaner.i18n.GT;
 public class LinksWRCallable extends MediaWikiCallable<Page> {
 
   private final Page page;
+  private final ArrayList<Page> knownPages;
 
   /**
    * @param listener Listener of MediaWiki events.
    * @param api MediaWiki API.
    * @param page Page.
+   * @param knownPages Already known pages.
    */
-  public LinksWRCallable(MediaWikiListener listener, API api, Page page) {
+  public LinksWRCallable(
+      MediaWikiListener listener, API api,
+      Page page, ArrayList<Page> knownPages) {
     super(listener, api);
     this.page = page;
+    this.knownPages = knownPages;
   }
 
   /* (non-Javadoc)
@@ -47,7 +54,7 @@ public class LinksWRCallable extends MediaWikiCallable<Page> {
    */
   public Page call() throws APIException {
     setText(GT._("Retrieving page back links") + " - " + page.getTitle());
-    api.retrieveLinksWithRedirects(page);
+    api.retrieveLinksWithRedirects(page, knownPages);
     return page;
   }
 

@@ -771,7 +771,7 @@ public class MainWindow
     config.setString(Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
     config.save();
     Controller.runFullAnalysis(
-        textPagename.getText().trim(),
+        textPagename.getText().trim(), null,
         getWikipedia());
   }
 
@@ -860,7 +860,7 @@ public class MainWindow
         (pageNames != null) ? pageNames.size() : 0);
     if (pageNames != null) {
       for (String name : pageNames) {
-        pages.add(DataManager.getPage(getWikipedia(), name, null));
+        pages.add(DataManager.getPage(getWikipedia(), name, null, null));
       }
     }
     PageListWindow.createPageListWindow(

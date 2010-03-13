@@ -221,8 +221,9 @@ public class MediaWikiAPI implements API {
    * Retrieves the contents of <code>page</code>.
    * 
    * @param page The page.
+   * @param withRedirects Flag indicating if redirects information should be retrieved.
    */
-  public void retrieveContents(Page page)
+  public void retrieveContents(Page page, boolean withRedirects)
       throws APIException {
     HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("prop", "revisions|info");
@@ -236,7 +237,7 @@ public class MediaWikiAPI implements API {
           page,
           getRoot(properties, MAX_ATTEMPTS),
           "/api/query/pages/page");
-      if (redirect) {
+      if (redirect && withRedirects) {
         ArrayList<Page> pages = new ArrayList<Page>(1);
         pages.add(page);
         initializeRedirect(pages);
@@ -450,8 +451,10 @@ public class MediaWikiAPI implements API {
    * Retrieves the links of <code>page</code>.
    * 
    * @param page The page.
+   * @param knownPages Already known pages.
    */
-  public void retrieveLinksWithRedirects(Page page)
+  public void retrieveLinksWithRedirects(
+      Page page, ArrayList<Page> knownPages)
       throws APIException {
     HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("generator", "links");
@@ -467,6 +470,7 @@ public class MediaWikiAPI implements API {
         constructLinksWithRedirects(
             page, root,
             "/api/query/pages/page",
+            knownPages,
             redirects, keepLinks);
         XPath xpaContinue = XPath.newInstance("/api/query-continue/links");
         XPath xpaGplContinue = XPath.newInstance("./@gplcontinue");
@@ -516,7 +520,7 @@ public class MediaWikiAPI implements API {
         while (iter.hasNext()) {
           Element currentNode = (Element) iter.next();
           Page link = DataManager.getPage(
-              page.getWikipedia(), xpaTitle.valueOf(currentNode), null);
+              page.getWikipedia(), xpaTitle.valueOf(currentNode), null, null);
           link.setNamespace(xpaNs.valueOf(currentNode));
           link.setPageId(xpaPageId.valueOf(currentNode));
           links.add(link);
@@ -572,7 +576,7 @@ public class MediaWikiAPI implements API {
         while (iter.hasNext()) {
           Element currentNode = (Element) iter.next();
           Page link = DataManager.getPage(
-              page.getWikipedia(), xpaTitle.valueOf(currentNode), null);
+              page.getWikipedia(), xpaTitle.valueOf(currentNode), null, null);
           link.setNamespace(xpaNs.valueOf(currentNode));
           link.setPageId(xpaPageId.valueOf(currentNode));
           link.setRevisionId(xpaLastRevId.valueOf(currentNode));
@@ -628,7 +632,7 @@ public class MediaWikiAPI implements API {
         while (iter.hasNext()) {
           Element currentNode = (Element) iter.next();
           Page link = DataManager.getPage(
-              page.getWikipedia(), xpaTitle.valueOf(currentNode), null);
+              page.getWikipedia(), xpaTitle.valueOf(currentNode), null, null);
           link.setNamespace(xpaNs.valueOf(currentNode));
           link.setPageId(xpaPageId.valueOf(currentNode));
           links.add(link);
@@ -754,7 +758,9 @@ public class MediaWikiAPI implements API {
       while (iter.hasNext()) {
         Page page = iter.next();
         if (page.isInMainNamespace()) {
-          tmpPages.add(page);
+          if (!tmpPages.contains(page)) {
+            tmpPages.add(page);
+          }
         } else {
           page.setDisambiguationPage(Boolean.FALSE);
         }
@@ -935,7 +941,7 @@ public class MediaWikiAPI implements API {
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
         Page link = DataManager.getPage(
-            page.getWikipedia(), xpaTitle.valueOf(currentNode), null);
+            page.getWikipedia(), xpaTitle.valueOf(currentNode), null, null);
         link.setNamespace(xpaNs.valueOf(currentNode));
         links.add(link);
       }
@@ -949,11 +955,15 @@ public class MediaWikiAPI implements API {
   /**
    * @param page Page.
    * @param root Root element.
-   * @param query XPath query to retrieve the links 
+   * @param query XPath query to retrieve the links.
+   * @param knownPages Already known pages.
+   * @param redirects List of redirects filled by the method.
+   * @param Flag indicating if links of the page should be kept.
    * @throws APIException
    */
   private void constructLinksWithRedirects(
       Page page, Element root, String query,
+      ArrayList<Page> knownPages,
       ArrayList<Page> redirects,
       boolean keepExistingLinks)
       throws APIException {
@@ -978,7 +988,8 @@ public class MediaWikiAPI implements API {
         Page link = DataManager.getPage(
             page.getWikipedia(),
             xpaTitle.valueOf(currentNode),
-            xpaRevisionId.valueOf(currentNode));
+            xpaRevisionId.valueOf(currentNode),
+            knownPages);
         link.setNamespace(xpaNs.valueOf(currentNode));
         if (currentNode.getAttribute("pageid") != null) {
           link.setExisting(Boolean.TRUE);
@@ -986,7 +997,10 @@ public class MediaWikiAPI implements API {
           link.setExisting(Boolean.FALSE);
         }
         if ((currentNode.getAttribute("redirect") != null) && (redirects != null)) {
-          redirects.add(link);
+          // If the link is not already a redirect, add it to the list for more processing
+          if (!link.isRedirect()) {
+            redirects.add(link);
+          }
         }
         links.add(link);
       }
@@ -1038,7 +1052,7 @@ public class MediaWikiAPI implements API {
             }
           }
           if (!alreadyFound) {
-            Page template = DataManager.getPage(wikipedia, title, null);
+            Page template = DataManager.getPage(wikipedia, title, null, null);
             template.setNamespace(namespace);
             newTemplates.add(template);
           }
@@ -1175,7 +1189,7 @@ public class MediaWikiAPI implements API {
               if (!listTo.isEmpty()) {
                 Element to = (Element) listTo.get(0);
                 Page pageTo = DataManager.getPage(
-                    p.getWikipedia(), xpaTitle.valueOf(to), null);
+                    p.getWikipedia(), xpaTitle.valueOf(to), null, null);
                 pageTo.setNamespace(xpaNamespace.valueOf(to));
                 pageTo.setPageId(xpaPageId.valueOf(to));
                 p.addRedirect(pageTo);

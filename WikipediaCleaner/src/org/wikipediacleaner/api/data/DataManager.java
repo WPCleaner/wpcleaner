@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.ArrayList;
+
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.utils.Configuration;
 
@@ -31,9 +33,25 @@ public class DataManager {
    * @param wikipedia Wikipedia.
    * @param title Page title.
    * @param revisionId Revision id.
+   * @param knownPages Already known pages.
    * @return The requested page.
    */
-  public static Page getPage(EnumWikipedia wikipedia, String title, String revisionId) {
+  public static Page getPage(
+      EnumWikipedia wikipedia,
+      String title, String revisionId,
+      ArrayList<Page> knownPages) {
+
+    // Check in the known pages
+    if (knownPages != null) {
+      for (Page page : knownPages) {
+        if ((page != null) &&
+            (page.getWikipedia() == wikipedia) &&
+            (Page.areSameTitle(page.getTitle(), title)) &&
+            ((revisionId == null) || (revisionId.equals(page.getRevisionId().toString())))) {
+          return page;
+        }
+      }
+    }
 
     // Retrieve page
     Page page = new Page(wikipedia, title);

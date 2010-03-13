@@ -63,18 +63,15 @@ public class AutomaticDisambiguationWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.replaceText(pages, replacements, wikipedia, comment, description);
-      if (showDescription) {
+      Integer count = Integer.valueOf(mw.replaceText(pages, replacements, wikipedia, comment, description));
+      if (showDescription && (count > 0)) {
         InformationWindow.createInformationWindow(
-            GT._("The following modifications have been done :"),
+            GT._("The following modifications have been done ({0} pages):", count.toString()),
             description.toString(), wikipedia);
       }
-      if ((showDescription) && (description.length() > 0)) {
-        System.out.println(description);
-      }
+      return count;
     } catch (APIException e) {
       return e;
     }
-    return null;
   }
 }

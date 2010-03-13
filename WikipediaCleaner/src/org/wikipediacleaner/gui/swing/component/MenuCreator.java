@@ -992,14 +992,14 @@ public class MenuCreator {
     if ((menuItem == null) || (page == null)) {
       return;
     }
+    if (page.isRedirect()) {
+      menuItem.setFont(menuItem.getFont().deriveFont(Font.ITALIC));
+    }
     if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
       menuItem.setFont(menuItem.getFont().deriveFont(disambiguationAttributes));
     }
     if (Boolean.FALSE.equals(page.isExisting())) {
       menuItem.setFont(menuItem.getFont().deriveFont(missingAttributes));
-    }
-    if (page.isRedirect()) {
-      menuItem.setFont(menuItem.getFont().deriveFont(Font.ITALIC));
     }
   }
 

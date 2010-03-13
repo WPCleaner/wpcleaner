@@ -621,6 +621,12 @@ public class DisambiguationWindow extends PageWindow {
         if (!worker.shouldContinue()) {
           return;
         }
+        if (worker.get() instanceof Integer) {
+          Integer count = (Integer) worker.get();
+          if (count.intValue() == 0) {
+            return;
+          }
+        }
         actionReload();
       }
     });
@@ -658,8 +664,20 @@ public class DisambiguationWindow extends PageWindow {
    * Action called when Full analysis button is pressed.
    */
   private void actionFullAnalysisLink() {
+    ArrayList<Page> knownPages = null;
+    if (getPage() != null) {
+      knownPages = new ArrayList<Page>(1);
+      knownPages.add(getPage());
+      for (Page backLink : getPage().getBackLinksWithRedirects()) {
+        if ((backLink != null) &&
+            (backLink.isRedirect()) &&
+            (Page.areSameTitle(getPage().getTitle(), backLink.getRedirectDestination()))) {
+          knownPages.add(backLink);
+        }
+      }
+    }
     Controller.runFullAnalysis(
-        getParentComponent(), listLinks.getSelectedValues(), getWikipedia());
+        getParentComponent(), listLinks.getSelectedValues(), knownPages, getWikipedia());
   }
 
   /**
