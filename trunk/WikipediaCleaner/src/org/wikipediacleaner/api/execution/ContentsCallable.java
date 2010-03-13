@@ -32,17 +32,22 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
 
   private final Page page;
   private final Page returnPage;
+  private final boolean withRedirects;
 
   /**
    * @param listener Listener of MediaWiki events.
    * @param api MediaWiki API.
    * @param page Page.
    * @param returnPage Page to return at the end of the processing.
+   * @param withRedirects Flag indicating if redirects information should be retrieved.
    */
-  public ContentsCallable(MediaWikiListener listener, API api, Page page, Page returnPage) {
+  public ContentsCallable(
+      MediaWikiListener listener, API api,
+      Page page, Page returnPage, boolean withRedirects) {
     super(listener, api);
     this.page = page;
     this.returnPage = returnPage;
+    this.withRedirects = withRedirects;
   }
 
   /* (non-Javadoc)
@@ -50,7 +55,7 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
    */
   public Page call() throws APIException {
     setText(GT._("Retrieving contents") + " - " + page.getTitle());
-    api.retrieveContents(page);
+    api.retrieveContents(page, withRedirects);
     return returnPage;
   }
 

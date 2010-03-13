@@ -43,7 +43,7 @@ public class RedLinksAnalysisWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveAllBacklinks(page);
+      mw.retrieveAllBacklinks(page, true);
     } catch (APIException e) {
       return e;
     }

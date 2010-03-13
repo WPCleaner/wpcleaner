@@ -63,6 +63,6 @@ public class PageListAnalyzeListener extends MouseAdapter {
       return;
     }
     Page page = (Page) object;
-    AnalysisWindow.createAnalysisWindow(page.getTitle(), wikipedia);
+    AnalysisWindow.createAnalysisWindow(page.getTitle(), null, wikipedia);
   }
 }

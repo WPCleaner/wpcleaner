@@ -78,7 +78,7 @@ public class PageUtilitiesTest {
   @Test
   public void testCreatePatternForInternalLink() {
     int count = 0;
-    Page link = DataManager.getPage(EnumWikipedia.FR, "AFP", null);
+    Page link = DataManager.getPage(EnumWikipedia.FR, "AFP", null, null);
     Pattern pattern = PageUtilities.createPatternForInternalLink(link);
     Matcher matcher = pattern.matcher(pageText);
     while (matcher.find()) {
@@ -89,8 +89,8 @@ public class PageUtilitiesTest {
   
   @Test
   public void testCountLinkOccurencesInText() {
-    Page page = DataManager.getPage(EnumWikipedia.FR, "Utilisateur:Salebot/Journal/2008-11-05", null);
-    Page link = DataManager.getPage(EnumWikipedia.FR, "AFP", null);
+    Page page = DataManager.getPage(EnumWikipedia.FR, "Utilisateur:Salebot/Journal/2008-11-05", null, null);
+    Page link = DataManager.getPage(EnumWikipedia.FR, "AFP", null, null);
     PageUtilities.countLinkOccurencesInText(EnumWikipedia.FR, page, pageText, link);
     assertEquals(1, link.getCountOccurence());
   }

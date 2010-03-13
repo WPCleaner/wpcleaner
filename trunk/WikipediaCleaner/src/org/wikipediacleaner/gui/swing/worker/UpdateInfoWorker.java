@@ -40,7 +40,7 @@ public class UpdateInfoWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveAllBacklinks(pageList);
+      mw.retrieveAllBacklinks(pageList, true);
     } catch (APIException e) {
       return e;
     }

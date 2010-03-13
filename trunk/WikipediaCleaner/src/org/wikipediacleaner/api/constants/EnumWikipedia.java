@@ -428,9 +428,8 @@ public enum EnumWikipedia {
       ArrayList<Page> list = new ArrayList<Page>(templatesForHelpRequested.length);
       for (String template : templatesForHelpRequested) {
         list.add(DataManager.getPage(
-            this,
-            Namespace.getTitle(Namespace.TEMPLATE, namespaces, template),
-            null));
+            this, Namespace.getTitle(Namespace.TEMPLATE, namespaces, template),
+            null, null));
       }
       return list;
     }
@@ -450,7 +449,9 @@ public enum EnumWikipedia {
   public void initDisambiguationTemplates(API api) {
     if (disambiguationTemplates == null) {
       synchronized(api) {
-        Page page = DataManager.getPage(this, "Mediawiki:Disambiguationspage", null);
+        Page page = DataManager.getPage(
+            this, "Mediawiki:Disambiguationspage",
+            null, null);
         try {
           api.retrieveLinks(page);
         } catch (APIException e) {

@@ -269,7 +269,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   private void actionFullAnalysis() {
     Controller.runFullAnalysis(
         getParentComponent(),
-        getSelectedPages(),
+        getSelectedPages(), null,
         getWikipedia());
   }
 
@@ -317,7 +317,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
         watchedPages.add(value);
         Collections.sort(watchedPages);
         config.setStringArrayList(Configuration.ARRAY_WATCH_PAGES, watchedPages);
-        modelPages.addPage(DataManager.getPage(getWikipedia(), value, null));
+        modelPages.addPage(DataManager.getPage(getWikipedia(), value, null, null));
       }
     }
   }

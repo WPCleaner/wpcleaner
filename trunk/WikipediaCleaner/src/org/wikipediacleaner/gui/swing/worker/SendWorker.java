@@ -62,7 +62,7 @@ public class SendWorker extends BasicWorker {
       if (APIException.ERROR_BAD_TOKEN.equals(e.getErrorCode())) {
         try {
           setText(GT._("Error 'badtoken' detected: Retrying"));
-          api.retrieveContents(page);
+          api.retrieveContents(page, false);
           api.updatePage(page, text, wikipedia.createUpdatePageComment(comment, null));
         } catch (APIException e2) {
           return e2;

@@ -243,7 +243,7 @@ public class Page implements Comparable<Page> {
     if (redirects != null) {
       for (int i = 0; i < redirects.size(); i++) {
         if (Boolean.TRUE.equals(redirects.get(i).isDisambiguationPage())) {
-          return true;
+          return Boolean.TRUE;
         }
       }
     }

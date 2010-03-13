@@ -42,6 +42,6 @@ public class FullPageAnalysisAction implements ActionListener {
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
-    Controller.runFullAnalysis(title, wiki);
+    Controller.runFullAnalysis(title, null, wiki);
   }
 }

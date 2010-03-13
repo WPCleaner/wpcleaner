@@ -83,14 +83,17 @@ public class MediaWiki extends MediaWikiController {
    * @param page Page.
    * @param block Flag indicating if the call should block until completed.
    * @param returnPage Flag indicating if the page should be returned once task is finished.
+   * @param withRedirects Flag indicating if redirects information should be retrieved.
    * @throws APIException
    */
-  public void retrieveContents(Page page, boolean block, boolean returnPage) throws APIException {
+  public void retrieveContents(
+      Page page,
+      boolean block, boolean returnPage, boolean withRedirects) throws APIException {
     if (page == null) {
       return;
     }
     final API api = APIFactory.getAPI();
-    addTask(new ContentsCallable(this, api, page, returnPage ? page : null));
+    addTask(new ContentsCallable(this, api, page, returnPage ? page : null, withRedirects));
     block(block);
   }
 
@@ -114,7 +117,7 @@ public class MediaWiki extends MediaWikiController {
       return 0;
     }
     for (Page page : pages) {
-      retrieveContents(page, false, true);
+      retrieveContents(page, false, true, true); // TODO: withRedirects=false ?
     }
     int count = 0;
     final API api = APIFactory.getAPI();
@@ -164,7 +167,7 @@ public class MediaWiki extends MediaWikiController {
               api.updatePage(page, newContents, wikipedia.createUpdatePageComment(comment, details.toString()));
             } catch (APIException e) {
               if (APIException.ERROR_BAD_TOKEN.equals(e.getErrorCode())) {
-                api.retrieveContents(page);
+                api.retrieveContents(page, false);
                 api.updatePage(page, newContents, wikipedia.createUpdatePageComment(comment, details.toString()));
               } else {
                 throw e;
@@ -228,37 +231,43 @@ public class MediaWiki extends MediaWikiController {
    * Retrieve all links (with redirects) of a page.
    * 
    * @param page Page.
+   * @param knownPages Already known pages.
+   * @param block Flag indicating if the call should block until completed.
    * @throws APIException
    */
-  public void retrieveAllLinks(Page page) throws APIException {
+  public void retrieveAllLinks(
+      Page page, ArrayList<Page> knownPages,
+      boolean block) throws APIException {
     if (page == null) {
       return;
     }
     final API api = APIFactory.getAPI();
-    addTask(new LinksWRCallable(this, api, page));
-    block(true);
+    addTask(new LinksWRCallable(this, api, page, knownPages));
+    block(block);
   }
 
   /**
    * Retrieve all backlinks (with redirects) of a page.
    * 
    * @param page Page.
+   * @param block Flag indicating if the call should block until completed.
    * @throws APIException
    */
-  public void retrieveAllBacklinks(Page page) throws APIException {
+  public void retrieveAllBacklinks(Page page, boolean block) throws APIException {
     if (page == null) {
       return;
     }
-    retrieveAllBacklinks(new Page[] { page });
+    retrieveAllBacklinks(new Page[] { page }, block);
   }
 
   /**
    * Retrieve all backlinks (with redirects) of a list of pages.
    * 
    * @param pageList List of pages.
+   * @param block Flag indicating if the call should block until completed.
    * @throws APIException
    */
-  public void retrieveAllBacklinks(Page[] pageList) throws APIException {
+  public void retrieveAllBacklinks(Page[] pageList, boolean block) throws APIException {
     if ((pageList == null) || (pageList.length == 0)) {
       return;
     }
@@ -288,7 +297,7 @@ public class MediaWiki extends MediaWikiController {
         }
       }
     }
-    block(true);
+    block(block);
   }
 
   /**
@@ -312,12 +321,14 @@ public class MediaWiki extends MediaWikiController {
    * Retrieve disambiguation information for a list of pages.
    * 
    * @param pageList List of page.
+   * @param knownPages Already known pages.
    * @param disambiguations Flag indicating if possible disambiguations should be retrieved.
+   * @param block Flag indicating if the call should block until completed.
    * @throws APIException
    */
   public void retrieveDisambiguationInformation(
-      ArrayList<Page> pageList,
-      boolean disambiguations) throws APIException {
+      ArrayList<Page> pageList, ArrayList<Page> knownPages,
+      boolean disambiguations, boolean block) throws APIException {
     if ((pageList == null) || (pageList.isEmpty())) {
       return;
     }
@@ -325,14 +336,19 @@ public class MediaWiki extends MediaWikiController {
 
     // Retrieving disambiguation status
     final int maxPages = api.getMaxPagesPerQuery();
-    if (pageList.size() <= maxPages) {
-      addTask(new DisambiguationStatusCallable(this, api, pageList));
+    ArrayList<Page> filteredList = pageList;
+    if (knownPages != null) {
+      filteredList = new ArrayList<Page>(pageList);
+      filteredList.removeAll(knownPages);
+    }
+    if (filteredList.size() <= maxPages) {
+      addTask(new DisambiguationStatusCallable(this, api, filteredList));
     } else {
       int index = 0;
-      while (index < pageList.size()) {
+      while (index < filteredList.size()) {
         ArrayList<Page> tmpList = new ArrayList<Page>(api.getMaxPagesPerQuery());
-        for (int i = 0; i < maxPages && index < pageList.size(); i++, index++) {
-          tmpList.add(pageList.get(index));
+        for (int i = 0; (i < maxPages) && (index < filteredList.size()); i++, index++) {
+          tmpList.add(filteredList.get(index));
         }
         addTask(new DisambiguationStatusCallable(this, api, tmpList));
       }
@@ -345,12 +361,16 @@ public class MediaWiki extends MediaWikiController {
         Iterator<Page> iter = p.getRedirectIteratorWithPage();
         while (iter.hasNext()) {
           p = iter.next();
-          if (Boolean.TRUE.equals(p.isDisambiguationPage())) {
-            addTask(new LinksWRCallable(this, api, p));
+          if ((Boolean.TRUE.equals(p.isDisambiguationPage())) &&
+              (!p.isRedirect())) {
+            ArrayList<Page> links = p.getLinks();
+            if ((links == null) || (links.size() == 0)) {
+              addTask(new LinksWRCallable(this, api, p, null));
+            }
           }
         }
       }
     }
-    block(true);
+    block(block);
   }
 }

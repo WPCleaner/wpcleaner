@@ -147,7 +147,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
               if (separator != -1) {
                 foundText = foundText.substring(0, separator);
               }
-              attrPage = DataManager.getPage(wikipedia, foundText, null);
+              attrPage = DataManager.getPage(wikipedia, foundText, null, null);
             }
           }
         }
@@ -230,7 +230,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
                 String template = foundText.substring(0, separatorIndex);
                 String title = "Template:" + template;
                 String params = foundText.substring(separatorIndex + 1);
-                Page page = DataManager.getPage(wikipedia, title, null);
+                Page page = DataManager.getPage(wikipedia, title, null, null);
                 JPopupMenu popup = new JPopupMenu();
                 JMenuItem menuItem = new JMenuItem(page.getTitle());
                 menuItem.setEnabled(false);

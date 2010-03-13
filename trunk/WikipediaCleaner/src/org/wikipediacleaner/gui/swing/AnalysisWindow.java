@@ -96,14 +96,18 @@ public class AnalysisWindow extends PageWindow {
   private JButton buttonDisambiguationLink;
   private JButton buttonWatchLink;
 
+  ArrayList<Page> knownPages;
+
   /**
    * Create and display a AnalysisWindow.
    * 
    * @param page Page name.
+   * @param knownPages Pages already loaded.
    * @param wikipedia Wikipedia.
    */
   public static void createAnalysisWindow(
       final String page,
+      final ArrayList<Page> knownPages,
       final EnumWikipedia wikipedia) {
     createWindow(
         "AnalysisWindow",
@@ -117,6 +121,7 @@ public class AnalysisWindow extends PageWindow {
               Configuration config = Configuration.getConfiguration();
               AnalysisWindow analysis = (AnalysisWindow) window;
               analysis.setPageName(page);
+              analysis.knownPages = knownPages;
               analysis.modelLinks = new PageListModel();
               analysis.modelLinks.setShowDisambiguation(config.getBoolean(
                   Configuration.BOOLEAN_ANALYSIS_DISAMBIG_PAGES,
@@ -555,7 +560,8 @@ public class AnalysisWindow extends PageWindow {
   @Override
   protected void actionReload() {
     clean();
-    FullAnalysisWorker reloadWorker = new FullAnalysisWorker(this, getPage());
+    FullAnalysisWorker reloadWorker = new FullAnalysisWorker(this, getPage(), knownPages);
+    knownPages = null;
     setupReloadWorker(reloadWorker);
     reloadWorker.start();
   }
@@ -667,6 +673,7 @@ public class AnalysisWindow extends PageWindow {
     Controller.runFullAnalysis(
         getParentComponent(),
         listLinks.getSelectedValues(),
+        null,
         getWikipedia());
   }
 
