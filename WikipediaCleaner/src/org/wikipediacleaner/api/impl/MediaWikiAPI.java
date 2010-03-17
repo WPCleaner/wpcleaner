@@ -78,7 +78,7 @@ public class MediaWikiAPI implements API {
   private final static boolean DEBUG_TIME = false;
   private final static boolean DEBUG_URL = true;
   private final static boolean DEBUG_XML = false;
-  private static XMLOutputter xmlOutputter;
+  private static XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
 
   private EnumWikipedia mediawikiAPI;
   private HttpClient httpClient;
@@ -1470,10 +1470,10 @@ public class MediaWikiAPI implements API {
       String attribute,
       String value)
       throws JDOMException {
-    if ((value != null) && (value.indexOf("'") != -1)) {
-      return XPath.newInstance(element + "[@" + attribute + "=\"" + value + "\"]");
+    if ((value != null) && (value.indexOf("\"") != -1)) {
+      return XPath.newInstance(element + "[@" + attribute + "=\"" + xmlOutputter.escapeAttributeEntities(value) + "\"]");
     }
-    return XPath.newInstance(element + "[@" + attribute + "='" + value + "']");
+    return XPath.newInstance(element + "[@" + attribute + "=\"" + value + "\"]");
   }
 
   /**
