@@ -137,6 +137,10 @@ public class MediaWiki extends MediaWikiController {
               String from = replacementValue.getKey().toString();
               String to = replacementValue.getValue().toString();
               String tmpContents = newContents;
+              if (to.indexOf('$') >= 0) {
+                // Replacement: "$" -> "\$" to avoid interpretation by replaceAll
+                to = to.replaceAll(Pattern.quote("$"), "\\\\\\$");
+              }
               newContents = tmpContents.replaceAll(Pattern.quote(from), to);
               if (!newContents.equals(tmpContents)) {
                 if (description != null) {
