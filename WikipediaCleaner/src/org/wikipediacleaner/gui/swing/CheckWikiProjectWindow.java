@@ -56,7 +56,6 @@ import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -74,8 +73,6 @@ import org.wikipediacleaner.i18n.GT;
  * Check Wiki Project window.
  */
 public class CheckWikiProjectWindow extends PageWindow {
-
-  private Page projectPage;
 
   private ArrayList<CheckError> errors;
   private JComboBox listAllErrors;
@@ -135,10 +132,6 @@ public class CheckWikiProjectWindow extends PageWindow {
    */
   @Override
   protected Component createComponents() {
-    projectPage = DataManager.getPage(
-        getWikipedia(), getWikipedia().getCheckWikiProject(),
-        null, null);
-
     JPanel panel = new JPanel(new GridBagLayout());
 
     // Initialize constraints
@@ -420,8 +413,8 @@ public class CheckWikiProjectWindow extends PageWindow {
    * Analyze the Check Wiki page contents.
    */
   private void analyzeCheckWiki() {
-    String contents = projectPage.getContents();
-    errors = CheckError.initCheckErrors(getWikipedia(), contents);
+    //String contents = projectPage.getContents();
+    //errors = CheckError.initCheckErrors(getWikipedia(), contents);
     if (modelAllErrors != null) {
       modelAllErrors.removeAllElements();
       if (errors != null) {
@@ -564,7 +557,8 @@ public class CheckWikiProjectWindow extends PageWindow {
   @Override
   protected void actionReload() {
     clean();
-    CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(this, projectPage);
+    errors = new ArrayList<CheckError>();
+    CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(this, getWikipedia(), errors);
     setupReloadWorker(reloadWorker);
     reloadWorker.start();
   }

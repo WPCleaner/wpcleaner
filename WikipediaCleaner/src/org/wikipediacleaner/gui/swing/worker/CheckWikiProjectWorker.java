@@ -18,22 +18,95 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
-import org.wikipediacleaner.api.data.Page;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.zip.GZIPInputStream;
+
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.check.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.gui.swing.basic.BasicWorker;
+import org.wikipediacleaner.i18n.GT;
 
 /**
  * SwingWorker for reloading the page. 
  */
-public class CheckWikiProjectWorker extends RetrieveContentWorker {
+public class CheckWikiProjectWorker extends BasicWorker {
+
+  private EnumWikipedia wikipedia;
+  private ArrayList<CheckError> errors;
 
   /**
    * Constructor.
    * 
    * @param window Window.
-   * @param page Page.
+   * @param wikipedia Wikipedia.
+   * @param errors Error list to complete.
    */
-  public CheckWikiProjectWorker(BasicWindow window, Page page) {
-    super(window, page);
-    //
+  public CheckWikiProjectWorker(BasicWindow window, EnumWikipedia wikipedia, ArrayList<CheckError> errors) {
+    super(window);
+    this.wikipedia = wikipedia;
+    this.errors = errors;
+    this.errors.clear();
+  }
+
+  /* (non-Javadoc)
+   * @see org.wikipediacleaner.gui.swing.utils.SwingWorker#construct()
+   */
+  @Override
+  public Object construct() {
+    MultiThreadedHttpConnectionManager manager = new MultiThreadedHttpConnectionManager();
+    HttpClient httpClient = new HttpClient(manager);
+    PostMethod method = null;
+    for (int errorNumber = 1; errorNumber < 100; errorNumber++) {
+      String className = CheckErrorAlgorithm.class.getName() + Integer.toString(errorNumber);
+      try {
+        setText(GT._("Checking for errors number {0}", Integer.toString(errorNumber)));
+
+        // Checking if the error number is known by WikiCleaner
+        Class.forName(className);
+
+        // Retrieving list of pages for the error number
+        String url = "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi";
+        method = new PostMethod(url);
+        method.getParams().setContentCharset("UTF-8");
+        method.setRequestHeader("Accept-Encoding", "gzip");
+        method.addParameter("id", Integer.toString(errorNumber));
+        method.addParameter("limit", Integer.toString(500));
+        method.addParameter("offset", Integer.toString(0));
+        method.addParameter("project", wikipedia.getCode() + "wiki");
+        method.addParameter("view", "bots");
+        int statusCode = httpClient.executeMethod(method);
+        if (statusCode != HttpStatus.SC_OK) {
+          return new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
+        }
+        InputStream stream = method.getResponseBodyAsStream();
+        stream = new BufferedInputStream(stream);
+        Header contentEncoding = method.getResponseHeader("Content-Encoding");
+        if (contentEncoding != null) {
+          if (contentEncoding.getValue().equals("gzip")) {
+            stream = new GZIPInputStream(stream);
+          }
+        }
+        CheckError.addCheckError(errors, wikipedia, errorNumber, stream);
+      } catch (ClassNotFoundException e) {
+        // Not found: error not yet available in WikiCleaner.
+      } catch (HttpException e) {
+        return e;
+      } catch (IOException e) {
+        return e;
+      }
+    }
+    return null;
   }
 }
