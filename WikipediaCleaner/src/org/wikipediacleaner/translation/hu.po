@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-13 20:05+0100\n"
+"POT-Creation-Date: 2010-03-24 20:25+0100\n"
 "PO-Revision-Date: 2009-12-18 11:58+0000\n"
 "Last-Translator: sillentdx <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -17,17 +17,17 @@ msgstr ""
 "X-Launchpad-Export-Date: 2009-12-18 19:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: org/wikipediacleaner/api/MediaWiki.java:141
+#: org/wikipediacleaner/api/MediaWiki.java:148
 #, java-format
 msgid "Page {0}:"
 msgstr "Oldal {0}:"
 
-#: org/wikipediacleaner/api/check/CheckError.java:228
+#: org/wikipediacleaner/api/check/CheckError.java:212
 #, java-format
 msgid "Error n°{0} ({1}) - {2}"
 msgstr "Hiba n°{0} ({1}) - {2}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:233
+#: org/wikipediacleaner/api/check/CheckError.java:217
 msgid "Error unkown from WikiCleaner"
 msgstr "A WikiCleaner számára ismeretlen hiba"
 
@@ -132,11 +132,11 @@ msgid "Occurrence"
 msgstr "Előfordulás"
 
 #: org/wikipediacleaner/api/execution/BacklinksWRCallable.java:49
-#: org/wikipediacleaner/api/execution/LinksWRCallable.java:49
+#: org/wikipediacleaner/api/execution/LinksWRCallable.java:56
 msgid "Retrieving page back links"
 msgstr ""
 
-#: org/wikipediacleaner/api/execution/ContentsCallable.java:52
+#: org/wikipediacleaner/api/execution/ContentsCallable.java:57
 msgid "Retrieving contents"
 msgstr "Tartalom letöltése"
 
@@ -291,31 +291,31 @@ msgstr ""
 msgid "Semi-automatic disambiguation fixing"
 msgstr "Félautomata egyértelműsítő lap javítás"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:119
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:116
 msgid "Check Wikipedia"
 msgstr "Wiképédia ellenőrzése"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:159
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:152
 msgid "This screen is not functional yet !"
 msgstr "Ez még nem működik!"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:229
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:222
 msgid "List of errors detected :"
 msgstr "Észlelt hibák:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:257
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:250
 msgid "Pages"
 msgstr "Lapok"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:273
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:266
 msgid "Load full list"
 msgstr "Teljes lista betöltése"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:284
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:277
 msgid "Show full list"
 msgstr "Teljes lista mutatása"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:334
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:327
 msgid "Selected page"
 msgstr "Kiválasztott lap"
 
@@ -1086,29 +1086,29 @@ msgid "Analyze page"
 msgstr "Lap elemzése"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:784
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:822
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:840
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:821
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:839
 msgid "External Viewer"
 msgstr "Külső néző"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:858
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:863
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:857
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:862
 msgid "Disambiguation analysis"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:888
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:887
 msgid "Reload links"
 msgstr "Linkek újratöltése"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:905
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:904
 msgid "Purge cache"
 msgstr "Gyorsítótár (cache) ürítése"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:922
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:921
 msgid "Find text"
 msgstr "Szöveg keresése"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:940
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:939
 msgid "Search in templates"
 msgstr "Keresés a sablonokban"
 
@@ -1121,6 +1121,11 @@ msgstr ""
 #, fuzzy, java-format
 msgid "The following modifications have been done ({0} pages):"
 msgstr "A következő változtatások történtek:"
+
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:74
+#, java-format
+msgid "Checking for errors number {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:57
 msgid "Current disambiguation list"
