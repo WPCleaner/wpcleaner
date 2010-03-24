@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -88,18 +89,21 @@ public class CheckError {
       ArrayList<CheckError> errors,
       EnumWikipedia wikipedia, int errorNumber, InputStream stream) {
     CheckError error = new CheckError(wikipedia, errorNumber);
-    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-    String line = null;
     boolean errorFound = false;
     try {
+      BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+      String line = null;
       // TODO: Correctly parse HTML ?
       while (((line = reader.readLine()) != null) && !line.endsWith("<pre>")) {
         // Waiting for <pre>
       }
       while (((line = reader.readLine()) != null) && !line.startsWith("</pre>")) {
+        // TODO: Use something like Apache Commons Lang StringEscapeUtils ?
         error.addPage(line);
         errorFound = true;
       }
+    } catch (UnsupportedEncodingException e) {
+      //
     } catch (IOException e) {
       //
     }
