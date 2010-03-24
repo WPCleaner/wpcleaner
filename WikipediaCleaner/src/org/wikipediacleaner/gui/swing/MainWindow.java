@@ -684,7 +684,7 @@ public class MainWindow
 
     // Login
     new LoginWorker(
-        this, getWikipedia(),
+        getWikipedia(), this,
         (EnumLanguage) comboLanguage.getSelectedItem(),
         textUsername.getText(),
         textPassword.getPassword(),
@@ -809,7 +809,7 @@ public class MainWindow
           GT._("There's no known list of disambiguation pages for this Wikipedia."));
       return;
     }
-    new DisambiguationListWorker(this, wikipedia).start();
+    new DisambiguationListWorker(wikipedia, this).start();
   }
 
   /**
@@ -817,7 +817,7 @@ public class MainWindow
    */
   private void actionHelpRequestedOn() {
     EnumWikipedia wikipedia = getWikipedia();
-    new EmbeddedInWorker(this, wikipedia, wikipedia.getTemplatesForHelpRequested()).start();
+    new EmbeddedInWorker(wikipedia, this, wikipedia.getTemplatesForHelpRequested()).start();
   }
 
   /**
@@ -847,7 +847,7 @@ public class MainWindow
    * Action called when Random page button is pressed.
    */
   private void actionRandomPage() {
-    new RandomPageWorker(this, textPagename).start();
+    new RandomPageWorker(getWikipedia(), this, textPagename).start();
   }
 
   /**
@@ -873,7 +873,6 @@ public class MainWindow
    */
   class LoginWorker extends BasicWorker {
 
-    private final EnumWikipedia wikipedia;
     private final EnumLanguage language;
     private final String username;
     private final char[] password;
@@ -881,15 +880,14 @@ public class MainWindow
     private final boolean login;
 
     public LoginWorker(
-        BasicWindow window,
         EnumWikipedia wikipedia,
+        BasicWindow window,
         EnumLanguage language,
         String username,
         char[] password,
         boolean savePassword,
         boolean login) {
-      super(window);
-      this.wikipedia = wikipedia;
+      super(wikipedia, window);
       this.language = language;
       this.username = username.trim();
       this.password = password;
@@ -920,7 +918,7 @@ public class MainWindow
         setText(GT._("Retrieving MediaWiki API"));
         API api = APIFactory.getAPI();
         setText(GT._("Login"));
-        LoginResult result = api.login(wikipedia, username, new String(password), login);
+        LoginResult result = api.login(getWikipedia(), username, new String(password), login);
         if (login) {
           if ((result == null) || (!result.isLoginSuccessful())) {
             throw new APIException("Login unsuccessful: " + ((result != null) ? result.toString() : ""));
@@ -930,7 +928,7 @@ public class MainWindow
 
         // Saving settings
         Configuration configuration = Configuration.getConfiguration();
-        configuration.setWikipedia(wikipedia);
+        configuration.setWikipedia(getWikipedia());
         configuration.setLanguage(language);
         if (login) {
           configuration.setString(Configuration.STRING_USER_NAME, username);
@@ -942,11 +940,11 @@ public class MainWindow
         setText(GT._("Retrieving namespaces"));
         ArrayList<Namespace> namespaces = new ArrayList<Namespace>();
         api.getNamespaces(namespaces);
-        wikipedia.setNamespaces(namespaces);
+        getWikipedia().setNamespaces(namespaces);
         
         // Retrieving disambiguation templates
         setText(GT._("Retrieving disambiguation templates"));
-        wikipedia.initDisambiguationTemplates(api);
+        getWikipedia().initDisambiguationTemplates(api);
       } catch (APIException e) {
         return e;
       }

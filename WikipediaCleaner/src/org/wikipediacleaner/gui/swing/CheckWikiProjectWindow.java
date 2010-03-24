@@ -454,7 +454,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     Object selection = listPages.getSelectedValue();
     if (selection instanceof Page) {
       setPage((Page) selection);
-      RetrieveContentWorker contentWorker = new RetrieveContentWorker(this, getPage());
+      RetrieveContentWorker contentWorker = new RetrieveContentWorker(getWikipedia(), this, getPage());
       contentWorker.setListener(new DefaultBasicWorkerListener() {
 
         /* (non-Javadoc)
@@ -558,7 +558,8 @@ public class CheckWikiProjectWindow extends PageWindow {
   protected void actionReload() {
     clean();
     errors = new ArrayList<CheckError>();
-    CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(this, getWikipedia(), errors);
+    CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
+        getWikipedia(), this, errors);
     setupReloadWorker(reloadWorker);
     reloadWorker.start();
   }

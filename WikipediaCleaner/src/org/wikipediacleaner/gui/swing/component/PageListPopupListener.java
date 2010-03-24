@@ -120,17 +120,17 @@ public class PageListPopupListener extends MouseAdapter {
     MenuCreator.addRemoveAllLinksToMenu(popup, link, textPane);
     popup.add(new JSeparator());
     if (Boolean.FALSE.equals(link.isExisting())) {
-      MenuCreator.addRedLinksAnalysisMenu(popup, link, textPane, wikipedia);
+      MenuCreator.addRedLinksAnalysisMenu(wikipedia, popup, link, textPane);
       popup.add(new JSeparator());
     }
-    MenuCreator.addAnalyzeToMenu(popup, link, wikipedia);
-    MenuCreator.addViewToMenu(popup, link, wikipedia);
-    MenuCreator.addDisambiguationToMenu(popup, link, wikipedia);
-    MenuCreator.addReloadLinksToMenu(popup, link, window);
+    MenuCreator.addAnalyzeToMenu(wikipedia, popup, link);
+    MenuCreator.addViewToMenu(wikipedia, popup, link);
+    MenuCreator.addDisambiguationToMenu(wikipedia, popup, link);
+    MenuCreator.addReloadLinksToMenu(wikipedia, popup, link, window);
     //MenuCreator.addPurgeCacheToMenu(popup, link, window);
     popup.add(new JSeparator());
     MenuCreator.addFindTextToMenu(popup, link, textPane);
-    MenuCreator.addAnalyzeTemplatesToMenu(popup, page, link, wikipedia);
+    MenuCreator.addAnalyzeTemplatesToMenu(wikipedia, popup, page, link);
 
     popup.show(e.getComponent(), e.getX(), e.getY());
   }

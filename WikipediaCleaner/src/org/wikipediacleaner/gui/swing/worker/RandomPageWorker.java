@@ -23,6 +23,7 @@ import javax.swing.text.JTextComponent;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -32,10 +33,15 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class RandomPageWorker extends BasicWorker {
 
-  private JTextComponent text;
+  private final JTextComponent text;
 
-  public RandomPageWorker(BasicWindow window, JTextComponent text) {
-    super(window);
+  /**
+   * @param wikipedia Wikipedia.
+   * @param window Window.
+   * @param text Text component.
+   */
+  public RandomPageWorker(EnumWikipedia wikipedia, BasicWindow window, JTextComponent text) {
+    super(wikipedia, window);
     this.text = text;
   }
 
@@ -48,7 +54,7 @@ public class RandomPageWorker extends BasicWorker {
       setText(GT._("Retrieving MediaWiki API"));
       API api = APIFactory.getAPI();
       setText(GT._("Getting random page"));
-      String title = api.getRandomPage();
+      String title = api.getRandomPage(getWikipedia());
       text.setText(title);
     } catch (APIException e) {
       return e;

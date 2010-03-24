@@ -35,17 +35,21 @@ public class SendWorker extends BasicWorker {
   private final Page page;
   private final String text;
   private final String comment;
-  private final EnumWikipedia wikipedia;
 
+  /**
+   * @param wikipedia Wikipedia.
+   * @param window Window.
+   * @param page Page.
+   * @param text Page contents.
+   * @param comment Comment.
+   */
   public SendWorker(
-      BasicWindow window,
-      Page page, String text, String comment,
-      EnumWikipedia wikipedia) {
-    super(window);
+      EnumWikipedia wikipedia, BasicWindow window,
+      Page page, String text, String comment) {
+    super(wikipedia, window);
     this.page = page;
     this.text = text;
     this.comment = comment;
-    this.wikipedia = wikipedia;
   }
 
   /* (non-Javadoc)
@@ -57,13 +61,17 @@ public class SendWorker extends BasicWorker {
     API api = APIFactory.getAPI();
     try {
       setText(GT._("Updating page contents"));
-      api.updatePage(page, text, wikipedia.createUpdatePageComment(comment, null));
+      api.updatePage(
+          getWikipedia(), page, text,
+          getWikipedia().createUpdatePageComment(comment, null));
     } catch (APIException e) {
       if (APIException.ERROR_BAD_TOKEN.equals(e.getErrorCode())) {
         try {
           setText(GT._("Error 'badtoken' detected: Retrying"));
-          api.retrieveContents(page, false);
-          api.updatePage(page, text, wikipedia.createUpdatePageComment(comment, null));
+          api.retrieveContents(getWikipedia(), page, false);
+          api.updatePage(
+              getWikipedia(), page, text,
+              getWikipedia().createUpdatePageComment(comment, null));
         } catch (APIException e2) {
           return e2;
         }

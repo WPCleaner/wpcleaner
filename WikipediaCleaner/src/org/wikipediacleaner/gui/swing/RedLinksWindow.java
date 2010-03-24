@@ -443,7 +443,7 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
    * Action called when Reload button is pressed. 
    */
   void actionReload() {
-    RedLinksAnalysisWorker reloadWorker = new RedLinksAnalysisWorker(this, page);
+    RedLinksAnalysisWorker reloadWorker = new RedLinksAnalysisWorker(getWikipedia(), this, page);
     reloadWorker.setListener(new DefaultBasicWorkerListener () {
       @Override
       public void afterFinished(

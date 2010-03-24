@@ -463,7 +463,8 @@ public class DisambiguationWindow extends PageWindow {
   @Override
   protected void actionReload() {
     clean();
-    DisambiguationAnalysisWorker reloadWorker = new DisambiguationAnalysisWorker(this, getPage());
+    DisambiguationAnalysisWorker reloadWorker = new DisambiguationAnalysisWorker(
+        getWikipedia(), this, getPage());
     setupReloadWorker(reloadWorker);
     reloadWorker.start();
   }
@@ -610,7 +611,7 @@ public class DisambiguationWindow extends PageWindow {
     HashMap<String, Properties> replacements = new HashMap<String, Properties>();
     replacements.put("[[" + getPage().getTitle() + "]]", replacement);
     AutomaticDisambiguationWorker dabWorker = new AutomaticDisambiguationWorker(
-        this, pages, replacements, getWikipedia(),
+        getWikipedia(), this, pages, replacements,
         getWikipedia().getUpdatePageMessage(),
         true);
     dabWorker.setListener(new DefaultBasicWorkerListener() {

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import org.wikipediacleaner.api.MediaWikiListener;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.i18n.GT;
 
@@ -36,15 +37,16 @@ public class LinksWRCallable extends MediaWikiCallable<Page> {
   private final ArrayList<Page> knownPages;
 
   /**
+   * @param wikipedia Wikipedia.
    * @param listener Listener of MediaWiki events.
    * @param api MediaWiki API.
    * @param page Page.
    * @param knownPages Already known pages.
    */
   public LinksWRCallable(
-      MediaWikiListener listener, API api,
+      EnumWikipedia wikipedia, MediaWikiListener listener, API api,
       Page page, ArrayList<Page> knownPages) {
-    super(listener, api);
+    super(wikipedia, listener, api);
     this.page = page;
     this.knownPages = knownPages;
   }
@@ -54,7 +56,7 @@ public class LinksWRCallable extends MediaWikiCallable<Page> {
    */
   public Page call() throws APIException {
     setText(GT._("Retrieving page back links") + " - " + page.getTitle());
-    api.retrieveLinksWithRedirects(page, knownPages);
+    api.retrieveLinksWithRedirects(getWikipedia(), page, knownPages);
     return page;
   }
 

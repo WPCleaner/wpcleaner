@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -33,8 +34,13 @@ public class DisambiguationAnalysisWorker extends BasicWorker {
 
   private final Page page;
 
-  public DisambiguationAnalysisWorker(BasicWindow window, Page page) {
-    super(window);
+  /**
+   * @param wikipedia Wikipedia.
+   * @param window Window.
+   * @param page Page.
+   */
+  public DisambiguationAnalysisWorker(EnumWikipedia wikipedia, BasicWindow window, Page page) {
+    super(wikipedia, window);
     this.page = page;
   }
 
@@ -45,18 +51,18 @@ public class DisambiguationAnalysisWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveContents(page, false, false, true);
-      mw.retrieveAllBacklinks(page, true);
+      mw.retrieveContents(getWikipedia(), page, false, false, true);
+      mw.retrieveAllBacklinks(getWikipedia(), page, true);
       ArrayList<Page> pageAndRedirects = new ArrayList<Page>();
       pageAndRedirects.add(page);
       for (Page backlink : page.getBackLinksWithRedirects()) {
         if ((backlink != null) && (backlink.isRedirect())) {
           pageAndRedirects.add(backlink);
-          mw.retrieveContents(backlink, false, false, false);
+          mw.retrieveContents(getWikipedia(), backlink, false, false, false);
         }
       }
-      mw.retrieveDisambiguationInformation(pageAndRedirects, null, false, false);
-      mw.retrieveAllLinks(page, null, true);
+      mw.retrieveDisambiguationInformation(getWikipedia(), pageAndRedirects, null, false, false);
+      mw.retrieveAllLinks(getWikipedia(), page, null, true);
     } catch (APIException e) {
       return e;
     }

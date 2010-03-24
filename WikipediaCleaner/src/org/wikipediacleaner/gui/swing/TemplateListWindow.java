@@ -154,7 +154,7 @@ public class TemplateListWindow extends BasicWindow {
    * Action called when Reload button is pressed. 
    */
   void actionReload() {
-    new ReloadWorker(this, page, link).start();
+    new ReloadWorker(getWikipedia(), this, page, link).start();
   }
 
   /**
@@ -174,8 +174,14 @@ public class TemplateListWindow extends BasicWindow {
     private final Page page1;
     private final Page link1;
 
-    public ReloadWorker(BasicWindow window, Page page, Page link) {
-      super(window);
+    /**
+     * @param wikipedia Wikipedia.
+     * @param window Window.
+     * @param page Page.
+     * @param link Link.
+     */
+    public ReloadWorker(EnumWikipedia wikipedia, BasicWindow window, Page page, Page link) {
+      super(wikipedia, window);
       this.page1 = page;
       this.link1 = link;
     }
@@ -210,13 +216,13 @@ public class TemplateListWindow extends BasicWindow {
         setText(GT._("Retrieving MediaWiki API"));
         API api = APIFactory.getAPI();
         setText(GT._("Retrieving templates"));
-        api.retrieveTemplates(page1);
+        api.retrieveTemplates(getWikipedia(), page1);
         setText(GT._("Retrieving links in templates"));
         for (Page p : page1.getTemplates()) {
           if (!shouldContinue()) {
             return null;
           }
-          api.retrieveLinks(p);
+          api.retrieveLinks(getWikipedia(), p);
         }
         setText(GT._("Displaying templates found"));
         for (Page p : page1.getTemplates()) {

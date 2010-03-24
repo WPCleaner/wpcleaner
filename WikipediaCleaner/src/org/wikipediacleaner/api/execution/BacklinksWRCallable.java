@@ -21,6 +21,7 @@ package org.wikipediacleaner.api.execution;
 import org.wikipediacleaner.api.MediaWikiListener;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.i18n.GT;
 
@@ -33,12 +34,15 @@ public class BacklinksWRCallable extends MediaWikiCallable<Page> {
   private final Page page;
 
   /**
+   * @param wikipedia Wikipedia.
    * @param listener Listener of MediaWiki events.
    * @param api MediaWiki API.
    * @param page Page.
    */
-  public BacklinksWRCallable(MediaWikiListener listener, API api, Page page) {
-    super(listener, api);
+  public BacklinksWRCallable(
+      EnumWikipedia wikipedia, MediaWikiListener listener, API api,
+      Page page) {
+    super(wikipedia, listener, api);
     this.page = page;
   }
 
@@ -47,7 +51,7 @@ public class BacklinksWRCallable extends MediaWikiCallable<Page> {
    */
   public Page call() throws APIException {
     setText(GT._("Retrieving page back links") + " - " + page.getTitle());
-    api.retrieveBackLinksWithRedirects(page);
+    api.retrieveBackLinksWithRedirects(getWikipedia(), page);
     return page;
   }
 

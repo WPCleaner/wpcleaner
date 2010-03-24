@@ -26,6 +26,7 @@ import java.util.Iterator;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.ProgressPanel;
@@ -37,18 +38,22 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class ReloadLinksAction implements ActionListener {
 
+  private final EnumWikipedia wikipedia;
   private final Page page;
   private final BasicWindow window;
 
   /**
    * Constructor.
    * 
+   * @param wikipedia Wikipedia.
    * @param page Wikipedia page.
    * @param window Window on which the action is done.
    */
   public ReloadLinksAction(
+      EnumWikipedia wikipedia,
       Page page,
       BasicWindow window) {
+    this.wikipedia = wikipedia;
     this.page = page;
     this.window = window;
   }
@@ -69,11 +74,11 @@ public class ReloadLinksAction implements ActionListener {
       }
       ArrayList<Page> pages = new ArrayList<Page>();
       pages.add(page);
-      api.initializeRedirect(pages);
+      api.initializeRedirect(wikipedia, pages);
       if (progressPanel != null) {
         progressPanel.setText(GT._("Analyzing links for disambiguation pages"));
       }
-      api.initializeDisambiguationStatus(pages);
+      api.initializeDisambiguationStatus(wikipedia, pages);
       Iterator<Page> iter = page.getRedirectIteratorWithPage();
       while (iter.hasNext()) {
         Page tmp = iter.next();
@@ -82,7 +87,7 @@ public class ReloadLinksAction implements ActionListener {
               "Retrieving possible disambiguations for {0}",
               new Object[] { tmp.getTitle() } ));
         }
-        api.retrieveLinks(tmp);
+        api.retrieveLinks(wikipedia, tmp);
       }
     } catch (APIException ex) {
       //

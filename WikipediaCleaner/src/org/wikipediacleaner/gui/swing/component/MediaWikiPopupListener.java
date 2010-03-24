@@ -185,7 +185,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
                 if (foundText.length() > 0) {
                   JPopupMenu popup = new JPopupMenu();
                   MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
-                  MenuCreator.addViewToMenu(popup, foundText, wikipedia);
+                  MenuCreator.addViewToMenu(wikipedia, popup, foundText);
                   popup.show(textPane, x, y);
                   return;
                 }
@@ -197,7 +197,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
               if (foundText.length() > 0) {
                 JPopupMenu popup = new JPopupMenu();
                 MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
-                MenuCreator.addViewToMenu(popup, foundText, null);
+                MenuCreator.addViewToMenu(null, popup, foundText);
                 popup.show(textPane, x, y);
                 return;
               }
@@ -239,15 +239,15 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
                 if (attrPage instanceof Page) {
                   popup.add(new JSeparator());
                   MenuCreator.addReplaceTemplateToMenu(
-                      popup, template, params, (Page) attrPage,
-                      null /*TODO*/, element, textPane, wikipedia);
-                  MenuCreator.addAnalyzeToMenu(popup, (Page) attrPage, wikipedia);
-                  MenuCreator.addViewToMenu(popup, (Page) attrPage, wikipedia);
-                  MenuCreator.addDisambiguationToMenu(popup, (Page) attrPage, wikipedia);
-                  MenuCreator.addReloadLinksToMenu(popup, (Page) attrPage, window);
+                      wikipedia, popup, template, params, (Page) attrPage,
+                      null /*TODO*/, element, textPane);
+                  MenuCreator.addAnalyzeToMenu(wikipedia, popup, (Page) attrPage);
+                  MenuCreator.addViewToMenu(wikipedia, popup, (Page) attrPage);
+                  MenuCreator.addDisambiguationToMenu(wikipedia, popup, (Page) attrPage);
+                  MenuCreator.addReloadLinksToMenu(wikipedia, popup, (Page) attrPage, window);
                 } else {
-                  MenuCreator.addAnalyzeToMenu(popup, page, wikipedia);
-                  MenuCreator.addViewToMenu(popup, page, wikipedia);
+                  MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
+                  MenuCreator.addViewToMenu(wikipedia, popup, page);
                 }
                 popup.show(textPane, x, y);
                 return;
@@ -274,13 +274,13 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
     // Create sub menus
     MenuCreator.addReplaceLinkToMenu(popup, page, text, element, textPane);
     MenuCreator.addRemoveLinkToMenu(popup, text, element, textPane);
-    MenuCreator.addMarkAsNormalToMenu(popup, page, text, element, textPane, wikipedia);
-    MenuCreator.addMarkAsNeedingHelpToMenu(popup, page, text, element, textPane, chkAddNote, wikipedia);
+    MenuCreator.addMarkAsNormalToMenu(wikipedia, popup, page, text, element, textPane);
+    MenuCreator.addMarkAsNeedingHelpToMenu(wikipedia, popup, page, text, element, textPane, chkAddNote);
     popup.add(new JSeparator());
-    MenuCreator.addAnalyzeToMenu(popup, page, wikipedia);
-    MenuCreator.addViewToMenu(popup, page, wikipedia);
-    MenuCreator.addDisambiguationToMenu(popup, page, wikipedia);
-    MenuCreator.addReloadLinksToMenu(popup, page, window);
+    MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
+    MenuCreator.addViewToMenu(wikipedia, popup, page);
+    MenuCreator.addDisambiguationToMenu(wikipedia, popup, page);
+    MenuCreator.addReloadLinksToMenu(wikipedia, popup, page, window);
 
     popup.show(textPane, x, y);
   }

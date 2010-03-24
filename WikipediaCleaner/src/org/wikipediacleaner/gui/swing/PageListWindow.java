@@ -338,7 +338,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     if ((tmpPages == null) || (tmpPages.length == 0)) {
       return;
     }
-    final UpdateInfoWorker updateWorker = new UpdateInfoWorker(this, tmpPages);
+    final UpdateInfoWorker updateWorker = new UpdateInfoWorker(getWikipedia(), this, tmpPages);
     updateWorker.setListener(new DefaultBasicWorkerListener() {
 
       /* (non-Javadoc)

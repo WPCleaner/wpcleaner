@@ -453,7 +453,7 @@ public enum EnumWikipedia {
             this, "Mediawiki:Disambiguationspage",
             null, null);
         try {
-          api.retrieveLinks(page);
+          api.retrieveLinks(this, page);
         } catch (APIException e) {
           // Error retrieving Disambiguation templates list
         }

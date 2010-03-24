@@ -253,7 +253,7 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
       return;
     }
     new NewSectionWorker(
-        this,
+        getWikipedia(), this,
         pageName, section, text, editToken,
         chkForceWatch.isSelected()).start();
   }
