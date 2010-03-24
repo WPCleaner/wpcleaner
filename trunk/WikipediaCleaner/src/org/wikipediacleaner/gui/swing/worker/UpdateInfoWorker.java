@@ -20,6 +20,7 @@ package org.wikipediacleaner.gui.swing.worker;
 
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -28,8 +29,13 @@ public class UpdateInfoWorker extends BasicWorker {
 
   private final Page[] pageList;
 
-  public UpdateInfoWorker(BasicWindow window, Page[] pages) {
-    super(window);
+  /**
+   * @param wikipedia Wikipedia.
+   * @param window Window.
+   * @param pages Pages.
+   */
+  public UpdateInfoWorker(EnumWikipedia wikipedia, BasicWindow window, Page[] pages) {
+    super(wikipedia, window);
     this.pageList = pages.clone();
   }
 
@@ -40,7 +46,7 @@ public class UpdateInfoWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveAllBacklinks(pageList, true);
+      mw.retrieveAllBacklinks(getWikipedia(), pageList, true);
     } catch (APIException e) {
       return e;
     }

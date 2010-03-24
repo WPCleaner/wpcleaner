@@ -257,7 +257,7 @@ public class PreviewWindow
    */
   void actionUpdate() {
     new ExpandTemplatesWorker(
-        this, textTitle.getText(),
+        getWikipedia(), this, textTitle.getText(),
         textOriginal,
         showExpand ? textExpanded : null,
         showPreview ? this : null).start();

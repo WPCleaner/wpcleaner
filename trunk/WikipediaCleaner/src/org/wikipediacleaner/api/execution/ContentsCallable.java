@@ -21,6 +21,7 @@ package org.wikipediacleaner.api.execution;
 import org.wikipediacleaner.api.MediaWikiListener;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.i18n.GT;
 
@@ -35,6 +36,7 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
   private final boolean withRedirects;
 
   /**
+   * @param wikipedia Wikipedia.
    * @param listener Listener of MediaWiki events.
    * @param api MediaWiki API.
    * @param page Page.
@@ -42,9 +44,9 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
    * @param withRedirects Flag indicating if redirects information should be retrieved.
    */
   public ContentsCallable(
-      MediaWikiListener listener, API api,
+      EnumWikipedia wikipedia, MediaWikiListener listener, API api,
       Page page, Page returnPage, boolean withRedirects) {
-    super(listener, api);
+    super(wikipedia, listener, api);
     this.page = page;
     this.returnPage = returnPage;
     this.withRedirects = withRedirects;
@@ -55,7 +57,7 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
    */
   public Page call() throws APIException {
     setText(GT._("Retrieving contents") + " - " + page.getTitle());
-    api.retrieveContents(page, withRedirects);
+    api.retrieveContents(getWikipedia(), page, withRedirects);
     return returnPage;
   }
 

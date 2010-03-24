@@ -43,19 +43,19 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckWikiProjectWorker extends BasicWorker {
 
-  private EnumWikipedia wikipedia;
-  private ArrayList<CheckError> errors;
+  private final ArrayList<CheckError> errors;
 
   /**
    * Constructor.
    * 
-   * @param window Window.
    * @param wikipedia Wikipedia.
+   * @param window Window.
    * @param errors Error list to complete.
    */
-  public CheckWikiProjectWorker(BasicWindow window, EnumWikipedia wikipedia, ArrayList<CheckError> errors) {
-    super(window);
-    this.wikipedia = wikipedia;
+  public CheckWikiProjectWorker(
+      EnumWikipedia wikipedia, BasicWindow window,
+      ArrayList<CheckError> errors) {
+    super(wikipedia, window);
     this.errors = errors;
     this.errors.clear();
   }
@@ -84,7 +84,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
         method.addParameter("id", Integer.toString(errorNumber));
         method.addParameter("limit", Integer.toString(500));
         method.addParameter("offset", Integer.toString(0));
-        method.addParameter("project", wikipedia.getCode() + "wiki");
+        method.addParameter("project", getWikipedia().getCode() + "wiki");
         method.addParameter("view", "bots");
         int statusCode = httpClient.executeMethod(method);
         if (statusCode != HttpStatus.SC_OK) {
@@ -98,7 +98,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
             stream = new GZIPInputStream(stream);
           }
         }
-        CheckError.addCheckError(errors, wikipedia, errorNumber, stream);
+        CheckError.addCheckError(errors, getWikipedia(), errorNumber, stream);
       } catch (ClassNotFoundException e) {
         // Not found: error not yet available in WikiCleaner.
       } catch (HttpException e) {

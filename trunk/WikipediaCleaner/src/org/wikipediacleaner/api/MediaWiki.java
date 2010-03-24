@@ -80,6 +80,7 @@ public class MediaWiki extends MediaWikiController {
   /**
    * Retrieve page contents.
    * 
+   * @param wikipedia Wikipedia.
    * @param page Page.
    * @param block Flag indicating if the call should block until completed.
    * @param returnPage Flag indicating if the page should be returned once task is finished.
@@ -87,13 +88,15 @@ public class MediaWiki extends MediaWikiController {
    * @throws APIException
    */
   public void retrieveContents(
-      Page page,
+      EnumWikipedia wikipedia, Page page,
       boolean block, boolean returnPage, boolean withRedirects) throws APIException {
     if (page == null) {
       return;
     }
     final API api = APIFactory.getAPI();
-    addTask(new ContentsCallable(this, api, page, returnPage ? page : null, withRedirects));
+    addTask(new ContentsCallable(
+        wikipedia, this, api,
+        page, returnPage ? page : null, withRedirects));
     block(block);
   }
 
@@ -117,7 +120,7 @@ public class MediaWiki extends MediaWikiController {
       return 0;
     }
     for (Page page : pages) {
-      retrieveContents(page, false, true, true); // TODO: withRedirects=false ?
+      retrieveContents(wikipedia, page, false, true, true); // TODO: withRedirects=false ?
     }
     int count = 0;
     final API api = APIFactory.getAPI();
@@ -168,11 +171,15 @@ public class MediaWiki extends MediaWikiController {
           if (!oldContents.equals(newContents)) {
             count++;
             try {
-              api.updatePage(page, newContents, wikipedia.createUpdatePageComment(comment, details.toString()));
+              api.updatePage(
+                  wikipedia, page, newContents,
+                  wikipedia.createUpdatePageComment(comment, details.toString()));
             } catch (APIException e) {
               if (APIException.ERROR_BAD_TOKEN.equals(e.getErrorCode())) {
-                api.retrieveContents(page, false);
-                api.updatePage(page, newContents, wikipedia.createUpdatePageComment(comment, details.toString()));
+                api.retrieveContents(wikipedia, page, false);
+                api.updatePage(
+                    wikipedia, page, newContents,
+                    wikipedia.createUpdatePageComment(comment, details.toString()));
               } else {
                 throw e;
               }
@@ -188,16 +195,17 @@ public class MediaWiki extends MediaWikiController {
   /**
    * Expand templates.
    * 
+   * @param wikipedia Wikipedia.
    * @param title Title of the page.
    * @param text Text of the page.
    * @throws APIException
    */
-  public String expandTemplates(String title, String text) throws APIException {
+  public String expandTemplates(EnumWikipedia wikipedia, String title, String text) throws APIException {
     if (text == null) {
       return null;
     }
     final API api = APIFactory.getAPI();
-    addTask(new ExpandTemplatesCallable(this, api, title, text));
+    addTask(new ExpandTemplatesCallable(wikipedia, this, api, title, text));
     while (hasRemainingTask() && !shouldStop()) {
       Object result = getNextResult();
       if (result != null) {
@@ -211,16 +219,17 @@ public class MediaWiki extends MediaWikiController {
   /**
    * Parse complete text.
    * 
+   * @param wikipedia Wikipedia.
    * @param title Title of the page.
    * @param text Text of the page.
    * @throws APIException
    */
-  public String parseText(String title, String text) throws APIException {
+  public String parseText(EnumWikipedia wikipedia, String title, String text) throws APIException {
     if (text == null) {
       return null;
     }
     final API api = APIFactory.getAPI();
-    addTask(new ParseTextCallable(this, api, title, text));
+    addTask(new ParseTextCallable(wikipedia, this, api, title, text));
     while (hasRemainingTask() && !shouldStop()) {
       Object result = getNextResult();
       if (result != null) {
@@ -234,50 +243,54 @@ public class MediaWiki extends MediaWikiController {
   /**
    * Retrieve all links (with redirects) of a page.
    * 
+   * @param wikipedia Wikipedia.
    * @param page Page.
    * @param knownPages Already known pages.
    * @param block Flag indicating if the call should block until completed.
    * @throws APIException
    */
   public void retrieveAllLinks(
+      EnumWikipedia wikipedia,
       Page page, ArrayList<Page> knownPages,
       boolean block) throws APIException {
     if (page == null) {
       return;
     }
     final API api = APIFactory.getAPI();
-    addTask(new LinksWRCallable(this, api, page, knownPages));
+    addTask(new LinksWRCallable(wikipedia, this, api, page, knownPages));
     block(block);
   }
 
   /**
    * Retrieve all backlinks (with redirects) of a page.
    * 
+   * @param wikipedia Wikipedia.
    * @param page Page.
    * @param block Flag indicating if the call should block until completed.
    * @throws APIException
    */
-  public void retrieveAllBacklinks(Page page, boolean block) throws APIException {
+  public void retrieveAllBacklinks(EnumWikipedia wikipedia, Page page, boolean block) throws APIException {
     if (page == null) {
       return;
     }
-    retrieveAllBacklinks(new Page[] { page }, block);
+    retrieveAllBacklinks(wikipedia, new Page[] { page }, block);
   }
 
   /**
    * Retrieve all backlinks (with redirects) of a list of pages.
    * 
+   * @param wikipedia Wikipedia.
    * @param pageList List of pages.
    * @param block Flag indicating if the call should block until completed.
    * @throws APIException
    */
-  public void retrieveAllBacklinks(Page[] pageList, boolean block) throws APIException {
+  public void retrieveAllBacklinks(EnumWikipedia wikipedia, Page[] pageList, boolean block) throws APIException {
     if ((pageList == null) || (pageList.length == 0)) {
       return;
     }
     final API api = APIFactory.getAPI();
     for (final Page page : pageList) {
-      addTask(new BacklinksWRCallable(this, api, page));
+      addTask(new BacklinksWRCallable(wikipedia, this, api, page));
     }
     while (hasRemainingTask() && !shouldStop()) {
       Object result = getNextResult();
@@ -293,7 +306,7 @@ public class MediaWiki extends MediaWikiController {
               while (iter.hasNext()) {
                 Page tmp = iter.next();
                 if (Page.areSameTitle(page.getTitle(), tmp.getTitle())) {
-                  addTask(new BacklinksWRCallable(this, api, p));
+                  addTask(new BacklinksWRCallable(wikipedia, this, api, p));
                 }
               }
             }
@@ -307,16 +320,18 @@ public class MediaWiki extends MediaWikiController {
   /**
    * Retrieve all pages it is embedded in of a list of pages.
    * 
+   * @param wikipedia Wikipedia.
    * @param pageList List of pages.
    * @throws APIException
    */
-  public void retrieveAllEmbeddedIn(ArrayList<Page> pageList) throws APIException {
+  public void retrieveAllEmbeddedIn(
+      EnumWikipedia wikipedia, ArrayList<Page> pageList) throws APIException {
     if ((pageList == null) || (pageList.size() == 0)) {
       return;
     }
     final API api = APIFactory.getAPI();
     for (final Page page : pageList) {
-      addTask(new EmbeddedInCallable(this, api, page));
+      addTask(new EmbeddedInCallable(wikipedia, this, api, page));
     }
     block(true);
   }
@@ -324,6 +339,7 @@ public class MediaWiki extends MediaWikiController {
   /**
    * Retrieve disambiguation information for a list of pages.
    * 
+   * @param wikipedia Wikipedia.
    * @param pageList List of page.
    * @param knownPages Already known pages.
    * @param disambiguations Flag indicating if possible disambiguations should be retrieved.
@@ -331,6 +347,7 @@ public class MediaWiki extends MediaWikiController {
    * @throws APIException
    */
   public void retrieveDisambiguationInformation(
+      EnumWikipedia wikipedia,
       ArrayList<Page> pageList, ArrayList<Page> knownPages,
       boolean disambiguations, boolean block) throws APIException {
     if ((pageList == null) || (pageList.isEmpty())) {
@@ -346,7 +363,7 @@ public class MediaWiki extends MediaWikiController {
       filteredList.removeAll(knownPages);
     }
     if (filteredList.size() <= maxPages) {
-      addTask(new DisambiguationStatusCallable(this, api, filteredList));
+      addTask(new DisambiguationStatusCallable(wikipedia, this, api, filteredList));
     } else {
       int index = 0;
       while (index < filteredList.size()) {
@@ -354,7 +371,7 @@ public class MediaWiki extends MediaWikiController {
         for (int i = 0; (i < maxPages) && (index < filteredList.size()); i++, index++) {
           tmpList.add(filteredList.get(index));
         }
-        addTask(new DisambiguationStatusCallable(this, api, tmpList));
+        addTask(new DisambiguationStatusCallable(wikipedia, this, api, tmpList));
       }
     }
     block(true);
@@ -369,7 +386,7 @@ public class MediaWiki extends MediaWikiController {
               (!p.isRedirect())) {
             ArrayList<Page> links = p.getLinks();
             if ((links == null) || (links.size() == 0)) {
-              addTask(new LinksWRCallable(this, api, p, null));
+              addTask(new LinksWRCallable(wikipedia, this, api, p, null));
             }
           }
         }

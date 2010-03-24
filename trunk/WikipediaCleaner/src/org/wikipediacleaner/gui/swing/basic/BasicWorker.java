@@ -19,6 +19,7 @@
 package org.wikipediacleaner.gui.swing.basic;
 
 import org.wikipediacleaner.api.MediaWikiListener;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
 /**
@@ -26,11 +27,17 @@ import org.wikipediacleaner.api.MediaWikiListener;
  */
 public class BasicWorker extends SwingWorker implements MediaWikiListener {
 
-  private BasicWindow window;
+  private final EnumWikipedia wikipedia;
+  private final BasicWindow window;
   private BasicWorkerListener listener;
 
-  public BasicWorker(BasicWindow window) {
+  /**
+   * @param wikipedia Wikipedia.
+   * @param window Window.
+   */
+  public BasicWorker(EnumWikipedia wikipedia, BasicWindow window) {
     super();
+    this.wikipedia = wikipedia;
     this.window = window;
   }
 
@@ -129,5 +136,12 @@ public class BasicWorker extends SwingWorker implements MediaWikiListener {
    */
   public BasicWindow getWindow() {
     return window;
+  }
+
+  /**
+   * @return Wikipedia.
+   */
+  public EnumWikipedia getWikipedia() {
+    return wikipedia;
   }
 }

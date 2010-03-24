@@ -34,13 +34,16 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class EmbeddedInWorker extends BasicWorker {
 
-  private final EnumWikipedia wikipedia;
   private final ArrayList<Page> embeddedInList;
   private final ArrayList<Page> pages;
 
-  public EmbeddedInWorker(BasicWindow window, EnumWikipedia wikipedia, ArrayList<Page> pages) {
-    super(window);
-    this.wikipedia = wikipedia;
+  /**
+   * @param wikipedia Wikipedia.
+   * @param window Window.
+   * @param pages Pages.
+   */
+  public EmbeddedInWorker(EnumWikipedia wikipedia, BasicWindow window, ArrayList<Page> pages) {
+    super(wikipedia, window);
     this.pages = pages;
     embeddedInList = new ArrayList<Page>();
   }
@@ -55,7 +58,7 @@ public class EmbeddedInWorker extends BasicWorker {
     if (!(result instanceof Throwable)) {
       PageListWindow.createPageListWindow(
           GT._("Help requested on pages"),
-          embeddedInList, wikipedia, false);
+          embeddedInList, getWikipedia(), false);
     }
   }
 
@@ -66,7 +69,7 @@ public class EmbeddedInWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveAllEmbeddedIn(pages);
+      mw.retrieveAllEmbeddedIn(getWikipedia(), pages);
       if (!shouldContinue()) {
         return null;
       }

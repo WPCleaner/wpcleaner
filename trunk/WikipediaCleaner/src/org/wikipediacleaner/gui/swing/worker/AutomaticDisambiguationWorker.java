@@ -37,20 +37,17 @@ public class AutomaticDisambiguationWorker extends BasicWorker {
 
   private final Page[] pages;
   private final HashMap<String, Properties> replacements;
-  private final EnumWikipedia wikipedia;
   private final String comment;
   private final StringBuffer description;
   private final boolean showDescription;
 
   public AutomaticDisambiguationWorker(
-      BasicWindow window, Page[] pages,
-      HashMap<String, Properties> replacements,
-      EnumWikipedia wikipedia, String comment,
+      EnumWikipedia wikipedia, BasicWindow window,
+      Page[] pages, HashMap<String, Properties> replacements, String comment,
       boolean showDescription) {
-    super(window);
+    super(wikipedia, window);
     this.pages = pages.clone();
     this.replacements = replacements;
-    this.wikipedia = wikipedia;
     this.comment = comment;
     this.showDescription = showDescription;
     this.description = (showDescription ? new StringBuffer() : null);
@@ -63,11 +60,12 @@ public class AutomaticDisambiguationWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      Integer count = Integer.valueOf(mw.replaceText(pages, replacements, wikipedia, comment, description));
+      Integer count = Integer.valueOf(mw.replaceText(
+          pages, replacements, getWikipedia(), comment, description));
       if (showDescription && (count > 0)) {
         InformationWindow.createInformationWindow(
             GT._("The following modifications have been done ({0} pages):", count.toString()),
-            description.toString(), wikipedia);
+            description.toString(), getWikipedia());
       }
       return count;
     } catch (APIException e) {

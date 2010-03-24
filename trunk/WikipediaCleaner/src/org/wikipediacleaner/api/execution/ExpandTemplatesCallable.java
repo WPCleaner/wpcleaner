@@ -21,6 +21,7 @@ package org.wikipediacleaner.api.execution;
 import org.wikipediacleaner.api.MediaWikiListener;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -33,13 +34,16 @@ public class ExpandTemplatesCallable extends MediaWikiCallable<String> {
   private final String text;
 
   /**
+   * @param wikipedia Wikipedia.
    * @param listener Listener of MediaWiki events.
    * @param api MediaWiki API.
    * @param title Page title.
    * @param text Page text.
    */
-  public ExpandTemplatesCallable(MediaWikiListener listener, API api, String title, String text) {
-    super(listener, api);
+  public ExpandTemplatesCallable(
+      EnumWikipedia wikipedia, MediaWikiListener listener, API api,
+      String title, String text) {
+    super(wikipedia, listener, api);
     this.title = title;
     this.text = text;
   }
@@ -49,7 +53,7 @@ public class ExpandTemplatesCallable extends MediaWikiCallable<String> {
    */
   public String call() throws APIException {
     setText(GT._("Expanding templates") + " - " + title);
-    return api.expandTemplates(title, text);
+    return api.expandTemplates(getWikipedia(), title, text);
   }
 
 }

@@ -22,6 +22,7 @@ import java.util.concurrent.Callable;
 
 import org.wikipediacleaner.api.MediaWikiListener;
 import org.wikipediacleaner.api.base.API;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
 /**
@@ -29,10 +30,17 @@ import org.wikipediacleaner.api.base.API;
  */
 public abstract class MediaWikiCallable<T> implements Callable<T>, MediaWikiListener {
 
+  private final EnumWikipedia wikipedia;
   protected final API api;
   private final MediaWikiListener listener;
 
-  public MediaWikiCallable(MediaWikiListener listener, API api) {
+  /**
+   * @param wikipedia Wikipedia.
+   * @param listener Listener.
+   * @param api API.
+   */
+  public MediaWikiCallable(EnumWikipedia wikipedia, MediaWikiListener listener, API api) {
+    this.wikipedia = wikipedia;
     this.listener = listener;
     this.api = api;
   }
@@ -48,5 +56,9 @@ public abstract class MediaWikiCallable<T> implements Callable<T>, MediaWikiList
       return listener.shouldStop();
     }
     return false;
+  }
+
+  protected EnumWikipedia getWikipedia() {
+    return wikipedia;
   }
 }

@@ -162,6 +162,7 @@ public class MenuCreator {
   /**
    * Add submenus for replacing templates.
    * 
+   * @param wikipedia Wikipedia.
    * @param popup Popup menu.
    * @param template Template name.
    * @param params Templates parameters.
@@ -169,12 +170,10 @@ public class MenuCreator {
    * @param page Page containing the text.
    * @param element Element.
    * @param textPane Text pane.
-   * @param wikipedia Wikipedia.
    */
   public static void addReplaceTemplateToMenu(
-      JPopupMenu popup, String template, String params,
-      Page disambigPage, Page page, Element element,
-      JTextPane textPane, EnumWikipedia wikipedia) {
+      EnumWikipedia wikipedia, JPopupMenu popup, String template, String params,
+      Page disambigPage, Page page, Element element, JTextPane textPane) {
     if ((popup == null) ||
         (template == null) ||
         (params == null) ||
@@ -481,14 +480,13 @@ public class MenuCreator {
   /**
    * Add submenus for analysing missing page.
    * 
+   * @param wikipedia Wikipedia.
    * @param popup Popup menu.
    * @param page Page.
    * @param textPane Text pane.
-   * @param wikipedia Wikipedia.
    */
   public static void addRedLinksAnalysisMenu(
-      JPopupMenu popup, Page page,
-      MediaWikiPane textPane, EnumWikipedia wikipedia) {
+      EnumWikipedia wikipedia, JPopupMenu popup, Page page, MediaWikiPane textPane) {
     JMenuItem menuItem = new JMenuItem(GT._("Red links analysis"));
     ActionListener action = new RedLinksAnalysisAction(page, textPane, wikipedia);
     menuItem.addActionListener(action);
@@ -626,16 +624,16 @@ public class MenuCreator {
   /**
    * Add submenus for marking link as normal.
    * 
+   * @param wikipedia Wikipedia.
    * @param popup Popup menu.
    * @param page Page.
    * @param text Text.
    * @param element Element.
    * @param textPane Text pane.
-   * @param wikipedia Wikipedia
    */
   public static void addMarkAsNormalToMenu(
-      JPopupMenu popup, Page page, String text,Element element,
-      JTextPane textPane, EnumWikipedia wikipedia) {
+      EnumWikipedia wikipedia, JPopupMenu popup, Page page, String text,
+      Element element, JTextPane textPane) {
     String[] templates = (wikipedia != null) ? wikipedia.getTemplatesForDisambiguationLink() : null;
     if ((text != null) &&
         (page != null) &&
@@ -667,17 +665,17 @@ public class MenuCreator {
   /**
    * Add submenus for marking link as requiring help to disambiguate.
    * 
+   * @param wikipedia Wikipedia.
    * @param popup Popup menu.
    * @param page Page.
    * @param text Text.
    * @param element Element.
    * @param textPane Text pane.
    * @param checkBox Check Box.
-   * @param wikipedia Wikipedia
    */
   public static void addMarkAsNeedingHelpToMenu(
-      JPopupMenu popup, Page page, String text, Element element,
-      JTextPane textPane, JCheckBox checkBox, EnumWikipedia wikipedia) {
+      EnumWikipedia wikipedia, JPopupMenu popup, Page page, String text,
+      Element element, JTextPane textPane, JCheckBox checkBox) {
     String[] templates = (wikipedia != null) ? wikipedia.getTemplatesForNeedingHelp() : null;
     if ((text != null) &&
         (page != null) &&
@@ -709,12 +707,12 @@ public class MenuCreator {
   /**
    * Add submenus for analyzing pages.
    * 
+   * @param wikipedia Wikipedia.
    * @param popup Popup menu.
    * @param page Page.
-   * @param wikipedia Wikipedia
    */
   public static void addAnalyzeToMenu(
-      JPopupMenu popup, Page page, EnumWikipedia wikipedia) {
+      EnumWikipedia wikipedia, JPopupMenu popup, Page page) {
     JMenuItem menuItem = null;
     ActionListener action = null;
     ArrayList<Page> links = page.getLinksWithRedirect();
@@ -768,12 +766,12 @@ public class MenuCreator {
   /**
    * Add submenus for viewing pages.
    * 
+   * @param wikipedia Wikipedia.
    * @param popup Popup menu.
    * @param page Page.
-   * @param wikipedia Wikipedia
    */
   public static void addViewToMenu(
-      JPopupMenu popup, Page page, EnumWikipedia wikipedia) {
+      EnumWikipedia wikipedia, JPopupMenu popup, Page page) {
     JMenuItem menuItem = null;
     ActionListener action = null;
     ArrayList<Page> links = page.getLinksWithRedirect();
@@ -829,12 +827,12 @@ public class MenuCreator {
   /**
    * Add submenus for viewing pages.
    * 
+   * @param wikipedia Wikipedia.
    * @param popup Popup menu.
    * @param url URL.
-   * @param wikipedia Wikipedia
    */
   public static void addViewToMenu(
-      JPopupMenu popup, String url, EnumWikipedia wikipedia) {
+      EnumWikipedia wikipedia, JPopupMenu popup, String url) {
     if (Utilities.isDesktopSupported()) {
       JMenuItem menuItem = new JMenuItem(GT._("External Viewer"));
       ActionListener action = new PageViewAction(url, wikipedia);
@@ -846,12 +844,12 @@ public class MenuCreator {
   /**
    * Add submenus for disambiguation.
    * 
+   * @param wikipedia Wikipedia.
    * @param popup Popup menu.
    * @param page Page.
-   * @param wikipedia Wikipedia
    */
   public static void addDisambiguationToMenu(
-      JPopupMenu popup, Page page, EnumWikipedia wikipedia) {
+      EnumWikipedia wikipedia, JPopupMenu popup, Page page) {
     if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
       if (!page.isRedirect()) {
         JMenuItem menuItem = new JMenuItem(GT._("Disambiguation analysis"));
@@ -877,15 +875,16 @@ public class MenuCreator {
   /**
    * Add submenus for reloading links. 
    * 
+   * @param wikipedia Wikipedia.
    * @param popup Popup menu.
    * @param page Page.
    * @param window Window.
    */
   public static void addReloadLinksToMenu(
-      JPopupMenu popup, Page page, BasicWindow window) {
+      EnumWikipedia wikipedia, JPopupMenu popup, Page page, BasicWindow window) {
     if (page != null) {
       JMenuItem menuItem = new JMenuItem(GT._("Reload links"));
-      ActionListener action = new ReloadLinksAction(page, window);
+      ActionListener action = new ReloadLinksAction(wikipedia, page, window);
       menuItem.addActionListener(action);
       popup.add(menuItem);
     }
@@ -894,15 +893,16 @@ public class MenuCreator {
   /**
    * Add submenus for purging page cache. 
    * 
+   * @param wikipedia Wikipedia.
    * @param popup Popup menu.
    * @param page Page.
    * @param window Window.
    */
   public static void addPurgeCacheToMenu(
-      JPopupMenu popup, Page page, BasicWindow window) {
+      EnumWikipedia wikipedia, JPopupMenu popup, Page page, BasicWindow window) {
     if (page != null) {
       JMenuItem menuItem = new JMenuItem(GT._("Purge cache"));
-      ActionListener action = new PurgeCacheAction(page, window);
+      ActionListener action = new PurgeCacheAction(wikipedia, page, window);
       menuItem.addActionListener(action);
       popup.add(menuItem);
     }
@@ -928,13 +928,13 @@ public class MenuCreator {
   /**
    * Add submenus for analyzing templates.
    * 
+   * @param wikipedia Wikipedia.
    * @param popup Popup menu.
    * @param page Initial page.
    * @param link Link.
-   * @param wikipedia Wikipedia
    */
   public static void addAnalyzeTemplatesToMenu(
-      JPopupMenu popup, Page page, Page link, EnumWikipedia wikipedia) {
+      EnumWikipedia wikipedia, JPopupMenu popup, Page page, Page link) {
     if ((page != null) && (wikipedia != null)) {
       JMenuItem menuItem = new JMenuItem(GT._("Search in templates"));
       ActionListener action = new TemplatesAnalysisAction(page, link, wikipedia);

@@ -22,6 +22,7 @@ import javax.swing.text.JTextComponent;
 
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 
@@ -30,17 +31,25 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
  */
 public class ExpandTemplatesWorker extends BasicWorker {
 
-  private String title;
-  private JTextComponent textOriginal;
-  private JTextComponent textExpanded;
-  private HtmlPreview htmlPreview;
+  private final String title;
+  private final JTextComponent textOriginal;
+  private final JTextComponent textExpanded;
+  private final HtmlPreview htmlPreview;
 
+  /**
+   * @param wikipedia Wikipedia.
+   * @param window Window.
+   * @param title
+   * @param textOriginal
+   * @param textExpanded
+   * @param htmlPreview
+   */
   public ExpandTemplatesWorker(
-      BasicWindow window, String title,
+      EnumWikipedia wikipedia, BasicWindow window, String title,
       JTextComponent textOriginal,
       JTextComponent textExpanded,
       HtmlPreview htmlPreview) {
-    super(window);
+    super(wikipedia, window);
     this.title = title;
     this.textOriginal = textOriginal;
     this.textExpanded = textExpanded;
@@ -55,10 +64,10 @@ public class ExpandTemplatesWorker extends BasicWorker {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       if (textExpanded != null) {
-        textExpanded.setText(mw.expandTemplates(title, textOriginal.getText()));
+        textExpanded.setText(mw.expandTemplates(getWikipedia(), title, textOriginal.getText()));
       }
       if (htmlPreview != null) {
-        String text = mw.parseText(title, textOriginal.getText());
+        String text = mw.parseText(getWikipedia(), title, textOriginal.getText());
         htmlPreview.setHtml(
             "<html><head>" +
             "</head><body>" + text + "</body></html>");

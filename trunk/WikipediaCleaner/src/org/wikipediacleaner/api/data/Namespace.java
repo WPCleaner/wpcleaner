@@ -52,7 +52,7 @@ public class Namespace implements Comparable<Namespace> {
    */
   public Namespace(String id, String title) {
     try {
-      this.id = new Integer(id);
+      this.id = Integer.parseInt(id);
     } catch (NumberFormatException e) {
       this.id = Integer.valueOf(-1);
     }

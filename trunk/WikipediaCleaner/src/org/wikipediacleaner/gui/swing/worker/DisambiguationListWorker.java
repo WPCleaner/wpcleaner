@@ -36,12 +36,14 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class DisambiguationListWorker extends BasicWorker {
 
-  private final EnumWikipedia wikipedia;
   private final ArrayList<Page> disambiguationList;
 
-  public DisambiguationListWorker(BasicWindow window, EnumWikipedia wikipedia) {
-    super(window);
-    this.wikipedia = wikipedia;
+  /**
+   * @param wikipedia Wikipedia.
+   * @param window Window.
+   */
+  public DisambiguationListWorker(EnumWikipedia wikipedia, BasicWindow window) {
+    super(wikipedia, window);
     disambiguationList = new ArrayList<Page>();
   }
 
@@ -55,7 +57,7 @@ public class DisambiguationListWorker extends BasicWorker {
     if (!(result instanceof Throwable)) {
       PageListWindow.createPageListWindow(
           GT._("Current disambiguation list"),
-          disambiguationList, wikipedia, false);
+          disambiguationList, getWikipedia(), false);
     }
   }
 
@@ -66,10 +68,10 @@ public class DisambiguationListWorker extends BasicWorker {
   public Object construct() {
     try {
       Page page = DataManager.getPage(
-          wikipedia, wikipedia.getDisambiguationList(),
+          getWikipedia(), getWikipedia().getDisambiguationList(),
           null, null);
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveAllLinks(page, null, true);
+      mw.retrieveAllLinks(getWikipedia(), page, null, true);
       ArrayList<Page> pages = new ArrayList<Page>();
       Iterator<Page> iter = page.getLinks().iterator();
       while (iter.hasNext()) {
@@ -78,7 +80,7 @@ public class DisambiguationListWorker extends BasicWorker {
           pages.add(link);
         }
       }
-      mw.retrieveDisambiguationInformation(pages, null, false, true);
+      mw.retrieveDisambiguationInformation(getWikipedia(), pages, null, false, true);
       if (!shouldContinue()) {
         return null;
       }

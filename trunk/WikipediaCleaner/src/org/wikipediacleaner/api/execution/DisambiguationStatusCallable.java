@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import org.wikipediacleaner.api.MediaWikiListener;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.i18n.GT;
 
@@ -35,12 +36,15 @@ public class DisambiguationStatusCallable extends MediaWikiCallable<ArrayList<Pa
   private final ArrayList<Page> pages;
 
   /**
+   * @param wikipedia Wikipedia.
    * @param listener Listener of MediaWiki events.
    * @param api MediaWiki API.
    * @param pages List of pages.
    */
-  public DisambiguationStatusCallable(MediaWikiListener listener, API api, ArrayList<Page> pages) {
-    super(listener, api);
+  public DisambiguationStatusCallable(
+      EnumWikipedia wikipedia, MediaWikiListener listener, API api,
+      ArrayList<Page> pages) {
+    super(wikipedia, listener, api);
     this.pages = pages;
   }
 
@@ -49,7 +53,7 @@ public class DisambiguationStatusCallable extends MediaWikiCallable<ArrayList<Pa
    */
   public ArrayList<Page> call() throws APIException {
     setText(GT._("Retrieving disambiguation informations"));
-    api.initializeDisambiguationStatus(pages);
+    api.initializeDisambiguationStatus(getWikipedia(), pages);
     return pages;
   }
 

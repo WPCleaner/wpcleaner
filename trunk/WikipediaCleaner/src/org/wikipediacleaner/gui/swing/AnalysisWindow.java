@@ -560,7 +560,7 @@ public class AnalysisWindow extends PageWindow {
   @Override
   protected void actionReload() {
     clean();
-    FullAnalysisWorker reloadWorker = new FullAnalysisWorker(this, getPage(), knownPages);
+    FullAnalysisWorker reloadWorker = new FullAnalysisWorker(getWikipedia(), this, getPage(), knownPages);
     knownPages = null;
     setupReloadWorker(reloadWorker);
     reloadWorker.start();
