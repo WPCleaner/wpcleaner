@@ -18,6 +18,10 @@
 
 package org.wikipediacleaner.api.check;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -30,56 +34,6 @@ import org.wikipediacleaner.i18n.GT;
  * An abstract class for managing errors defind in the check wikipedia project.
  */
 public class CheckError {
-
-  /**
-   * Create new instances of CheckError after parsing the current status of the check wikipedia project.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param contents Contents of the check wikipedia project.
-   * @return Array of CheckError.
-   */
-  public static ArrayList<CheckError> initCheckErrors(EnumWikipedia wikipedia, String contents) {
-    if (contents == null) {
-      return null;
-    }
-    ArrayList<CheckError> result = new ArrayList<CheckError>();
-    int beginIndex = 0;
-    final String beginError = "<!-- error number ";
-    while (beginIndex < contents.length()) {
-      beginIndex = contents.indexOf(beginError, beginIndex);
-      if (beginIndex < 0) {
-        beginIndex = contents.length();
-      } else {
-        beginIndex += beginError.length();
-        int endIndex = beginIndex;
-        while (Character.isDigit(contents.charAt(endIndex))) {
-          endIndex++;
-        }
-        if (endIndex > beginIndex) {
-          CheckError error = new CheckError(wikipedia, Integer.parseInt(contents.substring(beginIndex, endIndex)));
-          int nextChapter = contents.indexOf("\n=", endIndex);
-          int nextError = contents.indexOf(beginError, endIndex);
-          endIndex = Math.min(
-              (nextChapter < 0) ? contents.length() : nextChapter,
-              (nextError < 0) ? contents.length() : nextError);
-          while (beginIndex < endIndex) {
-            beginIndex = contents.indexOf("\n", beginIndex);
-            if ((beginIndex < 0) || (beginIndex >= endIndex)) {
-              beginIndex = endIndex;
-            } else {
-              beginIndex++;
-              if (contents.startsWith("| [[:", beginIndex)) {
-                beginIndex += 5;
-                error.addPage(contents.substring(beginIndex, contents.indexOf("]]", beginIndex)));
-              }
-            }
-          }
-          result.add(error);
-        }
-      }
-    }
-    return result;
-  }
 
   /**
    * Analyze a page to find error types.
@@ -122,6 +76,36 @@ public class CheckError {
       algorithm.analyze(page, contents, errorsFound);
     }
     return errorsFound;
+  }
+
+  /**
+   * @param errors Errors list.
+   * @param wikipedia Wikipedia.
+   * @param errorNumber Error number.
+   * @param stream Stream containing list of pages for the error number.
+   */
+  public static void addCheckError(
+      ArrayList<CheckError> errors,
+      EnumWikipedia wikipedia, int errorNumber, InputStream stream) {
+    CheckError error = new CheckError(wikipedia, errorNumber);
+    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    String line = null;
+    boolean errorFound = false;
+    try {
+      // TODO: Correctly parse HTML ?
+      while (((line = reader.readLine()) != null) && !line.endsWith("<pre>")) {
+        // Waiting for <pre>
+      }
+      while (((line = reader.readLine()) != null) && !line.startsWith("</pre>")) {
+        error.addPage(line);
+        errorFound = true;
+      }
+    } catch (IOException e) {
+      //
+    }
+    if (errorFound) {
+      errors.add(error);
+    }
   }
 
   private final EnumWikipedia wikipedia;
