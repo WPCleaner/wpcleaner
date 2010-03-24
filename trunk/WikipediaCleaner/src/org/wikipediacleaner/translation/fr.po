@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-13 20:05+0100\n"
+"POT-Creation-Date: 2010-03-24 20:25+0100\n"
 "PO-Revision-Date: 2009-12-19 21:32+0000\n"
 "Last-Translator: Christophe Guillermin <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -21,17 +21,17 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: ../../..\n"
 
-#: org/wikipediacleaner/api/MediaWiki.java:141
+#: org/wikipediacleaner/api/MediaWiki.java:148
 #, java-format
 msgid "Page {0}:"
 msgstr "Page {0} :"
 
-#: org/wikipediacleaner/api/check/CheckError.java:228
+#: org/wikipediacleaner/api/check/CheckError.java:212
 #, java-format
 msgid "Error n°{0} ({1}) - {2}"
 msgstr "Erreur n°{0} ({1}) - {2}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:233
+#: org/wikipediacleaner/api/check/CheckError.java:217
 msgid "Error unkown from WikiCleaner"
 msgstr "Erreur inconnue de WikiCleaner"
 
@@ -136,11 +136,11 @@ msgid "Occurrence"
 msgstr "Occurrence"
 
 #: org/wikipediacleaner/api/execution/BacklinksWRCallable.java:49
-#: org/wikipediacleaner/api/execution/LinksWRCallable.java:49
+#: org/wikipediacleaner/api/execution/LinksWRCallable.java:56
 msgid "Retrieving page back links"
 msgstr "Récupération des pages liées"
 
-#: org/wikipediacleaner/api/execution/ContentsCallable.java:52
+#: org/wikipediacleaner/api/execution/ContentsCallable.java:57
 msgid "Retrieving contents"
 msgstr "Récupération du contenu"
 
@@ -300,31 +300,31 @@ msgstr ""
 msgid "Semi-automatic disambiguation fixing"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:119
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:116
 msgid "Check Wikipedia"
 msgstr "Vérifier Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:159
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:152
 msgid "This screen is not functional yet !"
 msgstr "Cet écran n'est pas encore fonctionnel !"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:229
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:222
 msgid "List of errors detected :"
 msgstr "Liste des erreurs détectées :"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:257
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:250
 msgid "Pages"
 msgstr "Pages"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:273
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:266
 msgid "Load full list"
 msgstr "Charger la liste complète"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:284
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:277
 msgid "Show full list"
 msgstr "Montrer la liste complète"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:334
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:327
 msgid "Selected page"
 msgstr "Page sélectionnée"
 
@@ -1100,29 +1100,29 @@ msgid "Analyze page"
 msgstr "Analyser la page"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:784
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:822
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:840
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:821
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:839
 msgid "External Viewer"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:858
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:863
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:857
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:862
 msgid "Disambiguation analysis"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:888
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:887
 msgid "Reload links"
 msgstr "Recharger les liens"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:905
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:904
 msgid "Purge cache"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:922
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:921
 msgid "Find text"
 msgstr "Rechercher un texte"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:940
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:939
 msgid "Search in templates"
 msgstr "Rechercher dans les modèles"
 
@@ -1134,6 +1134,11 @@ msgstr "{0} dans l''espace principal / {1} liens au total"
 #: org/wikipediacleaner/gui/swing/worker/AutomaticDisambiguationWorker.java:69
 #, java-format
 msgid "The following modifications have been done ({0} pages):"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:74
+#, java-format
+msgid "Checking for errors number {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:57
