@@ -53,7 +53,6 @@ import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
-import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -936,12 +935,6 @@ public class MainWindow
         }
         Configuration.getConfiguration().save();
 
-        // Retrieving namespaces
-        setText(GT._("Retrieving namespaces"));
-        ArrayList<Namespace> namespaces = new ArrayList<Namespace>();
-        api.getNamespaces(namespaces);
-        getWikipedia().setNamespaces(namespaces);
-        
         // Retrieving disambiguation templates
         setText(GT._("Retrieving disambiguation templates"));
         getWikipedia().initDisambiguationTemplates(api);

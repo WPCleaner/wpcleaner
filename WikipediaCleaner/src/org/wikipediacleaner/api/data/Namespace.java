@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -43,20 +44,29 @@ public class Namespace implements Comparable<Namespace> {
   public final static int CATEGORY = 14;
   public final static int CATEGORY_TALK = 15;
 
-  private Integer id;
-  private String title;
+  private final Integer id;
+  private final String title;
+  private final String canonicalTitle;
+  private final LinkedList<String> aliases;
 
   /**
    * @param id Namespace Id.
    * @param title Namespace title.
+   * @param canonicalTitle Canonical title.
    */
-  public Namespace(String id, String title) {
+  public Namespace(String id, String title, String canonicalTitle) {
+    Integer tmpId = null;
     try {
-      this.id = Integer.parseInt(id);
+      tmpId = Integer.parseInt(id);
     } catch (NumberFormatException e) {
-      this.id = Integer.valueOf(-1);
+      tmpId = Integer.valueOf(-1);
     }
+    this.id = tmpId;
     this.title = title;
+    this.canonicalTitle = canonicalTitle;
+    this.aliases = new LinkedList<String>();
+    addAlias(this.title);
+    addAlias(this.canonicalTitle);
   }
 
   /**
@@ -109,6 +119,28 @@ public class Namespace implements Comparable<Namespace> {
     return title;
   }
 
+  /**
+   * @return Canonical title.
+   */
+  public String getCanonicalTitle() {
+    return canonicalTitle;
+  }
+  
+  /**
+   * @return Aliases.
+   */
+  public LinkedList<String> getAliases() {
+    return aliases;
+  }
+  
+  /**
+   * @param alias Alias to be added.
+   */
+  public void addAlias(String alias) {
+    if (!aliases.contains(alias)) {
+      aliases.add(alias);
+    }
+  }
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */

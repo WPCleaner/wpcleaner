@@ -19,11 +19,9 @@
 package org.wikipediacleaner.api.base;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LoginResult;
-import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
 
@@ -61,19 +59,6 @@ public interface API {
    * Logout.
    */
   public void logout();
-
-  /**
-   * @param id Namespace Id.
-   * @return Name of the namespace.
-   */
-  public String getNamespace(Integer id);
-
-  /**
-   * Retrieves the list of Namespaces.
-   * 
-   * @param list List of Namespaces. 
-   */
-  public void getNamespaces(List<Namespace> list);
 
   /**
    * @param wikipedia Wikipedia.
