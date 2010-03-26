@@ -18,32 +18,38 @@
 
 package org.wikipediacleaner.gui.swing;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -64,6 +70,7 @@ import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
 import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
 import org.wikipediacleaner.gui.swing.worker.CheckWikiProjectWorker;
 import org.wikipediacleaner.gui.swing.worker.RetrieveContentWorker;
+import org.wikipediacleaner.gui.swing.worker.SendWorker;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -72,15 +79,14 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckWikiProjectWindow extends PageWindow {
 
-  private ArrayList<CheckError> errors;
-  private JComboBox listAllErrors;
+  ArrayList<CheckError> errors;
+  JComboBox listAllErrors;
   private DefaultComboBoxModel modelAllErrors;
 
   private JList listPages;
   private DefaultListModel modelPages;
 
-  private JList listErrors;
-  private DefaultListModel modelErrors;
+  private JTabbedPane contentPane;
 
   /**
    * Create and display a CheckWikiProjectWindow.
@@ -144,19 +150,6 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.weightx = 0;
     constraints.weighty = 0;
 
-    // TODO
-    JLabel labelNotFinished = Utilities.createJLabel(GT._(
-        "This screen is not functional yet !"));
-    labelNotFinished.setHorizontalAlignment(SwingConstants.CENTER);
-    labelNotFinished.setForeground(Color.RED);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 0;
-    constraints.weighty = 0;
-    panel.add(labelNotFinished, constraints);
-    constraints.gridy++;
-
     // Check Wikipedia Project
     constraints.fill = GridBagConstraints.BOTH;
     constraints.gridwidth = 2;
@@ -180,7 +173,9 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.gridx++;
     constraints.weightx = 1;
     constraints.weighty = 1;
-    panel.add(createContentsComponents(), constraints);
+    contentPane = new JTabbedPane();
+    contentPane.setPreferredSize(new Dimension(900, 600));
+    panel.add(contentPane, constraints);
     constraints.gridy++;
 
     updateComponentState();
@@ -205,15 +200,6 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.ipady = 0;
     constraints.weightx = 0;
     constraints.weighty = 0;
-
-    // Comments
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridwidth = 1;
-    constraints.gridx = 0;
-    constraints.weightx = 0;
-    constraints.weighty = 0;
-    addChkAutomaticComment(panel, constraints);
-    constraints.gridy++;
 
     // List of errors managed by the project
     JLabel labelErrors = Utilities.createJLabel(GT._("List of errors detected :"));
@@ -294,77 +280,246 @@ public class CheckWikiProjectWindow extends PageWindow {
   }
 
   /**
+   * @param page Page.
    * @return Contents components.
    */
-  private Component createContentsComponents() {
-    JPanel panel = new JPanel(new GridBagLayout());
-    panel.setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Selected page")));
-
-    // Initialize constraints
-    GridBagConstraints constraints = new GridBagConstraints();
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridheight = 1;
-    constraints.gridwidth = 1;
-    constraints.gridx = 0;
-    constraints.gridy = 0;
-    constraints.insets = new Insets(0, 0, 0, 0);
-    constraints.ipadx = 0;
-    constraints.ipady = 0;
-    constraints.weightx = 1;
-    constraints.weighty = 0;
-
-    // Buttons
-    JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
-    addButtonSend(panelButtons);
-    addButtonView(panelButtons);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridwidth = 2;
-    constraints.weightx = 1;
-    constraints.weighty = 0;
-    panel.add(panelButtons, constraints);
-    constraints.gridy++;
-
-    // Errors list
-    modelErrors = new DefaultListModel();
-    listErrors = new JList(modelErrors);
-    listErrors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    listErrors.addListSelectionListener(new ListSelectionListener() {
-
-      public void valueChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting()) {
-          return;
-        }
-        actionSelectError();
-      }
-      
-    });
-    JScrollPane scrollErrors = new JScrollPane(listErrors);
-    scrollErrors.setMinimumSize(new Dimension(200, 200));
-    scrollErrors.setPreferredSize(new Dimension(200, 300));
-    scrollErrors.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-    constraints.fill = GridBagConstraints.BOTH;
-    constraints.gridwidth = 1;
-    constraints.gridx = 0;
-    constraints.weightx = 0;
-    constraints.weighty = 1;
-    panel.add(scrollErrors, constraints);
-    constraints.gridx++;
-
-    // Page contents
-    createTextContents(this);
-    /*JScrollPane scrollPage = new JScrollPane(getTextContents());
-    scrollPage.setMinimumSize(new Dimension(200, 200));
-    scrollPage.setPreferredSize(new Dimension(1000, 500));
-    scrollPage.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);*/
-    constraints.fill = GridBagConstraints.BOTH;
-    constraints.weightx = 1;
-    constraints.weighty = 1;
-    //panel.add(scrollPage, constraints);
-    addTextContents(panel, constraints);
-    constraints.gridy++;
-
+  public CheckWikiContentPanel createContentsComponents(JTabbedPane pane, Page page) {
+    CheckWikiContentPanel panel = new CheckWikiContentPanel(pane, page);
+    panel.initialize();
     return panel;
+  }
+  
+  /**
+   * Component for working on a page in the CheckWiki project.
+   */
+  private class CheckWikiContentPanel extends JPanel implements ActionListener {
+
+    private static final long serialVersionUID = 1L;
+
+    JTabbedPane pane;
+    private Page page;
+
+    private JList listErrors;
+    private DefaultListModel modelErrors;
+    private JButton buttonSend;
+    private MediaWikiPane textPage;
+
+    /**
+     * @param page Page.
+     */
+    CheckWikiContentPanel(JTabbedPane pane, Page page) {
+      super(new GridBagLayout());
+      this.pane = pane;
+      this.page = page;
+      setName(page.getTitle());
+    }
+
+    /**
+     * Initialize window.
+     */
+    void initialize() {
+
+      // Initialize constraints
+      GridBagConstraints constraints = new GridBagConstraints();
+      constraints.fill = GridBagConstraints.HORIZONTAL;
+      constraints.gridheight = 1;
+      constraints.gridwidth = 1;
+      constraints.gridx = 0;
+      constraints.gridy = 0;
+      constraints.insets = new Insets(0, 0, 0, 0);
+      constraints.ipadx = 0;
+      constraints.ipady = 0;
+      constraints.weightx = 1;
+      constraints.weighty = 0;
+
+      // Buttons
+      JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
+      buttonSend = Utilities.createJButton(GT._("&Send"));
+      buttonSend.setEnabled(false);
+      buttonSend.setActionCommand(ACTION_SEND);
+      buttonSend.addActionListener(this);
+      panelButtons.add(buttonSend);
+      if (Utilities.isDesktopSupported()) {
+        JButton buttonView = Utilities.createJButton(GT._("&External Viewer"));
+        buttonView.setActionCommand(ACTION_VIEW);
+        buttonView.addActionListener(this);
+        panelButtons.add(buttonView);
+      }
+      constraints.fill = GridBagConstraints.HORIZONTAL;
+      constraints.gridwidth = 2;
+      constraints.weightx = 1;
+      constraints.weighty = 0;
+      add(panelButtons, constraints);
+      constraints.gridy++;
+
+      // Errors list
+      modelErrors = new DefaultListModel();
+      listErrors = new JList(modelErrors);
+      listErrors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+      listErrors.addListSelectionListener(new ListSelectionListener() {
+
+        public void valueChanged(ListSelectionEvent e) {
+          if (e.getValueIsAdjusting()) {
+            return;
+          }
+          actionSelectError();
+        }
+        
+      });
+      JScrollPane scrollErrors = new JScrollPane(listErrors);
+      scrollErrors.setMinimumSize(new Dimension(200, 200));
+      scrollErrors.setPreferredSize(new Dimension(200, 300));
+      scrollErrors.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+      constraints.fill = GridBagConstraints.BOTH;
+      constraints.gridwidth = 1;
+      constraints.gridx = 0;
+      constraints.weightx = 0;
+      constraints.weighty = 1;
+      add(scrollErrors, constraints);
+      constraints.gridx++;
+
+      // Page contents
+      textPage = new MediaWikiPane(getWikipedia(), page, CheckWikiProjectWindow.this);
+      textPage.setEditable(true);
+      textPage.addPropertyChangeListener(
+          MediaWikiPane.PROPERTY_MODIFIED,
+          new PropertyChangeListener() {
+  
+            /* (non-Javadoc)
+             * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+             */
+            public void propertyChange(@SuppressWarnings("unused") PropertyChangeEvent evt) {
+              updateComponentState();
+            }
+            
+          });
+      JScrollPane scrollContents = new JScrollPane(textPage);
+      scrollContents.setMinimumSize(new Dimension(100, 100));
+      scrollContents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+      constraints.fill = GridBagConstraints.BOTH;
+      constraints.weightx = 1;
+      constraints.weighty = 1;
+      //panel.add(scrollPage, constraints);
+      add(scrollContents, constraints);
+      constraints.gridy++;
+    }
+
+    /**
+     * Update component state.
+     */
+    public void updateComponentState() {
+      if (buttonSend != null) {
+        buttonSend.setEnabled((textPage != null) && (textPage.isModified()));
+      }
+    }
+
+    /**
+     * Action called when a page is selected (after page is loaded).
+     */
+    void actionPageSelected() {
+      if (page != null) {
+        textPage.setText(page.getContents());
+        textPage.setModified(false);
+        ArrayList<CheckErrorAlgorithm> errorsFound = CheckError.analyzeErrors(
+            errors, page, page.getContents());
+        modelErrors.clear();
+        if (errorsFound != null) {
+          for (CheckErrorAlgorithm algorithm : errorsFound) {
+            modelErrors.addElement(algorithm);
+          }
+        }
+        int index = modelErrors.indexOf(listAllErrors.getSelectedItem());
+        if (index >= 0) {
+          listErrors.setSelectedIndex(index);
+        } else if (modelErrors.getSize() > 0) {
+          listErrors.setSelectedIndex(0);
+        }
+      }
+    }
+
+    /**
+     * Action called when an error is selected. 
+     */
+    void actionSelectError() {
+      Object selection = listErrors.getSelectedValue();
+      if (selection instanceof CheckErrorAlgorithm) {
+        CheckErrorAlgorithm algorithm = (CheckErrorAlgorithm) selection;
+        boolean modified = textPage.isModified();
+        String contents = textPage.getText();
+        ArrayList<CheckErrorResult> errorsFound = CheckError.analyzeError(
+            algorithm, getPage(), contents);
+        boolean visible = false;
+        textPage.resetAttributes();
+        StyledDocument document = textPage.getStyledDocument();
+        if (document != null) {
+          if (errorsFound != null) {
+            for (CheckErrorResult error : errorsFound) {
+              document.setCharacterAttributes(
+                  error.getStartPosition(),
+                  error.getLength(),
+                  textPage.getStyle(MediaWikiConstants.STYLE_DISAMBIGUATION_LINK),
+                  true);
+              SimpleAttributeSet attributes = new SimpleAttributeSet();
+              attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_INFO, error);
+              document.setCharacterAttributes(
+                  error.getStartPosition(),
+                  error.getLength(),
+                  attributes, false);
+              if (!visible) {
+                textPage.setCaretPosition(error.getStartPosition());
+                textPage.moveCaretPosition(error.getEndPosition());
+                visible = true;
+              }
+            }
+          }
+        }
+        textPage.setModified(modified);
+        updateComponentState();
+      }
+    }
+
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e) {
+      if (e == null) {
+        return;
+      }
+
+      if (ACTION_SEND.equals(e.getActionCommand())) {
+        actionSend();
+      } else if (ACTION_VIEW.equals(e.getActionCommand())) {
+        actionView();
+      }
+    }
+
+    /**
+     * Send page.
+     */
+    private void actionSend() {
+      String comment = getDefaultComment();
+      SendWorker sendWorker = new SendWorker(
+          getWikipedia(), CheckWikiProjectWindow.this,
+          page, textPage.getText(), comment);
+      sendWorker.setListener(new DefaultBasicWorkerListener() {
+        @Override
+        public void afterFinished(
+            @SuppressWarnings("unused") BasicWorker worker,
+            boolean ok) {
+          if (ok) {
+            pane.remove(CheckWikiContentPanel.this);
+          }
+        }
+      });
+      sendWorker.start();
+    }
+
+    /**
+     * View page in external viewer.
+     */
+    private void actionView() {
+      Utilities.browseURL(getWikipedia(), page.getTitle());
+    }
   }
 
   /**
@@ -419,13 +574,72 @@ public class CheckWikiProjectWindow extends PageWindow {
   }
 
   /**
+   * A close icon for JTabbedPane.
+   */
+  private static class CloseIcon implements Icon {
+
+    private final static int SIZE = 10;
+    transient Rectangle position = null; 
+
+    /**
+     * @param pane Pane component.
+     * @param component Page.
+     */
+    public CloseIcon(final JTabbedPane pane, final Component component) {
+      MouseAdapter adapter = new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+          if (!e.isConsumed() &&
+              (position != null) &&
+              position.contains(e.getX(), e.getY())) {
+            for (int i = pane.getComponentCount(); i > 0; i--) {
+              if (pane.getComponent(i - 1) == component) {
+                pane.remove(i - 1);
+                pane.removeMouseListener(this);
+              }
+            }
+          }
+        }
+      };
+      pane.addMouseListener(adapter);
+    }
+
+    public int getIconHeight() {
+      return SIZE;
+    }
+
+    public int getIconWidth() {
+      return SIZE;
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics, int, int)
+     */
+    public void paintIcon(@SuppressWarnings("unused") Component c, Graphics g, int x, int y) {
+      if (g instanceof Graphics2D) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.draw3DRect(x, y, getIconWidth() - 1, getIconHeight() - 1, false);
+        g2.drawLine(x + 2, y + 2, x + getIconWidth() - 3, y + getIconHeight() - 3);
+        g2.drawLine(x + 2, y + getIconHeight() - 3, x + getIconWidth() - 3, y + 2);
+        g2.dispose();
+      }
+      position = new Rectangle(x, y, getIconWidth(), getIconHeight());
+    }
+    
+  }
+
+  /**
    * Action called when a page is selected.
    */
   void actionSelectPage() {
     Object selection = listPages.getSelectedValue();
     if (selection instanceof Page) {
-      setPage((Page) selection);
-      RetrieveContentWorker contentWorker = new RetrieveContentWorker(getWikipedia(), this, getPage());
+      Page pageSelected = (Page) selection;
+      final CheckWikiContentPanel contentPanel = createContentsComponents(contentPane, pageSelected);
+      contentPane.add(contentPanel);
+      contentPane.setIconAt(contentPane.getComponentCount() - 1, new CloseIcon(contentPane, contentPanel));
+      contentPane.setSelectedComponent(contentPanel);
+      RetrieveContentWorker contentWorker = new RetrieveContentWorker(getWikipedia(), this, pageSelected);
       contentWorker.setListener(new DefaultBasicWorkerListener() {
 
         /* (non-Javadoc)
@@ -433,91 +647,13 @@ public class CheckWikiProjectWindow extends PageWindow {
          */
         @Override
         public void beforeFinished(BasicWorker worker) {
-          setPageLoaded(true);
           super.beforeFinished(worker);
-          actionPageSelected();
+          contentPanel.actionPageSelected();
         }
         //
       });
       contentWorker.start();
     } else {
-      setPage(null);
-      setPageLoaded(false);
-      actionPageSelected();
-      updateComponentState();
-    }
-  }
-
-  /**
-   * Action called when a page is selected (after page is loaded).
-   */
-  void actionPageSelected() {
-    MediaWikiPane textPage = getTextContents();
-    Page page = getPage();
-    if (page != null) {
-      textPage.setPage(page);
-      textPage.setText(page.getContents());
-      textPage.setModified(false);
-      ArrayList<CheckErrorAlgorithm> errorsFound = CheckError.analyzeErrors(
-          errors, page, page.getContents());
-      modelErrors.clear();
-      if (errorsFound != null) {
-        for (CheckErrorAlgorithm algorithm : errorsFound) {
-          modelErrors.addElement(algorithm);
-        }
-      }
-      int index = modelErrors.indexOf(listAllErrors.getSelectedItem());
-      if (index >= 0) {
-        listErrors.setSelectedIndex(index);
-      } else if (modelErrors.getSize() > 0) {
-        listErrors.setSelectedIndex(0);
-      }
-    } else {
-      textPage.setPage((Page) null);
-      textPage.setText("");
-      textPage.setModified(false);
-      modelErrors.clear();
-    }
-  }
-
-  /**
-   * Action called when an error is selected. 
-   */
-  void actionSelectError() {
-    Object selection = listErrors.getSelectedValue();
-    if (selection instanceof CheckErrorAlgorithm) {
-      CheckErrorAlgorithm algorithm = (CheckErrorAlgorithm) selection;
-      MediaWikiPane textPage = getTextContents();
-      boolean modified = textPage.isModified();
-      String contents = textPage.getText();
-      ArrayList<CheckErrorResult> errorsFound = CheckError.analyzeError(
-          algorithm, getPage(), contents);
-      boolean visible = false;
-      textPage.resetAttributes();
-      StyledDocument document = textPage.getStyledDocument();
-      if (document != null) {
-        if (errorsFound != null) {
-          for (CheckErrorResult error : errorsFound) {
-            document.setCharacterAttributes(
-                error.getStartPosition(),
-                error.getLength(),
-                textPage.getStyle(MediaWikiConstants.STYLE_DISAMBIGUATION_LINK),
-                true);
-            SimpleAttributeSet attributes = new SimpleAttributeSet();
-            attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_INFO, error);
-            document.setCharacterAttributes(
-                error.getStartPosition(),
-                error.getLength(),
-                attributes, false);
-            if (!visible) {
-              textPage.setCaretPosition(error.getStartPosition());
-              textPage.moveCaretPosition(error.getEndPosition());
-              visible = true;
-            }
-          }
-        }
-      }
-      textPage.setModified(modified);
       updateComponentState();
     }
   }

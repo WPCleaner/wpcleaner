@@ -458,16 +458,30 @@ public abstract class PageWindow
    * @param constraints Constraints.
    */
   protected void addTextContents(JPanel panel, GridBagConstraints constraints) {
-    if (textContents != null) {
+    addTextContents(panel, constraints, textContents, buttonUndo);
+  }
+
+  /**
+   * Add a component for the Text.
+   * 
+   * @param panel Container.
+   * @param constraints Constraints.
+   * @param textPane Text pane.
+   * @param undo Button undo.
+   */
+  protected void addTextContents(
+      JPanel panel, GridBagConstraints constraints,
+      MediaWikiPane textPane, JButton undo) {
+    if (textPane != null) {
       Configuration config = Configuration.getConfiguration();
-      textContents.setBackground(Color.WHITE);
-      textContents.setEditable(true);
-      if (buttonUndo != null) {
-        textContents.setUndoLevels(config.getInt(
+      textPane.setBackground(Color.WHITE);
+      textPane.setEditable(true);
+      if (undo != null) {
+        textPane.setUndoLevels(config.getInt(
             Configuration.INTEGER_ANALYSIS_UNDO_LVL,
             Configuration.DEFAULT_ANALYSIS_UNDO_LVL));
       }
-      textContents.addPropertyChangeListener(
+      textPane.addPropertyChangeListener(
           MediaWikiPane.PROPERTY_MODIFIED,
           new PropertyChangeListener() {
   
@@ -479,7 +493,7 @@ public abstract class PageWindow
             }
             
           });
-      JScrollPane scrollContents = new JScrollPane(getTextContents());
+      JScrollPane scrollContents = new JScrollPane(textPane);
       scrollContents.setMinimumSize(new Dimension(100, 100));
       scrollContents.setPreferredSize(new Dimension(1000, 500));
       scrollContents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -614,17 +628,17 @@ public abstract class PageWindow
   /* ActionListener                                                         */
   /* ====================================================================== */
 
-  private final static String ACTION_DISAMBIGUATION_PAGE  = "DISAMBIGUATION PAGE";
-  private final static String ACTION_DISAMBIGUATION_REDIR = "DISAMBIGUATION REDIR";
-  private final static String ACTION_EXPAND_TEMPLATES     = "EXPAND TEMPLATES";
-  private final static String ACTION_EXPAND_PREVIEW       = "EXPAND PREVIEW";
-  private final static String ACTION_FULL_ANALYSIS_PAGE   = "FULL ANALYSIS PAGE";
-  private final static String ACTION_FULL_ANALYSIS_REDIR  = "FULL ANALYSIS REDIR";
-  private final static String ACTION_PREVIEW              = "PREVIEW";
-  private final static String ACTION_RELOAD               = "RELOAD";
-  private final static String ACTION_SEND                 = "SEND";
-  private final static String ACTION_VIEW                 = "VIEW";
-  private final static String ACTION_WATCH                = "WATCH";
+  public final static String ACTION_DISAMBIGUATION_PAGE  = "DISAMBIGUATION PAGE";
+  public final static String ACTION_DISAMBIGUATION_REDIR = "DISAMBIGUATION REDIR";
+  public final static String ACTION_EXPAND_TEMPLATES     = "EXPAND TEMPLATES";
+  public final static String ACTION_EXPAND_PREVIEW       = "EXPAND PREVIEW";
+  public final static String ACTION_FULL_ANALYSIS_PAGE   = "FULL ANALYSIS PAGE";
+  public final static String ACTION_FULL_ANALYSIS_REDIR  = "FULL ANALYSIS REDIR";
+  public final static String ACTION_PREVIEW              = "PREVIEW";
+  public final static String ACTION_RELOAD               = "RELOAD";
+  public final static String ACTION_SEND                 = "SEND";
+  public final static String ACTION_VIEW                 = "VIEW";
+  public final static String ACTION_WATCH                = "WATCH";
 
   /* (non-Javadoc)
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

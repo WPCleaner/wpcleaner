@@ -89,5 +89,5 @@ class WikiFr {
     new TemplateMatch("Voir paronymes", "1,2,3,4", "{{PAGENAME}} (paronymie)", true, false),
   };
   
-  final static String checkWikiProject = "Projet:Correction syntaxique/Détections";
+  final static String checkWikiProject = "P:CS";
 }
