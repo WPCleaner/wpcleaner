@@ -301,7 +301,7 @@ public abstract class BasicWindow {
    * @param message Message.
    * @return Answer {@link JOptionPane#YES_OPTION} or {@link JOptionPane#NO_OPTION}.
    */
-  protected int displayYesNoWarning(String message) {
+  public int displayYesNoWarning(String message) {
     return Utilities.displayYesNoWarning(parentComponent, message);
   }
 

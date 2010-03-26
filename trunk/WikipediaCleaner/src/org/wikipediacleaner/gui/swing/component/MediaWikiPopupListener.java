@@ -229,7 +229,8 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
               if (foundText.length() > 0) {
                 String template = foundText.substring(0, separatorIndex);
                 String title = "Template:" + template;
-                String params = foundText.substring(separatorIndex + 1);
+                String params = (separatorIndex < foundText.length()) ?
+                    foundText.substring(separatorIndex + 1) : "";
                 Page page = DataManager.getPage(wikipedia, title, null, null);
                 JPopupMenu popup = new JPopupMenu();
                 JMenuItem menuItem = new JMenuItem(page.getTitle());
@@ -256,7 +257,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
           }
         }
       } catch (BadLocationException e) {
-        //
+        System.err.println("BadLocationException: " + e.getMessage());
       }
       return;
     }

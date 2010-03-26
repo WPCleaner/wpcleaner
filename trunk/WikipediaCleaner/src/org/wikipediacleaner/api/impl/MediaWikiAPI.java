@@ -1113,6 +1113,8 @@ public class MediaWikiAPI implements API {
         }
         XPath xpaEditToken = XPath.newInstance("./@edittoken");
         page.setEditToken(xpaEditToken.valueOf(node));
+        XPath xpaPageId = XPath.newInstance("./@pageid");
+        page.setPageId(xpaPageId.valueOf(node));
       }
       XPath xpa = XPath.newInstance(query + "/revisions/rev");
       node = (Element) xpa.selectSingleNode(root);

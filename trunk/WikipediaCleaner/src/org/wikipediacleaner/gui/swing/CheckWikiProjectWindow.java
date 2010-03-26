@@ -45,6 +45,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -283,8 +284,8 @@ public class CheckWikiProjectWindow extends PageWindow {
    * @param page Page.
    * @return Contents components.
    */
-  public CheckWikiContentPanel createContentsComponents(JTabbedPane pane, Page page) {
-    CheckWikiContentPanel panel = new CheckWikiContentPanel(pane, page);
+  public CheckWikiContentPanel createContentsComponents(JTabbedPane pane, Page page, CheckError error) {
+    CheckWikiContentPanel panel = new CheckWikiContentPanel(pane, page, error);
     panel.initialize();
     return panel;
   }
@@ -296,8 +297,11 @@ public class CheckWikiProjectWindow extends PageWindow {
 
     private static final long serialVersionUID = 1L;
 
+    public final static String ACTION_MARK_AS_FIXED = "MARK_AS_FIXED";
+
     JTabbedPane pane;
-    private Page page;
+    private final Page page;
+    private final CheckError error;
 
     private JList listErrors;
     private DefaultListModel modelErrors;
@@ -307,10 +311,11 @@ public class CheckWikiProjectWindow extends PageWindow {
     /**
      * @param page Page.
      */
-    CheckWikiContentPanel(JTabbedPane pane, Page page) {
+    CheckWikiContentPanel(JTabbedPane pane, Page page, CheckError error) {
       super(new GridBagLayout());
       this.pane = pane;
       this.page = page;
+      this.error = error;
       setName(page.getTitle());
     }
 
@@ -345,6 +350,11 @@ public class CheckWikiProjectWindow extends PageWindow {
         buttonView.addActionListener(this);
         panelButtons.add(buttonView);
       }
+      JButton buttonMarkAsFixed = Utilities.createJButton(GT._("Mark as Fixed"));
+      buttonMarkAsFixed.setEnabled(true);
+      buttonMarkAsFixed.setActionCommand(ACTION_MARK_AS_FIXED);
+      buttonMarkAsFixed.addActionListener(this);
+      panelButtons.add(buttonMarkAsFixed);
       constraints.fill = GridBagConstraints.HORIZONTAL;
       constraints.gridwidth = 2;
       constraints.weightx = 1;
@@ -453,21 +463,21 @@ public class CheckWikiProjectWindow extends PageWindow {
         StyledDocument document = textPage.getStyledDocument();
         if (document != null) {
           if (errorsFound != null) {
-            for (CheckErrorResult error : errorsFound) {
+            for (CheckErrorResult errorFound : errorsFound) {
               document.setCharacterAttributes(
-                  error.getStartPosition(),
-                  error.getLength(),
+                  errorFound.getStartPosition(),
+                  errorFound.getLength(),
                   textPage.getStyle(MediaWikiConstants.STYLE_DISAMBIGUATION_LINK),
                   true);
               SimpleAttributeSet attributes = new SimpleAttributeSet();
-              attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_INFO, error);
+              attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_INFO, errorFound);
               document.setCharacterAttributes(
-                  error.getStartPosition(),
-                  error.getLength(),
+                  errorFound.getStartPosition(),
+                  errorFound.getLength(),
                   attributes, false);
               if (!visible) {
-                textPage.setCaretPosition(error.getStartPosition());
-                textPage.moveCaretPosition(error.getEndPosition());
+                textPage.setCaretPosition(errorFound.getStartPosition());
+                textPage.moveCaretPosition(errorFound.getEndPosition());
                 visible = true;
               }
             }
@@ -486,10 +496,24 @@ public class CheckWikiProjectWindow extends PageWindow {
         return;
       }
 
-      if (ACTION_SEND.equals(e.getActionCommand())) {
+      if (ACTION_MARK_AS_FIXED.equals(e.getActionCommand())) {
+        actionMarkAsFixed();
+      } else if (ACTION_SEND.equals(e.getActionCommand())) {
         actionSend();
       } else if (ACTION_VIEW.equals(e.getActionCommand())) {
         actionView();
+      }
+    }
+
+    /**
+     * Mark a page as fixed. 
+     */
+    private void actionMarkAsFixed() {
+      if (displayYesNoWarning(
+          GT._("Do you want to mark {0} as fixed for error n°{1}",
+               new Object[] { page.getTitle(), Integer.toString(error.getErrorNumber())})) == JOptionPane.YES_OPTION) {
+        error.fix(page);
+        actionSelectErrorType();
       }
     }
 
@@ -635,7 +659,9 @@ public class CheckWikiProjectWindow extends PageWindow {
     Object selection = listPages.getSelectedValue();
     if (selection instanceof Page) {
       Page pageSelected = (Page) selection;
-      final CheckWikiContentPanel contentPanel = createContentsComponents(contentPane, pageSelected);
+      final CheckWikiContentPanel contentPanel = createContentsComponents(
+          contentPane, pageSelected,
+          (CheckError) modelAllErrors.getSelectedItem());
       contentPane.add(contentPanel);
       contentPane.setIconAt(contentPane.getComponentCount() - 1, new CloseIcon(contentPane, contentPanel));
       contentPane.setSelectedComponent(contentPanel);
@@ -664,6 +690,7 @@ public class CheckWikiProjectWindow extends PageWindow {
   @Override
   protected void actionReload() {
     clean();
+    contentPane.removeAll();
     errors = new ArrayList<CheckError>();
     CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
         getWikipedia(), this, errors);

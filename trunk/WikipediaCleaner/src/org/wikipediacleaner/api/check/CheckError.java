@@ -25,6 +25,11 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -194,5 +199,31 @@ public class CheckError {
         (algorithm != null) ?
             algorithm.getErrorDescription() :
             GT._("Error unkown from WikiCleaner") });
+  }
+
+  public boolean fix(Page page) {
+    try {
+      MultiThreadedHttpConnectionManager manager = new MultiThreadedHttpConnectionManager();
+      HttpClient httpClient = new HttpClient(manager);
+      String url = "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi";
+      PostMethod method = new PostMethod(url);
+      method.getParams().setContentCharset("UTF-8");
+      method.setRequestHeader("Accept-Encoding", "gzip");
+      method.addParameter("id", Integer.toString(errorNumber));
+      method.addParameter("pageid", Integer.toString(page.getPageId()));
+      method.addParameter("project", wikipedia.getCode() + "wiki");
+      method.addParameter("view", "only");
+      int statusCode = httpClient.executeMethod(method);
+      if (statusCode != HttpStatus.SC_OK) {
+        return false;
+      }
+      
+      this.errors.remove(page);
+    } catch (HttpException e) {
+      return false;
+    } catch (IOException e) {
+      return false;
+    }
+    return true;
   }
 }
