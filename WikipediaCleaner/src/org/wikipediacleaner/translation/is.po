@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-24 20:25+0100\n"
+"POT-Creation-Date: 2010-03-27 00:51+0100\n"
 "PO-Revision-Date: 2008-12-24 00:31+0000\n"
 "Last-Translator: Jóna Þórunn Ragnarsdóttir <Unknown>\n"
 "Language-Team: Icelandic <is@li.org>\n"
@@ -17,17 +17,17 @@ msgstr ""
 "X-Launchpad-Export-Date: 2008-12-24 08:01+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: org/wikipediacleaner/api/MediaWiki.java:148
+#: org/wikipediacleaner/api/MediaWiki.java:151
 #, fuzzy, java-format
 msgid "Page {0}:"
 msgstr "&Síða:"
 
-#: org/wikipediacleaner/api/check/CheckError.java:212
+#: org/wikipediacleaner/api/check/CheckError.java:196
 #, java-format
 msgid "Error n°{0} ({1}) - {2}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:217
+#: org/wikipediacleaner/api/check/CheckError.java:201
 msgid "Error unkown from WikiCleaner"
 msgstr ""
 
@@ -131,33 +131,33 @@ msgstr "Tilvísun"
 msgid "Occurrence"
 msgstr "Tilvik"
 
-#: org/wikipediacleaner/api/execution/BacklinksWRCallable.java:49
-#: org/wikipediacleaner/api/execution/LinksWRCallable.java:56
+#: org/wikipediacleaner/api/execution/BacklinksWRCallable.java:53
+#: org/wikipediacleaner/api/execution/LinksWRCallable.java:58
 msgid "Retrieving page back links"
 msgstr "Næ í tengla sem vísa hingað"
 
-#: org/wikipediacleaner/api/execution/ContentsCallable.java:57
+#: org/wikipediacleaner/api/execution/ContentsCallable.java:59
 msgid "Retrieving contents"
 msgstr "Næ í efni"
 
-#: org/wikipediacleaner/api/execution/DisambiguationStatusCallable.java:51
+#: org/wikipediacleaner/api/execution/DisambiguationStatusCallable.java:55
 msgid "Retrieving disambiguation informations"
 msgstr "Næ í upplýsingar um aðgreiningarsíðu"
 
-#: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:49
+#: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:53
 msgid "Retrieving page usage"
 msgstr "Sæki notkun"
 
-#: org/wikipediacleaner/api/execution/ExpandTemplatesCallable.java:51
+#: org/wikipediacleaner/api/execution/ExpandTemplatesCallable.java:55
 msgid "Expanding templates"
 msgstr "Útvíkka snið"
 
-#: org/wikipediacleaner/api/execution/ParseTextCallable.java:51
+#: org/wikipediacleaner/api/execution/ParseTextCallable.java:55
 msgid "Parsing text"
 msgstr "Þátta texta"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:66
-#: org/wikipediacleaner/gui/swing/MainWindow.java:515
+#: org/wikipediacleaner/gui/swing/MainWindow.java:514
 msgid "About"
 msgstr "Um"
 
@@ -195,7 +195,7 @@ msgid "Sort"
 msgstr "Raða"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:363
-#: org/wikipediacleaner/gui/swing/MainWindow.java:507
+#: org/wikipediacleaner/gui/swing/MainWindow.java:506
 msgid "&Options"
 msgstr "&Valkostir"
 
@@ -237,14 +237,14 @@ msgstr "Telja aðrar síður"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:420
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:384
-#: org/wikipediacleaner/gui/swing/MainWindow.java:405
+#: org/wikipediacleaner/gui/swing/MainWindow.java:404
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:184
 msgid "&Full analysis"
 msgstr "&Full lýsing"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:430
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:394
-#: org/wikipediacleaner/gui/swing/MainWindow.java:416
+#: org/wikipediacleaner/gui/swing/MainWindow.java:415
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:194
 msgid "&Disambiguation"
 msgstr "&Aðgreining"
@@ -259,12 +259,12 @@ msgid "Would you like to add these pages on your local Watch list ?"
 msgstr "Viltu bæta þessum síðum við vaktlistann?"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:74
-#: org/wikipediacleaner/gui/swing/MainWindow.java:482
+#: org/wikipediacleaner/gui/swing/MainWindow.java:481
 msgid "Bot tools"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:99
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:586
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:587
 msgid "!!! WARNING !!!"
 msgstr ""
 
@@ -277,12 +277,12 @@ msgid "They may modify a lot of pages in a short period of time."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:589
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
 msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:591
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
 msgstr ""
@@ -292,36 +292,39 @@ msgstr ""
 msgid "Semi-automatic disambiguation fixing"
 msgstr "Sjálfvirk aðgreiningarlögun"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:116
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:120
 #, fuzzy
 msgid "Check Wikipedia"
 msgstr "Önnur Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:152
-msgid "This screen is not functional yet !"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:222
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:206
 msgid "List of errors detected :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:250
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:234
 #, fuzzy
 msgid "Pages"
 msgstr "&Síða:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:266
-msgid "Load full list"
-msgstr ""
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:342
+#: org/wikipediacleaner/gui/swing/PageWindow.java:350
+msgid "&Send"
+msgstr "&Senda"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:277
-msgid "Show full list"
-msgstr ""
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:348
+#: org/wikipediacleaner/gui/swing/PageWindow.java:380
+msgid "&External Viewer"
+msgstr "&Útvær skoðari"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:327
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:353
 #, fuzzy
-msgid "Selected page"
-msgstr "Laga valdar síður"
+msgid "Mark as Fixed"
+msgstr "Merkja sem hjálparþurfi"
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:513
+#, java-format
+msgid "Do you want to mark {0} as fixed for error n°{1}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/Controller.java:242
 #, java-format
@@ -368,28 +371,28 @@ msgstr ""
 msgid "Select &next links"
 msgstr "Velja &næstu tengla"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:575
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:576
 msgid "You must select the pages on which running automatic disambiguation."
 msgstr "Þú verður að velja aðgreiningarsíður sem á að laga sjálfvirkt."
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:581
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:582
 msgid "You must input the initial and destination texts."
 msgstr "Þú verður að bæta við ílagi og ítengingartexta"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:587
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:588
 msgid "This function will do all the replacements in all selected pages."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:588
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:589
 msgid "It may modify a lot of pages in a short period of time."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:591
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:592
 msgid ""
 "Also, verify again the texts you have inputed before running this function."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:592
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:593
 msgid "Do you want to continue ?"
 msgstr ""
 
@@ -397,142 +400,142 @@ msgstr ""
 msgid "Informations"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:138
+#: org/wikipediacleaner/gui/swing/MainWindow.java:137
 #, java-format
 msgid "Wikipedia Cleaner - Version {0} ({1})"
 msgstr "Wikipedia Cleaner - útgáfa {0} ({1})"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:223
+#: org/wikipediacleaner/gui/swing/MainWindow.java:222
 msgid "Message"
 msgstr "Skilaboð"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:239
-#: org/wikipediacleaner/gui/swing/MainWindow.java:922
+#: org/wikipediacleaner/gui/swing/MainWindow.java:238
+#: org/wikipediacleaner/gui/swing/MainWindow.java:919
 msgid "Login"
 msgstr "Innskrá"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:257
+#: org/wikipediacleaner/gui/swing/MainWindow.java:256
 msgid "Other Wikipedia"
 msgstr "Önnur Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:260
+#: org/wikipediacleaner/gui/swing/MainWindow.java:259
 msgid "&Wikipedia"
 msgstr "&Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:273
+#: org/wikipediacleaner/gui/swing/MainWindow.java:272
 msgid "Other Language"
 msgstr "Annað tungumál"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:277
+#: org/wikipediacleaner/gui/swing/MainWindow.java:276
 msgid "Lan&guage"
 msgstr "Tungu&mál"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:291
+#: org/wikipediacleaner/gui/swing/MainWindow.java:290
 msgid "&User name :"
 msgstr "&Notandanafn:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:306
+#: org/wikipediacleaner/gui/swing/MainWindow.java:305
 msgid "&Password :"
 msgstr "&Lykilorð:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:318
+#: org/wikipediacleaner/gui/swing/MainWindow.java:317
 msgid "&Save password"
 msgstr "&Vista lykilorð"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:331
+#: org/wikipediacleaner/gui/swing/MainWindow.java:330
 msgid "&Login"
 msgstr "&Innskrá"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:335
+#: org/wikipediacleaner/gui/swing/MainWindow.java:334
 msgid "&Demo"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:339
+#: org/wikipediacleaner/gui/swing/MainWindow.java:338
 msgid "L&ogout"
 msgstr "Ú&tskrá"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:343
+#: org/wikipediacleaner/gui/swing/MainWindow.java:342
 msgid "&Help"
 msgstr "&Hjálp"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:375
+#: org/wikipediacleaner/gui/swing/MainWindow.java:374
 msgid "Work"
 msgstr "Vinna"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:393
+#: org/wikipediacleaner/gui/swing/MainWindow.java:392
 #: org/wikipediacleaner/gui/swing/PageWindow.java:275
 msgid "&Page :"
 msgstr "&Síða:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:427
+#: org/wikipediacleaner/gui/swing/MainWindow.java:426
 msgid "&Current Disambiguation List"
 msgstr "&Núverandi aðgreiningalisti"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:438
+#: org/wikipediacleaner/gui/swing/MainWindow.java:437
 msgid "Help requested on..."
 msgstr "Hjálp beðin..."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:449
+#: org/wikipediacleaner/gui/swing/MainWindow.java:448
 #, fuzzy
 msgid "Project check wikipedia"
 msgstr "Önnur Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:460
+#: org/wikipediacleaner/gui/swing/MainWindow.java:459
 msgid "&Random page"
 msgstr "&Handahófvalin grein"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:471
+#: org/wikipediacleaner/gui/swing/MainWindow.java:470
 msgid "Local &Watch list"
 msgstr "&Vaktlisti"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:511
+#: org/wikipediacleaner/gui/swing/MainWindow.java:510
 msgid "&Idea ? Bug ?"
 msgstr "&Hugmynd? Villa?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:586
+#: org/wikipediacleaner/gui/swing/MainWindow.java:585
 msgid ""
 "Demo mode is only available for testing WikiCleaner.\n"
 "You won't be able to modify pages on Wikipedia in Demo mode.\n"
 "Do you want to continue ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:604
+#: org/wikipediacleaner/gui/swing/MainWindow.java:603
 msgid "You must select which Wikipedia you want to work on before login"
 msgstr ""
 "Þú verður að velja hvaða Wikipediu þú vilt vinna með fyrir innskráningu."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:616
+#: org/wikipediacleaner/gui/swing/MainWindow.java:615
 msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr ""
 "Þú getur lært hvernig á að bæta við annarri Wikipedia á eftirfarandi síðu:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:627
+#: org/wikipediacleaner/gui/swing/MainWindow.java:626
 msgid "You must select a language before login"
 msgstr "Þú verður að velja tungumál fyrir innskráningu"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:639
+#: org/wikipediacleaner/gui/swing/MainWindow.java:638
 msgid "You can learn how to add other languages at the following URL:"
 msgstr ""
 "Þú getur lært hvernig á að bæta við öðru tungumáli á eftirfarandi síðu:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:654
+#: org/wikipediacleaner/gui/swing/MainWindow.java:653
 msgid "You must input your user name before login"
 msgstr "Þú verður að skrá notandanafn fyrir innskráningu"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:679
+#: org/wikipediacleaner/gui/swing/MainWindow.java:678
 msgid "You must input your password before login"
 msgstr "Þú verður að skrá lykilorð fyrir innskráningu"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:720
+#: org/wikipediacleaner/gui/swing/MainWindow.java:719
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
 msgstr "Þú getur fengið hjálp með Wikipedia Cleaner á þessari síðu:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:737
+#: org/wikipediacleaner/gui/swing/MainWindow.java:736
 msgid "You can submit bug reports or feature requests at the following URL:"
 msgstr ""
 "Þú getur sent inn villumeldingar eða óskað eftir einhverju á þessari síðu:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:749
+#: org/wikipediacleaner/gui/swing/MainWindow.java:748
 msgid ""
 "The password will be saved on your disk, so anyone having access to your "
 "computer may be able to get it.\n"
@@ -541,42 +544,38 @@ msgstr ""
 "Lykilorðið vistast á harðadiskinum í tölvunni, svo aðrir geta komist í það.\n"
 "Ertu viss um að þú viljir vista?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:766
+#: org/wikipediacleaner/gui/swing/MainWindow.java:765
 msgid "You must input a page name for running a full analysis"
 msgstr "Þú verður að skrifa inn síðuheiti til að fá fulla lýsingu"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:786
+#: org/wikipediacleaner/gui/swing/MainWindow.java:785
 msgid "You must input a page name for running a disambiguation analysis"
 msgstr "Þú verður að skrifa inn síðuheiti til að fá aðgreiningarlýsingu"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:809
+#: org/wikipediacleaner/gui/swing/MainWindow.java:808
 msgid "There's no known list of disambiguation pages for this Wikipedia."
 msgstr "Það er ekki til þekktur listi yfir aðgreiningar á þessari Wikipediu."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:833
+#: org/wikipediacleaner/gui/swing/MainWindow.java:832
 #, fuzzy
 msgid "There's no known Check Wikipedia Project for this Wikipedia."
 msgstr "Það er ekki til þekktur listi yfir aðgreiningar á þessari Wikipediu."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:867
+#: org/wikipediacleaner/gui/swing/MainWindow.java:866
 msgid "Watched pages"
 msgstr "Vaktaðar síður"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:920
-#: org/wikipediacleaner/gui/swing/TemplateListWindow.java:210
-#: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:62
-#: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:64
-#: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:63
-#: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:48
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:56
+#: org/wikipediacleaner/gui/swing/MainWindow.java:917
+#: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
+#: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:67
+#: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:69
+#: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:75
+#: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:54
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:60
 msgid "Retrieving MediaWiki API"
 msgstr "Sæki MediaWiki API"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:942
-msgid "Retrieving namespaces"
-msgstr "Sæki nafnrými"
-
-#: org/wikipediacleaner/gui/swing/MainWindow.java:948
+#: org/wikipediacleaner/gui/swing/MainWindow.java:939
 #, fuzzy
 msgid "Retrieving disambiguation templates"
 msgstr "Næ í upplýsingar um aðgreiningarsíðu"
@@ -822,10 +821,6 @@ msgstr "Aðgreining á tilvísun"
 msgid "&Reload"
 msgstr "&Endurlesa"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:350
-msgid "&Send"
-msgstr "&Senda"
-
 #: org/wikipediacleaner/gui/swing/PageWindow.java:363
 msgid "Undo"
 msgstr "Taka til baka"
@@ -833,10 +828,6 @@ msgstr "Taka til baka"
 #: org/wikipediacleaner/gui/swing/PageWindow.java:365
 msgid "Redo"
 msgstr "Gera aftur"
-
-#: org/wikipediacleaner/gui/swing/PageWindow.java:380
-msgid "&External Viewer"
-msgstr "&Útvær skoðari"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:408
 msgid "Automatic comment"
@@ -851,41 +842,41 @@ msgid "&Add a note on talk page"
 msgstr "&Bæta við innleggi á spjallsíðu"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:450
-#: org/wikipediacleaner/gui/swing/PageWindow.java:519
+#: org/wikipediacleaner/gui/swing/PageWindow.java:533
 msgid "Last modified: "
 msgstr "Síðast breytt: "
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:546
+#: org/wikipediacleaner/gui/swing/PageWindow.java:560
 msgid "Fix &redirects"
 msgstr "Laga &tilvísanir"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:555
+#: org/wikipediacleaner/gui/swing/PageWindow.java:569
 #, java-format
 msgid "Link \"{0}\" to \"{1}\""
 msgstr "Tengja \"{0}\" við \"{1}\""
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:569
+#: org/wikipediacleaner/gui/swing/PageWindow.java:583
 msgid "&Tools"
 msgstr "&Tól"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:573
+#: org/wikipediacleaner/gui/swing/PageWindow.java:587
 msgid "&Preview"
 msgstr "&Forskoða"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:578
+#: org/wikipediacleaner/gui/swing/PageWindow.java:592
 msgid "&Expand templates"
 msgstr "&Útvíkka snið"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:583
+#: org/wikipediacleaner/gui/swing/PageWindow.java:597
 msgid "Expand templates &and Preview"
 msgstr "Útvíkka snið &og forskoða"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:755
+#: org/wikipediacleaner/gui/swing/PageWindow.java:769
 #, java-format
 msgid "Sending {0}"
 msgstr "Sendi {0}"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:792
+#: org/wikipediacleaner/gui/swing/PageWindow.java:805
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr "Viltu bæta þessari síðu við á vaktlistann?"
 
@@ -964,15 +955,15 @@ msgstr "Snið í {0}"
 msgid "Templates used in {0}, linking to {1}"
 msgstr "Snið notuð í {0}, tengja í {1}"
 
-#: org/wikipediacleaner/gui/swing/TemplateListWindow.java:212
+#: org/wikipediacleaner/gui/swing/TemplateListWindow.java:218
 msgid "Retrieving templates"
 msgstr "Sæki snið"
 
-#: org/wikipediacleaner/gui/swing/TemplateListWindow.java:214
+#: org/wikipediacleaner/gui/swing/TemplateListWindow.java:220
 msgid "Retrieving links in templates"
 msgstr "Sæki tengla í sniðum"
 
-#: org/wikipediacleaner/gui/swing/TemplateListWindow.java:221
+#: org/wikipediacleaner/gui/swing/TemplateListWindow.java:227
 msgid "Displaying templates found"
 msgstr "Sýni fundin snið"
 
@@ -980,19 +971,19 @@ msgstr "Sýni fundin snið"
 msgid "String to find"
 msgstr "Strengur til að finna"
 
-#: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:66
+#: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:71
 msgid "Purging page cache"
 msgstr "Hendi síðuminni"
 
-#: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:68
+#: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:73
 msgid "Analyzing links for redirect pages"
 msgstr "Lýsi tenglum í tilvísanir"
 
-#: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:74
+#: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:79
 msgid "Analyzing links for disambiguation pages"
 msgstr "Lýsi tenglum í aðgreiningasíður"
 
-#: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:82
+#: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:87
 #, java-format
 msgid "Retrieving possible disambiguations for {0}"
 msgstr "Næ í mögulegar aðgreiningar fyrir {0}"
@@ -1011,7 +1002,7 @@ msgid "An unknown error occured"
 msgstr "Óþekkt villa kom upp"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:126
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:343
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:342
 msgid "Replace with"
 msgstr "Endursetja með"
 
@@ -1019,84 +1010,84 @@ msgstr "Endursetja með"
 msgid "Current chapter"
 msgstr "Núverandi kafli"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:199
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:198
 #, fuzzy, java-format
 msgid "Link parameter {0} to"
 msgstr "&Tenja í {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:200
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:199
 #, fuzzy, java-format
 msgid "Replace parameter {0} with"
 msgstr "Endursetja með"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:342
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:512
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:341
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:510
 msgid "Link to"
 msgstr "Tengir í"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:459
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:458
 #, java-format
 msgid "Reverse to [[{0}|{1}]]"
 msgstr "Bylta í [[{0}|{1}]]"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:469
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:468
 #, java-format
 msgid "&Link to {0}"
 msgstr "&Tenja í {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:474
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:473
 #, java-format
 msgid "&Replace with {0}"
 msgstr "&Endursetja með {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:492
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:490
 msgid "Red links analysis"
 msgstr "Lýsing á rauðum tenglum"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:604
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:602
 msgid "Remove link"
 msgstr "Fjarlægja tengil"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:620
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:618
 msgid "Remove all links"
 msgstr "Fjarlægja alla tengla"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:646
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:657
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:644
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:655
 msgid "Mark as normal link"
 msgstr "Merkja sem venjulegan tengil"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:648
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:690
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:646
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:688
 #, java-format
 msgid "Using '{{'{0}'}}'"
 msgstr "Nota '{{'{0}'}}'"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:688
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:699
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:686
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:697
 msgid "Mark as needing help"
 msgstr "Merkja sem hjálparþurfi"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:724
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:722
 msgid "Analyze"
 msgstr "Lýsa"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:761
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:759
 msgid "Analyze page"
 msgstr "Lýsa síðu"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:784
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:821
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:839
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:782
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:819
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:837
 msgid "External Viewer"
 msgstr "Útvær skoðari"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:857
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:862
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:855
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:860
 msgid "Disambiguation analysis"
 msgstr "Aðgreiningalýsing"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:887
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:886
 msgid "Reload links"
 msgstr "Endurhlaða tenglum"
 
@@ -1117,39 +1108,46 @@ msgstr "Leita í sniðum"
 msgid "{0} links in Main Namespace / {1} total links"
 msgstr "{0} tenglar í aðalnafnrými / {1} tenglar alls"
 
-#: org/wikipediacleaner/gui/swing/worker/AutomaticDisambiguationWorker.java:69
+#: org/wikipediacleaner/gui/swing/worker/AutomaticDisambiguationWorker.java:67
 #, java-format
 msgid "The following modifications have been done ({0} pages):"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:74
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:76
 #, java-format
 msgid "Checking for errors number {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:57
+#: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:59
 msgid "Current disambiguation list"
 msgstr "Núverandi listi yfir aðgreiningar"
 
-#: org/wikipediacleaner/gui/swing/worker/EmbeddedInWorker.java:57
+#: org/wikipediacleaner/gui/swing/worker/EmbeddedInWorker.java:60
 msgid "Help requested on pages"
 msgstr "Hjálpar þurfi á síðum"
 
-#: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:65
+#: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:77
 msgid "Adding comment"
 msgstr "Bæti við athugasemd"
 
-#: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:50
+#: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:56
 msgid "Getting random page"
 msgstr "Sæki handahófsvalda síðu"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:59
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:63
 msgid "Updating page contents"
 msgstr "Uppfæri síðuinnihald"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:64
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:70
 msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Selected page"
+#~ msgstr "Laga valdar síður"
+
+#~ msgid "Retrieving namespaces"
+#~ msgstr "Sæki nafnrými"
 
 #, fuzzy
 #~ msgid "Project - {0}"
