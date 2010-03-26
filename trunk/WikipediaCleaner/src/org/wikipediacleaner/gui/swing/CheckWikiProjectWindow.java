@@ -35,8 +35,6 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -80,7 +78,6 @@ public class CheckWikiProjectWindow extends PageWindow {
 
   private JList listPages;
   private DefaultListModel modelPages;
-  private JCheckBox chkShowFullList;
 
   private JList listErrors;
   private DefaultListModel modelErrors;
@@ -262,28 +259,6 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.weightx = 1;
     constraints.weighty = 0;
 
-    // Load full list
-    JButton buttonLoadFullList = Utilities.createJButton(GT._("Load full list"));
-    buttonLoadFullList.setEnabled(false); // TODO: Manage action on this button
-    constraints.fill = GridBagConstraints.BOTH;
-    constraints.gridheight = 1;
-    constraints.gridx = 0;
-    constraints.weightx = 0;
-    constraints.weighty = 0;
-    panel.add(buttonLoadFullList, constraints);
-    constraints.gridy++;
-
-    // Show full list
-    chkShowFullList = Utilities.createJCheckBox(GT._("Show full list"), false);
-    chkShowFullList.setEnabled(false);
-    constraints.fill = GridBagConstraints.BOTH;
-    constraints.gridheight = 1;
-    constraints.gridx = 0;
-    constraints.weightx = 0;
-    constraints.weighty = 0;
-    panel.add(chkShowFullList, constraints);
-    constraints.gridy++;
-
     // Page List
     modelPages = new DefaultListModel();
     listPages = new JList(modelPages);
@@ -433,13 +408,9 @@ public class CheckWikiProjectWindow extends PageWindow {
     modelPages.clear();
     if (selection instanceof CheckError) {
       CheckError error = (CheckError) selection;
-      chkShowFullList.setEnabled(error.isFullListInitialized());
-      if (!error.isFullListInitialized()) {
-        chkShowFullList.setSelected(false);
-      }
-      int nbPages = error.getPageCount(chkShowFullList.isSelected());
+      int nbPages = error.getPageCount();
       for (int numPage = 0; numPage < nbPages; numPage++) {
-        Page page = error.getPage(numPage, chkShowFullList.isSelected());
+        Page page = error.getPage(numPage);
         modelPages.addElement(page);
       }
       setPageLoaded(false);

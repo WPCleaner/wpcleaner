@@ -116,8 +116,6 @@ public class CheckError {
   private final int errorNumber;
   private final CheckErrorAlgorithm algorithm;
   private final ArrayList<Page> errors;
-  private boolean fullErrorsInitialized;
-  private final ArrayList<Page> fullErrors;
 
   /**
    * Constructor
@@ -145,8 +143,6 @@ public class CheckError {
     this.algorithm = tmpAlgorithm;
     this.errorNumber = errorNumber;
     this.errors = new ArrayList<Page>();
-    this.fullErrors = new ArrayList<Page>();
-    this.fullErrorsInitialized = false;
   }
   
   /**
@@ -157,19 +153,9 @@ public class CheckError {
   }
 
   /**
-   * @return Flag indicating if the full list is available.
-   */
-  public boolean isFullListInitialized() {
-    return fullErrorsInitialized;
-  }
-
-  /**
    * @return Number of error pages.
    */
-  public int getPageCount(boolean full) {
-    if (full && fullErrorsInitialized) {
-      return fullErrors.size();
-    }
+  public int getPageCount() {
     return errors.size();
   }
 
@@ -177,13 +163,7 @@ public class CheckError {
    * @param index Page index.
    * @return Error page.
    */
-  public Page getPage(int index, boolean full) {
-    if (full && fullErrorsInitialized) {
-      if ((index < 0) || (index >= fullErrors.size())) {
-        return null;
-      }
-      return fullErrors.get(index);
-    }
+  public Page getPage(int index) {
     if ((index < 0) || (index >= errors.size())) {
       return null;
     }
@@ -207,12 +187,7 @@ public class CheckError {
    */
   @Override
   public String toString() {
-    String count;
-    if (fullErrorsInitialized) {
-      count = Integer.toString(errors.size()) + "/" + Integer.toString(fullErrors.size());
-    } else {
-      count = Integer.toString(errors.size());
-    }
+    String count = Integer.toString(errors.size());
     return GT._("Error n°{0} ({1}) - {2}", new Object[] {
         Integer.valueOf(errorNumber),
         count,

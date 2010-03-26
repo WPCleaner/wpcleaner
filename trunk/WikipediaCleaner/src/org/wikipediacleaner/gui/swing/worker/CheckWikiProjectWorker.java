@@ -37,6 +37,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.Configuration;
 
 /**
  * SwingWorker for reloading the page. 
@@ -68,6 +69,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
     MultiThreadedHttpConnectionManager manager = new MultiThreadedHttpConnectionManager();
     HttpClient httpClient = new HttpClient(manager);
     PostMethod method = null;
+    Configuration config = Configuration.getConfiguration();
     for (int errorNumber = 1; errorNumber < 100; errorNumber++) {
       String className = CheckErrorAlgorithm.class.getName() + Integer.toString(errorNumber);
       try {
@@ -82,7 +84,9 @@ public class CheckWikiProjectWorker extends BasicWorker {
         method.getParams().setContentCharset("UTF-8");
         method.setRequestHeader("Accept-Encoding", "gzip");
         method.addParameter("id", Integer.toString(errorNumber));
-        method.addParameter("limit", Integer.toString(500));
+        method.addParameter("limit", Integer.toString(config.getInt(
+            Configuration.INTEGER_CHECK_NB_ERRORS,
+            Configuration.DEFAULT_CHECK_NB_ERRORS)));
         method.addParameter("offset", Integer.toString(0));
         method.addParameter("project", getWikipedia().getCode() + "wiki");
         method.addParameter("view", "bots");

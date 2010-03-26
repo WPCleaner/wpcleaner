@@ -62,12 +62,14 @@ public class Configuration implements WindowListener {
   // Integer properties
   public  final static String  INTEGER_ANALYSIS_NB_PAGES = "AnalysisNbPages";
   public  final static String  INTEGER_ANALYSIS_UNDO_LVL = "AnalysisUndoLevels";
+  public  final static String  INTEGER_CHECK_NB_ERRORS   = "CheckNbErrors";
   public  final static String  INTEGER_INTERROG_THREAD   = "InterrogationThreads";
   public  final static String  INTEGER_MAXIMUM_PAGES     = "MaximumPages";
   public  final static String  INTEGER_MENU_SIZE         = "MenuSize";
 
   public  final static int     DEFAULT_ANALYSIS_NB_PAGES = 10;
   public  final static int     DEFAULT_ANALYSIS_UNDO_LVL = 10;
+  public  final static int     DEFAULT_CHECK_NB_ERRORS   = 100;
   public  final static int     DEFAULT_INTERROG_THREAD   = 30;
   public  final static int     DEFAULT_MAXIMUM_PAGES     = 20;
   public  final static int     DEFAULT_MENU_SIZE         = 30;
