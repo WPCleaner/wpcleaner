@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
@@ -88,8 +89,6 @@ public class MediaWikiAPI implements API {
   private String lgusername = null;
   private String lguserid = null;
 
-  private HashMap<Integer, Namespace> namespaces;
-
   /**
    * Constructor.
    */
@@ -143,7 +142,7 @@ public class MediaWikiAPI implements API {
     }
 
     // Retrieve data
-    loadNamespaces(wikipedia);
+    loadSiteInfo(wikipedia);
 
     return result;
   }
@@ -155,30 +154,6 @@ public class MediaWikiAPI implements API {
     this.lgtoken = null;
     this.lgusername = null;
     this.lguserid = null;
-    this.namespaces = null;
-  }
-
-  /**
-   * @param id Namespace Id.
-   * @return Name of the namespace.
-   */
-  public String getNamespace(Integer id) {
-    Namespace ns = namespaces.get(id);
-    return (ns != null ? ns.getTitle() : "");
-  }
-
-  /**
-   * Retrieves the list of Namespaces.
-   * 
-   * @param list List of Namespaces. 
-   */
-  public void getNamespaces(List<Namespace> list) {
-    if ((list != null) && (namespaces != null)) {
-      for (Namespace n : namespaces.values()) {
-        list.add(n);
-      }
-      Collections.sort(list);
-    }
   }
 
   /**
@@ -828,19 +803,19 @@ public class MediaWikiAPI implements API {
   }
 
   /**
-   * Load namespaces informations.
+   * Load site informations.
    * 
    * @param wikipedia Wikipedia.
    * @throws APIException
    */
-  private void loadNamespaces(EnumWikipedia wikipedia) throws APIException {
+  private void loadSiteInfo(EnumWikipedia wikipedia) throws APIException {
     HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("meta", "siteinfo");
     properties.put("siprop", "namespaces|namespacealiases");
     try {
-      namespaces = constructNamespaces(
+      constructSiteInfo(
           getRoot(wikipedia, properties, MAX_ATTEMPTS),
-          "/api/query/namespaces/ns");
+          "/api/query", wikipedia);
     } catch (JDOMParseException e) {
       log.error("Error loading namespaces", e);
       throw new APIException("Error parsing XML", e);
@@ -913,32 +888,61 @@ public class MediaWikiAPI implements API {
 
   /**
    * @param root Root element.
-   * @param query XPath query to retrieve the namespaces 
+   * @param query XPath query to retrieve the namespaces
+   * @param wikipedia Wikipedia.
    * @return List of namespaces.
    * @throws APIException
    */
-  private HashMap<Integer, Namespace> constructNamespaces(Element root, String query)
+  private void constructSiteInfo(
+      Element root, String query,
+      EnumWikipedia wikipedia)
       throws APIException {
-    HashMap<Integer, Namespace> list = null;
+
+    // Retrieve namespaces
+    HashMap<Integer, Namespace> namespaces = null;
     try {
-      XPath xpa = XPath.newInstance(query);
+      XPath xpa = XPath.newInstance(query + "/namespaces/ns");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
-      list = new HashMap<Integer, Namespace>();
+      namespaces = new HashMap<Integer, Namespace>();
       XPath xpaId = XPath.newInstance("./@id");
       XPath xpaTitle = XPath.newInstance(".");
+      XPath xpaCanonical = XPath.newInstance("./@canonical");
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
         Namespace ns = new Namespace(
             xpaId.valueOf(currentNode),
-            xpaTitle.valueOf(currentNode));
-        list.put(ns.getId(), ns);
+            xpaTitle.valueOf(currentNode),
+            xpaCanonical.valueOf(currentNode));
+        namespaces.put(ns.getId(), ns);
       }
     } catch (JDOMException e) {
       log.error("Error namespaces", e);
       throw new APIException("Error parsing XML result", e);
     }
-    return list;
+
+    // Retrieve namespaces aliases
+    try {
+      XPath xpa = XPath.newInstance(query + "/namespacealiases/ns");
+      List results = xpa.selectNodes(root);
+      Iterator iter = results.iterator();
+      XPath xpaId = XPath.newInstance("./@id");
+      XPath xpaTitle = XPath.newInstance(".");
+      while (iter.hasNext()) {
+        Element currentNode = (Element) iter.next();
+        Namespace namespace = namespaces.get(xpaId.valueOf(currentNode));
+        if (namespace != null) {
+          namespace.addAlias(xpaTitle.valueOf(currentNode));
+        }
+      }
+    } catch (JDOMException e) {
+      log.error("Error namespaces", e);
+      throw new APIException("Error parsing XML result", e);
+    }
+
+    // Update namespace list
+    LinkedList<Namespace> list = new LinkedList<Namespace>(namespaces.values());
+    wikipedia.setNamespaces(list);
   }
 
   /**
