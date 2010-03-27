@@ -281,7 +281,7 @@ public abstract class BasicWindow {
    * 
    * @param message Message.
    */
-  protected void displayWarning(String message) {
+  public void displayWarning(String message) {
     Utilities.displayWarning(parentComponent, message);
   }
 

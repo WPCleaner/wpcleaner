@@ -509,6 +509,15 @@ public class CheckWikiProjectWindow extends PageWindow {
      * Mark a page as fixed. 
      */
     private void actionMarkAsFixed() {
+      ArrayList<CheckErrorResult> results = CheckError.analyzeError(
+          error.getAlgorithm(), page, page.getContents());
+      if ((results != null) && (!results.isEmpty())) {
+        displayWarning(GT._(
+            "The error n°{0} is still found {1} times in the page.\n" +
+            "You must fix them and save the page before marking it as fixed.",
+            new Object[] { Integer.toString(error.getErrorNumber()), results.size() } ));
+        return;
+      }
       if (displayYesNoWarning(
           GT._("Do you want to mark {0} as fixed for error n°{1}",
                new Object[] { page.getTitle(), Integer.toString(error.getErrorNumber())})) == JOptionPane.YES_OPTION) {
