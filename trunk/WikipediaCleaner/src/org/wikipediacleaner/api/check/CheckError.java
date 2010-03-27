@@ -158,6 +158,13 @@ public class CheckError {
   }
 
   /**
+   * @return
+   */
+  public CheckErrorAlgorithm getAlgorithm() {
+    return algorithm;
+  }
+
+  /**
    * @return Number of error pages.
    */
   public int getPageCount() {
