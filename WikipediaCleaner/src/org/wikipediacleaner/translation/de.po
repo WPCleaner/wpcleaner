@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-27 01:12+0100\n"
+"POT-Creation-Date: 2010-03-27 10:00+0100\n"
 "PO-Revision-Date: 2009-11-14 17:17+0000\n"
 "Last-Translator: Fabian Affolter <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -22,12 +22,12 @@ msgstr ""
 msgid "Page {0}:"
 msgstr "Seite {0}:"
 
-#: org/wikipediacleaner/api/check/CheckError.java:203
+#: org/wikipediacleaner/api/check/CheckError.java:205
 #, java-format
 msgid "Error n°{0} ({1}) - {2}"
 msgstr "Fehler-No {0} ({1}) - {2}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:208
+#: org/wikipediacleaner/api/check/CheckError.java:210
 msgid "Error unkown from WikiCleaner"
 msgstr "Unbekannter Fehler von WikiCleaner"
 
@@ -328,6 +328,19 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:522
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:580
+#, java-format
+msgid "Marking page as fixed for error n°{0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:608
+msgid "Detection by [["
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:608
+msgid "]]"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/Controller.java:242
@@ -1107,7 +1120,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:76
 #, java-format
-msgid "Checking for errors number {0}"
+msgid "Checking for errors n°{0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:59
