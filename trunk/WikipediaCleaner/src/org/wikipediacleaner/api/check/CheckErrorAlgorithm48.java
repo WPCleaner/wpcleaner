@@ -45,6 +45,9 @@ public class CheckErrorAlgorithm48 extends CheckErrorAlgorithmBase {
       return false;
     }
     String search = "[[" + page.getTitle() + "]]"; // TODO: more possibilities (lowercase, space, pipe)
-    return simpleTextSearch(page, contents, errors, search);
+    String[] replacements = new String[] {
+        page.getTitle(), "'''" + page.getTitle() + "'''"
+    };
+    return simpleTextSearch(page, contents, errors, search, replacements);
   }
 }

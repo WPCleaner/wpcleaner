@@ -46,7 +46,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Flag indicating if the error was found.
    */
   protected boolean simpleTextSearch(Page page, String contents, ArrayList<CheckErrorResult> errors, String search) {
-    return simpleTextSearch(page, contents, errors, search, null);
+    return simpleTextSearch(page, contents, errors, search, (String[]) null);
   }
 
   /**
@@ -62,6 +62,24 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   protected boolean simpleTextSearch(
       Page page, String contents, ArrayList<CheckErrorResult> errors,
       String search, String replacement) {
+    return simpleTextSearch(
+        page, contents, errors, search,
+        (replacement != null) ? new String[] { replacement } : null);
+  }
+
+  /**
+   * Search for simple text in page.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param errors Errors found in the page.
+   * @param search Text to be searched.
+   * @param replacements Texts proposed as a replacement.
+   * @return Flag indicating if the error was found.
+   */
+  protected boolean simpleTextSearch(
+      Page page, String contents, ArrayList<CheckErrorResult> errors,
+      String search, String[] replacements) {
     int startIndex = 0;
     boolean result = false;
     while (startIndex < contents.length()) {
@@ -73,8 +91,12 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
         result = true;
         int endIndex = startIndex + search.length();
         CheckErrorResult errorResult = new CheckErrorResult(getErrorDescription(), startIndex, endIndex);
-        if (replacement != null) {
-          errorResult.addReplacement(replacement);
+        if (replacements != null) {
+          for (int i = 0; i < replacements.length; i++) {
+            if (replacements[i] != null) {
+              errorResult.addReplacement(replacements[i]);
+            }
+          }
         }
         errors.add(errorResult);
         startIndex = endIndex;

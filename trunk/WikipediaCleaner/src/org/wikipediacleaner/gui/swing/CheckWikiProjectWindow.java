@@ -34,6 +34,7 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -57,6 +58,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyledDocument;
 
+import org.wikipediacleaner.api.MediaWikiController;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -461,7 +463,7 @@ public class CheckWikiProjectWindow extends PageWindow {
         boolean modified = textPage.isModified();
         String contents = textPage.getText();
         ArrayList<CheckErrorResult> errorsFound = CheckError.analyzeError(
-            algorithm, getPage(), contents);
+            algorithm, page, contents);
         boolean visible = false;
         textPage.resetAttributes();
         StyledDocument document = textPage.getStyledDocument();
@@ -573,20 +575,21 @@ public class CheckWikiProjectWindow extends PageWindow {
             // Close pane
             pane.remove(CheckWikiContentPanel.this);
 
-            // Mark errors fixed
+            // Remove errors fixed
             for (int posError = 0; posError < listAllErrors.getModel().getSize(); posError++) {
               Object element = listAllErrors.getModel().getElementAt(posError);
               if (element instanceof CheckError) {
-                CheckError tmpError = (CheckError) element;
+                final CheckError tmpError = (CheckError) element;
                 for (int posAlgo = 0; posAlgo < errorsFixed.size(); posAlgo++) {
                   if (tmpError.getAlgorithm().equals(errorsFixed.get(posAlgo))) {
-                    if ((CheckWikiProjectWindow.this != null) &&
-                        (CheckWikiProjectWindow.this.getGlassPane() != null)) {
-                      CheckWikiProjectWindow.this.getGlassPane().setText(GT._(
-                          "Marking page as fixed for error n°{0}",
-                          new Object[] { tmpError.getErrorNumber() }));
-                    }
-                    tmpError.fix(page);
+                    tmpError.remove(page);
+                    MediaWikiController.addSimpleTask(new Callable<Page>() {
+
+                      public Page call() throws Exception
+                      {
+                        tmpError.fix(page);
+                        return page;
+                      }});
                   }
                 }
               }
