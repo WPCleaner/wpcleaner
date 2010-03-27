@@ -36,8 +36,11 @@ import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpConnectionManager;
+import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -91,9 +94,9 @@ public class MediaWikiAPI implements API {
 
   /**
    * Constructor.
+   * @param manager HTTP connection manager.
    */
-  public MediaWikiAPI() {
-    MultiThreadedHttpConnectionManager manager = new MultiThreadedHttpConnectionManager();
+  public MediaWikiAPI(HttpConnectionManager manager) {
     httpClient = new HttpClient(manager);
   }
 
@@ -154,6 +157,60 @@ public class MediaWikiAPI implements API {
     this.lgtoken = null;
     this.lgusername = null;
     this.lguserid = null;
+  }
+
+  /**
+   * Send a request to Check Wiki.
+   * 
+   * @param parameters Request parameters.
+   * @param stream Flag indicating if the stream is needed.
+   * @return Answer.
+   * @throws APIException
+   */
+  public InputStream askCheckWiki(
+      NameValuePair[] parameters,
+      boolean         stream) throws APIException {
+    try {
+      String url = "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi";
+      StringBuffer debugUrl = (DEBUG_URL) ? new StringBuffer(url) : null;
+      PostMethod method = new PostMethod(url);
+      method.getParams().setContentCharset("UTF-8");
+      method.setRequestHeader("Accept-Encoding", "gzip");
+      method.addParameters(parameters);
+      if (DEBUG_URL) {
+        for (int i = 0; i < parameters.length; i++) {
+          debugUrl.append(
+              (i == 0 ? "?" : "&") +
+              parameters[i].getName() + "=" + parameters[i].getValue());
+        }
+        if (DEBUG_TIME) {
+          System.out.println("" + System.currentTimeMillis() + ": " + debugUrl.toString());
+        } else {
+          System.out.println(debugUrl.toString());
+        }
+      }
+      HttpClient toolClient = new HttpClient(new MultiThreadedHttpConnectionManager());
+      int statusCode = toolClient.executeMethod(method);
+      if (statusCode != HttpStatus.SC_OK) {
+        throw new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
+      }
+      if (!stream) {
+        return null;
+      }
+      InputStream inputStream = method.getResponseBodyAsStream();
+      inputStream = new BufferedInputStream(inputStream);
+      Header contentEncoding = method.getResponseHeader("Content-Encoding");
+      if (contentEncoding != null) {
+        if (contentEncoding.getValue().equals("gzip")) {
+          inputStream = new GZIPInputStream(inputStream);
+        }
+      }
+      return inputStream;
+    } catch (HttpException e) {
+      throw new APIException("HttpException: " + e.getMessage());
+    } catch (IOException e) {
+      throw new APIException("IOException: " + e.getMessage());
+    }
   }
 
   /**

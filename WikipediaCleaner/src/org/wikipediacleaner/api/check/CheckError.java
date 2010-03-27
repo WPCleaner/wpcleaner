@@ -26,11 +26,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.NameValuePair;
+import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -210,27 +208,33 @@ public class CheckError {
             GT._("Error unkown from WikiCleaner") });
   }
 
+  /**
+   * Remove a page from the list of errors.
+   * 
+   * @param page Page.
+   * @return
+   */
+  public void remove(Page page) {
+    errors.remove(page);
+  }
+
+  /**
+   * Fix an error for the page.
+   * 
+   * @param page Page.
+   * @return Flag indicating if fix was done.
+   */
   public boolean fix(Page page) {
     try {
-      MultiThreadedHttpConnectionManager manager = new MultiThreadedHttpConnectionManager();
-      HttpClient httpClient = new HttpClient(manager);
-      String url = "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi";
-      PostMethod method = new PostMethod(url);
-      method.getParams().setContentCharset("UTF-8");
-      method.setRequestHeader("Accept-Encoding", "gzip");
-      method.addParameter("id", Integer.toString(errorNumber));
-      method.addParameter("pageid", Integer.toString(page.getPageId()));
-      method.addParameter("project", wikipedia.getCode() + "wiki");
-      method.addParameter("view", "only");
-      int statusCode = httpClient.executeMethod(method);
-      if (statusCode != HttpStatus.SC_OK) {
-        return false;
-      }
-      
+      NameValuePair[] parameters = new NameValuePair[] {
+          new NameValuePair("id", Integer.toString(errorNumber)),
+          new NameValuePair("pageid", Integer.toString(page.getPageId())),
+          new NameValuePair("project", wikipedia.getCode() + "wiki"),
+          new NameValuePair("view", "only")
+      };
+      APIFactory.getAPI().askCheckWiki(parameters, false);
       this.errors.remove(page);
-    } catch (HttpException e) {
-      return false;
-    } catch (IOException e) {
+    } catch (APIException e) {
       return false;
     }
     return true;

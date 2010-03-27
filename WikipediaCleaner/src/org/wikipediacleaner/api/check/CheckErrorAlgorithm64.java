@@ -78,7 +78,10 @@ public class CheckErrorAlgorithm64 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
-          errors.add(new CheckErrorResult(getErrorDescription(), beginIndex, endIndex + 2));
+          CheckErrorResult errorResult = new CheckErrorResult(
+              getErrorDescription(), beginIndex, endIndex + 2);
+          errorResult.addReplacement("[[" + text + "]]");
+          errors.add(errorResult);
         }
         startIndex = beginIndex + 1;
       }

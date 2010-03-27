@@ -18,6 +18,9 @@
 
 package org.wikipediacleaner.api.base;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpConnectionManager;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.wikipediacleaner.api.impl.MediaWikiAPI;
 
 
@@ -26,15 +29,25 @@ import org.wikipediacleaner.api.impl.MediaWikiAPI;
  */
 public class APIFactory {
 
+  private static HttpConnectionManager connectionManger;
   private static API api;
+
+  static {
+    connectionManger = new MultiThreadedHttpConnectionManager();
+    api = new MediaWikiAPI(connectionManger);
+  }
 
   /**
    * @return MediaWiki API implementation.
    */
   public static API getAPI() {
-    if (api == null) {
-      api = new MediaWikiAPI();
-    }
     return api;
+  }
+
+  /**
+   * @return A HTTP connection.
+   */
+  public static HttpClient getHttpClient() {
+    return new HttpClient(connectionManger);
   }
 }

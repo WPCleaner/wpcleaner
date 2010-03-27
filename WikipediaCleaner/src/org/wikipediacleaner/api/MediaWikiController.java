@@ -69,6 +69,14 @@ public abstract class MediaWikiController implements MediaWikiListener {
   }
 
   /**
+   * @param task
+   * @return
+   */
+  static public Future<?> addSimpleTask(Callable<?> task) {
+    return getStaticExecutor().submit(task);
+  }
+
+  /**
    * Add a task in the queue of tasks to run.
    * 
    * @param task The task itself.

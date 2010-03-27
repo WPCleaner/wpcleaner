@@ -18,19 +18,12 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.zip.GZIPInputStream;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.NameValuePair;
 import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -66,9 +59,6 @@ public class CheckWikiProjectWorker extends BasicWorker {
    */
   @Override
   public Object construct() {
-    MultiThreadedHttpConnectionManager manager = new MultiThreadedHttpConnectionManager();
-    HttpClient httpClient = new HttpClient(manager);
-    PostMethod method = null;
     Configuration config = Configuration.getConfiguration();
     for (int errorNumber = 1; errorNumber < 100; errorNumber++) {
       String className = CheckErrorAlgorithm.class.getName() + Integer.toString(errorNumber);
@@ -79,35 +69,20 @@ public class CheckWikiProjectWorker extends BasicWorker {
         Class.forName(className);
 
         // Retrieving list of pages for the error number
-        String url = "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi";
-        method = new PostMethod(url);
-        method.getParams().setContentCharset("UTF-8");
-        method.setRequestHeader("Accept-Encoding", "gzip");
-        method.addParameter("id", Integer.toString(errorNumber));
-        method.addParameter("limit", Integer.toString(config.getInt(
-            Configuration.INTEGER_CHECK_NB_ERRORS,
-            Configuration.DEFAULT_CHECK_NB_ERRORS)));
-        method.addParameter("offset", Integer.toString(0));
-        method.addParameter("project", getWikipedia().getCode() + "wiki");
-        method.addParameter("view", "bots");
-        int statusCode = httpClient.executeMethod(method);
-        if (statusCode != HttpStatus.SC_OK) {
-          return new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
-        }
-        InputStream stream = method.getResponseBodyAsStream();
-        stream = new BufferedInputStream(stream);
-        Header contentEncoding = method.getResponseHeader("Content-Encoding");
-        if (contentEncoding != null) {
-          if (contentEncoding.getValue().equals("gzip")) {
-            stream = new GZIPInputStream(stream);
-          }
-        }
+        NameValuePair[] parameters = new NameValuePair[] {
+            new NameValuePair("id", Integer.toString(errorNumber)),
+            new NameValuePair("limit", Integer.toString(config.getInt(
+                                Configuration.INTEGER_CHECK_NB_ERRORS,
+                                Configuration.DEFAULT_CHECK_NB_ERRORS))),
+            new NameValuePair("offset", Integer.toString(0)),
+            new NameValuePair("project", getWikipedia().getCode() + "wiki"),
+            new NameValuePair("view", "bots")
+        };
+        InputStream stream = APIFactory.getAPI().askCheckWiki(parameters, true);
         CheckError.addCheckError(errors, getWikipedia(), errorNumber, stream);
       } catch (ClassNotFoundException e) {
         // Not found: error not yet available in WikiCleaner.
-      } catch (HttpException e) {
-        return e;
-      } catch (IOException e) {
+      } catch (APIException e) {
         return e;
       }
     }

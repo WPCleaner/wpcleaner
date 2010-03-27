@@ -18,8 +18,10 @@
 
 package org.wikipediacleaner.api.base;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
+import org.apache.commons.httpclient.NameValuePair;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Page;
@@ -59,6 +61,18 @@ public interface API {
    * Logout.
    */
   public void logout();
+
+  /**
+   * Send a request to Check Wiki.
+   * 
+   * @param parameters Request parameters.
+   * @param stream Flag indicating if the stream is needed.
+   * @return Answer.
+   * @throws APIException
+   */
+  public InputStream askCheckWiki(
+      NameValuePair[] parameters,
+      boolean         stream) throws APIException;
 
   /**
    * @param wikipedia Wikipedia.
