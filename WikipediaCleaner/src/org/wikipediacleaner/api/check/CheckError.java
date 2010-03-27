@@ -158,7 +158,7 @@ public class CheckError {
   }
 
   /**
-   * @return
+   * @return Algorithm.
    */
   public CheckErrorAlgorithm getAlgorithm() {
     return algorithm;
