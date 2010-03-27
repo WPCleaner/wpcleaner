@@ -339,22 +339,26 @@ public class CheckWikiProjectWindow extends PageWindow {
 
       // Buttons
       JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
-      buttonSend = Utilities.createJButton(GT._("&Send"));
+      buttonSend = Utilities.createJButton(GT._("&Send")); // Send
       buttonSend.setEnabled(false);
       buttonSend.setActionCommand(ACTION_SEND);
       buttonSend.addActionListener(this);
       panelButtons.add(buttonSend);
-      if (Utilities.isDesktopSupported()) {
+      if (Utilities.isDesktopSupported()) { // External Viewer
         JButton buttonView = Utilities.createJButton(GT._("&External Viewer"));
         buttonView.setActionCommand(ACTION_VIEW);
         buttonView.addActionListener(this);
         panelButtons.add(buttonView);
       }
-      JButton buttonMarkAsFixed = Utilities.createJButton(GT._("Mark as Fixed"));
+      JButton buttonMarkAsFixed = Utilities.createJButton(GT._("Mark as Fixed")); // Mark as fixed
       buttonMarkAsFixed.setEnabled(true);
       buttonMarkAsFixed.setActionCommand(ACTION_MARK_AS_FIXED);
       buttonMarkAsFixed.addActionListener(this);
       panelButtons.add(buttonMarkAsFixed);
+      JButton buttonFullAnalysis = Utilities.createJButton(GT._("Full analysis")); // Full analysis
+      buttonFullAnalysis.setActionCommand(ACTION_FULL_ANALYSIS_PAGE);
+      buttonFullAnalysis.addActionListener(this);
+      panelButtons.add(buttonFullAnalysis);
       constraints.fill = GridBagConstraints.HORIZONTAL;
       constraints.gridwidth = 2;
       constraints.weightx = 1;
@@ -496,7 +500,9 @@ public class CheckWikiProjectWindow extends PageWindow {
         return;
       }
 
-      if (ACTION_MARK_AS_FIXED.equals(e.getActionCommand())) {
+      if (ACTION_FULL_ANALYSIS_PAGE.equals(e.getActionCommand())) {
+        Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
+      } else if (ACTION_MARK_AS_FIXED.equals(e.getActionCommand())) {
         actionMarkAsFixed();
       } else if (ACTION_SEND.equals(e.getActionCommand())) {
         actionSend();
