@@ -73,7 +73,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
     for (int errorNumber = 1; errorNumber < 100; errorNumber++) {
       String className = CheckErrorAlgorithm.class.getName() + Integer.toString(errorNumber);
       try {
-        setText(GT._("Checking for errors number {0}", Integer.toString(errorNumber)));
+        setText(GT._("Checking for errors n°{0}", Integer.toString(errorNumber)));
 
         // Checking if the error number is known by WikiCleaner
         Class.forName(className);

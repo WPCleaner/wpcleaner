@@ -300,7 +300,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     public final static String ACTION_MARK_AS_FIXED = "MARK_AS_FIXED";
 
     JTabbedPane pane;
-    private final Page page;
+    final Page page;
     private final CheckError error;
 
     private JList listErrors;
@@ -530,17 +530,62 @@ public class CheckWikiProjectWindow extends PageWindow {
      * Send page.
      */
     private void actionSend() {
-      String comment = getDefaultComment();
+      // Check page text to see what errors are still present
+      final ArrayList<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
+      for (int pos = 0; pos < modelErrors.size(); pos++) {
+        if (modelErrors.get(pos) instanceof CheckErrorAlgorithm) {
+          CheckErrorAlgorithm initialAlgorithm = (CheckErrorAlgorithm) modelErrors.get(pos);
+          ArrayList<CheckErrorResult> results = CheckError.analyzeError(
+              initialAlgorithm, page, textPage.getText());
+          if ((results == null) || (results.isEmpty())) {
+            errorsFixed.add(initialAlgorithm);
+          }
+        }
+      }
+
+      // Compute comment
+      StringBuilder comment = new StringBuilder(getDefaultComment());
+      for (int pos = 0; pos < errorsFixed.size(); pos++) {
+        if (pos > 0) {
+          comment.append(", ");
+        } else {
+          comment.append(": ");
+        }
+        comment.append(errorsFixed.get(pos).getErrorDescription());
+      }
+
+      // Send page
       SendWorker sendWorker = new SendWorker(
           getWikipedia(), CheckWikiProjectWindow.this,
-          page, textPage.getText(), comment);
+          page, textPage.getText(), comment.toString());
       sendWorker.setListener(new DefaultBasicWorkerListener() {
         @Override
         public void afterFinished(
             @SuppressWarnings("unused") BasicWorker worker,
             boolean ok) {
           if (ok) {
+            // Close pane
             pane.remove(CheckWikiContentPanel.this);
+
+            // Mark errors fixed
+            for (int posError = 0; posError < listAllErrors.getModel().getSize(); posError++) {
+              Object element = listAllErrors.getModel().getElementAt(posError);
+              if (element instanceof CheckError) {
+                CheckError tmpError = (CheckError) element;
+                for (int posAlgo = 0; posAlgo < errorsFixed.size(); posAlgo++) {
+                  if (tmpError.getAlgorithm().equals(errorsFixed.get(posAlgo))) {
+                    if ((CheckWikiProjectWindow.this != null) &&
+                        (CheckWikiProjectWindow.this.getGlassPane() != null)) {
+                      CheckWikiProjectWindow.this.getGlassPane().setText(GT._(
+                          "Marking page as fixed for error n°{0}",
+                          new Object[] { tmpError.getErrorNumber() }));
+                    }
+                    tmpError.fix(page);
+                  }
+                }
+              }
+            }
+
           }
         }
       });
@@ -560,7 +605,7 @@ public class CheckWikiProjectWindow extends PageWindow {
    */
   @Override
   protected String getDefaultComment() {
-    return "[[" + getWikipedia().getCheckWikiProject() + "]]";
+    return GT._("Detection by [[" + getWikipedia().getCheckWikiProject() + "]]");
   }
 
   /* (non-Javadoc)
