@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-27 10:00+0100\n"
+"POT-Creation-Date: 2010-03-27 12:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -316,28 +316,34 @@ msgstr ""
 msgid "Mark as Fixed"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:516
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:358
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:165
+#: org/wikipediacleaner/gui/swing/PageWindow.java:304
+msgid "Full analysis"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:522
 #, java-format
 msgid ""
 "The error n°{0} is still found {1} times in the page.\n"
 "You must fix them and save the page before marking it as fixed."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:522
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:528
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:580
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:586
 #, java-format
 msgid "Marking page as fixed for error n°{0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:608
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:614
 msgid "Detection by [["
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:608
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:614
 msgid "]]"
 msgstr ""
 
@@ -624,11 +630,6 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:164
 msgid "General"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:165
-#: org/wikipediacleaner/gui/swing/PageWindow.java:304
-msgid "Full analysis"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:166
