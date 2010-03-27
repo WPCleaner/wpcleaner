@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-27 00:51+0100\n"
+"POT-Creation-Date: 2010-03-27 01:12+0100\n"
 "PO-Revision-Date: 2008-07-24 02:38+0000\n"
 "Last-Translator: Ricardo Ichizo <n1ghtcr4wler@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -22,12 +22,12 @@ msgstr ""
 msgid "Page {0}:"
 msgstr "&Página:"
 
-#: org/wikipediacleaner/api/check/CheckError.java:196
+#: org/wikipediacleaner/api/check/CheckError.java:203
 #, java-format
 msgid "Error n°{0} ({1}) - {2}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:201
+#: org/wikipediacleaner/api/check/CheckError.java:208
 msgid "Error unkown from WikiCleaner"
 msgstr ""
 
@@ -325,7 +325,14 @@ msgstr "&Visualizador externo"
 msgid "Mark as Fixed"
 msgstr "Marcar como necessitando de ajuda"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:513
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:516
+#, java-format
+msgid ""
+"The error n°{0} is still found {1} times in the page.\n"
+"You must fix them and save the page before marking it as fixed."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:522
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
