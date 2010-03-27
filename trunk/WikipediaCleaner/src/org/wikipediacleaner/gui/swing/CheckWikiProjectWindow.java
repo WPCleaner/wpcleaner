@@ -585,7 +585,7 @@ public class CheckWikiProjectWindow extends PageWindow {
                 }
               }
             }
-
+            actionSelectErrorType();
           }
         }
       });
