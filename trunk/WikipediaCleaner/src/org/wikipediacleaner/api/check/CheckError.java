@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.regex.Pattern;
 
 import org.apache.commons.httpclient.NameValuePair;
@@ -39,6 +40,12 @@ import org.wikipediacleaner.i18n.GT;
  * An abstract class for managing errors defind in the check wikipedia project.
  */
 public class CheckError {
+
+  public final static int PRIORITY_UNKOWN = -1;
+  public final static int PRIORITY_DEACTIVATED = 0;
+  public final static int PRIORITY_TOP = 1;
+  public final static int PRIORITY_MIDDLE = 2;
+  public final static int PRIORITY_LOWEST = 3;
 
   /**
    * Analyze a page to find error types.
@@ -84,15 +91,117 @@ public class CheckError {
   }
 
   /**
+   * Retrieve error priority from configuration.
+   * 
+   * @param config Check Wiki configuration.
+   * @param errorNumber Error number.
+   * @return Priority.
+   */
+  public static int getErrorPriority(
+      Properties config, EnumWikipedia wikipedia, int errorNumber) {
+    String code = wikipedia.getCode();
+    String txtErrorNumber = Integer.toString(errorNumber);
+    while (txtErrorNumber.length() < 3) {
+      txtErrorNumber = "0" + txtErrorNumber;
+    }
+    String errorPrefix = "error_" + txtErrorNumber + "_";
+    String prioWiki   = config.getProperty(errorPrefix + "prio_" + code + "wiki");
+    int errorPriority = PRIORITY_UNKOWN;
+    try {
+      errorPriority = Integer.parseInt(prioWiki);
+    } catch (NumberFormatException e) {
+      //
+    }
+    if (errorPriority == PRIORITY_UNKOWN) {
+      String prioScript = config.getProperty(errorPrefix + "prio_script");
+      try {
+        errorPriority = Integer.parseInt(prioScript);
+      } catch (NumberFormatException e) {
+        //
+      }
+    }
+    return errorPriority;
+  }
+
+  /**
+   * @param priority Priority.
+   * @return Flag indicating if the priority is active.
+   */
+  public static boolean isPriorityActive(int priority) {
+    if ((priority == PRIORITY_TOP) ||
+        (priority == PRIORITY_MIDDLE) ||
+        (priority == PRIORITY_LOWEST)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Retrieve error short description from configuration.
+   * 
+   * @param config Check Wiki configuration.
+   * @param errorNumber Error number.
+   * @return Short description.
+   */
+  public static String getErrorShortDescription(
+      Properties config, EnumWikipedia wikipedia, int errorNumber) {
+    String code = wikipedia.getCode();
+    String txtErrorNumber = Integer.toString(errorNumber);
+    while (txtErrorNumber.length() < 3) {
+      txtErrorNumber = "0" + txtErrorNumber;
+    }
+    String errorPrefix = "error_" + txtErrorNumber + "_";
+    String headWiki   = config.getProperty(errorPrefix + "head_" + code + "wiki");
+    if ((headWiki != null) && (headWiki.length() > 0)) {
+      return headWiki;
+    }
+    return config.getProperty(errorPrefix + "head_script");
+  }
+
+  /**
+   * Retrieve error long description from configuration.
+   * 
+   * @param config Check Wiki configuration.
+   * @param errorNumber Error number.
+   * @return Long description.
+   */
+  public static String getErrorLongDescription(
+      Properties config, EnumWikipedia wikipedia, int errorNumber) {
+    String code = wikipedia.getCode();
+    String txtErrorNumber = Integer.toString(errorNumber);
+    while (txtErrorNumber.length() < 3) {
+      txtErrorNumber = "0" + txtErrorNumber;
+    }
+    String errorPrefix = "error_" + txtErrorNumber + "_";
+    String headWiki   = config.getProperty(errorPrefix + "desc_" + code + "wiki");
+    if ((headWiki != null) && (headWiki.length() > 0)) {
+      return headWiki;
+    }
+    return config.getProperty(errorPrefix + "desc_script");
+  }
+
+  /**
+   * @param config Check Wiki configuration.
    * @param errors Errors list.
    * @param wikipedia Wikipedia.
    * @param errorNumber Error number.
    * @param stream Stream containing list of pages for the error number.
    */
   public static void addCheckError(
+      Properties config,
       ArrayList<CheckError> errors,
       EnumWikipedia wikipedia, int errorNumber, InputStream stream) {
-    CheckError error = new CheckError(wikipedia, errorNumber);
+
+    // Analyze properties to find infos about error number
+    int priority = getErrorPriority(config, wikipedia, errorNumber);
+    if (!isPriorityActive(priority)) {
+      return;
+    }
+    String shortDescription = getErrorShortDescription(config, wikipedia, errorNumber);
+    String longDescription = getErrorLongDescription(config, wikipedia, errorNumber);
+
+    // Create error
+    CheckError error = new CheckError(wikipedia, errorNumber, priority, shortDescription, longDescription);
     boolean errorFound = false;
     try {
       BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
@@ -125,15 +234,21 @@ public class CheckError {
   /**
    * Constructor
    * 
+   * @param wikipedia Wikipedia.
    * @param errorNumber Error number as defined in the check wikipedia project.
    */
-  private CheckError(EnumWikipedia wikipedia, int errorNumber) {
+  private CheckError(
+      EnumWikipedia wikipedia, int errorNumber,
+      int priority, String shortDescription, String longDescription) {
     this.wikipedia = wikipedia;
     String className = CheckErrorAlgorithm.class.getName() + Integer.toString(errorNumber);
     CheckErrorAlgorithm tmpAlgorithm = null;
     try {
       Class algorithmClass = Class.forName(className);
       tmpAlgorithm = (CheckErrorAlgorithm) algorithmClass.newInstance();
+      tmpAlgorithm.setPriority(priority);
+      tmpAlgorithm.setShortDescription(shortDescription);
+      tmpAlgorithm.setLongDescription(longDescription);
     } catch (ClassNotFoundException e) {
       // Not found: error not yet available in WikiCleaner.
     } catch (InstantiationException e) {
@@ -204,7 +319,7 @@ public class CheckError {
         Integer.valueOf(errorNumber),
         count,
         (algorithm != null) ?
-            algorithm.getErrorDescription() :
+            algorithm.getShortDescription() :
             GT._("Error unkown from WikiCleaner") });
   }
 
@@ -231,7 +346,8 @@ public class CheckError {
           new NameValuePair("project", wikipedia.getCode() + "wiki"),
           new NameValuePair("view", "only")
       };
-      APIFactory.getAPI().askCheckWiki(parameters, false);
+      APIFactory.getAPI().askToolServerPost(
+          "~sk/cgi-bin/checkwiki/checkwiki.cgi", parameters, false);
       this.errors.remove(page);
     } catch (APIException e) {
       return false;

@@ -29,10 +29,36 @@ import org.wikipediacleaner.api.data.Page;
 public interface CheckErrorAlgorithm {
 
   /**
-   * @return Description of the error.
+   * @return Short description of the error.
    * (See Check Wikipedia project for the description of errors)
    */
-  public String getErrorDescription();
+  public String getShortDescription();
+
+  /**
+   * @param desc Short description.
+   */
+  public void setShortDescription(String desc);
+
+  /**
+   * @return Long description of the error.
+   * (See Check Wikipedia project for the description of errors)
+   */
+  public String getLongDescription();
+
+  /**
+   * @param desc Long description.
+   */
+  public void setLongDescription(String desc);
+
+  /**
+   * @return Priority.
+   */
+  public int getPriority();
+
+  /**
+   * @param priority Priority.
+   */
+  public void setPriority(int priority);
 
   /**
    * @return Error number.

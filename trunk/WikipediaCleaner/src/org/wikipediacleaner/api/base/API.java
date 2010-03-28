@@ -63,15 +63,29 @@ public interface API {
   public void logout();
 
   /**
-   * Send a request to Check Wiki.
+   * Send a POST request to the Tool Server.
    * 
+   * @param path Path on the tool server.
    * @param parameters Request parameters.
    * @param stream Flag indicating if the stream is needed.
    * @return Answer.
    * @throws APIException
    */
-  public InputStream askCheckWiki(
+  public InputStream askToolServerPost(
+      String          path,
       NameValuePair[] parameters,
+      boolean         stream) throws APIException;
+
+  /**
+   * Send a GET request to the Tool Server.
+   * 
+   * @param path Path on the tool server.
+   * @param stream Flag indicating if the stream is needed.
+   * @return Answer.
+   * @throws APIException
+   */
+  public InputStream askToolServerGet(
+      String          path,
       boolean         stream) throws APIException;
 
   /**

@@ -21,7 +21,6 @@ package org.wikipediacleaner.api.check;
 import java.util.ArrayList;
 
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -30,11 +29,8 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm48 extends CheckErrorAlgorithmBase {
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#getErrorDescription()
-   */
-  public String getErrorDescription() {
-    return GT._("Title linked in text");
+  public CheckErrorAlgorithm48() {
+    super("Title linked in text");
   }
 
   /* (non-Javadoc)

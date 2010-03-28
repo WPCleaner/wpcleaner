@@ -54,6 +54,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
@@ -89,6 +90,7 @@ public class CheckWikiProjectWindow extends PageWindow {
   ArrayList<CheckError> errors;
   JComboBox listAllErrors;
   private DefaultComboBoxModel modelAllErrors;
+  private JTextPane textDescription;
 
   private JList listPages;
   private DefaultListModel modelPages;
@@ -226,6 +228,21 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.gridx++;
     constraints.weightx = 1;
     panel.add(listAllErrors, constraints);
+    constraints.gridx = 0;
+    constraints.gridy++;
+
+    // Error description
+    textDescription = new JTextPane();
+    textDescription.setEditable(false);
+    JScrollPane scrollDescription = new JScrollPane(textDescription);
+    scrollDescription.setMinimumSize(new Dimension(100, 100));
+    scrollDescription.setPreferredSize(new Dimension(500, 100));
+    scrollDescription.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    constraints.fill = GridBagConstraints.BOTH;
+    constraints.gridwidth = 2;
+    constraints.weightx = 1;
+    constraints.weighty = 1;
+    panel.add(scrollDescription, constraints);
     constraints.gridy++;
 
     return panel;
@@ -588,7 +605,7 @@ public class CheckWikiProjectWindow extends PageWindow {
           //comment.append("wiki&view=only&id=");
           //comment.append(errorsFixed.get(pos).getErrorNumber());
           //comment.append(" ");
-          comment.append(errorsFixed.get(pos).getErrorDescription());
+          comment.append(errorsFixed.get(pos).getShortDescription());
           //comment.append("]");
         }
       }
@@ -745,6 +762,8 @@ public class CheckWikiProjectWindow extends PageWindow {
     modelPages.clear();
     if (selection instanceof CheckError) {
       CheckError error = (CheckError) selection;
+      textDescription.setText(error.getAlgorithm().getLongDescription());
+      textDescription.setCaretPosition(0);
       int nbPages = error.getPageCount();
       for (int numPage = 0; numPage < nbPages; numPage++) {
         Page page = error.getPage(numPage);

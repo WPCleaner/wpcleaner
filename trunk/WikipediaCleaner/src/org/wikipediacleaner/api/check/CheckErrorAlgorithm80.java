@@ -21,7 +21,6 @@ package org.wikipediacleaner.api.check;
 import java.util.ArrayList;
 
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -30,11 +29,8 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm80 extends CheckErrorAlgorithmBase {
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#getErrorDescription()
-   */
-  public String getErrorDescription() {
-    return GT._("External link with line break");
+  public CheckErrorAlgorithm80() {
+    super("External link with line break");
   }
 
   /* (non-Javadoc)
@@ -75,10 +71,10 @@ public class CheckErrorAlgorithm80 extends CheckErrorAlgorithmBase {
           }
           result = true;
           if (lineIndex < 0) {
-            errors.add(new CheckErrorResult(getErrorDescription(), startIndex, contents.length()));
+            errors.add(new CheckErrorResult(getShortDescription(), startIndex, contents.length()));
             startIndex = contents.length();
           } else {
-            errors.add(new CheckErrorResult(getErrorDescription(), startIndex, lineIndex));
+            errors.add(new CheckErrorResult(getShortDescription(), startIndex, lineIndex));
             startIndex = lineIndex + 1;
           }
         } else {
@@ -87,7 +83,7 @@ public class CheckErrorAlgorithm80 extends CheckErrorAlgorithmBase {
               return true;
             }
             result = true;
-            errors.add(new CheckErrorResult(getErrorDescription(), startIndex, lineIndex));
+            errors.add(new CheckErrorResult(getShortDescription(), startIndex, lineIndex));
             startIndex = lineIndex + 1;
           } else {
             startIndex = endIndex;

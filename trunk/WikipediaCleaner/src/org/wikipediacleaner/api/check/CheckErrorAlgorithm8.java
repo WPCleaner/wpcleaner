@@ -21,7 +21,6 @@ package org.wikipediacleaner.api.check;
 import java.util.ArrayList;
 
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -30,11 +29,8 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm8 extends CheckErrorAlgorithmBase {
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#getErrorDescription()
-   */
-  public String getErrorDescription() {
-    return GT._("Headline should end with \"=\"");
+  public CheckErrorAlgorithm8() {
+    super("Headline should end with \"=\"");
   }
 
   /* (non-Javadoc)
@@ -75,7 +71,7 @@ public class CheckErrorAlgorithm8 extends CheckErrorAlgorithmBase {
               return true;
             }
             result = true;
-            errors.add(new CheckErrorResult(getErrorDescription(), titleIndex, endLineIndex));
+            errors.add(new CheckErrorResult(getShortDescription(), titleIndex, endLineIndex));
           }
           startIndex = endLineIndex + 1;
         } else {

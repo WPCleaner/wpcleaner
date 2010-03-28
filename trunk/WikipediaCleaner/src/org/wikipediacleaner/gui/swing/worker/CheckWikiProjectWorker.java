@@ -18,8 +18,13 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import org.apache.commons.httpclient.NameValuePair;
 import org.wikipediacleaner.api.base.APIException;
@@ -54,36 +59,92 @@ public class CheckWikiProjectWorker extends BasicWorker {
     this.errors.clear();
   }
 
+  /**
+   * Extract next parameter from Check Wiki configuration.
+   *
+   * @param properties Properties to store the next parameter.
+   * @param reader Reader for the configuration.
+   * @return Next parameter found.
+   * @throw APIException.
+   */
+  private boolean getNextCheckWikiParameter(
+      Properties properties, BufferedReader reader) throws APIException {
+    String line;
+    try {
+      while ((line = reader.readLine()) != null) {
+        int posEqual = line.indexOf('=');
+        if (posEqual > 0) {
+          String name = line.substring(0, posEqual);
+          line = line.substring(posEqual + 1);
+          int posEnd;
+          while ((posEnd = line.indexOf(" END")) == -1) {
+            line += "\n" + reader.readLine();
+          }
+          line = line.substring(0, posEnd);
+          properties.setProperty(name.trim(), line);
+          return true;
+        }
+      }
+    } catch (IOException e) {
+      throw new APIException("Error reading Check Wiki configuration: " + e.getMessage());
+    }
+    return false;
+  }
+
   /* (non-Javadoc)
    * @see org.wikipediacleaner.gui.swing.utils.SwingWorker#construct()
    */
   @Override
   public Object construct() {
     Configuration config = Configuration.getConfiguration();
+
+    // Retrieving Check Wiki configuration
+    String code = getWikipedia().getCode();
+    Properties checkWikiConfig = new Properties();
+    try {
+      setText(GT._("Retrieving Check Wiki configuration"));
+      InputStream stream = APIFactory.getAPI().askToolServerGet(
+          "~sk/checkwiki/" + code + "wiki/" + code + "wiki_translation.txt",
+          true);
+      BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+      while (getNextCheckWikiParameter(checkWikiConfig, reader)) {
+        //
+      }
+    } catch (APIException e) {
+      return e;
+    } catch (UnsupportedEncodingException e) {
+      return e;
+    }
+
+    // Retrieving errors
     for (int errorNumber = 1; errorNumber < 100; errorNumber++) {
-      String className = CheckErrorAlgorithm.class.getName() + Integer.toString(errorNumber);
-      try {
-        setText(GT._("Checking for errors n°{0}", Integer.toString(errorNumber)));
-
-        // Checking if the error number is known by WikiCleaner
-        Class.forName(className);
-
-        // Retrieving list of pages for the error number
-        NameValuePair[] parameters = new NameValuePair[] {
-            new NameValuePair("id", Integer.toString(errorNumber)),
-            new NameValuePair("limit", Integer.toString(config.getInt(
-                                Configuration.INTEGER_CHECK_NB_ERRORS,
-                                Configuration.DEFAULT_CHECK_NB_ERRORS))),
-            new NameValuePair("offset", Integer.toString(0)),
-            new NameValuePair("project", getWikipedia().getCode() + "wiki"),
-            new NameValuePair("view", "bots")
-        };
-        InputStream stream = APIFactory.getAPI().askCheckWiki(parameters, true);
-        CheckError.addCheckError(errors, getWikipedia(), errorNumber, stream);
-      } catch (ClassNotFoundException e) {
-        // Not found: error not yet available in WikiCleaner.
-      } catch (APIException e) {
-        return e;
+      int errorPriority = CheckError.getErrorPriority(checkWikiConfig, getWikipedia(), errorNumber);
+      if (CheckError.isPriorityActive(errorPriority)) {
+        String className = CheckErrorAlgorithm.class.getName() + Integer.toString(errorNumber);
+        try {
+          setText(GT._("Checking for errors n°{0}", Integer.toString(errorNumber)));
+  
+          // Checking if the error number is known by WikiCleaner
+          Class.forName(className);
+  
+          // Retrieving list of pages for the error number
+          NameValuePair[] parameters = new NameValuePair[] {
+              new NameValuePair("id", Integer.toString(errorNumber)),
+              new NameValuePair("limit", Integer.toString(config.getInt(
+                                  Configuration.INTEGER_CHECK_NB_ERRORS,
+                                  Configuration.DEFAULT_CHECK_NB_ERRORS))),
+              new NameValuePair("offset", Integer.toString(0)),
+              new NameValuePair("project", code + "wiki"),
+              new NameValuePair("view", "bots")
+          };
+          InputStream stream = APIFactory.getAPI().askToolServerPost(
+              "~sk/cgi-bin/checkwiki/checkwiki.cgi", parameters, true);
+          CheckError.addCheckError(checkWikiConfig, errors, getWikipedia(), errorNumber, stream);
+        } catch (ClassNotFoundException e) {
+          // Not found: error not yet available in WikiCleaner.
+        } catch (APIException e) {
+          return e;
+        }
       }
     }
     return null;

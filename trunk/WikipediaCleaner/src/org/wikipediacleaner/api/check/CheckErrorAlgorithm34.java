@@ -21,7 +21,6 @@ package org.wikipediacleaner.api.check;
 import java.util.ArrayList;
 
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -30,11 +29,8 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm34 extends CheckErrorAlgorithmBase {
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#getErrorDescription()
-   */
-  public String getErrorDescription() {
-    return GT._("Template programming element");
+  public CheckErrorAlgorithm34() {
+    super("Template programming element");
   }
 
   /* (non-Javadoc)
