@@ -88,6 +88,8 @@ public class OptionsWindow
   private JSpinner spinMenuSize;
   private SpinnerNumberModel modelMaxPages;
   private JSpinner spinMaxPages;
+  private SpinnerNumberModel modelMaxErrorsCheckWiki;
+  private JSpinner spinMaxErrorsCheckWiki;
   private SpinnerNumberModel modelInterrogationThreads;
   private JSpinner spinInterrogationThreads;
   private JTextField txtSignature;
@@ -293,6 +295,25 @@ public class OptionsWindow
     constraints.gridx = 2;
     constraints.weightx = 1;
     panel.add(spinMaxPages, constraints);
+    constraints.gridy++;
+
+    // Max errors for Check Wiki
+    modelMaxErrorsCheckWiki = new SpinnerNumberModel(
+        configuration.getInt(Configuration.INTEGER_CHECK_NB_ERRORS, Configuration.DEFAULT_CHECK_NB_ERRORS),
+        10, 1000, 5);
+    spinMaxErrorsCheckWiki = new JSpinner(modelMaxErrorsCheckWiki);
+    JLabel labelMaxErrorsCheckWiki = Utilities.createJLabel(
+        GT._("Maximum number of errors for Check Wiki :"));
+    labelMaxErrorsCheckWiki.setLabelFor(spinMaxErrorsCheckWiki);
+    labelMaxErrorsCheckWiki.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridwidth = 2;
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    panel.add(labelMaxErrorsCheckWiki, constraints);
+    constraints.gridwidth = 1;
+    constraints.gridx = 2;
+    constraints.weightx = 1;
+    panel.add(spinMaxErrorsCheckWiki, constraints);
     constraints.gridy++;
 
     // Interrogation threads
@@ -745,6 +766,7 @@ public class OptionsWindow
 
     // Integer values
     config.setInt(Configuration.INTEGER_ANALYSIS_NB_PAGES, modelAnalysisNbPages.getNumber().intValue());
+    config.setInt(Configuration.INTEGER_CHECK_NB_ERRORS, modelMaxErrorsCheckWiki.getNumber().intValue());
     config.setInt(Configuration.INTEGER_INTERROG_THREAD, modelInterrogationThreads.getNumber().intValue());
     config.setInt(Configuration.INTEGER_MENU_SIZE, modelMenuSize.getNumber().intValue());
     config.setInt(Configuration.INTEGER_MAXIMUM_PAGES, modelMaxPages.getNumber().intValue());
@@ -820,6 +842,9 @@ public class OptionsWindow
     modelAnalysisNbPages.setValue(config.getInt(
         Configuration.INTEGER_ANALYSIS_NB_PAGES,
         Configuration.DEFAULT_ANALYSIS_NB_PAGES));
+    modelMaxErrorsCheckWiki.setValue(config.getInt(
+        Configuration.INTEGER_CHECK_NB_ERRORS,
+        Configuration.DEFAULT_CHECK_NB_ERRORS));
     modelInterrogationThreads.setValue(config.getInt(
         Configuration.INTEGER_INTERROG_THREAD,
         Configuration.DEFAULT_INTERROG_THREAD));
