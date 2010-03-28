@@ -212,7 +212,6 @@ public class CheckError {
    * Remove a page from the list of errors.
    * 
    * @param page Page.
-   * @return
    */
   public void remove(Page page) {
     errors.remove(page);

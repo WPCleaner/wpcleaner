@@ -236,7 +236,7 @@
 
   <target name="check-uptodate-pot">
     <condition property="uptodate-pot">
-      <uptodate targetfile="${WikiCleaner.po.dir}/WikiCleaner.pot.tstamp">
+      <uptodate targetfile="${WikiCleaner.po.dir}/tstamp.WikiCleaner.pot_">
         <srcfiles refid="WikiCleaner.java.files"/>
         <srcfiles file="${WikiCleaner.po.dir}/WikiCleaner.pot"/>
       </uptodate>
@@ -250,7 +250,7 @@
       <istrue value="${do.create.pot}" />
       <then>
         <echo message="Generating WikiCleaner.pot (gettext PO-template) file in ${WikiCleaner.po.dir} ..."/>
-        <delete file="${WikiCleaner.po.dir}/WikiCleaner.pot.tstamp"/>
+        <delete file="${WikiCleaner.po.dir}/tstamp.WikiCleaner.pot_"/>
         <!-- generate new WikiCleaner.pot -->
         <mkdir dir="${WikiCleaner.po.dir}/tmp"/>
         <apply executable="${gettext.xgettext}" dir="${basedir}/${WikiCleaner.src.dir}" parallel="true"
@@ -301,7 +301,7 @@
             </if>
           </else>
         </if>
-        <touch file="${WikiCleaner.po.dir}/WikiCleaner.pot.tstamp"/>
+        <touch file="${WikiCleaner.po.dir}/tstamp.WikiCleaner.pot_"/>
         <delete dir="${WikiCleaner.po.dir}/tmp"/>
       </then>
       <else>
@@ -334,7 +334,7 @@
 
   <target name="check-uptodate-po">
     <condition property="uptodate-po-${WikiCleaner_lang_value}">
-      <uptodate targetfile="${WikiCleaner.po.dir}/${WikiCleaner_lang_value}.po.tstamp">
+      <uptodate targetfile="${WikiCleaner.po.dir}/tstamp.${WikiCleaner_lang_value}.po_">
         <srcfiles file="${WikiCleaner.po.dir}/WikiCleaner.pot"/>
         <srcfiles file="${WikiCleaner.po.dir}/${WikiCleaner_lang_value}.po"/>
       </uptodate>
@@ -345,11 +345,11 @@
           depends="check-uptodate-po"
           if="exist_msgmerge" unless="uptodate-po-${WikiCleaner_lang_value}">
     <echo message="Updating wikicleaner-${WikiCleaner_lang_value}.po gettext file for WikiCleaner ..."/>
-    <delete file="${WikiCleaner.po.dir}/${WikiCleaner_lang_value}.po.tstamp"/>
+    <delete file="${WikiCleaner.po.dir}/tstamp.${WikiCleaner_lang_value}.po_"/>
     <exec executable="${gettext.msgmerge}" dir="${basedir}/${WikiCleaner.po.dir}">
       <arg line="-U ${WikiCleaner_lang_value}.po WikiCleaner.pot"/>
     </exec>
-    <touch file="${WikiCleaner.po.dir}/${WikiCleaner_lang_value}.po.tstamp"/>
+    <touch file="${WikiCleaner.po.dir}/tstamp.${WikiCleaner_lang_value}.po_"/>
     <delete file="${WikiCleaner.po.dir}/${WikiCleaner_lang_value}.po~"/>
   </target>
 
