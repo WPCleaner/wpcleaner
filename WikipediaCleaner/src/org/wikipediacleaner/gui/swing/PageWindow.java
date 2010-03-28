@@ -320,6 +320,19 @@ public abstract class PageWindow
   }
 
   /**
+   * Create a Next Occurence button.
+   * 
+   * @param listener Action listener.
+   * @return Next Occurence button.
+   */
+  public JButton createButtonNextOccurence(ActionListener listener) {
+    JButton button = Utilities.createJButton(GT._("&Next occurrence"));
+    button.setActionCommand(ACTION_NEXT_OCCURENCE);
+    button.addActionListener(listener);
+    return button;
+  }
+
+  /**
    * Add a component for the Redirect buttons.
    * 
    * @param panel Container.
@@ -713,6 +726,7 @@ public abstract class PageWindow
   public final static String ACTION_EXPAND_PREVIEW       = "EXPAND PREVIEW";
   public final static String ACTION_FULL_ANALYSIS_PAGE   = "FULL ANALYSIS PAGE";
   public final static String ACTION_FULL_ANALYSIS_REDIR  = "FULL ANALYSIS REDIR";
+  public final static String ACTION_NEXT_OCCURENCE       = "NEXT OCCURENCE";
   public final static String ACTION_PREVIEW              = "PREVIEW";
   public final static String ACTION_RELOAD               = "RELOAD";
   public final static String ACTION_SEND                 = "SEND";
