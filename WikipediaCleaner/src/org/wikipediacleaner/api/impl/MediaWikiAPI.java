@@ -1223,6 +1223,9 @@ public class MediaWikiAPI implements API {
         if (node.getAttribute("redirect") != null) {
           redirect = true;
         }
+        if (node.getAttribute("missing") != null) {
+          page.setExisting(Boolean.FALSE);
+        }
         XPath xpaEditToken = XPath.newInstance("./@edittoken");
         page.setEditToken(xpaEditToken.valueOf(node));
         XPath xpaPageId = XPath.newInstance("./@pageid");
