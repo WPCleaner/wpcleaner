@@ -482,23 +482,30 @@ public class CheckWikiProjectWindow extends PageWindow {
      * Action called when a page is selected (after page is loaded).
      */
     void actionPageSelected() {
-      if (page != null) {
-        textPage.setText(page.getContents());
-        textPage.setModified(false);
-        ArrayList<CheckErrorAlgorithm> errorsFound = CheckError.analyzeErrors(
-            errors, page, textPage.getText());
-        modelErrors.clear();
-        if (errorsFound != null) {
-          for (CheckErrorAlgorithm algorithm : errorsFound) {
-            modelErrors.addElement(algorithm);
-          }
+      if (page == null) {
+        pane.remove(this);
+        return;
+      }
+      if (Boolean.FALSE.equals(page.isExisting())) {
+        displayWarning(GT._("The page {0} doesn't exist on Wikipedia", page.getTitle()));
+        pane.remove(this);
+        return;
+      }
+      textPage.setText(page.getContents());
+      textPage.setModified(false);
+      ArrayList<CheckErrorAlgorithm> errorsFound = CheckError.analyzeErrors(
+          errors, page, textPage.getText());
+      modelErrors.clear();
+      if (errorsFound != null) {
+        for (CheckErrorAlgorithm algorithm : errorsFound) {
+          modelErrors.addElement(algorithm);
         }
-        int index = modelErrors.indexOf(listAllErrors.getSelectedItem());
-        if (index >= 0) {
-          listErrors.setSelectedIndex(index);
-        } else if (modelErrors.getSize() > 0) {
-          listErrors.setSelectedIndex(0);
-        }
+      }
+      int index = modelErrors.indexOf(listAllErrors.getSelectedItem());
+      if (index >= 0) {
+        listErrors.setSelectedIndex(index);
+      } else if (modelErrors.getSize() > 0) {
+        listErrors.setSelectedIndex(0);
       }
     }
 
