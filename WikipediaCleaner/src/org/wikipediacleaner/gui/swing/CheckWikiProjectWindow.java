@@ -29,6 +29,8 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
@@ -42,6 +44,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -50,6 +53,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
@@ -295,7 +299,9 @@ public class CheckWikiProjectWindow extends PageWindow {
   /**
    * Component for working on a page in the CheckWiki project.
    */
-  private class CheckWikiContentPanel extends JPanel implements ActionListener {
+  private class CheckWikiContentPanel
+    extends JPanel
+    implements ActionListener, ItemListener {
 
     private static final long serialVersionUID = 1L;
 
@@ -307,6 +313,8 @@ public class CheckWikiProjectWindow extends PageWindow {
 
     private JList listErrors;
     private DefaultListModel modelErrors;
+    private JTextField textComment;
+    private JCheckBox chkAutomaticComment;
     private JButton buttonSend;
     private MediaWikiPane textPage;
 
@@ -339,17 +347,43 @@ public class CheckWikiProjectWindow extends PageWindow {
       constraints.weightx = 1;
       constraints.weighty = 0;
 
+      // Comment
+      JPanel panelComment = new JPanel(new GridBagLayout());
+      GridBagConstraints constraints2 = new GridBagConstraints();
+      constraints2.fill = GridBagConstraints.HORIZONTAL;
+      constraints2.gridheight = 1;
+      constraints2.gridwidth = 1;
+      constraints2.gridx = 0;
+      constraints2.gridy = 0;
+      constraints2.insets = new Insets(0, 0, 0, 0);
+      constraints2.ipadx = 0;
+      constraints2.ipady = 0;
+      constraints2.weightx = 0;
+      constraints2.weighty = 0;
+      chkAutomaticComment = createChkAutomaticComment(true, this);
+      panelComment.add(chkAutomaticComment, constraints2);
+      constraints2.gridx++;
+      textComment = new JTextField(getComment(null));
+      textComment.setEditable(false);
+      constraints2.weightx = 1;
+      panelComment.add(textComment, constraints2);
+      constraints2.gridx++;
+      constraints.fill = GridBagConstraints.HORIZONTAL;
+      constraints.gridwidth = 2;
+      constraints.weightx = 1;
+      constraints.weighty = 0;
+      add(panelComment, constraints);
+      constraints.gridy++;
+
       // Buttons
       JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
-      buttonSend = Utilities.createJButton(GT._("&Send")); // Send
+      JButton buttonValidate = createButtonValidate(this);
+      panelButtons.add(buttonValidate);
+      buttonSend = createButtonSend(this);
       buttonSend.setEnabled(false);
-      buttonSend.setActionCommand(ACTION_SEND);
-      buttonSend.addActionListener(this);
       panelButtons.add(buttonSend);
       if (Utilities.isDesktopSupported()) { // External Viewer
-        JButton buttonView = Utilities.createJButton(GT._("&External Viewer"));
-        buttonView.setActionCommand(ACTION_VIEW);
-        buttonView.addActionListener(this);
+        JButton buttonView = createButtonView(this);
         panelButtons.add(buttonView);
       }
       JButton buttonMarkAsFixed = Utilities.createJButton(GT._("Mark as Fixed")); // Mark as fixed
@@ -357,9 +391,7 @@ public class CheckWikiProjectWindow extends PageWindow {
       buttonMarkAsFixed.setActionCommand(ACTION_MARK_AS_FIXED);
       buttonMarkAsFixed.addActionListener(this);
       panelButtons.add(buttonMarkAsFixed);
-      JButton buttonFullAnalysis = Utilities.createJButton(GT._("Full analysis")); // Full analysis
-      buttonFullAnalysis.setActionCommand(ACTION_FULL_ANALYSIS_PAGE);
-      buttonFullAnalysis.addActionListener(this);
+      JButton buttonFullAnalysis = createButtonFullAnalysis(this);
       panelButtons.add(buttonFullAnalysis);
       constraints.fill = GridBagConstraints.HORIZONTAL;
       constraints.gridwidth = 2;
@@ -437,7 +469,7 @@ public class CheckWikiProjectWindow extends PageWindow {
         textPage.setText(page.getContents());
         textPage.setModified(false);
         ArrayList<CheckErrorAlgorithm> errorsFound = CheckError.analyzeErrors(
-            errors, page, page.getContents());
+            errors, page, textPage.getText());
         modelErrors.clear();
         if (errorsFound != null) {
           for (CheckErrorAlgorithm algorithm : errorsFound) {
@@ -508,6 +540,8 @@ public class CheckWikiProjectWindow extends PageWindow {
         actionMarkAsFixed();
       } else if (ACTION_SEND.equals(e.getActionCommand())) {
         actionSend();
+      } else if (ACTION_VALIDATE.equals(e.getActionCommand())) {
+        actionValidate();
       } else if (ACTION_VIEW.equals(e.getActionCommand())) {
         actionView();
       }
@@ -535,10 +569,36 @@ public class CheckWikiProjectWindow extends PageWindow {
     }
 
     /**
-     * Send page.
+     * Compute comment.
+     * 
+     * @param errorsFixed Errors fixed
+     * @return Comment.
      */
-    private void actionSend() {
-      // Check page text to see what errors are still present
+    private String getComment(ArrayList<CheckErrorAlgorithm> errorsFixed) {
+      StringBuilder comment = new StringBuilder(getDefaultComment());
+      if (errorsFixed != null) {
+        for (int pos = 0; pos < errorsFixed.size(); pos++) {
+          if (pos > 0) {
+            comment.append(", ");
+          } else {
+            comment.append(": ");
+          }
+          //comment.append("[http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi?project=");
+          //comment.append(getWikipedia().getCode());
+          //comment.append("wiki&view=only&id=");
+          //comment.append(errorsFixed.get(pos).getErrorNumber());
+          //comment.append(" ");
+          comment.append(errorsFixed.get(pos).getErrorDescription());
+          //comment.append("]");
+        }
+      }
+      return comment.toString();
+    }
+
+    /**
+     * @return Errors fixed.
+     */
+    private ArrayList<CheckErrorAlgorithm> computeErrorsFixed() {
       final ArrayList<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
       for (int pos = 0; pos < modelErrors.size(); pos++) {
         if (modelErrors.get(pos) instanceof CheckErrorAlgorithm) {
@@ -550,28 +610,21 @@ public class CheckWikiProjectWindow extends PageWindow {
           }
         }
       }
+      return errorsFixed;
+    }
 
-      // Compute comment
-      StringBuilder comment = new StringBuilder(getDefaultComment());
-      for (int pos = 0; pos < errorsFixed.size(); pos++) {
-        if (pos > 0) {
-          comment.append(", ");
-        } else {
-          comment.append(": ");
-        }
-        comment.append("[http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi?project=");
-        comment.append(getWikipedia().getCode());
-        comment.append("wiki&view=only&id=");
-        comment.append(errorsFixed.get(pos).getErrorNumber());
-        comment.append(" ");
-        comment.append(errorsFixed.get(pos).getErrorDescription());
-        comment.append("]");
-      }
+    /**
+     * Send page.
+     */
+    private void actionSend() {
+      // Check page text to see what errors are still present
+      final ArrayList<CheckErrorAlgorithm> errorsFixed = computeErrorsFixed();
+      updateComment(errorsFixed);
 
       // Send page
       SendWorker sendWorker = new SendWorker(
           getWikipedia(), CheckWikiProjectWindow.this,
-          page, textPage.getText(), comment.toString());
+          page, textPage.getText(), textComment.getText());
       sendWorker.setListener(new DefaultBasicWorkerListener() {
         @Override
         public void afterFinished(
@@ -608,10 +661,46 @@ public class CheckWikiProjectWindow extends PageWindow {
     }
 
     /**
+     * Validate current text and recompute errors.
+     */
+    private void actionValidate() {
+      actionSelectError();
+      updateComment(null);
+    }
+
+    /**
      * View page in external viewer.
      */
     private void actionView() {
       Utilities.browseURL(getWikipedia(), page.getTitle());
+    }
+
+    /**
+     * Update automatic comment.
+     * 
+     * @param errorsFixed Errors.
+     */
+    private void updateComment(ArrayList<CheckErrorAlgorithm> errorsFixed) {
+      if ((chkAutomaticComment != null) &&
+          (textComment != null)) {
+        textComment.setEditable(!chkAutomaticComment.isSelected());
+        if (chkAutomaticComment.isSelected()) {
+          textComment.setText(getComment((errorsFixed != null) ? errorsFixed : computeErrorsFixed()));
+        }
+      }
+    }
+
+    /* (non-Javadoc)
+     * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
+     */
+    public void itemStateChanged(ItemEvent e) {
+      if ((e == null) || (e.getSource() == null)) {
+        return;
+      }
+      Object source = e.getSource();
+      if ((source == chkAutomaticComment)) {
+        updateComment(null);
+      }
     }
   }
 
