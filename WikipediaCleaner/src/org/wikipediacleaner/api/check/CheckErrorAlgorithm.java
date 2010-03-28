@@ -35,6 +35,12 @@ public interface CheckErrorAlgorithm {
   public String getErrorDescription();
 
   /**
+   * @return Error number.
+   * (See Check Wikipedia project for the description of errors)
+   */
+  public String getErrorNumber();
+
+  /**
    * Analyze a page to check if errors are present.
    * 
    * @param page Page.
