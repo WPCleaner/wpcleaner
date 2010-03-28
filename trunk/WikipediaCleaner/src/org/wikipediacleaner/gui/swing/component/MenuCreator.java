@@ -794,11 +794,25 @@ public class MenuCreator {
           fixedBegin += addSeparator(submenuView);
     
           for (Page p : links) {
-            menuItem = new JMenuItem(p.getTitle());
-            updateFont(menuItem, p);
-            action = new PageViewAction(p.getTitle(), wikipedia);
-            menuItem.addActionListener(action);
-            submenuView.add(menuItem);
+            if (p.isRedirect()) {
+              JMenu submenuRedirect = new JMenu(p.getTitle());
+              Iterator<Page> itPage = p.getRedirectIteratorWithPage();
+              while (itPage.hasNext()) {
+                Page redirect = itPage.next();
+                menuItem = new JMenuItem(redirect.getTitle());
+                updateFont(menuItem, redirect);
+                action = new PageViewAction(redirect.getTitle(), wikipedia);
+                menuItem.addActionListener(action);
+                submenuRedirect.add(menuItem);
+              }
+              submenuView.add(submenuRedirect);
+            } else {
+              menuItem = new JMenuItem(p.getTitle());
+              updateFont(menuItem, p);
+              action = new PageViewAction(p.getTitle(), wikipedia);
+              menuItem.addActionListener(action);
+              submenuView.add(menuItem);
+            }
           }
 
           fixedEnd += addSeparator(submenuView);
