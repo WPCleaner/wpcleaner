@@ -559,7 +559,13 @@ public class CheckWikiProjectWindow extends PageWindow {
         } else {
           comment.append(": ");
         }
+        comment.append("[http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi?project=");
+        comment.append(getWikipedia().getCode());
+        comment.append("wiki&view=only&id=");
+        comment.append(errorsFixed.get(pos).getErrorNumber());
+        comment.append(" ");
         comment.append(errorsFixed.get(pos).getErrorDescription());
+        comment.append("]");
       }
 
       // Send page

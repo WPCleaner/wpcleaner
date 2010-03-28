@@ -37,6 +37,19 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * @return Error number.
+   * (See Check Wikipedia project for the description of errors)
+   */
+  public String getErrorNumber() {
+    String baseName = CheckErrorAlgorithm.class.getName();
+    String name = getClass().getName();
+    if (name.startsWith(baseName)) {
+      return name.substring(baseName.length());
+    }
+    return "unknown";
+  }
+
+  /**
    * Search for simple text in page.
    * 
    * @param page Page.
