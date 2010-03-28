@@ -301,11 +301,22 @@ public abstract class PageWindow
    */
   protected void addButtonFullAnalysis(JPanel panel) {
     if (buttonFullAnalysis == null) {
-      buttonFullAnalysis = Utilities.createJButton(GT._("Full analysis"));
-      buttonFullAnalysis.setActionCommand(ACTION_FULL_ANALYSIS_PAGE);
-      buttonFullAnalysis.addActionListener(this);
+      buttonFullAnalysis = createButtonFullAnalysis(this);
       panel.add(buttonFullAnalysis);
     }
+  }
+
+  /**
+   * Create a Full Analysis button.
+   * 
+   * @param listener Action listener.
+   * @return Full Analysis button.
+   */
+  public JButton createButtonFullAnalysis(ActionListener listener) {
+    JButton button = Utilities.createJButton(GT._("Full analysis"));
+    button.setActionCommand(ACTION_FULL_ANALYSIS_PAGE);
+    button.addActionListener(listener);
+    return button;
   }
 
   /**
@@ -333,11 +344,22 @@ public abstract class PageWindow
    */
   protected void addButtonReload(JPanel panel) {
     if (buttonReload == null) {
-      buttonReload = Utilities.createJButton(GT._("&Reload"));
-      buttonReload.setActionCommand(ACTION_RELOAD);
-      buttonReload.addActionListener(this);
+      buttonReload = createButtonReload(this);
       panel.add(buttonReload);
     }
+  }
+
+  /**
+   * Create a Reload button.
+   * 
+   * @param listener Action listener.
+   * @return Reload button.
+   */
+  public JButton createButtonReload(ActionListener listener) {
+    JButton button = Utilities.createJButton(GT._("&Reload"));
+    button.setActionCommand(ACTION_RELOAD);
+    button.addActionListener(listener);
+    return button;
   }
 
   /**
@@ -347,11 +369,22 @@ public abstract class PageWindow
    */
   protected void addButtonSend(JPanel panel) {
     if (buttonSend == null) {
-      buttonSend = Utilities.createJButton(GT._("&Send"));
-      buttonSend.setActionCommand(ACTION_SEND);
-      buttonSend.addActionListener(this);
+      buttonSend = createButtonSend(this);
       panel.add(buttonSend);
     }
+  }
+
+  /**
+   * Create a Send button.
+   * 
+   * @param listener Action listener.
+   * @return Send button.
+   */
+  public JButton createButtonSend(ActionListener listener) {
+    JButton button = Utilities.createJButton(GT._("&Send"));
+    button.setActionCommand(ACTION_SEND);
+    button.addActionListener(listener);
+    return button;
   }
 
   /**
@@ -371,17 +404,41 @@ public abstract class PageWindow
   }
 
   /**
+   * Create a Validate button.
+   * 
+   * @param listener Action listener.
+   * @return Validate button.
+   */
+  public JButton createButtonValidate(ActionListener listener) {
+    JButton button = Utilities.createJButton(GT._("&Validate"));
+    button.setActionCommand(ACTION_VALIDATE);
+    button.addActionListener(listener);
+    return button;
+  }
+
+  /**
    * Add a component for the View button.
    * 
    * @param panel Container.
    */
   protected void addButtonView(JPanel panel) {
     if (Utilities.isDesktopSupported() && (buttonView == null)) {
-      buttonView = Utilities.createJButton(GT._("&External Viewer"));
-      buttonView.setActionCommand(ACTION_VIEW);
-      buttonView.addActionListener(this);
+      buttonView = createButtonView(this);
       panel.add(buttonView);
     }
+  }
+
+  /**
+   * Create a External Viewer button.
+   * 
+   * @param listener Action listener.
+   * @return External Viewer button.
+   */
+  public JButton createButtonView(ActionListener listener) {
+    JButton button = Utilities.createJButton(GT._("&External Viewer"));
+    button.setActionCommand(ACTION_VIEW);
+    button.addActionListener(listener);
+    return button;
   }
 
   /**
@@ -391,11 +448,22 @@ public abstract class PageWindow
    */
   protected void addButtonWatch(JPanel panel) {
     if (buttonWatch == null) {
-      buttonWatch = Utilities.createJButton(GT._("Add to &Watch list"));
-      buttonWatch.setActionCommand(ACTION_WATCH);
-      buttonWatch.addActionListener(this);
+      buttonWatch = createButtonWatch(this);
       panel.add(buttonWatch);
     }
+  }
+
+  /**
+   * Create a Watch button.
+   * 
+   * @param listener Action listener.
+   * @return Watch button.
+   */
+  public JButton createButtonWatch(ActionListener listener) {
+    JButton button = Utilities.createJButton(GT._("Add to &Watch list"));
+    button.setActionCommand(ACTION_WATCH);
+    button.addActionListener(listener);
+    return button;
   }
 
   /**
@@ -405,13 +473,24 @@ public abstract class PageWindow
    * @param constraints Constraints.
    */
   protected void addChkAutomaticComment(JPanel panel, GridBagConstraints constraints) {
-    chkAutomaticComment = Utilities.createJCheckBox(GT._("Automatic comment"), true);
-    chkAutomaticComment.addItemListener(this);
+    chkAutomaticComment = createChkAutomaticComment(true, this);
     panel.add(chkAutomaticComment, constraints);
     constraints.gridx++;
     textComment = new JTextField(getDefaultComment());
     constraints.weightx = 1;
     panel.add(textComment, constraints);
+  }
+
+  /**
+   * Create a Automatic Comment checkbox.
+   * 
+   * @param listener Action listener.
+   * @return Automatic Comment checkbox.
+   */
+  public JCheckBox createChkAutomaticComment(boolean checked, ItemListener listener) {
+    JCheckBox checkbox = Utilities.createJCheckBox(GT._("Automatic comment"), checked);
+    checkbox.addItemListener(listener);
+    return checkbox;
   }
 
   /**
@@ -637,6 +716,7 @@ public abstract class PageWindow
   public final static String ACTION_PREVIEW              = "PREVIEW";
   public final static String ACTION_RELOAD               = "RELOAD";
   public final static String ACTION_SEND                 = "SEND";
+  public final static String ACTION_VALIDATE             = "VALIDATE";
   public final static String ACTION_VIEW                 = "VIEW";
   public final static String ACTION_WATCH                = "WATCH";
 
@@ -666,6 +746,8 @@ public abstract class PageWindow
       actionReload();
     } else if (ACTION_SEND.equals(e.getActionCommand())) {
       actionSend();
+    } else if (ACTION_VALIDATE.equals(e.getActionCommand())) {
+      actionValidate();
     } else if (ACTION_VIEW.equals(e.getActionCommand())) {
       actionView();
     } else if (ACTION_WATCH.equals(e.getActionCommand())) {
@@ -788,6 +870,13 @@ public abstract class PageWindow
       }
     });
     sendWorker.start();
+  }
+
+  /**
+   * Action called when Validate button is pressed. 
+   */
+  protected void actionValidate() {
+    // Implement in sub-classes
   }
 
   /**

@@ -75,7 +75,6 @@ public class AnalysisWindow extends PageWindow {
   private final static String ACTION_DISAMBIGUATION_LINK  = "DISAMBIGUATION LINK";
   private final static String ACTION_FULL_ANALYSIS_LINK   = "FULL ANALYSIS LINK";
   private final static String ACTION_NEXT_OCCURENCE       = "NEXT OCCURENCE";
-  private final static String ACTION_VALIDATE             = "VALIDATE";
   private final static String ACTION_WATCH_LINK           = "WATCH LINK";
 
   private JButton buttonNext;
@@ -317,9 +316,7 @@ public class AnalysisWindow extends PageWindow {
     buttonNext.setActionCommand(ACTION_NEXT_OCCURENCE);
     buttonNext.addActionListener(this);
     buttonTextPanel.add(buttonNext);
-    buttonValidate = Utilities.createJButton(GT._("&Validate"));
-    buttonValidate.setActionCommand(ACTION_VALIDATE);
-    buttonValidate.addActionListener(this);
+    buttonValidate = createButtonValidate(this);
     buttonTextPanel.add(buttonValidate);
     addButtonUndoRedo(buttonTextPanel);
     addButtonRedirect(buttonTextPanel);
@@ -530,9 +527,7 @@ public class AnalysisWindow extends PageWindow {
     }
 
     super.actionPerformed(e);
-    if (ACTION_VALIDATE.equals(e.getActionCommand())) {
-      actionValidate();
-    } else if (ACTION_WATCH_LINK.equals(e.getActionCommand())) {
+    if (ACTION_WATCH_LINK.equals(e.getActionCommand())) {
       actionWatchLink();
     } else if (ACTION_DISAMBIGUATION_LINK.equals(e.getActionCommand())) {
       actionDisambiguationLink();
@@ -716,7 +711,8 @@ public class AnalysisWindow extends PageWindow {
   /**
    * Action called when Validate button is pressed.
    */
-  private void actionValidate() {
+  @Override
+  protected void actionValidate() {
     getTextContents().resetAttributes();
     countOccurences(getTextContents().getText());
     listLinks.repaint();
