@@ -391,6 +391,7 @@ public class Utilities {
       browseURL(
           wiki.getWikiURL() +
           "?title=" + URLEncoder.encode(title, "UTF-8") +
+          "&redirect=no" +
           "&action=" + action);
     } catch (UnsupportedEncodingException e) {
       // Nothing to be done
@@ -405,7 +406,7 @@ public class Utilities {
    */
   public static void browseURL(EnumWikipedia wiki, String title) {
     try {
-      browseURL(wiki.getWikiURL() + "?title=" + URLEncoder.encode(title, "UTF-8"));
+      browseURL(wiki.getWikiURL() + "?title=" + URLEncoder.encode(title, "UTF-8") + "&redirect=no");
     } catch (UnsupportedEncodingException e) {
       // Nothing to be done
     }
