@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-03-27 18:06+0100\n"
-"PO-Revision-Date: 2008-05-21 21:24+0000\n"
+"PO-Revision-Date: 2010-03-27 15:39+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-07-30 20:44+0000\n"
+"X-Launchpad-Export-Date: 2010-03-28 08:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:151
-#, fuzzy, java-format
+#, java-format
 msgid "Page {0}:"
-msgstr "&עמוד :"
+msgstr "דף {0}:"
 
 #: org/wikipediacleaner/api/check/CheckError.java:203
 #, java-format
@@ -29,35 +29,35 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:208
 msgid "Error unkown from WikiCleaner"
-msgstr ""
+msgstr "שגיאה בלתי ידועה מ־WikiCleaner"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm10.java:37
 msgid "Square brackets not correct end"
-msgstr ""
+msgstr "סיומת הסוגריים המרובעים אינה נכונה"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm19.java:37
 msgid "Headlines start with one \"=\""
-msgstr ""
+msgstr "שורות הכותרת מתחילות ב־\"=\" יחיד"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm2.java:37
 msgid "Article with false <br/>"
-msgstr ""
+msgstr "ערך עם <br/> שקרי"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm26.java:37
 msgid "HTML text style element <b>"
-msgstr ""
+msgstr "רכיב עיצוב ה־HTML ‏<b>"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm28.java:37
 msgid "Table not correct end"
-msgstr ""
+msgstr "סיומת הטבלה שגויה"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:38
 msgid "Double pipe in one link"
-msgstr ""
+msgstr "הפרדה כפולה בקישור יחיד"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm34.java:37
 msgid "Template programming element"
-msgstr ""
+msgstr "רכיב תכנות תבנית"
 
 #: org/wikipediacleaner/api/check/CheckErrorAlgorithm38.java:37
 msgid "HTML text style element <i>"
@@ -278,7 +278,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
@@ -288,23 +289,20 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:114
-#, fuzzy
 msgid "Semi-automatic disambiguation fixing"
-msgstr "תיקון פירושון אוטומטי"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:122
-#, fuzzy
 msgid "Check Wikipedia"
-msgstr "ויקיפדיה אחרת"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:208
 msgid "List of errors detected :"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:236
-#, fuzzy
 msgid "Pages"
-msgstr "&עמוד :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:344
 #: org/wikipediacleaner/gui/swing/PageWindow.java:350
@@ -317,9 +315,8 @@ msgid "&External Viewer"
 msgstr "תוכנת &צפייה חיצונית"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:355
-#, fuzzy
 msgid "Mark as Fixed"
-msgstr "סמן כנזקק לעזרה"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:360
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:165
@@ -499,9 +496,8 @@ msgid "Help requested on..."
 msgstr "עזרה נתבקשה עבור..."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:448
-#, fuzzy
 msgid "Project check wikipedia"
-msgstr "ויקיפדיה אחרת"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:459
 msgid "&Random page"
@@ -577,9 +573,8 @@ msgid "There's no known list of disambiguation pages for this Wikipedia."
 msgstr "אין רשימה ידוע של עמודי פירושונים עבור ויקיפדיה זו."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:832
-#, fuzzy
 msgid "There's no known Check Wikipedia Project for this Wikipedia."
-msgstr "אין רשימה ידוע של עמודי פירושונים עבור ויקיפדיה זו."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:866
 msgid "Watched pages"
@@ -596,9 +591,8 @@ msgid "Retrieving MediaWiki API"
 msgstr "מאחזר את מנשק התיכנות של מדיהויקי"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:939
-#, fuzzy
 msgid "Retrieving disambiguation templates"
-msgstr "מאחזר את נתוני הפירושון"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:114
 #, java-format
@@ -783,9 +777,8 @@ msgid "&Remove page comments"
 msgstr "ה&סר הערות עמוד"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:175
-#, fuzzy
 msgid "Backlinks"
-msgstr "מספר הקישורים החוזרים המירבי :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:203
 msgid "&Update page information"
@@ -987,9 +980,8 @@ msgid "String to find"
 msgstr "מחרוזת למציאה"
 
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:71
-#, fuzzy
 msgid "Purging page cache"
-msgstr "מאחזר את השימוש בעמוד"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:73
 msgid "Analyzing links for redirect pages"
@@ -1027,14 +1019,14 @@ msgid "Current chapter"
 msgstr "פרק נוכחי"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:198
-#, fuzzy, java-format
+#, java-format
 msgid "Link parameter {0} to"
-msgstr "&קישור אל {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:199
-#, fuzzy, java-format
+#, java-format
 msgid "Replace parameter {0} with"
-msgstr "החלף עם"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:341
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:510
@@ -1158,26 +1150,16 @@ msgstr "מעדכן את תכני העמוד"
 msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Selected page"
-#~ msgstr "תקן את העמודים הנבחרים"
-
 #~ msgid "Retrieving namespaces"
 #~ msgstr "מאחזר את מרווחי השם"
-
-#, fuzzy
-#~ msgid "Project - {0}"
-#~ msgstr "תצוגה מקדימה - {0}"
 
 #~ msgid ""
 #~ "!!! WARNING !!!\n"
 #~ "This function will do all the replacements in all selected pages.\n"
 #~ "It may modify a lot of pages in a short period of time.\n"
 #~ "On some Wikipedia projects, you may need the bot status for doing this.\n"
-#~ "Please, check if you need the bot status by reading the rules of "
-#~ "Wikipedia.\n"
-#~ "Also, verify again the texts you have inputed before running this "
-#~ "function.\n"
+#~ "Please, check if you need the bot status by reading the rules of Wikipedia.\n"
+#~ "Also, verify again the texts you have inputed before running this function.\n"
 #~ "Do you want to continue ?"
 #~ msgstr ""
 #~ "!!! אזהרה !!!\n"
@@ -1189,10 +1171,9 @@ msgstr ""
 #~ "האם ברצונך להמשיך ?"
 
 #~ msgid ""
-#~ "The page {0} has been modified on Wikipedia since you have loaded the "
-#~ "page.\n"
-#~ "To avoid modification conflicts, you need to reload the page and make "
-#~ "your modifications again.\n"
+#~ "The page {0} has been modified on Wikipedia since you have loaded the page.\n"
+#~ "To avoid modification conflicts, you need to reload the page and make your "
+#~ "modifications again.\n"
 #~ "(Local revision: {1}, Wikipedia revision: {2})"
 #~ msgstr ""
 #~ "העמוד {0} נערך בויקיפדיה מאז שטענתם את העמוד.\n"
