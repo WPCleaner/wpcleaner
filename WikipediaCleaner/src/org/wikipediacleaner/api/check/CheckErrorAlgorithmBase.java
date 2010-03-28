@@ -28,12 +28,67 @@ import org.wikipediacleaner.api.data.Page;
  */
 public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
 
+  private int priority = CheckError.PRIORITY_UNKOWN;
+  private String shortDescription;
+  private String longDescription;
+
+  /**
+   * @param shortDescription Short description.
+   */
+  public CheckErrorAlgorithmBase(String shortDescription) {
+    this.shortDescription = shortDescription;
+  }
+
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */
   @Override
   public String toString() {
-    return getErrorDescription();
+    return getShortDescription();
+  }
+
+  /**
+   * @return Short description of the error.
+   * (See Check Wikipedia project for the description of errors)
+   */
+  public String getShortDescription() {
+    return shortDescription;
+  }
+
+  /**
+   * @param desc Short description.
+   */
+  public void setShortDescription(String desc) {
+    this.shortDescription = desc;
+  }
+
+  /**
+   * @return Long description of the error.
+   * (See Check Wikipedia project for the description of errors)
+   */
+  public String getLongDescription() {
+    return longDescription;
+  }
+
+  /**
+   * @param desc Long description.
+   */
+  public void setLongDescription(String desc) {
+    this.longDescription = desc;
+  }
+
+  /**
+   * @return Priority.
+   */
+  public int getPriority() {
+    return priority;
+  }
+
+  /**
+   * @param priority Priority.
+   */
+  public void setPriority(int priority) {
+    this.priority = priority;
   }
 
   /**
@@ -103,7 +158,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
         }
         result = true;
         int endIndex = startIndex + search.length();
-        CheckErrorResult errorResult = new CheckErrorResult(getErrorDescription(), startIndex, endIndex);
+        CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), startIndex, endIndex);
         if (replacements != null) {
           for (int i = 0; i < replacements.length; i++) {
             if (replacements[i] != null) {

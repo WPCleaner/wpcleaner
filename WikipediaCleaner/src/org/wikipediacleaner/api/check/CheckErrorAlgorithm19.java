@@ -21,7 +21,6 @@ package org.wikipediacleaner.api.check;
 import java.util.ArrayList;
 
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -30,11 +29,8 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm19 extends CheckErrorAlgorithmBase {
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#getErrorDescription()
-   */
-  public String getErrorDescription() {
-    return GT._("Headlines start with one \"=\"");
+  public CheckErrorAlgorithm19() {
+    super("Headlines start with one \"=\"");
   }
 
   /* (non-Javadoc)
@@ -67,7 +63,7 @@ public class CheckErrorAlgorithm19 extends CheckErrorAlgorithmBase {
               return true;
             }
             result = true;
-            errors.add(new CheckErrorResult(getErrorDescription(), titleIndex, endLineIndex));
+            errors.add(new CheckErrorResult(getShortDescription(), titleIndex, endLineIndex));
           }
           startIndex = endLineIndex + 1;
         } else {

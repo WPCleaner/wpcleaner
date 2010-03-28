@@ -21,7 +21,6 @@ package org.wikipediacleaner.api.check;
 import java.util.ArrayList;
 
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -30,11 +29,8 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm81 extends CheckErrorAlgorithmBase {
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#getErrorDescription()
-   */
-  public String getErrorDescription() {
-    return GT._("Reference duplication");
+  public CheckErrorAlgorithm81() {
+    super("Reference duplication");
   }
 
   /* (non-Javadoc)
@@ -62,8 +58,8 @@ public class CheckErrorAlgorithm81 extends CheckErrorAlgorithmBase {
           return true;
         }
         result = true;
-        errors.add(new CheckErrorResult(getErrorDescription(), beginIndex, endIndex));
-        errors.add(new CheckErrorResult(getErrorDescription(), duplicateIndex, duplicateIndex + endIndex - beginIndex));
+        errors.add(new CheckErrorResult(getShortDescription(), beginIndex, endIndex));
+        errors.add(new CheckErrorResult(getShortDescription(), duplicateIndex, duplicateIndex + endIndex - beginIndex));
       }
       startIndex = endIndex;
     }

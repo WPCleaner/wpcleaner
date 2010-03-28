@@ -21,7 +21,6 @@ package org.wikipediacleaner.api.check;
 import java.util.ArrayList;
 
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -30,11 +29,8 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm64 extends CheckErrorAlgorithmBase {
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#getErrorDescription()
-   */
-  public String getErrorDescription() {
-    return GT._("Link equal to linktext");
+  public CheckErrorAlgorithm64() {
+    super("Link equal to linktext");
   }
 
   /* (non-Javadoc)
@@ -79,7 +75,7 @@ public class CheckErrorAlgorithm64 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = new CheckErrorResult(
-              getErrorDescription(), beginIndex, endIndex + 2);
+              getShortDescription(), beginIndex, endIndex + 2);
           errorResult.addReplacement("[[" + text + "]]");
           errors.add(errorResult);
         }

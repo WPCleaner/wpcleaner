@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -31,11 +30,8 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#getErrorDescription()
-   */
-  public String getErrorDescription() {
-    return GT._("Double pipe in one link");
+  public CheckErrorAlgorithm32() {
+    super("Double pipe in one link");
   }
 
   /* (non-Javadoc)
@@ -103,7 +99,7 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
                     return true;
                   }
                   result = true;
-                  errors.add(new CheckErrorResult(getErrorDescription(), beginIndex, endIndex));
+                  errors.add(new CheckErrorResult(getShortDescription(), beginIndex, endIndex));
                 }
                 if (beginIndex2 < 0) {
                   startIndex = contents.length();
@@ -135,7 +131,7 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
                   return true;
                 }
                 result = true;
-                errors.add(new CheckErrorResult(getErrorDescription(), beginIndex, endIndex));
+                errors.add(new CheckErrorResult(getShortDescription(), beginIndex, endIndex));
                 if (beginIndex2 < 0) {
                   startIndex = contents.length();
                 } else {
