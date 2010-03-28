@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-28 14:51+0200\n"
+"POT-Creation-Date: 2010-03-28 19:04+0200\n"
 "PO-Revision-Date: 2009-09-05 13:31+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -22,87 +22,14 @@ msgstr ""
 msgid "Page {0}:"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:203
+#: org/wikipediacleaner/api/check/CheckError.java:318
 #, java-format
 msgid "Error n°{0} ({1}) - {2}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:208
+#: org/wikipediacleaner/api/check/CheckError.java:323
 msgid "Error unkown from WikiCleaner"
 msgstr ""
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm10.java:37
-msgid "Square brackets not correct end"
-msgstr "Doppie quadre non chiuse"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm19.java:37
-msgid "Headlines start with one \"=\""
-msgstr "Sezioni che iniziano con un solo \"=\""
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm2.java:37
-msgid "Article with false <br/>"
-msgstr "Voci con falsi <br/>"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm26.java:37
-msgid "HTML text style element <b>"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm28.java:37
-#, fuzzy
-msgid "Table not correct end"
-msgstr "Template senza graffe di chiusura"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:38
-msgid "Double pipe in one link"
-msgstr "Wikilink con doppia pipe"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm34.java:37
-msgid "Template programming element"
-msgstr "Elementi di programmazione dei template"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm38.java:37
-msgid "HTML text style element <i>"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm39.java:37
-msgid "HTML text style element <p>"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm43.java:37
-msgid "Template not correct end"
-msgstr "Template senza graffe di chiusura"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm46.java:37
-msgid "Square brackets not correct begin"
-msgstr "Doppie quadre non aperte"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm47.java:37
-msgid "Template not correct begin"
-msgstr "Template senza graffe di apertura"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm48.java:37
-msgid "Title linked in text"
-msgstr "Wikilink al titolo della voce"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm50.java:37
-msgid "en dash or em dash"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm64.java:37
-msgid "Link equal to linktext"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm8.java:37
-msgid "Headline should end with \"=\""
-msgstr "Titolo di sezione che non finisce con \"=\""
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm80.java:37
-msgid "External link with line break"
-msgstr "Collegamenti esterni con a capo"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm81.java:37
-msgid "Reference duplication"
-msgstr "Nota doppia"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
@@ -286,42 +213,42 @@ msgstr ""
 msgid "Semi-automatic disambiguation fixing"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:126
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:128
 #, fuzzy
 msgid "Check Wikipedia"
 msgstr "Altre Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:212
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:214
 msgid "List of errors detected :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:240
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:257
 #, fuzzy
 msgid "Pages"
 msgstr "&Pagina :"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:389
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:406
 #, fuzzy
 msgid "Mark as Fixed"
 msgstr "Marca come aiuto necessario"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:558
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:575
 #, java-format
 msgid ""
 "The error n°{0} is still found {1} times in the page.\n"
 "You must fix them and save the page before marking it as fixed."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:564
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:581
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:712
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:729
 msgid "Detection by [["
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:712
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:729
 msgid "]]"
 msgstr ""
 
@@ -1139,7 +1066,12 @@ msgstr "{0} collegamenti nel Namespace Principale / {1} collegamenti totali"
 msgid "The following modifications have been done ({0} pages):"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:66
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:105
+#, fuzzy
+msgid "Retrieving Check Wiki configuration"
+msgstr "Recupero informazioni di disambiguazione"
+
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:125
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr ""
@@ -1167,6 +1099,46 @@ msgstr "Aggiornamento contenuti pagina"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:70
 msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
+
+#~ msgid "Square brackets not correct end"
+#~ msgstr "Doppie quadre non chiuse"
+
+#~ msgid "Headlines start with one \"=\""
+#~ msgstr "Sezioni che iniziano con un solo \"=\""
+
+#~ msgid "Article with false <br/>"
+#~ msgstr "Voci con falsi <br/>"
+
+#, fuzzy
+#~ msgid "Table not correct end"
+#~ msgstr "Template senza graffe di chiusura"
+
+#~ msgid "Double pipe in one link"
+#~ msgstr "Wikilink con doppia pipe"
+
+#~ msgid "Template programming element"
+#~ msgstr "Elementi di programmazione dei template"
+
+#~ msgid "Template not correct end"
+#~ msgstr "Template senza graffe di chiusura"
+
+#~ msgid "Square brackets not correct begin"
+#~ msgstr "Doppie quadre non aperte"
+
+#~ msgid "Template not correct begin"
+#~ msgstr "Template senza graffe di apertura"
+
+#~ msgid "Title linked in text"
+#~ msgstr "Wikilink al titolo della voce"
+
+#~ msgid "Headline should end with \"=\""
+#~ msgstr "Titolo di sezione che non finisce con \"=\""
+
+#~ msgid "External link with line break"
+#~ msgstr "Collegamenti esterni con a capo"
+
+#~ msgid "Reference duplication"
+#~ msgstr "Nota doppia"
 
 #, fuzzy
 #~ msgid "Selected page"
