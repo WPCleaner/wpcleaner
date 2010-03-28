@@ -394,6 +394,8 @@ public class CheckWikiProjectWindow extends PageWindow {
 
       // Buttons
       JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
+      JButton buttonNext = createButtonNextOccurence(this);
+      panelButtons.add(buttonNext);
       JButton buttonValidate = createButtonValidate(this);
       panelButtons.add(buttonValidate);
       buttonSend = createButtonSend(this);
@@ -562,6 +564,8 @@ public class CheckWikiProjectWindow extends PageWindow {
         Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
       } else if (ACTION_MARK_AS_FIXED.equals(e.getActionCommand())) {
         actionMarkAsFixed();
+      } else if (ACTION_NEXT_OCCURENCE.equals(e.getActionCommand())) {
+        actionNextOccurence();
       } else if (ACTION_SEND.equals(e.getActionCommand())) {
         actionSend();
       } else if (ACTION_VALIDATE.equals(e.getActionCommand())) {
@@ -590,6 +594,14 @@ public class CheckWikiProjectWindow extends PageWindow {
         error.fix(page);
         actionSelectErrorType();
       }
+    }
+
+    /**
+     * Select next occurence. 
+     */
+    private void actionNextOccurence() {
+      textPage.selectNextOccurence();
+      textPage.requestFocusInWindow();
     }
 
     /**

@@ -74,7 +74,6 @@ public class AnalysisWindow extends PageWindow {
 
   private final static String ACTION_DISAMBIGUATION_LINK  = "DISAMBIGUATION LINK";
   private final static String ACTION_FULL_ANALYSIS_LINK   = "FULL ANALYSIS LINK";
-  private final static String ACTION_NEXT_OCCURENCE       = "NEXT OCCURENCE";
   private final static String ACTION_WATCH_LINK           = "WATCH LINK";
 
   private JButton buttonNext;
@@ -312,9 +311,7 @@ public class AnalysisWindow extends PageWindow {
 
     // Text buttons
     JPanel buttonTextPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 0));
-    buttonNext = Utilities.createJButton(GT._("&Next occurrence"));
-    buttonNext.setActionCommand(ACTION_NEXT_OCCURENCE);
-    buttonNext.addActionListener(this);
+    buttonNext = createButtonNextOccurence(this);
     buttonTextPanel.add(buttonNext);
     buttonValidate = createButtonValidate(this);
     buttonTextPanel.add(buttonValidate);
