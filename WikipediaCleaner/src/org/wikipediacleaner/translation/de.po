@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-28 14:51+0200\n"
+"POT-Creation-Date: 2010-03-28 19:04+0200\n"
 "PO-Revision-Date: 2009-11-14 17:17+0000\n"
 "Last-Translator: Fabian Affolter <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -22,86 +22,14 @@ msgstr ""
 msgid "Page {0}:"
 msgstr "Seite {0}:"
 
-#: org/wikipediacleaner/api/check/CheckError.java:203
+#: org/wikipediacleaner/api/check/CheckError.java:318
 #, java-format
 msgid "Error n°{0} ({1}) - {2}"
 msgstr "Fehler-No {0} ({1}) - {2}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:208
+#: org/wikipediacleaner/api/check/CheckError.java:323
 msgid "Error unkown from WikiCleaner"
 msgstr "Unbekannter Fehler von WikiCleaner"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm10.java:37
-msgid "Square brackets not correct end"
-msgstr "Anzahl schließender eckiger Klammern nicht korrekt"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm19.java:37
-msgid "Headlines start with one \"=\""
-msgstr "Überschriften beginnen mit einem „=“"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm2.java:37
-msgid "Article with false <br/>"
-msgstr "Artikel mit nicht standardkonformen manuellen Zeilenumbrüchen"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm26.java:37
-msgid "HTML text style element <b>"
-msgstr "HTML-Text-Stil-Element <b>"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm28.java:37
-msgid "Table not correct end"
-msgstr "Tabelle endet nicht korrekt"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm32.java:38
-msgid "Double pipe in one link"
-msgstr "Doppelter senkrechter Strich in einem Link"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm34.java:37
-msgid "Template programming element"
-msgstr "Reste aus Vorlagenprogrammierung"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm38.java:37
-msgid "HTML text style element <i>"
-msgstr "HTML-Text-Stil-Element <i>"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm39.java:37
-msgid "HTML text style element <p>"
-msgstr "HTML-Text-Stil-Element <p>"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm43.java:37
-msgid "Template not correct end"
-msgstr "Vorlage ohne korrektes Ende"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm46.java:37
-msgid "Square brackets not correct begin"
-msgstr "Anzahl öffnender eckiger Klammern nicht korrekt"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm47.java:37
-msgid "Template not correct begin"
-msgstr "Vorlage ohne korrekten Anfang"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm48.java:37
-msgid "Title linked in text"
-msgstr "Selbstlink"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm50.java:37
-msgid "en dash or em dash"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm64.java:37
-msgid "Link equal to linktext"
-msgstr "Link gleicht Linktext"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm8.java:37
-msgid "Headline should end with \"=\""
-msgstr "Überschrift sollte mit „=“ enden"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm80.java:37
-msgid "External link with line break"
-msgstr "Weblink mit Zeilenumbruch"
-
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm81.java:37
-msgid "Reference duplication"
-msgstr "Mehrfache Referenz-Angabe"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
@@ -286,39 +214,39 @@ msgstr ""
 msgid "Semi-automatic disambiguation fixing"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:126
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:128
 msgid "Check Wikipedia"
 msgstr "Bei Wikipedia nachprüfen"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:212
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:214
 msgid "List of errors detected :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:240
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:257
 msgid "Pages"
 msgstr "Seiten"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:389
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:406
 msgid "Mark as Fixed"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:558
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:575
 #, java-format
 msgid ""
 "The error n°{0} is still found {1} times in the page.\n"
 "You must fix them and save the page before marking it as fixed."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:564
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:581
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:712
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:729
 msgid "Detection by [["
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:712
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:729
 msgid "]]"
 msgstr ""
 
@@ -1115,7 +1043,12 @@ msgstr ""
 msgid "The following modifications have been done ({0} pages):"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:66
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:105
+#, fuzzy
+msgid "Retrieving Check Wiki configuration"
+msgstr "Beziehe Informationen zur Begriffsklärung"
+
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:125
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr ""
@@ -1143,6 +1076,57 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:70
 msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
+
+#~ msgid "Square brackets not correct end"
+#~ msgstr "Anzahl schließender eckiger Klammern nicht korrekt"
+
+#~ msgid "Headlines start with one \"=\""
+#~ msgstr "Überschriften beginnen mit einem „=“"
+
+#~ msgid "Article with false <br/>"
+#~ msgstr "Artikel mit nicht standardkonformen manuellen Zeilenumbrüchen"
+
+#~ msgid "HTML text style element <b>"
+#~ msgstr "HTML-Text-Stil-Element <b>"
+
+#~ msgid "Table not correct end"
+#~ msgstr "Tabelle endet nicht korrekt"
+
+#~ msgid "Double pipe in one link"
+#~ msgstr "Doppelter senkrechter Strich in einem Link"
+
+#~ msgid "Template programming element"
+#~ msgstr "Reste aus Vorlagenprogrammierung"
+
+#~ msgid "HTML text style element <i>"
+#~ msgstr "HTML-Text-Stil-Element <i>"
+
+#~ msgid "HTML text style element <p>"
+#~ msgstr "HTML-Text-Stil-Element <p>"
+
+#~ msgid "Template not correct end"
+#~ msgstr "Vorlage ohne korrektes Ende"
+
+#~ msgid "Square brackets not correct begin"
+#~ msgstr "Anzahl öffnender eckiger Klammern nicht korrekt"
+
+#~ msgid "Template not correct begin"
+#~ msgstr "Vorlage ohne korrekten Anfang"
+
+#~ msgid "Title linked in text"
+#~ msgstr "Selbstlink"
+
+#~ msgid "Link equal to linktext"
+#~ msgstr "Link gleicht Linktext"
+
+#~ msgid "Headline should end with \"=\""
+#~ msgstr "Überschrift sollte mit „=“ enden"
+
+#~ msgid "External link with line break"
+#~ msgstr "Weblink mit Zeilenumbruch"
+
+#~ msgid "Reference duplication"
+#~ msgstr "Mehrfache Referenz-Angabe"
 
 #~ msgid "Load full list"
 #~ msgstr "Komplette Liste laden"
