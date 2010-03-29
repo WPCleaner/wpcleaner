@@ -40,6 +40,8 @@ public class CheckErrorAlgorithm10 extends CheckErrorAlgorithmBase {
     if ((page == null) || (contents == null)) {
       return false;
     }
+
+    // Analyze contents from the end by counting ]] and [[
     int startIndex = contents.length();
     boolean result = false;
     int beginIndex = contents.lastIndexOf("[[", startIndex);
@@ -47,19 +49,43 @@ public class CheckErrorAlgorithm10 extends CheckErrorAlgorithmBase {
     int count = 0;
     while (startIndex > 0) {
       if ((beginIndex < 0) && (endIndex < 0)) {
+        // No more ]] or [[
         startIndex = 0;
       } else if ((endIndex >= 0) && ((beginIndex < endIndex) || (beginIndex < 0))) {
+        // Found a ]]
         count++;
         startIndex = endIndex;
         endIndex = contents.lastIndexOf("]]", startIndex - 1);
       } else {
+        // Found a [[
         count--;
         if (count < 0) {
+          // Found more [[ than ]]
           if (errors == null) {
             return true;
           }
           result = true;
-          errors.add(new CheckErrorResult(getShortDescription(), beginIndex, beginIndex + 2));
+
+          // Check if the situation is something like [[....] (replacement: [[....]])
+          boolean errorReported = false;
+          int nextEnd = contents.indexOf(']', beginIndex + 2);
+          if (nextEnd > 0) {
+            int nextCR = contents.indexOf('\n', beginIndex + 2);
+            int nextBegin = contents.indexOf('[', beginIndex + 2);
+            if (((nextCR < 0) || (nextCR > nextEnd)) &&
+                ((nextBegin < 0) || (nextBegin > nextEnd))) {
+              CheckErrorResult errorResult = new CheckErrorResult(
+                  getShortDescription(), beginIndex, nextEnd + 1);
+              errorResult.addReplacement(contents.substring(beginIndex, nextEnd + 1) + "]");
+              errors.add(errorResult);
+              errorReported = true;
+            }
+          }
+
+          // Default
+          if (!errorReported) {
+            errors.add(new CheckErrorResult(getShortDescription(), beginIndex, beginIndex + 2));
+          }
           count = 0;
         }
         startIndex = beginIndex;
