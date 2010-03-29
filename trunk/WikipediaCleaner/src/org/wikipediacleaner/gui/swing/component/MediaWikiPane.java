@@ -773,7 +773,7 @@ public class MediaWikiPane
           if (chapters == null) {
             chapters = new LinkedList<String>();
           }
-          chapters.add(0, "" + currentLevel + " - " + value.substring(start, end + 1).trim());
+          chapters.add(0, "" + (currentLevel - 1) + " - " + value.substring(start, end + 1).trim());
         }
       }
     } catch (BadLocationException e) {
