@@ -55,6 +55,7 @@ public class CheckErrorAlgorithm8 extends CheckErrorAlgorithmBase {
             currentPos++;
             titleLevel++;
           }
+          int titleLevelInitial = titleLevel;
           if (endLineIndex < 0) {
             endLineIndex = contents.length();
           }
@@ -71,7 +72,34 @@ public class CheckErrorAlgorithm8 extends CheckErrorAlgorithmBase {
               return true;
             }
             result = true;
-            errors.add(new CheckErrorResult(getShortDescription(), titleIndex, endLineIndex));
+
+            // Report detailed result
+            CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), titleIndex, endLineIndex);
+
+            // Replacement : truncate if there's text after end title
+            for (int pos = titleIndex + titleLevelInitial; pos < endLineIndex - titleLevelInitial; pos++) {
+              if (contents.charAt(pos) == '=') {
+                boolean allTitle = true;
+                for (int i = 0; i < titleLevelInitial; i++) {
+                  if (contents.charAt(pos + i) != '=') {
+                    allTitle = false;
+                  }
+                }
+                if (allTitle) {
+                  errorResult.addReplacement(contents.substring(titleIndex, pos + titleLevelInitial));
+                }
+              }
+            }
+
+            // Replacement : complete line
+            String replacement = contents.substring(titleIndex, currentPos + 1);
+            for (int i = 0; i < titleLevel; i++) {
+              replacement += "=";
+            }
+            replacement += contents.substring(currentPos + 1, endLineIndex);
+            errorResult.addReplacement(replacement);
+
+            errors.add(errorResult);
           }
           startIndex = endLineIndex + 1;
         } else {
