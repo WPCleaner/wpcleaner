@@ -592,6 +592,7 @@ public class CheckWikiProjectWindow extends PageWindow {
           GT._("Do you want to mark {0} as fixed for error n°{1}",
                new Object[] { page.getTitle(), Integer.toString(error.getErrorNumber())})) == JOptionPane.YES_OPTION) {
         error.fix(page);
+        pane.remove(CheckWikiContentPanel.this);
         actionSelectErrorType();
       }
     }
