@@ -40,6 +40,8 @@ public class CheckErrorAlgorithm46 extends CheckErrorAlgorithmBase {
     if ((page == null) || (contents == null)) {
       return false;
     }
+
+    // Analyze contents from the beginning by counting [[ and ]]
     int startIndex = 0;
     boolean result = false;
     int beginIndex = contents.indexOf("[[", startIndex);
@@ -47,19 +49,49 @@ public class CheckErrorAlgorithm46 extends CheckErrorAlgorithmBase {
     int count = 0;
     while (startIndex < contents.length()) {
       if ((beginIndex < 0) && (endIndex < 0)) {
+        // No more [[ or ]]
         startIndex = contents.length();
       } else if ((beginIndex >= 0) && ((beginIndex < endIndex) || (endIndex < 0))) {
+        // Found a [[
         count++;
         startIndex = beginIndex + 2;
         beginIndex = contents.indexOf("[[", startIndex);
       } else {
+        // Found a ]]
         count--;
         if (count < 0) {
+          // Found more ]] than [[
           if (errors == null) {
             return true;
           }
           result = true;
-          errors.add(new CheckErrorResult(getShortDescription(), endIndex, endIndex + 2));
+
+          // Check if the situation is something like [....]] (replacement: [[....]])
+          boolean errorReported = false;
+          int previousBegin = contents.lastIndexOf('[', endIndex - 1);
+          if (previousBegin > 0) {
+            int previousCR = contents.lastIndexOf('\n', endIndex - 1);
+            int previousEnd = contents.lastIndexOf(']', endIndex - 1);
+            if (((previousCR < 0) || (previousCR < previousBegin)) &&
+                ((previousEnd < 0) || (previousEnd < previousBegin))) {
+              CheckErrorResult errorResult = new CheckErrorResult(
+                  getShortDescription(), previousBegin, endIndex + 2);
+              errorResult.addReplacement("[" + contents.substring(previousBegin, endIndex + 2));
+
+              // Check if the situation is something like [http://....]] (replacement: [http://....]) 
+              if (contents.startsWith("http://", previousBegin + 1)) {
+                errorResult.addReplacement(contents.substring(previousBegin, endIndex + 1));
+              }
+
+              errors.add(errorResult);
+              errorReported = true;
+            }
+          }
+
+          // Default
+          if (!errorReported) {
+            errors.add(new CheckErrorResult(getShortDescription(), endIndex, endIndex + 2));
+          }
           count = 0;
         }
         startIndex = endIndex + 2;
