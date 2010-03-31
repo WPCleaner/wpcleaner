@@ -49,6 +49,7 @@ class WikiFr {
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {
     new TemplateMatch("Wiktionnaire", "1", "{{pagename}}", true, false),
     new TemplateMatch("Wiktionnaire-2", "1,2", "", true, false),
+    new TemplateMatch("Autres projets", "wiktionary", "", true, false),
   };
 
   final static String[] dabLinkTemplates = new String[] {
