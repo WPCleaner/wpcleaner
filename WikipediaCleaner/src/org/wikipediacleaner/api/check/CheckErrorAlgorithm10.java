@@ -77,6 +77,12 @@ public class CheckErrorAlgorithm10 extends CheckErrorAlgorithmBase {
               CheckErrorResult errorResult = new CheckErrorResult(
                   getShortDescription(), beginIndex, nextEnd + 1);
               errorResult.addReplacement(contents.substring(beginIndex, nextEnd + 1) + "]");
+
+              // Check if the situation is something like [[http://....] (replacement: [http://....]) 
+              if (contents.startsWith("http://", beginIndex + 2)) {
+                errorResult.addReplacement(contents.substring(beginIndex + 1, nextEnd + 1));
+              }
+
               errors.add(errorResult);
               errorReported = true;
             }
