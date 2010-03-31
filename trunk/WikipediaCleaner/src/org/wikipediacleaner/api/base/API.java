@@ -178,12 +178,14 @@ public interface API {
    * 
    * @param wikipedia Wikipedia.
    * @param page Page.
+   * @param namespace If set, retrieve only links in this namespace.
    * @param knownPages Already known pages.
    * @throws APIException
    */
   public void retrieveLinksWithRedirects(
       EnumWikipedia wikipedia,
-      Page page, ArrayList<Page> knownPages) throws APIException;
+      Page page, Integer namespace,
+      ArrayList<Page> knownPages) throws APIException;
 
   /**
    * Retrieves the back links of <code>page</code>.

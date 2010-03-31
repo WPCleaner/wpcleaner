@@ -34,6 +34,7 @@ import org.wikipediacleaner.i18n.GT;
 public class LinksWRCallable extends MediaWikiCallable<Page> {
 
   private final Page page;
+  private final Integer namespace;
   private final ArrayList<Page> knownPages;
 
   /**
@@ -41,13 +42,15 @@ public class LinksWRCallable extends MediaWikiCallable<Page> {
    * @param listener Listener of MediaWiki events.
    * @param api MediaWiki API.
    * @param page Page.
+   * @param namespace If set, retrieve only links in this namespace.
    * @param knownPages Already known pages.
    */
   public LinksWRCallable(
       EnumWikipedia wikipedia, MediaWikiListener listener, API api,
-      Page page, ArrayList<Page> knownPages) {
+      Page page, Integer namespace, ArrayList<Page> knownPages) {
     super(wikipedia, listener, api);
     this.page = page;
+    this.namespace = namespace;
     this.knownPages = knownPages;
   }
 
@@ -56,7 +59,7 @@ public class LinksWRCallable extends MediaWikiCallable<Page> {
    */
   public Page call() throws APIException {
     setText(GT._("Retrieving page back links") + " - " + page.getTitle());
-    api.retrieveLinksWithRedirects(getWikipedia(), page, knownPages);
+    api.retrieveLinksWithRedirects(getWikipedia(), page, namespace, knownPages);
     return page;
   }
 
