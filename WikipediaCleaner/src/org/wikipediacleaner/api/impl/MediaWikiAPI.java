@@ -552,15 +552,19 @@ public class MediaWikiAPI implements API {
    * 
    * @param wikipedia Wikipedia.
    * @param page The page.
+   * @param namespace If set, retrieve only links in this namespace.
    * @param knownPages Already known pages.
    */
   public void retrieveLinksWithRedirects(
       EnumWikipedia wikipedia,
-      Page page, ArrayList<Page> knownPages)
+      Page page, Integer namespace, ArrayList<Page> knownPages)
       throws APIException {
     HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("generator", "links");
     properties.put("gpllimit", "max");
+    if (namespace != null) {
+      properties.put("gplnamespace", namespace.toString());
+    }
     properties.put("prop", "info");
     properties.put("titles", page.getTitle());
     boolean keepLinks = false;

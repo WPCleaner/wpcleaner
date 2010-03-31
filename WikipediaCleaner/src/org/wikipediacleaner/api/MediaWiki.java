@@ -224,7 +224,9 @@ public class MediaWiki extends MediaWikiController {
    * @param text Text of the page.
    * @throws APIException
    */
-  public String parseText(EnumWikipedia wikipedia, String title, String text) throws APIException {
+  public String parseText(
+      EnumWikipedia wikipedia,
+      String title, String text) throws APIException {
     if (text == null) {
       return null;
     }
@@ -245,19 +247,21 @@ public class MediaWiki extends MediaWikiController {
    * 
    * @param wikipedia Wikipedia.
    * @param page Page.
+   * @param namespace If set, retrieve only links in this namespace.
    * @param knownPages Already known pages.
    * @param block Flag indicating if the call should block until completed.
    * @throws APIException
    */
   public void retrieveAllLinks(
       EnumWikipedia wikipedia,
-      Page page, ArrayList<Page> knownPages,
+      Page page, Integer namespace,
+      ArrayList<Page> knownPages,
       boolean block) throws APIException {
     if (page == null) {
       return;
     }
     final API api = APIFactory.getAPI();
-    addTask(new LinksWRCallable(wikipedia, this, api, page, knownPages));
+    addTask(new LinksWRCallable(wikipedia, this, api, page, namespace, knownPages));
     block(block);
   }
 
@@ -269,7 +273,9 @@ public class MediaWiki extends MediaWikiController {
    * @param block Flag indicating if the call should block until completed.
    * @throws APIException
    */
-  public void retrieveAllBacklinks(EnumWikipedia wikipedia, Page page, boolean block) throws APIException {
+  public void retrieveAllBacklinks(
+      EnumWikipedia wikipedia,
+      Page page, boolean block) throws APIException {
     if (page == null) {
       return;
     }
@@ -284,7 +290,9 @@ public class MediaWiki extends MediaWikiController {
    * @param block Flag indicating if the call should block until completed.
    * @throws APIException
    */
-  public void retrieveAllBacklinks(EnumWikipedia wikipedia, Page[] pageList, boolean block) throws APIException {
+  public void retrieveAllBacklinks(
+      EnumWikipedia wikipedia,
+      Page[] pageList, boolean block) throws APIException {
     if ((pageList == null) || (pageList.length == 0)) {
       return;
     }
@@ -386,7 +394,7 @@ public class MediaWiki extends MediaWikiController {
               (!p.isRedirect())) {
             ArrayList<Page> links = p.getLinks();
             if ((links == null) || (links.size() == 0)) {
-              addTask(new LinksWRCallable(wikipedia, this, api, p, null));
+              addTask(new LinksWRCallable(wikipedia, this, api, p, null, null));
             }
           }
         }

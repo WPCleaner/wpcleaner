@@ -71,7 +71,7 @@ public class DisambiguationListWorker extends BasicWorker {
           getWikipedia(), getWikipedia().getDisambiguationList(),
           null, null);
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveAllLinks(getWikipedia(), page, null, true);
+      mw.retrieveAllLinks(getWikipedia(), page, null, null, true);
       ArrayList<Page> pages = new ArrayList<Page>();
       Iterator<Page> iter = page.getLinks().iterator();
       while (iter.hasNext()) {

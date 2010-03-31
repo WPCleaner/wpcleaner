@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -56,7 +57,7 @@ public class FullAnalysisWorker extends BasicWorker {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       mw.retrieveContents(getWikipedia(), page, false, false, true);
-      mw.retrieveAllLinks(getWikipedia(), page, knownPages, true);
+      mw.retrieveAllLinks(getWikipedia(), page, Namespace.MAIN, knownPages, true);
       mw.retrieveDisambiguationInformation(getWikipedia(), page.getLinks(), knownPages, true, true);
       for (Page link : page.getLinks()) {
         if (Boolean.TRUE.equals(link.isDisambiguationPage()) &&
