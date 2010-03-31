@@ -19,6 +19,8 @@
 package org.wikipediacleaner.gui.swing.component;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -780,5 +782,32 @@ public class MediaWikiPane
       //
     }
     return chapters;
+  }
+
+  /**
+   * @return Flag indicating if all the text can be displayed.
+   */
+  public boolean canDisplayAllText() {
+    String text = getText();
+    Font font = getFont();
+    if ((text != null) && (font != null)) {
+      return (font.canDisplayUpTo(text) == -1);
+    }
+    return true;
+  }
+
+  /**
+   * @return List of fonts that can display all characters.
+   */
+  public ArrayList<Font> getPossibleFonts() {
+    String text = getText();
+    ArrayList<Font> possibleFonts = new ArrayList<Font>();
+    Font[] allFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+    for (int i = 0; i < allFonts.length; i++) {
+      if (allFonts[i].canDisplayUpTo(text) == -1) {
+        possibleFonts.add(allFonts[i]);
+      }
+    }
+    return possibleFonts;
   }
 }
