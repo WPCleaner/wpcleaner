@@ -779,7 +779,7 @@ public class MediaWikiAPI implements API {
       HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
       titles.setLength(0);
       int count = 0;
-      while ((count < MAX_PAGES_PER_QUERY) && !newTemplates.isEmpty()) {
+      while ((count < (MAX_PAGES_PER_QUERY / 5)) && !newTemplates.isEmpty()) {
         Page p = newTemplates.remove(0);
         if (count > 0) {
           titles.append("|");
