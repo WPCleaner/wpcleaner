@@ -40,10 +40,50 @@ public class CheckErrorAlgorithm48 extends CheckErrorAlgorithmBase {
     if ((page == null) || (contents == null)) {
       return false;
     }
-    String search = "[[" + page.getTitle() + "]]"; // TODO: more possibilities (lowercase, space, pipe)
-    String[] replacements = new String[] {
-        page.getTitle(), "'''" + page.getTitle() + "'''"
-    };
-    return simpleTextSearch(page, contents, errors, search, replacements);
+
+    int startIndex = 0;
+    boolean result = false;
+    while (startIndex < contents.length()) {
+      // Looking for [[
+      startIndex = contents.indexOf("[[", startIndex);
+      if (startIndex >= 0) {
+        int linkIndex = startIndex + 2;
+        // Removing possible whitespaces before link
+        while ((linkIndex < contents.length()) && (contents.charAt(linkIndex) == ' ')) {
+          linkIndex++;
+        }
+        if (contents.startsWith(page.getTitle(), linkIndex)) {
+          String text = contents.substring(linkIndex, linkIndex + page.getTitle().length());
+          linkIndex += page.getTitle().length();
+          // Removing possible whitespaces after link
+          while ((linkIndex < contents.length()) && (contents.charAt(linkIndex) == ' ')) {
+            linkIndex++;
+          }
+          int endIndex = contents.indexOf("]]", linkIndex);
+          if (endIndex < 0) {
+            startIndex = contents.length();
+          } else {
+            if (contents.charAt(linkIndex) == '|') {
+              linkIndex++;
+              text = contents.substring(linkIndex, endIndex).trim();
+            }
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), startIndex, endIndex + 2);
+            errorResult.addReplacement(text);
+            errorResult.addReplacement("'''" + text + "'''");
+            errors.add(errorResult);
+            startIndex = endIndex + 2;
+          }
+        } else {
+          startIndex = linkIndex;
+        }
+      } else {
+        startIndex = contents.length();
+      }
+    }
+    return result;
   }
 }
