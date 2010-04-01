@@ -746,7 +746,7 @@ public class CheckWikiProjectWindow extends PageWindow {
    */
   @Override
   protected String getDefaultComment() {
-    return GT._("Detection by [[" + getWikipedia().getCheckWikiProject() + "]]");
+    return GT._("Detection by [[{0}]]", getWikipedia().getCheckWikiProject());
   }
 
   /* (non-Javadoc)
