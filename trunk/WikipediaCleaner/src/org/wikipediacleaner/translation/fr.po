@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-01 18:42+0200\n"
-"PO-Revision-Date: 2010-04-01 17:13+0100\n"
-"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
+"PO-Revision-Date: 2010-04-01 19:27+0000\n"
+"Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-01 14:52+0000\n"
+"X-Launchpad-Export-Date: 2010-04-01 20:08+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -28,28 +28,28 @@ msgstr "Page {0} :"
 
 #: org/wikipediacleaner/api/check/CheckError.java:147
 msgid "Deactivated"
-msgstr ""
+msgstr "Désactivé"
 
 #: org/wikipediacleaner/api/check/CheckError.java:149
 msgid "Low priority"
-msgstr ""
+msgstr "Priorité faible"
 
 #: org/wikipediacleaner/api/check/CheckError.java:151
 msgid "Middle priority"
-msgstr ""
+msgstr "Priorité moyenne"
 
 #: org/wikipediacleaner/api/check/CheckError.java:153
 msgid "Top priority"
-msgstr ""
+msgstr "Priorité maximale"
 
 #: org/wikipediacleaner/api/check/CheckError.java:155
 msgid "Priority unknown"
-msgstr ""
+msgstr "Priorité inconnue"
 
 #: org/wikipediacleaner/api/check/CheckError.java:344
-#, fuzzy, java-format
+#, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
-msgstr "Erreur n°{0} ({1}) - {2}"
+msgstr "Erreur n°{0} ({1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckError.java:351
 msgid "Error unkown from WikiCleaner"
@@ -221,7 +221,8 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -236,7 +237,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:114
 msgid "Semi-automatic disambiguation fixing"
-msgstr ""
+msgstr "Correction d'homonymie semi-automatique"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:128
 msgid "Check Wikipedia"
@@ -443,7 +444,7 @@ msgstr "Page &aléatoire"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:470
 msgid "Local &Watch list"
-msgstr ""
+msgstr "Liste de Suivi locale"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:510
 msgid "&Idea ? Bug ?"
@@ -636,7 +637,7 @@ msgstr "Nombre maximum d'analyses simultanées :"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:318
 msgid "Maximum number of errors for Check Wiki :"
-msgstr ""
+msgstr "Nombre maximum d'erreurs pour P:CS"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:336
 msgid "Maximum number of interrogation threads :"
@@ -776,7 +777,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr ""
+msgstr "Backlinks - Espace de nom principal : {0}, Tous les espaces : {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:290
 msgid "Disambiguation"
@@ -784,11 +785,11 @@ msgstr "Homonymie"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:329
 msgid "&Next occurrence"
-msgstr ""
+msgstr "Occurence suiva&nte"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:342
 msgid "Full analysis of redirect"
-msgstr ""
+msgstr "Analyse complète des redirections"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:347
 msgid "Disambiguation analysis of redirect"
@@ -933,12 +934,12 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:101
 #, java-format
 msgid "Templates in {0}"
-msgstr ""
+msgstr "Modèles dans {0}"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:126
 #, java-format
 msgid "Templates used in {0}, linking to {1}"
-msgstr ""
+msgstr "Modèles utilisés dans {0}, pointant vers {1}"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:218
 msgid "Retrieving templates"
@@ -946,11 +947,11 @@ msgstr "Récupération des modèles"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:220
 msgid "Retrieving links in templates"
-msgstr ""
+msgstr "Récupération des liens dans les modèles"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:227
 msgid "Displaying templates found"
-msgstr ""
+msgstr "Affichage des modèles trouvés"
 
 #: org/wikipediacleaner/gui/swing/action/FindTextAction.java:66
 msgid "String to find"
@@ -1131,9 +1132,6 @@ msgstr "Mise à jour du contenu de la page"
 msgid "Error 'badtoken' detected: Retrying"
 msgstr "Erreur 'badtoken' détectée : réessayer"
 
-#~ msgid "]]"
-#~ msgstr "]]"
-
 #~ msgid "Retrieving namespaces"
 #~ msgstr "Récupération des espaces de nom"
 
@@ -1193,3 +1191,6 @@ msgstr "Erreur 'badtoken' détectée : réessayer"
 
 #~ msgid "This screen is not functional yet !"
 #~ msgstr "Cet écran n'est pas encore fonctionnel !"
+
+#~ msgid "]]"
+#~ msgstr "]]"
