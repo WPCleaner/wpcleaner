@@ -34,6 +34,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.Configuration;
 
 
 /**
@@ -240,9 +241,15 @@ public class CheckError {
     } catch (IOException e) {
       //
     }
-    if (errorFound) {
-      errors.add(error);
+    if (!errorFound) {
+      Configuration configuration = Configuration.getConfiguration();
+      if (!configuration.getBoolean(
+          Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
+          Configuration.DEFAULT_CHECK_SHOW_0_ERRORS)) {
+        return;
+      }
     }
+    errors.add(error);
   }
 
   private final EnumWikipedia wikipedia;

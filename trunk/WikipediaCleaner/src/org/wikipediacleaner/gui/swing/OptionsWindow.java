@@ -84,6 +84,7 @@ public class OptionsWindow
   private JCheckBox chkSaveWindowPosition;
   private JCheckBox chkShortNotation;
   private JCheckBox chkWikiInComments;
+  private JCheckBox chkShow0ErrorsCheckWiki;
   private SpinnerNumberModel modelMenuSize;
   private JSpinner spinMenuSize;
   private SpinnerNumberModel modelMaxPages;
@@ -260,7 +261,18 @@ public class OptionsWindow
     constraints.weightx = 0;
     panel.add(chkWikiInComments, constraints);
     constraints.gridy++;
-    
+
+    // Show 0 errors in Check Wiki
+    chkShow0ErrorsCheckWiki = Utilities.createJCheckBox(
+        GT._("Show errors with no detection found"),
+        configuration.getBoolean(
+            Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
+            Configuration.DEFAULT_CHECK_SHOW_0_ERRORS));
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    panel.add(chkShow0ErrorsCheckWiki, constraints);
+    constraints.gridy++;
+
     // Menu size
     modelMenuSize = new SpinnerNumberModel(
         configuration.getInt(Configuration.INTEGER_MENU_SIZE, Configuration.DEFAULT_MENU_SIZE),
@@ -758,6 +770,7 @@ public class OptionsWindow
     config.setBoolean(Configuration.BOOLEAN_ANALYSIS_MISSING_PAGES, chkAnalysisMissing.isSelected());
     config.setBoolean(Configuration.BOOLEAN_ANALYSIS_OTHER_PAGES, chkAnalysisOther.isSelected());
     config.setBoolean(Configuration.BOOLEAN_ANALYSIS_REDIRECT_PAGES, chkAnalysisRedirect.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS, chkShow0ErrorsCheckWiki.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CLOSE_DISAMBIG, chkCloseDisambig.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CLOSE_FULL, chkCloseFull.isSelected());
     config.setBoolean(Configuration.BOOLEAN_RESTORE_WINDOW, chkRestoreWindowPosition.isSelected());
@@ -822,6 +835,9 @@ public class OptionsWindow
     chkAnalysisRedirect.setSelected(config.getBoolean(
         Configuration.BOOLEAN_ANALYSIS_REDIRECT_PAGES,
         Configuration.DEFAULT_ANALYSIS_REDIRECT_PAGES));
+    chkShow0ErrorsCheckWiki.setSelected(config.getBoolean(
+        Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
+        Configuration.DEFAULT_CHECK_SHOW_0_ERRORS));
     chkCloseDisambig.setSelected(config.getBoolean(
         Configuration.BOOLEAN_CLOSE_DISAMBIG,
         Configuration.DEFAULT_CLOSE_DISAMBIG));
