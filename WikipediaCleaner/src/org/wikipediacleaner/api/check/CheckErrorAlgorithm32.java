@@ -48,10 +48,6 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
     int pipe1Index = 0;
     int pipe2Index = 0;
     Namespace fileNamespace = Namespace.getNamespace(Namespace.IMAGE, page.getWikipedia().getNamespaces());
-    String localFileNamespace = null;
-    if (fileNamespace != null) {
-      localFileNamespace = fileNamespace.getTitle();
-    }
     while (startIndex < contents.length()) {
       // Update of begin index
       if ((beginIndex >= 0) && (beginIndex < startIndex)) {
@@ -92,9 +88,15 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
             int beginIndex2 = contents.indexOf("[[", beginIndex);
             if (pipe2Index < endIndex) {
               if ((beginIndex2 < 0) || (beginIndex2 > endIndex)) {
-                if ((!contents.startsWith("File:", beginIndex)) &&
-                    (!contents.startsWith("Image:", beginIndex)) &&
-                    ((localFileNamespace == null) || (!contents.startsWith(localFileNamespace, beginIndex)))) {
+                boolean isImageNamespace= false;
+                int namespaceIndex = contents.indexOf(":", beginIndex);
+                if ((namespaceIndex > beginIndex) && (namespaceIndex < pipe1Index)) {
+                  if ((fileNamespace != null) &&
+                      (fileNamespace.isPossibleName(contents.substring(beginIndex, namespaceIndex).trim()))) {
+                    isImageNamespace = true;
+                  }
+                }
+                if (!isImageNamespace) {
                   if (errors == null) {
                     return true;
                   }
