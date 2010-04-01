@@ -1046,9 +1046,15 @@ public class MediaWikiAPI implements API {
       XPath xpaTitle = XPath.newInstance(".");
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
-        Namespace namespace = namespaces.get(xpaId.valueOf(currentNode));
-        if (namespace != null) {
-          namespace.addAlias(xpaTitle.valueOf(currentNode));
+        Integer nsId = null;
+        try {
+          nsId = Integer.parseInt(xpaId.valueOf(currentNode));
+          Namespace namespace = namespaces.get(nsId);
+          if (namespace != null) {
+            namespace.addAlias(xpaTitle.valueOf(currentNode));
+          }
+        } catch (NumberFormatException e) {
+          //
         }
       }
     } catch (JDOMException e) {

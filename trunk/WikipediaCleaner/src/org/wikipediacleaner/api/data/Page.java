@@ -136,13 +136,21 @@ public class Page implements Comparable<Page> {
   }
 
   /**
+   * @param text Original text.
+   * @return Same text with the first letter in upper case.
+   */
+  public static String getStringUcFirst(String text) {
+    if ((text != null) && (text.length() > 0) && (Character.isLowerCase(text.charAt(0)))) {
+      return "" + Character.toUpperCase(text.charAt(0)) + text.substring(1);
+    }
+    return text;
+  }
+
+  /**
    * @return Title with first letter as uppercase
    */
   public String getTitleUcFirst() {
-    if ((title != null) && (title.length() > 0) && (Character.isLowerCase(title.charAt(0)))) {
-      return "" + Character.toUpperCase(title.charAt(0)) + title.substring(1);
-    }
-    return title;
+    return getStringUcFirst(title);
   }
 
   /**

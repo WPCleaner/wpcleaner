@@ -137,10 +137,32 @@ public class Namespace implements Comparable<Namespace> {
    * @param alias Alias to be added.
    */
   public void addAlias(String alias) {
+    if (alias == null) {
+      return;
+    }
+    alias = Page.getStringUcFirst(alias);
     if (!aliases.contains(alias)) {
       aliases.add(alias);
     }
   }
+
+  /**
+   * @param name Namespace name.
+   * @return Flag indicating if the given name can represent this namespace.
+   */
+  public boolean isPossibleName(String name) {
+    if (name == null) {
+      return false;
+    }
+    name = Page.getStringUcFirst(name);
+    for (String alias : aliases) {
+      if (name.equals(alias)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */
