@@ -66,16 +66,21 @@ public class CheckErrorAlgorithm48 extends CheckErrorAlgorithmBase {
             if (contents.charAt(linkIndex) == '|') {
               linkIndex++;
               text = contents.substring(linkIndex, endIndex).trim();
+              linkIndex = endIndex;
             }
-            if (errors == null) {
-              return true;
+            if (linkIndex == endIndex) {
+              if (errors == null) {
+                return true;
+              }
+              result = true;
+              CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), startIndex, endIndex + 2);
+              errorResult.addReplacement(text);
+              errorResult.addReplacement("'''" + text + "'''");
+              errors.add(errorResult);
+              startIndex = endIndex + 2;
+            } else {
+              startIndex = linkIndex;
             }
-            result = true;
-            CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), startIndex, endIndex + 2);
-            errorResult.addReplacement(text);
-            errorResult.addReplacement("'''" + text + "'''");
-            errors.add(errorResult);
-            startIndex = endIndex + 2;
           }
         } else {
           startIndex = linkIndex;
