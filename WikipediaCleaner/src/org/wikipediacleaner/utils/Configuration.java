@@ -85,6 +85,7 @@ public class Configuration implements WindowListener {
   public  final static String  BOOLEAN_ANALYSIS_MISSING_PAGES  = "AnalysisMissingPages";
   public  final static String  BOOLEAN_ANALYSIS_OTHER_PAGES    = "AnalysisOtherPages";
   public  final static String  BOOLEAN_ANALYSIS_REDIRECT_PAGES = "AnalysisRedirectPages";
+  public  final static String  BOOLEAN_CHECK_SHOW_0_ERRORS     = "CheckShow0Errors";
   public  final static String  BOOLEAN_CLOSE_DISAMBIG          = "CloseDisambiguation";
   public  final static String  BOOLEAN_CLOSE_FULL              = "CloseFullAnalysis";
   public  final static String  BOOLEAN_RESTORE_WINDOW          = "RestoreWindow";
@@ -102,6 +103,7 @@ public class Configuration implements WindowListener {
   public  final static boolean DEFAULT_ANALYSIS_MISSING_PAGES  = false;
   public  final static boolean DEFAULT_ANALYSIS_OTHER_PAGES    = false;
   public  final static boolean DEFAULT_ANALYSIS_REDIRECT_PAGES = false;
+  public  final static boolean DEFAULT_CHECK_SHOW_0_ERRORS     = false;
   public  final static boolean DEFAULT_CLOSE_DISAMBIG          = false;
   public  final static boolean DEFAULT_CLOSE_FULL              = true;
   public  final static boolean DEFAULT_RESTORE_WINDOW          = true;
