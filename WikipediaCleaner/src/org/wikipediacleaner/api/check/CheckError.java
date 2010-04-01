@@ -137,6 +137,25 @@ public class CheckError {
   }
 
   /**
+   * @param priority Priority.
+   * @return Textual description of the priority.
+   */
+  public static String getPriority(int priority) {
+    switch (priority) {
+    case PRIORITY_DEACTIVATED:
+      return GT._("Deactivated");
+    case PRIORITY_LOWEST:
+      return GT._("Low priority");
+    case PRIORITY_MIDDLE:
+      return GT._("Middle priority");
+    case PRIORITY_TOP:
+      return GT._("Top priority");
+    default:
+      return GT._("Priority unknown");
+    }
+  }
+
+  /**
    * Retrieve error short description from configuration.
    * 
    * @param config Check Wiki configuration.
@@ -315,9 +334,11 @@ public class CheckError {
   @Override
   public String toString() {
     String count = Integer.toString(errors.size());
-    return GT._("Error n°{0} ({1}) - {2}", new Object[] {
+    return GT._("Error n°{0} ({1} - {2}) - {3}", new Object[] {
         Integer.valueOf(errorNumber),
         count,
+        CheckError.getPriority((algorithm != null) ?
+            algorithm.getPriority() : CheckError.PRIORITY_UNKOWN),
         (algorithm != null) ?
             algorithm.getShortDescription() :
             GT._("Error unkown from WikiCleaner") });
