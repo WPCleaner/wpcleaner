@@ -34,7 +34,6 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.i18n.GT;
-import org.wikipediacleaner.utils.Configuration;
 
 
 /**
@@ -248,7 +247,6 @@ public class CheckError {
 
     // Create error
     CheckError error = new CheckError(wikipedia, errorNumber, priority, shortDescription, longDescription);
-    boolean errorFound = false;
     try {
       BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
       String line = null;
@@ -260,20 +258,11 @@ public class CheckError {
         // TODO: Use something like Apache Commons Lang StringEscapeUtils ?
         line = line.replaceAll(Pattern.quote("&#039;"), "'");
         error.addPage(line);
-        errorFound = true;
       }
     } catch (UnsupportedEncodingException e) {
       //
     } catch (IOException e) {
       //
-    }
-    if (!errorFound) {
-      Configuration configuration = Configuration.getConfiguration();
-      if (!configuration.getBoolean(
-          Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
-          Configuration.DEFAULT_CHECK_SHOW_0_ERRORS)) {
-        return;
-      }
     }
     errors.add(error);
   }
