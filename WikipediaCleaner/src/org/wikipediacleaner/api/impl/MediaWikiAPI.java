@@ -57,6 +57,7 @@ import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Namespace;
@@ -1080,6 +1081,30 @@ public class MediaWikiAPI implements API {
         languages.add(new Language(xpaCode.valueOf(currentNode), xpaName.valueOf(currentNode)));
       }
       wikipedia.setLanguages(languages);
+    } catch (JDOMException e) {
+      log.error("Error languages", e);
+      throw new APIException("Error parsing XML result", e);
+    }
+
+    // Retrieve interwikis
+    try {
+      LinkedList<Interwiki> interwikis = new LinkedList<Interwiki>();
+      XPath xpa = XPath.newInstance(query + "/interwikimap/iw");
+      List results = xpa.selectNodes(root);
+      Iterator iter = results.iterator();
+      XPath xpaPrefix = XPath.newInstance("./@prefix");
+      XPath xpaLocal = XPath.newInstance("./@local");
+      XPath xpaLanguage = XPath.newInstance("./@language");
+      XPath xpaUrl = XPath.newInstance("./@url");
+      while (iter.hasNext()) {
+        Element currentNode = (Element) iter.next();
+        interwikis.add(new Interwiki(
+            xpaPrefix.valueOf(currentNode),
+            xpaLocal.valueOf(currentNode),
+            xpaLanguage.valueOf(currentNode),
+            xpaUrl.valueOf(currentNode)));
+      }
+      wikipedia.setInterwikis(interwikis);
     } catch (JDOMException e) {
       log.error("Error languages", e);
       throw new APIException("Error parsing XML result", e);
