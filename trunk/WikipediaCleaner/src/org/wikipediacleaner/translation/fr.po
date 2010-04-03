@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-01 18:42+0200\n"
-"PO-Revision-Date: 2010-04-03 08:44+0000\n"
+"PO-Revision-Date: 2010-04-03 11:49+0000\n"
 "Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-03 09:20+0000\n"
+"X-Launchpad-Export-Date: 2010-04-03 14:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -421,7 +421,7 @@ msgstr "&Aide"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:374
 msgid "Work"
-msgstr ""
+msgstr "Travail"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:392
 #: org/wikipediacleaner/gui/swing/PageWindow.java:275
@@ -743,7 +743,7 @@ msgstr "&Ok"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:252
 msgid "&Remove page comments"
-msgstr ""
+msgstr "Supprimer les commentaires de la page"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:175
 msgid "Backlinks"
@@ -1004,12 +1004,12 @@ msgstr "Chapitre courant"
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:198
 #, java-format
 msgid "Link parameter {0} to"
-msgstr ""
+msgstr "Lier le paramètre {0} à"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:199
 #, java-format
 msgid "Replace parameter {0} with"
-msgstr ""
+msgstr "Remplacer le paramètre {0} par"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:341
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:510
