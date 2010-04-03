@@ -49,8 +49,10 @@ public class CheckErrorAlgorithm8 extends CheckErrorAlgorithmBase {
       } else {
         int endLineIndex = contents.indexOf("\n", titleIndex);
         if ((titleIndex == 0) || (contents.charAt(titleIndex - 1) == '\n')) {
+          // Title found
           int titleLevel = 0;
           int currentPos = titleIndex;
+          // Count number of '=' at the beginning of title to know title level
           while ((currentPos < contents.length()) && (contents.charAt(currentPos) == '=')) {
             currentPos++;
             titleLevel++;
@@ -60,9 +62,11 @@ public class CheckErrorAlgorithm8 extends CheckErrorAlgorithmBase {
             endLineIndex = contents.length();
           }
           currentPos = endLineIndex - 1;
-          while ((currentPos >= 0) && (contents.charAt(currentPos) == ' ')) {
+          // Possible whitespaces at the end
+          while ((currentPos >= 0) && (Character.isWhitespace(contents.charAt(currentPos)))) {
             currentPos--;
           }
+          // Counting '=' at the end of title
           while ((currentPos >= 0) && (contents.charAt(currentPos) == '=')) {
             currentPos--;
             titleLevel--;
