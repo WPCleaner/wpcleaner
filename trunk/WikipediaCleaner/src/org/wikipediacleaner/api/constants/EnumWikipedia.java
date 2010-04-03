@@ -28,6 +28,7 @@ import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TemplateMatch;
@@ -194,6 +195,7 @@ public enum EnumWikipedia {
   private final String checkWikiProject;
 
   private List<Namespace> namespaces;
+  private List<Language>  languages;
 
   /**
    * @param code Code.
@@ -528,6 +530,20 @@ public enum EnumWikipedia {
    */
   public void setNamespaces(List<Namespace> namespaces) {
     this.namespaces = namespaces;
+  }
+
+  /**
+   * @return List of languages
+   */
+  public List<Language> getLanguages() {
+    return languages;
+  }
+
+  /**
+   * @param languages List of languages
+   */
+  public void setLanguages(List<Language> languages) {
+    this.languages = languages;
   }
 
   /* (non-Javadoc)

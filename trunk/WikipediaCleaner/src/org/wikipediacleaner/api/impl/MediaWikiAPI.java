@@ -57,6 +57,7 @@ import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -927,7 +928,7 @@ public class MediaWikiAPI implements API {
   private void loadSiteInfo(EnumWikipedia wikipedia) throws APIException {
     HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("meta", "siteinfo");
-    properties.put("siprop", "namespaces|namespacealiases");
+    properties.put("siprop", "namespaces|namespacealiases|languages");
     try {
       constructSiteInfo(
           getRoot(wikipedia, properties, MAX_ATTEMPTS),
@@ -1065,6 +1066,24 @@ public class MediaWikiAPI implements API {
     // Update namespace list
     LinkedList<Namespace> list = new LinkedList<Namespace>(namespaces.values());
     wikipedia.setNamespaces(list);
+
+    // Retrieve languages
+    try {
+      LinkedList<Language> languages = new LinkedList<Language>();
+      XPath xpa = XPath.newInstance(query + "/languages/lang");
+      List results = xpa.selectNodes(root);
+      Iterator iter = results.iterator();
+      XPath xpaCode = XPath.newInstance("./@code");
+      XPath xpaName = XPath.newInstance(".");
+      while (iter.hasNext()) {
+        Element currentNode = (Element) iter.next();
+        languages.add(new Language(xpaCode.valueOf(currentNode), xpaName.valueOf(currentNode)));
+      }
+      wikipedia.setLanguages(languages);
+    } catch (JDOMException e) {
+      log.error("Error languages", e);
+      throw new APIException("Error parsing XML result", e);
+    }
   }
 
   /**
