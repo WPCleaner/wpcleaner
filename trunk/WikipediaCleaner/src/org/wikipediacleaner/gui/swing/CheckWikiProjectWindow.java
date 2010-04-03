@@ -98,6 +98,8 @@ public class CheckWikiProjectWindow extends PageWindow {
 
   private JTabbedPane contentPane;
 
+  public final static String ACTION_LOAD_PAGES    = "LOAD_PAGES";
+
   /**
    * Create and display a CheckWikiProjectWindow.
    * 
@@ -273,7 +275,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     // Page List
     modelPages = new DefaultListModel();
     listPages = new JList(modelPages);
-    listPages.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    listPages.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     listPages.addMouseListener(new MouseAdapter() {
 
       /* (non-Javadoc)
@@ -301,6 +303,16 @@ public class CheckWikiProjectWindow extends PageWindow {
     panel.add(scrollPages, constraints);
     constraints.gridy++;
 
+    // Load pages
+    JButton buttonLoad = Utilities.createJButton(GT._("&Load pages"));
+    buttonLoad.setActionCommand(ACTION_LOAD_PAGES);
+    buttonLoad.addActionListener(this);
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    constraints.weighty = 0;
+    panel.add(buttonLoad, constraints);
+    constraints.gridy++;
     return panel;
   }
 
@@ -866,23 +878,46 @@ public class CheckWikiProjectWindow extends PageWindow {
       }
       position = new Rectangle(x, y, getIconWidth(), getIconHeight());
     }
-    
+  }
+
+  /* (non-Javadoc)
+   * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+   */
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    if (e == null) {
+      return;
+    }
+
+    super.actionPerformed(e);
+    if (ACTION_LOAD_PAGES.equals(e.getActionCommand())) {
+      actionSelectPage();
+    }
   }
 
   /**
    * Action called when a page is selected.
    */
   void actionSelectPage() {
-    Object selection = listPages.getSelectedValue();
-    if (selection instanceof Page) {
-      Page pageSelected = (Page) selection;
-      final CheckWikiContentPanel contentPanel = createContentsComponents(
-          contentPane, pageSelected,
-          (CheckError) modelAllErrors.getSelectedItem());
-      contentPane.add(contentPanel);
-      contentPane.setIconAt(contentPane.getComponentCount() - 1, new CloseIcon(contentPane, contentPanel));
-      contentPane.setSelectedComponent(contentPanel);
-      RetrieveContentWorker contentWorker = new RetrieveContentWorker(getWikipedia(), this, pageSelected);
+    Object[] selection = listPages.getSelectedValues();
+    ArrayList<Page> pages = new ArrayList<Page>();
+    if (selection != null) {
+      for (int i = 0; i < selection.length; i++) {
+        pages.add((Page) selection[i]);
+      }
+    }
+    if (pages.size() > 0) {
+      final ArrayList<CheckWikiContentPanel> contentPanels = new ArrayList<CheckWikiContentPanel>();
+      for (Page page : pages) {
+        final CheckWikiContentPanel contentPanel = createContentsComponents(
+            contentPane, page,
+            (CheckError) modelAllErrors.getSelectedItem());
+        contentPane.add(contentPanel);
+        contentPane.setIconAt(contentPane.getComponentCount() - 1, new CloseIcon(contentPane, contentPanel));
+        contentPane.setSelectedComponent(contentPanel);
+        contentPanels.add(contentPanel);
+      }
+      RetrieveContentWorker contentWorker = new RetrieveContentWorker(getWikipedia(), this, pages);
       contentWorker.setListener(new DefaultBasicWorkerListener() {
 
         /* (non-Javadoc)
@@ -891,7 +926,9 @@ public class CheckWikiProjectWindow extends PageWindow {
         @Override
         public void beforeFinished(BasicWorker worker) {
           super.beforeFinished(worker);
-          contentPanel.actionPageSelected();
+          for (CheckWikiContentPanel contentPanel : contentPanels) {
+            contentPanel.actionPageSelected();
+          }
         }
         //
       });
