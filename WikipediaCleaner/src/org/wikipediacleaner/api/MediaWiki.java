@@ -101,6 +101,30 @@ public class MediaWiki extends MediaWikiController {
   }
 
   /**
+   * Retrieve page contents.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param pages Pages.
+   * @param block Flag indicating if the call should block until completed.
+   * @param withRedirects Flag indicating if redirects information should be retrieved.
+   * @throws APIException
+   */
+  public void retrieveContents(
+      EnumWikipedia wikipedia, ArrayList<Page> pages,
+      boolean block, boolean withRedirects) throws APIException {
+    if (pages == null) {
+      return;
+    }
+    final API api = APIFactory.getAPI();
+    for (Page page : pages) {
+      addTask(new ContentsCallable(
+          wikipedia, this, api,
+          page, null, withRedirects));
+    }
+    block(block);
+  }
+
+  /**
    * Replace text in a list of pages.
    * 
    * @param pages List of pages.
