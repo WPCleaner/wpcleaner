@@ -612,13 +612,11 @@ public class CheckWikiProjectWindow extends PageWindow {
      * @return Comment.
      */
     private String getComment(ArrayList<CheckErrorAlgorithm> errorsFixed) {
-      StringBuilder comment = new StringBuilder(getDefaultComment());
+      StringBuilder comment = new StringBuilder();
       if (errorsFixed != null) {
         for (int pos = 0; pos < errorsFixed.size(); pos++) {
           if (pos > 0) {
-            comment.append(", ");
-          } else {
-            comment.append(": ");
+            comment.append(" - ");
           }
           //comment.append("[http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi?project=");
           //comment.append(getWikipedia().getCode());
@@ -629,6 +627,9 @@ public class CheckWikiProjectWindow extends PageWindow {
           //comment.append("]");
         }
       }
+      comment.append(" (");
+      comment.append(getDefaultComment());
+      comment.append(")");
       return comment.toString();
     }
 
