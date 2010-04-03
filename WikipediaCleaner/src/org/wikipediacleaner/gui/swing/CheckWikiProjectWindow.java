@@ -80,6 +80,7 @@ import org.wikipediacleaner.gui.swing.worker.CheckWikiProjectWorker;
 import org.wikipediacleaner.gui.swing.worker.RetrieveContentWorker;
 import org.wikipediacleaner.gui.swing.worker.SendWorker;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.Configuration;
 
 
 /**
@@ -673,6 +674,7 @@ public class CheckWikiProjectWindow extends PageWindow {
             pane.remove(CheckWikiContentPanel.this);
 
             // Remove errors fixed
+            ArrayList<CheckError> errorsToBeRemoved = new ArrayList<CheckError>();
             for (int posError = 0; posError < listAllErrors.getModel().getSize(); posError++) {
               Object element = listAllErrors.getModel().getElementAt(posError);
               if (element instanceof CheckError) {
@@ -680,6 +682,9 @@ public class CheckWikiProjectWindow extends PageWindow {
                 for (int posAlgo = 0; posAlgo < errorsFixed.size(); posAlgo++) {
                   if (tmpError.getAlgorithm().equals(errorsFixed.get(posAlgo))) {
                     tmpError.remove(page);
+                    if (tmpError.getPageCount() == 0) {
+                      errorsToBeRemoved.add(tmpError);
+                    }
                     MediaWikiController.addSimpleTask(new Callable<Page>() {
 
                       public Page call() throws Exception
@@ -689,6 +694,14 @@ public class CheckWikiProjectWindow extends PageWindow {
                       }});
                   }
                 }
+              }
+            }
+            Configuration configuration = Configuration.getConfiguration();
+            if (!configuration.getBoolean(
+                Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
+                Configuration.DEFAULT_CHECK_SHOW_0_ERRORS)) {
+              for (CheckError tmpError : errorsToBeRemoved) {
+                listAllErrors.removeItem(tmpError);
               }
             }
             actionSelectErrorType();
@@ -767,9 +780,15 @@ public class CheckWikiProjectWindow extends PageWindow {
     //errors = CheckError.initCheckErrors(getWikipedia(), contents);
     if (modelAllErrors != null) {
       modelAllErrors.removeAllElements();
+      Configuration config = Configuration.getConfiguration();
+      boolean showAllErrors = config.getBoolean(
+          Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
+          Configuration.DEFAULT_CHECK_SHOW_0_ERRORS);
       if (errors != null) {
         for (CheckError error : errors) {
-          modelAllErrors.addElement(error);
+          if ((error.getPageCount() > 0) || (showAllErrors)) {
+            modelAllErrors.addElement(error);
+          }
         }
       }
     }
