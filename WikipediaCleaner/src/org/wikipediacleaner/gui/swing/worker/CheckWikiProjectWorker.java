@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Properties;
 
 import org.apache.commons.httpclient.NameValuePair;
@@ -31,6 +32,7 @@ import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.CheckErrorComparator;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -147,6 +149,9 @@ public class CheckWikiProjectWorker extends BasicWorker {
         }
       }
     }
+
+    // Sorting errors by priority
+    Collections.sort(errors, new CheckErrorComparator());
     return null;
   }
 }

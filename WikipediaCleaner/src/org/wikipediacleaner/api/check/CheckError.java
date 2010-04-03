@@ -138,6 +138,32 @@ public class CheckError {
   }
 
   /**
+   * Compare 2 priorities.
+   * 
+   * @param p1 Priority 1.
+   * @param p2 Priority 2.
+   * @return 0 if priorities are equal, -1 if p1 < p2, 1 if p1 > p2.
+   */
+  public static int comparePriority(int p1, int p2) {
+    if (p1 == p2) {
+      return 0;
+    }
+    if (p1 == PRIORITY_UNKOWN) {
+      return -1;
+    }
+    if (p2 == PRIORITY_UNKOWN) {
+      return 1;
+    }
+    if (p1 == PRIORITY_DEACTIVATED) {
+      return -1;
+    }
+    if (p2 == PRIORITY_DEACTIVATED) {
+      return 1;
+    }
+    return (p1 < p2) ? -1 : 1;
+  }
+
+  /**
    * @param priority Priority.
    * @return Textual description of the priority.
    */
