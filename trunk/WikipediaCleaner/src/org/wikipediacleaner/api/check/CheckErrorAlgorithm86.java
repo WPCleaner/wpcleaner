@@ -30,7 +30,7 @@ import org.wikipediacleaner.api.data.Page;
 public class CheckErrorAlgorithm86 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm86() {
-    super("Title linked in text");
+    super("External link with two brackets");
   }
 
   /* (non-Javadoc)
