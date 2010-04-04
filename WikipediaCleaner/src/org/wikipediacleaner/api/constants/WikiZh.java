@@ -55,5 +55,5 @@ class WikiZh {
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
   };
   
-  final static String checkWikiProject = "Wikipedia:专题/错误检查";
+  final static String checkWikiProject = "Wikipedia:WPCHECK";
 }

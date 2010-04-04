@@ -54,5 +54,5 @@ class WikiPl {
   final static String dabList = "Wikipedia:Strony ujednoznaczniające z linkami/50+";
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
-  final static String checkWikiProject = "Wikiprojekt:Check Wikipedia";
+  final static String checkWikiProject = "Wikipedia:WCW";
 }

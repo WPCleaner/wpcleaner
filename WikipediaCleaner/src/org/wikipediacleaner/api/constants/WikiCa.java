@@ -54,5 +54,5 @@ class WikiCa {
   final static String dabList = "Viquipèdia:Enllaços incorrectes a pàgines de desambiguació";
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
-  final static String checkWikiProject = "Viquipèdia:WikiProject Check Wikipedia";
+  final static String checkWikiProject = "VP:CHVP";
 }
