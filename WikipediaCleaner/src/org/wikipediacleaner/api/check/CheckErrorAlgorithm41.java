@@ -24,8 +24,8 @@ import org.wikipediacleaner.api.data.Page;
 
 
 /**
- * Algorithm for analyzing error 38 of check wikipedia project.
- * Error 38: HTML text style element &lt;big&gt;
+ * Algorithm for analyzing error 41 of check wikipedia project.
+ * Error 41: HTML text style element &lt;big&gt;
  */
 public class CheckErrorAlgorithm41 extends CheckErrorAlgorithmBase {
 
