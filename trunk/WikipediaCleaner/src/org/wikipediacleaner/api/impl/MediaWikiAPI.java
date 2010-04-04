@@ -445,6 +445,7 @@ public class MediaWikiAPI implements API {
     properties.put("bot", "");
     properties.put("minor", "");
     properties.put("summary", comment);
+    properties.put("starttimestamp", page.getStartTimestamp());
     properties.put("text", newContents);
     properties.put("title", page.getTitle());
     properties.put("token", page.getEditToken());
@@ -1284,6 +1285,8 @@ public class MediaWikiAPI implements API {
         page.setEditToken(xpaEditToken.valueOf(node));
         XPath xpaPageId = XPath.newInstance("./@pageid");
         page.setPageId(xpaPageId.valueOf(node));
+        XPath xpaStartTimestamp = XPath.newInstance("./@starttimestamp");
+        page.setStartTimestamp(xpaStartTimestamp.valueOf(node));
       }
       XPath xpa = XPath.newInstance(query + "/revisions/rev");
       node = (Element) xpa.selectSingleNode(root);
