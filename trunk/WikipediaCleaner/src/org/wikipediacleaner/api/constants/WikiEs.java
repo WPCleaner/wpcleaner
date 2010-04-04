@@ -54,5 +54,5 @@ class WikiEs {
   final static String dabList = "Wikiproyecto:Corrección de errores menores/Páginas de desambiguación más enlazadas";
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
-  final static String checkWikiProject = "Wikiproyecto:Check Wikipedia";
+  final static String checkWikiProject = "PR:CW";
 }
