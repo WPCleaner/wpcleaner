@@ -339,7 +339,7 @@ public class CheckWikiProjectWindow extends PageWindow {
 
     JTabbedPane pane;
     final Page page;
-    private final CheckError error;
+    final CheckError error;
 
     private JList listErrors;
     private DefaultListModel modelErrors;
@@ -503,7 +503,10 @@ public class CheckWikiProjectWindow extends PageWindow {
       }
       if (Boolean.FALSE.equals(page.isExisting())) {
         displayWarning(GT._("The page {0} doesn't exist on Wikipedia", page.getTitle()));
+        error.remove(page);
         pane.remove(this);
+        markPageAsFixed(error, page);
+        actionSelectErrorType();
         return;
       }
       textPage.setText(page.getContents());
@@ -604,9 +607,18 @@ public class CheckWikiProjectWindow extends PageWindow {
       if (displayYesNoWarning(
           GT._("Do you want to mark {0} as fixed for error n°{1}",
                new Object[] { page.getTitle(), Integer.toString(error.getErrorNumber())})) == JOptionPane.YES_OPTION) {
-        error.fix(page);
+        error.remove(page);
         pane.remove(CheckWikiContentPanel.this);
+        if (error.getPageCount() == 0) {
+          Configuration configuration = Configuration.getConfiguration();
+          if (!configuration.getBoolean(
+              Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
+              Configuration.DEFAULT_CHECK_SHOW_0_ERRORS)) {
+            listAllErrors.removeItem(error);
+          }
+        }
         actionSelectErrorType();
+        markPageAsFixed(error, page);
       }
     }
 
@@ -697,13 +709,7 @@ public class CheckWikiProjectWindow extends PageWindow {
                     if (tmpError.getPageCount() == 0) {
                       errorsToBeRemoved.add(tmpError);
                     }
-                    MediaWikiController.addSimpleTask(new Callable<Page>() {
-
-                      public Page call() throws Exception
-                      {
-                        tmpError.fix(page);
-                        return page;
-                      }});
+                    markPageAsFixed(tmpError, page);
                   }
                 }
               }
@@ -950,5 +956,23 @@ public class CheckWikiProjectWindow extends PageWindow {
         getWikipedia(), this, errors);
     setupReloadWorker(reloadWorker);
     reloadWorker.start();
+  }
+
+  /**
+   * Mark a page as fixed for an error.
+   * 
+   * @param error Error.
+   * @param page Page.
+   */
+  void markPageAsFixed(final CheckError error, final Page page) {
+    if ((error != null) && (page != null) && (page.getPageId() != null)) {
+      MediaWikiController.addSimpleTask(new Callable<Page>() {
+  
+        public Page call() throws Exception
+        {
+          error.fix(page);
+          return page;
+        }});
+    }
   }
 }
