@@ -929,7 +929,7 @@ public class MediaWikiAPI implements API {
   private void loadSiteInfo(EnumWikipedia wikipedia) throws APIException {
     HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("meta", "siteinfo");
-    properties.put("siprop", "namespaces|namespacealiases|languages");
+    properties.put("siprop", "namespaces|namespacealiases|languages|interwikimap");
     try {
       constructSiteInfo(
           getRoot(wikipedia, properties, MAX_ATTEMPTS),
