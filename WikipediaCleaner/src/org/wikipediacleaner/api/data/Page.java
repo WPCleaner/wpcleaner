@@ -40,6 +40,7 @@ public class Page implements Comparable<Page> {
   private String  contents;
   private Integer revisionId;
   private String  contentsTimestamp;
+  private String  startTimestamp;
   private String  editToken;
   private Boolean disambiguation;
   private Boolean wiktionaryLink;
@@ -224,6 +225,20 @@ public class Page implements Comparable<Page> {
    */
   public void setContentsTimestamp(String timestamp) {
     this.contentsTimestamp = timestamp;
+  }
+
+  /**
+   * @return Start timestamp.
+   */
+  public String getStartTimestamp() {
+    return startTimestamp;
+  }
+
+  /**
+   * @param timestamp Start timestamp.
+   */
+  public void setStartTimestamp(String timestamp) {
+    this.startTimestamp = timestamp;
   }
 
   /**
