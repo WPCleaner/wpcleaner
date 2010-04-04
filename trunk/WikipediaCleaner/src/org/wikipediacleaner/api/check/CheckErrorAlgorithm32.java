@@ -66,7 +66,7 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
           startIndex = contents.length();
         } else {
           
-          // Update of pipe 1 index
+          // Update of pipe index
           if ((pipe1Index >= 0) && (pipe1Index < beginIndex)) {
             if (pipe2Index < 0) {
               pipe1Index = 0;
@@ -82,6 +82,7 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
               pipe2Index = contents.indexOf("|", pipe1Index + 1);
             }
           }
+
           if ((pipe1Index < 0) || (pipe2Index < 0)) {
             startIndex = contents.length();
           } else {
@@ -114,31 +115,6 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
             } else {
               if (beginIndex2 < 0) {
                 startIndex = contents.length();
-              } else {
-                startIndex = beginIndex2;
-              }
-            }
-          }
-          int pipeIndex1 = contents.indexOf("|", beginIndex);
-          if ((pipeIndex1 < 0) || (endIndex < pipeIndex1)) {
-            startIndex = endIndex + 2;
-          } else {
-            int pipeIndex2 = contents.indexOf("|", pipeIndex1 + 1);
-            if ((pipeIndex2 < 0) || (endIndex < pipeIndex2)) {
-              startIndex = endIndex + 2;
-            } else {
-              int beginIndex2 = contents.indexOf("[[", beginIndex);
-              if ((beginIndex2 < 0) || (beginIndex > endIndex)) {
-                if (errors == null) {
-                  return true;
-                }
-                result = true;
-                errors.add(new CheckErrorResult(getShortDescription(), beginIndex, endIndex));
-                if (beginIndex2 < 0) {
-                  startIndex = contents.length();
-                } else {
-                  startIndex = beginIndex2;
-                }
               } else {
                 startIndex = beginIndex2;
               }
