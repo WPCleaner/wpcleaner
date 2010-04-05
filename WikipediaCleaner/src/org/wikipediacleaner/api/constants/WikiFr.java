@@ -43,7 +43,7 @@ class WikiFr {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "Correction des [[Projet:Liens vers les pages d'homonymie|liens vers les pages d'homonymie]]";
+  final static String message  = "Correction des [[P:HOM|liens vers les pages d'homonymie]]";
 
   final static String wikt     = "wikt";
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {
