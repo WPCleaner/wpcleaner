@@ -40,9 +40,9 @@ Error 009: Categories more at one line
 Error 010: Square brackets not correct end
 Status: DONE
 Replacements:
- - if text looks like [[...]         -> [[...]]
- - if text looks like [[http://...]  -> [http://...]
- - if text looks like [[https://...] -> [https://...]
+ - [[...]         -> [[...]]
+ - [[http://...]  -> [http://...]
+ - [[https://...] -> [https://...]
 
 ===============================================================================
 Error 011: HTML named entities
