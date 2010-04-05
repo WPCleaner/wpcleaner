@@ -43,84 +43,84 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
     }
     int startIndex = 0;
     boolean result = false;
-    int beginIndex = contents.indexOf("[[", startIndex);
-    int endIndex = 0;
-    int pipe1Index = 0;
-    int pipe2Index = 0;
     Namespace fileNamespace = Namespace.getNamespace(Namespace.IMAGE, page.getWikipedia().getNamespaces());
     while (startIndex < contents.length()) {
-      // Update of begin index
-      if ((beginIndex >= 0) && (beginIndex < startIndex)) {
-        beginIndex = contents.indexOf("[[", startIndex);
-      }
+
+      // Searching for next [[
+      int beginIndex = contents.indexOf("[[", startIndex);
       if (beginIndex < 0) {
         startIndex = contents.length();
       } else {
-        beginIndex += 2;
-        
-        // Update of end index
-        if ((endIndex >= 0) && (endIndex < beginIndex)) {
-          endIndex = contents.indexOf("]]", beginIndex);
-        }
-        if (endIndex < 0) {
-          startIndex = contents.length();
-        } else {
-          
-          // Update of pipe index
-          if ((pipe1Index >= 0) && (pipe1Index < beginIndex)) {
-            if (pipe2Index < 0) {
-              pipe1Index = 0;
-            } else if (pipe2Index < beginIndex) {
-              pipe1Index = contents.indexOf("|", beginIndex);
-              if (pipe1Index >= 0) {
-                pipe2Index = contents.indexOf("|", pipe1Index + 1);
-              } else {
-                pipe2Index = -1;
-              }
-            } else {
-              pipe1Index = pipe2Index;
-              pipe2Index = contents.indexOf("|", pipe1Index + 1);
+        int levelSquareBrackets = 1;
+        int levelCurlyBrackets = 0;
+        int pipeFound = 0;
+        int currentPos = beginIndex + 2;
+        while ((currentPos < contents.length()) && (levelSquareBrackets > 0)) {
+          switch (contents.charAt(currentPos)) {
+          case '[':
+            // Checking if we have inside [[
+            if ((currentPos + 1 < contents.length()) &&
+                (contents.charAt(currentPos + 1) == '[')) {
+              levelSquareBrackets++;
+              currentPos++;
             }
+            break;
+          case ']':
+            // Checking if we have ]]
+            if ((currentPos + 1 < contents.length()) &&
+                (contents.charAt(currentPos + 1) == ']')) {
+              levelSquareBrackets--;
+              currentPos++;
+            }
+            break;
+          case '{':
+            // Checking if we have {{
+            if ((currentPos + 1 < contents.length()) &&
+                (contents.charAt(currentPos + 1) == '{')) {
+              levelCurlyBrackets++;
+              currentPos++;
+            }
+            break;
+          case '}':
+            // Checking if we have }}
+            if ((currentPos + 1 < contents.length()) &&
+                (contents.charAt(currentPos + 1) == '}')) {
+              levelCurlyBrackets--;
+              currentPos++;
+            }
+            break;
+          case ':':
+            // Checking if we have a namespace
+            if ((pipeFound == 0) &&
+                (levelSquareBrackets == 1) &&
+                (levelCurlyBrackets == 0) &&
+                (fileNamespace != null) &&
+                (fileNamespace.isPossibleName(contents.substring(beginIndex + 2, currentPos).trim()))) {
+              // Shortcut to end the test
+              levelSquareBrackets = 0;
+            }
+            break;
+          case '|':
+            // Checking if the | is counting for
+            if ((levelSquareBrackets == 1) &&
+                (levelCurlyBrackets == 0)) {
+              pipeFound++;
+            }
+            break;
           }
+          currentPos++;
+        }
 
-          if ((pipe1Index < 0) || (pipe2Index < 0)) {
-            startIndex = contents.length();
-          } else {
-            int beginIndex2 = contents.indexOf("[[", beginIndex);
-            if (pipe2Index < endIndex) {
-              if ((beginIndex2 < 0) || (beginIndex2 > endIndex)) {
-                boolean isImageNamespace= false;
-                int namespaceIndex = contents.indexOf(":", beginIndex);
-                if ((namespaceIndex > beginIndex) && (namespaceIndex < pipe1Index)) {
-                  if ((fileNamespace != null) &&
-                      (fileNamespace.isPossibleName(contents.substring(beginIndex, namespaceIndex).trim()))) {
-                    isImageNamespace = true;
-                  }
-                }
-                if (!isImageNamespace) {
-                  if (errors == null) {
-                    return true;
-                  }
-                  result = true;
-                  errors.add(new CheckErrorResult(getShortDescription(), beginIndex, endIndex));
-                }
-                if (beginIndex2 < 0) {
-                  startIndex = contents.length();
-                } else {
-                  startIndex = beginIndex2;
-                }
-              } else {
-                startIndex = beginIndex2;
-              }
-            } else {
-              if (beginIndex2 < 0) {
-                startIndex = contents.length();
-              } else {
-                startIndex = beginIndex2;
-              }
-            }
+        // Testing if the error has been found
+        if ((levelSquareBrackets == 0) && (pipeFound > 1)) {
+          if (errors == null) {
+            return true;
           }
+          result = true;
+          CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), beginIndex, currentPos);
+          errors.add(errorResult);
         }
+        startIndex = beginIndex + 2;
       }
     }
     return result;
