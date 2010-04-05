@@ -74,6 +74,10 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param desc Long description.
    */
   public void setLongDescription(String desc) {
+    if (desc != null) {
+      desc = desc.replaceAll("<nowiki>", "");
+      desc = desc.replaceAll("</nowiki>", "");
+    }
     this.longDescription = desc;
   }
 
