@@ -44,36 +44,41 @@ public class CheckErrorAlgorithm55 extends CheckErrorAlgorithmBase {
     // Analyzing the text from the beginning
     boolean result = false;
     int startIndex = 0;
-    int beginIndex = -1;
-    int endIndex = -1;
-    int level = 0;
     while (startIndex < contents.length()) {
-      // Update position of next <small>
-      if (beginIndex < startIndex) {
-        beginIndex = contents.indexOf("<small>", startIndex);
-      }
-      // Update position of next </small>
-      if (endIndex < startIndex) {
-        endIndex = contents.indexOf("</small>", startIndex);
-      }
-      if ((beginIndex < 0) || (endIndex < 0)) {
-        // No more elements
+
+      // Searching for next <small>
+      int beginIndex = contents.indexOf("<small>", startIndex);
+      if (beginIndex < 0) {
         startIndex = contents.length();
-      } else if (beginIndex < endIndex) {
-        // Next element is <small>
-        level++;
-        if (level > 1) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          errors.add(new CheckErrorResult(getShortDescription(), beginIndex, endIndex + "</small>".length()));
-        }
-        startIndex = beginIndex + 1;
       } else {
-        // Next element is </small>
-        level--;
-        startIndex = endIndex + 1;
+        int currentPos = beginIndex + 7;
+        int levelSmall = 1;
+        int smallPos = currentPos;
+        while ((currentPos < contents.length()) && (levelSmall > 0)) {
+          if (contents.charAt(currentPos) == '<') {
+            if (contents.startsWith("<small>", currentPos)) {
+              if (levelSmall == 1) {
+                smallPos = currentPos;
+              }
+              levelSmall++;
+              currentPos += 6;
+            } else if (contents.startsWith("</small>", currentPos)) {
+              levelSmall--;
+              if (levelSmall == 1) {
+                if (errors == null) {
+                  return true;
+                }
+                result = true;
+                CheckErrorResult errorResult = new CheckErrorResult(
+                    getShortDescription(), smallPos, currentPos + 8);
+                errors.add(errorResult);
+              }
+              currentPos += 7;
+            }
+          }
+          currentPos++;
+        }
+        startIndex = currentPos;
       }
     }
     return result;
