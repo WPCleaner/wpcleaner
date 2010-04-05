@@ -206,6 +206,7 @@ Status: DONE
 
 ===============================================================================
 Error 051: Interwiki before last headline
+Status: DONE
 
 ===============================================================================
 Error 052: Category before last headline
