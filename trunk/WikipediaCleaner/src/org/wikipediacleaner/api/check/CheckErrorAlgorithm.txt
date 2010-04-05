@@ -6,9 +6,9 @@ Error 001: No bold title
 Error 002: Article with false <br/>
 Status: DONE
 Replacements:
-- <br\> -> <br />
-- <\br> -> <br />
-- <br.> -> <br />
+ - <br\> -> <br />
+ - <\br> -> <br />
+ - <br.> -> <br />
 
 ===============================================================================
 Error 003: Article with <ref> and no <references />
@@ -40,22 +40,22 @@ Error 009: Categories more at one line
 Error 010: Square brackets not correct end
 Status: DONE
 Replacements:
-- if text looks like [[...]         -> [[...]]
-- if text looks like [[http://...]  -> [http://...]
-- if text looks like [[https://...] -> [https://...]
+ - if text looks like [[...]         -> [[...]]
+ - if text looks like [[http://...]  -> [http://...]
+ - if text looks like [[https://...] -> [https://...]
 
 ===============================================================================
 Error 011: HTML named entities
 Status: DONE
 Replacements:
-- &acirc; - &agrav,
-- &ccedil;
-- &eacute; - &ecirc; - &egrav;
-- &deg; - &minus; - &sect;
-- &laquo; - &raquo; - &quot;
-- &larr; - &rarr;
-- &nu;
-- &thinsp;
+ - &acirc; - &agrav,
+ - &ccedil;
+ - &eacute; - &ecirc; - &egrav;
+ - &deg; - &minus; - &sect;
+ - &laquo; - &raquo; - &quot;
+ - &larr; - &rarr;
+ - &nu;
+ - &thinsp;
  
 ===============================================================================
 Error 012: HTML List elements
@@ -163,7 +163,7 @@ Error 042: HTML text style element <small>
 Error 043: Template not correct end
 Status: DONE
 Replacements:
-- {{...} -> {{...}}
+ - {{...} -> {{...}}
 
 ===============================================================================
 Error 044: Headlines with bold
@@ -176,22 +176,22 @@ Status: DONE
 Error 046: Square brackets not correct begin
 Status: DONE
 Replacements:
-- [...]]        -> [[...]]
-- [http://...]] -> [http://...]
+ - [...]]        -> [[...]]
+ - [http://...]] -> [http://...]
 
 ===============================================================================
 Error 047: Template not correct begin
 Status: DONE
 Replacements:
-- {...}}  -> {{...}}
-- {'...}} -> {{...}}
+ - {...}}  -> {{...}}
+ - {'...}} -> {{...}}
 
 ===============================================================================
 Error 048: Title in text
 Status: DONE
 Replacements:
-- [[...]] -> ...
-- [[...]] -> '''...'''
+ - [[...]] -> ...
+ - [[...]] -> '''...'''
 
 ===============================================================================
 Error 049: Headline with HTML
@@ -223,7 +223,7 @@ Error 056: Arrow as ASCII art
 Error 057: Headlines end with colon
 Status: DONE
 Replacements:
-- ===...:=== -> ===...===
+ - ===...:=== -> ===...===
 
 ===============================================================================
 Error 058: Headlines with capitalization
@@ -249,7 +249,7 @@ Status: DONE
 Error 064: Link equal to linktext
 Status: DONE
 Replacements:
-- [[...|...]] -> [[...]]
+ - [[...|...]] -> [[...]]
 
 ===============================================================================
 Error 065: Image description with break
@@ -323,8 +323,8 @@ Error 085: Tag without content
 Error 086: Link with two brackets to external source
 Status: DONE
 Replacements:
-- [[http://...]]  -> [http://...]
-- [[https://...]] -> [https://...]
+ - [[http://...]]  -> [http://...]
+ - [[https://...]] -> [https://...]
 
 ===============================================================================
 Error 087: HTML named entities without semicolon
@@ -333,13 +333,13 @@ Error 087: HTML named entities without semicolon
 Error 088: DEFAULTSORT with blank at first position
 Status: DONE
 Replacements:
-- {{DEFAULTSORT: ...}} -> {{DEFAULTSORT:...}}
+ - {{DEFAULTSORT: ...}} -> {{DEFAULTSORT:...}}
 
 ===============================================================================
 Error 089: DEFAULTSORT with capitalization in the middle of the word
 Status: DONE
 Replacements:
-- {{DEFAULTSORT:XxxXxx...}} -> {{DEFAULTSORT:Xxxxxx...}}
+ - {{DEFAULTSORT:XxxXxx...}} -> {{DEFAULTSORT:Xxxxxx...}}
 
 ===============================================================================
 Error 090: DEFAULTSORT with lowercase letters
