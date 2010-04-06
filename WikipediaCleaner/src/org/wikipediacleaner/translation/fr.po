@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-03 22:57+0200\n"
-"PO-Revision-Date: 2010-04-04 19:50+0000\n"
+"PO-Revision-Date: 2010-04-06 01:49+0000\n"
 "Last-Translator: A2 <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-04 20:48+0000\n"
+"X-Launchpad-Export-Date: 2010-04-06 10:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -98,7 +98,7 @@ msgstr "Récupération des informations d'homonymie"
 
 #: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:53
 msgid "Retrieving page usage"
-msgstr ""
+msgstr "Récupérer les paramètres de la page"
 
 #: org/wikipediacleaner/api/execution/ExpandTemplatesCallable.java:55
 msgid "Expanding templates"
@@ -253,7 +253,7 @@ msgstr "Pages"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:307
 msgid "&Load pages"
-msgstr ""
+msgstr "Charger les pages"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:421
 msgid "Mark as Fixed"
@@ -270,8 +270,8 @@ msgid ""
 "The error n°{0} is still found {1} times in the page.\n"
 "You must fix them and save the page before marking it as fixed."
 msgstr ""
-"L’erreur n°{0} est encore {1} fois dans l’article.\n"
-"Elle doit être corrigée et sauvegardée avant d'être marquée comme corrigée."
+"L’erreur n° {0} est encore {1} fois dans l’article.\n"
+"La modification doit être sauvegardée avant d’être marquée comme corrigée."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:605
 #, java-format
@@ -759,7 +759,7 @@ msgstr "&Mise à jour des informations"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:212
 msgid "Set page &comments"
-msgstr ""
+msgstr "Régler les &commentaires de la page"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:222
 msgid "&Remove page"
@@ -938,7 +938,7 @@ msgstr "Se termine par"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:399
 msgid "&Search for possible pages"
-msgstr ""
+msgstr "Rechercher les pages possibles"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:101
 #, java-format
@@ -1115,7 +1115,8 @@ msgstr "Récupération de la configuration du projet de correction syntaxique"
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:127
 #, java-format
 msgid "Checking for errors n°{0}"
-msgstr "Vérifie les erreurs n°{0}"
+msgstr ""
+"Chargement de la liste des articles contenant l’erreur syntaxique n° {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:59
 msgid "Current disambiguation list"
