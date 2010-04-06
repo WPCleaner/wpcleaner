@@ -188,7 +188,6 @@ Error 047: Template not correct begin
 Status: DONE
 Replacements:
  - {...}}  -> {{...}}
- - {'...}} -> {{...}}
 
 ===============================================================================
 Error 048: Title in text

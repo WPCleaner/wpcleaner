@@ -44,60 +44,59 @@ public class CheckErrorAlgorithm47 extends CheckErrorAlgorithmBase {
     // Analyze contents from the beginning by counting {{ and }}
     int startIndex = 0;
     boolean result = false;
-    int beginIndex = contents.indexOf("{{", startIndex);
-    int endIndex = contents.indexOf("}}", startIndex);
-    int count = 0;
+    int levelCurlyBrackets = 0;
+    int levelMath = 0;
+    int previousCurlyBracket = -1;
     while (startIndex < contents.length()) {
-      if ((beginIndex < 0) && (endIndex < 0)) {
-        // No more {{ or }}
-        startIndex = contents.length();
-      } else if ((beginIndex >= 0) && ((beginIndex < endIndex) || (endIndex < 0))) {
-        // Found a {{
-        count++;
-        startIndex = beginIndex + 2;
-        beginIndex = contents.indexOf("{{", startIndex);
-      } else {
-        // Found a }}
-        count--;
-        if (count < 0) {
-          // Found more }} than {{
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-
-          // Check if the situation is something like {....}} (replacement: {{....}})
-          boolean errorReported = false;
-          int previousBegin = contents.lastIndexOf('{', endIndex - 1);
-          if (previousBegin > 0) {
-            int previousCR = contents.lastIndexOf('\n', endIndex - 1);
-            int previousEnd = contents.lastIndexOf('}', endIndex - 1);
-            if (((previousCR < 0) || (previousCR < previousBegin)) &&
-                ((previousEnd < 0) || (previousEnd < previousBegin))) {
-              CheckErrorResult errorResult = new CheckErrorResult(
-                  getShortDescription(), previousBegin, endIndex + 2);
-              errorResult.addReplacement("{" + contents.substring(previousBegin, endIndex + 2));
-
-              // Check if the situation is something like {'....}} (replacement: {{....}})
-              // (explanation : ' and { are on the same key)
-              if (contents.charAt(previousBegin + 1) == '\'') {
-                errorResult.addReplacement("{{" + contents.substring(previousBegin + 2, endIndex + 2));
-              }
-
-              errors.add(errorResult);
-              errorReported = true;
-            }
-          }
-
-          // Default
-          if (!errorReported) {
-            errors.add(new CheckErrorResult(getShortDescription(), endIndex, endIndex + 2));
-          }
-          count = 0;
+      switch (contents.charAt(startIndex)) {
+      case '<':
+        // Check if <math> or </math> tag
+        if (contents.startsWith("<math>", startIndex)) {
+          levelMath++;
+        } else if (contents.startsWith("</math>", startIndex)) {
+          levelMath--;
         }
-        startIndex = endIndex + 2;
-        endIndex = contents.indexOf("}}", startIndex);
+        break;
+      case '{':
+        // Check if {{
+        if (levelMath == 0) {
+          if (((startIndex + 1) < contents.length()) &&
+              (contents.charAt(startIndex + 1) == '{')) {
+            levelCurlyBrackets++;
+            startIndex++;
+          } else {
+            previousCurlyBracket = startIndex;
+          }
+        }
+        break;
+      case '}':
+        // Check if }}
+        if (levelMath == 0) {
+          if (((startIndex + 1) < contents.length()) &&
+              (contents.charAt(startIndex + 1) == '}')) {
+            if (levelCurlyBrackets == 0) {
+              if (errors == null) {
+                return true;
+              }
+              result = true;
+              CheckErrorResult errorResult = null;
+              if (previousCurlyBracket < 0) {
+                errorResult = new CheckErrorResult(getShortDescription(), startIndex, startIndex + 2);
+              } else {
+                errorResult = new CheckErrorResult(getShortDescription(), previousCurlyBracket, startIndex + 2);
+                errorResult.addReplacement(
+                    "{" + contents.substring(previousCurlyBracket, startIndex + 2));
+              }
+              errors.add(errorResult);
+            } else {
+              levelCurlyBrackets--;
+            }
+            startIndex++;
+          }
+        }
+        break;
       }
+      startIndex++;
     }
     return result;
   }
