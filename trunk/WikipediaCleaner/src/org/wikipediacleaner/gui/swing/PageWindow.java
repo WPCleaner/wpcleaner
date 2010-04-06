@@ -455,6 +455,19 @@ public abstract class PageWindow
   }
 
   /**
+   * Create a External Viewer button for the page history.
+   * 
+   * @param listener Action listener.
+   * @return External Viewer button.
+   */
+  public JButton createButtonViewHistory(ActionListener listener) {
+    JButton button = Utilities.createJButton(GT._("&History"));
+    button.setActionCommand(ACTION_VIEW_HISTORY);
+    button.addActionListener(listener);
+    return button;
+  }
+
+  /**
    * Add a component for the Watch button.
    * 
    * @param panel Container.
@@ -732,6 +745,7 @@ public abstract class PageWindow
   public final static String ACTION_SEND                 = "SEND";
   public final static String ACTION_VALIDATE             = "VALIDATE";
   public final static String ACTION_VIEW                 = "VIEW";
+  public final static String ACTION_VIEW_HISTORY         = "VIEW_HISTORY";
   public final static String ACTION_WATCH                = "WATCH";
 
   /* (non-Javadoc)
@@ -764,6 +778,8 @@ public abstract class PageWindow
       actionValidate();
     } else if (ACTION_VIEW.equals(e.getActionCommand())) {
       actionView();
+    } else if (ACTION_VIEW_HISTORY.equals(e.getActionCommand())) {
+      actionViewHistory();
     } else if (ACTION_WATCH.equals(e.getActionCommand())) {
       actionWatch();
     }
@@ -898,6 +914,13 @@ public abstract class PageWindow
    */
   private void actionView() {
     Utilities.browseURL(getWikipedia(), getPageName());
+  }
+
+  /**
+   * Action called when View History button is pressed. 
+   */
+  private void actionViewHistory() {
+    Utilities.browseURL(getWikipedia(), getPageName(), "history");
   }
 
   /**

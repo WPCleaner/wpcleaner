@@ -418,6 +418,10 @@ public class CheckWikiProjectWindow extends PageWindow {
         JButton buttonView = createButtonView(this);
         panelButtons.add(buttonView);
       }
+      if (Utilities.isDesktopSupported()) { // History
+        JButton buttonHistory = createButtonViewHistory(this);
+        panelButtons.add(buttonHistory);
+      }
       JButton buttonMarkAsFixed = Utilities.createJButton(GT._("Mark as Fixed")); // Mark as fixed
       buttonMarkAsFixed.setEnabled(true);
       buttonMarkAsFixed.setActionCommand(ACTION_MARK_AS_FIXED);
@@ -588,6 +592,8 @@ public class CheckWikiProjectWindow extends PageWindow {
         actionValidate();
       } else if (ACTION_VIEW.equals(e.getActionCommand())) {
         actionView();
+      } else if (ACTION_VIEW_HISTORY.equals(e.getActionCommand())) {
+        actionViewHistory();
       }
     }
 
@@ -742,6 +748,13 @@ public class CheckWikiProjectWindow extends PageWindow {
      */
     private void actionView() {
       Utilities.browseURL(getWikipedia(), page.getTitle());
+    }
+
+    /**
+     * View page history in external viewer.
+     */
+    private void actionViewHistory() {
+      Utilities.browseURL(getWikipedia(), page.getTitle(), "history");
     }
 
     /**
