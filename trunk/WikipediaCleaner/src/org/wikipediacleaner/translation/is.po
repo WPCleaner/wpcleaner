@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-06 20:04+0200\n"
+"POT-Creation-Date: 2010-04-06 22:14+0200\n"
 "PO-Revision-Date: 2008-12-24 00:31+0000\n"
 "Last-Translator: Jóna Þórunn Ragnarsdóttir <Unknown>\n"
 "Language-Team: Icelandic <is@li.org>\n"
@@ -42,12 +42,12 @@ msgstr ""
 msgid "Priority unknown"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:359
+#: org/wikipediacleaner/api/check/CheckError.java:366
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:366
+#: org/wikipediacleaner/api/check/CheckError.java:373
 msgid "Error unkown from WikiCleaner"
 msgstr ""
 
@@ -230,48 +230,53 @@ msgstr ""
 msgid "Semi-automatic disambiguation fixing"
 msgstr "Sjálfvirk aðgreiningarlögun"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:131
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:134
 #, fuzzy
 msgid "Check Wikipedia"
 msgstr "Önnur Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:217
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:220
 msgid "List of errors detected :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:260
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:237
+#, fuzzy
+msgid "Reload error"
+msgstr "&Endurlesa"
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:269
 #, fuzzy
 msgid "Pages"
 msgstr "&Síða:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:307
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:316
 #, fuzzy
 msgid "&Load pages"
 msgstr "&Endurhlaða síðulista"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:425
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:434
 #, fuzzy
 msgid "Mark as Fixed"
 msgstr "Merkja sem hjálparþurfi"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:509
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:518
 #, java-format
 msgid "The page {0} doesn't exist on Wikipedia"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:608
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:617
 #, java-format
 msgid ""
 "The error n°{0} is still found {1} times in the page.\n"
 "You must fix them and save the page before marking it as fixed."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:614
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:623
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:794
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:803
 #, fuzzy, java-format
 msgid "Detection by [[{0}]]"
 msgstr "Nýr kafli í {0}"
@@ -1094,12 +1099,12 @@ msgstr "{0} tenglar í aðalnafnrými / {1} tenglar alls"
 msgid "The following modifications have been done ({0} pages):"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:107
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:119
 #, fuzzy
 msgid "Retrieving Check Wiki configuration"
 msgstr "Næ í upplýsingar um aðgreiningarsíðu"
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:127
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:141
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr ""

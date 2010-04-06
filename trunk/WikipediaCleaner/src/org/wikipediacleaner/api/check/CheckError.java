@@ -264,6 +264,13 @@ public class CheckError {
     } catch (IOException e) {
       //
     }
+
+    // Add / Replace error
+    for (int i = errors.size(); i > 0; i--) {
+      if (errors.get(i - 1).getErrorNumber() == errorNumber) {
+        errors.remove(i - 1);
+      }
+    }
     errors.add(error);
   }
 
