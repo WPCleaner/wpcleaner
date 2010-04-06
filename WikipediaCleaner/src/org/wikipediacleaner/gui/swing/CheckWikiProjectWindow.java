@@ -36,6 +36,7 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import javax.swing.BorderFactory;
@@ -89,6 +90,7 @@ import org.wikipediacleaner.utils.Configuration;
 public class CheckWikiProjectWindow extends PageWindow {
 
   ArrayList<CheckError> errors;
+  Properties checkWikiConfig;
   JComboBox listAllErrors;
   private DefaultComboBoxModel modelAllErrors;
   private JTextPane textDescription;
@@ -98,7 +100,8 @@ public class CheckWikiProjectWindow extends PageWindow {
 
   private JTabbedPane contentPane;
 
-  public final static String ACTION_LOAD_PAGES    = "LOAD_PAGES";
+  public final static String ACTION_LOAD_PAGES   = "LOAD_PAGES";
+  public final static String ACTION_RELOAD_ERROR = "RELOAD_ERROR";
 
   /**
    * Create and display a CheckWikiProjectWindow.
@@ -231,6 +234,12 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.gridx++;
     constraints.weightx = 1;
     panel.add(listAllErrors, constraints);
+    JButton buttonReloadError = Utilities.createJButton(GT._("Reload error"));
+    buttonReloadError.setActionCommand(ACTION_RELOAD_ERROR);
+    buttonReloadError.addActionListener(this);
+    constraints.gridx++;
+    constraints.weightx = 0;
+    panel.add(buttonReloadError, constraints);
     constraints.gridx = 0;
     constraints.gridy++;
 
@@ -242,7 +251,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     scrollDescription.setPreferredSize(new Dimension(500, 100));
     scrollDescription.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     constraints.fill = GridBagConstraints.BOTH;
-    constraints.gridwidth = 2;
+    constraints.gridwidth = 3;
     constraints.weightx = 1;
     constraints.weighty = 1;
     panel.add(scrollDescription, constraints);
@@ -911,6 +920,8 @@ public class CheckWikiProjectWindow extends PageWindow {
     super.actionPerformed(e);
     if (ACTION_LOAD_PAGES.equals(e.getActionCommand())) {
       actionSelectPage();
+    } else if (ACTION_RELOAD_ERROR.equals(e.getActionCommand())) {
+      actionReloadError();
     }
   }
 
@@ -965,10 +976,25 @@ public class CheckWikiProjectWindow extends PageWindow {
     clean();
     contentPane.removeAll();
     errors = new ArrayList<CheckError>();
+    checkWikiConfig = new Properties();
     CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
-        getWikipedia(), this, errors);
+        getWikipedia(), this, errors, checkWikiConfig, null);
     setupReloadWorker(reloadWorker);
     reloadWorker.start();
+  }
+
+  /**
+   * Action called when Reload Error button is pressed. 
+   */
+  protected void actionReloadError() {
+    Object selected = listAllErrors.getSelectedItem();
+    if (selected instanceof CheckError) {
+      CheckError error = (CheckError) selected;
+      CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
+          getWikipedia(), this, errors, checkWikiConfig, error.getErrorNumber());
+      setupReloadWorker(reloadWorker);
+      reloadWorker.start();
+    }
   }
 
   /**

@@ -45,6 +45,9 @@ import org.wikipediacleaner.utils.Configuration;
 public class CheckWikiProjectWorker extends BasicWorker {
 
   private final ArrayList<CheckError> errors;
+  private final boolean retrieveConfig;
+  private final Properties checkWikiConfig;
+  private final Integer onlyError;
 
   /**
    * Constructor.
@@ -52,13 +55,22 @@ public class CheckWikiProjectWorker extends BasicWorker {
    * @param wikipedia Wikipedia.
    * @param window Window.
    * @param errors Error list to complete.
+   * @param properties Properties to complete.
+   * @param onlyError If set, limit the errors retrieved to this error number.
    */
   public CheckWikiProjectWorker(
       EnumWikipedia wikipedia, BasicWindow window,
-      ArrayList<CheckError> errors) {
+      ArrayList<CheckError> errors,
+      Properties properties,
+      Integer onlyError) {
     super(wikipedia, window);
     this.errors = errors;
-    this.errors.clear();
+    if (onlyError == null) {
+      this.errors.clear();
+    }
+    this.retrieveConfig = true;
+    this.checkWikiConfig = properties;
+    this.onlyError = onlyError;
   }
 
   /**
@@ -102,26 +114,28 @@ public class CheckWikiProjectWorker extends BasicWorker {
 
     // Retrieving Check Wiki configuration
     String code = getWikipedia().getCode();
-    Properties checkWikiConfig = new Properties();
-    try {
-      setText(GT._("Retrieving Check Wiki configuration"));
-      InputStream stream = APIFactory.getAPI().askToolServerGet(
-          "~sk/checkwiki/" + code + "wiki/" + code + "wiki_translation.txt",
-          true);
-      BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-      while (getNextCheckWikiParameter(checkWikiConfig, reader)) {
-        //
+    if (retrieveConfig) {
+      try {
+        setText(GT._("Retrieving Check Wiki configuration"));
+        InputStream stream = APIFactory.getAPI().askToolServerGet(
+            "~sk/checkwiki/" + code + "wiki/" + code + "wiki_translation.txt",
+            true);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        while (getNextCheckWikiParameter(checkWikiConfig, reader)) {
+          //
+        }
+      } catch (APIException e) {
+        return e;
+      } catch (UnsupportedEncodingException e) {
+        return e;
       }
-    } catch (APIException e) {
-      return e;
-    } catch (UnsupportedEncodingException e) {
-      return e;
     }
 
     // Retrieving errors
     for (int errorNumber = 1; errorNumber < 100; errorNumber++) {
       int errorPriority = CheckError.getErrorPriority(checkWikiConfig, getWikipedia(), errorNumber);
-      if (CheckError.isPriorityActive(errorPriority)) {
+      if ((CheckError.isPriorityActive(errorPriority)) &&
+          ((onlyError == null) || (onlyError.intValue() == errorNumber))) {
         String className = CheckErrorAlgorithm.class.getName() + Integer.toString(errorNumber);
         try {
           setText(GT._("Checking for errors n°{0}", Integer.toString(errorNumber)));
