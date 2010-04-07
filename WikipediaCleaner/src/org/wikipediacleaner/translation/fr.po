@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-06 22:14+0200\n"
-"PO-Revision-Date: 2010-04-06 01:49+0000\n"
+"PO-Revision-Date: 2010-04-06 22:35+0000\n"
 "Last-Translator: A2 <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-06 10:12+0000\n"
+"X-Launchpad-Export-Date: 2010-04-07 20:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -221,7 +221,8 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -247,9 +248,8 @@ msgid "List of errors detected :"
 msgstr "Liste des erreurs détectées :"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:237
-#, fuzzy
 msgid "Reload error"
-msgstr "&Recharger"
+msgstr "Rafraîchir la liste"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:269
 msgid "Pages"
@@ -257,7 +257,7 @@ msgstr "Pages"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:316
 msgid "&Load pages"
-msgstr "Charger les pages"
+msgstr "Charger les pages sélectionnées"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:434
 msgid "Mark as Fixed"
@@ -789,7 +789,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr ""
+"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:290
 msgid "Disambiguation"
@@ -829,7 +830,7 @@ msgstr "Affichage externe"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:464
 msgid "&History"
-msgstr ""
+msgstr "&Historique"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:517
 msgid "Automatic comment"
