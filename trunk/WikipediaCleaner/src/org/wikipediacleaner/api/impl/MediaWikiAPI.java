@@ -43,6 +43,7 @@ import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom.Document;
@@ -101,6 +102,9 @@ public class MediaWikiAPI implements API {
    */
   public MediaWikiAPI(HttpConnectionManager manager) {
     httpClient = new HttpClient(manager);
+    httpClient.getParams().setParameter(
+        HttpMethodParams.USER_AGENT,
+        "WikiCleaner (+http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation)");
   }
 
   /**
