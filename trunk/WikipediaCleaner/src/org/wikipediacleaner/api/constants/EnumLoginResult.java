@@ -26,6 +26,7 @@ public enum EnumLoginResult {
 
   EMPTY_PASS       ("EmptyPass",       "Empty password"),
   ILLEGAL          ("Illegal",         "Illegal"),
+  NEED_TOKEN       ("NeedToken",       "Need token"),
   NEED_TO_WAIT     ("NeedToWait",      "Need to wait"),
   NO_NAME          ("NoName",          "No name"),
   NOT_EXISTS       ("NotExists",       "Not exists"),

@@ -30,10 +30,33 @@ public class LoginResult {
   private String details;
   private String wait;
 
+  /**
+   * Create a correct login result.
+   * 
+   * @return Login result.
+   */
   static public LoginResult createCorrectLogin() {
     return new LoginResult(EnumLoginResult.SUCCESS, null, null);
   }
-  
+
+  /**
+   * Create a login result to indicate that a token is needed.
+   * 
+   * @param token Token.
+   * @return Login result.
+   */
+  static public LoginResult createNeedTokenLogin(String token) {
+    return new LoginResult(EnumLoginResult.NEED_TOKEN, token, null);
+  }
+
+  /**
+   * Create an error login result.
+   * 
+   * @param errorText Text error.
+   * @param details Details of the error.
+   * @param wait Wait text.
+   * @return
+   */
   static public LoginResult createErrorLogin(
       String errorText, String details, String wait) {
     EnumLoginResult loginResult = EnumLoginResult.getEnumByCode(errorText);
@@ -46,13 +69,26 @@ public class LoginResult {
     this.wait = wait;
   }
 
+  /**
+   * @return Flag indicating if login is successful.
+   */
   public boolean isLoginSuccessful() {
     if (loginResult != null) {
       return loginResult.isOk();
     }
     return false;
   }
-  
+
+  /**
+   * @return Flag indicating if token is needed.
+   */
+  public boolean isTokenNeeded() {
+    if (loginResult != null) {
+      return (loginResult == EnumLoginResult.NEED_TOKEN);
+    }
+    return false;
+  }
+
   public String getDetails() {
     return details;
   }

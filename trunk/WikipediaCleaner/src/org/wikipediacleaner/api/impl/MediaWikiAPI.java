@@ -141,6 +141,12 @@ public class MediaWikiAPI implements API {
         result = constructLogin(
             getRoot(wikipedia, properties, 1),
             "/api/login");
+        if ((result != null) && (result.isTokenNeeded())) {
+          properties.put("lgtoken", result.getDetails());
+          result = constructLogin(
+              getRoot(wikipedia, properties, 1),
+              "/api/login");
+        }
       } catch (JDOMParseException e) {
         log.error("Exception in MediaWikiAPI.login()", e);
         throw new APIException("Couldn't login");
@@ -964,6 +970,9 @@ public class MediaWikiAPI implements API {
           lgusername = xpaUsername.valueOf(node);
           lgtoken = xpaToken.valueOf(node);
           return LoginResult.createCorrectLogin();
+        } else if ("NeedToken".equalsIgnoreCase(result)) {
+          XPath xpaToken = XPath.newInstance("./@token");
+          return LoginResult.createNeedTokenLogin(xpaToken.valueOf(node));
         }
         XPath xpaWait = XPath.newInstance("./@wait");
         XPath xpaDetails = XPath.newInstance("./@details");
