@@ -31,6 +31,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   private int priority = CheckError.PRIORITY_UNKOWN;
   private String shortDescription;
   private String longDescription;
+  private String link;
 
   /**
    * @param shortDescription Short description.
@@ -79,6 +80,20 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       desc = desc.replaceAll("</nowiki>", "");
     }
     this.longDescription = desc;
+  }
+
+  /**
+   * @return Link to error description.
+   */
+  public String getLink() {
+    return link;
+  }
+
+  /**
+   * @param link Link to error description.
+   */
+  public void setLink(String link) {
+    this.link = link;
   }
 
   /**

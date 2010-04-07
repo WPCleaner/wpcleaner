@@ -196,7 +196,7 @@ public class CheckError {
       txtErrorNumber = "0" + txtErrorNumber;
     }
     String errorPrefix = "error_" + txtErrorNumber + "_";
-    String headWiki   = config.getProperty(errorPrefix + "head_" + code + "wiki");
+    String headWiki = config.getProperty(errorPrefix + "head_" + code + "wiki");
     if ((headWiki != null) && (headWiki.length() > 0)) {
       return headWiki;
     }
@@ -218,11 +218,33 @@ public class CheckError {
       txtErrorNumber = "0" + txtErrorNumber;
     }
     String errorPrefix = "error_" + txtErrorNumber + "_";
-    String headWiki   = config.getProperty(errorPrefix + "desc_" + code + "wiki");
+    String headWiki = config.getProperty(errorPrefix + "desc_" + code + "wiki");
     if ((headWiki != null) && (headWiki.length() > 0)) {
       return headWiki;
     }
     return config.getProperty(errorPrefix + "desc_script");
+  }
+
+  /**
+   * Retrieve link to error description from configuration.
+   * 
+   * @param config Check Wiki configuration.
+   * @param errorNumber Error number.
+   * @return Link to error description.
+   */
+  public static String getErrorLink(
+      Properties config, EnumWikipedia wikipedia, int errorNumber) {
+    String code = wikipedia.getCode();
+    String txtErrorNumber = Integer.toString(errorNumber);
+    while (txtErrorNumber.length() < 3) {
+      txtErrorNumber = "0" + txtErrorNumber;
+    }
+    String errorPrefix = "error_" + txtErrorNumber + "_";
+    String linkWiki = config.getProperty(errorPrefix + "link_" + code + "wiki");
+    if ((linkWiki != null) && (linkWiki.trim().length() > 0)) {
+      return linkWiki.trim();
+    }
+    return null;
   }
 
   /**
@@ -244,9 +266,12 @@ public class CheckError {
     }
     String shortDescription = getErrorShortDescription(config, wikipedia, errorNumber);
     String longDescription = getErrorLongDescription(config, wikipedia, errorNumber);
+    String link = getErrorLink(config, wikipedia, errorNumber);
 
     // Create error
-    CheckError error = new CheckError(wikipedia, errorNumber, priority, shortDescription, longDescription);
+    CheckError error = new CheckError(
+        wikipedia, errorNumber, priority,
+        shortDescription, longDescription, link);
     try {
       BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
       String line = null;
@@ -284,10 +309,14 @@ public class CheckError {
    * 
    * @param wikipedia Wikipedia.
    * @param errorNumber Error number as defined in the check wikipedia project.
+   * @param priority Error priority.
+   * @param shortDescription Short description.
+   * @param longDescription Long description.
+   * @param link Link to error description.
    */
   private CheckError(
-      EnumWikipedia wikipedia, int errorNumber,
-      int priority, String shortDescription, String longDescription) {
+      EnumWikipedia wikipedia, int errorNumber, int priority,
+      String shortDescription, String longDescription, String link) {
     this.wikipedia = wikipedia;
     String className = CheckErrorAlgorithm.class.getName() + Integer.toString(errorNumber);
     CheckErrorAlgorithm tmpAlgorithm = null;
@@ -297,6 +326,7 @@ public class CheckError {
       tmpAlgorithm.setPriority(priority);
       tmpAlgorithm.setShortDescription(shortDescription);
       tmpAlgorithm.setLongDescription(longDescription);
+      tmpAlgorithm.setLink(link);
     } catch (ClassNotFoundException e) {
       // Not found: error not yet available in WikiCleaner.
     } catch (InstantiationException e) {

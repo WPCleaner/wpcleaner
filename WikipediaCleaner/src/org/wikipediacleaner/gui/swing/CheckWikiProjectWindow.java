@@ -658,13 +658,20 @@ public class CheckWikiProjectWindow extends PageWindow {
           if (pos > 0) {
             comment.append(" - ");
           }
-          //comment.append("[http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi?project=");
-          //comment.append(getWikipedia().getCode());
-          //comment.append("wiki&view=only&id=");
-          //comment.append(errorsFixed.get(pos).getErrorNumber());
-          //comment.append(" ");
           comment.append(errorsFixed.get(pos).getShortDescription());
-          //comment.append("]");
+          String link = errorsFixed.get(pos).getLink();
+          Configuration config = Configuration.getConfiguration();
+          if ((link != null) &&
+              (config != null) &&
+              (config.getBoolean(
+                  Configuration.BOOLEAN_CHECK_LINK_ERRORS,
+                  Configuration.DEFAULT_CHECK_LINK_ERRORS))) {
+            comment.append(", [[");
+            comment.append(link);
+            comment.append("|n°");
+            comment.append(errorsFixed.get(pos).getErrorNumber());
+            comment.append("]]");
+          }
         }
       }
       comment.append(" (");

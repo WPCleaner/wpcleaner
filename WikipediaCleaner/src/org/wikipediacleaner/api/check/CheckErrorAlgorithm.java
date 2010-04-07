@@ -51,6 +51,16 @@ public interface CheckErrorAlgorithm {
   public void setLongDescription(String desc);
 
   /**
+   * @return Link to error description.
+   */
+  public String getLink();
+
+  /**
+   * @param link Link to error description.
+   */
+  public void setLink(String link);
+
+  /**
    * @return Priority.
    */
   public int getPriority();

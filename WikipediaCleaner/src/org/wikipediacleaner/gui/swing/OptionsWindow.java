@@ -85,6 +85,7 @@ public class OptionsWindow
   private JCheckBox chkShortNotation;
   private JCheckBox chkWikiInComments;
   private JCheckBox chkShow0ErrorsCheckWiki;
+  private JCheckBox chkLinkErrorsCheckWiki;
   private SpinnerNumberModel modelMenuSize;
   private JSpinner spinMenuSize;
   private SpinnerNumberModel modelMaxPages;
@@ -271,6 +272,17 @@ public class OptionsWindow
     constraints.gridx = 0;
     constraints.weightx = 0;
     panel.add(chkShow0ErrorsCheckWiki, constraints);
+    constraints.gridy++;
+
+    // Link to error description in comment for Check Wiki
+    chkLinkErrorsCheckWiki = Utilities.createJCheckBox(
+        GT._("Add link to error description in comments"),
+        configuration.getBoolean(
+            Configuration.BOOLEAN_CHECK_LINK_ERRORS,
+            Configuration.DEFAULT_CHECK_LINK_ERRORS));
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    panel.add(chkLinkErrorsCheckWiki, constraints);
     constraints.gridy++;
 
     // Menu size
