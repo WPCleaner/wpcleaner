@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-06 22:14+0200\n"
+"POT-Creation-Date: 2010-04-07 23:56+0200\n"
 "PO-Revision-Date: 2008-12-24 00:31+0000\n"
 "Last-Translator: Jóna Þórunn Ragnarsdóttir <Unknown>\n"
 "Language-Team: Icelandic <is@li.org>\n"
@@ -42,12 +42,12 @@ msgstr ""
 msgid "Priority unknown"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:366
+#: org/wikipediacleaner/api/check/CheckError.java:396
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:373
+#: org/wikipediacleaner/api/check/CheckError.java:403
 msgid "Error unkown from WikiCleaner"
 msgstr ""
 
@@ -138,22 +138,22 @@ msgid "&Options"
 msgstr "&Valkostir"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:359
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:417
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:429
 msgid "Show &disambiguation pages"
 msgstr "Sýna &aðgreiningasíður"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:363
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:426
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:438
 msgid "Show &missing pages"
 msgstr "Sýna &týndar síður"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:367
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:435
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:447
 msgid "Show &redirect pages"
 msgstr "Sýna &aðgreiningasíður"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:371
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:444
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:456
 msgid "Show &other pages"
 msgstr "Sýna &aðrar síður"
 
@@ -276,7 +276,7 @@ msgstr ""
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:803
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:810
 #, fuzzy, java-format
 msgid "Detection by [[{0}]]"
 msgstr "Nýr kafli í {0}"
@@ -298,7 +298,7 @@ msgid "Automatic disambiguation fixing"
 msgstr "Sjálfvirk aðgreiningarlögun"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:300
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:583
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:595
 msgid "Add"
 msgstr "Bæta við"
 
@@ -562,148 +562,152 @@ msgid "Article contents"
 msgstr "Innihald greinar"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:210
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:658
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:670
 #: org/wikipediacleaner/gui/swing/PageWindow.java:426
 msgid "&Validate"
 msgstr "&Staðfesta"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:214
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:664
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:676
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:258
 msgid "&Cancel"
 msgstr "&Hætta við"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:144
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:145
 msgid "Options"
 msgstr "Stillingar"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:167
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:168
 msgid "General"
 msgstr "Almennt"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:168
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:169
 #: org/wikipediacleaner/gui/swing/PageWindow.java:316
 msgid "Full analysis"
 msgstr "Full lýsing"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:169
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:170
 msgid "Sorting"
 msgstr "Röðun"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:181
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:182
 msgid "General options"
 msgstr "Almennir valkostir"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:201
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:202
 msgid "Close disambiguation window after sending"
 msgstr "Loka aðgreiningarglugga eftir sendingu"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:212
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:213
 msgid "Restore window position"
 msgstr "Setja glugga aftur á sinn stað"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:223
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:224
 msgid "Save window position"
 msgstr "Vista gluggastaðsetningu"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:234
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:235
 msgid "Use short notation [[Xxxxx (yyy)|]]"
 msgstr "Nota stutta aðgreiningu [[Xxxxx (yyy)|]]"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:245
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:246
 msgid "Use advanced features (experimental)"
 msgstr "Nota flóknar aðgerðir (tilraunaútgáfa)"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:256
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:257
 msgid "Display WikiCleaner link in update comments"
 msgstr "Sýna tengil í WikiCleaner í breytingaágripi"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:267
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:268
 msgid "Show errors with no detection found"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:281
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:279
+msgid "Add link to error description in comments"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:293
 msgid "Maximum number of items in a menu :"
 msgstr "Hámarksfjöldi atriða í valmynd:"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:299
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:311
 msgid "Maximum number of simultaneous analysis :"
 msgstr "Hámarksfjöldi lýsinga (samtímis):"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:318
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:330
 #, fuzzy
 msgid "Maximum number of errors for Check Wiki :"
 msgstr "Hámarksfjöldi fyrirspurna:"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:336
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:348
 msgid "Maximum number of interrogation threads :"
 msgstr "Hámarksfjöldi fyrirspurna:"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:354
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:366
 msgid "Signature :"
 msgstr "Undirskrift:"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:388
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:400
 msgid "Full Analysis window options"
 msgstr "Stillingar á glugga fyrir fullar lýsingar"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:408
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:420
 msgid "Close full analysis window after sending"
 msgstr "Loka glugganum með fullum lýsingum eftir sendingu"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:453
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:465
 msgid "Count &disambiguation pages"
 msgstr "Telja &aðgreiningasíður"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:462
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:474
 msgid "Count &missing pages"
 msgstr "Telja &týndar síður"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:471
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:483
 msgid "Count &redirect pages"
 msgstr "Telja &tilvísanir"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:480
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:492
 msgid "Count &other pages"
 msgstr "Telja &aðrar síður"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:489
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:501
 msgid "&Hide window when sending"
 msgstr "&Fela glugga við sendingu"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:501
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:513
 msgid "Number of links selected :"
 msgstr "Fjöldi valdra tengla:"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:519
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:531
 msgid "Undo levels :"
 msgstr "Taka aftur þrep:"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:566
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:578
 msgid "Sort orders"
 msgstr "Raða í röð"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:587
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:599
 msgid "Delete"
 msgstr "Eyða"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:600
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:612
 msgid "Details"
 msgstr "Nánar"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:626
 msgid "Up"
 msgstr "Upp"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:618
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:630
 msgid "Down"
 msgstr "Niður"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:652
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:664
 msgid "&Apply"
 msgstr "&Virkja"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:670
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:682
 msgid "&Restore defaults"
 msgstr "&Endurhlaða sjálfval"
 
