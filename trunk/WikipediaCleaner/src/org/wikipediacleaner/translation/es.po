@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-07 23:56+0200\n"
-"PO-Revision-Date: 2009-12-25 17:54+0000\n"
+"PO-Revision-Date: 2009-12-26 18:37+0000\n"
 "Last-Translator: Paco Molinero <paco@byasl.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-12-26 16:04+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 18:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
@@ -43,9 +43,9 @@ msgid "Priority unknown"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:396
-#, fuzzy, java-format
+#, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
-msgstr "Error n°{0} ({1}) - {2}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:403
 msgid "Error unkown from WikiCleaner"
@@ -218,7 +218,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
@@ -240,18 +241,16 @@ msgid "List of errors detected :"
 msgstr "Lista de errores detectados"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:237
-#, fuzzy
 msgid "Reload error"
-msgstr "&Recargar"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:269
 msgid "Pages"
 msgstr "Páginas"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:316
-#, fuzzy
 msgid "&Load pages"
-msgstr "&Página al azar"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:434
 msgid "Mark as Fixed"
@@ -275,9 +274,9 @@ msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:810
-#, fuzzy, java-format
+#, java-format
 msgid "Detection by [[{0}]]"
-msgstr "Nueva sección en {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/Controller.java:242
 #, java-format
@@ -634,9 +633,8 @@ msgid "Maximum number of simultaneous analysis :"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:330
-#, fuzzy
 msgid "Maximum number of errors for Check Wiki :"
-msgstr "Número máximo de items en un menu :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:348
 msgid "Maximum number of interrogation threads :"
@@ -1100,9 +1098,8 @@ msgid "The following modifications have been done ({0} pages):"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:119
-#, fuzzy
 msgid "Retrieving Check Wiki configuration"
-msgstr "Recibiendo informaciones de desambigüación"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:141
 #, java-format
@@ -1142,23 +1139,11 @@ msgstr ""
 #~ msgid "Article with false <br/>"
 #~ msgstr "Artículos con <br> incorrecto"
 
-#~ msgid "HTML text style element <b>"
-#~ msgstr "Elemento de estilo de texto HTML <b>"
-
-#~ msgid "Table not correct end"
-#~ msgstr "Final incorrecto de tabla"
-
 #~ msgid "Double pipe in one link"
 #~ msgstr "Separador doble en un enlace"
 
 #~ msgid "Template programming element"
 #~ msgstr "Elemento programador de plantilla"
-
-#~ msgid "HTML text style element <i>"
-#~ msgstr "Elemento de estilo de texto HTML <i>"
-
-#~ msgid "HTML text style element <p>"
-#~ msgstr "Elemento de estilo de texto HTML"
 
 #~ msgid "Template not correct end"
 #~ msgstr "Plantilla sin cerrar correctamente"
@@ -1181,8 +1166,20 @@ msgstr ""
 #~ msgid "Reference duplication"
 #~ msgstr "Varias referencias iguales"
 
-#~ msgid "This screen is not functional yet !"
-#~ msgstr "Esta pantalla aun no es funcional"
+#~ msgid "Table not correct end"
+#~ msgstr "Final incorrecto de tabla"
+
+#~ msgid "HTML text style element <b>"
+#~ msgstr "Elemento de estilo de texto HTML <b>"
+
+#~ msgid "HTML text style element <i>"
+#~ msgstr "Elemento de estilo de texto HTML <i>"
+
+#~ msgid "HTML text style element <p>"
+#~ msgstr "Elemento de estilo de texto HTML"
+
+#~ msgid "Selected page"
+#~ msgstr "Seleccioanar página"
 
 #~ msgid "Load full list"
 #~ msgstr "Cargar lista completa"
@@ -1190,5 +1187,5 @@ msgstr ""
 #~ msgid "Show full list"
 #~ msgstr "Mostar lista completa"
 
-#~ msgid "Selected page"
-#~ msgstr "Seleccioanar página"
+#~ msgid "This screen is not functional yet !"
+#~ msgstr "Esta pantalla aun no es funcional"

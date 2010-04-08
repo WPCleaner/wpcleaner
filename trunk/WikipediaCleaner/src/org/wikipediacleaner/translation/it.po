@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-07 23:56+0200\n"
-"PO-Revision-Date: 2009-09-05 13:31+0100\n"
-"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
+"PO-Revision-Date: 2009-09-05 18:48+0000\n"
+"Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-07-22 17:48+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 18:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
@@ -216,7 +216,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
@@ -230,33 +231,28 @@ msgid "Semi-automatic disambiguation fixing"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:134
-#, fuzzy
 msgid "Check Wikipedia"
-msgstr "Altre Wikipedia"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:220
 msgid "List of errors detected :"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:237
-#, fuzzy
 msgid "Reload error"
-msgstr "&Ricarica"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:269
-#, fuzzy
 msgid "Pages"
-msgstr "&Pagina :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:316
-#, fuzzy
 msgid "&Load pages"
-msgstr "&Aggiorna lista pagina"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:434
-#, fuzzy
 msgid "Mark as Fixed"
-msgstr "Marca come aiuto necessario"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:518
 #, java-format
@@ -276,9 +272,9 @@ msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:810
-#, fuzzy, java-format
+#, java-format
 msgid "Detection by [[{0}]]"
-msgstr "Nuova sezione in {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/Controller.java:242
 #, java-format
@@ -516,10 +512,8 @@ msgstr ""
 "Non c'è nessuna lista di disambiguazione conosciuta per questa Wikipedia."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:832
-#, fuzzy
 msgid "There's no known Check Wikipedia Project for this Wikipedia."
 msgstr ""
-"Non c'è nessuna lista di disambiguazione conosciuta per questa Wikipedia."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:866
 msgid "Watched pages"
@@ -536,9 +530,8 @@ msgid "Retrieving MediaWiki API"
 msgstr "Recupero API MediaWiki"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:939
-#, fuzzy
 msgid "Retrieving disambiguation templates"
-msgstr "Recupero informazioni di disambiguazione"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:114
 #, java-format
@@ -640,9 +633,8 @@ msgid "Maximum number of simultaneous analysis :"
 msgstr "Numero massimo di analisi simultanee:"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:330
-#, fuzzy
 msgid "Maximum number of errors for Check Wiki :"
-msgstr "Numero massimo di thread di interrogazione:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:348
 msgid "Maximum number of interrogation threads :"
@@ -747,9 +739,8 @@ msgid "&Remove page comments"
 msgstr "&Rimuovi pagina commenti"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:175
-#, fuzzy
 msgid "Backlinks"
-msgstr "Max backlink :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:203
 msgid "&Update page information"
@@ -1008,14 +999,14 @@ msgid "Current chapter"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:198
-#, fuzzy, java-format
+#, java-format
 msgid "Link parameter {0} to"
-msgstr "&Collegamento a {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:199
-#, fuzzy, java-format
+#, java-format
 msgid "Replace parameter {0} with"
-msgstr "Sostituisci con"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:341
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:510
@@ -1111,9 +1102,8 @@ msgid "The following modifications have been done ({0} pages):"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:119
-#, fuzzy
 msgid "Retrieving Check Wiki configuration"
-msgstr "Recupero informazioni di disambiguazione"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:141
 #, java-format
@@ -1144,6 +1134,9 @@ msgstr "Aggiornamento contenuti pagina"
 msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
 
+#~ msgid "Retrieving namespaces"
+#~ msgstr "Recupero namespace"
+
 #~ msgid "Square brackets not correct end"
 #~ msgstr "Doppie quadre non chiuse"
 
@@ -1152,10 +1145,6 @@ msgstr ""
 
 #~ msgid "Article with false <br/>"
 #~ msgstr "Voci con falsi <br/>"
-
-#, fuzzy
-#~ msgid "Table not correct end"
-#~ msgstr "Template senza graffe di chiusura"
 
 #~ msgid "Double pipe in one link"
 #~ msgstr "Wikilink con doppia pipe"
@@ -1183,10 +1172,3 @@ msgstr ""
 
 #~ msgid "Reference duplication"
 #~ msgstr "Nota doppia"
-
-#, fuzzy
-#~ msgid "Selected page"
-#~ msgstr "Ripara le pagine selezionate"
-
-#~ msgid "Retrieving namespaces"
-#~ msgstr "Recupero namespace"

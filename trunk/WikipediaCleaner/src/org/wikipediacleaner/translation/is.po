@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-07 23:56+0200\n"
-"PO-Revision-Date: 2008-12-24 00:31+0000\n"
-"Last-Translator: Jóna Þórunn Ragnarsdóttir <Unknown>\n"
+"PO-Revision-Date: 2009-08-01 22:00+0000\n"
+"Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Icelandic <is@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-12-24 08:01+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 18:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
-#, fuzzy, java-format
+#, java-format
 msgid "Page {0}:"
-msgstr "&Síða:"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:172
 msgid "Deactivated"
@@ -216,7 +216,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
@@ -226,38 +227,32 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:114
-#, fuzzy
 msgid "Semi-automatic disambiguation fixing"
-msgstr "Sjálfvirk aðgreiningarlögun"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:134
-#, fuzzy
 msgid "Check Wikipedia"
-msgstr "Önnur Wikipedia"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:220
 msgid "List of errors detected :"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:237
-#, fuzzy
 msgid "Reload error"
-msgstr "&Endurlesa"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:269
-#, fuzzy
 msgid "Pages"
-msgstr "&Síða:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:316
-#, fuzzy
 msgid "&Load pages"
-msgstr "&Endurhlaða síðulista"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:434
-#, fuzzy
 msgid "Mark as Fixed"
-msgstr "Merkja sem hjálparþurfi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:518
 #, java-format
@@ -277,9 +272,9 @@ msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:810
-#, fuzzy, java-format
+#, java-format
 msgid "Detection by [[{0}]]"
-msgstr "Nýr kafli í {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/Controller.java:242
 #, java-format
@@ -431,9 +426,8 @@ msgid "Help requested on..."
 msgstr "Hjálp beðin..."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:448
-#, fuzzy
 msgid "Project check wikipedia"
-msgstr "Önnur Wikipedia"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:459
 msgid "&Random page"
@@ -512,9 +506,8 @@ msgid "There's no known list of disambiguation pages for this Wikipedia."
 msgstr "Það er ekki til þekktur listi yfir aðgreiningar á þessari Wikipediu."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:832
-#, fuzzy
 msgid "There's no known Check Wikipedia Project for this Wikipedia."
-msgstr "Það er ekki til þekktur listi yfir aðgreiningar á þessari Wikipediu."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:866
 msgid "Watched pages"
@@ -531,9 +524,8 @@ msgid "Retrieving MediaWiki API"
 msgstr "Sæki MediaWiki API"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:939
-#, fuzzy
 msgid "Retrieving disambiguation templates"
-msgstr "Næ í upplýsingar um aðgreiningarsíðu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:114
 #, java-format
@@ -635,9 +627,8 @@ msgid "Maximum number of simultaneous analysis :"
 msgstr "Hámarksfjöldi lýsinga (samtímis):"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:330
-#, fuzzy
 msgid "Maximum number of errors for Check Wiki :"
-msgstr "Hámarksfjöldi fyrirspurna:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:348
 msgid "Maximum number of interrogation threads :"
@@ -742,9 +733,8 @@ msgid "&Remove page comments"
 msgstr "&Fjarlægja athugasemdir"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:175
-#, fuzzy
 msgid "Backlinks"
-msgstr "Hámarksfjöldi tengla:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:203
 msgid "&Update page information"
@@ -1001,14 +991,14 @@ msgid "Current chapter"
 msgstr "Núverandi kafli"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:198
-#, fuzzy, java-format
+#, java-format
 msgid "Link parameter {0} to"
-msgstr "&Tenja í {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:199
-#, fuzzy, java-format
+#, java-format
 msgid "Replace parameter {0} with"
-msgstr "Endursetja með"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:341
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:510
@@ -1104,9 +1094,8 @@ msgid "The following modifications have been done ({0} pages):"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:119
-#, fuzzy
 msgid "Retrieving Check Wiki configuration"
-msgstr "Næ í upplýsingar um aðgreiningarsíðu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:141
 #, java-format
@@ -1137,26 +1126,16 @@ msgstr "Uppfæri síðuinnihald"
 msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Selected page"
-#~ msgstr "Laga valdar síður"
-
 #~ msgid "Retrieving namespaces"
 #~ msgstr "Sæki nafnrými"
-
-#, fuzzy
-#~ msgid "Project - {0}"
-#~ msgstr "Forskoða - {0}"
 
 #~ msgid ""
 #~ "!!! WARNING !!!\n"
 #~ "This function will do all the replacements in all selected pages.\n"
 #~ "It may modify a lot of pages in a short period of time.\n"
 #~ "On some Wikipedia projects, you may need the bot status for doing this.\n"
-#~ "Please, check if you need the bot status by reading the rules of "
-#~ "Wikipedia.\n"
-#~ "Also, verify again the texts you have inputed before running this "
-#~ "function.\n"
+#~ "Please, check if you need the bot status by reading the rules of Wikipedia.\n"
+#~ "Also, verify again the texts you have inputed before running this function.\n"
 #~ "Do you want to continue ?"
 #~ msgstr ""
 #~ "!!! Viðvörun !!!\n"

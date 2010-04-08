@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-07 23:56+0200\n"
-"PO-Revision-Date: 2009-11-14 17:17+0000\n"
-"Last-Translator: Fabian Affolter <Unknown>\n"
+"PO-Revision-Date: 2009-11-16 21:23+0000\n"
+"Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-11-16 19:40+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 18:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
@@ -43,9 +43,9 @@ msgid "Priority unknown"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:396
-#, fuzzy, java-format
+#, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
-msgstr "Fehler-No {0} ({1}) - {2}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:403
 msgid "Error unkown from WikiCleaner"
@@ -217,7 +217,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
@@ -239,18 +240,16 @@ msgid "List of errors detected :"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:237
-#, fuzzy
 msgid "Reload error"
-msgstr "E&rneut laden"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:269
 msgid "Pages"
 msgstr "Seiten"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:316
-#, fuzzy
 msgid "&Load pages"
-msgstr "Beobachtete Seiten"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:434
 msgid "Mark as Fixed"
@@ -274,9 +273,9 @@ msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:810
-#, fuzzy, java-format
+#, java-format
 msgid "Detection by [[{0}]]"
-msgstr "Neue Sektion in {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/Controller.java:242
 #, java-format
@@ -852,7 +851,8 @@ msgstr "Sende {0}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:931
 msgid "Would you like to add this page on your local Watch list ?"
-msgstr "Möchten Sie diese Seite zu Ihrer lokalen Beobachtungsliste hinzufügen?"
+msgstr ""
+"Möchten Sie diese Seite zu Ihrer lokalen Beobachtungsliste hinzufügen?"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:130
 #, java-format
@@ -1088,9 +1088,8 @@ msgid "The following modifications have been done ({0} pages):"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:119
-#, fuzzy
 msgid "Retrieving Check Wiki configuration"
-msgstr "Beziehe Informationen zur Begriffsklärung"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:141
 #, java-format
@@ -1130,23 +1129,11 @@ msgstr ""
 #~ msgid "Article with false <br/>"
 #~ msgstr "Artikel mit nicht standardkonformen manuellen Zeilenumbrüchen"
 
-#~ msgid "HTML text style element <b>"
-#~ msgstr "HTML-Text-Stil-Element <b>"
-
-#~ msgid "Table not correct end"
-#~ msgstr "Tabelle endet nicht korrekt"
-
 #~ msgid "Double pipe in one link"
 #~ msgstr "Doppelter senkrechter Strich in einem Link"
 
 #~ msgid "Template programming element"
 #~ msgstr "Reste aus Vorlagenprogrammierung"
-
-#~ msgid "HTML text style element <i>"
-#~ msgstr "HTML-Text-Stil-Element <i>"
-
-#~ msgid "HTML text style element <p>"
-#~ msgstr "HTML-Text-Stil-Element <p>"
 
 #~ msgid "Template not correct end"
 #~ msgstr "Vorlage ohne korrektes Ende"
@@ -1154,14 +1141,8 @@ msgstr ""
 #~ msgid "Square brackets not correct begin"
 #~ msgstr "Anzahl öffnender eckiger Klammern nicht korrekt"
 
-#~ msgid "Template not correct begin"
-#~ msgstr "Vorlage ohne korrekten Anfang"
-
 #~ msgid "Title linked in text"
 #~ msgstr "Selbstlink"
-
-#~ msgid "Link equal to linktext"
-#~ msgstr "Link gleicht Linktext"
 
 #~ msgid "Headline should end with \"=\""
 #~ msgstr "Überschrift sollte mit „=“ enden"
@@ -1172,11 +1153,29 @@ msgstr ""
 #~ msgid "Reference duplication"
 #~ msgstr "Mehrfache Referenz-Angabe"
 
+#~ msgid "Link equal to linktext"
+#~ msgstr "Link gleicht Linktext"
+
+#~ msgid "Selected page"
+#~ msgstr "Gewählte Seite"
+
+#~ msgid "HTML text style element <b>"
+#~ msgstr "HTML-Text-Stil-Element <b>"
+
+#~ msgid "Table not correct end"
+#~ msgstr "Tabelle endet nicht korrekt"
+
+#~ msgid "Template not correct begin"
+#~ msgstr "Vorlage ohne korrekten Anfang"
+
+#~ msgid "HTML text style element <i>"
+#~ msgstr "HTML-Text-Stil-Element <i>"
+
+#~ msgid "HTML text style element <p>"
+#~ msgstr "HTML-Text-Stil-Element <p>"
+
 #~ msgid "Load full list"
 #~ msgstr "Komplette Liste laden"
 
 #~ msgid "Show full list"
 #~ msgstr "Komplette Liste anzeigen"
-
-#~ msgid "Selected page"
-#~ msgstr "Gewählte Seite"
