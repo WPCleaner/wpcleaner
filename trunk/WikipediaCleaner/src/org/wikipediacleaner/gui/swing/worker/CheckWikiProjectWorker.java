@@ -22,18 +22,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Properties;
 
 import org.apache.commons.httpclient.NameValuePair;
+import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.CheckErrorComparator;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -117,10 +121,20 @@ public class CheckWikiProjectWorker extends BasicWorker {
     if (retrieveConfig) {
       try {
         setText(GT._("Retrieving Check Wiki configuration"));
-        InputStream stream = APIFactory.getAPI().askToolServerGet(
-            "~sk/checkwiki/" + code + "wiki/" + code + "wiki_translation.txt",
-            true);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        BufferedReader reader = null;
+        if (getWikipedia().getCheckWikiTraduction() != null) {
+          MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
+          Page page = DataManager.getPage(
+              getWikipedia(), getWikipedia().getCheckWikiTraduction(), null, null);
+          mw.retrieveContents(getWikipedia(), page, true, false, false);
+          reader = new BufferedReader(new StringReader(page.getContents()));
+        }
+        if (reader == null) {
+          InputStream stream = APIFactory.getAPI().askToolServerGet(
+              "~sk/checkwiki/" + code + "wiki/" + code + "wiki_translation.txt",
+              true);
+          reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        }
         while (getNextCheckWikiParameter(checkWikiConfig, reader)) {
           //
         }
