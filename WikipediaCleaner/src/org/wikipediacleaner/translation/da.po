@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-07 23:56+0200\n"
-"PO-Revision-Date: 2009-09-05 13:12+0100\n"
-"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
+"PO-Revision-Date: 2009-09-05 18:49+0000\n"
+"Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-07-30 20:44+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 18:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
-#, fuzzy, java-format
+#, java-format
 msgid "Page {0}:"
-msgstr "&Side :"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:172
 msgid "Deactivated"
@@ -216,7 +216,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
@@ -230,28 +231,24 @@ msgid "Semi-automatic disambiguation fixing"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:134
-#, fuzzy
 msgid "Check Wikipedia"
-msgstr "&Wikipedia"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:220
 msgid "List of errors detected :"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:237
-#, fuzzy
 msgid "Reload error"
-msgstr "&Genindlæs"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:269
-#, fuzzy
 msgid "Pages"
-msgstr "&Side :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:316
-#, fuzzy
 msgid "&Load pages"
-msgstr "&Tilføj side"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:434
 msgid "Mark as Fixed"
@@ -624,9 +621,8 @@ msgid "Maximum number of simultaneous analysis :"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:330
-#, fuzzy
 msgid "Maximum number of errors for Check Wiki :"
-msgstr "Maksimalt antal emner i en menu :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:348
 msgid "Maximum number of interrogation threads :"
@@ -992,9 +988,9 @@ msgid "Link parameter {0} to"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:199
-#, fuzzy, java-format
+#, java-format
 msgid "Replace parameter {0} with"
-msgstr "Erstat med"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:341
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:510
@@ -1130,10 +1126,6 @@ msgstr ""
 
 #~ msgid "Article with false <br/>"
 #~ msgstr "Artikel med forkert <br/>"
-
-#, fuzzy
-#~ msgid "Table not correct end"
-#~ msgstr "Skabelon slutter forkert"
 
 #~ msgid "Double pipe in one link"
 #~ msgstr "Dobbelt-pipe i et link"

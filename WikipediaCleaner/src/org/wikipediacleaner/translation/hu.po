@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-07 23:56+0200\n"
-"PO-Revision-Date: 2009-12-18 11:58+0000\n"
+"PO-Revision-Date: 2009-12-28 09:53+0000\n"
 "Last-Translator: sillentdx <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-12-18 19:04+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 18:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
@@ -43,9 +43,9 @@ msgid "Priority unknown"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:396
-#, fuzzy, java-format
+#, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
-msgstr "Hiba n°{0} ({1}) - {2}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:403
 msgid "Error unkown from WikiCleaner"
@@ -216,7 +216,8 @@ msgstr "Rövid idő alatt sok lapot módosíthat."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:590
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
@@ -238,18 +239,16 @@ msgid "List of errors detected :"
 msgstr "Észlelt hibák:"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:237
-#, fuzzy
 msgid "Reload error"
-msgstr "Frissítés"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:269
 msgid "Pages"
 msgstr "Lapok"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:316
-#, fuzzy
 msgid "&Load pages"
-msgstr "&Oldal hozzáadása"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:434
 msgid "Mark as Fixed"
@@ -273,9 +272,9 @@ msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:810
-#, fuzzy, java-format
+#, java-format
 msgid "Detection by [[{0}]]"
-msgstr "Új fejezet it: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/Controller.java:242
 #, java-format
@@ -636,9 +635,8 @@ msgid "Maximum number of simultaneous analysis :"
 msgstr "Maximum számú egyidejű elemzés:"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:330
-#, fuzzy
 msgid "Maximum number of errors for Check Wiki :"
-msgstr "Maximum számú tárgy egy menüben:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:348
 msgid "Maximum number of interrogation threads :"
@@ -909,7 +907,7 @@ msgstr "&Alkalmazás csak erre: {0}"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:268
 msgid "&Reload page list"
-msgstr ""
+msgstr "&Oldal lista újratöltése"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:309
 msgid "Possible pages"
@@ -1099,14 +1097,13 @@ msgid "{0} links in Main Namespace / {1} total links"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/AutomaticDisambiguationWorker.java:67
-#, fuzzy, java-format
+#, java-format
 msgid "The following modifications have been done ({0} pages):"
-msgstr "A következő változtatások történtek:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:119
-#, fuzzy
 msgid "Retrieving Check Wiki configuration"
-msgstr "Egyértelmüsítő lapok információinak letöltése"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:141
 #, java-format
@@ -1137,14 +1134,11 @@ msgstr "Oldal frissítése"
 msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
 
-#~ msgid "Square brackets not correct end"
-#~ msgstr "Square brackets not correct end"
-
 #~ msgid "Headlines start with one \"=\""
 #~ msgstr "Egy „=”-lel kezdődő szakaszcímek"
 
-#~ msgid "Article with false <br/>"
-#~ msgstr "Cikkek hibás <br/> taggel"
+#~ msgid "Square brackets not correct end"
+#~ msgstr "Square brackets not correct end"
 
 #~ msgid "HTML text style element <b>"
 #~ msgstr "<b> HTML-kifejezés"
@@ -1152,11 +1146,20 @@ msgstr ""
 #~ msgid "Table not correct end"
 #~ msgstr "Lezáratlan táblázat"
 
-#~ msgid "Double pipe in one link"
-#~ msgstr "Két vonal egy wikilinkben"
+#~ msgid "Title linked in text"
+#~ msgstr "Cím a szövegben"
 
-#~ msgid "Template programming element"
-#~ msgstr "Sablonkészítő kifejezések szócikkekben"
+#~ msgid "Template not correct end"
+#~ msgstr "Lezáratlan sablon"
+
+#~ msgid "Template not correct begin"
+#~ msgstr "Hibás kezdetű sablon"
+
+#~ msgid "Square brackets not correct begin"
+#~ msgstr "Hibás kezdetű szögletes zárójel"
+
+#~ msgid "Headline should end with \"=\""
+#~ msgstr "Nem „=”-lel végződő szakaszcímek"
 
 #~ msgid "HTML text style element <i>"
 #~ msgstr "<i> HTML-kifejezés"
@@ -1164,26 +1167,8 @@ msgstr ""
 #~ msgid "HTML text style element <p>"
 #~ msgstr "<p> HTML-kifejezés"
 
-#~ msgid "Template not correct end"
-#~ msgstr "Lezáratlan sablon"
-
-#~ msgid "Square brackets not correct begin"
-#~ msgstr "Hibás kezdetű szögletes zárójel"
-
-#~ msgid "Template not correct begin"
-#~ msgstr "Hibás kezdetű sablon"
-
-#~ msgid "Title linked in text"
-#~ msgstr "Cím a szövegben"
-
-#~ msgid "en dash or em dash"
-#~ msgstr "&ndash vagy &mdash a  „–” vagy  a „—” helyett"
-
-#~ msgid "Link equal to linktext"
-#~ msgstr "Wikilink azonos szöveggel és céllal"
-
-#~ msgid "Headline should end with \"=\""
-#~ msgstr "Nem „=”-lel végződő szakaszcímek"
+#~ msgid "Article with false <br/>"
+#~ msgstr "Cikkek hibás <br/> taggel"
 
 #~ msgid "External link with line break"
 #~ msgstr "Külső hivatkozás sortöréssel"
@@ -1191,17 +1176,29 @@ msgstr ""
 #~ msgid "Reference duplication"
 #~ msgstr "Azonos tartalmú <ref>"
 
-#~ msgid "This screen is not functional yet !"
-#~ msgstr "Ez még nem működik!"
-
 #~ msgid "Load full list"
 #~ msgstr "Teljes lista betöltése"
 
 #~ msgid "Show full list"
 #~ msgstr "Teljes lista mutatása"
 
+#~ msgid "Template programming element"
+#~ msgstr "Sablonkészítő kifejezések szócikkekben"
+
 #~ msgid "Selected page"
 #~ msgstr "Kiválasztott lap"
 
 #~ msgid "Retrieving namespaces"
 #~ msgstr "Névterek letöltése"
+
+#~ msgid "Link equal to linktext"
+#~ msgstr "Wikilink azonos szöveggel és céllal"
+
+#~ msgid "Double pipe in one link"
+#~ msgstr "Két vonal egy wikilinkben"
+
+#~ msgid "This screen is not functional yet !"
+#~ msgstr "Ez még nem működik!"
+
+#~ msgid "en dash or em dash"
+#~ msgstr "&ndash vagy &mdash a  „–” vagy  a „—” helyett"
