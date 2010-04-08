@@ -55,4 +55,5 @@ class WikiPl {
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
   final static String checkWikiProject = "Wikipedia:WCW";
+  final static String checkWikiTraduction = "Wikiprojekt:Check Wikipedia/Tłumaczenie";
 }

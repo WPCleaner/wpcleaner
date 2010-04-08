@@ -55,4 +55,5 @@ class WikiHe {
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
   final static String checkWikiProject = "ויקיפדיה:Check Wikipedia";
+  final static String checkWikiTraduction = "ויקיפדיה:Check Wikipedia/Translation";
 }

@@ -61,7 +61,8 @@ public enum EnumWikipedia {
    * - Disambiguation project page giving the list of pages to work on.
    * - Array of disambiguation templates.
    * - Array of special templates.
-   * - Project Check Wikipedia.
+   * - Project Check Wikipedia page.
+   * - Project Check Wikipedia traduction.
    */
 
   CA( WikiCa.code, WikiCa.name,
@@ -71,7 +72,7 @@ public enum EnumWikipedia {
       WikiCa.wikt, WikiCa.wiktMatches,
       WikiCa.dabLinkTemplates, WikiCa.needHelpTemplates, WikiCa.helpRequestedTemplates,
       WikiCa.dabList, WikiCa.dabMatches,
-      WikiCa.checkWikiProject),
+      WikiCa.checkWikiProject, WikiCa.checkWikiTraduction),
   DE( WikiDe.code, WikiDe.name,
       WikiDe.apiUrl, WikiDe.indexUrl,
       WikiDe.helpUrl, WikiDe.helpLink, WikiDe.orientation,
@@ -79,7 +80,7 @@ public enum EnumWikipedia {
       WikiDe.wikt, WikiDe.wiktMatches,
       WikiDe.dabLinkTemplates, WikiDe.needHelpTemplates, WikiDe.helpRequestedTemplates,
       WikiDe.dabList, WikiDe.dabMatches,
-      WikiDe.checkWikiProject),
+      WikiDe.checkWikiProject, WikiDe.checkWikiTraduction),
   EN( WikiEn.code, WikiEn.name,
       WikiEn.apiUrl, WikiEn.indexUrl,
       WikiEn.helpUrl, WikiEn.helpLink, WikiEn.orientation,
@@ -87,7 +88,7 @@ public enum EnumWikipedia {
       WikiEn.wikt, WikiEn.wiktMatches,
       WikiEn.dabLinkTemplates, WikiEn.needHelpTemplates, WikiEn.helpRequestedTemplates,
       WikiEn.dabList, WikiEn.dabMatches,
-      WikiEn.checkWikiProject),
+      WikiEn.checkWikiProject, WikiEn.checkWikiTraduction),
   ES( WikiEs.code, WikiEs.name,
       WikiEs.apiUrl, WikiEs.indexUrl,
       WikiEs.helpUrl, WikiEs.helpLink, WikiEs.orientation,
@@ -95,7 +96,7 @@ public enum EnumWikipedia {
       WikiEs.wikt, WikiEs.wiktMatches,
       WikiEs.dabLinkTemplates, WikiEs.needHelpTemplates, WikiEs.helpRequestedTemplates,
       WikiEs.dabList, WikiEs.dabMatches,
-      WikiEs.checkWikiProject),
+      WikiEs.checkWikiProject, WikiEs.checkWikiTraduction),
   FR( WikiFr.code, WikiFr.name,
       WikiFr.apiUrl, WikiFr.indexUrl,
       WikiFr.helpUrl, WikiFr.helpLink, WikiFr.orientation,
@@ -103,7 +104,7 @@ public enum EnumWikipedia {
       WikiFr.wikt, WikiFr.wiktMatches,
       WikiFr.dabLinkTemplates, WikiFr.needHelpTemplates, WikiFr.helpRequestedTemplates,
       WikiFr.dabList, WikiFr.dabMatches,
-      WikiFr.checkWikiProject),
+      WikiFr.checkWikiProject, WikiFr.checkWikiTraduction),
   HE( WikiHe.code, WikiHe.name,
       WikiHe.apiUrl, WikiHe.indexUrl,
       WikiHe.helpUrl, WikiHe.helpLink, WikiHe.orientation,
@@ -111,7 +112,7 @@ public enum EnumWikipedia {
       WikiHe.wikt, WikiHe.wiktMatches,
       WikiHe.dabLinkTemplates, WikiHe.needHelpTemplates, WikiHe.helpRequestedTemplates,
       WikiHe.dabList, WikiHe.dabMatches,
-      WikiHe.checkWikiProject),
+      WikiHe.checkWikiProject, WikiHe.checkWikiTraduction),
   IS( WikiIs.code, WikiIs.name,
       WikiIs.apiUrl, WikiIs.indexUrl,
       WikiIs.helpUrl, WikiIs.helpLink, WikiIs.orientation,
@@ -119,7 +120,7 @@ public enum EnumWikipedia {
       WikiIs.wikt, WikiIs.wiktMatches,
       WikiIs.dabLinkTemplates, WikiIs.needHelpTemplates, WikiIs.helpRequestedTemplates,
       WikiIs.dabList, WikiIs.dabMatches,
-      WikiIs.checkWikiProject),
+      WikiIs.checkWikiProject, WikiIs.checkWikiTraduction),
   NL( WikiNl.code, WikiNl.name,
       WikiNl.apiUrl, WikiNl.indexUrl,
       WikiNl.helpUrl, WikiNl.helpLink, WikiNl.orientation,
@@ -127,7 +128,7 @@ public enum EnumWikipedia {
       WikiNl.wikt, WikiNl.wiktMatches,
       WikiNl.dabLinkTemplates, WikiNl.needHelpTemplates, WikiNl.helpRequestedTemplates,
       WikiNl.dabList, WikiNl.dabMatches,
-      WikiNl.checkWikiProject),
+      WikiNl.checkWikiProject, WikiNl.checkWikiTraduction),
   NO( WikiNo.code, WikiNo.name,
       WikiNo.apiUrl, WikiNo.indexUrl,
       WikiNo.helpUrl, WikiNo.helpLink, WikiNo.orientation,
@@ -135,7 +136,7 @@ public enum EnumWikipedia {
       WikiNo.wikt, WikiNo.wiktMatches,
       WikiNo.dabLinkTemplates, WikiNo.needHelpTemplates, WikiNo.helpRequestedTemplates,
       WikiNo.dabList, WikiNo.dabMatches,
-      WikiNo.checkWikiProject),
+      WikiNo.checkWikiProject, WikiNo.checkWikiTraduction),
   PL( WikiPl.code, WikiPl.name,
       WikiPl.apiUrl, WikiPl.indexUrl,
       WikiPl.helpUrl, WikiPl.helpLink, WikiPl.orientation,
@@ -143,7 +144,7 @@ public enum EnumWikipedia {
       WikiPl.wikt, WikiPl.wiktMatches,
       WikiPl.dabLinkTemplates, WikiPl.needHelpTemplates, WikiPl.helpRequestedTemplates,
       WikiPl.dabList, WikiPl.dabMatches,
-      WikiPl.checkWikiProject),
+      WikiPl.checkWikiProject, WikiPl.checkWikiTraduction),
   PT( WikiPt.code, WikiPt.name,
       WikiPt.apiUrl, WikiPt.indexUrl,
       WikiPt.helpUrl, WikiPt.helpLink, WikiPt.orientation,
@@ -151,7 +152,7 @@ public enum EnumWikipedia {
       WikiPt.wikt, WikiPt.wiktMatches,
       WikiPt.dabLinkTemplates, WikiPt.needHelpTemplates, WikiPt.helpRequestedTemplates,
       WikiPt.dabList, WikiPt.dabMatches,
-      WikiPt.checkWikiProject),
+      WikiPt.checkWikiProject, WikiPt.checkWikiTraduction),
   RU( WikiRu.code, WikiRu.name,
       WikiRu.apiUrl, WikiRu.indexUrl,
       WikiRu.helpUrl, WikiRu.helpLink, WikiRu.orientation,
@@ -159,7 +160,7 @@ public enum EnumWikipedia {
       WikiRu.wikt, WikiRu.wiktMatches,
       WikiRu.dabLinkTemplates, WikiRu.needHelpTemplates, WikiRu.helpRequestedTemplates,
       WikiRu.dabList, WikiRu.dabMatches,
-      WikiRu.checkWikiProject),
+      WikiRu.checkWikiProject, WikiRu.checkWikiTraduction),
   SL( WikiSl.code, WikiSl.name,
       WikiSl.apiUrl, WikiSl.indexUrl,
       WikiSl.helpUrl, WikiSl.helpLink, WikiSl.orientation,
@@ -167,7 +168,7 @@ public enum EnumWikipedia {
       WikiSl.wikt, WikiSl.wiktMatches,
       WikiSl.dabLinkTemplates, WikiSl.needHelpTemplates, WikiSl.helpRequestedTemplates,
       WikiSl.dabList, WikiSl.dabMatches,
-      WikiSl.checkWikiProject),
+      WikiSl.checkWikiProject, WikiSl.checkWikiTraduction),
   ZH( WikiZh.code, WikiZh.name,
       WikiZh.apiUrl, WikiZh.indexUrl,
       WikiZh.helpUrl, WikiZh.helpLink, WikiZh.orientation,
@@ -175,7 +176,7 @@ public enum EnumWikipedia {
       WikiZh.wikt, WikiZh.wiktMatches,
       WikiZh.dabLinkTemplates, WikiZh.needHelpTemplates, WikiZh.helpRequestedTemplates,
       WikiZh.dabList, WikiZh.dabMatches,
-      WikiZh.checkWikiProject);
+      WikiZh.checkWikiProject, WikiZh.checkWikiTraduction);
 
   private final String code;
   private final String title;
@@ -194,6 +195,7 @@ public enum EnumWikipedia {
   private ArrayList<Page> disambiguationTemplates;
   private final TemplateMatch[] disambiguationMatches;
   private final String checkWikiProject;
+  private final String checkWikiTraduction;
 
   private List<Namespace> namespaces;
   private List<Language>  languages;
@@ -214,7 +216,8 @@ public enum EnumWikipedia {
    * @param templatesForHelpRequested Templates used to find pages where help is requested.
    * @param disambiguationList Page containing the list of disambiguation pages to work on.
    * @param templateMatches List of templates to analyze when looking for links.
-   * @param checkWikiProject Project Check Wikipedia.
+   * @param checkWikiProject Project Check Wikipedia page.
+   * @param checkWikiTraduction Project Check Wikipedia traduction.
    */
   EnumWikipedia(
       String code,
@@ -232,7 +235,8 @@ public enum EnumWikipedia {
       String[] templatesForHelpRequested,
       String disambiguationList,
       TemplateMatch[] templateMatches,
-      String checkWikiProject) {
+      String checkWikiProject,
+      String checkWikiTraduction) {
     this.code = code;
     this.title = title;
     this.apiUrl = apiUrl;
@@ -249,6 +253,7 @@ public enum EnumWikipedia {
     this.disambiguationList = disambiguationList;
     this.disambiguationMatches = templateMatches;
     this.checkWikiProject = checkWikiProject;
+    this.checkWikiTraduction = checkWikiTraduction;
   }
 
   /**
@@ -519,7 +524,14 @@ public enum EnumWikipedia {
   public String getCheckWikiProject() {
     return checkWikiProject;
   }
-  
+
+  /**
+   * @return Check Wikipedia Project traduction.
+   */
+  public String getCheckWikiTraduction() {
+    return checkWikiTraduction;
+  }
+
   /**
    * @return List of namespaces
    */

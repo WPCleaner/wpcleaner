@@ -64,4 +64,5 @@ class WikiEn {
   };
   
   final static String checkWikiProject = "Wikipedia:WCW";
+  final static String checkWikiTraduction = "Wikipedia:WikiProject Check Wikipedia/Translation";
 }

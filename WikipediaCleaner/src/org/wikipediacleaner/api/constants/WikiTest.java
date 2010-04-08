@@ -55,4 +55,5 @@ class WikiTest {
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
   final static String checkWikiProject = null;
+  final static String checkWikiTraduction = null;
 }

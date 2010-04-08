@@ -59,4 +59,5 @@ class WikiRu {
   };
   
   final static String checkWikiProject = "Википедия:ССО";
+  final static String checkWikiTraduction = "Википедия:Страницы с ошибками в викитексте/Перевод";
 }
