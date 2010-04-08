@@ -783,6 +783,7 @@ public class OptionsWindow
     config.setBoolean(Configuration.BOOLEAN_ANALYSIS_OTHER_PAGES, chkAnalysisOther.isSelected());
     config.setBoolean(Configuration.BOOLEAN_ANALYSIS_REDIRECT_PAGES, chkAnalysisRedirect.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS, chkShow0ErrorsCheckWiki.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_CHECK_LINK_ERRORS, chkLinkErrorsCheckWiki.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CLOSE_DISAMBIG, chkCloseDisambig.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CLOSE_FULL, chkCloseFull.isSelected());
     config.setBoolean(Configuration.BOOLEAN_RESTORE_WINDOW, chkRestoreWindowPosition.isSelected());
@@ -850,6 +851,9 @@ public class OptionsWindow
     chkShow0ErrorsCheckWiki.setSelected(config.getBoolean(
         Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
         Configuration.DEFAULT_CHECK_SHOW_0_ERRORS));
+    chkLinkErrorsCheckWiki.setSelected(config.getBoolean(
+        Configuration.BOOLEAN_CHECK_LINK_ERRORS,
+        Configuration.DEFAULT_CHECK_LINK_ERRORS));
     chkCloseDisambig.setSelected(config.getBoolean(
         Configuration.BOOLEAN_CLOSE_DISAMBIG,
         Configuration.DEFAULT_CLOSE_DISAMBIG));
