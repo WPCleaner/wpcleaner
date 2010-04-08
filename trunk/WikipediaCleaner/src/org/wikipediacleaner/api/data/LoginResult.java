@@ -55,7 +55,7 @@ public class LoginResult {
    * @param errorText Text error.
    * @param details Details of the error.
    * @param wait Wait text.
-   * @return
+   * @return Error.
    */
   static public LoginResult createErrorLogin(
       String errorText, String details, String wait) {
