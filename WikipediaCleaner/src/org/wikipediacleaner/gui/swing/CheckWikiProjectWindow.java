@@ -826,18 +826,27 @@ public class CheckWikiProjectWindow extends PageWindow {
     //String contents = projectPage.getContents();
     //errors = CheckError.initCheckErrors(getWikipedia(), contents);
     if (modelAllErrors != null) {
+      int selectedError = 0;
+      if (listAllErrors.getSelectedItem() instanceof CheckError) {
+        selectedError = ((CheckError) listAllErrors.getSelectedItem()).getErrorNumber();
+      }
       modelAllErrors.removeAllElements();
       Configuration config = Configuration.getConfiguration();
       boolean showAllErrors = config.getBoolean(
           Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
           Configuration.DEFAULT_CHECK_SHOW_0_ERRORS);
+      int selectedIndex = 0;
       if (errors != null) {
         for (CheckError error : errors) {
           if ((error.getPageCount() > 0) || (showAllErrors)) {
+            if (error.getErrorNumber() == selectedError) {
+              selectedIndex = modelAllErrors.getSize();
+            }
             modelAllErrors.addElement(error);
           }
         }
       }
+      listAllErrors.setSelectedIndex(selectedIndex);
     }
   }
 
