@@ -91,4 +91,5 @@ class WikiFr {
   };
   
   final static String checkWikiProject = "P:CS";
+  final static String checkWikiTraduction = "Projet:Correction syntaxique/Traduction";
 }

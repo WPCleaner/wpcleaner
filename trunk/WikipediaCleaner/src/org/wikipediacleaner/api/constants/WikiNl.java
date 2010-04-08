@@ -55,4 +55,5 @@ class WikiNl {
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
   final static String checkWikiProject = "Wikipedia:CW";
+  final static String checkWikiTraduction = "Wikipedia:Wikiproject/Check Wikipedia/Vertaling";
 }

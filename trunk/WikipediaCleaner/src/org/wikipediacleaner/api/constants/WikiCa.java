@@ -55,4 +55,5 @@ class WikiCa {
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
   final static String checkWikiProject = "VP:CHVP";
+  final static String checkWikiTraduction = "Viquipèdia:WikiProject Check Wikipedia/Translation";
 }

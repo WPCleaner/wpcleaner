@@ -56,4 +56,5 @@ class WikiZh {
   };
   
   final static String checkWikiProject = "Wikipedia:WPCHECK";
+  final static String checkWikiTraduction = "维基百科:错误检查专题/翻译";
 }

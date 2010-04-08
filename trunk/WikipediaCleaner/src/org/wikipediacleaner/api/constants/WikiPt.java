@@ -55,4 +55,5 @@ class WikiPt {
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
   final static String checkWikiProject = "WP:CHECK";
+  final static String checkWikiTraduction = "Wikipedia:Projetos/Check Wikipedia/Tradução";
 }

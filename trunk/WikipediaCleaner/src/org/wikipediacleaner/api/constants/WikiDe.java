@@ -55,4 +55,5 @@ class WikiDe {
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
   final static String checkWikiProject = "Wikipedia:WikiProject Check Wikipedia";
+  final static String checkWikiTraduction = "Wikipedia:WikiProjekt Syntaxkorrektur/Übersetzung";
 }

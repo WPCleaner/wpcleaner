@@ -55,4 +55,5 @@ class WikiEs {
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
   final static String checkWikiProject = "PR:CW";
+  final static String checkWikiTraduction = "Wikiproyecto:Check Wikipedia/Translation";
 }
