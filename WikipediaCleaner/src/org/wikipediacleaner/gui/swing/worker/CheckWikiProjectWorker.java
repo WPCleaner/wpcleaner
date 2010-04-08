@@ -121,22 +121,22 @@ public class CheckWikiProjectWorker extends BasicWorker {
     if (retrieveConfig) {
       try {
         setText(GT._("Retrieving Check Wiki configuration"));
-        BufferedReader reader = null;
+        InputStream stream = APIFactory.getAPI().askToolServerGet(
+            "~sk/checkwiki/" + code + "wiki/" + code + "wiki_translation.txt",
+            true);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        while (getNextCheckWikiParameter(checkWikiConfig, reader)) {
+          //
+        }
         if (getWikipedia().getCheckWikiTraduction() != null) {
           MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
           Page page = DataManager.getPage(
               getWikipedia(), getWikipedia().getCheckWikiTraduction(), null, null);
           mw.retrieveContents(getWikipedia(), page, true, false, false);
           reader = new BufferedReader(new StringReader(page.getContents()));
-        }
-        if (reader == null) {
-          InputStream stream = APIFactory.getAPI().askToolServerGet(
-              "~sk/checkwiki/" + code + "wiki/" + code + "wiki_translation.txt",
-              true);
-          reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-        }
-        while (getNextCheckWikiParameter(checkWikiConfig, reader)) {
-          //
+          while (getNextCheckWikiParameter(checkWikiConfig, reader)) {
+            //
+          }
         }
       } catch (APIException e) {
         return e;
