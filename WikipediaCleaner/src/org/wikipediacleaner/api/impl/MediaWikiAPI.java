@@ -451,6 +451,7 @@ public class MediaWikiAPI implements API {
     }
     QueryResult result = null;
     HashMap<String, String> properties = getProperties(ACTION_API_EDIT, true);
+    properties.put("assert", "user");
     properties.put("basetimestamp", page.getContentsTimestamp());
     properties.put("bot", "");
     properties.put("minor", "");
