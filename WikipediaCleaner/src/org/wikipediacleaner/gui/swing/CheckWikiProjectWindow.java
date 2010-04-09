@@ -35,6 +35,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.concurrent.Callable;
@@ -55,7 +57,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
@@ -64,6 +65,12 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyledDocument;
 
+import org.lobobrowser.html.HtmlRendererContext;
+import org.lobobrowser.html.UserAgentContext;
+import org.lobobrowser.html.gui.HtmlPanel;
+import org.lobobrowser.html.parser.DocumentBuilderImpl;
+import org.lobobrowser.html.test.SimpleUserAgentContext;
+import org.w3c.dom.Document;
 import org.wikipediacleaner.api.MediaWikiController;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorAlgorithm;
@@ -76,12 +83,15 @@ import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
+import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
 import org.wikipediacleaner.gui.swing.worker.CheckWikiProjectWorker;
 import org.wikipediacleaner.gui.swing.worker.RetrieveContentWorker;
 import org.wikipediacleaner.gui.swing.worker.SendWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 
 /**
@@ -93,13 +103,17 @@ public class CheckWikiProjectWindow extends PageWindow {
   Properties checkWikiConfig;
   JComboBox listAllErrors;
   private DefaultComboBoxModel modelAllErrors;
-  private JTextPane textDescription;
+  private HtmlPanel textDescription;
+  private UserAgentContext ucontext;
+  private HtmlRendererContext rcontext;
+  private JButton buttonErrorDetail;
 
   private JList listPages;
   private DefaultListModel modelPages;
 
   private JTabbedPane contentPane;
 
+  public final static String ACTION_ERROR_DETAIL = "ERROR_DETAIL";
   public final static String ACTION_LOAD_PAGES   = "LOAD_PAGES";
   public final static String ACTION_RELOAD_ERROR = "RELOAD_ERROR";
 
@@ -234,6 +248,13 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.gridx++;
     constraints.weightx = 1;
     panel.add(listAllErrors, constraints);
+    buttonErrorDetail = Utilities.createJButton(GT._("Detail"));
+    buttonErrorDetail.setActionCommand(ACTION_ERROR_DETAIL);
+    buttonErrorDetail.addActionListener(this);
+    buttonErrorDetail.setEnabled(false);
+    constraints.gridx++;
+    constraints.weightx = 0;
+    panel.add(buttonErrorDetail, constraints);
     JButton buttonReloadError = Utilities.createJButton(GT._("Reload error"));
     buttonReloadError.setActionCommand(ACTION_RELOAD_ERROR);
     buttonReloadError.addActionListener(this);
@@ -244,17 +265,16 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.gridy++;
 
     // Error description
-    textDescription = new JTextPane();
-    textDescription.setEditable(false);
-    JScrollPane scrollDescription = new JScrollPane(textDescription);
-    scrollDescription.setMinimumSize(new Dimension(100, 100));
-    scrollDescription.setPreferredSize(new Dimension(500, 100));
-    scrollDescription.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    textDescription = new HtmlPanel();
+    ucontext = new SimpleUserAgentContext();
+    rcontext = new MediaWikiHtmlRendererContext(textDescription, ucontext);
+    textDescription.setPreferredSize(new Dimension(500, 100));
     constraints.fill = GridBagConstraints.BOTH;
-    constraints.gridwidth = 3;
+    constraints.gridwidth = 4;
+    constraints.gridx = 0;
     constraints.weightx = 1;
     constraints.weighty = 1;
-    panel.add(scrollDescription, constraints);
+    panel.add(textDescription, constraints);
     constraints.gridy++;
 
     return panel;
@@ -858,8 +878,28 @@ public class CheckWikiProjectWindow extends PageWindow {
     modelPages.clear();
     if (selection instanceof CheckError) {
       CheckError error = (CheckError) selection;
-      textDescription.setText(error.getAlgorithm().getLongDescription());
-      textDescription.setCaretPosition(0);
+
+      // Error detail
+      buttonErrorDetail.setEnabled(
+          (error.getAlgorithm().getLink() != null) &&
+          Utilities.isDesktopSupported());
+
+      // Error type description
+      try {
+        DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontext);
+        InputSource is = new InputSource(new StringReader(error.getAlgorithm().getLongDescription()));
+        is.setSystemId(
+            "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi?" +
+            "project=frwiki&view=only&id=" + error.getErrorNumber());
+        Document document = dbi.parse(is);
+        textDescription.setDocument(document, rcontext);
+      } catch (SAXException e) {
+        textDescription.clearDocument();
+      } catch (IOException e) {
+        textDescription.clearDocument();
+      }
+
+      // Pages
       int nbPages = error.getPageCount();
       for (int numPage = 0; numPage < nbPages; numPage++) {
         Page page = error.getPage(numPage);
@@ -934,10 +974,26 @@ public class CheckWikiProjectWindow extends PageWindow {
     }
 
     super.actionPerformed(e);
-    if (ACTION_LOAD_PAGES.equals(e.getActionCommand())) {
+    if (ACTION_ERROR_DETAIL.equals(e.getActionCommand())) {
+      actionErrorDetail();
+    } else if (ACTION_LOAD_PAGES.equals(e.getActionCommand())) {
       actionSelectPage();
     } else if (ACTION_RELOAD_ERROR.equals(e.getActionCommand())) {
       actionReloadError();
+    }
+  }
+
+  /**
+   * Action called to display error detail. 
+   */
+  private void actionErrorDetail() {
+    Object selected = listAllErrors.getSelectedItem();
+    if ((selected instanceof CheckError) &&
+        (Utilities.isDesktopSupported())) {
+      CheckError error = (CheckError) selected;
+      if (error.getAlgorithm().getLink() != null) {
+        Utilities.browseURL(getWikipedia(), error.getAlgorithm().getLink());
+      }
     }
   }
 

@@ -30,6 +30,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
 
   private int priority = CheckError.PRIORITY_UNKOWN;
   private String shortDescription;
+  private String shortDescriptionReplaced;
   private String longDescription;
   private String link;
 
@@ -57,10 +58,20 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * @return Short description of the error.
+   */
+  public String getShortDescriptionReplaced() {
+    return shortDescriptionReplaced;
+  }
+
+  /**
    * @param desc Short description.
    */
   public void setShortDescription(String desc) {
     this.shortDescription = desc;
+    shortDescriptionReplaced = desc;
+    shortDescriptionReplaced = shortDescriptionReplaced.replaceAll("&lt;", "<");
+    shortDescriptionReplaced = shortDescriptionReplaced.replaceAll("&gt;", ">");
   }
 
   /**
@@ -75,10 +86,10 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param desc Long description.
    */
   public void setLongDescription(String desc) {
-    if (desc != null) {
+    /*if (desc != null) {
       desc = desc.replaceAll("<nowiki>", "");
       desc = desc.replaceAll("</nowiki>", "");
-    }
+    }*/
     this.longDescription = desc;
   }
 

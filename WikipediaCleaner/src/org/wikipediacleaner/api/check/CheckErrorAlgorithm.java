@@ -35,6 +35,12 @@ public interface CheckErrorAlgorithm {
   public String getShortDescription();
 
   /**
+   * @return Short description of the error.
+   * (See Check Wikipedia project for the description of errors)
+   */
+  public String getShortDescriptionReplaced();
+
+  /**
    * @param desc Short description.
    */
   public void setShortDescription(String desc);

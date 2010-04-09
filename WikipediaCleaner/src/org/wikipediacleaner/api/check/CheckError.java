@@ -399,7 +399,7 @@ public class CheckError {
         CheckError.getPriority((algorithm != null) ?
             algorithm.getPriority() : CheckError.PRIORITY_UNKOWN),
         (algorithm != null) ?
-            algorithm.getShortDescription() :
+            algorithm.getShortDescriptionReplaced() :
             GT._("Error unkown from WikiCleaner") });
   }
 
