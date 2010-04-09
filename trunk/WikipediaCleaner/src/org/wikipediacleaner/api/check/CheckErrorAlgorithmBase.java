@@ -46,7 +46,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   @Override
   public String toString() {
-    return getShortDescription();
+    return getShortDescriptionReplaced();
   }
 
   /**
