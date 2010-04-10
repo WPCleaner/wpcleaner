@@ -1,0 +1,14 @@
+The files in the images directory and its subdirectories are from :
+- Tango: The Tango Desktop Project (http://tango.freedesktop.org/)
+
+
+The following files are available in the "normal" directory:
+- help-browser.png (Tango)
+- internet-web-browser.png (Tango)
+- view-refresh.png (Tango)
+
+The following files are available in the "small" directory:
+- help-browser.png (Tango)
+- internet-web-browser.png (Tango)
+- view-refresh.png (Tango)
+ 
