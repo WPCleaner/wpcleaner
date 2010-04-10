@@ -20,6 +20,12 @@ package org.wikipediacleaner.api.check;
 
 import java.util.ArrayList;
 
+import javax.swing.JTextPane;
+import javax.swing.text.Element;
+
+import org.wikipediacleaner.gui.swing.action.ReplaceTextAction;
+import org.wikipediacleaner.i18n.GT;
+
 
 /**
  * A class for memorizing informations about errors detected.
@@ -93,5 +99,23 @@ public class CheckErrorResult {
    */
   public ArrayList<String> getReplacements() {
     return replacements;
+  }
+
+  /**
+   * @return Possible actions.
+   */
+  public ArrayList<Actionnable> getPossibleActions(
+      Element element, JTextPane textPane) {
+    ArrayList<Actionnable> result = new ArrayList<Actionnable>();
+    if ((replacements != null) && (replacements.size() > 0)) {
+      ArrayList<Actionnable> possibleReplacements = new ArrayList<Actionnable>(replacements.size());
+      for (String replacement : replacements) {
+        possibleReplacements.add(new SimpleAction(
+            replacement,
+            new ReplaceTextAction(replacement, element, textPane)));
+      }
+      result.add(new CompositeAction(GT._("Replace with"), possibleReplacements));
+    }
+    return result;
   }
 }
