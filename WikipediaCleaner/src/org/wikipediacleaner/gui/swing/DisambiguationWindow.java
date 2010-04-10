@@ -45,8 +45,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -67,6 +69,7 @@ import org.wikipediacleaner.gui.swing.component.PageListPopupListener;
 import org.wikipediacleaner.gui.swing.worker.AutomaticDisambiguationWorker;
 import org.wikipediacleaner.gui.swing.worker.DisambiguationAnalysisWorker;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -270,7 +273,7 @@ public class DisambiguationWindow extends PageWindow {
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
-    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.fill = GridBagConstraints.VERTICAL;
     constraints.gridheight = 1;
     constraints.gridwidth = 1;
     constraints.gridx = 0;
@@ -278,8 +281,50 @@ public class DisambiguationWindow extends PageWindow {
     constraints.insets = new Insets(1, 1, 1, 1);
     constraints.ipadx = 0;
     constraints.ipady = 0;
-    constraints.weightx = 1;
-    constraints.weighty = 0;
+    constraints.weightx = 0;
+    constraints.weighty = 1;
+
+    // Commands
+    JToolBar toolBarButtons = new JToolBar(SwingConstants.VERTICAL);
+    toolBarButtons.setFloatable(false);
+    buttonAddAutomaticFixing = Utilities.createJButton(
+        "gnome-list-add.png", EnumImageSize.NORMAL,
+        GT._("Add"));
+    buttonAddAutomaticFixing.setActionCommand(ACTION_ADD_AUTOMATIC_FIXING);
+    buttonAddAutomaticFixing.addActionListener(this);
+    toolBarButtons.add(buttonAddAutomaticFixing);
+    buttonRmvAutomaticFixing = Utilities.createJButton(
+        "gnome-list-remove.png", EnumImageSize.NORMAL,
+        GT._("Remove"));
+    buttonRmvAutomaticFixing.setActionCommand(ACTION_RMV_AUTOMATIC_FIXING);
+    buttonRmvAutomaticFixing.addActionListener(this);
+    toolBarButtons.add(buttonRmvAutomaticFixing);
+    buttonMdfAutomaticFixing = Utilities.createJButton(GT._("Modify"));
+    buttonMdfAutomaticFixing.setActionCommand(ACTION_MDF_AUTOMATIC_FIXING);
+    buttonMdfAutomaticFixing.addActionListener(this);
+    toolBarButtons.add(buttonMdfAutomaticFixing);
+    buttonClrAutomaticFixing = Utilities.createJButton(
+        "gnome-edit-clear.png", EnumImageSize.NORMAL,
+        GT._("Clear"));
+    buttonClrAutomaticFixing.setActionCommand(ACTION_CLR_AUTOMATIC_FIXING);
+    buttonClrAutomaticFixing.addActionListener(this);
+    toolBarButtons.add(buttonClrAutomaticFixing);
+    buttonSaveAutomaticFixing = Utilities.createJButton(
+        "gnome-media-floppy.png", EnumImageSize.NORMAL,
+        GT._("Save"));
+    buttonSaveAutomaticFixing.setActionCommand(ACTION_SAVE_AUTOMATIC_FIXING);
+    buttonSaveAutomaticFixing.addActionListener(this);
+    toolBarButtons.add(buttonSaveAutomaticFixing);
+    buttonRunAutomaticFixing = Utilities.createJButton(
+        "gnome-system-run.png", EnumImageSize.NORMAL,
+        GT._("Fix selected pages"));
+    buttonRunAutomaticFixing.setActionCommand(ACTION_RUN_AUTOMATIC_FIXING);
+    buttonRunAutomaticFixing.addActionListener(this);
+    toolBarButtons.add(buttonRunAutomaticFixing);
+    constraints.fill = GridBagConstraints.VERTICAL;
+    constraints.gridy = 0;
+    panel.add(toolBarButtons, constraints);
+    constraints.gridx++;
 
     // Automatic fixing list
     modelAutomaticFixing = new DefaultListModel();
@@ -290,42 +335,10 @@ public class DisambiguationWindow extends PageWindow {
     scrollAutomaticFixing.setPreferredSize(new Dimension(200, 150));
     scrollAutomaticFixing.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     constraints.fill = GridBagConstraints.BOTH;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.weightx = 1;
     panel.add(scrollAutomaticFixing, constraints);
-    constraints.gridy++;
-
-    // Commands
-    JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 1, 0));
-    buttonAddAutomaticFixing = Utilities.createJButton(GT._("Add"));
-    buttonAddAutomaticFixing.setActionCommand(ACTION_ADD_AUTOMATIC_FIXING);
-    buttonAddAutomaticFixing.addActionListener(this);
-    panelButtons.add(buttonAddAutomaticFixing);
-    buttonMdfAutomaticFixing = Utilities.createJButton(GT._("Modify"));
-    buttonMdfAutomaticFixing.setActionCommand(ACTION_MDF_AUTOMATIC_FIXING);
-    buttonMdfAutomaticFixing.addActionListener(this);
-    panelButtons.add(buttonMdfAutomaticFixing);
-    buttonRmvAutomaticFixing = Utilities.createJButton(GT._("Remove"));
-    buttonRmvAutomaticFixing.setActionCommand(ACTION_RMV_AUTOMATIC_FIXING);
-    buttonRmvAutomaticFixing.addActionListener(this);
-    panelButtons.add(buttonRmvAutomaticFixing);
-    buttonClrAutomaticFixing = Utilities.createJButton(GT._("Clear"));
-    buttonClrAutomaticFixing.setActionCommand(ACTION_CLR_AUTOMATIC_FIXING);
-    buttonClrAutomaticFixing.addActionListener(this);
-    panelButtons.add(buttonClrAutomaticFixing);
-    buttonRunAutomaticFixing = Utilities.createJButton(GT._("Fix selected pages"));
-    buttonRunAutomaticFixing.setActionCommand(ACTION_RUN_AUTOMATIC_FIXING);
-    buttonRunAutomaticFixing.addActionListener(this);
-    panelButtons.add(buttonRunAutomaticFixing);
-    buttonSaveAutomaticFixing = Utilities.createJButton(GT._("Save"));
-    buttonSaveAutomaticFixing.setActionCommand(ACTION_SAVE_AUTOMATIC_FIXING);
-    buttonSaveAutomaticFixing.addActionListener(this);
-    panelButtons.add(buttonSaveAutomaticFixing);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    panel.add(panelButtons, constraints);
-    constraints.gridy++;
+    constraints.gridx++;
 
     return panel;
   }

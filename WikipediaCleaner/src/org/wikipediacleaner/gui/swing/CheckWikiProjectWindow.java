@@ -20,7 +20,6 @@ package org.wikipediacleaner.gui.swing;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -91,6 +90,7 @@ import org.wikipediacleaner.gui.swing.worker.CheckWikiProjectWorker;
 import org.wikipediacleaner.gui.swing.worker.RetrieveContentWorker;
 import org.wikipediacleaner.gui.swing.worker.SendWorker;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -253,12 +253,14 @@ public class CheckWikiProjectWindow extends PageWindow {
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
     JButton buttonReloadError = Utilities.createJButton(
-        "view-refresh.png", false, GT._("Reload error"));
+        "gnome-view-refresh.png", EnumImageSize.NORMAL,
+        GT._("Reload error"));
     buttonReloadError.setActionCommand(ACTION_RELOAD_ERROR);
     buttonReloadError.addActionListener(this);
     toolbar.add(buttonReloadError);
     buttonErrorDetail = Utilities.createJButton(
-        "help-browser.png", false, GT._("Detail"));
+        "help-browser.png", EnumImageSize.NORMAL,
+        GT._("Detail"));
     buttonErrorDetail.setActionCommand(ACTION_ERROR_DETAIL);
     buttonErrorDetail.addActionListener(this);
     buttonErrorDetail.setEnabled(false);
@@ -441,34 +443,35 @@ public class CheckWikiProjectWindow extends PageWindow {
       constraints.gridy++;
 
       // Buttons
-      JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
-      JButton buttonNext = createButtonNextOccurence(this);
-      panelButtons.add(buttonNext);
+      JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
+      toolbarButtons.setFloatable(false);
+      JButton buttonNext = createButtonNextOccurence(this, true);
+      toolbarButtons.add(buttonNext);
       JButton buttonValidate = createButtonValidate(this);
-      panelButtons.add(buttonValidate);
+      toolbarButtons.add(buttonValidate);
       buttonSend = createButtonSend(this);
       buttonSend.setEnabled(false);
-      panelButtons.add(buttonSend);
+      toolbarButtons.add(buttonSend);
       if (Utilities.isDesktopSupported()) { // External Viewer
-        JButton buttonView = createButtonView(this);
-        panelButtons.add(buttonView);
+        JButton buttonView = createButtonView(this, true);
+        toolbarButtons.add(buttonView);
       }
       if (Utilities.isDesktopSupported()) { // History
-        JButton buttonHistory = createButtonViewHistory(this);
-        panelButtons.add(buttonHistory);
+        JButton buttonHistory = createButtonViewHistory(this, true);
+        toolbarButtons.add(buttonHistory);
       }
       JButton buttonMarkAsFixed = Utilities.createJButton(GT._("Mark as Fixed")); // Mark as fixed
       buttonMarkAsFixed.setEnabled(true);
       buttonMarkAsFixed.setActionCommand(ACTION_MARK_AS_FIXED);
       buttonMarkAsFixed.addActionListener(this);
-      panelButtons.add(buttonMarkAsFixed);
-      JButton buttonFullAnalysis = createButtonFullAnalysis(this);
-      panelButtons.add(buttonFullAnalysis);
+      toolbarButtons.add(buttonMarkAsFixed);
+      JButton buttonFullAnalysis = createButtonFullAnalysis(this, true);
+      toolbarButtons.add(buttonFullAnalysis);
       constraints.fill = GridBagConstraints.HORIZONTAL;
       constraints.gridwidth = 2;
       constraints.weightx = 1;
       constraints.weighty = 0;
-      add(panelButtons, constraints);
+      add(toolbarButtons, constraints);
       constraints.gridy++;
 
       // Errors list

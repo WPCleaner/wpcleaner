@@ -311,7 +311,7 @@ public class AnalysisWindow extends PageWindow {
 
     // Text buttons
     JPanel buttonTextPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 0));
-    buttonNext = createButtonNextOccurence(this);
+    buttonNext = createButtonNextOccurence(this, false);
     buttonTextPanel.add(buttonNext);
     buttonValidate = createButtonValidate(this);
     buttonTextPanel.add(buttonValidate);

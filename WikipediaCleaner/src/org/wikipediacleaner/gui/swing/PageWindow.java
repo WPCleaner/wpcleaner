@@ -54,6 +54,7 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
 import org.wikipediacleaner.gui.swing.worker.SendWorker;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -301,7 +302,7 @@ public abstract class PageWindow
    */
   protected void addButtonFullAnalysis(JPanel panel) {
     if (buttonFullAnalysis == null) {
-      buttonFullAnalysis = createButtonFullAnalysis(this);
+      buttonFullAnalysis = createButtonFullAnalysis(this, false);
       panel.add(buttonFullAnalysis);
     }
   }
@@ -310,10 +311,18 @@ public abstract class PageWindow
    * Create a Full Analysis button.
    * 
    * @param listener Action listener.
+   * @param icon Flag indicating if an icon should be used.
    * @return Full Analysis button.
    */
-  public JButton createButtonFullAnalysis(ActionListener listener) {
-    JButton button = Utilities.createJButton(GT._("Full analysis"));
+  public JButton createButtonFullAnalysis(ActionListener listener, boolean icon) {
+    JButton button = null;
+    if (icon) {
+      button = Utilities.createJButton(
+          "gnome-system-run.png", EnumImageSize.NORMAL,
+          GT._("Full analysis"));
+    } else {
+      button = Utilities.createJButton(GT._("Full analysis"));
+    }
     button.setActionCommand(ACTION_FULL_ANALYSIS_PAGE);
     button.addActionListener(listener);
     return button;
@@ -323,10 +332,18 @@ public abstract class PageWindow
    * Create a Next Occurence button.
    * 
    * @param listener Action listener.
+   * @param icon Flag indicating if an icon should be used.
    * @return Next Occurence button.
    */
-  public JButton createButtonNextOccurence(ActionListener listener) {
-    JButton button = Utilities.createJButton(GT._("&Next occurrence"));
+  public JButton createButtonNextOccurence(ActionListener listener, boolean icon) {
+    JButton button = null;
+    if (icon) {
+      button = Utilities.createJButton(
+          "gnome-go-next.png", EnumImageSize.NORMAL,
+          GT._("&Next occurrence"));
+    } else {
+      button = Utilities.createJButton(GT._("&Next occurrence"));
+    }
     button.setActionCommand(ACTION_NEXT_OCCURENCE);
     button.addActionListener(listener);
     return button;
@@ -436,7 +453,7 @@ public abstract class PageWindow
    */
   protected void addButtonView(JPanel panel) {
     if (Utilities.isDesktopSupported() && (buttonView == null)) {
-      buttonView = createButtonView(this);
+      buttonView = createButtonView(this, false);
       panel.add(buttonView);
     }
   }
@@ -445,10 +462,18 @@ public abstract class PageWindow
    * Create a External Viewer button.
    * 
    * @param listener Action listener.
+   * @param icon Flag indicating if an icon should be used.
    * @return External Viewer button.
    */
-  public JButton createButtonView(ActionListener listener) {
-    JButton button = Utilities.createJButton(GT._("&External Viewer"));
+  public JButton createButtonView(ActionListener listener, boolean icon) {
+    JButton button = null;
+    if (icon) {
+      button = Utilities.createJButton(
+          "gnome-emblem-web.png", EnumImageSize.NORMAL,
+          GT._("&External Viewer"));
+    } else {
+      button = Utilities.createJButton(GT._("&External Viewer"));
+    }
     button.setActionCommand(ACTION_VIEW);
     button.addActionListener(listener);
     return button;
@@ -458,10 +483,18 @@ public abstract class PageWindow
    * Create a External Viewer button for the page history.
    * 
    * @param listener Action listener.
+   * @param icon Flag indicating if an icon should be used.
    * @return External Viewer button.
    */
-  public JButton createButtonViewHistory(ActionListener listener) {
-    JButton button = Utilities.createJButton(GT._("&History"));
+  public JButton createButtonViewHistory(ActionListener listener, boolean icon) {
+    JButton button = null;
+    if (icon) {
+      button = Utilities.createJButton(
+          "gnome-emblem-documents.png", EnumImageSize.NORMAL,
+          GT._("&History"));
+    } else {
+      button = Utilities.createJButton(GT._("&History"));
+    }
     button.setActionCommand(ACTION_VIEW_HISTORY);
     button.addActionListener(listener);
     return button;
