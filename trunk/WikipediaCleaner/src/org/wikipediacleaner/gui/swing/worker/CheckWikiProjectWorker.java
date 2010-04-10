@@ -72,7 +72,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
     if (onlyError == null) {
       this.errors.clear();
     }
-    this.retrieveConfig = true;
+    this.retrieveConfig = ((onlyError == null) || (properties == null));
     this.checkWikiConfig = properties;
     this.onlyError = onlyError;
   }

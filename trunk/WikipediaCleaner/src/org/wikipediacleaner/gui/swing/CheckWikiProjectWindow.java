@@ -57,8 +57,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -248,19 +250,22 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.gridx++;
     constraints.weightx = 1;
     panel.add(listAllErrors, constraints);
-    buttonErrorDetail = Utilities.createJButton(GT._("Detail"));
+    JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbar.setFloatable(false);
+    JButton buttonReloadError = Utilities.createJButton(
+        "view-refresh.png", false, GT._("Reload error"));
+    buttonReloadError.setActionCommand(ACTION_RELOAD_ERROR);
+    buttonReloadError.addActionListener(this);
+    toolbar.add(buttonReloadError);
+    buttonErrorDetail = Utilities.createJButton(
+        "help-browser.png", false, GT._("Detail"));
     buttonErrorDetail.setActionCommand(ACTION_ERROR_DETAIL);
     buttonErrorDetail.addActionListener(this);
     buttonErrorDetail.setEnabled(false);
+    toolbar.add(buttonErrorDetail);
     constraints.gridx++;
     constraints.weightx = 0;
-    panel.add(buttonErrorDetail, constraints);
-    JButton buttonReloadError = Utilities.createJButton(GT._("Reload error"));
-    buttonReloadError.setActionCommand(ACTION_RELOAD_ERROR);
-    buttonReloadError.addActionListener(this);
-    constraints.gridx++;
-    constraints.weightx = 0;
-    panel.add(buttonReloadError, constraints);
+    panel.add(toolbar, constraints);
     constraints.gridx = 0;
     constraints.gridy++;
 
@@ -270,7 +275,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     rcontext = new MediaWikiHtmlRendererContext(textDescription, ucontext);
     textDescription.setPreferredSize(new Dimension(500, 100));
     constraints.fill = GridBagConstraints.BOTH;
-    constraints.gridwidth = 4;
+    constraints.gridwidth = 3;
     constraints.gridx = 0;
     constraints.weightx = 1;
     constraints.weighty = 1;

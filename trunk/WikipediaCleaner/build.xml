@@ -107,6 +107,13 @@
           tofile="${WikiCleaner.classes.dir}/jaxen.license" />
     <copy file="LICENSE.txt" todir="${WikiCleaner.classes.dir}" />
 
+  	<!-- Copy images -->
+    <copy todir="${WikiCleaner.classes.dir}">
+      <fileset dir="${WikiCleaner.src.dir}">
+        <include name="**/*.png"/>
+      </fileset>
+    </copy>
+
     <!-- Create jar for JNLP release -->
     <jar destfile="${WikiCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
          manifest="${WikiCleaner.res.dir}/manifest.txt">

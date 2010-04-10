@@ -25,8 +25,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.URLEncoder;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
@@ -188,6 +190,37 @@ public class Utilities {
    */
   public static JButton createJButton(String message) {
     JButton button = new JButton(getLabelWithoutMnemonic(message));
+    char mnemonic = getMnemonic(message);
+    if (mnemonic != ' ') {
+      button.setMnemonic(mnemonic);
+    }
+    return button;
+  }
+
+  /**
+   * Create a JButton.
+   * 
+   * @param iconName Icon name.
+   * @param small Flag indicating if a small version is required.
+   * @param message Label text with optional mnemonic inside.
+   * @return Button initialized with text and mnemonic.
+   */
+  public static JButton createJButton(String iconName, boolean small, String message) {
+    ImageIcon icon = null;
+    if (iconName != null) {
+      URL url = Utilities.class.getClassLoader().getResource(
+          "org/wikipediacleaner/images/" + (small ? "small/" : "normal/") + iconName);
+      if (url != null) {
+        icon = new ImageIcon(url);
+      }
+    }
+    JButton button = null;
+    if (icon != null) {
+      button = new JButton(icon);
+      button.setToolTipText(getLabelWithoutMnemonic(message));
+    } else {
+      button = new JButton(getLabelWithoutMnemonic(message));
+    }
     char mnemonic = getMnemonic(message);
     if (mnemonic != ' ') {
       button.setMnemonic(mnemonic);
