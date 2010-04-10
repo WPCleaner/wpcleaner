@@ -678,7 +678,6 @@ public class CheckWikiProjectWindow extends PageWindow {
           if (pos > 0) {
             comment.append(" - ");
           }
-          comment.append(errorsFixed.get(pos).getShortDescription());
           String link = errorsFixed.get(pos).getLink();
           Configuration config = Configuration.getConfiguration();
           if ((link != null) &&
@@ -686,11 +685,13 @@ public class CheckWikiProjectWindow extends PageWindow {
               (config.getBoolean(
                   Configuration.BOOLEAN_CHECK_LINK_ERRORS,
                   Configuration.DEFAULT_CHECK_LINK_ERRORS))) {
-            comment.append(", [[");
+            comment.append("[[");
             comment.append(link);
-            comment.append("|n°");
-            comment.append(errorsFixed.get(pos).getErrorNumber());
+            comment.append("|");
+            comment.append(errorsFixed.get(pos).getShortDescriptionReplaced());
             comment.append("]]");
+          } else {
+            comment.append(errorsFixed.get(pos).getShortDescriptionReplaced());
           }
         }
       }
@@ -866,7 +867,9 @@ public class CheckWikiProjectWindow extends PageWindow {
           }
         }
       }
-      listAllErrors.setSelectedIndex(selectedIndex);
+      if (listAllErrors.getItemCount() > selectedIndex) {
+        listAllErrors.setSelectedIndex(selectedIndex);
+      }
     }
   }
 
