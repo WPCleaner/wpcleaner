@@ -301,6 +301,17 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.weightx = 1;
     constraints.weighty = 0;
 
+    // Load pages
+    JButton buttonLoad = Utilities.createJButton(GT._("&Load pages"));
+    buttonLoad.setActionCommand(ACTION_LOAD_PAGES);
+    buttonLoad.addActionListener(this);
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    constraints.weighty = 0;
+    panel.add(buttonLoad, constraints);
+    constraints.gridy++;
+
     // Page List
     modelPages = new DefaultListModel();
     listPages = new JList(modelPages);
@@ -332,16 +343,6 @@ public class CheckWikiProjectWindow extends PageWindow {
     panel.add(scrollPages, constraints);
     constraints.gridy++;
 
-    // Load pages
-    JButton buttonLoad = Utilities.createJButton(GT._("&Load pages"));
-    buttonLoad.setActionCommand(ACTION_LOAD_PAGES);
-    buttonLoad.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridx = 0;
-    constraints.weightx = 0;
-    constraints.weighty = 0;
-    panel.add(buttonLoad, constraints);
-    constraints.gridy++;
     return panel;
   }
 
