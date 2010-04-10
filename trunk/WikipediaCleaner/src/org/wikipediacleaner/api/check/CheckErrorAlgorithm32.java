@@ -54,6 +54,7 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
         int levelSquareBrackets = 1;
         int levelCurlyBrackets = 0;
         int pipeFound = 0;
+        ArrayList<Integer> pipeIndex = new ArrayList<Integer>();
         int currentPos = beginIndex + 2;
         while ((currentPos < contents.length()) && (levelSquareBrackets > 0)) {
           switch (contents.charAt(currentPos)) {
@@ -104,6 +105,7 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
             // Checking if the | is counting for
             if ((levelSquareBrackets == 1) &&
                 (levelCurlyBrackets == 0)) {
+              pipeIndex.add(Integer.valueOf(currentPos));
               pipeFound++;
             }
             break;
@@ -118,9 +120,19 @@ public class CheckErrorAlgorithm32 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), beginIndex, currentPos);
+          for (int i = 0; i < pipeIndex.size(); i++) {
+            int beginText = pipeIndex.get(i).intValue();
+            int endText = ((i + 1 < pipeIndex.size()) ? pipeIndex.get(i + 1).intValue() : currentPos - 2);
+            if (contents.substring(beginText + 1, endText).trim().length() > 0) {
+              errorResult.addReplacement(
+                  contents.substring(beginIndex, pipeIndex.get(0).intValue()) +
+                  contents.substring(beginText, endText) +
+                  "]]");
+            }
+          }
           errors.add(errorResult);
         }
-        startIndex = beginIndex + 2;
+        startIndex = currentPos;
       }
     }
     return result;

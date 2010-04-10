@@ -127,6 +127,7 @@ TODO: Make it work with <table align="..."> or other forms of <table>, <td>, <th
 ===============================================================================
 Error 032: Double pipe in one link
 Status: DONE
+- [[xxx|yyy|zzz]] -> [[xxx|yyy]], [[xxx|zzz]]
 
 ===============================================================================
 Error 033: HTML text style element <u>

@@ -447,11 +447,18 @@ public class CheckWikiProjectWindow extends PageWindow {
       toolbarButtons.setFloatable(false);
       JButton buttonNext = createButtonNextOccurence(this, true);
       toolbarButtons.add(buttonNext);
+      toolbarButtons.addSeparator();
       JButton buttonValidate = createButtonValidate(this);
       toolbarButtons.add(buttonValidate);
       buttonSend = createButtonSend(this);
       buttonSend.setEnabled(false);
       toolbarButtons.add(buttonSend);
+      JButton buttonMarkAsFixed = Utilities.createJButton(GT._("Mark as Fixed")); // Mark as fixed
+      buttonMarkAsFixed.setEnabled(true);
+      buttonMarkAsFixed.setActionCommand(ACTION_MARK_AS_FIXED);
+      buttonMarkAsFixed.addActionListener(this);
+      toolbarButtons.add(buttonMarkAsFixed);
+      toolbarButtons.addSeparator();
       if (Utilities.isDesktopSupported()) { // External Viewer
         JButton buttonView = createButtonView(this, true);
         toolbarButtons.add(buttonView);
@@ -459,12 +466,8 @@ public class CheckWikiProjectWindow extends PageWindow {
       if (Utilities.isDesktopSupported()) { // History
         JButton buttonHistory = createButtonViewHistory(this, true);
         toolbarButtons.add(buttonHistory);
+        toolbarButtons.addSeparator();
       }
-      JButton buttonMarkAsFixed = Utilities.createJButton(GT._("Mark as Fixed")); // Mark as fixed
-      buttonMarkAsFixed.setEnabled(true);
-      buttonMarkAsFixed.setActionCommand(ACTION_MARK_AS_FIXED);
-      buttonMarkAsFixed.addActionListener(this);
-      toolbarButtons.add(buttonMarkAsFixed);
       JButton buttonFullAnalysis = createButtonFullAnalysis(this, true);
       toolbarButtons.add(buttonFullAnalysis);
       constraints.fill = GridBagConstraints.HORIZONTAL;

@@ -36,6 +36,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextPane;
 import javax.swing.text.Element;
 
+import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
@@ -56,7 +57,6 @@ import org.wikipediacleaner.gui.swing.action.RemoveLinkAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceLinkAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceTemplateAction;
-import org.wikipediacleaner.gui.swing.action.ReplaceTextAction;
 import org.wikipediacleaner.gui.swing.action.RevertLinkAction;
 import org.wikipediacleaner.gui.swing.action.TemplatesAnalysisAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -111,7 +111,6 @@ public class MenuCreator {
     if ((popup == null) || (element == null) || (textPane == null) || (info == null)) {
       return;
     }
-    ActionListener action = null;
     
     // Current chapter
     JMenuItem menuItem = new JMenuItem(info.getErrorType());
@@ -120,17 +119,24 @@ public class MenuCreator {
     addCurrentChapterToMenu(popup, textPane, position);
     popup.add(new JSeparator());
 
-    // Replacement
-    ArrayList<String> replacements = info.getReplacements();
-    if ((replacements != null) && (replacements.size() > 0)) {
-      JMenu subMenuReplace = new JMenu(GT._("Replace with"));
-      for (String replacement : replacements) {
-        menuItem = new JMenuItem(replacement);
-        action = new ReplaceTextAction(replacement, element, textPane);
-        menuItem.addActionListener(action);
-        subMenuReplace.add(menuItem);
+    // Actions
+    ArrayList<Actionnable> possibleActions = info.getPossibleActions(element, textPane);
+    if (possibleActions != null) {
+      for (Actionnable possibleAction : possibleActions) {
+        if (possibleAction.isCompositeAction()) {
+          JMenu subMenu = new JMenu(possibleAction.getName());
+          for (Actionnable subAction : possibleAction.getActions()) {
+            menuItem = new JMenuItem(subAction.getName());
+            menuItem.addActionListener(subAction.getAction());
+            subMenu.add(menuItem);
+          }
+          addSubmenu(popup, subMenu, 0, 0);
+        } else {
+          menuItem = new JMenuItem(possibleAction.getName());
+          menuItem.addActionListener(possibleAction.getAction());
+          popup.add(menuItem);
+        }
       }
-      addSubmenu(popup, subMenuReplace, 0, 0);
     }
   }
 
