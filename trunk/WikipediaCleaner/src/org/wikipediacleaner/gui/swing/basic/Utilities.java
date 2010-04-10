@@ -202,7 +202,7 @@ public class Utilities {
    * Create a JButton.
    * 
    * @param iconName Icon name.
-   * @param small Flag indicating if a small version is required.
+   * @param size Icon size.
    * @param message Label text with optional mnemonic inside.
    * @return Button initialized with text and mnemonic.
    */
