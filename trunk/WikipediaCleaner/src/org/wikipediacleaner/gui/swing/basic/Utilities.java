@@ -45,6 +45,7 @@ import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 
 
 /**
@@ -205,11 +206,13 @@ public class Utilities {
    * @param message Label text with optional mnemonic inside.
    * @return Button initialized with text and mnemonic.
    */
-  public static JButton createJButton(String iconName, boolean small, String message) {
+  public static JButton createJButton(
+      String iconName, EnumImageSize size,
+      String message) {
     ImageIcon icon = null;
-    if (iconName != null) {
+    if ((iconName != null) && (size != null)) {
       URL url = Utilities.class.getClassLoader().getResource(
-          "org/wikipediacleaner/images/" + (small ? "small/" : "normal/") + iconName);
+          "org/wikipediacleaner/images/" + size.getFolder() + "/" + iconName);
       if (url != null) {
         icon = new ImageIcon(url);
       }
