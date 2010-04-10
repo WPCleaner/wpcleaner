@@ -117,7 +117,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
     Configuration config = Configuration.getConfiguration();
 
     // Retrieving Check Wiki configuration
-    String code = getWikipedia().getCode();
+    String code = getWikipedia().getCode().replace("-", "_");
     if (retrieveConfig) {
       try {
         setText(GT._("Retrieving Check Wiki configuration"));

@@ -24,14 +24,14 @@ import org.wikipediacleaner.api.data.TemplateMatch;
 
 
 /**
- * Configuration for <a href="http://test.wikipedia.org/w/index.php">test wikipedia</a>.
+ * Configuration for <a href="http://pdc.wikipedia.org/w/index.php">Pennsylvania German wikipedia</a>.
  */
-class WikiTest {
+class WikiPdc {
 
-  private final static String baseUrl = "http://test.wikipedia.org/w/";
+  private final static String baseUrl = "http://pdc.wikipedia.org/w/";
 
-  final static String code     = "test";
-  final static String name     = "Test Wikipedia";
+  final static String code     = "pdc";
+  final static String name     = "Pennsylvania German Wikipedia";
 
   final static String apiUrl   = baseUrl + "api.php";
   final static String queryUrl = baseUrl + "query.php";
@@ -42,7 +42,7 @@ class WikiTest {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "Repairing link to disambiguation page - [[Wikipedia:Disambiguation pages with links|You can help!]]";
+  final static String message  = "";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
@@ -54,6 +54,6 @@ class WikiTest {
   final static String dabList = null;
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
-  final static String checkWikiProject = null;
-  final static String checkWikiTraduction = null;
+  final static String checkWikiProject = "Wikipedia:Check Wikipedia";
+  final static String checkWikiTraduction = "Wikipedia:WikiProject Check Wikipedia/Translation";
 }
