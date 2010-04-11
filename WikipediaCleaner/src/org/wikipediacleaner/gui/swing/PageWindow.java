@@ -222,6 +222,7 @@ public abstract class PageWindow
   private JButton buttonReload;
   private JButton buttonSend;
   private JButton buttonView;
+  private JButton buttonViewHistory;
   private JButton buttonWatch;
   private JButton buttonFullAnalysis;
   private JTextField textComment;
@@ -243,6 +244,9 @@ public abstract class PageWindow
     }
     if (buttonView != null) {
       buttonView.setEnabled(pageLoaded);
+    }
+    if (buttonViewHistory != null) {
+      buttonViewHistory.setEnabled(pageLoaded);
     }
     if ((buttonSend != null) && (textContents != null)) {
       buttonSend.setEnabled(pageLoaded && textContents.isModified());
@@ -287,7 +291,7 @@ public abstract class PageWindow
    * 
    * @param panel Container.
    */
-  protected void addButtonDisambiguation(JPanel panel) {
+  protected void addButtonDisambiguation(JComponent panel) {
     if (buttonDisambiguation == null) {
       buttonDisambiguation = Utilities.createJButton(GT._("Disambiguation"));
       buttonDisambiguation.setActionCommand(ACTION_DISAMBIGUATION_PAGE);
@@ -372,10 +376,11 @@ public abstract class PageWindow
    * Add a component for the Reload button.
    * 
    * @param panel Container.
+   * @param icon Flag indicating if an icon should be used.
    */
-  protected void addButtonReload(JPanel panel) {
+  protected void addButtonReload(JComponent panel, boolean icon) {
     if (buttonReload == null) {
-      buttonReload = createButtonReload(this);
+      buttonReload = createButtonReload(this, icon);
       panel.add(buttonReload);
     }
   }
@@ -384,10 +389,18 @@ public abstract class PageWindow
    * Create a Reload button.
    * 
    * @param listener Action listener.
+   * @param icon Flag indicating if an icon should be used.
    * @return Reload button.
    */
-  public JButton createButtonReload(ActionListener listener) {
-    JButton button = Utilities.createJButton(GT._("&Reload"));
+  public JButton createButtonReload(ActionListener listener, boolean icon) {
+    JButton button = null;
+    if (icon) {
+      button = Utilities.createJButton(
+          "gnome-view-refresh.png", EnumImageSize.NORMAL,
+          GT._("&Reload"));
+    } else {
+      button = Utilities.createJButton(GT._("&Reload"));
+    }
     button.setActionCommand(ACTION_RELOAD);
     button.addActionListener(listener);
     return button;
@@ -398,7 +411,7 @@ public abstract class PageWindow
    * 
    * @param panel Container.
    */
-  protected void addButtonSend(JPanel panel) {
+  protected void addButtonSend(JComponent panel) {
     if (buttonSend == null) {
       buttonSend = createButtonSend(this);
       panel.add(buttonSend);
@@ -461,13 +474,14 @@ public abstract class PageWindow
   }
 
   /**
-   * Add a component for the View button.
+   * Add a component for the External Viewer button.
    * 
    * @param panel Container.
+   * @param icon Flag indicating if an icon should be used.
    */
-  protected void addButtonView(JPanel panel) {
+  protected void addButtonView(JComponent panel, boolean icon) {
     if (Utilities.isDesktopSupported() && (buttonView == null)) {
-      buttonView = createButtonView(this, false);
+      buttonView = createButtonView(this, icon);
       panel.add(buttonView);
     }
   }
@@ -491,6 +505,19 @@ public abstract class PageWindow
     button.setActionCommand(ACTION_VIEW);
     button.addActionListener(listener);
     return button;
+  }
+
+  /**
+   * Add a component for the External Viewer button for the page history.
+   * 
+   * @param panel Container.
+   * @param icon Flag indicating if an icon should be used.
+   */
+  protected void addButtonViewHistory(JComponent panel, boolean icon) {
+    if (Utilities.isDesktopSupported() && (buttonViewHistory == null)) {
+      buttonViewHistory = createButtonViewHistory(this, icon);
+      panel.add(buttonViewHistory);
+    }
   }
 
   /**
@@ -519,7 +546,7 @@ public abstract class PageWindow
    * 
    * @param panel Container.
    */
-  protected void addButtonWatch(JPanel panel) {
+  protected void addButtonWatch(JComponent panel) {
     if (buttonWatch == null) {
       buttonWatch = createButtonWatch(this);
       panel.add(buttonWatch);
