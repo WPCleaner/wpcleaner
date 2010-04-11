@@ -1,6 +1,6 @@
 The files in the images directory and its subdirectories are from :
 - Tango: The Tango Desktop Project (http://tango.freedesktop.org/). Icons from Tango are in the public domain. 
-- Gnome: The Gnome Icon Theme (http://www.gnome.org/). Icons from Gnome are under GPL v2.
+- Gnome: The Gnome Icon Theme (http://git.gnome.org./browse/gnome-icon-theme/tree/ - http://www.gnome.org/). Icons from Gnome are under GPL v2.
 
 The following files are available in the "normal" directory:
 - gnome-applications-internet.png (Gnome)
@@ -11,10 +11,14 @@ The following files are available in the "normal" directory:
 - gnome-edit-undo.png (Gnome)
 - gnome-emblem-documents.png (Gnome)
 - gnome-emblem-web.png (Gnome)
+- gnome-go-bottom.png (Gnome)
+- gnome-go-down.png (Gnome)
 - gnome-go-first.png (Gnome)
 - gnome-go-last.png (Gnome)
 - gnome-go-next.png (Gnome)
 - gnome-go-previous.png (Gnome)
+- gnome-go-top.png (Gnome)
+- gnome-go-up.png (Gnome)
 - gnome-list-add.png (Gnome)
 - gnome-list-remove.png (Gnome)
 - gnome-logviewer.png (Gnome)

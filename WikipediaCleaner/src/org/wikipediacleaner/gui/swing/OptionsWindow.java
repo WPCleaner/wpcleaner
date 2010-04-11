@@ -42,6 +42,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
@@ -57,6 +58,7 @@ import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -591,19 +593,22 @@ public class OptionsWindow
     scrollSort.setPreferredSize(new Dimension(150, 200));
     scrollSort.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     panelSortOrders.add(scrollSort, constraints);
-    JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 1, 1));
-    buttonSortAdd = Utilities.createJButton(GT._("Add"));
+    JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbarButtons.setFloatable(false);
+    buttonSortAdd = Utilities.createJButton(
+        "gnome-list-add.png", EnumImageSize.NORMAL, GT._("Add"));
     buttonSortAdd.setActionCommand(ACTION_SORT_ADD);
     buttonSortAdd.addActionListener(this);
-    panelButtons.add(buttonSortAdd);
-    buttonSortDelete = Utilities.createJButton(GT._("Delete"));
+    toolbarButtons.add(buttonSortAdd);
+    buttonSortDelete = Utilities.createJButton(
+        "gnome-list-remove.png", EnumImageSize.NORMAL, GT._("Delete"));
     buttonSortDelete.setActionCommand(ACTION_SORT_DELETE);
     buttonSortDelete.addActionListener(this);
-    panelButtons.add(buttonSortDelete);
+    toolbarButtons.add(buttonSortDelete);
     constraints.gridy++;
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weighty = 0;
-    panelSortOrders.add(panelButtons, constraints);
+    panelSortOrders.add(toolbarButtons, constraints);
     constraints.gridy++;
 
     // Sort description
@@ -622,18 +627,21 @@ public class OptionsWindow
     scrollSortItem.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     panelSortDescription.add(scrollSortItem, constraints);
     constraints.gridy++;
-    panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 1, 1));
-    buttonSortUp = Utilities.createJButton(GT._("Up"));
+    toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbarButtons.setFloatable(false);
+    buttonSortUp = Utilities.createJButton(
+        "gnome-go-up.png", EnumImageSize.NORMAL, GT._("Up"));
     buttonSortUp.setActionCommand(ACTION_SORT_UP);
     buttonSortUp.addActionListener(this);
-    panelButtons.add(buttonSortUp);
-    buttonSortDown = Utilities.createJButton(GT._("Down"));
+    toolbarButtons.add(buttonSortUp);
+    buttonSortDown = Utilities.createJButton(
+        "gnome-go-down.png", EnumImageSize.NORMAL, GT._("Down"));
     buttonSortDown.setActionCommand(ACTION_SORT_DOWN);
     buttonSortDown.addActionListener(this);
-    panelButtons.add(buttonSortDown);
+    toolbarButtons.add(buttonSortDown);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weighty = 0;
-    panelSortDescription.add(panelButtons, constraints);
+    panelSortDescription.add(toolbarButtons, constraints);
     constraints.gridy++;
     if (modelSort.getSize() > 0) {
       listSort.setSelectedIndex(0);
