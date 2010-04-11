@@ -44,117 +44,61 @@ public class CheckErrorAlgorithm63 extends CheckErrorAlgorithmBase {
     // Analyzing the text from the beginning
     boolean result = false;
     int startIndex = 0;
-    int beginIndex = -1;
-    int endIndex = -1;
-    int beginRef = 0;
-    int endRef = 0;
-    int beginSub = 0;
-    int endSub = 0;
-    int beginSup = 0;
-    int endSup = 0;
-    int level = 0;
     int levelRef = 0;
     int levelSub = 0;
     int levelSup = 0;
+    int levelSmall = 0;
+    int errorLevel = -1;
+    int errorIndex = -1;
     while (startIndex < contents.length()) {
-      // Update position of next <small> and </small>
-      if (beginIndex < startIndex) {
-        beginIndex = contents.indexOf("<small>", startIndex);
-      }
-      if (endIndex < startIndex) {
-        endIndex = contents.indexOf("</small>", startIndex);
-      }
-
-      if ((beginIndex < 0) || (endIndex < 0)) {
-        // No more <small> or </small>
-        startIndex = contents.length();
-      } else {
-        int firstIndex = Math.min(beginIndex, endIndex);
-
-        // Update position of next <ref> and </ref>
-        if ((beginRef >= 0) && (beginRef <= startIndex)) {
-          beginRef = contents.indexOf("<ref>", startIndex);
-        }
-        if (beginRef >= 0) {
-          firstIndex = Math.min(firstIndex, beginRef);
-        }
-        if ((endRef >= 0) && (endRef <= startIndex)) {
-          endRef = contents.indexOf("</ref>", startIndex);
-        }
-        if (endRef >= 0) {
-          firstIndex = Math.min(firstIndex, endRef);
-        }
-
-        // Update position of next <sub> and </sub>
-        if ((beginSub >= 0) && (beginSub <= startIndex)) {
-          beginSub = contents.indexOf("<sub>", startIndex);
-        }
-        if (beginSub >= 0) {
-          firstIndex = Math.min(firstIndex, beginSub);
-        }
-        if ((endSub >= 0) && (endSub <= startIndex)) {
-          endSub = contents.indexOf("</sub>", startIndex);
-        }
-        if (endSub >= 0) {
-          firstIndex = Math.min(firstIndex, endSub);
-        }
-
-        // Update position of next <sup> and </sup>
-        if ((beginSup >= 0) && (beginSup <= startIndex)) {
-          beginSup = contents.indexOf("<sup>", startIndex);
-        }
-        if (beginSup >= 0) {
-          firstIndex = Math.min(firstIndex, beginSup);
-        }
-        if ((endSup >= 0) && (endSup <= startIndex)) {
-          endSup = contents.indexOf("</sup>", startIndex);
-        }
-        if (endSup >= 0) {
-          firstIndex = Math.min(firstIndex, endSup);
-        }
-
-        if (beginRef == firstIndex) {
-          // Next element is <ref>
+      switch (contents.charAt(startIndex)) {
+      case '<':
+        if (contents.startsWith("<ref", startIndex)) {
           levelRef++;
-          startIndex = beginRef + 1;
-        } else if (endRef == firstIndex) {
-          // Next element is </ref>
+          startIndex += 3;
+        } else if (contents.startsWith("</ref", startIndex)) {
           levelRef--;
-          startIndex = endRef + 1;
-        } else if (beginSub == firstIndex) {
-          // Next element is <sub>
+          startIndex += 4;
+        } else if (contents.startsWith("<sub", startIndex)) {
           levelSub++;
-          startIndex = beginSub + 1;
-        } else if (endSub == firstIndex) {
-          // Next element is </sub>
+          startIndex += 3;
+        } else if (contents.startsWith("</sub", startIndex)) {
           levelSub--;
-          startIndex = endSub + 1;
-        } else if (beginSup == firstIndex) {
-          // Next element is <sup>
+          startIndex += 4;
+        } else if (contents.startsWith("<sup", startIndex)) {
           levelSup++;
-          startIndex = beginSup + 1;
-        } else if (endSup == firstIndex) {
-          // Next element is </sup>
+          startIndex += 3;
+        } else if (contents.startsWith("</sup", startIndex)) {
           levelSup--;
-          startIndex = endSup + 1;
-        } else if (beginIndex == firstIndex) {
-          // Next element is <small>
-          level++;
-          if ((level > 0) &&
-              ((levelRef > 0) || (levelSub > 0) || (levelSup > 0))) {
-            if (errors == null) {
-              return true;
+          startIndex += 4;
+        } else if (contents.startsWith("<small>", startIndex)) {
+          if ((levelRef > 0) || (levelSub > 0) || (levelSup > 0)) {
+            if (errorLevel < 0) {
+              errorLevel = levelSmall;
+              errorIndex = startIndex;
             }
-            result = true;
-            errors.add(new CheckErrorResult(getShortDescription(), beginIndex, endIndex + "</small>".length()));
           }
-          startIndex = beginIndex + 1;
-        } else {
-          // Next element is </small>
-          level--;
-          startIndex = endIndex + 1;
+          levelSmall++;
+          startIndex += 6;
+        } else if (contents.startsWith("</small>", startIndex)) {
+          levelSmall--;
+          startIndex += 7;
+          if ((levelRef > 0) || (levelSub > 0) || (levelSup > 0)) {
+            if (levelSmall == errorLevel) {
+              if (errors == null) {
+                return true;
+              }
+              result = true;
+              errorLevel = -1;
+              CheckErrorResult errorResult = new CheckErrorResult(
+                  getShortDescription(), errorIndex, startIndex + 1);
+              errors.add(errorResult);
+            }
+          }
         }
+        break;
       }
+      startIndex++;
     }
     return result;
   }
