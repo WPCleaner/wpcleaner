@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Properties;
 
 import javax.swing.JCheckBox;
 import javax.swing.JMenu;
@@ -70,12 +71,23 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public class MenuCreator {
 
-  final private static HashMap<String, String> lastReplacement = new HashMap<String, String>();
+  private final static HashMap<String, String> lastReplacement = new HashMap<String, String>();
 
   final private static HashMap<TextAttribute, Color> disambiguationAttributes = new HashMap<TextAttribute, Color>();
   final private static HashMap<TextAttribute, Boolean> missingAttributes = new HashMap<TextAttribute, Boolean>();
 
+  final private static Configuration configuration = Configuration.getConfiguration();
+
   static {
+    Properties tmp = configuration.getProperties(
+        Configuration.PROPERTIES_LAST_REPLACEMENT);
+    if (tmp != null) {
+      for (Object object : tmp.keySet()) {
+        if (object instanceof String) {
+          lastReplacement.put((String) object, tmp.getProperty((String) object, "")); 
+        }
+      }
+    }
     disambiguationAttributes.put(TextAttribute.FOREGROUND, Color.RED);
     missingAttributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
   }
@@ -89,6 +101,13 @@ public class MenuCreator {
   public static void addLastReplacement(String from, String to) {
     if ((from != null) && (to != null)) {
       lastReplacement.put(from, to);
+      if (configuration.getBoolean(
+          Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT,
+          Configuration.DEFAULT_SAVE_LAST_REPLACEMENT)) {
+        configuration.setSubString(
+            Configuration.PROPERTIES_LAST_REPLACEMENT,
+            from, to);
+      }
     }
   }
 
