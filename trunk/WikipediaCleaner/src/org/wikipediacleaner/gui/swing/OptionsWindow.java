@@ -107,6 +107,7 @@ public class OptionsWindow
   private JCheckBox chkAnalysisMissing;
   private JCheckBox chkAnalysisOther;
   private JCheckBox chkAnalysisRedirect;
+  private JCheckBox chkSaveLastReplacement;
   private JCheckBox chkCloseFull;
   private JSpinner spinAnalysisNbPages;
   private SpinnerNumberModel modelAnalysisNbPages;
@@ -507,6 +508,15 @@ public class OptionsWindow
     panel.add(chkAnalysisHideSending, constraints);
     constraints.gridy++;
 
+    // Save last replacement
+    chkSaveLastReplacement = Utilities.createJCheckBox(
+        GT._("Save last replacement used"),
+        configuration.getBoolean(
+            Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT,
+            Configuration.DEFAULT_SAVE_LAST_REPLACEMENT));
+    panel.add(chkSaveLastReplacement, constraints);
+    constraints.gridy++;
+
     // Nb pages selected
     modelAnalysisNbPages = new SpinnerNumberModel(
         configuration.getInt(Configuration.INTEGER_ANALYSIS_NB_PAGES, Configuration.DEFAULT_ANALYSIS_NB_PAGES),
@@ -795,6 +805,7 @@ public class OptionsWindow
     config.setBoolean(Configuration.BOOLEAN_CLOSE_DISAMBIG, chkCloseDisambig.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CLOSE_FULL, chkCloseFull.isSelected());
     config.setBoolean(Configuration.BOOLEAN_RESTORE_WINDOW, chkRestoreWindowPosition.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT, chkSaveLastReplacement.isSelected());
     config.setBoolean(Configuration.BOOLEAN_SAVE_WINDOW, chkSaveWindowPosition.isSelected());
     config.setBoolean(Configuration.BOOLEAN_SHORT_NOTATION, chkShortNotation.isSelected());
 
@@ -871,6 +882,9 @@ public class OptionsWindow
     chkRestoreWindowPosition.setSelected(config.getBoolean(
         Configuration.BOOLEAN_RESTORE_WINDOW,
         Configuration.DEFAULT_RESTORE_WINDOW));
+    chkSaveLastReplacement.setSelected(config.getBoolean(
+        Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT,
+        Configuration.DEFAULT_SAVE_LAST_REPLACEMENT));
     chkSaveWindowPosition.setSelected(config.getBoolean(
         Configuration.BOOLEAN_SAVE_WINDOW,
         Configuration.DEFAULT_SAVE_WINDOW));
