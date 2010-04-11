@@ -297,20 +297,6 @@ public class AnalysisWindow extends PageWindow {
     constraints.weightx = 1;
     constraints.weighty = 0;
 
-    // Command buttons
-    JPanel panelCommand = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 0));
-    addButtonReload(panelCommand);
-    addButtonView(panelCommand);
-    addButtonSend(panelCommand);
-    addButtonWatch(panelCommand);
-    addButtonDisambiguation(panelCommand);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridx = 0;
-    constraints.weightx = 1;
-    constraints.weighty = 0;
-    panel.add(panelCommand);
-    constraints.gridy++;
-
     // Text buttons
     JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarButtons.setFloatable(false);
@@ -320,7 +306,15 @@ public class AnalysisWindow extends PageWindow {
     addButtonUndoRedo(toolbarButtons, true);
     buttonValidate = createButtonValidate(this);
     toolbarButtons.add(buttonValidate);
+    addButtonSend(toolbarButtons);
     addButtonRedirect(toolbarButtons);
+    toolbarButtons.addSeparator();
+    addButtonReload(toolbarButtons, true);
+    addButtonView(toolbarButtons, true);
+    addButtonViewHistory(toolbarButtons, true);
+    toolbarButtons.addSeparator();
+    addButtonWatch(toolbarButtons);
+    addButtonDisambiguation(toolbarButtons);
     toolbarButtons.addSeparator();
     addLblLastModified(toolbarButtons);
     constraints.fill = GridBagConstraints.HORIZONTAL;

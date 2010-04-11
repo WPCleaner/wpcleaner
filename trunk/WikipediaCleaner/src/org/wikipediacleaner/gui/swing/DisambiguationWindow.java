@@ -221,8 +221,8 @@ public class DisambiguationWindow extends PageWindow {
   private Component createPageComponents() {
     JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     addTextPageName(panel);
-    addButtonReload(panel);
-    addButtonView(panel);
+    addButtonReload(panel, false);
+    addButtonView(panel, false);
     addButtonSend(panel);
     addButtonWatch(panel);
     addButtonFullAnalysis(panel);
