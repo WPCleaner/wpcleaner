@@ -33,6 +33,7 @@ import java.util.Collections;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -354,7 +355,7 @@ public abstract class PageWindow
    * 
    * @param panel Container.
    */
-  protected void addButtonRedirect(JPanel panel) {
+  protected void addButtonRedirect(JComponent panel) {
     buttonFullAnalysisRedirect = Utilities.createJButton(GT._(
         "Full analysis of redirect"));
     buttonFullAnalysisRedirect.setActionCommand(ACTION_FULL_ANALYSIS_REDIR);
@@ -421,11 +422,24 @@ public abstract class PageWindow
    * Add a component for the Undo / Redo buttons.
    * 
    * @param panel Container.
+   * @param icon Flag indicating if an icon should be used.
    */
-  protected void addButtonUndoRedo(JPanel panel) {
-    buttonUndo = Utilities.createJButton(GT._("Undo"));
+  protected void addButtonUndoRedo(JComponent panel, boolean icon) {
+    if (icon) {
+      buttonUndo = Utilities.createJButton(
+          "gnome-edit-undo.png", EnumImageSize.NORMAL,
+          GT._("Undo"));
+    } else {
+      buttonUndo = Utilities.createJButton(GT._("Undo"));
+    }
     panel.add(buttonUndo);
-    buttonRedo = Utilities.createJButton(GT._("Redo"));
+    if (icon) {
+      buttonRedo = Utilities.createJButton(
+          "gnome-edit-redo.png", EnumImageSize.NORMAL,
+          GT._("Redo"));
+    } else {
+      buttonRedo = Utilities.createJButton(GT._("Redo"));
+    }
     panel.add(buttonRedo);
     if (textContents != null) {
       textContents.setUndoButton(buttonUndo);
@@ -584,8 +598,8 @@ public abstract class PageWindow
    * 
    * @param panel Container.
    */
-  protected void addLblLastModified(JPanel panel) {
-    lblLastModified = Utilities.createJLabel(GT._("Last modified: "));
+  protected void addLblLastModified(JComponent panel) {
+    lblLastModified = Utilities.createJLabel(" ");
     panel.add(lblLastModified);
   }
 
@@ -668,7 +682,24 @@ public abstract class PageWindow
       }
       if (lblLastModified != null) {
         if ((page.getContentsTimestamp() != null) && (!page.getContentsTimestamp().equals(""))) {
-          lblLastModified.setText(GT._("Last modified: ") + page.getContentsTimestamp());
+          Long duration = page.getContentsAge();
+          if (duration != null) {
+            if (duration.longValue() <= 5 * 60) { // 5 minutes
+              lblLastModified.setForeground(Color.RED);
+              lblLastModified.setToolTipText(GT._(
+                  "Last modified at {0}. It was modified less than {1} minutes ago.",
+                  new Object[] { page.getContentsTimestamp(), Long.valueOf(duration / 60 + 1) } ));
+            } else if (duration.longValue() <= 60 * 60) { // 1 hour
+              lblLastModified.setForeground(Color.ORANGE);
+              lblLastModified.setToolTipText(GT._(
+                  "Last modified at {0}. It was modified less than {1} minutes ago.",
+                  new Object[] { page.getContentsTimestamp(), Long.valueOf(duration / 60 + 1) } ));
+            } else {
+              lblLastModified.setToolTipText(GT._(
+                  "Last modified at {0}", page.getContentsTimestamp()));
+            }
+          }
+          lblLastModified.setText(page.getContentsTimestamp());
           lblLastModified.setVisible(true);
         } else {
           lblLastModified.setVisible(false);

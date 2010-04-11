@@ -18,8 +18,11 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -225,6 +228,25 @@ public class Page implements Comparable<Page> {
    */
   public void setContentsTimestamp(String timestamp) {
     this.contentsTimestamp = timestamp;
+  }
+
+  /**
+   * @return Age of the contents compared to the start date (in seconds).
+   */
+  public Long getContentsAge() {
+    if ((contentsTimestamp == null) || (startTimestamp == null)) {
+      return null;
+    }
+    SimpleDateFormat format = new SimpleDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'");
+    try {
+      Date dateContents = format.parse(contentsTimestamp);
+      Date dateStart = format.parse(startTimestamp);
+      long duration = (dateStart.getTime() - dateContents.getTime()) / 1000;
+      return Long.valueOf(duration);
+    } catch (ParseException e) {
+      //
+    }
+    return null;
   }
 
   /**
