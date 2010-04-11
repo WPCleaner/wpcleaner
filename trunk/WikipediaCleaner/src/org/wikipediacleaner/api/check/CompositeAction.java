@@ -21,12 +21,14 @@ package org.wikipediacleaner.api.check;
 import java.util.ArrayList;
 
 import javax.swing.Action;
+import javax.swing.JTextPane;
+import javax.swing.text.Element;
 
 
 /**
  * A composite action.
  */
-public class CompositeAction implements Actionnable {
+class CompositeAction implements Actionnable {
 
   private final String name;
   private final ArrayList<Actionnable> actions;
@@ -59,9 +61,11 @@ public class CompositeAction implements Actionnable {
   }
 
   /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.Actionnable#getAction()
+   * @see org.wikipediacleaner.api.check.Actionnable#getAction(javax.swing.text.Element, javax.swing.JTextPane)
    */
-  public Action getAction() {
+  public Action getAction(
+      @SuppressWarnings("unused") Element element,
+      @SuppressWarnings("unused") JTextPane textPane) {
     return null;
   }
 

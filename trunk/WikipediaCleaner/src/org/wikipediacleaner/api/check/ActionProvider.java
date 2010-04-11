@@ -18,37 +18,20 @@
 
 package org.wikipediacleaner.api.check;
 
-import java.util.ArrayList;
-
 import javax.swing.Action;
 import javax.swing.JTextPane;
 import javax.swing.text.Element;
 
 
 /**
- * A generic interface for grouping possible actions.
+ * Provides an action.
  */
-public interface Actionnable {
-
-  /**
-   * @return Action name.
-   */
-  public String getName();
-
-  /**
-   * @return Flag indicating if it is composed action.
-   */
-  public boolean isCompositeAction();
+interface ActionProvider {
 
   /**
    * @param element Text element.
    * @param textPane Text component.
    * @return Action.
    */
-  public Action getAction(Element element, JTextPane textPane);
-
-  /**
-   * @return Actions.
-   */
-  public ArrayList<Actionnable> getActions();
+  Action getAction(Element element, JTextPane textPane);
 }

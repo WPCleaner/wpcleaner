@@ -139,20 +139,20 @@ public class MenuCreator {
     popup.add(new JSeparator());
 
     // Actions
-    ArrayList<Actionnable> possibleActions = info.getPossibleActions(element, textPane);
+    ArrayList<Actionnable> possibleActions = info.getPossibleActions();
     if (possibleActions != null) {
       for (Actionnable possibleAction : possibleActions) {
         if (possibleAction.isCompositeAction()) {
           JMenu subMenu = new JMenu(possibleAction.getName());
           for (Actionnable subAction : possibleAction.getActions()) {
             menuItem = new JMenuItem(subAction.getName());
-            menuItem.addActionListener(subAction.getAction());
+            menuItem.addActionListener(subAction.getAction(element, textPane));
             subMenu.add(menuItem);
           }
           addSubmenu(popup, subMenu, 0, 0);
         } else {
           menuItem = new JMenuItem(possibleAction.getName());
-          menuItem.addActionListener(possibleAction.getAction());
+          menuItem.addActionListener(possibleAction.getAction(element, textPane));
           popup.add(menuItem);
         }
       }

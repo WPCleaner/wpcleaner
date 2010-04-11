@@ -18,37 +18,32 @@
 
 package org.wikipediacleaner.api.check;
 
-import java.util.ArrayList;
-
 import javax.swing.Action;
 import javax.swing.JTextPane;
 import javax.swing.text.Element;
 
+import org.wikipediacleaner.gui.swing.action.ReplaceTextAction;
+
 
 /**
- * A generic interface for grouping possible actions.
+ * An action provider for ReplaceTextAction.
  */
-public interface Actionnable {
+class ReplaceTextActionProvider implements ActionProvider {
+
+  private final String newText;
 
   /**
-   * @return Action name.
+   * @param newText New text.
    */
-  public String getName();
+  ReplaceTextActionProvider(String newText) {
+    this.newText = newText;
+  }
 
-  /**
-   * @return Flag indicating if it is composed action.
+  /* (non-Javadoc)
+   * @see org.wikipediacleaner.api.check.ActionProvider#getAction(javax.swing.text.Element, javax.swing.JTextPane)
    */
-  public boolean isCompositeAction();
+  public Action getAction(Element element, JTextPane textPane) {
+    return new ReplaceTextAction(newText, element, textPane);
+  }
 
-  /**
-   * @param element Text element.
-   * @param textPane Text component.
-   * @return Action.
-   */
-  public Action getAction(Element element, JTextPane textPane);
-
-  /**
-   * @return Actions.
-   */
-  public ArrayList<Actionnable> getActions();
 }
