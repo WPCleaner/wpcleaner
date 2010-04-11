@@ -40,16 +40,17 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
+import org.lobobrowser.html.HtmlRendererContext;
 import org.lobobrowser.html.UserAgentContext;
 import org.lobobrowser.html.gui.HtmlPanel;
 import org.lobobrowser.html.parser.DocumentBuilderImpl;
-import org.lobobrowser.html.test.SimpleHtmlRendererContext;
 import org.lobobrowser.html.test.SimpleUserAgentContext;
 import org.w3c.dom.Document;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.worker.ExpandTemplatesWorker;
 import org.wikipediacleaner.gui.swing.worker.HtmlPreview;
 import org.wikipediacleaner.i18n.GT;
@@ -77,7 +78,7 @@ public class PreviewWindow
   private JTextPane  textExpanded;
   private HtmlPanel  htmlPreview;
   UserAgentContext ucontext;
-  SimpleHtmlRendererContext rcontext;
+  HtmlRendererContext rcontext;
 
   /**
    * Create and display a ExpandTemplatesWindow.
@@ -206,7 +207,7 @@ public class PreviewWindow
     if (showPreview) {
       htmlPreview = new HtmlPanel();
       ucontext = new SimpleUserAgentContext();
-      rcontext = new SimpleHtmlRendererContext(htmlPreview, ucontext);
+      rcontext = new MediaWikiHtmlRendererContext(htmlPreview, ucontext);
       constraints.fill = GridBagConstraints.BOTH;
       constraints.gridwidth = 2;
       constraints.gridx = 0;
