@@ -54,20 +54,47 @@ public class CheckErrorAlgorithm63 extends CheckErrorAlgorithmBase {
       switch (contents.charAt(startIndex)) {
       case '<':
         if (contents.startsWith("<ref", startIndex)) {
-          levelRef++;
           startIndex += 3;
+          while ((startIndex < contents.length()) &&
+                 (contents.charAt(startIndex) != '>')) {
+            startIndex++;
+          }
+          if ((startIndex < contents.length()) &&
+              (contents.charAt(startIndex) == '>')) {
+            if (contents.charAt(startIndex - 1) != '/') {
+              levelRef++;
+            }
+          }
         } else if (contents.startsWith("</ref", startIndex)) {
           levelRef--;
           startIndex += 4;
         } else if (contents.startsWith("<sub", startIndex)) {
-          levelSub++;
           startIndex += 3;
+          while ((startIndex < contents.length()) &&
+                 (contents.charAt(startIndex) != '>')) {
+            startIndex++;
+          }
+          if ((startIndex < contents.length()) &&
+              (contents.charAt(startIndex) == '>')) {
+            if (contents.charAt(startIndex - 1) != '/') {
+              levelSub++;
+            }
+          }
         } else if (contents.startsWith("</sub", startIndex)) {
           levelSub--;
           startIndex += 4;
         } else if (contents.startsWith("<sup", startIndex)) {
-          levelSup++;
           startIndex += 3;
+          while ((startIndex < contents.length()) &&
+                 (contents.charAt(startIndex) != '>')) {
+            startIndex++;
+          }
+          if ((startIndex < contents.length()) &&
+              (contents.charAt(startIndex) == '>')) {
+            if (contents.charAt(startIndex - 1) != '/') {
+              levelSup++;
+            }
+          }
         } else if (contents.startsWith("</sup", startIndex)) {
           levelSup--;
           startIndex += 4;
