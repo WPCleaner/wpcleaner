@@ -44,7 +44,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -310,19 +312,22 @@ public class AnalysisWindow extends PageWindow {
     constraints.gridy++;
 
     // Text buttons
-    JPanel buttonTextPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 0));
-    buttonNext = createButtonNextOccurence(this, false);
-    buttonTextPanel.add(buttonNext);
+    JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbarButtons.setFloatable(false);
+    buttonNext = createButtonNextOccurence(this, true);
+    toolbarButtons.add(buttonNext);
+    toolbarButtons.addSeparator();
+    addButtonUndoRedo(toolbarButtons, true);
     buttonValidate = createButtonValidate(this);
-    buttonTextPanel.add(buttonValidate);
-    addButtonUndoRedo(buttonTextPanel);
-    addButtonRedirect(buttonTextPanel);
-    addLblLastModified(buttonTextPanel);
+    toolbarButtons.add(buttonValidate);
+    addButtonRedirect(toolbarButtons);
+    toolbarButtons.addSeparator();
+    addLblLastModified(toolbarButtons);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
     constraints.weightx = 1;
     constraints.weighty = 0;
-    panel.add(buttonTextPanel, constraints);
+    panel.add(toolbarButtons, constraints);
     constraints.gridy++;
 
     // Contents
