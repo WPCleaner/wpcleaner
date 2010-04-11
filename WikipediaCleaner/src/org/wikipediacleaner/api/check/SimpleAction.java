@@ -21,30 +21,35 @@ package org.wikipediacleaner.api.check;
 import java.util.ArrayList;
 
 import javax.swing.Action;
+import javax.swing.JTextPane;
+import javax.swing.text.Element;
 
 
 /**
  * A simple action.
  */
-public class SimpleAction implements Actionnable {
+class SimpleAction implements Actionnable {
 
   private final String name;
-  private final Action action;
+  private final ActionProvider actionProvider;
 
   /**
    * @param name Action name.
-   * @param action Action.
+   * @param actionProvider Action provider.
    */
-  public SimpleAction(String name, Action action) {
+  SimpleAction(String name, ActionProvider actionProvider) {
     this.name = name;
-    this.action = action;
+    this.actionProvider = actionProvider;
   }
 
   /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.Actionnable#getAction()
+   * @see org.wikipediacleaner.api.check.Actionnable#getAction(javax.swing.text.Element, javax.swing.JTextPane)
    */
-  public Action getAction() {
-    return action;
+  public Action getAction(Element element, JTextPane textPane) {
+    if (actionProvider == null) {
+      return null;
+    }
+    return actionProvider.getAction(element, textPane);
   }
 
   /* (non-Javadoc)

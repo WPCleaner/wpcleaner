@@ -20,10 +20,6 @@ package org.wikipediacleaner.api.check;
 
 import java.util.ArrayList;
 
-import javax.swing.JTextPane;
-import javax.swing.text.Element;
-
-import org.wikipediacleaner.gui.swing.action.ReplaceTextAction;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -36,7 +32,8 @@ public class CheckErrorResult {
   private final int startPosition;
   private final int endPosition;
 
-  private ArrayList<String> replacements;
+  private ArrayList<Actionnable> possibleActions;
+  private ArrayList<Actionnable> possibleReplacements;
 
   /**
    * Constructor.
@@ -49,7 +46,8 @@ public class CheckErrorResult {
     this.errorType = errorType;
     this.startPosition = startPosition;
     this.endPosition = endPosition;
-    this.replacements = null;
+    this.possibleActions = new ArrayList<Actionnable>();
+    this.possibleReplacements = null;
   }
 
   /**
@@ -86,36 +84,28 @@ public class CheckErrorResult {
    * @param replacement Possible replacement.
    */
   public void addReplacement(String replacement) {
-    if (replacements == null) {
-      replacements = new ArrayList<String>();
+    if (replacement == null) {
+      return;
     }
-    if (!replacements.contains(replacement)) {
-      replacements.add(replacement);
+    if (possibleReplacements == null) {
+      possibleReplacements = new ArrayList<Actionnable>();
+      possibleActions.add(new CompositeAction(
+          GT._("Replace with"), possibleReplacements));
     }
-  }
-
-  /**
-   * @return Possible replacements.
-   */
-  public ArrayList<String> getReplacements() {
-    return replacements;
+    for (Actionnable actionnable : possibleReplacements) {
+      if (replacement.equals(actionnable.getName())) {
+        return;
+      }
+    }
+    possibleReplacements.add(new SimpleAction(
+        replacement,
+        new ReplaceTextActionProvider(replacement)));
   }
 
   /**
    * @return Possible actions.
    */
-  public ArrayList<Actionnable> getPossibleActions(
-      Element element, JTextPane textPane) {
-    ArrayList<Actionnable> result = new ArrayList<Actionnable>();
-    if ((replacements != null) && (replacements.size() > 0)) {
-      ArrayList<Actionnable> possibleReplacements = new ArrayList<Actionnable>(replacements.size());
-      for (String replacement : replacements) {
-        possibleReplacements.add(new SimpleAction(
-            replacement,
-            new ReplaceTextAction(replacement, element, textPane)));
-      }
-      result.add(new CompositeAction(GT._("Replace with"), possibleReplacements));
-    }
-    return result;
+  public ArrayList<Actionnable> getPossibleActions() {
+    return possibleActions;
   }
 }
