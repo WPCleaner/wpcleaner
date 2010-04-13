@@ -61,6 +61,7 @@ import org.wikipediacleaner.gui.swing.worker.DisambiguationListWorker;
 import org.wikipediacleaner.gui.swing.worker.EmbeddedInWorker;
 import org.wikipediacleaner.gui.swing.worker.RandomPageWorker;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -423,7 +424,9 @@ public class MainWindow
     constraints.gridy++;
 
     // Current list button
-    buttonCurrentList = Utilities.createJButton(GT._("&Current Disambiguation List"));
+    buttonCurrentList = Utilities.createJButton(
+        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        GT._("&Current Disambiguation List"), true);
     buttonCurrentList.setActionCommand(ACTION_CURRENT_LIST);
     buttonCurrentList.addActionListener(this);
     constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -445,7 +448,9 @@ public class MainWindow
     constraints.gridy++;
 
     // Check Wiki Project button
-    buttonCheckWiki = Utilities.createJButton(GT._("Project check wikipedia"));
+    buttonCheckWiki = Utilities.createJButton(
+        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
+        GT._("Project check wikipedia"), true);
     buttonCheckWiki.setActionCommand(ACTION_CHECK_WIKI);
     buttonCheckWiki.addActionListener(this);
     constraints.fill = GridBagConstraints.HORIZONTAL;

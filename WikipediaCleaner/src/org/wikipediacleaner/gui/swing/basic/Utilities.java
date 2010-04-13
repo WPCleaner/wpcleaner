@@ -204,11 +204,12 @@ public class Utilities {
    * @param iconName Icon name.
    * @param size Icon size.
    * @param message Label text with optional mnemonic inside.
+   * @param showMessage TODO
    * @return Button initialized with text and mnemonic.
    */
   public static JButton createJButton(
       String iconName, EnumImageSize size,
-      String message) {
+      String message, boolean showMessage) {
     ImageIcon icon = null;
     if ((iconName != null) && (size != null)) {
       URL url = Utilities.class.getClassLoader().getResource(
@@ -219,8 +220,12 @@ public class Utilities {
     }
     JButton button = null;
     if (icon != null) {
-      button = new JButton(icon);
-      button.setToolTipText(getLabelWithoutMnemonic(message));
+      if (showMessage) {
+        button = new JButton(getLabelWithoutMnemonic(message), icon);
+      } else {
+        button = new JButton(icon);
+        button.setToolTipText(getLabelWithoutMnemonic(message));
+      }
     } else {
       button = new JButton(getLabelWithoutMnemonic(message));
     }

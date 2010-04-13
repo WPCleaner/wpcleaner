@@ -1,8 +1,11 @@
 The files in the images directory and its subdirectories are from :
 - Tango: The Tango Desktop Project (http://tango.freedesktop.org/). Icons from Tango are in the public domain. 
 - Gnome: The Gnome Icon Theme (http://git.gnome.org./browse/gnome-icon-theme/tree/ - http://www.gnome.org/). Icons from Gnome are under GPL v2.
+- Commons: Wikimedia Commons (http://commons.wikimedia.org). Licence depends on the image.
 
 The following files are available in the "normal" directory:
+- commons-disambig-colour.png (Commons - Author: Bub's - http://commons.wikimedia.org/wiki/File:Disambig_colour.svg - public domain)
+- commons-nuvola-web-broom.png (Commons - Author: Seahen - http://commons.wikimedia.org/wiki/Image:Nuvola_web_broom.svg - GPL 2.1 or +) 
 - gnome-applications-internet.png (Gnome)
 - gnome-edit-clear.png (Gnome)
 - gnome-edit-delete.png (Gnome)

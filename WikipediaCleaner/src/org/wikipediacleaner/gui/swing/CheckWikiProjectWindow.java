@@ -254,13 +254,13 @@ public class CheckWikiProjectWindow extends PageWindow {
     toolbar.setFloatable(false);
     JButton buttonReloadError = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
-        GT._("Reload error"));
+        GT._("Reload error"), false);
     buttonReloadError.setActionCommand(ACTION_RELOAD_ERROR);
     buttonReloadError.addActionListener(this);
     toolbar.add(buttonReloadError);
     buttonErrorDetail = Utilities.createJButton(
         "help-browser.png", EnumImageSize.NORMAL,
-        GT._("Detail"));
+        GT._("Detail"), false);
     buttonErrorDetail.setActionCommand(ACTION_ERROR_DETAIL);
     buttonErrorDetail.addActionListener(this);
     buttonErrorDetail.setEnabled(false);

@@ -324,7 +324,7 @@ public abstract class PageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-system-run.png", EnumImageSize.NORMAL,
-          GT._("Full analysis"));
+          GT._("Full analysis"), false);
     } else {
       button = Utilities.createJButton(GT._("Full analysis"));
     }
@@ -345,7 +345,7 @@ public abstract class PageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-go-next.png", EnumImageSize.NORMAL,
-          GT._("&Next occurrence"));
+          GT._("&Next occurrence"), false);
     } else {
       button = Utilities.createJButton(GT._("&Next occurrence"));
     }
@@ -397,7 +397,7 @@ public abstract class PageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-view-refresh.png", EnumImageSize.NORMAL,
-          GT._("&Reload"));
+          GT._("&Reload"), false);
     } else {
       button = Utilities.createJButton(GT._("&Reload"));
     }
@@ -441,7 +441,7 @@ public abstract class PageWindow
     if (icon) {
       buttonUndo = Utilities.createJButton(
           "gnome-edit-undo.png", EnumImageSize.NORMAL,
-          GT._("Undo"));
+          GT._("Undo"), false);
     } else {
       buttonUndo = Utilities.createJButton(GT._("Undo"));
     }
@@ -449,7 +449,7 @@ public abstract class PageWindow
     if (icon) {
       buttonRedo = Utilities.createJButton(
           "gnome-edit-redo.png", EnumImageSize.NORMAL,
-          GT._("Redo"));
+          GT._("Redo"), false);
     } else {
       buttonRedo = Utilities.createJButton(GT._("Redo"));
     }
@@ -498,7 +498,7 @@ public abstract class PageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-emblem-web.png", EnumImageSize.NORMAL,
-          GT._("&External Viewer"));
+          GT._("&External Viewer"), false);
     } else {
       button = Utilities.createJButton(GT._("&External Viewer"));
     }
@@ -532,7 +532,7 @@ public abstract class PageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-emblem-documents.png", EnumImageSize.NORMAL,
-          GT._("&History"));
+          GT._("&History"), false);
     } else {
       button = Utilities.createJButton(GT._("&History"));
     }
