@@ -289,13 +289,13 @@ public class DisambiguationWindow extends PageWindow {
     toolBarButtons.setFloatable(false);
     buttonAddAutomaticFixing = Utilities.createJButton(
         "gnome-list-add.png", EnumImageSize.NORMAL,
-        GT._("Add"));
+        GT._("Add"), false);
     buttonAddAutomaticFixing.setActionCommand(ACTION_ADD_AUTOMATIC_FIXING);
     buttonAddAutomaticFixing.addActionListener(this);
     toolBarButtons.add(buttonAddAutomaticFixing);
     buttonRmvAutomaticFixing = Utilities.createJButton(
         "gnome-list-remove.png", EnumImageSize.NORMAL,
-        GT._("Remove"));
+        GT._("Remove"), false);
     buttonRmvAutomaticFixing.setActionCommand(ACTION_RMV_AUTOMATIC_FIXING);
     buttonRmvAutomaticFixing.addActionListener(this);
     toolBarButtons.add(buttonRmvAutomaticFixing);
@@ -305,19 +305,19 @@ public class DisambiguationWindow extends PageWindow {
     toolBarButtons.add(buttonMdfAutomaticFixing);
     buttonClrAutomaticFixing = Utilities.createJButton(
         "gnome-edit-clear.png", EnumImageSize.NORMAL,
-        GT._("Clear"));
+        GT._("Clear"), false);
     buttonClrAutomaticFixing.setActionCommand(ACTION_CLR_AUTOMATIC_FIXING);
     buttonClrAutomaticFixing.addActionListener(this);
     toolBarButtons.add(buttonClrAutomaticFixing);
     buttonSaveAutomaticFixing = Utilities.createJButton(
         "gnome-media-floppy.png", EnumImageSize.NORMAL,
-        GT._("Save"));
+        GT._("Save"), false);
     buttonSaveAutomaticFixing.setActionCommand(ACTION_SAVE_AUTOMATIC_FIXING);
     buttonSaveAutomaticFixing.addActionListener(this);
     toolBarButtons.add(buttonSaveAutomaticFixing);
     buttonRunAutomaticFixing = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
-        GT._("Fix selected pages"));
+        GT._("Fix selected pages"), false);
     buttonRunAutomaticFixing.setActionCommand(ACTION_RUN_AUTOMATIC_FIXING);
     buttonRunAutomaticFixing.addActionListener(this);
     toolBarButtons.add(buttonRunAutomaticFixing);
