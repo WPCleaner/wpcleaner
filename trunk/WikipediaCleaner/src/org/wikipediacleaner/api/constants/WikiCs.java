@@ -42,7 +42,7 @@ class WikiCs {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "";
+  final static String message  = "Opraveny odkazy na rozcestníky";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
