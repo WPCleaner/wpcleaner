@@ -539,6 +539,56 @@ public class MediaWikiAPI implements API {
   }
 
   /**
+   * @param from Wikipedia in which the article is.
+   * @param to Wikipedia to which the link is searched.
+   * @param title Page title.
+   * @return Page title in the destination Wikipedia.
+   * @throws APIException
+   */
+  public String getLanguageLink(EnumWikipedia from, EnumWikipedia to, String title)
+      throws APIException {
+    HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    properties.put("lllimit", "max");
+    properties.put("prop", "langlinks");
+    properties.put("titles", title);
+    boolean llcontinue = false;
+    do {
+      try {
+        Element root = getRoot(from, properties, MAX_ATTEMPTS);
+
+        // Analyzing result
+        XPath xpaLangLink = XPath.newInstance("/api/query/pages/page/langlinks/ll[@lang=\"" + to.getCode() + "\"]");
+        List results = xpaLangLink.selectNodes(root);
+        Iterator iter = results.iterator();
+        while (iter.hasNext()) {
+          Element currentNode = (Element) iter.next();
+          XPath xpaLink = XPath.newInstance(".");
+          String link = xpaLink.valueOf(currentNode);
+          if ((link != null) && (link.trim().length() > 0)) {
+            return link.trim();
+          }
+        }
+
+        // Checking if need to continue
+        XPath xpaContinue = XPath.newInstance("/api/query-continue/langlinks");
+        XPath xpaLlContinue = XPath.newInstance("./@llcontinue");
+        results = xpaContinue.selectNodes(root);
+        iter = results.iterator();
+        llcontinue = false;
+        while (iter.hasNext()) {
+          Element currentNode = (Element) iter.next();
+          llcontinue = true;
+          properties.put("llcontinue", xpaLlContinue.valueOf(currentNode));
+        }
+      } catch (JDOMException e) {
+        log.error("Error retrieving language links", e);
+        throw new APIException("Error retrieving language links", e);
+      }
+    } while (llcontinue);
+    return null;
+  }
+
+  /**
    * Retrieves the links of <code>page</code>.
    * 
    * @param wikipedia Wikipedia.

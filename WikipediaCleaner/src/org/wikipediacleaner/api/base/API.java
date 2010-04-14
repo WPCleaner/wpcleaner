@@ -240,4 +240,13 @@ public interface API {
    * @throws APIException
    */
   public void initializeDisambiguationStatus(EnumWikipedia wikipedia, ArrayList<Page> pages) throws APIException;
+
+  /**
+   * @param from Wikipedia in which the article is.
+   * @param to Wikipedia to which the link is searched.
+   * @param title Page title.
+   * @return Page title in the destination Wikipedia.
+   * @throws APIException
+   */
+  public String getLanguageLink(EnumWikipedia from, EnumWikipedia to, String title) throws APIException;
 }
