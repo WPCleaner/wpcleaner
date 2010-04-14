@@ -642,31 +642,47 @@ public class CheckWikiProjectWindow extends PageWindow {
      * Mark a page as fixed. 
      */
     private void actionMarkAsFixed() {
-      ArrayList<CheckErrorResult> results = CheckError.analyzeError(
-          error.getAlgorithm(), page, page.getContents());
-      if ((results != null) && (!results.isEmpty())) {
-        displayWarning(GT._(
-            "The error n°{0} is still found {1} times in the page.\n" +
-            "You must fix them and save the page before marking it as fixed.",
-            new Object[] { Integer.toString(error.getErrorNumber()), results.size() } ));
+
+      // Ask for confirmation
+      if (displayYesNoWarning(GT._(
+          "Do you want to mark {0} as fixed for error n°{1}",
+          new Object[] { page.getTitle(), Integer.toString(error.getErrorNumber())})) != JOptionPane.YES_OPTION) {
         return;
       }
-      if (displayYesNoWarning(
-          GT._("Do you want to mark {0} as fixed for error n°{1}",
-               new Object[] { page.getTitle(), Integer.toString(error.getErrorNumber())})) == JOptionPane.YES_OPTION) {
-        error.remove(page);
-        pane.remove(CheckWikiContentPanel.this);
-        if (error.getPageCount() == 0) {
-          Configuration configuration = Configuration.getConfiguration();
-          if (!configuration.getBoolean(
-              Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
-              Configuration.DEFAULT_CHECK_SHOW_0_ERRORS)) {
-            listAllErrors.removeItem(error);
-          }
+
+      // Check if error is still present 
+      ArrayList<CheckErrorResult> results = CheckError.analyzeError(
+          error.getAlgorithm(), page, textPage.getText());
+      if ((results != null) && (!results.isEmpty())) {
+        if (displayYesNoWarning(GT._(
+            "The error n°{0} is still found {1} times in the page.\n" +
+            "Are you really sure that you want to mark it as fixed ?",
+            new Object[] { Integer.toString(error.getErrorNumber()), results.size() } )) != JOptionPane.YES_OPTION) {
+          return;
         }
-        actionSelectErrorType();
-        markPageAsFixed(error, page);
+      } else {
+        // Check if error was initially present
+        if (modelErrors.contains(error.getAlgorithm())) {
+          displayWarning(GT._(
+              "You have already fixed this error by modifying the page.\n" +
+              "You should send your modifications, the page will be marked as fixed."));
+          return;
+        }
       }
+
+      // Mark as fixed
+      error.remove(page);
+      pane.remove(CheckWikiContentPanel.this);
+      if (error.getPageCount() == 0) {
+        Configuration configuration = Configuration.getConfiguration();
+        if (!configuration.getBoolean(
+            Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
+            Configuration.DEFAULT_CHECK_SHOW_0_ERRORS)) {
+          listAllErrors.removeItem(error);
+        }
+      }
+      actionSelectErrorType();
+      markPageAsFixed(error, page);
     }
 
     /**
