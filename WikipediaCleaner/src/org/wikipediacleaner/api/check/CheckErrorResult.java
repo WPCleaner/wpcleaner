@@ -103,6 +103,29 @@ public class CheckErrorResult {
   }
 
   /**
+   * Add a possible action.
+   * 
+   * @param action Action.
+   */
+  public void addPossibleAction(Actionnable action) {
+    if (action != null) {
+      possibleActions.add(action);
+    }
+  }
+
+  /**
+   * Add a possible action.
+   * 
+   * @param name Action name.
+   * @param action Action provider.
+   */
+  public void addPossibleAction(String name, ActionProvider action) {
+    if ((name != null) && (action != null)) {
+      addPossibleAction(new SimpleAction(name, action));
+    }
+  }
+
+  /**
    * @return Possible actions.
    */
   public ArrayList<Actionnable> getPossibleActions() {

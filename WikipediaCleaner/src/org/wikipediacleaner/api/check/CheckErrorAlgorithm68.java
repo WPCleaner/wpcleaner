@@ -20,8 +20,10 @@ package org.wikipediacleaner.api.check;
 
 import java.util.ArrayList;
 
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -82,7 +84,22 @@ public class CheckErrorAlgorithm68 extends CheckErrorAlgorithmBase {
                     return true;
                   }
                   result = true;
-                  errors.add(new CheckErrorResult(getShortDescription(), beginIndex, endIndex + 2));
+                  CheckErrorResult errorResult = new CheckErrorResult(
+                      getShortDescription(), beginIndex, endIndex + 2);
+                  EnumWikipedia fromWikipedia = EnumWikipedia.getWikipedia(lg.getCode());
+                  if (fromWikipedia != null) {
+                    currentPos++;
+                    int beginTitle = currentPos;
+                    while ((currentPos < endIndex) && (contents.charAt(currentPos) != '|')) {
+                      currentPos++;
+                    }
+                    errorResult.addPossibleAction(
+                        GT._("Check language links"),
+                        new CheckLanguageLinkActionProvider(
+                            fromWikipedia, page.getWikipedia(),
+                            contents.substring(beginTitle, currentPos)));
+                  }
+                  errors.add(errorResult);
                 }
               }
             }

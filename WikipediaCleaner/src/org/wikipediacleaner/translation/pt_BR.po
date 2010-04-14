@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-14 20:23+0200\n"
+"POT-Creation-Date: 2010-04-14 23:59+0200\n"
 "PO-Revision-Date: 2008-11-30 16:27+0000\n"
 "Last-Translator: Ricardo Ichizo <n1ghtcr4wler@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -49,6 +49,10 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:403
 msgid "Error unkown from WikiCleaner"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorAlgorithm68.java:97
+msgid "Check language links"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:93
@@ -974,6 +978,21 @@ msgstr "Recuperando vínculos em templates"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:227
 msgid "Displaying templates found"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:73
+#, java-format
+msgid ""
+"The page {0} in the {1} Wikipedia doesn''t have a language link to the {2} "
+"Wikipedia."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:79
+#, java-format
+msgid ""
+"The page {0} in the {1} Wikipedia has a language link to the {2} Wikipedia: "
+"{3}.\n"
+"Do you want to replace the link by [[{3}]] ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/FindTextAction.java:66
