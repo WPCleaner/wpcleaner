@@ -812,7 +812,7 @@ public class CheckWikiProjectWindow extends PageWindow {
      * View page in external viewer.
      */
     private void actionView() {
-      Utilities.browseURL(getWikipedia(), page.getTitle());
+      Utilities.browseURL(getWikipedia(), page.getTitle(), false);
     }
 
     /**
@@ -1023,7 +1023,7 @@ public class CheckWikiProjectWindow extends PageWindow {
         (Utilities.isDesktopSupported())) {
       CheckError error = (CheckError) selected;
       if (error.getAlgorithm().getLink() != null) {
-        Utilities.browseURL(getWikipedia(), error.getAlgorithm().getLink());
+        Utilities.browseURL(getWikipedia(), error.getAlgorithm().getLink(), true);
       }
     }
   }

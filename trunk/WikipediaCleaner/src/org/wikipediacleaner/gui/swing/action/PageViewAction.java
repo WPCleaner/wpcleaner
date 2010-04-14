@@ -55,7 +55,7 @@ public class PageViewAction implements ActionListener {
     if (action != null) {
       Utilities.browseURL(wiki, title, action);
     } else if (wiki != null) {
-      Utilities.browseURL(wiki, title);
+      Utilities.browseURL(wiki, title, false);
     } else {
       Utilities.browseURL(title);
     }
