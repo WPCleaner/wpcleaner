@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-14 20:23+0200\n"
-"PO-Revision-Date: 2009-08-01 22:01+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"PO-Revision-Date: 2010-04-14 16:10+0000\n"
+"Last-Translator: Jakub Naliwajek <naliwajek@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-08 18:40+0000\n"
+"X-Launchpad-Export-Date: 2010-04-14 19:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
 #, java-format
 msgid "Page {0}:"
-msgstr ""
+msgstr "Strona {0}:"
 
 #: org/wikipediacleaner/api/check/CheckError.java:172
 msgid "Deactivated"
@@ -32,20 +32,20 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:176
 msgid "Middle priority"
-msgstr ""
+msgstr "Średni priorytet"
 
 #: org/wikipediacleaner/api/check/CheckError.java:178
 msgid "Top priority"
-msgstr ""
+msgstr "Wysoki priorytet"
 
 #: org/wikipediacleaner/api/check/CheckError.java:180
 msgid "Priority unknown"
-msgstr ""
+msgstr "Nieznany priorytet"
 
 #: org/wikipediacleaner/api/check/CheckError.java:396
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
-msgstr ""
+msgstr "Błąd n°{0} ({1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckError.java:403
 msgid "Error unkown from WikiCleaner"
@@ -209,7 +209,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:99
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:600
 msgid "!!! WARNING !!!"
-msgstr ""
+msgstr "!!! OSTRZEŻENIE !!!"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:100
 msgid "Functions available here are considered as bot tools."
@@ -247,9 +247,8 @@ msgid "Reload error"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:263
-#, fuzzy
 msgid "Detail"
-msgstr "Szczegóły"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:296
 msgid "Pages"
