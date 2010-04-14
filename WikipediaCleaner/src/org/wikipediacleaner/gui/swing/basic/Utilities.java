@@ -444,10 +444,14 @@ public class Utilities {
    * 
    * @param wiki Wikipedia.
    * @param title Page title.
+   * @param redirect Flag indicating if redirects should be followed.
    */
-  public static void browseURL(EnumWikipedia wiki, String title) {
+  public static void browseURL(EnumWikipedia wiki, String title, boolean redirect) {
     try {
-      browseURL(wiki.getWikiURL() + "?title=" + URLEncoder.encode(title, "UTF-8") + "&redirect=no");
+      browseURL(
+          wiki.getWikiURL() +
+          "?title=" + URLEncoder.encode(title, "UTF-8") +
+          (redirect ? "" : "&redirect=no"));
     } catch (UnsupportedEncodingException e) {
       // Nothing to be done
     }

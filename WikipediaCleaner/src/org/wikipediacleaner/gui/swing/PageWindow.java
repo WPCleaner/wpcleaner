@@ -1004,7 +1004,7 @@ public abstract class PageWindow
    * Action called when View button is pressed. 
    */
   private void actionView() {
-    Utilities.browseURL(getWikipedia(), getPageName());
+    Utilities.browseURL(getWikipedia(), getPageName(), false);
   }
 
   /**
