@@ -172,6 +172,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
           CheckError.addCheckError(checkWikiConfig, errors, getWikipedia(), errorNumber, stream);
         } catch (ClassNotFoundException e) {
           // Not found: error not yet available in WikiCleaner.
+          System.out.println("Error " + errorNumber + " is not yet available in WikiCleaner.");
         } catch (APIException e) {
           return e;
         }
