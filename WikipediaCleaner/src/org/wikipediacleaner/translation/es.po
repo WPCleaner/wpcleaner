@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-14 23:59+0200\n"
+"POT-Creation-Date: 2010-04-16 20:32+0200\n"
 "PO-Revision-Date: 2010-04-16 15:36+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -228,8 +228,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "En algunas proyectos de Wikipedia, podrías requerir tener el permiso de bot "
 "para hacer esto."
@@ -301,7 +300,11 @@ msgstr ""
 "Ya ha reparado el terro modificando esta página.\n"
 "Debe enviar sus modificaciones para ser marcada como reparada."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:859
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:763
+msgid "A comment is required for sending the page."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:868
 #, java-format
 msgid "Detection by [[{0}]]"
 msgstr "Detección por [[{0}]]"
@@ -544,8 +547,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:813
 msgid "There's no known list of disambiguation pages for this Wikipedia."
-msgstr ""
-"No existe una lista de páginas de desambiguación para esta Wikipedia."
+msgstr "No existe una lista de páginas de desambiguación para esta Wikipedia."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:837
 msgid "There's no known Check Wikipedia Project for this Wikipedia."

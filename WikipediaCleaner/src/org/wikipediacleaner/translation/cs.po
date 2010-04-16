@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-14 23:59+0200\n"
+"POT-Creation-Date: 2010-04-16 20:32+0200\n"
 "PO-Revision-Date: 2010-04-15 12:08+0000\n"
 "Last-Translator: JAn Dudík <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -225,8 +225,7 @@ msgstr "Můžou změnit nožství stránek v krátkém čase."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Na některých projektech Wikimedia potřebuješ pro tyto funkce příznak Bot."
 
@@ -296,7 +295,11 @@ msgstr ""
 "Při editaci stránky jsi chybu opravil.\n"
 "Můžeš uložit změny, chyba bude označena jako vyřešená."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:859
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:763
+msgid "A comment is required for sending the page."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:868
 #, java-format
 msgid "Detection by [[{0}]]"
 msgstr "Deteckce nástrojem [[{0}]]"
