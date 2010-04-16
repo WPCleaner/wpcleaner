@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-14 23:59+0200\n"
+"POT-Creation-Date: 2010-04-16 20:32+0200\n"
 "PO-Revision-Date: 2009-09-05 18:48+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -290,7 +290,11 @@ msgid ""
 "You should send your modifications, the page will be marked as fixed."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:859
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:763
+msgid "A comment is required for sending the page."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:868
 #, java-format
 msgid "Detection by [[{0}]]"
 msgstr ""
