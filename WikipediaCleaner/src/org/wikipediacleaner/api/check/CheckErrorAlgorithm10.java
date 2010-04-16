@@ -96,7 +96,7 @@ public class CheckErrorAlgorithm10 extends CheckErrorAlgorithmBase {
           count = 0;
         }
         startIndex = beginIndex;
-        beginIndex = contents.lastIndexOf("[[", startIndex - 1);
+        beginIndex = contents.lastIndexOf("[[", startIndex - 2);
       }
     }
     return result;
