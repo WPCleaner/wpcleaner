@@ -53,19 +53,22 @@ public class CheckError {
    * @param errors Possible error types.
    * @param page Page to be analyzed.
    * @param contents Page contents (may be different from page.getContents()).
-   * @return Error types found in the page.
+   * @return Errors found in the page.
    */
-  public static ArrayList<CheckErrorAlgorithm> analyzeErrors(
+  public static ArrayList<CheckErrorPage> analyzeErrors(
       ArrayList<CheckError> errors, Page page, String contents) {
-    ArrayList<CheckErrorAlgorithm> errorsFound = new ArrayList<CheckErrorAlgorithm>();
+    ArrayList<CheckErrorPage> errorsFound = new ArrayList<CheckErrorPage>();
     if ((errors != null) && (page != null)) {
       if (contents == null) {
         contents = page.getContents();
       }
       for (CheckError error : errors) {
         if (error.algorithm != null) {
-          if (error.algorithm.analyze(page, contents, null)) {
-            errorsFound.add(error.algorithm);
+          ArrayList<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
+          if (error.algorithm.analyze(page, contents, results)) {
+            CheckErrorPage errorPage = new CheckErrorPage(page, error.algorithm);
+            errorPage.setResults(results);
+            errorsFound.add(errorPage);
           }
         }
       }
@@ -76,18 +79,18 @@ public class CheckError {
   /**
    * Analyze a page to find errors of a given type.
    * 
-   * @param algorithm Algorithm.
-   * @param page Page to be analyzed.
+   * @param errorPage Error page.
    * @param contents Page contents (may be different from page.getContents()).
-   * @return Errors found in the page.
    */
-  public static ArrayList<CheckErrorResult> analyzeError(
-      CheckErrorAlgorithm algorithm, Page page, String contents) {
-    ArrayList<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
-    if (algorithm != null) {
-      algorithm.analyze(page, contents, errorsFound);
+  public static void analyzeError(
+      CheckErrorPage errorPage, String contents) {
+    if (errorPage != null) {
+      ArrayList<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
+      if ((errorPage.getAlgorithm() != null) && (errorPage.getPage() != null)) {
+        errorPage.getAlgorithm().analyze(errorPage.getPage(), contents, errorsFound);
+      }
+      errorPage.setResults(errorsFound);
     }
-    return errorsFound;
   }
 
   /**

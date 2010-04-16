@@ -75,6 +75,7 @@ import org.w3c.dom.Document;
 import org.wikipediacleaner.api.MediaWikiController;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
@@ -83,6 +84,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
 import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
@@ -480,6 +482,9 @@ public class CheckWikiProjectWindow extends PageWindow {
       // Errors list
       modelErrors = new DefaultListModel();
       listErrors = new JList(modelErrors);
+      CheckErrorPageListCellRenderer cellRenderer = new CheckErrorPageListCellRenderer();
+      cellRenderer.showCountOccurence(true);
+      listErrors.setCellRenderer(cellRenderer);
       listErrors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       listErrors.addListSelectionListener(new ListSelectionListener() {
 
@@ -556,12 +561,12 @@ public class CheckWikiProjectWindow extends PageWindow {
       }
       textPage.setText(page.getContents());
       textPage.setModified(false);
-      ArrayList<CheckErrorAlgorithm> errorsFound = CheckError.analyzeErrors(
+      ArrayList<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
           errors, page, textPage.getText());
       modelErrors.clear();
       if (errorsFound != null) {
-        for (CheckErrorAlgorithm algorithm : errorsFound) {
-          modelErrors.addElement(algorithm);
+        for (CheckErrorPage tmpError : errorsFound) {
+          modelErrors.addElement(tmpError);
         }
       }
       int index = modelErrors.indexOf(listAllErrors.getSelectedItem());
@@ -577,18 +582,17 @@ public class CheckWikiProjectWindow extends PageWindow {
      */
     void actionSelectError() {
       Object selection = listErrors.getSelectedValue();
-      if (selection instanceof CheckErrorAlgorithm) {
-        CheckErrorAlgorithm algorithm = (CheckErrorAlgorithm) selection;
+      if (selection instanceof CheckErrorPage) {
+        CheckErrorPage errorSelected = (CheckErrorPage) selection;
         boolean modified = textPage.isModified();
         String contents = textPage.getText();
-        ArrayList<CheckErrorResult> errorsFound = CheckError.analyzeError(
-            algorithm, page, contents);
+        CheckError.analyzeError(errorSelected, contents);
         boolean visible = false;
         textPage.resetAttributes();
         StyledDocument document = textPage.getStyledDocument();
         if (document != null) {
-          if (errorsFound != null) {
-            for (CheckErrorResult errorFound : errorsFound) {
+          if (errorSelected.getResults() != null) {
+            for (CheckErrorResult errorFound : errorSelected.getResults()) {
               document.setCharacterAttributes(
                   errorFound.getStartPosition(),
                   errorFound.getLength(),
@@ -608,6 +612,7 @@ public class CheckWikiProjectWindow extends PageWindow {
             }
           }
         }
+        listErrors.repaint();
         textPage.setModified(modified);
         updateComponentState();
       }
@@ -650,23 +655,29 @@ public class CheckWikiProjectWindow extends PageWindow {
         return;
       }
 
-      // Check if error is still present 
-      ArrayList<CheckErrorResult> results = CheckError.analyzeError(
-          error.getAlgorithm(), page, textPage.getText());
-      if ((results != null) && (!results.isEmpty())) {
+      // Check if error is still present
+      CheckErrorPage errorPage = new CheckErrorPage(page, error.getAlgorithm());
+      CheckError.analyzeError(errorPage, textPage.getText());
+      if ((errorPage.getResults() != null) &&
+          (!errorPage.getResults().isEmpty())) {
         if (displayYesNoWarning(GT._(
             "The error n°{0} is still found {1} times in the page.\n" +
             "Are you really sure that you want to mark it as fixed ?",
-            new Object[] { Integer.toString(error.getErrorNumber()), results.size() } )) != JOptionPane.YES_OPTION) {
+            new Object[] { Integer.toString(error.getErrorNumber()), errorPage.getResults().size() } )) != JOptionPane.YES_OPTION) {
           return;
         }
       } else {
         // Check if error was initially present
-        if (modelErrors.contains(error.getAlgorithm())) {
-          displayWarning(GT._(
-              "You have already fixed this error by modifying the page.\n" +
-              "You should send your modifications, the page will be marked as fixed."));
-          return;
+        for (int i = 0; i < modelErrors.size(); i++) {
+          if (modelErrors.elementAt(i) instanceof CheckErrorPage) {
+            CheckErrorPage tmp = (CheckErrorPage) modelErrors.elementAt(i);
+            if (tmp.getAlgorithm() == error.getAlgorithm()) {
+              displayWarning(GT._(
+                  "You have already fixed this error by modifying the page.\n" +
+                  "You should send your modifications, the page will be marked as fixed."));
+              return;
+            }
+          }
         }
       }
 
@@ -737,12 +748,12 @@ public class CheckWikiProjectWindow extends PageWindow {
     private ArrayList<CheckErrorAlgorithm> computeErrorsFixed() {
       final ArrayList<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
       for (int pos = 0; pos < modelErrors.size(); pos++) {
-        if (modelErrors.get(pos) instanceof CheckErrorAlgorithm) {
-          CheckErrorAlgorithm initialAlgorithm = (CheckErrorAlgorithm) modelErrors.get(pos);
-          ArrayList<CheckErrorResult> results = CheckError.analyzeError(
-              initialAlgorithm, page, textPage.getText());
-          if ((results == null) || (results.isEmpty())) {
-            errorsFixed.add(initialAlgorithm);
+        if (modelErrors.get(pos) instanceof CheckErrorPage) {
+          CheckErrorPage initialError = (CheckErrorPage) modelErrors.get(pos);
+          CheckError.analyzeError(initialError, textPage.getText());
+          if ((initialError.getResults() == null) ||
+              (initialError.getResults().isEmpty())) {
+            errorsFixed.add(initialError.getAlgorithm());
           }
         }
       }
