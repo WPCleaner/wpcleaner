@@ -73,19 +73,21 @@ public class CheckErrorAlgorithm18 extends CheckErrorAlgorithmBase {
           if ((contents.charAt(linkEnd) == ':') &&
               (categoryNamespace.isPossibleName(contents.substring(linkBegin, linkEnd)))) {
             // Possible whitespaces
-            linkBegin = linkEnd + 1;
-            while ((linkBegin < endIndex) && (contents.charAt(linkBegin) == ' ')) {
-              linkBegin++;
+            int nameBegin = linkEnd + 1;
+            while ((nameBegin < endIndex) && (contents.charAt(nameBegin) == ' ')) {
+              nameBegin++;
             }
             // Category itself
-            linkEnd = linkBegin;
-            while ((linkEnd < endIndex) &&
-                (contents.charAt(linkEnd) != '|')) {
-              linkEnd++;
+            int nameEnd = nameBegin;
+            while ((nameEnd < endIndex) &&
+                (contents.charAt(nameEnd) != '|')) {
+              nameEnd++;
             }
             // Check if category has a lower case as a first letter
-            String category = contents.substring(linkBegin, linkEnd);
-            if ((category.length() > 0) && (Character.isLowerCase(contents.charAt(linkBegin)))) {
+            String category = contents.substring(nameBegin, nameEnd);
+            if ((category.length() > 0) &&
+                ((Character.isLowerCase(contents.charAt(nameBegin))) ||
+                 (Character.isLowerCase(contents.charAt(linkBegin))))) {
               if (errors == null) {
                 return true;
               }
@@ -93,9 +95,9 @@ public class CheckErrorAlgorithm18 extends CheckErrorAlgorithmBase {
               CheckErrorResult errorResult = new CheckErrorResult(
                   getShortDescription(), beginIndex, endIndex + 2);
               errorResult.addReplacement(
-                  contents.substring(beginIndex, linkBegin) +
-                  Character.toUpperCase(contents.charAt(linkBegin)) +
-                  contents.substring(linkBegin + 1, endIndex + 2));
+                  "[[" + categoryNamespace.getTitle() + ":" +
+                  Character.toUpperCase(contents.charAt(nameBegin)) +
+                  contents.substring(nameBegin + 1, endIndex + 2));
               errors.add(errorResult);
             }
           }
