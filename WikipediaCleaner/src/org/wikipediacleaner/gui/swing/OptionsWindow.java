@@ -808,6 +808,7 @@ public class OptionsWindow
     config.setBoolean(Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT, chkSaveLastReplacement.isSelected());
     config.setBoolean(Configuration.BOOLEAN_SAVE_WINDOW, chkSaveWindowPosition.isSelected());
     config.setBoolean(Configuration.BOOLEAN_SHORT_NOTATION, chkShortNotation.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_WIKICLEANER_COMMENT, chkWikiInComments.isSelected());
 
     // Integer values
     config.setInt(Configuration.INTEGER_ANALYSIS_NB_PAGES, modelAnalysisNbPages.getNumber().intValue());
