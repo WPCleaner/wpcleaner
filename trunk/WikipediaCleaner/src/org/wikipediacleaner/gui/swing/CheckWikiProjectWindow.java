@@ -723,9 +723,11 @@ public class CheckWikiProjectWindow extends PageWindow {
           }
         }
       }
-      comment.append(" (");
-      comment.append(getDefaultComment());
-      comment.append(")");
+      if (comment.length() > 0) {
+        comment.append(" (");
+        comment.append(getDefaultComment());
+        comment.append(")");
+      }
       return comment.toString();
     }
 
@@ -754,6 +756,13 @@ public class CheckWikiProjectWindow extends PageWindow {
       // Check page text to see what errors are still present
       final ArrayList<CheckErrorAlgorithm> errorsFixed = computeErrorsFixed();
       updateComment(errorsFixed);
+
+      // Check that a comment is available
+      if (textComment.getText().trim().length() == 0) {
+        Utilities.displayWarning(getParent(), GT._(
+            "A comment is required for sending the page."));
+        return;
+      }
 
       // Send page
       SendWorker sendWorker = new SendWorker(
