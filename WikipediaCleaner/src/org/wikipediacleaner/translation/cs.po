@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-16 20:32+0200\n"
+"POT-Creation-Date: 2010-04-17 19:52+0200\n"
 "PO-Revision-Date: 2010-04-15 12:08+0000\n"
 "Last-Translator: JAn Dudík <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -22,32 +22,32 @@ msgstr ""
 msgid "Page {0}:"
 msgstr "Stránka {0}:"
 
-#: org/wikipediacleaner/api/check/CheckError.java:172
+#: org/wikipediacleaner/api/check/CheckError.java:175
 msgid "Deactivated"
 msgstr "Deaktivováno"
 
-#: org/wikipediacleaner/api/check/CheckError.java:174
+#: org/wikipediacleaner/api/check/CheckError.java:177
 msgid "Low priority"
 msgstr "Nízká priorita"
 
-#: org/wikipediacleaner/api/check/CheckError.java:176
+#: org/wikipediacleaner/api/check/CheckError.java:179
 msgid "Middle priority"
 msgstr "Střední priorita"
 
-#: org/wikipediacleaner/api/check/CheckError.java:178
+#: org/wikipediacleaner/api/check/CheckError.java:181
 msgid "Top priority"
 msgstr "Vysoká priorita"
 
-#: org/wikipediacleaner/api/check/CheckError.java:180
+#: org/wikipediacleaner/api/check/CheckError.java:183
 msgid "Priority unknown"
 msgstr "Neznámá priorita"
 
-#: org/wikipediacleaner/api/check/CheckError.java:396
+#: org/wikipediacleaner/api/check/CheckError.java:399
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "chyba č. {0} ({1} - {2}) - {3}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:403
+#: org/wikipediacleaner/api/check/CheckError.java:406
 msgid "Error unkown from WikiCleaner"
 msgstr "Neznámá chyba z WikiCleaneru"
 
@@ -240,45 +240,49 @@ msgstr ""
 msgid "Semi-automatic disambiguation fixing"
 msgstr "Poloautomatické řešení odkazů na rozcestníky"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:150
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:155
 msgid "Check Wikipedia"
 msgstr "Kontrola Wikipedie"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:236
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:241
 msgid "List of errors detected :"
 msgstr "Seznam detekovaných chyb:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:257
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:262
 msgid "Reload error"
 msgstr "Znovunačti chybu"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:263
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:268
 msgid "Detail"
 msgstr "Podrobnosti"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:296
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:275
+msgid "List on toolserver"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:308
 msgid "Pages"
 msgstr "Stránek"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:312
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:324
 msgid "&Load pages"
 msgstr "Načti stránky"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:456
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:468
 msgid "Mark as Fixed"
 msgstr "Označ jako opravené"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:550
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:565
 #, java-format
 msgid "The page {0} doesn't exist on Wikipedia"
 msgstr "Stránka {0} na Wikipedii neexistuje"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:648
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:663
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr "Chceš označit  {0} jako vyřešená pro chybu č. {1}"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:658
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:674
 #, java-format
 msgid ""
 "The error n°{0} is still found {1} times in the page.\n"
@@ -287,7 +291,7 @@ msgstr ""
 "Chyba č. {0} je na stránce ještě {1}krát.\n"
 "Opravdu jí chceš označit jako opravenou?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:667
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:686
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
@@ -295,11 +299,11 @@ msgstr ""
 "Při editaci stránky jsi chybu opravil.\n"
 "Můžeš uložit změny, chyba bude označena jako vyřešená."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:763
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:784
 msgid "A comment is required for sending the page."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:868
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:889
 #, java-format
 msgid "Detection by [[{0}]]"
 msgstr "Deteckce nástrojem [[{0}]]"
