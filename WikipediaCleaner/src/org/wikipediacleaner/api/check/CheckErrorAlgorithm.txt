@@ -334,6 +334,8 @@ Error 084: Section without content
 
 ===============================================================================
 Error 085: Tag without content
+Status: DONE
+ - includeonly, noinclude
 
 ===============================================================================
 Error 086: Link with two brackets to external source
