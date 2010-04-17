@@ -83,6 +83,9 @@ Status: DONE
 ===============================================================================
 Error 018: Category first letter small
 Status: DONE
+Replacements:
+ - [[Category:x...]] -> [[Category:X...]]
+ - [[category:X...]] -> [[Category:X...]]
 
 ===============================================================================
 Error 019: Headlines start with one "="
@@ -358,6 +361,10 @@ Replacements:
 
 ===============================================================================
 Error 090: DEFAULTSORT with lowercase letters
+Status: DONE
+Replacements:
+ - {{DEFAULTSORT:xxx...}} -> {{DEFAULTSORT:Xxx...}}
+ - Works also with localized versions of DEFAULTSORT
 
 ===============================================================================
 Error 091: DEFAULTSORT is missing and title with lowercase_letters
