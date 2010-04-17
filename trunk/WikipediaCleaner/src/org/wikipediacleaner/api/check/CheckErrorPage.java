@@ -30,6 +30,7 @@ public class CheckErrorPage {
 
   private final CheckErrorAlgorithm algorithm;
   private final Page page;
+  private boolean errorFound;
   private ArrayList<CheckErrorResult> results;
 
   /**
@@ -39,6 +40,7 @@ public class CheckErrorPage {
   public CheckErrorPage(Page page, CheckErrorAlgorithm algorithm) {
     this.page = page;
     this.algorithm = algorithm;
+    this.errorFound = false;
     this.results = null;
   }
 
@@ -57,10 +59,21 @@ public class CheckErrorPage {
   }
 
   /**
+   * @param errorFound Flag indicating if errors have been found.
    * @param results Results.
    */
-  public void setResults(ArrayList<CheckErrorResult> results) {
+  public void setResults(
+      boolean errorFound,
+      ArrayList<CheckErrorResult> results) {
+    this.errorFound = errorFound;
     this.results = results;
+  }
+
+  /**
+   * @return Flag indicating if errors have been found.
+   */
+  public boolean getErrorFound() {
+    return errorFound;
   }
 
   /**

@@ -370,6 +370,7 @@ Replacements:
 
 ===============================================================================
 Error 091: DEFAULTSORT is missing and title with lowercase_letters
+Status: DONE
 
 ===============================================================================
 Error 092: Headline double

@@ -67,7 +67,7 @@ public class CheckError {
           ArrayList<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
           if (error.algorithm.analyze(page, contents, results)) {
             CheckErrorPage errorPage = new CheckErrorPage(page, error.algorithm);
-            errorPage.setResults(results);
+            errorPage.setResults(true, results);
             errorsFound.add(errorPage);
           }
         }
@@ -86,10 +86,13 @@ public class CheckError {
       CheckErrorPage errorPage, String contents) {
     if (errorPage != null) {
       ArrayList<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
-      if ((errorPage.getAlgorithm() != null) && (errorPage.getPage() != null)) {
-        errorPage.getAlgorithm().analyze(errorPage.getPage(), contents, errorsFound);
+      boolean errorFound = false;
+      if ((errorPage.getAlgorithm() != null) &&
+          (errorPage.getPage() != null)) {
+        errorFound = errorPage.getAlgorithm().analyze(
+            errorPage.getPage(), contents, errorsFound);
       }
-      errorPage.setResults(errorsFound);
+      errorPage.setResults(errorFound, errorsFound);
     }
   }
 

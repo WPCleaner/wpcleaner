@@ -676,6 +676,13 @@ public class CheckWikiProjectWindow extends PageWindow {
             new Object[] { Integer.toString(error.getErrorNumber()), errorPage.getResults().size() } )) != JOptionPane.YES_OPTION) {
           return;
         }
+      } else if (errorPage.getErrorFound()) {
+        if (displayYesNoWarning(GT._(
+            "The error n°{0} is still found in the page.\n" +
+            "Are you really sure that you want to mark it as fixed ?",
+            Integer.toString(error.getErrorNumber()))) != JOptionPane.YES_OPTION) {
+          return;
+        }
       } else {
         // Check if error was initially present
         for (int i = 0; i < modelErrors.size(); i++) {
@@ -761,7 +768,8 @@ public class CheckWikiProjectWindow extends PageWindow {
         if (modelErrors.get(pos) instanceof CheckErrorPage) {
           CheckErrorPage initialError = (CheckErrorPage) modelErrors.get(pos);
           CheckError.analyzeError(initialError, textPage.getText());
-          if ((initialError.getResults() == null) ||
+          if ((initialError.getErrorFound() == false) ||
+              (initialError.getResults() == null) ||
               (initialError.getResults().isEmpty())) {
             errorsFixed.add(initialError.getAlgorithm());
           }
