@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-17 19:52+0200\n"
+"POT-Creation-Date: 2010-04-17 20:54+0200\n"
 "PO-Revision-Date: 2010-04-16 09:51+0000\n"
 "Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -26,32 +26,32 @@ msgstr ""
 msgid "Page {0}:"
 msgstr "Page {0} :"
 
-#: org/wikipediacleaner/api/check/CheckError.java:175
+#: org/wikipediacleaner/api/check/CheckError.java:178
 msgid "Deactivated"
 msgstr "Désactivé"
 
-#: org/wikipediacleaner/api/check/CheckError.java:177
+#: org/wikipediacleaner/api/check/CheckError.java:180
 msgid "Low priority"
 msgstr "Priorité faible"
 
-#: org/wikipediacleaner/api/check/CheckError.java:179
+#: org/wikipediacleaner/api/check/CheckError.java:182
 msgid "Middle priority"
 msgstr "Priorité moyenne"
 
-#: org/wikipediacleaner/api/check/CheckError.java:181
+#: org/wikipediacleaner/api/check/CheckError.java:184
 msgid "Top priority"
 msgstr "Priorité maximale"
 
-#: org/wikipediacleaner/api/check/CheckError.java:183
+#: org/wikipediacleaner/api/check/CheckError.java:186
 msgid "Priority unknown"
 msgstr "Priorité inconnue"
 
-#: org/wikipediacleaner/api/check/CheckError.java:399
+#: org/wikipediacleaner/api/check/CheckError.java:402
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "Erreur n°{0} ({1} - {2}) - {3}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:406
+#: org/wikipediacleaner/api/check/CheckError.java:409
 msgid "Error unkown from WikiCleaner"
 msgstr "Erreur inconnue de WikiCleaner"
 
@@ -298,7 +298,16 @@ msgstr ""
 "L’erreur n° {0} est toujours {1}[npsb]fois dans la page.\n"
 "Êtes-vous certains de vouloir la marquer comme corrigée ?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:686
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:681
+#, fuzzy, java-format
+msgid ""
+"The error n°{0} is still found in the page.\n"
+"Are you really sure that you want to mark it as fixed ?"
+msgstr ""
+"L’erreur n° {0} est toujours {1}[npsb]fois dans la page.\n"
+"Êtes-vous certains de vouloir la marquer comme corrigée ?"
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:693
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
@@ -306,11 +315,11 @@ msgstr ""
 "Vous avez déjà corrigé cette erreur en modifiant la page.\n"
 "Vous devriez envoyer vos modifications, la page sera marquée comme corrigée."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:784
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:792
 msgid "A comment is required for sending the page."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:889
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:897
 #, java-format
 msgid "Detection by [[{0}]]"
 msgstr "Détecté par [[{0}]]"

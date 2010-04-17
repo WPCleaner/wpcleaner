@@ -80,6 +80,8 @@ public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRe
             (errorPage.getResultsCount() > 1)) {
           text += " (" + errorPage.getResultsCount() + ")";
         }
+      } else if (errorPage.getErrorFound()) {
+        errorsPresent = Boolean.TRUE;
       } else {
         errorsPresent = Boolean.FALSE;
       }
