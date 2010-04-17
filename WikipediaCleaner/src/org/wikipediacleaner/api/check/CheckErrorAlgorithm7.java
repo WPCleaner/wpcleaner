@@ -43,10 +43,14 @@ public class CheckErrorAlgorithm7 extends CheckErrorAlgorithmBase {
     boolean result = false;
     int startIndex = 0;
     while (startIndex < contents.length()) {
+
+      // Find next =
       int titleIndex = contents.indexOf("=", startIndex);
       if (titleIndex < 0) {
         startIndex = contents.length();
       } else {
+
+        // Check if the = is the beginning of a title
         int endLineIndex = contents.indexOf("\n", titleIndex);
         if ((titleIndex == 0) || (contents.charAt(titleIndex - 1) == '\n')) {
           int titleLevel = 0;
@@ -61,6 +65,8 @@ public class CheckErrorAlgorithm7 extends CheckErrorAlgorithmBase {
           if (titleLevel != 3) {
             return false;
           }
+
+          // The first title is at level 3, check if there's a lower title later
           startIndex = endLineIndex + 1;
           while (startIndex < contents.length()) {
             int nextTitleIndex = contents.indexOf("=", startIndex);
@@ -68,17 +74,19 @@ public class CheckErrorAlgorithm7 extends CheckErrorAlgorithmBase {
               startIndex = contents.length();
             } else {
               int nextEndLineIndex = contents.indexOf("\n", nextTitleIndex);
-              titleLevel = 0;
-              currentPos = nextTitleIndex;
-              while ((currentPos < contents.length()) && (contents.charAt(currentPos) == '=')) {
-                currentPos++;
-                titleLevel++;
-              }
-              if (nextEndLineIndex < 0) {
-                nextEndLineIndex = contents.length();
-              }
-              if (titleLevel < 3) {
-                return false;
+              if (contents.charAt(nextTitleIndex - 1) == '\n') {
+                titleLevel = 0;
+                currentPos = nextTitleIndex;
+                while ((currentPos < contents.length()) && (contents.charAt(currentPos) == '=')) {
+                  currentPos++;
+                  titleLevel++;
+                }
+                if (nextEndLineIndex < 0) {
+                  nextEndLineIndex = contents.length();
+                }
+                if (titleLevel < 3) {
+                  return false;
+                }
               }
               startIndex = nextEndLineIndex + 1;
             }

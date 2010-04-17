@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.check;
 
 import java.util.ArrayList;
 
+import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
 
 
@@ -64,48 +65,59 @@ public class CheckErrorAlgorithm89 extends CheckErrorAlgorithmBase {
           while ((currentPos < endIndex) && Character.isWhitespace(contents.charAt(currentPos))) {
             currentPos++;
           }
+
           // Check that link is DEFAULTSORT
-          if ((currentPos < endIndex) && (contents.startsWith("DEFAULTSORT", currentPos))) {
-            currentPos += "DEFAULTSORT".length();
+          String defaultSort = null;
+          if (currentPos < endIndex) {
+            MagicWord magicDefaultsort = page.getWikipedia().getMagicWord(MagicWord.DEFAULT_SORT);
+            ArrayList<String> aliases = magicDefaultsort.getAliases();
+            for (int i = 0; (i < aliases.size()) && (defaultSort == null); i++) {
+              if (contents.startsWith(aliases.get(i), currentPos)) {
+                currentPos += aliases.get(i).length();
+                defaultSort = aliases.get(i);
+              }
+            }
+          }
+
+          // DEFAULTSORT found
+          if ((currentPos < endIndex) && (defaultSort != null)) {
+
             // Possible whitespaces
             while ((currentPos < endIndex) && Character.isWhitespace(contents.charAt(currentPos))) {
               currentPos++;
             }
-            // Check that link starts with :
-            if ((currentPos < endIndex) && (contents.charAt(currentPos) == ':')) {
+
+            boolean capFound = false;
+            boolean firstLetter = true;
+            String text = "";
+            while (currentPos < endIndex) {
+              boolean error = false;
+              if (Character.isUpperCase(contents.charAt(currentPos))) {
+                if (!firstLetter) {
+                  capFound = true;
+                  error = true;
+                }
+                firstLetter = false;
+              } else if (Character.isLowerCase(contents.charAt(currentPos))) {
+                firstLetter = false;
+              } else {
+                firstLetter = true;
+              }
+              if (error) {
+                text += Character.toLowerCase(contents.charAt(currentPos));
+              } else {
+                text += contents.charAt(currentPos);
+              }
               currentPos++;
-              boolean capFound = false;
-              boolean firstLetter = true;
-              String text = contents.substring(beginIndex, currentPos);
-              while (currentPos < endIndex) {
-                boolean error = false;
-                if (Character.isUpperCase(contents.charAt(currentPos))) {
-                  if (!firstLetter) {
-                    capFound = true;
-                    error = true;
-                  }
-                  firstLetter = false;
-                } else if (Character.isLowerCase(contents.charAt(currentPos))) {
-                  firstLetter = false;
-                } else {
-                  firstLetter = true;
-                }
-                if (error) {
-                  text += Character.toLowerCase(contents.charAt(currentPos));
-                } else {
-                  text += contents.charAt(currentPos);
-                }
-                currentPos++;
+            }
+            if (capFound) {
+              if (errors == null) {
+                return true;
               }
-              if (capFound) {
-                if (errors == null) {
-                  return true;
-                }
-                result = true;
-                CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), beginIndex, endIndex + 2);
-                errorResult.addReplacement(text + contents.substring(currentPos, endIndex + 2));
-                errors.add(errorResult);
-              }
+              result = true;
+              CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), beginIndex, endIndex + 2);
+              errorResult.addReplacement("{{" + defaultSort + text + "}}");
+              errors.add(errorResult);
             }
           }
           startIndex = endIndex + 2;

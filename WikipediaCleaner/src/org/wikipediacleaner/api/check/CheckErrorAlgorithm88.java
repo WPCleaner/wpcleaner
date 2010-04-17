@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.check;
 
 import java.util.ArrayList;
 
+import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
 
 
@@ -60,34 +61,39 @@ public class CheckErrorAlgorithm88 extends CheckErrorAlgorithmBase {
         if (endIndex < 0) {
           startIndex = contents.length();
         } else {
+
           // Possible whitespaces
           while ((currentPos < endIndex) && Character.isWhitespace(contents.charAt(currentPos))) {
             currentPos++;
           }
+
           // Check that link is DEFAULTSORT
-          if ((currentPos < endIndex) && (contents.startsWith("DEFAULTSORT", currentPos))) {
-            currentPos += "DEFAULTSORT".length();
-            // Possible whitespaces
-            while ((currentPos < endIndex) && Character.isWhitespace(contents.charAt(currentPos))) {
+          String defaultSort = null;
+          if (currentPos < endIndex) {
+            MagicWord magicDefaultsort = page.getWikipedia().getMagicWord(MagicWord.DEFAULT_SORT);
+            ArrayList<String> aliases = magicDefaultsort.getAliases();
+            for (int i = 0; (i < aliases.size()) && (defaultSort == null); i++) {
+              if (contents.startsWith(aliases.get(i), currentPos)) {
+                currentPos += aliases.get(i).length();
+                defaultSort = aliases.get(i);
+              }
+            }
+          }
+          // DEFAULTSORT found
+          if ((currentPos < endIndex) && (defaultSort != null)) {
+            int beginLink = currentPos;
+            while ((currentPos < endIndex) && (contents.charAt(currentPos) == ' ')) {
               currentPos++;
             }
-            // Check that link starts with :
-            if ((currentPos < endIndex) && (contents.charAt(currentPos) == ':')) {
-              currentPos++;
-              int beginLink = currentPos;
-              while ((currentPos < endIndex) && (contents.charAt(currentPos) == ' ')) {
-                currentPos++;
+            if (currentPos > beginLink) {
+              if (errors == null) {
+                return true;
               }
-              if (currentPos > beginLink) {
-                if (errors == null) {
-                  return true;
-                }
-                result = true;
-                CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), beginIndex, endIndex + 2);
-                errorResult.addReplacement(
-                    contents.substring(beginIndex, beginLink) + contents.substring(currentPos, endIndex + 2));
-                errors.add(errorResult);
-              }
+              result = true;
+              CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), beginIndex, endIndex + 2);
+              errorResult.addReplacement(
+                  "{{" + defaultSort + contents.substring(currentPos, endIndex + 2));
+              errors.add(errorResult);
             }
           }
           startIndex = endIndex + 2;

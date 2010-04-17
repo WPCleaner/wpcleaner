@@ -61,6 +61,7 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.LoginResult;
+import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
@@ -991,7 +992,7 @@ public class MediaWikiAPI implements API {
   private void loadSiteInfo(EnumWikipedia wikipedia) throws APIException {
     HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("meta", "siteinfo");
-    properties.put("siprop", "namespaces|namespacealiases|languages|interwikimap");
+    properties.put("siprop", "namespaces|namespacealiases|languages|interwikimap|magicwords");
     try {
       constructSiteInfo(
           getRoot(wikipedia, properties, MAX_ATTEMPTS),
@@ -1172,6 +1173,34 @@ public class MediaWikiAPI implements API {
       wikipedia.setInterwikis(interwikis);
     } catch (JDOMException e) {
       log.error("Error languages", e);
+      throw new APIException("Error parsing XML result", e);
+    }
+
+    // Retrieve magic words
+    try {
+      HashMap<String, MagicWord> magicWords = new HashMap<String, MagicWord>();
+      XPath xpa = XPath.newInstance(query + "/magicwords/magicword");
+      List results = xpa.selectNodes(root);
+      Iterator iter = results.iterator();
+      XPath xpaName = XPath.newInstance("./@name");
+      XPath xpaAlias = XPath.newInstance("./aliases/alias");
+      XPath xpaAliasValue = XPath.newInstance(".");
+      while (iter.hasNext()) {
+        Element currentNode = (Element) iter.next();
+        String magicWord = xpaName.valueOf(currentNode);
+        ArrayList<String> aliases = new ArrayList<String>();
+        List resultsAlias = xpaAlias.selectNodes(currentNode);
+        Iterator iterAlias = resultsAlias.iterator();
+        while (iterAlias.hasNext()) {
+          Element currentAlias = (Element) iterAlias.next();
+          String alias = xpaAliasValue.valueOf(currentAlias);
+          aliases.add(alias);
+        }
+        magicWords.put(magicWord, new MagicWord(magicWord, aliases));
+      }
+      wikipedia.setMagicWords(magicWords);
+    } catch (JDOMException e) {
+      log.error("Error magic words", e);
       throw new APIException("Error parsing XML result", e);
     }
   }
