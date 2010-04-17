@@ -109,6 +109,9 @@ public class CheckErrorAlgorithm63 extends CheckErrorAlgorithmBase {
           startIndex += 6;
         } else if (contents.startsWith("</small>", startIndex)) {
           levelSmall--;
+          if (levelSmall < 0) {
+            levelSmall = 0;
+          }
           startIndex += 7;
           if ((levelRef > 0) || (levelSub > 0) || (levelSup > 0)) {
             if (levelSmall == errorLevel) {
