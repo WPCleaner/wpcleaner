@@ -110,7 +110,9 @@ public class CheckWikiProjectWindow extends PageWindow {
   private HtmlPanel textDescription;
   private UserAgentContext ucontext;
   private HtmlRendererContext rcontext;
+  private JButton buttonReloadError;
   private JButton buttonErrorDetail;
+  private JButton buttonErrorList;
 
   private JList listPages;
   private DefaultListModel modelPages;
@@ -118,6 +120,7 @@ public class CheckWikiProjectWindow extends PageWindow {
   private JTabbedPane contentPane;
 
   public final static String ACTION_ERROR_DETAIL = "ERROR_DETAIL";
+  public final static String ACTION_ERROR_LIST   = "ERROR_LIST";
   public final static String ACTION_LOAD_PAGES   = "LOAD_PAGES";
   public final static String ACTION_RELOAD_ERROR = "RELOAD_ERROR";
 
@@ -254,7 +257,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     panel.add(listAllErrors, constraints);
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
-    JButton buttonReloadError = Utilities.createJButton(
+    buttonReloadError = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
         GT._("Reload error"), false);
     buttonReloadError.setActionCommand(ACTION_RELOAD_ERROR);
@@ -267,6 +270,13 @@ public class CheckWikiProjectWindow extends PageWindow {
     buttonErrorDetail.addActionListener(this);
     buttonErrorDetail.setEnabled(false);
     toolbar.add(buttonErrorDetail);
+    buttonErrorList = Utilities.createJButton(
+        "gnome-web-browser.png", EnumImageSize.NORMAL,
+        GT._("List on toolserver"), false);
+    buttonErrorList.setActionCommand(ACTION_ERROR_LIST);
+    buttonErrorList.addActionListener(this);
+    buttonErrorList.setEnabled(false);
+    toolbar.add(buttonErrorList);
     constraints.gridx++;
     constraints.weightx = 0;
     panel.add(toolbar, constraints);
@@ -930,10 +940,12 @@ public class CheckWikiProjectWindow extends PageWindow {
     if (selection instanceof CheckError) {
       CheckError error = (CheckError) selection;
 
-      // Error detail
+      // Button status
+      buttonReloadError.setEnabled(true);
       buttonErrorDetail.setEnabled(
           (error.getAlgorithm().getLink() != null) &&
           Utilities.isDesktopSupported());
+      buttonErrorList.setEnabled(true);
 
       // Error type description
       try {
@@ -958,6 +970,10 @@ public class CheckWikiProjectWindow extends PageWindow {
       }
       setPageLoaded(false);
       actionSelectPage();
+    } else {
+      buttonReloadError.setEnabled(false);
+      buttonErrorDetail.setEnabled(false);
+      buttonErrorList.setEnabled(false);
     }
   }
 
@@ -1027,6 +1043,8 @@ public class CheckWikiProjectWindow extends PageWindow {
     super.actionPerformed(e);
     if (ACTION_ERROR_DETAIL.equals(e.getActionCommand())) {
       actionErrorDetail();
+    } else if (ACTION_ERROR_LIST.equals(e.getActionCommand())) {
+      actionErrorList();
     } else if (ACTION_LOAD_PAGES.equals(e.getActionCommand())) {
       actionSelectPage();
     } else if (ACTION_RELOAD_ERROR.equals(e.getActionCommand())) {
@@ -1045,6 +1063,22 @@ public class CheckWikiProjectWindow extends PageWindow {
       if (error.getAlgorithm().getLink() != null) {
         Utilities.browseURL(getWikipedia(), error.getAlgorithm().getLink(), true);
       }
+    }
+  }
+
+  /**
+   * Action called to display error list on toolserver. 
+   */
+  private void actionErrorList() {
+    Object selected = listAllErrors.getSelectedItem();
+    if ((selected instanceof CheckError) &&
+        (Utilities.isDesktopSupported())) {
+      CheckError error = (CheckError) selected;
+      Utilities.browseURL(
+          "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi" +
+          "?id=" + error.getErrorNumber() +
+          "&project=" + getWikipedia().getCode() + "wiki" +
+          "&view=only");
     }
   }
 
