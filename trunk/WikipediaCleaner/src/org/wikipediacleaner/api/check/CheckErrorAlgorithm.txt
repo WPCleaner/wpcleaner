@@ -51,11 +51,14 @@ Replacements:
  - &acirc; - &agrav,
  - &ccedil;
  - &eacute; - &ecirc; - &egrav;
- - &deg; - &minus; - &sect;
+ - &iacute;
+ - &deg; - &hellip; - &middot; - &minus; - &sect;
  - &laquo; - &raquo; - &quot;
  - &larr; - &rarr;
- - &nu;
+ - &lambda; - &nu; - &sigma;
  - &thinsp;
+ - &le;
+ - &cap; - &cup; - &isin; - &sube;
  
 ===============================================================================
 Error 012: HTML List elements
@@ -344,12 +347,14 @@ Error 088: DEFAULTSORT with blank at first position
 Status: DONE
 Replacements:
  - {{DEFAULTSORT: ...}} -> {{DEFAULTSORT:...}}
-
+ - Works also with localized versions of DEFAULTSORT
+ 
 ===============================================================================
 Error 089: DEFAULTSORT with capitalization in the middle of the word
 Status: DONE
 Replacements:
  - {{DEFAULTSORT:XxxXxx...}} -> {{DEFAULTSORT:Xxxxxx...}}
+ - Works also with localized versions of DEFAULTSORT
 
 ===============================================================================
 Error 090: DEFAULTSORT with lowercase letters

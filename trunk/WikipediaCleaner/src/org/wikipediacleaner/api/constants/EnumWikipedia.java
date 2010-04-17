@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.constants;
 
 import java.awt.ComponentOrientation;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
@@ -30,6 +31,7 @@ import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
+import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TemplateMatch;
@@ -384,6 +386,7 @@ public enum EnumWikipedia {
   private List<Namespace> namespaces;
   private List<Language>  languages;
   private List<Interwiki> interwikis;
+  private HashMap<String, MagicWord> magicWords;
 
   /**
    * @param code Code.
@@ -756,6 +759,24 @@ public enum EnumWikipedia {
    */
   public void setInterwikis(List<Interwiki> interwikis) {
     this.interwikis = interwikis;
+  }
+
+  /**
+   * @param name Magic word name.
+   * @return Magic word.
+   */
+  public MagicWord getMagicWord(String name) {
+    if ((name == null) || (magicWords == null)) {
+      return null;
+    }
+    return magicWords.get(name); 
+  }
+
+  /**
+   * @param magicWords Magic words.
+   */
+  public void setMagicWords(HashMap<String, MagicWord> magicWords) {
+    this.magicWords = magicWords;
   }
 
   /* (non-Javadoc)
