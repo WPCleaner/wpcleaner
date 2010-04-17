@@ -181,6 +181,7 @@ Replacements:
 
 ===============================================================================
 Error 044: Headlines with bold
+Status: DONE
 
 ===============================================================================
 Error 045: Interwiki double
@@ -371,6 +372,7 @@ Replacements:
 ===============================================================================
 Error 091: DEFAULTSORT is missing and title with lowercase_letters
 Status: DONE
+ - Works also with localized versions of DEFAULTSORT
 
 ===============================================================================
 Error 092: Headline double
