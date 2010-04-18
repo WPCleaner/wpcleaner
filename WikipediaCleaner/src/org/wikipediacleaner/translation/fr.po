@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-17 20:54+0200\n"
-"PO-Revision-Date: 2010-04-16 09:51+0000\n"
+"PO-Revision-Date: 2010-04-18 07:34+0000\n"
 "Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-16 17:04+0000\n"
+"X-Launchpad-Export-Date: 2010-04-18 11:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -230,7 +230,8 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -265,7 +266,7 @@ msgstr "Détail"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:275
 msgid "List on toolserver"
-msgstr ""
+msgstr "Liste sur toolserver"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:308
 msgid "Pages"
@@ -299,13 +300,11 @@ msgstr ""
 "Êtes-vous certains de vouloir la marquer comme corrigée ?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:681
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "The error n°{0} is still found in the page.\n"
 "Are you really sure that you want to mark it as fixed ?"
 msgstr ""
-"L’erreur n° {0} est toujours {1}[npsb]fois dans la page.\n"
-"Êtes-vous certains de vouloir la marquer comme corrigée ?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:693
 msgid ""
@@ -317,7 +316,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:792
 msgid "A comment is required for sending the page."
-msgstr ""
+msgstr "Un commentaire est requis pour envoyer cette page."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:897
 #, java-format
@@ -835,7 +834,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr ""
+"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:296
 msgid "Disambiguation"
