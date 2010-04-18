@@ -42,7 +42,7 @@ class WikiEn {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "Repairing link to disambiguation page - [[Wikipedia:Disambiguation pages with links|You can help!]]";
+  final static String message  = "Repairing link to disambiguation page - [[WP:DPL|You can help!]]";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};

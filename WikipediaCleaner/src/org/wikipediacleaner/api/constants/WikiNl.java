@@ -42,7 +42,7 @@ class WikiNl {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "Link naar doorverwijspagina aangepast. [[Wikipedia:Links naar doorverwijspagina's|Help mee!]]";
+  final static String message  = "Link naar doorverwijspagina aangepast. [[WP:LND|Help mee!]]";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
