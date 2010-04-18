@@ -42,7 +42,7 @@ class WikiEs {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "Corrigiendo error, ¡[[Wikiproyecto:Corrección_de_errores_menores|Puedes ayudar]]!";
+  final static String message  = "Corrigiendo error, ¡[[PR:CEM|Puedes ayudar]]!";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};

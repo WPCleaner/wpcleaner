@@ -42,7 +42,7 @@ class WikiPl {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "Naprawa linku do [[Wikipedia:Strony ujednoznaczniające z linkami|strony ujednoznaczniającej]]";
+  final static String message  = "Naprawa linku do [[WP:UJL|strony ujednoznaczniającej]]";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
