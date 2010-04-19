@@ -187,7 +187,7 @@ public class MainWindow
   @Override
   protected void updateComponentState() {
     EnumWikipedia wikipedia = getWikipedia();
-    Configuration config = Configuration.getConfiguration();
+    //Configuration config = Configuration.getConfiguration();
 
     comboWikipedia.setEnabled(!logged);
     comboLanguage.setEnabled(!logged);
@@ -206,7 +206,6 @@ public class MainWindow
                                    (wikipedia != null) &&
                                    (wikipedia.getTemplatesForHelpRequested() != null));
     buttonCheckWiki.setEnabled(logged &&
-                               config.getBoolean(Configuration.BOOLEAN_ADVANCED_FEATURES, false) &&
                                (wikipedia != null));
     //buttonCheckWiki.setVisible(false); //TODO
     buttonRandomPage.setEnabled(logged);
