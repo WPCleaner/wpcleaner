@@ -609,7 +609,7 @@ public class MainWindow
       return;
     }
     if (comboWikipedia.getSelectedItem() instanceof String) {
-      String url = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia Cleaner#Other Wikipedia";
+      String url = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner#Other_Wikipedia";
       if (Utilities.isDesktopSupported()) {
         Utilities.browseURL(url);
       } else {
@@ -632,7 +632,7 @@ public class MainWindow
       return;
     }
     if (comboLanguage.getSelectedItem() instanceof String) {
-      String url = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia Cleaner#Other Language";
+      String url = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner#Other_Language";
       if (Utilities.isDesktopSupported()) {
         Utilities.browseURL(url);
       } else {
