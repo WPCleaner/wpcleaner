@@ -662,26 +662,19 @@ public class MainWindow
 
     // Check that correct values are entered for password
     if (login) {
-      boolean passwordOk = true;
-      if (textPassword == null) {
-        passwordOk = false;
+      if ((textPassword == null) ||
+          (textPassword.getPassword() == null) ||
+          (textPassword.getPassword().length == 0)) {
+          displayWarning(
+              GT._("You must input your password before login"),
+              textPassword);
+          return;       
       }
-      if (passwordOk) {
-        char[] password = textPassword.getPassword();
-        if ((password == null) || (password.length == 0)) {
-          passwordOk = false;
-        }
-        if (password != null) {
-          for (int i = 0; i < password.length; i++) {
-            password[i] = '\0';
-          }
-        }
-      }
-      if (!passwordOk) {
-        displayWarning(
-            GT._("You must input your password before login"),
-            textPassword);
-        return;
+
+      // If password is Ok... continue with validation
+      char[] password = textPassword.getPassword();
+      for (int i = 0; i < password.length; i++) {
+        password[i] = '\0';
       }
     }
 
