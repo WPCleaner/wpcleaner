@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-17 20:54+0200\n"
-"PO-Revision-Date: 2010-04-15 12:08+0000\n"
-"Last-Translator: JAn Dudík <Unknown>\n"
+"PO-Revision-Date: 2010-04-19 17:54+0000\n"
+"Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-15 19:56+0000\n"
+"X-Launchpad-Export-Date: 2010-04-19 18:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
@@ -225,7 +225,8 @@ msgstr "Můžou změnit nožství stránek v krátkém čase."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Na některých projektech Wikimedia potřebuješ pro tyto funkce příznak Bot."
 
@@ -292,13 +293,11 @@ msgstr ""
 "Opravdu jí chceš označit jako opravenou?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:681
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "The error n°{0} is still found in the page.\n"
 "Are you really sure that you want to mark it as fixed ?"
 msgstr ""
-"Chyba č. {0} je na stránce ještě {1}krát.\n"
-"Opravdu jí chceš označit jako opravenou?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:693
 msgid ""
@@ -315,7 +314,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:897
 #, java-format
 msgid "Detection by [[{0}]]"
-msgstr "Deteckce nástrojem [[{0}]]"
+msgstr "Detekce nástrojem [[{0}]]"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:242
 #, java-format
