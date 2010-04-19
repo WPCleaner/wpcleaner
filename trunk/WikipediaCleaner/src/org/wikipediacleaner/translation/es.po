@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-17 20:54+0200\n"
-"PO-Revision-Date: 2010-04-16 15:36+0000\n"
+"PO-Revision-Date: 2010-04-19 14:25+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-16 17:04+0000\n"
+"X-Launchpad-Export-Date: 2010-04-19 17:08+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: Spanish\n"
 
@@ -228,7 +228,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "En algunas proyectos de Wikipedia, podrías requerir tener el permiso de bot "
 "para hacer esto."
@@ -263,7 +264,7 @@ msgstr "Detalle"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:275
 msgid "List on toolserver"
-msgstr ""
+msgstr "Listado en toolserver"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:308
 msgid "Pages"
@@ -297,13 +298,11 @@ msgstr ""
 "¿Está seguro que desea marcarlo como reparado?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:681
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "The error n°{0} is still found in the page.\n"
 "Are you really sure that you want to mark it as fixed ?"
 msgstr ""
-"El error n°{0} aún se encuentra {1} veces en la página.\n"
-"¿Está seguro que desea marcarlo como reparado?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:693
 msgid ""
@@ -315,7 +314,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:792
 msgid "A comment is required for sending the page."
-msgstr ""
+msgstr "Se requiere de un comentario para enviar la página"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:897
 #, java-format
@@ -560,7 +559,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:813
 msgid "There's no known list of disambiguation pages for this Wikipedia."
-msgstr "No existe una lista de páginas de desambiguación para esta Wikipedia."
+msgstr ""
+"No existe una lista de páginas de desambiguación para esta Wikipedia."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:837
 msgid "There's no known Check Wikipedia Project for this Wikipedia."
