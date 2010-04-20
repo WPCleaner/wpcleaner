@@ -46,6 +46,7 @@ public enum EnumLanguage {
   OC   ("oc"   , "Occitan"),
   PL   ("pl"   , "Polish"),
   PT_BR("pt_BR", "Brazilian Portuguese"),
+  RU   ("ru"   , "Russian"),
   SV   ("sv"   , "Swedish"),
   TR   ("tr"   , "Turkish");
 
