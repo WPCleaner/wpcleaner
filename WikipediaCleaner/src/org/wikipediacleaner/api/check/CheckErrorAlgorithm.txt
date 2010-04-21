@@ -19,9 +19,12 @@ Error 004: Article with weblink
 ===============================================================================
 Error 005: Found a comment "<!--" with no "-->" end.
 Status: DONE
+Replacements:
+ - <!---...-> -> <!--...-->
 
 ===============================================================================
 Error 006: DEFAULTSORT with special letters
+Status: DONE
 
 ===============================================================================
 Error 007: Headlines start with three "="
