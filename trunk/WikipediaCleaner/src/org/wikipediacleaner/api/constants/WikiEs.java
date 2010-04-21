@@ -31,7 +31,7 @@ class WikiEs {
   private final static String baseUrl = "http://es.wikipedia.org/w/";
 
   final static String code     = "es";
-  final static String name     = "Wikipedia en castellano";
+  final static String name     = "Wikipedia en español";
 
   final static String apiUrl   = baseUrl + "api.php";
   final static String queryUrl = baseUrl + "query.php";
