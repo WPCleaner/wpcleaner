@@ -104,6 +104,7 @@ import org.xml.sax.SAXException;
 public class CheckWikiProjectWindow extends PageWindow {
 
   ArrayList<CheckError> errors;
+  ArrayList<Integer> errorsList;
   Properties checkWikiConfig;
   JComboBox listAllErrors;
   private DefaultComboBoxModel modelAllErrors;
@@ -128,9 +129,10 @@ public class CheckWikiProjectWindow extends PageWindow {
    * Create and display a CheckWikiProjectWindow.
    * 
    * @param wikipedia Wikipedia.
+   * @param errors Comma separated list of errors
    */
   public static void createCheckWikiProjectWindow(
-      final EnumWikipedia wikipedia) {
+      final EnumWikipedia wikipedia, final String errors) {
     createWindow(
         "CheckWikiWindow",
         wikipedia,
@@ -141,6 +143,17 @@ public class CheckWikiProjectWindow extends PageWindow {
           public void displayWindow(BasicWindow window) {
             if (window instanceof CheckWikiProjectWindow) {
               CheckWikiProjectWindow analysis = (CheckWikiProjectWindow) window;
+              if ((errors != null) && (errors.length() > 0)) {
+                String[] errorsNumber = errors.split(",");
+                analysis.errorsList = new ArrayList<Integer>(errorsNumber.length);
+                for (int i = 0; i < errorsNumber.length; i++) {
+                  try {
+                    analysis.errorsList.add(Integer.valueOf(errorsNumber[i].trim()));
+                  } catch (NumberFormatException e) {
+                    // Nothing
+                  }
+                }
+              }
               analysis.actionReload();
             }
           }
@@ -1143,7 +1156,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     errors = new ArrayList<CheckError>();
     checkWikiConfig = new Properties();
     CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
-        getWikipedia(), this, errors, checkWikiConfig, null);
+        getWikipedia(), this, errors, checkWikiConfig, errorsList, true);
     setupReloadWorker(reloadWorker);
     reloadWorker.start();
   }
@@ -1155,8 +1168,10 @@ public class CheckWikiProjectWindow extends PageWindow {
     Object selected = listAllErrors.getSelectedItem();
     if (selected instanceof CheckError) {
       CheckError error = (CheckError) selected;
+      ArrayList<Integer> errorsNumber = new ArrayList<Integer>(1);
+      errorsNumber.add(Integer.valueOf(error.getErrorNumber()));
       CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
-          getWikipedia(), this, errors, checkWikiConfig, error.getErrorNumber());
+          getWikipedia(), this, errors, checkWikiConfig, errorsNumber, false);
       setupReloadWorker(reloadWorker);
       reloadWorker.start();
     }

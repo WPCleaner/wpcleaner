@@ -278,22 +278,24 @@ public class CheckError {
     CheckError error = new CheckError(
         wikipedia, errorNumber, priority,
         shortDescription, longDescription, link);
-    try {
-      BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-      String line = null;
-      // TODO: Correctly parse HTML ?
-      while (((line = reader.readLine()) != null) && !line.endsWith("<pre>")) {
-        // Waiting for <pre>
+    if (stream != null) {
+      try {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        String line = null;
+        // TODO: Correctly parse HTML ?
+        while (((line = reader.readLine()) != null) && !line.endsWith("<pre>")) {
+          // Waiting for <pre>
+        }
+        while (((line = reader.readLine()) != null) && !line.startsWith("</pre>")) {
+          // TODO: Use something like Apache Commons Lang StringEscapeUtils ?
+          line = line.replaceAll(Pattern.quote("&#039;"), "'");
+          error.addPage(line);
+        }
+      } catch (UnsupportedEncodingException e) {
+        //
+      } catch (IOException e) {
+        //
       }
-      while (((line = reader.readLine()) != null) && !line.startsWith("</pre>")) {
-        // TODO: Use something like Apache Commons Lang StringEscapeUtils ?
-        line = line.replaceAll(Pattern.quote("&#039;"), "'");
-        error.addPage(line);
-      }
-    } catch (UnsupportedEncodingException e) {
-      //
-    } catch (IOException e) {
-      //
     }
 
     // Add / Replace error

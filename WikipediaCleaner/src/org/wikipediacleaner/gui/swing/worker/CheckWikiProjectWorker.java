@@ -51,7 +51,8 @@ public class CheckWikiProjectWorker extends BasicWorker {
   private final ArrayList<CheckError> errors;
   private final boolean retrieveConfig;
   private final Properties checkWikiConfig;
-  private final Integer onlyError;
+  private final ArrayList<Integer> onlyError;
+  private final boolean otherErrors;
 
   /**
    * Constructor.
@@ -60,21 +61,24 @@ public class CheckWikiProjectWorker extends BasicWorker {
    * @param window Window.
    * @param errors Error list to complete.
    * @param properties Properties to complete.
-   * @param onlyError If set, limit the errors retrieved to this error number.
+   * @param onlyError If set, limit the errors retrieved to this error numbers.
+   * @param otherErrors Flag indicating if other errors should be retrieved (without list).
    */
   public CheckWikiProjectWorker(
       EnumWikipedia wikipedia, BasicWindow window,
       ArrayList<CheckError> errors,
       Properties properties,
-      Integer onlyError) {
+      ArrayList<Integer> onlyError,
+      boolean otherErrors) {
     super(wikipedia, window);
     this.errors = errors;
     if (onlyError == null) {
       this.errors.clear();
     }
-    this.retrieveConfig = ((onlyError == null) || (properties == null));
+    this.retrieveConfig = ((onlyError == null) || (properties == null) || (otherErrors));
     this.checkWikiConfig = properties;
     this.onlyError = onlyError;
+    this.otherErrors = otherErrors;
   }
 
   /**
@@ -148,8 +152,15 @@ public class CheckWikiProjectWorker extends BasicWorker {
     // Retrieving errors
     for (int errorNumber = 1; errorNumber < 100; errorNumber++) {
       int errorPriority = CheckError.getErrorPriority(checkWikiConfig, getWikipedia(), errorNumber);
-      if ((CheckError.isPriorityActive(errorPriority)) &&
-          ((onlyError == null) || (onlyError.intValue() == errorNumber))) {
+      boolean needError = false;
+      boolean needList = false;
+      if ((onlyError == null) || (onlyError.contains(Integer.valueOf(errorNumber)))) {
+        needError = true;
+        needList = true;
+      } else if (otherErrors) {
+        needError = true;
+      }
+      if ((CheckError.isPriorityActive(errorPriority)) && (needError)) {
         String className = CheckErrorAlgorithm.class.getName() + Integer.toString(errorNumber);
         try {
           setText(GT._("Checking for errors n°{0}", Integer.toString(errorNumber)));
@@ -167,8 +178,11 @@ public class CheckWikiProjectWorker extends BasicWorker {
               new NameValuePair("project", code + "wiki"),
               new NameValuePair("view", "bots")
           };
-          InputStream stream = APIFactory.getAPI().askToolServerPost(
-              "~sk/cgi-bin/checkwiki/checkwiki.cgi", parameters, true);
+          InputStream stream = null;
+          if (needList) {
+            stream = APIFactory.getAPI().askToolServerPost(
+                "~sk/cgi-bin/checkwiki/checkwiki.cgi", parameters, true);
+          }
           CheckError.addCheckError(checkWikiConfig, errors, getWikipedia(), errorNumber, stream);
         } catch (ClassNotFoundException e) {
           // Not found: error not yet available in WikiCleaner.
