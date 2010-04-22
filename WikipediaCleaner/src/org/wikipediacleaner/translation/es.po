@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-17 20:54+0200\n"
-"PO-Revision-Date: 2010-04-21 20:34+0000\n"
+"PO-Revision-Date: 2010-04-22 08:05+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-21 20:52+0000\n"
+"X-Launchpad-Export-Date: 2010-04-22 19:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: Spanish\n"
 
@@ -100,7 +100,7 @@ msgstr "Recibiendo contenidos"
 
 #: org/wikipediacleaner/api/execution/DisambiguationStatusCallable.java:55
 msgid "Retrieving disambiguation informations"
-msgstr "Recibiendo informaciones de desambigüación"
+msgstr "Recibiendo informaciones de desambiguación"
 
 #: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:53
 msgid "Retrieving page usage"
@@ -650,7 +650,7 @@ msgstr "Opciones generales"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:205
 msgid "Close disambiguation window after sending"
-msgstr "Cerrar venta de desambiguación tras el envío"
+msgstr "Cerrar ventana de desambiguación tras el envío"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:216
 msgid "Restore window position"
