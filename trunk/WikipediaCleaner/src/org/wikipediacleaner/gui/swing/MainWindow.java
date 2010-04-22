@@ -104,6 +104,7 @@ public class MainWindow
 
   JTextField textPagename;
   private JButton buttonCheckWiki;
+  private JTextField textCheckWikiErrors;
   private JButton buttonCurrentList;
   private JButton buttonDisambiguation;
   private JButton buttonFullAnalysis;
@@ -205,9 +206,8 @@ public class MainWindow
     buttonHelpRequested.setEnabled(logged &&
                                    (wikipedia != null) &&
                                    (wikipedia.getTemplatesForHelpRequested() != null));
-    buttonCheckWiki.setEnabled(logged &&
-                               (wikipedia != null));
-    //buttonCheckWiki.setVisible(false); //TODO
+    buttonCheckWiki.setEnabled(logged && (wikipedia != null));
+    textCheckWikiErrors.setEnabled(logged && (wikipedia != null));
     buttonRandomPage.setEnabled(logged);
     buttonWatchedPages.setEnabled(logged);
     buttonBotTools.setEnabled(logged);
@@ -458,7 +458,17 @@ public class MainWindow
     constraints.weightx = 1;
     panel.add(buttonCheckWiki, constraints);
     constraints.gridy++;
-    
+
+    textCheckWikiErrors = new JTextField();
+    textCheckWikiErrors.setToolTipText(GT._(
+        "Comma separated list of errors to work on."));
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridwidth = 2;
+    constraints.gridx = 0;
+    constraints.weightx = 1;
+    panel.add(textCheckWikiErrors, constraints);
+    constraints.gridy++;
+
     // Random page button
     buttonRandomPage = Utilities.createJButton(GT._("&Random page"));
     buttonRandomPage.setActionCommand(ACTION_RANDOM_PAGE);
@@ -829,7 +839,7 @@ public class MainWindow
           GT._("There's no known Check Wikipedia Project for this Wikipedia."));
       return;
     }
-    Controller.runCheckWikiProject(getWikipedia());
+    Controller.runCheckWikiProject(getWikipedia(), textCheckWikiErrors.getText());
   }
 
   /**
