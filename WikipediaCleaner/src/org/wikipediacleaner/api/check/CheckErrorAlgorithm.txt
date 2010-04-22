@@ -82,6 +82,7 @@ Status: DONE
 
 ===============================================================================
 Error 016: Template with Unicode control characters
+Status: DONE
 
 ===============================================================================
 Error 017: Category double
