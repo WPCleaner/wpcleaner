@@ -61,24 +61,34 @@ public class SpecialCharacters {
 
     // Possible replacements
     replacements.put('Á', "A");
+    replacements.put('Â', "A");
+    replacements.put('Ä', "A");
     replacements.put('á', "a");
     replacements.put('à', "a");
     replacements.put('â', "a");
     replacements.put('ä', "a");
     replacements.put('ç', "c");
     replacements.put('É', "E");
+    replacements.put('Ê', "E");
+    replacements.put('Ë', "E");
     replacements.put('é', "e");
     replacements.put('è', "e");
     replacements.put('ê', "e");
     replacements.put('ë', "e");
+    replacements.put('Î', "I");
+    replacements.put('Ï', "I");
     replacements.put('í', "i");
     replacements.put('î', "i");
     replacements.put('ï', "i");
     replacements.put('ñ', "n");
     replacements.put('Ó', "O");
+    replacements.put('Ô', "O");
+    replacements.put('Ö', "O");
     replacements.put('ó', "o");
     replacements.put('ô', "o");
     replacements.put('ö', "o");
+    replacements.put('Û', "U");
+    replacements.put('Ü', "U");
     replacements.put('ú', "u");
     replacements.put('ù', "u");
     replacements.put('û', "u");
