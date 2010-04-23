@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-22 22:39+0200\n"
-"PO-Revision-Date: 2010-04-22 08:05+0000\n"
+"PO-Revision-Date: 2010-04-23 13:21+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-22 19:16+0000\n"
+"X-Launchpad-Export-Date: 2010-04-23 18:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: Spanish\n"
 
@@ -228,7 +228,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "En algunas proyectos de Wikipedia, podría requerir tener el permiso de bot "
 "para hacer esto."
@@ -482,7 +483,7 @@ msgstr "Proyecto Check Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:464
 msgid "Comma separated list of errors to work on."
-msgstr ""
+msgstr "Lista de errores separada por coma para trabajar en ellos."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:473
 msgid "&Random page"
@@ -565,11 +566,13 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:815
 msgid "There's no known list of disambiguation pages for this Wikipedia."
-msgstr "No existe una lista de páginas de desambiguación para esta Wikipedia."
+msgstr ""
+"No existe una lista de páginas de desambiguación para esta Wikipedia."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:839
 msgid "There's no known Check Wikipedia Project for this Wikipedia."
-msgstr "No existe el proyecto Check Wikipedia para esta versión de Wikipedia."
+msgstr ""
+"No existe el proyecto Check Wikipedia para esta versión de Wikipedia."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:873
 msgid "Watched pages"
