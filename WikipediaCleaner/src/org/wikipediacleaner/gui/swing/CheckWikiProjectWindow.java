@@ -107,7 +107,7 @@ public class CheckWikiProjectWindow extends PageWindow {
   ArrayList<Integer> errorsList;
   Properties checkWikiConfig;
   JComboBox listAllErrors;
-  private DefaultComboBoxModel modelAllErrors;
+  DefaultComboBoxModel modelAllErrors;
   private HtmlPanel textDescription;
   private UserAgentContext ucontext;
   private HtmlRendererContext rcontext;
@@ -578,7 +578,7 @@ public class CheckWikiProjectWindow extends PageWindow {
         displayWarning(GT._("The page {0} doesn't exist on Wikipedia", page.getTitle()));
         error.remove(page);
         pane.remove(this);
-        markPageAsFixed(error, page);
+        markPageAsFixed(error, error.getAlgorithm().getErrorNumber(), page);
         actionSelectErrorType();
         return;
       }
@@ -723,7 +723,7 @@ public class CheckWikiProjectWindow extends PageWindow {
         }
       }
       actionSelectErrorType();
-      markPageAsFixed(error, page);
+      markPageAsFixed(error, error.getAlgorithm().getErrorNumber(), page);
     }
 
     /**
@@ -821,19 +821,24 @@ public class CheckWikiProjectWindow extends PageWindow {
 
             // Remove errors fixed
             ArrayList<CheckError> errorsToBeRemoved = new ArrayList<CheckError>();
-            for (int posError = 0; posError < listAllErrors.getModel().getSize(); posError++) {
-              Object element = listAllErrors.getModel().getElementAt(posError);
-              if (element instanceof CheckError) {
-                final CheckError tmpError = (CheckError) element;
-                for (int posAlgo = 0; posAlgo < errorsFixed.size(); posAlgo++) {
-                  if (tmpError.getAlgorithm().equals(errorsFixed.get(posAlgo))) {
+            for (CheckErrorAlgorithm algoFixed : errorsFixed) {
+              boolean marked = false;
+              for (int posError = 0; posError < modelAllErrors.getSize(); posError++) {
+                Object element = modelAllErrors.getElementAt(posError);
+                if (element instanceof CheckError) {
+                  final CheckError tmpError = (CheckError) element;
+                  if (tmpError.getAlgorithm().getErrorNumber().equals(algoFixed.getErrorNumber())) {
                     tmpError.remove(page);
                     if (tmpError.getPageCount() == 0) {
                       errorsToBeRemoved.add(tmpError);
                     }
-                    markPageAsFixed(tmpError, page);
+                    markPageAsFixed(tmpError, algoFixed.getErrorNumber(), page);
+                    marked = true;
                   }
                 }
+              }
+              if (!marked) {
+                markPageAsFixed(null, algoFixed.getErrorNumber(), page);
               }
             }
             Configuration configuration = Configuration.getConfiguration();
@@ -1183,13 +1188,17 @@ public class CheckWikiProjectWindow extends PageWindow {
    * @param error Error.
    * @param page Page.
    */
-  void markPageAsFixed(final CheckError error, final Page page) {
-    if ((error != null) && (page != null) && (page.getPageId() != null)) {
+  void markPageAsFixed(final CheckError error, final String errorNumber, final Page page) {
+    if ((page != null) && (page.getPageId() != null)) {
       MediaWikiController.addSimpleTask(new Callable<Page>() {
   
         public Page call() throws Exception
         {
-          error.fix(page);
+          if (error != null) {
+            error.fix(page);
+          } else {
+            CheckError.fix(page, errorNumber);
+          }
           return page;
         }});
     }

@@ -424,22 +424,33 @@ public class CheckError {
    * Fix an error for the page.
    * 
    * @param page Page.
+   * @param errorNumber Error number.
    * @return Flag indicating if fix was done.
    */
-  public boolean fix(Page page) {
+  public static boolean fix(Page page, String errorNumber) {
     try {
       NameValuePair[] parameters = new NameValuePair[] {
-          new NameValuePair("id", Integer.toString(errorNumber)),
+          new NameValuePair("id", errorNumber),
           new NameValuePair("pageid", Integer.toString(page.getPageId())),
-          new NameValuePair("project", wikipedia.getCode() + "wiki"),
+          new NameValuePair("project", page.getWikipedia().getCode() + "wiki"),
           new NameValuePair("view", "only")
       };
       APIFactory.getAPI().askToolServerPost(
           "~sk/cgi-bin/checkwiki/checkwiki.cgi", parameters, false);
-      this.errors.remove(page);
     } catch (APIException e) {
       return false;
     }
     return true;
+  }
+
+  /**
+   * Fix an error for the page.
+   * 
+   * @param page Page.
+   * @return Flag indicating if fix was done.
+   */
+  public boolean fix(Page page) {
+    errors.remove(page);
+    return fix(page, Integer.toString(errorNumber));
   }
 }
