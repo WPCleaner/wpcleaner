@@ -420,7 +420,14 @@ public class CheckError {
    * @param page Page.
    */
   public void remove(Page page) {
-    errors.remove(page);
+    if (page == null) {
+      return;
+    }
+    for (int i = errors.size(); i > 0; i--) {
+      if (Page.areSameTitle(page.getTitle(), errors.get(i).getTitle())) {
+        errors.remove(i);
+      }
+    }
   }
 
   /**
