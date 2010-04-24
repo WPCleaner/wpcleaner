@@ -89,17 +89,17 @@ public class CheckErrorResult {
     }
     if (possibleReplacements == null) {
       possibleReplacements = new ArrayList<Actionnable>();
-      possibleActions.add(new CompositeAction(
-          GT._("Replace with"), possibleReplacements));
     }
     for (Actionnable actionnable : possibleReplacements) {
       if (replacement.equals(actionnable.getName())) {
         return;
       }
     }
-    possibleReplacements.add(new SimpleAction(
-        replacement,
-        new ReplaceTextActionProvider(replacement)));
+    SimpleAction action = new SimpleAction(
+        GT._("Replace with {0}", replacement),
+        new ReplaceTextActionProvider(replacement));
+    possibleActions.add(action);
+    possibleReplacements.add(action);
   }
 
   /**
