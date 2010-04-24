@@ -75,7 +75,7 @@ public class ReplaceTextAction extends TextAction {
       JTextPane localTextPane) {
     if ((localElement == null) ||
         (localTextPane == null) ||
-        (localNewText == null) || (localNewText.length() == 0)) {
+        (localNewText == null)) {
       return;
     }
 

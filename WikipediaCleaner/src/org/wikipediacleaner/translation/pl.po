@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-24 10:24+0200\n"
+"POT-Creation-Date: 2010-04-24 11:41+0200\n"
 "PO-Revision-Date: 2010-04-14 16:10+0000\n"
 "Last-Translator: Jakub Naliwajek <naliwajek@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -51,10 +51,15 @@ msgstr "Błąd n°{0} ({1} - {2}) - {3}"
 msgid "Error unkown from WikiCleaner"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:99
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:101
 #, fuzzy, java-format
 msgid "Replace with {0}"
 msgstr "Za&mień na {0}"
+
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:102
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
+msgid "Delete"
+msgstr "Usuń"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
@@ -721,10 +726,6 @@ msgstr "Poziomy cofania:"
 msgid "Sort orders"
 msgstr "Kolejność sortowania"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
-msgid "Delete"
-msgstr "Usuń"
-
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:627
 msgid "Details"
 msgstr "Szczegóły"
@@ -1194,6 +1195,10 @@ msgstr "Odświeżanie zawartości strony"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:70
 msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Delete it"
+#~ msgstr "Usuń"
 
 #~ msgid "Retrieving namespaces"
 #~ msgstr "Pobieranie przestrzeni nazw"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-24 10:24+0200\n"
+"POT-Creation-Date: 2010-04-24 11:41+0200\n"
 "PO-Revision-Date: 2010-04-20 04:32+0000\n"
 "Last-Translator: Serguey Basalaev <SBasalaev@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -51,10 +51,15 @@ msgstr "Ошибка №{0} ({1} - {2}) - {3}"
 msgid "Error unkown from WikiCleaner"
 msgstr "Неизвестная ошибка от WikiCleaner"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:99
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:101
 #, fuzzy, java-format
 msgid "Replace with {0}"
 msgstr "Заменить на"
+
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:102
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
+msgid "Delete"
+msgstr "Удалить"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
@@ -736,10 +741,6 @@ msgstr "Уровни отмены :"
 msgid "Sort orders"
 msgstr "Порядки сортировки"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
-msgid "Delete"
-msgstr "Удалить"
-
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:627
 msgid "Details"
 msgstr "Подробно"
@@ -1214,3 +1215,7 @@ msgstr "Обновление содержимого страницы"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:70
 msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Delete it"
+#~ msgstr "Удалить"

@@ -87,6 +87,7 @@ public class CheckErrorResult {
     if (replacement == null) {
       return;
     }
+    replacement = replacement.trim();
     if (possibleReplacements == null) {
       possibleReplacements = new ArrayList<Actionnable>();
     }
@@ -96,7 +97,9 @@ public class CheckErrorResult {
       }
     }
     SimpleAction action = new SimpleAction(
-        GT._("Replace with {0}", replacement),
+        (replacement.length() > 0) ?
+            GT._("Replace with {0}", replacement) :
+            GT._("Delete"),
         new ReplaceTextActionProvider(replacement));
     possibleActions.add(action);
     possibleReplacements.add(action);

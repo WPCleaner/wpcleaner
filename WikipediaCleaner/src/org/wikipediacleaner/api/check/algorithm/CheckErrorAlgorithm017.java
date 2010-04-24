@@ -92,7 +92,14 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
                 return true;
               }
               result = true;
-              errors.add(new CheckErrorResult(getShortDescription(), beginIndex, endIndex + 2));
+              int endError = endIndex + 2;
+              if ((endError + 1 < contents.length()) && (contents.charAt(endError + 1) == '\n')) {
+                endError++;
+              }
+              CheckErrorResult errorResult = new CheckErrorResult(
+                  getShortDescription(), beginIndex, endError);
+              errorResult.addReplacement("");
+              errors.add(errorResult);
             } else {
               categories.add(category);
             }
