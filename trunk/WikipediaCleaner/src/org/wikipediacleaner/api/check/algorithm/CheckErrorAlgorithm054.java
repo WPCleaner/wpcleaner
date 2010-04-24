@@ -60,10 +60,17 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
       if (isList) {
         boolean found = true;
         int currentPos = endLineIndex - 1;
-        if ((currentPos < 1) || (!contents.startsWith("/>", currentPos - 1))) {
+        while ((currentPos >= 0) && (Character.isWhitespace(contents.charAt(currentPos)))) {
+          currentPos--;
+        }
+        if ((currentPos >= 0) && (contents.charAt(currentPos) == '>')) {
+          currentPos--;
+        } else {
           found = false;
         }
-        currentPos -= 2;
+        if ((currentPos >= 0) && (contents.charAt(currentPos) == '/')) {
+          currentPos--;
+        }
         while ((currentPos >= 0) && (Character.isWhitespace(contents.charAt(currentPos)))) {
           currentPos--;
         }
