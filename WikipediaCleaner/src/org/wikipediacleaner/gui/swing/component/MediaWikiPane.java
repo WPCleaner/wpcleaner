@@ -338,6 +338,21 @@ public class MediaWikiPane
     StyleConstants.setForeground(normalTemplate, Color.BLUE);
     normalTemplate.addAttribute(MediaWikiConstants.ATTRIBUTE_TYPE, MediaWikiConstants.VALUE_NORMAL_TEMPLATE);
 
+    Style checkWikiError = addStyle(MediaWikiConstants.STYLE_CHECK_WIKI_ERROR, root);
+    StyleConstants.setBold(checkWikiError, true);
+    StyleConstants.setForeground(checkWikiError, Color.RED);
+    checkWikiError.addAttribute(MediaWikiConstants.STYLE_CHECK_WIKI_ERROR, MediaWikiConstants.VALUE_CHECK_WIKI_ERROR);
+
+    Style checkWikiOk = addStyle(MediaWikiConstants.STYLE_CHECK_WIKI_OK, root);
+    StyleConstants.setBold(checkWikiOk, true);
+    StyleConstants.setForeground(checkWikiOk, Color.GREEN);
+    checkWikiError.addAttribute(MediaWikiConstants.STYLE_CHECK_WIKI_OK, MediaWikiConstants.VALUE_CHECK_WIKI_OK);
+
+    Style checkWikiWarning = addStyle(MediaWikiConstants.STYLE_CHECK_WIKI_WARNING, root);
+    StyleConstants.setBold(checkWikiWarning, true);
+    StyleConstants.setForeground(checkWikiWarning, Color.ORANGE);
+    checkWikiError.addAttribute(MediaWikiConstants.STYLE_CHECK_WIKI_WARNING, MediaWikiConstants.VALUE_CHECK_WIKI_WARNING);
+
     Style disambiguationLink = addStyle(MediaWikiConstants.STYLE_DISAMBIGUATION_LINK, root);
     StyleConstants.setBold(disambiguationLink, true);
     StyleConstants.setForeground(disambiguationLink, Color.RED);

@@ -617,10 +617,16 @@ public class CheckWikiProjectWindow extends PageWindow {
         if (document != null) {
           if (errorSelected.getResults() != null) {
             for (CheckErrorResult errorFound : errorSelected.getResults()) {
+              String styleName = MediaWikiConstants.STYLE_CHECK_WIKI_ERROR;
+              if (errorFound.getErrorLevel() == CheckErrorResult.ErrorLevel.CORRECT) {
+                styleName = MediaWikiConstants.STYLE_CHECK_WIKI_OK;
+              } else if (errorFound.getErrorLevel() == CheckErrorResult.ErrorLevel.WARNING) {
+                styleName = MediaWikiConstants.STYLE_CHECK_WIKI_WARNING;
+              }
               document.setCharacterAttributes(
                   errorFound.getStartPosition(),
                   errorFound.getLength(),
-                  textPage.getStyle(MediaWikiConstants.STYLE_DISAMBIGUATION_LINK),
+                  textPage.getStyle(styleName),
                   true);
               SimpleAttributeSet attributes = new SimpleAttributeSet();
               attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_INFO, errorFound);

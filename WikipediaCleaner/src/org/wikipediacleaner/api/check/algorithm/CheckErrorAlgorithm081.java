@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
@@ -43,27 +44,103 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }
     int startIndex = 0;
     boolean result = false;
+    HashMap<String, RefElement> refs = new HashMap<String, RefElement>();
     while (startIndex < contents.length()) {
-      int beginIndex = contents.indexOf("<ref>", startIndex);
-      if (beginIndex < 0) {
-        return result;
-      }
-      int endIndex = contents.indexOf("</ref>", beginIndex);
-      if (endIndex < 0) {
-        return result;
-      }
-      endIndex += 6;
-      int duplicateIndex = contents.indexOf(contents.substring(beginIndex, endIndex), endIndex);
-      if (duplicateIndex >= 0) {
-        if (errors == null) {
-          return true;
+      if (contents.charAt(startIndex) == '<') {
+        int beginIndex = startIndex;
+        int currentIndex = beginIndex + 1;
+        if (contents.startsWith("ref", currentIndex)) {
+          currentIndex += 3;
+          String name = null;
+          while ((currentIndex < contents.length()) &&
+                 (contents.charAt(currentIndex) != '>') &&
+                 (contents.charAt(currentIndex) != '<')) {
+            if (contents.startsWith(" name=", currentIndex)) {
+              currentIndex += 6;
+              char separator = contents.charAt(currentIndex);
+              if ((separator == '"') || (separator == '\'')) {
+                currentIndex++;
+                int beginName = currentIndex;
+                while ((currentIndex < contents.length()) &&
+                       (contents.charAt(currentIndex) != separator) &&
+                       (contents.charAt(currentIndex) != '>') &&
+                       (contents.charAt(currentIndex) != '<')) {
+                  currentIndex++;
+                }
+                if (contents.charAt(currentIndex) == separator) {
+                  name = contents.substring(beginName, currentIndex);
+                }
+              }
+            } else {
+              currentIndex++;
+            }
+          }
+          if (contents.charAt(currentIndex) == '>') {
+            currentIndex++;
+            int beginRefIndex = currentIndex;
+            int endRefIndex = contents.indexOf("</ref>", beginRefIndex);
+            if (endRefIndex < 0) {
+              currentIndex = contents.length();
+            } else {
+              currentIndex = endRefIndex + 6;
+              String reference = contents.substring(beginRefIndex, endRefIndex).trim();
+              RefElement refElement = refs.get(reference);
+              if (refElement == null) {
+                refElement = new RefElement(reference, beginIndex, currentIndex, name);
+                refs.put(reference, refElement);
+              } else {
+                if (errors == null) {
+                  return true;
+                }
+                result = true;
+                if (refElement.errorResult == null) {
+                  refElement.errorResult = new CheckErrorResult(
+                      getShortDescription(),
+                      refElement.begin, refElement.end,
+                      (refElement.name == null) ?
+                          CheckErrorResult.ErrorLevel.WARNING :
+                          CheckErrorResult.ErrorLevel.CORRECT);
+                  errors.add(refElement.errorResult);
+                }
+                CheckErrorResult errorResult = new CheckErrorResult(
+                    getShortDescription(), beginIndex, currentIndex);
+                if (refElement.name != null) {
+                  errorResult.addReplacement("<ref name=\"" + refElement.name + "\"/>");
+                }
+                errors.add(errorResult);
+              }
+            }
+          }
         }
-        result = true;
-        errors.add(new CheckErrorResult(getShortDescription(), beginIndex, endIndex));
-        errors.add(new CheckErrorResult(getShortDescription(), duplicateIndex, duplicateIndex + endIndex - beginIndex));
+        startIndex = currentIndex;
+      } else {
+        startIndex++;
       }
-      startIndex = endIndex;
     }
     return result;
+  }
+
+  /**
+   * Class to hold informations about a ref element.
+   */
+  static class RefElement {
+    String reference;
+    int begin;
+    int end;
+    String name;
+    CheckErrorResult errorResult;
+
+    /**
+     * @param reference Reference text.
+     * @param begin Begin position.
+     * @param end End position.
+     * @param name Reference name.
+     */
+    public RefElement(String reference, int begin, int end, String name) {
+      this.reference = reference;
+      this.begin = begin;
+      this.end = end;
+      this.name = name;
+    }
   }
 }
