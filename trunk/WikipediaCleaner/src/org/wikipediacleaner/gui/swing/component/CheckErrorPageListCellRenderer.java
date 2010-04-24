@@ -74,11 +74,12 @@ public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRe
     if (value instanceof CheckErrorPage) {
       CheckErrorPage errorPage = (CheckErrorPage) value;
       text = errorPage.getAlgorithm().toString();
-      if (errorPage.getResultsCount() > 0) {
+      int errorCount = errorPage.getActiveResultsCount();
+      if (errorCount > 0) {
         errorsPresent = Boolean.TRUE;
         if ((showCountOccurence) &&
-            (errorPage.getResultsCount() > 1)) {
-          text += " (" + errorPage.getResultsCount() + ")";
+            (errorCount > 1)) {
+          text += " (" + errorCount + ")";
         }
       } else if (errorPage.getErrorFound()) {
         errorsPresent = Boolean.TRUE;
