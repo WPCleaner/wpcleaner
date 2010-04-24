@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-24 11:41+0200\n"
+"POT-Creation-Date: 2010-04-24 11:51+0200\n"
 "PO-Revision-Date: 2010-04-19 17:54+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -245,49 +245,49 @@ msgstr ""
 msgid "Semi-automatic disambiguation fixing"
 msgstr "Poloautomatické řešení odkazů na rozcestníky"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:168
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:169
 msgid "Check Wikipedia"
 msgstr "Kontrola Wikipedie"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:254
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:255
 msgid "List of errors detected :"
 msgstr "Seznam detekovaných chyb:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:275
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:276
 msgid "Reload error"
 msgstr "Znovunačti chybu"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:281
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:282
 msgid "Detail"
 msgstr "Podrobnosti"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:288
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:289
 msgid "List on toolserver"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:321
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:322
 msgid "Pages"
 msgstr "Stránek"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:337
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:338
 msgid "&Load pages"
 msgstr "Načti stránky"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:481
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:482
 msgid "Mark as Fixed"
 msgstr "Označ jako opravené"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:578
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:579
 #, java-format
 msgid "The page {0} doesn't exist on Wikipedia"
 msgstr "Stránka {0} na Wikipedii neexistuje"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:676
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:677
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr "Chceš označit  {0} jako vyřešená pro chybu č. {1}"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:687
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:688
 #, java-format
 msgid ""
 "The error n°{0} is still found {1} times in the page.\n"
@@ -296,14 +296,14 @@ msgstr ""
 "Chyba č. {0} je na stránce ještě {1}krát.\n"
 "Opravdu jí chceš označit jako opravenou?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:694
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:695
 #, java-format
 msgid ""
 "The error n°{0} is still found in the page.\n"
 "Are you really sure that you want to mark it as fixed ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:706
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:707
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
@@ -311,14 +311,23 @@ msgstr ""
 "Při editaci stránky jsi chybu opravil.\n"
 "Můžeš uložit změny, chyba bude označena jako vyřešená."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:805
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:806
 msgid "A comment is required for sending the page."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:915
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:916
 #, java-format
 msgid "Detection by [[{0}]]"
 msgstr "Detekce nástrojem [[{0}]]"
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1093
+#, java-format
+msgid ""
+"There''s no page defined for this error type.\n"
+"If you want to define a page you need to add :\n"
+"  {0} = <page name> END\n"
+"to the translation page ({1}) on {2} Wikipedia"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/Controller.java:243
 #, java-format
