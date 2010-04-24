@@ -335,7 +335,6 @@ Status: DONE
 ===============================================================================
 Error 081: Reference tag in article double
 Status: DONE
-TODO: Make it work with <ref name="..."> or other forms of <ref>.
 
 ===============================================================================
 Error 082: Link to other wikiproject

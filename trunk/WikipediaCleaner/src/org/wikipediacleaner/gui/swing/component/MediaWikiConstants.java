@@ -25,6 +25,9 @@ package org.wikipediacleaner.gui.swing.component;
 public class MediaWikiConstants {
 
   // Style constants
+  public final static String STYLE_CHECK_WIKI_ERROR        = "CheckWikiError";
+  public final static String STYLE_CHECK_WIKI_OK           = "CheckWikiOk";
+  public final static String STYLE_CHECK_WIKI_WARNING      = "CheckWikiWarning";
   public final static String STYLE_DISAMBIGUATION_LINK     = "DisambiguationLink";
   public final static String STYLE_DISAMBIGUATION_TEMPLATE = "DisambiguationTemplate";
   public final static String STYLE_EXTERNAL_LINK           = "ExternalLink";
@@ -41,6 +44,9 @@ public class MediaWikiConstants {
   public final static String ATTRIBUTE_INFO = "MediaWikiInfo";
 
   // Attributes values
+  public final static String VALUE_CHECK_WIKI_ERROR        = "CheckWikiError";
+  public final static String VALUE_CHECK_WIKI_OK           = "CheckWikiOk";
+  public final static String VALUE_CHECK_WIKI_WARNING      = "CheckWikiWarning";
   public final static String VALUE_DISAMBIGUATION_LINK     = "DisambiguationLink";
   public final static String VALUE_DISAMBIGUATION_TEMPLATE = "DisambiguationTemplate";
   public final static String VALUE_EXTERNAL_LINK           = "ExternalLink";

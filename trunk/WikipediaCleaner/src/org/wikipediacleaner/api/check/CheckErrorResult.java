@@ -31,9 +31,39 @@ public class CheckErrorResult {
   private final String errorType;
   private final int startPosition;
   private final int endPosition;
+  private final ErrorLevel errorLevel;
 
   private ArrayList<Actionnable> possibleActions;
   private ArrayList<Actionnable> possibleReplacements;
+
+  /**
+   * Error levels.
+   */
+  public static enum ErrorLevel {
+    ERROR(),
+    WARNING(),
+    CORRECT();
+  }
+
+  /**
+   * Constructor.
+   * 
+   * @param errorType Type of error.
+   * @param startPosition Start of the error.
+   * @param endPosition End of the error.
+   * @param errorLevel Error level.
+   */
+  public CheckErrorResult(
+      String errorType,
+      int startPosition, int endPosition,
+      ErrorLevel errorLevel) {
+    this.errorType = errorType;
+    this.startPosition = startPosition;
+    this.endPosition = endPosition;
+    this.errorLevel = errorLevel;
+    this.possibleActions = new ArrayList<Actionnable>();
+    this.possibleReplacements = null;
+  }
 
   /**
    * Constructor.
@@ -42,12 +72,10 @@ public class CheckErrorResult {
    * @param startPosition Start of the error.
    * @param endPosition End of the error.
    */
-  public CheckErrorResult(String errorType, int startPosition, int endPosition) {
-    this.errorType = errorType;
-    this.startPosition = startPosition;
-    this.endPosition = endPosition;
-    this.possibleActions = new ArrayList<Actionnable>();
-    this.possibleReplacements = null;
+  public CheckErrorResult(
+      String errorType,
+      int startPosition, int endPosition) {
+    this(errorType, startPosition, endPosition, ErrorLevel.ERROR);
   }
 
   /**
@@ -76,6 +104,13 @@ public class CheckErrorResult {
    */
   public int getLength() {
     return endPosition - startPosition;
+  }
+
+  /**
+   * @return Error level.
+   */
+  public ErrorLevel getErrorLevel() {
+    return errorLevel;
   }
 
   /**
