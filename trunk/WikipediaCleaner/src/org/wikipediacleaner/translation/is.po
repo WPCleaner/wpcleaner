@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-22 22:39+0200\n"
+"POT-Creation-Date: 2010-04-24 10:24+0200\n"
 "PO-Revision-Date: 2009-08-01 22:00+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Icelandic <is@li.org>\n"
@@ -22,43 +22,43 @@ msgstr ""
 msgid "Page {0}:"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:178
+#: org/wikipediacleaner/api/check/CheckError.java:180
 msgid "Deactivated"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:180
+#: org/wikipediacleaner/api/check/CheckError.java:182
 msgid "Low priority"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:182
+#: org/wikipediacleaner/api/check/CheckError.java:184
 msgid "Middle priority"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:184
+#: org/wikipediacleaner/api/check/CheckError.java:186
 msgid "Top priority"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:186
+#: org/wikipediacleaner/api/check/CheckError.java:188
 msgid "Priority unknown"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:404
+#: org/wikipediacleaner/api/check/CheckError.java:407
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:411
+#: org/wikipediacleaner/api/check/CheckError.java:414
 msgid "Error unkown from WikiCleaner"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm68.java:97
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:99
+#, fuzzy, java-format
+msgid "Replace with {0}"
+msgstr "&Endursetja með {0}"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
 msgstr ""
-
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:93
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:367
-msgid "Replace with"
-msgstr "Endursetja með"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
@@ -305,7 +305,7 @@ msgstr ""
 msgid "A comment is required for sending the page."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:910
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:915
 #, java-format
 msgid "Detection by [[{0}]]"
 msgstr ""
@@ -1070,6 +1070,10 @@ msgstr ""
 msgid "Link to"
 msgstr "Tengir í"
 
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:367
+msgid "Replace with"
+msgstr "Endursetja með"
+
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:483
 #, java-format
 msgid "Reverse to [[{0}|{1}]]"
@@ -1158,11 +1162,11 @@ msgstr "{0} tenglar í aðalnafnrými / {1} tenglar alls"
 msgid "The following modifications have been done ({0} pages):"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:127
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:128
 msgid "Retrieving Check Wiki configuration"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:166
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:168
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr ""

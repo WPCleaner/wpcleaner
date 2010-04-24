@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Properties;
@@ -33,8 +34,8 @@ import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
-import org.wikipediacleaner.api.check.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.CheckErrorComparator;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -150,6 +151,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
     }
 
     // Retrieving errors
+    DecimalFormat errorNumberFormat = new DecimalFormat("000");
     for (int errorNumber = 1; errorNumber < 100; errorNumber++) {
       int errorPriority = CheckError.getErrorPriority(checkWikiConfig, getWikipedia(), errorNumber);
       boolean needError = false;
@@ -161,7 +163,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
         needError = true;
       }
       if ((CheckError.isPriorityActive(errorPriority)) && (needError)) {
-        String className = CheckErrorAlgorithm.class.getName() + Integer.toString(errorNumber);
+        String className = CheckErrorAlgorithm.class.getName() + errorNumberFormat.format(errorNumber);
         try {
           setText(GT._("Checking for errors n°{0}", Integer.toString(errorNumber)));
   

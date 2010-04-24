@@ -29,13 +29,13 @@ import org.wikipediacleaner.gui.swing.action.CheckLanguageLinkAction;
 /**
  * An action provider for CheckLanguageLinkAction.
  */
-class CheckLanguageLinkActionProvider implements ActionProvider {
+public class CheckLanguageLinkActionProvider implements ActionProvider {
 
   private final EnumWikipedia fromWikipedia;
   private final EnumWikipedia toWikipedia;
   private final String title;
 
-  CheckLanguageLinkActionProvider(EnumWikipedia from, EnumWikipedia to, String title) {
+  public CheckLanguageLinkActionProvider(EnumWikipedia from, EnumWikipedia to, String title) {
     this.fromWikipedia = from;
     this.toWikipedia = to;
     this.title = title;

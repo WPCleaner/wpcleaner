@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.regex.Pattern;
@@ -30,6 +31,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.httpclient.NameValuePair;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -326,7 +328,8 @@ public class CheckError {
       EnumWikipedia wikipedia, int errorNumber, int priority,
       String shortDescription, String longDescription, String link) {
     this.wikipedia = wikipedia;
-    String className = CheckErrorAlgorithm.class.getName() + Integer.toString(errorNumber);
+    DecimalFormat errorNumberFormat = new DecimalFormat("000");
+    String className = CheckErrorAlgorithm.class.getName() + errorNumberFormat.format(errorNumber);
     CheckErrorAlgorithm tmpAlgorithm = null;
     try {
       Class algorithmClass = Class.forName(className);

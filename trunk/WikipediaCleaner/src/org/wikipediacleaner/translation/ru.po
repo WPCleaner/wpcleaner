@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-22 22:39+0200\n"
+"POT-Creation-Date: 2010-04-24 10:24+0200\n"
 "PO-Revision-Date: 2010-04-20 04:32+0000\n"
 "Last-Translator: Serguey Basalaev <SBasalaev@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -22,43 +22,43 @@ msgstr ""
 msgid "Page {0}:"
 msgstr "Страница {0}:"
 
-#: org/wikipediacleaner/api/check/CheckError.java:178
+#: org/wikipediacleaner/api/check/CheckError.java:180
 msgid "Deactivated"
 msgstr "Деактивировано"
 
-#: org/wikipediacleaner/api/check/CheckError.java:180
+#: org/wikipediacleaner/api/check/CheckError.java:182
 msgid "Low priority"
 msgstr "Низкий приоритет"
 
-#: org/wikipediacleaner/api/check/CheckError.java:182
+#: org/wikipediacleaner/api/check/CheckError.java:184
 msgid "Middle priority"
 msgstr "Средний приоритет"
 
-#: org/wikipediacleaner/api/check/CheckError.java:184
+#: org/wikipediacleaner/api/check/CheckError.java:186
 msgid "Top priority"
 msgstr "Высокий приоритет"
 
-#: org/wikipediacleaner/api/check/CheckError.java:186
+#: org/wikipediacleaner/api/check/CheckError.java:188
 msgid "Priority unknown"
 msgstr "Приоритет неизвестен"
 
-#: org/wikipediacleaner/api/check/CheckError.java:404
+#: org/wikipediacleaner/api/check/CheckError.java:407
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "Ошибка №{0} ({1} - {2}) - {3}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:411
+#: org/wikipediacleaner/api/check/CheckError.java:414
 msgid "Error unkown from WikiCleaner"
 msgstr "Неизвестная ошибка от WikiCleaner"
 
-#: org/wikipediacleaner/api/check/CheckErrorAlgorithm68.java:97
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:99
+#, fuzzy, java-format
+msgid "Replace with {0}"
+msgstr "Заменить на"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
 msgstr "Проверить языковые ссылки"
-
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:93
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:367
-msgid "Replace with"
-msgstr "Заменить на"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
@@ -314,7 +314,7 @@ msgstr ""
 msgid "A comment is required for sending the page."
 msgstr "Для отправки страницы необходим комментарий."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:910
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:915
 #, java-format
 msgid "Detection by [[{0}]]"
 msgstr "Обнаружение по [[{0}]]"
@@ -1090,6 +1090,10 @@ msgstr "Заменить параметр {0} на"
 msgid "Link to"
 msgstr "Ссылка на"
 
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:367
+msgid "Replace with"
+msgstr "Заменить на"
+
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:483
 #, java-format
 msgid "Reverse to [[{0}|{1}]]"
@@ -1178,11 +1182,11 @@ msgstr "{0} ссылок в пространстве имён Main / {1} ссы�
 msgid "The following modifications have been done ({0} pages):"
 msgstr "Были сделаны следующие изменения ({0} страниц):"
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:127
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:128
 msgid "Retrieving Check Wiki configuration"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:166
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:168
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr ""
