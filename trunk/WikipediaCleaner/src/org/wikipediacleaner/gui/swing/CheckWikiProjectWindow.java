@@ -36,6 +36,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.StringReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.concurrent.Callable;
@@ -968,9 +969,7 @@ public class CheckWikiProjectWindow extends PageWindow {
 
       // Button status
       buttonReloadError.setEnabled(true);
-      buttonErrorDetail.setEnabled(
-          (error.getAlgorithm().getLink() != null) &&
-          Utilities.isDesktopSupported());
+      buttonErrorDetail.setEnabled(true);
       buttonErrorList.setEnabled(true);
 
       // Error type description
@@ -1088,6 +1087,18 @@ public class CheckWikiProjectWindow extends PageWindow {
       CheckError error = (CheckError) selected;
       if (error.getAlgorithm().getLink() != null) {
         Utilities.browseURL(getWikipedia(), error.getAlgorithm().getLink(), true);
+      } else {
+        DecimalFormat format = new DecimalFormat("000");
+        Utilities.displayInformationMessage(getParentComponent(), GT._(
+            "There''s no page defined for this error type.\n" +
+            "If you want to define a page you need to add :\n" +
+            "  {0} = <page name> END\n" +
+            "to the translation page ({1}) on {2} Wikipedia",
+            new Object[] {
+                "error_" + format.format(error.getErrorNumber()) + "_link_" + getWikipedia().getCode() + "wiki",
+                getWikipedia().getCheckWikiTraduction(),
+                getWikipedia().getCode()
+            }));
       }
     }
   }
