@@ -154,7 +154,7 @@ public class MainWindow
     constraints.gridwidth = 1;
     constraints.gridx = 0;
     constraints.gridy = 0;
-    constraints.insets = new Insets(2, 2, 2, 2);
+    constraints.insets = new Insets(0, 0, 0, 0);
     constraints.ipadx = 0;
     constraints.ipady = 0;
     constraints.weightx = 1;
@@ -350,173 +350,8 @@ public class MainWindow
     panel.add(buttonPanel, constraints);
     constraints.gridy++;
 
-    // Empty panel
-    JPanel emptyPanel = new JPanel();
-    emptyPanel.setMinimumSize(new Dimension(0, 0));
-    emptyPanel.setPreferredSize(new Dimension(0, 0));
-    constraints.fill = GridBagConstraints.BOTH;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.insets = new Insets(0, 0, 0, 0);
-    constraints.weightx = 1;
-    constraints.weighty = 1;
-    panel.add(emptyPanel, constraints);
-
-    return panel;
-  }
-
-  /**
-   * @return Work components.
-   */
-  private Component createWorkComponents() {
-    JPanel panel = new JPanel(new GridBagLayout());
-    panel.setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Work")));
-    Configuration configuration = Configuration.getConfiguration();
-
-    // Initialize constraints
-    GridBagConstraints constraints = new GridBagConstraints();
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridheight = 1;
-    constraints.gridwidth = 1;
-    constraints.gridx = 0;
-    constraints.gridy = 0;
-    constraints.insets = new Insets(2, 2, 2, 2);
-    constraints.ipadx = 0;
-    constraints.ipady = 0;
-    constraints.weightx = 0;
-    constraints.weighty = 0;
-
-    // Page name
-    textPagename = new JTextField(configuration.getString(Configuration.STRING_PAGE_NAME), 20);
-    JLabel labelPagename = Utilities.createJLabel(GT._("&Page :"));
-    labelPagename.setLabelFor(textPagename);
-    labelPagename.setHorizontalAlignment(SwingConstants.TRAILING);
-    constraints.gridx = 0;
-    constraints.weightx = 0;
-    panel.add(labelPagename, constraints);
-    constraints.gridx = 1;
-    constraints.weightx = 1;
-    panel.add(textPagename, constraints);
-    constraints.gridy++;
-
-    // Full analysis button
-    buttonFullAnalysis = Utilities.createJButton(GT._("&Full analysis"));
-    buttonFullAnalysis.setActionCommand(ACTION_FULL_ANALYSIS);
-    buttonFullAnalysis.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 1;
-    panel.add(buttonFullAnalysis, constraints);
-    constraints.gridy++;
-
-    // Disambiguation button
-    buttonDisambiguation = Utilities.createJButton(GT._("&Disambiguation"));
-    buttonDisambiguation.setActionCommand(ACTION_DISAMBIGUATION);
-    buttonDisambiguation.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 1;
-    panel.add(buttonDisambiguation, constraints);
-    constraints.gridy++;
-
-    // Current list button
-    buttonCurrentList = Utilities.createJButton(
-        "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("&Current Disambiguation List"), true);
-    buttonCurrentList.setActionCommand(ACTION_CURRENT_LIST);
-    buttonCurrentList.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 1;
-    panel.add(buttonCurrentList, constraints);
-    constraints.gridy++;
-
-    // Help requested button
-    buttonHelpRequested = Utilities.createJButton(GT._("Help requested on..."));
-    buttonHelpRequested.setActionCommand(ACTION_HELP_REQUESTED);
-    buttonHelpRequested.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 1;
-    panel.add(buttonHelpRequested, constraints);
-    constraints.gridy++;
-
-    // Check Wiki Project button
-    buttonCheckWiki = Utilities.createJButton(
-        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Project check wikipedia"), true);
-    buttonCheckWiki.setActionCommand(ACTION_CHECK_WIKI);
-    buttonCheckWiki.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 1;
-    panel.add(buttonCheckWiki, constraints);
-    constraints.gridy++;
-
-    textCheckWikiErrors = new JTextField();
-    textCheckWikiErrors.setToolTipText(GT._(
-        "Comma separated list of errors to work on."));
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 1;
-    panel.add(textCheckWikiErrors, constraints);
-    constraints.gridy++;
-
-    // Random page button
-    buttonRandomPage = Utilities.createJButton(GT._("&Random page"));
-    buttonRandomPage.setActionCommand(ACTION_RANDOM_PAGE);
-    buttonRandomPage.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 1;
-    panel.add(buttonRandomPage, constraints);
-    constraints.gridy++;
-
-    // Watched pages button
-    buttonWatchedPages = Utilities.createJButton(GT._("Local &Watch list"));
-    buttonWatchedPages.setActionCommand(ACTION_WATCHED_PAGES);
-    buttonWatchedPages.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 1;
-    panel.add(buttonWatchedPages, constraints);
-    constraints.gridy++;
-
-    // Bot tools button
-    buttonBotTools = Utilities.createJButton(GT._("Bot tools"));
-    buttonBotTools.setActionCommand(ACTION_BOT_TOOLS);
-    buttonBotTools.addActionListener(this);
-    /*constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 1;
-    panel.add(buttonBotTools, constraints);
-    constraints.gridy++;*/
-    
-    // Empty panel
-    JPanel emptyPanel = new JPanel();
-    emptyPanel.setMinimumSize(new Dimension(0, 0));
-    emptyPanel.setPreferredSize(new Dimension(0, 0));
-    constraints.fill = GridBagConstraints.BOTH;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.insets = new Insets(0, 0, 0, 0);
-    constraints.weightx = 1;
-    constraints.weighty = 1;
-    panel.add(emptyPanel, constraints);
-    constraints.gridy++;
-
     // Buttons
-    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     buttonOptions = Utilities.createJButton(GT._("&Options"));
     buttonOptions.setActionCommand(ACTION_OPTIONS);
     buttonOptions.addActionListener(this);
@@ -530,12 +365,181 @@ public class MainWindow
     buttonAbout.addActionListener(this);
     buttonAbout.setEnabled(false);
     buttonPanel.add(buttonAbout);
-    constraints.fill = GridBagConstraints.NONE;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 1;
+    constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weighty = 0;
     panel.add(buttonPanel, constraints);
+    constraints.gridy++;
+
+    // Empty panel
+    JPanel emptyPanel = new JPanel();
+    emptyPanel.setMinimumSize(new Dimension(0, 0));
+    emptyPanel.setPreferredSize(new Dimension(0, 0));
+    constraints.fill = GridBagConstraints.BOTH;
+    constraints.gridwidth = 2;
+    constraints.gridx = 0;
+    constraints.insets = new Insets(0, 0, 0, 0);
+    constraints.weightx = 1;
+    constraints.weighty = 1;
+    panel.add(emptyPanel, constraints);
+    constraints.gridy++;
+
+    return panel;
+  }
+
+  /**
+   * @return Page components.
+   */
+  private Component createPageComponents() {
+    JPanel panel = new JPanel(new GridBagLayout());
+    panel.setBorder(BorderFactory.createTitledBorder(
+        BorderFactory.createEtchedBorder(), GT._("Page")));
+    Configuration configuration = Configuration.getConfiguration();
+
+    // Initialize constraints
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridheight = 1;
+    constraints.gridwidth = 1;
+    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.insets = new Insets(1, 1, 1, 1);
+    constraints.ipadx = 0;
+    constraints.ipady = 0;
+    constraints.weightx = 1;
+    constraints.weighty = 0;
+
+    // Page name
+    textPagename = new JTextField(configuration.getString(Configuration.STRING_PAGE_NAME), 20);
+    panel.add(textPagename, constraints);
+    constraints.gridy++;
+
+    // Full analysis button
+    buttonFullAnalysis = Utilities.createJButton(GT._("&Full analysis"));
+    buttonFullAnalysis.setActionCommand(ACTION_FULL_ANALYSIS);
+    buttonFullAnalysis.addActionListener(this);
+    panel.add(buttonFullAnalysis, constraints);
+    constraints.gridy++;
+
+    // Disambiguation button
+    buttonDisambiguation = Utilities.createJButton(GT._("&Disambiguation"));
+    buttonDisambiguation.setActionCommand(ACTION_DISAMBIGUATION);
+    buttonDisambiguation.addActionListener(this);
+    panel.add(buttonDisambiguation, constraints);
+    constraints.gridy++;
+
+    // Random page button
+    buttonRandomPage = Utilities.createJButton(GT._("&Random page"));
+    buttonRandomPage.setActionCommand(ACTION_RANDOM_PAGE);
+    buttonRandomPage.addActionListener(this);
+    panel.add(buttonRandomPage, constraints);
+    constraints.gridy++;
+
+    return panel;
+  }
+
+  /**
+   * @return Projects components.
+   */
+  private Component createProjectsComponents() {
+    JPanel panel = new JPanel(new GridBagLayout());
+    panel.setBorder(BorderFactory.createTitledBorder(
+        BorderFactory.createEtchedBorder(), GT._("Projects")));
+
+    // Initialize constraints
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridheight = 1;
+    constraints.gridwidth = 1;
+    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.insets = new Insets(1, 1, 1, 1);
+    constraints.ipadx = 0;
+    constraints.ipady = 0;
+    constraints.weightx = 1;
+    constraints.weighty = 0;
+
+    // Current list button
+    buttonCurrentList = Utilities.createJButton(
+        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        GT._("&Current Disambiguation List"), true);
+    buttonCurrentList.setActionCommand(ACTION_CURRENT_LIST);
+    buttonCurrentList.addActionListener(this);
+    panel.add(buttonCurrentList, constraints);
+    constraints.gridy++;
+
+    // Check Wiki Project button
+    buttonCheckWiki = Utilities.createJButton(
+        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
+        GT._("Project check wikipedia"), true);
+    buttonCheckWiki.setActionCommand(ACTION_CHECK_WIKI);
+    buttonCheckWiki.addActionListener(this);
+    panel.add(buttonCheckWiki, constraints);
+    constraints.gridy++;
+
+    textCheckWikiErrors = new JTextField();
+    textCheckWikiErrors.setToolTipText(GT._(
+        "Comma separated list of errors to work on."));
+    panel.add(textCheckWikiErrors, constraints);
+    constraints.gridy++;
+
+    // Help requested button
+    buttonHelpRequested = Utilities.createJButton(GT._("Help requested on..."));
+    buttonHelpRequested.setActionCommand(ACTION_HELP_REQUESTED);
+    buttonHelpRequested.addActionListener(this);
+    panel.add(buttonHelpRequested, constraints);
+    constraints.gridy++;
+
+    // Watched pages button
+    buttonWatchedPages = Utilities.createJButton(GT._("Local &Watch list"));
+    buttonWatchedPages.setActionCommand(ACTION_WATCHED_PAGES);
+    buttonWatchedPages.addActionListener(this);
+    panel.add(buttonWatchedPages, constraints);
+    constraints.gridy++;
+
+    // Bot tools button
+    buttonBotTools = Utilities.createJButton(GT._("Bot tools"));
+    buttonBotTools.setActionCommand(ACTION_BOT_TOOLS);
+    buttonBotTools.addActionListener(this);
+    /*panel.add(buttonBotTools, constraints);
+    constraints.gridy++;*/
+
+    return panel;
+  }
+
+  /**
+   * @return Work components.
+   */
+  private Component createWorkComponents() {
+    JPanel panel = new JPanel(new GridBagLayout());
+
+    // Initialize constraints
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridheight = 1;
+    constraints.gridwidth = 1;
+    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.insets = new Insets(0, 0, 0, 0);
+    constraints.ipadx = 0;
+    constraints.ipady = 0;
+    constraints.weightx = 0;
+    constraints.weighty = 0;
+
+    // Projects components
+    panel.add(createProjectsComponents(), constraints);
+    constraints.gridy++;
+
+    // Page components
+    panel.add(createPageComponents(), constraints);
+    constraints.gridy++;
+
+    // Empty panel
+    JPanel emptyPanel = new JPanel();
+    emptyPanel.setMinimumSize(new Dimension(0, 0));
+    emptyPanel.setPreferredSize(new Dimension(0, 0));
+    constraints.fill = GridBagConstraints.BOTH;
+    constraints.weighty = 1;
+    panel.add(emptyPanel, constraints);
     constraints.gridy++;
 
     return panel;
