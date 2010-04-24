@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Language;
@@ -43,64 +44,92 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyzing the text from the beginning
-    boolean result = false;
     int startIndex = 0;
-    ArrayList<String> knownLanguages = new ArrayList<String>();
+    boolean result = false;
+    HashMap<String, InterwikiElement> interwikis = new HashMap<String, InterwikiElement>();
     while (startIndex < contents.length()) {
-      // Update position of next [[
-      int beginIndex = contents.indexOf("[[", startIndex);
+      if (contents.startsWith("[[", startIndex)) {
+        int beginIndex = startIndex;
+        int currentIndex = beginIndex + 2;
 
-      if (beginIndex < 0) {
-        // No more [[
-        startIndex = contents.length();
-      } else {
-        int currentPos = beginIndex + 2;
+        // Namespace
+        int linkIndex = currentIndex;
+        while ((currentIndex < contents.length()) &&
+               (contents.charAt(currentIndex) != ':') &&
+               (contents.charAt(currentIndex) != '|') &&
+               (contents.charAt(currentIndex) != ']') &&
+               (contents.charAt(currentIndex) != '[')) {
+          currentIndex++;
+        }
 
-        // Update position of next ]]
-        int endIndex = contents.indexOf("]]", currentPos);
+        // Retrieve namespace
+        if ((currentIndex < contents.length()) &&
+            (contents.charAt(currentIndex) == ':')) {
 
-        if (endIndex < 0) {
-          startIndex = contents.length();
-        } else {
-          // Possible whitespaces
-          while ((currentPos < endIndex) && Character.isWhitespace(contents.charAt(currentPos))) {
-            currentPos++;
-          }
-          int beginLink = currentPos;
-          while ((currentPos < endIndex) &&
-              (contents.charAt(currentPos) != ':') &&
-              (contents.charAt(currentPos) != '|')) {
-            currentPos++;
-          }
-          // Check that link starts with :
-          if ((currentPos < endIndex) && (contents.charAt(currentPos) == ':')) {
-            String namespace = contents.substring(beginLink, currentPos);
-            for (Language lg : page.getWikipedia().getLanguages()) {
-              if (namespace.equals(lg.getCode())) {
-                if (!knownLanguages.contains(lg.getCode())) {
-                  knownLanguages.add(lg.getCode());
+          // Link itself
+          String namespace = contents.substring(linkIndex, currentIndex);
+          currentIndex++;
+          for (Language lg : page.getWikipedia().getLanguages()) {
+            if (namespace.equals(lg.getCode())) {
+              while ((currentIndex < contents.length()) &&
+                     (contents.charAt(currentIndex) != ']')) {
+                currentIndex++;
+              }
+
+              if ((currentIndex < contents.length()) &&
+                  (contents.startsWith("]]", currentIndex))) {
+                currentIndex += 2;
+                InterwikiElement interwikiElement = interwikis.get(namespace);
+                if (interwikiElement == null) {
+                  interwikiElement = new InterwikiElement(namespace, beginIndex, currentIndex);
+                  interwikis.put(namespace, interwikiElement);
                 } else {
                   if (errors == null) {
                     return true;
                   }
                   result = true;
-                  int endError = endIndex + 2;
-                  if ((endError + 1 < contents.length()) && (contents.charAt(endError + 1) == '\n')) {
-                    endError++;
+                  if (interwikiElement.errorResult == null) {
+                    interwikiElement.errorResult = new CheckErrorResult(
+                        getShortDescription(),
+                        interwikiElement.begin, interwikiElement.end,
+                        CheckErrorResult.ErrorLevel.CORRECT);
+                    errors.add(interwikiElement.errorResult);
                   }
                   CheckErrorResult errorResult = new CheckErrorResult(
-                      getShortDescription(), beginIndex, endError);
+                      getShortDescription(), beginIndex, currentIndex);
                   errorResult.addReplacement("");
                   errors.add(errorResult);
                 }
               }
             }
           }
-          startIndex = endIndex + 2;
         }
+        startIndex = currentIndex;
+      } else {
+        startIndex++;
       }
     }
     return result;
+  }
+
+  /**
+   * Class to hold information about an interwiki element.
+   */
+  static class InterwikiElement {
+    String name;
+    int begin;
+    int end;
+    CheckErrorResult errorResult;
+
+    /**
+     * @param name Interwiki name.
+     * @param begin Begin position.
+     * @param end End position.
+     */
+    public InterwikiElement(String name, int begin, int end) {
+      this.name = name;
+      this.begin = begin;
+      this.end = end;
+    }
   }
 }

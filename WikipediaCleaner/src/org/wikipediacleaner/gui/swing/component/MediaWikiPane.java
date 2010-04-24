@@ -346,12 +346,12 @@ public class MediaWikiPane
     Style checkWikiOk = addStyle(MediaWikiConstants.STYLE_CHECK_WIKI_OK, root);
     StyleConstants.setBold(checkWikiOk, true);
     StyleConstants.setForeground(checkWikiOk, Color.GREEN);
-    checkWikiError.addAttribute(MediaWikiConstants.ATTRIBUTE_TYPE, MediaWikiConstants.VALUE_CHECK_WIKI_OK);
+    checkWikiOk.addAttribute(MediaWikiConstants.ATTRIBUTE_TYPE, MediaWikiConstants.VALUE_CHECK_WIKI_OK);
 
     Style checkWikiWarning = addStyle(MediaWikiConstants.STYLE_CHECK_WIKI_WARNING, root);
     StyleConstants.setBold(checkWikiWarning, true);
     StyleConstants.setForeground(checkWikiWarning, Color.ORANGE);
-    checkWikiError.addAttribute(MediaWikiConstants.ATTRIBUTE_TYPE, MediaWikiConstants.VALUE_CHECK_WIKI_WARNING);
+    checkWikiWarning.addAttribute(MediaWikiConstants.ATTRIBUTE_TYPE, MediaWikiConstants.VALUE_CHECK_WIKI_WARNING);
 
     Style disambiguationLink = addStyle(MediaWikiConstants.STYLE_DISAMBIGUATION_LINK, root);
     StyleConstants.setBold(disambiguationLink, true);

@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
@@ -42,72 +43,103 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
     if ((page == null) || (contents == null)) {
       return false;
     }
+
+    int startIndex = 0;
     boolean result = false;
     Namespace categoryNamespace = Namespace.getNamespace(Namespace.CATEGORY, page.getWikipedia().getNamespaces());
     if (categoryNamespace == null) {
       return result;
     }
-    ArrayList<String> categories = new ArrayList<String>();
-    int startIndex = 0;
+    HashMap<String, CategoryElement> categories = new HashMap<String, CategoryElement>();
     while (startIndex < contents.length()) {
-      int beginIndex = contents.indexOf("[[", startIndex);
-      if (beginIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        int endIndex = contents.indexOf("]]", beginIndex);
-        if (endIndex < 0) {
-          startIndex = contents.length();
-        } else {
-          // Possible whitespaces
-          int linkBegin = beginIndex + 2;
-          while ((linkBegin < endIndex) && (contents.charAt(linkBegin) == ' ')) {
-            linkBegin++;
-          }
+      if (contents.startsWith("[[", startIndex)) {
+        int beginIndex = startIndex;
+        int currentIndex = beginIndex + 2;
+
+        // Namespace
+        int linkIndex = currentIndex;
+        while ((currentIndex < contents.length()) &&
+               (contents.charAt(currentIndex) != ':') &&
+               (contents.charAt(currentIndex) != '|') &&
+               (contents.charAt(currentIndex) != ']') &&
+               (contents.charAt(currentIndex) != '[')) {
+          currentIndex++;
+        }
+
+        // Check if namespace is Category
+        if ((currentIndex < contents.length()) &&
+            (contents.charAt(currentIndex) == ':') &&
+            (categoryNamespace.isPossibleName(contents.substring(linkIndex, currentIndex).trim()))) {
+
           // Link itself
-          int linkEnd = linkBegin;
-          while ((linkEnd < endIndex) &&
-              (contents.charAt(linkEnd) != ':') &&
-              (contents.charAt(linkEnd) != '|')) {
-            linkEnd++;
+          currentIndex++;
+          linkIndex = currentIndex;
+          while ((currentIndex < contents.length()) &&
+                 (contents.charAt(currentIndex) != '|') &&
+                 (contents.charAt(currentIndex) != ']')) {
+            currentIndex++;
           }
 
-          // Check if namespace is Category
-          if ((contents.charAt(linkEnd) == ':') &&
-              (categoryNamespace.isPossibleName(contents.substring(linkBegin, linkEnd)))) {
-            // Possible whitespaces
-            linkBegin = linkEnd + 1;
-            while ((linkBegin < endIndex) && (contents.charAt(linkBegin) == ' ')) {
-              linkBegin++;
-            }
-            // Category itself
-            linkEnd = linkBegin;
-            while ((linkEnd < endIndex) &&
-                (contents.charAt(linkEnd) != '|')) {
-              linkEnd++;
-            }
-            // Check if category is already known
-            String category = Page.getStringUcFirst(contents.substring(linkBegin, linkEnd));
-            if (categories.contains(category)) {
+          // Retrieve category name
+          String categoryName = Page.getStringUcFirst(contents.substring(linkIndex, currentIndex).trim());
+
+          // Go to the end
+          while ((currentIndex < contents.length()) &&
+                 (!contents.startsWith("]]", currentIndex))) {
+            currentIndex++;
+          }
+          if ((currentIndex < contents.length()) &&
+              (contents.startsWith("]]", currentIndex))) {
+            currentIndex += 2;
+            CategoryElement categoryElement = categories.get(categoryName);
+            if (categoryElement == null) {
+              categoryElement = new CategoryElement(categoryName, beginIndex, currentIndex);
+              categories.put(categoryName, categoryElement);
+            } else {
               if (errors == null) {
                 return true;
               }
               result = true;
-              int endError = endIndex + 2;
-              if ((endError + 1 < contents.length()) && (contents.charAt(endError + 1) == '\n')) {
-                endError++;
+              if (categoryElement.errorResult == null) {
+                categoryElement.errorResult = new CheckErrorResult(
+                    getShortDescription(),
+                    categoryElement.begin, categoryElement.end,
+                    CheckErrorResult.ErrorLevel.CORRECT);
+                errors.add(categoryElement.errorResult);
               }
               CheckErrorResult errorResult = new CheckErrorResult(
-                  getShortDescription(), beginIndex, endError);
+                  getShortDescription(), beginIndex, currentIndex);
               errorResult.addReplacement("");
               errors.add(errorResult);
-            } else {
-              categories.add(category);
             }
           }
-          startIndex = endIndex + 2;
         }
+        startIndex = currentIndex;
+      } else {
+        startIndex++;
       }
     }
     return result;
+  }
+
+  /**
+   * Class to hold information about a category element.
+   */
+  static class CategoryElement {
+    String name;
+    int begin;
+    int end;
+    CheckErrorResult errorResult;
+
+    /**
+     * @param name Category name.
+     * @param begin Begin position.
+     * @param end End position.
+     */
+    public CategoryElement(String name, int begin, int end) {
+      this.name = name;
+      this.begin = begin;
+      this.end = end;
+    }
   }
 }
