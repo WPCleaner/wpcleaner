@@ -424,8 +424,8 @@ public class CheckError {
       return;
     }
     for (int i = errors.size(); i > 0; i--) {
-      if (Page.areSameTitle(page.getTitle(), errors.get(i).getTitle())) {
-        errors.remove(i);
+      if (Page.areSameTitle(page.getTitle(), errors.get(i - 1).getTitle())) {
+        errors.remove(i - 1);
       }
     }
   }
