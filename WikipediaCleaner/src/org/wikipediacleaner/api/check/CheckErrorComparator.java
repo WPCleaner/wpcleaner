@@ -20,6 +20,8 @@ package org.wikipediacleaner.api.check;
 
 import java.util.Comparator;
 
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+
 
 /**
  * A comparator for CheckError objects by priority.

@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.check;
 
 import java.util.ArrayList;
 
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.data.Page;
 
 
