@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-24 10:24+0200\n"
+"POT-Creation-Date: 2010-04-24 11:41+0200\n"
 "PO-Revision-Date: 2009-09-05 18:48+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -51,10 +51,15 @@ msgstr ""
 msgid "Error unkown from WikiCleaner"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:99
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:101
 #, fuzzy, java-format
 msgid "Replace with {0}"
 msgstr "&Sostituisci con {0}"
+
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:102
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
+msgid "Delete"
+msgstr "Elimina"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
@@ -727,10 +732,6 @@ msgstr "Annulla livelli:"
 msgid "Sort orders"
 msgstr "Ordina ordini"
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
-msgid "Delete"
-msgstr "Elimina"
-
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:627
 msgid "Details"
 msgstr "Dettagli"
@@ -1202,6 +1203,10 @@ msgstr "Aggiornamento contenuti pagina"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:70
 msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Delete it"
+#~ msgstr "Elimina"
 
 #~ msgid "Retrieving namespaces"
 #~ msgstr "Recupero namespace"

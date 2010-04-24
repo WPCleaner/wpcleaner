@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-24 10:24+0200\n"
+"POT-Creation-Date: 2010-04-24 11:41+0200\n"
 "PO-Revision-Date: 2010-04-23 13:21+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -52,10 +52,15 @@ msgstr "Error n°{0} ({1} - {2}) - {3}"
 msgid "Error unkown from WikiCleaner"
 msgstr "Error desconocido de  WikiCleaner"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:99
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:101
 #, fuzzy, java-format
 msgid "Replace with {0}"
 msgstr "&Reemplazar con {0}"
+
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:102
+#: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
+msgid "Delete"
+msgstr "Eliminar"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
@@ -745,10 +750,6 @@ msgstr "Niveles de deshacer:"
 msgid "Sort orders"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
-msgid "Delete"
-msgstr "Eliminar"
-
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:627
 msgid "Details"
 msgstr "Detalles"
@@ -1224,6 +1225,10 @@ msgstr "Actualizando contenidos de la página"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:70
 msgid "Error 'badtoken' detected: Retrying"
 msgstr "Error 'badtoken' detectado: Reintentando"
+
+#, fuzzy
+#~ msgid "Delete it"
+#~ msgstr "Eliminar"
 
 #~ msgid "Square brackets not correct end"
 #~ msgstr "Corchetes sin cerrar"
