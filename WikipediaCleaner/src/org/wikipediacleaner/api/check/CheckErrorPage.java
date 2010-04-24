@@ -93,4 +93,21 @@ public class CheckErrorPage {
     }
     return results.size();
   }
+
+  /**
+   * @return Active results count.
+   */
+  public int getActiveResultsCount() {
+    if (results == null) {
+      return 0;
+    }
+    int count = 0;
+    for (CheckErrorResult result : results) {
+      if ((result.getErrorLevel() == CheckErrorResult.ErrorLevel.ERROR) ||
+          (result.getErrorLevel() == CheckErrorResult.ErrorLevel.WARNING)) {
+        count++;
+      }
+    }
+    return count;
+  }
 }
