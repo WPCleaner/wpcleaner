@@ -872,8 +872,21 @@ public class MenuCreator {
    */
   public static void addViewToMenu(
       EnumWikipedia wikipedia, JPopupMenu popup, String url) {
+    addViewToMenu(wikipedia, popup, url, GT._("External Viewer"));
+  }
+
+  /**
+   * Add submenus for viewing pages.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param popup Popup menu.
+   * @param url URL.
+   * @param label Menu label.
+   */
+  public static void addViewToMenu(
+      EnumWikipedia wikipedia, JPopupMenu popup, String url, String label) {
     if (Utilities.isDesktopSupported()) {
-      JMenuItem menuItem = new JMenuItem(GT._("External Viewer"));
+      JMenuItem menuItem = new JMenuItem(label);
       ActionListener action = new PageViewAction(url, wikipedia);
       menuItem.addActionListener(action);
       popup.add(menuItem);

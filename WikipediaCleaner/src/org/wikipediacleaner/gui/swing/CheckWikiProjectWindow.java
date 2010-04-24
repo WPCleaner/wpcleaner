@@ -86,6 +86,7 @@ import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
+import org.wikipediacleaner.gui.swing.component.CheckErrorPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
 import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
@@ -520,6 +521,7 @@ public class CheckWikiProjectWindow extends PageWindow {
         }
         
       });
+      listErrors.addMouseListener(new CheckErrorPageListPopupListener(getWikipedia()));
       JScrollPane scrollErrors = new JScrollPane(listErrors);
       scrollErrors.setMinimumSize(new Dimension(200, 200));
       scrollErrors.setPreferredSize(new Dimension(200, 300));
