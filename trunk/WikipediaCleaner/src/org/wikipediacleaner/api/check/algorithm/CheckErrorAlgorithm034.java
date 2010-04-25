@@ -48,7 +48,7 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
     result |= simpleTextSearch(page, contents, errors, "#tag:");
     result |= simpleTextSearch(page, contents, errors, "{{NAMESPACE}}");
     result |= simpleTextSearch(page, contents, errors, "{{SITENAME}}");
-    result |= simpleTextSearch(page, contents, errors, "{{PAGENAME}}");
+    result |= simpleTextSearch(page, contents, errors, "{{PAGENAME}}", page.getMagicPAGENAME());
     result |= simpleTextSearch(page, contents, errors, "{{FULLPAGENAME}}");
     return result;
   }
