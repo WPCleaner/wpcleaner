@@ -288,6 +288,7 @@ Replacements:
 
 ===============================================================================
 Error 065: Image description with break
+Status: DONE
 
 ===============================================================================
 Error 066: Image description with full <small>.
