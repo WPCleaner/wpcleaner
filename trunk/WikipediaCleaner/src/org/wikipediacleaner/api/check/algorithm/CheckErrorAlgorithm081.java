@@ -84,30 +84,32 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
             } else {
               currentIndex = endRefIndex + 6;
               String reference = contents.substring(beginRefIndex, endRefIndex).trim();
-              RefElement refElement = refs.get(reference);
-              if (refElement == null) {
-                refElement = new RefElement(reference, beginIndex, currentIndex, name);
-                refs.put(reference, refElement);
-              } else {
-                if (errors == null) {
-                  return true;
+              if (reference.length() > 0) {
+                RefElement refElement = refs.get(reference);
+                if (refElement == null) {
+                  refElement = new RefElement(reference, beginIndex, currentIndex, name);
+                  refs.put(reference, refElement);
+                } else {
+                  if (errors == null) {
+                    return true;
+                  }
+                  result = true;
+                  if (refElement.errorResult == null) {
+                    refElement.errorResult = new CheckErrorResult(
+                        getShortDescription(),
+                        refElement.begin, refElement.end,
+                        (refElement.name == null) ?
+                            CheckErrorResult.ErrorLevel.WARNING :
+                            CheckErrorResult.ErrorLevel.CORRECT);
+                    errors.add(refElement.errorResult);
+                  }
+                  CheckErrorResult errorResult = new CheckErrorResult(
+                      getShortDescription(), beginIndex, currentIndex);
+                  if (refElement.name != null) {
+                    errorResult.addReplacement("<ref name=\"" + refElement.name + "\"/>");
+                  }
+                  errors.add(errorResult);
                 }
-                result = true;
-                if (refElement.errorResult == null) {
-                  refElement.errorResult = new CheckErrorResult(
-                      getShortDescription(),
-                      refElement.begin, refElement.end,
-                      (refElement.name == null) ?
-                          CheckErrorResult.ErrorLevel.WARNING :
-                          CheckErrorResult.ErrorLevel.CORRECT);
-                  errors.add(refElement.errorResult);
-                }
-                CheckErrorResult errorResult = new CheckErrorResult(
-                    getShortDescription(), beginIndex, currentIndex);
-                if (refElement.name != null) {
-                  errorResult.addReplacement("<ref name=\"" + refElement.name + "\"/>");
-                }
-                errors.add(errorResult);
               }
             }
           }
