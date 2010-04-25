@@ -1,0 +1,149 @@
+/*
+ *  WikipediaCleaner: A tool to help on Wikipedia maintenance tasks.
+ *  Copyright (C) 2008  Nicolas Vervelle
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package org.wikipediacleaner.api.check.algorithm;
+
+import java.util.ArrayList;
+
+import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.MagicWord;
+import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.Page;
+
+
+/**
+ * Algorithm for analyzing error 30 of check wikipedia project.
+ * Error 30: Image without description
+ */
+public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
+
+  public CheckErrorAlgorithm030() {
+    super("Image without description");
+  }
+
+  /* (non-Javadoc)
+   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#analyze(org.wikipediacleaner.api.data.Page, java.lang.String, java.util.ArrayList)
+   */
+  public boolean analyze(Page page, String contents, ArrayList<CheckErrorResult> errors) {
+    if ((page == null) || (contents == null)) {
+      return false;
+    }
+
+    int startIndex = 0;
+    boolean result = false;
+    Namespace imageNamespace = Namespace.getNamespace(Namespace.IMAGE, page.getWikipedia().getNamespaces());
+    if (imageNamespace == null) {
+      return result;
+    }
+    while (startIndex < contents.length()) {
+      if (contents.startsWith("[[", startIndex)) {
+        int beginIndex = startIndex;
+        int currentIndex = beginIndex + 2;
+
+        // Namespace
+        int linkIndex = currentIndex;
+        while ((currentIndex < contents.length()) &&
+               (contents.charAt(currentIndex) != ':') &&
+               (contents.charAt(currentIndex) != '|') &&
+               (contents.charAt(currentIndex) != ']') &&
+               (contents.charAt(currentIndex) != '[')) {
+          currentIndex++;
+        }
+
+        // Check if namespace is Image
+        if ((currentIndex < contents.length()) &&
+            (contents.charAt(currentIndex) == ':') &&
+            (imageNamespace.isPossibleName(contents.substring(linkIndex, currentIndex).trim()))) {
+
+          // Link itself
+          currentIndex++;
+          while ((currentIndex < contents.length()) &&
+                 (contents.charAt(currentIndex) != '|') &&
+                 (contents.charAt(currentIndex) != ']')) {
+            currentIndex++;
+          }
+
+          // Go to the end
+          if ((currentIndex < contents.length()) &&
+              (contents.charAt(currentIndex) == '|')) {
+            currentIndex++;
+          }
+          linkIndex = currentIndex;
+          while ((currentIndex < contents.length()) &&
+                 (!contents.startsWith("]]", currentIndex))) {
+            currentIndex++;
+          }
+          if ((currentIndex < contents.length()) &&
+              (contents.startsWith("]]", currentIndex))) {
+            String[] args = contents.substring(linkIndex, currentIndex).split("\\|");
+            currentIndex += 2;
+            EnumWikipedia wikipedia = page.getWikipedia();
+            boolean descriptionFound = false;
+            for (int i = args.length; (i > 0) && !descriptionFound; i--) {
+              String arg = args[i - 1];
+              if (arg.length() > 0) {
+                boolean magicWordFound = false;
+                if ((wikipedia.getMagicWord(MagicWord.IMG_ALT).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_BASELINE).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_BORDER).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_BOTTOM).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_CENTER).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_FRAMED).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_FRAMELESS).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_LEFT).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_LINK).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_MANUAL_THUMB).isPossibleAlias(arg, "[0-9]*")) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_MIDDLE).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_NONE).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_PAGE).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_RIGHT).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_SUB).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_SUPER).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_TEXT_BOTTOM).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_TEXT_TOP).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_THUMBNAIL).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_TOP).isPossibleAlias(arg)) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_UPRIGHT).isPossibleAlias(arg, "[0-9]*")) ||
+                    (wikipedia.getMagicWord(MagicWord.IMG_WIDTH).isPossibleAlias(arg, "[0-9]*"))) {
+                  magicWordFound = true;
+                }
+                if (!magicWordFound) {
+                  descriptionFound = true;
+                }
+              }
+            }
+            if (!descriptionFound) {
+              if (errors == null) {
+                return true;
+              }
+              result = true;
+              CheckErrorResult errorResult = new CheckErrorResult(
+                  getShortDescription(), beginIndex, currentIndex);
+              errors.add(errorResult);
+            }
+          }
+        }
+        startIndex = currentIndex;
+      } else {
+        startIndex++;
+      }
+    }
+    return result;
+  }
+}
