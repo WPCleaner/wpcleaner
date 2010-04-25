@@ -315,6 +315,17 @@ public abstract class BasicWindow {
   }
 
   /**
+   * Display an URL message.
+   * 
+   * @param message Message.
+   * @param url URL.
+   */
+  protected void displayUrlMessage(String message, String url) {
+    // TODO: Let users copy / paste the url
+    displayInformationMessage(message + "\n" + url);
+  }
+
+  /**
    * Ask the user to input a value.
    * 
    * @param message Message.

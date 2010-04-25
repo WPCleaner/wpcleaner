@@ -43,6 +43,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
 import org.wikipediacleaner.Version;
@@ -72,24 +73,30 @@ public class MainWindow
   extends BasicWindow
   implements ActionListener, ItemListener {
 
-  private final static String ACTION_ABOUT          = "ABOUT";
-  private final static String ACTION_BOT_TOOLS      = "BOT TOOLS";
-  private final static String ACTION_CHECK_WIKI     = "CHECK WIKI";
-  private final static String ACTION_CURRENT_LIST   = "CURRENT LIST";
-  private final static String ACTION_DEMO           = "DEMO";
-  private final static String ACTION_DISAMBIGUATION = "DISAMBIGUATION";
-  private final static String ACTION_FULL_ANALYSIS  = "FULL ANALYSIS";
-  private final static String ACTION_HELP           = "HELP";
-  private final static String ACTION_HELP_REQUESTED = "HELP_REQUESTED";
-  private final static String ACTION_IDEA           = "IDEA";
-  private final static String ACTION_LOGIN          = "LOGIN";
-  private final static String ACTION_LOGOUT         = "LOGOUT";
-  private final static String ACTION_OPTIONS        = "OPTIONS";
-  private final static String ACTION_RANDOM_PAGE    = "RANDOM PAGE";
-  private final static String ACTION_SAVE_PASSWORD  = "SAVE PASSWORD";
-  private final static String ACTION_WATCHED_PAGES  = "WATCHED PAGES";
+  private final static String ACTION_ABOUT           = "ABOUT";
+  private final static String ACTION_BOT_TOOLS       = "BOT TOOLS";
+  private final static String ACTION_CHECK_WIKI      = "CHECK WIKI";
+  private final static String ACTION_CURRENT_LIST    = "CURRENT LIST";
+  private final static String ACTION_DEMO            = "DEMO";
+  private final static String ACTION_DISAMBIGUATION  = "DISAMBIGUATION";
+  private final static String ACTION_FULL_ANALYSIS   = "FULL ANALYSIS";
+  private final static String ACTION_HELP            = "HELP";
+  private final static String ACTION_HELP_REQUESTED  = "HELP_REQUESTED";
+  private final static String ACTION_IDEA            = "IDEA";
+  private final static String ACTION_LOGIN           = "LOGIN";
+  private final static String ACTION_LOGOUT          = "LOGOUT";
+  private final static String ACTION_OPTIONS         = "OPTIONS";
+  private final static String ACTION_OTHER_LANGUAGE  = "OTHER LANGUAGE";
+  private final static String ACTION_OTHER_WIKIPEDIA = "OTHER WIKIPEDIA";
+  private final static String ACTION_RANDOM_PAGE     = "RANDOM PAGE";
+  private final static String ACTION_SAVE_PASSWORD   = "SAVE PASSWORD";
+  private final static String ACTION_WATCHED_PAGES   = "WATCHED PAGES";
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(3);
+
+  private final static String URL_OTHER_LANGUAGE  = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner#Other_Language";
+  private final static String URL_OTHER_WIKIPEDIA = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner#Other_Wikipedia";
+  private final static String URL_TALK_PAGE       = "http://fr.wikipedia.org/wiki/Discussion_Utilisateur:NicoV/Wikipedia_Cleaner";
 
   private JComboBox comboWikipedia;
   private JComboBox comboLanguage;
@@ -187,9 +194,6 @@ public class MainWindow
    */
   @Override
   protected void updateComponentState() {
-    EnumWikipedia wikipedia = getWikipedia();
-    //Configuration config = Configuration.getConfiguration();
-
     comboWikipedia.setEnabled(!logged);
     comboLanguage.setEnabled(!logged);
     textUsername.setEnabled(!logged);
@@ -203,11 +207,9 @@ public class MainWindow
     buttonFullAnalysis.setEnabled(logged);
     buttonDisambiguation.setEnabled(logged);
     buttonCurrentList.setEnabled(logged);
-    buttonHelpRequested.setEnabled(logged &&
-                                   (wikipedia != null) &&
-                                   (wikipedia.getTemplatesForHelpRequested() != null));
-    buttonCheckWiki.setEnabled(logged && (wikipedia != null));
-    textCheckWikiErrors.setEnabled(logged && (wikipedia != null));
+    buttonHelpRequested.setEnabled(logged);
+    buttonCheckWiki.setEnabled(logged);
+    textCheckWikiErrors.setEnabled(logged);
     buttonRandomPage.setEnabled(logged);
     buttonWatchedPages.setEnabled(logged);
     buttonBotTools.setEnabled(logged);
@@ -245,7 +247,7 @@ public class MainWindow
     constraints.gridwidth = 1;
     constraints.gridx = 0;
     constraints.gridy = 0;
-    constraints.insets = new Insets(2, 2, 2, 2);
+    constraints.insets = new Insets(1, 1, 1, 1);
     constraints.ipadx = 0;
     constraints.ipady = 0;
     constraints.weightx = 0;
@@ -253,39 +255,59 @@ public class MainWindow
 
     // Wikipedia
     comboWikipedia = new JComboBox(EnumWikipedia.getVector());
-    comboWikipedia.addItem(GT._("Other Wikipedia"));
     comboWikipedia.setEditable(false);
     comboWikipedia.setSelectedItem(configuration.getWikipedia());
     JLabel labelWikipedia = Utilities.createJLabel(GT._("&Wikipedia"));
     labelWikipedia.setLabelFor(comboWikipedia);
     labelWikipedia.setHorizontalAlignment(SwingConstants.TRAILING);
+    JToolBar toolbarWikipedia = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbarWikipedia.setFloatable(false);
+    JButton buttonWikipediaInfo = Utilities.createJButton(
+        "help-browser.png", EnumImageSize.SMALL,
+        GT._("Other Wikipedia"), false);
+    buttonWikipediaInfo.setActionCommand(ACTION_OTHER_WIKIPEDIA);
+    buttonWikipediaInfo.addActionListener(this);
+    toolbarWikipedia.add(buttonWikipediaInfo);
     constraints.gridx = 0;
     constraints.weightx = 0;
     panel.add(labelWikipedia, constraints);
     constraints.gridx = 1;
     constraints.weightx = 1;
     panel.add(comboWikipedia, constraints);
+    constraints.gridx = 2;
+    constraints.weightx = 0;
+    panel.add(toolbarWikipedia, constraints);
     constraints.gridy++;
 
     // Language
     comboLanguage = new JComboBox(EnumLanguage.getVector());
-    comboLanguage.addItem(GT._("Other Language"));
     comboLanguage.setEditable(false);
     comboLanguage.setSelectedItem(configuration.getLanguage());
     comboLanguage.addItemListener(this);
     JLabel labelLanguage = Utilities.createJLabel(GT._("Lan&guage"));
     labelLanguage.setLabelFor(comboLanguage);
     labelLanguage.setHorizontalAlignment(SwingConstants.TRAILING);
+    JToolBar toolbarLanguage = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbarLanguage.setFloatable(false);
+    JButton buttonLanguageInfo = Utilities.createJButton(
+        "help-browser.png", EnumImageSize.SMALL,
+        GT._("Other Language"), false);
+    buttonLanguageInfo.setActionCommand(ACTION_OTHER_LANGUAGE);
+    buttonLanguageInfo.addActionListener(this);
+    toolbarLanguage.add(buttonLanguageInfo);
     constraints.gridx = 0;
     constraints.weightx = 0;
     panel.add(labelLanguage, constraints);
     constraints.gridx = 1;
     constraints.weightx = 1;
     panel.add(comboLanguage, constraints);
+    constraints.gridx = 2;
+    constraints.weightx = 0;
+    panel.add(toolbarLanguage, constraints);
     constraints.gridy++;
 
     // User name
-    textUsername = new JTextField(20);
+    textUsername = new JTextField();
     textUsername.setText(configuration.getString(Configuration.STRING_USER_NAME));
     JLabel labelUsername = Utilities.createJLabel(GT._("&User name :"));
     labelUsername.setLabelFor(textUsername);
@@ -299,7 +321,7 @@ public class MainWindow
     constraints.gridy++;
 
     // Password
-    textPassword = new JPasswordField(20);
+    textPassword = new JPasswordField();
     textPassword.setText(configuration.getString(Configuration.STRING_PASSWORD, null));
     echoPassword = textPassword.getEchoChar();
     JLabel labelPassword = Utilities.createJLabel(GT._("&Password :"));
@@ -579,6 +601,10 @@ public class MainWindow
       actionWatchedPages();
     } else if (ACTION_OPTIONS.equals(e.getActionCommand())) {
       Controller.runOptions();
+    } else if (ACTION_OTHER_LANGUAGE.equals(e.getActionCommand())) {
+      actionOtherLanguage();
+    } else if (ACTION_OTHER_WIKIPEDIA.equals(e.getActionCommand())) {
+      actionOtherWikipedia();
     } else if (ACTION_HELP_REQUESTED.equals(e.getActionCommand())) {
       actionHelpRequestedOn();
     } else if (ACTION_CHECK_WIKI.equals(e.getActionCommand())) {
@@ -609,6 +635,34 @@ public class MainWindow
   }
 
   /**
+   * Action called when Other Wikipedia button is pressed.
+   */
+  public void actionOtherWikipedia() {
+    String url = URL_OTHER_WIKIPEDIA;
+    if (Utilities.isDesktopSupported()) {
+      Utilities.browseURL(url);
+    } else {
+      displayUrlMessage(
+          GT._("You can learn how to add other Wikipedia at the following URL:"),
+          url);
+    }
+  }
+
+  /**
+   * Action called when Other Language button is pressed. 
+   */
+  public void actionOtherLanguage() {
+    String url = URL_OTHER_LANGUAGE;
+    if (Utilities.isDesktopSupported()) {
+      Utilities.browseURL(url);
+    } else {
+      displayUrlMessage(
+          GT._("You can learn how to add other languages at the following URL:"),
+          url);
+    }
+  }
+
+  /**
    * Action called when Login or Demo button is pressed.
    * 
    * @param login Flag indicating if login is required.
@@ -622,20 +676,6 @@ public class MainWindow
           comboWikipedia);
       return;
     }
-    if (comboWikipedia.getSelectedItem() instanceof String) {
-      String url = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner#Other_Wikipedia";
-      if (Utilities.isDesktopSupported()) {
-        Utilities.browseURL(url);
-      } else {
-        // TODO: Let users copy / paste the url
-        displayInformationMessage(
-                "<html>" +
-                GT._("You can learn how to add other Wikipedia at the following URL:") +
-                "<br><a href=\"" + url + "\">" + url + "</a>" +
-                "</html>");
-      }
-      return;
-    }
     setWikipedia((EnumWikipedia) comboWikipedia.getSelectedItem());
 
     // Check that correct values are entered in Language combo
@@ -643,20 +683,6 @@ public class MainWindow
       displayWarning(
           GT._("You must select a language before login"),
           comboLanguage);
-      return;
-    }
-    if (comboLanguage.getSelectedItem() instanceof String) {
-      String url = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner#Other_Language";
-      if (Utilities.isDesktopSupported()) {
-        Utilities.browseURL(url);
-      } else {
-        // TODO: Let users copy / paste the url
-        displayInformationMessage(
-                "<html>" +
-                GT._("You can learn how to add other languages at the following URL:") +
-                "<br><a href=\"" + url + "\">" + url + "</a>" +
-                "</html>");
-      }
       return;
     }
     EnumLanguage language = (EnumLanguage) comboLanguage.getSelectedItem();
@@ -717,19 +743,16 @@ public class MainWindow
    */
   private void actionHelp() {
     EnumWikipedia wikipedia = getWikipedia();
-    String url = EnumWikipedia.FR.getHelpURL();
+    String url = EnumWikipedia.EN.getHelpURL();
     if ((wikipedia != null) && (wikipedia.getHelpURL() != null)) {
       url = wikipedia.getHelpURL();
     }
     if (Utilities.isDesktopSupported()) {
       Utilities.browseURL(url);
     } else {
-      // TODO: Let users copy / paste the url
-      displayInformationMessage(
-              "<html>" +
-              GT._("You can read the help on Wikipedia Cleaner at the following URL:") +
-              "<br><a href=\"" + url + "\">" + url + "</a>" +
-              "</html>");
+      displayUrlMessage(
+          GT._("You can read the help on Wikipedia Cleaner at the following URL:"),
+          url);
     }
   }
 
@@ -737,16 +760,13 @@ public class MainWindow
    * Action called when Idea button is pressed.
    */
   private void actionIdea() {
-    String url = "http://fr.wikipedia.org/wiki/Discussion_Utilisateur:NicoV/Wikipedia_Cleaner";
+    String url = URL_TALK_PAGE;
     if (Utilities.isDesktopSupported()) {
       Utilities.browseURL(url);
     } else {
-      // TODO: Let users copy / paste the url
-      displayInformationMessage(
-              "<html>" +
-              GT._("You can submit bug reports or feature requests at the following URL:") +
-              "<br><a href=\"" + url + "\">" + url + "</a>" +
-              "</html>");
+      displayUrlMessage(
+          GT._("You can submit bug reports or feature requests at the following URL:"),
+          url);
     }
   }
 
@@ -815,8 +835,15 @@ public class MainWindow
     }
     if ((wikipedia.getDisambiguationList() == null) ||
         ("".equals(wikipedia.getDisambiguationList()))) {
-      displayWarning(
-          GT._("There's no known list of disambiguation pages for this Wikipedia."));
+      String url = URL_OTHER_WIKIPEDIA;
+      displayUrlMessage(
+          GT._(
+              "There's no known list of disambiguation pages for this Wikipedia.\n" +
+              "You can learn how to configure WikiCleaner at the following URL:"),
+          url);
+      if (Utilities.isDesktopSupported()) {
+        Utilities.browseURL(url);
+      }
       return;
     }
     new DisambiguationListWorker(wikipedia, this).start();
@@ -827,7 +854,22 @@ public class MainWindow
    */
   private void actionHelpRequestedOn() {
     EnumWikipedia wikipedia = getWikipedia();
-    new EmbeddedInWorker(wikipedia, this, wikipedia.getTemplatesForHelpRequested()).start();
+    if (wikipedia == null) {
+      return;
+    }
+    if (wikipedia.getTemplatesForHelpRequested() == null) {
+      String url = URL_OTHER_WIKIPEDIA;
+      displayUrlMessage(
+          GT._(
+              "There's no known template for requesting help for the Wikipedia.\n" +
+              "You can learn how to configure WikiCleaner at the following URL:"),
+          url);
+      if (Utilities.isDesktopSupported()) {
+        Utilities.browseURL(url);
+      }
+    } else {
+      new EmbeddedInWorker(wikipedia, this, wikipedia.getTemplatesForHelpRequested()).start();
+    }
   }
 
   /**
@@ -839,8 +881,15 @@ public class MainWindow
       return;
     }
     if (wikipedia.getCheckWikiProject() == null) {
-      displayWarning(
-          GT._("There's no known Check Wikipedia Project for this Wikipedia."));
+      String url = URL_OTHER_WIKIPEDIA;
+      displayUrlMessage(
+          GT._(
+              "There's no known Check Wikipedia Project for this Wikipedia.\n" +
+              "You can learn how to configure WikiCleaner at the following URL:"),
+          url);
+      if (Utilities.isDesktopSupported()) {
+        Utilities.browseURL(url);
+      }
       return;
     }
     Controller.runCheckWikiProject(getWikipedia(), textCheckWikiErrors.getText());
