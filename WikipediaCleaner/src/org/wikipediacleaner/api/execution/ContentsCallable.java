@@ -58,6 +58,11 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
   public Page call() throws APIException {
     setText(GT._("Retrieving contents") + " - " + page.getTitle());
     api.retrieveContents(getWikipedia(), page, withRedirects);
+    if (withRedirects &&
+        page.isRedirect() &&
+        (page.getRedirects().size() > 0)) {
+      api.retrieveContents(getWikipedia(), page.getRedirects().get(0), false);
+    }
     return returnPage;
   }
 

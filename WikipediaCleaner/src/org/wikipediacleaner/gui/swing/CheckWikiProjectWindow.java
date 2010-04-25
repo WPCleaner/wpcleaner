@@ -120,7 +120,7 @@ public class CheckWikiProjectWindow extends PageWindow {
   private JList listPages;
   private DefaultListModel modelPages;
 
-  private JTabbedPane contentPane;
+  JTabbedPane contentPane;
 
   public final static String ACTION_ERROR_DETAIL = "ERROR_DETAIL";
   public final static String ACTION_ERROR_LIST   = "ERROR_LIST";
@@ -1137,23 +1137,13 @@ public class CheckWikiProjectWindow extends PageWindow {
    */
   void actionSelectPage() {
     Object[] selection = listPages.getSelectedValues();
-    ArrayList<Page> pages = new ArrayList<Page>();
+    final ArrayList<Page> pages = new ArrayList<Page>();
     if (selection != null) {
       for (int i = 0; i < selection.length; i++) {
         pages.add((Page) selection[i]);
       }
     }
     if (pages.size() > 0) {
-      final ArrayList<CheckWikiContentPanel> contentPanels = new ArrayList<CheckWikiContentPanel>();
-      for (Page page : pages) {
-        final CheckWikiContentPanel contentPanel = createContentsComponents(
-            contentPane, page,
-            (CheckError) modelAllErrors.getSelectedItem());
-        contentPane.add(contentPanel);
-        contentPane.setIconAt(contentPane.getComponentCount() - 1, new CloseIcon(contentPane, contentPanel));
-        contentPane.setSelectedComponent(contentPanel);
-        contentPanels.add(contentPanel);
-      }
       RetrieveContentWorker contentWorker = new RetrieveContentWorker(getWikipedia(), this, pages);
       contentWorker.setListener(new DefaultBasicWorkerListener() {
 
@@ -1163,6 +1153,28 @@ public class CheckWikiProjectWindow extends PageWindow {
         @Override
         public void beforeFinished(BasicWorker worker) {
           super.beforeFinished(worker);
+          final ArrayList<CheckWikiContentPanel> contentPanels = new ArrayList<CheckWikiContentPanel>();
+          for (Page page : pages) {
+            while (page != null) {
+              final CheckWikiContentPanel contentPanel = createContentsComponents(
+                  contentPane, page,
+                  (CheckError) modelAllErrors.getSelectedItem());
+              contentPane.add(contentPanel);
+              contentPane.setIconAt(contentPane.getComponentCount() - 1, new CloseIcon(contentPane, contentPanel));
+              contentPane.setSelectedComponent(contentPanel);
+              contentPanels.add(contentPanel);
+              if (page.isRedirect()) {
+                ArrayList<Page> redirects = page.getRedirects();
+                if (redirects.size() > 0) {
+                  page = redirects.get(0);
+                } else {
+                  page = null;
+                }
+              } else {
+                page = null;
+              }
+            }
+          }
           for (CheckWikiContentPanel contentPanel : contentPanels) {
             contentPanel.actionPageSelected();
           }
