@@ -613,7 +613,6 @@ public class CheckWikiProjectWindow extends PageWindow {
         boolean modified = textPage.isModified();
         String contents = textPage.getText();
         CheckError.analyzeError(errorSelected, contents);
-        boolean visible = false;
         textPage.resetAttributes();
         StyledDocument document = textPage.getStyledDocument();
         if (document != null) {
@@ -636,17 +635,13 @@ public class CheckWikiProjectWindow extends PageWindow {
                   errorFound.getStartPosition(),
                   errorFound.getLength(),
                   attributes, false);
-              if (!visible) {
-                textPage.setCaretPosition(errorFound.getStartPosition());
-                textPage.moveCaretPosition(errorFound.getEndPosition());
-                visible = true;
-              }
             }
           }
         }
         listErrors.repaint();
         textPage.setModified(modified);
         updateComponentState();
+        actionFirstOccurence();
       }
     }
 
@@ -658,7 +653,9 @@ public class CheckWikiProjectWindow extends PageWindow {
         return;
       }
 
-      if (ACTION_FULL_ANALYSIS_PAGE.equals(e.getActionCommand())) {
+      if (ACTION_FIRST_OCCURENCE.equals(e.getActionCommand())) {
+        actionFirstOccurence();
+      } else if (ACTION_FULL_ANALYSIS_PAGE.equals(e.getActionCommand())) {
         Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
       } else if (ACTION_MARK_AS_FIXED.equals(e.getActionCommand())) {
         actionMarkAsFixed();
@@ -733,6 +730,14 @@ public class CheckWikiProjectWindow extends PageWindow {
       }
       actionSelectErrorType();
       markPageAsFixed(error, error.getAlgorithm().getErrorNumber(), page);
+    }
+
+    /**
+     * Select first occurence. 
+     */
+    private void actionFirstOccurence() {
+      textPage.selectFirstOccurence();
+      textPage.requestFocusInWindow();
     }
 
     /**
