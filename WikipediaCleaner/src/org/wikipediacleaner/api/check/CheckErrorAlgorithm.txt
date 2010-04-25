@@ -41,6 +41,7 @@ Replacements:
  
 ===============================================================================
 Error 009: Categories more at one line
+Status: DONE
 
 ===============================================================================
 Error 010: Square brackets not correct end
