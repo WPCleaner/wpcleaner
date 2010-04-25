@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-24 23:42+0200\n"
-"PO-Revision-Date: 2010-04-23 09:29+0000\n"
+"PO-Revision-Date: 2010-04-25 03:23+0000\n"
 "Last-Translator: A2 <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-23 18:52+0000\n"
+"X-Launchpad-Export-Date: 2010-04-25 08:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -56,7 +56,7 @@ msgid "Error unkown from WikiCleaner"
 msgstr "Erreur inconnue de WikiCleaner"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:136
-#, fuzzy, java-format
+#, java-format
 msgid "Replace with {0}"
 msgstr "Remplacer par {0}"
 
@@ -235,7 +235,8 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -339,6 +340,10 @@ msgid ""
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on {2} Wikipedia"
 msgstr ""
+"Il n’y a pas d’article pour ce type d’erreur.\n"
+"Si vous souhaitez définir un article à ajouter :\n"
+"  {0} = <page name > END\n"
+"à la page de traduction ({1}) sur Wikipédia {2}"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:243
 #, java-format
@@ -485,9 +490,8 @@ msgid "&Idea ? Bug ?"
 msgstr "&Idée ? Bug ?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:395
-#, fuzzy
 msgid "Page"
-msgstr "Pages"
+msgstr "Article"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:431
 msgid "&Random page"
@@ -495,7 +499,7 @@ msgstr "Page &aléatoire"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:446
 msgid "Projects"
-msgstr ""
+msgstr "Projets"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:464
 msgid "&Current Disambiguation List"
@@ -853,7 +857,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr ""
+"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:281
 msgid "&Page :"
@@ -1106,7 +1111,7 @@ msgstr "Une erreur inconnue s'est produite"
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
 #, java-format
 msgid "Error n°{0}"
-msgstr ""
+msgstr "Erreur n° {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:177
 msgid "Current chapter"
@@ -1253,13 +1258,6 @@ msgstr "Mise à jour du contenu de la page"
 msgid "Error 'badtoken' detected: Retrying"
 msgstr "Erreur « badtoken » détectée : nouvelle tentative"
 
-#~ msgid "Work"
-#~ msgstr "Travail"
-
-#, fuzzy
-#~ msgid "Delete it"
-#~ msgstr "Supprimer"
-
 #~ msgid "Retrieving namespaces"
 #~ msgstr "Récupération des espaces de nom"
 
@@ -1322,3 +1320,6 @@ msgstr "Erreur « badtoken » détectée : nouvelle tentative"
 
 #~ msgid "]]"
 #~ msgstr "]]"
+
+#~ msgid "Work"
+#~ msgstr "Travail"
