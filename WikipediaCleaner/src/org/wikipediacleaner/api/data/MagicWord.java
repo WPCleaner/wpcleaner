@@ -221,6 +221,35 @@ public class MagicWord implements Comparable<MagicWord> {
     return aliases;
   }
 
+  /**
+   * @param text Text to check.
+   * @return Flag indicating if the text is a possible alias.
+   */
+  public boolean isPossibleAlias(String text) {
+    return isPossibleAlias(text, ".*");
+  }
+
+  /**
+   * @param text Text to check.
+   * @param pattern Pattern acceptable for replacing $1
+   * @return Flag indicating if the text is a possible alias.
+   */
+  public boolean isPossibleAlias(String text, String pattern) {
+    if (text == null) {
+      return false;
+    }
+    for (String alias : aliases) {
+      if (alias.contains("$1")) {
+        if (text.matches(alias.replaceAll("\\$1", pattern))) {
+          return true;
+        }
+      } else if (alias.equals(text)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /* (non-Javadoc)
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
