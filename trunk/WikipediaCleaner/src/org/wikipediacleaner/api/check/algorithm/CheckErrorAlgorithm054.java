@@ -74,17 +74,31 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
         while ((currentPos >= 0) && (Character.isWhitespace(contents.charAt(currentPos)))) {
           currentPos--;
         }
-        if ((currentPos < 2) || (!contents.startsWith("<br", currentPos - 2))) {
+        if ((currentPos < 1) || (!contents.startsWith("br", currentPos - 1))) {
           found = false;
         }
         currentPos -= 2;
+        while ((currentPos >= 0) && (Character.isWhitespace(contents.charAt(currentPos)))) {
+          currentPos--;
+        }
+        if ((currentPos >= 0) && (contents.charAt(currentPos) == '/')) {
+          currentPos--;
+        }
+        if ((currentPos >= 0) && (contents.charAt(currentPos) == '<')) {
+          currentPos--;
+        } else {
+          found = false;
+        }
+        while ((currentPos >= 0) && (Character.isWhitespace(contents.charAt(currentPos)))) {
+          currentPos--;
+        }
         if (found) {
           if (errors == null) {
             return true;
           }
           result = true;
           CheckErrorResult errorResult = new CheckErrorResult(
-              getShortDescription(), currentPos, endLineIndex);
+              getShortDescription(), currentPos + 1, endLineIndex);
           errorResult.addReplacement("");
           errors.add(errorResult);
         }
