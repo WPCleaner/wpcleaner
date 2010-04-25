@@ -45,6 +45,7 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
 
     { "<===>", "⇔" },
     { "<==>" , "⇔" },
+    { "<=>"  , "⇔" },
 
     { "<===" , "⇐" },
     { "<=="  , "⇐" },
