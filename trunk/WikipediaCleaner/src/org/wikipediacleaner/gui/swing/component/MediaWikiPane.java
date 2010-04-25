@@ -347,6 +347,7 @@ public class MediaWikiPane
     StyleConstants.setBold(checkWikiOk, true);
     StyleConstants.setForeground(checkWikiOk, Color.GREEN);
     checkWikiOk.addAttribute(MediaWikiConstants.ATTRIBUTE_TYPE, MediaWikiConstants.VALUE_CHECK_WIKI_OK);
+    checkWikiOk.addAttribute(MediaWikiConstants.ATTRIBUTE_OCCURENCE, Boolean.FALSE);
 
     Style checkWikiWarning = addStyle(MediaWikiConstants.STYLE_CHECK_WIKI_WARNING, root);
     StyleConstants.setBold(checkWikiWarning, true);
@@ -550,6 +551,30 @@ public class MediaWikiPane
   }
 
   /**
+   * Select first occurence of text. 
+   */
+  public void selectFirstOccurence() {
+    StyledDocument doc = getStyledDocument();
+    int length = doc.getLength();
+    int lastEnd = Integer.MAX_VALUE;
+    for (int pos = 0; pos < length; pos = lastEnd) {
+      Element run = doc.getCharacterElement(pos);
+      lastEnd = run.getEndOffset();
+      if (pos == lastEnd) {
+        // offset + length beyond length of document, bail.
+        break;
+      }
+      MutableAttributeSet attr = (MutableAttributeSet) run.getAttributes();
+      if ((attr != null) &&
+          (attr.getAttribute(MediaWikiConstants.ATTRIBUTE_TYPE) != null) &&
+          (attr.getAttribute(MediaWikiConstants.ATTRIBUTE_OCCURENCE) != Boolean.FALSE)) {
+        select(run.getStartOffset(), run.getEndOffset());
+        return;
+      }
+    }
+  }
+
+  /**
    * Select next occurence of text. 
    */
   public void selectNextOccurence() {
@@ -565,7 +590,8 @@ public class MediaWikiPane
       }
       MutableAttributeSet attr = (MutableAttributeSet) run.getAttributes();
       if ((attr != null) &&
-          (attr.getAttribute(MediaWikiConstants.ATTRIBUTE_TYPE) != null)) {
+          (attr.getAttribute(MediaWikiConstants.ATTRIBUTE_TYPE) != null) &&
+          (attr.getAttribute(MediaWikiConstants.ATTRIBUTE_OCCURENCE) != Boolean.FALSE)) {
         select(run.getStartOffset(), run.getEndOffset());
         return;
       }
@@ -579,7 +605,8 @@ public class MediaWikiPane
       }
       MutableAttributeSet attr = (MutableAttributeSet) run.getAttributes();
       if ((attr != null) &&
-          (attr.getAttribute(MediaWikiConstants.ATTRIBUTE_TYPE) != null)) {
+          (attr.getAttribute(MediaWikiConstants.ATTRIBUTE_TYPE) != null) &&
+          (attr.getAttribute(MediaWikiConstants.ATTRIBUTE_OCCURENCE) != Boolean.FALSE)) {
         select(run.getStartOffset(), run.getEndOffset());
         return;
       }

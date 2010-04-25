@@ -301,6 +301,27 @@ public abstract class PageWindow
   }
 
   /**
+   * Create a First Occurence button.
+   * 
+   * @param listener Action listener.
+   * @param icon Flag indicating if an icon should be used.
+   * @return First Occurence button.
+   */
+  public JButton createButtonFirstOccurence(ActionListener listener, boolean icon) {
+    JButton button = null;
+    if (icon) {
+      button = Utilities.createJButton(
+          "gnome-go-first.png", EnumImageSize.NORMAL,
+          GT._("&First occurrence"), false);
+    } else {
+      button = Utilities.createJButton(GT._("&First occurrence"));
+    }
+    button.setActionCommand(ACTION_FIRST_OCCURENCE);
+    button.addActionListener(listener);
+    return button;
+  }
+
+  /**
    * Add a component for the Full Analysis button.
    * 
    * @param panel Container.
@@ -334,6 +355,27 @@ public abstract class PageWindow
   }
 
   /**
+   * Create a Last Occurence button.
+   * 
+   * @param listener Action listener.
+   * @param icon Flag indicating if an icon should be used.
+   * @return Last Occurence button.
+   */
+  public JButton createButtonLastOccurence(ActionListener listener, boolean icon) {
+    JButton button = null;
+    if (icon) {
+      button = Utilities.createJButton(
+          "gnome-go-last.png", EnumImageSize.NORMAL,
+          GT._("&Last occurrence"), false);
+    } else {
+      button = Utilities.createJButton(GT._("&Last occurrence"));
+    }
+    button.setActionCommand(ACTION_LAST_OCCURENCE);
+    button.addActionListener(listener);
+    return button;
+  }
+
+  /**
    * Create a Next Occurence button.
    * 
    * @param listener Action listener.
@@ -350,6 +392,27 @@ public abstract class PageWindow
       button = Utilities.createJButton(GT._("&Next occurrence"));
     }
     button.setActionCommand(ACTION_NEXT_OCCURENCE);
+    button.addActionListener(listener);
+    return button;
+  }
+
+  /**
+   * Create a Previous Occurence button.
+   * 
+   * @param listener Action listener.
+   * @param icon Flag indicating if an icon should be used.
+   * @return Previous Occurence button.
+   */
+  public JButton createButtonPreviousOccurence(ActionListener listener, boolean icon) {
+    JButton button = null;
+    if (icon) {
+      button = Utilities.createJButton(
+          "gnome-go-previous.png", EnumImageSize.NORMAL,
+          GT._("&Previous occurrence"), false);
+    } else {
+      button = Utilities.createJButton(GT._("&Previous occurrence"));
+    }
+    button.setActionCommand(ACTION_PREVIOUS_OCCURENCE);
     button.addActionListener(listener);
     return button;
   }
@@ -828,10 +891,13 @@ public abstract class PageWindow
   public final static String ACTION_DISAMBIGUATION_REDIR = "DISAMBIGUATION REDIR";
   public final static String ACTION_EXPAND_TEMPLATES     = "EXPAND TEMPLATES";
   public final static String ACTION_EXPAND_PREVIEW       = "EXPAND PREVIEW";
+  public final static String ACTION_FIRST_OCCURENCE      = "FIRST OCCURENCE";
   public final static String ACTION_FULL_ANALYSIS_PAGE   = "FULL ANALYSIS PAGE";
   public final static String ACTION_FULL_ANALYSIS_REDIR  = "FULL ANALYSIS REDIR";
+  public final static String ACTION_LAST_OCCURENCE       = "LAST OCCURENCE";
   public final static String ACTION_NEXT_OCCURENCE       = "NEXT OCCURENCE";
   public final static String ACTION_PREVIEW              = "PREVIEW";
+  public final static String ACTION_PREVIOUS_OCCURENCE   = "PREVIOUS OCCURENCE";
   public final static String ACTION_RELOAD               = "RELOAD";
   public final static String ACTION_SEND                 = "SEND";
   public final static String ACTION_VALIDATE             = "VALIDATE";

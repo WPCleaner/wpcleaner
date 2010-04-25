@@ -38,10 +38,11 @@ public class MediaWikiConstants {
   public final static String STYLE_REDIRECT_LINK           = "RedirectLink";
 
   // Attributes
-  public final static String ATTRIBUTE_TYPE = "MediaWikiType";
-  public final static String ATTRIBUTE_PAGE = "MediaWikiPage";
-  public final static String ATTRIBUTE_TEXT = "MediaWikiText";
-  public final static String ATTRIBUTE_INFO = "MediaWikiInfo";
+  public final static String ATTRIBUTE_TYPE      = "MediaWikiType";
+  public final static String ATTRIBUTE_PAGE      = "MediaWikiPage";
+  public final static String ATTRIBUTE_TEXT      = "MediaWikiText";
+  public final static String ATTRIBUTE_INFO      = "MediaWikiInfo";
+  public final static String ATTRIBUTE_OCCURENCE = "MediaWikiOccurence";
 
   // Attributes values
   public final static String VALUE_CHECK_WIKI_ERROR        = "CheckWikiError";
