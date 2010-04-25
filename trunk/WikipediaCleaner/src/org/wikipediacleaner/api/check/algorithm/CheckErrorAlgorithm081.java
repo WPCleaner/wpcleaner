@@ -53,6 +53,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
           currentIndex += 3;
           String name = null;
           while ((currentIndex < contents.length()) &&
+                 (contents.charAt(currentIndex) != '/') &&
                  (contents.charAt(currentIndex) != '>') &&
                  (contents.charAt(currentIndex) != '<')) {
             if (contents.startsWith(" name=", currentIndex)) {
@@ -63,6 +64,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                 int beginName = currentIndex;
                 while ((currentIndex < contents.length()) &&
                        (contents.charAt(currentIndex) != separator) &&
+                       (contents.charAt(currentIndex) != '/') &&
                        (contents.charAt(currentIndex) != '>') &&
                        (contents.charAt(currentIndex) != '<')) {
                   currentIndex++;
@@ -75,14 +77,21 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
               currentIndex++;
             }
           }
-          if (contents.charAt(currentIndex) == '>') {
+          boolean simpleTag = false;
+          if ((currentIndex < contents.length()) &&
+              (contents.charAt(currentIndex) == '/')) {
+            simpleTag = true;
+            currentIndex++;
+          }
+          if ((currentIndex < contents.length()) &&
+              (contents.charAt(currentIndex) == '>')) {
             currentIndex++;
             int beginRefIndex = currentIndex;
-            int endRefIndex = contents.indexOf("</ref>", beginRefIndex);
+            int endRefIndex = simpleTag ? beginRefIndex : contents.indexOf("</ref>", beginRefIndex);
             if (endRefIndex < 0) {
               currentIndex = contents.length();
             } else {
-              currentIndex = endRefIndex + 6;
+              currentIndex = endRefIndex + (simpleTag ? 0 : 6);
               String reference = contents.substring(beginRefIndex, endRefIndex).trim();
               if (reference.length() > 0) {
                 RefElement refElement = refs.get(reference);
