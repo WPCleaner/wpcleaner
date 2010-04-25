@@ -122,7 +122,7 @@ public class CheckErrorResult {
     if (replacement == null) {
       return;
     }
-    replacement = replacement.trim();
+    //replacement = replacement.trim();
     if (possibleReplacements == null) {
       possibleReplacements = new ArrayList<Actionnable>();
     }
