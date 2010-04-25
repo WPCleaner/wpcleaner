@@ -25,7 +25,9 @@ Replacements:
 ===============================================================================
 Error 006: DEFAULTSORT with special letters
 Status: DONE
-
+Replacements:
+ - Special letters replaced
+ 
 ===============================================================================
 Error 007: Headlines start with three "="
 Status: DONE
@@ -62,7 +64,7 @@ Replacements:
  - &lambda; - &nu; - &sigma;
  - &thinsp;
  - &le;
- - &cap; - &cup; - &isin; - &sube;
+ - &cap; - &cup; - &isin; - &sube; - &times;
  
 ===============================================================================
 Error 012: HTML List elements
