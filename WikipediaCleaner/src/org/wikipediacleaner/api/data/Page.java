@@ -753,14 +753,27 @@ public class Page implements Comparable<Page> {
     this.countOccurence = count;
   }
 
+  /**
+   * @return Page comment.
+   */
   public PageComment getComment() {
     return comment;
   }
-  
+
+  /**
+   * @param comment Page comment.
+   */
   public void setComment(PageComment comment) {
     this.comment = comment;
   }
-  
+
+  /**
+   * @return Evaluation of {{PAGENAME}}
+   */
+  public String getMagicPAGENAME() {
+    return title;
+  }
+
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */
