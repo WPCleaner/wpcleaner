@@ -68,6 +68,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
     result |= simpleTextSearch(page, contents, errors, "&sigma;", "σ");
     result |= simpleTextSearch(page, contents, errors, "&sube;", "⊆");
     result |= simpleTextSearch(page, contents, errors, "&thinsp;", " ");
+    result |= simpleTextSearch(page, contents, errors, "&times;", "×");
     return result;
   }
 }
