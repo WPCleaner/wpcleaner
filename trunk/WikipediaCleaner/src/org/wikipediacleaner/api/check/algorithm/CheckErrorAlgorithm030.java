@@ -21,10 +21,13 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.gui.swing.action.PageViewAction;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -78,6 +81,7 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
                  (contents.charAt(currentIndex) != ']')) {
             currentIndex++;
           }
+          String imageName = contents.substring(linkIndex, currentIndex);
 
           // Go to the end
           if ((currentIndex < contents.length()) &&
@@ -135,6 +139,9 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
               result = true;
               CheckErrorResult errorResult = new CheckErrorResult(
                   getShortDescription(), beginIndex, currentIndex);
+              errorResult.addPossibleAction(new SimpleAction(
+                  GT._("View image"),
+                  new PageViewAction(imageName, wikipedia, true)));
               errors.add(errorResult);
             }
           }
