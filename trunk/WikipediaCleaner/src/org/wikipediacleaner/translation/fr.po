@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-25 13:16+0200\n"
-"PO-Revision-Date: 2010-04-25 03:23+0000\n"
+"PO-Revision-Date: 2010-04-26 01:16+0000\n"
 "Last-Translator: A2 <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-25 08:36+0000\n"
+"X-Launchpad-Export-Date: 2010-04-26 18:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -235,7 +235,8 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -289,7 +290,7 @@ msgstr "Marqué comme corrigé"
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:581
 #, java-format
 msgid "The page {0} doesn't exist on Wikipedia"
-msgstr "Cette page {0} n'existe pas sur Wikipédia"
+msgstr "L’article {0} n’existe pas sur Wikipédia."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:682
 #, java-format
@@ -588,25 +589,29 @@ msgstr ""
 "Vous devez saisir un nom de page avant d'effectuer une analyse d'homonymie"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:841
-#, fuzzy
 msgid ""
 "There's no known list of disambiguation pages for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
-msgstr "Il n'ya pas de liste de pages d'homonymie sur cette Wikipédia."
+msgstr ""
+"Il n’y a pas de liste de page d’homonymie sur cette Wikipédia.\n"
+"Vous pouvez apprendre comment configurer WikiCleaner à cette adresse  :"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:864
 msgid ""
 "There's no known template for requesting help for the Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
+"Il n'y a pas de modèle connu pour demander de l’aide sur cette Wikipédia.\n"
+"Vous pouvez apprendre comment configurer WikiCleaner à cette adresse :"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:887
-#, fuzzy
 msgid ""
 "There's no known Check Wikipedia Project for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
-"Il n’y a pas de projet de correction syntaxique connu sur cette Wikipédia"
+"Il n’y a pas de projet Check Wikipedia (correction syntaxique) sur cette "
+"Wikipédia.\n"
+"Vous pouvez apprendre comment configurer WikiCleaner à cette adresse :"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:926
 msgid "Watched pages"
@@ -868,7 +873,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr ""
+"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:281
 msgid "&Page :"
@@ -880,15 +886,13 @@ msgstr "Homonymie"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
 #: org/wikipediacleaner/gui/swing/PageWindow.java:317
-#, fuzzy
 msgid "&First occurrence"
-msgstr "Occurence suiva&nte"
+msgstr "&Première occurence"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:369
 #: org/wikipediacleaner/gui/swing/PageWindow.java:371
-#, fuzzy
 msgid "&Last occurrence"
-msgstr "Occurence suiva&nte"
+msgstr "&Dernière occurence"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:390
 #: org/wikipediacleaner/gui/swing/PageWindow.java:392
@@ -897,9 +901,8 @@ msgstr "Occurence suiva&nte"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
 #: org/wikipediacleaner/gui/swing/PageWindow.java:413
-#, fuzzy
 msgid "&Previous occurrence"
-msgstr "Occurence suiva&nte"
+msgstr "&Occurence précédente"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:427
 msgid "Full analysis of redirect"
@@ -1245,7 +1248,7 @@ msgstr "Rechercher dans les modèles"
 #: org/wikipediacleaner/gui/swing/component/PageListModel.java:317
 #, java-format
 msgid "{0} links in Main Namespace / {1} total links"
-msgstr "{0} dans l''espace principal / {1} liens au total"
+msgstr "{0} dans l’espace principal / {1} lien(s) au total"
 
 #: org/wikipediacleaner/gui/swing/worker/AutomaticDisambiguationWorker.java:67
 #, java-format
