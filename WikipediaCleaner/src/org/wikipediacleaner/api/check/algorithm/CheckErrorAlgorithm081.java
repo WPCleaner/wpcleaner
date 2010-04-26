@@ -19,10 +19,16 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
+import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CompositeAction;
+import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.gui.swing.action.NoOpAction;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -45,6 +51,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     int startIndex = 0;
     boolean result = false;
     HashMap<String, RefElement> refs = new HashMap<String, RefElement>();
+    ArrayList<String> names = new ArrayList<String>();
+    ArrayList<Actionnable> existingNames = new ArrayList<Actionnable>();
     while (startIndex < contents.length()) {
       if (contents.charAt(startIndex) == '<') {
         int beginIndex = startIndex;
@@ -70,7 +78,10 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                   currentIndex++;
                 }
                 if (contents.charAt(currentIndex) == separator) {
-                  name = contents.substring(beginName, currentIndex);
+                  name = contents.substring(beginName, currentIndex).trim();
+                  if (!names.contains(name)) {
+                    names.add(name);
+                  }
                 }
               }
             } else {
@@ -110,6 +121,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                         (refElement.name == null) ?
                             CheckErrorResult.ErrorLevel.WARNING :
                             CheckErrorResult.ErrorLevel.CORRECT);
+                    refElement.errorResult.addPossibleAction(
+                        new CompositeAction(GT._("Existing references"), existingNames));
                     errors.add(refElement.errorResult);
                   }
                   CheckErrorResult errorResult = new CheckErrorResult(
@@ -117,6 +130,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                   if (refElement.name != null) {
                     errorResult.addReplacement("<ref name=\"" + refElement.name + "\"/>");
                   }
+                  errorResult.addPossibleAction(
+                      new CompositeAction(GT._("Existing references"), existingNames));
                   errors.add(errorResult);
                 }
               }
@@ -127,6 +142,10 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       } else {
         startIndex++;
       }
+    }
+    Collections.sort(names);
+    for (String name : names) {
+      existingNames.add(new SimpleAction(name, new NoOpAction()));
     }
     return result;
   }
