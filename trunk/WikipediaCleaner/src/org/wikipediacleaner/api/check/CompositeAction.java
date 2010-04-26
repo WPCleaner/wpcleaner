@@ -28,7 +28,7 @@ import javax.swing.text.Element;
 /**
  * A composite action.
  */
-class CompositeAction implements Actionnable {
+public class CompositeAction implements Actionnable {
 
   private final String name;
   private final ArrayList<Actionnable> actions;
