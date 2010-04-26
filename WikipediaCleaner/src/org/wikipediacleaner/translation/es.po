@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-25 13:16+0200\n"
+"POT-Creation-Date: 2010-04-26 20:54+0200\n"
 "PO-Revision-Date: 2010-04-23 13:21+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -61,6 +61,10 @@ msgstr "&Reemplazar con {0}"
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
 msgid "Delete"
 msgstr "Eliminar"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:143
+msgid "View image"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"

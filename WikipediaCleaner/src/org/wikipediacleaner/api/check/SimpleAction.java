@@ -28,10 +28,11 @@ import javax.swing.text.Element;
 /**
  * A simple action.
  */
-class SimpleAction implements Actionnable {
+public class SimpleAction implements Actionnable {
 
   private final String name;
   private final ActionProvider actionProvider;
+  private final Action action;
 
   /**
    * @param name Action name.
@@ -40,16 +41,27 @@ class SimpleAction implements Actionnable {
   SimpleAction(String name, ActionProvider actionProvider) {
     this.name = name;
     this.actionProvider = actionProvider;
+    this.action = null;
+  }
+
+  /**
+   * @param name Action name.
+   * @param action Action.
+   */
+  public SimpleAction(String name, Action action) {
+    this.name = name;
+    this.actionProvider = null;
+    this.action = action;
   }
 
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.Actionnable#getAction(javax.swing.text.Element, javax.swing.JTextPane)
    */
   public Action getAction(Element element, JTextPane textPane) {
-    if (actionProvider == null) {
-      return null;
+    if (actionProvider != null) {
+      return actionProvider.getAction(element, textPane);
     }
-    return actionProvider.getAction(element, textPane);
+    return action;
   }
 
   /* (non-Javadoc)
