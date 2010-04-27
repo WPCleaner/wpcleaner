@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
@@ -102,31 +101,7 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
             for (int i = args.length; (i > 0) && !descriptionFound; i--) {
               String arg = args[i - 1];
               if (arg.length() > 0) {
-                boolean magicWordFound = false;
-                if ((wikipedia.getMagicWord(MagicWord.IMG_ALT).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_BASELINE).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_BORDER).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_BOTTOM).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_CENTER).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_FRAMED).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_FRAMELESS).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_LEFT).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_LINK).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_MANUAL_THUMB).isPossibleAlias(arg, "[0-9]*")) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_MIDDLE).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_NONE).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_PAGE).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_RIGHT).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_SUB).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_SUPER).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_TEXT_BOTTOM).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_TEXT_TOP).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_THUMBNAIL).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_TOP).isPossibleAlias(arg)) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_UPRIGHT).isPossibleAlias(arg, "[0-9]*")) ||
-                    (wikipedia.getMagicWord(MagicWord.IMG_WIDTH).isPossibleAlias(arg, "[0-9]*"))) {
-                  magicWordFound = true;
-                }
+                boolean magicWordFound = wikipedia.isPossibleAliasForImgMagicWord(arg);
                 if (!magicWordFound) {
                   descriptionFound = true;
                 }
