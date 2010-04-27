@@ -773,6 +773,38 @@ public enum EnumWikipedia {
   }
 
   /**
+   * @param text Text
+   * @return Flag indicating if the text is an alias for a Image Magic Word.
+   */
+  public boolean isPossibleAliasForImgMagicWord(String text) {
+    if ((getMagicWord(MagicWord.IMG_ALT).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_BASELINE).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_BORDER).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_BOTTOM).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_CENTER).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_FRAMED).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_FRAMELESS).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_LEFT).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_LINK).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_MANUAL_THUMB).isPossibleAlias(text, "[0-9]*")) ||
+        (getMagicWord(MagicWord.IMG_MIDDLE).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_NONE).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_PAGE).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_RIGHT).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_SUB).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_SUPER).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_TEXT_BOTTOM).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_TEXT_TOP).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_THUMBNAIL).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_TOP).isPossibleAlias(text)) ||
+        (getMagicWord(MagicWord.IMG_UPRIGHT).isPossibleAlias(text, "[0-9]*")) ||
+        (getMagicWord(MagicWord.IMG_WIDTH).isPossibleAlias(text, "[0-9]*"))) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * @param magicWords Magic words.
    */
   public void setMagicWords(HashMap<String, MagicWord> magicWords) {
