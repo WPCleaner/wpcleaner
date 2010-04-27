@@ -31,7 +31,7 @@ class WikiHu {
   private final static String baseUrl = "http://hu.wikipedia.org/w/";
 
   final static String code     = "hu";
-  final static String name     = "Hungarian Wikipedia";
+  final static String name     = "Magyar Wikipédia";
 
   final static String apiUrl   = baseUrl + "api.php";
   final static String queryUrl = baseUrl + "query.php";
@@ -42,7 +42,7 @@ class WikiHu {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "";
+  final static String message  = "Egyértelműsítések javítása";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
