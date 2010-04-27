@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-26 21:27+0200\n"
-"PO-Revision-Date: 2010-04-23 13:21+0000\n"
+"PO-Revision-Date: 2010-04-26 22:15+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-23 18:52+0000\n"
+"X-Launchpad-Export-Date: 2010-04-27 21:08+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: Spanish\n"
 
@@ -53,9 +53,9 @@ msgid "Error unkown from WikiCleaner"
 msgstr "Error desconocido de  WikiCleaner"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:136
-#, fuzzy, java-format
+#, java-format
 msgid "Replace with {0}"
-msgstr "&Reemplazar con {0}"
+msgstr "Reemplazar con {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:137
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
@@ -73,7 +73,7 @@ msgstr "Chequear interwikies"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:125
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:134
 msgid "Existing references"
-msgstr ""
+msgstr "Referencias existentes"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
@@ -242,7 +242,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "En algunas proyectos de Wikipedia, podría requerir tener el permiso de bot "
 "para hacer esto."
@@ -489,9 +490,8 @@ msgid "&Idea ? Bug ?"
 msgstr "¿&Ideas?... ¿Errores?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:417
-#, fuzzy
 msgid "Page"
-msgstr "Páginas"
+msgstr "Página"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:453
 msgid "&Random page"
@@ -499,7 +499,7 @@ msgstr "&Página al azar"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:468
 msgid "Projects"
-msgstr ""
+msgstr "Proyectos"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:486
 msgid "&Current Disambiguation List"
@@ -589,11 +589,12 @@ msgstr ""
 "desambiguación"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:841
-#, fuzzy
 msgid ""
 "There's no known list of disambiguation pages for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
-msgstr "No existe una lista de páginas de desambiguación para esta Wikipedia."
+msgstr ""
+"No existe una lista de desambiguaciones para esta versión de Wikipedia.\n"
+"Aprenda como configurar WikiCleaner en la siguiente dirección URL:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:864
 msgid ""
@@ -602,11 +603,12 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:887
-#, fuzzy
 msgid ""
 "There's no known Check Wikipedia Project for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
-msgstr "No existe el proyecto Check Wikipedia para esta versión de Wikipedia."
+msgstr ""
+"No existe el proyecto Chek Wikipedia para esta versión de Wikipedia.\n"
+"Aprenda como configurar WikiCleaner en la siguiente dirección URL:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:926
 msgid "Watched pages"
@@ -881,15 +883,13 @@ msgstr "Desambiguación:"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
 #: org/wikipediacleaner/gui/swing/PageWindow.java:317
-#, fuzzy
 msgid "&First occurrence"
-msgstr "&Siguiente ocurrencia"
+msgstr "Primera coincidencia"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:369
 #: org/wikipediacleaner/gui/swing/PageWindow.java:371
-#, fuzzy
 msgid "&Last occurrence"
-msgstr "&Siguiente ocurrencia"
+msgstr "Última coincidencia"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:390
 #: org/wikipediacleaner/gui/swing/PageWindow.java:392
@@ -898,9 +898,8 @@ msgstr "&Siguiente ocurrencia"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
 #: org/wikipediacleaner/gui/swing/PageWindow.java:413
-#, fuzzy
 msgid "&Previous occurrence"
-msgstr "&Siguiente ocurrencia"
+msgstr "Coincidencia previa"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:427
 msgid "Full analysis of redirect"
@@ -1139,7 +1138,7 @@ msgstr "Ha ocurrido un error desconocido"
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
 #, java-format
 msgid "Error n°{0}"
-msgstr ""
+msgstr "Error nº{0}"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:179
 msgid "Current chapter"
@@ -1287,10 +1286,6 @@ msgstr "Error 'badtoken' detectado: Reintentando"
 
 #~ msgid "Work"
 #~ msgstr "Trabajo"
-
-#, fuzzy
-#~ msgid "Delete it"
-#~ msgstr "Eliminar"
 
 #~ msgid "Square brackets not correct end"
 #~ msgstr "Corchetes sin cerrar"
