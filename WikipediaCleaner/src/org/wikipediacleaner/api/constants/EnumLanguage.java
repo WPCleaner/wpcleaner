@@ -38,6 +38,7 @@ public enum EnumLanguage {
   FR   ("fr"   , "Français"),
   HE   ("he"   , "Hebrew"),
   HU   ("hu"   , "Hungarian"),
+  ID   ("id"   , "Indonesian"),
   IS   ("is"   , "Icelandic"),
   IT   ("it"   , "Italian"),
   KO   ("ko"   , "Korean"),
