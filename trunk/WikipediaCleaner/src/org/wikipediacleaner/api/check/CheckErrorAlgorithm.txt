@@ -59,7 +59,7 @@ Replacements:
  - &ccedil;
  - &eacute; - &ecirc; - &egrav;
  - &iacute;
- - &deg; - &hellip; - &middot; - &minus; - &sect;
+ - &deg; - &hellip; - &middot; - &minus; - &reg; - &sect;
  - &laquo; - &raquo; - &quot;
  - &larr; - &rarr;
  - &lambda; - &nu; - &sigma;
