@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-26 21:27+0200\n"
-"PO-Revision-Date: 2010-04-30 16:16+0000\n"
+"PO-Revision-Date: 2010-05-01 07:19+0000\n"
 "Last-Translator: Iwan Novirion <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-30 16:16+0000\n"
+"X-Launchpad-Export-Date: 2010-05-01 09:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
@@ -45,16 +45,16 @@ msgstr "Prioritas tidak diketahui"
 #: org/wikipediacleaner/api/check/CheckError.java:407
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
-msgstr "Kesalahan n°{0} ({1} - {2}) - {3}"
+msgstr "Galat n°{0} ({1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckError.java:414
 msgid "Error unkown from WikiCleaner"
-msgstr "Kesalahan tidak diketahui dari WikiCleaner"
+msgstr "Galat tidak diketahui dari WikiCleaner"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:136
 #, java-format
 msgid "Replace with {0}"
-msgstr "Gantikan dengan {0}"
+msgstr "Ganti dengan {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:137
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
@@ -100,7 +100,7 @@ msgstr "Alihkan"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:457
 msgid "Occurrence"
-msgstr "Peristiwa"
+msgstr "Ditemukan"
 
 #: org/wikipediacleaner/api/execution/BacklinksWRCallable.java:53
 #: org/wikipediacleaner/api/execution/LinksWRCallable.java:61
@@ -125,7 +125,7 @@ msgstr "Kembangkan templat"
 
 #: org/wikipediacleaner/api/execution/ParseTextCallable.java:55
 msgid "Parsing text"
-msgstr "Uraian text"
+msgstr "Uraian teks"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:66
 #: org/wikipediacleaner/gui/swing/MainWindow.java:385
@@ -163,22 +163,22 @@ msgstr "&Pilihan"
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:358
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:432
 msgid "Show &disambiguation pages"
-msgstr "Perlihatkan halaman &disambiguasi"
+msgstr "Tunjukan halaman &disambiguasi"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:362
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:441
 msgid "Show &missing pages"
-msgstr "Perlihatkan halaman yang &hilang"
+msgstr "Tunjukan halaman yang &hilang"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:366
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:450
 msgid "Show &redirect pages"
-msgstr "Perlihatkan &pengalihan halaman"
+msgstr "Tunjukan &pengalihan halaman"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:370
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:459
 msgid "Show &other pages"
-msgstr "Perlihatkan halaman &lain"
+msgstr "Tunjukan halaman &lain"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:375
 msgid "Count disambiguation pages"
@@ -250,8 +250,7 @@ msgstr ""
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
 msgstr ""
-"Silahkan periksa apakah anda memerlukan staus bot dengan membaca peraturan "
-"Wikipedia."
+"Periksa apakah anda perlu staus bot dengan membaca peraturan Wikipedia."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:114
 msgid "Semi-automatic disambiguation fixing"
@@ -299,7 +298,7 @@ msgstr "Artikel {0} tidak ada di Wikipedia"
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:682
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
-msgstr "Anda ingin menandai {0} sebagai sudah diperbaiki pada galat n°{1}"
+msgstr "Anda ingin tandai {0} sudah diperbaiki pada galat n°{1}"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:693
 #, java-format
@@ -324,14 +323,12 @@ msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
 msgstr ""
-"Anda telah memperbaiki galat tersebut dengan melakukan perubahan pada "
-"artikel.\n"
-"Silahkan kirim perubahan yang anda lakukan, artikel akan ditandai sudah "
-"diperbaiki."
+"Galat telah diperbaiki dengan melakukan perubahan pada artikel.\n"
+"Kirim perubahan artikel, yang akan ditandai sudah diperbaiki."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:819
 msgid "A comment is required for sending the page."
-msgstr "Diperlukan ringkasan untuk mengirim perbaikan artikel."
+msgstr "Perlu ringkasan untuk mengirim perubahan artikel."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:929
 #, java-format
@@ -346,7 +343,7 @@ msgid ""
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on {2} Wikipedia"
 msgstr ""
-"Tidak ada halaman definisi untuk jenis kesalahan ini.\n"
+"Tidak ada halaman definisi untuk jenis galat ini.\n"
 "Jika anda ingin memberikan halaman definisinya, tambahkan :\n"
 "  {0} = <nama halaman> END\n"
 "pada halaman terjemahan ({1}) di {2} Wikipedia"
@@ -405,7 +402,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:595
 msgid "You must input the initial and destination texts."
-msgstr "Anda harus memasukkan awalan dan tujuan teks."
+msgstr "Anda harus memasukkan teks awal dantujuan."
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:601
 msgid "This function will do all the replacements in all selected pages."
@@ -419,9 +416,7 @@ msgstr "Ini akan merubah banyak halaman dalam waktu singkat."
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:605
 msgid ""
 "Also, verify again the texts you have inputed before running this function."
-msgstr ""
-"Jangan lupa, memeriksa teks yang anda masukkan sebelum menjalankan fungsi "
-"ini."
+msgstr "Ingat, periksa teks yang dimasukkan sebelum menjalankan fungsi ini."
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:606
 msgid "Do you want to continue ?"
@@ -455,7 +450,7 @@ msgstr "Wikipedia lain"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:287
 msgid "Lan&guage"
-msgstr ""
+msgstr "Ba&hasa"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:294
 msgid "Other Language"
@@ -567,7 +562,7 @@ msgstr "Silahkan baca bantuan WikiCleaner pada pranala berikut ini :"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:768
 msgid "You can submit bug reports or feature requests at the following URL:"
 msgstr ""
-"Silahkan laporkan bug atau minta fungsi tambahan pada pranala berikut ini :"
+"Silahkan laporkan bug atau minta fungsi tambahan pada pranala berikut ini:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:779
 msgid ""
@@ -593,7 +588,7 @@ msgid ""
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
 "Tidak ada daftar halaman disambiguasi pada Wikipedia ini.\n"
-"Pelajari konfigurasi WikiCleaner pada pranala berikut ini :"
+"Pelajari konfigurasi WikiCleaner pada pranala berikut ini:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:864
 msgid ""
@@ -601,7 +596,7 @@ msgid ""
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
 "Tidak ada templat untuk permintaan bantuan pada Wikipedia ini.\n"
-"Pelajari konfigurasi WikiCleaner pada pranala berikut ini :"
+"Pelajari konfigurasi WikiCleaner pada pranala berikut ini:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:887
 msgid ""
@@ -609,7 +604,7 @@ msgid ""
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
 "Tidak ada ProyekWiki Cek Wikipedia pada Wikipedia ini.\n"
-"Pelajari konfigurasi WikiCleaner pada pranala berikut ini :"
+"Pelajari konfigurasi WikiCleaner pada pranala berikut ini:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:926
 msgid "Watched pages"
@@ -649,7 +644,7 @@ msgstr "&Tanda tangan"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:160
 msgid "&Force watching page"
-msgstr "&Buka halaman pantauan"
+msgstr "&Pantau halaman ini"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:202
 msgid "Article contents"
@@ -767,7 +762,7 @@ msgstr "Jumlah halaman &lain"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:504
 msgid "&Hide window when sending"
-msgstr "&Sembunyikan window ketika kirim"
+msgstr "&Sembunyikan window saat kirim"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:513
 msgid "Save last replacement used"
@@ -866,7 +861,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:311
 msgid "Enter the page title you want to add to your local watch list"
 msgstr ""
-"Ketik judul artikel yang akan anda tambahkan pada daftar pantauan lokal anda"
+"Ketik judul artikel yang akan ditambahkan pada daftar pantauan lokal anda"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
@@ -993,7 +988,7 @@ msgstr "Kirim {0}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:1088
 msgid "Would you like to add this page on your local Watch list ?"
-msgstr "Apakah akan anda tambahkan pada daftar pantauan lokal ?"
+msgstr "Tambahkan halaman ini pada daftar pantauan lokal anda ?"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:131
 #, java-format
@@ -1012,7 +1007,7 @@ msgstr "Kembangkan templat - {0}"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:222
 msgid "&Update"
-msgstr "& Perbarui"
+msgstr "&Perbarui"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:147
 #, java-format
@@ -1054,7 +1049,7 @@ msgstr "&Isi"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:384
 msgid "&Ends with"
-msgstr "&Diakhiri dengan"
+msgstr "&Akhiri dengan"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:399
 msgid "&Search for possible pages"
@@ -1130,16 +1125,16 @@ msgstr "WikiCleaner tengah berjalan..."
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:73
 #, java-format
 msgid "An error occured: {0}"
-msgstr "Sebuah kesalahan terjadi: {0}"
+msgstr "Sebuah galat ditemukan: {0}"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:74
 msgid "An unknown error occured"
-msgstr "Kesalahan tak dikenal terjadi"
+msgstr "Galat tak dikenal ditemukan"
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
 #, java-format
 msgid "Error n°{0}"
-msgstr "Kesalahan n°{0}"
+msgstr "Galat n°{0}"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:179
 msgid "Current chapter"
@@ -1250,7 +1245,7 @@ msgstr "{0} pranala dalam ruangnama Utama / {1} total pranala"
 #: org/wikipediacleaner/gui/swing/worker/AutomaticDisambiguationWorker.java:67
 #, java-format
 msgid "The following modifications have been done ({0} pages):"
-msgstr "Perubahan ini telah siap dikerjakan ({0} artikel):"
+msgstr "Perubahan ini telah selesai dikerjakan ({0} artikel):"
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:128
 msgid "Retrieving Check Wiki configuration"
@@ -1259,7 +1254,7 @@ msgstr "Kembalikan konfigurasi Cek Wiki"
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:168
 #, java-format
 msgid "Checking for errors n°{0}"
-msgstr "Periksa kesalahan n°{0}"
+msgstr "Periksa galat n°{0}"
 
 #: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:59
 msgid "Current disambiguation list"
