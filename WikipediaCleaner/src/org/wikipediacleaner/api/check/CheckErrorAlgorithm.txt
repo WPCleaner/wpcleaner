@@ -295,6 +295,7 @@ Error 066: Image description with full <small>.
 
 ===============================================================================
 Error 067: Reference after punctuation
+Status: DONE
 
 ===============================================================================
 Error 068: Link to other language
