@@ -29,6 +29,11 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 public class SpecialCharacters {
 
   /**
+   * Punctuation characters. 
+   */
+  private final static String punctuation = ".,;:!?";
+
+  /**
    * Characters authorized for every Wikipedia.
    */
   private final static String authorizedCharacters =
@@ -110,6 +115,17 @@ public class SpecialCharacters {
 
     replacements.put('Ÿ', "Y");
     replacements.put('ÿ', "y");
+  }
+
+  /**
+   * @param character Character tested.
+   * @return Flag indicating if the character is a punctuation.
+   */
+  public static boolean isPunctuation(char character) {
+    if (punctuation.indexOf(character) >= 0) {
+      return true;
+    }
+    return false;
   }
 
   /**
