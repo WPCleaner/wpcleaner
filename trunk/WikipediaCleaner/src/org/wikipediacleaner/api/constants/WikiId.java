@@ -42,17 +42,23 @@ class WikiId {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "";
+  final static String message  = "ProyekWiki disambiguasi - [[Wikipedia:ProyekWiki Disambiguasi|Mari bergabung !]]";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
 
-  final static String[] dabLinkTemplates = null;
+  final static String[] dabLinkTemplates = new String[] { "Templat:Disambig info" };
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String dabList = null;
-  final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
+  final static String dabList = "Wikipedia:ProyekWiki Disambiguasi";
+  final static TemplateMatch[] dabMatches = new TemplateMatch[] {
+    new TemplateMatch("Disambig", "1", "", false, false),
+    new TemplateMatch("Disambig info", "1", "", true, false),
+    new TemplateMatch("Disambig karya", "1", "", false, false),
+    new TemplateMatch("Disambig nama", "1", "", false, false),
+    new TemplateMatch("Disambig tempat", "1", "", false, false),
+  };
   
   final static String checkWikiProject = "Wikipedia:ProyekWiki Cek Wikipedia";
   final static String checkWikiTraduction = "Wikipedia:ProyekWiki Cek Wikipedia/Terjemahan";
