@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-26 21:27+0200\n"
-"PO-Revision-Date: 2010-04-26 22:15+0000\n"
+"PO-Revision-Date: 2010-04-30 19:38+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-27 21:08+0000\n"
+"X-Launchpad-Export-Date: 2010-05-01 09:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: Spanish\n"
 
@@ -64,7 +64,7 @@ msgstr "Eliminar"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:143
 msgid "View image"
-msgstr ""
+msgstr "Ver imagen"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
