@@ -51,7 +51,7 @@ class WikiCa {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String dabList = "Viquipèdia:Enllaços incorrectes a pàgines de desambiguació";
+  final static String[] dabList = { "Viquipèdia:Enllaços incorrectes a pàgines de desambiguació" };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
   final static String checkWikiProject = "VP:CHVP";
