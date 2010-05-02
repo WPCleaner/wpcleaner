@@ -56,7 +56,7 @@ class WikiEn {
     "Ambiguous link",
   };
 
-  final static String dabList = "Wikipedia:Disambiguation pages with links";
+  final static String[] dabList = { "Wikipedia:Disambiguation pages with links" };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
     new TemplateMatch("Ambiguous link", "1", "", false, true),
     new TemplateMatch("Dn", "1", "", false, true),

@@ -834,7 +834,7 @@ public class MainWindow
       return;
     }
     if ((wikipedia.getDisambiguationList() == null) ||
-        ("".equals(wikipedia.getDisambiguationList()))) {
+        (wikipedia.getDisambiguationList().length == 0)) {
       String url = URL_OTHER_WIKIPEDIA;
       displayUrlMessage(
           GT._(

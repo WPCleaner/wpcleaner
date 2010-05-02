@@ -51,7 +51,7 @@ class WikiPt {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String dabList = "Wikipedia:Páginas de desambiguação com links";
+  final static String[] dabList = { "Wikipedia:Páginas de desambiguação com links" };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
   final static String checkWikiProject = "WP:CHECK";

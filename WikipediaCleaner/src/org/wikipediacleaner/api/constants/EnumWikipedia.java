@@ -377,7 +377,7 @@ public enum EnumWikipedia {
   private final String[] templatesForDisambiguationLink;
   private final String[] templatesForNeedingHelp;
   private final String[] templatesForHelpRequested;
-  private final String disambiguationList;
+  private final String[] disambiguationList;
   private ArrayList<Page> disambiguationTemplates;
   private final TemplateMatch[] disambiguationMatches;
   private final String checkWikiProject;
@@ -401,7 +401,7 @@ public enum EnumWikipedia {
    * @param templatesForDisambiguationLink Template used to indicate a normal link to disambiguation page.
    * @param templatesForNeedingHelp Templates used to indicate a link needed help to fix.
    * @param templatesForHelpRequested Templates used to find pages where help is requested.
-   * @param disambiguationList Page containing the list of disambiguation pages to work on.
+   * @param disambiguationList Page(s) containing the list of disambiguation pages to work on.
    * @param templateMatches List of templates to analyze when looking for links.
    * @param checkWikiProject Project Check Wikipedia page.
    * @param checkWikiTraduction Project Check Wikipedia traduction.
@@ -420,7 +420,7 @@ public enum EnumWikipedia {
       String[] templatesForDisambiguationLink,
       String[] templatesForNeedingHelp,
       String[] templatesForHelpRequested,
-      String disambiguationList,
+      String[] disambiguationList,
       TemplateMatch[] templateMatches,
       String checkWikiProject,
       String checkWikiTraduction) {
@@ -633,9 +633,9 @@ public enum EnumWikipedia {
   }
 
   /**
-   * @return Page containing the list of disambiguation pages.
+   * @return Pages containing the list of disambiguation pages.
    */
-  public String getDisambiguationList() {
+  public String[] getDisambiguationList() {
     return disambiguationList;
   }
 

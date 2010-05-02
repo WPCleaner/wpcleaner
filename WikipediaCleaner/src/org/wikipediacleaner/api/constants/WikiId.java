@@ -51,7 +51,7 @@ class WikiId {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String dabList = "Wikipedia:ProyekWiki Disambiguasi";
+  final static String[] dabList = { "Wikipedia:ProyekWiki Disambiguasi" };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
     new TemplateMatch("Disambig", "1", "", false, false),
     new TemplateMatch("Disambig info", "1", "", true, false),

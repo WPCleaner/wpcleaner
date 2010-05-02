@@ -51,7 +51,7 @@ class WikiNl {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String dabList = "Wikipedia:Links_naar_doorverwijspagina's/data";
+  final static String[] dabList = { "Wikipedia:Links_naar_doorverwijspagina's/data" };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
   final static String checkWikiProject = "Wikipedia:CW";

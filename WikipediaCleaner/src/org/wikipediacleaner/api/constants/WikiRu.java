@@ -51,7 +51,7 @@ class WikiRu {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String dabList = "Википедия:Исправление ссылок на страницы значений";
+  final static String[] dabList = { "Википедия:Исправление ссылок на страницы значений" };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
     new TemplateMatch("Другие значения", "1", "{{PAGENAME}} (значения)", true, false),
     new TemplateMatch("Другое значение", "1", "{{PAGENAME}}", true, false),

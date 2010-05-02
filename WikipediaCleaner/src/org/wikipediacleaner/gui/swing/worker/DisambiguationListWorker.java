@@ -67,17 +67,19 @@ public class DisambiguationListWorker extends BasicWorker {
   @Override
   public Object construct() {
     try {
-      Page page = DataManager.getPage(
-          getWikipedia(), getWikipedia().getDisambiguationList(),
-          null, null);
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveAllLinks(getWikipedia(), page, null, null, true);
       ArrayList<Page> pages = new ArrayList<Page>();
-      Iterator<Page> iter = page.getLinks().iterator();
-      while (iter.hasNext()) {
-        Page link = iter.next();
-        if ((link != null) && link.isInMainNamespace()) {
-          pages.add(link);
+      for (String dabList : getWikipedia().getDisambiguationList()) {
+        Page page = DataManager.getPage(getWikipedia(), dabList, null, null);
+        mw.retrieveAllLinks(getWikipedia(), page, null, null, true);
+        Iterator<Page> iter = page.getLinks().iterator();
+        while (iter.hasNext()) {
+          Page link = iter.next();
+          if ((link != null) &&
+              (link.isInMainNamespace()) &&
+              (!pages.contains(link))) {
+            pages.add(link);
+          }
         }
       }
       mw.retrieveDisambiguationInformation(getWikipedia(), pages, null, false, true);

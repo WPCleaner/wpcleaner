@@ -51,7 +51,7 @@ class WikiIs {
   final static String[] needHelpTemplates = new String[] {};
   final static String[] helpRequestedTemplates = new String[] {};
 
-  final static String dabList = null;
+  final static String[] dabList = null;
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
   final static String checkWikiProject = "Wikipedia:WikiProject Check Wikipedia";

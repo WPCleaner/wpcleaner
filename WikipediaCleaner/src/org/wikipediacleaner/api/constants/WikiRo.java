@@ -51,7 +51,7 @@ class WikiRo {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String dabList = null;
+  final static String[] dabList = null;
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
   
   final static String checkWikiProject = "Wikipedia:WikiProject Check Wikipedia";
