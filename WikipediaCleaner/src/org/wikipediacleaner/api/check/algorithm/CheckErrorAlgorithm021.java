@@ -20,9 +20,12 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 
+import org.wikipediacleaner.api.check.CheckCategoryLinkActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -97,6 +100,11 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
               result = true;
               CheckErrorResult errorResult = new CheckErrorResult(
                   getShortDescription(), beginIndex, currentIndex);
+              errorResult.addPossibleAction(
+                  GT._("Check category"),
+                  new CheckCategoryLinkActionProvider(
+                      EnumWikipedia.EN, page.getWikipedia(),
+                      categoryName));
               if (!"Category".equals(categoryNamespace.getCanonicalTitle())) {
                 errorResult.addReplacement(
                     "[[" + categoryNamespace.getCanonicalTitle() + ":" + categoryName + "]]");

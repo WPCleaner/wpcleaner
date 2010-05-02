@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-26 21:27+0200\n"
+"POT-Creation-Date: 2010-05-02 12:33+0200\n"
 "PO-Revision-Date: 2010-05-01 07:19+0000\n"
 "Last-Translator: Iwan Novirion <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -61,7 +61,11 @@ msgstr "Ganti dengan {0}"
 msgid "Delete"
 msgstr "Hapus"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:143
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:104
+msgid "Check category"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:118
 msgid "View image"
 msgstr "Lihat gambar"
 
@@ -240,8 +244,7 @@ msgstr "Dapat melakukan perubahan pada banyak halaman dalam waktu singkat."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Pada beberapa ProyekWiki, anda memerlukan status bot guna melakukan hal ini."
 
@@ -1076,6 +1079,42 @@ msgstr "Kembalikan pranala pada templat"
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:227
 msgid "Displaying templates found"
 msgstr "Tunjukan templat yang ditemukan"
+
+#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:93
+#, java-format
+msgid "Unable to find if category {0} exists in the {1} Wikipedia."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:101
+#, fuzzy, java-format
+msgid ""
+"The category {0} exists in the {1} Wikipedia.\n"
+"Do you want to replace the category by [[{2}]] ?"
+msgstr ""
+"Artikel {0} pada {1} Wikipedia memiliki pranala bahasa pada {2} Wikipedia: "
+"{3}.\n"
+"Anda ingin mengganti pranala dengan [[{3}]] ?"
+
+#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:124
+#, fuzzy, java-format
+msgid ""
+"The category {0} in the {1} Wikipedia doesn''t have a language link to the "
+"{2} Wikipedia.\n"
+"It doesn''t exist either in the {2} Wikipedia."
+msgstr ""
+"Artikel {0} pada {1} Wikipedia tidak memiliki pranala bahasa pada {2} "
+"Wikipedia."
+
+#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:132
+#, fuzzy, java-format
+msgid ""
+"The category {0} doesn't exist in the {2} Wikipedia.\n"
+"In the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\n"
+"Do you want to replace the category by [[{3}]] ?"
+msgstr ""
+"Artikel {0} pada {1} Wikipedia memiliki pranala bahasa pada {2} Wikipedia: "
+"{3}.\n"
+"Anda ingin mengganti pranala dengan [[{3}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:73
 #, java-format

@@ -1388,6 +1388,7 @@ public class MediaWikiAPI implements API {
         XPath xpaRevision = XPath.newInstance("./@revid");
         XPath xpaTimestamp = XPath.newInstance("./@timestamp");
         page.setContents(xpaContents.valueOf(node));
+        page.setExisting(Boolean.TRUE);
         page.setRevisionId(xpaRevision.valueOf(node));
         page.setContentsTimestamp(xpaTimestamp.valueOf(node));
       }
