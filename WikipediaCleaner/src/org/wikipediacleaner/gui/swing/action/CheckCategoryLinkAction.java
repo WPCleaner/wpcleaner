@@ -129,7 +129,7 @@ public class CheckCategoryLinkAction extends TextAction {
       int answer = Utilities.displayYesNoWarning(
           textPane.getParent(),
           GT._(
-              "The category {0} doesn't exist in the {2} Wikipedia.\n" +
+              "The category {0} doesn''t exist in the {2} Wikipedia.\n" +
               "In the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\n" +
               "Do you want to replace the category by [[{3}]] ?",
               new Object[] { title, fromWikipedia.getCode(), toWikipedia.getCode(), languageLink } ));
