@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-26 21:27+0200\n"
+"POT-Creation-Date: 2010-05-02 12:33+0200\n"
 "PO-Revision-Date: 2010-03-28 13:33+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -61,7 +61,11 @@ msgstr "&החלף ב- {0}"
 msgid "Delete"
 msgstr "מחק"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:143
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:104
+msgid "Check category"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:118
 msgid "View image"
 msgstr ""
 
@@ -1054,6 +1058,34 @@ msgstr "מאחזר קישורים בתבניות"
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:227
 msgid "Displaying templates found"
 msgstr "מציג את התבניות שנמצאו"
+
+#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:93
+#, java-format
+msgid "Unable to find if category {0} exists in the {1} Wikipedia."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:101
+#, java-format
+msgid ""
+"The category {0} exists in the {1} Wikipedia.\n"
+"Do you want to replace the category by [[{2}]] ?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:124
+#, java-format
+msgid ""
+"The category {0} in the {1} Wikipedia doesn''t have a language link to the "
+"{2} Wikipedia.\n"
+"It doesn''t exist either in the {2} Wikipedia."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:132
+#, java-format
+msgid ""
+"The category {0} doesn't exist in the {2} Wikipedia.\n"
+"In the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\n"
+"Do you want to replace the category by [[{3}]] ?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:73
 #, java-format
