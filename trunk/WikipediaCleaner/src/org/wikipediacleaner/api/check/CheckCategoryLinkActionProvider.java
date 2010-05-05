@@ -34,17 +34,26 @@ public class CheckCategoryLinkActionProvider implements ActionProvider {
   private final EnumWikipedia fromWikipedia;
   private final EnumWikipedia toWikipedia;
   private final String title;
+  private final String order;
 
-  public CheckCategoryLinkActionProvider(EnumWikipedia from, EnumWikipedia to, String title) {
+  /**
+   * @param from From Wikipedia.
+   * @param to To Wikipedia.
+   * @param title Category name.
+   * @param order Sort order.
+   */
+  public CheckCategoryLinkActionProvider(
+      EnumWikipedia from, EnumWikipedia to, String title, String order) {
     this.fromWikipedia = from;
     this.toWikipedia = to;
     this.title = title;
+    this.order = order;
   }
 
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.SimpleAction#getAction(javax.swing.text.Element, javax.swing.JTextPane)
    */
   public Action getAction(Element element, JTextPane textPane) {
-    return new CheckCategoryLinkAction(fromWikipedia, toWikipedia, title, element, textPane);
+    return new CheckCategoryLinkAction(fromWikipedia, toWikipedia, title, order, element, textPane);
   }
 }

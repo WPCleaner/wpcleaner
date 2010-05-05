@@ -85,6 +85,19 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
           // Retrieve category name
           String categoryName = Page.getStringUcFirst(contents.substring(linkIndex, currentIndex).trim());
 
+          // Sort order
+          String order = null;
+          if ((currentIndex < contents.length()) &&
+              (contents.charAt(currentIndex) == '|')) {
+            currentIndex++;
+            linkIndex = currentIndex;
+            while ((currentIndex < contents.length()) &&
+                   (contents.charAt(currentIndex) != ']')) {
+              currentIndex++;
+            }
+            order = contents.substring(linkIndex, currentIndex);
+          }
+
           // Go to the end
           while ((currentIndex < contents.length()) &&
                  (!contents.startsWith("]]", currentIndex))) {
@@ -104,14 +117,17 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
                   GT._("Check category"),
                   new CheckCategoryLinkActionProvider(
                       EnumWikipedia.EN, page.getWikipedia(),
-                      categoryName));
+                      categoryName, order));
               if (!"Category".equals(categoryNamespace.getCanonicalTitle())) {
                 errorResult.addReplacement(
-                    "[[" + categoryNamespace.getCanonicalTitle() + ":" + categoryName + "]]");
+                    "[[" + categoryNamespace.getCanonicalTitle() + ":" + categoryName +
+                    ((order != null) ? "|" + order : "") + "]]");
               }
               for (String alias : categoryNamespace.getAliases()) {
                 if (!"Category".equals(alias)) {
-                  errorResult.addReplacement("[[" + alias + ":" + categoryName + "]]");
+                  errorResult.addReplacement(
+                      "[[" + alias + ":" + categoryName +
+                      ((order != null) ? "|" + order : "") + "]]");
                 }
               }
               errors.add(errorResult);
