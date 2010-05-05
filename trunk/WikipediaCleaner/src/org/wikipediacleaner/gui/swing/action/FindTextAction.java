@@ -70,7 +70,7 @@ public class FindTextAction extends TextAction {
     }
     lastSearch = currentSearch.trim();
     String textPattern =
-      "[" + Character.toUpperCase(lastSearch.charAt(0)) + Character.toLowerCase(lastSearch.charAt(1)) + "]" +
+      "[" + Character.toUpperCase(lastSearch.charAt(0)) + Character.toLowerCase(lastSearch.charAt(0)) + "]" +
      Pattern.quote(lastSearch.substring(1));
     Pattern pattern = Pattern.compile(textPattern);
     Matcher matcher = pattern.matcher(text.getText());
