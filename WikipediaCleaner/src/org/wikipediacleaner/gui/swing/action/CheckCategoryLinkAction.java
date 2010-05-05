@@ -46,6 +46,7 @@ public class CheckCategoryLinkAction extends TextAction {
   private final EnumWikipedia fromWikipedia;
   private final EnumWikipedia toWikipedia;
   private final String title;
+  private final String order;
   private final Element element;
   private final JTextPane textPane;
 
@@ -53,12 +54,14 @@ public class CheckCategoryLinkAction extends TextAction {
       EnumWikipedia fromWikipedia,
       EnumWikipedia toWikipedia,
       String title,
+      String order,
       Element element,
       JTextPane textPane) {
     super("CheckLanguageLink");
     this.fromWikipedia = fromWikipedia;
     this.toWikipedia = toWikipedia;
     this.title = title;
+    this.order = order;
     this.element = element;
     this.textPane = textPane;
   }
@@ -95,19 +98,19 @@ public class CheckCategoryLinkAction extends TextAction {
         return;
       }
       if (Boolean.TRUE.equals(category.isExisting())) {
+        String replace = categoryName + ":" + title + ((order != null) ? "|" + order : "");
         int answer = Utilities.displayYesNoWarning(
             textPane.getParent(),
             GT._(
                 "The category {0} exists in the {1} Wikipedia.\n" +
                 "Do you want to replace the category by [[{2}]] ?",
-                new Object[] { title, toWikipedia.getCode(), categoryName + ":" + title }));
+                new Object[] { title, toWikipedia.getCode(), replace }));
         if (answer == JOptionPane.YES_OPTION) {
           int startOffset = element.getStartOffset();
           int endOffset = element.getEndOffset();
           try {
-            String replace = "[[" + categoryName + ":" + title + "]]";
             textPane.getDocument().remove(startOffset, endOffset - startOffset);
-            textPane.getDocument().insertString(startOffset, replace, element.getAttributes());
+            textPane.getDocument().insertString(startOffset, "[[" + replace + "]]", element.getAttributes());
             textPane.setCaretPosition(startOffset);
             textPane.moveCaretPosition(startOffset + replace.length());
           } catch (BadLocationException e1) {
@@ -126,19 +129,20 @@ public class CheckCategoryLinkAction extends TextAction {
                 new Object[] { title, fromWikipedia.getCode(), toWikipedia.getCode() } ));
         return;
       }
+      String replace = languageLink + ((order != null) ? "|" + order : "");
       int answer = Utilities.displayYesNoWarning(
           textPane.getParent(),
           GT._(
               "The category {0} doesn''t exist in the {2} Wikipedia.\n" +
               "In the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\n" +
               "Do you want to replace the category by [[{3}]] ?",
-              new Object[] { title, fromWikipedia.getCode(), toWikipedia.getCode(), languageLink } ));
+              new Object[] { title, fromWikipedia.getCode(), toWikipedia.getCode(), replace } ));
       if (answer == JOptionPane.YES_OPTION) {
         int startOffset = element.getStartOffset();
         int endOffset = element.getEndOffset();
         try {
           textPane.getDocument().remove(startOffset, endOffset - startOffset);
-          textPane.getDocument().insertString(startOffset, "[[" + languageLink + "]]", element.getAttributes());
+          textPane.getDocument().insertString(startOffset, "[[" + replace + "]]", element.getAttributes());
           textPane.setCaretPosition(startOffset);
           textPane.moveCaretPosition(startOffset + languageLink.length() + 4);
         } catch (BadLocationException e1) {
