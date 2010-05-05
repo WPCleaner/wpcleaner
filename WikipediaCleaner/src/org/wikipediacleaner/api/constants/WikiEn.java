@@ -38,7 +38,7 @@ class WikiEn {
   final static String indexUrl = baseUrl + "index.php";
 
   final static String helpUrl  = "http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation";
-  final static String helpLink = ":en:User:NicoV/Wikipedia Cleaner/Documentation";
+  final static String helpLink = ":en:WP:CLEANER";
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
