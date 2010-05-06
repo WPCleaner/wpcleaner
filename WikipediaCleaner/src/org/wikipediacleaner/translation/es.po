@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-05-02 19:32+0200\n"
-"PO-Revision-Date: 2010-05-02 05:42+0000\n"
-"Last-Translator: Paco Molinero <paco@byasl.com>\n"
+"PO-Revision-Date: 2010-05-06 14:37+0000\n"
+"Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-05-02 08:32+0000\n"
+"X-Launchpad-Export-Date: 2010-05-06 22:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: Spanish\n"
 
@@ -64,7 +64,7 @@ msgstr "Eliminar"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:104
 msgid "Check category"
-msgstr ""
+msgstr "Comprobar categoría"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:118
 msgid "View image"
@@ -246,7 +246,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "En algunas proyectos de Wikipedia, podría requerir tener el permiso de bot "
 "para hacer esto."
@@ -1091,34 +1092,27 @@ msgid "Unable to find if category {0} exists in the {1} Wikipedia."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:101
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "The category {0} exists in the {1} Wikipedia.\n"
 "Do you want to replace the category by [[{2}]] ?"
 msgstr ""
-"La página {0} en la Wikipedia en {1} posee interwiki en la Wikipedia en {2}: "
-"{3}.\n"
-"¿Desea reemplazar el enlace con [[{3}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:124
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "The category {0} in the {1} Wikipedia doesn''t have a language link to the "
 "{2} Wikipedia.\n"
 "It doesn''t exist either in the {2} Wikipedia."
 msgstr ""
-"La página {0} en Wikipedia en {1} no tiene interwiki a la Wikipedia en {2}."
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:132
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "The category {0} doesn''t exist in the {2} Wikipedia.\n"
 "In the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\n"
 "Do you want to replace the category by [[{3}]] ?"
 msgstr ""
-"La página {0} en la Wikipedia en {1} posee interwiki en la Wikipedia en {2}: "
-"{3}.\n"
-"¿Desea reemplazar el enlace con [[{3}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:73
 #, java-format
