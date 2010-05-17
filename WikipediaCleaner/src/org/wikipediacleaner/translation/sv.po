@@ -8,44 +8,44 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-05-02 19:32+0200\n"
-"PO-Revision-Date: 2008-11-30 16:27+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"PO-Revision-Date: 2010-05-13 10:04+0000\n"
+"Last-Translator: fluff <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-08 18:40+0000\n"
+"X-Launchpad-Export-Date: 2010-05-17 18:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
 #, java-format
 msgid "Page {0}:"
-msgstr ""
+msgstr "Sida {0}:"
 
 #: org/wikipediacleaner/api/check/CheckError.java:180
 msgid "Deactivated"
-msgstr ""
+msgstr "Avaktiverad"
 
 #: org/wikipediacleaner/api/check/CheckError.java:182
 msgid "Low priority"
-msgstr ""
+msgstr "Låg prioritet"
 
 #: org/wikipediacleaner/api/check/CheckError.java:184
 msgid "Middle priority"
-msgstr ""
+msgstr "Medelprioritet"
 
 #: org/wikipediacleaner/api/check/CheckError.java:186
 msgid "Top priority"
-msgstr ""
+msgstr "Hög prioritet"
 
 #: org/wikipediacleaner/api/check/CheckError.java:188
 msgid "Priority unknown"
-msgstr ""
+msgstr "Okänd prioritet"
 
 #: org/wikipediacleaner/api/check/CheckError.java:407
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
-msgstr ""
+msgstr "Fel nr {0} ({1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckError.java:414
 msgid "Error unkown from WikiCleaner"
@@ -59,7 +59,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:137
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
 msgid "Delete"
-msgstr ""
+msgstr "Ta bort"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:104
 msgid "Check category"
@@ -243,7 +243,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
@@ -847,15 +848,13 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
 #: org/wikipediacleaner/gui/swing/PageWindow.java:317
-#, fuzzy
 msgid "&First occurrence"
-msgstr "Frekvens"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:369
 #: org/wikipediacleaner/gui/swing/PageWindow.java:371
-#, fuzzy
 msgid "&Last occurrence"
-msgstr "Frekvens"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:390
 #: org/wikipediacleaner/gui/swing/PageWindow.java:392
@@ -864,9 +863,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
 #: org/wikipediacleaner/gui/swing/PageWindow.java:413
-#, fuzzy
 msgid "&Previous occurrence"
-msgstr "Frekvens"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:427
 msgid "Full analysis of redirect"

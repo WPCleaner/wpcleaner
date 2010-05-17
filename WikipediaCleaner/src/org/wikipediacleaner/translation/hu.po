@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-05-02 19:32+0200\n"
-"PO-Revision-Date: 2009-12-28 09:53+0000\n"
-"Last-Translator: sillentdx <Unknown>\n"
+"PO-Revision-Date: 2010-05-16 07:25+0000\n"
+"Last-Translator: Krasznecz Zoltán <zoltan.krasznecz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-08 18:40+0000\n"
+"X-Launchpad-Export-Date: 2010-05-17 18:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
@@ -45,16 +45,16 @@ msgstr ""
 #: org/wikipediacleaner/api/check/CheckError.java:407
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
-msgstr ""
+msgstr "Hiba n°{0} ({1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckError.java:414
 msgid "Error unkown from WikiCleaner"
 msgstr "A WikiCleaner számára ismeretlen hiba"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:136
-#, fuzzy, java-format
+#, java-format
 msgid "Replace with {0}"
-msgstr "&Cere ezzel: {0}"
+msgstr "Felülírás ezzel  {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:137
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
@@ -63,15 +63,15 @@ msgstr "Töröl"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:104
 msgid "Check category"
-msgstr ""
+msgstr "Kategória ellenörzése"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:118
 msgid "View image"
-msgstr ""
+msgstr "Kép megtekintése"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
-msgstr ""
+msgstr "Nyelvi oldalak ellenörzése"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:125
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:134
@@ -243,7 +243,8 @@ msgstr "Rövid idő alatt sok lapot módosíthat."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
@@ -270,9 +271,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:283
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:105
-#, fuzzy
 msgid "Detail"
-msgstr "Részletek"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:290
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:111
@@ -294,7 +294,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:581
 #, java-format
 msgid "The page {0} doesn't exist on Wikipedia"
-msgstr ""
+msgstr "Az oldal {0} nem létezik a Wikipédián."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:682
 #, java-format
@@ -480,9 +480,8 @@ msgid "&Idea ? Bug ?"
 msgstr "&Ötlet ? Hiba ?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:417
-#, fuzzy
 msgid "Page"
-msgstr "Lapok"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:453
 msgid "&Random page"
@@ -865,15 +864,13 @@ msgstr "Egyértelmüsítő lap"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
 #: org/wikipediacleaner/gui/swing/PageWindow.java:317
-#, fuzzy
 msgid "&First occurrence"
-msgstr "&Következő"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:369
 #: org/wikipediacleaner/gui/swing/PageWindow.java:371
-#, fuzzy
 msgid "&Last occurrence"
-msgstr "&Következő"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:390
 #: org/wikipediacleaner/gui/swing/PageWindow.java:392
@@ -882,9 +879,8 @@ msgstr "&Következő"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
 #: org/wikipediacleaner/gui/swing/PageWindow.java:413
-#, fuzzy
 msgid "&Previous occurrence"
-msgstr "&Következő"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:427
 msgid "Full analysis of redirect"
@@ -921,7 +917,7 @@ msgstr "&Külső néző"
 #: org/wikipediacleaner/gui/swing/PageWindow.java:598
 #: org/wikipediacleaner/gui/swing/PageWindow.java:600
 msgid "&History"
-msgstr ""
+msgstr "&Előzmények"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:654
 msgid "Automatic comment"
@@ -942,9 +938,9 @@ msgid "Last modified at {0}. It was modified less than {1} minutes ago."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:789
-#, fuzzy, java-format
+#, java-format
 msgid "Last modified at {0}"
-msgstr "Utolsó módosítás idelye: "
+msgstr "Utoljára módosítva ekkor {0}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:819
 msgid "Fix &redirects"
@@ -1147,7 +1143,7 @@ msgstr "Ismeretlen hiba történt"
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
 #, java-format
 msgid "Error n°{0}"
-msgstr ""
+msgstr "Hiba n°{0}"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:179
 msgid "Current chapter"
@@ -1202,7 +1198,7 @@ msgstr "Összes hivatkozás eltávolítása"
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:671
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:682
 msgid "Mark as normal link"
-msgstr ""
+msgstr "Megjelölés normál hivatkozásként"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:673
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:715
@@ -1293,13 +1289,6 @@ msgstr "Oldal frissítése"
 msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
 
-#~ msgid "Work"
-#~ msgstr "Munka"
-
-#, fuzzy
-#~ msgid "Delete it"
-#~ msgstr "Töröl"
-
 #~ msgid "Headlines start with one \"=\""
 #~ msgstr "Egy „=”-lel kezdődő szakaszcímek"
 
@@ -1368,3 +1357,6 @@ msgstr ""
 
 #~ msgid "en dash or em dash"
 #~ msgstr "&ndash vagy &mdash a  „–” vagy  a „—” helyett"
+
+#~ msgid "Work"
+#~ msgstr "Munka"
