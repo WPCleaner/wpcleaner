@@ -42,7 +42,7 @@ class WikiRu {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "[[:ru:Wikipedia:Исправление ссылок на страницы значений|Толкование ссылок на страницу значений]]";
+  final static String message  = "[[Википедия:Толкование ссылок|Толкование ссылок на страницу значений]]";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
