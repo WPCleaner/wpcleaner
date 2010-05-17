@@ -42,7 +42,7 @@ class WikiSv {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "";
+  final static String message  = "Särskiljer länkar till förgreningssidor [[Wikipedia:Projekt länkutredning|hjälp gärna till!]]";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
