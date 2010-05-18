@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-05-02 19:32+0200\n"
-"PO-Revision-Date: 2010-05-06 14:37+0000\n"
-"Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
+"PO-Revision-Date: 2010-05-18 02:33+0000\n"
+"Last-Translator: sebikul <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-05-06 22:48+0000\n"
+"X-Launchpad-Export-Date: 2010-05-18 19:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: Spanish\n"
 
@@ -351,6 +351,10 @@ msgid ""
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on {2} Wikipedia"
 msgstr ""
+"No hay una pagina definida para este tipo de error.\n"
+"Si desea definir una pagina usted necesita agregar :\n"
+"  {0} = <nombre de página> FIN\n"
+"a la página de traducción ({1}) en {2} Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:243
 #, java-format
@@ -605,6 +609,8 @@ msgid ""
 "There's no known template for requesting help for the Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
+"No hay ninguna plantilla para solicitar ayuda para la Wikipedia.\n"
+"Puedes aprender cómo configurar WikiCleaner en la siguiente URL:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:887
 msgid ""
@@ -652,7 +658,7 @@ msgstr "&Firma"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:160
 msgid "&Force watching page"
-msgstr ""
+msgstr "&Forzar revisión de pagina"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:202
 msgid "Article contents"
@@ -786,7 +792,7 @@ msgstr "Niveles de deshacer:"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:590
 msgid "Sort orders"
-msgstr ""
+msgstr "Cambiar Orden"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:627
 msgid "Details"
@@ -1029,7 +1035,7 @@ msgstr "Reem&plazar"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:231
 msgid "Pages concerned"
-msgstr ""
+msgstr "Páginas afectadas"
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:248
 #, java-format
@@ -1089,7 +1095,7 @@ msgstr "Mostrar plantillas encontradas"
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:93
 #, java-format
 msgid "Unable to find if category {0} exists in the {1} Wikipedia."
-msgstr ""
+msgstr "Imposible encontrar si la categoria {0} existe en la {1} Wikipedia."
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:101
 #, java-format
@@ -1097,6 +1103,8 @@ msgid ""
 "The category {0} exists in the {1} Wikipedia.\n"
 "Do you want to replace the category by [[{2}]] ?"
 msgstr ""
+"La categoría {0} existe en la {1} Wikipedia.\n"
+"Desea reemplazar la categoría por [[{2}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:124
 #, java-format
@@ -1105,6 +1113,9 @@ msgid ""
 "{2} Wikipedia.\n"
 "It doesn''t exist either in the {2} Wikipedia."
 msgstr ""
+"La categoría {0} en la {1} Wikipedia no tiene un enlace de idioma a la {2} "
+"Wikipedia.\n"
+"ni tampoco existe en la {2} Wikipedia."
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:132
 #, java-format
@@ -1113,6 +1124,9 @@ msgid ""
 "In the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\n"
 "Do you want to replace the category by [[{3}]] ?"
 msgstr ""
+"La categoría {0} no existe en la {2} Wikipedia.\n"
+"En la {1} Wikipedia, tiene un enlace a la {2} Wikipedia: {3}.\n"
+"Desea reemplazar la categoría por [[{3}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:73
 #, java-format
