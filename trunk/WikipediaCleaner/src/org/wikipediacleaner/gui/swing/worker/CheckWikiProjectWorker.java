@@ -99,9 +99,15 @@ public class CheckWikiProjectWorker extends BasicWorker {
         if (posEqual > 0) {
           String name = line.substring(0, posEqual);
           line = line.substring(posEqual + 1);
-          int posEnd;
-          while ((posEnd = line.indexOf(" END")) == -1) {
-            line += "\n" + reader.readLine();
+          int posEnd = line.indexOf(" END");
+          while (posEnd == -1) {
+            String nextLine = reader.readLine();
+            if (nextLine != null) {
+              line += "\n" + nextLine;
+              posEnd = line.indexOf(" END");
+            } else {
+              posEnd = line.length();
+            }
           }
           line = line.substring(0, posEnd);
           properties.setProperty(name.trim(), line);
