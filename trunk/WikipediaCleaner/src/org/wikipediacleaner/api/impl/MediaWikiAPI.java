@@ -158,6 +158,14 @@ public class MediaWikiAPI implements API {
       }
     }
 
+    // Retrieve configuration
+    if (wikipedia.getConfiguationPage() != null) {
+      Page page = DataManager.getPage(
+          wikipedia, wikipedia.getConfiguationPage(), null, null);
+      retrieveContents(wikipedia, page, false);
+      wikipedia.initConfiguration(page.getContents());
+    }
+
     // Retrieve data
     loadSiteInfo(wikipedia);
 
