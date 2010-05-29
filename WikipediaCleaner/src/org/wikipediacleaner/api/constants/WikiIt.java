@@ -52,7 +52,9 @@ class WikiIt {
   final static String[] helpRequestedTemplates = null;
 
   final static String[] dabList = null;
-  final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
+  final static TemplateMatch[] dabMatches = new TemplateMatch[] {
+    new TemplateMatch("Nota disambigua", "1,2,3", "(omonimia) {{PAGENAME}}", true, false),
+  };
   
   final static String checkWikiProject = "Wikipedia:Check Wikipedia";
   final static String checkWikiTraduction = "Wikipedia:WikiProjekt Check Wikipedia/Translation";
