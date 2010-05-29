@@ -19,10 +19,14 @@
 package org.wikipediacleaner.api.constants;
 
 import java.awt.ComponentOrientation;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.Vector;
 
 import org.wikipediacleaner.Version;
@@ -54,6 +58,9 @@ public enum EnumWikipedia {
    * - full URL of the help page.
    * - Internal link to the help page.
    * - Component orientation.
+   * 
+   * - Internal link to the configuration page.
+   * OR
    * - "Disambiguation correction" text.
    * - Wiktionary interwiki.
    * - Wiktionary templates.
@@ -158,11 +165,10 @@ public enum EnumWikipedia {
   FR( WikiFr.code, WikiFr.name,
       WikiFr.apiUrl, WikiFr.indexUrl,
       WikiFr.helpUrl, WikiFr.helpLink, WikiFr.orientation,
-      WikiFr.message,
+      WikiFr.configuration,
       WikiFr.wikt, WikiFr.wiktMatches,
       WikiFr.dabLinkTemplates, WikiFr.needHelpTemplates, WikiFr.helpRequestedTemplates,
-      WikiFr.dabList, WikiFr.dabMatches,
-      WikiFr.checkWikiProject, WikiFr.checkWikiTraduction),
+      WikiFr.dabList, WikiFr.dabMatches),
   FY( WikiFy.code, WikiFy.name,
       WikiFy.apiUrl, WikiFy.indexUrl,
       WikiFy.helpUrl, WikiFy.helpLink, WikiFy.orientation,
@@ -371,6 +377,8 @@ public enum EnumWikipedia {
   private final String helpUrl;
   private final String helpPage;
   private final ComponentOrientation componentOrientation;
+  private final String configPage;
+  private final Properties configuration;
   private final String disambiguationText;
   private final String wiktionaryInterwiki;
   private final TemplateMatch[] wiktionaryMatches;
@@ -387,6 +395,62 @@ public enum EnumWikipedia {
   private List<Language>  languages;
   private List<Interwiki> interwikis;
   private HashMap<String, MagicWord> magicWords;
+
+  /**
+   * @param code Code.
+   * @param title Title.
+   * @param apiUrl URL of api.php.
+   * @param wikiUrl URL of the wiki.
+   * @param helpUrl URL of the help page.
+   * @param helpPage Help page.
+   * @param configPage Configuration page.
+   * @param disambiguationText Text indicating disambiguation repairing.
+   * @param wiktionaryInterwiki Interwiki link to wiktionary.
+   * @param wiktionaryMatches List of templates for wiktionary.
+   * @param templatesForDisambiguationLink Template used to indicate a normal link to disambiguation page.
+   * @param templatesForNeedingHelp Templates used to indicate a link needed help to fix.
+   * @param templatesForHelpRequested Templates used to find pages where help is requested.
+   * @param disambiguationList Page(s) containing the list of disambiguation pages to work on.
+   * @param templateMatches List of templates to analyze when looking for links.
+   * @param checkWikiProject Project Check Wikipedia page.
+   * @param checkWikiTraduction Project Check Wikipedia traduction.
+   */
+  EnumWikipedia(
+      String code,
+      String title,
+      String apiUrl,
+      String wikiUrl,
+      String helpUrl,
+      String helpPage,
+      ComponentOrientation componentOrientation,
+      String configPage,
+      String wiktionaryInterwiki,
+      TemplateMatch[] wiktionaryMatches,
+      String[] templatesForDisambiguationLink,
+      String[] templatesForNeedingHelp,
+      String[] templatesForHelpRequested,
+      String[] disambiguationList,
+      TemplateMatch[] templateMatches) {
+    this.code = code;
+    this.title = title;
+    this.apiUrl = apiUrl;
+    this.wikiUrl = wikiUrl;
+    this.helpUrl = helpUrl;
+    this.helpPage = helpPage;
+    this.configPage = configPage;
+    this.configuration = new Properties();
+    this.componentOrientation = componentOrientation;
+    this.disambiguationText = null;
+    this.wiktionaryInterwiki = wiktionaryInterwiki;
+    this.wiktionaryMatches = wiktionaryMatches;
+    this.templatesForDisambiguationLink = templatesForDisambiguationLink;
+    this.templatesForNeedingHelp = templatesForNeedingHelp;
+    this.templatesForHelpRequested = templatesForHelpRequested;
+    this.disambiguationList = disambiguationList;
+    this.disambiguationMatches = templateMatches;
+    this.checkWikiProject = null;
+    this.checkWikiTraduction = null;
+  }
 
   /**
    * @param code Code.
@@ -431,6 +495,8 @@ public enum EnumWikipedia {
     this.helpUrl = helpUrl;
     this.helpPage = helpPage;
     this.componentOrientation = componentOrientation;
+    this.configPage = null;
+    this.configuration = null;
     this.disambiguationText = disambiguationText;
     this.wiktionaryInterwiki = wiktionaryInterwiki;
     this.wiktionaryMatches = wiktionaryMatches;
@@ -525,10 +591,23 @@ public enum EnumWikipedia {
   }
 
   /**
+   * @return Configuration page.
+   */
+  public String getConfiguationPage() {
+    return configPage;
+  }
+
+  /**
    * @return Text indicating disambiguation repairing.
    */
   public String getDisambiguationString() {
-    return disambiguationText;
+    if (disambiguationText != null) {
+      return disambiguationText;
+    }
+    if (configuration != null) {
+      return configuration.getProperty("dab_comment", null);
+    }
+    return null;
   }
 
   /**
@@ -544,8 +623,8 @@ public enum EnumWikipedia {
    * @return Full comment.
    */
   public String createUpdatePageComment(String text, String details) {
-    Configuration configuration = Configuration.getConfiguration();
-    boolean comment = configuration.getBoolean(
+    Configuration config = Configuration.getConfiguration();
+    boolean comment = config.getBoolean(
         Configuration.BOOLEAN_WIKICLEANER_COMMENT,
         Configuration.DEFAULT_WIKICLEANER_COMMENT);
 
@@ -640,6 +719,58 @@ public enum EnumWikipedia {
   }
 
   /**
+   * Extract next parameter from configuration.
+   *
+   * @param properties Properties to store the next parameter.
+   * @param reader Reader for the configuration.
+   * @return Next parameter found.
+   * @throw IOException.
+   */
+  private static boolean getNextParameter(
+      Properties properties, BufferedReader reader) throws IOException {
+    String line;
+    while ((line = reader.readLine()) != null) {
+      int posEqual = line.indexOf('=');
+      if (posEqual > 0) {
+        String name = line.substring(0, posEqual);
+        line = line.substring(posEqual + 1);
+        int posEnd = line.indexOf(" END");
+        while (posEnd == -1) {
+          String nextLine = reader.readLine();
+          if (nextLine != null) {
+            line += "\n" + nextLine;
+            posEnd = line.indexOf(" END");
+          } else {
+            posEnd = line.length();
+          }
+        }
+        line = line.substring(0, posEnd);
+        properties.setProperty(name.trim(), line);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * @param config Configuration (page contents)
+   */
+  public void initConfiguration(String config) {
+    configuration.clear();
+    if (config != null) {
+      BufferedReader reader = null;
+      try {
+        reader = new BufferedReader(new StringReader(config));
+        while (getNextParameter(configuration, reader)) {
+          //
+        }
+      } catch (IOException e) {
+        //
+      }
+    }
+  }
+
+  /**
    * @param api Wikipédia API.
    */
   public void initDisambiguationTemplates(API api) {
@@ -709,14 +840,26 @@ public enum EnumWikipedia {
    * @return Check Wikipedia Project page.
    */
   public String getCheckWikiProject() {
-    return checkWikiProject;
+    if (checkWikiProject != null) {
+      return checkWikiProject;
+    }
+    if (configuration != null) {
+      return configuration.getProperty("check_wiki_project_page", null);
+    }
+    return null;
   }
 
   /**
    * @return Check Wikipedia Project traduction.
    */
   public String getCheckWikiTraduction() {
-    return checkWikiTraduction;
+    if (checkWikiTraduction != null) {
+      return checkWikiTraduction;
+    }
+    if (configuration != null) {
+      return configuration.getProperty("check_wiki_translation_page", null);
+    }
+    return null;
   }
 
   /**

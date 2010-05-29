@@ -43,7 +43,7 @@ class WikiFr {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "Correction des [[P:HOM|liens vers les pages d'homonymie]]";
+  final static String configuration = "Utilisateur:NicoV/WikiCleanerConfiguration";
 
   final static String wikt     = "wikt";
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {
@@ -89,7 +89,4 @@ class WikiFr {
     new TemplateMatch("Voir homophones", "1,2,3,4,5,6,7", "{{PAGENAME}} (homophonie)", true, false),
     new TemplateMatch("Voir paronymes", "1,2,3,4", "{{PAGENAME}} (paronymie)", true, false),
   };
-  
-  final static String checkWikiProject = "P:CS";
-  final static String checkWikiTraduction = "Projet:Correction syntaxique/Traduction";
 }
