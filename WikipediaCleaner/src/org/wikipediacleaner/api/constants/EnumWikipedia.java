@@ -76,12 +76,10 @@ public enum EnumWikipedia {
 
   AF( WikiAf.code, WikiAf.name,
       WikiAf.apiUrl, WikiAf.indexUrl,
-      WikiAf.helpUrl, WikiAf.helpLink, WikiAf.orientation,
-      WikiAf.message,
+      WikiAf.orientation, WikiAf.configuration,
       WikiAf.wikt, WikiAf.wiktMatches,
       WikiAf.dabLinkTemplates, WikiAf.needHelpTemplates, WikiAf.helpRequestedTemplates,
-      WikiAf.dabList, WikiAf.dabMatches,
-      WikiAf.checkWikiProject, WikiAf.checkWikiTraduction),
+      WikiAf.dabMatches),
   AR( WikiAr.code, WikiAr.name,
       WikiAr.apiUrl, WikiAr.indexUrl,
       WikiAr.helpUrl, WikiAr.helpLink, WikiAr.orientation,
@@ -574,7 +572,10 @@ public enum EnumWikipedia {
       return helpUrl;
     }
     if (configuration != null) {
-      return configuration.getProperty("help_url", null);
+      String tmp = configuration.getProperty("help_url", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        return tmp.trim();
+      }
     }
     return null;
   }
@@ -587,7 +588,10 @@ public enum EnumWikipedia {
       return helpPage;
     }
     if (configuration != null) {
-      return configuration.getProperty("help_page", null);
+      String tmp = configuration.getProperty("help_page", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        return tmp.trim();
+      }
     }
     return null;
   }
@@ -614,7 +618,10 @@ public enum EnumWikipedia {
       return disambiguationText;
     }
     if (configuration != null) {
-      return configuration.getProperty("dab_comment", null);
+      String tmp = configuration.getProperty("dab_comment", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        return tmp.trim();
+      }
     }
     return null;
   }
@@ -736,8 +743,8 @@ public enum EnumWikipedia {
     }
     if (configuration != null) {
       String tmp = configuration.getProperty("dab_list", null);
-      if (tmp != null) {
-        String[] results = tmp.split("\n");
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        String[] results = tmp.trim().split("\n");
         if ((results != null) && (results.length > 0)) {
           for (int i = 0; i < results.length; i++) {
             results[i] = results[i].trim();
@@ -875,7 +882,10 @@ public enum EnumWikipedia {
       return checkWikiProject;
     }
     if (configuration != null) {
-      return configuration.getProperty("check_wiki_project_page", null);
+      String tmp = configuration.getProperty("check_wiki_project_page", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        return tmp;
+      }
     }
     return null;
   }
@@ -888,7 +898,10 @@ public enum EnumWikipedia {
       return checkWikiTraduction;
     }
     if (configuration != null) {
-      return configuration.getProperty("check_wiki_translation_page", null);
+      String tmp = configuration.getProperty("check_wiki_translation_page", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        return tmp;
+      }
     }
     return null;
   }
