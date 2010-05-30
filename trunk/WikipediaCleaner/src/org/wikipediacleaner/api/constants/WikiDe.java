@@ -37,12 +37,9 @@ class WikiDe {
   final static String queryUrl = baseUrl + "query.php";
   final static String indexUrl = baseUrl + "index.php";
 
-  final static String helpUrl  = "http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation";
-  final static String helpLink = ":en:User:NicoV/Wikipedia Cleaner/Documentation";
-
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "Begriffsklärung.";
+  final static String configuration = "Utilisateur:NicoV/WikiCleanerConfiguration";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
@@ -51,12 +48,5 @@ class WikiDe {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String[] dabList = {
-    "Wikipedia:WikiProjekt Begriffsklärungsseiten/Arbeitslisten/Top-BKS",
-    "Wikipedia:WikiProjekt Begriffsklärungsseiten/Arbeitslisten/NeueVerlinkteBKS",
-  };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
-  
-  final static String checkWikiProject = "Wikipedia:WikiProject Check Wikipedia";
-  final static String checkWikiTraduction = "Wikipedia:WikiProjekt Syntaxkorrektur/Übersetzung";
 }
