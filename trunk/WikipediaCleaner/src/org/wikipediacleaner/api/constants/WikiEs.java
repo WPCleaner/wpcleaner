@@ -37,12 +37,9 @@ class WikiEs {
   final static String queryUrl = baseUrl + "query.php";
   final static String indexUrl = baseUrl + "index.php";
 
-  final static String helpUrl  = WikiEn.helpUrl;
-  final static String helpLink = WikiEn.helpLink;
-
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "Corrigiendo error, ¡[[PR:CEM|Puedes ayudar]]!";
+  final static String configuration = "Usuario:NicoV/WikiCleanerConfiguration";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
@@ -51,9 +48,5 @@ class WikiEs {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String[] dabList = { "Wikiproyecto:Corrección de errores menores/Páginas de desambiguación más enlazadas" };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
-  
-  final static String checkWikiProject = "PR:CW";
-  final static String checkWikiTraduction = "Wikiproyecto:Check Wikipedia/Translation";
 }

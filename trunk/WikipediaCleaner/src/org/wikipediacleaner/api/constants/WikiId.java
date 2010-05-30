@@ -37,12 +37,9 @@ class WikiId {
   final static String queryUrl = baseUrl + "query.php";
   final static String indexUrl = baseUrl + "index.php";
 
-  final static String helpUrl  = WikiEn.helpUrl;
-  final static String helpLink = WikiEn.helpLink;
-
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "ProyekWiki disambiguasi - [[Wikipedia:ProyekWiki Disambiguasi|Mari bergabung !]]";
+  final static String configuration = "Pengguna:NicoV/WikiCleanerConfiguration";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
@@ -51,7 +48,6 @@ class WikiId {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String[] dabList = { "Wikipedia:ProyekWiki Disambiguasi" };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
     new TemplateMatch("Disambig", "1", "", false, false),
     new TemplateMatch("Disambig info", "1", "", true, false),
@@ -59,7 +55,4 @@ class WikiId {
     new TemplateMatch("Disambig nama", "1", "", false, false),
     new TemplateMatch("Disambig tempat", "1", "", false, false),
   };
-  
-  final static String checkWikiProject = "Wikipedia:ProyekWiki Cek Wikipedia";
-  final static String checkWikiTraduction = "Wikipedia:ProyekWiki Cek Wikipedia/Terjemahan";
 }
