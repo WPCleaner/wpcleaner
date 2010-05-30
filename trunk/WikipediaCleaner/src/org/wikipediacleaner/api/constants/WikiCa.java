@@ -37,12 +37,9 @@ class WikiCa {
   final static String queryUrl = baseUrl + "query.php";
   final static String indexUrl = baseUrl + "index.php";
 
-  final static String helpUrl  = WikiEn.helpUrl;
-  final static String helpLink = WikiEn.helpLink;
-
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "Corregint enllaç a una pàgina de desambiguació";
+  final static String configuration = "Usuari:NicoV/WikiCleanerConfiguration";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
@@ -51,9 +48,5 @@ class WikiCa {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String[] dabList = { "Viquipèdia:Enllaços incorrectes a pàgines de desambiguació" };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
-  
-  final static String checkWikiProject = "VP:CHVP";
-  final static String checkWikiTraduction = "Viquipèdia:WikiProject Check Wikipedia/Translation";
 }
