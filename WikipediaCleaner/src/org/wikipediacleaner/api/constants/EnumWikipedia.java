@@ -55,12 +55,12 @@ public enum EnumWikipedia {
    * - full Wikipedia name.
    * - full URL of MediaWiki API (api.php).
    * - full URL of the wiki (index.php).
-   * - full URL of the help page.
-   * - Internal link to the help page.
    * - Component orientation.
    * 
    * - Internal link to the configuration page.
    * OR
+   * - full URL of the help page.
+   * - Internal link to the help page.
    * - "Disambiguation correction" text.
    * - Wiktionary interwiki.
    * - Wiktionary templates.
@@ -164,8 +164,7 @@ public enum EnumWikipedia {
       WikiFi.checkWikiProject, WikiFi.checkWikiTraduction),
   FR( WikiFr.code, WikiFr.name,
       WikiFr.apiUrl, WikiFr.indexUrl,
-      WikiFr.helpUrl, WikiFr.helpLink, WikiFr.orientation,
-      WikiFr.configuration,
+      WikiFr.orientation, WikiFr.configuration,
       WikiFr.wikt, WikiFr.wiktMatches,
       WikiFr.dabLinkTemplates, WikiFr.needHelpTemplates, WikiFr.helpRequestedTemplates,
       WikiFr.dabList, WikiFr.dabMatches),
@@ -401,8 +400,6 @@ public enum EnumWikipedia {
    * @param title Title.
    * @param apiUrl URL of api.php.
    * @param wikiUrl URL of the wiki.
-   * @param helpUrl URL of the help page.
-   * @param helpPage Help page.
    * @param configPage Configuration page.
    * @param disambiguationText Text indicating disambiguation repairing.
    * @param wiktionaryInterwiki Interwiki link to wiktionary.
@@ -412,16 +409,12 @@ public enum EnumWikipedia {
    * @param templatesForHelpRequested Templates used to find pages where help is requested.
    * @param disambiguationList Page(s) containing the list of disambiguation pages to work on.
    * @param templateMatches List of templates to analyze when looking for links.
-   * @param checkWikiProject Project Check Wikipedia page.
-   * @param checkWikiTraduction Project Check Wikipedia traduction.
    */
   EnumWikipedia(
       String code,
       String title,
       String apiUrl,
       String wikiUrl,
-      String helpUrl,
-      String helpPage,
       ComponentOrientation componentOrientation,
       String configPage,
       String wiktionaryInterwiki,
@@ -435,8 +428,8 @@ public enum EnumWikipedia {
     this.title = title;
     this.apiUrl = apiUrl;
     this.wikiUrl = wikiUrl;
-    this.helpUrl = helpUrl;
-    this.helpPage = helpPage;
+    this.helpUrl = null;
+    this.helpPage = null;
     this.configPage = configPage;
     this.configuration = new Properties();
     this.componentOrientation = componentOrientation;
@@ -580,7 +573,26 @@ public enum EnumWikipedia {
    * @return URL of the help page.
    */
   public String getHelpURL() {
-    return helpUrl;
+    if (helpUrl != null) {
+      return helpUrl;
+    }
+    if (configuration != null) {
+      return configuration.getProperty("help_url", null);
+    }
+    return null;
+  }
+
+  /**
+   * @return Help page.
+   */
+  public String getHelpPage() {
+    if (helpPage != null) {
+      return helpPage;
+    }
+    if (configuration != null) {
+      return configuration.getProperty("help_page", null);
+    }
+    return null;
   }
 
   /**
@@ -629,7 +641,14 @@ public enum EnumWikipedia {
         Configuration.DEFAULT_WIKICLEANER_COMMENT);
 
     if (comment) {
-      return "[[" + helpPage + "|WikiCleaner]] " + Version.VERSION +
+      String link = getHelpPage();
+      String wikiCleaner = null;
+      if ((link == null) || (link.trim().length() == 0)) {
+        wikiCleaner = "WikiCleaner ";
+      } else {
+        wikiCleaner = "[[" + link + "|WikiCleaner]] ";
+      }
+      return wikiCleaner + Version.VERSION +
              (((text != null) && (text.length() > 0)) ? " - " + text : "") +
              (((details != null) && (details.length() > 0)) ? " - " + details : "");
     }
