@@ -167,7 +167,7 @@ public enum EnumWikipedia {
       WikiFr.orientation, WikiFr.configuration,
       WikiFr.wikt, WikiFr.wiktMatches,
       WikiFr.dabLinkTemplates, WikiFr.needHelpTemplates, WikiFr.helpRequestedTemplates,
-      WikiFr.dabList, WikiFr.dabMatches),
+      WikiFr.dabMatches),
   FY( WikiFy.code, WikiFy.name,
       WikiFy.apiUrl, WikiFy.indexUrl,
       WikiFy.helpUrl, WikiFy.helpLink, WikiFy.orientation,
@@ -401,13 +401,11 @@ public enum EnumWikipedia {
    * @param apiUrl URL of api.php.
    * @param wikiUrl URL of the wiki.
    * @param configPage Configuration page.
-   * @param disambiguationText Text indicating disambiguation repairing.
    * @param wiktionaryInterwiki Interwiki link to wiktionary.
    * @param wiktionaryMatches List of templates for wiktionary.
    * @param templatesForDisambiguationLink Template used to indicate a normal link to disambiguation page.
    * @param templatesForNeedingHelp Templates used to indicate a link needed help to fix.
    * @param templatesForHelpRequested Templates used to find pages where help is requested.
-   * @param disambiguationList Page(s) containing the list of disambiguation pages to work on.
    * @param templateMatches List of templates to analyze when looking for links.
    */
   EnumWikipedia(
@@ -422,7 +420,6 @@ public enum EnumWikipedia {
       String[] templatesForDisambiguationLink,
       String[] templatesForNeedingHelp,
       String[] templatesForHelpRequested,
-      String[] disambiguationList,
       TemplateMatch[] templateMatches) {
     this.code = code;
     this.title = title;
@@ -439,7 +436,7 @@ public enum EnumWikipedia {
     this.templatesForDisambiguationLink = templatesForDisambiguationLink;
     this.templatesForNeedingHelp = templatesForNeedingHelp;
     this.templatesForHelpRequested = templatesForHelpRequested;
-    this.disambiguationList = disambiguationList;
+    this.disambiguationList = null;
     this.disambiguationMatches = templateMatches;
     this.checkWikiProject = null;
     this.checkWikiTraduction = null;
@@ -734,7 +731,22 @@ public enum EnumWikipedia {
    * @return Pages containing the list of disambiguation pages.
    */
   public String[] getDisambiguationList() {
-    return disambiguationList;
+    if (disambiguationList != null) {
+      return disambiguationList;
+    }
+    if (configuration != null) {
+      String tmp = configuration.getProperty("dab_list", null);
+      if (tmp != null) {
+        String[] results = tmp.split("\n");
+        if ((results != null) && (results.length > 0)) {
+          for (int i = 0; i < results.length; i++) {
+            results[i] = results[i].trim();
+          }
+          return results;
+        }
+      }
+    }
+    return null;
   }
 
   /**
