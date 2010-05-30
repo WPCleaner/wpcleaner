@@ -38,9 +38,6 @@ class WikiFr {
   final static String queryUrl = baseUrl + "query.php";
   final static String indexUrl = baseUrl + "index.php";
 
-  final static String helpUrl  = "http://fr.wikipedia.org/wiki/Utilisateur:NicoV/Wikipedia_Cleaner/Documentation";
-  final static String helpLink = ":fr:WP:CLEANER";
-
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
   final static String configuration = "Utilisateur:NicoV/WikiCleanerConfiguration";
