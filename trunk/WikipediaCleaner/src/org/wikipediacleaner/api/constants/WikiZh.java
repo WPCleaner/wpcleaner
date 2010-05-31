@@ -37,12 +37,9 @@ class WikiZh {
   final static String queryUrl = baseUrl + "query.php";
   final static String indexUrl = baseUrl + "index.php";
 
-  final static String helpUrl  = "http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation";
-  final static String helpLink = ":en:User:NicoV/Wikipedia Cleaner/Documentation";
-
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "修复消歧义页中的链接 - [[:zh:Wikipedia:消歧义页的链接，你可以提供帮助!]]";
+  final static String configuration = "User:NicoV/WikiCleanerConfiguration";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
@@ -51,10 +48,6 @@ class WikiZh {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String[] dabList = null;
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
   };
-  
-  final static String checkWikiProject = "Wikipedia:WPCHECK";
-  final static String checkWikiTraduction = "维基百科:错误检查专题/翻译";
 }

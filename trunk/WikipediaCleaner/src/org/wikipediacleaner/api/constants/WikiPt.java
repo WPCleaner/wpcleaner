@@ -37,12 +37,9 @@ class WikiPt {
   final static String queryUrl = baseUrl + "query.php";
   final static String indexUrl = baseUrl + "index.php";
 
-  final static String helpUrl  = WikiEn.helpUrl;
-  final static String helpLink = WikiEn.helpLink;
-
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "Corrigindo ligação para página de desambiguação - [[:pt:Wikipedia:Coordenação robótica/desambiguação|Desambiguação assistida]]";
+  final static String configuration = "Utilisateur:NicoV/WikiCleanerConfiguration";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
@@ -51,9 +48,5 @@ class WikiPt {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String[] dabList = { "Wikipedia:Páginas de desambiguação com links" };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
-  
-  final static String checkWikiProject = "WP:CHECK";
-  final static String checkWikiTraduction = "Wikipedia:Projetos/Check Wikipedia/Tradução";
 }
