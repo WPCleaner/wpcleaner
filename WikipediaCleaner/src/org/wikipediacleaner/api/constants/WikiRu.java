@@ -37,12 +37,9 @@ class WikiRu {
   final static String queryUrl = baseUrl + "query.php";
   final static String indexUrl = baseUrl + "index.php";
 
-  final static String helpUrl  = WikiEn.helpUrl;
-  final static String helpLink = WikiEn.helpLink;
-
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "[[Википедия:Толкование ссылок|Толкование ссылок на страницу значений]]";
+  final static String configuration = "Участник:NicoV/WikiCleanerConfiguration";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
@@ -51,13 +48,9 @@ class WikiRu {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String[] dabList = { "Википедия:Исправление ссылок на страницы значений" };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
     new TemplateMatch("Другие значения", "1", "{{PAGENAME}} (значения)", true, false),
     new TemplateMatch("Другое значение", "1", "{{PAGENAME}}", true, false),
     new TemplateMatch("Однофамильцы", "1", "{{PAGENAME}}", true, false)
   };
-  
-  final static String checkWikiProject = "Википедия:ССО";
-  final static String checkWikiTraduction = "Википедия:Страницы с ошибками в викитексте/Перевод";
 }

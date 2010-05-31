@@ -37,12 +37,9 @@ class WikiSv {
   final static String queryUrl = baseUrl + "query.php";
   final static String indexUrl = baseUrl + "index.php";
 
-  final static String helpUrl  = WikiEn.helpUrl;
-  final static String helpLink = WikiEn.helpLink;
-
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "Särskiljer länkar till förgreningssidor [[Wikipedia:Projekt länkutredning|hjälp gärna till!]]";
+  final static String configuration = "Användare:NicoV/WikiCleanerConfiguration";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
@@ -51,9 +48,5 @@ class WikiSv {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String[] dabList = null;
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
-  
-  final static String checkWikiProject = "Wikipedia:SF";
-  final static String checkWikiTraduction = "Wikipedia:Projekt wikifiering/Syntaxfel/Translation";
 }

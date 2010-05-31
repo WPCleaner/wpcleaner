@@ -37,12 +37,9 @@ class WikiNl {
   final static String queryUrl = baseUrl + "query.php";
   final static String indexUrl = baseUrl + "index.php";
 
-  final static String helpUrl  = WikiEn.helpUrl;
-  final static String helpLink = WikiEn.helpLink;
-
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "Link naar doorverwijspagina aangepast. [[WP:LND|Help mee!]]";
+  final static String configuration = "Gebruiker:NicoV/WikiCleanerConfiguration";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
@@ -51,9 +48,5 @@ class WikiNl {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String[] dabList = { "Wikipedia:Links_naar_doorverwijspagina's/data" };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
-  
-  final static String checkWikiProject = "Wikipedia:CW";
-  final static String checkWikiTraduction = "Wikipedia:Wikiproject/Check Wikipedia/Vertaling";
 }
