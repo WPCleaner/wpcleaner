@@ -82,12 +82,10 @@ public enum EnumWikipedia {
       WikiAf.dabMatches),
   AR( WikiAr.code, WikiAr.name,
       WikiAr.apiUrl, WikiAr.indexUrl,
-      WikiAr.helpUrl, WikiAr.helpLink, WikiAr.orientation,
-      WikiAr.message,
+      WikiAr.orientation, WikiAr.configuration,
       WikiAr.wikt, WikiAr.wiktMatches,
       WikiAr.dabLinkTemplates, WikiAr.needHelpTemplates, WikiAr.helpRequestedTemplates,
-      WikiAr.dabList, WikiAr.dabMatches,
-      WikiAr.checkWikiProject, WikiAr.checkWikiTraduction),
+      WikiAr.dabMatches),
   CA( WikiCa.code, WikiCa.name,
       WikiCa.apiUrl, WikiCa.indexUrl,
       WikiCa.orientation, WikiCa.configuration,
@@ -120,12 +118,10 @@ public enum EnumWikipedia {
       WikiDe.dabMatches),
   EN( WikiEn.code, WikiEn.name,
       WikiEn.apiUrl, WikiEn.indexUrl,
-      WikiEn.helpUrl, WikiEn.helpLink, WikiEn.orientation,
-      WikiEn.message,
+      WikiEn.orientation, WikiEn.configuration,
       WikiEn.wikt, WikiEn.wiktMatches,
       WikiEn.dabLinkTemplates, WikiEn.needHelpTemplates, WikiEn.helpRequestedTemplates,
-      WikiEn.dabList, WikiEn.dabMatches,
-      WikiEn.checkWikiProject, WikiEn.checkWikiTraduction),
+      WikiEn.dabMatches),
   EO( WikiEo.code, WikiEo.name,
       WikiEo.apiUrl, WikiEo.indexUrl,
       WikiEo.orientation, WikiEo.configuration,
@@ -164,12 +160,10 @@ public enum EnumWikipedia {
       WikiGd.dabMatches),
   HE( WikiHe.code, WikiHe.name,
       WikiHe.apiUrl, WikiHe.indexUrl,
-      WikiHe.helpUrl, WikiHe.helpLink, WikiHe.orientation,
-      WikiHe.message,
+      WikiHe.orientation, WikiHe.configuration,
       WikiHe.wikt, WikiHe.wiktMatches,
       WikiHe.dabLinkTemplates, WikiHe.needHelpTemplates, WikiHe.helpRequestedTemplates,
-      WikiHe.dabList, WikiHe.dabMatches,
-      WikiHe.checkWikiProject, WikiHe.checkWikiTraduction),
+      WikiHe.dabMatches),
   HU( WikiHu.code, WikiHu.name,
       WikiHu.apiUrl, WikiHu.indexUrl,
       WikiHu.orientation, WikiHu.configuration,
@@ -292,12 +286,10 @@ public enum EnumWikipedia {
       WikiUk.dabMatches),
   YI( WikiYi.code, WikiYi.name,
       WikiYi.apiUrl, WikiYi.indexUrl,
-      WikiYi.helpUrl, WikiYi.helpLink, WikiYi.orientation,
-      WikiYi.message,
+      WikiYi.orientation, WikiYi.configuration,
       WikiYi.wikt, WikiYi.wiktMatches,
       WikiYi.dabLinkTemplates, WikiYi.needHelpTemplates, WikiYi.helpRequestedTemplates,
-      WikiYi.dabList, WikiYi.dabMatches,
-      WikiYi.checkWikiProject, WikiYi.checkWikiTraduction),
+      WikiYi.dabMatches),
   ZH( WikiZh.code, WikiZh.name,
       WikiZh.apiUrl, WikiZh.indexUrl,
       WikiZh.orientation, WikiZh.configuration,
@@ -515,7 +507,7 @@ public enum EnumWikipedia {
         return tmp.trim();
       }
     }
-    return null;
+    return "http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation";
   }
 
   /**

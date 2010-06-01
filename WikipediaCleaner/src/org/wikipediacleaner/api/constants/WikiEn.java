@@ -37,12 +37,9 @@ class WikiEn {
   final static String queryUrl = baseUrl + "query.php";
   final static String indexUrl = baseUrl + "index.php";
 
-  final static String helpUrl  = "http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation";
-  final static String helpLink = ":en:WP:CLEANER";
-
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String message  = "Repairing link to disambiguation page - [[WP:DPL|You can help!]]";
+  final static String configuration = "User:NicoV/WikiCleanerConfiguration";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
@@ -56,13 +53,9 @@ class WikiEn {
     "Ambiguous link",
   };
 
-  final static String[] dabList = { "Wikipedia:Disambiguation pages with links" };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
     new TemplateMatch("Ambiguous link", "1", "", false, true),
     new TemplateMatch("Dn", "1", "", false, true),
     new TemplateMatch("Otherpeople2", "1", "", true, false),
   };
-  
-  final static String checkWikiProject = "Wikipedia:WCW";
-  final static String checkWikiTraduction = "Wikipedia:WikiProject Check Wikipedia/Translation";
 }

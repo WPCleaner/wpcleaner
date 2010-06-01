@@ -37,12 +37,9 @@ class WikiHe {
   final static String queryUrl = baseUrl + "query.php";
   final static String indexUrl = baseUrl + "index.php";
 
-  final static String helpUrl  = "http://he.wikipedia.org/wiki/%D7%9E%D7%A9%D7%AA%D7%9E%D7%A9:%D7%A9%D7%9E%D7%95%D7%91%D7%91%D7%94/%D7%94%D7%95%D7%A8%D7%90%D7%95%D7%AA_%D7%91%D7%A2%D7%91%D7%A8%D7%99%D7%AA";
-  final static String helpLink = "%D7%9E%D7%A9%D7%AA%D7%9E%D7%A9:%D7%A9%D7%9E%D7%95%D7%91%D7%91%D7%94/%D7%94%D7%95%D7%A8%D7%90%D7%95%D7%AA_%D7%91%D7%A2%D7%91%D7%A8%D7%99%D7%AA";
-
   final static ComponentOrientation orientation = ComponentOrientation.RIGHT_TO_LEFT;
 
-  final static String message  = "תיקון הפניה לדף פירושונים";
+  final static String configuration = "User:NicoV/WikiCleanerConfiguration";
 
   final static String wikt     = null;
   final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
@@ -51,9 +48,5 @@ class WikiHe {
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
 
-  final static String[] dabList = { "ויקיפדיה:מיזמי ויקיפדיה/מיזם דפי פירושונים" };
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
-  
-  final static String checkWikiProject = "ויקיפדיה:Check Wikipedia";
-  final static String checkWikiTraduction = "ויקיפדיה:Check Wikipedia/Translation";
 }

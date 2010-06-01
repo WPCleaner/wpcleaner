@@ -86,6 +86,7 @@ public class MainWindow
   private final static String ACTION_LOGIN           = "LOGIN";
   private final static String ACTION_LOGOUT          = "LOGOUT";
   private final static String ACTION_OPTIONS         = "OPTIONS";
+  private final static String ACTION_OPTIONS_SYSTEM  = "OPTIONS SYSTEM";
   private final static String ACTION_OTHER_LANGUAGE  = "OTHER LANGUAGE";
   private final static String ACTION_OTHER_WIKIPEDIA = "OTHER WIKIPEDIA";
   private final static String ACTION_RANDOM_PAGE     = "RANDOM PAGE";
@@ -120,6 +121,7 @@ public class MainWindow
   private JButton buttonWatchedPages;
   private JButton buttonBotTools;
   private JButton buttonOptions;
+  private JButton buttonOptionsSystem;
   private JButton buttonIdea;
   private JButton buttonAbout;
 
@@ -202,6 +204,7 @@ public class MainWindow
     buttonLogin.setEnabled(!logged);
     buttonDemo.setEnabled(!logged);
     buttonLogout.setEnabled(logged);
+    buttonOptionsSystem.setEnabled(logged);
 
     textPagename.setEnabled(logged);
     buttonFullAnalysis.setEnabled(logged);
@@ -374,10 +377,18 @@ public class MainWindow
 
     // Buttons
     buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-    buttonOptions = Utilities.createJButton(GT._("&Options"));
+    buttonOptions = Utilities.createJButton(
+        "gnome-preferences-other.png", EnumImageSize.NORMAL,
+        GT._("&Options"), false);
     buttonOptions.setActionCommand(ACTION_OPTIONS);
     buttonOptions.addActionListener(this);
     buttonPanel.add(buttonOptions);
+    buttonOptionsSystem = Utilities.createJButton(
+        "gnome-preferences-system.png", EnumImageSize.NORMAL,
+        GT._("S&ystem Options"), false);
+    buttonOptionsSystem.setActionCommand(ACTION_OPTIONS_SYSTEM);
+    buttonOptionsSystem.addActionListener(this);
+    buttonPanel.add(buttonOptionsSystem);
     buttonIdea = Utilities.createJButton(GT._("&Idea ? Bug ?"));
     buttonIdea.setActionCommand(ACTION_IDEA);
     buttonIdea.addActionListener(this);
@@ -601,6 +612,8 @@ public class MainWindow
       actionWatchedPages();
     } else if (ACTION_OPTIONS.equals(e.getActionCommand())) {
       Controller.runOptions();
+    } else if (ACTION_OPTIONS_SYSTEM.equals(e.getActionCommand())) {
+      actionOptionsSystem();
     } else if (ACTION_OTHER_LANGUAGE.equals(e.getActionCommand())) {
       actionOtherLanguage();
     } else if (ACTION_OTHER_WIKIPEDIA.equals(e.getActionCommand())) {
@@ -738,6 +751,20 @@ public class MainWindow
     updateComponentState();
   }
 
+
+  /**
+   * Action called when System Options button is pressed.
+   */
+  public void actionOptionsSystem() {
+    if (Utilities.isDesktopSupported()) {
+      EnumWikipedia wikipedia = getWikipedia();
+      Utilities.browseURL(wikipedia, wikipedia.getConfiguationPage(), true);
+    } else {
+      displayUrlMessage(
+          GT._("You can learn how to configure WikiCleaner at the following URL:"),
+          URL_OTHER_WIKIPEDIA);
+    }
+  }
   /**
    * Action called when Help button is pressed.
    */
