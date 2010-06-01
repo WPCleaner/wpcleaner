@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-05-02 19:32+0200\n"
+"POT-Creation-Date: 2010-06-01 22:17+0200\n"
 "PO-Revision-Date: 2010-05-16 07:25+0000\n"
 "Last-Translator: Krasznecz Zoltán <zoltan.krasznecz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -61,7 +61,7 @@ msgstr "Felülírás ezzel  {0}"
 msgid "Delete"
 msgstr "Töröl"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:104
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:117
 msgid "Check category"
 msgstr "Kategória ellenörzése"
 
@@ -132,7 +132,7 @@ msgid "Parsing text"
 msgstr "Szöveg feldolgozása"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:66
-#: org/wikipediacleaner/gui/swing/MainWindow.java:385
+#: org/wikipediacleaner/gui/swing/MainWindow.java:396
 msgid "About"
 msgstr "Névjegy"
 
@@ -160,7 +160,7 @@ msgid "Sort"
 msgstr "Rendezés"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:356
-#: org/wikipediacleaner/gui/swing/MainWindow.java:377
+#: org/wikipediacleaner/gui/swing/MainWindow.java:382
 msgid "&Options"
 msgstr "&Beállítások"
 
@@ -202,14 +202,14 @@ msgstr "Egyéb oldalak megszámlálása"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:413
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:397
-#: org/wikipediacleaner/gui/swing/MainWindow.java:439
+#: org/wikipediacleaner/gui/swing/MainWindow.java:450
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:184
 msgid "&Full analysis"
 msgstr "&Teljes elemzés"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:423
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:407
-#: org/wikipediacleaner/gui/swing/MainWindow.java:446
+#: org/wikipediacleaner/gui/swing/MainWindow.java:457
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:194
 msgid "&Disambiguation"
 msgstr "&Egyértelműsítő lapok"
@@ -224,7 +224,7 @@ msgid "Would you like to add these pages on your local Watch list ?"
 msgstr "Hozzá akarod adni ezeket az oldalakat a helyi Figyelsőlistádhoz?"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:74
-#: org/wikipediacleaner/gui/swing/MainWindow.java:522
+#: org/wikipediacleaner/gui/swing/MainWindow.java:533
 msgid "Bot tools"
 msgstr "Bot eszközök"
 
@@ -243,8 +243,7 @@ msgstr "Rövid idő alatt sok lapot módosíthat."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
@@ -417,101 +416,106 @@ msgstr "Bitos, hogy folytatod?"
 msgid "Informations"
 msgstr "Információk"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:146
+#: org/wikipediacleaner/gui/swing/MainWindow.java:148
 #, java-format
 msgid "Wikipedia Cleaner - Version {0} ({1})"
 msgstr "Wikipedia Cleaner - {0} ({1}) verzió"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:224
+#: org/wikipediacleaner/gui/swing/MainWindow.java:227
 msgid "Message"
 msgstr "Üzenet"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:240
-#: org/wikipediacleaner/gui/swing/MainWindow.java:979
+#: org/wikipediacleaner/gui/swing/MainWindow.java:243
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1006
 msgid "Login"
 msgstr "Bejelentkezés"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:260
+#: org/wikipediacleaner/gui/swing/MainWindow.java:263
 msgid "&Wikipedia"
 msgstr "&Wikipédia"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:267
+#: org/wikipediacleaner/gui/swing/MainWindow.java:270
 msgid "Other Wikipedia"
 msgstr "Más Wikipédia"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:287
+#: org/wikipediacleaner/gui/swing/MainWindow.java:290
 msgid "Lan&guage"
 msgstr "Nyelv"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:294
+#: org/wikipediacleaner/gui/swing/MainWindow.java:297
 msgid "Other Language"
 msgstr "Más nyelv"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:312
+#: org/wikipediacleaner/gui/swing/MainWindow.java:315
 msgid "&User name :"
 msgstr "&Felhasználónév:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:327
+#: org/wikipediacleaner/gui/swing/MainWindow.java:330
 msgid "&Password :"
 msgstr "&Jelszó:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:339
+#: org/wikipediacleaner/gui/swing/MainWindow.java:342
 msgid "&Save password"
 msgstr "&Jelszó megjegyzése"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:352
+#: org/wikipediacleaner/gui/swing/MainWindow.java:355
 msgid "&Login"
 msgstr "&Bejelentkezés"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:356
+#: org/wikipediacleaner/gui/swing/MainWindow.java:359
 msgid "&Demo"
 msgstr "&Bemutató"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:360
+#: org/wikipediacleaner/gui/swing/MainWindow.java:363
 msgid "L&ogout"
 msgstr "K&ijelentkezés"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:364
+#: org/wikipediacleaner/gui/swing/MainWindow.java:367
 msgid "&Help"
 msgstr "&Súgó"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:381
+#: org/wikipediacleaner/gui/swing/MainWindow.java:388
+#, fuzzy
+msgid "S&ystem Options"
+msgstr "&Beállítások"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:392
 msgid "&Idea ? Bug ?"
 msgstr "&Ötlet ? Hiba ?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:417
+#: org/wikipediacleaner/gui/swing/MainWindow.java:428
 msgid "Page"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:453
+#: org/wikipediacleaner/gui/swing/MainWindow.java:464
 msgid "&Random page"
 msgstr "&Lap találomra"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:468
+#: org/wikipediacleaner/gui/swing/MainWindow.java:479
 msgid "Projects"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:486
+#: org/wikipediacleaner/gui/swing/MainWindow.java:497
 msgid "&Current Disambiguation List"
 msgstr "&Jelenlegi egyértelműsítő lap lista"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:495
+#: org/wikipediacleaner/gui/swing/MainWindow.java:506
 msgid "Project check wikipedia"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:503
+#: org/wikipediacleaner/gui/swing/MainWindow.java:514
 msgid "Comma separated list of errors to work on."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:508
+#: org/wikipediacleaner/gui/swing/MainWindow.java:519
 msgid "Help requested on..."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:515
+#: org/wikipediacleaner/gui/swing/MainWindow.java:526
 msgid "Local &Watch list"
 msgstr "Helyi Figyelőlista"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:629
+#: org/wikipediacleaner/gui/swing/MainWindow.java:642
 msgid ""
 "Demo mode is only available for testing WikiCleaner.\n"
 "You won't be able to modify pages on Wikipedia in Demo mode.\n"
@@ -521,42 +525,47 @@ msgstr ""
 "A Bemutató módban nem lehet a Wikipédia lapjait módosítani.\n"
 "Folytatni akarod?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:646
+#: org/wikipediacleaner/gui/swing/MainWindow.java:659
 msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr "Ezt a hivatkozást követve új Wikipédiákat adhatsz hozzá:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:660
+#: org/wikipediacleaner/gui/swing/MainWindow.java:673
 msgid "You can learn how to add other languages at the following URL:"
 msgstr "Ezt a hivatkozást követve új nyelveket adhatsz hozzá:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:675
+#: org/wikipediacleaner/gui/swing/MainWindow.java:688
 msgid "You must select which Wikipedia you want to work on before login"
 msgstr ""
 "Mielőtt bejelentkezel ki kell választanod melyik Wikipédiában akarsz dolgozni"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:684
+#: org/wikipediacleaner/gui/swing/MainWindow.java:697
 msgid "You must select a language before login"
 msgstr "Mielőtt bejelentkezel ki kell választanod egy nyelvet"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:697
+#: org/wikipediacleaner/gui/swing/MainWindow.java:710
 msgid "You must input your user name before login"
 msgstr "A bejelentkezéshez be kell írnod a felhasználóneved"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:709
+#: org/wikipediacleaner/gui/swing/MainWindow.java:722
 msgid "You must input your password before login"
 msgstr "A bejelentkezéshez be kell írnod a jelszavad"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:754
+#: org/wikipediacleaner/gui/swing/MainWindow.java:764
+#, fuzzy
+msgid "You can learn how to configure WikiCleaner at the following URL:"
+msgstr "Ezt a hivatkozást követve új Wikipédiákat adhatsz hozzá:"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:781
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
 msgstr "Ezt a hivatkozást követve elérheted a Wikipedia Cleaner súgóját:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:768
+#: org/wikipediacleaner/gui/swing/MainWindow.java:795
 msgid "You can submit bug reports or feature requests at the following URL:"
 msgstr ""
 "A hibákat jelentését vagy az új funkciók javasolását a következő oldalon "
 "teheted meg:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:779
+#: org/wikipediacleaner/gui/swing/MainWindow.java:806
 msgid ""
 "The password will be saved on your disk, so anyone having access to your "
 "computer may be able to get it.\n"
@@ -566,38 +575,38 @@ msgstr ""
 "számítógépedhez megtudhatja.\n"
 "Biztos, hogy el akarod menteni?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:796
+#: org/wikipediacleaner/gui/swing/MainWindow.java:823
 msgid "You must input a page name for running a full analysis"
 msgstr "Tejles elemzés előtt be kell írnod a lap nevét"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:816
+#: org/wikipediacleaner/gui/swing/MainWindow.java:843
 msgid "You must input a page name for running a disambiguation analysis"
 msgstr ""
 "Be kell írnod az oldal nevén amin ellenőrizni akarod a egyértelműsítő lapok"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:841
+#: org/wikipediacleaner/gui/swing/MainWindow.java:868
 msgid ""
 "There's no known list of disambiguation pages for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:864
+#: org/wikipediacleaner/gui/swing/MainWindow.java:891
 msgid ""
 "There's no known template for requesting help for the Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:887
+#: org/wikipediacleaner/gui/swing/MainWindow.java:914
 msgid ""
 "There's no known Check Wikipedia Project for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:926
+#: org/wikipediacleaner/gui/swing/MainWindow.java:953
 msgid "Watched pages"
 msgstr "Figyelt lapok"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:977
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1004
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:67
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:69
@@ -607,7 +616,7 @@ msgstr "Figyelt lapok"
 msgid "Retrieving MediaWiki API"
 msgstr "MediaWiki API letöltése"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:999
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1026
 msgid "Retrieving disambiguation templates"
 msgstr "Egyértelműsítő lapok sablonjainak letöltése"
 
@@ -1063,19 +1072,19 @@ msgstr ""
 msgid "Displaying templates found"
 msgstr "Talált sablonok mutatása"
 
-#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:93
+#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:96
 #, java-format
 msgid "Unable to find if category {0} exists in the {1} Wikipedia."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:101
+#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:105
 #, java-format
 msgid ""
 "The category {0} exists in the {1} Wikipedia.\n"
 "Do you want to replace the category by [[{2}]] ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:124
+#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:127
 #, java-format
 msgid ""
 "The category {0} in the {1} Wikipedia doesn''t have a language link to the "
@@ -1083,7 +1092,7 @@ msgid ""
 "It doesn''t exist either in the {2} Wikipedia."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:132
+#: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:136
 #, java-format
 msgid ""
 "The category {0} doesn''t exist in the {2} Wikipedia.\n"
@@ -1256,11 +1265,11 @@ msgstr ""
 msgid "The following modifications have been done ({0} pages):"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:128
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:134
 msgid "Retrieving Check Wiki configuration"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:168
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:174
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr ""

@@ -29,12 +29,12 @@ import java.util.GregorianCalendar;
 public final class Version {
 
   public final static String VERSION = "0.99";
-  public final static Date   DATE = new GregorianCalendar(2010, Calendar.MARCH, 2).getTime();
+  public final static Date   DATE = new GregorianCalendar(2010, Calendar.JUNE, 1).getTime();
 
   public final static String MESSAGE =
     "<html>" +
     "I hope you'll like WikiCleaner.<br><br>" +
-    "I have added a fix for the problem with 'bad token': a new token is requested and the update is done again.<br>" +
+    "!NEW! - WikiCleaner configuration is now available online, check the System configuration.<br>" +
     "Many new features added for the Check Wiki project : try them !<br><br>" +
     "Please, report any other problem you find to me." +
     "</html>";
