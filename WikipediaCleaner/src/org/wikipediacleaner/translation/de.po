@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-01 22:17+0200\n"
-"PO-Revision-Date: 2009-11-16 21:23+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"PO-Revision-Date: 2010-06-03 18:03+0000\n"
+"Last-Translator: Eduard Gotwig <eduardgotwig@gmail.com>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-08 18:40+0000\n"
+"X-Launchpad-Export-Date: 2010-06-03 18:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
@@ -54,7 +54,7 @@ msgstr "Unbekannter Fehler von WikiCleaner"
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:136
 #, java-format
 msgid "Replace with {0}"
-msgstr ""
+msgstr "Ersetze mit {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:137
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
@@ -63,15 +63,15 @@ msgstr "Löschen"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:117
 msgid "Check category"
-msgstr ""
+msgstr "Überprüfe Kategorie"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:118
 msgid "View image"
-msgstr ""
+msgstr "Betrachte Bild"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
-msgstr ""
+msgstr "Überprüfe Sprachverknüpfungen"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:125
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:134
@@ -244,7 +244,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
@@ -271,9 +272,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:283
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:105
-#, fuzzy
 msgid "Detail"
-msgstr "Details"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:290
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:111
@@ -473,18 +473,16 @@ msgid "&Help"
 msgstr "&Hilfe"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:388
-#, fuzzy
 msgid "S&ystem Options"
-msgstr "&Einstellungen"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:392
 msgid "&Idea ? Bug ?"
 msgstr "&Idee ? Fehler ?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:428
-#, fuzzy
 msgid "Page"
-msgstr "Seiten"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:464
 msgid "&Random page"
@@ -859,15 +857,13 @@ msgstr "Begriffsklärung"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
 #: org/wikipediacleaner/gui/swing/PageWindow.java:317
-#, fuzzy
 msgid "&First occurrence"
-msgstr "&Nächstes Auftreten"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:369
 #: org/wikipediacleaner/gui/swing/PageWindow.java:371
-#, fuzzy
 msgid "&Last occurrence"
-msgstr "&Nächstes Auftreten"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:390
 #: org/wikipediacleaner/gui/swing/PageWindow.java:392
@@ -876,9 +872,8 @@ msgstr "&Nächstes Auftreten"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
 #: org/wikipediacleaner/gui/swing/PageWindow.java:413
-#, fuzzy
 msgid "&Previous occurrence"
-msgstr "&Nächstes Auftreten"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:427
 msgid "Full analysis of redirect"
@@ -972,7 +967,8 @@ msgstr "Sende {0}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:1088
 msgid "Would you like to add this page on your local Watch list ?"
-msgstr "Möchten Sie diese Seite zu Ihrer lokalen Beobachtungsliste hinzufügen?"
+msgstr ""
+"Möchten Sie diese Seite zu Ihrer lokalen Beobachtungsliste hinzufügen?"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:131
 #, java-format
@@ -1287,13 +1283,6 @@ msgstr ""
 msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
 
-#~ msgid "Work"
-#~ msgstr "Arbeit"
-
-#, fuzzy
-#~ msgid "Delete it"
-#~ msgstr "Löschen"
-
 #~ msgid "Square brackets not correct end"
 #~ msgstr "Anzahl schließender eckiger Klammern nicht korrekt"
 
@@ -1332,6 +1321,9 @@ msgstr ""
 
 #~ msgid "Selected page"
 #~ msgstr "Gewählte Seite"
+
+#~ msgid "Work"
+#~ msgstr "Arbeit"
 
 #~ msgid "HTML text style element <b>"
 #~ msgstr "HTML-Text-Stil-Element <b>"
