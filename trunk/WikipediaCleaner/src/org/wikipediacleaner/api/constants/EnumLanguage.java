@@ -34,6 +34,7 @@ public enum EnumLanguage {
   DA   ("da"   , "Danish"),
   DE   ("de"   , "German"),
   EN   ("en"   , "English"),
+  EO   ("eo"   , "Esperanto"),
   ES   ("es"   , "Spanish"),
   FR   ("fr"   , "Français"),
   HE   ("he"   , "Hebrew"),
