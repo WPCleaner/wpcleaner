@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-01 22:17+0200\n"
-"PO-Revision-Date: 2010-06-03 18:03+0000\n"
+"PO-Revision-Date: 2010-06-03 20:51+0000\n"
 "Last-Translator: Eduard Gotwig <eduardgotwig@gmail.com>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-06-03 18:44+0000\n"
+"X-Launchpad-Export-Date: 2010-06-04 22:08+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
@@ -24,28 +24,28 @@ msgstr "Seite {0}:"
 
 #: org/wikipediacleaner/api/check/CheckError.java:180
 msgid "Deactivated"
-msgstr ""
+msgstr "Deaktiviert"
 
 #: org/wikipediacleaner/api/check/CheckError.java:182
 msgid "Low priority"
-msgstr ""
+msgstr "Niedrige Priorität"
 
 #: org/wikipediacleaner/api/check/CheckError.java:184
 msgid "Middle priority"
-msgstr ""
+msgstr "Mittlere Priorität"
 
 #: org/wikipediacleaner/api/check/CheckError.java:186
 msgid "Top priority"
-msgstr ""
+msgstr "Hohe Priorität"
 
 #: org/wikipediacleaner/api/check/CheckError.java:188
 msgid "Priority unknown"
-msgstr ""
+msgstr "Unbekannte Priorität"
 
 #: org/wikipediacleaner/api/check/CheckError.java:407
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
-msgstr ""
+msgstr "Fehler n°{0} ({1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckError.java:414
 msgid "Error unkown from WikiCleaner"
@@ -186,7 +186,7 @@ msgstr "&other-Seiten anzeigen"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:375
 msgid "Count disambiguation pages"
-msgstr ""
+msgstr "Begriffsklärungseiten zählen"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:379
 msgid "Count missing pages"
@@ -212,7 +212,7 @@ msgstr "&Komplette Analyse"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:457
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:194
 msgid "&Disambiguation"
-msgstr ""
+msgstr "&Begriffserklärung"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:432
 #: org/wikipediacleaner/gui/swing/PageWindow.java:626
@@ -240,23 +240,26 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:101
 msgid "They may modify a lot of pages in a short period of time."
-msgstr ""
+msgstr "Sie können viele Seiten in einer kurzen Zeitspanne ändern."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
 msgid ""
 "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
+"Bei einigen Wikipedia-Projekten benötigen Sie den Bot-Status um dies zu tun."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:604
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
 msgstr ""
+"Bitte überprüfen Sie, ob Sie den Bot-Status benötigen, indem Sie die "
+"Richtlinen von Wikipedia durchlesen."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:114
 msgid "Semi-automatic disambiguation fixing"
-msgstr ""
+msgstr "Teilautomatische Korrigierung der Begriffsklärung"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:170
 msgid "Check Wikipedia"
@@ -264,7 +267,7 @@ msgstr "Bei Wikipedia nachprüfen"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:256
 msgid "List of errors detected :"
-msgstr ""
+msgstr "Liste der entdeckten Fehler :"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:277
 msgid "Reload error"
@@ -295,7 +298,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:581
 #, java-format
 msgid "The page {0} doesn't exist on Wikipedia"
-msgstr ""
+msgstr "Die Seite {0} existiert nicht auf Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:682
 #, java-format
@@ -350,11 +353,11 @@ msgstr "Sie haben {0} Seiten ausgewählt."
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:150
 #, java-format
 msgid "Disambiguation - {0}"
-msgstr ""
+msgstr "Begriffsklärung - {0}"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:272
 msgid "Automatic disambiguation fixing"
-msgstr ""
+msgstr "Automatische Korrigierung der Begriffsklärung"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:292
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:609
@@ -408,7 +411,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:606
 msgid "Do you want to continue ?"
-msgstr ""
+msgstr "Wollen Sie fortfahren?"
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:104
 msgid "Informations"
@@ -434,7 +437,7 @@ msgstr "&Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:270
 msgid "Other Wikipedia"
-msgstr ""
+msgstr "Andere Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:290
 msgid "Lan&guage"
@@ -486,7 +489,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:464
 msgid "&Random page"
-msgstr ""
+msgstr "&Zufälliger Artikel"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:479
 msgid "Projects"
@@ -494,7 +497,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:497
 msgid "&Current Disambiguation List"
-msgstr ""
+msgstr "&Aktuelle Begriffsklärungs-Liste"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:506
 msgid "Project check wikipedia"
@@ -518,6 +521,9 @@ msgid ""
 "You won't be able to modify pages on Wikipedia in Demo mode.\n"
 "Do you want to continue ?"
 msgstr ""
+"Der Demomodus ist nur für das Testen von WikiCleaner verfügbar.\n"
+"Sie werden keine Artikel in Demomodus bei Wikipedia bearbeiten können.\n"
+"Wollen Sie trotzdem fortfahren ?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:659
 msgid "You can learn how to add other Wikipedia at the following URL:"
@@ -526,10 +532,14 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:673
 msgid "You can learn how to add other languages at the following URL:"
 msgstr ""
+"Sie können unter der folgenden Adresse herausfinden wie Sie andere Sprachen "
+"hinzufügen können:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:688
 msgid "You must select which Wikipedia you want to work on before login"
 msgstr ""
+"Sie müssen zuerst auswählen an welcher Wikipedia Sie mitarbeiten wollen, "
+"bevor Sie sich anmelden können."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:697
 msgid "You must select a language before login"
@@ -538,10 +548,11 @@ msgstr "Sprache muss vor dem Anmelden gewählt werden"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:710
 msgid "You must input your user name before login"
 msgstr ""
+"Sie müssen erst Ihren Benutzernamen eingeben um sich anmelden zu können"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:722
 msgid "You must input your password before login"
-msgstr ""
+msgstr "Sie müssen erst Ihr Passwort eingeben um sich anmelden zu können"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:764
 msgid "You can learn how to configure WikiCleaner at the following URL:"
@@ -550,6 +561,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:781
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
 msgstr ""
+"Sie können unter der folgenden Adresse Hilfe zu WikipediaCleaner erhalten:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:795
 msgid "You can submit bug reports or feature requests at the following URL:"
@@ -565,10 +577,13 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:823
 msgid "You must input a page name for running a full analysis"
 msgstr ""
+"Sie müssen eine Seitename eingeben, um eine volle Analyse laufen zu lassen"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:843
 msgid "You must input a page name for running a disambiguation analysis"
 msgstr ""
+"Sie müssen eine Seitename eingeben, um eine Begriffsklärunganalyse laufen zu "
+"lassen"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:868
 msgid ""
