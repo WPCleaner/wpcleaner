@@ -42,7 +42,6 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
-import org.wikipediacleaner.utils.Configuration;
 
 /**
  * SwingWorker for reloading the page. 
@@ -54,6 +53,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
   private final Properties checkWikiConfig;
   private final ArrayList<Integer> onlyError;
   private final boolean otherErrors;
+  private final int errorLimit;
 
   /**
    * Constructor.
@@ -64,13 +64,15 @@ public class CheckWikiProjectWorker extends BasicWorker {
    * @param properties Properties to complete.
    * @param onlyError If set, limit the errors retrieved to this error numbers.
    * @param otherErrors Flag indicating if other errors should be retrieved (without list).
+   * @param errorLimit Maximum number of pages that should be returned for each error.
    */
   public CheckWikiProjectWorker(
       EnumWikipedia wikipedia, BasicWindow window,
       ArrayList<CheckError> errors,
       Properties properties,
       ArrayList<Integer> onlyError,
-      boolean otherErrors) {
+      boolean otherErrors,
+      int errorLimit) {
     super(wikipedia, window);
     this.errors = errors;
     if (onlyError == null) {
@@ -80,6 +82,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
     this.checkWikiConfig = properties;
     this.onlyError = onlyError;
     this.otherErrors = otherErrors;
+    this.errorLimit = errorLimit;
   }
 
   /**
@@ -125,7 +128,6 @@ public class CheckWikiProjectWorker extends BasicWorker {
    */
   @Override
   public Object construct() {
-    Configuration config = Configuration.getConfiguration();
 
     // Retrieving Check Wiki configuration
     String code = getWikipedia().getCode().replace("-", "_");
@@ -179,9 +181,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
           // Retrieving list of pages for the error number
           NameValuePair[] parameters = new NameValuePair[] {
               new NameValuePair("id", Integer.toString(errorNumber)),
-              new NameValuePair("limit", Integer.toString(config.getInt(
-                                  Configuration.INTEGER_CHECK_NB_ERRORS,
-                                  Configuration.DEFAULT_CHECK_NB_ERRORS))),
+              new NameValuePair("limit", Integer.toString(errorLimit)),
               new NameValuePair("offset", Integer.toString(0)),
               new NameValuePair("project", code + "wiki"),
               new NameValuePair("view", "bots")
