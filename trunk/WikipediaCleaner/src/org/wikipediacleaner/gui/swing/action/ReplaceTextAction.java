@@ -26,6 +26,8 @@ import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.TextAction;
 
+import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
+
 
 /**
  * An action listener for replacing text.
@@ -82,6 +84,32 @@ public class ReplaceTextAction extends TextAction {
     // Initialize
     int startOffset = localElement.getStartOffset();
     int endOffset = localElement.getEndOffset();
+    Object uuid = localElement.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_UUID);
+    if (uuid != null) {
+      boolean finished;
+      do {
+        finished = true;
+        Element tmpElement = localTextPane.getStyledDocument().getCharacterElement(startOffset - 1); 
+        if ((tmpElement != null) && (tmpElement.getAttributes() != null)) {
+          if ((localElement != tmpElement) &&
+              (uuid.equals(tmpElement.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_UUID)))) {
+            startOffset = tmpElement.getStartOffset();
+            finished = false;
+          }
+        }
+      } while (!finished);
+      do {
+        finished = true;
+        Element tmpElement = localTextPane.getStyledDocument().getCharacterElement(endOffset);
+        if ((tmpElement != null) && (tmpElement.getAttributes() != null)) {
+          if ((localElement != tmpElement) &&
+              (uuid.equals(tmpElement.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_UUID)))) {
+            endOffset = tmpElement.getEndOffset();
+            finished = false;
+          }
+        }
+      } while (!finished);
+    }
 
     // Replace
     try {

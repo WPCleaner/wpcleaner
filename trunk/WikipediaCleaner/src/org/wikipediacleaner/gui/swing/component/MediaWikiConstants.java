@@ -43,6 +43,7 @@ public class MediaWikiConstants {
   public final static String ATTRIBUTE_TEXT      = "MediaWikiText";
   public final static String ATTRIBUTE_INFO      = "MediaWikiInfo";
   public final static String ATTRIBUTE_OCCURENCE = "MediaWikiOccurence";
+  public final static String ATTRIBUTE_UUID      = "MediaWikiUUID";
 
   // Attributes values
   public final static String VALUE_CHECK_WIKI_ERROR        = "CheckWikiError";
