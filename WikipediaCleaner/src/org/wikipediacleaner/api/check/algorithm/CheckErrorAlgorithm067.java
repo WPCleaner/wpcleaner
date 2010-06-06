@@ -103,15 +103,25 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
               }
 
               // Check if previous character is a punctuation
-              if ((tmpIndex >= 0) && (SpecialCharacters.isPunctuation(contents.charAt(tmpIndex)))) {
+              char punctuation = contents.charAt(tmpIndex);
+              if ((tmpIndex >= 0) && (SpecialCharacters.isPunctuation(punctuation))) {
                 if (errors == null) {
                   return true;
                 }
                 result = true;
+                int endIndex = currentIndex;
+                while ((currentIndex < contents.length()) &&
+                       (punctuation == contents.charAt(currentIndex))) {
+                  currentIndex++;
+                }
                 CheckErrorResult errorResult = new CheckErrorResult(
                     getShortDescription(), tmpIndex, currentIndex);
                 errorResult.addReplacement(
-                    contents.substring(beginIndex, currentIndex) + contents.charAt(tmpIndex));
+                    contents.substring(beginIndex, endIndex) + punctuation);
+                if (currentIndex > endIndex) {
+                  errorResult.addReplacement(
+                      contents.substring(beginIndex, endIndex) + punctuation + contents.substring(endIndex, currentIndex));
+                }
                 errors.add(errorResult);
               }
             }
