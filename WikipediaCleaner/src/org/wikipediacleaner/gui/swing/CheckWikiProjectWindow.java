@@ -41,6 +41,7 @@ import java.io.StringReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 
 import javax.swing.BorderFactory;
@@ -670,6 +671,7 @@ public class CheckWikiProjectWindow extends PageWindow {
                   true);
               SimpleAttributeSet attributes = new SimpleAttributeSet();
               attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_INFO, errorFound);
+              attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_UUID, UUID.randomUUID());
               document.setCharacterAttributes(
                   errorFound.getStartPosition(),
                   errorFound.getLength(),

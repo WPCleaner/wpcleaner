@@ -27,6 +27,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -677,6 +678,7 @@ public class MediaWikiPane
             }
           }
           attr.addAttribute(MediaWikiConstants.ATTRIBUTE_TEXT, text);
+          attr.addAttribute(MediaWikiConstants.ATTRIBUTE_UUID, UUID.randomUUID());
           doc.setCharacterAttributes(start, end - start, attr, true);
           if (start < startPosition) {
             startPosition = start;
