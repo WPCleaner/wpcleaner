@@ -112,7 +112,6 @@ public class MainWindow
 
   JTextField textPagename;
   private JButton buttonCheckWiki;
-  private JTextField textCheckWikiErrors;
   private JButton buttonCurrentList;
   private JButton buttonDisambiguation;
   private JButton buttonFullAnalysis;
@@ -212,7 +211,6 @@ public class MainWindow
     buttonCurrentList.setEnabled(logged);
     buttonHelpRequested.setEnabled(logged);
     buttonCheckWiki.setEnabled(logged);
-    textCheckWikiErrors.setEnabled(logged);
     buttonRandomPage.setEnabled(logged);
     buttonWatchedPages.setEnabled(logged);
     buttonBotTools.setEnabled(logged);
@@ -507,12 +505,6 @@ public class MainWindow
     buttonCheckWiki.setActionCommand(ACTION_CHECK_WIKI);
     buttonCheckWiki.addActionListener(this);
     panel.add(buttonCheckWiki, constraints);
-    constraints.gridy++;
-
-    textCheckWikiErrors = new JTextField();
-    textCheckWikiErrors.setToolTipText(GT._(
-        "Comma separated list of errors to work on."));
-    panel.add(textCheckWikiErrors, constraints);
     constraints.gridy++;
 
     // Help requested button
@@ -919,7 +911,7 @@ public class MainWindow
       }
       return;
     }
-    Controller.runCheckWikiProject(getWikipedia(), textCheckWikiErrors.getText());
+    Controller.runCheckWikiProject(getWikipedia());
   }
 
   /**

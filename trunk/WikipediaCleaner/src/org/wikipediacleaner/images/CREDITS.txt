@@ -38,6 +38,7 @@ The following files are available in the "normal" directory:
 - view-refresh.png (Tango)
 
 The following files are available in the "small" directory:
+- gnome-view-refresh.png (Gnome)
 - go-next.png (Tango)
 - help-browser.png (Tango)
 - internet-web-browser.png (Tango)

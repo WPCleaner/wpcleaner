@@ -30,6 +30,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
@@ -43,6 +45,7 @@ import java.util.concurrent.Callable;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
@@ -54,12 +57,15 @@ import javax.swing.JList;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
@@ -80,9 +86,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
-import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
@@ -105,8 +109,13 @@ import org.xml.sax.SAXException;
  */
 public class CheckWikiProjectWindow extends PageWindow {
 
+  ButtonGroup groupErrors;
+  private JRadioButton radioAllErrors;
+  JRadioButton radioOnlyErrors;
+  private JTextField textOnlyErrors;
+  private SpinnerNumberModel modelMaxErrors;
+
   ArrayList<CheckError> errors;
-  ArrayList<Integer> errorsList;
   Properties checkWikiConfig;
   JComboBox listAllErrors;
   DefaultComboBoxModel modelAllErrors;
@@ -131,35 +140,15 @@ public class CheckWikiProjectWindow extends PageWindow {
    * Create and display a CheckWikiProjectWindow.
    * 
    * @param wikipedia Wikipedia.
-   * @param errors Comma separated list of errors
    */
   public static void createCheckWikiProjectWindow(
-      final EnumWikipedia wikipedia, final String errors) {
+      final EnumWikipedia wikipedia) {
     createWindow(
         "CheckWikiWindow",
         wikipedia,
         WindowConstants.DISPOSE_ON_CLOSE,
         CheckWikiProjectWindow.class,
-        new DefaultBasicWindowListener() {
-          @Override
-          public void displayWindow(BasicWindow window) {
-            if (window instanceof CheckWikiProjectWindow) {
-              CheckWikiProjectWindow analysis = (CheckWikiProjectWindow) window;
-              if ((errors != null) && (errors.length() > 0)) {
-                String[] errorsNumber = errors.split(",");
-                analysis.errorsList = new ArrayList<Integer>(errorsNumber.length);
-                for (int i = 0; i < errorsNumber.length; i++) {
-                  try {
-                    analysis.errorsList.add(Integer.valueOf(errorsNumber[i].trim()));
-                  } catch (NumberFormatException e) {
-                    // Nothing
-                  }
-                }
-              }
-              analysis.actionReload();
-            }
-          }
-        });
+        null);
   }
 
   /* (non-Javadoc)
@@ -238,6 +227,7 @@ public class CheckWikiProjectWindow extends PageWindow {
    */
   private Component createProjectComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
+    Configuration configuration = Configuration.getConfiguration();
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -246,11 +236,59 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.gridwidth = 1;
     constraints.gridx = 0;
     constraints.gridy = 0;
-    constraints.insets = new Insets(2, 2, 2, 2);
+    constraints.insets = new Insets(1, 1, 1, 1);
     constraints.ipadx = 0;
     constraints.ipady = 0;
     constraints.weightx = 0;
     constraints.weighty = 0;
+
+    // Loading
+    JToolBar toolbarLoad = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbarLoad.setFloatable(false);
+    JButton buttonLoad = Utilities.createJButton(
+        "gnome-view-refresh.png", EnumImageSize.SMALL,
+        GT._("Load"), true);
+    buttonLoad.setActionCommand(ACTION_RELOAD);
+    buttonLoad.addActionListener(this);
+    toolbarLoad.add(buttonLoad);
+    groupErrors = new ButtonGroup();
+    radioAllErrors = Utilities.createJRadioButton(GT._("all errors"), true);
+    toolbarLoad.add(radioAllErrors);
+    groupErrors.add(radioAllErrors);
+    toolbarLoad.add(Utilities.createJLabel("/"));
+    radioOnlyErrors = Utilities.createJRadioButton(GT._("only"), false);
+    toolbarLoad.add(radioOnlyErrors);
+    groupErrors.add(radioOnlyErrors);
+    textOnlyErrors = new JTextField(20);
+    textOnlyErrors.setToolTipText(GT._(
+        "Comma separated list of errors to work on."));
+    textOnlyErrors.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(@SuppressWarnings("unused") KeyEvent e) {
+        groupErrors.setSelected(radioOnlyErrors.getModel(), true);
+      }
+    });
+    toolbarLoad.add(textOnlyErrors);
+
+    toolbarLoad.addSeparator();
+
+    modelMaxErrors = new SpinnerNumberModel(
+        configuration.getInt(Configuration.INTEGER_CHECK_NB_ERRORS, Configuration.DEFAULT_CHECK_NB_ERRORS),
+        10, 1000, 5);
+    JSpinner spinMaxErrors = new JSpinner(modelMaxErrors);
+    JLabel labelMaxErrors = Utilities.createJLabel(
+        GT._("Maximum number of errors for Check Wiki :"));
+    labelMaxErrors.setLabelFor(spinMaxErrors);
+    labelMaxErrors.setHorizontalAlignment(SwingConstants.TRAILING);
+    toolbarLoad.add(labelMaxErrors);
+    toolbarLoad.add(spinMaxErrors);
+    constraints.fill = GridBagConstraints.BOTH;
+    constraints.gridwidth = 3;
+    constraints.gridx = 0;
+    constraints.weightx = 1;
+    constraints.weighty = 0;
+    panel.add(toolbarLoad, constraints);
+    constraints.gridy++;
 
     // List of errors managed by the project
     JLabel labelErrors = Utilities.createJLabel(GT._("List of errors detected :"));
@@ -303,6 +341,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     ucontext = new SimpleUserAgentContext();
     rcontext = new MediaWikiHtmlRendererContext(textDescription, ucontext);
     textDescription.setPreferredSize(new Dimension(500, 100));
+    textDescription.setMinimumSize(new Dimension(200, 100));
     constraints.fill = GridBagConstraints.BOTH;
     constraints.gridwidth = 3;
     constraints.gridx = 0;
@@ -1194,10 +1233,24 @@ public class CheckWikiProjectWindow extends PageWindow {
   protected void actionReload() {
     clean();
     contentPane.removeAll();
+    ArrayList<Integer> errorsList = null;
+    if ((groupErrors.getSelection() == radioOnlyErrors.getModel()) &&
+        (textOnlyErrors.getText().trim().length() > 0)) {
+      String[] errorsNumber = textOnlyErrors.getText().trim().split(",");
+      errorsList = new ArrayList<Integer>(errorsNumber.length);
+      for (int i = 0; i < errorsNumber.length; i++) {
+        try {
+          errorsList.add(Integer.valueOf(errorsNumber[i].trim()));
+        } catch (NumberFormatException e) {
+          // Nothing
+        }
+      }
+    }
     errors = new ArrayList<CheckError>();
     checkWikiConfig = new Properties();
     CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
-        getWikipedia(), this, errors, checkWikiConfig, errorsList, true);
+        getWikipedia(), this, errors, checkWikiConfig, errorsList, true,
+        modelMaxErrors.getNumber().intValue());
     setupReloadWorker(reloadWorker);
     reloadWorker.start();
   }
@@ -1212,7 +1265,8 @@ public class CheckWikiProjectWindow extends PageWindow {
       ArrayList<Integer> errorsNumber = new ArrayList<Integer>(1);
       errorsNumber.add(Integer.valueOf(error.getErrorNumber()));
       CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
-          getWikipedia(), this, errors, checkWikiConfig, errorsNumber, false);
+          getWikipedia(), this, errors, checkWikiConfig, errorsNumber, false,
+          modelMaxErrors.getNumber().intValue());
       setupReloadWorker(reloadWorker);
       reloadWorker.start();
     }

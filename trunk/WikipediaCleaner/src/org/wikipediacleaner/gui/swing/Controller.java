@@ -155,10 +155,9 @@ public class Controller {
    * Run Check Wiki project.
    * 
    * @param wikipedia Wikipedia
-   * @param errors Comma separated list of errors
    */
-  public static void runCheckWikiProject(EnumWikipedia wikipedia, String errors) {
-    CheckWikiProjectWindow.createCheckWikiProjectWindow(wikipedia, errors);
+  public static void runCheckWikiProject(EnumWikipedia wikipedia) {
+    CheckWikiProjectWindow.createCheckWikiProjectWindow(wikipedia);
   }
 
   /**
