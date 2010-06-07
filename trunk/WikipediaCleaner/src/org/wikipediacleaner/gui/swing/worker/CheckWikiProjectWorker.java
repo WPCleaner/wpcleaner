@@ -51,7 +51,8 @@ public class CheckWikiProjectWorker extends BasicWorker {
   private final ArrayList<CheckError> errors;
   private final boolean retrieveConfig;
   private final Properties checkWikiConfig;
-  private final ArrayList<Integer> onlyError;
+  private final ArrayList<Integer> onlyErrors;
+  private final ArrayList<Integer> exceptErrors;
   private final boolean otherErrors;
   private final int errorLimit;
 
@@ -62,7 +63,8 @@ public class CheckWikiProjectWorker extends BasicWorker {
    * @param window Window.
    * @param errors Error list to complete.
    * @param properties Properties to complete.
-   * @param onlyError If set, limit the errors retrieved to this error numbers.
+   * @param onlyErrors If set, limit the errors retrieved to this error numbers.
+   * @param exceptErrors If set, ignore this error numbers.
    * @param otherErrors Flag indicating if other errors should be retrieved (without list).
    * @param errorLimit Maximum number of pages that should be returned for each error.
    */
@@ -70,17 +72,19 @@ public class CheckWikiProjectWorker extends BasicWorker {
       EnumWikipedia wikipedia, BasicWindow window,
       ArrayList<CheckError> errors,
       Properties properties,
-      ArrayList<Integer> onlyError,
+      ArrayList<Integer> onlyErrors,
+      ArrayList<Integer> exceptErrors,
       boolean otherErrors,
       int errorLimit) {
     super(wikipedia, window);
     this.errors = errors;
-    if (onlyError == null) {
+    if (onlyErrors == null) {
       this.errors.clear();
     }
-    this.retrieveConfig = ((onlyError == null) || (properties == null) || (otherErrors));
+    this.retrieveConfig = ((onlyErrors == null) || (properties == null) || (otherErrors));
     this.checkWikiConfig = properties;
-    this.onlyError = onlyError;
+    this.onlyErrors = onlyErrors;
+    this.exceptErrors = exceptErrors;
     this.otherErrors = otherErrors;
     this.errorLimit = errorLimit;
   }
@@ -164,7 +168,9 @@ public class CheckWikiProjectWorker extends BasicWorker {
       int errorPriority = CheckError.getErrorPriority(checkWikiConfig, getWikipedia(), errorNumber);
       boolean needError = false;
       boolean needList = false;
-      if ((onlyError == null) || (onlyError.contains(Integer.valueOf(errorNumber)))) {
+      if ((exceptErrors != null) && (exceptErrors.contains(Integer.valueOf(errorNumber)))) {
+        // Nothing to do 
+      } else if ((onlyErrors == null) || (onlyErrors.contains(Integer.valueOf(errorNumber)))) {
         needError = true;
         needList = true;
       } else if (otherErrors) {
