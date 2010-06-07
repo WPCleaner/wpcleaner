@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-07 18:34+0200\n"
-"PO-Revision-Date: 2010-05-28 00:13+0000\n"
-"Last-Translator: A2 <Unknown>\n"
+"PO-Revision-Date: 2010-06-07 11:08+0000\n"
+"Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-05-28 06:36+0000\n"
+"X-Launchpad-Export-Date: 2010-06-07 16:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -271,16 +271,15 @@ msgstr "Vérifier Wikipédia"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:253
 msgid "Load"
-msgstr ""
+msgstr "Charger"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:258
-#, fuzzy
 msgid "all errors"
-msgstr "Rafraîchir la liste"
+msgstr "toutes les erreurs"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:262
 msgid "only"
-msgstr ""
+msgstr "seulement"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:267
 msgid "Comma separated list of errors to work on."
@@ -533,9 +532,8 @@ msgid "&Help"
 msgstr "&Aide"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:386
-#, fuzzy
 msgid "S&ystem Options"
-msgstr "&Options"
+msgstr "&Options système"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:390
 msgid "&Idea ? Bug ?"
@@ -608,10 +606,8 @@ msgid "You must input your password before login"
 msgstr "Vous devez saisir votre mot de passe avant de vous connecter"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:756
-#, fuzzy
 msgid "You can learn how to configure WikiCleaner at the following URL:"
-msgstr ""
-"Vous pouvez savoir comment ajouter d'autres Wikipédia à l'adresse suivante :"
+msgstr "Vous pouvez apprendre comment configurer WikiCleaner à l'adresse :"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:773
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
@@ -1153,8 +1149,8 @@ msgid ""
 "{2} Wikipedia.\n"
 "It doesn''t exist either in the {2} Wikipedia."
 msgstr ""
-"La catégorie {0} susr Wikipdia {1} n’a pas de lien inter-langue vers "
-"Wikipedia {2}.\n"
+"La catégorie {0} sur Wikipedia {1} n’a pas de lien inter-langue vers "
+"Wikidepia {2}.\n"
 "Elle n’existe pas non plus sur Wikipedia {2}."
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:136
