@@ -113,7 +113,9 @@ public class CheckWikiProjectWindow extends PageWindow {
   ButtonGroup groupErrors;
   private JRadioButton radioAllErrors;
   JRadioButton radioOnlyErrors;
+  JRadioButton radioExceptErrors;
   private JTextField textOnlyErrors;
+  private JTextField textExceptErrors;
   private SpinnerNumberModel modelMaxErrors;
 
   ArrayList<CheckError> errors;
@@ -270,6 +272,20 @@ public class CheckWikiProjectWindow extends PageWindow {
       }
     });
     toolbarLoad.add(textOnlyErrors);
+    toolbarLoad.add(Utilities.createJLabel("/"));
+    radioExceptErrors = Utilities.createJRadioButton(GT._("except"), false);
+    toolbarLoad.add(radioExceptErrors);
+    groupErrors.add(radioExceptErrors);
+    textExceptErrors = new JTextField(20);
+    textExceptErrors.setToolTipText(GT._(
+        "Comma separated list of errors to ignore."));
+    textExceptErrors.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(@SuppressWarnings("unused") KeyEvent e) {
+        groupErrors.setSelected(radioExceptErrors.getModel(), true);
+      }
+    });
+    toolbarLoad.add(textExceptErrors);
 
     toolbarLoad.addSeparator();
 
@@ -1235,14 +1251,27 @@ public class CheckWikiProjectWindow extends PageWindow {
   protected void actionReload() {
     clean();
     contentPane.removeAll();
-    ArrayList<Integer> errorsList = null;
+    ArrayList<Integer> onlyErrorsList = null;
     if ((groupErrors.getSelection() == radioOnlyErrors.getModel()) &&
         (textOnlyErrors.getText().trim().length() > 0)) {
       String[] errorsNumber = textOnlyErrors.getText().trim().split(",");
-      errorsList = new ArrayList<Integer>(errorsNumber.length);
+      onlyErrorsList = new ArrayList<Integer>(errorsNumber.length);
       for (int i = 0; i < errorsNumber.length; i++) {
         try {
-          errorsList.add(Integer.valueOf(errorsNumber[i].trim()));
+          onlyErrorsList.add(Integer.valueOf(errorsNumber[i].trim()));
+        } catch (NumberFormatException e) {
+          // Nothing
+        }
+      }
+    }
+    ArrayList<Integer> exceptErrorsList = null;
+    if ((groupErrors.getSelection() == radioExceptErrors.getModel()) &&
+        (textExceptErrors.getText().trim().length() > 0)) {
+      String[] errorsNumber = textExceptErrors.getText().trim().split(",");
+      exceptErrorsList = new ArrayList<Integer>(errorsNumber.length);
+      for (int i = 0; i < errorsNumber.length; i++) {
+        try {
+          exceptErrorsList.add(Integer.valueOf(errorsNumber[i].trim()));
         } catch (NumberFormatException e) {
           // Nothing
         }
@@ -1251,8 +1280,8 @@ public class CheckWikiProjectWindow extends PageWindow {
     errors = new ArrayList<CheckError>();
     checkWikiConfig = new Properties();
     CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
-        getWikipedia(), this, errors, checkWikiConfig, errorsList, true,
-        modelMaxErrors.getNumber().intValue());
+        getWikipedia(), this, errors, checkWikiConfig, onlyErrorsList, exceptErrorsList,
+        true, modelMaxErrors.getNumber().intValue());
     setupReloadWorker(reloadWorker);
     reloadWorker.start();
   }
@@ -1267,8 +1296,8 @@ public class CheckWikiProjectWindow extends PageWindow {
       ArrayList<Integer> errorsNumber = new ArrayList<Integer>(1);
       errorsNumber.add(Integer.valueOf(error.getErrorNumber()));
       CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
-          getWikipedia(), this, errors, checkWikiConfig, errorsNumber, false,
-          modelMaxErrors.getNumber().intValue());
+          getWikipedia(), this, errors, checkWikiConfig, errorsNumber,
+          null, false, modelMaxErrors.getNumber().intValue());
       setupReloadWorker(reloadWorker);
       reloadWorker.start();
     }
