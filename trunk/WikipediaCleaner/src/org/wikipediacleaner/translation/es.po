@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-07 18:34+0200\n"
-"PO-Revision-Date: 2010-06-06 23:42+0000\n"
-"Last-Translator: martin <Unknown>\n"
+"PO-Revision-Date: 2010-06-08 09:25+0000\n"
+"Last-Translator: Jonay <jonay.santana@gmail.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-06-07 16:44+0000\n"
+"X-Launchpad-Export-Date: 2010-06-08 18:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: Spanish\n"
 
@@ -246,7 +246,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "En algunas proyectos de Wikipedia, podría requerir tener el permiso de bot "
 "para hacer esto."
@@ -285,12 +286,11 @@ msgstr "Lista de errores separada por coma para trabajar en ellos."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:276
 msgid "except"
-msgstr ""
+msgstr "excepto"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:281
-#, fuzzy
 msgid "Comma separated list of errors to ignore."
-msgstr "Lista de errores separada por coma para trabajar en ellos."
+msgstr "Lista de errores separados por coma a ignorar."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:297
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:333
