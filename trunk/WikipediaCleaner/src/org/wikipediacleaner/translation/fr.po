@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-07 18:34+0200\n"
-"PO-Revision-Date: 2010-06-07 11:08+0000\n"
+"PO-Revision-Date: 2010-06-09 06:38+0000\n"
 "Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-06-07 16:44+0000\n"
+"X-Launchpad-Export-Date: 2010-06-10 19:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -248,7 +248,8 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -284,19 +285,18 @@ msgstr "seulement"
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:267
 msgid "Comma separated list of errors to work on."
 msgstr ""
-"Liste des numéros d'erreur séparés d'une virgule (par ex. 17, 46, 53) à "
-"analyser."
+"Liste des numéros d'erreurs à analyser séparés d'une virgule (par ex. 17, "
+"46, 53)."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:276
 msgid "except"
-msgstr ""
+msgstr "excepté"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:281
-#, fuzzy
 msgid "Comma separated list of errors to ignore."
 msgstr ""
-"Liste des numéros d'erreur séparés d'une virgule (par ex. 17, 46, 53) à "
-"analyser."
+"Liste des numéros d'erreurs à ignorer séparés d'une virgule (par ex. 17, 46, "
+"53)."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:297
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:333
@@ -917,7 +917,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr ""
+"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:281
 msgid "&Page :"
