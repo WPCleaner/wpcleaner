@@ -899,7 +899,7 @@ public class MainWindow
     if (wikipedia == null) {
       return;
     }
-    if (wikipedia.getCheckWikiProject() == null) {
+    if (!wikipedia.isCheckWikiProjectAvailable()) {
       String url = URL_OTHER_WIKIPEDIA;
       displayUrlMessage(
           GT._(

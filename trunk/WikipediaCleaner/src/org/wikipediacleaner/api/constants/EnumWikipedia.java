@@ -86,6 +86,12 @@ public enum EnumWikipedia {
       WikiAr.wikt, WikiAr.wiktMatches,
       WikiAr.dabLinkTemplates, WikiAr.needHelpTemplates, WikiAr.helpRequestedTemplates,
       WikiAr.dabMatches),
+  BAR(WikiBar.code, WikiBar.name,
+      WikiBar.apiUrl, WikiBar.indexUrl,
+      WikiBar.orientation, WikiBar.configuration,
+      WikiBar.wikt, WikiBar.wiktMatches,
+      WikiBar.dabLinkTemplates, WikiBar.needHelpTemplates, WikiBar.helpRequestedTemplates,
+      WikiBar.dabMatches),
   CA( WikiCa.code, WikiCa.name,
       WikiCa.apiUrl, WikiCa.indexUrl,
       WikiCa.orientation, WikiCa.configuration,
@@ -808,6 +814,23 @@ public enum EnumWikipedia {
       }
     }
     return null;
+  }
+
+  /**
+   * @return Flag indicating if the Check Wiki project is available.
+   */
+  public boolean isCheckWikiProjectAvailable() {
+    String project = getCheckWikiProject();
+    if (project != null) {
+      return true;
+    }
+    if (configuration != null) {
+      String tmp = configuration.getProperty("check_wiki_force", null);
+      if (("Y".equalsIgnoreCase(tmp)) || ("YES".equalsIgnoreCase(tmp))) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
