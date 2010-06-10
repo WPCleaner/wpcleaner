@@ -267,6 +267,9 @@ public class MediaWikiAPI implements API {
       }
       HttpClient toolClient = new HttpClient(new MultiThreadedHttpConnectionManager());
       int statusCode = toolClient.executeMethod(method);
+      if (statusCode == HttpStatus.SC_NOT_FOUND) {
+        return null;
+      }
       if (statusCode != HttpStatus.SC_OK) {
         throw new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
       }

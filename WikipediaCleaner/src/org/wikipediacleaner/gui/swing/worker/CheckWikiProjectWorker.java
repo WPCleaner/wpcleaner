@@ -141,18 +141,30 @@ public class CheckWikiProjectWorker extends BasicWorker {
         InputStream stream = APIFactory.getAPI().askToolServerGet(
             "~sk/checkwiki/" + code + "wiki/" + code + "wiki_translation.txt",
             true);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-        while (getNextCheckWikiParameter(checkWikiConfig, reader)) {
-          //
+        if (stream != null) {
+          BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+          while (getNextCheckWikiParameter(checkWikiConfig, reader)) {
+            //
+          }
+          try {
+            reader.close();
+          } catch (IOException e) {
+            // Nothing
+          }
         }
         if (getWikipedia().getCheckWikiTraduction() != null) {
           MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
           Page page = DataManager.getPage(
               getWikipedia(), getWikipedia().getCheckWikiTraduction(), null, null);
           mw.retrieveContents(getWikipedia(), page, true, false, false);
-          reader = new BufferedReader(new StringReader(page.getContents()));
+          BufferedReader reader = new BufferedReader(new StringReader(page.getContents()));
           while (getNextCheckWikiParameter(checkWikiConfig, reader)) {
             //
+          }
+          try {
+            reader.close();
+          } catch (IOException e) {
+            // Nothing
           }
         }
       } catch (APIException e) {
