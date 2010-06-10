@@ -295,7 +295,13 @@ public enum EnumWikipedia {
       WikiZh.orientation, WikiZh.configuration,
       WikiZh.wikt, WikiZh.wiktMatches,
       WikiZh.dabLinkTemplates, WikiZh.needHelpTemplates, WikiZh.helpRequestedTemplates,
-      WikiZh.dabMatches);
+      WikiZh.dabMatches),
+  COMMONS(WikiCommons.code, WikiCommons.name,
+          WikiCommons.apiUrl, WikiCommons.indexUrl,
+          WikiCommons.orientation, WikiCommons.configuration,
+          WikiCommons.wikt, WikiCommons.wiktMatches,
+          WikiCommons.dabLinkTemplates, WikiCommons.needHelpTemplates, WikiCommons.helpRequestedTemplates,
+          WikiCommons.dabMatches);
 
   private final String code;
   private final String title;
