@@ -191,7 +191,6 @@ public class CheckWikiProjectWorker extends BasicWorker {
       if ((CheckError.isPriorityActive(errorPriority)) && (needError)) {
         String className = CheckErrorAlgorithm.class.getName() + errorNumberFormat.format(errorNumber);
         try {
-          setText(GT._("Checking for errors n°{0}", Integer.toString(errorNumber)));
   
           // Checking if the error number is known by WikiCleaner
           Class.forName(className);
@@ -206,13 +205,16 @@ public class CheckWikiProjectWorker extends BasicWorker {
           };
           InputStream stream = null;
           if (needList) {
+            setText(GT._("Checking for errors n°{0}", Integer.toString(errorNumber)));
             stream = APIFactory.getAPI().askToolServerPost(
                 "~sk/cgi-bin/checkwiki/checkwiki.cgi", parameters, true);
           }
           CheckError.addCheckError(checkWikiConfig, errors, getWikipedia(), errorNumber, stream);
         } catch (ClassNotFoundException e) {
           // Not found: error not yet available in WikiCleaner.
-          System.out.println("Error " + errorNumber + " is not yet available in WikiCleaner.");
+          if (needList) {
+            System.out.println("Error " + errorNumber + " is not yet available in WikiCleaner.");
+          }
         } catch (APIException e) {
           return e;
         }
@@ -220,7 +222,9 @@ public class CheckWikiProjectWorker extends BasicWorker {
     }
 
     // Sorting errors by priority
+    setText(GT._("Sorting errors by priority"));
     Collections.sort(errors, new CheckErrorComparator());
+
     return null;
   }
 }
