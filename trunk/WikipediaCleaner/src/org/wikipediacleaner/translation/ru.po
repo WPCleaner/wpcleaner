@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-07 18:34+0200\n"
+"POT-Creation-Date: 2010-06-16 19:27+0200\n"
 "PO-Revision-Date: 2010-05-30 10:12+0000\n"
 "Last-Translator: Sergey Sedov <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1304,9 +1304,13 @@ msgstr "Были сделаны следующие изменения ({0} ст�
 msgid "Retrieving Check Wiki configuration"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:182
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:208
 #, java-format
 msgid "Checking for errors n°{0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:225
+msgid "Sorting errors by priority"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:59
