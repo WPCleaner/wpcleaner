@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-16 19:27+0200\n"
+"POT-Creation-Date: 2010-06-16 20:51+0200\n"
 "PO-Revision-Date: 2010-05-01 07:19+0000\n"
 "Last-Translator: Iwan Novirion <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -329,12 +329,21 @@ msgstr "Tandai sudah diperbaiki"
 msgid "The page {0} doesn't exist on Wikipedia"
 msgstr "Artikel {0} tidak ada di Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:739
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:667
+#, fuzzy, java-format
+msgid ""
+"The error n°{0} hasn''t been found in the page {1}.\n"
+"Do you want to mark it as fixed ?"
+msgstr ""
+"Galat n°{0} tetap ditemukan pada artikel.\n"
+"Anda yakin untuk menandai sudah diperbaiki ?"
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:766
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr "Anda ingin tandai {0} sudah diperbaiki pada galat n°{1}"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:750
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:777
 #, java-format
 msgid ""
 "The error n°{0} is still found {1} times in the page.\n"
@@ -343,7 +352,7 @@ msgstr ""
 "Galat n°{0} tetap ditemukan {1} kali pada artikel.\n"
 "Anda yakin untuk menandai sudah diperbaiki ?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:757
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:784
 #, java-format
 msgid ""
 "The error n°{0} is still found in the page.\n"
@@ -352,7 +361,7 @@ msgstr ""
 "Galat n°{0} tetap ditemukan pada artikel.\n"
 "Anda yakin untuk menandai sudah diperbaiki ?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:769
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:796
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
@@ -360,16 +369,16 @@ msgstr ""
 "Galat telah diperbaiki dengan melakukan perubahan pada artikel.\n"
 "Kirim perubahan artikel, yang akan ditandai sudah diperbaiki."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:876
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:903
 msgid "A comment is required for sending the page."
 msgstr "Perlu ringkasan untuk mengirim perubahan artikel."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:986
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1013
 #, java-format
 msgid "Detection by [[{0}]]"
 msgstr "Ditemukan oleh [[{0}]]"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1163
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1190
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
