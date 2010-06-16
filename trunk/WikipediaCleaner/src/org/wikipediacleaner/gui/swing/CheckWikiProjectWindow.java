@@ -646,9 +646,36 @@ public class CheckWikiProjectWindow extends PageWindow {
       ArrayList<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
           errors, page, textPage.getText());
       modelErrors.clear();
+      boolean errorFound = false;
+      int errorCount = 0;
       if (errorsFound != null) {
         for (CheckErrorPage tmpError : errorsFound) {
           modelErrors.addElement(tmpError);
+          errorCount++;
+          if ((error != null) && (error.getAlgorithm().equals(tmpError.getAlgorithm()))) {
+            errorFound = true;
+          }
+        }
+      }
+      if ((error != null) && (errorFound == false)) {
+        Configuration config = Configuration.getConfiguration();
+        int answer = JOptionPane.YES_OPTION;
+        if (!config.getBoolean(
+            Configuration.BOOLEAN_CHECK_MARK_AS_FIXED,
+            Configuration.DEFAULT_CHECK_MARK_AS_FIXED)) {
+          answer = displayYesNoWarning(GT._(
+              "The error n°{0} hasn''t been found in the page {1}.\n" +
+              "Do you want to mark it as fixed ?",
+              new Object[] { error.getAlgorithm().getErrorNumber(), page.getTitle() }));
+        }
+        if (answer == JOptionPane.YES_OPTION) {
+          error.remove(page);
+          if (errorCount == 0) {
+            pane.remove(this);
+          }
+          markPageAsFixed(error, error.getAlgorithm().getErrorNumber(), page);
+          actionSelectErrorType();
+          return;
         }
       }
       int index = modelErrors.indexOf(listAllErrors.getSelectedItem());
