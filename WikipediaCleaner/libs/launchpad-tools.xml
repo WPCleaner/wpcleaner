@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Launchpad Tools" default="import-launchpad-export-files" basedir="..">
+
+  <property name="build.dir" location="build/launchpad" />
+
+  <target name="import-launchpad-export-files" id="import-launchpad-export-files">
+    <!-- Clean previous launch -->
+    <delete dir="${build.dir}" />
+
+    <!-- Extract launchpad export -->
+    <input message="What is the path to launchpad export files ?"
+           defaultvalue="D:/Temp"
+           addproperty="launchpad.export.files" />
+    <mkdir dir="${build.dir}" />
+    <move todir="${build.dir}" includeemptydirs="false">
+      <fileset dir="${launchpad.export.files}">
+        <include name="wikicleaner_wikicleaner-*.po" />
+      </fileset>
+      <mapper type="glob" from="wikicleaner_wikicleaner-*.po" to="*.po" />
+    </move>
+    <copy todir="src/org/wikipediacleaner/translation">
+      <fileset dir="${build.dir}" includes="*.po" />
+    </copy>
+
+    <!-- Cleanup -->
+    <delete dir="${build.dir}" />
+  </target>
+</project>
