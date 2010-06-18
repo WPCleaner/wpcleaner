@@ -312,7 +312,7 @@ public abstract class PageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-go-first.png", EnumImageSize.NORMAL,
-          GT._("&First occurrence"), false);
+          GT._("First occurrence (Alt + &F)"), false);
     } else {
       button = Utilities.createJButton(GT._("&First occurrence"));
     }
@@ -366,7 +366,7 @@ public abstract class PageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-go-last.png", EnumImageSize.NORMAL,
-          GT._("&Last occurrence"), false);
+          GT._("Last occurrence (Alt + &L)"), false);
     } else {
       button = Utilities.createJButton(GT._("&Last occurrence"));
     }
@@ -387,7 +387,7 @@ public abstract class PageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-go-next.png", EnumImageSize.NORMAL,
-          GT._("&Next occurrence"), false);
+          GT._("Next occurrence (Alt + &N)"), false);
     } else {
       button = Utilities.createJButton(GT._("&Next occurrence"));
     }
@@ -408,7 +408,7 @@ public abstract class PageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-go-previous.png", EnumImageSize.NORMAL,
-          GT._("&Previous occurrence"), false);
+          GT._("Previous occurrence (Alt + &P)"), false);
     } else {
       button = Utilities.createJButton(GT._("&Previous occurrence"));
     }
@@ -460,7 +460,7 @@ public abstract class PageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-view-refresh.png", EnumImageSize.NORMAL,
-          GT._("&Reload"), false);
+          GT._("Reload (Alt + &R)"), false);
     } else {
       button = Utilities.createJButton(GT._("&Reload"));
     }
@@ -561,7 +561,7 @@ public abstract class PageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-emblem-web.png", EnumImageSize.NORMAL,
-          GT._("&External Viewer"), false);
+          GT._("External Viewer (Alt + &E)"), false);
     } else {
       button = Utilities.createJButton(GT._("&External Viewer"));
     }
@@ -595,7 +595,7 @@ public abstract class PageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-emblem-documents.png", EnumImageSize.NORMAL,
-          GT._("&History"), false);
+          GT._("History (Alt + &H)"), false);
     } else {
       button = Utilities.createJButton(GT._("&History"));
     }

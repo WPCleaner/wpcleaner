@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-16 20:51+0200\n"
+"POT-Creation-Date: 2010-06-18 19:03+0200\n"
 "PO-Revision-Date: 2010-05-23 23:57+0000\n"
 "Last-Translator: Modernday <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -900,21 +900,34 @@ msgid "Disambiguation"
 msgstr "Disambiguazione"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
+msgid "First occurrence (Alt + &F)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:317
 msgid "&First occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:369
+msgid "Last occurrence (Alt + &L)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:371
 msgid "&Last occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:390
+#, fuzzy
+msgid "Next occurrence (Alt + &N)"
+msgstr "&Prossimo evento"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:392
 msgid "&Next occurrence"
 msgstr "&Prossimo evento"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
+msgid "Previous occurrence (Alt + &P)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:413
 msgid "&Previous occurrence"
 msgstr ""
@@ -928,6 +941,9 @@ msgid "Disambiguation analysis of redirect"
 msgstr "Analisi disambiguazione del redirect"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:463
+msgid "Reload (Alt + &R)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:465
 msgid "&Reload"
 msgstr "&Ricarica"
@@ -947,11 +963,18 @@ msgid "Redo"
 msgstr "Rifai"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:564
+#, fuzzy
+msgid "External Viewer (Alt + &E)"
+msgstr "Visualizzatore Esterno"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:566
 msgid "&External Viewer"
 msgstr "&Visualizzatore Esterno"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:598
+msgid "History (Alt + &H)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:600
 msgid "&History"
 msgstr ""

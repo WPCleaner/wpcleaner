@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-16 20:51+0200\n"
-"PO-Revision-Date: 2010-06-10 22:43+0000\n"
+"POT-Creation-Date: 2010-06-18 19:03+0200\n"
+"PO-Revision-Date: 2010-06-18 07:17+0000\n"
 "Last-Translator: A2 <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-06-11 20:04+0000\n"
+"X-Launchpad-Export-Date: 2010-06-18 09:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -338,13 +338,13 @@ msgid "The page {0} doesn't exist on Wikipedia"
 msgstr "L’article {0} n’existe pas sur Wikipédia."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:667
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "The error n°{0} hasn''t been found in the page {1}.\n"
 "Do you want to mark it as fixed ?"
 msgstr ""
-"L’erreur n° {0} est toujours présente dans la page.\n"
-"Êtes-vous certain de vouloir la marquer comme corrigée ?"
+"L''erreur n°{0} n''a pas été trouvée dans la page {1}.\n"
+"Voulez-vous la marquer comme corrigée ?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:766
 #, java-format
@@ -936,21 +936,37 @@ msgid "Disambiguation"
 msgstr "Homonymie"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
+#, fuzzy
+msgid "First occurrence (Alt + &F)"
+msgstr "&Première occurence"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:317
 msgid "&First occurrence"
 msgstr "&Première occurence"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:369
+#, fuzzy
+msgid "Last occurrence (Alt + &L)"
+msgstr "&Dernière occurence"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:371
 msgid "&Last occurrence"
 msgstr "&Dernière occurence"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:390
+#, fuzzy
+msgid "Next occurrence (Alt + &N)"
+msgstr "Occurence suiva&nte"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:392
 msgid "&Next occurrence"
 msgstr "Occurence suiva&nte"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
+#, fuzzy
+msgid "Previous occurrence (Alt + &P)"
+msgstr "&Occurence précédente"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:413
 msgid "&Previous occurrence"
 msgstr "&Occurence précédente"
@@ -964,6 +980,9 @@ msgid "Disambiguation analysis of redirect"
 msgstr "Analyse homonimique des redirections"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:463
+msgid "Reload (Alt + &R)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:465
 msgid "&Reload"
 msgstr "&Recharger"
@@ -983,11 +1002,18 @@ msgid "Redo"
 msgstr "Refaire"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:564
+#, fuzzy
+msgid "External Viewer (Alt + &E)"
+msgstr "Visualisateur externe"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:566
 msgid "&External Viewer"
 msgstr "Affichage externe"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:598
+msgid "History (Alt + &H)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:600
 msgid "&History"
 msgstr "&Historique"
@@ -1139,7 +1165,7 @@ msgstr "Affichage des modèles trouvés"
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:96
 #, java-format
 msgid "Unable to find if category {0} exists in the {1} Wikipedia."
-msgstr "Impossible de trouver si la catégorie {0} existe sur wikipédia {1}."
+msgstr "Impossible de trouver si la catégorie {0} existe sur {1}wiki."
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:105
 #, java-format
@@ -1147,8 +1173,8 @@ msgid ""
 "The category {0} exists in the {1} Wikipedia.\n"
 "Do you want to replace the category by [[{2}]] ?"
 msgstr ""
-"La catégorie {0} existe sur wikipédia {1}.\n"
-"Voulez-vous remplacer la catégorie par [[{2}]] ?"
+"La catégorie {0} existe sur {1}wiki.\n"
+"Voulez-vous remplacer la catégorie par [[{2}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:127
 #, java-format
@@ -1157,9 +1183,8 @@ msgid ""
 "{2} Wikipedia.\n"
 "It doesn''t exist either in the {2} Wikipedia."
 msgstr ""
-"La catégorie {0} sur Wikipedia {1} n’a pas de lien inter-langue vers "
-"Wikidepia {2}.\n"
-"Elle n’existe pas non plus sur Wikipedia {2}."
+"La catégorie {0} sur {1}wiki n’a pas de lien inter-langue vers {2}wiki.\n"
+"Elle n’existe pas non plus sur {2}wiki."
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:136
 #, java-format
@@ -1168,8 +1193,8 @@ msgid ""
 "In the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\n"
 "Do you want to replace the category by [[{3}]] ?"
 msgstr ""
-"La catégorie {0} n’existe pas sur Wikipedia {2}.\n"
-"Sur Wikipédia {1}, il existe un lien interlangue vers Wikipédia {2} : {3}.\n"
+"La catégorie {0} n’existe pas sur {2}wiki.\n"
+"Sur {1}wiki, il existe un lien interlangue vers {2}wiki : {3}.\n"
 "Voulez-vous remplacer cette catégorie par [[{3}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:73
@@ -1354,7 +1379,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:225
 msgid "Sorting errors by priority"
-msgstr ""
+msgstr "Trier les erreurs par priorité"
 
 #: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:59
 msgid "Current disambiguation list"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-16 20:51+0200\n"
+"POT-Creation-Date: 2010-06-18 19:03+0200\n"
 "PO-Revision-Date: 2010-06-11 16:17+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -919,21 +919,37 @@ msgid "Disambiguation"
 msgstr "Rozcestníky"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
+#, fuzzy
+msgid "First occurrence (Alt + &F)"
+msgstr "První výskyt"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:317
 msgid "&First occurrence"
 msgstr "První výskyt"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:369
+#, fuzzy
+msgid "Last occurrence (Alt + &L)"
+msgstr "Poslední výskyt"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:371
 msgid "&Last occurrence"
 msgstr "Poslední výskyt"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:390
+#, fuzzy
+msgid "Next occurrence (Alt + &N)"
+msgstr "&Následující výskyt"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:392
 msgid "&Next occurrence"
 msgstr "&Následující výskyt"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
+#, fuzzy
+msgid "Previous occurrence (Alt + &P)"
+msgstr "&Předchozí výskyt"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:413
 msgid "&Previous occurrence"
 msgstr "&Předchozí výskyt"
@@ -947,6 +963,9 @@ msgid "Disambiguation analysis of redirect"
 msgstr "Rozcestníková analýza přesměrování"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:463
+msgid "Reload (Alt + &R)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:465
 msgid "&Reload"
 msgstr "Obnovit"
@@ -966,11 +985,18 @@ msgid "Redo"
 msgstr "Znovu"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:564
+#, fuzzy
+msgid "External Viewer (Alt + &E)"
+msgstr "Externí prohlížeč"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:566
 msgid "&External Viewer"
 msgstr "&Externí prohlížeč"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:598
+msgid "History (Alt + &H)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:600
 msgid "&History"
 msgstr "&Historie"

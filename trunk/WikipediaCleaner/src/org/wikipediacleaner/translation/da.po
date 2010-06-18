@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-16 20:51+0200\n"
-"PO-Revision-Date: 2010-05-06 15:40+0000\n"
-"Last-Translator: Steen Thomassen <Unknown>\n"
+"POT-Creation-Date: 2010-06-18 19:03+0200\n"
+"PO-Revision-Date: 2010-06-18 16:04+0000\n"
+"Last-Translator: Joe Hansen <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-05-06 22:48+0000\n"
+"X-Launchpad-Export-Date: 2010-06-18 16:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
@@ -63,11 +63,11 @@ msgstr "Slet"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:117
 msgid "Check category"
-msgstr ""
+msgstr "Tjek kategori"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:118
 msgid "View image"
-msgstr ""
+msgstr "Se billede"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
@@ -147,7 +147,7 @@ msgstr "&Luk"
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:169
 #, java-format
 msgid "Analysis - {0}"
-msgstr ""
+msgstr "Analyse - {0}"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:182
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:377
@@ -266,9 +266,8 @@ msgid "Load"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:258
-#, fuzzy
 msgid "all errors"
-msgstr "Indlæsnings fejl"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:262
 msgid "only"
@@ -327,13 +326,11 @@ msgid "The page {0} doesn't exist on Wikipedia"
 msgstr "Siden {0} findes ikke på Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:667
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "The error n°{0} hasn''t been found in the page {1}.\n"
 "Do you want to mark it as fixed ?"
 msgstr ""
-"Fejl nr {0} er stadig fundet i siden..\n"
-"Er du sikker på at du vil mærkere den som rettet?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:766
 #, java-format
@@ -523,9 +520,8 @@ msgid "&Help"
 msgstr "&Hjælp"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:386
-#, fuzzy
 msgid "S&ystem Options"
-msgstr "&Indstillinger"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:390
 msgid "&Idea ? Bug ?"
@@ -899,21 +895,34 @@ msgid "Disambiguation"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
+msgid "First occurrence (Alt + &F)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:317
 msgid "&First occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:369
+msgid "Last occurrence (Alt + &L)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:371
 msgid "&Last occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:390
+#, fuzzy
+msgid "Next occurrence (Alt + &N)"
+msgstr "&Næste forekomst"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:392
 msgid "&Next occurrence"
 msgstr "&Næste forekomst"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
+msgid "Previous occurrence (Alt + &P)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:413
 msgid "&Previous occurrence"
 msgstr ""
@@ -927,6 +936,9 @@ msgid "Disambiguation analysis of redirect"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:463
+msgid "Reload (Alt + &R)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:465
 msgid "&Reload"
 msgstr "&Genindlæs"
@@ -946,11 +958,18 @@ msgid "Redo"
 msgstr "Omgør"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:564
+#, fuzzy
+msgid "External Viewer (Alt + &E)"
+msgstr "Ekstern visning"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:566
 msgid "&External Viewer"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:598
+msgid "History (Alt + &H)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:600
 msgid "&History"
 msgstr ""

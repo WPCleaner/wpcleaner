@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-16 20:51+0200\n"
+"POT-Creation-Date: 2010-06-18 19:03+0200\n"
 "PO-Revision-Date: 2009-08-01 22:01+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -886,23 +886,38 @@ msgid "Disambiguation"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
+#, fuzzy
+msgid "First occurrence (Alt + &F)"
+msgstr "Olay"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:317
 #, fuzzy
 msgid "&First occurrence"
 msgstr "Olay"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:369
+#, fuzzy
+msgid "Last occurrence (Alt + &L)"
+msgstr "Olay"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:371
 #, fuzzy
 msgid "&Last occurrence"
 msgstr "Olay"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:390
+msgid "Next occurrence (Alt + &N)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:392
 msgid "&Next occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
+#, fuzzy
+msgid "Previous occurrence (Alt + &P)"
+msgstr "Olay"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:413
 #, fuzzy
 msgid "&Previous occurrence"
@@ -917,6 +932,9 @@ msgid "Disambiguation analysis of redirect"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:463
+msgid "Reload (Alt + &R)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:465
 msgid "&Reload"
 msgstr "&Tekrar Yükle"
@@ -936,11 +954,17 @@ msgid "Redo"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:564
+msgid "External Viewer (Alt + &E)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:566
 msgid "&External Viewer"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:598
+msgid "History (Alt + &H)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:600
 msgid "&History"
 msgstr ""

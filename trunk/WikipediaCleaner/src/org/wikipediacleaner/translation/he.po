@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-16 20:51+0200\n"
+"POT-Creation-Date: 2010-06-18 19:03+0200\n"
 "PO-Revision-Date: 2010-03-28 13:33+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -894,23 +894,39 @@ msgid "Disambiguation"
 msgstr "פירושון"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
+#, fuzzy
+msgid "First occurrence (Alt + &F)"
+msgstr "המו&פע הבא"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:317
 #, fuzzy
 msgid "&First occurrence"
 msgstr "המו&פע הבא"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:369
+#, fuzzy
+msgid "Last occurrence (Alt + &L)"
+msgstr "המו&פע הבא"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:371
 #, fuzzy
 msgid "&Last occurrence"
 msgstr "המו&פע הבא"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:390
+#, fuzzy
+msgid "Next occurrence (Alt + &N)"
+msgstr "המו&פע הבא"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:392
 msgid "&Next occurrence"
 msgstr "המו&פע הבא"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
+#, fuzzy
+msgid "Previous occurrence (Alt + &P)"
+msgstr "המו&פע הבא"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:413
 #, fuzzy
 msgid "&Previous occurrence"
@@ -925,6 +941,9 @@ msgid "Disambiguation analysis of redirect"
 msgstr "ניתוח הפירושון של ההפניה"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:463
+msgid "Reload (Alt + &R)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:465
 msgid "&Reload"
 msgstr "&טען מחדש"
@@ -944,11 +963,18 @@ msgid "Redo"
 msgstr "בצע שוב"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:564
+#, fuzzy
+msgid "External Viewer (Alt + &E)"
+msgstr "תוכנת צפייה חיצונית"
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:566
 msgid "&External Viewer"
 msgstr "תוכנת &צפייה חיצונית"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:598
+msgid "History (Alt + &H)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/PageWindow.java:600
 msgid "&History"
 msgstr ""
