@@ -22,6 +22,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.wikipediacleaner.i18n.GT;
+
 
 /**
  * A simple class keeping version informations. 
@@ -33,10 +35,13 @@ public final class Version {
 
   public final static String MESSAGE =
     "<html>" +
-    "I hope you'll like WikiCleaner.<br><br>" +
-    "!NEW! - WikiCleaner configuration is now available online, check the System configuration.<br>" +
-    "Many new features added for the Check Wiki project : try them !<br><br>" +
-    "Please, report any other problem you find to me." +
+    GT._("I hope you'll like WikiCleaner.") +
+    "<br><br>" +
+    GT._("!NEW! - WikiCleaner configuration is now available online, check the System configuration.") +
+    "<br>" +
+    GT._("Many new features added for the Check Wiki project : try them !") +
+    "<br><br>" +
+    GT._("Please, report any other problem you find to me.") +
     "</html>";
   public final static boolean HIGHLIGHT = false;
 }

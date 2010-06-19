@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-18 19:03+0200\n"
+"POT-Creation-Date: 2010-06-19 15:00+0200\n"
 "PO-Revision-Date: 2010-06-11 16:17+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -16,6 +16,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2010-06-11 20:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#: org/wikipediacleaner/Version.java:38
+msgid "I hope you'll like WikiCleaner."
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:40
+msgid ""
+"!NEW! - WikiCleaner configuration is now available online, check the System "
+"configuration."
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:42
+msgid "Many new features added for the Check Wiki project : try them !"
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:44
+msgid "Please, report any other problem you find to me."
+msgstr ""
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
 #, java-format
@@ -160,7 +178,6 @@ msgid "Sort"
 msgstr "Řadit"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:356
-#: org/wikipediacleaner/gui/swing/MainWindow.java:380
 msgid "&Options"
 msgstr "&Možnosti"
 
@@ -524,8 +541,13 @@ msgstr "Odhlásit"
 msgid "&Help"
 msgstr "Nápověda"
 
+#: org/wikipediacleaner/gui/swing/MainWindow.java:380
+msgid "Options (Alt + &O)"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/MainWindow.java:386
-msgid "S&ystem Options"
+#, fuzzy
+msgid "System Options (Alt + &Y)"
 msgstr "S&ystémové volby"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:390
