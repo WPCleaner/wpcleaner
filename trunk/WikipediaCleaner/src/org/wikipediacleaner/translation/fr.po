@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-19 15:00+0200\n"
+"POT-Creation-Date: 2010-06-19 17:47+0200\n"
 "PO-Revision-Date: 2010-06-18 07:17+0000\n"
 "Last-Translator: A2 <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -44,32 +44,36 @@ msgstr ""
 msgid "Page {0}:"
 msgstr "Page {0} :"
 
-#: org/wikipediacleaner/api/check/CheckError.java:180
+#: org/wikipediacleaner/api/check/CheckError.java:188
 msgid "Deactivated"
 msgstr "Désactivé"
 
-#: org/wikipediacleaner/api/check/CheckError.java:182
+#: org/wikipediacleaner/api/check/CheckError.java:190
 msgid "Low priority"
 msgstr "Priorité faible"
 
-#: org/wikipediacleaner/api/check/CheckError.java:184
+#: org/wikipediacleaner/api/check/CheckError.java:192
 msgid "Middle priority"
 msgstr "Priorité moyenne"
 
-#: org/wikipediacleaner/api/check/CheckError.java:186
+#: org/wikipediacleaner/api/check/CheckError.java:194
 msgid "Top priority"
 msgstr "Priorité maximale"
 
-#: org/wikipediacleaner/api/check/CheckError.java:188
+#: org/wikipediacleaner/api/check/CheckError.java:196
+msgid "For Bot"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckError.java:198
 msgid "Priority unknown"
 msgstr "Priorité inconnue"
 
-#: org/wikipediacleaner/api/check/CheckError.java:407
+#: org/wikipediacleaner/api/check/CheckError.java:418
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "Erreur n°{0} ({1} - {2}) - {3}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:414
+#: org/wikipediacleaner/api/check/CheckError.java:425
 msgid "Error unkown from WikiCleaner"
 msgstr "Erreur inconnue de WikiCleaner"
 
