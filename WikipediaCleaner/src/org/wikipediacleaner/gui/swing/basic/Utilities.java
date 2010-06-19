@@ -32,6 +32,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -54,6 +55,10 @@ import org.wikipediacleaner.images.EnumImageSize;
 public class Utilities {
 
   private static Log log = LogFactory.getLog(Utilities.class);
+
+  public final static int YES_ALL_OPTION = 101;
+
+  public final static int NO_ALL_OPTION = 102;
 
   /**
    * Display an error message.
@@ -181,6 +186,44 @@ public class Utilities {
         parent, message,
         "Wikipedia Cleaner",
         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+  }
+
+  /**
+   * Display a question with Yes/Yes all/No/No all answers.
+   * 
+   * @param parent Parent component.
+   * @param message Message.
+   * @return Answer {@link JOptionPane#YES_OPTION} or {@link JOptionPane#NO_OPTION}.
+   */
+  public static int displayYesNoAllWarning(Component parent, String message) {
+    Object[] options = new Object[] {
+        GT._("Yes"),
+        GT._("Yes to all"),
+        GT._("No"),
+        GT._("No to all"),
+    }; 
+    JOptionPane pane = new JOptionPane(
+        message, JOptionPane.WARNING_MESSAGE,
+        JOptionPane.YES_NO_OPTION, null, options);
+    JDialog dialog = pane.createDialog(parent, "Wikipedia Cleaner");
+    dialog.setVisible(true);
+    Object selectedValue = pane.getValue();
+    if (selectedValue == null) {
+      return JOptionPane.CLOSED_OPTION;
+    }
+    if (options[0].equals(selectedValue)) {
+      return JOptionPane.YES_OPTION;
+    }
+    if (options[1].equals(selectedValue)) {
+      return YES_ALL_OPTION;
+    }
+    if (options[2].equals(selectedValue)) {
+      return JOptionPane.NO_OPTION;
+    }
+    if (options[3].equals(selectedValue)) {
+      return NO_ALL_OPTION;
+    }
+    return JOptionPane.CLOSED_OPTION;
   }
 
   /**

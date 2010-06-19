@@ -131,6 +131,8 @@ public class CheckWikiProjectWindow extends PageWindow {
 
   private JList listPages;
   private DefaultListModel modelPages;
+  boolean yesAll = false;
+  boolean noAll = false;
 
   JTabbedPane contentPane;
 
@@ -628,6 +630,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     /**
      * Action called when a page is selected (after page is loaded).
      */
+    @SuppressWarnings("fallthrough")
     void actionPageSelected() {
       if (page == null) {
         pane.remove(this);
@@ -660,15 +663,25 @@ public class CheckWikiProjectWindow extends PageWindow {
       if ((error != null) && (errorFound == false)) {
         Configuration config = Configuration.getConfiguration();
         int answer = JOptionPane.YES_OPTION;
-        if (!config.getBoolean(
-            Configuration.BOOLEAN_CHECK_MARK_AS_FIXED,
-            Configuration.DEFAULT_CHECK_MARK_AS_FIXED)) {
-          answer = displayYesNoWarning(GT._(
-              "The error n°{0} hasn''t been found in the page {1}.\n" +
-              "Do you want to mark it as fixed ?",
-              new Object[] { error.getAlgorithm().getErrorNumber(), page.getTitle() }));
+        if (yesAll) {
+          answer = Utilities.YES_ALL_OPTION;
+        } else if (noAll) {
+          answer = Utilities.NO_ALL_OPTION;
+        } else {
+          if (!config.getBoolean(
+              Configuration.BOOLEAN_CHECK_MARK_AS_FIXED,
+              Configuration.DEFAULT_CHECK_MARK_AS_FIXED)) {
+            answer = displayYesNoAllWarning(GT._(
+                "The error n°{0} hasn''t been found in the page {1}.\n" +
+                "Do you want to mark it as fixed ?",
+                new Object[] { error.getAlgorithm().getErrorNumber(), page.getTitle() }));
+          }
         }
-        if (answer == JOptionPane.YES_OPTION) {
+        switch (answer) {
+        case Utilities.YES_ALL_OPTION:
+          yesAll = true;
+          // Go through
+        case JOptionPane.YES_OPTION:
           error.remove(page);
           if (errorCount == 0) {
             pane.remove(this);
@@ -676,6 +689,9 @@ public class CheckWikiProjectWindow extends PageWindow {
           markPageAsFixed(error, error.getAlgorithm().getErrorNumber(), page);
           actionSelectErrorType();
           return;
+        case Utilities.NO_ALL_OPTION:
+          noAll = true;
+          break;
         }
       }
       int index = modelErrors.indexOf(listAllErrors.getSelectedItem());
@@ -1259,6 +1275,8 @@ public class CheckWikiProjectWindow extends PageWindow {
               }
             }
           }
+          yesAll = false;
+          noAll = false;
           for (CheckWikiContentPanel contentPanel : contentPanels) {
             contentPanel.actionPageSelected();
           }
