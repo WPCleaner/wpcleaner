@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-19 17:47+0200\n"
+"POT-Creation-Date: 2010-06-19 23:21+0200\n"
 "PO-Revision-Date: 2010-06-03 20:51+0000\n"
 "Last-Translator: Eduard Gotwig <eduardgotwig@gmail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -281,116 +281,116 @@ msgstr ""
 msgid "Semi-automatic disambiguation fixing"
 msgstr "Teilautomatische Korrigierung der Begriffsklärung"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:162
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:164
 msgid "Check Wikipedia"
 msgstr "Bei Wikipedia nachprüfen"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:253
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:255
 msgid "Load"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:258
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:260
 msgid "all errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:262
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:264
 msgid "only"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:267
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:269
 msgid "Comma separated list of errors to work on."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:276
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:278
 msgid "except"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:281
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:283
 msgid "Comma separated list of errors to ignore."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:297
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:299
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:333
 msgid "Maximum number of errors for Check Wiki :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:311
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:313
 msgid "List of errors detected :"
 msgstr "Liste der entdeckten Fehler :"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:332
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:334
 msgid "Reload error"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:338
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:340
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:105
 msgid "Detail"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:345
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:347
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:111
 msgid "List on toolserver"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:379
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:381
 msgid "Pages"
 msgstr "Seiten"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:395
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:397
 msgid "&Load pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:539
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:541
 msgid "Mark as Fixed"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:637
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:640
 #, java-format
 msgid "The page {0} doesn't exist on Wikipedia"
 msgstr "Die Seite {0} existiert nicht auf Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:667
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:675
 #, java-format
 msgid ""
 "The error n°{0} hasn''t been found in the page {1}.\n"
 "Do you want to mark it as fixed ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:766
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:782
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:777
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:793
 #, java-format
 msgid ""
 "The error n°{0} is still found {1} times in the page.\n"
 "Are you really sure that you want to mark it as fixed ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:784
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:800
 #, java-format
 msgid ""
 "The error n°{0} is still found in the page.\n"
 "Are you really sure that you want to mark it as fixed ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:796
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:812
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:903
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:919
 msgid "A comment is required for sending the page."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1013
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1029
 #, java-format
 msgid "Detection by [[{0}]]"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1190
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1206
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
@@ -1214,13 +1214,29 @@ msgstr ""
 msgid "Wikipedia Cleaner is working..."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:73
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:78
 #, java-format
 msgid "An error occured: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:74
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:79
 msgid "An unknown error occured"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:200
+msgid "Yes"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:201
+msgid "Yes to all"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:202
+msgid "No"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:203
+msgid "No to all"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99

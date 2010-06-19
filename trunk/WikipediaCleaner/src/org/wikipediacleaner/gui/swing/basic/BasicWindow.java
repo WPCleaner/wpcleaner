@@ -306,6 +306,16 @@ public abstract class BasicWindow {
   }
 
   /**
+   * Display a question with Yes/Yes all/No/No all answers.
+   * 
+   * @param message Message.
+   * @return Answer {@link JOptionPane#YES_OPTION} or {@link JOptionPane#NO_OPTION}.
+   */
+  public int displayYesNoAllWarning(String message) {
+    return Utilities.displayYesNoAllWarning(parentComponent, message);
+  }
+
+  /**
    * Display an information message.
    * 
    * @param message Message.
