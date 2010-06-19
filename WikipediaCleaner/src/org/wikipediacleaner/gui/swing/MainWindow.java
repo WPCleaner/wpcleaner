@@ -377,13 +377,13 @@ public class MainWindow
     buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     buttonOptions = Utilities.createJButton(
         "gnome-preferences-other.png", EnumImageSize.NORMAL,
-        GT._("&Options"), false);
+        GT._("Options (Alt + &O)"), false);
     buttonOptions.setActionCommand(ACTION_OPTIONS);
     buttonOptions.addActionListener(this);
     buttonPanel.add(buttonOptions);
     buttonOptionsSystem = Utilities.createJButton(
         "gnome-preferences-system.png", EnumImageSize.NORMAL,
-        GT._("S&ystem Options"), false);
+        GT._("System Options (Alt + &Y)"), false);
     buttonOptionsSystem.setActionCommand(ACTION_OPTIONS_SYSTEM);
     buttonOptionsSystem.addActionListener(this);
     buttonPanel.add(buttonOptionsSystem);
