@@ -826,7 +826,7 @@ public enum EnumWikipedia {
     }
     if (configuration != null) {
       String tmp = configuration.getProperty("check_wiki_force", null);
-      if (("Y".equalsIgnoreCase(tmp)) || ("YES".equalsIgnoreCase(tmp))) {
+      if ((tmp != null) && Boolean.valueOf(tmp)) {
         return true;
       }
     }

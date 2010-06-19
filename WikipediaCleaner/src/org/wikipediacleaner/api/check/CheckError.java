@@ -48,6 +48,7 @@ public class CheckError {
   public final static int PRIORITY_TOP = 1;
   public final static int PRIORITY_MIDDLE = 2;
   public final static int PRIORITY_LOWEST = 3;
+  public final static int PRIORITY_BOT_ONLY = 4;
 
   /**
    * Analyze a page to find error types.
@@ -128,6 +129,12 @@ public class CheckError {
         //
       }
     }
+    if (errorPriority == PRIORITY_DEACTIVATED) {
+      String botOnly = config.getProperty(errorPrefix + "bot_" + code + "wiki");
+      if ((botOnly != null) && Boolean.valueOf(botOnly)) {
+        errorPriority = PRIORITY_BOT_ONLY;
+      }
+    }
     return errorPriority;
   }
 
@@ -138,7 +145,8 @@ public class CheckError {
   public static boolean isPriorityActive(int priority) {
     if ((priority == PRIORITY_TOP) ||
         (priority == PRIORITY_MIDDLE) ||
-        (priority == PRIORITY_LOWEST)) {
+        (priority == PRIORITY_LOWEST) ||
+        (priority == PRIORITY_BOT_ONLY)) {
       return true;
     }
     return false;
@@ -184,6 +192,8 @@ public class CheckError {
       return GT._("Middle priority");
     case PRIORITY_TOP:
       return GT._("Top priority");
+    case PRIORITY_BOT_ONLY:
+      return GT._("For Bot");
     default:
       return GT._("Priority unknown");
     }
@@ -291,6 +301,7 @@ public class CheckError {
         while (((line = reader.readLine()) != null) && !line.startsWith("</pre>")) {
           // TODO: Use something like Apache Commons Lang StringEscapeUtils ?
           line = line.replaceAll(Pattern.quote("&#039;"), "'");
+          line = line.replaceAll(Pattern.quote("&quot;"), "\"");
           error.addPage(line);
         }
       } catch (UnsupportedEncodingException e) {
