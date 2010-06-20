@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-19 23:21+0200\n"
-"PO-Revision-Date: 2010-06-18 07:17+0000\n"
-"Last-Translator: A2 <Unknown>\n"
+"PO-Revision-Date: 2010-06-20 07:55+0000\n"
+"Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-06-18 09:04+0000\n"
+"X-Launchpad-Export-Date: 2010-06-20 08:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -23,21 +23,24 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:38
 msgid "I hope you'll like WikiCleaner."
-msgstr ""
+msgstr "J’espère que vous aimerez WikiCleaner"
 
 #: org/wikipediacleaner/Version.java:40
 msgid ""
 "!NEW! - WikiCleaner configuration is now available online, check the System "
 "configuration."
 msgstr ""
+"NOUVEAU — La configuration de WikiCleaner est disponible en ligne, regardez "
+"les Options systèmes."
 
 #: org/wikipediacleaner/Version.java:42
 msgid "Many new features added for the Check Wiki project : try them !"
 msgstr ""
+"Essayez les nouvelles fonctionnalités pour le projet Correction syntaxique !"
 
 #: org/wikipediacleaner/Version.java:44
 msgid "Please, report any other problem you find to me."
-msgstr ""
+msgstr "S'il vous plait, rapportez-moi les problèmes rencontrés."
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
 #, java-format
@@ -62,7 +65,7 @@ msgstr "Priorité maximale"
 
 #: org/wikipediacleaner/api/check/CheckError.java:196
 msgid "For Bot"
-msgstr ""
+msgstr "Pour bot"
 
 #: org/wikipediacleaner/api/check/CheckError.java:198
 msgid "Priority unknown"
@@ -269,7 +272,8 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -562,12 +566,11 @@ msgstr "&Aide"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:380
 msgid "Options (Alt + &O)"
-msgstr ""
+msgstr "Options (Alt + &O)"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:386
-#, fuzzy
 msgid "System Options (Alt + &Y)"
-msgstr "&Options système"
+msgstr "Options systèmes (Alt + &Y)"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:390
 msgid "&Idea ? Bug ?"
@@ -951,7 +954,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr ""
+"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:281
 msgid "&Page :"
@@ -962,36 +966,32 @@ msgid "Disambiguation"
 msgstr "Homonymie"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
-#, fuzzy
 msgid "First occurrence (Alt + &F)"
-msgstr "&Première occurence"
+msgstr "Première occurence (Alt + &Q)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:317
 msgid "&First occurrence"
 msgstr "&Première occurence"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:369
-#, fuzzy
 msgid "Last occurrence (Alt + &L)"
-msgstr "&Dernière occurence"
+msgstr "Dernière occurence (Alt + &S)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:371
 msgid "&Last occurrence"
 msgstr "&Dernière occurence"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:390
-#, fuzzy
 msgid "Next occurrence (Alt + &N)"
-msgstr "Occurence suiva&nte"
+msgstr "Prochaine occurence (Alt + &F)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:392
 msgid "&Next occurrence"
 msgstr "Occurence suiva&nte"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
-#, fuzzy
 msgid "Previous occurrence (Alt + &P)"
-msgstr "&Occurence précédente"
+msgstr "Occurence précédente (Alt + &D)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:413
 msgid "&Previous occurrence"
@@ -1007,7 +1007,7 @@ msgstr "Analyse homonimique des redirections"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:463
 msgid "Reload (Alt + &R)"
-msgstr ""
+msgstr "Recharger (Alt + &R)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:465
 msgid "&Reload"
@@ -1028,9 +1028,8 @@ msgid "Redo"
 msgstr "Refaire"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:564
-#, fuzzy
 msgid "External Viewer (Alt + &E)"
-msgstr "Visualisateur externe"
+msgstr "Navigateur externe (Alt + &E)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:566
 msgid "&External Viewer"
@@ -1038,7 +1037,7 @@ msgstr "Affichage externe"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:598
 msgid "History (Alt + &H)"
-msgstr ""
+msgstr "Historique (Alt + &H)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:600
 msgid "&History"
@@ -1069,7 +1068,7 @@ msgstr "Dernière modification à {0}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:819
 msgid "Fix &redirects"
-msgstr "Corriger les &redirects"
+msgstr "Corriger les &redirections"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:828
 #, java-format
@@ -1279,19 +1278,19 @@ msgstr "Une erreur inconnue s'est produite"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:200
 msgid "Yes"
-msgstr ""
+msgstr "Oui"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:201
 msgid "Yes to all"
-msgstr ""
+msgstr "Oui pour tous"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:202
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:203
 msgid "No to all"
-msgstr ""
+msgstr "Non pour tous"
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
 #, java-format
