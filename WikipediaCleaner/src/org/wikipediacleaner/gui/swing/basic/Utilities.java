@@ -413,7 +413,7 @@ public class Utilities {
    */
   public static boolean isDesktopSupported() {
     try {
-      Class desktop = Class.forName("java.awt.Desktop");
+      Class<?> desktop = Class.forName("java.awt.Desktop");
       Method method = desktop.getMethod("isDesktopSupported", (Class[]) null);
       return (Boolean) method.invoke(null, (Object[]) null);
     } catch (ClassNotFoundException e) {
@@ -441,7 +441,7 @@ public class Utilities {
   public static void browseURL(URI uri) {
     if (isDesktopSupported()) {
       try {
-        Class desktopClass = Class.forName("java.awt.Desktop");
+        Class<?> desktopClass = Class.forName("java.awt.Desktop");
         Method method = desktopClass.getMethod("getDesktop", (Class[]) null);
         Object desktop = method.invoke(null, (Object[]) null);
         method = desktopClass.getMethod("browse", new Class[] { URI.class });
@@ -523,7 +523,7 @@ public class Utilities {
    */
   public static void addRowSorter(JTable table, TableModel model) {
     try {
-      Class tableRowSorterClass = Class.forName("javax.swing.table.TableRowSorter");
+      Class<?> tableRowSorterClass = Class.forName("javax.swing.table.TableRowSorter");
       Constructor ctor = tableRowSorterClass.getConstructor(new Class[] { TableModel.class });
       Object rowSorter = ctor.newInstance(model);
       Class rowSorterClass = Class.forName("javax.swing.RowSorter");

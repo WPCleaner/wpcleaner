@@ -20,12 +20,9 @@ package org.wikipediacleaner.gui.swing;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -49,7 +46,6 @@ import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -92,6 +88,7 @@ import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListPopupListener;
+import org.wikipediacleaner.gui.swing.component.JTabbedPaneCloseIcon;
 import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
 import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
@@ -1115,60 +1112,6 @@ public class CheckWikiProjectWindow extends PageWindow {
     }
   }
 
-  /**
-   * A close icon for JTabbedPane.
-   */
-  private static class CloseIcon implements Icon {
-
-    private final static int SIZE = 10;
-    transient Rectangle position = null; 
-
-    /**
-     * @param pane Pane component.
-     * @param component Page.
-     */
-    public CloseIcon(final JTabbedPane pane, final Component component) {
-      MouseAdapter adapter = new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-          if (!e.isConsumed() &&
-              (position != null) &&
-              position.contains(e.getX(), e.getY())) {
-            for (int i = pane.getComponentCount(); i > 0; i--) {
-              if (pane.getComponent(i - 1) == component) {
-                pane.remove(i - 1);
-                pane.removeMouseListener(this);
-              }
-            }
-          }
-        }
-      };
-      pane.addMouseListener(adapter);
-    }
-
-    public int getIconHeight() {
-      return SIZE;
-    }
-
-    public int getIconWidth() {
-      return SIZE;
-    }
-
-    /* (non-Javadoc)
-     * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics, int, int)
-     */
-    public void paintIcon(@SuppressWarnings("unused") Component c, Graphics g, int x, int y) {
-      if (g instanceof Graphics2D) {
-        Graphics2D g2 = (Graphics2D) g.create();
-        g2.draw3DRect(x, y, getIconWidth() - 1, getIconHeight() - 1, false);
-        g2.drawLine(x + 2, y + 2, x + getIconWidth() - 3, y + getIconHeight() - 3);
-        g2.drawLine(x + 2, y + getIconHeight() - 3, x + getIconWidth() - 3, y + 2);
-        g2.dispose();
-      }
-      position = new Rectangle(x, y, getIconWidth(), getIconHeight());
-    }
-  }
-
   /* (non-Javadoc)
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
@@ -1260,7 +1203,9 @@ public class CheckWikiProjectWindow extends PageWindow {
                   contentPane, page,
                   (CheckError) modelAllErrors.getSelectedItem());
               contentPane.add(contentPanel);
-              contentPane.setIconAt(contentPane.getComponentCount() - 1, new CloseIcon(contentPane, contentPanel));
+              contentPane.setIconAt(
+                  contentPane.getComponentCount() - 1,
+                  new JTabbedPaneCloseIcon(contentPane, contentPanel));
               contentPane.setSelectedComponent(contentPanel);
               contentPanels.add(contentPanel);
               if (page.isRedirect()) {
