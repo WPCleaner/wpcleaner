@@ -973,6 +973,16 @@ public class CheckWikiProjectWindow extends PageWindow {
     private void actionValidate() {
       actionSelectError();
       updateComment(null);
+      Object selected = listErrors.getSelectedValue();
+      if (selected instanceof CheckErrorPage) {
+        CheckErrorPage errorPage = (CheckErrorPage) selected;
+        if (!errorPage.getErrorFound()) {
+          int index = listErrors.getSelectedIndex();
+          if (index < modelErrors.getSize() - 1) {
+            listErrors.setSelectedIndex(index + 1);
+          }
+        }
+      }
     }
 
     /**
