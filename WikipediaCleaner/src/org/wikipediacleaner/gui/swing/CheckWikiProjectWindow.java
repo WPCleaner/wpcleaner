@@ -88,7 +88,7 @@ import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListPopupListener;
-import org.wikipediacleaner.gui.swing.component.JTabbedPaneCloseIcon;
+import org.wikipediacleaner.gui.swing.component.JCloseableTabbedPane;
 import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
 import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
@@ -215,7 +215,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.gridx++;
     constraints.weightx = 1;
     constraints.weighty = 1;
-    contentPane = new JTabbedPane();
+    contentPane = new JCloseableTabbedPane();
     contentPane.setPreferredSize(new Dimension(900, 600));
     panel.add(contentPane, constraints);
     constraints.gridy++;
@@ -1213,9 +1213,6 @@ public class CheckWikiProjectWindow extends PageWindow {
                   contentPane, page,
                   (CheckError) modelAllErrors.getSelectedItem());
               contentPane.add(contentPanel);
-              contentPane.setIconAt(
-                  contentPane.getComponentCount() - 1,
-                  new JTabbedPaneCloseIcon(contentPane, contentPanel));
               contentPane.setSelectedComponent(contentPanel);
               contentPanels.add(contentPanel);
               if (page.isRedirect()) {
