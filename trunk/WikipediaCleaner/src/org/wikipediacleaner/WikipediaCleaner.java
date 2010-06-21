@@ -21,10 +21,12 @@ package org.wikipediacleaner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.RepaintManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.wikipediacleaner.gui.swing.MainWindow;
+import org.wikipediacleaner.gui.swing.component.CheckThreadViolationRepaintManager;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 
@@ -34,12 +36,18 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public class WikipediaCleaner {
 
+  private final static boolean CHECK_EDT = false;
+
   /**
    * @param args
    */
   public static void main(String[] args) {
     // Log levels
     Logger.getLogger("org.lobobrowser").setLevel(Level.WARNING);
+
+    if (CHECK_EDT) {
+      RepaintManager.setCurrentManager(new CheckThreadViolationRepaintManager());
+    }
 
     // User Interface
     try {
