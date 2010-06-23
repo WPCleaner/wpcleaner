@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-21 23:25+0200\n"
-"PO-Revision-Date: 2010-03-28 13:33+0000\n"
+"PO-Revision-Date: 2010-06-23 15:43+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-08 18:40+0000\n"
+"X-Launchpad-Export-Date: 2010-06-23 16:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:38
@@ -74,9 +74,9 @@ msgid "Error unkown from WikiCleaner"
 msgstr "שגיאה בלתי ידועה מ־WikiCleaner"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:136
-#, fuzzy, java-format
+#, java-format
 msgid "Replace with {0}"
-msgstr "&החלף ב- {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:137
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:614
@@ -102,7 +102,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
-msgstr "מרווח שם"
+msgstr "מרחב שם"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:253
 msgid "Title"
@@ -264,7 +264,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
@@ -320,9 +321,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:337
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:105
-#, fuzzy
 msgid "Detail"
-msgstr "פרטים"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:344
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:111
@@ -535,18 +535,16 @@ msgid "Options (Alt + &O)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:386
-#, fuzzy
 msgid "System Options (Alt + &Y)"
-msgstr "&אפשרויות"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:390
 msgid "&Idea ? Bug ?"
 msgstr "&רעיון ? באג ?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:426
-#, fuzzy
 msgid "Page"
-msgstr "מזהה עמוד"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:462
 msgid "&Random page"
@@ -604,9 +602,8 @@ msgid "You must input your password before login"
 msgstr "עליך להזין את הסיסמה שלך לפני ההתחברות"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:756
-#, fuzzy
 msgid "You can learn how to configure WikiCleaner at the following URL:"
-msgstr "תוכל ללמוד כיצד להוסיף עוד ויקיפדיות בכתובת הבאה:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:773
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
@@ -635,11 +632,10 @@ msgid "You must input a page name for running a disambiguation analysis"
 msgstr "עליך להזין שם עמוד להרצת ניתוח פירושון"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:860
-#, fuzzy
 msgid ""
 "There's no known list of disambiguation pages for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
-msgstr "אין רשימה ידוע של עמודי פירושונים עבור ויקיפדיה זו."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:883
 msgid ""
@@ -919,43 +915,36 @@ msgid "Disambiguation"
 msgstr "פירושון"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
-#, fuzzy
 msgid "First occurrence (Alt + &F)"
-msgstr "המו&פע הבא"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:317
-#, fuzzy
 msgid "&First occurrence"
-msgstr "המו&פע הבא"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:369
-#, fuzzy
 msgid "Last occurrence (Alt + &L)"
-msgstr "המו&פע הבא"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:371
-#, fuzzy
 msgid "&Last occurrence"
-msgstr "המו&פע הבא"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:390
-#, fuzzy
 msgid "Next occurrence (Alt + &N)"
-msgstr "המו&פע הבא"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:392
 msgid "&Next occurrence"
 msgstr "המו&פע הבא"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
-#, fuzzy
 msgid "Previous occurrence (Alt + &P)"
-msgstr "המו&פע הבא"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:413
-#, fuzzy
 msgid "&Previous occurrence"
-msgstr "המו&פע הבא"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:427
 msgid "Full analysis of redirect"
@@ -988,9 +977,8 @@ msgid "Redo"
 msgstr "בצע שוב"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:564
-#, fuzzy
 msgid "External Viewer (Alt + &E)"
-msgstr "תוכנת צפייה חיצונית"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:566
 msgid "&External Viewer"
@@ -1401,10 +1389,6 @@ msgstr ""
 #~ msgid "Work"
 #~ msgstr "עבודה"
 
-#, fuzzy
-#~ msgid "Delete it"
-#~ msgstr "מחק"
-
 #~ msgid "Retrieving namespaces"
 #~ msgstr "מאחזר את מרווחי השם"
 
@@ -1413,10 +1397,8 @@ msgstr ""
 #~ "This function will do all the replacements in all selected pages.\n"
 #~ "It may modify a lot of pages in a short period of time.\n"
 #~ "On some Wikipedia projects, you may need the bot status for doing this.\n"
-#~ "Please, check if you need the bot status by reading the rules of "
-#~ "Wikipedia.\n"
-#~ "Also, verify again the texts you have inputed before running this "
-#~ "function.\n"
+#~ "Please, check if you need the bot status by reading the rules of Wikipedia.\n"
+#~ "Also, verify again the texts you have inputed before running this function.\n"
 #~ "Do you want to continue ?"
 #~ msgstr ""
 #~ "!!! אזהרה !!!\n"
@@ -1428,10 +1410,9 @@ msgstr ""
 #~ "האם ברצונך להמשיך ?"
 
 #~ msgid ""
-#~ "The page {0} has been modified on Wikipedia since you have loaded the "
-#~ "page.\n"
-#~ "To avoid modification conflicts, you need to reload the page and make "
-#~ "your modifications again.\n"
+#~ "The page {0} has been modified on Wikipedia since you have loaded the page.\n"
+#~ "To avoid modification conflicts, you need to reload the page and make your "
+#~ "modifications again.\n"
 #~ "(Local revision: {1}, Wikipedia revision: {2})"
 #~ msgstr ""
 #~ "העמוד {0} נערך בויקיפדיה מאז שטענתם את העמוד.\n"
