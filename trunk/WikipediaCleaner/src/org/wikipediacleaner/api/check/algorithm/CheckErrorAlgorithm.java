@@ -92,4 +92,19 @@ public interface CheckErrorAlgorithm {
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(Page page, String contents, ArrayList<CheckErrorResult> errors);
+
+  /**
+   * @return List of possible global fixes.
+   */
+  public String[] getGlobalFixes();
+
+  /**
+   * Fix all the errors in the page.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Page contents after fix.
+   */
+  public String fix(String fixName, Page page, String contents);
 }

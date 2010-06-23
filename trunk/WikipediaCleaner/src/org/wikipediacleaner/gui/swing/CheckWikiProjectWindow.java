@@ -576,7 +576,6 @@ public class CheckWikiProjectWindow extends PageWindow {
         }
         
       });
-      listErrors.addMouseListener(new CheckErrorPageListPopupListener(getWikipedia()));
       JScrollPane scrollErrors = new JScrollPane(listErrors);
       scrollErrors.setMinimumSize(new Dimension(200, 200));
       scrollErrors.setPreferredSize(new Dimension(200, 300));
@@ -591,6 +590,8 @@ public class CheckWikiProjectWindow extends PageWindow {
 
       // Page contents
       textPage = new MediaWikiPane(getWikipedia(), page, CheckWikiProjectWindow.this);
+      listErrors.addMouseListener(
+          new CheckErrorPageListPopupListener(getWikipedia(), textPage, buttonValidate));
       textPage.setEditable(true);
       textPage.addPropertyChangeListener(
           MediaWikiPane.PROPERTY_MODIFIED,
