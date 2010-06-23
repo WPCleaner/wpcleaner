@@ -137,6 +137,25 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * @return List of possible global fixes.
+   */
+  public String[] getGlobalFixes() {
+    return null;
+  }
+
+  /**
+   * Fix all the errors in the page.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Page contents after fix.
+   */
+  public String fix(String fixName, Page page, String contents) {
+    throw new IllegalStateException("This algorithm has no global fixes");
+  }
+
+  /**
    * Search for simple text in page.
    * 
    * @param page Page.

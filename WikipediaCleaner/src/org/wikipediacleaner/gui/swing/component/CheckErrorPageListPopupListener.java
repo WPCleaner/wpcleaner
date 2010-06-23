@@ -18,9 +18,11 @@
 
 package org.wikipediacleaner.gui.swing.component;
 
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.AbstractButton;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -29,6 +31,7 @@ import javax.swing.JSeparator;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.gui.swing.action.CheckErrorGlobalFixAction;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -38,10 +41,16 @@ import org.wikipediacleaner.i18n.GT;
 public class CheckErrorPageListPopupListener extends MouseAdapter {
 
   private final EnumWikipedia wikipedia;
+  private final MediaWikiPane textComponent;
+  private final AbstractButton button;
 
   public CheckErrorPageListPopupListener(
-      EnumWikipedia wikipedia) {
+      EnumWikipedia wikipedia,
+      MediaWikiPane textComponent,
+      AbstractButton button) {
     this.wikipedia = wikipedia;
+    this.textComponent = textComponent;
+    this.button = button;
   }
 
   /* (non-Javadoc)
@@ -99,6 +108,19 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
     JMenuItem menuItem = new JMenuItem(GT._("Error n°{0}", algorithm.getErrorNumber()));
     menuItem.setEnabled(false);
     popup.add(menuItem);
+
+    // Global fixes
+    String[] fixes = algorithm.getGlobalFixes();
+    if ((fixes != null) && (fixes.length > 0)) {
+      popup.add(new JSeparator());
+      for (int i = 0; i < fixes.length; i++) {
+        menuItem = new JMenuItem(fixes[i]);
+        ActionListener action = new CheckErrorGlobalFixAction(
+            algorithm, fixes[i], error.getPage(), textComponent, button);
+        menuItem.addActionListener(action);
+        popup.add(menuItem);
+      }
+    }
 
     // Create sub menus
     popup.add(new JSeparator());
