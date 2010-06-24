@@ -44,6 +44,8 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
     boolean result = false;
     result |= simpleTextSearch(page, contents, errors, "&Aacute;", "Á");
     result |= simpleTextSearch(page, contents, errors, "&Agrave;", "À");
+    result |= simpleTextSearch(page, contents, errors, "&Aring;", "Å");
+    result |= simpleTextSearch(page, contents, errors, "&aacute;", "á");
     result |= simpleTextSearch(page, contents, errors, "&acirc;", "â");
     result |= simpleTextSearch(page, contents, errors, "&agrave;", "à");
     result |= simpleTextSearch(page, contents, errors, "&atilde;", "ã");
@@ -67,9 +69,11 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
     result |= simpleTextSearch(page, contents, errors, "&middot;", "·");
     result |= simpleTextSearch(page, contents, errors, "&minus;", "−");
     result |= simpleTextSearch(page, contents, errors, "&ne;", "≠");
+    result |= simpleTextSearch(page, contents, errors, "&ntilde;", "ñ");
     result |= simpleTextSearch(page, contents, errors, "&nu;", "ν");
     result |= simpleTextSearch(page, contents, errors, "&Omega;", "Ω");
     result |= simpleTextSearch(page, contents, errors, "&omega;", "ω");
+    result |= simpleTextSearch(page, contents, errors, "&ouml;", "ö");
     result |= simpleTextSearch(page, contents, errors, "&quot;", "\"");
     result |= simpleTextSearch(page, contents, errors, "&raquo;", "»");
     result |= simpleTextSearch(page, contents, errors, "&rarr;", "→");
