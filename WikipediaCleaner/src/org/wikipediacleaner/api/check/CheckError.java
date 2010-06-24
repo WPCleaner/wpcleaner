@@ -131,7 +131,7 @@ public class CheckError {
     }
     if (errorPriority == PRIORITY_DEACTIVATED) {
       String botOnly = config.getProperty(errorPrefix + "bot_" + code + "wiki");
-      if ((botOnly != null) && Boolean.valueOf(botOnly)) {
+      if ((botOnly != null) && Boolean.valueOf(botOnly.trim())) {
         errorPriority = PRIORITY_BOT_ONLY;
       }
     }
