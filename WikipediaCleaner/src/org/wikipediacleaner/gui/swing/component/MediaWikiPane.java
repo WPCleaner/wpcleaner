@@ -576,6 +576,26 @@ public class MediaWikiPane
   }
 
   /**
+   * Select previous occurence of text. 
+   */
+  public void selectPreviousOccurence() {
+    StyledDocument doc = getStyledDocument();
+    int lastStart = Integer.MIN_VALUE;
+    for (int pos = getSelectionStart(); pos > 0; pos = lastStart) {
+      Element run = doc.getCharacterElement(pos - 1);
+      lastStart = run.getStartOffset();
+      MutableAttributeSet attr = (MutableAttributeSet) run.getAttributes();
+      if ((attr != null) &&
+          (attr.getAttribute(MediaWikiConstants.ATTRIBUTE_TYPE) != null) &&
+          (attr.getAttribute(MediaWikiConstants.ATTRIBUTE_OCCURENCE) != Boolean.FALSE)) {
+        select(run.getStartOffset(), run.getEndOffset());
+        return;
+      }
+    }
+    selectLastOccurence();
+  }
+
+  /**
    * Select next occurence of text. 
    */
   public void selectNextOccurence() {
@@ -597,13 +617,18 @@ public class MediaWikiPane
         return;
       }
     }
-    for (int pos = 0; pos < length; pos = lastEnd) {
-      Element run = doc.getCharacterElement(pos);
-      lastEnd = run.getEndOffset();
-      if (pos == lastEnd) {
-        // offset + length beyond length of document, bail.
-        break;
-      }
+    selectFirstOccurence();
+  }
+
+  /**
+   * Select last occurence of text. 
+   */
+  public void selectLastOccurence() {
+    StyledDocument doc = getStyledDocument();
+    int lastStart = Integer.MIN_VALUE;
+    for (int pos = doc.getLength(); pos > 0; pos = lastStart) {
+      Element run = doc.getCharacterElement(pos - 1);
+      lastStart = run.getStartOffset();
       MutableAttributeSet attr = (MutableAttributeSet) run.getAttributes();
       if ((attr != null) &&
           (attr.getAttribute(MediaWikiConstants.ATTRIBUTE_TYPE) != null) &&
