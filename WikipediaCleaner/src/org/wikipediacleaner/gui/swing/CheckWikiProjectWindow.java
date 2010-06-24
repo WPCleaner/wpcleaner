@@ -1178,11 +1178,13 @@ public class CheckWikiProjectWindow extends PageWindow {
     if ((selected instanceof CheckError) &&
         (Utilities.isDesktopSupported())) {
       CheckError error = (CheckError) selected;
-      Utilities.browseURL(
-          "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi" +
-          "?id=" + error.getErrorNumber() +
-          "&project=" + getWikipedia().getCode() + "wiki" +
-          "&view=only");
+      String url =
+        "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi" +
+        "?id=" + error.getErrorNumber() +
+        "&project=" + getWikipedia().getCode() + "wiki" +
+        "&view=only" +
+        "&limit=" + modelMaxErrors.getNumber();
+      Utilities.browseURL(url);
     }
   }
 
