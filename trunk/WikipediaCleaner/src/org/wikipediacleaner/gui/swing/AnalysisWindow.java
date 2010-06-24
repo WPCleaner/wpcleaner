@@ -304,7 +304,7 @@ public class AnalysisWindow extends PageWindow {
     toolbarButtons.add(buttonNext);
     toolbarButtons.addSeparator();
     addButtonUndoRedo(toolbarButtons, true);
-    buttonValidate = createButtonValidate(this);
+    buttonValidate = createButtonValidate(this, true);
     toolbarButtons.add(buttonValidate);
     addButtonSend(toolbarButtons);
     addButtonRedirect(toolbarButtons);

@@ -527,10 +527,16 @@ public class CheckWikiProjectWindow extends PageWindow {
       // Buttons
       JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
       toolbarButtons.setFloatable(false);
+      JButton buttonFirst = createButtonFirstOccurence(this, true);
+      toolbarButtons.add(buttonFirst);
+      JButton buttonPrev = createButtonPreviousOccurence(this, true);
+      toolbarButtons.add(buttonPrev);
       JButton buttonNext = createButtonNextOccurence(this, true);
       toolbarButtons.add(buttonNext);
+      JButton buttonLast = createButtonLastOccurence(this, true);
+      toolbarButtons.add(buttonLast);
       toolbarButtons.addSeparator();
-      JButton buttonValidate = createButtonValidate(this);
+      JButton buttonValidate = createButtonValidate(this, true);
       toolbarButtons.add(buttonValidate);
       buttonSend = createButtonSend(this);
       buttonSend.setEnabled(false);
@@ -755,10 +761,14 @@ public class CheckWikiProjectWindow extends PageWindow {
         actionFirstOccurence();
       } else if (ACTION_FULL_ANALYSIS_PAGE.equals(e.getActionCommand())) {
         Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
+      } else if (ACTION_LAST_OCCURENCE.equals(e.getActionCommand())) {
+        actionLastOccurence();
       } else if (ACTION_MARK_AS_FIXED.equals(e.getActionCommand())) {
         actionMarkAsFixed();
       } else if (ACTION_NEXT_OCCURENCE.equals(e.getActionCommand())) {
         actionNextOccurence();
+      } else if (ACTION_PREVIOUS_OCCURENCE.equals(e.getActionCommand())) {
+        actionPreviousOccurence();
       } else if (ACTION_SEND.equals(e.getActionCommand())) {
         actionSend();
       } else if (ACTION_VALIDATE.equals(e.getActionCommand())) {
@@ -839,10 +849,26 @@ public class CheckWikiProjectWindow extends PageWindow {
     }
 
     /**
+     * Select previous occurence. 
+     */
+    private void actionPreviousOccurence() {
+      textPage.selectPreviousOccurence();
+      textPage.requestFocusInWindow();
+    }
+
+    /**
      * Select next occurence. 
      */
     private void actionNextOccurence() {
       textPage.selectNextOccurence();
+      textPage.requestFocusInWindow();
+    }
+
+    /**
+     * Select last occurence. 
+     */
+    private void actionLastOccurence() {
+      textPage.selectLastOccurence();
       textPage.requestFocusInWindow();
     }
 

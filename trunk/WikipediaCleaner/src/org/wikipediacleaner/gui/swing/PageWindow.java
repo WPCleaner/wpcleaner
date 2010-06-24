@@ -527,10 +527,18 @@ public abstract class PageWindow
    * Create a Validate button.
    * 
    * @param listener Action listener.
+   * @param icon Flag indicating if an icon should be used.
    * @return Validate button.
    */
-  public JButton createButtonValidate(ActionListener listener) {
-    JButton button = Utilities.createJButton(GT._("&Validate"));
+  public JButton createButtonValidate(ActionListener listener, boolean icon) {
+    JButton button;
+    if (icon) {
+      button = Utilities.createJButton(
+          "commons-approve-icon.png", EnumImageSize.NORMAL,
+          GT._("Validate (Alt + &V)"), false);
+    } else {
+      button = Utilities.createJButton(GT._("&Validate"));
+    }
     button.setActionCommand(ACTION_VALIDATE);
     button.addActionListener(listener);
     return button;
