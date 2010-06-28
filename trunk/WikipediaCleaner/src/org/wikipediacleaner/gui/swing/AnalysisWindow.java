@@ -78,7 +78,10 @@ public class AnalysisWindow extends PageWindow {
   private final static String ACTION_FULL_ANALYSIS_LINK   = "FULL ANALYSIS LINK";
   private final static String ACTION_WATCH_LINK           = "WATCH LINK";
 
+  private JButton buttonFirst;
+  private JButton buttonPrevious;
   private JButton buttonNext;
+  private JButton buttonLast;
   private JButton buttonValidate;
 
   JList listLinks;
@@ -190,7 +193,10 @@ public class AnalysisWindow extends PageWindow {
    */
   @Override
   protected void updateComponentState() {
+    buttonFirst.setEnabled(isPageLoaded());
+    buttonPrevious.setEnabled(isPageLoaded());
     buttonNext.setEnabled(isPageLoaded());
+    buttonLast.setEnabled(isPageLoaded());
     buttonValidate.setEnabled(isPageLoaded());
     super.updateComponentState();
   }
@@ -300,8 +306,14 @@ public class AnalysisWindow extends PageWindow {
     // Text buttons
     JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarButtons.setFloatable(false);
+    buttonFirst = createButtonFirstOccurence(this, true);
+    toolbarButtons.add(buttonFirst);
+    buttonPrevious = createButtonPreviousOccurence(this, true);
+    toolbarButtons.add(buttonPrevious);
     buttonNext = createButtonNextOccurence(this, true);
     toolbarButtons.add(buttonNext);
+    buttonLast = createButtonLastOccurence(this, true);
+    toolbarButtons.add(buttonLast);
     toolbarButtons.addSeparator();
     addButtonUndoRedo(toolbarButtons, true);
     buttonValidate = createButtonValidate(this, true);
