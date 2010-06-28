@@ -65,56 +65,101 @@ public class SpecialCharacters {
     localAuthorizedCharacters.put(EnumWikipedia.UK, "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдежзийклмнопрстуфхцчшщьыъэюяіїґ");
 
     // Possible replacements
-    replacements.put('Á', "A");
-    replacements.put('À', "A");
-    replacements.put('Â', "A");
-    replacements.put('Ä', "A");
-    replacements.put('á', "a");
-    replacements.put('à', "a");
-    replacements.put('â', "a");
-    replacements.put('ä', "a");
-    replacements.put('Æ', "AE");
-    replacements.put('æ', "ae");
+    replacements.put((char) 0xFEFF, "");
+    replacements.put((char) 0x200E, "");
+    replacements.put((char) 0x200B, "");
+    addReplacements("’", "'");
 
-    replacements.put('Ç', "C");
-    replacements.put('ç', "c");
+    addReplacements("ÀÁÂÃĀĂȦÄẢÅǍẠĄ", "A");
+    addReplacements("àáâãāăȧäảåǎạą", "a");
+    addReplacements("ÆǼǢ", "AE");
+    addReplacements("æǽǣ", "ae");
 
-    replacements.put('É', "E");
-    replacements.put('È', "E");
-    replacements.put('Ê', "E");
-    replacements.put('Ë', "E");
-    replacements.put('é', "e");
-    replacements.put('è', "e");
-    replacements.put('ê', "e");
-    replacements.put('ë', "e");
+    addReplacements("ḂƁḄ", "B");
+    addReplacements("ḃɓḅ", "b");
 
-    replacements.put('Î', "I");
-    replacements.put('Ï', "I");
-    replacements.put('í', "i");
-    replacements.put('î', "i");
-    replacements.put('ï', "i");
+    addReplacements("ĆḈĈĊƇČÇ", "C");
+    addReplacements("ćḉĉċƈčç", "c");
 
-    replacements.put('ñ', "n");
+    addReplacements("ḊƊĎḌḐ", "D");
+    addReplacements("ḋɗďḍḑ", "d");
 
-    replacements.put('Ó', "O");
-    replacements.put('Ô', "O");
-    replacements.put('Ö', "O");
-    replacements.put('ó', "o");
-    replacements.put('ô', "o");
-    replacements.put('ö', "o");
-    replacements.put('Œ', "OE");
-    replacements.put('œ', "oe");
+    addReplacements("ÈÉÊẼỄĒĔĖËẺỂĚẸỆȨĘę", "E");
+    addReplacements("èéêẽễēĕėëẻểěẹệȩ", "e");
 
-    replacements.put('Ù', "U");
-    replacements.put('Û', "U");
-    replacements.put('Ü', "U");
-    replacements.put('ú', "u");
-    replacements.put('ù', "u");
-    replacements.put('û', "u");
-    replacements.put('ü', "u");
+    addReplacements("ḞƑ", "F");
+    addReplacements("ḟƒ", "f");
 
-    replacements.put('Ÿ', "Y");
-    replacements.put('ÿ', "y");
+    addReplacements("ǴĜḠĞĠƓǦĢ", "G");
+    addReplacements("ǵĝḡğġɠǧģ", "g");
+
+    addReplacements("ĤḢḦȞḤḨ", "H");
+    addReplacements("ĥḣḧɦȟḥḩ", "h");
+
+    addReplacements("ÌÍÎĨĪĬİÏǏỊĮ", "I");
+    addReplacements("ìíîĩīĭıïǐịį", "i");
+
+    addReplacements("Ĵ", "J");
+    addReplacements("ĵǰ", "j");
+
+    addReplacements("ḰƘǨḲĶ", "K");
+    addReplacements("ḱƙǩḳķ", "k");
+
+    addReplacements("ĹĿĽḶĻ", "L");
+    addReplacements("ĺŀľḷļ", "l");
+
+    addReplacements("ḾṀṂ", "M");
+    addReplacements("ḿṁɱṃ", "m");
+
+    addReplacements("ǸŃÑṄŇṆŅ", "N");
+    addReplacements("ǹńñṅňṇņ", "n");
+
+    addReplacements("ÒÓÔÕŌŎȮÖỎŐǑỌǪ", "O");
+    addReplacements("òóôõōŏȯöỏőǒọǫ", "o");
+    addReplacements("Œ", "OE");
+    addReplacements("œ", "oe");
+
+    addReplacements("ṔṖƤ", "P");
+    addReplacements("ṕṗ", "p");
+
+    addReplacements("ŔṘŘṚŖ", "R");
+    addReplacements("ŕṙřṛŗ", "r");
+
+    addReplacements("ŚŜṠŠṢȘŞ", "S");
+    addReplacements("śŝṡšṣșş", "s");
+
+    addReplacements("ṪƬŤṬŢŢ", "T");
+    addReplacements("ṫẗƭťṭţţ", "t");
+
+    addReplacements("ÙÚÛŨŪŬÜŮŰǓỤŲ", "U");
+    addReplacements("ùúûũūŭüůűǔụų", "u");
+
+    addReplacements("ṼṾ", "V");
+    addReplacements("ṽṿ", "v");
+
+    addReplacements("ẀẂŴẆẄẈ", "W");
+    addReplacements("ẁẃŵẇẅẘẉ", "w");
+
+    addReplacements("ẊẌ", "X");
+    addReplacements("ẋẍ", "x");
+
+    addReplacements("ỲÝŶỸȲẎŸỴ", "Y");
+    addReplacements("ỳýŷỹȳẏÿẙỵ", "y");
+
+    addReplacements("ŹẐŻŽẒ", "Z");
+    addReplacements("źẑżẓ", "z");
+  }
+
+  /**
+   * Add replacements for some characters.
+   * 
+   * @param characters All the characters to replace.
+   * @param replacement Replacement.
+   */
+  private static void addReplacements(String characters, String replacement) {
+    for (int i = 0; i < characters.length(); i++) {
+      replacements.put(characters.charAt(i), replacement);
+    }
   }
 
   /**

@@ -7,33 +7,36 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-24 21:20+0200\n"
-"PO-Revision-Date: 2010-06-11 16:17+0000\n"
+"POT-Creation-Date: 2010-06-29 00:20+0200\n"
+"PO-Revision-Date: 2010-06-27 08:43+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-06-11 20:04+0000\n"
+"X-Launchpad-Export-Date: 2010-06-28 15:24+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:38
 msgid "I hope you'll like WikiCleaner."
-msgstr ""
+msgstr "Doufám, že se vám WikiCleaner bude líbit."
 
 #: org/wikipediacleaner/Version.java:40
 msgid ""
 "!NEW! - WikiCleaner configuration is now available online, check the System "
 "configuration."
 msgstr ""
+"!NOVINKA! Konfigurace WikiCleaneru je nyní dostupná on-line, nahlédněte do "
+"Systémových možností."
 
 #: org/wikipediacleaner/Version.java:42
 msgid "Many new features added for the Check Wiki project : try them !"
 msgstr ""
+"Mnoho nových vlastnosti bylo přidáno pro projekt CheckWikipedia, zkuste je!"
 
 #: org/wikipediacleaner/Version.java:44
 msgid "Please, report any other problem you find to me."
-msgstr ""
+msgstr "Prosím hlaste mi všechny nalezené problémy."
 
 #: org/wikipediacleaner/api/MediaWiki.java:175
 #, java-format
@@ -58,7 +61,7 @@ msgstr "Vysoká priorita"
 
 #: org/wikipediacleaner/api/check/CheckError.java:196
 msgid "For Bot"
-msgstr ""
+msgstr "Pro boty"
 
 #: org/wikipediacleaner/api/check/CheckError.java:198
 msgid "Priority unknown"
@@ -83,9 +86,14 @@ msgstr "Nahradit za {0}"
 msgid "Delete"
 msgstr "Smazat"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:129
+#, java-format
+msgid "Unable to replace the characters [{0}]"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:38
 msgid "Remove all control characters"
-msgstr ""
+msgstr "Odstranit všechny řídící znaky"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:117
 msgid "Check category"
@@ -352,13 +360,13 @@ msgid "The page {0} doesn't exist on Wikipedia"
 msgstr "Stránka {0} na Wikipedii neexistuje"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:679
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "The error n°{0} hasn''t been found in the page {1}.\n"
 "Do you want to mark it as fixed ?"
 msgstr ""
-"Chyba číslo {0} je stále na této stránce.\n"
-"Opravdu ji chcete označit za opravenou?"
+"Chyba číslo {0} nebyla na stránce {1} nalezena.\n"
+"Chcete ji označit za opravenou?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:790
 #, java-format
@@ -551,12 +559,11 @@ msgstr "Nápověda"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:380
 msgid "Options (Alt + &O)"
-msgstr ""
+msgstr "Možnosti (Alt + &O)"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:386
-#, fuzzy
 msgid "System Options (Alt + &Y)"
-msgstr "S&ystémové volby"
+msgstr "Systémové možnosti"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:390
 msgid "&Idea ? Bug ?"
@@ -949,36 +956,32 @@ msgid "Disambiguation"
 msgstr "Rozcestníky"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:315
-#, fuzzy
 msgid "First occurrence (Alt + &F)"
-msgstr "První výskyt"
+msgstr "První výskyt (Alt + &F)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:317
 msgid "&First occurrence"
 msgstr "První výskyt"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:369
-#, fuzzy
 msgid "Last occurrence (Alt + &L)"
-msgstr "Poslední výskyt"
+msgstr "Poslední výskyt (Alt + &L)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:371
 msgid "&Last occurrence"
 msgstr "Poslední výskyt"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:390
-#, fuzzy
 msgid "Next occurrence (Alt + &N)"
-msgstr "&Následující výskyt"
+msgstr "Následující výskyt (Alt + &N)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:392
 msgid "&Next occurrence"
 msgstr "&Následující výskyt"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
-#, fuzzy
 msgid "Previous occurrence (Alt + &P)"
-msgstr "&Předchozí výskyt"
+msgstr "Předchozí výskyt (Alt + &P)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:413
 msgid "&Previous occurrence"
@@ -994,7 +997,7 @@ msgstr "Rozcestníková analýza přesměrování"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:463
 msgid "Reload (Alt + &R)"
-msgstr ""
+msgstr "Načíst znovu (Alt + &R)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:465
 msgid "&Reload"
@@ -1015,14 +1018,12 @@ msgid "Redo"
 msgstr "Znovu"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:538
-#, fuzzy
 msgid "Validate (Alt + &V)"
-msgstr "Externí prohlížeč"
+msgstr "Ověřit (Alt + &V)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:572
-#, fuzzy
 msgid "External Viewer (Alt + &E)"
-msgstr "Externí prohlížeč"
+msgstr "Externí prohlížeč (Alt + &E)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:574
 msgid "&External Viewer"
@@ -1030,7 +1031,7 @@ msgstr "&Externí prohlížeč"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:606
 msgid "History (Alt + &H)"
-msgstr ""
+msgstr "Historie (Alt + &H)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:608
 msgid "&History"
@@ -1269,19 +1270,19 @@ msgstr "Došlo k neznámé chybě"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:200
 msgid "Yes"
-msgstr ""
+msgstr "Ano"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:201
 msgid "Yes to all"
-msgstr ""
+msgstr "Ano všem"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:202
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:203
 msgid "No to all"
-msgstr ""
+msgstr "Ne všem"
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:108
 #, java-format
@@ -1290,7 +1291,7 @@ msgstr "Chyba číslo {0}"
 
 #: org/wikipediacleaner/gui/swing/component/CloseTabComponent.java:90
 msgid "Close this tab"
-msgstr ""
+msgstr "Zavřít tuto kartu"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:179
 msgid "Current chapter"
@@ -1414,7 +1415,7 @@ msgstr "Ověřuji chybu číslo {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:225
 msgid "Sorting errors by priority"
-msgstr ""
+msgstr "Třídím chyby dle priority"
 
 #: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:59
 msgid "Current disambiguation list"
