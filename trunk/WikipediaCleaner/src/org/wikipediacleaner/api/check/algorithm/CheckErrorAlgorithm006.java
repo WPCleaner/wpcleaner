@@ -21,9 +21,11 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -90,6 +92,8 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
             }
 
             boolean characterFound = false;
+            boolean characterReplaced = false;
+            String unknownCharacters = "";
             String text = "";
             while (currentPos < endIndex) {
               boolean error = false;
@@ -99,7 +103,13 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
                 error = true;
               }
               if (error) {
-                text += SpecialCharacters.proposeReplacement(character);
+                String newCharacter = SpecialCharacters.proposeReplacement(character);
+                if (!Character.toString(character).equals(newCharacter)) {
+                  characterReplaced = true;
+                } else {
+                  unknownCharacters += character;
+                }
+                text += newCharacter;
               } else {
                 text += character;
               }
@@ -112,7 +122,13 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
               result = true;
               CheckErrorResult errorResult = new CheckErrorResult(
                   getShortDescription(), beginIndex, endIndex + 2);
-              errorResult.addReplacement("{{" + defaultSort + text + "}}");
+              if (characterReplaced) {
+                errorResult.addReplacement("{{" + defaultSort + text + "}}");
+              } else {
+                errorResult.addPossibleAction(
+                    GT._("Unable to replace the characters [{0}]", unknownCharacters),
+                    new NullActionProvider());
+              }
               errors.add(errorResult);
             }
           }
