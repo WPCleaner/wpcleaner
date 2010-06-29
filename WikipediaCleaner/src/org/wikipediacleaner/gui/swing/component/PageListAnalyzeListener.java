@@ -20,12 +20,14 @@ package org.wikipediacleaner.gui.swing.component;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JList;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.AnalysisWindow;
+import org.wikipediacleaner.gui.swing.PageWindow;
 
 
 /**
@@ -34,9 +36,11 @@ import org.wikipediacleaner.gui.swing.AnalysisWindow;
 public class PageListAnalyzeListener extends MouseAdapter {
 
   private final EnumWikipedia wikipedia;
+  private final PageWindow pageWindow;
 
-  public PageListAnalyzeListener(EnumWikipedia wikipedia) {
+  public PageListAnalyzeListener(EnumWikipedia wikipedia, PageWindow pageWindow) {
     this.wikipedia = wikipedia;
+    this.pageWindow = pageWindow;
   }
 
   /* (non-Javadoc)
@@ -63,6 +67,19 @@ public class PageListAnalyzeListener extends MouseAdapter {
       return;
     }
     Page page = (Page) object;
-    AnalysisWindow.createAnalysisWindow(page.getTitle(), null, wikipedia);
+    ArrayList<Page> knownPages = null;
+    if ((pageWindow != null) && (pageWindow.getPage() != null)) {
+      Page basePage = pageWindow.getPage();
+      knownPages = new ArrayList<Page>(1);
+      knownPages.add(basePage);
+      for (Page backLink : basePage.getBackLinksWithRedirects()) {
+        if ((backLink != null) &&
+            (backLink.isRedirect()) &&
+            (Page.areSameTitle(basePage.getTitle(), backLink.getRedirectDestination()))) {
+          knownPages.add(backLink);
+        }
+      }
+    }
+    AnalysisWindow.createAnalysisWindow(page.getTitle(), knownPages, wikipedia);
   }
 }

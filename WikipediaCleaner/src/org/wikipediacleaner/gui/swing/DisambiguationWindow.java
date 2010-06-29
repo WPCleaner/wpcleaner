@@ -385,7 +385,7 @@ public class DisambiguationWindow extends PageWindow {
     listLinks = new JList(modelLinks);
     listLinks.setCellRenderer(new PageListCellRenderer());
     listLinks.addMouseListener(new PageListPopupListener(getWikipedia(), getTextContents(), this));
-    listLinks.addMouseListener(new PageListAnalyzeListener(getWikipedia()));
+    listLinks.addMouseListener(new PageListAnalyzeListener(getWikipedia(), this));
     JScrollPane scrollLinks = new JScrollPane(listLinks);
     scrollLinks.setMinimumSize(new Dimension(100, 100));
     scrollLinks.setPreferredSize(new Dimension(200, 500));

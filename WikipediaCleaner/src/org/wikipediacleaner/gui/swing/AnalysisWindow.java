@@ -458,7 +458,7 @@ public class AnalysisWindow extends PageWindow {
     listLinks.setCellRenderer(listCellRenderer);
     popupListenerLinks = new PageListPopupListener(getWikipedia(), getTextContents(), this);
     listLinks.addMouseListener(popupListenerLinks);
-    listLinks.addMouseListener(new PageListAnalyzeListener(getWikipedia()));
+    listLinks.addMouseListener(new PageListAnalyzeListener(getWikipedia(), null));
     listLinks.addListSelectionListener(new AnalysisListSelectionListener());
     JScrollPane scrollLinks = new JScrollPane(listLinks);
     scrollLinks.setMinimumSize(new Dimension(100, 100));

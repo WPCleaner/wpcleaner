@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -513,6 +514,116 @@ public class Page implements Comparable<Page> {
       }
     }
     return links;
+  }
+
+  /**
+   * @param anchors Anchors among the link (OUT).
+   * @return Links from the page (working if the page is a redirection).
+   */
+  public ArrayList<Page> getLinksWithRedirect(HashMap<Page, List<String>> anchors) {
+    if (redirects != null) {
+      for (int i = 0; i < redirects.size(); i++) {
+        Page page = redirects.get(i);
+        ArrayList<Page> redirectLinks = page.links;
+        if ((redirectLinks != null) && (!redirectLinks.isEmpty())) {
+          getAnchors(page.getContents(), redirectLinks, anchors);
+          return redirectLinks;
+        }
+      }
+    }
+    getAnchors(contents, links, anchors);
+    return links;
+  }
+
+  /**
+   * @param pageContents Page contents.
+   * @param pageLinks Page links.
+   * @param anchors Anchors (OUT)
+   */
+  private void getAnchors(String pageContents, ArrayList<Page> pageLinks, HashMap<Page, List<String>> anchors) {
+    if ((pageContents != null) && (!pageContents.isEmpty()) && (anchors != null)) {
+      int currentPos = 0;
+      int nextSharp = 0;
+      // Check each internal link
+      while ((currentPos >= 0) && (currentPos < pageContents.length())) {
+        currentPos = pageContents.indexOf("[[", currentPos);
+        if (currentPos > 0) {
+          int tmpPos = currentPos + 2;
+          // Check the next anchor
+          if (nextSharp < currentPos) {
+            nextSharp = pageContents.indexOf("#", tmpPos);
+          }
+          if (nextSharp < 0) {
+            currentPos = -1;
+          } else {
+            // Check the next end of link 
+            int nextEnd = pageContents.indexOf("]]", tmpPos);
+            if (nextEnd < 0) {
+              currentPos = -1;
+            } else {
+              // If the anchor is not for the link, go to the next link
+              if (nextSharp > nextEnd) {
+                currentPos = nextEnd;
+              } else {
+                // Possible white spaces
+                while ((tmpPos < pageContents.length()) && (pageContents.charAt(tmpPos) == ' ')) {
+                  tmpPos++;
+                }
+                // Check each link
+                for (Page link : pageLinks) {
+                  int currentIndex = 0;
+                  boolean equals = true;
+                  String linkTitle = link.getTitle();
+                  while (equals && (currentIndex < linkTitle.length()) && (tmpPos + currentIndex < nextSharp)) {
+                    char contentsChar = contents.charAt(tmpPos + currentIndex);
+                    char linkTitleChar = linkTitle.charAt(currentIndex);
+                    if (currentIndex == 0) {
+                      if (Character.toUpperCase(linkTitleChar) != Character.toUpperCase(contentsChar)) {
+                        equals = false;
+                      }
+                    } else if (linkTitleChar == ' ') {
+                      if ((contentsChar != ' ') && (contentsChar != '_')) {
+                        equals = false;
+                      }
+                    } else {
+                      if (linkTitleChar != contentsChar) {
+                        equals = false;
+                      }
+                    }
+                    currentIndex++;
+                  }
+                  // Possible white spaces
+                  while ((tmpPos + currentIndex < pageContents.length()) &&
+                         (pageContents.charAt(currentPos + currentIndex) == ' ')) {
+                    currentIndex++;
+                  }
+                  if (tmpPos + currentIndex == nextSharp) {
+                    int nextPipe = contents.indexOf("|", nextSharp);
+                    String anchor;
+                    if ((nextPipe >= 0) && (nextPipe < nextEnd)) {
+                      anchor = contents.substring(tmpPos, nextPipe);
+                    } else {
+                      anchor = contents.substring(tmpPos, nextEnd);
+                    }
+                    if ((anchor != null) && (!anchor.trim().isEmpty())) {
+                      List<String> listAnchors = anchors.get(link);
+                      if (listAnchors == null) {
+                        listAnchors = new ArrayList<String>();
+                        anchors.put(link, listAnchors);
+                      }
+                      if (!listAnchors.contains(anchor)) {
+                        listAnchors.add(anchor);
+                      }
+                    }
+                  }
+                }
+                currentPos++;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   /**

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.swing.JCheckBox;
@@ -364,7 +365,8 @@ public class MenuCreator {
 
     // Disambiguation page
     if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
-      ArrayList<Page> links = page.getLinksWithRedirect();
+      HashMap<Page, List<String>> anchorsMap = new HashMap<Page, List<String>>();
+      ArrayList<Page> links = page.getLinksWithRedirect(anchorsMap);
       JMenu submenuLink = new JMenu(GT._("Link to"));
       JMenu submenuReplace = new JMenu(GT._("Replace with"));
 
@@ -452,6 +454,24 @@ public class MenuCreator {
             action = new ReplaceLinkAction(page.getTitle(), p.getTitle(), text, element, textPane, true);
             menuItem.addActionListener(action);
             submenuReplace.add(menuItem);
+
+            // Anchors
+            List<String> anchors = anchorsMap.get(p);
+            if (anchors != null) {
+              for (String anchor : anchors) {
+                menuItem = new JMenuItem(anchor);
+                updateFont(menuItem, p);
+                action = new ReplaceLinkAction(page.getTitle(), anchor, text, element, textPane, false);
+                menuItem.addActionListener(action);
+                submenuLink.add(menuItem);
+        
+                menuItem = new JMenuItem(anchor);
+                updateFont(menuItem, p);
+                action = new ReplaceLinkAction(page.getTitle(), anchor, text, element, textPane, true);
+                menuItem.addActionListener(action);
+                submenuReplace.add(menuItem);
+              }
+            }
           }
         }
       }
