@@ -74,7 +74,7 @@ public abstract class PageWindow
   /**
    * @return Page.
    */
-  protected Page getPage() {
+  public Page getPage() {
     return page;
   }
 
