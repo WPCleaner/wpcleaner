@@ -50,7 +50,8 @@ public enum EnumLanguage {
   PT_BR("pt_BR", "Brazilian Portuguese"),
   RU   ("ru"   , "Russian"),
   SV   ("sv"   , "Swedish"),
-  TR   ("tr"   , "Turkish");
+  TR   ("tr"   , "Turkish"),
+  UK   ("uk"   , "Ukrainian");
 
   private final String code;
   private final String language;
