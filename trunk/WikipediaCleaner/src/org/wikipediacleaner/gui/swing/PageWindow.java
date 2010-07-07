@@ -1045,6 +1045,9 @@ public abstract class PageWindow
     final boolean hideWindow = config.getBoolean(
         Configuration.BOOLEAN_ANALYSIS_HIDE_SENDING,
         Configuration.DEFAULT_ANALYSIS_HIDE_SENDING);
+    final boolean forceWatch = config.getBoolean(
+        Configuration.BOOLEAN_FORCE_WATCH,
+        Configuration.DEFAULT_FORCE_WATCH);
     final int oldState = getParentComponent().getExtendedState();
     if (hideWindow) {
       getParentComponent().setExtendedState(Frame.ICONIFIED);
@@ -1052,7 +1055,8 @@ public abstract class PageWindow
     getParentComponent().setTitle(GT._("Sending {0}", page.getTitle()));
     SendWorker sendWorker = new SendWorker(
         getWikipedia(), this, page, getTextContents().getText(),
-        (textComment != null) ? textComment.getText() : getWikipedia().getUpdatePageMessage());
+        (textComment != null) ? textComment.getText() : getWikipedia().getUpdatePageMessage(),
+        forceWatch);
     sendWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(

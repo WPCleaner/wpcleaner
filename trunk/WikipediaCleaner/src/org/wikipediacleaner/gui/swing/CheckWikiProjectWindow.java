@@ -945,9 +945,11 @@ public class CheckWikiProjectWindow extends PageWindow {
       }
 
       // Send page
+      final Configuration configuration = Configuration.getConfiguration();
       SendWorker sendWorker = new SendWorker(
           getWikipedia(), CheckWikiProjectWindow.this,
-          page, textPage.getText(), textComment.getText());
+          page, textPage.getText(), textComment.getText(),
+          configuration.getBoolean(Configuration.BOOLEAN_FORCE_WATCH, Configuration.DEFAULT_FORCE_WATCH));
       sendWorker.setListener(new DefaultBasicWorkerListener() {
         @Override
         public void afterFinished(
@@ -979,7 +981,6 @@ public class CheckWikiProjectWindow extends PageWindow {
                 markPageAsFixed(null, algoFixed.getErrorNumber(), page);
               }
             }
-            Configuration configuration = Configuration.getConfiguration();
             if (!configuration.getBoolean(
                 Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
                 Configuration.DEFAULT_CHECK_SHOW_0_ERRORS)) {

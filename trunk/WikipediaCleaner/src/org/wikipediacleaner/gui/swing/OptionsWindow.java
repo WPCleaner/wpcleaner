@@ -109,6 +109,7 @@ public class OptionsWindow
   private JCheckBox chkAnalysisRedirect;
   private JCheckBox chkSaveLastReplacement;
   private JCheckBox chkCloseFull;
+  private JCheckBox chkForceWatch;
   private JSpinner spinAnalysisNbPages;
   private SpinnerNumberModel modelAnalysisNbPages;
   private JSpinner spinAnalysisUndoLevels;
@@ -286,6 +287,17 @@ public class OptionsWindow
     constraints.gridx = 0;
     constraints.weightx = 0;
     panel.add(chkLinkErrorsCheckWiki, constraints);
+    constraints.gridy++;
+
+    // Force watching pages that have been edited
+    chkForceWatch = Utilities.createJCheckBox(
+        GT._("Watch all edited pages"),
+        configuration.getBoolean(
+            Configuration.BOOLEAN_FORCE_WATCH,
+            Configuration.DEFAULT_FORCE_WATCH));
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    panel.add(chkForceWatch, constraints);
     constraints.gridy++;
 
     // Menu size
@@ -804,6 +816,7 @@ public class OptionsWindow
     config.setBoolean(Configuration.BOOLEAN_CHECK_LINK_ERRORS, chkLinkErrorsCheckWiki.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CLOSE_DISAMBIG, chkCloseDisambig.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CLOSE_FULL, chkCloseFull.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_FORCE_WATCH, chkForceWatch.isSelected());
     config.setBoolean(Configuration.BOOLEAN_RESTORE_WINDOW, chkRestoreWindowPosition.isSelected());
     config.setBoolean(Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT, chkSaveLastReplacement.isSelected());
     config.setBoolean(Configuration.BOOLEAN_SAVE_WINDOW, chkSaveWindowPosition.isSelected());
@@ -880,6 +893,9 @@ public class OptionsWindow
     chkCloseFull.setSelected(config.getBoolean(
         Configuration.BOOLEAN_CLOSE_FULL,
         Configuration.DEFAULT_CLOSE_FULL));
+    chkForceWatch.setSelected(config.getBoolean(
+        Configuration.BOOLEAN_FORCE_WATCH,
+        Configuration.DEFAULT_FORCE_WATCH));
     chkRestoreWindowPosition.setSelected(config.getBoolean(
         Configuration.BOOLEAN_RESTORE_WINDOW,
         Configuration.DEFAULT_RESTORE_WINDOW));
