@@ -22,12 +22,15 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.EmptyBorder;
 
 import org.wikipediacleaner.api.check.CheckErrorPage;
+import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.images.EnumImageSize;
 
 
 /**
@@ -38,6 +41,7 @@ public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRe
   private static final long serialVersionUID = 1L;
 
   private boolean showCountOccurence;
+  private ImageIcon globalFixIcon;
 
   /**
    * Construct a renderer.
@@ -48,6 +52,7 @@ public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRe
     setVerticalAlignment(CENTER);
     setBorder(new EmptyBorder(0, 3, 0, 3));
     setFont(getFont().deriveFont(Font.PLAIN));
+    globalFixIcon = Utilities.getImageIcon("gnome-system-run.png", EnumImageSize.SMALL);
   }
 
   /**
@@ -71,6 +76,7 @@ public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRe
     // Retrieve data
     String text = (value != null) ? value.toString() : "";
     Boolean errorsPresent = null;
+    Boolean globalFix = null;
     if (value instanceof CheckErrorPage) {
       CheckErrorPage errorPage = (CheckErrorPage) value;
       text = errorPage.getAlgorithm().toString();
@@ -86,10 +92,19 @@ public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRe
       } else {
         errorsPresent = Boolean.FALSE;
       }
+      String[] globalFixes = errorPage.getAlgorithm().getGlobalFixes();
+      if ((globalFixes != null) && (globalFixes.length > 0)) {
+        globalFix = Boolean.TRUE;
+      }
     }
 
     // Text
     setText(text);
+    if (Boolean.TRUE.equals(globalFix)) {
+      setIcon(globalFixIcon);
+    } else {
+      setIcon(null);
+    }
 
     // Color
     Color background = isSelected ? list.getSelectionBackground() : list.getBackground();

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-07 20:45+0200\n"
+"POT-Creation-Date: 2010-07-07 21:56+0200\n"
 "PO-Revision-Date: 2010-05-16 07:25+0000\n"
 "Last-Translator: Krasznecz Zoltán <zoltan.krasznecz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -99,6 +99,11 @@ msgstr "Kategória ellenörzése"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:118
 msgid "View image"
 msgstr "Kép megtekintése"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm050.java:38
+#, fuzzy
+msgid "Replace all"
+msgstr "Csere"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
