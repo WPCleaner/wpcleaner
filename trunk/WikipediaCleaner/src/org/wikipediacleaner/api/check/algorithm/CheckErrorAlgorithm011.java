@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -29,6 +30,72 @@ import org.wikipediacleaner.api.data.Page;
  * Error 11: HTML named entities
  */
 public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
+
+  /**
+   * Possible global fixes.
+   */
+  private final static String[] globalFixes = new String[] {
+    GT._("Replace all"),
+  };
+
+  private final static String[][] characters = new String[][] {
+    { "&Aacute;", "Á" },
+    { "&Agrave;", "À" },
+    { "&Aring;" , "Å" },
+    { "&aacute;", "á" },
+    { "&acirc;" , "â" },
+    { "&agrave;", "à" },
+    { "&atilde;", "ã" },
+
+    { "&cap;"   , "∩" },
+    { "&ccedil;", "ç" },
+    { "&copy;"  , "©" },
+    { "&cup;"   , "∪" },
+
+    { "&deg;"   , "°" },
+
+    { "&Eacute;", "É" },
+    { "&eacute;", "é" },
+    { "&ecirc;" , "ê" },
+    { "&egrave;", "è" },
+
+    { "&hellip;", "…" },
+
+    { "&iacute;", "í" },
+    { "&infin;" , "∞" },
+    { "&isin;"  , "∈" },
+
+    { "&lambda;", "λ" },
+    { "&laquo;" , "«" },
+    { "&larr;"  , "←" },
+    { "&le;"    , "≤" },
+
+    { "&middot;", "·" },
+    { "&minus;" , "−" },
+
+    { "&ne;"    , "≠" },
+    { "&ntilde;", "ñ" },
+    { "&nu;"    , "ν" },
+
+    { "&Omega;" , "Ω" },
+    { "&omega;" , "ω" },
+    { "&ouml;"  , "ö" },
+
+    { "&quot;"  , "\"" },
+
+    { "&raquo;" , "»" },
+    { "&rarr;"  , "→" },
+    { "&reg;"   , "®" },
+
+    { "&sect;"  , "§" },
+    { "&sigma;" , "σ" },
+    { "&sube;"  , "⊆" },
+
+    { "&thinsp;", " " },
+    { "&times;" , "×" },
+
+    { "&Uuml;"  , "Ü" },
+  };
 
   public CheckErrorAlgorithm011() {
     super("HTML named entities");
@@ -42,48 +109,37 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
-    result |= simpleTextSearch(page, contents, errors, "&Aacute;", "Á");
-    result |= simpleTextSearch(page, contents, errors, "&Agrave;", "À");
-    result |= simpleTextSearch(page, contents, errors, "&Aring;", "Å");
-    result |= simpleTextSearch(page, contents, errors, "&aacute;", "á");
-    result |= simpleTextSearch(page, contents, errors, "&acirc;", "â");
-    result |= simpleTextSearch(page, contents, errors, "&agrave;", "à");
-    result |= simpleTextSearch(page, contents, errors, "&atilde;", "ã");
-    result |= simpleTextSearch(page, contents, errors, "&cap;", "∩");
-    result |= simpleTextSearch(page, contents, errors, "&ccedil;", "ç");
-    result |= simpleTextSearch(page, contents, errors, "&copy;", "©");
-    result |= simpleTextSearch(page, contents, errors, "&cup;", "∪");
-    result |= simpleTextSearch(page, contents, errors, "&deg;", "°");
-    result |= simpleTextSearch(page, contents, errors, "&Eacute;", "É");
-    result |= simpleTextSearch(page, contents, errors, "&eacute;", "é");
-    result |= simpleTextSearch(page, contents, errors, "&ecirc;", "ê");
-    result |= simpleTextSearch(page, contents, errors, "&egrave;", "è");
-    result |= simpleTextSearch(page, contents, errors, "&hellip;", "…");
-    result |= simpleTextSearch(page, contents, errors, "&iacute;", "í");
-    result |= simpleTextSearch(page, contents, errors, "&infin;", "∞");
-    result |= simpleTextSearch(page, contents, errors, "&isin;", "∈");
-    result |= simpleTextSearch(page, contents, errors, "&lambda;", "λ");
-    result |= simpleTextSearch(page, contents, errors, "&laquo;", "«");
-    result |= simpleTextSearch(page, contents, errors, "&larr;", "←");
-    result |= simpleTextSearch(page, contents, errors, "&le;", "≤");
-    result |= simpleTextSearch(page, contents, errors, "&middot;", "·");
-    result |= simpleTextSearch(page, contents, errors, "&minus;", "−");
-    result |= simpleTextSearch(page, contents, errors, "&ne;", "≠");
-    result |= simpleTextSearch(page, contents, errors, "&ntilde;", "ñ");
-    result |= simpleTextSearch(page, contents, errors, "&nu;", "ν");
-    result |= simpleTextSearch(page, contents, errors, "&Omega;", "Ω");
-    result |= simpleTextSearch(page, contents, errors, "&omega;", "ω");
-    result |= simpleTextSearch(page, contents, errors, "&ouml;", "ö");
-    result |= simpleTextSearch(page, contents, errors, "&quot;", "\"");
-    result |= simpleTextSearch(page, contents, errors, "&raquo;", "»");
-    result |= simpleTextSearch(page, contents, errors, "&rarr;", "→");
-    result |= simpleTextSearch(page, contents, errors, "&reg;", "®");
-    result |= simpleTextSearch(page, contents, errors, "&sect;", "§");
-    result |= simpleTextSearch(page, contents, errors, "&sigma;", "σ");
-    result |= simpleTextSearch(page, contents, errors, "&sube;", "⊆");
-    result |= simpleTextSearch(page, contents, errors, "&thinsp;", " ");
-    result |= simpleTextSearch(page, contents, errors, "&times;", "×");
-    result |= simpleTextSearch(page, contents, errors, "&Uuml;", "Ü");
+    for (int i = 0; i < characters.length; i++) {
+      result |= simpleTextSearch(page, contents, errors, characters[i][0], characters[i][1]);
+      if ((result) && (errors == null)) {
+        return true;
+      }
+    }
+    return result;
+  }
+
+  /**
+   * @return List of possible global fixes.
+   */
+  @Override
+  public String[] getGlobalFixes() {
+    return globalFixes;
+  }
+
+  /**
+   * Fix all the errors in the page.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Page contents after fix.
+   */
+  @Override
+  public String fix(String fixName, Page page, String contents) {
+    String result = contents;
+    for (int i = 0; i < characters.length; i++) {
+      result = result.replaceAll(characters[i][0], characters[i][1]);
+    }
     return result;
   }
 }
