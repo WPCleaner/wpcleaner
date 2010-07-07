@@ -35,6 +35,7 @@ public class SendWorker extends BasicWorker {
   private final Page page;
   private final String text;
   private final String comment;
+  private final boolean forceWatch;
 
   /**
    * @param wikipedia Wikipedia.
@@ -42,14 +43,17 @@ public class SendWorker extends BasicWorker {
    * @param page Page.
    * @param text Page contents.
    * @param comment Comment.
+   * @param forceWatch Force watching the page.
    */
   public SendWorker(
       EnumWikipedia wikipedia, BasicWindow window,
-      Page page, String text, String comment) {
+      Page page, String text, String comment,
+      boolean forceWatch) {
     super(wikipedia, window);
     this.page = page;
     this.text = text;
     this.comment = comment;
+    this.forceWatch = forceWatch;
   }
 
   /* (non-Javadoc)
@@ -63,7 +67,8 @@ public class SendWorker extends BasicWorker {
       setText(GT._("Updating page contents"));
       api.updatePage(
           getWikipedia(), page, text,
-          getWikipedia().createUpdatePageComment(comment, null));
+          getWikipedia().createUpdatePageComment(comment, null),
+          forceWatch);
     } catch (APIException e) {
       if (APIException.ERROR_BAD_TOKEN.equals(e.getErrorCode())) {
         try {
@@ -71,7 +76,8 @@ public class SendWorker extends BasicWorker {
           api.retrieveContents(getWikipedia(), page, false);
           api.updatePage(
               getWikipedia(), page, text,
-              getWikipedia().createUpdatePageComment(comment, null));
+              getWikipedia().createUpdatePageComment(comment, null),
+              forceWatch);
         } catch (APIException e2) {
           return e2;
         }

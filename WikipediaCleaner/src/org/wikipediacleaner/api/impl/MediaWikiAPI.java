@@ -445,10 +445,14 @@ public class MediaWikiAPI implements API {
    * @param page Page.
    * @param newContents New contents to use.
    * @param comment Comment.
+   * @param forceWatch Force watching the page.
    * @return Result of the command.
    * @throws APIException
    */
-  public QueryResult updatePage(EnumWikipedia wikipedia, Page page, String newContents, String comment) throws APIException {
+  public QueryResult updatePage(
+      EnumWikipedia wikipedia, Page page,
+      String newContents, String comment,
+      boolean forceWatch) throws APIException {
     if (page == null) {
       throw new APIException("Page is null");
     }

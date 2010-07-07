@@ -197,13 +197,15 @@ public class MediaWiki extends MediaWikiController {
             try {
               api.updatePage(
                   wikipedia, page, newContents,
-                  wikipedia.createUpdatePageComment(comment, details.toString()));
+                  wikipedia.createUpdatePageComment(comment, details.toString()),
+                  false);
             } catch (APIException e) {
               if (APIException.ERROR_BAD_TOKEN.equals(e.getErrorCode())) {
                 api.retrieveContents(wikipedia, page, false);
                 api.updatePage(
                     wikipedia, page, newContents,
-                    wikipedia.createUpdatePageComment(comment, details.toString()));
+                    wikipedia.createUpdatePageComment(comment, details.toString()),
+                    false);
               } else {
                 throw e;
               }
