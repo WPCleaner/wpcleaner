@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-07 20:45+0200\n"
+"POT-Creation-Date: 2010-07-07 21:56+0200\n"
 "PO-Revision-Date: 2010-06-27 08:43+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -102,6 +102,11 @@ msgstr "Ověřit kategorii"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:118
 msgid "View image"
 msgstr "Zobrazit obrázek"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm050.java:38
+#, fuzzy
+msgid "Replace all"
+msgstr "Nahradit"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"

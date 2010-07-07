@@ -242,6 +242,25 @@ public class Utilities {
   }
 
   /**
+   * Retrieve a icon.
+   * 
+   * @param iconName Icon name.
+   * @param size Icon size.
+   * @return Icon.
+   */
+  public static ImageIcon getImageIcon(String iconName, EnumImageSize size) {
+    ImageIcon icon = null;
+    if ((iconName != null) && (size != null)) {
+      URL url = Utilities.class.getClassLoader().getResource(
+          "org/wikipediacleaner/images/" + size.getFolder() + "/" + iconName);
+      if (url != null) {
+        icon = new ImageIcon(url);
+      }
+    }
+    return icon;
+  }
+
+  /**
    * Create a JButton.
    * 
    * @param iconName Icon name.
@@ -253,14 +272,7 @@ public class Utilities {
   public static JButton createJButton(
       String iconName, EnumImageSize size,
       String message, boolean showMessage) {
-    ImageIcon icon = null;
-    if ((iconName != null) && (size != null)) {
-      URL url = Utilities.class.getClassLoader().getResource(
-          "org/wikipediacleaner/images/" + size.getFolder() + "/" + iconName);
-      if (url != null) {
-        icon = new ImageIcon(url);
-      }
-    }
+    ImageIcon icon = getImageIcon(iconName, size);
     JButton button = null;
     if (icon != null) {
       if (showMessage) {
