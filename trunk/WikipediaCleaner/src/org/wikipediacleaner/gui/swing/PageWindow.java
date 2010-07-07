@@ -45,6 +45,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
@@ -99,7 +100,12 @@ public abstract class PageWindow
    * @param pageName Page name.
    */
   protected void setPageName(String pageName) {
-    this.pageName = pageName;
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia != null) {
+      this.pageName = wikipedia.normalizeTitle(pageName);
+    } else {
+      this.pageName = pageName;
+    }
   }
 
   /**

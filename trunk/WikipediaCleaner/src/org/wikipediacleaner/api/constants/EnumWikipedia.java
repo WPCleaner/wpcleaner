@@ -479,6 +479,22 @@ public enum EnumWikipedia {
   }
 
   /**
+   * @param pageTitle Title.
+   * @return Normalized title.
+   */
+  public String normalizeTitle(String pageTitle) {
+    if (title == null) {
+      return null;
+    }
+    String result = pageTitle;
+    result = result.replaceAll("_", " ");
+    result = result.replaceAll(" +", " ");
+    result = result.trim();
+    result = Page.getStringUcFirst(result);
+    return result;
+  }
+
+  /**
    * @return Code.
    */
   public String getCode() {
