@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-07 21:56+0200\n"
+"POT-Creation-Date: 2010-07-07 22:43+0200\n"
 "PO-Revision-Date: 2010-06-27 08:43+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -91,6 +91,13 @@ msgstr "Smazat"
 msgid "Unable to replace the characters [{0}]"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm011.java:38
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm020.java:38
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm050.java:38
+#, fuzzy
+msgid "Replace all"
+msgstr "Nahradit"
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:38
 msgid "Remove all control characters"
 msgstr "Odstranit všechny řídící znaky"
@@ -102,11 +109,6 @@ msgstr "Ověřit kategorii"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:118
 msgid "View image"
 msgstr "Zobrazit obrázek"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm050.java:38
-#, fuzzy
-msgid "Replace all"
-msgstr "Nahradit"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
