@@ -39,6 +39,13 @@ class ReplaceTextActionProvider implements ActionProvider {
     this.newText = newText;
   }
 
+  /**
+   * @return New text.
+   */
+  public String getNewText() {
+    return newText;
+  }
+
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.ActionProvider#getAction(javax.swing.text.Element, javax.swing.JTextPane)
    */
