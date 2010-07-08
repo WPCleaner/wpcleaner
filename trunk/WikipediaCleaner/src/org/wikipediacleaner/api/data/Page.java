@@ -541,7 +541,7 @@ public class Page implements Comparable<Page> {
    * @param anchors Anchors (OUT)
    */
   private void getAnchors(String pageContents, ArrayList<Page> pageLinks, HashMap<Page, List<String>> anchors) {
-    if ((pageContents != null) && (!pageContents.isEmpty()) && (anchors != null)) {
+    if ((pageContents != null) && (pageContents.length() > 0) && (anchors != null)) {
       int currentPos = 0;
       int nextSharp = 0;
       // Check each internal link
@@ -605,7 +605,7 @@ public class Page implements Comparable<Page> {
                     } else {
                       anchor = contents.substring(tmpPos, nextEnd);
                     }
-                    if ((anchor != null) && (!anchor.trim().isEmpty())) {
+                    if ((anchor != null) && (anchor.trim().length() > 0)) {
                       List<String> listAnchors = anchors.get(link);
                       if (listAnchors == null) {
                         listAnchors = new ArrayList<String>();
