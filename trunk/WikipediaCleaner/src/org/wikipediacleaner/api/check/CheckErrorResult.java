@@ -141,6 +141,27 @@ public class CheckErrorResult {
   }
 
   /**
+   * @return First replacement.
+   */
+  public String getFirstReplacement() {
+    if (possibleReplacements == null) {
+      return null;
+    }
+    if (possibleReplacements.isEmpty()) {
+      return null;
+    }
+    Actionnable action = possibleReplacements.get(0);
+    if (!(action instanceof SimpleAction)) {
+      return null;
+    }
+    ActionProvider provider = ((SimpleAction) action).getActionProvider();
+    if (!(provider instanceof ReplaceTextActionProvider)) {
+      return null;
+    }
+    return ((ReplaceTextActionProvider) provider).getNewText();
+  }
+
+  /**
    * Add a possible action.
    * 
    * @param action Action.

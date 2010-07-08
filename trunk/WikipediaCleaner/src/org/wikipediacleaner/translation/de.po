@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-07 22:43+0200\n"
+"POT-Creation-Date: 2010-07-08 21:40+0200\n"
 "PO-Revision-Date: 2010-06-03 20:51+0000\n"
 "Last-Translator: Eduard Gotwig <eduardgotwig@gmail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -105,6 +105,10 @@ msgstr "Überprüfe Kategorie"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:118
 msgid "View image"
 msgstr "Betrachte Bild"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:38
+msgid "Remove all links to title"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"

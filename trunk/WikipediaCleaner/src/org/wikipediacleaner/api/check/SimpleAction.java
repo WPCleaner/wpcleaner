@@ -64,6 +64,13 @@ public class SimpleAction implements Actionnable {
     return action;
   }
 
+  /**
+   * @return Action provider.
+   */
+  public ActionProvider getActionProvider() {
+    return actionProvider;
+  }
+
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.Actionnable#getActions()
    */

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -29,6 +30,13 @@ import org.wikipediacleaner.api.data.Page;
  * Error 48: Title linked in text
  */
 public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
+
+  /**
+   * Possible global fixes.
+   */
+  private final static String[] globalFixes = new String[] {
+    GT._("Remove all links to title"),
+  };
 
   public CheckErrorAlgorithm048() {
     super("Title linked in text");
@@ -88,6 +96,42 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
         }
       } else {
         startIndex = contents.length();
+      }
+    }
+    return result;
+  }
+
+  /**
+   * @return List of possible global fixes.
+   */
+  @Override
+  public String[] getGlobalFixes() {
+    return globalFixes;
+  }
+
+  /**
+   * Fix all the errors in the page.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Page contents after fix.
+   */
+  @Override
+  public String fix(String fixName, Page page, String contents) {
+    String result = contents;
+    ArrayList<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
+    if (analyze(page, contents, errors)) {
+      for (int i = errors.size(); i > 0; i--) {
+        CheckErrorResult errorResult = errors.get(i - 1);
+        String newText = errorResult.getFirstReplacement();
+        if (newText != null) {
+          String tmp =
+            result.substring(0, errorResult.getStartPosition()) +
+            newText +
+            result.substring(errorResult.getEndPosition());
+          result = tmp;
+        }
       }
     }
     return result;
