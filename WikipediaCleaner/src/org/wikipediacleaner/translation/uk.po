@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-07-07 22:43+0200\n"
-"PO-Revision-Date: 2010-07-01 15:43+0000\n"
+"PO-Revision-Date: 2010-07-07 22:39+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-07-05 16:16+0000\n"
+"X-Launchpad-Export-Date: 2010-07-08 18:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:38
@@ -31,7 +31,8 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:42
 msgid "Many new features added for the Check Wiki project : try them !"
-msgstr "До проекту Check Wiki додано багато нових можливостей : Спробуйте їх !"
+msgstr ""
+"До проекту Check Wiki додано багато нових можливостей : Спробуйте їх !"
 
 #: org/wikipediacleaner/Version.java:44
 msgid "Please, report any other problem you find to me."
@@ -93,9 +94,8 @@ msgstr "Не вдалось замінити символи [{0}]"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm011.java:38
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm020.java:38
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm050.java:38
-#, fuzzy
 msgid "Replace all"
-msgstr "&Заміна"
+msgstr "Замінити все"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:38
 msgid "Remove all control characters"
@@ -260,7 +260,8 @@ msgstr "Додати до &списку спостереження"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:645
 msgid "Would you like to add these pages on your local Watch list ?"
-msgstr "Хочете додати ці сторінки до вашого локального списку спостереження ?"
+msgstr ""
+"Хочете додати ці сторінки до вашого локального списку спостереження ?"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:74
 #: org/wikipediacleaner/gui/swing/MainWindow.java:525
@@ -282,7 +283,8 @@ msgstr "Вони можуть змінити багато сторінок за 
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "В деяких проектах Вікіпедії потрібен статус бота, щоб виконувати такі "
 "функції."
@@ -805,9 +807,8 @@ msgid "Add link to error description in comments"
 msgstr "Додавати посилання до опису помилки в коментарях"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:294
-#, fuzzy
 msgid "Watch all edited pages"
-msgstr "Сторінки спостереження"
+msgstr "Переглянути всі змінені сторінки"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:308
 msgid "Maximum number of items in a menu :"
