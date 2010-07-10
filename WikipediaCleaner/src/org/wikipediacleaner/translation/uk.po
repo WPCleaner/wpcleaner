@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-10 14:57+0200\n"
+"POT-Creation-Date: 2010-07-10 15:13+0200\n"
 "PO-Revision-Date: 2010-07-10 11:15+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -86,6 +86,9 @@ msgid "Delete"
 msgstr "Вилучити"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:41
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:39
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089.java:39
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:39
 msgid "Fix DEFAULTSORT"
 msgstr ""
 
