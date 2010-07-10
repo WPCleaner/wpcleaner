@@ -1581,7 +1581,10 @@ public class MediaWikiAPI implements API {
                 (Boolean.TRUE.equals(disambiguation))) {
               p.setDisambiguationPage(disambiguation);
             }
-            p.setWiktionaryLink(wiktionaryLink);
+            if ((p.hasWiktionaryLink() == null) ||
+                (Boolean.TRUE.equals(wiktionaryLink))) {
+              p.setWiktionaryLink(wiktionaryLink);
+            }
           }
         }
       }
