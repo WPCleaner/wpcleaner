@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -29,6 +30,13 @@ import org.wikipediacleaner.api.data.Page;
  * Error 54: Break in list
  */
 public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
+
+  /**
+   * Possible global fixes.
+   */
+  private final static String[] globalFixes = new String[] {
+    GT._("Remove breaks in list"),
+  };
 
   public CheckErrorAlgorithm054() {
     super("Break in list");
@@ -105,5 +113,26 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
       }
     }
     return result;
+  }
+
+  /**
+   * @return List of possible global fixes.
+   */
+  @Override
+  public String[] getGlobalFixes() {
+    return globalFixes;
+  }
+
+  /**
+   * Fix all the errors in the page.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Page contents after fix.
+   */
+  @Override
+  public String fix(String fixName, Page page, String contents) {
+    return fixUsingRemove(fixName, page, contents);
   }
 }

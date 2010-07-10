@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-10 15:21+0200\n"
+"POT-Creation-Date: 2010-07-10 16:15+0200\n"
 "PO-Revision-Date: 2010-05-01 07:19+0000\n"
 "Last-Translator: Iwan Novirion <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -123,6 +123,11 @@ msgstr "Lihat gambar"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:38
 #, fuzzy
 msgid "Remove all links to title"
+msgstr "Hapus semua pranala"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:38
+#, fuzzy
+msgid "Remove breaks in list"
 msgstr "Hapus semua pranala"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99

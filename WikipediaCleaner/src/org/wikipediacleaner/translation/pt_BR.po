@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-10 15:21+0200\n"
+"POT-Creation-Date: 2010-07-10 16:15+0200\n"
 "PO-Revision-Date: 2008-11-30 16:27+0000\n"
 "Last-Translator: Ricardo Ichizo <n1ghtcr4wler@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -123,6 +123,11 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:38
 #, fuzzy
 msgid "Remove all links to title"
+msgstr "Remover todos os vínculos"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:38
+#, fuzzy
+msgid "Remove breaks in list"
 msgstr "Remover todos os vínculos"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
