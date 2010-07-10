@@ -156,7 +156,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
-   * Fix all the errors in the page using first replacement proposed.
+   * Fix all the errors in the page by using the first replacement proposed.
    * 
    * @param fixName Fix name (extracted from getGlobalFixes()).
    * @param page Page.
@@ -177,6 +177,29 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
             result.substring(errorResult.getEndPosition());
           result = tmp;
         }
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Fix all the errors in the page by removing.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Page contents after fix.
+   */
+  public String fixUsingRemove(String fixName, Page page, String contents) {
+    String result = contents;
+    ArrayList<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
+    if (analyze(page, contents, errors)) {
+      for (int i = errors.size(); i > 0; i--) {
+        CheckErrorResult errorResult = errors.get(i - 1);
+        String tmp =
+          result.substring(0, errorResult.getStartPosition()) +
+          result.substring(errorResult.getEndPosition());
+        result = tmp;
       }
     }
     return result;
