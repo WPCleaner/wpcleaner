@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-08 21:40+0200\n"
+"POT-Creation-Date: 2010-07-10 14:57+0200\n"
 "PO-Revision-Date: 2010-07-09 09:01+0000\n"
 "Last-Translator: Donkade <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -87,7 +87,11 @@ msgstr "Vervang met {0}"
 msgid "Delete"
 msgstr "Verwijder"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:129
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:41
+msgid "Fix DEFAULTSORT"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:136
 #, java-format
 msgid "Unable to replace the characters [{0}]"
 msgstr "Niet mogelijk om de karakters [{0}] te vervangen."
@@ -287,8 +291,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103

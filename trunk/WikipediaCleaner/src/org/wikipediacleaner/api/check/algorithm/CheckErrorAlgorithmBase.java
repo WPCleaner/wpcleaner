@@ -156,6 +156,33 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * Fix all the errors in the page using first replacement proposed.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Page contents after fix.
+   */
+  public String fixUsingFirstReplacement(String fixName, Page page, String contents) {
+    String result = contents;
+    ArrayList<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
+    if (analyze(page, contents, errors)) {
+      for (int i = errors.size(); i > 0; i--) {
+        CheckErrorResult errorResult = errors.get(i - 1);
+        String newText = errorResult.getFirstReplacement();
+        if (newText != null) {
+          String tmp =
+            result.substring(0, errorResult.getStartPosition()) +
+            newText +
+            result.substring(errorResult.getEndPosition());
+          result = tmp;
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
    * Search for simple text in page.
    * 
    * @param page Page.
