@@ -34,6 +34,13 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
 
+  /**
+   * Possible global fixes.
+   */
+  private final static String[] globalFixes = new String[] {
+    GT._("Fix DEFAULTSORT"),
+  };
+
   public CheckErrorAlgorithm006() {
     super("DEFAULTSORT with special letters");
   }
@@ -137,5 +144,26 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
       }
     }
     return result;
+  }
+
+  /**
+   * @return List of possible global fixes.
+   */
+  @Override
+  public String[] getGlobalFixes() {
+    return globalFixes;
+  }
+
+  /**
+   * Fix all the errors in the page.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Page contents after fix.
+   */
+  @Override
+  public String fix(String fixName, Page page, String contents) {
+    return fixUsingFirstReplacement(fixName, page, contents);
   }
 }

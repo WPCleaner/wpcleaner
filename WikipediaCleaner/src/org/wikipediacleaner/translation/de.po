@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-08 21:40+0200\n"
+"POT-Creation-Date: 2010-07-10 14:57+0200\n"
 "PO-Revision-Date: 2010-06-03 20:51+0000\n"
 "Last-Translator: Eduard Gotwig <eduardgotwig@gmail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -83,7 +83,11 @@ msgstr "Ersetze mit {0}"
 msgid "Delete"
 msgstr "Löschen"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:129
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:41
+msgid "Fix DEFAULTSORT"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:136
 #, java-format
 msgid "Unable to replace the characters [{0}]"
 msgstr ""
