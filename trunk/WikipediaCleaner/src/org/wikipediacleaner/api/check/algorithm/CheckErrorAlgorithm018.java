@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -30,6 +31,13 @@ import org.wikipediacleaner.api.data.Page;
  * Error 18: Category first letter small
  */
 public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
+
+  /**
+   * Possible global fixes.
+   */
+  private final static String[] globalFixes = new String[] {
+    GT._("Fix categories"),
+  };
 
   public CheckErrorAlgorithm018() {
     super("Category first letter small");
@@ -107,5 +115,26 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
       }
     }
     return result;
+  }
+
+  /**
+   * @return List of possible global fixes.
+   */
+  @Override
+  public String[] getGlobalFixes() {
+    return globalFixes;
+  }
+
+  /**
+   * Fix all the errors in the page.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Page contents after fix.
+   */
+  @Override
+  public String fix(String fixName, Page page, String contents) {
+    return fixUsingFirstReplacement(fixName, page, contents);
   }
 }

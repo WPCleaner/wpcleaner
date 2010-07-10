@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-10 15:13+0200\n"
+"POT-Creation-Date: 2010-07-10 15:21+0200\n"
 "PO-Revision-Date: 2010-05-01 06:49+0000\n"
 "Last-Translator: Bundo <bundo@bundo.biz>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -104,6 +104,11 @@ msgstr "다음으로 바꾸기"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:38
 msgid "Remove all control characters"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm018.java:39
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm022.java:39
+msgid "Fix categories"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:117

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-10 15:13+0200\n"
+"POT-Creation-Date: 2010-07-10 15:21+0200\n"
 "PO-Revision-Date: 2010-07-10 11:15+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -106,6 +106,12 @@ msgstr "Замінити все"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:38
 msgid "Remove all control characters"
 msgstr "Вилучити всі символи керування"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm018.java:39
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm022.java:39
+#, fuzzy
+msgid "Fix categories"
+msgstr "Виправити вибрані сторінки"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:117
 msgid "Check category"
