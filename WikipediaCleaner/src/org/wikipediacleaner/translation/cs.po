@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-10 15:13+0200\n"
+"POT-Creation-Date: 2010-07-10 15:21+0200\n"
 "PO-Revision-Date: 2010-06-27 08:43+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -108,6 +108,12 @@ msgstr "Nahradit"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:38
 msgid "Remove all control characters"
 msgstr "Odstranit všechny řídící znaky"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm018.java:39
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm022.java:39
+#, fuzzy
+msgid "Fix categories"
+msgstr "Opravit vybrané stránky"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:117
 msgid "Check category"
