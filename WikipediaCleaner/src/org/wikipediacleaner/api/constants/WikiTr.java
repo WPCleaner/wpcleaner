@@ -41,9 +41,6 @@ class WikiTr {
 
   final static String configuration = "Kullanıcı:NicoV/WikiCleanerConfiguration";
 
-  final static String wikt     = null;
-  final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
-
   final static String[] dabLinkTemplates = null;
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;
