@@ -327,6 +327,13 @@ public class Page implements Comparable<Page> {
   }
 
   /**
+   * @return Flag indicating if page has a link to Wiktionary.
+   */
+  public Boolean hasWiktionaryLink() {
+    return wiktionaryLink;
+  }
+
+  /**
    * @param wiktionary Flag indicating if page has a link to Wiktionary.
    */
   public void setWiktionaryLink(Boolean wiktionary) {
