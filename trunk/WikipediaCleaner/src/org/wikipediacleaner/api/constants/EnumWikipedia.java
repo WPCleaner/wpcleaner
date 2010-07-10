@@ -77,235 +77,196 @@ public enum EnumWikipedia {
   AF( WikiAf.code, WikiAf.name,
       WikiAf.apiUrl, WikiAf.indexUrl,
       WikiAf.orientation, WikiAf.configuration,
-      WikiAf.wikt, WikiAf.wiktMatches,
       WikiAf.dabLinkTemplates, WikiAf.needHelpTemplates, WikiAf.helpRequestedTemplates,
       WikiAf.dabMatches),
   AR( WikiAr.code, WikiAr.name,
       WikiAr.apiUrl, WikiAr.indexUrl,
       WikiAr.orientation, WikiAr.configuration,
-      WikiAr.wikt, WikiAr.wiktMatches,
       WikiAr.dabLinkTemplates, WikiAr.needHelpTemplates, WikiAr.helpRequestedTemplates,
       WikiAr.dabMatches),
   BAR(WikiBar.code, WikiBar.name,
       WikiBar.apiUrl, WikiBar.indexUrl,
       WikiBar.orientation, WikiBar.configuration,
-      WikiBar.wikt, WikiBar.wiktMatches,
       WikiBar.dabLinkTemplates, WikiBar.needHelpTemplates, WikiBar.helpRequestedTemplates,
       WikiBar.dabMatches),
   CA( WikiCa.code, WikiCa.name,
       WikiCa.apiUrl, WikiCa.indexUrl,
       WikiCa.orientation, WikiCa.configuration,
-      WikiCa.wikt, WikiCa.wiktMatches,
       WikiCa.dabLinkTemplates, WikiCa.needHelpTemplates, WikiCa.helpRequestedTemplates,
       WikiCa.dabMatches),
   CS( WikiCs.code, WikiCs.name,
       WikiCs.apiUrl, WikiCs.indexUrl,
       WikiCs.orientation, WikiCs.configuration,
-      WikiCs.wikt, WikiCs.wiktMatches,
       WikiCs.dabLinkTemplates, WikiCs.needHelpTemplates, WikiCs.helpRequestedTemplates,
       WikiCs.dabMatches),
   CY( WikiCy.code, WikiCy.name,
       WikiCy.apiUrl, WikiCy.indexUrl,
       WikiCy.orientation, WikiCy.configuration,
-      WikiCy.wikt, WikiCy.wiktMatches,
       WikiCy.dabLinkTemplates, WikiCy.needHelpTemplates, WikiCy.helpRequestedTemplates,
       WikiCy.dabMatches),
   DA( WikiDa.code, WikiDa.name,
       WikiDa.apiUrl, WikiDa.indexUrl,
       WikiDa.orientation, WikiDa.configuration,
-      WikiDa.wikt, WikiDa.wiktMatches,
       WikiDa.dabLinkTemplates, WikiDa.needHelpTemplates, WikiDa.helpRequestedTemplates,
       WikiDa.dabMatches),
   DE( WikiDe.code, WikiDe.name,
       WikiDe.apiUrl, WikiDe.indexUrl,
       WikiDe.orientation, WikiDe.configuration,
-      WikiDe.wikt, WikiDe.wiktMatches,
       WikiDe.dabLinkTemplates, WikiDe.needHelpTemplates, WikiDe.helpRequestedTemplates,
       WikiDe.dabMatches),
   EN( WikiEn.code, WikiEn.name,
       WikiEn.apiUrl, WikiEn.indexUrl,
       WikiEn.orientation, WikiEn.configuration,
-      WikiEn.wikt, WikiEn.wiktMatches,
       WikiEn.dabLinkTemplates, WikiEn.needHelpTemplates, WikiEn.helpRequestedTemplates,
       WikiEn.dabMatches),
   EO( WikiEo.code, WikiEo.name,
       WikiEo.apiUrl, WikiEo.indexUrl,
       WikiEo.orientation, WikiEo.configuration,
-      WikiEo.wikt, WikiEo.wiktMatches,
       WikiEo.dabLinkTemplates, WikiEo.needHelpTemplates, WikiEo.helpRequestedTemplates,
       WikiEo.dabMatches),
   ES( WikiEs.code, WikiEs.name,
       WikiEs.apiUrl, WikiEs.indexUrl,
       WikiEs.orientation, WikiEs.configuration,
-      WikiEs.wikt, WikiEs.wiktMatches,
       WikiEs.dabLinkTemplates, WikiEs.needHelpTemplates, WikiEs.helpRequestedTemplates,
       WikiEs.dabMatches),
   FI( WikiFi.code, WikiFi.name,
       WikiFi.apiUrl, WikiFi.indexUrl,
       WikiFi.orientation, WikiFi.configuration,
-      WikiFi.wikt, WikiFi.wiktMatches,
       WikiFi.dabLinkTemplates, WikiFi.needHelpTemplates, WikiFi.helpRequestedTemplates,
       WikiFi.dabMatches),
   FR( WikiFr.code, WikiFr.name,
       WikiFr.apiUrl, WikiFr.indexUrl,
       WikiFr.orientation, WikiFr.configuration,
-      WikiFr.wikt, WikiFr.wiktMatches,
       WikiFr.dabLinkTemplates, WikiFr.needHelpTemplates, WikiFr.helpRequestedTemplates,
       WikiFr.dabMatches),
   FY( WikiFy.code, WikiFy.name,
       WikiFy.apiUrl, WikiFy.indexUrl,
       WikiFy.orientation, WikiFy.configuration,
-      WikiFy.wikt, WikiFy.wiktMatches,
       WikiFy.dabLinkTemplates, WikiFy.needHelpTemplates, WikiFy.helpRequestedTemplates,
       WikiFy.dabMatches),
   GD( WikiGd.code, WikiGd.name,
       WikiGd.apiUrl, WikiGd.indexUrl,
       WikiGd.orientation, WikiGd.configuration,
-      WikiGd.wikt, WikiGd.wiktMatches,
       WikiGd.dabLinkTemplates, WikiGd.needHelpTemplates, WikiGd.helpRequestedTemplates,
       WikiGd.dabMatches),
   HE( WikiHe.code, WikiHe.name,
       WikiHe.apiUrl, WikiHe.indexUrl,
       WikiHe.orientation, WikiHe.configuration,
-      WikiHe.wikt, WikiHe.wiktMatches,
       WikiHe.dabLinkTemplates, WikiHe.needHelpTemplates, WikiHe.helpRequestedTemplates,
       WikiHe.dabMatches),
   HU( WikiHu.code, WikiHu.name,
       WikiHu.apiUrl, WikiHu.indexUrl,
       WikiHu.orientation, WikiHu.configuration,
-      WikiHu.wikt, WikiHu.wiktMatches,
       WikiHu.dabLinkTemplates, WikiHu.needHelpTemplates, WikiHu.helpRequestedTemplates,
       WikiHu.dabMatches),
   ID( WikiId.code, WikiId.name,
       WikiId.apiUrl, WikiId.indexUrl,
       WikiId.orientation, WikiId.configuration,
-      WikiId.wikt, WikiId.wiktMatches,
       WikiId.dabLinkTemplates, WikiId.needHelpTemplates, WikiId.helpRequestedTemplates,
       WikiId.dabMatches),
   IS( WikiIs.code, WikiIs.name,
       WikiIs.apiUrl, WikiIs.indexUrl,
       WikiIs.orientation, WikiIs.configuration,
-      WikiIs.wikt, WikiIs.wiktMatches,
       WikiIs.dabLinkTemplates, WikiIs.needHelpTemplates, WikiIs.helpRequestedTemplates,
       WikiIs.dabMatches),
   IT( WikiIt.code, WikiIt.name,
       WikiIt.apiUrl, WikiIt.indexUrl,
       WikiIt.orientation, WikiIt.configuration,
-      WikiIt.wikt, WikiIt.wiktMatches,
       WikiIt.dabLinkTemplates, WikiIt.needHelpTemplates, WikiIt.helpRequestedTemplates,
       WikiIt.dabMatches),
   JA( WikiJa.code, WikiJa.name,
       WikiJa.apiUrl, WikiJa.indexUrl,
       WikiJa.orientation, WikiJa.configuration,
-      WikiJa.wikt, WikiJa.wiktMatches,
       WikiJa.dabLinkTemplates, WikiJa.needHelpTemplates, WikiJa.helpRequestedTemplates,
       WikiJa.dabMatches),
   LA( WikiLa.code, WikiLa.name,
       WikiLa.apiUrl, WikiLa.indexUrl,
       WikiLa.orientation, WikiLa.configuration,
-      WikiLa.wikt, WikiLa.wiktMatches,
       WikiLa.dabLinkTemplates, WikiLa.needHelpTemplates, WikiLa.helpRequestedTemplates,
       WikiLa.dabMatches),
   NDS(WikiNds.code, WikiNds.name,
       WikiNds.apiUrl, WikiNds.indexUrl,
       WikiNds.orientation, WikiNds.configuration,
-      WikiNds.wikt, WikiNds.wiktMatches,
       WikiNds.dabLinkTemplates, WikiNds.needHelpTemplates, WikiNds.helpRequestedTemplates,
       WikiNds.dabMatches),
   NDS_NL(WikiNdsNl.code, WikiNdsNl.name,
       WikiNdsNl.apiUrl, WikiNdsNl.indexUrl,
       WikiNdsNl.orientation, WikiNdsNl.configuration,
-      WikiNdsNl.wikt, WikiNdsNl.wiktMatches,
       WikiNdsNl.dabLinkTemplates, WikiNdsNl.needHelpTemplates, WikiNdsNl.helpRequestedTemplates,
       WikiNdsNl.dabMatches),
   NL( WikiNl.code, WikiNl.name,
       WikiNl.apiUrl, WikiNl.indexUrl,
       WikiNl.orientation, WikiNl.configuration,
-      WikiNl.wikt, WikiNl.wiktMatches,
       WikiNl.dabLinkTemplates, WikiNl.needHelpTemplates, WikiNl.helpRequestedTemplates,
       WikiNl.dabMatches),
   NO( WikiNo.code, WikiNo.name,
       WikiNo.apiUrl, WikiNo.indexUrl,
       WikiNo.orientation, WikiNo.configuration,
-      WikiNo.wikt, WikiNo.wiktMatches,
       WikiNo.dabLinkTemplates, WikiNo.needHelpTemplates, WikiNo.helpRequestedTemplates,
       WikiNo.dabMatches),
   PDC(WikiPdc.code, WikiPdc.name,
       WikiPdc.apiUrl, WikiPdc.indexUrl,
       WikiPdc.orientation, WikiPdc.configuration,
-      WikiPdc.wikt, WikiPdc.wiktMatches,
       WikiPdc.dabLinkTemplates, WikiPdc.needHelpTemplates, WikiPdc.helpRequestedTemplates,
       WikiPdc.dabMatches),
   PL( WikiPl.code, WikiPl.name,
       WikiPl.apiUrl, WikiPl.indexUrl,
       WikiPl.orientation, WikiPl.configuration,
-      WikiPl.wikt, WikiPl.wiktMatches,
       WikiPl.dabLinkTemplates, WikiPl.needHelpTemplates, WikiPl.helpRequestedTemplates,
       WikiPl.dabMatches),
   PT( WikiPt.code, WikiPt.name,
       WikiPt.apiUrl, WikiPt.indexUrl,
       WikiPt.orientation, WikiPt.configuration,
-      WikiPt.wikt, WikiPt.wiktMatches,
       WikiPt.dabLinkTemplates, WikiPt.needHelpTemplates, WikiPt.helpRequestedTemplates,
       WikiPt.dabMatches),
   RO( WikiRo.code, WikiRo.name,
       WikiRo.apiUrl, WikiRo.indexUrl,
       WikiRo.orientation, WikiRo.configuration,
-      WikiRo.wikt, WikiRo.wiktMatches,
       WikiRo.dabLinkTemplates, WikiRo.needHelpTemplates, WikiRo.helpRequestedTemplates,
       WikiRo.dabMatches),
   RU( WikiRu.code, WikiRu.name,
       WikiRu.apiUrl, WikiRu.indexUrl,
       WikiRu.orientation, WikiRu.configuration,
-      WikiRu.wikt, WikiRu.wiktMatches,
       WikiRu.dabLinkTemplates, WikiRu.needHelpTemplates, WikiRu.helpRequestedTemplates,
       WikiRu.dabMatches),
   SK( WikiSk.code, WikiSk.name,
       WikiSk.apiUrl, WikiSk.indexUrl,
       WikiSk.orientation, WikiSk.configuration,
-      WikiSk.wikt, WikiSk.wiktMatches,
       WikiSk.dabLinkTemplates, WikiSk.needHelpTemplates, WikiSk.helpRequestedTemplates,
       WikiSk.dabMatches),
   SL( WikiSl.code, WikiSl.name,
       WikiSl.apiUrl, WikiSl.indexUrl,
       WikiSl.orientation, WikiSl.configuration,
-      WikiSl.wikt, WikiSl.wiktMatches,
       WikiSl.dabLinkTemplates, WikiSl.needHelpTemplates, WikiSl.helpRequestedTemplates,
       WikiSl.dabMatches),
   SV( WikiSv.code, WikiSv.name,
       WikiSv.apiUrl, WikiSv.indexUrl,
       WikiSv.orientation, WikiSv.configuration,
-      WikiSv.wikt, WikiSv.wiktMatches,
       WikiSv.dabLinkTemplates, WikiSv.needHelpTemplates, WikiSv.helpRequestedTemplates,
       WikiSv.dabMatches),
   TR( WikiTr.code, WikiTr.name,
       WikiTr.apiUrl, WikiTr.indexUrl,
       WikiTr.orientation, WikiTr.configuration,
-      WikiTr.wikt, WikiTr.wiktMatches,
       WikiTr.dabLinkTemplates, WikiTr.needHelpTemplates, WikiTr.helpRequestedTemplates,
       WikiTr.dabMatches),
   UK( WikiUk.code, WikiUk.name,
       WikiUk.apiUrl, WikiUk.indexUrl,
       WikiUk.orientation, WikiUk.configuration,
-      WikiUk.wikt, WikiUk.wiktMatches,
       WikiUk.dabLinkTemplates, WikiUk.needHelpTemplates, WikiUk.helpRequestedTemplates,
       WikiUk.dabMatches),
   YI( WikiYi.code, WikiYi.name,
       WikiYi.apiUrl, WikiYi.indexUrl,
       WikiYi.orientation, WikiYi.configuration,
-      WikiYi.wikt, WikiYi.wiktMatches,
       WikiYi.dabLinkTemplates, WikiYi.needHelpTemplates, WikiYi.helpRequestedTemplates,
       WikiYi.dabMatches),
   ZH( WikiZh.code, WikiZh.name,
       WikiZh.apiUrl, WikiZh.indexUrl,
       WikiZh.orientation, WikiZh.configuration,
-      WikiZh.wikt, WikiZh.wiktMatches,
       WikiZh.dabLinkTemplates, WikiZh.needHelpTemplates, WikiZh.helpRequestedTemplates,
       WikiZh.dabMatches),
   COMMONS(WikiCommons.code, WikiCommons.name,
           WikiCommons.apiUrl, WikiCommons.indexUrl,
           WikiCommons.orientation, WikiCommons.configuration,
-          WikiCommons.wikt, WikiCommons.wiktMatches,
           WikiCommons.dabLinkTemplates, WikiCommons.needHelpTemplates, WikiCommons.helpRequestedTemplates,
           WikiCommons.dabMatches);
 
@@ -313,22 +274,22 @@ public enum EnumWikipedia {
   private final String title;
   private final String apiUrl;
   private final String wikiUrl;
-  private final String helpUrl;
-  private final String helpPage;
+  private String helpUrl;
+  private String helpPage;
   private final ComponentOrientation componentOrientation;
   private final String configPage;
   private final Properties configuration;
-  private final String disambiguationText;
-  private final String wiktionaryInterwiki;
-  private final TemplateMatch[] wiktionaryMatches;
+  private String disambiguationText;
+  private String wiktionaryInterwiki;
+  private TemplateMatch[] wiktionaryMatches;
   private final String[] templatesForDisambiguationLink;
   private final String[] templatesForNeedingHelp;
   private final String[] templatesForHelpRequested;
-  private final String[] disambiguationList;
+  private String[] disambiguationList;
   private ArrayList<Page> disambiguationTemplates;
   private final TemplateMatch[] disambiguationMatches;
-  private final String checkWikiProject;
-  private final String checkWikiTraduction;
+  private String checkWikiProject;
+  private String checkWikiTranslation;
 
   private List<Namespace> namespaces;
   private List<Language>  languages;
@@ -341,8 +302,6 @@ public enum EnumWikipedia {
    * @param apiUrl URL of api.php.
    * @param wikiUrl URL of the wiki.
    * @param configPage Configuration page.
-   * @param wiktionaryInterwiki Interwiki link to wiktionary.
-   * @param wiktionaryMatches List of templates for wiktionary.
    * @param templatesForDisambiguationLink Template used to indicate a normal link to disambiguation page.
    * @param templatesForNeedingHelp Templates used to indicate a link needed help to fix.
    * @param templatesForHelpRequested Templates used to find pages where help is requested.
@@ -355,8 +314,6 @@ public enum EnumWikipedia {
       String wikiUrl,
       ComponentOrientation componentOrientation,
       String configPage,
-      String wiktionaryInterwiki,
-      TemplateMatch[] wiktionaryMatches,
       String[] templatesForDisambiguationLink,
       String[] templatesForNeedingHelp,
       String[] templatesForHelpRequested,
@@ -371,15 +328,15 @@ public enum EnumWikipedia {
     this.configuration = new Properties();
     this.componentOrientation = componentOrientation;
     this.disambiguationText = null;
-    this.wiktionaryInterwiki = wiktionaryInterwiki;
-    this.wiktionaryMatches = wiktionaryMatches;
+    this.wiktionaryInterwiki = null;
+    this.wiktionaryMatches = null;
     this.templatesForDisambiguationLink = templatesForDisambiguationLink;
     this.templatesForNeedingHelp = templatesForNeedingHelp;
     this.templatesForHelpRequested = templatesForHelpRequested;
     this.disambiguationList = null;
     this.disambiguationMatches = templateMatches;
     this.checkWikiProject = null;
-    this.checkWikiTraduction = null;
+    this.checkWikiTranslation = null;
   }
 
   /**
@@ -436,7 +393,7 @@ public enum EnumWikipedia {
     this.disambiguationList = disambiguationList;
     this.disambiguationMatches = templateMatches;
     this.checkWikiProject = checkWikiProject;
-    this.checkWikiTraduction = checkWikiTraduction;
+    this.checkWikiTranslation = checkWikiTraduction;
   }
 
   /**
@@ -529,12 +486,6 @@ public enum EnumWikipedia {
     if (helpUrl != null) {
       return helpUrl;
     }
-    if (configuration != null) {
-      String tmp = configuration.getProperty("help_url", null);
-      if ((tmp != null) && (tmp.trim().length() > 0)) {
-        return tmp.trim();
-      }
-    }
     return "http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation";
   }
 
@@ -544,12 +495,6 @@ public enum EnumWikipedia {
   public String getHelpPage() {
     if (helpPage != null) {
       return helpPage;
-    }
-    if (configuration != null) {
-      String tmp = configuration.getProperty("help_page", null);
-      if ((tmp != null) && (tmp.trim().length() > 0)) {
-        return tmp.trim();
-      }
     }
     return null;
   }
@@ -574,12 +519,6 @@ public enum EnumWikipedia {
   public String getDisambiguationString() {
     if (disambiguationText != null) {
       return disambiguationText;
-    }
-    if (configuration != null) {
-      String tmp = configuration.getProperty("dab_comment", null);
-      if ((tmp != null) && (tmp.trim().length() > 0)) {
-        return tmp.trim();
-      }
     }
     return null;
   }
@@ -623,7 +562,10 @@ public enum EnumWikipedia {
    * @return Wiktionary interwiki.
    */
   public String getWiktionaryInterwiki() {
-    return wiktionaryInterwiki;
+    if (wiktionaryInterwiki != null) {
+      return wiktionaryInterwiki;
+    }
+    return null;
   }
 
   /**
@@ -699,18 +641,6 @@ public enum EnumWikipedia {
     if (disambiguationList != null) {
       return disambiguationList;
     }
-    if (configuration != null) {
-      String tmp = configuration.getProperty("dab_list", null);
-      if ((tmp != null) && (tmp.trim().length() > 0)) {
-        String[] results = tmp.trim().split("\n");
-        if ((results != null) && (results.length > 0)) {
-          for (int i = 0; i < results.length; i++) {
-            results[i] = results[i].trim();
-          }
-          return results;
-        }
-      }
-    }
     return null;
   }
 
@@ -731,7 +661,7 @@ public enum EnumWikipedia {
         String name = line.substring(0, posEqual);
         line = line.substring(posEqual + 1);
         int posEnd = line.indexOf(" END");
-        while (posEnd == -1) {
+        while ((posEnd == -1) && (!"END".equals(line))) {
           String nextLine = reader.readLine();
           if (nextLine != null) {
             line += "\n" + nextLine;
@@ -752,6 +682,7 @@ public enum EnumWikipedia {
    * @param config Configuration (page contents)
    */
   public void initConfiguration(String config) {
+    // Load configuration
     configuration.clear();
     if (config != null) {
       BufferedReader reader = null;
@@ -762,6 +693,96 @@ public enum EnumWikipedia {
         }
       } catch (IOException e) {
         //
+      }
+    }
+
+    // Analyze configuration
+    if (configuration != null) {
+      String tmp;
+
+      // Help URL
+      tmp = configuration.getProperty("help_url", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        helpUrl = tmp.trim();
+      }
+
+      // Help Page
+      tmp = configuration.getProperty("help_page", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        helpPage = tmp.trim();
+      }
+
+      // Disambiguation comment
+      tmp = configuration.getProperty("dab_comment", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        disambiguationText = tmp.trim();
+      }
+
+      // Disambiguation list
+      tmp = configuration.getProperty("dab_list", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        String[] results = tmp.trim().split("\n");
+        if ((results != null) && (results.length > 0)) {
+          int count = 0;
+          for (int i = 0; i < results.length; i++) {
+            results[i] = results[i].trim();
+            if (results[i].length() > 0) {
+              count++;
+            }
+          }
+          disambiguationList = new String[count];
+          for (int i = results.length; i > 0; i--) {
+            if (results[i - 1].length() > 0) {
+              count--;
+              disambiguationList[count] = results[i - 1];
+            }
+          }
+        }
+      }
+
+      // Wiktionary interwiki
+      tmp = configuration.getProperty("wikt_interwiki", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        wiktionaryInterwiki = tmp.trim();
+      }
+
+      // Wikitionary templates
+      tmp = configuration.getProperty("wikt_templates", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        String[] results = tmp.trim().split("\n");
+        if ((results != null) && (results.length > 0)) {
+          int count = 0;
+          for (int i = 0; i < results.length; i++) {
+            results[i] = results[i].trim();
+            if (results[i].length() > 0) {
+              count++;
+            }
+          }
+          wiktionaryMatches = new TemplateMatch[count];
+          for (int i = results.length; i > 0; i--) {
+            if (results[i - 1].length() > 0) {
+              count--;
+              String[] elements = results[i - 1].split("\\|");
+              wiktionaryMatches[count] = new TemplateMatch(
+                  (elements.length > 0) ? elements[0].trim() : "",
+                  (elements.length > 1) ? elements[1].trim() : "",
+                  (elements.length > 2) ? elements[2].trim() : "",
+                  true, false);
+            }
+          }
+        }
+      }
+
+      // Check Wiki project page
+      tmp = configuration.getProperty("check_wiki_project_page", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        checkWikiProject = tmp.trim();
+      }
+
+      // Check Wiki translation page
+      tmp = configuration.getProperty("check_wiki_translation_page", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        checkWikiTranslation = tmp.trim();
       }
     }
   }
@@ -856,12 +877,6 @@ public enum EnumWikipedia {
     if (checkWikiProject != null) {
       return checkWikiProject;
     }
-    if (configuration != null) {
-      String tmp = configuration.getProperty("check_wiki_project_page", null);
-      if ((tmp != null) && (tmp.trim().length() > 0)) {
-        return tmp;
-      }
-    }
     return null;
   }
 
@@ -869,14 +884,8 @@ public enum EnumWikipedia {
    * @return Check Wikipedia Project traduction.
    */
   public String getCheckWikiTraduction() {
-    if (checkWikiTraduction != null) {
-      return checkWikiTraduction;
-    }
-    if (configuration != null) {
-      String tmp = configuration.getProperty("check_wiki_translation_page", null);
-      if ((tmp != null) && (tmp.trim().length() > 0)) {
-        return tmp;
-      }
+    if (checkWikiTranslation != null) {
+      return checkWikiTranslation;
     }
     return null;
   }

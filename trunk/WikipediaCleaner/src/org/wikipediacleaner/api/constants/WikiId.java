@@ -41,9 +41,6 @@ class WikiId {
 
   final static String configuration = "Pengguna:NicoV/WikiCleanerConfiguration";
 
-  final static String wikt     = null;
-  final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
-
   final static String[] dabLinkTemplates = new String[] { "Templat:Disambig info" };
   final static String[] needHelpTemplates = null;
   final static String[] helpRequestedTemplates = null;

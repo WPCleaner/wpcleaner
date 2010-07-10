@@ -41,9 +41,6 @@ class WikiEn {
 
   final static String configuration = "User:NicoV/WikiCleanerConfiguration";
 
-  final static String wikt     = null;
-  final static TemplateMatch[] wiktMatches = new TemplateMatch[] {};
-
   final static String[] dabLinkTemplates = new String[] {
   };
   final static String[] needHelpTemplates = new String[] {
