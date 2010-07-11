@@ -277,6 +277,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
     MenuCreator.addRemoveLinkToMenu(popup, text, element, textPane);
     MenuCreator.addMarkAsNormalToMenu(wikipedia, popup, page, text, element, textPane);
     MenuCreator.addMarkAsNeedingHelpToMenu(wikipedia, popup, page, text, element, textPane, chkAddNote);
+    MenuCreator.addLinkTextToMenu(wikipedia, popup, page, text, element, textPane);
     popup.add(new JSeparator());
     MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
     MenuCreator.addViewToMenu(wikipedia, popup, page);

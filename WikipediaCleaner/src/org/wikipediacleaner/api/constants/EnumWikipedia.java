@@ -246,6 +246,7 @@ public enum EnumWikipedia {
   private String[] templatesForDisambiguationLink;
   private String[] templatesForNeedingHelp;
   private String[] templatesForHelpRequested;
+  private String[] templatesForLinkingText;
   private String[] disambiguationList;
   private ArrayList<Page> disambiguationTemplates;
   private final TemplateMatch[] disambiguationMatches;
@@ -288,6 +289,7 @@ public enum EnumWikipedia {
     this.templatesForDisambiguationLink = null;
     this.templatesForNeedingHelp = null;
     this.templatesForHelpRequested = null;
+    this.templatesForLinkingText = null;
     this.disambiguationList = null;
     this.disambiguationMatches = templateMatches;
     this.checkWikiProject = null;
@@ -590,6 +592,16 @@ public enum EnumWikipedia {
   }
 
   /**
+   * @return Templates used for linking text.
+   */
+  public String[] getTemplatesForLinkingText() {
+    if (templatesForLinkingText != null) {
+      return templatesForLinkingText.clone();
+    }
+    return null;
+  }
+
+  /**
    * @return Pages containing the list of disambiguation pages.
    */
   public String[] getDisambiguationList() {
@@ -695,6 +707,12 @@ public enum EnumWikipedia {
       tmp = configuration.getProperty("help_requested_templates", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         templatesForHelpRequested = convertPropertyToStringArray(tmp);
+      }
+
+      // Templates for linking text
+      tmp = configuration.getProperty("link_text_templates", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        templatesForLinkingText = convertPropertyToStringArray(tmp);
       }
 
       // Wiktionary interwiki

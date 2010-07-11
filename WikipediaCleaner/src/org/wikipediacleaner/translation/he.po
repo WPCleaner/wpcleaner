@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-10 16:15+0200\n"
+"POT-Creation-Date: 2010-07-11 13:07+0200\n"
 "PO-Revision-Date: 2010-06-23 15:43+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -1342,6 +1342,7 @@ msgstr "סמן כקישור רגיל"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:693
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:735
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:776
 #, java-format
 msgid "Using '{{'{0}'}}'"
 msgstr "עושה שימוש ב- '{{'{0}'}}'"
@@ -1351,38 +1352,44 @@ msgstr "עושה שימוש ב- '{{'{0}'}}'"
 msgid "Mark as needing help"
 msgstr "סמן כנזקק לעזרה"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:769
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:774
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:785
+#, fuzzy
+msgid "Link text"
+msgstr "חיפוש טקסט"
+
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:810
 msgid "Analyze"
 msgstr "נתח"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:806
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:847
 msgid "Analyze page"
 msgstr "נתח את העמוד"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:829
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:880
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:897
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:870
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:921
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:938
 msgid "External Viewer"
 msgstr "תוכנת צפייה חיצונית"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:929
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:934
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:970
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:975
 msgid "Disambiguation analysis"
 msgstr "ניתוח פירושונים"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:960
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1001
 msgid "Reload links"
 msgstr "טען קישורים מחדש"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:978
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1019
 msgid "Purge cache"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:995
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1036
 msgid "Find text"
 msgstr "חיפוש טקסט"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1013
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1054
 msgid "Search in templates"
 msgstr "חפש בתבניות"
 
