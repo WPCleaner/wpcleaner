@@ -42,18 +42,6 @@ class WikiFr {
 
   final static String configuration = "Utilisateur:NicoV/WikiCleanerConfiguration";
 
-  final static String[] dabLinkTemplates = new String[] {
-    "page h",
-    "page h'",
-    "page l",
-  };
-  final static String[] needHelpTemplates = new String[] {
-    "lh",
-  };
-  final static String[] helpRequestedTemplates = new String[] {
-    "Lien vers un homonyme",
-  };
-
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
     new TemplateMatch("A", "1", "", false, false),
     new TemplateMatch("Article détaillé", "1,2,3,4,5,6,7,8,9,10", "", false, false),

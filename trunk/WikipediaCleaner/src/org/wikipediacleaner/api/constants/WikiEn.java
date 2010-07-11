@@ -41,15 +41,6 @@ class WikiEn {
 
   final static String configuration = "User:NicoV/WikiCleanerConfiguration";
 
-  final static String[] dabLinkTemplates = new String[] {
-  };
-  final static String[] needHelpTemplates = new String[] {
-    "dn",
-  };
-  final static String[] helpRequestedTemplates = new String[] {
-    "Ambiguous link",
-  };
-
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
     new TemplateMatch("Ambiguous link", "1", "", false, true),
     new TemplateMatch("Dn", "1", "", false, true),

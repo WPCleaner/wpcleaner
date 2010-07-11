@@ -41,9 +41,5 @@ class WikiIs {
 
   final static String configuration = "Notandi:NicoV/WikiCleanerConfiguration";
 
-  final static String[] dabLinkTemplates = new String[] {};
-  final static String[] needHelpTemplates = new String[] {};
-  final static String[] helpRequestedTemplates = new String[] {};
-
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
 }
