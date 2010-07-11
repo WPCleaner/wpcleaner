@@ -735,7 +735,7 @@ public class MenuCreator {
           JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
           ActionListener action = new MarkLinkAction(
               page.getTitle(), text, template,
-              element, textPane, null);
+              element, textPane, checkBox);
           menuItem.addActionListener(action);
           submenu.add(menuItem);
         }
@@ -745,6 +745,47 @@ public class MenuCreator {
         ActionListener action = new MarkLinkAction(
             page.getTitle(), text, templates[0],
             element, textPane, checkBox);
+        menuItem.addActionListener(action);
+        popup.add(menuItem);
+      }
+    }
+  }
+
+  /**
+   * Add submenus for linking texts.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param popup Popup menu.
+   * @param page Page.
+   * @param text Text.
+   * @param element Element.
+   * @param textPane Text pane.
+   */
+  public static void addLinkTextToMenu(
+      EnumWikipedia wikipedia, JPopupMenu popup, Page page, String text,
+      Element element, JTextPane textPane) {
+    String[] templates = (wikipedia != null) ? wikipedia.getTemplatesForLinkingText() : null;
+    if ((text != null) &&
+        (page != null) &&
+        Boolean.TRUE.equals(page.isDisambiguationPage()) &&
+        (templates != null) &&
+        (templates.length > 0)) {
+      if (templates.length > 1) {
+        JMenu submenu = new JMenu(GT._("Link text"));
+        for (String template : templates) {
+          JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
+          ActionListener action = new MarkLinkAction(
+              page.getTitle(), text, template,
+              element, textPane, null);
+          menuItem.addActionListener(action);
+          submenu.add(menuItem);
+        }
+        popup.add(submenu);
+      } else {
+        JMenuItem menuItem = new JMenuItem(GT._("Link text"));
+        ActionListener action = new MarkLinkAction(
+            page.getTitle(), text, templates[0],
+            element, textPane, null);
         menuItem.addActionListener(action);
         popup.add(menuItem);
       }
