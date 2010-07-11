@@ -41,10 +41,6 @@ class WikiIt {
 
   final static String configuration = "Utente:NicoV/WikiCleanerConfiguration";
 
-  final static String[] dabLinkTemplates = null;
-  final static String[] needHelpTemplates = null;
-  final static String[] helpRequestedTemplates = null;
-
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
     new TemplateMatch("Nota disambigua", "1,2,3", "(omonimia) {{PAGENAME}}", true, false),
   };

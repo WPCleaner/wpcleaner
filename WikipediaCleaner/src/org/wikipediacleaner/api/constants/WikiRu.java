@@ -41,10 +41,6 @@ class WikiRu {
 
   final static String configuration = "Участник:NicoV/WikiCleanerConfiguration";
 
-  final static String[] dabLinkTemplates = null;
-  final static String[] needHelpTemplates = null;
-  final static String[] helpRequestedTemplates = null;
-
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
     new TemplateMatch("Другие значения", "1", "{{PAGENAME}} (значения)", true, false),
     new TemplateMatch("Другое значение", "1", "{{PAGENAME}}", true, false),

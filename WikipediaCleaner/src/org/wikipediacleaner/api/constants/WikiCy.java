@@ -41,9 +41,5 @@ class WikiCy {
 
   final static String configuration = "Defnyddiwr:NicoV/WikiCleanerConfiguration";
 
-  final static String[] dabLinkTemplates = null;
-  final static String[] needHelpTemplates = null;
-  final static String[] helpRequestedTemplates = null;
-
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
 }
