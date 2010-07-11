@@ -264,7 +264,7 @@ public class MainWindow
     JToolBar toolbarWikipedia = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarWikipedia.setFloatable(false);
     JButton buttonWikipediaInfo = Utilities.createJButton(
-        "help-browser.png", EnumImageSize.SMALL,
+        "tango-help-browser.png", EnumImageSize.SMALL,
         GT._("Other Wikipedia"), false);
     buttonWikipediaInfo.setActionCommand(ACTION_OTHER_WIKIPEDIA);
     buttonWikipediaInfo.addActionListener(this);
@@ -291,7 +291,7 @@ public class MainWindow
     JToolBar toolbarLanguage = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarLanguage.setFloatable(false);
     JButton buttonLanguageInfo = Utilities.createJButton(
-        "help-browser.png", EnumImageSize.SMALL,
+        "tango-help-browser.png", EnumImageSize.SMALL,
         GT._("Other Language"), false);
     buttonLanguageInfo.setActionCommand(ACTION_OTHER_LANGUAGE);
     buttonLanguageInfo.addActionListener(this);
@@ -515,7 +515,9 @@ public class MainWindow
     constraints.gridy++;
 
     // Watched pages button
-    buttonWatchedPages = Utilities.createJButton(GT._("Local &Watch list"));
+    buttonWatchedPages = Utilities.createJButton(
+        "gnome-logviewer.png", EnumImageSize.NORMAL,
+        GT._("Local &Watch list"), true);
     buttonWatchedPages.setActionCommand(ACTION_WATCHED_PAGES);
     buttonWatchedPages.addActionListener(this);
     panel.add(buttonWatchedPages, constraints);

@@ -223,8 +223,8 @@ public class DisambiguationWindow extends PageWindow {
     addTextPageName(panel);
     addButtonReload(panel, false);
     addButtonView(panel, false);
-    addButtonSend(panel);
-    addButtonWatch(panel);
+    addButtonSend(panel, false);
+    addButtonWatch(panel, false);
     addButtonFullAnalysis(panel);
     return panel;
   }
