@@ -318,15 +318,15 @@ public class AnalysisWindow extends PageWindow {
     addButtonUndoRedo(toolbarButtons, true);
     buttonValidate = createButtonValidate(this, true);
     toolbarButtons.add(buttonValidate);
-    addButtonSend(toolbarButtons);
+    addButtonSend(toolbarButtons, true);
     addButtonRedirect(toolbarButtons);
     toolbarButtons.addSeparator();
     addButtonReload(toolbarButtons, true);
     addButtonView(toolbarButtons, true);
     addButtonViewHistory(toolbarButtons, true);
     toolbarButtons.addSeparator();
-    addButtonWatch(toolbarButtons);
-    addButtonDisambiguation(toolbarButtons);
+    addButtonWatch(toolbarButtons, true);
+    addButtonDisambiguation(toolbarButtons, true);
     toolbarButtons.addSeparator();
     addLblLastModified(toolbarButtons);
     constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -541,8 +541,14 @@ public class AnalysisWindow extends PageWindow {
       actionDisambiguationLink();
     } else if (ACTION_FULL_ANALYSIS_LINK.equals(e.getActionCommand())) {
       actionFullAnalysisLink();
+    } else if (ACTION_FIRST_OCCURENCE.equals(e.getActionCommand())) {
+      actionFirstOccurence();
+    } else if (ACTION_PREVIOUS_OCCURENCE.equals(e.getActionCommand())) {
+      actionPreviousOccurence();
     } else if (ACTION_NEXT_OCCURENCE.equals(e.getActionCommand())) {
       actionNextOccurence();
+    } else if (ACTION_LAST_OCCURENCE.equals(e.getActionCommand())) {
+      actionLastOccurence();
     }
   }
 
@@ -750,10 +756,34 @@ public class AnalysisWindow extends PageWindow {
   }
 
   /**
+   * Action called when First Occurence button is pressed. 
+   */
+  private void actionFirstOccurence() {
+    getTextContents().selectFirstOccurence();
+    getTextContents().requestFocusInWindow();
+  }
+
+  /**
+   * Action called when Previous Occurence button is pressed. 
+   */
+  private void actionPreviousOccurence() {
+    getTextContents().selectPreviousOccurence();
+    getTextContents().requestFocusInWindow();
+  }
+
+  /**
    * Action called when Next Occurence button is pressed. 
    */
   private void actionNextOccurence() {
     getTextContents().selectNextOccurence();
+    getTextContents().requestFocusInWindow();
+  }
+
+  /**
+   * Action called when Last Occurence button is pressed. 
+   */
+  private void actionLastOccurence() {
+    getTextContents().selectLastOccurence();
     getTextContents().requestFocusInWindow();
   }
 }

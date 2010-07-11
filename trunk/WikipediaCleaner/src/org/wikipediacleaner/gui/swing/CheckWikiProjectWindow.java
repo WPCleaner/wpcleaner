@@ -333,7 +333,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     buttonReloadError.addActionListener(this);
     toolbar.add(buttonReloadError);
     buttonErrorDetail = Utilities.createJButton(
-        "help-browser.png", EnumImageSize.NORMAL,
+        "tango-help-browser.png", EnumImageSize.NORMAL,
         GT._("Detail"), false);
     buttonErrorDetail.setActionCommand(ACTION_ERROR_DETAIL);
     buttonErrorDetail.addActionListener(this);
@@ -538,7 +538,7 @@ public class CheckWikiProjectWindow extends PageWindow {
       toolbarButtons.addSeparator();
       JButton buttonValidate = createButtonValidate(this, true);
       toolbarButtons.add(buttonValidate);
-      buttonSend = createButtonSend(this);
+      buttonSend = createButtonSend(this, true);
       buttonSend.setEnabled(false);
       toolbarButtons.add(buttonSend);
       JButton buttonMarkAsFixed = Utilities.createJButton(GT._("Mark as Fixed")); // Mark as fixed

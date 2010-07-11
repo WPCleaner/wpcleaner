@@ -1,7 +1,16 @@
 The files in the images directory and its subdirectories are from :
-- Tango: The Tango Desktop Project (http://tango.freedesktop.org/). Icons from Tango are in the public domain. 
-- Gnome: The Gnome Icon Theme (http://git.gnome.org./browse/gnome-icon-theme/tree/ - http://www.gnome.org/). Icons from Gnome are under GPL v2.
-- Commons: Wikimedia Commons (http://commons.wikimedia.org). Licence depends on the image.
+- Tango:
+  The Tango Desktop Project (http://tango.freedesktop.org/).
+  Icons from Tango are in the public domain.
+  Image names have been prefixed by tango-.
+- Gnome:
+  The Gnome Icon Theme (http://git.gnome.org./browse/gnome-icon-theme/tree/ - http://www.gnome.org/).
+  Icons from Gnome are under GPL v2.
+  Image names have been prefixed by gnome-.
+- Commons:
+  Wikimedia Commons (http://commons.wikimedia.org).
+  Licence depends on the image.
+  Image names have been prefixed by commons-.
 
 The following files are available in the "normal" directory:
 - commons-approve-icon.png (Commons - Author: Akela NDE - http://commons.wikimedia.org/wiki/File:Approve_icon.svg - GFDL 1.2 or +, CC-BY-SA 3.0)
@@ -33,15 +42,16 @@ The following files are available in the "normal" directory:
 - gnome-view-refresh.png (Gnome)
 - gnome-web-browser.png (Gnome)
 - gnome-window-close.png (Gnome)
-- go-next.png (Tango)
-- help-browser.png (Tango)
-- internet-web-browser.png (Tango)
-- view-refresh.png (Tango)
+- tango-go-next.png (Tango)
+- tango-help-browser.png (Tango)
+- tango-internet-web-browser.png (Tango)
+- tango-view-refresh.png (Tango)
 
 The following files are available in the "small" directory:
+- gnome-system-run.png (Gnome)
 - gnome-view-refresh.png (Gnome)
-- go-next.png (Tango)
-- help-browser.png (Tango)
-- internet-web-browser.png (Tango)
-- view-refresh.png (Tango)
+- tango-go-next.png (Tango)
+- tango-help-browser.png (Tango)
+- tango-internet-web-browser.png (Tango)
+- tango-view-refresh.png (Tango)
  

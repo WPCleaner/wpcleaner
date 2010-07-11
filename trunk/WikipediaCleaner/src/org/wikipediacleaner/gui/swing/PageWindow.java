@@ -296,10 +296,17 @@ public abstract class PageWindow
    * Add a component for the Disambiguation button.
    * 
    * @param panel Container.
+   * @param icon Flag indicating if an icon should be used.
    */
-  protected void addButtonDisambiguation(JComponent panel) {
+  protected void addButtonDisambiguation(JComponent panel, boolean icon) {
     if (buttonDisambiguation == null) {
-      buttonDisambiguation = Utilities.createJButton(GT._("Disambiguation"));
+      if (icon) {
+        buttonDisambiguation = Utilities.createJButton(
+            "commons-disambig-colour.png", EnumImageSize.NORMAL,
+            GT._("Disambiguation"), false);
+      } else {
+        buttonDisambiguation = Utilities.createJButton(GT._("Disambiguation"));
+      }
       buttonDisambiguation.setActionCommand(ACTION_DISAMBIGUATION_PAGE);
       buttonDisambiguation.addActionListener(this);
       panel.add(buttonDisambiguation);
@@ -479,10 +486,11 @@ public abstract class PageWindow
    * Add a component for the Send button.
    * 
    * @param panel Container.
+   * @param icon Flag indicating if an icon should be used.
    */
-  protected void addButtonSend(JComponent panel) {
+  protected void addButtonSend(JComponent panel, boolean icon) {
     if (buttonSend == null) {
-      buttonSend = createButtonSend(this);
+      buttonSend = createButtonSend(this, icon);
       panel.add(buttonSend);
     }
   }
@@ -491,10 +499,18 @@ public abstract class PageWindow
    * Create a Send button.
    * 
    * @param listener Action listener.
+   * @param icon Flag indicating if an icon should be used.
    * @return Send button.
    */
-  public JButton createButtonSend(ActionListener listener) {
-    JButton button = Utilities.createJButton(GT._("&Send"));
+  public JButton createButtonSend(ActionListener listener, boolean icon) {
+    JButton button;
+    if (icon) {
+      button = Utilities.createJButton(
+          "gnome-document-send.png", EnumImageSize.NORMAL,
+          GT._("Send (Alt + &S)"), false);
+    } else {
+      button = Utilities.createJButton(GT._("&Send"));
+    }
     button.setActionCommand(ACTION_SEND);
     button.addActionListener(listener);
     return button;
@@ -622,10 +638,11 @@ public abstract class PageWindow
    * Add a component for the Watch button.
    * 
    * @param panel Container.
+   * @param icon Flag indicating if an icon should be used.
    */
-  protected void addButtonWatch(JComponent panel) {
+  protected void addButtonWatch(JComponent panel, boolean icon) {
     if (buttonWatch == null) {
-      buttonWatch = createButtonWatch(this);
+      buttonWatch = createButtonWatch(this, icon);
       panel.add(buttonWatch);
     }
   }
@@ -634,10 +651,18 @@ public abstract class PageWindow
    * Create a Watch button.
    * 
    * @param listener Action listener.
+   * @param icon Flag indicating if an icon should be used.
    * @return Watch button.
    */
-  public JButton createButtonWatch(ActionListener listener) {
-    JButton button = Utilities.createJButton(GT._("Add to &Watch list"));
+  public JButton createButtonWatch(ActionListener listener, boolean icon) {
+    JButton button;
+    if (icon) {
+      button = Utilities.createJButton(
+          "gnome-logviewer-add.png", EnumImageSize.NORMAL,
+          GT._("Add to Watch list (Alt + &W)"), false);
+    } else {
+      button = Utilities.createJButton(GT._("Add to &Watch list"));
+    }
     button.setActionCommand(ACTION_WATCH);
     button.addActionListener(listener);
     return button;
