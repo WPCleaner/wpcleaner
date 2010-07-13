@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-13 21:17+0200\n"
+"POT-Creation-Date: 2010-07-13 21:33+0200\n"
 "PO-Revision-Date: 2010-05-01 06:49+0000\n"
 "Last-Translator: Bundo <bundo@bundo.biz>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -132,6 +132,7 @@ msgid "Check language links"
 msgstr "언어 연결 조사"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:125
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:147
 #, java-format
 msgid "The checksum is {0} instead of {1}"
 msgstr ""

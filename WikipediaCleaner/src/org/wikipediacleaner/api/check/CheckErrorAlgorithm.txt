@@ -314,9 +314,11 @@ Error 071: ISBN wrong position of X
 
 ===============================================================================
 Error 072: ISBN wrong checksum in ISBN-10
+Status: DONE
 
 ===============================================================================
 Error 073: ISBN wrong checksum in ISBN-13
+Status: DONE
 
 ===============================================================================
 Error 074: Link with no target
