@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-07-11 17:52+0200\n"
-"PO-Revision-Date: 2010-06-27 08:43+0000\n"
+"PO-Revision-Date: 2010-07-13 09:09+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-06-28 15:24+0000\n"
+"X-Launchpad-Export-Date: 2010-07-13 18:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:38
@@ -91,19 +91,18 @@ msgstr "Smazat"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089.java:39
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:39
 msgid "Fix DEFAULTSORT"
-msgstr ""
+msgstr "Opravit DEFAULTSORT"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:136
 #, java-format
 msgid "Unable to replace the characters [{0}]"
-msgstr ""
+msgstr "Nelze nahradit znaky [{0}]"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm011.java:38
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm020.java:38
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm050.java:38
-#, fuzzy
 msgid "Replace all"
-msgstr "Nahradit"
+msgstr "Nahradit vše"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:38
 msgid "Remove all control characters"
@@ -111,9 +110,8 @@ msgstr "Odstranit všechny řídící znaky"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm018.java:39
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm022.java:39
-#, fuzzy
 msgid "Fix categories"
-msgstr "Opravit vybrané stránky"
+msgstr "Opravit kategorie"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:117
 msgid "Check category"
@@ -124,14 +122,12 @@ msgid "View image"
 msgstr "Zobrazit obrázek"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:38
-#, fuzzy
 msgid "Remove all links to title"
-msgstr "Odebrat všechny odkazy"
+msgstr "Odstranit všechny odkazy na článek"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:38
-#, fuzzy
 msgid "Remove breaks in list"
-msgstr "Odebrat všechny odkazy"
+msgstr "Odstranit zalomení v seznamu"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
@@ -306,7 +302,8 @@ msgstr "Můžou změnit nožství stránek v krátkém čase."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Na některých projektech Wikimedia potřebuješ pro tyto funkce příznak Bot."
 
@@ -663,7 +660,8 @@ msgstr "Než se přihlásíte, musíte zadat heslo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:758
 msgid "You can learn how to configure WikiCleaner at the following URL:"
-msgstr "Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
+msgstr ""
+"Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:775
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
@@ -828,9 +826,8 @@ msgid "Add link to error description in comments"
 msgstr "Přidat do shrnutí popis chyby"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:294
-#, fuzzy
 msgid "Watch all edited pages"
-msgstr "Sledované stránky"
+msgstr "Sledovat všechny editované stránky"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:308
 msgid "Maximum number of items in a menu :"
@@ -1040,9 +1037,8 @@ msgid "&Reload"
 msgstr "Obnovit"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:510
-#, fuzzy
 msgid "Send (Alt + &S)"
-msgstr "Načíst znovu (Alt + &R)"
+msgstr "Odeslat (Alt + &S)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:512
 msgid "&Send"
@@ -1079,9 +1075,8 @@ msgid "&History"
 msgstr "&Historie"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:662
-#, fuzzy
 msgid "Add to Watch list (Alt + &W)"
-msgstr "Přidat do &Sledovaných stránek"
+msgstr "Přidat do sledovaných (Alt + &W)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:693
 msgid "Automatic comment"
@@ -1408,9 +1403,8 @@ msgstr "Označit žádostí o pomoc"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:774
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:785
-#, fuzzy
 msgid "Link text"
-msgstr "Najít text"
+msgstr "Text odkazu"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:810
 msgid "Analyze"
