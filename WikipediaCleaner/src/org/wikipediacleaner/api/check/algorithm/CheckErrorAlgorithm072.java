@@ -122,7 +122,7 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmBase {
               getShortDescription(), startIndex, tmpIndex);
           errorResult.addPossibleAction(
               GT._(
-                  "The check digit is {0} instead of {1}",
+                  "The checksum is {0} instead of {1}",
                   new Object[] { checkCharacter, computedCheck } ),
               new NullActionProvider());
           errors.add(errorResult);
