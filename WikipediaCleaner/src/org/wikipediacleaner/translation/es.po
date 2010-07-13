@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-11 17:52+0200\n"
+"POT-Creation-Date: 2010-07-13 21:03+0200\n"
 "PO-Revision-Date: 2010-07-12 06:25+0000\n"
 "Last-Translator: Paco Molinero <paco@byasl.com>\n"
 "Language-Team: Spanish\n"
@@ -130,6 +130,11 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
 msgstr "Comrpobar los vínculos de idioma"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:117
+#, java-format
+msgid "The check digit is {0} instead of {1}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:125
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:134
@@ -302,8 +307,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "En algunas proyectos de Wikipedia, podría requerir tener el permiso de bot "
 "para hacer esto."

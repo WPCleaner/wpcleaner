@@ -664,7 +664,7 @@ public class CheckWikiProjectWindow extends PageWindow {
           }
         }
       }
-      if ((error != null) && (errorFound == false)) {
+      if ((error != null) && (errorFound == false) && (error.getAlgorithm().isFullDetection())) {
         Configuration config = Configuration.getConfiguration();
         int answer = JOptionPane.YES_OPTION;
         if (yesAll) {

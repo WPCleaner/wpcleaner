@@ -21,7 +21,9 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -32,6 +34,14 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm072() {
     super("ISBN wrong checksum in ISBN-10");
+  }
+
+  /**
+   * @return Flag indicating if the detection is fully done.
+   */
+  @Override
+  public boolean isFullDetection() {
+    return false;
   }
 
   /* (non-Javadoc)
@@ -59,35 +69,32 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmBase {
         // Check 9 digits and compute check
         boolean isISBN = true;
         int check = 0;
-        int i = 0;
-        while (isISBN && (tmpIndex < contents.length()) && (i < 9)) {
-          if (Character.isDigit(contents.charAt(tmpIndex))) {
+        for (int i = 0; i < 9; i++) {
+          if ((tmpIndex < contents.length()) && Character.isDigit(contents.charAt(tmpIndex))) {
             check += (10 - i) * (contents.charAt(tmpIndex) - '0');
-            i++;
-          } else if ((contents.charAt(tmpIndex) != '-') && (contents.charAt(tmpIndex) != ' ')) {
+            tmpIndex++;
+          } else {
             isISBN = false;
           }
-          tmpIndex++;
+          if ((tmpIndex < contents.length()) &&
+              ((contents.charAt(tmpIndex) == ' ') || (contents.charAt(tmpIndex) == '-'))) {
+            tmpIndex++;
+          }
         }
         check = check % 11; // Modulus 11
         check = 11 - check; // Invert
         check = check % 11; // 11 -> 0
         char computedCheck = (check < 10) ? (char) ('0' + check): 'X';
 
-        // Removing dashes
-        while ((tmpIndex < contents.length()) &&
-               ((contents.charAt(tmpIndex) == '-') ||
-                (contents.charAt(tmpIndex) == ' '))) {
-          tmpIndex++;
-        }
-
         // Verify check
         boolean checkVerified = false;
+        char checkCharacter = ' ';
         if ((tmpIndex < contents.length()) &&
             ((Character.isDigit(contents.charAt(tmpIndex))) ||
              (contents.charAt(tmpIndex) == 'X') ||
              (contents.charAt(tmpIndex) == 'x'))) {
-          if (computedCheck == Character.toUpperCase(contents.charAt(tmpIndex))) {
+          checkCharacter = contents.charAt(tmpIndex);
+          if (computedCheck == Character.toUpperCase(checkCharacter)) {
             checkVerified = true;
           }
         } else {
@@ -113,6 +120,11 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmBase {
           }
           CheckErrorResult errorResult = new CheckErrorResult(
               getShortDescription(), startIndex, tmpIndex);
+          errorResult.addPossibleAction(
+              GT._(
+                  "The check digit is {0} instead of {1}",
+                  new Object[] { checkCharacter, computedCheck } ),
+              new NullActionProvider());
           errors.add(errorResult);
           result = true;
         }

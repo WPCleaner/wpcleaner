@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-11 17:52+0200\n"
+"POT-Creation-Date: 2010-07-13 21:03+0200\n"
 "PO-Revision-Date: 2010-07-12 10:01+0000\n"
 "Last-Translator: A2 <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -136,6 +136,11 @@ msgstr "Supprimer les sauts de ligne en fin de liste"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
 msgstr "Vérifier les liens inter-langues"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:117
+#, java-format
+msgid "The check digit is {0} instead of {1}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:125
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:134
@@ -307,8 +312,7 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -993,8 +997,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr ""
-"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:287
 msgid "&Page :"
