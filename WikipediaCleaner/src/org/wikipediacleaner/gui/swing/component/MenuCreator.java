@@ -422,11 +422,14 @@ public class MenuCreator {
           if (p.isRedirect()) {
             JMenu submenu1 = new JMenu(p.getTitle());
             JMenu submenu2 = new JMenu(p.getTitle());
+            HashMap<Page, List<String>> anchorsRedirectMap = new HashMap<Page, List<String>>();
+            p.getLinksWithRedirect(anchorsRedirectMap);
             
             Iterator<Page> iter = p.getRedirectIteratorWithPage();
             while (iter.hasNext()) {
               Page pageTmp = iter.next();
-              
+              List<String> anchors = anchorsRedirectMap.get(pageTmp);
+
               menuItem = new JMenuItem(pageTmp.getTitle());
               updateFont(menuItem, pageTmp);
               action = new ReplaceLinkAction(page.getTitle(), pageTmp.getTitle(), text, element, textPane, false);
@@ -438,6 +441,22 @@ public class MenuCreator {
               action = new ReplaceLinkAction(page.getTitle(), pageTmp.getTitle(), text, element, textPane, true);
               menuItem.addActionListener(action);
               submenu2.add(menuItem);
+
+              if ((anchors != null) && (anchors.size() > 0)) {
+                for (String anchor : anchors) {
+                  menuItem = new JMenuItem(anchor);
+                  updateFont(menuItem, pageTmp);
+                  action = new ReplaceLinkAction(page.getTitle(), anchor, text, element, textPane, false);
+                  menuItem.addActionListener(action);
+                  submenu1.add(menuItem);
+          
+                  menuItem = new JMenuItem(anchor);
+                  updateFont(menuItem, pageTmp);
+                  action = new ReplaceLinkAction(page.getTitle(), anchor, text, element, textPane, true);
+                  menuItem.addActionListener(action);
+                  submenu2.add(menuItem);
+                }
+              }
             }
             
             submenuLink.add(submenu1);
