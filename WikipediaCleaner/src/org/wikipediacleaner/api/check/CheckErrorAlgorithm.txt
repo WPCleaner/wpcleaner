@@ -337,6 +337,7 @@ Error 078: Reference double
 
 ===============================================================================
 Error 079: External link without description
+Status: DONE
 
 ===============================================================================
 Error 080: External link with line break
