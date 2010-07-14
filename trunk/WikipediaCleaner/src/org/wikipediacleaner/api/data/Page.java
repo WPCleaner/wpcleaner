@@ -538,7 +538,11 @@ public class Page implements Comparable<Page> {
         }
       }
     }
-    getAnchors(contents, links, anchors);
+    if (links != null) {
+      getAnchors(contents, links, anchors);
+    } else if (redirects != null) {
+      getAnchors(contents, redirects, anchors);
+    }
     return links;
   }
 
