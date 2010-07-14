@@ -26,14 +26,16 @@ public class ProgressionValue implements Comparable<ProgressionValue> {
 
   private Integer currentValue;
   private Integer goalValue;
+  private final boolean displayZero;
 
   /**
    * @param current Current value.
    * @param goal Goal value.
    */
-  public ProgressionValue(Integer current, Integer goal) {
+  public ProgressionValue(Integer current, Integer goal, boolean displayZero) {
     this.currentValue = current;
     this.goalValue = goal;
+    this.displayZero = displayZero;
   }
 
   public Integer getCurrent() {
@@ -67,6 +69,9 @@ public class ProgressionValue implements Comparable<ProgressionValue> {
     if (currentValue != null) {
       if ((goalValue != null) && (!currentValue.equals(goalValue))) {
         return "" + currentValue + " / " + goalValue;
+      }
+      if (!displayZero && (currentValue.intValue() == 0)) {
+        return "";
       }
       return currentValue.toString();
     }

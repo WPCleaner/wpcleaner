@@ -730,7 +730,7 @@ public class Page implements Comparable<Page> {
    */
   public ProgressionValue getBacklinksProgression() {
     if (backLinksProgression == null) {
-      backLinksProgression = new ProgressionValue(null, null);
+      backLinksProgression = new ProgressionValue(null, null, true);
     }
     backLinksProgression.setCurrent(getBacklinksCount());
     if (comment != null) {
@@ -763,7 +763,7 @@ public class Page implements Comparable<Page> {
    */
   public ProgressionValue getBacklinksProgressionInMainNamespace() {
     if (backLinksMainProgression == null) {
-      backLinksMainProgression = new ProgressionValue(null, null);
+      backLinksMainProgression = new ProgressionValue(null, null, true);
     }
     backLinksMainProgression.setCurrent(getBacklinksCountInMainNamespace());
     if (comment != null) {
@@ -796,7 +796,7 @@ public class Page implements Comparable<Page> {
    */
   public ProgressionValue getBacklinksProgressionInTemplateNamespace() {
     if (backLinksTemplateProgression == null) {
-      backLinksTemplateProgression = new ProgressionValue(null, null);
+      backLinksTemplateProgression = new ProgressionValue(null, null, false);
     }
     backLinksTemplateProgression.setCurrent(getBacklinksCountInTemplateNamespace());
     if (comment != null) {
