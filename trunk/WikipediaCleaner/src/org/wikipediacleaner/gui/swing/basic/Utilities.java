@@ -72,12 +72,22 @@ public class Utilities {
     if ((exception != null) && !(exception instanceof APIException)) {
       exception.printStackTrace();
     }
-    displayMessage(
-        parent,
-        (exception != null) ?
-            GT._("An error occured: {0}", exception.getMessage()) :
-            GT._("An unknown error occured"),
-        null, JOptionPane.ERROR_MESSAGE);
+    if (exception != null) {
+      if (exception instanceof APIException) {
+        displayMessage(
+            parent, GT._("An error occured: {0}", exception.getMessage()),
+            null, JOptionPane.ERROR_MESSAGE);
+      } else {
+        displayMessage(
+            parent,
+            GT._("An error occured: {0}", exception.getMessage() + " - " + exception.getClass().getName()),
+            null, JOptionPane.ERROR_MESSAGE);
+      }
+    } else {
+      displayMessage(
+          parent, GT._("An unknown error occured"),
+          null, JOptionPane.ERROR_MESSAGE);
+    }
   }
 
   /**

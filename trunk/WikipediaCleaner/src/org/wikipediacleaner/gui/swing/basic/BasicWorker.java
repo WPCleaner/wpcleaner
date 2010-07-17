@@ -108,26 +108,33 @@ public class BasicWorker extends SwingWorker implements MediaWikiListener {
    */
   @Override
   public void finished() {
-    if (listener != null) {
-      listener.beforeFinished(this);
-    }
-    super.finished();
-    Object result = get();
-    boolean ok = true;
-    if (result instanceof Throwable) {
-      ok = false;
-    }
-    if (window != null) {
-      if (result instanceof Throwable) {
-        window.displayError((Throwable) result);
+    try {
+      if (listener != null) {
+        listener.beforeFinished(this);
       }
-      window.updateComponentState();
-    }
-    if (listener != null) {
-      listener.afterFinished(this, ok);
-    }
-    if ((window != null) && (window.getGlassPane() != null)) {
-      window.getGlassPane().stop();
+      super.finished();
+      Object result = get();
+      boolean ok = true;
+      if (result instanceof Throwable) {
+        ok = false;
+      }
+      if (window != null) {
+        if (result instanceof Throwable) {
+          window.displayError((Throwable) result);
+        }
+        window.updateComponentState();
+      }
+      if (listener != null) {
+        listener.afterFinished(this, ok);
+      }
+    } catch (Throwable t) {
+      if (window != null) {
+        window.displayError(t);
+      }
+    } finally {
+      if ((window != null) && (window.getGlassPane() != null)) {
+        window.getGlassPane().stop();
+      }
     }
   }
 
