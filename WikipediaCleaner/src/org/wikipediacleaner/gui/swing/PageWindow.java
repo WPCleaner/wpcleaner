@@ -1086,16 +1086,21 @@ public abstract class PageWindow
       @Override
       public void afterFinished(
           BasicWorker worker,
-          @SuppressWarnings("unused") boolean ok) {
+          boolean ok) {
         if (!worker.shouldContinue()) {
           return;
         }
-        if ((chkCloseAfterSend != null) && chkCloseAfterSend.isSelected()) {
-          dispose();
+        if (ok) {
+          if ((chkCloseAfterSend != null) && chkCloseAfterSend.isSelected()) {
+            dispose();
+          } else {
+            worker.getWindow().setWindowTitle(getTitle());
+            worker.getWindow().setExtendedState(oldState);
+            actionReload();
+          }
         } else {
           worker.getWindow().setWindowTitle(getTitle());
           worker.getWindow().setExtendedState(oldState);
-          actionReload();
         }
       }
     });
