@@ -66,7 +66,7 @@ public class CheckError {
         contents = page.getContents();
       }
       for (CheckError error : errors) {
-        if (error.algorithm != null) {
+        if ((error.algorithm != null) && (error.algorithm.isAvailable())) {
           ArrayList<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
           if (error.algorithm.analyze(page, contents, results)) {
             CheckErrorPage errorPage = new CheckErrorPage(page, error.algorithm);
@@ -91,6 +91,7 @@ public class CheckError {
       ArrayList<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
       boolean errorFound = false;
       if ((errorPage.getAlgorithm() != null) &&
+          (errorPage.getAlgorithm().isAvailable()) &&
           (errorPage.getPage() != null)) {
         errorFound = errorPage.getAlgorithm().analyze(
             errorPage.getPage(), contents, errorsFound);
