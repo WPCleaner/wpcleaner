@@ -52,6 +52,13 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * @return Flag indicating if this algorithm is available.
+   */
+  public boolean isAvailable() {
+    return true;
+  }
+
+  /**
    * @return Short description of the error.
    * (See Check Wikipedia project for the description of errors)
    */

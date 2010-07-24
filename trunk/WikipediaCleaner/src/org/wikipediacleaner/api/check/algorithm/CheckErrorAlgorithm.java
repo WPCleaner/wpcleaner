@@ -30,6 +30,11 @@ import org.wikipediacleaner.api.data.Page;
 public interface CheckErrorAlgorithm {
 
   /**
+   * @return Flag indicating if this algorithm is available.
+   */
+  public boolean isAvailable();
+
+  /**
    * @return Short description of the error.
    * (See Check Wikipedia project for the description of errors)
    */

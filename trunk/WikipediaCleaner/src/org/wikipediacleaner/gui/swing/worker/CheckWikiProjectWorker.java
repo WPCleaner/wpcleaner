@@ -193,28 +193,35 @@ public class CheckWikiProjectWorker extends BasicWorker {
         try {
   
           // Checking if the error number is known by WikiCleaner
-          Class.forName(className);
-  
-          // Retrieving list of pages for the error number
-          NameValuePair[] parameters = new NameValuePair[] {
-              new NameValuePair("id", Integer.toString(errorNumber)),
-              new NameValuePair("limit", Integer.toString(errorLimit)),
-              new NameValuePair("offset", Integer.toString(0)),
-              new NameValuePair("project", code + "wiki"),
-              new NameValuePair("view", "bots")
-          };
-          InputStream stream = null;
-          if (needList) {
-            setText(GT._("Checking for errors n°{0}", Integer.toString(errorNumber)));
-            stream = APIFactory.getAPI().askToolServerPost(
-                "~sk/cgi-bin/checkwiki/checkwiki.cgi", parameters, true);
+          Class algorithmClass = Class.forName(className);
+          CheckErrorAlgorithm algorithm = (CheckErrorAlgorithm) algorithmClass.newInstance();
+
+          if ((algorithm != null) && (algorithm.isAvailable())) {
+            // Retrieving list of pages for the error number
+            NameValuePair[] parameters = new NameValuePair[] {
+                new NameValuePair("id", Integer.toString(errorNumber)),
+                new NameValuePair("limit", Integer.toString(errorLimit)),
+                new NameValuePair("offset", Integer.toString(0)),
+                new NameValuePair("project", code + "wiki"),
+                new NameValuePair("view", "bots")
+            };
+            InputStream stream = null;
+            if (needList) {
+              setText(GT._("Checking for errors n°{0}", Integer.toString(errorNumber)));
+              stream = APIFactory.getAPI().askToolServerPost(
+                  "~sk/cgi-bin/checkwiki/checkwiki.cgi", parameters, true);
+            }
+            CheckError.addCheckError(checkWikiConfig, errors, getWikipedia(), errorNumber, stream);
           }
-          CheckError.addCheckError(checkWikiConfig, errors, getWikipedia(), errorNumber, stream);
         } catch (ClassNotFoundException e) {
           // Not found: error not yet available in WikiCleaner.
           if (needList) {
             System.out.println("Error " + errorNumber + " is not yet available in WikiCleaner.");
           }
+        } catch (IllegalAccessException e) {
+          System.err.println("IllegalAccessException: " + e.getMessage());
+        } catch (InstantiationException e) {
+          System.err.println("InstantiationException: " + e.getMessage());
         } catch (APIException e) {
           return e;
         }
