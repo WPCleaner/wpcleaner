@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-17 12:45+0200\n"
+"POT-Creation-Date: 2010-07-27 00:34+0200\n"
 "PO-Revision-Date: 2010-07-19 16:36+0000\n"
 "Last-Translator: A2 <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -47,45 +47,45 @@ msgstr "S'il vous plait, rapportez-moi les problèmes rencontrés."
 msgid "Page {0}:"
 msgstr "Page {0} :"
 
-#: org/wikipediacleaner/api/check/CheckError.java:188
+#: org/wikipediacleaner/api/check/CheckError.java:189
 msgid "Deactivated"
 msgstr "Désactivé"
 
-#: org/wikipediacleaner/api/check/CheckError.java:190
+#: org/wikipediacleaner/api/check/CheckError.java:191
 msgid "Low priority"
 msgstr "Priorité faible"
 
-#: org/wikipediacleaner/api/check/CheckError.java:192
+#: org/wikipediacleaner/api/check/CheckError.java:193
 msgid "Middle priority"
 msgstr "Priorité moyenne"
 
-#: org/wikipediacleaner/api/check/CheckError.java:194
+#: org/wikipediacleaner/api/check/CheckError.java:195
 msgid "Top priority"
 msgstr "Priorité maximale"
 
-#: org/wikipediacleaner/api/check/CheckError.java:196
+#: org/wikipediacleaner/api/check/CheckError.java:197
 msgid "For Bot"
 msgstr "Pour bot"
 
-#: org/wikipediacleaner/api/check/CheckError.java:198
+#: org/wikipediacleaner/api/check/CheckError.java:199
 msgid "Priority unknown"
 msgstr "Priorité inconnue"
 
-#: org/wikipediacleaner/api/check/CheckError.java:418
+#: org/wikipediacleaner/api/check/CheckError.java:419
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "Erreur n°{0} ({1} - {2}) - {3}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:425
+#: org/wikipediacleaner/api/check/CheckError.java:426
 msgid "Error unkown from WikiCleaner"
 msgstr "Erreur inconnue de WikiCleaner"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:136
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:125
 #, java-format
 msgid "Replace with {0}"
 msgstr "Remplacer par {0}"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:137
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:126
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:626
 msgid "Delete"
 msgstr "Supprimer"
@@ -142,6 +142,10 @@ msgstr "Vérifier les liens inter-langues"
 #, java-format
 msgid "The checksum is {0} instead of {1}"
 msgstr "La somme de contrôle est {0} à la place de {1}"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:98
+msgid "Convert into <ref> tag"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:125
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:134
@@ -1152,7 +1156,7 @@ msgstr "Développer les modèles et Aperçu"
 msgid "Sending {0}"
 msgstr "Envoi de {0}"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:1131
+#: org/wikipediacleaner/gui/swing/PageWindow.java:1136
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr "Voulez-vous ajouter cette page à votre liste de suivi locale ?"
 
@@ -1479,13 +1483,13 @@ msgstr "Les modifications suivantes ont été effectuées ({0} pages) :"
 msgid "Retrieving Check Wiki configuration"
 msgstr "Récupération de la configuration du projet de correction syntaxique"
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:208
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:210
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr ""
 "Chargement de la liste des articles contenant l’erreur syntaxique n° {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:225
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:232
 msgid "Sorting errors by priority"
 msgstr "Trier les erreurs par priorité"
 

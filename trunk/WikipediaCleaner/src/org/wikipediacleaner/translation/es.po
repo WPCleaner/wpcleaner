@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-17 12:45+0200\n"
+"POT-Creation-Date: 2010-07-27 00:34+0200\n"
 "PO-Revision-Date: 2010-07-25 04:49+0000\n"
 "Last-Translator: martin <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -43,45 +43,45 @@ msgstr "Por favor, informe de cualquier otro problema que encuentre."
 msgid "Page {0}:"
 msgstr "Página {0}:"
 
-#: org/wikipediacleaner/api/check/CheckError.java:188
+#: org/wikipediacleaner/api/check/CheckError.java:189
 msgid "Deactivated"
 msgstr "Desactivado"
 
-#: org/wikipediacleaner/api/check/CheckError.java:190
+#: org/wikipediacleaner/api/check/CheckError.java:191
 msgid "Low priority"
 msgstr "Baja prioridad"
 
-#: org/wikipediacleaner/api/check/CheckError.java:192
+#: org/wikipediacleaner/api/check/CheckError.java:193
 msgid "Middle priority"
 msgstr "Prioridad media"
 
-#: org/wikipediacleaner/api/check/CheckError.java:194
+#: org/wikipediacleaner/api/check/CheckError.java:195
 msgid "Top priority"
 msgstr "Alta prioridad"
 
-#: org/wikipediacleaner/api/check/CheckError.java:196
+#: org/wikipediacleaner/api/check/CheckError.java:197
 msgid "For Bot"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:198
+#: org/wikipediacleaner/api/check/CheckError.java:199
 msgid "Priority unknown"
 msgstr "Prioridad desconocida"
 
-#: org/wikipediacleaner/api/check/CheckError.java:418
+#: org/wikipediacleaner/api/check/CheckError.java:419
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "Error n°{0} ({1} - {2}) - {3}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:425
+#: org/wikipediacleaner/api/check/CheckError.java:426
 msgid "Error unkown from WikiCleaner"
 msgstr "Error desconocido de  WikiCleaner"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:136
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:125
 #, java-format
 msgid "Replace with {0}"
 msgstr "Reemplazar con {0}"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:137
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:126
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:626
 msgid "Delete"
 msgstr "Eliminar"
@@ -137,6 +137,10 @@ msgstr "Comrpobar los vínculos de idioma"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:147
 #, java-format
 msgid "The checksum is {0} instead of {1}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:98
+msgid "Convert into <ref> tag"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:125
@@ -310,8 +314,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "En algunas proyectos de Wikipedia, podría requerir tener el permiso de bot "
 "para hacer esto."
@@ -1143,7 +1146,7 @@ msgstr "Expandir plantillas y &Previsualizar"
 msgid "Sending {0}"
 msgstr "Enviando {0}"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:1131
+#: org/wikipediacleaner/gui/swing/PageWindow.java:1136
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr "¿Desea agregar esta página a su lista de seguimiento local?"
 
@@ -1470,12 +1473,12 @@ msgstr "La siguiente modificación ha sido realizada ({0} páginas):"
 msgid "Retrieving Check Wiki configuration"
 msgstr "Recuperando la configuración de CheckWikipedia"
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:208
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:210
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr "Comprobando por el error nº{0}"
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:225
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:232
 msgid "Sorting errors by priority"
 msgstr "Ordenar errores por prioridad"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-17 12:45+0200\n"
+"POT-Creation-Date: 2010-07-27 00:34+0200\n"
 "PO-Revision-Date: 2010-05-01 07:19+0000\n"
 "Last-Translator: Iwan Novirion <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -40,45 +40,45 @@ msgstr ""
 msgid "Page {0}:"
 msgstr "Halaman {0}:"
 
-#: org/wikipediacleaner/api/check/CheckError.java:188
+#: org/wikipediacleaner/api/check/CheckError.java:189
 msgid "Deactivated"
 msgstr "Menonaktifkan"
 
-#: org/wikipediacleaner/api/check/CheckError.java:190
+#: org/wikipediacleaner/api/check/CheckError.java:191
 msgid "Low priority"
 msgstr "Prioritas rendah"
 
-#: org/wikipediacleaner/api/check/CheckError.java:192
+#: org/wikipediacleaner/api/check/CheckError.java:193
 msgid "Middle priority"
 msgstr "Prioritas menengah"
 
-#: org/wikipediacleaner/api/check/CheckError.java:194
+#: org/wikipediacleaner/api/check/CheckError.java:195
 msgid "Top priority"
 msgstr "Prioritas utama"
 
-#: org/wikipediacleaner/api/check/CheckError.java:196
+#: org/wikipediacleaner/api/check/CheckError.java:197
 msgid "For Bot"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:198
+#: org/wikipediacleaner/api/check/CheckError.java:199
 msgid "Priority unknown"
 msgstr "Prioritas tidak diketahui"
 
-#: org/wikipediacleaner/api/check/CheckError.java:418
+#: org/wikipediacleaner/api/check/CheckError.java:419
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "Galat n°{0} ({1} - {2}) - {3}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:425
+#: org/wikipediacleaner/api/check/CheckError.java:426
 msgid "Error unkown from WikiCleaner"
 msgstr "Galat tidak diketahui dari WikiCleaner"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:136
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:125
 #, java-format
 msgid "Replace with {0}"
 msgstr "Ganti dengan {0}"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:137
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:126
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:626
 msgid "Delete"
 msgstr "Hapus"
@@ -138,6 +138,10 @@ msgstr "Periksa pranala bahasa"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:147
 #, java-format
 msgid "The checksum is {0} instead of {1}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:98
+msgid "Convert into <ref> tag"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:125
@@ -1149,7 +1153,7 @@ msgstr "Kembangkan templat &dan Pratayang"
 msgid "Sending {0}"
 msgstr "Kirim {0}"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:1131
+#: org/wikipediacleaner/gui/swing/PageWindow.java:1136
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr "Tambahkan halaman ini pada daftar pantauan lokal anda ?"
 
@@ -1478,12 +1482,12 @@ msgstr "Perubahan ini telah selesai dikerjakan ({0} artikel):"
 msgid "Retrieving Check Wiki configuration"
 msgstr "Kembalikan konfigurasi Cek Wiki"
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:208
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:210
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr "Periksa galat n°{0}"
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:225
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:232
 msgid "Sorting errors by priority"
 msgstr ""
 

@@ -119,6 +119,20 @@ public class CheckErrorResult {
    * @param replacement Possible replacement.
    */
   public void addReplacement(String replacement) {
+    addReplacement(
+        replacement,
+        (replacement.length() > 0) ?
+            GT._("Replace with {0}", replacement) :
+            GT._("Delete"));
+  }
+
+  /**
+   * Add a possible replacement for the error.
+   * 
+   * @param replacement Possible replacement.
+   * @param text Text explaining the replacement.
+   */
+  public void addReplacement(String replacement, String text) {
     if (replacement == null) {
       return;
     }
@@ -132,9 +146,7 @@ public class CheckErrorResult {
       }
     }
     SimpleAction action = new SimpleAction(
-        (replacement.length() > 0) ?
-            GT._("Replace with {0}", replacement) :
-            GT._("Delete"),
+        text,
         new ReplaceTextActionProvider(replacement));
     possibleActions.add(action);
     possibleReplacements.add(action);

@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.TagData;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -74,7 +76,28 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
               return true;
             }
             result = true;
-            errors.add(new CheckErrorResult(getShortDescription(), startIndex, endIndex + 1));
+            CheckErrorResult errorResult = new CheckErrorResult(
+                getShortDescription(), startIndex, endIndex + 1); 
+            boolean isInRef = false;
+            TagData previousStartRef = findPreviousStartTag(page, contents, "ref", startIndex);
+            if (previousStartRef != null) {
+              TagData previousEndRef = findPreviousEndTag(page, contents, "ref", startIndex);
+              if ((previousEndRef == null) || (previousEndRef.getEndIndex() < previousStartRef.getEndIndex())) {
+                TagData nextEndRef = findNextEndTag(page, contents, "ref", endIndex);
+                if (nextEndRef != null) {
+                  TagData nextStartRef = findNextStartTag(page, contents, "ref", startIndex);
+                  if ((nextStartRef == null) || (nextEndRef.getStartIndex() > nextStartRef.getStartIndex())) {
+                    isInRef = true;
+                  }
+                }
+              }
+            }
+            if (!isInRef) {
+              errorResult.addReplacement(
+                  "<ref>" + contents.substring(startIndex + 1, endIndex) + "</ref>",
+                  GT._("Convert into <ref> tag"));
+            }
+            errors.add(errorResult);
             startIndex = endIndex + 1;
           } else {
             startIndex = endIndex + 1;
