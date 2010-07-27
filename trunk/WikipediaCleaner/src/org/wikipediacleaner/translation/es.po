@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-07-27 00:34+0200\n"
-"PO-Revision-Date: 2010-07-25 04:49+0000\n"
-"Last-Translator: martin <Unknown>\n"
+"PO-Revision-Date: 2010-07-27 14:53+0000\n"
+"Last-Translator: Jonay <jonay.santana@gmail.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-07-25 18:52+0000\n"
+"X-Launchpad-Export-Date: 2010-07-27 23:01+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: Spanish\n"
 
@@ -137,7 +137,7 @@ msgstr "Comrpobar los vínculos de idioma"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:147
 #, java-format
 msgid "The checksum is {0} instead of {1}"
-msgstr ""
+msgstr "La suma de comprobación (checksum) es {0} en lugar de {1}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:98
 msgid "Convert into <ref> tag"
@@ -314,7 +314,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "En algunas proyectos de Wikipedia, podría requerir tener el permiso de bot "
 "para hacer esto."
@@ -1422,7 +1423,7 @@ msgstr "Marcar como ayuda necesaria"
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:793
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:804
 msgid "Link text"
-msgstr ""
+msgstr "Enlazar texto"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:829
 msgid "Analyze"
