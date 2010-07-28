@@ -691,7 +691,7 @@ public class MediaWikiAPI implements API {
     HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("list", "backlinks");
     properties.put("bltitle", page.getTitle());
-    properties.put("bllimit", "max" /*"500"*/);
+    properties.put("bllimit", /*"max"*/ "500"); // TODO
     ArrayList<Page> links = new ArrayList<Page>();
     boolean blcontinue = false;
     do {
@@ -744,7 +744,7 @@ public class MediaWikiAPI implements API {
     properties.put("generator", "backlinks");
     properties.put("prop", "info");
     properties.put("gbltitle", page.getTitle());
-    properties.put("gbllimit", "max" /*"500"*/);
+    properties.put("gbllimit", /*"max"*/ "500"); // TODO
     ArrayList<Page> links = new ArrayList<Page>();
     boolean blcontinue = false;
     do {
