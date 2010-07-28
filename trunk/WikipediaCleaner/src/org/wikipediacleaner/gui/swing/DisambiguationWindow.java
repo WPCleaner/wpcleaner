@@ -490,12 +490,17 @@ public class DisambiguationWindow extends PageWindow {
     super.afterFinishedReloadWorker();
     Page page = getPage();
     ArrayList<Page> links = page.getBackLinksWithRedirects();
-    for (Page p : links) {
-      modelLinks.addElement(p);
+    if (links != null) {
+      for (Page p : links) {
+        modelLinks.addElement(p);
+      }
     }
-    int countMain = page.getBacklinksCountInMainNamespace();
-    int countTotal = page.getBacklinksCount();
-    linkCount.setText("" + countMain + " / " + countTotal);
+    Integer countMain = page.getBacklinksCountInMainNamespace();
+    Integer countTotal = page.getBacklinksCount();
+    linkCount.setText(
+        ((countMain != null) ? countMain.toString() : "?") +
+        " / " +
+        ((countTotal != null) ? countTotal.toString() : "?"));
     
     // Update automatic fixing
     Configuration config = Configuration.getConfiguration();
