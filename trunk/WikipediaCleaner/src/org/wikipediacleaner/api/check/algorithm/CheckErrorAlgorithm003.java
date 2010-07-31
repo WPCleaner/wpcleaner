@@ -18,14 +18,60 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
+
+import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.TagData;
+
 
 /**
  * Algorithm for analyzing error 3 of check wikipedia project.
  * Error 3: Article with &lt;ref&gt; and no &lt;references /&gt;
  */
-public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmUnavailable {
+public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm003() {
     super("Article with <ref> and no <references />");
+  }
+
+  /**
+   * Analyze a page to check if errors are present.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyze(Page page, String contents, ArrayList<CheckErrorResult> errors) {
+    if ((page == null) || (contents == null)) {
+      return false;
+    }
+
+    // Analyzing the text for <ref>
+    boolean refFound = false;
+    if (!refFound) {
+      TagData tag = findNextTag(page, contents, "ref", 0);
+      if (tag != null) {
+        refFound = true;
+      }
+    }
+
+    // Analyzing the text for <references>
+    boolean referencesFound = false;
+    if (refFound) {
+      if (!referencesFound) {
+        TagData tag = findNextTag(page, contents, "references", 0);
+        if (tag != null) {
+          referencesFound = true;
+        }
+      }
+    }
+
+    // Result
+    if (refFound && !referencesFound) {
+      return true;
+    }
+    return false;
   }
 }

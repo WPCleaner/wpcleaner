@@ -291,6 +291,56 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     return result;
   }
 
+
+  /**
+   * Find the first tag after an index in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param tag Tag to be found.
+   * @param currentIndex The last index.
+   * @return Tag found.
+   */
+  protected TagData findNextTag(
+      Page page, String contents,
+      String tag, int currentIndex) {
+    if (contents == null) {
+      return null;
+    }
+    while ((currentIndex < contents.length())) {
+      int tmpIndex = contents.indexOf("<", currentIndex);
+      if (tmpIndex < 0) {
+        currentIndex = contents.length();
+      } else {
+        int infoTagStart = tmpIndex;
+        tmpIndex++;
+        currentIndex = tmpIndex;
+        // Possible whitespaces
+        while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
+          tmpIndex++;
+        }
+        int endIndex = contents.indexOf(">", tmpIndex);
+        if (endIndex < 0) {
+          currentIndex = contents.length();
+        } else {
+          int nextStartIndex = contents.indexOf("<", tmpIndex);
+          if ((nextStartIndex < 0) || (endIndex < nextStartIndex)) {
+            int infoTagEnd = endIndex + 1;
+            if (tag.equalsIgnoreCase(contents.substring(tmpIndex, tmpIndex + tag.length()))) {
+              tmpIndex += tag.length();
+              if ((contents.charAt(tmpIndex) == ' ') ||
+                  (contents.charAt(tmpIndex) == '/') ||
+                  (contents.charAt(tmpIndex) == '>')) {
+                return new TagData(infoTagStart, infoTagEnd); 
+              }
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   /**
    * Find the last start tag before an index in the page contents.
    * 
