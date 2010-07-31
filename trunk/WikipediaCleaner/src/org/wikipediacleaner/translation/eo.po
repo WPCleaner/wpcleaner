@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-31 19:46+0200\n"
+"POT-Creation-Date: 2010-07-31 20:28+0200\n"
 "PO-Revision-Date: 2010-06-02 20:44+0000\n"
 "Last-Translator: Michael MORONI <haikara90@gmail.com>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
@@ -136,21 +136,25 @@ msgstr "Kontrolu interlingvajn ligilojn"
 msgid "The checksum is {0} instead of {1}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:98
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:100
 msgid "Add a description..."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:101
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:110
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:103
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:112
 msgid "What description would like to use for the external link ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:105
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:107
 msgid "Convert into <ref> tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:109
 msgid "Add a description and convert into <ref> tag"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:116
+msgid "External viewer"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:125
