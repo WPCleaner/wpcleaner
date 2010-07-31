@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.concurrent.Callable;
@@ -462,6 +463,7 @@ public class CheckWikiProjectWindow extends PageWindow {
 
     private JList listErrors;
     private DefaultListModel modelErrors;
+    private List<CheckErrorPage> initialErrors;
     private JTextField textComment;
     private JCheckBox chkAutomaticComment;
     private JButton buttonSend;
@@ -653,11 +655,13 @@ public class CheckWikiProjectWindow extends PageWindow {
       ArrayList<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
           errors, page, textPage.getText());
       modelErrors.clear();
+      initialErrors = new ArrayList<CheckErrorPage>();
       boolean errorFound = false;
       int errorCount = 0;
       if (errorsFound != null) {
         for (CheckErrorPage tmpError : errorsFound) {
           modelErrors.addElement(tmpError);
+          initialErrors.add(tmpError);
           errorCount++;
           if ((error != null) && (error.getAlgorithm().equals(tmpError.getAlgorithm()))) {
             errorFound = true;
@@ -915,13 +919,10 @@ public class CheckWikiProjectWindow extends PageWindow {
      */
     private ArrayList<CheckErrorAlgorithm> computeErrorsFixed() {
       final ArrayList<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
-      for (int pos = 0; pos < modelErrors.size(); pos++) {
-        if (modelErrors.get(pos) instanceof CheckErrorPage) {
-          CheckErrorPage initialError = (CheckErrorPage) modelErrors.get(pos);
+      if (initialErrors != null) {
+        for (CheckErrorPage initialError : initialErrors) {
           CheckError.analyzeError(initialError, textPage.getText());
-          if ((initialError.getErrorFound() == false) ||
-              (initialError.getResults() == null) ||
-              (initialError.getResults().isEmpty())) {
+          if (initialError.getErrorFound() == false) {
             errorsFixed.add(initialError.getAlgorithm());
           }
         }
@@ -999,6 +1000,26 @@ public class CheckWikiProjectWindow extends PageWindow {
      * Validate current text and recompute errors.
      */
     private void actionValidate() {
+      // Check for new errors
+      ArrayList<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
+          errors, page, textPage.getText());
+      if (errorsFound != null) {
+        for (CheckErrorPage tmpError : errorsFound) {
+          boolean errorFound = false;
+          for (int index = 0; index < modelErrors.getSize(); index++) {
+            CheckErrorPage errorModel = (CheckErrorPage) modelErrors.get(index);
+            if ((errorModel != null) &&
+                (errorModel.getAlgorithm() != null) &&
+                (errorModel.getAlgorithm().equals(tmpError.getAlgorithm()))) {
+              errorFound = true;
+            }
+          }
+          if (!errorFound) {
+            modelErrors.addElement(tmpError);
+          }
+        }
+      }
+
       actionSelectError();
       updateComment(null);
       Object selected = listErrors.getSelectedValue();
