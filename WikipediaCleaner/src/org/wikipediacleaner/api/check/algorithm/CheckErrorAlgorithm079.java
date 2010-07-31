@@ -22,8 +22,10 @@ import java.util.ArrayList;
 
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TagData;
+import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -111,6 +113,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
             } else {
               errorResult.addReplacement(url);
             }
+            errorResult.addPossibleAction(new SimpleAction(GT._("External viewer"), new PageViewAction(url)));
             errors.add(errorResult);
             startIndex = endIndex + 1;
           } else {
