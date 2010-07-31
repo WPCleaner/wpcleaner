@@ -298,7 +298,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param contents Page contents (may be different from page.getContents()).
    * @param tag Tag to be found.
    * @param currentIndex The last index.
-   * @return
+   * @return Tag found.
    */
   protected TagData findPreviousStartTag(
       Page page, String contents,
@@ -351,7 +351,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param contents Page contents (may be different from page.getContents()).
    * @param tag Tag to be found.
    * @param currentIndex The last index.
-   * @return
+   * @return Tag found.
    */
   protected TagData findNextStartTag(
       Page page, String contents,
@@ -399,7 +399,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param contents Page contents (may be different from page.getContents()).
    * @param tag Tag to be found.
    * @param currentIndex The last index.
-   * @return
+   * @return Tag found.
    */
   protected TagData findPreviousEndTag(
       Page page, String contents,
@@ -455,7 +455,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param contents Page contents (may be different from page.getContents()).
    * @param tag Tag to be found.
    * @param currentIndex The last index.
-   * @return
+   * @return Tag found.
    */
   protected TagData findNextEndTag(
       Page page, String contents,

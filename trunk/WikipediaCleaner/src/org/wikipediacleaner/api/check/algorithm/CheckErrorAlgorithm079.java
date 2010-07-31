@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 
+import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TagData;
@@ -92,10 +93,23 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
                 }
               }
             }
+            String url = contents.substring(startIndex + 1, endIndex).trim();
+            errorResult.addPossibleAction(
+                GT._("Add a description..."),
+                new AddTextActionProvider(
+                    "[" + url + " ", "]", url,
+                    GT._("What description would like to use for the external link ?")));
             if (!isInRef) {
               errorResult.addReplacement(
-                  "<ref>" + contents.substring(startIndex + 1, endIndex) + "</ref>",
+                  "<ref>" + url + "</ref>",
                   GT._("Convert into <ref> tag"));
+              errorResult.addPossibleAction(
+                  GT._("Add a description and convert into <ref> tag"),
+                  new AddTextActionProvider(
+                      "<ref>[" + url + " ", "]</ref>", url,
+                      GT._("What description would like to use for the external link ?")));
+            } else {
+              errorResult.addReplacement(url);
             }
             errors.add(errorResult);
             startIndex = endIndex + 1;

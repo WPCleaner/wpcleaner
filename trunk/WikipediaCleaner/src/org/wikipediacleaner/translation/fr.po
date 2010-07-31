@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-27 00:34+0200\n"
+"POT-Creation-Date: 2010-07-31 19:46+0200\n"
 "PO-Revision-Date: 2010-07-27 07:06+0000\n"
 "Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -144,7 +144,21 @@ msgid "The checksum is {0} instead of {1}"
 msgstr "La somme de contrôle est {0} à la place de {1}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:98
+msgid "Add a description..."
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:101
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:110
+msgid "What description would like to use for the external link ?"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:105
 msgid "Convert into <ref> tag"
+msgstr "Convertir en référence"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:107
+#, fuzzy
+msgid "Add a description and convert into <ref> tag"
 msgstr "Convertir en référence"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:125
@@ -302,7 +316,7 @@ msgid "Bot tools"
 msgstr "Outils robot"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:99
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:600
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:605
 msgid "!!! WARNING !!!"
 msgstr "!!! ATTENTION !!!"
 
@@ -316,15 +330,14 @@ msgid "They may modify a lot of pages in a short period of time."
 msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:603
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:604
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:609
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
 msgstr ""
@@ -516,34 +529,34 @@ msgstr "Corriger les pages sélectionnées"
 msgid "Select &next links"
 msgstr "Sélectionner les liens suivants"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:589
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:594
 msgid "You must select the pages on which running automatic disambiguation."
 msgstr ""
 "Vous devez sélectionner les pages sur lesquelles exécuter la correction "
 "automatique"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:595
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:600
 msgid "You must input the initial and destination texts."
 msgstr "Vous devez saisir le texte initial et le texte de remplacement"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:601
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:606
 msgid "This function will do all the replacements in all selected pages."
 msgstr ""
 "Cette fonction effectuera tous les remplacements dans toutes les pages "
 "sélectionnées"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:602
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:607
 msgid "It may modify a lot of pages in a short period of time."
 msgstr "Cela peut modifier rapidement beaucoup de pages"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:605
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:610
 msgid ""
 "Also, verify again the texts you have inputed before running this function."
 msgstr ""
 "Ainsi, vérifier à nouveau le texte que vous avez entré avant de lancer cette "
 "fonction."
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:606
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:611
 msgid "Do you want to continue ?"
 msgstr "Voulez-vous continuer ?"
 
@@ -1003,8 +1016,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr ""
-"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:287
 msgid "&Page :"
