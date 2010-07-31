@@ -23,10 +23,12 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import org.wikipediacleaner.api.check.Actionnable;
+import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CompositeAction;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.TagBlock;
 import org.wikipediacleaner.gui.swing.action.NoOpAction;
 import org.wikipediacleaner.i18n.GT;
 
@@ -50,97 +52,63 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }
     int startIndex = 0;
     boolean result = false;
-    HashMap<String, RefElement> refs = new HashMap<String, RefElement>();
+    HashMap<String, TagBlock> refs = new HashMap<String, TagBlock>();
+    HashMap<TagBlock, CheckErrorResult> errorResults = new HashMap<TagBlock, CheckErrorResult>();
     ArrayList<String> names = new ArrayList<String>();
     ArrayList<Actionnable> existingNames = new ArrayList<Actionnable>();
-    while (startIndex < contents.length()) {
+    while ((startIndex < contents.length()) && (startIndex >= 0)) {
       if (contents.charAt(startIndex) == '<') {
-        int beginIndex = startIndex;
-        int currentIndex = beginIndex + 1;
-        if (contents.startsWith("ref", currentIndex)) {
-          currentIndex += 3;
-          String name = null;
-          while ((currentIndex < contents.length()) &&
-                 (contents.charAt(currentIndex) != '/') &&
-                 (contents.charAt(currentIndex) != '>') &&
-                 (contents.charAt(currentIndex) != '<')) {
-            if (contents.startsWith(" name=", currentIndex)) {
-              currentIndex += 6;
-              char separator = contents.charAt(currentIndex);
-              if ((separator == '"') || (separator == '\'')) {
-                currentIndex++;
-                int beginName = currentIndex;
-                while ((currentIndex < contents.length()) &&
-                       (contents.charAt(currentIndex) != separator) &&
-                       (contents.charAt(currentIndex) != '/') &&
-                       (contents.charAt(currentIndex) != '>') &&
-                       (contents.charAt(currentIndex) != '<')) {
-                  currentIndex++;
-                }
-                if (contents.charAt(currentIndex) == separator) {
-                  name = contents.substring(beginName, currentIndex).trim();
-                  if (!names.contains(name)) {
-                    names.add(name);
-                  }
-                }
+        TagBlock ref = TagBlock.analyzeBlock("ref", contents, startIndex);
+        if (ref != null) {
+          startIndex = ref.getEndTagEndIndex() + 1;
+          String reference = ref.getText();
+          if ((reference != null) && (!reference.isEmpty())) {
+            TagBlock previousRef = refs.get(reference);
+            if (previousRef == null) {
+              refs.put(reference, ref);
+            } else {
+              if (errors == null) {
+                return true;
               }
-            } else {
-              currentIndex++;
-            }
-          }
-          boolean simpleTag = false;
-          if ((currentIndex < contents.length()) &&
-              (contents.charAt(currentIndex) == '/')) {
-            simpleTag = true;
-            currentIndex++;
-          }
-          if ((currentIndex < contents.length()) &&
-              (contents.charAt(currentIndex) == '>')) {
-            currentIndex++;
-            int beginRefIndex = currentIndex;
-            int endRefIndex = simpleTag ? beginRefIndex : contents.indexOf("</ref>", beginRefIndex);
-            if (endRefIndex < 0) {
-              currentIndex = contents.length();
-            } else {
-              currentIndex = endRefIndex + (simpleTag ? 0 : 6);
-              String reference = contents.substring(beginRefIndex, endRefIndex).trim();
-              if (reference.length() > 0) {
-                RefElement refElement = refs.get(reference);
-                if (refElement == null) {
-                  refElement = new RefElement(reference, beginIndex, currentIndex, name);
-                  refs.put(reference, refElement);
-                } else {
-                  if (errors == null) {
-                    return true;
-                  }
-                  result = true;
-                  if (refElement.errorResult == null) {
-                    refElement.errorResult = new CheckErrorResult(
-                        getShortDescription(),
-                        refElement.begin, refElement.end,
-                        (refElement.name == null) ?
-                            CheckErrorResult.ErrorLevel.WARNING :
-                            CheckErrorResult.ErrorLevel.CORRECT);
-                    refElement.errorResult.addPossibleAction(
-                        new CompositeAction(GT._("Existing references"), existingNames));
-                    errors.add(refElement.errorResult);
-                  }
-                  CheckErrorResult errorResult = new CheckErrorResult(
-                      getShortDescription(), beginIndex, currentIndex);
-                  if (refElement.name != null) {
-                    errorResult.addReplacement("<ref name=\"" + refElement.name + "\"/>");
-                  }
+              result = true;
+              String previousName = previousRef.getParameter("name");
+              if (errorResults.get(previousRef) == null) {
+                CheckErrorResult errorResult = new CheckErrorResult(
+                    getShortDescription(),
+                    previousRef.getStartTagBeginIndex(), previousRef.getEndTagEndIndex() + 1,
+                    (previousName == null) ?
+                        CheckErrorResult.ErrorLevel.WARNING :
+                        CheckErrorResult.ErrorLevel.CORRECT);
+                if (previousName == null) {
                   errorResult.addPossibleAction(
-                      new CompositeAction(GT._("Existing references"), existingNames));
-                  errors.add(errorResult);
+                      GT._("Give a name to the <ref> tag"),
+                      new AddTextActionProvider(
+                          previousRef.getPartBeforeParameters() + " name=\"",
+                          "\"" + previousRef.getPartFromParameters(),
+                          null,
+                          GT._("What name would like to use for the <ref> tag ?")));
                 }
+                errorResult.addPossibleAction(
+                    new CompositeAction(GT._("Existing references"), existingNames));
+                errors.add(errorResult);
+                errorResults.put(previousRef, errorResult);
               }
+              CheckErrorResult errorResult = new CheckErrorResult(
+                  getShortDescription(),
+                  ref.getStartTagBeginIndex(), ref.getEndTagEndIndex() + 1);
+              if (previousName != null) {
+                errorResult.addReplacement("<ref name=" + previousName + "/>");
+              }
+              errorResult.addPossibleAction(
+                  new CompositeAction(GT._("Existing references"), existingNames));
+              errors.add(errorResult);
             }
           }
+        } else {
+          startIndex = contents.indexOf('<', startIndex + 1);
         }
-        startIndex = currentIndex;
       } else {
-        startIndex++;
+        startIndex = contents.indexOf('<', startIndex + 1);
       }
     }
     Collections.sort(names);
@@ -148,29 +116,5 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       existingNames.add(new SimpleAction(name, new NoOpAction()));
     }
     return result;
-  }
-
-  /**
-   * Class to hold informations about a ref element.
-   */
-  static class RefElement {
-    String reference;
-    int begin;
-    int end;
-    String name;
-    CheckErrorResult errorResult;
-
-    /**
-     * @param reference Reference text.
-     * @param begin Begin position.
-     * @param end End position.
-     * @param name Reference name.
-     */
-    public RefElement(String reference, int begin, int end, String name) {
-      this.reference = reference;
-      this.begin = begin;
-      this.end = end;
-      this.name = name;
-    }
   }
 }

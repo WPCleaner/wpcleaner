@@ -22,7 +22,7 @@ package org.wikipediacleaner.api.data;
 /**
  * Class containing informations about a tag (&lt;<i>tag</i>&gt;). 
  */
-public class TagData{
+public class TagData {
   private final int startIndex;
   private final int endIndex;
 
