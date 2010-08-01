@@ -19,6 +19,13 @@
 package org.wikipediacleaner.gui.swing.action;
 
 import java.awt.event.ActionEvent;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -78,11 +85,36 @@ public class AddTextAction extends TextAction {
       localElement = localTextPane.getStyledDocument().getCharacterElement(
           localTextPane.getSelectionStart());
     }
-    String value = defaultValue;
+    String value = null;
     if (url != null) {
-      // TODO
+      try {
+        URL url2 = new URL(url);
+        URLConnection connection = url2.openConnection();
+        DataInputStream dis = new DataInputStream(connection.getInputStream());
+        StringBuilder html = new StringBuilder();
+        String tmp;
+        Pattern p = Pattern.compile("<title>(.*?)</title>", Pattern.CASE_INSENSITIVE);
+        while ((value == null) && ((tmp = dis.readUTF()) != null)) {
+          tmp = " " + tmp;
+          tmp.replaceAll("\\s", " ");
+          html.append(tmp);
+          Matcher m = p.matcher(html);
+          if (m.find() == true) {
+            value = m.group(1);
+          }
+        }
+      } catch (MalformedURLException ex) {
+        // Nothing to do
+      } catch (IOException ex) {
+        // Nothing to do
+      }
     }
-    value = Utilities.askForValue(localTextPane, question, value);
+    if (value == null) {
+      value = defaultValue;
+    }
+    value = Utilities.askForValue(
+        (localTextPane != null) ? localTextPane.getParent() : null,
+        question, value);
     if ((value != null) && (!value.isEmpty())) {
       StringBuilder newText = new StringBuilder();
       if (prefix != null) {
