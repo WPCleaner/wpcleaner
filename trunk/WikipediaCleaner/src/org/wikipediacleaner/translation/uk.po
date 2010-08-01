@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-07-31 22:56+0200\n"
-"PO-Revision-Date: 2010-07-27 07:42+0000\n"
+"PO-Revision-Date: 2010-08-01 07:40+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-07-27 23:01+0000\n"
+"X-Launchpad-Export-Date: 2010-08-01 09:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:38
@@ -31,7 +31,8 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:42
 msgid "Many new features added for the Check Wiki project : try them !"
-msgstr "До проекту Check Wiki додано багато нових можливостей : Спробуйте їх !"
+msgstr ""
+"До проекту Check Wiki додано багато нових можливостей : Спробуйте їх !"
 
 #: org/wikipediacleaner/Version.java:44
 msgid "Please, report any other problem you find to me."
@@ -140,35 +141,33 @@ msgstr "Контрольна сума — {0} замість {1}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:100
 msgid "Add a description..."
-msgstr ""
+msgstr "Додати опис..."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:103
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:112
 msgid "What description would like to use for the external link ?"
 msgstr ""
+"Який опис ви хотіли б використовувати для цього зовнішнього посилання ?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:107
 msgid "Convert into <ref> tag"
 msgstr "Перетворити в <ref>позначку"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:109
-#, fuzzy
 msgid "Add a description and convert into <ref> tag"
-msgstr "Перетворити в <ref>позначку"
+msgstr "Додати опис та перетворити його в <ref> позначку"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:116
-#, fuzzy
 msgid "External viewer"
 msgstr "Зовнішній переглядач"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:84
-#, fuzzy
 msgid "Give a name to the <ref> tag"
-msgstr "Перетворити в <ref>позначку"
+msgstr "Дати назву <ref> позначці"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:89
 msgid "What name would like to use for the <ref> tag ?"
-msgstr ""
+msgstr "Яку назву ви хотіли б використовувати для цієї <ref> позначки ?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:103
@@ -317,7 +316,8 @@ msgstr "Додати до &списку спостереження"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:651
 msgid "Would you like to add these pages on your local Watch list ?"
-msgstr "Хочете додати ці сторінки до вашого локального списку спостереження ?"
+msgstr ""
+"Хочете додати ці сторінки до вашого локального списку спостереження ?"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:74
 #: org/wikipediacleaner/gui/swing/MainWindow.java:527
@@ -339,7 +339,8 @@ msgstr "Вони можуть змінити багато сторінок за 
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "В деяких проектах Вікіпедії потрібен статус бота, щоб виконувати такі "
 "функції."
