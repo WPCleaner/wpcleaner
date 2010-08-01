@@ -19,11 +19,8 @@
 package org.wikipediacleaner.gui.swing.action;
 
 import java.awt.event.ActionEvent;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,6 +30,9 @@ import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.TextAction;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
 
@@ -87,26 +87,42 @@ public class AddTextAction extends TextAction {
     }
     String value = null;
     if (url != null) {
+      GetMethod method = null;
+      InputStream is = null;
       try {
-        URL url2 = new URL(url);
-        URLConnection connection = url2.openConnection();
-        DataInputStream dis = new DataInputStream(connection.getInputStream());
-        StringBuilder html = new StringBuilder();
-        String tmp;
-        Pattern p = Pattern.compile("<title>(.*?)</title>", Pattern.CASE_INSENSITIVE);
-        while ((value == null) && ((tmp = dis.readUTF()) != null)) {
-          tmp = " " + tmp;
-          tmp.replaceAll("\\s", " ");
-          html.append(tmp);
-          Matcher m = p.matcher(html);
-          if (m.find() == true) {
-            value = m.group(1);
+        HttpClient httpClient = new HttpClient();
+        method = new GetMethod(url);
+        System.out.println(url);
+        int statusCode = httpClient.executeMethod(method);
+        if (statusCode == HttpStatus.SC_OK) {
+          is = method.getResponseBodyAsStream();
+          StringBuilder html = new StringBuilder();
+          byte[] tmpBytes = new byte[256];
+          int size;
+          Pattern pTitle = Pattern.compile("<title>(.*?)</title>", Pattern.CASE_INSENSITIVE);
+          while ((value == null) && ((size = is.read(tmpBytes)) > 0)) {
+            String tmp = " " + new String(tmpBytes, 0, size);
+            tmp = tmp.replaceAll("\\s", " ");
+            html.append(tmp);
+            Matcher m = pTitle.matcher(html);
+            if (m.find() == true) {
+              value = m.group(1).trim();
+            }
           }
         }
-      } catch (MalformedURLException ex) {
-        // Nothing to do
       } catch (IOException ex) {
         // Nothing to do
+      } finally {
+        if (is != null) {
+          try {
+            is.close();
+          } catch (IOException ex) {
+            // Nothing to do 
+          }
+        }
+        if (method != null) {
+          method.releaseConnection();
+        }
       }
     }
     if (value == null) {
