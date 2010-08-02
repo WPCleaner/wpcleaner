@@ -22,7 +22,8 @@ import java.util.ArrayList;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.TagData;
+import org.wikipediacleaner.api.data.TagBlock;
+import org.wikipediacleaner.api.data.TemplateBlock;
 
 
 /**
@@ -51,7 +52,8 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     // Analyzing the text for <ref>
     boolean refFound = false;
     if (!refFound) {
-      TagData tag = findNextTag(page, contents, "ref", 0);
+      // Search for <ref>
+      TagBlock tag = findNextTag(page, contents, "ref", 0);
       if (tag != null) {
         refFound = true;
       }
@@ -60,9 +62,17 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     // Analyzing the text for <references>
     boolean referencesFound = false;
     if (refFound) {
+      // Search for <references>
       if (!referencesFound) {
-        TagData tag = findNextTag(page, contents, "references", 0);
+        TagBlock tag = findNextTag(page, contents, "references", 0);
         if (tag != null) {
+          referencesFound = true;
+        }
+      }
+      // Search for {{Références}}
+      if (!referencesFound) {
+        TemplateBlock template = findNextTemplate(page, contents, "références", 0);
+        if (template != null) {
           referencesFound = true;
         }
       }

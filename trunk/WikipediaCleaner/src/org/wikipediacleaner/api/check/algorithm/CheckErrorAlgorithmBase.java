@@ -23,7 +23,9 @@ import java.util.ArrayList;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.TagBlock;
 import org.wikipediacleaner.api.data.TagData;
+import org.wikipediacleaner.api.data.TemplateBlock;
 
 
 /**
@@ -291,19 +293,48 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     return result;
   }
 
+  /**
+   * Find the first template after an index in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param templateName Template to be found.
+   * @param currentIndex The last index.
+   * @return Tag found.
+   */
+  protected TemplateBlock findNextTemplate(
+      Page page, String contents,
+      String templateName, int currentIndex) {
+    if (contents == null) {
+      return null;
+    }
+    while ((currentIndex < contents.length())) {
+      int tmpIndex = contents.indexOf("{{", currentIndex);
+      if (tmpIndex < 0) {
+        currentIndex = contents.length();
+      } else {
+        TemplateBlock template = TemplateBlock.analyzeBlock(templateName, contents, tmpIndex);
+        if (template != null) {
+          return template;
+        }
+        currentIndex = tmpIndex + 1;
+      }
+    }
+    return null;
+  }
 
   /**
    * Find the first tag after an index in the page contents.
    * 
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
-   * @param tag Tag to be found.
+   * @param tagName Tag to be found.
    * @param currentIndex The last index.
    * @return Tag found.
    */
-  protected TagData findNextTag(
+  protected TagBlock findNextTag(
       Page page, String contents,
-      String tag, int currentIndex) {
+      String tagName, int currentIndex) {
     if (contents == null) {
       return null;
     }
@@ -312,30 +343,11 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       if (tmpIndex < 0) {
         currentIndex = contents.length();
       } else {
-        int infoTagStart = tmpIndex;
-        tmpIndex++;
-        currentIndex = tmpIndex;
-        // Possible whitespaces
-        while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
-          tmpIndex++;
+        TagBlock tag = TagBlock.analyzeBlock(tagName, contents, tmpIndex);
+        if (tag != null) {
+          return tag;
         }
-        int endIndex = contents.indexOf(">", tmpIndex);
-        if (endIndex < 0) {
-          currentIndex = contents.length();
-        } else {
-          int nextStartIndex = contents.indexOf("<", tmpIndex);
-          if ((nextStartIndex < 0) || (endIndex < nextStartIndex)) {
-            int infoTagEnd = endIndex + 1;
-            if (tag.equalsIgnoreCase(contents.substring(tmpIndex, tmpIndex + tag.length()))) {
-              tmpIndex += tag.length();
-              if ((contents.charAt(tmpIndex) == ' ') ||
-                  (contents.charAt(tmpIndex) == '/') ||
-                  (contents.charAt(tmpIndex) == '>')) {
-                return new TagData(infoTagStart, infoTagEnd); 
-              }
-            }
-          }
-        }
+        currentIndex = tmpIndex + 1;
       }
     }
     return null;
