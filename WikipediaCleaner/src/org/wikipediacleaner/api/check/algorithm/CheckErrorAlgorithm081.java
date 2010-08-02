@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TagBlock;
 import org.wikipediacleaner.gui.swing.action.NoOpAction;
+import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -79,23 +80,23 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                     (previousName == null) ?
                         CheckErrorResult.ErrorLevel.WARNING :
                         CheckErrorResult.ErrorLevel.CORRECT);
-                if (previousName == null) {
-                  String url = null;
-                  String text = previousRef.getText();
-                  if (text != null) {
-                    int httpIndex = text.indexOf("http://");
-                    if (httpIndex < 0) {
-                      httpIndex = text.indexOf("https://");
-                    }
-                    if (httpIndex >= 0) {
-                      int spaceIndex = text.indexOf(' ');
-                      if (spaceIndex < 0) {
-                        url = text.substring(httpIndex);
-                      } else {
-                        url = text.substring(httpIndex, spaceIndex);
-                      }
+                String url = null;
+                String text = previousRef.getText();
+                if (text != null) {
+                  int httpIndex = text.indexOf("http://");
+                  if (httpIndex < 0) {
+                    httpIndex = text.indexOf("https://");
+                  }
+                  if (httpIndex >= 0) {
+                    int spaceIndex = text.indexOf(' ');
+                    if (spaceIndex < 0) {
+                      url = text.substring(httpIndex);
+                    } else {
+                      url = text.substring(httpIndex, spaceIndex);
                     }
                   }
+                }
+                if (previousName == null) {
                   errorResult.addPossibleAction(
                       GT._("Give a name to the <ref> tag"),
                       new AddTextActionProvider(
@@ -107,6 +108,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                 }
                 errorResult.addPossibleAction(
                     new CompositeAction(GT._("Existing references"), existingNames));
+                errorResult.addPossibleAction(new SimpleAction(GT._("External viewer"), new PageViewAction(url)));
                 errors.add(errorResult);
                 errorResults.put(previousRef, errorResult);
               }

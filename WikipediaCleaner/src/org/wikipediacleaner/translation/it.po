@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-31 22:56+0200\n"
+"POT-Creation-Date: 2010-08-02 22:11+0200\n"
 "PO-Revision-Date: 2010-05-23 23:57+0000\n"
 "Last-Translator: Modernday <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -145,33 +145,34 @@ msgid "Add a description..."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:103
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:112
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:113
 msgid "What description would like to use for the external link ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:108
 msgid "Convert into <ref> tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:109
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:110
 msgid "Add a description and convert into <ref> tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:116
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:118
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:111
 #, fuzzy
 msgid "External viewer"
 msgstr "Visualizzatore Esterno"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:84
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:101
 msgid "Give a name to the <ref> tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:89
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:106
 msgid "What name would like to use for the <ref> tag ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:92
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:103
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:110
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:122
 msgid "Existing references"
 msgstr ""
 
@@ -1322,19 +1323,19 @@ msgstr "Si è verificato un errore: {0}"
 msgid "An unknown error occured"
 msgstr "Si è verificato un errore sconosciuto"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:210
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:229
 msgid "Yes"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:211
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:230
 msgid "Yes to all"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:212
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:231
 msgid "No"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:213
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:232
 msgid "No to all"
 msgstr ""
 
