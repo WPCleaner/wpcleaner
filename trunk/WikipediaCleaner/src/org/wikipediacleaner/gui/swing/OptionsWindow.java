@@ -748,7 +748,7 @@ public class OptionsWindow
    * Action called when Sort Add button is pressed.
    */
   private void actionSortAdd() {
-    String name = Utilities.askForValue(getParentComponent(), "Input name :", "");
+    String name = Utilities.askForValue(getParentComponent(), "Input name :", "", null);
     if (name != null) {
       CompositeComparator<Page> comparator = PageComparator.createComparator(name);
       modelSort.addElement(comparator);

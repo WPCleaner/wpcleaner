@@ -48,6 +48,7 @@ public class AddTextAction extends TextAction {
   private final String url;
   private final String question;
   private final String defaultValue;
+  private final String unauthorizedCharacters;
   private final Element element;
   private final JTextPane textPane;
 
@@ -57,6 +58,7 @@ public class AddTextAction extends TextAction {
       String url,
       String question,
       String defaultValue,
+      String unauthorizedCharacters,
       Element element,
       JTextPane textPane) {
     super("ReplaceLink");
@@ -65,6 +67,7 @@ public class AddTextAction extends TextAction {
     this.url = url;
     this.question = question;
     this.defaultValue = defaultValue;
+    this.unauthorizedCharacters = unauthorizedCharacters;
     this.element = element;
     this.textPane = textPane;
   }
@@ -130,7 +133,7 @@ public class AddTextAction extends TextAction {
     }
     value = Utilities.askForValue(
         (localTextPane != null) ? localTextPane.getParent() : null,
-        question, value);
+        question, value, unauthorizedCharacters);
     if ((value != null) && (!value.isEmpty())) {
       StringBuilder newText = new StringBuilder();
       if (prefix != null) {

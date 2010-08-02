@@ -86,7 +86,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                           previousRef.getPartBeforeParameters() + " name=\"",
                           "\"" + previousRef.getPartFromParameters(),
                           null,
-                          GT._("What name would like to use for the <ref> tag ?")));
+                          GT._("What name would like to use for the <ref> tag ?"),
+                          "[]\""));
                 }
                 errorResult.addPossibleAction(
                     new CompositeAction(GT._("Existing references"), existingNames));

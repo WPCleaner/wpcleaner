@@ -529,12 +529,12 @@ public class DisambiguationWindow extends PageWindow {
    */
   private void actionAddAutomaticFixing() {
     String initialText = Utilities.askForValue(
-        getParentComponent(), "Input the text that should be replaced", "");
+        getParentComponent(), "Input the text that should be replaced", "", null);
     if ((initialText == null) || (initialText.length() == 0)) {
       return;
     }
     String replaceText = Utilities.askForValue(
-        getParentComponent(), "Input the text that should be used as replacement", "");
+        getParentComponent(), "Input the text that should be used as replacement", "", null);
     if ((replaceText == null) || (replaceText.length() == 0)) {
       return;
     }
@@ -550,14 +550,14 @@ public class DisambiguationWindow extends PageWindow {
       AutomaticFixing fixing = (AutomaticFixing) selected;
       String initialText = Utilities.askForValue(
           getParentComponent(), "Input the text that should be replaced",
-          fixing.getOriginalText());
+          fixing.getOriginalText(), null);
       if ((initialText == null) || (initialText.length() == 0)) {
         return;
       }
       fixing.setOriginalText(initialText);
       String replaceText = Utilities.askForValue(
           getParentComponent(), "Input the text that should be used as replacement",
-          fixing.getReplacementText());
+          fixing.getReplacementText(), null);
       if ((replaceText == null) || (replaceText.length() == 0)) {
         return;
       }

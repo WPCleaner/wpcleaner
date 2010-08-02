@@ -100,7 +100,8 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
                 GT._("Add a description..."),
                 new AddTextActionProvider(
                     "[" + url + " ", "]", url,
-                    GT._("What description would like to use for the external link ?")));
+                    GT._("What description would like to use for the external link ?"),
+                    "[]"));
             if (!isInRef) {
               errorResult.addReplacement(
                   "<ref>" + url + "</ref>",
@@ -109,7 +110,8 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
                   GT._("Add a description and convert into <ref> tag"),
                   new AddTextActionProvider(
                       "<ref>[" + url + " ", "]</ref>", url,
-                      GT._("What description would like to use for the external link ?")));
+                      GT._("What description would like to use for the external link ?"),
+                      "[]"));
             } else {
               errorResult.addReplacement(url);
             }
