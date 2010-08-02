@@ -41,44 +41,8 @@ public class CheckErrorAlgorithm040 extends CheckErrorAlgorithmBase {
     if ((page == null) || (contents == null)) {
       return false;
     }
-
-    int startIndex = 0;
     boolean result = false;
-    while (startIndex < contents.length()) {
-      if (contents.charAt(startIndex) == '<') {
-        int endIndex = startIndex;
-        if (contents.startsWith("<font", startIndex)) {
-          int currentPos = startIndex + 1;
-          while ((currentPos < contents.length()) &&
-                 (contents.charAt(currentPos) != '>')) {
-            boolean ok = false;
-            if (contents.charAt(currentPos) != '<') {
-              ok = true;
-            }
-            if (ok) {
-              currentPos++;
-            } else {
-              currentPos = contents.length();
-            }
-          }
-          if ((currentPos < contents.length()) && (contents.charAt(currentPos) == '>')) {
-            endIndex = currentPos + 1;
-          }
-        } else if (contents.startsWith("</font>", startIndex)) {
-          endIndex += "</font>".length();
-        }
-        if (endIndex > startIndex) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = new CheckErrorResult(
-              getShortDescription(), startIndex, endIndex);
-          errors.add(errorResult);
-        }
-      }
-      startIndex++;
-    }
+    result = addTags(result, page, contents, errors, "font");
     return result;
   }
 }

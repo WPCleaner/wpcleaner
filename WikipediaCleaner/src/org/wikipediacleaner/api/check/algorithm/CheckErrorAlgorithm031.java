@@ -42,14 +42,10 @@ public class CheckErrorAlgorithm031 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
-    result |= simpleTextSearch(page, contents, errors, "<table>");
-    result |= simpleTextSearch(page, contents, errors, "</table>");
-    result |= simpleTextSearch(page, contents, errors, "<td>");
-    result |= simpleTextSearch(page, contents, errors, "</td>");
-    result |= simpleTextSearch(page, contents, errors, "<th>");
-    result |= simpleTextSearch(page, contents, errors, "</th>");
-    result |= simpleTextSearch(page, contents, errors, "<tr>");
-    result |= simpleTextSearch(page, contents, errors, "</tr>");
+    result = addTags(result, page, contents, errors, "table");
+    result = addTags(result, page, contents, errors, "td");
+    result = addTags(result, page, contents, errors, "th");
+    result = addTags(result, page, contents, errors, "tr");
     return result;
   }
 }
