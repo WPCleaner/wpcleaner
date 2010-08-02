@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-31 22:56+0200\n"
+"POT-Creation-Date: 2010-08-02 22:11+0200\n"
 "PO-Revision-Date: 2010-08-01 07:40+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -31,8 +31,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:42
 msgid "Many new features added for the Check Wiki project : try them !"
-msgstr ""
-"До проекту Check Wiki додано багато нових можливостей : Спробуйте їх !"
+msgstr "До проекту Check Wiki додано багато нових можливостей : Спробуйте їх !"
 
 #: org/wikipediacleaner/Version.java:44
 msgid "Please, report any other problem you find to me."
@@ -144,33 +143,34 @@ msgid "Add a description..."
 msgstr "Додати опис..."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:103
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:112
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:113
 msgid "What description would like to use for the external link ?"
 msgstr ""
 "Який опис ви хотіли б використовувати для цього зовнішнього посилання ?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:108
 msgid "Convert into <ref> tag"
 msgstr "Перетворити в <ref>позначку"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:109
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:110
 msgid "Add a description and convert into <ref> tag"
 msgstr "Додати опис та перетворити його в <ref> позначку"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:116
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:118
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:111
 msgid "External viewer"
 msgstr "Зовнішній переглядач"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:84
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:101
 msgid "Give a name to the <ref> tag"
 msgstr "Дати назву <ref> позначці"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:89
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:106
 msgid "What name would like to use for the <ref> tag ?"
 msgstr "Яку назву ви хотіли б використовувати для цієї <ref> позначки ?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:92
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:103
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:110
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:122
 msgid "Existing references"
 msgstr "Наявні виноски"
 
@@ -316,8 +316,7 @@ msgstr "Додати до &списку спостереження"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:651
 msgid "Would you like to add these pages on your local Watch list ?"
-msgstr ""
-"Хочете додати ці сторінки до вашого локального списку спостереження ?"
+msgstr "Хочете додати ці сторінки до вашого локального списку спостереження ?"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:74
 #: org/wikipediacleaner/gui/swing/MainWindow.java:527
@@ -339,8 +338,7 @@ msgstr "Вони можуть змінити багато сторінок за 
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "В деяких проектах Вікіпедії потрібен статус бота, щоб виконувати такі "
 "функції."
@@ -1348,19 +1346,19 @@ msgstr "Виникла помилка: {0}"
 msgid "An unknown error occured"
 msgstr "Виникла невідома помилка"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:210
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:229
 msgid "Yes"
 msgstr "Так"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:211
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:230
 msgid "Yes to all"
 msgstr "Так для всіх"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:212
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:231
 msgid "No"
 msgstr "Ні"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:213
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:232
 msgid "No to all"
 msgstr "Ні для всіх"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-31 22:56+0200\n"
+"POT-Creation-Date: 2010-08-02 22:11+0200\n"
 "PO-Revision-Date: 2010-08-02 11:10+0000\n"
 "Last-Translator: A2 <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -148,32 +148,33 @@ msgid "Add a description..."
 msgstr "Ajoutez une description…"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:103
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:112
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:113
 msgid "What description would like to use for the external link ?"
 msgstr "Quel description utiliser pour ce lien externe ?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:108
 msgid "Convert into <ref> tag"
 msgstr "Convertir en référence"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:109
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:110
 msgid "Add a description and convert into <ref> tag"
 msgstr "Ajouter une description et mettre entre balise <ref>"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:116
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:118
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:111
 msgid "External viewer"
 msgstr "Navigateur externe"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:84
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:101
 msgid "Give a name to the <ref> tag"
 msgstr "Donnez un nom à la balise <ref>"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:89
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:106
 msgid "What name would like to use for the <ref> tag ?"
 msgstr "Quel nom souhaitez-vous utiliser pour la balise <ref> ?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:92
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:103
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:110
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:122
 msgid "Existing references"
 msgstr "Références existantes"
 
@@ -342,8 +343,7 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -1028,8 +1028,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr ""
-"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:287
 msgid "&Page :"
@@ -1364,19 +1363,19 @@ msgstr "Une erreur est survenue : {0}"
 msgid "An unknown error occured"
 msgstr "Une erreur inconnue s'est produite"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:210
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:229
 msgid "Yes"
 msgstr "Oui"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:211
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:230
 msgid "Yes to all"
 msgstr "Oui pour tous"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:212
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:231
 msgid "No"
 msgstr "Non"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:213
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:232
 msgid "No to all"
 msgstr "Non pour tous"
 
