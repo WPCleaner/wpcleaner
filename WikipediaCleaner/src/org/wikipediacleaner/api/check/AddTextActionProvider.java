@@ -35,15 +35,20 @@ public class AddTextActionProvider implements ActionProvider {
   private final String url;
   private final String question;
   private final String defaultValue;
+  private final String unauthorizedCharacters;
 
   /**
    * @param prefix Prefix.
    * @param suffix Suffix.
    * @param url Optional URL to retrieve title.
    * @param question Question asked to the user.
+   * @param unauthorizedCharacters Unauthorized characters.
    */
-  public AddTextActionProvider(String prefix, String suffix, String url, String question) {
-    this(prefix, suffix, url, question, "");
+  public AddTextActionProvider(
+      String prefix, String suffix,
+      String url, String question,
+      String unauthorizedCharacters) {
+    this(prefix, suffix, url, question, "", unauthorizedCharacters);
   }
 
   /**
@@ -52,20 +57,28 @@ public class AddTextActionProvider implements ActionProvider {
    * @param url Optional URL to retrieve title.
    * @param question Question asked to the user.
    * @param defaultValue Value used by default.
+   * @param unauthorizedCharacters Unauthorized characters.
    */
-  public AddTextActionProvider(String prefix, String suffix, String url, String question, String defaultValue) {
+  public AddTextActionProvider(
+      String prefix, String suffix, String url,
+      String question, String defaultValue,
+      String unauthorizedCharacters) {
     this.prefix = prefix;
     this.suffix = suffix;
     this.url = url;
     this.question = question;
     this.defaultValue = defaultValue;
+    this.unauthorizedCharacters = unauthorizedCharacters;
   }
 
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.ActionProvider#getAction(javax.swing.text.Element, javax.swing.JTextPane)
    */
   public Action getAction(Element element, JTextPane textPane) {
-    return new AddTextAction(prefix, suffix, url, question, defaultValue, element, textPane);
+    return new AddTextAction(
+        prefix, suffix, url,
+        question, defaultValue, unauthorizedCharacters,
+        element, textPane);
   }
 
 }

@@ -340,10 +340,11 @@ public abstract class BasicWindow {
    * 
    * @param message Message.
    * @param value Default value.
+   * @param unauthorizedCharacters Unauthorized characters.
    * @return Value provided by the user.
    */
-  protected String askForValue(String message, String value) {
-    return Utilities.askForValue(parentComponent, message, value);
+  protected String askForValue(String message, String value, String unauthorizedCharacters) {
+    return Utilities.askForValue(parentComponent, message, value, unauthorizedCharacters);
   }
 
   /**

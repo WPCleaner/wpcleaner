@@ -171,17 +171,36 @@ public class Utilities {
    * @param parent Parent component.
    * @param message Message.
    * @param value Default value.
+   * @param unauthorizedCharacters Unauthorized characters
    * @return Value provided by the user.
    */
-  public static String askForValue(Component parent, String message, String value) {
-    Object result = JOptionPane.showInputDialog(
-        parent, message, "Wikipedia Cleaner",
-        JOptionPane.QUESTION_MESSAGE, null, null,
-        value);
-    if (result != null) {
-      return result.toString();
+  public static String askForValue(
+      Component parent, String message, String value,
+      String unauthorizedCharacters) {
+    String defaultValue = value;
+    while (true) {
+      Object result = JOptionPane.showInputDialog(
+          parent, message, "Wikipedia Cleaner",
+          JOptionPane.QUESTION_MESSAGE, null, null,
+          defaultValue);
+      if (result == null) {
+        return null;
+      }
+      defaultValue = result.toString();
+      boolean modified = false;
+      if (unauthorizedCharacters != null) {
+        for (int i = 0; i < unauthorizedCharacters.length(); i++) {
+          int index;
+          while ((index = defaultValue.indexOf(unauthorizedCharacters.charAt(i))) > 0) {
+            defaultValue = defaultValue.substring(0, index) + defaultValue.substring(index + 1);
+            modified = true;
+          }
+        }
+      }
+      if (!modified) {
+        return defaultValue;
+      }
     }
-    return null;
   }
 
   /**

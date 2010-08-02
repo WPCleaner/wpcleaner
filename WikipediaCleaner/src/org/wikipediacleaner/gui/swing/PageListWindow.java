@@ -309,7 +309,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   private void actionAdd() {
     String value = askForValue(
         GT._("Enter the page title you want to add to your local watch list"),
-        "");
+        "", null);
     if (value != null) {
       Configuration config = Configuration.getConfiguration();
       ArrayList<String> watchedPages = config.getStringArrayList(Configuration.ARRAY_WATCH_PAGES);
