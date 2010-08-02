@@ -70,10 +70,15 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
         }
       }
       // Search for {{Références}}
-      if (!referencesFound) {
-        TemplateBlock template = findNextTemplate(page, contents, "références", 0);
-        if (template != null) {
-          referencesFound = true;
+      String[] referencesTemplates = {
+        "Références", "References", "Notes", "Reflist"  
+      }; // TODO: Use error_003_references_templates
+      for (String referencesTemplate : referencesTemplates) {
+        if (!referencesFound) {
+          TemplateBlock template = findNextTemplate(page, contents, referencesTemplate, 0);
+          if (template != null) {
+            referencesFound = true;
+          }
         }
       }
     }
