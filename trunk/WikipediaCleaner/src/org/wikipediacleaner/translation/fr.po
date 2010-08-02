@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-07-31 22:56+0200\n"
-"PO-Revision-Date: 2010-07-27 07:06+0000\n"
-"Last-Translator: Gaël Desbois <Unknown>\n"
+"PO-Revision-Date: 2010-08-02 11:10+0000\n"
+"Last-Translator: A2 <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-07-27 23:01+0000\n"
+"X-Launchpad-Export-Date: 2010-08-02 16:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -145,35 +145,32 @@ msgstr "La somme de contrôle est {0} à la place de {1}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:100
 msgid "Add a description..."
-msgstr ""
+msgstr "Ajoutez une description…"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:103
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:112
 msgid "What description would like to use for the external link ?"
-msgstr ""
+msgstr "Quel description utiliser pour ce lien externe ?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:107
 msgid "Convert into <ref> tag"
 msgstr "Convertir en référence"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:109
-#, fuzzy
 msgid "Add a description and convert into <ref> tag"
-msgstr "Convertir en référence"
+msgstr "Ajouter une description et mettre entre balise <ref>"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:116
-#, fuzzy
 msgid "External viewer"
-msgstr "Visualisateur externe"
+msgstr "Navigateur externe"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:84
-#, fuzzy
 msgid "Give a name to the <ref> tag"
-msgstr "Convertir en référence"
+msgstr "Donnez un nom à la balise <ref>"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:89
 msgid "What name would like to use for the <ref> tag ?"
-msgstr ""
+msgstr "Quel nom souhaitez-vous utiliser pour la balise <ref> ?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:103
@@ -345,7 +342,8 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -1030,7 +1028,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr ""
+"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:287
 msgid "&Page :"
