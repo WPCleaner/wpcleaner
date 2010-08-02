@@ -80,12 +80,28 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                         CheckErrorResult.ErrorLevel.WARNING :
                         CheckErrorResult.ErrorLevel.CORRECT);
                 if (previousName == null) {
+                  String url = null;
+                  String text = previousRef.getText();
+                  if (text != null) {
+                    int httpIndex = text.indexOf("http://");
+                    if (httpIndex < 0) {
+                      httpIndex = text.indexOf("https://");
+                    }
+                    if (httpIndex >= 0) {
+                      int spaceIndex = text.indexOf(' ');
+                      if (spaceIndex < 0) {
+                        url = text.substring(httpIndex);
+                      } else {
+                        url = text.substring(httpIndex, spaceIndex);
+                      }
+                    }
+                  }
                   errorResult.addPossibleAction(
                       GT._("Give a name to the <ref> tag"),
                       new AddTextActionProvider(
                           previousRef.getPartBeforeParameters() + " name=\"",
                           "\"" + previousRef.getPartFromParameters(),
-                          null,
+                          url,
                           GT._("What name would like to use for the <ref> tag ?"),
                           "[]\""));
                 }
