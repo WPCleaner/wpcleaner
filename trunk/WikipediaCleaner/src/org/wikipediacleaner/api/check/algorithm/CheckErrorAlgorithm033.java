@@ -42,10 +42,7 @@ public class CheckErrorAlgorithm033 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
-    result |= simpleTextSearch(page, contents, errors, "<u>");
-    result |= simpleTextSearch(page, contents, errors, "</u>");
-    result |= simpleTextSearch(page, contents, errors, "<U>");
-    result |= simpleTextSearch(page, contents, errors, "</U>");
+    result = addTags(result, page, contents, errors, "u");
     return result;
   }
 }

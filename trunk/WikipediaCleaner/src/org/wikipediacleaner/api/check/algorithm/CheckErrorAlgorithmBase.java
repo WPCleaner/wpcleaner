@@ -324,6 +324,54 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * Find tags.
+   * 
+   * @param found Flag indicating if a tag has already been found.
+   * @param page Page.
+   * @param contents Page contents.
+   * @param errors Errors.
+   * @param tagName Tag name.
+   * @return Flag indicating if a tag has been found.
+   */
+  protected boolean addTags(boolean found, Page page, String contents, ArrayList<CheckErrorResult> errors, String tagName) {
+    if (found && (errors == null)) {
+      return found;
+    }
+    boolean result = found;
+    int startIndex = 0;
+    while ((startIndex < contents.length())) {
+      TagData tag = findNextStartTag(page, contents, tagName, startIndex);
+      if (tag != null) {
+        result = true;
+        if (errors != null) {
+          CheckErrorResult errorResult = new CheckErrorResult(
+              getShortDescription(), tag.getStartIndex(), tag.getEndIndex());
+          errors.add(errorResult);
+        }
+        startIndex = tag.getEndIndex();
+      } else {
+        startIndex = contents.length();
+      }
+    }
+    startIndex = 0;
+    while ((startIndex < contents.length())) {
+      TagData tag = findNextEndTag(page, contents, tagName, startIndex);
+      if (tag != null) {
+        result = true;
+        if (errors != null) {
+          CheckErrorResult errorResult = new CheckErrorResult(
+              getShortDescription(), tag.getStartIndex(), tag.getEndIndex());
+          errors.add(errorResult);
+        }
+        startIndex = tag.getEndIndex();
+      } else {
+        startIndex = contents.length();
+      }
+    }
+    return result;
+  }
+
+  /**
    * Find the first tag after an index in the page contents.
    * 
    * @param page Page.
