@@ -52,6 +52,9 @@ public class AddTextAction extends TextAction {
   private final Element element;
   private final JTextPane textPane;
 
+  private final static int BUFFER_SIZE = 1024;
+  private final static int MAXIMUM_SIZE = 10000;
+
   public AddTextAction(
       String prefix,
       String suffix,
@@ -100,10 +103,14 @@ public class AddTextAction extends TextAction {
         if (statusCode == HttpStatus.SC_OK) {
           is = method.getResponseBodyAsStream();
           StringBuilder html = new StringBuilder();
-          byte[] tmpBytes = new byte[256];
+          byte[] tmpBytes = new byte[BUFFER_SIZE];
           int size;
+          int totalSize = 0;
           Pattern pTitle = Pattern.compile("<title>(.*?)</title>", Pattern.CASE_INSENSITIVE);
-          while ((value == null) && ((size = is.read(tmpBytes)) > 0)) {
+          while ((value == null) &&
+                 ((size = is.read(tmpBytes)) > 0) &&
+                 (totalSize < MAXIMUM_SIZE)) {
+            totalSize += size;
             String tmp = " " + new String(tmpBytes, 0, size);
             tmp = tmp.replaceAll("\\s", " ");
             html.append(tmp);
