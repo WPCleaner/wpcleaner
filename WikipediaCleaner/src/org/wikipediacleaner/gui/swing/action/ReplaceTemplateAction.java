@@ -113,7 +113,7 @@ public class ReplaceTemplateAction extends TextAction {
         (localNewTitle.length() > 0)) {
       localTextPane.setCaretPosition(localElement.getStartOffset());
       localTextPane.moveCaretPosition(localElement.getEndOffset());
-      StringBuffer newText = new StringBuffer();
+      StringBuilder newText = new StringBuilder();
       newText.append("{{");
       newText.append(template);
       boolean notFound = false;

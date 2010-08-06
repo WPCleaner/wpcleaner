@@ -38,7 +38,7 @@ public class AutomaticDisambiguationWorker extends BasicWorker {
   private final Page[] pages;
   private final HashMap<String, Properties> replacements;
   private final String comment;
-  private final StringBuffer description;
+  private final StringBuilder description;
   private final boolean showDescription;
 
   public AutomaticDisambiguationWorker(
@@ -50,7 +50,7 @@ public class AutomaticDisambiguationWorker extends BasicWorker {
     this.replacements = replacements;
     this.comment = comment;
     this.showDescription = showDescription;
-    this.description = (showDescription ? new StringBuffer() : null);
+    this.description = (showDescription ? new StringBuilder() : null);
   }
 
   /* (non-Javadoc)

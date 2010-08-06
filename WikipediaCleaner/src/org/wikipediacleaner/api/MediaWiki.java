@@ -139,7 +139,7 @@ public class MediaWiki extends MediaWikiController {
   public int replaceText(
       Page[] pages, HashMap<String, Properties> replacements,
       EnumWikipedia wikipedia, String comment,
-      StringBuffer description) throws APIException {
+      StringBuilder description) throws APIException {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
       return 0;
     }
@@ -148,7 +148,7 @@ public class MediaWiki extends MediaWikiController {
     }
     int count = 0;
     final API api = APIFactory.getAPI();
-    StringBuffer details = new StringBuffer();
+    StringBuilder details = new StringBuilder();
     while (hasRemainingTask() && !shouldStop()) {
       Object result = getNextResult();
       if ((result != null) && (result instanceof Page)) {

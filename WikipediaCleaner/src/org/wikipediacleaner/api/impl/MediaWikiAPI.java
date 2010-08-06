@@ -254,7 +254,7 @@ public class MediaWikiAPI implements API {
       boolean         stream) throws APIException {
     try {
       String url = "http://toolserver.org/" + path;
-      StringBuffer debugUrl = (DEBUG_URL) ? new StringBuffer(url) : null;
+      StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder(url) : null;
       GetMethod method = new GetMethod(url);
       method.getParams().setContentCharset("UTF-8");
       method.setRequestHeader("Accept-Encoding", "gzip");
