@@ -196,7 +196,7 @@ public class MediaWikiAPI implements API {
       boolean         stream) throws APIException {
     try {
       String url = "http://toolserver.org/" + path;
-      StringBuffer debugUrl = (DEBUG_URL) ? new StringBuffer(url) : null;
+      StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder(url) : null;
       PostMethod method = new PostMethod(url);
       method.getParams().setContentCharset("UTF-8");
       method.setRequestHeader("Accept-Encoding", "gzip");
@@ -369,7 +369,7 @@ public class MediaWikiAPI implements API {
     HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("prop", "revisions");
     properties.put("rvprop", "content");
-    StringBuffer titles = new StringBuffer();
+    StringBuilder titles = new StringBuilder();
     for (int i = 0; i < pages.size();) {
       titles.setLength(0);
       for (int j = 0; (j < MAX_PAGES_PER_QUERY) && (i < pages.size()); i++, j++) {
@@ -858,7 +858,7 @@ public class MediaWikiAPI implements API {
     ArrayList<Page> templates = new ArrayList<Page>();
     ArrayList<Page> newTemplates = new ArrayList<Page>();
     newTemplates.add(page);
-    StringBuffer titles = new StringBuffer();
+    StringBuilder titles = new StringBuilder();
     do {
       HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
       titles.setLength(0);
@@ -905,7 +905,7 @@ public class MediaWikiAPI implements API {
     }
     HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("redirects", "");
-    StringBuffer titles = new StringBuffer();
+    StringBuilder titles = new StringBuilder();
     for (int i = 0; i < pages.size();) {
       titles.setLength(0);
       for (int j = 0; (j < MAX_PAGES_PER_QUERY) && (i < pages.size()); i++, j++) {
@@ -958,7 +958,7 @@ public class MediaWikiAPI implements API {
         }
       }
     }
-    StringBuffer titles = new StringBuffer();
+    StringBuilder titles = new StringBuilder();
     for (int i = 0; i < tmpPages.size();) {
       titles.setLength(0);
       for (int j = 0; (j < MAX_PAGES_PER_QUERY) && (i < tmpPages.size()); i++, j++) {
@@ -1632,7 +1632,7 @@ public class MediaWikiAPI implements API {
       try {
         try {
           String url = wikipedia.getApiURL();
-          StringBuffer debugUrl = (DEBUG_URL) ? new StringBuffer(url) : null;
+          StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder(url) : null;
           method = new PostMethod(url);
           method.getParams().setContentCharset("UTF-8");
           method.setRequestHeader("Accept-Encoding", "gzip");
@@ -1644,7 +1644,7 @@ public class MediaWikiAPI implements API {
               String key = property.getKey();
               String value = property.getValue();
               method.addParameter(key, value);
-              if (debugUrl != null) {
+              if (DEBUG_URL) {
                 int start = 0;
                 while ((start < value.length()) && Character.isWhitespace(value.charAt(start))) {
                   start++;
@@ -1659,7 +1659,7 @@ public class MediaWikiAPI implements API {
                 first = false;
               }
             }
-            if (debugUrl != null) {
+            if (DEBUG_URL) {
               if (DEBUG_TIME) {
                 System.out.println("" + System.currentTimeMillis() + ": " + debugUrl.toString());
               } else {
