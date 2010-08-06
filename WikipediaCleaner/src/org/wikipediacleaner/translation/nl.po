@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-02 22:11+0200\n"
-"PO-Revision-Date: 2010-07-10 12:08+0000\n"
+"POT-Creation-Date: 2010-07-31 22:56+0200\n"
+"PO-Revision-Date: 2010-08-06 09:42+0000\n"
 "Last-Translator: Donkade <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-07-10 13:00+0000\n"
+"X-Launchpad-Export-Date: 2010-08-06 16:42+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:38
@@ -92,7 +92,7 @@ msgstr "Verwijder"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089.java:39
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:39
 msgid "Fix DEFAULTSORT"
-msgstr ""
+msgstr "Repareer DEFAULTSORT"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:136
 #, java-format
@@ -112,7 +112,7 @@ msgstr "Vervang alle controle karakters"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm018.java:39
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm022.java:39
 msgid "Fix categories"
-msgstr ""
+msgstr "Repareer categorieën"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:117
 msgid "Check category"
@@ -127,9 +127,8 @@ msgid "Remove all links to title"
 msgstr "Verplaats alle links naar de titel"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:38
-#, fuzzy
 msgid "Remove breaks in list"
-msgstr "Verplaats alle links naar de titel"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
@@ -143,36 +142,35 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:100
 msgid "Add a description..."
-msgstr ""
+msgstr "Voer een bescrijving toe..."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:103
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:113
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:112
 msgid "What description would like to use for the external link ?"
-msgstr ""
+msgstr "Welke beschrijving wilt u aan deze externe link toevoegen?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:108
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:107
 msgid "Convert into <ref> tag"
-msgstr ""
+msgstr "Converteer naar de <ref> tag"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:110
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:109
 msgid "Add a description and convert into <ref> tag"
-msgstr ""
+msgstr "Voeg een beschrijving toe en converteer daarna naar de <ref> tag"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:118
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:111
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:116
 msgid "External viewer"
-msgstr ""
+msgstr "Externe kijker"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:101
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:84
 msgid "Give a name to the <ref> tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:106
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:89
 msgid "What name would like to use for the <ref> tag ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:110
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:122
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:92
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:103
 msgid "Existing references"
 msgstr "Bestaande refenties"
 
@@ -344,7 +342,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Op enkele Wikipedia-projecten moet u misschien de bot-status gebruiken om "
 "dit te doen."
@@ -388,7 +387,8 @@ msgstr "uitzonderen"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:281
 msgid "Comma separated list of errors to ignore."
-msgstr "Lijst van fouten die genegeerd moeten worden, gescheiden door komma's."
+msgstr ""
+"Lijst van fouten die genegeerd moeten worden, gescheiden door komma's."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:297
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:345
@@ -1093,9 +1093,8 @@ msgid "&History"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:662
-#, fuzzy
 msgid "Add to Watch list (Alt + &W)"
-msgstr "Voeg aan &Kijk lijst toe"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:693
 msgid "Automatic comment"
@@ -1319,19 +1318,19 @@ msgstr ""
 msgid "An unknown error occured"
 msgstr "Er is een onbekende fout opgetreden"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:229
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:210
 msgid "Yes"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:230
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:211
 msgid "Yes to all"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:231
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:212
 msgid "No"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:232
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:213
 msgid "No to all"
 msgstr ""
 
@@ -1413,9 +1412,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:793
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:804
-#, fuzzy
 msgid "Link text"
-msgstr "Teks samenpersen"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:829
 msgid "Analyze"
