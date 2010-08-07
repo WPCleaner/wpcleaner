@@ -1326,9 +1326,8 @@ public class CheckWikiProjectWindow extends PageWindow {
       }
     }
     errors = new ArrayList<CheckError>();
-    checkWikiConfig = new Properties();
     CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
-        getWikipedia(), this, errors, checkWikiConfig, onlyErrorsList, exceptErrorsList,
+        getWikipedia(), this, errors, onlyErrorsList, exceptErrorsList,
         true, modelMaxErrors.getNumber().intValue());
     setupReloadWorker(reloadWorker);
     reloadWorker.start();
@@ -1344,7 +1343,7 @@ public class CheckWikiProjectWindow extends PageWindow {
       ArrayList<Integer> errorsNumber = new ArrayList<Integer>(1);
       errorsNumber.add(Integer.valueOf(error.getErrorNumber()));
       CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
-          getWikipedia(), this, errors, checkWikiConfig, errorsNumber,
+          getWikipedia(), this, errors, errorsNumber,
           null, false, modelMaxErrors.getNumber().intValue());
       setupReloadWorker(reloadWorker);
       reloadWorker.start();
