@@ -88,7 +88,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                     httpIndex = text.indexOf("https://");
                   }
                   if (httpIndex >= 0) {
-                    int spaceIndex = text.indexOf(' ');
+                    int spaceIndex = text.indexOf(' ', httpIndex);
                     if (spaceIndex < 0) {
                       url = text.substring(httpIndex);
                     } else {
