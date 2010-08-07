@@ -255,7 +255,7 @@ public class MainWindow
     constraints.weighty = 0;
 
     // Wikipedia
-    comboWikipedia = new JComboBox(EnumWikipedia.getVector());
+    comboWikipedia = new JComboBox(EnumWikipedia.getList().toArray());
     comboWikipedia.setEditable(false);
     comboWikipedia.setSelectedItem(configuration.getWikipedia());
     JLabel labelWikipedia = Utilities.createJLabel(GT._("&Wikipedia"));
@@ -281,7 +281,7 @@ public class MainWindow
     constraints.gridy++;
 
     // Language
-    comboLanguage = new JComboBox(EnumLanguage.getVector());
+    comboLanguage = new JComboBox(EnumLanguage.getList().toArray());
     comboLanguage.setEditable(false);
     comboLanguage.setSelectedItem(configuration.getLanguage());
     comboLanguage.addItemListener(this);

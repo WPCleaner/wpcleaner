@@ -18,9 +18,10 @@
 
 package org.wikipediacleaner.api.constants;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Vector;
 
 import org.wikipediacleaner.i18n.Messages;
 
@@ -84,12 +85,12 @@ public enum EnumLanguage {
   /**
    * @return Vector of all languages.
    */
-  public static Vector<EnumLanguage> getVector() {
-    Vector<EnumLanguage> vector = new Vector<EnumLanguage>(EnumLanguage.values().length);
+  public static List<EnumLanguage> getList() {
+    List<EnumLanguage> list = new ArrayList<EnumLanguage>(EnumLanguage.values().length);
     for (EnumLanguage e : EnumLanguage.values()) {
-      vector.add(e);
+      list.add(e);
     }
-    return vector;
+    return list;
   }
 
   /**
