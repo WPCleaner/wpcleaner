@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
-import java.util.Vector;
 
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.base.API;
@@ -356,12 +355,12 @@ public enum EnumWikipedia {
   /**
    * @return Vector of all Wikipedia.
    */
-  public static Vector<EnumWikipedia> getVector() {
-    Vector<EnumWikipedia> vector = new Vector<EnumWikipedia>(EnumWikipedia.values().length);
+  public static List<EnumWikipedia> getList() {
+    List<EnumWikipedia> list = new ArrayList<EnumWikipedia>(EnumWikipedia.values().length);
     for (EnumWikipedia e : EnumWikipedia.values()) {
-      vector.add(e);
+      list.add(e);
     }
-    return vector;
+    return list;
   }
 
   /**
