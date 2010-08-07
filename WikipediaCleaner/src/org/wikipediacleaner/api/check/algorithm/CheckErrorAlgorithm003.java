@@ -69,15 +69,21 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
           referencesFound = true;
         }
       }
-      // Search for {{Références}}
-      String[] referencesTemplates = {
-        "Références", "References", "Notes", "Reflist"  
-      }; // TODO: Use error_003_references_templates
-      for (String referencesTemplate : referencesTemplates) {
-        if (!referencesFound) {
-          TemplateBlock template = findNextTemplate(page, contents, referencesTemplate, 0);
-          if (template != null) {
-            referencesFound = true;
+
+      // Search for templates like {{Références}}
+      String templates = page.getWikipedia().getCheckWikiProperty(
+          "references_templates", 3, true, true, false);
+      String[] referencesTemplates = null;
+      if (templates != null) {
+        referencesTemplates = page.getWikipedia().convertPropertyToStringArray(templates);
+      }
+      if (referencesTemplates != null) {
+        for (String referencesTemplate : referencesTemplates) {
+          if (!referencesFound) {
+            TemplateBlock template = findNextTemplate(page, contents, referencesTemplate, 0);
+            if (template != null) {
+              referencesFound = true;
+            }
           }
         }
       }
