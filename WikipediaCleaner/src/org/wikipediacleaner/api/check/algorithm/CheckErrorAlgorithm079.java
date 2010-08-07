@@ -89,7 +89,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
                 TagData nextEndRef = findNextEndTag(page, contents, "ref", endIndex);
                 if (nextEndRef != null) {
                   TagData nextStartRef = findNextStartTag(page, contents, "ref", startIndex);
-                  if ((nextStartRef == null) || (nextEndRef.getStartIndex() > nextStartRef.getStartIndex())) {
+                  if ((nextStartRef == null) || (nextEndRef.getStartIndex() < nextStartRef.getStartIndex())) {
                     isInRef = true;
                   }
                 }
