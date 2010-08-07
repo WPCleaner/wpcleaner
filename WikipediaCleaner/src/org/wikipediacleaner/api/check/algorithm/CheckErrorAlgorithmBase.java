@@ -298,6 +298,35 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * 
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
+   * @param currentIndex The last index.
+   * @return Tag found.
+   */
+  protected TemplateBlock findNextTemplate(
+      Page page, String contents,
+      int currentIndex) {
+    if (contents == null) {
+      return null;
+    }
+    while ((currentIndex < contents.length())) {
+      int tmpIndex = contents.indexOf("{{", currentIndex);
+      if (tmpIndex < 0) {
+        currentIndex = contents.length();
+      } else {
+        TemplateBlock template = TemplateBlock.analyzeBlock(null, contents, tmpIndex);
+        if (template != null) {
+          return template;
+        }
+        currentIndex = tmpIndex + 1;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Find the first template after an index in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
    * @param templateName Template to be found.
    * @param currentIndex The last index.
    * @return Tag found.

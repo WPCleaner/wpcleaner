@@ -18,14 +18,107 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
+
+import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.TemplateBlock;
+import org.wikipediacleaner.i18n.GT;
+
 
 /**
  * Algorithm for analyzing error 59 of check wikipedia project.
  * Error 59: Template value end with break
  */
-public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmUnavailable {
+public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm059() {
     super("Template value end with break");
+  }
+
+  /* (non-Javadoc)
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#isFullDetection()
+   */
+  @Override
+  public boolean isFullDetection() {
+    return false;
+  }
+
+  /**
+   * Analyze a page to check if errors are present.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyze(Page page, String contents, ArrayList<CheckErrorResult> errors) {
+    if ((page == null) || (contents == null)) {
+      return false;
+    }
+
+    // Analyzing from the begining
+    boolean errorFound = false;
+    int startIndex = 0;
+    while (startIndex < contents.length()) {
+      TemplateBlock template = findNextTemplate(page, contents, startIndex);
+      if (template == null) {
+        startIndex = contents.length();
+      } else {
+        for (int i = 0; i < template.getParameterCount(); i++) {
+          String parameterValue = template.getParameterValue(i);
+          if (parameterValue != null) {
+            boolean ok = true;
+            int tmpIndex = parameterValue.length() - 1;
+            while ((tmpIndex >= 0) && (parameterValue.charAt(tmpIndex) == ' ')) {
+              tmpIndex--;
+            }
+            int endIndex = tmpIndex;
+            if ((tmpIndex >= 0) && (parameterValue.charAt(tmpIndex) == '>')) {
+              tmpIndex--;
+            } else {
+              ok = false;
+            }
+            if ((tmpIndex >= 0) && (parameterValue.charAt(tmpIndex) == '/')) {
+              tmpIndex--;
+            } else {
+              ok = false;
+            }
+            while ((tmpIndex >= 0) && (parameterValue.charAt(tmpIndex) == ' ')) {
+              tmpIndex--;
+            }
+            if ((tmpIndex >= 1) && (parameterValue.startsWith("br", tmpIndex - 1))) {
+              tmpIndex -= 2;
+            } else {
+              ok = false;
+            }
+            while ((tmpIndex >= 0) && (parameterValue.charAt(tmpIndex) == ' ')) {
+              tmpIndex--;
+            }
+            if ((tmpIndex >= 0) && (parameterValue.charAt(tmpIndex) == '<')) {
+              tmpIndex--;
+            } else {
+              ok = false;
+            }
+            if (ok) {
+              if (errors == null) {
+                return true;
+              }
+              errorFound = true;
+              CheckErrorResult errorResult = new CheckErrorResult(
+                  getShortDescription(),
+                  template.getParameterValueOffset(i) + tmpIndex + 1,
+                  template.getParameterValueOffset(i) + endIndex + 1);
+              errorResult.addReplacement("", GT._("Delete"));
+              errors.add(errorResult);
+            }
+          }
+        }
+        startIndex = template.getBeginIndex() + 1;
+      }
+    }
+
+    // Result
+    return errorFound;
   }
 }
