@@ -94,6 +94,7 @@ public class Configuration implements WindowListener {
   public  final static String  BOOLEAN_CLOSE_DISAMBIG          = "CloseDisambiguation";
   public  final static String  BOOLEAN_CLOSE_FULL              = "CloseFullAnalysis";
   public  final static String  BOOLEAN_FORCE_WATCH             = "ForceWatch";
+  public  final static String  BOOLEAN_REMEMBER_LAST_PAGE      = "RememberLastPage";
   public  final static String  BOOLEAN_RESTORE_WINDOW          = "RestoreWindow";
   public  final static String  BOOLEAN_SAVE_LAST_REPLACEMENT   = "SaveLastReplacement";
   public  final static String  BOOLEAN_SAVE_WINDOW             = "SaveWindow";
@@ -116,6 +117,7 @@ public class Configuration implements WindowListener {
   public  final static boolean DEFAULT_CLOSE_DISAMBIG          = false;
   public  final static boolean DEFAULT_CLOSE_FULL              = true;
   public  final static boolean DEFAULT_FORCE_WATCH             = false;
+  public  final static boolean DEFAULT_REMEMBER_LAST_PAGE      = true;
   public  final static boolean DEFAULT_RESTORE_WINDOW          = true;
   public  final static boolean DEFAULT_SAVE_LAST_REPLACEMENT   = false;
   public  final static boolean DEFAULT_SAVE_WINDOW             = true;

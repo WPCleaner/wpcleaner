@@ -108,6 +108,7 @@ public class OptionsWindow
   private JCheckBox chkAnalysisOther;
   private JCheckBox chkAnalysisRedirect;
   private JCheckBox chkSaveLastReplacement;
+  private JCheckBox chkRememberLastPage;
   private JCheckBox chkCloseFull;
   private JCheckBox chkForceWatch;
   private JSpinner spinAnalysisNbPages;
@@ -529,6 +530,15 @@ public class OptionsWindow
     panel.add(chkSaveLastReplacement, constraints);
     constraints.gridy++;
 
+    // Remember last page
+    chkRememberLastPage = Utilities.createJCheckBox(
+        GT._("Remember last edited page"),
+        configuration.getBoolean(
+            Configuration.BOOLEAN_REMEMBER_LAST_PAGE,
+            Configuration.DEFAULT_REMEMBER_LAST_PAGE));
+    panel.add(chkRememberLastPage, constraints);
+    constraints.gridy++;
+
     // Nb pages selected
     modelAnalysisNbPages = new SpinnerNumberModel(
         configuration.getInt(Configuration.INTEGER_ANALYSIS_NB_PAGES, Configuration.DEFAULT_ANALYSIS_NB_PAGES),
@@ -817,6 +827,7 @@ public class OptionsWindow
     config.setBoolean(Configuration.BOOLEAN_CLOSE_DISAMBIG, chkCloseDisambig.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CLOSE_FULL, chkCloseFull.isSelected());
     config.setBoolean(Configuration.BOOLEAN_FORCE_WATCH, chkForceWatch.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_REMEMBER_LAST_PAGE, chkRememberLastPage.isSelected());
     config.setBoolean(Configuration.BOOLEAN_RESTORE_WINDOW, chkRestoreWindowPosition.isSelected());
     config.setBoolean(Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT, chkSaveLastReplacement.isSelected());
     config.setBoolean(Configuration.BOOLEAN_SAVE_WINDOW, chkSaveWindowPosition.isSelected());
@@ -896,6 +907,9 @@ public class OptionsWindow
     chkForceWatch.setSelected(config.getBoolean(
         Configuration.BOOLEAN_FORCE_WATCH,
         Configuration.DEFAULT_FORCE_WATCH));
+    chkRememberLastPage.setSelected(config.getBoolean(
+        Configuration.BOOLEAN_REMEMBER_LAST_PAGE,
+        Configuration.DEFAULT_REMEMBER_LAST_PAGE));
     chkRestoreWindowPosition.setSelected(config.getBoolean(
         Configuration.BOOLEAN_RESTORE_WINDOW,
         Configuration.DEFAULT_RESTORE_WINDOW));
