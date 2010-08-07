@@ -22,6 +22,7 @@ import java.awt.ComponentOrientation;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -256,6 +257,8 @@ public enum EnumWikipedia {
   private List<Language>  languages;
   private List<Interwiki> interwikis;
   private HashMap<String, MagicWord> magicWords;
+  private Properties      checkWikiGeneralConfig;
+  private Properties      checkWikiConfig;
 
   /**
    * @param code Code.
@@ -749,6 +752,45 @@ public enum EnumWikipedia {
         checkWikiTranslation = tmp.trim();
       }
     }
+  }
+
+  /**
+   * @param configuration Check Wiki configuration (general).
+   */
+  public void setCheckWikiGeneralConfiguration(Properties configuration) {
+    this.checkWikiGeneralConfig = configuration;
+  }
+
+  private final DecimalFormat errorNumberFormat = new DecimalFormat("000");
+
+  public String getCheckWikiProperty(
+      String propertyName, int errorNumber,
+      boolean useWiki, boolean useGeneral, boolean acceptEmpty) {
+    String errorPrefix;
+    synchronized (errorNumberFormat) {
+      errorPrefix = "error_" + errorNumberFormat.format(errorNumber) + "_" + propertyName + "_";
+    }
+    String result = null;
+    if ((useWiki) && (checkWikiConfig != null)) {
+      result = checkWikiConfig.getProperty(errorPrefix + code + "wiki", null);
+    }
+    if ((result != null) && ((acceptEmpty) || (!result.trim().isEmpty()))) {
+      return result.trim();
+    }
+    if ((useGeneral) && (checkWikiGeneralConfig != null)) {
+      result = checkWikiGeneralConfig.getProperty(errorPrefix + "script", null);
+    }
+    if (result != null) {
+      return result.trim();
+    }
+    return null;
+  }
+
+  /**
+   * @param configuration Check Wiki configuration for this Wiki.
+   */
+  public void setCheckWikiConfiguration(Properties configuration) {
+    this.checkWikiConfig = configuration;
   }
 
   /**

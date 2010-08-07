@@ -25,7 +25,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Properties;
 import java.util.regex.Pattern;
 
 import org.apache.commons.httpclient.NameValuePair;
@@ -103,35 +102,32 @@ public class CheckError {
   /**
    * Retrieve error priority from configuration.
    * 
-   * @param config Check Wiki configuration.
    * @param errorNumber Error number.
    * @return Priority.
    */
   public static int getErrorPriority(
-      Properties config, EnumWikipedia wikipedia, int errorNumber) {
-    String code = wikipedia.getCode();
-    String txtErrorNumber = Integer.toString(errorNumber);
-    while (txtErrorNumber.length() < 3) {
-      txtErrorNumber = "0" + txtErrorNumber;
-    }
-    String errorPrefix = "error_" + txtErrorNumber + "_";
-    String prioWiki   = config.getProperty(errorPrefix + "prio_" + code + "wiki");
+      EnumWikipedia wikipedia, int errorNumber) {
     int errorPriority = PRIORITY_UNKOWN;
-    try {
-      errorPriority = Integer.parseInt(prioWiki);
-    } catch (NumberFormatException e) {
-      //
-    }
-    if (errorPriority == PRIORITY_UNKOWN) {
-      String prioScript = config.getProperty(errorPrefix + "prio_script");
+    String prioWiki = wikipedia.getCheckWikiProperty("prio", errorNumber, true, false, false);
+    if (prioWiki != null) {
       try {
-        errorPriority = Integer.parseInt(prioScript);
+        errorPriority = Integer.parseInt(prioWiki);
       } catch (NumberFormatException e) {
         //
       }
     }
+    if (errorPriority == PRIORITY_UNKOWN) {
+      String prioScript = wikipedia.getCheckWikiProperty("prio", errorNumber, false, true, false);
+      if (prioScript != null) {
+        try {
+          errorPriority = Integer.parseInt(prioScript);
+        } catch (NumberFormatException e) {
+          //
+        }
+      }
+    }
     if (errorPriority == PRIORITY_DEACTIVATED) {
-      String botOnly = config.getProperty(errorPrefix + "bot_" + code + "wiki");
+      String botOnly = wikipedia.getCheckWikiProperty("bot", errorNumber, true, true, false);
       if ((botOnly != null) && Boolean.valueOf(botOnly.trim())) {
         errorPriority = PRIORITY_BOT_ONLY;
       }
@@ -203,45 +199,23 @@ public class CheckError {
   /**
    * Retrieve error short description from configuration.
    * 
-   * @param config Check Wiki configuration.
    * @param errorNumber Error number.
    * @return Short description.
    */
   public static String getErrorShortDescription(
-      Properties config, EnumWikipedia wikipedia, int errorNumber) {
-    String code = wikipedia.getCode();
-    String txtErrorNumber = Integer.toString(errorNumber);
-    while (txtErrorNumber.length() < 3) {
-      txtErrorNumber = "0" + txtErrorNumber;
-    }
-    String errorPrefix = "error_" + txtErrorNumber + "_";
-    String headWiki = config.getProperty(errorPrefix + "head_" + code + "wiki");
-    if ((headWiki != null) && (headWiki.length() > 0)) {
-      return headWiki;
-    }
-    return config.getProperty(errorPrefix + "head_script");
+      EnumWikipedia wikipedia, int errorNumber) {
+    return wikipedia.getCheckWikiProperty("head", errorNumber, true, true, false);
   }
 
   /**
    * Retrieve error long description from configuration.
    * 
-   * @param config Check Wiki configuration.
    * @param errorNumber Error number.
    * @return Long description.
    */
   public static String getErrorLongDescription(
-      Properties config, EnumWikipedia wikipedia, int errorNumber) {
-    String code = wikipedia.getCode();
-    String txtErrorNumber = Integer.toString(errorNumber);
-    while (txtErrorNumber.length() < 3) {
-      txtErrorNumber = "0" + txtErrorNumber;
-    }
-    String errorPrefix = "error_" + txtErrorNumber + "_";
-    String headWiki = config.getProperty(errorPrefix + "desc_" + code + "wiki");
-    if ((headWiki != null) && (headWiki.length() > 0)) {
-      return headWiki;
-    }
-    return config.getProperty(errorPrefix + "desc_script");
+      EnumWikipedia wikipedia, int errorNumber) {
+    return wikipedia.getCheckWikiProperty("desc", errorNumber, true, true, false);
   }
 
   /**
@@ -252,40 +226,28 @@ public class CheckError {
    * @return Link to error description.
    */
   public static String getErrorLink(
-      Properties config, EnumWikipedia wikipedia, int errorNumber) {
-    String code = wikipedia.getCode();
-    String txtErrorNumber = Integer.toString(errorNumber);
-    while (txtErrorNumber.length() < 3) {
-      txtErrorNumber = "0" + txtErrorNumber;
-    }
-    String errorPrefix = "error_" + txtErrorNumber + "_";
-    String linkWiki = config.getProperty(errorPrefix + "link_" + code + "wiki");
-    if ((linkWiki != null) && (linkWiki.trim().length() > 0)) {
-      return linkWiki.trim();
-    }
-    return null;
+      EnumWikipedia wikipedia, int errorNumber) {
+    return wikipedia.getCheckWikiProperty("link", errorNumber, true, true, false);
   }
 
   /**
-   * @param config Check Wiki configuration.
    * @param errors Errors list.
    * @param wikipedia Wikipedia.
    * @param errorNumber Error number.
    * @param stream Stream containing list of pages for the error number.
    */
   public static void addCheckError(
-      Properties config,
       ArrayList<CheckError> errors,
       EnumWikipedia wikipedia, int errorNumber, InputStream stream) {
 
     // Analyze properties to find infos about error number
-    int priority = getErrorPriority(config, wikipedia, errorNumber);
+    int priority = getErrorPriority(wikipedia, errorNumber);
     if (!isPriorityActive(priority)) {
       return;
     }
-    String shortDescription = getErrorShortDescription(config, wikipedia, errorNumber);
-    String longDescription = getErrorLongDescription(config, wikipedia, errorNumber);
-    String link = getErrorLink(config, wikipedia, errorNumber);
+    String shortDescription = getErrorShortDescription(wikipedia, errorNumber);
+    String longDescription = getErrorLongDescription(wikipedia, errorNumber);
+    String link = getErrorLink(wikipedia, errorNumber);
 
     // Create error
     CheckError error = new CheckError(
