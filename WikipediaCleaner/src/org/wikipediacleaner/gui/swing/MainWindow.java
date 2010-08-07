@@ -448,7 +448,13 @@ public class MainWindow
     constraints.weighty = 0;
 
     // Page name
-    textPagename = new JTextField(configuration.getString(Configuration.STRING_PAGE_NAME), 20);
+    String lastPage = "";
+    if (configuration.getBoolean(
+        Configuration.BOOLEAN_REMEMBER_LAST_PAGE,
+        Configuration.DEFAULT_REMEMBER_LAST_PAGE)) {
+      lastPage = configuration.getString(Configuration.STRING_PAGE_NAME);
+    }
+    textPagename = new JTextField(lastPage, 20);
     panel.add(textPagename, constraints);
     constraints.gridy++;
 
