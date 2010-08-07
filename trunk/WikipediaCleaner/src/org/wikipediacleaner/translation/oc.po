@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-02 22:11+0200\n"
+"POT-Creation-Date: 2010-08-07 14:21+0200\n"
 "PO-Revision-Date: 2009-08-01 22:01+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
@@ -79,6 +79,7 @@ msgid "Replace with {0}"
 msgstr "Remplaçar amb"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:112
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:626
 msgid "Delete"
 msgstr "Suprimir"

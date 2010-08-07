@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.api.data;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +29,33 @@ import java.util.List;
 public class TemplateBlock {
   private final String templateName;
   private final int beginIndex;
-  private final List<String> parameterNames;
-  private final List<String> parameterValues;
+  private final List<Parameter> parameters;
   private final int endIndex;
+
+  private static class Parameter {
+    final String name;
+    final int nameStartIndex;
+    final String value;
+    final int valueStartIndex;
+
+    public Parameter(String name, int nameStartIndex, String value, int valueStartIndex) {
+      this.name = name;
+      this.nameStartIndex = nameStartIndex;
+      this.value = value;
+      this.valueStartIndex = valueStartIndex;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+      if ((name != null) && (!name.isEmpty())) {
+        return name + "=" + value;
+      }
+      return value;
+    }
+  }
 
   /**
    * Analyze contents to check if it matches a block for the given template name.
@@ -42,11 +67,19 @@ public class TemplateBlock {
    */
   public static TemplateBlock analyzeBlock(String templateName, String contents, int index) {
     // Verify arguments
-    if ((templateName == null) || (templateName.isEmpty()) || (contents == null)) {
+    if (contents == null) {
       return null;
     }
-    String templateName1 = Character.toLowerCase(templateName.charAt(0)) + templateName.substring(1);
-    String templateName2 = Character.toUpperCase(templateName.charAt(0)) + templateName.substring(1);
+    templateName = ((templateName != null) && (!templateName.trim().isEmpty())) ? templateName.trim() : "";
+    String templateName1 = templateName;
+    String templateName2 = templateName;
+    if (templateName.length() > 1) {
+      templateName1 = Character.toLowerCase(templateName.charAt(0)) + templateName.substring(1);
+      templateName2 = Character.toUpperCase(templateName.charAt(0)) + templateName.substring(1);
+    } else if (templateName.length() > 0) {
+      templateName1 = templateName.toLowerCase();
+      templateName2 = templateName.toUpperCase();
+    }
 
     // Look for '{{'
     int beginIndex = index;
@@ -67,11 +100,24 @@ public class TemplateBlock {
     if (tmpIndex >= contents.length()) {
       return null;
     }
-    if ((!contents.startsWith(templateName1, tmpIndex)) &&
-        (!contents.startsWith(templateName2, tmpIndex))) {
-      return null;
+    if (templateName.length() > 0) {
+      if ((!contents.startsWith(templateName1, tmpIndex)) &&
+          (!contents.startsWith(templateName2, tmpIndex))) {
+        return null;
+      }
+      tmpIndex += templateName.length();
+    } else {
+      int pipeIndex = contents.indexOf('|', tmpIndex);
+      int endIndex = contents.indexOf("}}", tmpIndex);
+      if ((pipeIndex < 0) && (endIndex < 0)) {
+        return null;
+      }
+      int endNameindex = Math.min(
+          (pipeIndex < 0) ? contents.length() : pipeIndex,
+          (endIndex < 0) ? contents.length() : endIndex);
+      templateName = contents.substring(tmpIndex, endNameindex).trim();
+      tmpIndex = endNameindex;
     }
-    tmpIndex += templateName.length();
     if (tmpIndex >= contents.length()) {
       return null;
     }
@@ -87,20 +133,31 @@ public class TemplateBlock {
     // Check if parameters are present
     if (contents.charAt(tmpIndex) == '|') {
       tmpIndex++;
-      int endIndex = contents.indexOf("}}", tmpIndex);
-      if (endIndex < 0) {
+      int depth = 1;
+      int endIndex = tmpIndex;
+      while ((depth > 0) && (tmpIndex < contents.length())) {
+        if (contents.startsWith("{{", endIndex)) {
+          endIndex += 2;
+          depth++;
+        } else if (contents.startsWith("}}", endIndex)) {
+          endIndex += 2;
+          depth--;
+        } else {
+          endIndex++;
+        }
+      }
+      if (depth > 0) {
         return null;
       }
-      List<String> parameterNames = new ArrayList<String>();
-      List<String> parameterValues = new ArrayList<String>();
+      List<Parameter> parameters = new ArrayList<Parameter>();
       if (!analyzeTemplateParameters(
-          contents.substring(tmpIndex, endIndex),
-          parameterNames, parameterValues)) {
+          contents.substring(tmpIndex, endIndex - 2), tmpIndex,
+          parameters)) {
         return null;
       }
-      return new TemplateBlock(templateName, beginIndex, endIndex + 2, parameterNames, parameterValues);
+      return new TemplateBlock(templateName, beginIndex, endIndex, parameters);
     } else if (contents.startsWith("}}", tmpIndex)) {
-      return new TemplateBlock(templateName, beginIndex, tmpIndex + 2, null, null);
+      return new TemplateBlock(templateName, beginIndex, tmpIndex + 2, null);
     }
     return null;
   }
@@ -108,31 +165,124 @@ public class TemplateBlock {
   /**
    * Analyze the parameters of template.
    * 
-   * @param parameters String containing the parameters.
-   * @param parameterNames Parameter names.
-   * @param parameterValues Parameter values.
+   * @param strParameters String containing the parameters.
+   * @param offset Position of the String.
+   * @param parameters Parameters.
    * @return Flag indicating if the analyze is correct.
    */
   private static boolean analyzeTemplateParameters(
-      String parameters,
-      List<String> parameterNames, List<String> parameterValues) {
-    if ((parameters == null) || (parameters.trim().isEmpty())) {
+      String strParameters, int offset,
+      List<Parameter> parameters) {
+    if ((strParameters == null) || (strParameters.trim().isEmpty())) {
       return true;
     }
-    parameters = parameters.trim();
-    String[] params = parameters.split("|");
-    for (int i = 0; i < params.length; i++) {
-      String param = params[i].trim();
-      int pipeIndex = param.indexOf('=');
-      if (pipeIndex < 0) {
-        parameterNames.add("");
-        parameterValues.add(param);
+    int beginIndex = 0;
+    int tmpIndex = 0;
+    int depthCurlyBrackets = 0;
+    int depthSquareBrackets = 0;
+    while (tmpIndex < strParameters.length()) {
+      if (strParameters.startsWith("{{", tmpIndex)) {
+        tmpIndex += 2;
+        depthCurlyBrackets++;
+      } else if (strParameters.startsWith("}}", tmpIndex)) {
+        tmpIndex += 2;
+        depthCurlyBrackets--;
+      } else if (strParameters.startsWith("[[", tmpIndex)) {
+        tmpIndex += 2;
+        depthSquareBrackets++;
+      } else if (strParameters.startsWith("]]", tmpIndex)) {
+        tmpIndex += 2;
+        depthSquareBrackets--;
       } else {
-        parameterNames.add(param.substring(0, pipeIndex));
-        parameterValues.add(param.substring(pipeIndex + 1));
+        if ((depthCurlyBrackets == 0) &&
+            (depthSquareBrackets == 0) &&
+            (strParameters.charAt(tmpIndex) == '|')) {
+          addParameter(parameters, strParameters.substring(beginIndex, tmpIndex), offset + beginIndex);
+          tmpIndex++;
+          beginIndex = tmpIndex;
+        } else {
+          tmpIndex++;
+        }
       }
     }
+    addParameter(parameters, strParameters.substring(beginIndex), offset + beginIndex);
     return true;
+  }
+
+  private static void addParameter(
+      List<Parameter> parameters, String parameter, int offset) {
+    int equalIndex = parameter.indexOf('=');
+    if (equalIndex < 0) {
+      int spaces = 0;
+      while ((spaces < parameter.length()) && (parameter.charAt(spaces) == ' ')) {
+        spaces++;
+      }
+      parameters.add(new Parameter(
+          "", offset + spaces, parameter.trim(), offset + spaces));
+    } else {
+      int spacesName = 0;
+      while ((spacesName < equalIndex) && (parameter.charAt(spacesName) == ' ')) {
+        spacesName++;
+      }
+      int spacesValue = equalIndex + 1;
+      while ((spacesValue < parameter.length()) && (parameter.charAt(spacesValue) == ' ')) {
+        spacesValue++;
+      }
+      parameters.add(new Parameter(
+          parameter.substring(0, equalIndex).trim(), offset + spacesName,
+          parameter.substring(spacesValue).trim(), offset + spacesValue));
+    }
+  }
+
+  /**
+   * Get parameter count.
+   * 
+   * @return Parameter count.
+   */
+  public int getParameterCount() {
+    if (parameters == null) {
+      return 0;
+    }
+    return parameters.size();
+  }
+
+  /**
+   * Retrieve parameter name offset.
+   * 
+   * @param index Parameter index.
+   * @return Parameter name offset.
+   */
+  public int getParameterNameOffset(int index) {
+    if ((index >= 0) && (index < parameters.size())) {
+      return parameters.get(index).nameStartIndex;
+    }
+    return 0;
+  }
+
+  /**
+   * Retrieve parameter value.
+   * 
+   * @param index Parameter index.
+   * @return Parameter value.
+   */
+  public String getParameterValue(int index) {
+    if ((index >= 0) && (index < parameters.size())) {
+      return parameters.get(index).value;
+    }
+    return null;
+  }
+
+  /**
+   * Retrieve parameter value offset.
+   * 
+   * @param index Parameter index.
+   * @return Parameter value offset.
+   */
+  public int getParameterValueOffset(int index) {
+    if ((index >= 0) && (index < parameters.size())) {
+      return parameters.get(index).valueStartIndex;
+    }
+    return 0;
   }
 
   /**
@@ -141,11 +291,11 @@ public class TemplateBlock {
    * @param name Parameter name.
    * @return Parameter value.
    */
-  public String getParameter(String name) {
+  public String getParameterValue(String name) {
     int index = 0;
-    while ((index < parameterNames.size()) && (index < parameterValues.size())) {
-      if (name.endsWith(parameterNames.get(index))) {
-        return parameterValues.get(index);
+    while (index < parameters.size()) {
+      if (name.equals(parameters.get(index).name)) {
+        return parameters.get(index).value;
       }
     }
     return null;
@@ -162,12 +312,11 @@ public class TemplateBlock {
   private TemplateBlock(
       String templateName,
       int beginIndex, int endIndex,
-      List<String> parameterNames, List<String> parameterValues) {
+      List<Parameter> parameters) {
     this.templateName = templateName;
     this.beginIndex = beginIndex;
     this.endIndex = endIndex;
-    this.parameterNames = parameterNames;
-    this.parameterValues = parameterValues;
+    this.parameters = parameters;
   }
 
   public String getPartBeforeParameters() {
@@ -180,14 +329,14 @@ public class TemplateBlock {
   public String getPartFromParameters() {
     StringBuilder sb = new StringBuilder();
     int index = 0;
-    while ((index < parameterNames.size()) && (index < parameterValues.size())) {
+    while (index < parameters.size()) {
       sb.append('|');
-      String parameterName = parameterNames.get(index);
+      String parameterName = parameters.get(index).name;
       if ((parameterName != null) && (!parameterName.trim().isEmpty())) {
-        sb.append(parameterNames.get(index));
+        sb.append(parameters.get(index).name);
         sb.append('=');
       }
-      sb.append(parameterValues.get(index));
+      sb.append(parameters.get(index).value);
     }
     sb.append("}}");
     return sb.toString();
