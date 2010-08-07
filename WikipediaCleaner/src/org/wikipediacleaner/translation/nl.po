@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-31 22:56+0200\n"
+"POT-Creation-Date: 2010-08-02 22:11+0200\n"
 "PO-Revision-Date: 2010-08-06 09:42+0000\n"
 "Last-Translator: Donkade <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -145,32 +145,33 @@ msgid "Add a description..."
 msgstr "Voer een bescrijving toe..."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:103
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:112
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:113
 msgid "What description would like to use for the external link ?"
 msgstr "Welke beschrijving wilt u aan deze externe link toevoegen?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:108
 msgid "Convert into <ref> tag"
 msgstr "Converteer naar de <ref> tag"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:109
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:110
 msgid "Add a description and convert into <ref> tag"
 msgstr "Voeg een beschrijving toe en converteer daarna naar de <ref> tag"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:116
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:118
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:111
 msgid "External viewer"
 msgstr "Externe kijker"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:84
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:101
 msgid "Give a name to the <ref> tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:89
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:106
 msgid "What name would like to use for the <ref> tag ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:92
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:103
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:110
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:122
 msgid "Existing references"
 msgstr "Bestaande refenties"
 
@@ -342,8 +343,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Op enkele Wikipedia-projecten moet u misschien de bot-status gebruiken om "
 "dit te doen."
@@ -387,8 +387,7 @@ msgstr "uitzonderen"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:281
 msgid "Comma separated list of errors to ignore."
-msgstr ""
-"Lijst van fouten die genegeerd moeten worden, gescheiden door komma's."
+msgstr "Lijst van fouten die genegeerd moeten worden, gescheiden door komma's."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:297
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:345
@@ -1318,19 +1317,19 @@ msgstr ""
 msgid "An unknown error occured"
 msgstr "Er is een onbekende fout opgetreden"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:210
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:229
 msgid "Yes"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:211
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:230
 msgid "Yes to all"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:212
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:231
 msgid "No"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:213
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:232
 msgid "No to all"
 msgstr ""
 
