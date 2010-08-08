@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-08-08 01:13+0200\n"
-"PO-Revision-Date: 2010-08-01 07:40+0000\n"
+"PO-Revision-Date: 2010-08-08 14:14+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-08-01 09:52+0000\n"
+"X-Launchpad-Export-Date: 2010-08-08 15:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:38
@@ -31,7 +31,8 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:42
 msgid "Many new features added for the Check Wiki project : try them !"
-msgstr "До проекту Check Wiki додано багато нових можливостей : Спробуйте їх !"
+msgstr ""
+"До проекту Check Wiki додано багато нових можливостей : Спробуйте їх !"
 
 #: org/wikipediacleaner/Version.java:44
 msgid "Please, report any other problem you find to me."
@@ -317,7 +318,8 @@ msgstr "Додати до &списку спостереження"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:651
 msgid "Would you like to add these pages on your local Watch list ?"
-msgstr "Хочете додати ці сторінки до вашого локального списку спостереження ?"
+msgstr ""
+"Хочете додати ці сторінки до вашого локального списку спостереження ?"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:74
 #: org/wikipediacleaner/gui/swing/MainWindow.java:541
@@ -339,7 +341,8 @@ msgstr "Вони можуть змінити багато сторінок за 
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "В деяких проектах Вікіпедії потрібен статус бота, щоб виконувати такі "
 "функції."
@@ -920,7 +923,7 @@ msgstr "Зберегти останню використану заміну"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:535
 msgid "Remember last edited page"
-msgstr ""
+msgstr "Пам’ятати останню редаговану сторінку"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:547
 msgid "Number of links selected :"
