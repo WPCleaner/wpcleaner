@@ -210,6 +210,7 @@ public class TagBlock {
       if (name.endsWith(parameterNames.get(index))) {
         return parameterValues.get(index);
       }
+      index++;
     }
     return null;
   }
@@ -285,6 +286,7 @@ public class TagBlock {
       sb.append(parameterNames.get(index));
       sb.append('=');
       sb.append(parameterValues.get(index));
+      index++;
     }
     if (simpleTag) {
       sb.append('/');

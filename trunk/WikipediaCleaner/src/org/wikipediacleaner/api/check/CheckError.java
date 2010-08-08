@@ -67,6 +67,7 @@ public class CheckError {
       for (CheckError error : errors) {
         if ((error.algorithm != null) && (error.algorithm.isAvailable())) {
           ArrayList<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
+          //System.out.println("Checking error n°" + error.getErrorNumber() + " for " + page.getTitle());
           if (error.algorithm.analyze(page, contents, results)) {
             CheckErrorPage errorPage = new CheckErrorPage(page, error.algorithm);
             errorPage.setResults(true, results);
@@ -221,7 +222,6 @@ public class CheckError {
   /**
    * Retrieve link to error description from configuration.
    * 
-   * @param config Check Wiki configuration.
    * @param errorNumber Error number.
    * @return Link to error description.
    */
