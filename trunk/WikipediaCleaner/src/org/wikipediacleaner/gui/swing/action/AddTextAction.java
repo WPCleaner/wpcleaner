@@ -122,6 +122,8 @@ public class AddTextAction extends TextAction {
         }
       } catch (IOException ex) {
         // Nothing to do
+      } catch (Exception ex) {
+        // Nothing to do
       } finally {
         if (is != null) {
           try {
