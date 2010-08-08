@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.TagBlock;
 
 
 /**
@@ -42,94 +43,86 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     if ((page == null) || (contents == null)) {
       return false;
     }
+
+    // Retrieve possible abreviations before <ref> tag
+    String abbreviations = page.getWikipedia().getCheckWikiProperty(
+        "abbreviations", 67, true, false, false);
+    String[] abbreviationsList = null;
+    if (abbreviations != null) {
+      abbreviationsList = page.getWikipedia().convertPropertyToStringArray(abbreviations);
+    }
+
+    // Analyze from the begining
     int startIndex = 0;
     boolean result = false;
-    ArrayList<String> names = new ArrayList<String>();
-    while (startIndex < contents.length()) {
+    while ((startIndex >= 0) && (startIndex < contents.length())) {
       if (contents.charAt(startIndex) == '<') {
-        int beginIndex = startIndex;
-        int currentIndex = beginIndex + 1;
-        if (contents.startsWith("ref", currentIndex)) {
-          currentIndex += 3;
-          String name = null;
-          while ((currentIndex < contents.length()) &&
-                 (contents.charAt(currentIndex) != '/') &&
-                 (contents.charAt(currentIndex) != '>') &&
-                 (contents.charAt(currentIndex) != '<')) {
-            if (contents.startsWith(" name=", currentIndex)) {
-              currentIndex += 6;
-              char separator = contents.charAt(currentIndex);
-              if ((separator == '"') || (separator == '\'')) {
-                currentIndex++;
-                int beginName = currentIndex;
-                while ((currentIndex < contents.length()) &&
-                       (contents.charAt(currentIndex) != separator) &&
-                       (contents.charAt(currentIndex) != '/') &&
-                       (contents.charAt(currentIndex) != '>') &&
-                       (contents.charAt(currentIndex) != '<')) {
-                  currentIndex++;
-                }
-                if (contents.charAt(currentIndex) == separator) {
-                  name = contents.substring(beginName, currentIndex).trim();
-                  if (!names.contains(name)) {
-                    names.add(name);
-                  }
-                }
-              }
-            } else {
-              currentIndex++;
+        TagBlock tag = findNextTag(page, contents, "ref", startIndex);
+        if (tag != null) {
+          startIndex = contents.indexOf('<', tag.getEndTagEndIndex());
+          int tmpIndex = tag.getStartTagBeginIndex() - 1;
+
+          // Remove possible whitespaces
+          while ((tmpIndex >= 0) && (Character.isWhitespace(contents.charAt(tmpIndex)))) {
+            tmpIndex--;
+          }
+
+          // Check if previous character is a punctuation
+          boolean punctuationFound = false;
+          char punctuation = ' ';
+          if (tmpIndex >= 0) {
+            punctuation = contents.charAt(tmpIndex);
+            if (SpecialCharacters.isPunctuation(punctuation)) {
+              punctuationFound = true;
             }
           }
-          boolean simpleTag = false;
-          if ((currentIndex < contents.length()) &&
-              (contents.charAt(currentIndex) == '/')) {
-            simpleTag = true;
-            currentIndex++;
-          }
-          if ((currentIndex < contents.length()) &&
-              (contents.charAt(currentIndex) == '>')) {
-            currentIndex++;
-            int beginRefIndex = currentIndex;
-            int endRefIndex = simpleTag ? beginRefIndex : contents.indexOf("</ref>", beginRefIndex);
-            if (endRefIndex < 0) {
-              currentIndex = contents.length();
-            } else {
-              currentIndex = endRefIndex + (simpleTag ? 0 : 6);
 
-              // Remove possible whitespaces
-              int tmpIndex = beginIndex - 1;
-              while ((tmpIndex >= 0) && (Character.isWhitespace(contents.charAt(tmpIndex)))) {
-                tmpIndex--;
-              }
-
-              // Check if previous character is a punctuation
-              char punctuation = contents.charAt(tmpIndex);
-              if ((tmpIndex >= 0) && (SpecialCharacters.isPunctuation(punctuation))) {
-                if (errors == null) {
-                  return true;
+          // Check for possible abbreviations
+          boolean abbreviationFound = false;
+          if ((punctuationFound) && (abbreviationsList != null)) {
+            for (String abbreviation : abbreviationsList) {
+              if (abbreviation != null) {
+                if (contents.startsWith(abbreviation, tmpIndex - abbreviation.length() + 1)) {
+                  abbreviationFound = true;
                 }
-                result = true;
-                int endIndex = currentIndex;
-                while ((currentIndex < contents.length()) &&
-                       (punctuation == contents.charAt(currentIndex))) {
-                  currentIndex++;
-                }
-                CheckErrorResult errorResult = new CheckErrorResult(
-                    getShortDescription(), tmpIndex, currentIndex);
-                errorResult.addReplacement(
-                    contents.substring(beginIndex, endIndex) + punctuation);
-                if (currentIndex > endIndex) {
-                  errorResult.addReplacement(
-                      contents.substring(beginIndex, endIndex) + punctuation + contents.substring(endIndex, currentIndex));
-                }
-                errors.add(errorResult);
               }
             }
           }
+
+          // Punctuation found
+          if (punctuationFound) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            String allPunctuations = "";
+            while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == punctuation)) {
+              allPunctuations = contents.charAt(tmpIndex) + allPunctuations;
+              tmpIndex--;
+            }
+            int endIndex = tag.getEndTagEndIndex() + 1;
+            while ((endIndex < contents.length()) && (contents.charAt(endIndex) == punctuation)) {
+              endIndex++;
+            }
+            CheckErrorResult errorResult = new CheckErrorResult(
+                getShortDescription(), tmpIndex + 1, endIndex,
+                abbreviationFound ? CheckErrorResult.ErrorLevel.CORRECT : CheckErrorResult.ErrorLevel.ERROR);
+            String tagText = contents.substring(tag.getStartTagBeginIndex(), tag.getEndTagEndIndex() + 1);
+            errorResult.addReplacement(
+                tagText + allPunctuations,
+                "<ref>...</ref>" + allPunctuations);
+            if (endIndex > tag.getEndTagEndIndex() + 1) {
+              errorResult.addReplacement(
+                  tagText + allPunctuations + contents.substring(tag.getEndTagEndIndex() + 1, endIndex),
+                  "<ref>...</ref>" + allPunctuations + contents.substring(tag.getEndTagEndIndex() + 1, endIndex));
+            }
+            errors.add(errorResult);
+          }
+        } else {
+          startIndex = contents.indexOf('<', startIndex + 1);
         }
-        startIndex = currentIndex;
       } else {
-        startIndex++;
+        startIndex = contents.indexOf('<', startIndex + 1);
       }
     }
     return result;
