@@ -187,15 +187,25 @@ public class TagBlock {
       return false;
     }
     char quoteCharacter = parameters.charAt(tmpIndex);
-    if ((quoteCharacter != '\'') && (quoteCharacter != '"')) {
-      return false;
+    int endParameterIndex = tmpIndex;
+    if ((quoteCharacter == '\'') || (quoteCharacter == '"')) {
+      int quoteIndex = parameters.indexOf(quoteCharacter, tmpIndex + 1);
+      if (quoteIndex < 0) {
+        return false;
+      }
+      parameterValues.add(parameters.substring(tmpIndex, quoteIndex + 1));
+      endParameterIndex = quoteIndex + 1;
+    } else {
+      int spaceIndex = parameters.indexOf(' ', tmpIndex + 1);
+      if (spaceIndex < 0) {
+        parameterValues.add(parameters.substring(tmpIndex));
+        endParameterIndex = parameters.length();
+      } else {
+        parameterValues.add(parameters.substring(tmpIndex, spaceIndex));
+        endParameterIndex = spaceIndex + 1;
+      }
     }
-    int quoteIndex = parameters.indexOf(quoteCharacter, tmpIndex + 1);
-    if (quoteIndex < 0) {
-      return false;
-    }
-    parameterValues.add(parameters.substring(tmpIndex, quoteIndex + 1));
-    return analyzeTagParameters(parameters.substring(quoteIndex + 1), parameterNames, parameterValues);
+    return analyzeTagParameters(parameters.substring(endParameterIndex), parameterNames, parameterValues);
   }
 
   /**

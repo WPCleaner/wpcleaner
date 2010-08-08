@@ -573,6 +573,21 @@ public class MediaWikiPane
         return;
       }
     }
+    for (int pos = 0; pos < length; pos = lastEnd) {
+      Element run = doc.getCharacterElement(pos);
+      lastEnd = run.getEndOffset();
+      if (pos == lastEnd) {
+        // offset + length beyond length of document, bail.
+        break;
+      }
+      MutableAttributeSet attr = (MutableAttributeSet) run.getAttributes();
+      if ((attr != null) &&
+          (attr.getAttribute(MediaWikiConstants.ATTRIBUTE_TYPE) != null) &&
+          (attr.getAttribute(MediaWikiConstants.ATTRIBUTE_OCCURENCE) != null)) {
+        select(run.getStartOffset(), run.getEndOffset());
+        return;
+      }
+    }
   }
 
   /**
