@@ -65,7 +65,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     while (startIndex < contents.length()) {
       TagBlock tag = findNextTag(page, contents, "ref", startIndex);
       if (tag != null) {
-        startIndex = contents.indexOf('<', tag.getEndTagEndIndex());
+        startIndex = tag.getEndTagEndIndex() + 1;
         int tmpIndex = tag.getStartTagBeginIndex() - 1;
 
         // Remove possible whitespaces
@@ -115,6 +115,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
             if (nextTag == null) {
               tryNext = false;
             } else {
+              startIndex = nextTag.getEndTagEndIndex() + 1;
               while ((endIndex < nextTag.getStartTagBeginIndex()) && (tryNext)) {
                 if (!Character.isWhitespace(contents.charAt(endIndex))) {
                   tryNext = false;
