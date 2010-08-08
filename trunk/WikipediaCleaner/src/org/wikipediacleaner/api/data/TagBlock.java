@@ -107,11 +107,18 @@ public class TagBlock {
     if (tmpIndex >= contents.length()) {
       return null;
     }
-    int endTagBeginIndex = contents.indexOf('<', tmpIndex);
-    if (endTagBeginIndex < 0) {
-      return null;
+    boolean endTagFound = false;
+    int endTagBeginIndex = tmpIndex;
+    while (!endTagFound) {
+      endTagBeginIndex = contents.indexOf('<', tmpIndex);
+      if (endTagBeginIndex < 0) {
+        return null;
+      }
+      tmpIndex = endTagBeginIndex + 1;
+      if (!contents.startsWith("<!--", endTagBeginIndex)) {
+        endTagFound = true;
+      }
     }
-    tmpIndex = endTagBeginIndex + 1;
 
     // Look for '/'
     if ((tmpIndex >= contents.length()) || (contents.charAt(tmpIndex) != '/')) {
