@@ -135,7 +135,7 @@ public class TemplateBlock {
       tmpIndex++;
       int depth = 1;
       int endIndex = tmpIndex;
-      while ((depth > 0) && (tmpIndex < contents.length())) {
+      while ((depth > 0) && (endIndex < contents.length())) {
         if (contents.startsWith("{{", endIndex)) {
           endIndex += 2;
           depth++;

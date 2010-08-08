@@ -114,7 +114,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
             }
           }
         }
-        startIndex = template.getBeginIndex() + 1;
+        startIndex = template.getBeginIndex() + 2;
       }
     }
 

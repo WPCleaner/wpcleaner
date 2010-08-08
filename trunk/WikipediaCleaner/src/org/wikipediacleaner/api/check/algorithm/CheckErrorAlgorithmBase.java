@@ -316,7 +316,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
         if (template != null) {
           return template;
         }
-        currentIndex = tmpIndex + 1;
+        currentIndex = tmpIndex + 2;
       }
     }
     return null;
