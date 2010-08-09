@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.DefaultsortBlock;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TagBlock;
 import org.wikipediacleaner.api.data.TagData;
@@ -291,6 +292,35 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       }
     }
     return result;
+  }
+
+  /**
+   * Find the first DEFAULTSORT after an index in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param currentIndex The last index.
+   * @return DEFAULTSORT found.
+   */
+  protected DefaultsortBlock findNextDefaultsort(
+      Page page, String contents,
+      int currentIndex) {
+    if (contents == null) {
+      return null;
+    }
+    while ((currentIndex < contents.length())) {
+      int tmpIndex = contents.indexOf("{{", currentIndex);
+      if (tmpIndex < 0) {
+        currentIndex = contents.length();
+      } else {
+        DefaultsortBlock template = DefaultsortBlock.analyzeBlock(page.getWikipedia(), contents, tmpIndex);
+        if (template != null) {
+          return template;
+        }
+        currentIndex = tmpIndex + 2;
+      }
+    }
+    return null;
   }
 
   /**

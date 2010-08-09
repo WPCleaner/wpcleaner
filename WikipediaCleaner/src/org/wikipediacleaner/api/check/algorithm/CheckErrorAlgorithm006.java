@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.check.SpecialCharacters;
-import org.wikipediacleaner.api.data.MagicWord;
+import org.wikipediacleaner.api.data.DefaultsortBlock;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.i18n.GT;
 
@@ -57,90 +57,53 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
     boolean result = false;
     int startIndex = 0;
     while (startIndex < contents.length()) {
-      // Update position of next {{
-      int beginIndex = contents.indexOf("{{", startIndex);
-
-      if (beginIndex < 0) {
-        // No more {{
-        startIndex = contents.length();
-      } else {
-        int currentPos = beginIndex + 2;
-
-        // Update position of next }}
-        int endIndex = contents.indexOf("}}", currentPos);
-
-        if (endIndex < 0) {
-          startIndex = contents.length();
-        } else {
-          // Possible whitespaces
-          while ((currentPos < endIndex) && Character.isWhitespace(contents.charAt(currentPos))) {
-            currentPos++;
+      DefaultsortBlock tag = findNextDefaultsort(page, contents, startIndex);
+      if (tag != null) {
+        startIndex = tag.getEndIndex() + 1;
+        boolean characterFound = false;
+        boolean characterReplaced = false;
+        String unknownCharacters = "";
+        String text = "";
+        int currentPos = 0;
+        String value = tag.getValue();
+        while (currentPos < value.length()) {
+          boolean error = false;
+          char character = value.charAt(currentPos);
+          if (!SpecialCharacters.isAuthorized(character, page.getWikipedia())) {
+            characterFound = true;
+            error = true;
           }
-
-          // Check that link is DEFAULTSORT
-          String defaultSort = null;
-          if (currentPos < endIndex) {
-            MagicWord magicDefaultsort = page.getWikipedia().getMagicWord(MagicWord.DEFAULT_SORT);
-            ArrayList<String> aliases = magicDefaultsort.getAliases();
-            for (int i = 0; (i < aliases.size()) && (defaultSort == null); i++) {
-              if (contents.startsWith(aliases.get(i), currentPos)) {
-                currentPos += aliases.get(i).length();
-                defaultSort = aliases.get(i);
-              }
+          if (error) {
+            String newCharacter = SpecialCharacters.proposeReplacement(character);
+            if (!Character.toString(character).equals(newCharacter)) {
+              characterReplaced = true;
+            } else {
+              unknownCharacters += character;
             }
+            text += newCharacter;
+          } else {
+            text += character;
           }
-
-          // DEFAULTSORT found
-          if ((currentPos < endIndex) && (defaultSort != null)) {
-
-            // Possible whitespaces
-            while ((currentPos < endIndex) && Character.isWhitespace(contents.charAt(currentPos))) {
-              currentPos++;
-            }
-
-            boolean characterFound = false;
-            boolean characterReplaced = false;
-            String unknownCharacters = "";
-            String text = "";
-            while (currentPos < endIndex) {
-              boolean error = false;
-              char character = contents.charAt(currentPos);
-              if (!SpecialCharacters.isAuthorized(character, page.getWikipedia())) {
-                characterFound = true;
-                error = true;
-              }
-              if (error) {
-                String newCharacter = SpecialCharacters.proposeReplacement(character);
-                if (!Character.toString(character).equals(newCharacter)) {
-                  characterReplaced = true;
-                } else {
-                  unknownCharacters += character;
-                }
-                text += newCharacter;
-              } else {
-                text += character;
-              }
-              currentPos++;
-            }
-            if (characterFound) {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              CheckErrorResult errorResult = new CheckErrorResult(
-                  getShortDescription(), beginIndex, endIndex + 2);
-              if (characterReplaced) {
-                errorResult.addReplacement("{{" + defaultSort + text + "}}");
-              } else {
-                errorResult.addPossibleAction(
-                    GT._("Unable to replace the characters [{0}]", unknownCharacters),
-                    new NullActionProvider());
-              }
-              errors.add(errorResult);
-            }
-          }
-          startIndex = endIndex + 2;
+          currentPos++;
         }
+        if (characterFound) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = new CheckErrorResult(
+              getShortDescription(), tag.getBeginIndex(), tag.getEndIndex());
+          if (characterReplaced) {
+            errorResult.addReplacement("{{" + tag.getTag() + text + "}}");
+          } else {
+            errorResult.addPossibleAction(
+                GT._("Unable to replace the characters [{0}]", unknownCharacters),
+                new NullActionProvider());
+          }
+          errors.add(errorResult);
+        }
+      } else {
+        startIndex = contents.length();
       }
     }
     return result;
