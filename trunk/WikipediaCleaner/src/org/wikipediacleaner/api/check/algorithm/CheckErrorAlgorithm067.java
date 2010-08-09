@@ -98,74 +98,79 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         // Punctuation found
         if (punctuationFound) {
           if (errors == null) {
-            return true;
-          }
-          result = true;
-          String allPunctuations = "";
-          while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == punctuation)) {
-            allPunctuations = contents.charAt(tmpIndex) + allPunctuations;
-            tmpIndex--;
-          }
-          ArrayList<TagBlock> tagList = new ArrayList<TagBlock>();
-          tagList.add(tag);
-          boolean tryNext = true;
-          while (tryNext) {
-            int endIndex = tagList.get(tagList.size() - 1).getEndTagEndIndex() + 1;
-            TagBlock nextTag = findNextTag(page, contents, "ref", endIndex);
-            if (nextTag == null) {
-              tryNext = false;
-            } else {
-              startIndex = nextTag.getEndTagEndIndex() + 1;
-              while ((endIndex < nextTag.getStartTagBeginIndex()) && (tryNext)) {
-                if (!Character.isWhitespace(contents.charAt(endIndex))) {
-                  tryNext = false;
-                }
-                endIndex++;
-              }
-              if (tryNext) {
-                tagList.add(nextTag);
-              }
+            if (!abbreviationFound) {
+              return true;
             }
-          }
-          TagBlock lastTag = tagList.get(tagList.size() - 1);
-          int endIndex = lastTag.getEndTagEndIndex() + 1;
-          while ((endIndex < contents.length()) && (contents.charAt(endIndex) == punctuation)) {
-            endIndex++;
-          }
-          CheckErrorResult errorResult = new CheckErrorResult(
-              getShortDescription(), tmpIndex + 1, endIndex,
-              abbreviationFound ? CheckErrorResult.ErrorLevel.CORRECT : CheckErrorResult.ErrorLevel.ERROR);
-          String tagText = "";
-          for (int i = 0; i < tagList.size(); i++) {
-            if (i > 0) {
-              tagText += separator; 
-            }
-            tagText += contents.substring(
-                tagList.get(i).getStartTagBeginIndex(),
-                tagList.get(i).getEndTagEndIndex() + 1);
-          }
-          if (tagList.size() > 1) {
-            errorResult.addReplacement(
-                tagText + allPunctuations,
-                "<ref>...</ref>" + separator + "..." + separator + "<ref>...</ref>" + allPunctuations);
           } else {
-            errorResult.addReplacement(
-                tagText + allPunctuations,
-                "<ref>...</ref>" + allPunctuations);
-          }
-          if (endIndex > lastTag.getEndTagEndIndex() + 1) {
-            String afterTag = contents.substring(lastTag.getEndTagEndIndex() + 1, endIndex);
+            if (!abbreviationFound) {
+              result = true;
+            }
+            String allPunctuations = "";
+            while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == punctuation)) {
+              allPunctuations = contents.charAt(tmpIndex) + allPunctuations;
+              tmpIndex--;
+            }
+            ArrayList<TagBlock> tagList = new ArrayList<TagBlock>();
+            tagList.add(tag);
+            boolean tryNext = true;
+            while (tryNext) {
+              int endIndex = tagList.get(tagList.size() - 1).getEndTagEndIndex() + 1;
+              TagBlock nextTag = findNextTag(page, contents, "ref", endIndex);
+              if (nextTag == null) {
+                tryNext = false;
+              } else {
+                startIndex = nextTag.getEndTagEndIndex() + 1;
+                while ((endIndex < nextTag.getStartTagBeginIndex()) && (tryNext)) {
+                  if (!Character.isWhitespace(contents.charAt(endIndex))) {
+                    tryNext = false;
+                  }
+                  endIndex++;
+                }
+                if (tryNext) {
+                  tagList.add(nextTag);
+                }
+              }
+            }
+            TagBlock lastTag = tagList.get(tagList.size() - 1);
+            int endIndex = lastTag.getEndTagEndIndex() + 1;
+            while ((endIndex < contents.length()) && (contents.charAt(endIndex) == punctuation)) {
+              endIndex++;
+            }
+            CheckErrorResult errorResult = new CheckErrorResult(
+                getShortDescription(), tmpIndex + 1, endIndex,
+                abbreviationFound ? CheckErrorResult.ErrorLevel.CORRECT : CheckErrorResult.ErrorLevel.ERROR);
+            String tagText = "";
+            for (int i = 0; i < tagList.size(); i++) {
+              if (i > 0) {
+                tagText += separator; 
+              }
+              tagText += contents.substring(
+                  tagList.get(i).getStartTagBeginIndex(),
+                  tagList.get(i).getEndTagEndIndex() + 1);
+            }
             if (tagList.size() > 1) {
               errorResult.addReplacement(
-                  tagText + allPunctuations + afterTag,
-                  "<ref>...</ref>" + separator + "..." + separator + "<ref>...</ref>" + allPunctuations + afterTag);
+                  tagText + allPunctuations,
+                  "<ref>...</ref>" + separator + "..." + separator + "<ref>...</ref>" + allPunctuations);
             } else {
               errorResult.addReplacement(
-                  tagText + allPunctuations + afterTag,
-                  "<ref>...</ref>" + allPunctuations + afterTag);
+                  tagText + allPunctuations,
+                  "<ref>...</ref>" + allPunctuations);
             }
+            if (endIndex > lastTag.getEndTagEndIndex() + 1) {
+              String afterTag = contents.substring(lastTag.getEndTagEndIndex() + 1, endIndex);
+              if (tagList.size() > 1) {
+                errorResult.addReplacement(
+                    tagText + allPunctuations + afterTag,
+                    "<ref>...</ref>" + separator + "..." + separator + "<ref>...</ref>" + allPunctuations + afterTag);
+              } else {
+                errorResult.addReplacement(
+                    tagText + allPunctuations + afterTag,
+                    "<ref>...</ref>" + allPunctuations + afterTag);
+              }
+            }
+            errors.add(errorResult);
           }
-          errors.add(errorResult);
         }
       } else {
         startIndex = contents.length();

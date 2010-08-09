@@ -414,13 +414,15 @@ public class CheckError {
   public static boolean fix(Page page, String errorNumber) {
     try {
       NameValuePair[] parameters = new NameValuePair[] {
-          new NameValuePair("id", errorNumber),
+          new NameValuePair("id", Integer.toString(Integer.parseInt(errorNumber))),
           new NameValuePair("pageid", Integer.toString(page.getPageId())),
           new NameValuePair("project", page.getWikipedia().getCode() + "wiki"),
           new NameValuePair("view", "only")
       };
       APIFactory.getAPI().askToolServerPost(
           "~sk/cgi-bin/checkwiki/checkwiki.cgi", parameters, false);
+    } catch (NumberFormatException e) {
+      return false;
     } catch (APIException e) {
       return false;
     }
