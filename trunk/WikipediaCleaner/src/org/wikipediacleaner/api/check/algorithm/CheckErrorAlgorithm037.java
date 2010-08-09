@@ -18,14 +18,76 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
+
+import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.SpecialCharacters;
+import org.wikipediacleaner.api.data.DefaultsortBlock;
+import org.wikipediacleaner.api.data.Page;
+
 
 /**
  * Algorithm for analyzing error 37 of check wikipedia project.
  * Error 37: Title with special letters and no DEFAULTSORT
  */
-public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmUnavailable {
+public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm037() {
     super("Title with special letters and no DEFAULTSORT");
+  }
+
+  /* (non-Javadoc)
+   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#analyze(org.wikipediacleaner.api.data.Page, java.lang.String, java.util.ArrayList)
+   */
+  public boolean analyze(
+      Page page, String contents,
+      @SuppressWarnings("unused") ArrayList<CheckErrorResult> errors) {
+    if ((page == null) || (contents == null)) {
+      return false;
+    }
+
+    // Analyzing title to find special characters
+    String title = page.getTitle();
+    boolean characterFound = false;
+    String unknownCharacters = "";
+    String text = "";
+    int currentPos = 0;
+    while (currentPos < title.length()) {
+      boolean error = false;
+      char character = title.charAt(currentPos);
+      if (!SpecialCharacters.isAuthorized(character, page.getWikipedia())) {
+        if (currentPos < 3) { // TODO : Parameter
+          characterFound = true;
+        }
+        error = true;
+      }
+      if (error) {
+        String newCharacter = SpecialCharacters.proposeReplacement(character);
+        if (!Character.toString(character).equals(newCharacter)) {
+          //
+        } else {
+          unknownCharacters += character;
+        }
+        text += newCharacter;
+      } else {
+        text += character;
+      }
+      currentPos++;
+    }
+    if (!characterFound) {
+      return false;
+    }
+
+    // Searching a DEFAULTSORT tag
+    DefaultsortBlock tag = findNextDefaultsort(page, contents, 0);
+    if (tag != null) {
+      return false;
+    }
+
+    // Searching for Categories without a sort key
+    // TODO
+
+    // Reporting error
+    return true;
   }
 }
