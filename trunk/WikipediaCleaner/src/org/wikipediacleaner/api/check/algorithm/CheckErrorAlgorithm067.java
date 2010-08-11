@@ -122,11 +122,19 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
                 tryNext = false;
               } else {
                 startIndex = nextTag.getEndTagEndIndex() + 1;
+                boolean separatorFound = false;
                 while ((endIndex < nextTag.getStartTagBeginIndex()) && (tryNext)) {
-                  if (!Character.isWhitespace(contents.charAt(endIndex))) {
+                  if (!separatorFound && (contents.startsWith(separator, endIndex))) {
+                    separatorFound = true;
+                    endIndex += separator.length();
+                  } else if (!Character.isWhitespace(contents.charAt(endIndex)) &&
+                             (contents.charAt(endIndex) != ',') &&
+                             (contents.charAt(endIndex) != ';') &&
+                             (contents.charAt(endIndex) != '\'')) {
                     tryNext = false;
+                  } else {
+                    endIndex++;
                   }
-                  endIndex++;
                 }
                 if (tryNext) {
                   tagList.add(nextTag);
