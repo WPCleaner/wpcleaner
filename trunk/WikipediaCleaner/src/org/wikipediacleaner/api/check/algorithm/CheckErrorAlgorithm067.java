@@ -67,6 +67,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     while (startIndex < contents.length()) {
       TagBlock tag = findNextTag(page, contents, "ref", startIndex);
       if (tag != null) {
+        System.out.println("Tag ref: " + tag.getText());
         startIndex = tag.getEndTagEndIndex() + 1;
         int tmpIndex = tag.getStartTagBeginIndex() - 1;
 
@@ -121,7 +122,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
               if (nextTag == null) {
                 tryNext = false;
               } else {
-                startIndex = nextTag.getEndTagEndIndex() + 1;
+                System.out.println("Next tag ref: " + nextTag.getText());
                 boolean separatorFound = false;
                 while ((endIndex < nextTag.getStartTagBeginIndex()) && (tryNext)) {
                   if (!separatorFound && (contents.startsWith(separator, endIndex))) {
@@ -138,6 +139,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
                 }
                 if (tryNext) {
                   tagList.add(nextTag);
+                  startIndex = nextTag.getEndTagEndIndex() + 1;
                 }
               }
             }
