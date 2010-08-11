@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-08 01:13+0200\n"
+"POT-Creation-Date: 2010-08-11 21:29+0200\n"
 "PO-Revision-Date: 2010-05-13 10:04+0000\n"
 "Last-Translator: fluff <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -40,27 +40,27 @@ msgstr ""
 msgid "Page {0}:"
 msgstr "Sida {0}:"
 
-#: org/wikipediacleaner/api/check/CheckError.java:185
+#: org/wikipediacleaner/api/check/CheckError.java:186
 msgid "Deactivated"
 msgstr "Avaktiverad"
 
-#: org/wikipediacleaner/api/check/CheckError.java:187
+#: org/wikipediacleaner/api/check/CheckError.java:188
 msgid "Low priority"
 msgstr "Låg prioritet"
 
-#: org/wikipediacleaner/api/check/CheckError.java:189
+#: org/wikipediacleaner/api/check/CheckError.java:190
 msgid "Middle priority"
 msgstr "Medelprioritet"
 
-#: org/wikipediacleaner/api/check/CheckError.java:191
+#: org/wikipediacleaner/api/check/CheckError.java:192
 msgid "Top priority"
 msgstr "Hög prioritet"
 
-#: org/wikipediacleaner/api/check/CheckError.java:193
+#: org/wikipediacleaner/api/check/CheckError.java:194
 msgid "For Bot"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:195
+#: org/wikipediacleaner/api/check/CheckError.java:196
 msgid "Priority unknown"
 msgstr "Okänd prioritet"
 
@@ -84,6 +84,10 @@ msgstr ""
 msgid "Delete"
 msgstr "Ta bort"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:107
+msgid "A list of templates resulting in the inclusion of <references/>"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:41
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:39
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089.java:39
@@ -91,7 +95,7 @@ msgstr "Ta bort"
 msgid "Fix DEFAULTSORT"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:136
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:100
 #, java-format
 msgid "Unable to replace the characters [{0}]"
 msgstr ""
@@ -125,6 +129,12 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:38
 msgid "Remove breaks in list"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:192
+msgid ""
+"A list of abbreviations that generate false positives when placed before "
+"<ref>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
@@ -170,6 +180,14 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:110
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:122
 msgid "Existing references"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:165
+msgid "Title of the article describing this type of error"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:166
+msgid "List of false positives for this type of error"
 msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212

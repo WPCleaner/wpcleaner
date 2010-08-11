@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-08 01:13+0200\n"
+"POT-Creation-Date: 2010-08-11 21:29+0200\n"
 "PO-Revision-Date: 2010-08-10 02:34+0000\n"
 "Last-Translator: A2 <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -47,27 +47,27 @@ msgstr "S'il vous plait, rapportez-moi les problèmes rencontrés."
 msgid "Page {0}:"
 msgstr "Page {0} :"
 
-#: org/wikipediacleaner/api/check/CheckError.java:185
+#: org/wikipediacleaner/api/check/CheckError.java:186
 msgid "Deactivated"
 msgstr "Désactivé"
 
-#: org/wikipediacleaner/api/check/CheckError.java:187
+#: org/wikipediacleaner/api/check/CheckError.java:188
 msgid "Low priority"
 msgstr "Priorité faible"
 
-#: org/wikipediacleaner/api/check/CheckError.java:189
+#: org/wikipediacleaner/api/check/CheckError.java:190
 msgid "Middle priority"
 msgstr "Priorité moyenne"
 
-#: org/wikipediacleaner/api/check/CheckError.java:191
+#: org/wikipediacleaner/api/check/CheckError.java:192
 msgid "Top priority"
 msgstr "Priorité maximale"
 
-#: org/wikipediacleaner/api/check/CheckError.java:193
+#: org/wikipediacleaner/api/check/CheckError.java:194
 msgid "For Bot"
 msgstr "Pour bot"
 
-#: org/wikipediacleaner/api/check/CheckError.java:195
+#: org/wikipediacleaner/api/check/CheckError.java:196
 msgid "Priority unknown"
 msgstr "Priorité inconnue"
 
@@ -91,6 +91,10 @@ msgstr "Remplacer par {0}"
 msgid "Delete"
 msgstr "Supprimer"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:107
+msgid "A list of templates resulting in the inclusion of <references/>"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:41
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:39
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089.java:39
@@ -98,7 +102,7 @@ msgstr "Supprimer"
 msgid "Fix DEFAULTSORT"
 msgstr "Corriger la clé de tri"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:136
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:100
 #, java-format
 msgid "Unable to replace the characters [{0}]"
 msgstr "Impossible de remplacer le caractère [{0}]"
@@ -133,6 +137,12 @@ msgstr "Supprimer tous les liens vers le titre de l’article"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:38
 msgid "Remove breaks in list"
 msgstr "Supprimer les sauts de ligne en fin de liste"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:192
+msgid ""
+"A list of abbreviations that generate false positives when placed before "
+"<ref>"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
@@ -178,6 +188,14 @@ msgstr "Quel nom souhaitez-vous utiliser pour la balise <ref> ?"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:122
 msgid "Existing references"
 msgstr "Références existantes"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:165
+msgid "Title of the article describing this type of error"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:166
+msgid "List of false positives for this type of error"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
@@ -344,8 +362,7 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -1039,8 +1056,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr ""
-"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:287
 msgid "&Page :"

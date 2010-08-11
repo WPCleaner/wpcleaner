@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-08 01:13+0200\n"
+"POT-Creation-Date: 2010-08-11 21:29+0200\n"
 "PO-Revision-Date: 2010-08-08 12:57+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -43,27 +43,27 @@ msgstr "Prosím hlaste mi všechny nalezené problémy."
 msgid "Page {0}:"
 msgstr "Stránka {0}:"
 
-#: org/wikipediacleaner/api/check/CheckError.java:185
+#: org/wikipediacleaner/api/check/CheckError.java:186
 msgid "Deactivated"
 msgstr "Deaktivováno"
 
-#: org/wikipediacleaner/api/check/CheckError.java:187
+#: org/wikipediacleaner/api/check/CheckError.java:188
 msgid "Low priority"
 msgstr "Nízká priorita"
 
-#: org/wikipediacleaner/api/check/CheckError.java:189
+#: org/wikipediacleaner/api/check/CheckError.java:190
 msgid "Middle priority"
 msgstr "Střední priorita"
 
-#: org/wikipediacleaner/api/check/CheckError.java:191
+#: org/wikipediacleaner/api/check/CheckError.java:192
 msgid "Top priority"
 msgstr "Vysoká priorita"
 
-#: org/wikipediacleaner/api/check/CheckError.java:193
+#: org/wikipediacleaner/api/check/CheckError.java:194
 msgid "For Bot"
 msgstr "Pro boty"
 
-#: org/wikipediacleaner/api/check/CheckError.java:195
+#: org/wikipediacleaner/api/check/CheckError.java:196
 msgid "Priority unknown"
 msgstr "Neznámá priorita"
 
@@ -87,6 +87,10 @@ msgstr "Nahradit za {0}"
 msgid "Delete"
 msgstr "Smazat"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:107
+msgid "A list of templates resulting in the inclusion of <references/>"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:41
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:39
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089.java:39
@@ -94,7 +98,7 @@ msgstr "Smazat"
 msgid "Fix DEFAULTSORT"
 msgstr "Opravit DEFAULTSORT"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:136
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:100
 #, java-format
 msgid "Unable to replace the characters [{0}]"
 msgstr "Nelze nahradit znaky [{0}]"
@@ -129,6 +133,12 @@ msgstr "Odstranit všechny odkazy na článek"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:38
 msgid "Remove breaks in list"
 msgstr "Odstranit zalomení v seznamu"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:192
+msgid ""
+"A list of abbreviations that generate false positives when placed before "
+"<ref>"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
@@ -174,6 +184,14 @@ msgstr "Jaké jméno chcete použít pro značku <ref>?"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:122
 msgid "Existing references"
 msgstr "Existující reference"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:165
+msgid "Title of the article describing this type of error"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:166
+msgid "List of false positives for this type of error"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
@@ -339,8 +357,7 @@ msgstr "Můžou změnit nožství stránek v krátkém čase."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Na některých projektech Wikimedia potřebuješ pro tyto funkce příznak Bot."
 
@@ -697,8 +714,7 @@ msgstr "Než se přihlásíte, musíte zadat heslo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:772
 msgid "You can learn how to configure WikiCleaner at the following URL:"
-msgstr ""
-"Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
+msgstr "Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:789
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
