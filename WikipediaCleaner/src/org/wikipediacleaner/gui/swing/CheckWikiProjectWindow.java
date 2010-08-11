@@ -35,9 +35,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.concurrent.Callable;
@@ -58,6 +60,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
@@ -121,8 +124,10 @@ public class CheckWikiProjectWindow extends PageWindow {
   JComboBox listAllErrors;
   DefaultComboBoxModel modelAllErrors;
   private HtmlPanel textDescription;
+  private HtmlPanel textParameters;
   private UserAgentContext ucontext;
-  private HtmlRendererContext rcontext;
+  private HtmlRendererContext rcontextDescription;
+  private HtmlRendererContext rcontextParameters;
   private JButton buttonReloadError;
   private JButton buttonErrorDetail;
   private JButton buttonErrorList;
@@ -356,15 +361,29 @@ public class CheckWikiProjectWindow extends PageWindow {
     // Error description
     textDescription = new HtmlPanel();
     ucontext = new SimpleUserAgentContext();
-    rcontext = new MediaWikiHtmlRendererContext(textDescription, ucontext);
+    rcontextDescription = new MediaWikiHtmlRendererContext(textDescription, ucontext);
     textDescription.setPreferredSize(new Dimension(500, 100));
     textDescription.setMinimumSize(new Dimension(200, 100));
+
+    // Parameters description
+    textParameters = new HtmlPanel();
+    rcontextParameters = new MediaWikiHtmlRendererContext(textParameters, ucontext);
+    textParameters.setPreferredSize(new Dimension(500, 100));
+    textParameters.setMinimumSize(new Dimension(200, 100));
+
+    // Split pane
+    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+    splitPane.setLeftComponent(textDescription);
+    splitPane.setRightComponent(textParameters);
+    splitPane.setPreferredSize(new Dimension(700, 100));
+    splitPane.setMinimumSize(new Dimension(300, 100));
+    splitPane.setResizeWeight(1.0);
     constraints.fill = GridBagConstraints.BOTH;
     constraints.gridwidth = 3;
     constraints.gridx = 0;
     constraints.weightx = 1;
     constraints.weighty = 1;
-    panel.add(textDescription, constraints);
+    panel.add(splitPane, constraints);
     constraints.gridy++;
 
     return panel;
@@ -1143,19 +1162,49 @@ public class CheckWikiProjectWindow extends PageWindow {
 
       // Error type description
       try {
-        DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontext);
+        DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontextDescription);
         InputSource is = new InputSource(new StringReader(error.getAlgorithm().getLongDescription()));
         is.setSystemId(
             "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi?" +
             "project=frwiki&view=only&id=" + error.getErrorNumber());
         Document document = dbi.parse(is);
-        textDescription.setDocument(document, rcontext);
+        textDescription.setDocument(document, rcontextDescription);
       } catch (SAXException e) {
         textDescription.clearDocument();
       } catch (IOException e) {
         textDescription.clearDocument();
       }
 
+      // Parameters description
+      try {
+        String url =
+          getWikipedia().getWikiURL() +
+          "?title=" +
+          URLEncoder.encode(getWikipedia().getCheckWikiTraduction(), "UTF-8");
+        StringBuilder parametersDescription = new StringBuilder();
+        parametersDescription.append(GT._(
+            "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :",
+            new Object[] { Integer.toString(error.getErrorNumber()), url }));
+        parametersDescription.append("\n<ul>");
+        Map<String, String> parameters = error.getAlgorithm().getParameters();
+        for (Map.Entry<String, String> entry : parameters.entrySet()) {
+          parametersDescription.append("<li><b>");
+          parametersDescription.append(entry.getKey());
+          parametersDescription.append("</b>: ");
+          parametersDescription.append(entry.getValue());
+          parametersDescription.append("</li>\n");
+        }
+        parametersDescription.append("</ul>");
+        DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontextParameters);
+        InputSource is = new InputSource(new StringReader(parametersDescription.toString()));
+        is.setSystemId(url);
+        Document document = dbi.parse(is);
+        textParameters.setDocument(document, rcontextParameters);
+      } catch (SAXException e) {
+        textParameters.clearDocument();
+      } catch (IOException e) {
+        textParameters.clearDocument();
+      }
       // Pages
       int nbPages = error.getPageCount();
       for (int numPage = 0; numPage < nbPages; numPage++) {
