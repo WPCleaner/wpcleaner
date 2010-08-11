@@ -197,7 +197,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     Map<String, String> parameters = super.getParameters();
     parameters.put(
         "abbreviations",
-        GT._("A list of abbreviations that generate false positives when placed before <ref>"));
+        GT._("A list of abbreviations that generate false positives when placed before {0}", "&lt;ref&gt;"));
     return parameters;
   }
 }

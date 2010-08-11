@@ -104,7 +104,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
-    parameters.put("references_templates", GT._("A list of templates resulting in the inclusion of <references/>"));
+    parameters.put("references_templates", GT._("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
     return parameters;
   }
 }
