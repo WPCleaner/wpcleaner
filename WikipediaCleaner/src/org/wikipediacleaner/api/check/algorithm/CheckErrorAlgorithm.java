@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
@@ -102,6 +103,13 @@ public interface CheckErrorAlgorithm {
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(Page page, String contents, ArrayList<CheckErrorResult> errors);
+
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (Name -> description).
+   */
+  public Map<String, String> getParameters();
 
   /**
    * @return List of possible global fixes.

@@ -19,6 +19,8 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -27,6 +29,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TagBlock;
 import org.wikipediacleaner.api.data.TagData;
 import org.wikipediacleaner.api.data.TemplateBlock;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -152,6 +155,16 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       return name.substring(baseName.length());
     }
     return "unknown";
+  }
+
+  /* (non-Javadoc)
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#getParameters()
+   */
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = new Hashtable<String, String>();
+    parameters.put("link", GT._("Title of the article describing this type of error"));
+    parameters.put("whitelist", GT._("List of false positives for this type of error"));
+    return parameters;
   }
 
   /**

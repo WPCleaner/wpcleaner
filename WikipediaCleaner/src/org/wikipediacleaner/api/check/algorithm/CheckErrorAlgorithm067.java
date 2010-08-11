@@ -19,11 +19,13 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TagBlock;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -177,5 +179,17 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       }
     }
     return result;
+  }
+
+  /* (non-Javadoc)
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        "abbreviations",
+        GT._("A list of abbreviations that generate false positives when placed before <ref>"));
+    return parameters;
   }
 }
