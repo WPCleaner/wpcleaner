@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-08-12 00:07+0200\n"
-"PO-Revision-Date: 2010-08-08 14:14+0000\n"
+"PO-Revision-Date: 2010-08-12 07:32+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-08-08 15:00+0000\n"
+"X-Launchpad-Export-Date: 2010-08-12 20:11+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:38
@@ -31,7 +31,8 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:42
 msgid "Many new features added for the Check Wiki project : try them !"
-msgstr "До проекту Check Wiki додано багато нових можливостей : Спробуйте їх !"
+msgstr ""
+"До проекту Check Wiki додано багато нових можливостей : Спробуйте їх !"
 
 #: org/wikipediacleaner/Version.java:44
 msgid "Please, report any other problem you find to me."
@@ -89,7 +90,7 @@ msgstr "Вилучити"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:107
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
-msgstr ""
+msgstr "Список шаблонів, що випливають з попереднього включення {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:41
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:39
@@ -139,6 +140,7 @@ msgstr "Вилучити розбивку в списку"
 msgid ""
 "A list of abbreviations that generate false positives when placed before {0}"
 msgstr ""
+"Список скорочень, які генерують помилкові спрацьовування розміщені раніше {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
@@ -188,11 +190,11 @@ msgstr "Наявні виноски"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:165
 msgid "Title of the article describing this type of error"
-msgstr ""
+msgstr "Назва статті, що описує цей тип помилки"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:166
 msgid "List of false positives for this type of error"
-msgstr ""
+msgstr "Список помилкових спрацьовувань для такого типу помилки"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
@@ -336,7 +338,8 @@ msgstr "Додати до &списку спостереження"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:651
 msgid "Would you like to add these pages on your local Watch list ?"
-msgstr "Хочете додати ці сторінки до вашого локального списку спостереження ?"
+msgstr ""
+"Хочете додати ці сторінки до вашого локального списку спостереження ?"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:74
 #: org/wikipediacleaner/gui/swing/MainWindow.java:541
@@ -358,7 +361,8 @@ msgstr "Вони можуть змінити багато сторінок за 
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "В деяких проектах Вікіпедії потрібен статус бота, щоб виконувати такі "
 "функції."
@@ -498,6 +502,8 @@ msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
 msgstr ""
+"Помилка n°{0} може бути сконфігурована з такими параметрами у <a "
+"href=\"{1}\">файлі перекладу</a> :"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1257
 #, java-format
