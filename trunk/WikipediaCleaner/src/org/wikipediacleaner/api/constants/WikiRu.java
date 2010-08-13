@@ -31,7 +31,7 @@ class WikiRu {
   private final static String baseUrl = "http://ru.wikipedia.org/w/";
 
   final static String code     = "ru";
-  final static String name     = "Википедия";
+  final static String name     = "Русская Википедия";
 
   final static String apiUrl   = baseUrl + "api.php";
   final static String queryUrl = baseUrl + "query.php";
