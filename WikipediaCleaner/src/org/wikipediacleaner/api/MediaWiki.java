@@ -193,6 +193,7 @@ public class MediaWiki extends MediaWikiController {
             }
           }
           if (!oldContents.equals(newContents)) {
+            setText(GT._("Updating page {0}", page.getTitle()));
             count++;
             try {
               api.updatePage(

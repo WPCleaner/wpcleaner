@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-14 10:43+0200\n"
+"POT-Creation-Date: 2010-08-14 15:15+0200\n"
 "PO-Revision-Date: 2008-11-30 16:28+0000\n"
 "Last-Translator: Røed <roed.wikipedia@gmail.com>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
@@ -38,6 +38,11 @@ msgstr ""
 #: org/wikipediacleaner/api/MediaWiki.java:175
 #, java-format
 msgid "Page {0}:"
+msgstr ""
+
+#: org/wikipediacleaner/api/MediaWiki.java:196
+#, java-format
+msgid "Updating page {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:186
