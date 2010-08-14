@@ -90,7 +90,7 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
                     return true;
                   }
                   result = true;
-                  errors.add(new CheckErrorResult(getShortDescription(), titleIndex, endLineIndex));
+                  errors.add(createCheckErrorResult(page, titleIndex, endLineIndex));
                   return true;
                 }
               }

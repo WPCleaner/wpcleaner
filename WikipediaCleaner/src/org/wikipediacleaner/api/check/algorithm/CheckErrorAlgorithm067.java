@@ -146,8 +146,8 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
             while ((endIndex < contents.length()) && (contents.charAt(endIndex) == punctuation)) {
               endIndex++;
             }
-            CheckErrorResult errorResult = new CheckErrorResult(
-                getShortDescription(), tmpIndex + 1, endIndex,
+            CheckErrorResult errorResult = createCheckErrorResult(
+                page, tmpIndex + 1, endIndex,
                 abbreviationFound ? CheckErrorResult.ErrorLevel.CORRECT : CheckErrorResult.ErrorLevel.ERROR);
             String tagText = "";
             for (int i = 0; i < tagList.size(); i++) {

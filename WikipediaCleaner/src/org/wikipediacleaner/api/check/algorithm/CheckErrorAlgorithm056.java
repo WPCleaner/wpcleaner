@@ -134,8 +134,8 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
-          CheckErrorResult errorResult = new CheckErrorResult(
-              getShortDescription(), startIndex, startIndex + arrowLen);
+          CheckErrorResult errorResult = createCheckErrorResult(
+              page, startIndex, startIndex + arrowLen);
           for (int i = 1; i < arrows.length; i++) {
             errorResult.addReplacement(arrows[i]);
           }

@@ -105,8 +105,8 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                 return true;
               }
               errorFound = true;
-              CheckErrorResult errorResult = new CheckErrorResult(
-                  getShortDescription(),
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  page,
                   template.getParameterValueOffset(i) + tmpIndex + 1,
                   template.getParameterValueOffset(i) + endIndex + 1);
               errorResult.addReplacement("", GT._("Delete"));

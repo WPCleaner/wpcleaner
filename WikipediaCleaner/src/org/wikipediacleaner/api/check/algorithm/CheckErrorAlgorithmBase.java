@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.DefaultsortBlock;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TagBlock;
@@ -42,6 +43,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   private String shortDescriptionReplaced;
   private String longDescription;
   private String link;
+  private String[] whiteList;
 
   /**
    * @param shortDescription Short description.
@@ -128,6 +130,71 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   public void setLink(String link) {
     this.link = link;
+  }
+
+  /**
+   * Tell if a page is among the white list.
+   * 
+   * @param title Page title.
+   * @return Page among the white list ?
+   */
+  public boolean isInWhiteList(String title) {
+    if ((whiteList == null) || (title == null)) {
+      return false;
+    }
+    for (int i = 0; i < whiteList.length; i++) {
+      if (title.equals(whiteList[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * @param whiteList White list.
+   */
+  public void setWhiteList(String[] whiteList) {
+    this.whiteList = whiteList;
+  }
+
+  /**
+   * Create a CheckErrorResult object.
+   * 
+   * @param startPosition Start of the error.
+   * @param endPosition End of the error.
+   * @return new CheckErrorResult object.
+   */
+  public CheckErrorResult createCheckErrorResult(
+      Page page,
+      int startPosition, int endPosition) {
+    return createCheckErrorResult(
+        page,
+        startPosition, endPosition,
+        ErrorLevel.ERROR);
+  }
+
+
+  /**
+   * Create a CheckErrorResult object.
+   * 
+   * @param startPosition Start of the error.
+   * @param endPosition End of the error.
+   * @param errorLevel Error level.
+   * @return new CheckErrorResult object.
+   */
+  public CheckErrorResult createCheckErrorResult(
+      Page page,
+      int startPosition, int endPosition,
+      ErrorLevel errorLevel) {
+    if ((!ErrorLevel.CORRECT.equals(errorLevel)) && (page != null)) {
+      if (isInWhiteList(page.getTitle())) {
+        errorLevel = ErrorLevel.CORRECT;
+      }
+    }
+    return new CheckErrorResult(
+        getShortDescription(),
+        startPosition, endPosition,
+        errorLevel);
   }
 
   /**
@@ -290,7 +357,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
         }
         result = true;
         int endIndex = startIndex + search.length();
-        CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), startIndex, endIndex);
+        CheckErrorResult errorResult = createCheckErrorResult(page, startIndex, endIndex);
         if (replacements != null) {
           for (int i = 0; i < replacements.length; i++) {
             if (replacements[i] != null) {
@@ -416,8 +483,8 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       if (tag != null) {
         result = true;
         if (errors != null) {
-          CheckErrorResult errorResult = new CheckErrorResult(
-              getShortDescription(), tag.getStartIndex(), tag.getEndIndex());
+          CheckErrorResult errorResult = createCheckErrorResult(
+              page, tag.getStartIndex(), tag.getEndIndex());
           errors.add(errorResult);
         }
         startIndex = tag.getEndIndex();
@@ -431,8 +498,8 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       if (tag != null) {
         result = true;
         if (errors != null) {
-          CheckErrorResult errorResult = new CheckErrorResult(
-              getShortDescription(), tag.getStartIndex(), tag.getEndIndex());
+          CheckErrorResult errorResult = createCheckErrorResult(
+              page, tag.getStartIndex(), tag.getEndIndex());
           errors.add(errorResult);
         }
         startIndex = tag.getEndIndex();

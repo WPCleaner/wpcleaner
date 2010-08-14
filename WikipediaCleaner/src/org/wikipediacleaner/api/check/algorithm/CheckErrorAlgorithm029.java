@@ -57,8 +57,8 @@ public class CheckErrorAlgorithm029 extends CheckErrorAlgorithmBase {
           }
           result = true;
           endIndex = startIndex + "<gallery>".length();
-          CheckErrorResult errorResult = new CheckErrorResult(
-              getShortDescription(), startIndex, endIndex);
+          CheckErrorResult errorResult = createCheckErrorResult(
+              page, startIndex, endIndex);
           errors.add(errorResult);
           startIndex = endIndex;
         } else {

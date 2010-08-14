@@ -40,13 +40,17 @@ public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRe
 
   private static final long serialVersionUID = 1L;
 
+  private final boolean forPage;
   private boolean showCountOccurence;
   private ImageIcon globalFixIcon;
 
   /**
    * Construct a renderer.
+   * 
+   * @param forPage Renderer for page or for algorithm ?
    */
-  public CheckErrorPageListCellRenderer() {
+  public CheckErrorPageListCellRenderer(boolean forPage) {
+    this.forPage = forPage;
     setOpaque(true);
     setHorizontalAlignment(LEFT);
     setVerticalAlignment(CENTER);
@@ -77,24 +81,30 @@ public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRe
     String text = (value != null) ? value.toString() : "";
     Boolean errorsPresent = null;
     Boolean globalFix = null;
+    boolean whiteList = false;
     if (value instanceof CheckErrorPage) {
       CheckErrorPage errorPage = (CheckErrorPage) value;
-      text = errorPage.getAlgorithm().toString();
-      int errorCount = errorPage.getActiveResultsCount();
-      if (errorCount > 0) {
-        errorsPresent = Boolean.TRUE;
-        if ((showCountOccurence) &&
-            (errorCount > 1)) {
-          text += " (" + errorCount + ")";
-        }
-      } else if (errorPage.getErrorFound()) {
-        errorsPresent = Boolean.TRUE;
+      whiteList = errorPage.isInWhiteList();
+      if (forPage) {
+        text = errorPage.getPage().getTitle();
       } else {
-        errorsPresent = Boolean.FALSE;
-      }
-      String[] globalFixes = errorPage.getAlgorithm().getGlobalFixes();
-      if ((globalFixes != null) && (globalFixes.length > 0)) {
-        globalFix = Boolean.TRUE;
+        text = errorPage.getAlgorithm().toString();
+        int errorCount = errorPage.getActiveResultsCount();
+        if (errorCount > 0) {
+          errorsPresent = Boolean.TRUE;
+          if ((showCountOccurence) &&
+              (errorCount > 1)) {
+            text += " (" + errorCount + ")";
+          }
+        } else if (errorPage.getErrorFound()) {
+          errorsPresent = Boolean.TRUE;
+        } else {
+          errorsPresent = Boolean.FALSE;
+        }
+        String[] globalFixes = errorPage.getAlgorithm().getGlobalFixes();
+        if ((globalFixes != null) && (globalFixes.length > 0)) {
+          globalFix = Boolean.TRUE;
+        }
       }
     }
 
@@ -109,10 +119,16 @@ public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRe
     // Color
     Color background = isSelected ? list.getSelectionBackground() : list.getBackground();
     Color foreground = isSelected ? list.getSelectionForeground() : list.getForeground();
-    if (errorsPresent == null) {
+    if (forPage) {
+      if (whiteList) {
+        foreground = Color.GREEN;
+      }
+    } else if (errorsPresent == null) {
       if (!isSelected) {
         foreground = Color.DARK_GRAY;
       }
+    } else if (whiteList) {
+      foreground = Color.GREEN;
     } else if (errorsPresent.booleanValue()) {
       foreground = Color.RED;
     }

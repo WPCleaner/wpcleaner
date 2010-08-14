@@ -88,8 +88,8 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
               return true;
             }
             result = true;
-            CheckErrorResult errorResult = new CheckErrorResult(
-                getShortDescription(), startIndex, currentPos + tag.length() + 3);
+            CheckErrorResult errorResult = createCheckErrorResult(
+                page, startIndex, currentPos + tag.length() + 3);
             errors.add(errorResult);
             startIndex = currentPos + tag.length() + 3;
           } else {

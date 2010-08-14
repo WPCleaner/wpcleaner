@@ -82,7 +82,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
                 return true;
               }
               result = true;
-              CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), startIndex, endIndex + 2);
+              CheckErrorResult errorResult = createCheckErrorResult(page, startIndex, endIndex + 2);
               errorResult.addReplacement(text);
               errorResult.addReplacement("'''" + text + "'''");
               errors.add(errorResult);

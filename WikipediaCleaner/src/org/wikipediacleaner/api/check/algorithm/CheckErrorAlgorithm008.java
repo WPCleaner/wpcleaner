@@ -79,7 +79,7 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
             result = true;
 
             // Report detailed result
-            CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), titleIndex, endLineIndex);
+            CheckErrorResult errorResult = createCheckErrorResult(page, titleIndex, endLineIndex);
 
             // Replacement : truncate if there's text after end title
             for (int pos = titleIndex + titleLevelInitial; pos < endLineIndex - titleLevelInitial; pos++) {

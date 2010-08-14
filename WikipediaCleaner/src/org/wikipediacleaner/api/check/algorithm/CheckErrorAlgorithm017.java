@@ -101,14 +101,14 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
               }
               result = true;
               if (categoryElement.errorResult == null) {
-                categoryElement.errorResult = new CheckErrorResult(
-                    getShortDescription(),
+                categoryElement.errorResult = createCheckErrorResult(
+                    page,
                     categoryElement.begin, categoryElement.end,
                     CheckErrorResult.ErrorLevel.CORRECT);
                 errors.add(categoryElement.errorResult);
               }
-              CheckErrorResult errorResult = new CheckErrorResult(
-                  getShortDescription(), beginIndex, currentIndex);
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  page, beginIndex, currentIndex);
               errorResult.addReplacement("");
               errors.add(errorResult);
             }

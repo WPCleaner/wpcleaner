@@ -424,6 +424,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     // Page List
     modelPages = new DefaultListModel();
     listPages = new JList(modelPages);
+    listPages.setCellRenderer(new CheckErrorPageListCellRenderer(true));
     listPages.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     listPages.addMouseListener(new MouseAdapter() {
 
@@ -589,7 +590,7 @@ public class CheckWikiProjectWindow extends PageWindow {
       // Errors list
       modelErrors = new DefaultListModel();
       listErrors = new JList(modelErrors);
-      CheckErrorPageListCellRenderer cellRenderer = new CheckErrorPageListCellRenderer();
+      CheckErrorPageListCellRenderer cellRenderer = new CheckErrorPageListCellRenderer(false);
       cellRenderer.showCountOccurence(true);
       listErrors.setCellRenderer(cellRenderer);
       listErrors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -1209,7 +1210,7 @@ public class CheckWikiProjectWindow extends PageWindow {
       int nbPages = error.getPageCount();
       for (int numPage = 0; numPage < nbPages; numPage++) {
         Page page = error.getPage(numPage);
-        modelPages.addElement(page);
+        modelPages.addElement(new CheckErrorPage(page, error.getAlgorithm()));
       }
       setPageLoaded(false);
       actionSelectPage();
@@ -1293,7 +1294,8 @@ public class CheckWikiProjectWindow extends PageWindow {
     final ArrayList<Page> pages = new ArrayList<Page>();
     if (selection != null) {
       for (int i = 0; i < selection.length; i++) {
-        pages.add((Page) selection[i]);
+        CheckErrorPage errorPage = (CheckErrorPage) selection[i];
+        pages.add(errorPage.getPage());
       }
     }
     if (pages.size() > 0) {

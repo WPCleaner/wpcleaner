@@ -121,8 +121,8 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
               }
               result = true;
               errorLevel = -1;
-              CheckErrorResult errorResult = new CheckErrorResult(
-                  getShortDescription(), errorIndex, startIndex + 1);
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  page, errorIndex, startIndex + 1);
               errors.add(errorResult);
             }
           }

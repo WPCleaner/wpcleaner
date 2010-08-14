@@ -74,8 +74,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
               result = true;
               String previousName = previousRef.getParameter("name");
               if (errorResults.get(previousRef) == null) {
-                CheckErrorResult errorResult = new CheckErrorResult(
-                    getShortDescription(),
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    page,
                     previousRef.getStartTagBeginIndex(), previousRef.getEndTagEndIndex() + 1,
                     (previousName == null) ?
                         CheckErrorResult.ErrorLevel.WARNING :
@@ -112,8 +112,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                 errors.add(errorResult);
                 errorResults.put(previousRef, errorResult);
               }
-              CheckErrorResult errorResult = new CheckErrorResult(
-                  getShortDescription(),
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  page,
                   ref.getStartTagBeginIndex(), ref.getEndTagEndIndex() + 1);
               if (previousName != null) {
                 errorResult.addReplacement("<ref name=" + previousName + "/>");

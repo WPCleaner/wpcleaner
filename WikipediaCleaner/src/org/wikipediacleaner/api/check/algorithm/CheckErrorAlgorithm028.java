@@ -60,7 +60,7 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
-          errors.add(new CheckErrorResult(getShortDescription(), beginIndex, beginIndex + 2));
+          errors.add(createCheckErrorResult(page, beginIndex, beginIndex + 2));
           count = 0;
         }
         startIndex = beginIndex;

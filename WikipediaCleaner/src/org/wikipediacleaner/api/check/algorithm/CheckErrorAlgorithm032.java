@@ -120,7 +120,7 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
-          CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), beginIndex, currentPos);
+          CheckErrorResult errorResult = createCheckErrorResult(page, beginIndex, currentPos);
           for (int i = 0; i < pipeIndex.size(); i++) {
             int beginText = pipeIndex.get(i).intValue();
             int endText = ((i + 1 < pipeIndex.size()) ? pipeIndex.get(i + 1).intValue() : currentPos - 2);

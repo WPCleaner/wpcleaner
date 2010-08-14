@@ -79,6 +79,19 @@ public interface CheckErrorAlgorithm {
   public void setLink(String link);
 
   /**
+   * Tell if a page is among the white list.
+   * 
+   * @param title Page title.
+   * @return Page among the white list ?
+   */
+  public boolean isInWhiteList(String title);
+
+  /**
+   * @param whiteList White list.
+   */
+  public void setWhiteList(String[] whiteList);
+
+  /**
    * @return Priority.
    */
   public int getPriority();

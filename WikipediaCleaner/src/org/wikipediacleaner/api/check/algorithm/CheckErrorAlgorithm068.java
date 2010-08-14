@@ -86,8 +86,8 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
                     return true;
                   }
                   result = true;
-                  CheckErrorResult errorResult = new CheckErrorResult(
-                      getShortDescription(), beginIndex, endIndex + 2);
+                  CheckErrorResult errorResult = createCheckErrorResult(
+                      page, beginIndex, endIndex + 2);
                   EnumWikipedia fromWikipedia = EnumWikipedia.getWikipedia(lg.getCode());
                   if (fromWikipedia != null) {
                     currentPos++;

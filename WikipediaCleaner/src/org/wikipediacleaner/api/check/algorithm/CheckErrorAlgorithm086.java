@@ -65,7 +65,7 @@ public class CheckErrorAlgorithm086 extends CheckErrorAlgorithmBase {
                 return true;
               }
               result = true;
-              CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), startIndex, endIndex + 2);
+              CheckErrorResult errorResult = createCheckErrorResult(page, startIndex, endIndex + 2);
               errorResult.addReplacement(contents.substring(startIndex + 1, endIndex + 1));
               errors.add(errorResult);
               startIndex = endIndex + 2;
