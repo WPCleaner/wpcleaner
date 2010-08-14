@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-08-14 15:15+0200\n"
-"PO-Revision-Date: 2010-08-08 12:57+0000\n"
+"PO-Revision-Date: 2010-08-14 16:30+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-08-08 15:00+0000\n"
+"X-Launchpad-Export-Date: 2010-08-14 17:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:38
@@ -44,9 +44,9 @@ msgid "Page {0}:"
 msgstr "Stránka {0}:"
 
 #: org/wikipediacleaner/api/MediaWiki.java:196
-#, fuzzy, java-format
+#, java-format
 msgid "Updating page {0}"
-msgstr "Aktualizuji obsah stránky"
+msgstr "Aktualizuji stránku {0}"
 
 #: org/wikipediacleaner/api/check/CheckError.java:186
 msgid "Deactivated"
@@ -147,6 +147,8 @@ msgstr "Odstranit zalomení v seznamu"
 msgid ""
 "A list of abbreviations that generate false positives when placed before {0}"
 msgstr ""
+"Seznam zkratek generujících falešně pozitivní výsledky, jsou-li umístěny "
+"před {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
@@ -195,11 +197,11 @@ msgstr "Existující reference"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:165
 msgid "Title of the article describing this type of error"
-msgstr ""
+msgstr "Titulek článku popisující tento typ chyby"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:166
 msgid "List of false positives for this type of error"
-msgstr ""
+msgstr "Seznam falešně pozitivních výsledků pro tento typ chyby"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:212
 msgid "Namespace"
@@ -365,7 +367,8 @@ msgstr "Můžou změnit nožství stránek v krátkém čase."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Na některých projektech Wikimedia potřebuješ pro tyto funkce příznak Bot."
 
@@ -503,6 +506,8 @@ msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
 msgstr ""
+"Chyba číslo {0} může být konfigurována s následujícím parametrem v <a "
+"href=\"{1}\">překladovém souboru</a>:"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1257
 #, java-format
@@ -729,7 +734,8 @@ msgstr "Než se přihlásíte, musíte zadat heslo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:772
 msgid "You can learn how to configure WikiCleaner at the following URL:"
-msgstr "Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
+msgstr ""
+"Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:789
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
