@@ -19,6 +19,10 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
@@ -47,20 +51,26 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
 
     boolean result = false;
     int startIndex = 0;
-    int count = 0;
-    TagBlock firstTag = null;
+    Map<String, TagBlock> firstTags = new HashMap<String, TagBlock>();
+    Set<String> tagUsed = new TreeSet<String>();
     while (startIndex < contents.length()) {
       TagBlock tag = findNextTag(page, contents, "references", startIndex);
       if (tag != null) {
         startIndex = tag.getEndTagEndIndex();
-        if (count == 0) {
-          firstTag = tag;
+        String group = tag.getParameter("group");
+        if (group == null) {
+          group = "";
+        }
+        TagBlock firstTag = firstTags.get(group);
+        if (firstTag == null) {
+          firstTags.put(group, tag);
         } else {
           if (errors == null) {
             return true;
           }
           result = true;
-          if ((count == 1) && (firstTag != null)) {
+          if (!tagUsed.contains(group)) {
+            tagUsed.add(group);
             CheckErrorResult errorResult = createCheckErrorResult(
                 page,
                 firstTag.getStartTagBeginIndex(), firstTag.getEndTagEndIndex(),
@@ -73,7 +83,6 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
         }
-        count++;
       } else {
         startIndex = contents.length();
       }
