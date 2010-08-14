@@ -79,8 +79,8 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
               return true;
             }
             result = true;
-            CheckErrorResult errorResult = new CheckErrorResult(
-                getShortDescription(), startIndex, endIndex + 1); 
+            CheckErrorResult errorResult = createCheckErrorResult(
+                page, startIndex, endIndex + 1); 
             boolean isInRef = false;
             TagData previousStartRef = findPreviousStartTag(page, contents, "ref", startIndex);
             if (previousStartRef != null) {

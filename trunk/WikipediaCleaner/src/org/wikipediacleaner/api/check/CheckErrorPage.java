@@ -31,6 +31,7 @@ public class CheckErrorPage {
 
   private final CheckErrorAlgorithm algorithm;
   private final Page page;
+  private final boolean inWhiteList;
   private boolean errorFound;
   private ArrayList<CheckErrorResult> results;
 
@@ -41,6 +42,8 @@ public class CheckErrorPage {
   public CheckErrorPage(Page page, CheckErrorAlgorithm algorithm) {
     this.page = page;
     this.algorithm = algorithm;
+    this.inWhiteList = ((page != null) && (algorithm != null)) ?
+        algorithm.isInWhiteList(page.getTitle()) : false;
     this.errorFound = false;
     this.results = null;
   }
@@ -57,6 +60,13 @@ public class CheckErrorPage {
    */
   public CheckErrorAlgorithm getAlgorithm() {
     return algorithm;
+  }
+
+  /**
+   * @return Page in white list ?
+   */
+  public boolean isInWhiteList() {
+    return inWhiteList;
   }
 
   /**

@@ -72,10 +72,10 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
           }
           result = true;
           if (lineIndex < 0) {
-            errors.add(new CheckErrorResult(getShortDescription(), startIndex, contents.length()));
+            errors.add(createCheckErrorResult(page, startIndex, contents.length()));
             startIndex = contents.length();
           } else {
-            errors.add(new CheckErrorResult(getShortDescription(), startIndex, lineIndex));
+            errors.add(createCheckErrorResult(page, startIndex, lineIndex));
             startIndex = lineIndex + 1;
           }
         } else {

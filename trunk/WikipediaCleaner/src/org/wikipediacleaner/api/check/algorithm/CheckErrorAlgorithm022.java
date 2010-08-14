@@ -105,8 +105,8 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
                 return true;
               }
               result = true;
-              CheckErrorResult errorResult = new CheckErrorResult(
-                  getShortDescription(), beginIndex, endIndex + 2);
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  page, beginIndex, endIndex + 2);
               errorResult.addReplacement(
                   "[[" + categoryNamespace.getTitle() + ":" +
                   Character.toUpperCase(contents.charAt(nameBegin)) +

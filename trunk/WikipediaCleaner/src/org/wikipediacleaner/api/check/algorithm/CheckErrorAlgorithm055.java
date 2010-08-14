@@ -70,8 +70,8 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
                   return true;
                 }
                 result = true;
-                CheckErrorResult errorResult = new CheckErrorResult(
-                    getShortDescription(), smallPos, currentPos + 8);
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    page, smallPos, currentPos + 8);
                 errors.add(errorResult);
               }
               currentPos += 7;

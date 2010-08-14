@@ -75,8 +75,8 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
             int nextBegin = contents.indexOf('[', beginIndex + 2);
             if (((nextCR < 0) || (nextCR > nextEnd)) &&
                 ((nextBegin < 0) || (nextBegin > nextEnd))) {
-              CheckErrorResult errorResult = new CheckErrorResult(
-                  getShortDescription(), beginIndex, nextEnd + 1);
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  page, beginIndex, nextEnd + 1);
               errorResult.addReplacement(contents.substring(beginIndex, nextEnd + 1) + "]");
 
               // Check if the situation is something like [[http://....] (replacement: [http://....]) 
@@ -92,7 +92,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
 
           // Default
           if (!errorReported) {
-            errors.add(new CheckErrorResult(getShortDescription(), beginIndex, beginIndex + 2));
+            errors.add(createCheckErrorResult(page, beginIndex, beginIndex + 2));
           }
           count = 0;
         }

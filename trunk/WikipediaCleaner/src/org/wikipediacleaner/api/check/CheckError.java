@@ -200,6 +200,7 @@ public class CheckError {
   /**
    * Retrieve error short description from configuration.
    * 
+   * @param wikipedia Wikipedia.
    * @param errorNumber Error number.
    * @return Short description.
    */
@@ -222,12 +223,30 @@ public class CheckError {
   /**
    * Retrieve link to error description from configuration.
    * 
+   * @param wikipedia Wikipedia.
    * @param errorNumber Error number.
    * @return Link to error description.
    */
   public static String getErrorLink(
       EnumWikipedia wikipedia, int errorNumber) {
     return wikipedia.getCheckWikiProperty("link", errorNumber, true, true, false);
+  }
+
+  /**
+   * Retrieve white list from configuration.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param errorNumber Error number.
+   * @return White list
+   */
+  public static String[] getErrorWhiteList(
+      EnumWikipedia wikipedia, int errorNumber) {
+    String whiteListString = wikipedia.getCheckWikiProperty(
+        "whitelist", errorNumber, true, false, false);
+    if (whiteListString == null) {
+      return null;
+    }
+    return wikipedia.convertPropertyToStringArray(whiteListString);
   }
 
   /**
@@ -248,11 +267,13 @@ public class CheckError {
     String shortDescription = getErrorShortDescription(wikipedia, errorNumber);
     String longDescription = getErrorLongDescription(wikipedia, errorNumber);
     String link = getErrorLink(wikipedia, errorNumber);
+    String[] whiteList = getErrorWhiteList(wikipedia, errorNumber);
 
     // Create error
     CheckError error = new CheckError(
         wikipedia, errorNumber, priority,
-        shortDescription, longDescription, link);
+        shortDescription, longDescription,
+        link, whiteList);
     if (stream != null) {
       try {
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
@@ -297,10 +318,12 @@ public class CheckError {
    * @param shortDescription Short description.
    * @param longDescription Long description.
    * @param link Link to error description.
+   * @param whiteList White list.
    */
   private CheckError(
       EnumWikipedia wikipedia, int errorNumber, int priority,
-      String shortDescription, String longDescription, String link) {
+      String shortDescription, String longDescription,
+      String link, String[] whiteList) {
     this.wikipedia = wikipedia;
     DecimalFormat errorNumberFormat = new DecimalFormat("000");
     String className = CheckErrorAlgorithm.class.getName() + errorNumberFormat.format(errorNumber);
@@ -312,6 +335,7 @@ public class CheckError {
       tmpAlgorithm.setShortDescription(shortDescription);
       tmpAlgorithm.setLongDescription(longDescription);
       tmpAlgorithm.setLink(link);
+      tmpAlgorithm.setWhiteList(whiteList);
     } catch (ClassNotFoundException e) {
       // Not found: error not yet available in WikiCleaner.
     } catch (InstantiationException e) {

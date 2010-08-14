@@ -112,8 +112,8 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
                 return true;
               }
               result = true;
-              CheckErrorResult errorResult = new CheckErrorResult(
-                  getShortDescription(), beginIndex, currentIndex);
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  page, beginIndex, currentIndex);
               errorResult.addPossibleAction(new SimpleAction(
                   GT._("View image"),
                   new PageViewAction(imageName, wikipedia, true)));

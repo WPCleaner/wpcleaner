@@ -61,15 +61,15 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
           }
           result = true;
           if ((count == 1) && (firstTag != null)) {
-            CheckErrorResult errorResult = new CheckErrorResult(
-                getShortDescription(),
+            CheckErrorResult errorResult = createCheckErrorResult(
+                page,
                 firstTag.getStartTagBeginIndex(), firstTag.getEndTagEndIndex(),
                 ErrorLevel.CORRECT);
             errorResult.addReplacement("", GT._("Delete"));
             errors.add(errorResult);
           }
-          CheckErrorResult errorResult = new CheckErrorResult(
-              getShortDescription(), tag.getStartTagBeginIndex(), tag.getEndTagEndIndex());
+          CheckErrorResult errorResult = createCheckErrorResult(
+              page, tag.getStartTagBeginIndex(), tag.getEndTagEndIndex());
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
         }

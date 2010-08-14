@@ -111,8 +111,8 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
                 return true;
               }
               result = true;
-              CheckErrorResult errorResult = new CheckErrorResult(
-                  getShortDescription(), beginIndex, currentIndex);
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  page, beginIndex, currentIndex);
               errorResult.addPossibleAction(
                   GT._("Check category"),
                   new CheckCategoryLinkActionProvider(

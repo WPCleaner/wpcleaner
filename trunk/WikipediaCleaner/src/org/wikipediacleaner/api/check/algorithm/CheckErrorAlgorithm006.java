@@ -91,8 +91,8 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
-          CheckErrorResult errorResult = new CheckErrorResult(
-              getShortDescription(), tag.getBeginIndex(), tag.getEndIndex());
+          CheckErrorResult errorResult = createCheckErrorResult(
+              page, tag.getBeginIndex(), tag.getEndIndex());
           if (characterReplaced) {
             errorResult.addReplacement("{{" + tag.getTag() + text + "}}");
           } else {

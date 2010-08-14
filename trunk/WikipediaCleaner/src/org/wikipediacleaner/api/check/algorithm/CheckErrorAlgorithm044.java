@@ -100,7 +100,7 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
               return true;
             }
             result = true;
-            CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), titleIndex, endLineIndex);
+            CheckErrorResult errorResult = createCheckErrorResult(page, titleIndex, endLineIndex);
             errorResult.addReplacement(text + contents.substring(currentEnd + 1, endLineIndex));
             errors.add(errorResult);
           }

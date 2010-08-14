@@ -82,9 +82,9 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
               result = true;
               CheckErrorResult errorResult = null;
               if (previousCurlyBracket < 0) {
-                errorResult = new CheckErrorResult(getShortDescription(), startIndex, startIndex + 2);
+                errorResult = createCheckErrorResult(page, startIndex, startIndex + 2);
               } else {
-                errorResult = new CheckErrorResult(getShortDescription(), previousCurlyBracket, startIndex + 2);
+                errorResult = createCheckErrorResult(page, previousCurlyBracket, startIndex + 2);
                 errorResult.addReplacement(
                     "{" + contents.substring(previousCurlyBracket, startIndex + 2));
               }

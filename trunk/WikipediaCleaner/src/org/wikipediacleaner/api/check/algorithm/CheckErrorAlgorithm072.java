@@ -118,8 +118,8 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmBase {
           if (errors == null) {
             return true;
           }
-          CheckErrorResult errorResult = new CheckErrorResult(
-              getShortDescription(), startIndex, tmpIndex);
+          CheckErrorResult errorResult = createCheckErrorResult(
+              page, startIndex, tmpIndex);
           errorResult.addPossibleAction(
               GT._(
                   "The checksum is {0} instead of {1}",

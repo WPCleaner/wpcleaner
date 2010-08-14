@@ -99,7 +99,7 @@ public class CheckErrorAlgorithm088 extends CheckErrorAlgorithmBase {
                 return true;
               }
               result = true;
-              CheckErrorResult errorResult = new CheckErrorResult(getShortDescription(), beginIndex, endIndex + 2);
+              CheckErrorResult errorResult = createCheckErrorResult(page, beginIndex, endIndex + 2);
               errorResult.addReplacement(
                   "{{" + defaultSort + contents.substring(currentPos, endIndex + 2));
               errors.add(errorResult);

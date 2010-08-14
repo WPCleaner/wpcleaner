@@ -75,11 +75,11 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
     }
     CheckErrorResult errorResult = null;
     if (possibleEndIndex < 0) {
-      errorResult = new CheckErrorResult(
-          getShortDescription(), commentIndex, commentIndex + 4);
+      errorResult = createCheckErrorResult(
+          page, commentIndex, commentIndex + 4);
     } else {
-      errorResult = new CheckErrorResult(
-          getShortDescription(), commentIndex, possibleEndIndex + 2);
+      errorResult = createCheckErrorResult(
+          page, commentIndex, possibleEndIndex + 2);
       errorResult.addReplacement(
           contents.substring(commentIndex, possibleEndIndex) + "-->");
     }

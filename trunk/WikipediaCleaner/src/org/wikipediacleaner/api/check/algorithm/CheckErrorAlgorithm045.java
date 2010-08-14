@@ -89,14 +89,14 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
                   }
                   result = true;
                   if (interwikiElement.errorResult == null) {
-                    interwikiElement.errorResult = new CheckErrorResult(
-                        getShortDescription(),
+                    interwikiElement.errorResult = createCheckErrorResult(
+                        page,
                         interwikiElement.begin, interwikiElement.end,
                         CheckErrorResult.ErrorLevel.CORRECT);
                     errors.add(interwikiElement.errorResult);
                   }
-                  CheckErrorResult errorResult = new CheckErrorResult(
-                      getShortDescription(), beginIndex, currentIndex);
+                  CheckErrorResult errorResult = createCheckErrorResult(
+                      page, beginIndex, currentIndex);
                   errorResult.addReplacement("");
                   errors.add(errorResult);
                 }
