@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-12 00:07+0200\n"
+"POT-Creation-Date: 2010-08-14 10:43+0200\n"
 "PO-Revision-Date: 2010-06-02 20:44+0000\n"
 "Last-Translator: Michael MORONI <haikara90@gmail.com>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
@@ -80,6 +80,8 @@ msgstr "Anstataŭigita per {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:126
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:112
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:68
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:73
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:636
 msgid "Delete"
 msgstr "Forigu"

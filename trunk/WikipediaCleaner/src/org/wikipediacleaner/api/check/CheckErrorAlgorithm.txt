@@ -172,6 +172,7 @@ Error 036: Redirect not correct
 
 ===============================================================================
 Error 037: Title with special letters and no DEFAULTSORT
+Status: DONE
 
 ===============================================================================
 Error 038: HTML text style element <i>
@@ -269,6 +270,7 @@ Status: DONE
 
 ===============================================================================
 Error 059: Template value end with break
+Status: DONE
 
 ===============================================================================
 Error 060: Template parameter with problem
@@ -335,6 +337,7 @@ Error 077: Image description with partial <small>
 
 ===============================================================================
 Error 078: Reference double
+Status: DONE
 
 ===============================================================================
 Error 079: External link without description
