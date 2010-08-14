@@ -18,14 +18,66 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
+
+import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.TagBlock;
+import org.wikipediacleaner.i18n.GT;
+
 
 /**
  * Algorithm for analyzing error 78 of check wikipedia project.
  * Error 78: Reference double
  */
-public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmUnavailable {
+public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm078() {
     super("Reference double");
+  }
+
+  /* (non-Javadoc)
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#analyze(org.wikipediacleaner.api.data.Page, java.lang.String, java.util.ArrayList)
+   */
+  public boolean analyze(Page page, String contents, ArrayList<CheckErrorResult> errors) {
+    if ((page == null) || (contents == null)) {
+      return false;
+    }
+
+    boolean result = false;
+    int startIndex = 0;
+    int count = 0;
+    TagBlock firstTag = null;
+    while (startIndex < contents.length()) {
+      TagBlock tag = findNextTag(page, contents, "references", startIndex);
+      if (tag != null) {
+        startIndex = tag.getEndTagEndIndex();
+        if (count == 0) {
+          firstTag = tag;
+        } else {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          if ((count == 1) && (firstTag != null)) {
+            CheckErrorResult errorResult = new CheckErrorResult(
+                getShortDescription(),
+                firstTag.getStartTagBeginIndex(), firstTag.getEndTagEndIndex(),
+                ErrorLevel.CORRECT);
+            errorResult.addReplacement("", GT._("Delete"));
+            errors.add(errorResult);
+          }
+          CheckErrorResult errorResult = new CheckErrorResult(
+              getShortDescription(), tag.getStartTagBeginIndex(), tag.getEndTagEndIndex());
+          errorResult.addReplacement("", GT._("Delete"));
+          errors.add(errorResult);
+        }
+        count++;
+      } else {
+        startIndex = contents.length();
+      }
+    }
+    return result;
   }
 }
