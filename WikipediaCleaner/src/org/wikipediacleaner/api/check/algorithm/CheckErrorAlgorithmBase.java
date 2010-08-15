@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.DefaultsortBlock;
@@ -38,7 +37,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
 
-  private int priority = CheckError.PRIORITY_UNKOWN;
+  private int priority = CheckErrorAlgorithms.PRIORITY_UNKOWN;
   private String shortDescription;
   private String shortDescriptionReplaced;
   private String longDescription;

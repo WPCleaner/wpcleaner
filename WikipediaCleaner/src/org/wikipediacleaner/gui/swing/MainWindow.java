@@ -58,6 +58,7 @@ import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -1083,6 +1084,7 @@ public class MainWindow
         } catch (APIException e) {
           System.err.println("Error retrieving Check Wiki configuration: " + e.getMessage());
         }
+        CheckErrorAlgorithms.initializeAlgorithms(getWikipedia());
       } catch (APIException e) {
         return e;
       }

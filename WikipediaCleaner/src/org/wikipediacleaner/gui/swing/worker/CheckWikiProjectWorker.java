@@ -19,7 +19,6 @@
 package org.wikipediacleaner.gui.swing.worker;
 
 import java.io.InputStream;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -29,6 +28,7 @@ import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorComparator;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -82,9 +82,8 @@ public class CheckWikiProjectWorker extends BasicWorker {
 
     // Retrieving errors
     String code = getWikipedia().getCode().replace("-", "_");
-    DecimalFormat errorNumberFormat = new DecimalFormat("000");
     for (int errorNumber = 1; errorNumber < 100; errorNumber++) {
-      int errorPriority = CheckError.getErrorPriority(getWikipedia(), errorNumber);
+      int errorPriority = CheckErrorAlgorithms.getPriority(getWikipedia(), errorNumber);
       boolean needError = false;
       boolean needList = false;
       if ((exceptErrors != null) && (exceptErrors.contains(Integer.valueOf(errorNumber)))) {
@@ -95,13 +94,11 @@ public class CheckWikiProjectWorker extends BasicWorker {
       } else if (otherErrors) {
         needError = true;
       }
-      if ((CheckError.isPriorityActive(errorPriority)) && (needError)) {
-        String className = CheckErrorAlgorithm.class.getName() + errorNumberFormat.format(errorNumber);
+      if ((CheckErrorAlgorithms.isPriorityActive(errorPriority)) && (needError)) {
         try {
   
           // Checking if the error number is known by WikiCleaner
-          Class algorithmClass = Class.forName(className);
-          CheckErrorAlgorithm algorithm = (CheckErrorAlgorithm) algorithmClass.newInstance();
+          CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(getWikipedia(), errorNumber);
 
           if ((algorithm != null) && (algorithm.isAvailable())) {
             // Retrieving list of pages for the error number
@@ -120,15 +117,6 @@ public class CheckWikiProjectWorker extends BasicWorker {
             }
             CheckError.addCheckError(errors, getWikipedia(), errorNumber, stream);
           }
-        } catch (ClassNotFoundException e) {
-          // Not found: error not yet available in WikiCleaner.
-          if (needList) {
-            System.out.println("Error " + errorNumber + " is not yet available in WikiCleaner.");
-          }
-        } catch (IllegalAccessException e) {
-          System.err.println("IllegalAccessException: " + e.getMessage());
-        } catch (InstantiationException e) {
-          System.err.println("InstantiationException: " + e.getMessage());
         } catch (APIException e) {
           return e;
         }
