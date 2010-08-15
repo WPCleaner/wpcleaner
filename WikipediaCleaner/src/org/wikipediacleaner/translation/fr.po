@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-08-14 15:15+0200\n"
-"PO-Revision-Date: 2010-08-12 18:06+0000\n"
-"Last-Translator: Gaël Desbois <Unknown>\n"
+"PO-Revision-Date: 2010-08-14 20:55+0000\n"
+"Last-Translator: A2 <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-08-12 20:11+0000\n"
+"X-Launchpad-Export-Date: 2010-08-15 10:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -48,9 +48,9 @@ msgid "Page {0}:"
 msgstr "Page {0} :"
 
 #: org/wikipediacleaner/api/MediaWiki.java:196
-#, fuzzy, java-format
+#, java-format
 msgid "Updating page {0}"
-msgstr "Mise à jour du contenu de la page"
+msgstr "Mise à jour de {0}"
 
 #: org/wikipediacleaner/api/check/CheckError.java:186
 msgid "Deactivated"
@@ -101,7 +101,7 @@ msgstr "Supprimer"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:107
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
-msgstr ""
+msgstr "Modèles incluants {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:41
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:39
@@ -151,6 +151,8 @@ msgstr "Supprimer les sauts de ligne en fin de liste"
 msgid ""
 "A list of abbreviations that generate false positives when placed before {0}"
 msgstr ""
+"Une liste d'abréviations qui génèrent des faux-positifs lorsqu'elles sont "
+"utilisées avant {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:99
 msgid "Check language links"
@@ -370,7 +372,8 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -514,6 +517,8 @@ msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
 msgstr ""
+"L’erreur n° {0} peut être configurée sur la <a href=\"{1}\">page de "
+"traduction</a> avec le paramètres suivants :"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1257
 #, java-format
@@ -650,7 +655,7 @@ msgstr "&Mot de passe :"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:348
 msgid "&Save password"
-msgstr "&Sauver le mot de passe"
+msgstr "&Sauvegarder le mot de passe"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:361
 msgid "&Login"
@@ -1071,7 +1076,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:401
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr ""
+"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:287
 msgid "&Page :"
