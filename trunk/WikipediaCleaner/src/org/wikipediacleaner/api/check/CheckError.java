@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -31,6 +30,7 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -41,13 +41,6 @@ import org.wikipediacleaner.i18n.GT;
  * An abstract class for managing errors defind in the check wikipedia project.
  */
 public class CheckError {
-
-  public final static int PRIORITY_UNKOWN = -1;
-  public final static int PRIORITY_DEACTIVATED = 0;
-  public final static int PRIORITY_TOP = 1;
-  public final static int PRIORITY_MIDDLE = 2;
-  public final static int PRIORITY_LOWEST = 3;
-  public final static int PRIORITY_BOT_ONLY = 4;
 
   /**
    * Analyze a page to find error types.
@@ -101,155 +94,6 @@ public class CheckError {
   }
 
   /**
-   * Retrieve error priority from configuration.
-   * 
-   * @param errorNumber Error number.
-   * @return Priority.
-   */
-  public static int getErrorPriority(
-      EnumWikipedia wikipedia, int errorNumber) {
-    int errorPriority = PRIORITY_UNKOWN;
-    String prioWiki = wikipedia.getCheckWikiProperty("prio", errorNumber, true, false, false);
-    if (prioWiki != null) {
-      try {
-        errorPriority = Integer.parseInt(prioWiki);
-      } catch (NumberFormatException e) {
-        //
-      }
-    }
-    if (errorPriority == PRIORITY_UNKOWN) {
-      String prioScript = wikipedia.getCheckWikiProperty("prio", errorNumber, false, true, false);
-      if (prioScript != null) {
-        try {
-          errorPriority = Integer.parseInt(prioScript);
-        } catch (NumberFormatException e) {
-          //
-        }
-      }
-    }
-    if (errorPriority == PRIORITY_DEACTIVATED) {
-      String botOnly = wikipedia.getCheckWikiProperty("bot", errorNumber, true, true, false);
-      if ((botOnly != null) && Boolean.valueOf(botOnly.trim())) {
-        errorPriority = PRIORITY_BOT_ONLY;
-      }
-    }
-    return errorPriority;
-  }
-
-  /**
-   * @param priority Priority.
-   * @return Flag indicating if the priority is active.
-   */
-  public static boolean isPriorityActive(int priority) {
-    if ((priority == PRIORITY_TOP) ||
-        (priority == PRIORITY_MIDDLE) ||
-        (priority == PRIORITY_LOWEST) ||
-        (priority == PRIORITY_BOT_ONLY)) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Compare 2 priorities.
-   * 
-   * @param p1 Priority 1.
-   * @param p2 Priority 2.
-   * @return 0 if priorities are equal, -1 if p1 < p2, 1 if p1 > p2.
-   */
-  public static int comparePriority(int p1, int p2) {
-    if (p1 == p2) {
-      return 0;
-    }
-    if (p1 == PRIORITY_UNKOWN) {
-      return -1;
-    }
-    if (p2 == PRIORITY_UNKOWN) {
-      return 1;
-    }
-    if (p1 == PRIORITY_DEACTIVATED) {
-      return -1;
-    }
-    if (p2 == PRIORITY_DEACTIVATED) {
-      return 1;
-    }
-    return (p1 < p2) ? -1 : 1;
-  }
-
-  /**
-   * @param priority Priority.
-   * @return Textual description of the priority.
-   */
-  public static String getPriority(int priority) {
-    switch (priority) {
-    case PRIORITY_DEACTIVATED:
-      return GT._("Deactivated");
-    case PRIORITY_LOWEST:
-      return GT._("Low priority");
-    case PRIORITY_MIDDLE:
-      return GT._("Middle priority");
-    case PRIORITY_TOP:
-      return GT._("Top priority");
-    case PRIORITY_BOT_ONLY:
-      return GT._("For Bot");
-    default:
-      return GT._("Priority unknown");
-    }
-  }
-
-  /**
-   * Retrieve error short description from configuration.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param errorNumber Error number.
-   * @return Short description.
-   */
-  public static String getErrorShortDescription(
-      EnumWikipedia wikipedia, int errorNumber) {
-    return wikipedia.getCheckWikiProperty("head", errorNumber, true, true, false);
-  }
-
-  /**
-   * Retrieve error long description from configuration.
-   * 
-   * @param errorNumber Error number.
-   * @return Long description.
-   */
-  public static String getErrorLongDescription(
-      EnumWikipedia wikipedia, int errorNumber) {
-    return wikipedia.getCheckWikiProperty("desc", errorNumber, true, true, false);
-  }
-
-  /**
-   * Retrieve link to error description from configuration.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param errorNumber Error number.
-   * @return Link to error description.
-   */
-  public static String getErrorLink(
-      EnumWikipedia wikipedia, int errorNumber) {
-    return wikipedia.getCheckWikiProperty("link", errorNumber, true, true, false);
-  }
-
-  /**
-   * Retrieve white list from configuration.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param errorNumber Error number.
-   * @return White list
-   */
-  public static String[] getErrorWhiteList(
-      EnumWikipedia wikipedia, int errorNumber) {
-    String whiteListString = wikipedia.getCheckWikiProperty(
-        "whitelist", errorNumber, true, false, false);
-    if (whiteListString == null) {
-      return null;
-    }
-    return wikipedia.convertPropertyToStringArray(whiteListString);
-  }
-
-  /**
    * @param errors Errors list.
    * @param wikipedia Wikipedia.
    * @param errorNumber Error number.
@@ -260,20 +104,12 @@ public class CheckError {
       EnumWikipedia wikipedia, int errorNumber, InputStream stream) {
 
     // Analyze properties to find infos about error number
-    int priority = getErrorPriority(wikipedia, errorNumber);
-    if (!isPriorityActive(priority)) {
+    if (!CheckErrorAlgorithms.isAlgorithmActive(wikipedia, errorNumber)) {
       return;
     }
-    String shortDescription = getErrorShortDescription(wikipedia, errorNumber);
-    String longDescription = getErrorLongDescription(wikipedia, errorNumber);
-    String link = getErrorLink(wikipedia, errorNumber);
-    String[] whiteList = getErrorWhiteList(wikipedia, errorNumber);
 
     // Create error
-    CheckError error = new CheckError(
-        wikipedia, errorNumber, priority,
-        shortDescription, longDescription,
-        link, whiteList);
+    CheckError error = new CheckError(wikipedia, errorNumber);
     if (stream != null) {
       try {
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
@@ -314,40 +150,11 @@ public class CheckError {
    * 
    * @param wikipedia Wikipedia.
    * @param errorNumber Error number as defined in the check wikipedia project.
-   * @param priority Error priority.
-   * @param shortDescription Short description.
-   * @param longDescription Long description.
-   * @param link Link to error description.
-   * @param whiteList White list.
    */
   private CheckError(
-      EnumWikipedia wikipedia, int errorNumber, int priority,
-      String shortDescription, String longDescription,
-      String link, String[] whiteList) {
+      EnumWikipedia wikipedia, int errorNumber) {
     this.wikipedia = wikipedia;
-    DecimalFormat errorNumberFormat = new DecimalFormat("000");
-    String className = CheckErrorAlgorithm.class.getName() + errorNumberFormat.format(errorNumber);
-    CheckErrorAlgorithm tmpAlgorithm = null;
-    try {
-      Class algorithmClass = Class.forName(className);
-      tmpAlgorithm = (CheckErrorAlgorithm) algorithmClass.newInstance();
-      tmpAlgorithm.setPriority(priority);
-      tmpAlgorithm.setShortDescription(shortDescription);
-      tmpAlgorithm.setLongDescription(longDescription);
-      tmpAlgorithm.setLink(link);
-      tmpAlgorithm.setWhiteList(whiteList);
-    } catch (ClassNotFoundException e) {
-      // Not found: error not yet available in WikiCleaner.
-    } catch (InstantiationException e) {
-      System.err.println("InstantiationException for " + className);
-    } catch (IllegalAccessException e) {
-      System.err.println("IllegalAccessException for " + className);
-    } catch (ClassCastException e) {
-      System.err.println(
-          "Class " + className +
-          " doesn't implement " + CheckErrorAlgorithm.class.getName());
-    }
-    this.algorithm = tmpAlgorithm;
+    this.algorithm = CheckErrorAlgorithms.getAlgorithm(wikipedia, errorNumber);
     this.errorNumber = errorNumber;
     this.errors = new ArrayList<Page>();
   }
@@ -405,8 +212,8 @@ public class CheckError {
     return GT._("Error n°{0} ({1} - {2}) - {3}", new Object[] {
         Integer.valueOf(errorNumber),
         count,
-        CheckError.getPriority((algorithm != null) ?
-            algorithm.getPriority() : CheckError.PRIORITY_UNKOWN),
+        CheckErrorAlgorithms.getPriorityString(
+            (algorithm != null) ? algorithm.getPriority() : CheckErrorAlgorithms.PRIORITY_UNKOWN),
         (algorithm != null) ?
             algorithm.getShortDescriptionReplaced() :
             GT._("Error unkown from WikiCleaner") });
