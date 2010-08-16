@@ -27,8 +27,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
@@ -38,6 +36,7 @@ import java.io.StringReader;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -46,18 +45,20 @@ import java.util.concurrent.Callable;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
@@ -85,6 +86,7 @@ import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -105,18 +107,17 @@ import org.wikipediacleaner.utils.Configuration;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-
 /**
  * Check Wiki Project window.
  */
 public class CheckWikiProjectWindow extends PageWindow {
 
-  ButtonGroup groupErrors;
-  private JRadioButton radioAllErrors;
-  JRadioButton radioOnlyErrors;
-  JRadioButton radioExceptErrors;
-  private JTextField textOnlyErrors;
-  private JTextField textExceptErrors;
+  private List<CheckErrorAlgorithm> allAlgorithms;
+  private List<CheckErrorAlgorithm> selectedAlgorithms;
+  private List<JMenuItem> menuItemAlgorithms;
+  private JPopupMenu popupSelectErrors;
+  private JButton buttonLoadErrors;
+
   private SpinnerNumberModel modelMaxErrors;
 
   ArrayList<CheckError> errors;
@@ -139,10 +140,11 @@ public class CheckWikiProjectWindow extends PageWindow {
 
   JTabbedPane contentPane;
 
-  public final static String ACTION_ERROR_DETAIL = "ERROR_DETAIL";
-  public final static String ACTION_ERROR_LIST   = "ERROR_LIST";
-  public final static String ACTION_LOAD_PAGES   = "LOAD_PAGES";
-  public final static String ACTION_RELOAD_ERROR = "RELOAD_ERROR";
+  public final static String ACTION_ERROR_DETAIL  = "ERROR_DETAIL";
+  public final static String ACTION_ERROR_LIST    = "ERROR_LIST";
+  public final static String ACTION_LOAD_PAGES    = "LOAD_PAGES";
+  public final static String ACTION_RELOAD_ERROR  = "RELOAD_ERROR";
+  public final static String ACTION_SELECT_ERRORS = "SELECT_ERRORS:";
 
   /**
    * Create and display a CheckWikiProjectWindow.
@@ -231,6 +233,203 @@ public class CheckWikiProjectWindow extends PageWindow {
   }
 
   /**
+   * @return Message for the Load button.
+   */
+  private String getLoadMessage() {
+    if ((allAlgorithms == null) || (allAlgorithms.isEmpty())) {
+      return GT._("No errors available");
+    }
+    if ((selectedAlgorithms == null) || (selectedAlgorithms.isEmpty())) {
+      return GT._("No errors selected");
+    }
+
+    // Check algorithms selected
+    boolean allErrorsSelected = true;
+    boolean allTopPrioritySelected = true;
+    boolean noTopPrioritySelected = true;
+    boolean allMiddlePrioritySelected = true;
+    boolean noMiddlePrioritySelected = true;
+    boolean allLowestPrioritySelected = true;
+    boolean noLowestPrioritySelected = true;
+    boolean allBotOnlyPrioritySelected = true;
+    boolean noBotOnlyPrioritySelected = true;
+    for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+      if (algorithm.isAvailable() &&
+          CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
+        if (!selectedAlgorithms.contains(algorithm)) {
+          allErrorsSelected = false;
+          switch (algorithm.getPriority()) {
+          case CheckErrorAlgorithms.PRIORITY_TOP:
+            allTopPrioritySelected = false;
+            break;
+          case CheckErrorAlgorithms.PRIORITY_MIDDLE:
+            allMiddlePrioritySelected = false;
+            break;
+          case CheckErrorAlgorithms.PRIORITY_LOWEST:
+            allLowestPrioritySelected = false;
+            break;
+          case CheckErrorAlgorithms.PRIORITY_BOT_ONLY:
+            allBotOnlyPrioritySelected = false;
+            break;
+          }
+        } else {
+          switch (algorithm.getPriority()) {
+          case CheckErrorAlgorithms.PRIORITY_TOP:
+            noTopPrioritySelected = false;
+            break;
+          case CheckErrorAlgorithms.PRIORITY_MIDDLE:
+            noMiddlePrioritySelected = false;
+            break;
+          case CheckErrorAlgorithms.PRIORITY_LOWEST:
+            noLowestPrioritySelected = false;
+            break;
+          case CheckErrorAlgorithms.PRIORITY_BOT_ONLY:
+            noBotOnlyPrioritySelected = false;
+            break;
+          }
+        }
+      }
+    }
+
+    // Get message depending on algorithms selected
+    if (allErrorsSelected) {
+      return GT._("Load all errors");
+    } else if (allTopPrioritySelected &&
+               noMiddlePrioritySelected &&
+               noLowestPrioritySelected &&
+               noBotOnlyPrioritySelected) {
+      return GT._("Load all high priority errors");
+    } else if (allTopPrioritySelected &&
+               allMiddlePrioritySelected &&
+               noLowestPrioritySelected &&
+               noBotOnlyPrioritySelected) {
+      return GT._("Load all high and middle priority errors");
+    } else if (noTopPrioritySelected &&
+               allMiddlePrioritySelected &&
+               noLowestPrioritySelected &&
+               noBotOnlyPrioritySelected) {
+      return GT._("Load all middle priority errors");
+    } else if (allTopPrioritySelected &&
+               allMiddlePrioritySelected &&
+               allLowestPrioritySelected &&
+               noBotOnlyPrioritySelected) {
+      return GT._("Load all high, middle and lowest priority errors");
+    } else if (allTopPrioritySelected &&
+               noMiddlePrioritySelected &&
+               allLowestPrioritySelected &&
+               noBotOnlyPrioritySelected) {
+      return GT._("Load all high and lowest priority errors");
+    } else if (noTopPrioritySelected &&
+               allMiddlePrioritySelected &&
+               allLowestPrioritySelected &&
+               noBotOnlyPrioritySelected) {
+      return GT._("Load all middle and lowest priority errors");
+    } else if (noTopPrioritySelected &&
+               noMiddlePrioritySelected &&
+               allLowestPrioritySelected &&
+               noBotOnlyPrioritySelected) {
+      return GT._("Load all lowest priority errors");
+    } else if (noTopPrioritySelected &&
+               noMiddlePrioritySelected &&
+               noLowestPrioritySelected &&
+               allBotOnlyPrioritySelected) {
+      return GT._("Load all errors for bots");
+    }
+
+    // Message with an explicit list of errors
+    StringBuilder msg = new StringBuilder();
+    for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
+      if (msg.length() > 0) {
+        msg.append(", ");
+      }
+      msg.append(algorithm.getErrorNumber());
+    }
+    return GT._("Load errors {0}", msg.toString());
+  }
+
+  /**
+   * Create popup menu for selecting errors.
+   */
+  private void createPopupSelectErrors() {
+    popupSelectErrors = new JPopupMenu(GT._("Select errors"));
+    menuItemAlgorithms = new ArrayList<JMenuItem>();
+    JMenuItem menuItem = null;
+
+    menuItem = new JMenuItem(GT._("Select all errors"));
+    menuItem.setActionCommand(ACTION_SELECT_ERRORS + "*");
+    menuItem.addActionListener(this);
+    popupSelectErrors.add(menuItem);
+
+    menuItem = new JMenuItem(GT._("Select high priority errors"));
+    menuItem.setActionCommand(ACTION_SELECT_ERRORS + "P1");
+    menuItem.addActionListener(this);
+    popupSelectErrors.add(menuItem);
+
+    menuItem = new JMenuItem(GT._("Select middle priority (and above) errors"));
+    menuItem.setActionCommand(ACTION_SELECT_ERRORS + "P1,P2");
+    menuItem.addActionListener(this);
+    popupSelectErrors.add(menuItem);
+
+    menuItem = new JMenuItem(GT._("Select lowest priority (and above) errors"));
+    menuItem.setActionCommand(ACTION_SELECT_ERRORS + "P1,P2,P3");
+    menuItem.addActionListener(this);
+    popupSelectErrors.add(menuItem);
+
+    popupSelectErrors.addSeparator();
+
+    final int PART_SIZE = 20; 
+    int lastPart = -1;
+    JMenu subMenu = null;
+    for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+      if (algorithm != null) {
+        int errorNumber = algorithm.getErrorNumber();
+        if (errorNumber > 0) {
+          int part = errorNumber / PART_SIZE;
+          if ((subMenu == null) || (part > lastPart)) {
+            int from = (part * PART_SIZE) + 1;
+            int to = (part + 1) * PART_SIZE;
+            subMenu = new JMenu(GT._(
+                "Errors from {0} to {1}",
+                new Object[] { Integer.valueOf(from), Integer.valueOf(to) }));
+            popupSelectErrors.add(subMenu);
+            lastPart = part;
+          }
+          String label =
+            algorithm.getErrorNumberString() + " - " +
+            algorithm.getShortDescriptionReplaced();
+          menuItem = new JCheckBoxMenuItem(label, selectedAlgorithms.contains(algorithm));
+          if ((!algorithm.isAvailable()) ||
+              (!CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()))) {
+            menuItem.setEnabled(false);
+          }
+          menuItem.setActionCommand(ACTION_SELECT_ERRORS + "+" + algorithm.getErrorNumberString());
+          menuItem.addActionListener(this);
+          subMenu.add(menuItem);
+          while (menuItemAlgorithms.size() <= errorNumber) {
+            menuItemAlgorithms.add(null);
+          }
+          menuItemAlgorithms.set(errorNumber, menuItem);
+        }
+      }
+    }
+  }
+
+  /**
+   * Update popup menu for selecting errors. 
+   */
+  private void updatePopupSelectErrors() {
+    for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+      if (algorithm != null) {
+        int errorNumber = algorithm.getErrorNumber();
+        JMenuItem menuItem = menuItemAlgorithms.get(errorNumber);
+        if (menuItem != null) {
+          menuItem.setSelected(selectedAlgorithms.contains(algorithm));
+        }
+      }
+    }
+  }
+
+  /**
    * @return Project components
    */
   private Component createProjectComponents() {
@@ -250,60 +449,50 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.weightx = 0;
     constraints.weighty = 0;
 
+    // Initialize algorithms list
+    allAlgorithms = CheckErrorAlgorithms.getAlgorithms(getWikipedia());
+    if (allAlgorithms == null) {
+      allAlgorithms = Collections.emptyList();
+    }
+    selectedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+      if (algorithm.isAvailable() &&
+          CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
+        selectedAlgorithms.add(algorithm);
+      }
+    }
+    createPopupSelectErrors();
+
     // Loading
     JToolBar toolbarLoad = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarLoad.setFloatable(false);
-    JButton buttonLoad = Utilities.createJButton(
-        "gnome-view-refresh.png", EnumImageSize.SMALL,
-        GT._("Load"), true);
-    buttonLoad.setActionCommand(ACTION_RELOAD);
-    buttonLoad.addActionListener(this);
-    toolbarLoad.add(buttonLoad);
-    groupErrors = new ButtonGroup();
-    radioAllErrors = Utilities.createJRadioButton(GT._("all errors"), true);
-    toolbarLoad.add(radioAllErrors);
-    groupErrors.add(radioAllErrors);
-    toolbarLoad.add(Utilities.createJLabel("/"));
-    radioOnlyErrors = Utilities.createJRadioButton(GT._("only"), false);
-    toolbarLoad.add(radioOnlyErrors);
-    groupErrors.add(radioOnlyErrors);
-    textOnlyErrors = new JTextField(20);
-    textOnlyErrors.setToolTipText(GT._(
-        "Comma separated list of errors to work on."));
-    textOnlyErrors.addKeyListener(new KeyAdapter() {
-      @Override
-      public void keyPressed(@SuppressWarnings("unused") KeyEvent e) {
-        groupErrors.setSelected(radioOnlyErrors.getModel(), true);
-      }
-    });
-    toolbarLoad.add(textOnlyErrors);
-    toolbarLoad.add(Utilities.createJLabel("/"));
-    radioExceptErrors = Utilities.createJRadioButton(GT._("except"), false);
-    toolbarLoad.add(radioExceptErrors);
-    groupErrors.add(radioExceptErrors);
-    textExceptErrors = new JTextField(20);
-    textExceptErrors.setToolTipText(GT._(
-        "Comma separated list of errors to ignore."));
-    textExceptErrors.addKeyListener(new KeyAdapter() {
-      @Override
-      public void keyPressed(@SuppressWarnings("unused") KeyEvent e) {
-        groupErrors.setSelected(radioExceptErrors.getModel(), true);
-      }
-    });
-    toolbarLoad.add(textExceptErrors);
-
-    toolbarLoad.addSeparator();
 
     modelMaxErrors = new SpinnerNumberModel(
         configuration.getInt(Configuration.INTEGER_CHECK_NB_ERRORS, Configuration.DEFAULT_CHECK_NB_ERRORS),
         10, 1000, 5);
     JSpinner spinMaxErrors = new JSpinner(modelMaxErrors);
+    spinMaxErrors.setPreferredSize(new Dimension(80, 20));
+    spinMaxErrors.setMaximumSize(new Dimension(80, 20));
     JLabel labelMaxErrors = Utilities.createJLabel(
         GT._("Maximum number of errors for Check Wiki :"));
     labelMaxErrors.setLabelFor(spinMaxErrors);
     labelMaxErrors.setHorizontalAlignment(SwingConstants.TRAILING);
     toolbarLoad.add(labelMaxErrors);
     toolbarLoad.add(spinMaxErrors);
+
+    toolbarLoad.addSeparator();
+
+    buttonLoadErrors = Utilities.createJButton(
+        "gnome-view-refresh.png", EnumImageSize.NORMAL,
+        getLoadMessage(), true);
+    buttonLoadErrors.setActionCommand(ACTION_RELOAD);
+    buttonLoadErrors.addActionListener(this);
+    buttonLoadErrors.setPreferredSize(new Dimension(800, 20));
+    buttonLoadErrors.setHorizontalAlignment(SwingConstants.LEADING);
+    buttonLoadErrors.setComponentPopupMenu(popupSelectErrors);
+    buttonLoadErrors.setToolTipText(GT._("Right click to select errors"));
+    toolbarLoad.add(buttonLoadErrors);
+
     constraints.fill = GridBagConstraints.BOTH;
     constraints.gridwidth = 3;
     constraints.gridx = 0;
@@ -666,13 +855,13 @@ public class CheckWikiProjectWindow extends PageWindow {
         displayWarning(GT._("The page {0} doesn't exist on Wikipedia", page.getTitle()));
         error.remove(page);
         pane.remove(this);
-        markPageAsFixed(error, error.getAlgorithm().getErrorNumber(), page);
+        markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
         actionSelectErrorType();
         return;
       }
       textPage.setText(page.getContents());
       textPage.setModified(false);
-      ArrayList<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
+      List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
           errors, page, textPage.getText());
       modelErrors.clear();
       initialErrors = new ArrayList<CheckErrorPage>();
@@ -702,7 +891,7 @@ public class CheckWikiProjectWindow extends PageWindow {
             answer = displayYesNoAllWarning(GT._(
                 "The error n°{0} hasn''t been found in the page {1}.\n" +
                 "Do you want to mark it as fixed ?",
-                new Object[] { error.getAlgorithm().getErrorNumber(), page.getTitle() }));
+                new Object[] { error.getAlgorithm().getErrorNumberString(), page.getTitle() }));
           }
         }
         switch (answer) {
@@ -714,7 +903,7 @@ public class CheckWikiProjectWindow extends PageWindow {
           if (errorCount == 0) {
             pane.remove(this);
           }
-          markPageAsFixed(error, error.getAlgorithm().getErrorNumber(), page);
+          markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
           actionSelectErrorType();
           return;
         case Utilities.NO_ALL_OPTION:
@@ -861,7 +1050,7 @@ public class CheckWikiProjectWindow extends PageWindow {
         }
       }
       actionSelectErrorType();
-      markPageAsFixed(error, error.getAlgorithm().getErrorNumber(), page);
+      markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
     }
 
     /**
@@ -988,18 +1177,18 @@ public class CheckWikiProjectWindow extends PageWindow {
                 Object element = modelAllErrors.getElementAt(posError);
                 if (element instanceof CheckError) {
                   final CheckError tmpError = (CheckError) element;
-                  if (tmpError.getAlgorithm().getErrorNumber().equals(algoFixed.getErrorNumber())) {
+                  if (tmpError.getAlgorithm().getErrorNumberString().equals(algoFixed.getErrorNumberString())) {
                     tmpError.remove(page);
                     if (tmpError.getPageCount() == 0) {
                       errorsToBeRemoved.add(tmpError);
                     }
-                    markPageAsFixed(tmpError, algoFixed.getErrorNumber(), page);
+                    markPageAsFixed(tmpError, algoFixed.getErrorNumberString(), page);
                     marked = true;
                   }
                 }
               }
               if (!marked) {
-                markPageAsFixed(null, algoFixed.getErrorNumber(), page);
+                markPageAsFixed(null, algoFixed.getErrorNumberString(), page);
               }
             }
             if (!configuration.getBoolean(
@@ -1021,7 +1210,7 @@ public class CheckWikiProjectWindow extends PageWindow {
      */
     private void actionValidate() {
       // Check for new errors
-      ArrayList<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
+      List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
           errors, page, textPage.getText());
       if (errorsFound != null) {
         for (CheckErrorPage tmpError : errorsFound) {
@@ -1239,7 +1428,102 @@ public class CheckWikiProjectWindow extends PageWindow {
       actionSelectPage();
     } else if (ACTION_RELOAD_ERROR.equals(e.getActionCommand())) {
       actionReloadError();
+    } else if ((e.getActionCommand() != null) &&
+               (e.getActionCommand().startsWith(ACTION_SELECT_ERRORS))) {
+      actionSelectErrors(e.getActionCommand().substring(ACTION_SELECT_ERRORS.length()));
     }
+  }
+
+  /**
+   * Action called when selected errors changes.
+   * 
+   * @param command Command.
+   */
+  private void actionSelectErrors(String command) {
+    if (command == null) {
+      return;
+    }
+
+    boolean selectionCleared = false;
+    String[] units = command.split(",");
+    for (int i = 0; i < units.length; i++) {
+      String unit = units[i].trim();
+
+      // Select all
+      if (unit.equals("*")) {
+        if (selectionCleared == false) {
+          selectedAlgorithms.clear();
+          selectionCleared = true;
+        }
+        for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+          if (algorithm.isAvailable() &&
+              CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
+            selectedAlgorithms.add(algorithm);
+          }
+        }
+
+      // Select priority
+      } else if (unit.startsWith("P")) {
+        if (selectionCleared == false) {
+          selectedAlgorithms.clear();
+          selectionCleared = true;
+        }
+        try {
+          int priority = Integer.parseInt(unit.substring(1));
+          for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+            if (algorithm.isAvailable() &&
+                CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()) &&
+                (priority == algorithm.getPriority())) {
+              selectedAlgorithms.add(algorithm);
+            }
+          }
+        } catch (NumberFormatException e) {
+          //
+        }
+
+      // Invert error selection
+      } else if (unit.startsWith("+")) {
+        try {
+          int errorNumber = Integer.parseInt(unit.substring(1));
+          for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+            if (algorithm.isAvailable() &&
+                CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()) &&
+                (errorNumber == algorithm.getErrorNumber())) {
+              if (selectedAlgorithms.contains(algorithm)) {
+                selectedAlgorithms.remove(algorithm);
+              } else {
+                selectedAlgorithms.add(algorithm);
+              }
+            }
+          }
+        } catch (NumberFormatException e) {
+          //
+        }
+
+      // Add an error
+      } else {
+        if (selectionCleared == false) {
+          selectedAlgorithms.clear();
+          selectionCleared = true;
+        }
+        try {
+          int errorNumber = Integer.parseInt(unit);
+          for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+            if (algorithm.isAvailable() &&
+                CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()) &&
+                (errorNumber == algorithm.getErrorNumber())) {
+              if (!selectedAlgorithms.contains(algorithm)) {
+                selectedAlgorithms.add(algorithm);
+              }
+            }
+          }
+        } catch (NumberFormatException e) {
+          //
+        }
+      }
+    }
+    updatePopupSelectErrors();
+    buttonLoadErrors.setText(getLoadMessage());
   }
 
   /**
@@ -1350,35 +1634,9 @@ public class CheckWikiProjectWindow extends PageWindow {
   protected void actionReload() {
     clean();
     contentPane.removeAll();
-    ArrayList<Integer> onlyErrorsList = null;
-    if ((groupErrors.getSelection() == radioOnlyErrors.getModel()) &&
-        (textOnlyErrors.getText().trim().length() > 0)) {
-      String[] errorsNumber = textOnlyErrors.getText().trim().split(",");
-      onlyErrorsList = new ArrayList<Integer>(errorsNumber.length);
-      for (int i = 0; i < errorsNumber.length; i++) {
-        try {
-          onlyErrorsList.add(Integer.valueOf(errorsNumber[i].trim()));
-        } catch (NumberFormatException e) {
-          // Nothing
-        }
-      }
-    }
-    ArrayList<Integer> exceptErrorsList = null;
-    if ((groupErrors.getSelection() == radioExceptErrors.getModel()) &&
-        (textExceptErrors.getText().trim().length() > 0)) {
-      String[] errorsNumber = textExceptErrors.getText().trim().split(",");
-      exceptErrorsList = new ArrayList<Integer>(errorsNumber.length);
-      for (int i = 0; i < errorsNumber.length; i++) {
-        try {
-          exceptErrorsList.add(Integer.valueOf(errorsNumber[i].trim()));
-        } catch (NumberFormatException e) {
-          // Nothing
-        }
-      }
-    }
     errors = new ArrayList<CheckError>();
     CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
-        getWikipedia(), this, errors, onlyErrorsList, exceptErrorsList,
+        getWikipedia(), this, errors, selectedAlgorithms,
         true, modelMaxErrors.getNumber().intValue());
     setupReloadWorker(reloadWorker);
     reloadWorker.start();
@@ -1391,11 +1649,11 @@ public class CheckWikiProjectWindow extends PageWindow {
     Object selected = listAllErrors.getSelectedItem();
     if (selected instanceof CheckError) {
       CheckError error = (CheckError) selected;
-      ArrayList<Integer> errorsNumber = new ArrayList<Integer>(1);
-      errorsNumber.add(Integer.valueOf(error.getErrorNumber()));
+      List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>(1);
+      algorithms.add(error.getAlgorithm());
       CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
-          getWikipedia(), this, errors, errorsNumber,
-          null, false, modelMaxErrors.getNumber().intValue());
+          getWikipedia(), this, errors, algorithms,
+          false, modelMaxErrors.getNumber().intValue());
       setupReloadWorker(reloadWorker);
       reloadWorker.start();
     }

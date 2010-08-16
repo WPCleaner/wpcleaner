@@ -18,7 +18,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -26,7 +26,6 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TagBlock;
 import org.wikipediacleaner.api.data.TemplateBlock;
 import org.wikipediacleaner.i18n.GT;
-
 
 /**
  * Algorithm for analyzing error 3 of check wikipedia project.
@@ -46,7 +45,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
-  public boolean analyze(Page page, String contents, ArrayList<CheckErrorResult> errors) {
+  public boolean analyze(Page page, String contents, List<CheckErrorResult> errors) {
     if ((page == null) || (contents == null)) {
       return false;
     }

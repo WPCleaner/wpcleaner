@@ -18,7 +18,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -105,7 +105,13 @@ public interface CheckErrorAlgorithm {
    * @return Error number.
    * (See Check Wikipedia project for the description of errors)
    */
-  public String getErrorNumber();
+  public String getErrorNumberString();
+
+  /**
+   * @return Error number.
+   * (See Check Wikipedia project for the description of errors)
+   */
+  public int getErrorNumber();
 
   /**
    * Analyze a page to check if errors are present.
@@ -115,7 +121,7 @@ public interface CheckErrorAlgorithm {
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
-  public boolean analyze(Page page, String contents, ArrayList<CheckErrorResult> errors);
+  public boolean analyze(Page page, String contents, List<CheckErrorResult> errors);
 
   /**
    * Return the parameters used to configure the algorithm.

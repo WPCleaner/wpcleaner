@@ -105,7 +105,7 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
 
     // Menu name
     JPopupMenu popup = new JPopupMenu();
-    JMenuItem menuItem = new JMenuItem(GT._("Error n°{0}", algorithm.getErrorNumber()));
+    JMenuItem menuItem = new JMenuItem(GT._("Error n°{0}", algorithm.getErrorNumberString()));
     menuItem.setEnabled(false);
     popup.add(menuItem);
 
@@ -127,7 +127,7 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
     MenuCreator.addViewToMenu(wikipedia, popup, algorithm.getLink(), GT._("Detail"));
     String toolserverUrl =
       "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi" +
-      "?id=" + algorithm.getErrorNumber() +
+      "?id=" + algorithm.getErrorNumberString() +
       "&project=" + wikipedia.getCode() + "wiki" +
       "&view=only";
     MenuCreator.addViewToMenu(null, popup, toolserverUrl, GT._("List on toolserver"));
