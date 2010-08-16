@@ -25,6 +25,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
@@ -55,6 +56,7 @@ public class Configuration implements WindowListener {
   public  final static String  DEFAULT_SIGNATURE         = "--~~~~";
 
   // Array properties
+  public  final static String  ARRAY_CHECK_SELECTION     = "CheckWikiSelection";
   public  final static String  ARRAY_SORT_ORDERS         = "SortOrders";
   public  final static String  ARRAY_WATCH_PAGES         = "WatchPages";
 
@@ -290,8 +292,8 @@ public class Configuration implements WindowListener {
    * @param property Property name.
    * @return List of property values.
    */
-  public ArrayList<String> getStringArrayList(String property) {
-    ArrayList<String> result = new ArrayList<String>();
+  public List<String> getStringList(String property) {
+    List<String> result = new ArrayList<String>();
     if (preferences != null) {
       try {
         Preferences node = preferences.node(property);
@@ -310,7 +312,7 @@ public class Configuration implements WindowListener {
    * @param property Property name.
    * @param values Property values.
    */
-  public void setStringArrayList(String property, ArrayList<String> values) {
+  public void setStringList(String property, List<String> values) {
     if (preferences != null) {
       // First, remove the old array list
       removeNode(preferences, property);

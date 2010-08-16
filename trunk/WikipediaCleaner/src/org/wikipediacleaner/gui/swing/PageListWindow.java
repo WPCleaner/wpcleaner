@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -300,7 +301,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
       watchedPages.add(p.getTitle());
     }
     Configuration config = Configuration.getConfiguration();
-    config.setStringArrayList(Configuration.ARRAY_WATCH_PAGES, watchedPages);
+    config.setStringList(Configuration.ARRAY_WATCH_PAGES, watchedPages);
   }
 
   /**
@@ -312,11 +313,11 @@ public class PageListWindow extends BasicWindow implements ActionListener {
         "", null);
     if (value != null) {
       Configuration config = Configuration.getConfiguration();
-      ArrayList<String> watchedPages = config.getStringArrayList(Configuration.ARRAY_WATCH_PAGES);
+      List<String> watchedPages = config.getStringList(Configuration.ARRAY_WATCH_PAGES);
       if (!watchedPages.contains(value)) {
         watchedPages.add(value);
         Collections.sort(watchedPages);
-        config.setStringArrayList(Configuration.ARRAY_WATCH_PAGES, watchedPages);
+        config.setStringList(Configuration.ARRAY_WATCH_PAGES, watchedPages);
         modelPages.addPage(DataManager.getPage(getWikipedia(), value, null, null));
       }
     }

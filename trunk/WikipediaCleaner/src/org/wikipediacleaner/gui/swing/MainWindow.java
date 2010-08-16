@@ -38,6 +38,7 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -950,7 +951,7 @@ public class MainWindow
    */
   private void actionWatchedPages() {
     Configuration config = Configuration.getConfiguration();
-    ArrayList<String> pageNames = config.getStringArrayList(Configuration.ARRAY_WATCH_PAGES);
+    List<String> pageNames = config.getStringList(Configuration.ARRAY_WATCH_PAGES);
     ArrayList<Page> pages = new ArrayList<Page>(
         (pageNames != null) ? pageNames.size() : 0);
     if (pageNames != null) {

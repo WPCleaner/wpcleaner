@@ -28,8 +28,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -58,7 +58,6 @@ import org.wikipediacleaner.gui.swing.worker.SendWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
-
 
 /**
  * A base class for Wikipedia Cleaner windows with page contents.
@@ -1135,11 +1134,11 @@ public abstract class PageWindow
     if (displayYesNoWarning(
         GT._("Would you like to add this page on your local Watch list ?")) == JOptionPane.YES_OPTION) {
       Configuration config = Configuration.getConfiguration();
-      ArrayList<String> watch = config.getStringArrayList(Configuration.ARRAY_WATCH_PAGES);
+      List<String> watch = config.getStringList(Configuration.ARRAY_WATCH_PAGES);
       if (!watch.contains(page.getTitle())) {
         watch.add(page.getTitle());
         Collections.sort(watch);
-        config.setStringArrayList(Configuration.ARRAY_WATCH_PAGES, watch);
+        config.setStringList(Configuration.ARRAY_WATCH_PAGES, watch);
       }
     }
   }

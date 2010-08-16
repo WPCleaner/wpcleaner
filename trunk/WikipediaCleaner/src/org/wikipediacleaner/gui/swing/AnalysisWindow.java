@@ -650,7 +650,7 @@ public class AnalysisWindow extends PageWindow {
     if (displayYesNoWarning(
         GT._("Would you like to add these pages on your local Watch list ?")) == JOptionPane.YES_OPTION) {
       Configuration config = Configuration.getConfiguration();
-      ArrayList<String> watch = config.getStringArrayList(Configuration.ARRAY_WATCH_PAGES);
+      List<String> watch = config.getStringList(Configuration.ARRAY_WATCH_PAGES);
       boolean added = false;
       for (Object link : links) {
         if (!watch.contains(link.toString())) {
@@ -660,7 +660,7 @@ public class AnalysisWindow extends PageWindow {
       }
       if (added) {
         Collections.sort(watch);
-        config.setStringArrayList(Configuration.ARRAY_WATCH_PAGES, watch);
+        config.setStringList(Configuration.ARRAY_WATCH_PAGES, watch);
       }
     }
   }

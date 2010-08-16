@@ -118,6 +118,8 @@ public class CheckWikiProjectWindow extends PageWindow {
   private List<CheckErrorAlgorithm> selectedAlgorithms;
   private List<JMenuItem> menuItemAlgorithms;
   private JPopupMenu popupSelectErrors;
+  private JMenu menuUseSelection;
+  private JMenu menuDeleteSelection;
   private JButton buttonLoadErrors;
 
   private SpinnerNumberModel modelMaxErrors;
@@ -446,6 +448,40 @@ public class CheckWikiProjectWindow extends PageWindow {
     // Select only
     popupSelectErrors.addSeparator();
     popupSelectErrors.add(subMenuSelectOnly);
+
+    // Saved selections
+    popupSelectErrors.addSeparator();
+    menuItem = new JMenuItem(GT._("Save current selection"));
+    menuItem.setActionCommand(ACTION_SELECT_ERRORS + "S");
+    menuItem.addActionListener(this);
+    popupSelectErrors.add(menuItem);
+    menuUseSelection = new JMenu(GT._("Use selection"));
+    popupSelectErrors.add(menuUseSelection);
+    menuDeleteSelection = new JMenu(GT._("Delete selection"));
+    popupSelectErrors.add(menuDeleteSelection);
+    updateSavedSelections();
+  }
+
+  /**
+   * Update menus for the saved selections.
+   */
+  private void updateSavedSelections() {
+    menuUseSelection.removeAll();
+    menuDeleteSelection.removeAll();
+    Configuration config = Configuration.getConfiguration();
+    List<String> selections = config.getStringList(Configuration.ARRAY_CHECK_SELECTION);
+    JMenuItem menuItem = null;
+    for (String selection : selections) {
+      menuItem = new JMenuItem(selection);
+      menuItem.setActionCommand(ACTION_SELECT_ERRORS + selection);
+      menuItem.addActionListener(this);
+      menuUseSelection.add(menuItem);
+
+      menuItem = new JMenuItem(selection);
+      menuItem.setActionCommand(ACTION_SELECT_ERRORS + "D" + selection);
+      menuItem.addActionListener(this);
+      menuDeleteSelection.add(menuItem);
+    }
   }
 
   /**
@@ -1489,11 +1525,37 @@ public class CheckWikiProjectWindow extends PageWindow {
 
     // Save current selection
     } else if (command.equals("S")) {
-      // TODO
+      // Creates a string representing the current selection
+      StringBuilder selection = new StringBuilder();
+      for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
+        if (selection.length() > 0) {
+          selection.append(",");
+        }
+        selection.append(algorithm.getErrorNumber());
+      }
+      String strSelection = selection.toString();
+
+      // Save configuration
+      Configuration config = Configuration.getConfiguration();
+      List<String> selections = config.getStringList(Configuration.ARRAY_CHECK_SELECTION);
+      if (!selections.contains(strSelection)) {
+        selections.add(strSelection);
+        Collections.sort(selections);
+        config.setStringList(Configuration.ARRAY_CHECK_SELECTION, selections);
+      }
+      updateSavedSelections();
 
     // Delete a saved selection
     } else if (command.startsWith("D")) {
-      // TODO
+      String selection = command.substring(1);
+      Configuration config = Configuration.getConfiguration();
+      List<String> selections = config.getStringList(Configuration.ARRAY_CHECK_SELECTION);
+      if (selections.contains(selection)) {
+        selections.remove(selection);
+        Collections.sort(selections);
+        config.setStringList(Configuration.ARRAY_CHECK_SELECTION, selections);
+      }
+      updateSavedSelections();
       
     } else {
       boolean selectionCleared = false;
