@@ -29,6 +29,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.font.TextAttribute;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -37,6 +38,7 @@ import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -377,41 +379,73 @@ public class CheckWikiProjectWindow extends PageWindow {
 
     popupSelectErrors.addSeparator();
 
+    final Map<TextAttribute, Boolean> inactiveAttributes = new HashMap<TextAttribute, Boolean>();
+    inactiveAttributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
+
+    // Select only
+    JMenu subMenuSelectOnly = new JMenu(GT._("Select only"));
+
     final int PART_SIZE = 20; 
     int lastPart = -1;
     JMenu subMenu = null;
+    JMenu subMenu2 = null;
     for (CheckErrorAlgorithm algorithm : allAlgorithms) {
       if (algorithm != null) {
         int errorNumber = algorithm.getErrorNumber();
         if (errorNumber > 0) {
           int part = errorNumber / PART_SIZE;
-          if ((subMenu == null) || (part > lastPart)) {
+          if ((subMenu == null) || (subMenu2 == null) || (part > lastPart)) {
             int from = (part * PART_SIZE) + 1;
             int to = (part + 1) * PART_SIZE;
             subMenu = new JMenu(GT._(
                 "Errors from {0} to {1}",
                 new Object[] { Integer.valueOf(from), Integer.valueOf(to) }));
             popupSelectErrors.add(subMenu);
+
+            subMenu2 = new JMenu(GT._(
+                "Errors from {0} to {1}",
+                new Object[] { Integer.valueOf(from), Integer.valueOf(to) }));
+            subMenuSelectOnly.add(subMenu2);
+
             lastPart = part;
           }
           String label =
             algorithm.getErrorNumberString() + " - " +
             algorithm.getShortDescriptionReplaced();
+
           menuItem = new JCheckBoxMenuItem(label, selectedAlgorithms.contains(algorithm));
-          if ((!algorithm.isAvailable()) ||
-              (!CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()))) {
+          if (!CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
+            menuItem.setEnabled(false);
+            menuItem.setFont(menuItem.getFont().deriveFont(inactiveAttributes));
+          } else if (!algorithm.isAvailable()) {
             menuItem.setEnabled(false);
           }
           menuItem.setActionCommand(ACTION_SELECT_ERRORS + "+" + algorithm.getErrorNumberString());
           menuItem.addActionListener(this);
           subMenu.add(menuItem);
+
           while (menuItemAlgorithms.size() <= errorNumber) {
             menuItemAlgorithms.add(null);
           }
           menuItemAlgorithms.set(errorNumber, menuItem);
+
+          menuItem = new JCheckBoxMenuItem(label, selectedAlgorithms.contains(algorithm));
+          if (!CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
+            menuItem.setEnabled(false);
+            menuItem.setFont(menuItem.getFont().deriveFont(inactiveAttributes));
+          } else if (!algorithm.isAvailable()) {
+            menuItem.setEnabled(false);
+          }
+          menuItem.setActionCommand(ACTION_SELECT_ERRORS + algorithm.getErrorNumberString());
+          menuItem.addActionListener(this);
+          subMenu2.add(menuItem);
         }
       }
     }
+
+    // Select only
+    popupSelectErrors.addSeparator();
+    popupSelectErrors.add(subMenuSelectOnly);
   }
 
   /**
@@ -1444,81 +1478,87 @@ public class CheckWikiProjectWindow extends PageWindow {
       return;
     }
 
-    boolean selectionCleared = false;
-    String[] units = command.split(",");
-    for (int i = 0; i < units.length; i++) {
-      String unit = units[i].trim();
-
-      // Select all
-      if (unit.equals("*")) {
-        if (selectionCleared == false) {
-          selectedAlgorithms.clear();
-          selectionCleared = true;
+    // Select all
+    if (command.equals("*")) {
+      for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+        if (algorithm.isAvailable() &&
+            CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
+          selectedAlgorithms.add(algorithm);
         }
-        for (CheckErrorAlgorithm algorithm : allAlgorithms) {
-          if (algorithm.isAvailable() &&
-              CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
-            selectedAlgorithms.add(algorithm);
+      }
+
+    // Save current selection
+    } else if (command.equals("S")) {
+      // TODO
+
+    // Delete a saved selection
+    } else if (command.startsWith("D")) {
+      // TODO
+      
+    } else {
+      boolean selectionCleared = false;
+      String[] units = command.split(",");
+      for (int i = 0; i < units.length; i++) {
+        String unit = units[i].trim();
+  
+        // Select priority
+        if (unit.startsWith("P")) {
+          if (selectionCleared == false) {
+            selectedAlgorithms.clear();
+            selectionCleared = true;
           }
-        }
-
-      // Select priority
-      } else if (unit.startsWith("P")) {
-        if (selectionCleared == false) {
-          selectedAlgorithms.clear();
-          selectionCleared = true;
-        }
-        try {
-          int priority = Integer.parseInt(unit.substring(1));
-          for (CheckErrorAlgorithm algorithm : allAlgorithms) {
-            if (algorithm.isAvailable() &&
-                CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()) &&
-                (priority == algorithm.getPriority())) {
-              selectedAlgorithms.add(algorithm);
-            }
-          }
-        } catch (NumberFormatException e) {
-          //
-        }
-
-      // Invert error selection
-      } else if (unit.startsWith("+")) {
-        try {
-          int errorNumber = Integer.parseInt(unit.substring(1));
-          for (CheckErrorAlgorithm algorithm : allAlgorithms) {
-            if (algorithm.isAvailable() &&
-                CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()) &&
-                (errorNumber == algorithm.getErrorNumber())) {
-              if (selectedAlgorithms.contains(algorithm)) {
-                selectedAlgorithms.remove(algorithm);
-              } else {
+          try {
+            int priority = Integer.parseInt(unit.substring(1));
+            for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+              if (algorithm.isAvailable() &&
+                  CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()) &&
+                  (priority == algorithm.getPriority())) {
                 selectedAlgorithms.add(algorithm);
               }
             }
+          } catch (NumberFormatException e) {
+            //
           }
-        } catch (NumberFormatException e) {
-          //
-        }
-
-      // Add an error
-      } else {
-        if (selectionCleared == false) {
-          selectedAlgorithms.clear();
-          selectionCleared = true;
-        }
-        try {
-          int errorNumber = Integer.parseInt(unit);
-          for (CheckErrorAlgorithm algorithm : allAlgorithms) {
-            if (algorithm.isAvailable() &&
-                CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()) &&
-                (errorNumber == algorithm.getErrorNumber())) {
-              if (!selectedAlgorithms.contains(algorithm)) {
-                selectedAlgorithms.add(algorithm);
+  
+        // Invert error selection
+        } else if (unit.startsWith("+")) {
+          try {
+            int errorNumber = Integer.parseInt(unit.substring(1));
+            for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+              if (algorithm.isAvailable() &&
+                  CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()) &&
+                  (errorNumber == algorithm.getErrorNumber())) {
+                if (selectedAlgorithms.contains(algorithm)) {
+                  selectedAlgorithms.remove(algorithm);
+                } else {
+                  selectedAlgorithms.add(algorithm);
+                }
               }
             }
+          } catch (NumberFormatException e) {
+            //
           }
-        } catch (NumberFormatException e) {
-          //
+  
+        // Add an error
+        } else {
+          if (selectionCleared == false) {
+            selectedAlgorithms.clear();
+            selectionCleared = true;
+          }
+          try {
+            int errorNumber = Integer.parseInt(unit);
+            for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+              if (algorithm.isAvailable() &&
+                  CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()) &&
+                  (errorNumber == algorithm.getErrorNumber())) {
+                if (!selectedAlgorithms.contains(algorithm)) {
+                  selectedAlgorithms.add(algorithm);
+                }
+              }
+            }
+          } catch (NumberFormatException e) {
+            //
+          }
         }
       }
     }
