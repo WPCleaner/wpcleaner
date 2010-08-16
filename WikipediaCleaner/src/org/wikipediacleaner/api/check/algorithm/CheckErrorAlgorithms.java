@@ -82,6 +82,26 @@ public final class CheckErrorAlgorithms {
   }
 
   /**
+   * Retrieve all algorithms for a wikipedia.
+   * 
+   * @param wikipedia Wikipedia.
+   * @return All algorithms.
+   */
+  public static List<CheckErrorAlgorithm> getAlgorithms(EnumWikipedia wikipedia) {
+    List<CheckErrorAlgorithm> algorithms = algorithmsMap.get(wikipedia);
+    if (algorithms == null) {
+      return null;
+    }
+    List<CheckErrorAlgorithm> tmpAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    for (CheckErrorAlgorithm algorithm : algorithms) {
+      if (algorithm != null) {
+        tmpAlgorithms.add(algorithm);
+      }
+    }
+    return tmpAlgorithms;
+  }
+
+  /**
    * Retrieve an algorithm.
    * 
    * @param wikipedia Wikipedia.

@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -214,13 +215,28 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Error number.
    * (See Check Wikipedia project for the description of errors)
    */
-  public String getErrorNumber() {
+  public String getErrorNumberString() {
     String baseName = CheckErrorAlgorithm.class.getName();
     String name = getClass().getName();
     if (name.startsWith(baseName)) {
       return name.substring(baseName.length());
     }
     return "unknown";
+  }
+
+  /**
+   * @return Error number.
+   * (See Check Wikipedia project for the description of errors)
+   */
+  public int getErrorNumber() {
+    int errorNumber = -1;
+    try {
+      String errorNumberString = getErrorNumberString();
+      errorNumber = Integer.parseInt(errorNumberString);
+    } catch (NumberFormatException e) {
+      //
+    }
+    return errorNumber;
   }
 
   /* (non-Javadoc)
@@ -262,7 +278,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   public String fixUsingFirstReplacement(String fixName, Page page, String contents) {
     String result = contents;
-    ArrayList<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
+    List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
     if (analyze(page, contents, errors)) {
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
@@ -289,7 +305,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   public String fixUsingRemove(String fixName, Page page, String contents) {
     String result = contents;
-    ArrayList<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
+    List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
     if (analyze(page, contents, errors)) {
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
@@ -311,7 +327,9 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param search Text to be searched.
    * @return Flag indicating if the error was found.
    */
-  protected boolean simpleTextSearch(Page page, String contents, ArrayList<CheckErrorResult> errors, String search) {
+  protected boolean simpleTextSearch(
+      Page page, String contents,
+      List<CheckErrorResult> errors, String search) {
     return simpleTextSearch(page, contents, errors, search, (String[]) null);
   }
 
@@ -326,7 +344,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Flag indicating if the error was found.
    */
   protected boolean simpleTextSearch(
-      Page page, String contents, ArrayList<CheckErrorResult> errors,
+      Page page, String contents, List<CheckErrorResult> errors,
       String search, String replacement) {
     return simpleTextSearch(
         page, contents, errors, search,
@@ -344,7 +362,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Flag indicating if the error was found.
    */
   protected boolean simpleTextSearch(
-      Page page, String contents, ArrayList<CheckErrorResult> errors,
+      Page page, String contents, List<CheckErrorResult> errors,
       String search, String[] replacements) {
     int startIndex = 0;
     boolean result = false;
@@ -471,7 +489,9 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param tagName Tag name.
    * @return Flag indicating if a tag has been found.
    */
-  protected boolean addTags(boolean found, Page page, String contents, ArrayList<CheckErrorResult> errors, String tagName) {
+  protected boolean addTags(
+      boolean found, Page page, String contents,
+      List<CheckErrorResult> errors, String tagName) {
     if (found && (errors == null)) {
       return found;
     }

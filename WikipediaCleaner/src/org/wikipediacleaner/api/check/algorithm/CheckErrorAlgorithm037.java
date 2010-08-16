@@ -18,13 +18,12 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.data.DefaultsortBlock;
 import org.wikipediacleaner.api.data.Page;
-
 
 /**
  * Algorithm for analyzing error 37 of check wikipedia project.
@@ -37,11 +36,11 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
   }
 
   /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.CheckErrorAlgorithm#analyze(org.wikipediacleaner.api.data.Page, java.lang.String, java.util.ArrayList)
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#analyze(org.wikipediacleaner.api.data.Page, java.lang.String, java.util.List)
    */
   public boolean analyze(
       Page page, String contents,
-      @SuppressWarnings("unused") ArrayList<CheckErrorResult> errors) {
+      @SuppressWarnings("unused") List<CheckErrorResult> errors) {
     if ((page == null) || (contents == null)) {
       return false;
     }

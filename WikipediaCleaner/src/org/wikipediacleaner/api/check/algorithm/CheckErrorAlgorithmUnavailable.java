@@ -18,7 +18,8 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
@@ -53,7 +54,7 @@ public abstract class CheckErrorAlgorithmUnavailable extends CheckErrorAlgorithm
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
-  public boolean analyze(Page page, String contents, ArrayList<CheckErrorResult> errors) {
+  public boolean analyze(Page page, String contents, List<CheckErrorResult> errors) {
     return false;
   }
 }

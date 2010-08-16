@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.commons.httpclient.NameValuePair;
@@ -50,9 +51,9 @@ public class CheckError {
    * @param contents Page contents (may be different from page.getContents()).
    * @return Errors found in the page.
    */
-  public static ArrayList<CheckErrorPage> analyzeErrors(
-      ArrayList<CheckError> errors, Page page, String contents) {
-    ArrayList<CheckErrorPage> errorsFound = new ArrayList<CheckErrorPage>();
+  public static List<CheckErrorPage> analyzeErrors(
+      List<CheckError> errors, Page page, String contents) {
+    List<CheckErrorPage> errorsFound = new ArrayList<CheckErrorPage>();
     if ((errors != null) && (page != null)) {
       if (contents == null) {
         contents = page.getContents();
@@ -100,7 +101,7 @@ public class CheckError {
    * @param stream Stream containing list of pages for the error number.
    */
   public static void addCheckError(
-      ArrayList<CheckError> errors,
+      List<CheckError> errors,
       EnumWikipedia wikipedia, int errorNumber, InputStream stream) {
 
     // Analyze properties to find infos about error number
