@@ -74,6 +74,8 @@ public class CheckWikiProjectWorker extends BasicWorker {
   public Object construct() {
 
     // Retrieving errors
+    boolean errorLoaded = false;
+    APIException exception = null;
     String code = getWikipedia().getCode().replace("-", "_");
     if (selectedAlgorithms != null) {
       for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
@@ -89,17 +91,23 @@ public class CheckWikiProjectWorker extends BasicWorker {
                 new NameValuePair("view", "bots")
             };
             InputStream stream = null;
-            setText(GT._("Checking for errors n°{0}", algorithm.getErrorNumberString()));
+            setText(
+                GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
+                " - " + algorithm.getShortDescriptionReplaced());
             stream = APIFactory.getAPI().askToolServerPost(
                 "~sk/cgi-bin/checkwiki/checkwiki.cgi", parameters, true);
             CheckError.addCheckError(
                 errors, getWikipedia(),
                 Integer.valueOf(algorithm.getErrorNumberString()), stream);
+            errorLoaded = true;
           }
         } catch (APIException e) {
-          return e;
+          exception = e;
         }
       }
+    }
+    if (!errorLoaded && (exception != null)) {
+      return exception;
     }
 
     // Sorting errors by priority

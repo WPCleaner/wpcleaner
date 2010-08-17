@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-17 20:10+0200\n"
+"POT-Creation-Date: 2010-08-17 22:24+0200\n"
 "PO-Revision-Date: 2010-05-16 07:25+0000\n"
 "Last-Translator: Krasznecz Zoltán <zoltan.krasznecz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -380,199 +380,200 @@ msgstr ""
 msgid "Semi-automatic disambiguation fixing"
 msgstr "Félautomata egyértelműsítő lap javítás"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:173
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:175
 msgid "Check Wikipedia"
 msgstr "Wiképédia ellenőrzése"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:244
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:246
 msgid "No errors available"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:247
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:249
 #, fuzzy
 msgid "No errors selected"
 msgstr "Észlelt hibák:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:300
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:302
 #, fuzzy
 msgid "Load all errors"
 msgstr "Teljes lista betöltése"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:305
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:307
 msgid "Load all high priority errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:310
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:312
 msgid "Load all high and middle priority errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:315
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:317
 msgid "Load all middle priority errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:320
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:322
 msgid "Load all high, middle and lowest priority errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:325
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:327
 msgid "Load all high and lowest priority errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:330
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:332
 msgid "Load all middle and lowest priority errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:335
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:337
 msgid "Load all lowest priority errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:340
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:342
 msgid "Load all errors for bots"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:351
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:353
 #, java-format
 msgid "Load errors {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:358
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:360
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:559
 #, fuzzy
 msgid "Select errors"
 msgstr "Kiválasztott lap"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:362
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:364
 #, fuzzy
 msgid "Select all errors"
 msgstr "Kiválasztott lap"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:367
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:369
 msgid "Select high priority errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:372
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:374
 msgid "Select middle priority (and above) errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:377
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:379
 msgid "Select lowest priority (and above) errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:388
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:390
 #, fuzzy
 msgid "Select only"
 msgstr "Kiválasztott lap"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:403
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:408
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:405
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:410
 #, java-format
 msgid "Errors from {0} to {1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:454
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:456
 msgid "Save current selection"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:458
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:460
 msgid "Use selection"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:460
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:462
 msgid "Delete selection"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:547
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:549
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:346
 msgid "Maximum number of errors for Check Wiki :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:563
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:571
 msgid "Right click to select errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:575
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:583
 msgid "List of errors detected :"
 msgstr "Észlelt hibák:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:596
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:604
 msgid "Reload error"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:602
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:610
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:127
 msgid "Detail"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:609
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:617
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:133
 msgid "List on toolserver"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:657
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:665
 msgid "Pages"
 msgstr "Lapok"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:673
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:681
 msgid "&Load pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:825
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:833
 msgid "Mark as Fixed"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:925
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:933
 #, java-format
 msgid "The page {0} doesn't exist on Wikipedia"
 msgstr "Az oldal {0} nem létezik a Wikipédián."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:962
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:970
 #, java-format
 msgid ""
 "The error n°{0} hasn''t been found in the page {1}.\n"
 "Do you want to mark it as fixed ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1073
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1081
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1084
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1092
 #, java-format
 msgid ""
 "The error n°{0} is still found {1} times in the page.\n"
 "Are you really sure that you want to mark it as fixed ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1091
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1099
 #, java-format
 msgid ""
 "The error n°{0} is still found in the page.\n"
 "Are you really sure that you want to mark it as fixed ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1103
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1111
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1223
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1231
 msgid "A comment is required for sending the page."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1364
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1372
 #, java-format
 msgid "Detection by [[{0}]]"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1446
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1454
 #, java-format
 msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1644
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1665
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
@@ -1594,12 +1595,12 @@ msgstr ""
 msgid "The following modifications have been done ({0} pages):"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:92
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:95
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:106
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:114
 msgid "Sorting errors by priority"
 msgstr ""
 
