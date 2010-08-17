@@ -60,6 +60,8 @@ public class Configuration implements WindowListener {
   public  final static String  ARRAY_SORT_ORDERS         = "SortOrders";
   public  final static String  ARRAY_WATCH_PAGES         = "WatchPages";
 
+  public  final static String  SUB_ARRAY_PREFERRED_DAB   = "PreferredDisambiguations";
+
   // Pojo properties
   public  final static String  POJO_AUTOMATIC_FIXING     = "AutomaticFixing";
   public  final static String  POJO_PAGE_COMMENTS        = "PageComments";
@@ -319,6 +321,53 @@ public class Configuration implements WindowListener {
 
       // Create the new one
       Preferences node = preferences.node(property);
+      if (values != null) {
+        for (int i = 0; i < values.size(); i++) {
+          node.put(Integer.toString(i), values.get(i));
+        }
+      }
+    }
+  }
+
+  /**
+   * @param property Property name.
+   * @param subProperty Sub-property name.
+   * @return List of property values.
+   */
+  public List<String> getStringSubList(String property, String subProperty) {
+    List<String> result = new ArrayList<String>();
+    if (preferences != null) {
+      try {
+        String nodeName = property + "/" + subProperty;
+        if (!preferences.nodeExists(nodeName)) {
+          return result;
+        }
+        Preferences node = preferences.node(nodeName);
+        String[] children = node.keys();
+        for (int i = 0; i < children.length; i++) {
+          result.add(node.get(children[i], ""));
+        }
+      } catch (BackingStoreException e) {
+        //
+      }
+    }
+    return result;
+  }
+
+  /**
+   * @param property Property name.
+   * @param subProperty Sub-property name.
+   * @param values Property values.
+   */
+  public void setStringSubList(String property, String subProperty, List<String> values) {
+    if (preferences != null) {
+      String nodeName = property + "/" + subProperty;
+
+      // First, remove the old array list
+      removeNode(preferences, nodeName);
+
+      // Create the new one
+      Preferences node = preferences.node(nodeName);
       if (values != null) {
         for (int i = 0; i < values.size(); i++) {
           node.put(Integer.toString(i), values.get(i));
