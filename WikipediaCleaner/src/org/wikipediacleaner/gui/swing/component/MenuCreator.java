@@ -46,6 +46,7 @@ import org.wikipediacleaner.api.data.PageUtilities;
 import org.wikipediacleaner.api.data.TemplateMatch;
 import org.wikipediacleaner.api.data.TemplateParameter;
 import org.wikipediacleaner.api.data.TemplateReplacement;
+import org.wikipediacleaner.gui.swing.action.ChangePreferredDisambiguationAction;
 import org.wikipediacleaner.gui.swing.action.DisambiguationAnalysisAction;
 import org.wikipediacleaner.gui.swing.action.FindTextAction;
 import org.wikipediacleaner.gui.swing.action.FullPageAnalysisAction;
@@ -369,6 +370,7 @@ public class MenuCreator {
       ArrayList<Page> links = page.getLinksWithRedirect(anchorsMap);
       JMenu submenuLink = new JMenu(GT._("Link to"));
       JMenu submenuReplace = new JMenu(GT._("Replace with"));
+      JMenu submenuAddPreferred = new JMenu(GT._("Add to preferred disambiguations"));
 
       // Determine if separators are needed
       ArrayList<String> wiktionary = page.getWiktionaryLinks();
@@ -378,25 +380,47 @@ public class MenuCreator {
         separators = true;
       }
 
+      // Retrieve preferred disambiguations
+      Configuration config = Configuration.getConfiguration();
+      List<String> preferredDabs = config.getStringSubList(
+          Configuration.SUB_ARRAY_PREFERRED_DAB, page.getTitle());
+
       // Last replacement
       int fixedBeginLink = 0;
       int fixedEndLink = 0;
       int fixedBeginReplace = 0;
       int fixedEndReplace = 0;
-      String title = getLastReplacement(page.getTitle());
-      if (title != null) {
-        menuItem = new JMenuItem(title);
-        action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
-        menuItem.addActionListener(action);
-        menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
-        submenuLink.add(menuItem);
-        fixedBeginLink++;
-        menuItem = new JMenuItem(title);
-        action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
-        menuItem.addActionListener(action);
-        menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
-        submenuReplace.add(menuItem);
-        fixedBeginReplace++;
+      if (!preferredDabs.isEmpty()) {
+        for (String title : preferredDabs) {
+          menuItem = new JMenuItem(title);
+          action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
+          menuItem.addActionListener(action);
+          menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+          submenuLink.add(menuItem);
+          fixedBeginLink++;
+          menuItem = new JMenuItem(title);
+          action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
+          menuItem.addActionListener(action);
+          menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+          submenuReplace.add(menuItem);
+          fixedBeginReplace++;
+        }
+      } else {
+        String title = getLastReplacement(page.getTitle());
+        if (title != null) {
+          menuItem = new JMenuItem(title);
+          action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
+          menuItem.addActionListener(action);
+          menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+          submenuLink.add(menuItem);
+          fixedBeginLink++;
+          menuItem = new JMenuItem(title);
+          action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
+          menuItem.addActionListener(action);
+          menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+          submenuReplace.add(menuItem);
+          fixedBeginReplace++;
+        }
       }
 
       // Separators
@@ -442,6 +466,14 @@ public class MenuCreator {
               menuItem.addActionListener(action);
               submenu2.add(menuItem);
 
+              if (!preferredDabs.contains(pageTmp.getTitle())) {
+                menuItem = new JMenuItem(pageTmp.getTitle());
+                updateFont(menuItem, pageTmp);
+                action = new ChangePreferredDisambiguationAction(page.getTitle(), pageTmp.getTitle(), true);
+                menuItem.addActionListener(action);
+                submenuAddPreferred.add(menuItem);
+              }
+
               if ((anchors != null) && (anchors.size() > 0)) {
                 for (String anchor : anchors) {
                   menuItem = new JMenuItem(anchor);
@@ -455,6 +487,14 @@ public class MenuCreator {
                   action = new ReplaceLinkAction(page.getTitle(), anchor, text, element, textPane, true);
                   menuItem.addActionListener(action);
                   submenu2.add(menuItem);
+
+                  if (!preferredDabs.contains(anchor)) {
+                    menuItem = new JMenuItem(anchor);
+                    updateFont(menuItem, pageTmp);
+                    action = new ChangePreferredDisambiguationAction(page.getTitle(), anchor, true);
+                    menuItem.addActionListener(action);
+                    submenuAddPreferred.add(menuItem);
+                  }
                 }
               }
             }
@@ -474,6 +514,14 @@ public class MenuCreator {
             menuItem.addActionListener(action);
             submenuReplace.add(menuItem);
 
+            if (!preferredDabs.contains(p.getTitle())) {
+              menuItem = new JMenuItem(p.getTitle());
+              updateFont(menuItem, p);
+              action = new ChangePreferredDisambiguationAction(page.getTitle(), p.getTitle(), true);
+              menuItem.addActionListener(action);
+              submenuAddPreferred.add(menuItem);
+            }
+
             // Anchors
             List<String> anchors = anchorsMap.get(p);
             if (anchors != null) {
@@ -489,6 +537,14 @@ public class MenuCreator {
                 action = new ReplaceLinkAction(page.getTitle(), anchor, text, element, textPane, true);
                 menuItem.addActionListener(action);
                 submenuReplace.add(menuItem);
+
+                if (!preferredDabs.contains(anchor)) {
+                  menuItem = new JMenuItem(anchor);
+                  updateFont(menuItem, p);
+                  action = new ChangePreferredDisambiguationAction(page.getTitle(), anchor, true);
+                  menuItem.addActionListener(action);
+                  submenuAddPreferred.add(menuItem);
+                }
               }
             }
           }
@@ -497,28 +553,58 @@ public class MenuCreator {
 
       // Last replacement
       if (separators) {
-        title = getLastReplacement(page.getTitle());
-        if (title != null) {
+        if (!preferredDabs.isEmpty()) {
           fixedEndLink += addSeparator(submenuLink);
-          menuItem = new JMenuItem(title);
-          action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
-          menuItem.addActionListener(action);
-          menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
-          submenuLink.add(menuItem);
-          fixedEndLink++;
-  
           fixedEndReplace += addSeparator(submenuReplace);
-          menuItem = new JMenuItem(title);
-          action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
-          menuItem.addActionListener(action);
-          menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
-          submenuReplace.add(menuItem);
-          fixedEndReplace++;
+          for (String title : preferredDabs) {
+            menuItem = new JMenuItem(title);
+            action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
+            menuItem.addActionListener(action);
+            menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+            submenuLink.add(menuItem);
+            fixedBeginLink++;
+            menuItem = new JMenuItem(title);
+            action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
+            menuItem.addActionListener(action);
+            menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+            submenuReplace.add(menuItem);
+            fixedBeginReplace++;
+          }
+        } else {
+          String title = getLastReplacement(page.getTitle());
+          if (title != null) {
+            fixedEndLink += addSeparator(submenuLink);
+            menuItem = new JMenuItem(title);
+            action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
+            menuItem.addActionListener(action);
+            menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+            submenuLink.add(menuItem);
+            fixedEndLink++;
+    
+            fixedEndReplace += addSeparator(submenuReplace);
+            menuItem = new JMenuItem(title);
+            action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
+            menuItem.addActionListener(action);
+            menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+            submenuReplace.add(menuItem);
+            fixedEndReplace++;
+          }
         }
       }
 
       addSubmenu(popup, submenuLink, fixedBeginLink, fixedEndLink);
       addSubmenu(popup, submenuReplace, fixedBeginReplace, fixedEndReplace);
+      addSubmenu(popup, submenuAddPreferred, 0, 0);
+      if (!preferredDabs.isEmpty()) {
+        JMenu submenuRemove = new JMenu(GT._("Remove from preferred disambiguations"));
+        for (String title : preferredDabs) {
+          menuItem = new JMenuItem(title);
+          action = new ChangePreferredDisambiguationAction(page.getTitle(), title, false);
+          menuItem.addActionListener(action);
+          submenuRemove.add(menuItem);
+        }
+        addSubmenu(popup, submenuRemove, 0, 0);
+      }
 
       if (!Page.areSameTitle(text, page.getTitle())) {
         menuItem = new JMenuItem(GT._("Reverse to [[{0}|{1}]]", new Object[]{text, page.getTitle()}));
