@@ -1516,6 +1516,7 @@ public class CheckWikiProjectWindow extends PageWindow {
 
     // Select all
     if (command.equals("*")) {
+      selectedAlgorithms.clear();
       for (CheckErrorAlgorithm algorithm : allAlgorithms) {
         if (algorithm.isAvailable() &&
             CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
@@ -1565,7 +1566,7 @@ public class CheckWikiProjectWindow extends PageWindow {
   
         // Select priority
         if (unit.startsWith("P")) {
-          if (selectionCleared == false) {
+          if (!selectionCleared) {
             selectedAlgorithms.clear();
             selectionCleared = true;
           }
@@ -1603,7 +1604,7 @@ public class CheckWikiProjectWindow extends PageWindow {
   
         // Add an error
         } else {
-          if (selectionCleared == false) {
+          if (!selectionCleared) {
             selectedAlgorithms.clear();
             selectionCleared = true;
           }
