@@ -120,6 +120,7 @@ public class CheckWikiProjectWindow extends PageWindow {
   private JPopupMenu popupSelectErrors;
   private JMenu menuUseSelection;
   private JMenu menuDeleteSelection;
+  private JButton buttonSelectErrors;
   private JButton buttonLoadErrors;
 
   private SpinnerNumberModel modelMaxErrors;
@@ -148,6 +149,7 @@ public class CheckWikiProjectWindow extends PageWindow {
   public final static String ACTION_ERROR_LIST    = "ERROR_LIST";
   public final static String ACTION_LOAD_PAGES    = "LOAD_PAGES";
   public final static String ACTION_RELOAD_ERROR  = "RELOAD_ERROR";
+  public final static String ACTION_CHOOSE_ERRORS = "CHOOSE_ERRORS";
   public final static String ACTION_SELECT_ERRORS = "SELECT_ERRORS:";
 
   /**
@@ -552,6 +554,12 @@ public class CheckWikiProjectWindow extends PageWindow {
 
     toolbarLoad.addSeparator();
 
+    buttonSelectErrors = Utilities.createJButton(
+        "gnome-preferences-desktop.png", EnumImageSize.NORMAL,
+        GT._("Select errors"), true);
+    buttonSelectErrors.setActionCommand(ACTION_CHOOSE_ERRORS);
+    buttonSelectErrors.addActionListener(this);
+    toolbarLoad.add(buttonSelectErrors);
     buttonLoadErrors = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
         getLoadMessage(), true);
@@ -1498,10 +1506,22 @@ public class CheckWikiProjectWindow extends PageWindow {
       actionSelectPage();
     } else if (ACTION_RELOAD_ERROR.equals(e.getActionCommand())) {
       actionReloadError();
+    } else if (ACTION_CHOOSE_ERRORS.equals(e.getActionCommand())) {
+      actionChooseErrors();
     } else if ((e.getActionCommand() != null) &&
                (e.getActionCommand().startsWith(ACTION_SELECT_ERRORS))) {
       actionSelectErrors(e.getActionCommand().substring(ACTION_SELECT_ERRORS.length()));
     }
+  }
+
+  /**
+   * Action callad when the Select Errors button is pressed. 
+   */
+  public void actionChooseErrors() {
+    popupSelectErrors.show(
+        buttonSelectErrors,
+        0,
+        buttonSelectErrors.getHeight());
   }
 
   /**
