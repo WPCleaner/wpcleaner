@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-08-17 22:24+0200\n"
-"PO-Revision-Date: 2010-08-14 20:55+0000\n"
-"Last-Translator: A2 <Unknown>\n"
+"PO-Revision-Date: 2010-08-18 08:22+0000\n"
+"Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-08-15 10:28+0000\n"
+"X-Launchpad-Export-Date: 2010-08-18 19:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -395,101 +395,95 @@ msgstr "Vérifier Wikipédia"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:246
 msgid "No errors available"
-msgstr ""
+msgstr "Pas d'erreurs disponibles"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:249
-#, fuzzy
 msgid "No errors selected"
-msgstr "Liste des erreurs détectées :"
+msgstr "Pas d'erreurs sélectionées"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:302
-#, fuzzy
 msgid "Load all errors"
-msgstr "toutes les erreurs"
+msgstr "Charger toutes les erreurs"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:307
 msgid "Load all high priority errors"
-msgstr ""
+msgstr "Charger toutes les erreurs de priorité maximale"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:312
 msgid "Load all high and middle priority errors"
-msgstr ""
+msgstr "Chager toutes les erreurs de priorité maximale et moyenne"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:317
-#, fuzzy
 msgid "Load all middle priority errors"
-msgstr "Priorité moyenne"
+msgstr "Charger toutes les erreurs de priorité moyenne"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:322
 msgid "Load all high, middle and lowest priority errors"
-msgstr ""
+msgstr "Charger toutes les erreurs de priorité maximale, moyenne et basse"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:327
 msgid "Load all high and lowest priority errors"
-msgstr ""
+msgstr "Charger toutes les erreurs de priorité maximale et basse"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:332
 msgid "Load all middle and lowest priority errors"
-msgstr ""
+msgstr "Charger toutes les erreurs de priorité moyenne et basse"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:337
 msgid "Load all lowest priority errors"
-msgstr ""
+msgstr "Charger toutes les erreurs de priorité basse"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:342
 msgid "Load all errors for bots"
-msgstr ""
+msgstr "Charger toutes les erreurs pour les robots"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:353
-#, fuzzy, java-format
+#, java-format
 msgid "Load errors {0}"
-msgstr "Rafraîchir la liste"
+msgstr "Charger les erreurs {0}"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:360
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:559
-#, fuzzy
 msgid "Select errors"
-msgstr "toutes les erreurs"
+msgstr "Sélection des erreurs"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:364
-#, fuzzy
 msgid "Select all errors"
-msgstr "toutes les erreurs"
+msgstr "Sélectionner toutes les erreurs"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:369
 msgid "Select high priority errors"
-msgstr ""
+msgstr "Sélectionner les erreurs de priorité maximale"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:374
 msgid "Select middle priority (and above) errors"
-msgstr ""
+msgstr "Sélectionner les erreurs de priorité moyenne et supérieure"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:379
 msgid "Select lowest priority (and above) errors"
-msgstr ""
+msgstr "Sélectionner les erreurs de priorité basse et supérieure"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:390
-#, fuzzy
 msgid "Select only"
-msgstr "toutes les erreurs"
+msgstr "Sélectionner seulement"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:405
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:410
 #, java-format
 msgid "Errors from {0} to {1}"
-msgstr ""
+msgstr "Erreurs de {0} à {1}"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:456
 msgid "Save current selection"
-msgstr ""
+msgstr "Sauvegarder la sélection courante"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:460
 msgid "Use selection"
-msgstr ""
+msgstr "Utiliser la sélection"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:462
 msgid "Delete selection"
-msgstr ""
+msgstr "Supprimer la sélection"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:549
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:346
@@ -498,7 +492,7 @@ msgstr "Nombre maximum d’erreurs pour les corrections syntaxiques"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:571
 msgid "Right click to select errors"
-msgstr ""
+msgstr "Clic droit pour sélectionner les erreurs"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:583
 msgid "List of errors detected :"
@@ -1533,13 +1527,12 @@ msgid "Replace with"
 msgstr "Remplacer par"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:373
-#, fuzzy
 msgid "Add to preferred disambiguations"
-msgstr "Liste d'homonymies à traiter"
+msgstr "Ajouter aux liens préférés"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:599
 msgid "Remove from preferred disambiguations"
-msgstr ""
+msgstr "Retirer des liens préférés"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:610
 #, java-format
@@ -1643,7 +1636,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:114
 msgid "Sorting errors by priority"
-msgstr "Trier les erreurs par priorité"
+msgstr "Tri des erreurs par priorité"
 
 #: org/wikipediacleaner/gui/swing/worker/DisambiguationListWorker.java:59
 msgid "Current disambiguation list"
@@ -1668,25 +1661,6 @@ msgstr "Mise à jour du contenu de la page"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:75
 msgid "Error 'badtoken' detected: Retrying"
 msgstr "Erreur « badtoken » détectée : nouvelle tentative"
-
-#~ msgid "Load"
-#~ msgstr "Charger"
-
-#~ msgid "only"
-#~ msgstr "seulement"
-
-#~ msgid "Comma separated list of errors to work on."
-#~ msgstr ""
-#~ "Liste des numéros d'erreurs à analyser séparés d'une virgule (par ex. 17, "
-#~ "46, 53)."
-
-#~ msgid "except"
-#~ msgstr "excepté"
-
-#~ msgid "Comma separated list of errors to ignore."
-#~ msgstr ""
-#~ "Liste des numéros d'erreurs à ignorer séparés d'une virgule (par ex. 17, "
-#~ "46, 53)."
 
 #~ msgid "Retrieving namespaces"
 #~ msgstr "Récupération des espaces de nom"
@@ -1753,3 +1727,22 @@ msgstr "Erreur « badtoken » détectée : nouvelle tentative"
 
 #~ msgid "Work"
 #~ msgstr "Travail"
+
+#~ msgid "only"
+#~ msgstr "seulement"
+
+#~ msgid "Load"
+#~ msgstr "Charger"
+
+#~ msgid "except"
+#~ msgstr "excepté"
+
+#~ msgid "Comma separated list of errors to ignore."
+#~ msgstr ""
+#~ "Liste des numéros d'erreurs à ignorer séparés d'une virgule (par ex. 17, "
+#~ "46, 53)."
+
+#~ msgid "Comma separated list of errors to work on."
+#~ msgstr ""
+#~ "Liste des numéros d'erreurs à analyser séparés d'une virgule (par ex. 17, "
+#~ "46, 53)."
