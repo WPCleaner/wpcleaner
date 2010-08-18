@@ -774,7 +774,7 @@ public enum EnumWikipedia {
     if ((useWiki) && (checkWikiConfig != null)) {
       result = checkWikiConfig.getProperty(errorPrefix + code + "wiki", null);
     }
-    if ((result != null) && ((acceptEmpty) || (!result.trim().isEmpty()))) {
+    if ((result != null) && ((acceptEmpty) || (result.trim().length() > 0))) {
       return result.trim();
     }
     if ((useGeneral) && (checkWikiGeneralConfig != null)) {
