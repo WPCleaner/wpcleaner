@@ -562,13 +562,13 @@ public class MenuCreator {
             menuItem.addActionListener(action);
             menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
             submenuLink.add(menuItem);
-            fixedBeginLink++;
+            fixedEndLink++;
             menuItem = new JMenuItem(title);
             action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
             menuItem.addActionListener(action);
             menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
             submenuReplace.add(menuItem);
-            fixedBeginReplace++;
+            fixedEndReplace++;
           }
         } else {
           String title = getLastReplacement(page.getTitle());
@@ -594,7 +594,17 @@ public class MenuCreator {
 
       addSubmenu(popup, submenuLink, fixedBeginLink, fixedEndLink);
       addSubmenu(popup, submenuReplace, fixedBeginReplace, fixedEndReplace);
-      addSubmenu(popup, submenuAddPreferred, 0, 0);
+
+      submenuAddPreferred.addSeparator();
+      menuItem = new JMenuItem(GT._("Add other preferred disambiguation..."));
+      action = new ChangePreferredDisambiguationAction(
+          page.getTitle(), textPane,
+          GT._("What link do you want to add to the preferred disambiguations?"),
+          null, "[|]");
+      menuItem.addActionListener(action);
+      submenuAddPreferred.add(menuItem);
+      addSubmenu(popup, submenuAddPreferred, 0, 2);
+
       if (!preferredDabs.isEmpty()) {
         JMenu submenuRemove = new JMenu(GT._("Remove from preferred disambiguations"));
         for (String title : preferredDabs) {
