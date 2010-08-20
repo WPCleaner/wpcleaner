@@ -18,12 +18,14 @@
 
 package org.wikipediacleaner.gui.swing.action;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.Collections;
 import java.util.List;
 
 import javax.swing.text.TextAction;
 
+import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -36,6 +38,10 @@ public class ChangePreferredDisambiguationAction extends TextAction {
   private final String page;
   private final String preferred;
   private final boolean add;
+  private final Component parent;
+  private final String message;
+  private final String defaultValue;
+  private final String unauthorizedCharacters;
 
   public ChangePreferredDisambiguationAction(
       String page,
@@ -45,6 +51,26 @@ public class ChangePreferredDisambiguationAction extends TextAction {
     this.page = page;
     this.preferred = preferred;
     this.add = add;
+    this.parent = null;
+    this.message = null;
+    this.defaultValue = null;
+    this.unauthorizedCharacters = null;
+  }
+
+  public ChangePreferredDisambiguationAction(
+      String page,
+      Component parent,
+      String message,
+      String defaultValue,
+      String unauthorizedCharacters) {
+    super("AddPreferredDisambiguation");
+    this.page = page;
+    this.preferred = null;
+    this.add = true;
+    this.parent = parent;
+    this.message = message;
+    this.defaultValue = defaultValue;
+    this.unauthorizedCharacters = unauthorizedCharacters;
   }
 
   /* (non-Javadoc)
@@ -55,13 +81,17 @@ public class ChangePreferredDisambiguationAction extends TextAction {
     List<String> preferredDabs = config.getStringSubList(
         Configuration.SUB_ARRAY_PREFERRED_DAB, page);
     if (add) {
-      if (!preferredDabs.contains(preferred)) {
-        preferredDabs.add(preferred);
+      String value = preferred;
+      if (value == null) {
+        value = Utilities.askForValue(parent, message, defaultValue, unauthorizedCharacters);
+      }
+      if ((value != null) && !preferredDabs.contains(value)) {
+        preferredDabs.add(value);
         Collections.sort(preferredDabs);
         config.setStringSubList(Configuration.SUB_ARRAY_PREFERRED_DAB, page, preferredDabs);
       }
     } else {
-      if (preferredDabs.contains(preferred)) {
+      if ((preferred != null) && preferredDabs.contains(preferred)) {
         preferredDabs.remove(preferred);
         Collections.sort(preferredDabs);
         config.setStringSubList(Configuration.SUB_ARRAY_PREFERRED_DAB, page, preferredDabs);
