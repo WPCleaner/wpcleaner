@@ -22,11 +22,11 @@ package org.wikipediacleaner.api.data;
 /**
  * Class containing informations about a tag (&lt;<i>tag</i>&gt;). 
  */
-public class TagData {
+public class PageElementTagData {
   private final int startIndex;
   private final int endIndex;
 
-  public TagData(int startIndex, int endIndex) {
+  public PageElementTagData(int startIndex, int endIndex) {
     this.startIndex = startIndex;
     this.endIndex = endIndex;
   }

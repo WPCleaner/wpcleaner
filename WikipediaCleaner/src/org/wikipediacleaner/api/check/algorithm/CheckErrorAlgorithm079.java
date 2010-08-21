@@ -24,7 +24,8 @@ import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.TagData;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementTagData;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
 
@@ -82,13 +83,13 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
             CheckErrorResult errorResult = createCheckErrorResult(
                 page, startIndex, endIndex + 1); 
             boolean isInRef = false;
-            TagData previousStartRef = findPreviousStartTag(page, contents, "ref", startIndex);
+            PageElementTagData previousStartRef = PageContents.findPreviousStartTag(page, contents, "ref", startIndex);
             if (previousStartRef != null) {
-              TagData previousEndRef = findPreviousEndTag(page, contents, "ref", startIndex);
+              PageElementTagData previousEndRef = PageContents.findPreviousEndTag(page, contents, "ref", startIndex);
               if ((previousEndRef == null) || (previousEndRef.getEndIndex() < previousStartRef.getEndIndex())) {
-                TagData nextEndRef = findNextEndTag(page, contents, "ref", endIndex);
+                PageElementTagData nextEndRef = PageContents.findNextEndTag(page, contents, "ref", endIndex);
                 if (nextEndRef != null) {
-                  TagData nextStartRef = findNextStartTag(page, contents, "ref", startIndex);
+                  PageElementTagData nextStartRef = PageContents.findNextStartTag(page, contents, "ref", startIndex);
                   if ((nextStartRef == null) || (nextEndRef.getStartIndex() < nextStartRef.getStartIndex())) {
                     isInRef = true;
                   }

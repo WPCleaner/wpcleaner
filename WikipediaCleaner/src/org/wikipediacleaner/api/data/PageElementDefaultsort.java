@@ -24,23 +24,23 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
 /**
- * Class containing informations about a complete template ({{<i>template</i>|...}}). 
+ * Class containing informations about a complete DEFAULTSORT ({{<i>DEFAULTSORT</i>:...}}). 
  */
-public class DefaultsortBlock {
+public class PageElementDefaultsort {
   private final int beginIndex;
   private final int endIndex;
   private final String tag;
   private final String value;
 
   /**
-   * Analyze contents to check if it matches a block for the given template name.
+   * Analyze contents to check if it matches a block for DEFAULTSORT.
    * 
    * @param wikipedia Wikipedia.
    * @param contents Contents.
    * @param index Block start index.
    * @return Block details it there's a block.
    */
-  public static DefaultsortBlock analyzeBlock(EnumWikipedia wikipedia, String contents, int index) {
+  public static PageElementDefaultsort analyzeBlock(EnumWikipedia wikipedia, String contents, int index) {
     // Verify arguments
     if (contents == null) {
       return null;
@@ -91,7 +91,7 @@ public class DefaultsortBlock {
       return null;
     }
 
-    return new DefaultsortBlock(
+    return new PageElementDefaultsort(
         beginIndex, endIndex + 2,
         defaultSort, contents.substring(tmpIndex, endIndex).trim());
   }
@@ -112,7 +112,7 @@ public class DefaultsortBlock {
     return value;
   }
 
-  private DefaultsortBlock(
+  private PageElementDefaultsort(
       int beginIndex, int endIndex,
       String tag, String value) {
     this.beginIndex = beginIndex;

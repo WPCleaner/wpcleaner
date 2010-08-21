@@ -29,7 +29,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CompositeAction;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.TagBlock;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.action.NoOpAction;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
@@ -54,18 +54,18 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }
     int startIndex = 0;
     boolean result = false;
-    HashMap<String, TagBlock> refs = new HashMap<String, TagBlock>();
-    HashMap<TagBlock, CheckErrorResult> errorResults = new HashMap<TagBlock, CheckErrorResult>();
+    HashMap<String, PageElementTag> refs = new HashMap<String, PageElementTag>();
+    HashMap<PageElementTag, CheckErrorResult> errorResults = new HashMap<PageElementTag, CheckErrorResult>();
     ArrayList<String> names = new ArrayList<String>();
     ArrayList<Actionnable> existingNames = new ArrayList<Actionnable>();
     while ((startIndex < contents.length()) && (startIndex >= 0)) {
       if (contents.charAt(startIndex) == '<') {
-        TagBlock ref = TagBlock.analyzeBlock("ref", contents, startIndex);
+        PageElementTag ref = PageElementTag.analyzeBlock("ref", contents, startIndex);
         if (ref != null) {
           startIndex = ref.getEndTagEndIndex() + 1;
           String reference = ref.getText();
           if ((reference != null) && (!reference.isEmpty())) {
-            TagBlock previousRef = refs.get(reference);
+            PageElementTag previousRef = refs.get(reference);
             if (previousRef == null) {
               refs.put(reference, ref);
             } else {

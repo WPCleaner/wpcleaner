@@ -22,8 +22,9 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
-import org.wikipediacleaner.api.data.DefaultsortBlock;
+import org.wikipediacleaner.api.data.PageElementDefaultsort;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageContents;
 
 /**
  * Algorithm for analyzing error 37 of check wikipedia project.
@@ -78,7 +79,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     }
 
     // Searching a DEFAULTSORT tag
-    DefaultsortBlock tag = findNextDefaultsort(page, contents, 0);
+    PageElementDefaultsort tag = PageContents.findNextDefaultsort(page, contents, 0);
     if (tag != null) {
       return false;
     }

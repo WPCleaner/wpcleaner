@@ -27,7 +27,8 @@ import java.util.TreeSet;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.TagBlock;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -51,17 +52,17 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
 
     boolean result = false;
     int startIndex = 0;
-    Map<String, TagBlock> firstTags = new HashMap<String, TagBlock>();
+    Map<String, PageElementTag> firstTags = new HashMap<String, PageElementTag>();
     Set<String> tagUsed = new TreeSet<String>();
     while (startIndex < contents.length()) {
-      TagBlock tag = findNextTag(page, contents, "references", startIndex);
+      PageElementTag tag = PageContents.findNextTag(page, contents, "references", startIndex);
       if (tag != null) {
         startIndex = tag.getEndTagEndIndex();
         String group = tag.getParameter("group");
         if (group == null) {
           group = "";
         }
-        TagBlock firstTag = firstTags.get(group);
+        PageElementTag firstTag = firstTags.get(group);
         if (firstTag == null) {
           firstTags.put(group, tag);
         } else {
