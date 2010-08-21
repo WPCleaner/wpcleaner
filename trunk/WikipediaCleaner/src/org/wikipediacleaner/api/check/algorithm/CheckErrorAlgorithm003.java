@@ -23,8 +23,9 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.TagBlock;
-import org.wikipediacleaner.api.data.TemplateBlock;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
 /**
@@ -54,7 +55,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     boolean refFound = false;
     if (!refFound) {
       // Search for <ref>
-      TagBlock tag = findNextTag(page, contents, "ref", 0);
+      PageElementTag tag = PageContents.findNextTag(page, contents, "ref", 0);
       if (tag != null) {
         refFound = true;
       }
@@ -65,7 +66,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     if (refFound) {
       // Search for <references>
       if (!referencesFound) {
-        TagBlock tag = findNextTag(page, contents, "references", 0);
+        PageElementTag tag = PageContents.findNextTag(page, contents, "references", 0);
         if (tag != null) {
           referencesFound = true;
         }
@@ -81,7 +82,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       if (referencesTemplates != null) {
         for (String referencesTemplate : referencesTemplates) {
           if (!referencesFound) {
-            TemplateBlock template = findNextTemplate(page, contents, referencesTemplate, 0);
+            PageElementTemplate template = PageContents.findNextTemplate(page, contents, referencesTemplate, 0);
             if (template != null) {
               referencesFound = true;
             }

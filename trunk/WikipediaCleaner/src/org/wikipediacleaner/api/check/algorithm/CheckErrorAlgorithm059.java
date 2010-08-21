@@ -23,7 +23,8 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.TemplateBlock;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -62,7 +63,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
     boolean errorFound = false;
     int startIndex = 0;
     while (startIndex < contents.length()) {
-      TemplateBlock template = findNextTemplate(page, contents, startIndex);
+      PageElementTemplate template = PageContents.findNextTemplate(page, contents, startIndex);
       if (template == null) {
         startIndex = contents.length();
       } else {

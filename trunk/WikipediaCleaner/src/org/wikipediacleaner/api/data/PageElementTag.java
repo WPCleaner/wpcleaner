@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Class containing informations about a complete tag (&lt;<i>tag</i>&gt;Text&lt;/<i>tag</i>&gt;). 
  */
-public class TagBlock {
+public class PageElementTag {
   private final String tagName;
   private final int startTagBeginIndex;
   private final int startTagEndIndex;
@@ -44,7 +44,7 @@ public class TagBlock {
    * @param index Block start index.
    * @return Block details it there's a block.
    */
-  public static TagBlock analyzeBlock(String tagName, String contents, int index) {
+  public static PageElementTag analyzeBlock(String tagName, String contents, int index) {
     // Verify arguments
     if ((tagName == null) || (tagName.isEmpty()) || (contents == null)) {
       return null;
@@ -99,7 +99,7 @@ public class TagBlock {
           parameterNames, parameterValues)) {
         return null;
       }
-      return new TagBlock(tagName, startTagBeginIndex, startTagEndIndex, parameterNames, parameterValues);
+      return new PageElementTag(tagName, startTagBeginIndex, startTagEndIndex, parameterNames, parameterValues);
     }
     tmpIndex = startTagEndIndex + 1;
 
@@ -158,7 +158,7 @@ public class TagBlock {
         parameterNames, parameterValues)) {
       return null;
     }
-    return new TagBlock(
+    return new PageElementTag(
         tagName, startTagBeginIndex, startTagEndIndex,
         parameterNames, parameterValues,
         contents.substring(startTagEndIndex + 1, endTagBeginIndex),
@@ -256,7 +256,7 @@ public class TagBlock {
     return endTagEndIndex;
   }
 
-  private TagBlock(
+  private PageElementTag(
       String tagName,
       int startTagBeginIndex, int startTagEndIndex,
       List<String> parameterNames, List<String> parameterValues) {
@@ -271,7 +271,7 @@ public class TagBlock {
     this.endTagEndIndex = startTagEndIndex;
   }
 
-  private TagBlock(
+  private PageElementTag(
       String tagName,
       int startTagBeginIndex, int startTagEndIndex,
       List<String> parameterNames, List<String> parameterValues,

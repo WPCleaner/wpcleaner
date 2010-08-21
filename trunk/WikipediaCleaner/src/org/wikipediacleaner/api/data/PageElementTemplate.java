@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * Class containing informations about a complete template ({{<i>template</i>|...}}). 
  */
-public class TemplateBlock {
+public class PageElementTemplate {
   private final String templateName;
   private final int beginIndex;
   private final List<Parameter> parameters;
@@ -65,7 +65,7 @@ public class TemplateBlock {
    * @param index Block start index.
    * @return Block details it there's a block.
    */
-  public static TemplateBlock analyzeBlock(String templateName, String contents, int index) {
+  public static PageElementTemplate analyzeBlock(String templateName, String contents, int index) {
     // Verify arguments
     if (contents == null) {
       return null;
@@ -155,9 +155,9 @@ public class TemplateBlock {
           parameters)) {
         return null;
       }
-      return new TemplateBlock(templateName, beginIndex, endIndex, parameters);
+      return new PageElementTemplate(templateName, beginIndex, endIndex, parameters);
     } else if (contents.startsWith("}}", tmpIndex)) {
-      return new TemplateBlock(templateName, beginIndex, tmpIndex + 2, null);
+      return new PageElementTemplate(templateName, beginIndex, tmpIndex + 2, null);
     }
     return null;
   }
@@ -309,7 +309,7 @@ public class TemplateBlock {
     return endIndex;
   }
 
-  private TemplateBlock(
+  private PageElementTemplate(
       String templateName,
       int beginIndex, int endIndex,
       List<Parameter> parameters) {

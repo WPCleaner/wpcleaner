@@ -23,8 +23,9 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.check.SpecialCharacters;
-import org.wikipediacleaner.api.data.DefaultsortBlock;
+import org.wikipediacleaner.api.data.PageElementDefaultsort;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.i18n.GT;
 
 /**
@@ -56,7 +57,7 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
     boolean result = false;
     int startIndex = 0;
     while (startIndex < contents.length()) {
-      DefaultsortBlock tag = findNextDefaultsort(page, contents, startIndex);
+      PageElementDefaultsort tag = PageContents.findNextDefaultsort(page, contents, startIndex);
       if (tag != null) {
         startIndex = tag.getEndIndex() + 1;
         boolean characterFound = false;

@@ -25,7 +25,8 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.TagBlock;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -66,7 +67,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     int startIndex = 0;
     boolean result = false;
     while (startIndex < contents.length()) {
-      TagBlock tag = findNextTag(page, contents, "ref", startIndex);
+      PageElementTag tag = PageContents.findNextTag(page, contents, "ref", startIndex);
       if (tag != null) {
         startIndex = tag.getEndTagEndIndex() + 1;
         int tmpIndex = tag.getStartTagBeginIndex() - 1;
@@ -113,12 +114,12 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
               allPunctuations = contents.charAt(tmpIndex) + allPunctuations;
               tmpIndex--;
             }
-            ArrayList<TagBlock> tagList = new ArrayList<TagBlock>();
+            ArrayList<PageElementTag> tagList = new ArrayList<PageElementTag>();
             tagList.add(tag);
             boolean tryNext = true;
             while (tryNext) {
               int endIndex = tagList.get(tagList.size() - 1).getEndTagEndIndex() + 1;
-              TagBlock nextTag = findNextTag(page, contents, "ref", endIndex);
+              PageElementTag nextTag = PageContents.findNextTag(page, contents, "ref", endIndex);
               if (nextTag == null) {
                 tryNext = false;
               } else {
@@ -142,7 +143,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
                 }
               }
             }
-            TagBlock lastTag = tagList.get(tagList.size() - 1);
+            PageElementTag lastTag = tagList.get(tagList.size() - 1);
             int endIndex = lastTag.getEndTagEndIndex() + 1;
             while ((endIndex < contents.length()) && (contents.charAt(endIndex) == punctuation)) {
               endIndex++;

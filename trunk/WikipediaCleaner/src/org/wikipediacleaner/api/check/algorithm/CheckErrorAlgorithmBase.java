@@ -25,11 +25,9 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
-import org.wikipediacleaner.api.data.DefaultsortBlock;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.TagBlock;
-import org.wikipediacleaner.api.data.TagData;
-import org.wikipediacleaner.api.data.TemplateBlock;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementTagData;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -392,94 +390,6 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
-   * Find the first DEFAULTSORT after an index in the page contents.
-   * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param currentIndex The last index.
-   * @return DEFAULTSORT found.
-   */
-  protected DefaultsortBlock findNextDefaultsort(
-      Page page, String contents,
-      int currentIndex) {
-    if (contents == null) {
-      return null;
-    }
-    while ((currentIndex < contents.length())) {
-      int tmpIndex = contents.indexOf("{{", currentIndex);
-      if (tmpIndex < 0) {
-        currentIndex = contents.length();
-      } else {
-        DefaultsortBlock template = DefaultsortBlock.analyzeBlock(page.getWikipedia(), contents, tmpIndex);
-        if (template != null) {
-          return template;
-        }
-        currentIndex = tmpIndex + 2;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Find the first template after an index in the page contents.
-   * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param currentIndex The last index.
-   * @return Tag found.
-   */
-  protected TemplateBlock findNextTemplate(
-      Page page, String contents,
-      int currentIndex) {
-    if (contents == null) {
-      return null;
-    }
-    while ((currentIndex < contents.length())) {
-      int tmpIndex = contents.indexOf("{{", currentIndex);
-      if (tmpIndex < 0) {
-        currentIndex = contents.length();
-      } else {
-        TemplateBlock template = TemplateBlock.analyzeBlock(null, contents, tmpIndex);
-        if (template != null) {
-          return template;
-        }
-        currentIndex = tmpIndex + 2;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Find the first template after an index in the page contents.
-   * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param templateName Template to be found.
-   * @param currentIndex The last index.
-   * @return Tag found.
-   */
-  protected TemplateBlock findNextTemplate(
-      Page page, String contents,
-      String templateName, int currentIndex) {
-    if (contents == null) {
-      return null;
-    }
-    while ((currentIndex < contents.length())) {
-      int tmpIndex = contents.indexOf("{{", currentIndex);
-      if (tmpIndex < 0) {
-        currentIndex = contents.length();
-      } else {
-        TemplateBlock template = TemplateBlock.analyzeBlock(templateName, contents, tmpIndex);
-        if (template != null) {
-          return template;
-        }
-        currentIndex = tmpIndex + 1;
-      }
-    }
-    return null;
-  }
-
-  /**
    * Find tags.
    * 
    * @param found Flag indicating if a tag has already been found.
@@ -498,7 +408,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     boolean result = found;
     int startIndex = 0;
     while ((startIndex < contents.length())) {
-      TagData tag = findNextStartTag(page, contents, tagName, startIndex);
+      PageElementTagData tag = PageContents.findNextStartTag(page, contents, tagName, startIndex);
       if (tag != null) {
         result = true;
         if (errors != null) {
@@ -513,7 +423,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     }
     startIndex = 0;
     while ((startIndex < contents.length())) {
-      TagData tag = findNextEndTag(page, contents, tagName, startIndex);
+      PageElementTagData tag = PageContents.findNextEndTag(page, contents, tagName, startIndex);
       if (tag != null) {
         result = true;
         if (errors != null) {
@@ -527,243 +437,5 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       }
     }
     return result;
-  }
-
-  /**
-   * Find the first tag after an index in the page contents.
-   * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param tagName Tag to be found.
-   * @param currentIndex The last index.
-   * @return Tag found.
-   */
-  protected TagBlock findNextTag(
-      Page page, String contents,
-      String tagName, int currentIndex) {
-    if (contents == null) {
-      return null;
-    }
-    while ((currentIndex < contents.length())) {
-      int tmpIndex = contents.indexOf("<", currentIndex);
-      if (tmpIndex < 0) {
-        currentIndex = contents.length();
-      } else {
-        TagBlock tag = TagBlock.analyzeBlock(tagName, contents, tmpIndex);
-        if (tag != null) {
-          return tag;
-        }
-        currentIndex = tmpIndex + 1;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Find the last start tag before an index in the page contents.
-   * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param tag Tag to be found.
-   * @param currentIndex The last index.
-   * @return Tag found.
-   */
-  protected TagData findPreviousStartTag(
-      Page page, String contents,
-      String tag, int currentIndex) {
-    if (contents == null) {
-      return null;
-    }
-    while ((currentIndex > 0)) {
-      int tmpIndex = contents.lastIndexOf(">", currentIndex - 1);
-      if (tmpIndex < 0) {
-        currentIndex = 0;
-      } else {
-        int infoTagEnd = tmpIndex + 1;
-        tmpIndex--;
-        currentIndex = tmpIndex;
-        // Possible whitespaces
-        while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == ' ')) {
-          tmpIndex--;
-        }
-        int startIndex = contents.lastIndexOf("<", tmpIndex);
-        if (startIndex < 0) {
-          currentIndex = 0;
-        } else {
-          int previousEndIndex = contents.lastIndexOf(">", tmpIndex);
-          if (previousEndIndex < startIndex) {
-            int infoTagStart = startIndex;
-            startIndex++;
-            // Possible whitespaces
-            while ((startIndex < tmpIndex) && (contents.charAt(startIndex) == ' ')) {
-              startIndex++;
-            }
-            if (tag.equalsIgnoreCase(contents.substring(startIndex, startIndex + tag.length()))) {
-              startIndex += tag.length();
-              if ((contents.charAt(startIndex) == ' ') ||
-                  (contents.charAt(startIndex) == '>')) {
-                return new TagData(infoTagStart, infoTagEnd); 
-              }
-            }
-          }
-        }
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Find the first start tag after an index in the page contents.
-   * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param tag Tag to be found.
-   * @param currentIndex The last index.
-   * @return Tag found.
-   */
-  protected TagData findNextStartTag(
-      Page page, String contents,
-      String tag, int currentIndex) {
-    if (contents == null) {
-      return null;
-    }
-    while ((currentIndex < contents.length())) {
-      int tmpIndex = contents.indexOf("<", currentIndex);
-      if (tmpIndex < 0) {
-        currentIndex = contents.length();
-      } else {
-        int infoTagStart = tmpIndex;
-        tmpIndex++;
-        currentIndex = tmpIndex;
-        // Possible whitespaces
-        while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
-          tmpIndex++;
-        }
-        int endIndex = contents.indexOf(">", tmpIndex);
-        if (endIndex < 0) {
-          currentIndex = contents.length();
-        } else {
-          int nextStartIndex = contents.indexOf("<", tmpIndex);
-          if ((nextStartIndex < 0) || (endIndex < nextStartIndex)) {
-            int infoTagEnd = endIndex + 1;
-            if (tag.equalsIgnoreCase(contents.substring(tmpIndex, tmpIndex + tag.length()))) {
-              tmpIndex += tag.length();
-              if ((contents.charAt(tmpIndex) == ' ') ||
-                  (contents.charAt(tmpIndex) == '>')) {
-                return new TagData(infoTagStart, infoTagEnd); 
-              }
-            }
-          }
-        }
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Find the last end tag before an index in the page contents.
-   * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param tag Tag to be found.
-   * @param currentIndex The last index.
-   * @return Tag found.
-   */
-  protected TagData findPreviousEndTag(
-      Page page, String contents,
-      String tag, int currentIndex) {
-    if (contents == null) {
-      return null;
-    }
-    while ((currentIndex > 0)) {
-      int tmpIndex = contents.lastIndexOf(">", currentIndex - 1);
-      if (tmpIndex < 0) {
-        currentIndex = 0;
-      } else {
-        int infoTagEnd = tmpIndex + 1;
-        tmpIndex--;
-        currentIndex = tmpIndex;
-        // Possible whitespaces
-        while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == ' ')) {
-          tmpIndex--;
-        }
-        int startIndex = contents.lastIndexOf("<", tmpIndex);
-        if (startIndex < 0) {
-          currentIndex = 0;
-        } else {
-          int previousEndIndex = contents.lastIndexOf(">", tmpIndex);
-          if (previousEndIndex < startIndex) {
-            int infoTagStart = startIndex;
-            startIndex++;
-            if ((startIndex < tmpIndex) && (contents.charAt(startIndex) == '/')) {
-              startIndex++;
-              // Possible whitespaces
-              while ((startIndex < tmpIndex) && (contents.charAt(startIndex) == ' ')) {
-                startIndex++;
-              }
-              if (tag.equalsIgnoreCase(contents.substring(startIndex, startIndex + tag.length()))) {
-                startIndex += tag.length();
-                if ((contents.charAt(startIndex) == ' ') ||
-                    (contents.charAt(startIndex) == '>')) {
-                  return new TagData(infoTagStart, infoTagEnd); 
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Find the first end tag after an index in the page contents.
-   * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param tag Tag to be found.
-   * @param currentIndex The last index.
-   * @return Tag found.
-   */
-  protected TagData findNextEndTag(
-      Page page, String contents,
-      String tag, int currentIndex) {
-    if (contents == null) {
-      return null;
-    }
-    while ((currentIndex < contents.length())) {
-      int tmpIndex = contents.indexOf("<", currentIndex);
-      if (tmpIndex < 0) {
-        currentIndex = contents.length();
-      } else {
-        int infoTagStart = tmpIndex;
-        tmpIndex++;
-        currentIndex = tmpIndex;
-        if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '/')) {
-          tmpIndex++;
-          // Possible whitespaces
-          while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
-            tmpIndex++;
-          }
-          int endIndex = contents.indexOf(">", tmpIndex);
-          if (endIndex < 0) {
-            currentIndex = contents.length();
-          } else {
-            int nextStartIndex = contents.indexOf("<", tmpIndex);
-            if ((nextStartIndex < 0) || (endIndex < nextStartIndex)) {
-              int infoTagEnd = endIndex + 1;
-              if (tag.equalsIgnoreCase(contents.substring(tmpIndex, tmpIndex + tag.length()))) {
-                tmpIndex += tag.length();
-                if ((contents.charAt(tmpIndex) == ' ') ||
-                    (contents.charAt(tmpIndex) == '>')) {
-                  return new TagData(infoTagStart, infoTagEnd); 
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    return null;
   }
 }
