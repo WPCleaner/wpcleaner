@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 
 import org.wikipediacleaner.Version;
@@ -39,6 +40,8 @@ import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TemplateMatch;
+import org.wikipediacleaner.api.data.TemplateMatcher;
+import org.wikipediacleaner.api.data.TemplateMatcherDirectInternalLink;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -235,11 +238,16 @@ public enum EnumWikipedia {
   private final String title;
   private final String apiUrl;
   private final String wikiUrl;
+  private final ComponentOrientation componentOrientation;
+  private final Properties configuration;
+
   private String helpUrl;
   private String helpPage;
-  private final ComponentOrientation componentOrientation;
+
+  private String pipeTemplate;
+  private Map<String, List<TemplateMatcher>> templateMatchers;
+
   private final String configPage;
-  private final Properties configuration;
   private String disambiguationText;
   private String wiktionaryInterwiki;
   private TemplateMatch[] wiktionaryMatches;
@@ -439,6 +447,20 @@ public enum EnumWikipedia {
   }
 
   /**
+   * @return Component orientation.
+   */
+  public ComponentOrientation getComponentOrientation() {
+    return componentOrientation;
+  }
+
+  /**
+   * @return Configuration page.
+   */
+  public String getConfiguationPage() {
+    return configPage;
+  }
+
+  /**
    * @return URL of the help page.
    */
   public String getHelpURL() {
@@ -452,24 +474,37 @@ public enum EnumWikipedia {
    * @return Help page.
    */
   public String getHelpPage() {
-    if (helpPage != null) {
-      return helpPage;
+    return helpPage;
+  }
+
+  /**
+   * @return Template creating a "|".
+   */
+  public String getPipeTemplate() {
+    return pipeTemplate;
+  }
+
+  /**
+   * @return Some matchers exist ?
+   */
+  public boolean hasDirectInternalLinkMatchers() {
+    if (templateMatchers == null) {
+      return false;
+    }
+    if (templateMatchers.isEmpty()) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * @return Matchers for templates creating direct internal links from parameter value.
+   */
+  public List<TemplateMatcher> getTemplateMatchers(String templateName) {
+    if (templateMatchers != null) {
+      return templateMatchers.get(normalizeTitle(templateName));
     }
     return null;
-  }
-
-  /**
-   * @return Component orientation.
-   */
-  public ComponentOrientation getComponentOrientation() {
-    return componentOrientation;
-  }
-
-  /**
-   * @return Configuration page.
-   */
-  public String getConfiguationPage() {
-    return configPage;
   }
 
   /**
@@ -681,6 +716,36 @@ public enum EnumWikipedia {
         helpPage = tmp.trim();
       }
 
+      // Pipe template
+      tmp = configuration.getProperty("general_pipe_template", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        pipeTemplate = tmp.trim();
+      }
+
+      // Templates creating internal links from parameter value
+      tmp = configuration.getProperty("general_direct_internal_link_templates", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        templateMatchers = new HashMap<String, List<TemplateMatcher>>();
+        List<String> tmpList = convertPropertyToStringList(tmp);
+        for (String template : tmpList) {
+          String[] elements = template.split("\\|");
+          String templateName = (elements.length > 0) ? normalizeTitle(elements[0]) : null;
+          String parameterName = (elements.length > 1) ? elements[1] : null;
+          String defaultValue = (elements.length > 2) ? elements[2] : null;
+          String neededParameter = (elements.length > 3) ? elements[3] : null;
+          if ((templateName != null) && (parameterName != null)) {
+            List<TemplateMatcher> list = templateMatchers.get(templateName);
+            if (list == null) {
+              list = new ArrayList<TemplateMatcher>();
+            }
+            TemplateMatcher matcher = new TemplateMatcherDirectInternalLink(
+                templateName, parameterName, defaultValue, neededParameter);
+            list.add(matcher);
+            templateMatchers.put(templateName, list);
+          }
+        }
+      }
+
       // Disambiguation comment
       tmp = configuration.getProperty("dab_comment", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
@@ -816,6 +881,29 @@ public enum EnumWikipedia {
           if (results[i - 1].length() > 0) {
             count--;
             result[count] = results[i - 1];
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Convert a multi-line property to a string list.
+   * 
+   * @param property Property.
+   * @return String list.
+   */
+  public List<String> convertPropertyToStringList(String property) {
+    List<String> result = null;
+    if ((property != null) && (property.trim().length() > 0)) {
+      String[] results = property.trim().split("\n");
+      if ((results != null) && (results.length > 0)) {
+        result = new ArrayList<String>();
+        for (int  i = 0; i < results.length; i++) {
+          results[i] = results[i].trim();
+          if (results[i].length() > 0) {
+            result.add(results[i]);
           }
         }
       }

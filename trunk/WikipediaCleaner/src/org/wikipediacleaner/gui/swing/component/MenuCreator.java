@@ -41,9 +41,12 @@ import javax.swing.text.Element;
 import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageUtilities;
 import org.wikipediacleaner.api.data.TemplateMatch;
+import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.api.data.TemplateParameter;
 import org.wikipediacleaner.api.data.TemplateReplacement;
 import org.wikipediacleaner.gui.swing.action.ChangePreferredDisambiguationAction;
@@ -186,6 +189,35 @@ public class MenuCreator {
       }
       addSubmenu(popup, submenu, 0, 0);
     }
+  }
+
+  /**
+   * Add submenus for replacing templates.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param popup Popup menu.
+   * @param template Template.
+   * @param matcher Template matcher.
+   * @param disambigPage Disambiguation page.
+   * @param page Page containing the text.
+   * @param element Element.
+   * @param textPane Text pane.
+   */
+  public static void addReplaceTemplateToMenu(
+      EnumWikipedia wikipedia, JPopupMenu popup,
+      PageElementTemplate template, TemplateMatcher matcher,
+      Page disambigPage, Page page, Element element, JTextPane textPane) {
+    if ((wikipedia == null) ||
+        (popup == null) ||
+        (template == null) ||
+        (matcher == null) ||
+        (disambigPage == null)) {
+      return;
+    }
+    if (!Boolean.TRUE.equals(disambigPage.isDisambiguationPage())) {
+      return;
+    }
+    //
   }
 
   /**
@@ -916,6 +948,9 @@ public class MenuCreator {
    */
   public static void addAnalyzeToMenu(
       EnumWikipedia wikipedia, JPopupMenu popup, Page page) {
+    if ((wikipedia == null) || (popup == null) || (page ==  null)) {
+      return;
+    }
     JMenuItem menuItem = null;
     ActionListener action = null;
     ArrayList<Page> links = page.getLinksWithRedirect();
@@ -959,7 +994,12 @@ public class MenuCreator {
       }
       addSubmenu(popup, submenuAnalyze, fixedBegin, fixedEnd);
     } else {
-      menuItem = new JMenuItem(GT._("Analyze page"));
+      if ((page.getNamespace() != null) &&
+          (page.getNamespace().intValue() == Namespace.TEMPLATE)) {
+        menuItem = new JMenuItem(GT._("Analyze template"));
+      } else {
+        menuItem = new JMenuItem(GT._("Analyze page"));
+      }
       action = new FullPageAnalysisAction(page.getTitle(), wikipedia);
       menuItem.addActionListener(action);
       popup.add(menuItem);
@@ -975,6 +1015,9 @@ public class MenuCreator {
    */
   public static void addViewToMenu(
       EnumWikipedia wikipedia, JPopupMenu popup, Page page) {
+    if ((wikipedia == null) || (popup == null) || (page == null)) {
+      return;
+    }
     JMenuItem menuItem = null;
     ActionListener action = null;
     ArrayList<Page> links = page.getLinksWithRedirect();
@@ -1033,7 +1076,12 @@ public class MenuCreator {
         }
         addSubmenu(popup, submenuView, fixedBegin, fixedEnd);
       } else {
-        menuItem = new JMenuItem(GT._("External Viewer"));
+        if ((page.getNamespace() != null) &&
+            (page.getNamespace().intValue() == Namespace.TEMPLATE)) {
+          menuItem = new JMenuItem(GT._("Template External Viewer"));
+        } else {
+          menuItem = new JMenuItem(GT._("External Viewer"));
+        }
         action = new PageViewAction(page.getTitle(), wikipedia);
         menuItem.addActionListener(action);
         popup.add(menuItem);
@@ -1080,6 +1128,9 @@ public class MenuCreator {
    */
   public static void addDisambiguationToMenu(
       EnumWikipedia wikipedia, JPopupMenu popup, Page page) {
+    if ((wikipedia == null) || (popup == null) || (page == null)) {
+      return;
+    }
     if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
       if (!page.isRedirect()) {
         JMenuItem menuItem = new JMenuItem(GT._("Disambiguation analysis"));
@@ -1112,12 +1163,13 @@ public class MenuCreator {
    */
   public static void addReloadLinksToMenu(
       EnumWikipedia wikipedia, JPopupMenu popup, Page page, BasicWindow window) {
-    if (page != null) {
-      JMenuItem menuItem = new JMenuItem(GT._("Reload links"));
-      ActionListener action = new ReloadLinksAction(wikipedia, page, window);
-      menuItem.addActionListener(action);
-      popup.add(menuItem);
+    if ((wikipedia == null) || (popup == null) || (window == null)) {
+      return;
     }
+    JMenuItem menuItem = new JMenuItem(GT._("Reload links"));
+    ActionListener action = new ReloadLinksAction(wikipedia, page, window);
+    menuItem.addActionListener(action);
+    popup.add(menuItem);
   }
 
   /**

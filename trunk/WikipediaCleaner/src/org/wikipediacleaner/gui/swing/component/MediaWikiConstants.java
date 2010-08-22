@@ -38,12 +38,14 @@ public class MediaWikiConstants {
   public final static String STYLE_REDIRECT_LINK           = "RedirectLink";
 
   // Attributes
-  public final static String ATTRIBUTE_TYPE      = "MediaWikiType";
-  public final static String ATTRIBUTE_PAGE      = "MediaWikiPage";
-  public final static String ATTRIBUTE_TEXT      = "MediaWikiText";
-  public final static String ATTRIBUTE_INFO      = "MediaWikiInfo";
-  public final static String ATTRIBUTE_OCCURENCE = "MediaWikiOccurence";
-  public final static String ATTRIBUTE_UUID      = "MediaWikiUUID";
+  public final static String ATTRIBUTE_INFO                = "MediaWikiInfo";
+  public final static String ATTRIBUTE_OCCURENCE           = "MediaWikiOccurence";
+  public final static String ATTRIBUTE_PAGE                = "MediaWikiPage";
+  public final static String ATTRIBUTE_PAGE_ELEMENT        = "MediaWikiPageElement";
+  public final static String ATTRIBUTE_TEMPLATE_MATCHER    = "MediaWikiTemplateMatcher";
+  public final static String ATTRIBUTE_TEXT                = "MediaWikiText";
+  public final static String ATTRIBUTE_TYPE                = "MediaWikiType";
+  public final static String ATTRIBUTE_UUID                = "MediaWikiUUID";
 
   // Attributes values
   public final static String VALUE_CHECK_WIKI_ERROR        = "CheckWikiError";

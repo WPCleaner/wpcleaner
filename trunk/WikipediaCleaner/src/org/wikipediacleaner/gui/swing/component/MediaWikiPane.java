@@ -27,6 +27,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,8 +51,11 @@ import javax.swing.text.StyledDocument;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageUtilities;
 import org.wikipediacleaner.api.data.TemplateMatch;
+import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.api.data.TemplateParameter;
 import org.wikipediacleaner.gui.swing.action.FindTextAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceLinkAction;
@@ -730,10 +734,80 @@ public class MediaWikiPane
 
     // Analyze templates
     if (internalLinks != null) {
+      String contents = getText();
+      long beginTime1 = System.nanoTime();
+      if (wikipedia.hasDirectInternalLinkMatchers()) {
+        int currentIndex = 0;
+        while (currentIndex < contents.length()) {
+          PageElementTemplate template = PageContents.findNextTemplate(page, contents, currentIndex);
+          if (template != null) {
+            currentIndex += 2;
+            List<? extends TemplateMatcher> matchers =
+              wikipedia.getTemplateMatchers(template.getTemplateName());
+            if (matchers != null) {
+              for (TemplateMatcher matcher : matchers) {
+                String linkTo = matcher.linksTo(template);
+                if (linkTo != null) {
+                  for (int i = 0; i < internalLinks.size(); i++) {
+                    Page link = internalLinks.get(i);
+                    if (Page.areSameTitle(link.getTitle(), linkTo)) {
+                      int start = template.getBeginIndex();
+                      int end = template.getEndIndex();
+                      String styleName = null;
+                      if (matcher.isGood() || Boolean.FALSE.equals(link.isDisambiguationPage())) {
+                        styleName = MediaWikiConstants.STYLE_NORMAL_TEMPLATE;
+                      } else {
+                        if (matcher.isHelpNeeded()) {
+                          styleName = MediaWikiConstants.STYLE_HELP_REQUESTED_LINK;
+                        } else {
+                          styleName = MediaWikiConstants.STYLE_DISAMBIGUATION_TEMPLATE;
+                        }
+                      }
+                      Style attr = getStyle(styleName);
+                      attr = (Style) attr.copyAttributes();
+                      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_PAGE, link);
+                      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_PAGE_ELEMENT, template);
+                      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_TEMPLATE_MATCHER, matcher);
+                      if ((matcher.isHelpNeeded()) && (template.getParameterCount() > 0)) {
+                        attr.addAttribute(
+                            MediaWikiConstants.ATTRIBUTE_TEXT,
+                            (template.getParameterCount() > 1) ?
+                                template.getParameterValue(1) : template.getParameterValue(0));
+                      }
+                      doc.setCharacterAttributes(start, end - start, attr, true);
+                      if (matcher.isGood() || !Boolean.FALSE.equals(link.isDisambiguationPage())) {
+                        if (start < thirdStartPosition) {
+                          thirdStartPosition = start;
+                          thirdEndPosition = end;
+                        }
+                      } else if (matcher.isHelpNeeded()) {
+                        if (start < secondStartPosition) {
+                          secondStartPosition = start;
+                          secondEndPosition = end;
+                        }
+                      } else {
+                        if (start < startPosition) {
+                          startPosition = start;
+                          endPosition = end;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          } else {
+            currentIndex = contents.length();
+          }
+        }
+      }
+      long endTime1 = System.nanoTime();
+
+      long beginTime2 = System.nanoTime();
       for (int numT = 0; numT < wikipedia.getDisambiguationMatchesCount(); numT++) {
         TemplateMatch template = wikipedia.getDisambiguationMatch(numT);
         Pattern pattern = PageUtilities.createPatternForTemplate(template);
-        Matcher matcher = pattern.matcher(getText());
+        Matcher matcher = pattern.matcher(contents);
         while (matcher.find()) {
           int start = matcher.start();
           int end = matcher.end();
@@ -787,6 +861,11 @@ public class MediaWikiPane
           }
         }
       }
+      long endTime2 = System.nanoTime();
+      System.err.println(
+          "Template analysis : " +
+          Long.toString(endTime1 - beginTime1) + "/" +
+          Long.toString(endTime2 - beginTime2));
     }
 
     // Move caret to force first element to be visible
