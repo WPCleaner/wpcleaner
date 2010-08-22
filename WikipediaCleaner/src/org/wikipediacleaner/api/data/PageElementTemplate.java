@@ -366,7 +366,7 @@ public class PageElementTemplate {
    * @param parameterName Parameter name that needs to be modified.
    * @param parameterValue New parameter value.
    * @param previousParameter Previous parameter.
-   * @return
+   * @return Complete template with parameter value replaced.
    */
   public String getParameterReplacement(
       String parameterName, String parameterValue, String previousParameter) {
