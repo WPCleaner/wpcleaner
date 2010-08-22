@@ -127,6 +127,13 @@ public class Page implements Comparable<Page> {
   }
 
   /**
+   * @param namespace Namespace number.
+   */
+  public void setNamespace(Integer namespace) {
+    this.namespace = namespace;
+  }
+
+  /**
    * @return Wikipedia.
    */
   public EnumWikipedia getWikipedia() {

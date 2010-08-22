@@ -70,16 +70,7 @@ public class PageElementTemplate {
     if (contents == null) {
       return null;
     }
-    templateName = ((templateName != null) && (!templateName.trim().isEmpty())) ? templateName.trim() : "";
-    String templateName1 = templateName;
-    String templateName2 = templateName;
-    if (templateName.length() > 1) {
-      templateName1 = Character.toLowerCase(templateName.charAt(0)) + templateName.substring(1);
-      templateName2 = Character.toUpperCase(templateName.charAt(0)) + templateName.substring(1);
-    } else if (templateName.length() > 0) {
-      templateName1 = templateName.toLowerCase();
-      templateName2 = templateName.toUpperCase();
-    }
+    templateName = ((templateName != null) && (templateName.trim().length() > 0)) ? templateName.trim() : "";
 
     // Look for '{{'
     int beginIndex = index;
@@ -101,6 +92,15 @@ public class PageElementTemplate {
       return null;
     }
     if (templateName.length() > 0) {
+      String templateName1 = templateName;
+      String templateName2 = templateName;
+      if (templateName.length() > 1) {
+        templateName1 = Character.toLowerCase(templateName.charAt(0)) + templateName.substring(1);
+        templateName2 = Character.toUpperCase(templateName.charAt(0)) + templateName.substring(1);
+      } else {
+        templateName1 = templateName.toLowerCase();
+        templateName2 = templateName.toUpperCase();
+      }
       if ((!contents.startsWith(templateName1, tmpIndex)) &&
           (!contents.startsWith(templateName2, tmpIndex))) {
         return null;
@@ -235,6 +235,13 @@ public class PageElementTemplate {
   }
 
   /**
+   * @return Template name.
+   */
+  public String getTemplateName() {
+    return templateName;
+  }
+
+  /**
    * Get parameter count.
    * 
    * @return Parameter count.
@@ -297,6 +304,7 @@ public class PageElementTemplate {
       if (name.equals(parameters.get(index).name)) {
         return parameters.get(index).value;
       }
+      index++;
     }
     return null;
   }

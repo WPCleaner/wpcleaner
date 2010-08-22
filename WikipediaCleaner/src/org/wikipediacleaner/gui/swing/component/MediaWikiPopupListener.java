@@ -29,13 +29,17 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTextPane;
+import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 
 
@@ -115,8 +119,19 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
       return;
     }
 
-    // Manage Informations
+    // Retrieve main attributes
+    AttributeSet attributes = element.getAttributes();
     Object attrInfo = element.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_INFO);
+    Object attrPage = attributes.getAttribute(MediaWikiConstants.ATTRIBUTE_PAGE);
+    Object attrPageElement = attributes.getAttribute(MediaWikiConstants.ATTRIBUTE_PAGE_ELEMENT);
+    Object attrTemplateMatcher = attributes.getAttribute(MediaWikiConstants.ATTRIBUTE_TEMPLATE_MATCHER);
+    Object attrText = attributes.getAttribute(MediaWikiConstants.ATTRIBUTE_TEXT);
+
+    Page page = (attrPage instanceof Page) ? (Page) attrPage : null;
+    TemplateMatcher matcher = (attrTemplateMatcher instanceof TemplateMatcher) ?
+        (TemplateMatcher) attrTemplateMatcher : null;
+
+    // Manage Informations
     if (attrInfo instanceof CheckErrorResult) { // TODO: more generic
       CheckErrorResult info = (CheckErrorResult) attrInfo;
       JPopupMenu popup = new JPopupMenu();
@@ -125,8 +140,33 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
       return;
     }
 
-    Object attrPage = element.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_PAGE);
-    Object attrText = element.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_TEXT);
+    // Manage TemplateMatcher
+    if (attrPageElement instanceof PageElementTemplate) {
+      PageElementTemplate template = (PageElementTemplate) attrPageElement;
+      JPopupMenu popup = new JPopupMenu();
+
+      String templateTitle = Namespace.getTitle(
+          Namespace.TEMPLATE, wikipedia.getNamespaces(), template.getTemplateName());
+      JMenuItem menuItem = new JMenuItem(templateTitle);
+      menuItem.setEnabled(false);
+      popup.add(menuItem);
+      MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
+
+      popup.addSeparator();
+      Page templatePage = DataManager.getPage(wikipedia, templateTitle, null, null);
+
+      MenuCreator.addReplaceTemplateToMenu(wikipedia, popup, template, matcher, page, null, element, textPane);
+      MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
+      MenuCreator.addAnalyzeToMenu(wikipedia, popup, templatePage);
+      MenuCreator.addViewToMenu(wikipedia, popup, page);
+      MenuCreator.addViewToMenu(wikipedia, popup, templatePage);
+      MenuCreator.addDisambiguationToMenu(wikipedia, popup, page);
+      MenuCreator.addReloadLinksToMenu(wikipedia, popup, page, window);
+
+      popup.show(textPane, x, y);
+      return;
+    }
+
     if (!(attrPage instanceof Page)) {
 
       // Trying to find if the click has been made in an internal link [[...]]
@@ -231,24 +271,24 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
                 String title = "Template:" + template;
                 String params = (separatorIndex < foundText.length()) ?
                     foundText.substring(separatorIndex + 1) : "";
-                Page page = DataManager.getPage(wikipedia, title, null, null);
+                Page templatePage = DataManager.getPage(wikipedia, title, null, null);
                 JPopupMenu popup = new JPopupMenu();
-                JMenuItem menuItem = new JMenuItem(page.getTitle());
+                JMenuItem menuItem = new JMenuItem(templatePage.getTitle());
                 menuItem.setEnabled(false);
                 popup.add(menuItem);
                 MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
-                if (attrPage instanceof Page) {
+                if (page != null) {
                   popup.add(new JSeparator());
                   MenuCreator.addReplaceTemplateToMenu(
-                      wikipedia, popup, template, params, (Page) attrPage,
+                      wikipedia, popup, template, params, page,
                       null /*TODO*/, element, textPane);
-                  MenuCreator.addAnalyzeToMenu(wikipedia, popup, (Page) attrPage);
-                  MenuCreator.addViewToMenu(wikipedia, popup, (Page) attrPage);
-                  MenuCreator.addDisambiguationToMenu(wikipedia, popup, (Page) attrPage);
-                  MenuCreator.addReloadLinksToMenu(wikipedia, popup, (Page) attrPage, window);
-                } else {
                   MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
                   MenuCreator.addViewToMenu(wikipedia, popup, page);
+                  MenuCreator.addDisambiguationToMenu(wikipedia, popup, page);
+                  MenuCreator.addReloadLinksToMenu(wikipedia, popup, page, window);
+                } else {
+                  MenuCreator.addAnalyzeToMenu(wikipedia, popup, templatePage);
+                  MenuCreator.addViewToMenu(wikipedia, popup, templatePage);
                 }
                 popup.show(textPane, x, y);
                 return;
@@ -263,7 +303,6 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
     }
 
     // Menu name
-    Page page = (Page) attrPage;
     String text = (String) attrText;
     JPopupMenu popup = new JPopupMenu();
     JMenuItem menuItem = new JMenuItem(page.getTitle());

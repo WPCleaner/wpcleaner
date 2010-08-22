@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-21 00:32+0200\n"
+"POT-Creation-Date: 2010-08-22 15:00+0200\n"
 "PO-Revision-Date: 2010-08-21 00:04+0000\n"
 "Last-Translator: Konki <pavel.konkol@seznam.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -63,26 +63,26 @@ msgid "Replace with {0}"
 msgstr "Nahradit za {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:126
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:113
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:78
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:83
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:114
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:79
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:84
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:636
 msgid "Delete"
 msgstr "Smazat"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:106
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:107
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr "Seznam šablon s vloženou {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:40
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:41
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:40
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089.java:40
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:40
 msgid "Fix DEFAULTSORT"
 msgstr "Opravit DEFAULTSORT"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:99
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:100
 #, java-format
 msgid "Unable to replace the characters [{0}]"
 msgstr "Nelze nahradit znaky [{0}]"
@@ -118,7 +118,7 @@ msgstr "Odstranit všechny odkazy na článek"
 msgid "Remove breaks in list"
 msgstr "Odstranit zalomení v seznamu"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:201
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:202
 #, java-format
 msgid ""
 "A list of abbreviations that generate false positives when placed before {0}"
@@ -136,24 +136,24 @@ msgstr "Zkontroluj jazykové odkazy"
 msgid "The checksum is {0} instead of {1}"
 msgstr "Kontrolní součet je {0} místo {1}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:100
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:101
 msgid "Add a description..."
 msgstr "Přidat popis…"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:103
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:113
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:104
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:114
 msgid "What description would like to use for the external link ?"
 msgstr "Jaký popis chcete použít pro externí odkaz?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:108
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:109
 msgid "Convert into <ref> tag"
 msgstr "Převést na značku <ref>"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:110
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:111
 msgid "Add a description and convert into <ref> tag"
 msgstr "Přidat popis a převést na značku <ref>"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:118
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:119
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:112
 msgid "External viewer"
 msgstr "Externí prohlížeč"
@@ -171,11 +171,11 @@ msgstr "Jaké jméno chcete použít pro značku <ref>?"
 msgid "Existing references"
 msgstr "Existující reference"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:247
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:245
 msgid "Title of the article describing this type of error"
 msgstr "Titulek článku popisující tento typ chyby"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:248
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:246
 msgid "List of false positives for this type of error"
 msgstr "Seznam falešně pozitivních výsledků pro tento typ chyby"
 
@@ -367,8 +367,7 @@ msgstr "Můžou změnit nožství stránek v krátkém čase."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Na některých projektech Wikimedia potřebuješ pro tyto funkce příznak Bot."
 
@@ -806,8 +805,7 @@ msgstr "Než se přihlásíte, musíte zadat heslo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:774
 msgid "You can learn how to configure WikiCleaner at the following URL:"
-msgstr ""
-"Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
+msgstr "Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:791
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
@@ -1490,126 +1488,136 @@ msgstr "Chyba číslo {0}"
 msgid "Close this tab"
 msgstr "Zavřít tuto kartu"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:181
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:184
 msgid "Current chapter"
 msgstr "Aktuální kapitola"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:227
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:259
 #, java-format
 msgid "Link parameter {0} to"
 msgstr "Připojit parametr {0} k"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:228
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:260
 #, java-format
 msgid "Replace parameter {0} with"
 msgstr "Nahradit parametr {0} za"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:371
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:672
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:403
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:704
 msgid "Link to"
 msgstr "Připojit k"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:372
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:404
 msgid "Replace with"
 msgstr "Nahradit za"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:373
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:405
 msgid "Add to preferred disambiguations"
 msgstr "Přidat k oblíbeným rozcestníkům"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:599
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:631
 msgid "Add other preferred disambiguation..."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:602
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:634
 msgid "What link do you want to add to the preferred disambiguations?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:609
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:641
 msgid "Remove from preferred disambiguations"
 msgstr "Odebrat z oblíbených rozcestníků"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:620
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:652
 #, java-format
 msgid "Reverse to [[{0}|{1}]]"
 msgstr "Zpět k [[{0}|{1}]]"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:630
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:662
 #, java-format
 msgid "&Link to {0}"
 msgstr "Odkaz na {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:635
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:667
 #, java-format
 msgid "&Replace with {0}"
 msgstr "Nahradit za {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:652
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:684
 msgid "Red links analysis"
 msgstr "Analýza červených odkazů"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:764
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:796
 msgid "Remove link"
 msgstr "Odebrat odkaz"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:780
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:812
 msgid "Remove all links"
 msgstr "Odebrat všechny odkazy"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:806
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:817
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:838
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:849
 msgid "Mark as normal link"
 msgstr "Označit jako normální odkaz"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:808
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:850
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:891
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:840
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:882
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:923
 #, java-format
 msgid "Using '{{'{0}'}}'"
 msgstr "Používám '{{'{0}'}}'"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:848
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:859
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:880
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:891
 msgid "Mark as needing help"
 msgstr "Označit žádostí o pomoc"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:889
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:900
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:921
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:932
 msgid "Link text"
 msgstr "Text odkazu"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:925
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:960
 msgid "Analyze"
 msgstr "Analyzovat"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:962
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:999
+#, fuzzy
+msgid "Analyze template"
+msgstr "Analyzovat stránku"
+
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1001
 msgid "Analyze page"
 msgstr "Analyzovat stránku"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:985
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1036
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1053
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1028
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1083
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1101
 msgid "External Viewer"
 msgstr "Externí prohlížeč"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1085
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1090
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1081
+#, fuzzy
+msgid "Template External Viewer"
+msgstr "Externí prohlížeč"
+
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1136
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1141
 msgid "Disambiguation analysis"
 msgstr "Rozcestníková analýza"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1116
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1169
 msgid "Reload links"
 msgstr "Obnovit odkazy"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1134
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1186
 msgid "Purge cache"
 msgstr "Vyčistit vyrovnávací paměť"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1151
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1203
 msgid "Find text"
 msgstr "Najít text"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1169
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1221
 msgid "Search in templates"
 msgstr "Hledat v šablonách"
 
