@@ -28,20 +28,25 @@ import java.util.List;
  */
 public class PageElementTemplate {
   private final String templateName;
+  private final String templateNameNotTrimmed;
   private final int beginIndex;
   private final List<Parameter> parameters;
   private final int endIndex;
 
   private static class Parameter {
     final String name;
+    final String nameNotTrimmed;
     final int nameStartIndex;
     final String value;
+    final String valueNotTrimmed;
     final int valueStartIndex;
 
     public Parameter(String name, int nameStartIndex, String value, int valueStartIndex) {
-      this.name = name;
+      this.nameNotTrimmed = name;
+      this.name = (name != null) ? name.trim() : null;
       this.nameStartIndex = nameStartIndex;
-      this.value = value;
+      this.valueNotTrimmed = value;
+      this.value = (value != null) ? value.trim() : null;
       this.valueStartIndex = valueStartIndex;
     }
 
@@ -81,6 +86,7 @@ public class PageElementTemplate {
       return null;
     }
     tmpIndex += 2;
+    int startTemplateName = tmpIndex;
 
     // Possible whitespaces characters
     while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
@@ -129,6 +135,7 @@ public class PageElementTemplate {
     if (tmpIndex >= contents.length()) {
       return null;
     }
+    int endTemplateName = tmpIndex;
 
     // Check if parameters are present
     if (contents.charAt(tmpIndex) == '|') {
@@ -155,9 +162,13 @@ public class PageElementTemplate {
           parameters)) {
         return null;
       }
-      return new PageElementTemplate(templateName, beginIndex, endIndex, parameters);
+      return new PageElementTemplate(
+          contents.substring(startTemplateName, endTemplateName),
+          beginIndex, endIndex, parameters);
     } else if (contents.startsWith("}}", tmpIndex)) {
-      return new PageElementTemplate(templateName, beginIndex, tmpIndex + 2, null);
+      return new PageElementTemplate(
+          contents.substring(startTemplateName, endTemplateName),
+          beginIndex, tmpIndex + 2, null);
     }
     return null;
   }
@@ -218,7 +229,7 @@ public class PageElementTemplate {
         spaces++;
       }
       parameters.add(new Parameter(
-          "", offset + spaces, parameter.trim(), offset + spaces));
+          "", offset + spaces, parameter, offset + spaces));
     } else {
       int spacesName = 0;
       while ((spacesName < equalIndex) && (parameter.charAt(spacesName) == ' ')) {
@@ -229,8 +240,8 @@ public class PageElementTemplate {
         spacesValue++;
       }
       parameters.add(new Parameter(
-          parameter.substring(0, equalIndex).trim(), offset + spacesName,
-          parameter.substring(spacesValue).trim(), offset + spacesValue));
+          parameter.substring(0, equalIndex), offset + spacesName,
+          parameter.substring(equalIndex + 1), offset + spacesValue));
     }
   }
 
@@ -321,30 +332,118 @@ public class PageElementTemplate {
       String templateName,
       int beginIndex, int endIndex,
       List<Parameter> parameters) {
-    this.templateName = templateName;
+    this.templateNameNotTrimmed = templateName;
+    this.templateName = (templateName != null) ? templateName.trim() : null;
     this.beginIndex = beginIndex;
     this.endIndex = endIndex;
     this.parameters = parameters;
   }
 
-  public String getPartBeforeParameters() {
-    StringBuilder sb = new StringBuilder();
+  private void addPartBeforeParameters(StringBuilder sb) {
     sb.append("{{");
-    sb.append(templateName);
-    return sb.toString();
+    sb.append(templateNameNotTrimmed);
   }
 
-  public String getPartFromParameters() {
-    StringBuilder sb = new StringBuilder();
-    int index = 0;
-    while (index < parameters.size()) {
-      sb.append('|');
-      String parameterName = parameters.get(index).name;
-      if ((parameterName != null) && (!parameterName.trim().isEmpty())) {
-        sb.append(parameters.get(index).name);
-        sb.append('=');
+  private void addPartFromParameters(StringBuilder sb) {
+    for (Parameter parameter : parameters) {
+      addParameter(sb, parameter.name, parameter.value);
+    }
+    sb.append("}}");
+  }
+
+  private void addParameter(StringBuilder sb, String parameterName, String parameterValue) {
+    sb.append('|');
+    if ((parameterName != null) && (parameterName.trim().length() > 0)) {
+      sb.append(parameterName);
+      sb.append('=');
+    }
+    sb.append(parameterValue);
+  }
+
+  /**
+   * Create a template with a parameter value modified.
+   * 
+   * @param parameterName Parameter name that needs to be modified.
+   * @param parameterValue New parameter value.
+   * @param previousParameter Previous parameter.
+   * @return
+   */
+  public String getParameterReplacement(
+      String parameterName, String parameterValue, String previousParameter) {
+    boolean parameterExist = false;
+    for (Parameter parameter : parameters) {
+      if (parameter.name.equals(parameterName)) {
+        parameterExist = true;
       }
-      sb.append(parameters.get(index).value);
+    }
+    StringBuilder sb = new StringBuilder();
+    addPartBeforeParameters(sb);
+    boolean parameterAdded = false;
+    String tmpParameterName = parameterName;
+    String tmpParameterValue = parameterValue;
+    for (Parameter parameter : parameters) {
+
+      // Manage whitespace characters before/after name/value
+      tmpParameterName = parameterName;
+      tmpParameterValue = parameterValue;
+      if (parameter.name != null) {
+        // Whitespace characters before name
+        int spaces = 0;
+        while ((spaces < parameter.nameNotTrimmed.length()) &&
+               (Character.isWhitespace(parameter.nameNotTrimmed.charAt(spaces)))) {
+          spaces++;
+        }
+        if (spaces > 0) {
+          tmpParameterName = parameter.nameNotTrimmed.substring(0, spaces) + parameterName;
+        }
+
+        // Whitespace characters after name
+        spaces = parameter.nameNotTrimmed.length();
+        while ((spaces > 0) &&
+               (Character.isWhitespace(parameter.nameNotTrimmed.charAt(spaces - 1)))) {
+          spaces--;
+        }
+        if (spaces < parameter.nameNotTrimmed.length()) {
+          tmpParameterName += parameter.nameNotTrimmed.substring(spaces);
+        }
+
+        // Whitespace characters before value
+        spaces = 0;
+        while ((spaces < parameter.valueNotTrimmed.length()) &&
+               (Character.isWhitespace(parameter.valueNotTrimmed.charAt(spaces)))) {
+          spaces++;
+        }
+        if (spaces > 0) {
+          tmpParameterValue = parameter.valueNotTrimmed.substring(0, spaces) + parameterValue;
+        }
+
+        // Whitespace characters after value
+        spaces = parameter.valueNotTrimmed.length();
+        while ((spaces > 0) &&
+               (Character.isWhitespace(parameter.valueNotTrimmed.charAt(spaces - 1)))) {
+          spaces--;
+        }
+        if (spaces < parameter.valueNotTrimmed.length()) {
+          tmpParameterValue += parameter.valueNotTrimmed.substring(spaces);
+        }
+      }
+
+      // Add parameter
+      if ((parameter.name != null) && (parameter.name.equals(parameterName))) {
+        addParameter(sb, parameter.nameNotTrimmed, tmpParameterValue);
+        parameterAdded = true;
+      } else if ((!parameterExist) &&
+                 (parameter.name != null) &&
+                 (parameter.name.equals(previousParameter))) {
+        addParameter(sb, parameter.nameNotTrimmed, parameter.valueNotTrimmed);
+        addParameter(sb, tmpParameterName, tmpParameterValue);
+        parameterAdded = true;
+      } else {
+        addParameter(sb, parameter.nameNotTrimmed, parameter.valueNotTrimmed);
+      }
+    }
+    if (!parameterAdded) {
+      addParameter(sb, tmpParameterName, tmpParameterValue);
     }
     sb.append("}}");
     return sb.toString();
@@ -356,8 +455,8 @@ public class PageElementTemplate {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append(getPartBeforeParameters());
-    sb.append(getPartFromParameters());
+    addPartBeforeParameters(sb);
+    addPartFromParameters(sb);
     return sb.toString();
   }
 }

@@ -63,6 +63,7 @@ import org.wikipediacleaner.gui.swing.action.RemoveLinkAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceLinkAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceTemplateAction;
+import org.wikipediacleaner.gui.swing.action.ReplaceTextAction;
 import org.wikipediacleaner.gui.swing.action.RevertLinkAction;
 import org.wikipediacleaner.gui.swing.action.TemplatesAnalysisAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -217,7 +218,175 @@ public class MenuCreator {
     if (!Boolean.TRUE.equals(disambigPage.isDisambiguationPage())) {
       return;
     }
-    //
+
+    // Retrieve possible replacements
+    List<String> replacements = matcher.getReplacements(template);
+    if ((replacements == null) || (replacements.isEmpty())) {
+      return;
+    }
+
+    // Retrieve preferred disambiguations
+    Configuration config = Configuration.getConfiguration();
+    List<String> preferredDabs = config.getStringSubList(
+        Configuration.SUB_ARRAY_PREFERRED_DAB, disambigPage.getTitle());
+
+    // Retrieve various informations
+    ArrayList<String> wiktionary = disambigPage.getWiktionaryLinks();
+    HashMap<Page, List<String>> anchorsMap = new HashMap<Page, List<String>>();
+    ArrayList<Page> links = disambigPage.getLinksWithRedirect(anchorsMap);
+
+    // Checking all possible replacements
+    JMenuItem menuItem = null;
+    ActionListener action = null;
+    for (int indexReplacement = 0; indexReplacement < replacements.size(); indexReplacement++) {
+      String replacement = replacements.get(indexReplacement);
+      if (replacement != null) {
+        JMenu submenu = new JMenu(replacement);
+
+        int fixedBegin = 0;
+        int fixedEnd = 0;
+        boolean separators = false;
+
+        if (!preferredDabs.isEmpty()) {
+          // Preferred disambiguations
+          for (String preferredDab : preferredDabs) {
+            menuItem = new JMenuItem(preferredDab);
+            action = new ReplaceTextAction(
+                matcher.getReplacement(template, indexReplacement, preferredDab),
+                element, textPane);
+            menuItem.addActionListener(action);
+            submenu.add(menuItem);
+            fixedBegin++;
+          }
+        } else {
+          // Last replacement
+          String title = getLastReplacement(disambigPage.getTitle());
+          if (title != null) {
+            menuItem = new JMenuItem(title);
+            action = new ReplaceTextAction(
+                matcher.getReplacement(template, indexReplacement, title),
+                element, textPane);
+            menuItem.addActionListener(action);
+            submenu.add(menuItem);
+            fixedBegin++;
+          }
+        }
+
+        // Wiktionary links
+        if ((wiktionary != null) && (wiktionary.size() > 0)) {
+          if ((!separators) && (fixedBegin > 0)) {
+            submenu.addSeparator();
+            fixedBegin++;
+            separators = true;
+          }
+          for (String wikt : wiktionary) {
+            String name = "wikt:" + wikt;
+            menuItem = new JMenuItem(name);
+            action = new ReplaceTextAction(
+                matcher.getReplacement(template, indexReplacement, name),
+                element, textPane);
+            menuItem.addActionListener(action);
+            submenu.add(menuItem);
+          }
+        }
+
+        // Possible links
+        if ((links != null) && (links.size() > 0)) {
+          for (Page p : links) {
+            if (p.isRedirect()) {
+              JMenu submenu1 = new JMenu(p.getTitle());
+              HashMap<Page, List<String>> anchorsRedirectMap = new HashMap<Page, List<String>>();
+              p.getLinksWithRedirect(anchorsRedirectMap);
+              
+              Iterator<Page> iter = p.getRedirectIteratorWithPage();
+              while (iter.hasNext()) {
+                Page pageTmp = iter.next();
+                List<String> anchors = anchorsRedirectMap.get(pageTmp);
+
+                menuItem = new JMenuItem(pageTmp.getTitle());
+                updateFont(menuItem, pageTmp);
+                action = new ReplaceTextAction(
+                    matcher.getReplacement(template, indexReplacement, pageTmp.getTitle()),
+                    element, textPane);
+                menuItem.addActionListener(action);
+                submenu1.add(menuItem);
+        
+                if ((anchors != null) && (anchors.size() > 0)) {
+                  for (String anchor : anchors) {
+                    menuItem = new JMenuItem(anchor);
+                    updateFont(menuItem, pageTmp);
+                    action = new ReplaceTextAction(
+                        matcher.getReplacement(template, indexReplacement, anchor),
+                        element, textPane);
+                    menuItem.addActionListener(action);
+                    submenu1.add(menuItem);
+                  }
+                }
+              }
+              
+              submenu.add(submenu1);
+            } else {
+              menuItem = new JMenuItem(p.getTitle());
+              updateFont(menuItem, p);
+              action = new ReplaceTextAction(
+                  matcher.getReplacement(template, indexReplacement, p.getTitle()),
+                  element, textPane);
+              menuItem.addActionListener(action);
+              submenu.add(menuItem);
+
+              // Anchors
+              List<String> anchors = anchorsMap.get(p);
+              if (anchors != null) {
+                for (String anchor : anchors) {
+                  menuItem = new JMenuItem(anchor);
+                  updateFont(menuItem, p);
+                  action = new ReplaceTextAction(
+                      matcher.getReplacement(template, indexReplacement, anchor),
+                      element, textPane);
+                  menuItem.addActionListener(action);
+                  submenu.add(menuItem);
+                }
+              }
+            }
+          }
+        }
+
+        if (separators) {
+          if (!preferredDabs.isEmpty()) {
+            // Preferred disambiguations
+            submenu.addSeparator();
+            fixedEnd++;
+  
+            for (String preferredDab : preferredDabs) {
+              menuItem = new JMenuItem(preferredDab);
+              action = new ReplaceTextAction(
+                  matcher.getReplacement(template, indexReplacement, preferredDab),
+                  element, textPane);
+              menuItem.addActionListener(action);
+              submenu.add(menuItem);
+              fixedEnd++;
+            }
+          } else {
+            // Last replacement
+            String title = getLastReplacement(page.getTitle());
+            if (title != null) {
+              submenu.addSeparator();
+              fixedEnd++;
+  
+              menuItem = new JMenuItem(title);
+              action = new ReplaceTextAction(
+                  matcher.getReplacement(template, indexReplacement, title),
+                  element, textPane);
+              menuItem.addActionListener(action);
+              submenu.add(menuItem);
+              fixedEnd++;
+            }
+          }
+        }
+
+        addSubmenu(popup, submenu, fixedBegin, fixedEnd);
+      }
+    }
   }
 
   /**
