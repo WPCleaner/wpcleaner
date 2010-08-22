@@ -36,7 +36,7 @@ public abstract class TemplateMatcher {
   /**
    * @param wikipedia Wikipedia.
    * @param templateName Template name.
-   * @param isGoof Is good ?
+   * @param isGood Is good ?
    * @param helpNeeded Is help needed ?
    */
   public TemplateMatcher(
@@ -56,7 +56,7 @@ public abstract class TemplateMatcher {
   public abstract String linksTo(PageElementTemplate template);
 
   /**
-   * @template Template.
+   * @param template Template.
    * @return List of possible kinds of replacements.
    */
   public abstract List<String> getReplacements(PageElementTemplate template);

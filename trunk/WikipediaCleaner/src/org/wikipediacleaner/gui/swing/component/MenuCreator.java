@@ -292,6 +292,11 @@ public class MenuCreator {
 
         // Possible links
         if ((links != null) && (links.size() > 0)) {
+          if ((!separators) && (fixedBegin > 0)) {
+            submenu.addSeparator();
+            fixedBegin++;
+            separators = true;
+          }
           for (Page p : links) {
             if (p.isRedirect()) {
               JMenu submenu1 = new JMenu(p.getTitle());
