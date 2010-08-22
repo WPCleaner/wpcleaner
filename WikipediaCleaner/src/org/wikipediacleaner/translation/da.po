@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-22 15:00+0200\n"
+"POT-Creation-Date: 2010-08-22 17:42+0200\n"
 "PO-Revision-Date: 2010-06-18 16:04+0000\n"
 "Last-Translator: Joe Hansen <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -123,6 +123,11 @@ msgstr "Fjern alle links"
 #, java-format
 msgid ""
 "A list of abbreviations that generate false positives when placed before {0}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:205
+#, java-format
+msgid "Used as a separator between consecutive {0} tags"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:100

@@ -200,6 +200,9 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     parameters.put(
         "abbreviations",
         GT._("A list of abbreviations that generate false positives when placed before {0}", "&lt;ref&gt;"));
+    parameters.put(
+        "separator",
+        GT._("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"));
     return parameters;
   }
 }
