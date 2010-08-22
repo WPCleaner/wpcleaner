@@ -53,14 +53,14 @@ public abstract class TemplateMatcher {
   }
 
   /**
-   * @return
+   * @return Is good ?
    */
   public boolean isGood() {
     return good;
   }
 
   /**
-   * @return
+   * @return Is help needed ?
    */
   public boolean isHelpNeeded() {
     return helpNeeded;
