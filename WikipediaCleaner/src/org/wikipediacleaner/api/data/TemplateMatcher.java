@@ -18,22 +18,32 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.List;
+
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+
 
 /**
  * A class for describing a matcher for template.
  */
 public abstract class TemplateMatcher {
 
+  private final EnumWikipedia wikipedia;
   private final String templateName;
   private final boolean good;
   private final boolean helpNeeded;
 
   /**
+   * @param wikipedia Wikipedia.
    * @param templateName Template name.
+   * @param isGoof Is good ?
+   * @param helpNeeded Is help needed ?
    */
   public TemplateMatcher(
+      EnumWikipedia wikipedia,
       String templateName,
       boolean isGood, boolean helpNeeded) {
+    this.wikipedia = wikipedia;
     this.templateName = templateName;
     this.good = isGood;
     this.helpNeeded = helpNeeded;
@@ -44,6 +54,29 @@ public abstract class TemplateMatcher {
    * @return Link (if any) created by the template for this matcher.
    */
   public abstract String linksTo(PageElementTemplate template);
+
+  /**
+   * @template Template.
+   * @return List of possible kinds of replacements.
+   */
+  public abstract List<String> getReplacements(PageElementTemplate template);
+
+  /**
+   * @param template Template.
+   * @param index Replacement index.
+   * @param text Replacement text.
+   * @return Full replacement.
+   */
+  public abstract String getReplacement(
+      PageElementTemplate template,
+      int index, String text);
+
+  /**
+   * @return Wikipedia.
+   */
+  public EnumWikipedia getWikipedia() {
+    return wikipedia;
+  }
 
   /**
    * @return Template name.

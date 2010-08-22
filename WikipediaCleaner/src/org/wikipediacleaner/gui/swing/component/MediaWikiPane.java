@@ -768,6 +768,7 @@ public class MediaWikiPane
                       attr.addAttribute(MediaWikiConstants.ATTRIBUTE_PAGE, link);
                       attr.addAttribute(MediaWikiConstants.ATTRIBUTE_PAGE_ELEMENT, template);
                       attr.addAttribute(MediaWikiConstants.ATTRIBUTE_TEMPLATE_MATCHER, matcher);
+                      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_UUID, UUID.randomUUID());
                       if ((matcher.isHelpNeeded()) && (template.getParameterCount() > 0)) {
                         attr.addAttribute(
                             MediaWikiConstants.ATTRIBUTE_TEXT,

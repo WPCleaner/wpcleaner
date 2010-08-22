@@ -42,6 +42,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TemplateMatch;
 import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.api.data.TemplateMatcherDirectInternalLink;
+import org.wikipediacleaner.api.data.TemplateMatcherInternalLink;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -722,10 +723,35 @@ public enum EnumWikipedia {
         pipeTemplate = tmp.trim();
       }
 
+      templateMatchers = new HashMap<String, List<TemplateMatcher>>();
+
       // Templates creating internal links from parameter value
+      tmp = configuration.getProperty("general_internal_link_templates", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        List<String> tmpList = convertPropertyToStringList(tmp);
+        for (String template : tmpList) {
+          String[] elements = template.split("\\|");
+          String templateName = (elements.length > 0) ? normalizeTitle(elements[0]) : null;
+          String parameterName = (elements.length > 1) ? elements[1] : null;
+          String defaultValue = (elements.length > 2) ? elements[2] : null;
+          String neededParameter = (elements.length > 3) ? elements[3] : null;
+          if ((templateName != null) && (parameterName != null)) {
+            List<TemplateMatcher> list = templateMatchers.get(templateName);
+            if (list == null) {
+              list = new ArrayList<TemplateMatcher>();
+            }
+            TemplateMatcher matcher = new TemplateMatcherInternalLink(
+                this, templateName,
+                parameterName, defaultValue, neededParameter);
+            list.add(matcher);
+            templateMatchers.put(templateName, list);
+          }
+        }
+      }
+
+      // Templates creating internal links directly from parameter value
       tmp = configuration.getProperty("general_direct_internal_link_templates", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
-        templateMatchers = new HashMap<String, List<TemplateMatcher>>();
         List<String> tmpList = convertPropertyToStringList(tmp);
         for (String template : tmpList) {
           String[] elements = template.split("\\|");
@@ -739,7 +765,8 @@ public enum EnumWikipedia {
               list = new ArrayList<TemplateMatcher>();
             }
             TemplateMatcher matcher = new TemplateMatcherDirectInternalLink(
-                templateName, parameterName, defaultValue, neededParameter);
+                this, templateName,
+                parameterName, defaultValue, neededParameter);
             list.add(matcher);
             templateMatchers.put(templateName, list);
           }

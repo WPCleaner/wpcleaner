@@ -26,10 +26,10 @@ import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * A class for describing a matcher for template creating internal links directly from parameter value.
- * {{templateName|parameterName=parameterValue}} => [[parameterValue]]
+ * A class for describing a matcher for template creating internal links from parameter value.
+ * {{templateName|parameterName=parameterValue}} => [[parameterValue|text]]
  */
-public class TemplateMatcherDirectInternalLink extends TemplateMatcher {
+public class TemplateMatcherInternalLink extends TemplateMatcher {
 
   private final String parameterName;
   private final String parameterDefaultValue;
@@ -42,7 +42,7 @@ public class TemplateMatcherDirectInternalLink extends TemplateMatcher {
    * @param parameterDefaultValue Parameter default value.
    * @param neededParameter Parameter eventually required.
    */
-  public TemplateMatcherDirectInternalLink(
+  public TemplateMatcherInternalLink(
       EnumWikipedia wikipedia,
       String templateName, String parameterName,
       String parameterDefaultValue,
@@ -83,14 +83,6 @@ public class TemplateMatcherDirectInternalLink extends TemplateMatcher {
         new Object[] {
             parameterName,
             "???" } ));
-    String value = getParameterValue(template);
-    if ((value != null) && (value.trim().length() > 0)) {
-      replacements.add(GT._(
-          "Replace parameter {0} with {1}",
-          new Object[] {
-              parameterName,
-              "???{{" + getWikipedia().getPipeTemplate() + "}}" + value} ));
-    }
     return replacements;
   }
 
@@ -108,9 +100,6 @@ public class TemplateMatcherDirectInternalLink extends TemplateMatcher {
     switch (index) {
     case 0:
       parameterValue = text;
-      break;
-    case 1:
-      parameterValue = text + "{{" + getWikipedia().getPipeTemplate() + "}}" + getParameterValue(template);
       break;
     }
     if (parameterValue == null) {

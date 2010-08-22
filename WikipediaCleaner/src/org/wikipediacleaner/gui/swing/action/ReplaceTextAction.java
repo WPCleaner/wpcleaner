@@ -89,23 +89,27 @@ public class ReplaceTextAction extends TextAction {
       boolean finished;
       do {
         finished = true;
-        Element tmpElement = localTextPane.getStyledDocument().getCharacterElement(startOffset - 1); 
-        if ((tmpElement != null) && (tmpElement.getAttributes() != null)) {
-          if ((localElement != tmpElement) &&
-              (uuid.equals(tmpElement.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_UUID)))) {
-            startOffset = tmpElement.getStartOffset();
-            finished = false;
+        if (startOffset > 0) {
+          Element tmpElement = localTextPane.getStyledDocument().getCharacterElement(startOffset - 1); 
+          if ((tmpElement != null) && (tmpElement.getAttributes() != null)) {
+            if ((localElement != tmpElement) &&
+                (uuid.equals(tmpElement.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_UUID)))) {
+              startOffset = tmpElement.getStartOffset();
+              finished = false;
+            }
           }
         }
       } while (!finished);
       do {
         finished = true;
-        Element tmpElement = localTextPane.getStyledDocument().getCharacterElement(endOffset);
-        if ((tmpElement != null) && (tmpElement.getAttributes() != null)) {
-          if ((localElement != tmpElement) &&
-              (uuid.equals(tmpElement.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_UUID)))) {
-            endOffset = tmpElement.getEndOffset();
-            finished = false;
+        if (endOffset < localTextPane.getText().length()) {
+          Element tmpElement = localTextPane.getStyledDocument().getCharacterElement(endOffset);
+          if ((tmpElement != null) && (tmpElement.getAttributes() != null)) {
+            if ((localElement != tmpElement) &&
+                (uuid.equals(tmpElement.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_UUID)))) {
+              endOffset = tmpElement.getEndOffset();
+              finished = false;
+            }
           }
         }
       } while (!finished);
