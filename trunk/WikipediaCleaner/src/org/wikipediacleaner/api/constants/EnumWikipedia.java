@@ -41,8 +41,8 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TemplateMatch;
 import org.wikipediacleaner.api.data.TemplateMatcher;
-import org.wikipediacleaner.api.data.TemplateMatcherDirectInternalLink;
-import org.wikipediacleaner.api.data.TemplateMatcherInternalLink;
+import org.wikipediacleaner.api.data.TemplateMatcher1LT;
+import org.wikipediacleaner.api.data.TemplateMatcher1L;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -726,7 +726,7 @@ public enum EnumWikipedia {
       templateMatchers = new HashMap<String, List<TemplateMatcher>>();
 
       // Templates creating internal links from parameter value
-      tmp = configuration.getProperty("general_internal_link_templates", null);
+      tmp = configuration.getProperty("general_dab_1l_templates", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         List<String> tmpList = convertPropertyToStringList(tmp);
         for (String template : tmpList) {
@@ -740,7 +740,7 @@ public enum EnumWikipedia {
             if (list == null) {
               list = new ArrayList<TemplateMatcher>();
             }
-            TemplateMatcher matcher = new TemplateMatcherInternalLink(
+            TemplateMatcher matcher = new TemplateMatcher1L(
                 this, templateName,
                 parameterName, defaultValue, neededParameter);
             list.add(matcher);
@@ -750,7 +750,7 @@ public enum EnumWikipedia {
       }
 
       // Templates creating internal links directly from parameter value
-      tmp = configuration.getProperty("general_direct_internal_link_templates", null);
+      tmp = configuration.getProperty("general_dab_1lt_templates", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         List<String> tmpList = convertPropertyToStringList(tmp);
         for (String template : tmpList) {
@@ -764,7 +764,7 @@ public enum EnumWikipedia {
             if (list == null) {
               list = new ArrayList<TemplateMatcher>();
             }
-            TemplateMatcher matcher = new TemplateMatcherDirectInternalLink(
+            TemplateMatcher matcher = new TemplateMatcher1LT(
                 this, templateName,
                 parameterName, defaultValue, neededParameter);
             list.add(matcher);
