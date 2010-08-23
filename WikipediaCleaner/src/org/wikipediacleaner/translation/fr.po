@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-08-22 21:39+0200\n"
-"PO-Revision-Date: 2010-08-18 08:22+0000\n"
+"PO-Revision-Date: 2010-08-23 06:19+0000\n"
 "Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-08-18 19:44+0000\n"
+"X-Launchpad-Export-Date: 2010-08-23 16:08+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -126,7 +126,7 @@ msgstr "Supprimer les sauts de ligne en fin de liste"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:205
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
-msgstr ""
+msgstr "Utiliser comme un séparateur entre les balises {0} consécutives"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:202
 #, java-format
@@ -244,9 +244,9 @@ msgstr "Occurrence"
 #: org/wikipediacleaner/api/data/TemplateMatcherDirectInternalLink.java:82
 #: org/wikipediacleaner/api/data/TemplateMatcherDirectInternalLink.java:89
 #: org/wikipediacleaner/api/data/TemplateMatcherInternalLink.java:82
-#, fuzzy, java-format
+#, java-format
 msgid "Replace parameter {0} with {1}"
-msgstr "Remplacer le paramètre {0} par"
+msgstr "Remplacer le paramètre {0} par {1}"
 
 #: org/wikipediacleaner/api/execution/BacklinksWRCallable.java:53
 #: org/wikipediacleaner/api/execution/LinksWRCallable.java:61
@@ -385,7 +385,8 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:608
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -1156,7 +1157,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:402
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr ""
+"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:286
 msgid "&Page :"
@@ -1544,14 +1546,12 @@ msgid "Add to preferred disambiguations"
 msgstr "Ajouter aux liens préférés"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:800
-#, fuzzy
 msgid "Add other preferred disambiguation..."
-msgstr "Ajouter aux liens préférés"
+msgstr "Ajouter d'autres liens préférés..."
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:803
-#, fuzzy
 msgid "What link do you want to add to the preferred disambiguations?"
-msgstr "Ajouter aux liens préférés"
+msgstr "Quel lien voulez-vous ajouter aux liens préférés ?"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:810
 msgid "Remove from preferred disambiguations"
@@ -1611,9 +1611,8 @@ msgid "Analyze"
 msgstr "Analyser"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1168
-#, fuzzy
 msgid "Analyze template"
-msgstr "Analyser la page"
+msgstr "Analyse du modèle"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1170
 msgid "Analyze page"
@@ -1626,9 +1625,8 @@ msgid "External Viewer"
 msgstr "Visualisateur externe"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1250
-#, fuzzy
 msgid "Template External Viewer"
-msgstr "Visualisateur externe"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1305
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1310
@@ -1772,8 +1770,8 @@ msgstr "Erreur « badtoken » détectée : nouvelle tentative"
 
 #~ msgid "Comma separated list of errors to ignore."
 #~ msgstr ""
-#~ "Liste des numéros d'erreurs à ignorer séparés d'une virgule (par ex. 17, "
-#~ "46, 53)."
+#~ "Liste des numéros d'erreurs à ignorer séparés d'une virgule (par ex. 17, 46, "
+#~ "53)."
 
 #~ msgid "Comma separated list of errors to work on."
 #~ msgstr ""
