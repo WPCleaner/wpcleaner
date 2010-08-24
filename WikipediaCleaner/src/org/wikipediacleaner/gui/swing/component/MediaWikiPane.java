@@ -741,7 +741,7 @@ public class MediaWikiPane
         while (currentIndex < contents.length()) {
           PageElementTemplate template = PageContents.findNextTemplate(page, contents, currentIndex);
           if (template != null) {
-            currentIndex += 2;
+            currentIndex = template.getBeginIndex() + 2;
             List<? extends TemplateMatcher> matchers =
               wikipedia.getTemplateMatchers(template.getTemplateName());
             if (matchers != null) {
