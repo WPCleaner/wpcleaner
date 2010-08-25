@@ -743,7 +743,29 @@ public enum EnumWikipedia {
               list = new ArrayList<TemplateMatcher>();
             }
             TemplateMatcher matcher = new TemplateMatcher1L(
-                this, templateName,
+                this, templateName, false,
+                parameterName, defaultValue, neededParameter);
+            list.add(matcher);
+            templateMatchers.put(templateName, list);
+          }
+        }
+      }
+      tmp = configuration.getProperty("general_good_1l_templates", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        List<String> tmpList = convertPropertyToStringList(tmp);
+        for (String template : tmpList) {
+          String[] elements = template.split("\\|");
+          String templateName = (elements.length > 0) ? normalizeTitle(elements[0]) : null;
+          String parameterName = (elements.length > 1) ? elements[1] : null;
+          String defaultValue = (elements.length > 2) ? elements[2] : null;
+          String neededParameter = (elements.length > 3) ? elements[3] : null;
+          if ((templateName != null) && (parameterName != null)) {
+            List<TemplateMatcher> list = templateMatchers.get(templateName);
+            if (list == null) {
+              list = new ArrayList<TemplateMatcher>();
+            }
+            TemplateMatcher matcher = new TemplateMatcher1L(
+                this, templateName, true,
                 parameterName, defaultValue, neededParameter);
             list.add(matcher);
             templateMatchers.put(templateName, list);
@@ -767,7 +789,29 @@ public enum EnumWikipedia {
               list = new ArrayList<TemplateMatcher>();
             }
             TemplateMatcher matcher = new TemplateMatcher1LT(
-                this, templateName,
+                this, templateName, false,
+                parameterName, defaultValue, neededParameter);
+            list.add(matcher);
+            templateMatchers.put(templateName, list);
+          }
+        }
+      }
+      tmp = configuration.getProperty("general_good_1lt_templates", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        List<String> tmpList = convertPropertyToStringList(tmp);
+        for (String template : tmpList) {
+          String[] elements = template.split("\\|");
+          String templateName = (elements.length > 0) ? normalizeTitle(elements[0]) : null;
+          String parameterName = (elements.length > 1) ? elements[1] : null;
+          String defaultValue = (elements.length > 2) ? elements[2] : null;
+          String neededParameter = (elements.length > 3) ? elements[3] : null;
+          if ((templateName != null) && (parameterName != null)) {
+            List<TemplateMatcher> list = templateMatchers.get(templateName);
+            if (list == null) {
+              list = new ArrayList<TemplateMatcher>();
+            }
+            TemplateMatcher matcher = new TemplateMatcher1LT(
+                this, templateName, true,
                 parameterName, defaultValue, neededParameter);
             list.add(matcher);
             templateMatchers.put(templateName, list);

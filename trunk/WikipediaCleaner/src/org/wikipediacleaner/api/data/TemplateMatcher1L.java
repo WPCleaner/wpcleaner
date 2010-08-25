@@ -38,16 +38,17 @@ public class TemplateMatcher1L extends TemplateMatcher {
   /**
    * @param wikipedia Wikipedia.
    * @param templateName Template name.
+   * @param isGood Is good ?
    * @param parameterName Parameter name.
    * @param parameterDefaultValue Parameter default value.
    * @param neededParameter Parameter eventually required.
    */
   public TemplateMatcher1L(
-      EnumWikipedia wikipedia,
-      String templateName, String parameterName,
-      String parameterDefaultValue,
+      EnumWikipedia wikipedia, String templateName,
+      boolean isGood,
+      String parameterName, String parameterDefaultValue,
       String neededParameter) {
-    super(wikipedia, templateName, false, false);
+    super(wikipedia, templateName, isGood, false);
     this.parameterName = parameterName;
     this.parameterDefaultValue = parameterDefaultValue;
     this.neededParameter = neededParameter;
@@ -78,11 +79,13 @@ public class TemplateMatcher1L extends TemplateMatcher {
   @Override
   public List<String> getReplacements(PageElementTemplate template) {
     List<String> replacements = new ArrayList<String>();
-    replacements.add(GT._(
-        "Replace parameter {0} with {1}",
-        new Object[] {
-            parameterName,
-            "???" } ));
+    if (!isGood()) {
+      replacements.add(GT._(
+          "Replace parameter {0} with {1}",
+          new Object[] {
+              parameterName,
+              "???" } ));
+    }
     return replacements;
   }
 
