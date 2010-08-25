@@ -38,6 +38,7 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -68,7 +69,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.worker.DisambiguationListWorker;
+import org.wikipediacleaner.gui.swing.worker.PageListWorker;
 import org.wikipediacleaner.gui.swing.worker.EmbeddedInWorker;
 import org.wikipediacleaner.gui.swing.worker.RandomPageWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -93,6 +94,7 @@ public class MainWindow
   private final static String ACTION_HELP            = "HELP";
   private final static String ACTION_HELP_REQUESTED  = "HELP_REQUESTED";
   private final static String ACTION_IDEA            = "IDEA";
+  private final static String ACTION_LINKS           = "LINKS";
   private final static String ACTION_LOGIN           = "LOGIN";
   private final static String ACTION_LOGOUT          = "LOGOUT";
   private final static String ACTION_OPTIONS         = "OPTIONS";
@@ -126,6 +128,7 @@ public class MainWindow
   private JButton buttonDisambiguation;
   private JButton buttonFullAnalysis;
   private JButton buttonHelpRequested;
+  private JButton buttonLinks;
   private JButton buttonRandomPage;
   private JButton buttonWatchedPages;
   private JButton buttonBotTools;
@@ -218,6 +221,7 @@ public class MainWindow
     textPagename.setEnabled(logged);
     buttonFullAnalysis.setEnabled(logged);
     buttonDisambiguation.setEnabled(logged);
+    buttonLinks.setEnabled(logged);
     buttonCurrentList.setEnabled(logged);
     buttonHelpRequested.setEnabled(logged);
     buttonCheckWiki.setEnabled(logged);
@@ -474,6 +478,13 @@ public class MainWindow
     panel.add(buttonDisambiguation, constraints);
     constraints.gridy++;
 
+    // Links button
+    buttonLinks = Utilities.createJButton(GT._("Links"));
+    buttonLinks.setActionCommand(ACTION_LINKS);
+    buttonLinks.addActionListener(this);
+    panel.add(buttonLinks, constraints);
+    constraints.gridy++;
+
     // Random page button
     buttonRandomPage = Utilities.createJButton(GT._("&Random page"));
     buttonRandomPage.setActionCommand(ACTION_RANDOM_PAGE);
@@ -614,6 +625,8 @@ public class MainWindow
       actionFullAnalysis();
     } else if (ACTION_DISAMBIGUATION.equals(e.getActionCommand())) {
       actionDisambiguation();
+    } else if (ACTION_LINKS.equals(e.getActionCommand())) {
+      actionLinks();
     } else if (ACTION_CURRENT_LIST.equals(e.getActionCommand())) {
       actionCurrentList();
     } else if (ACTION_RANDOM_PAGE.equals(e.getActionCommand())) {
@@ -863,6 +876,26 @@ public class MainWindow
   }
 
   /**
+   * Action called when Links button is pressed.
+   */
+  private void actionLinks() {
+    if ((textPagename == null) ||
+        (textPagename.getText() == null) ||
+        ("".equals(textPagename.getText().trim()))) {
+      displayWarning(
+          GT._("You must input a page name for retrieving the list of links"),
+          textPagename);
+      return;
+    }
+    Configuration config = Configuration.getConfiguration();
+    config.setString(Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
+    config.save();
+    new PageListWorker(
+        getWikipedia(), this,
+        Collections.singletonList(textPagename.getText().trim())).start();
+  }
+
+  /**
    * Action called when Current Disambiguation List is pressed.
    */
   private void actionCurrentList() {
@@ -871,7 +904,7 @@ public class MainWindow
       return;
     }
     if ((wikipedia.getDisambiguationList() == null) ||
-        (wikipedia.getDisambiguationList().length == 0)) {
+        (wikipedia.getDisambiguationList().isEmpty())) {
       String url = URL_OTHER_WIKIPEDIA;
       displayUrlMessage(
           GT._(
@@ -883,7 +916,7 @@ public class MainWindow
       }
       return;
     }
-    new DisambiguationListWorker(wikipedia, this).start();
+    new PageListWorker(wikipedia, this, wikipedia.getDisambiguationList()).start();
   }
 
   /**

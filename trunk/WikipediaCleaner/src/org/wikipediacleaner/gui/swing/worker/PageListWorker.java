@@ -35,17 +35,21 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * SwingWorker for getting current disambiguation list. 
  */
-public class DisambiguationListWorker extends BasicWorker {
+public class PageListWorker extends BasicWorker {
 
-  private final List<Page> disambiguationList;
+  private final List<String> pageNames;
+  private final List<Page> pageList;
 
   /**
    * @param wikipedia Wikipedia.
    * @param window Window.
    */
-  public DisambiguationListWorker(EnumWikipedia wikipedia, BasicWindow window) {
+  public PageListWorker(
+      EnumWikipedia wikipedia, BasicWindow window,
+      List<String> pageNames) {
     super(wikipedia, window);
-    disambiguationList = new ArrayList<Page>();
+    this.pageList = new ArrayList<Page>();
+    this.pageNames = pageNames;
   }
 
   /* (non-Javadoc)
@@ -58,7 +62,7 @@ public class DisambiguationListWorker extends BasicWorker {
     if (!(result instanceof Throwable)) {
       PageListWindow.createPageListWindow(
           GT._("Current disambiguation list"),
-          disambiguationList, getWikipedia(), false);
+          pageList, getWikipedia(), false);
     }
   }
 
@@ -70,7 +74,7 @@ public class DisambiguationListWorker extends BasicWorker {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       List<Page> pages = new ArrayList<Page>();
-      for (String dabList : getWikipedia().getDisambiguationList()) {
+      for (String dabList : pageNames) {
         Page page = DataManager.getPage(getWikipedia(), dabList, null, null);
         mw.retrieveAllLinks(getWikipedia(), page, null, null, true);
         Iterator<Page> iter = page.getLinks().iterator();
@@ -87,7 +91,7 @@ public class DisambiguationListWorker extends BasicWorker {
       if (!shouldContinue()) {
         return null;
       }
-      disambiguationList.addAll(pages);
+      pageList.addAll(pages);
     } catch (APIException e) {
       return e;
     }
