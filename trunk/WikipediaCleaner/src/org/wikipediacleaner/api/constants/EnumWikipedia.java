@@ -257,7 +257,7 @@ public enum EnumWikipedia {
   private String[] templatesForHelpRequested;
   private String[] templatesForLinkingText;
   private String[] disambiguationList;
-  private ArrayList<Page> disambiguationTemplates;
+  private List<Page> disambiguationTemplates;
   private final TemplateMatch[] disambiguationMatches;
   private String checkWikiProject;
   private String checkWikiTranslation;
@@ -265,7 +265,7 @@ public enum EnumWikipedia {
   private List<Namespace> namespaces;
   private List<Language>  languages;
   private List<Interwiki> interwikis;
-  private HashMap<String, MagicWord> magicWords;
+  private Map<String, MagicWord> magicWords;
   private Properties      checkWikiGeneralConfig;
   private Properties      checkWikiConfig;
 
@@ -616,9 +616,9 @@ public enum EnumWikipedia {
   /**
    * @return Templates used for finding pages where help is requested.
    */
-  public ArrayList<Page> getTemplatesForHelpRequested() {
+  public List<Page> getTemplatesForHelpRequested() {
     if (templatesForHelpRequested != null) {
-      ArrayList<Page> list = new ArrayList<Page>(templatesForHelpRequested.length);
+      List<Page> list = new ArrayList<Page>(templatesForHelpRequested.length);
       for (String template : templatesForHelpRequested) {
         list.add(DataManager.getPage(
             this, Namespace.getTitle(Namespace.TEMPLATE, namespaces, template),
@@ -1129,7 +1129,7 @@ public enum EnumWikipedia {
   /**
    * @param magicWords Magic words.
    */
-  public void setMagicWords(HashMap<String, MagicWord> magicWords) {
+  public void setMagicWords(Map<String, MagicWord> magicWords) {
     this.magicWords = magicWords;
   }
 

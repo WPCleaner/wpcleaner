@@ -18,8 +18,8 @@
 
 package org.wikipediacleaner.gui.swing;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -35,7 +35,7 @@ public class PageListTableModel extends AbstractTableModel {
 
   private static final long serialVersionUID = 6219036518582006787L;
 
-  private ArrayList<Page> pages;
+  private List<Page> pages;
 
   public final static int COLUMN_PAGE = 0;
   public final static int COLUMN_DISAMBIGUATION = COLUMN_PAGE + 1;
@@ -46,7 +46,7 @@ public class PageListTableModel extends AbstractTableModel {
   public final static int COLUMN_COMMENTS_TEXT = COLUMN_BACKLINKS_TEMPLATE + 1;
   public final static int NB_COLUMNS = COLUMN_COMMENTS_TEXT + 1;
 
-  public PageListTableModel(ArrayList<Page> pages) {
+  public PageListTableModel(List<Page> pages) {
     this.pages = pages;
   }
 
@@ -68,7 +68,7 @@ public class PageListTableModel extends AbstractTableModel {
   /**
    * @return List of pages.
    */
-  public ArrayList<Page> getPages() {
+  public List<Page> getPages() {
     return this.pages;
   }
 

@@ -18,7 +18,7 @@
 
 package org.wikipediacleaner.api.data;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class MagicWord implements Comparable<MagicWord> {
 
   private final String name;
-  private final ArrayList<String> aliases;
+  private final List<String> aliases;
 
   public final static String ANCHOR_ENCODE          = "anchorencode";
   public final static String BASE_PAGE_NAME         = "basepagename";
@@ -202,7 +202,7 @@ public class MagicWord implements Comparable<MagicWord> {
    * @param name Magic word name.
    * @param aliases Magic word aliases.
    */
-  public MagicWord(String name, ArrayList<String> aliases) {
+  public MagicWord(String name, List<String> aliases) {
     this.name = name;
     this.aliases = aliases;
   }
@@ -217,7 +217,7 @@ public class MagicWord implements Comparable<MagicWord> {
   /**
    * @return Magic word aliases.
    */
-  public ArrayList<String> getAliases() {
+  public List<String> getAliases() {
     return aliases;
   }
 

@@ -18,7 +18,6 @@
 
 package org.wikipediacleaner.api.data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -40,7 +39,7 @@ public class DataManager {
   public static Page getPage(
       EnumWikipedia wikipedia,
       String title, String revisionId,
-      ArrayList<Page> knownPages) {
+      List<Page> knownPages) {
 
     // Check in the known pages
     if (knownPages != null) {

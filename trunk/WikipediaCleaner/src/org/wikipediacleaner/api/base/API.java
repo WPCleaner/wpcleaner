@@ -19,7 +19,7 @@
 package org.wikipediacleaner.api.base;
 
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.httpclient.NameValuePair;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -189,7 +189,7 @@ public interface API {
   public void retrieveLinksWithRedirects(
       EnumWikipedia wikipedia,
       Page page, Integer namespace,
-      ArrayList<Page> knownPages) throws APIException;
+      List<Page> knownPages) throws APIException;
 
   /**
    * Retrieves the back links of <code>page</code>.
@@ -234,7 +234,7 @@ public interface API {
    * @param pages List of pages.
    * @throws APIException
    */
-  public void initializeRedirect(EnumWikipedia wikipedia, ArrayList<Page> pages) throws APIException;
+  public void initializeRedirect(EnumWikipedia wikipedia, List<Page> pages) throws APIException;
 
   /**
    * Initialize the disambiguation flags of a list of <code>pages</code>.
@@ -243,7 +243,7 @@ public interface API {
    * @param pages List of pages.
    * @throws APIException
    */
-  public void initializeDisambiguationStatus(EnumWikipedia wikipedia, ArrayList<Page> pages) throws APIException;
+  public void initializeDisambiguationStatus(EnumWikipedia wikipedia, List<Page> pages) throws APIException;
 
   /**
    * @param from Wikipedia in which the article is.

@@ -60,7 +60,7 @@ public class CheckError {
       }
       for (CheckError error : errors) {
         if ((error.algorithm != null) && (error.algorithm.isAvailable())) {
-          ArrayList<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
+          List<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
           //System.out.println("Checking error n°" + error.getErrorNumber() + " for " + page.getTitle());
           if (error.algorithm.analyze(page, contents, results)) {
             CheckErrorPage errorPage = new CheckErrorPage(page, error.algorithm);
@@ -82,7 +82,7 @@ public class CheckError {
   public static void analyzeError(
       CheckErrorPage errorPage, String contents) {
     if (errorPage != null) {
-      ArrayList<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
+      List<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
       boolean errorFound = false;
       if ((errorPage.getAlgorithm() != null) &&
           (errorPage.getAlgorithm().isAvailable()) &&
@@ -144,7 +144,7 @@ public class CheckError {
   private final EnumWikipedia wikipedia;
   private final int errorNumber;
   private final CheckErrorAlgorithm algorithm;
-  private final ArrayList<Page> errors;
+  private final List<Page> errors;
 
   /**
    * Constructor

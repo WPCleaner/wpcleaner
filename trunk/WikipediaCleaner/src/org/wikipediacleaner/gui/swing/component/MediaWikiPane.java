@@ -26,6 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -89,7 +90,7 @@ public class MediaWikiPane
   private final EnumWikipedia wikipedia;
   private Page page;
   private final BasicWindow window;
-  private ArrayList<Page> internalLinks;
+  private List<Page> internalLinks;
 
   private static final KeyStroke lastLinkKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK);
   private static final KeyStroke lastReplaceKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK);
@@ -100,8 +101,8 @@ public class MediaWikiPane
   private transient MediaWikiPopupListener popupListener;
 
   private int undoLevels;
-  private LinkedList<String> undoTexts;
-  private LinkedList<String> redoTexts;
+  private Deque<String> undoTexts;
+  private Deque<String> redoTexts;
   private JButton undoButton;
   private transient ActionListener undoAction;
   private JButton redoButton;
@@ -543,14 +544,14 @@ public class MediaWikiPane
   /**
    * @return List of disambiguation links.
    */
-  public ArrayList<Page> getInternalLinks() {
+  public List<Page> getInternalLinks() {
     return internalLinks;
   }
 
   /**
    * @param list List of disambiguation links.
    */
-  public void setInternalLinks(ArrayList<Page> list) {
+  public void setInternalLinks(List<Page> list) {
     internalLinks = list;
     resetAttributes();
   }
@@ -812,7 +813,7 @@ public class MediaWikiPane
         while (matcher.find()) {
           int start = matcher.start();
           int end = matcher.end();
-          ArrayList<TemplateParameter> parameters = PageUtilities.analyzeTemplateParameters(template, matcher, page);
+          List<TemplateParameter> parameters = PageUtilities.analyzeTemplateParameters(template, matcher, page);
           if (parameters != null) {
             for (TemplateParameter param : parameters) {
               // Analyze each page
@@ -894,8 +895,8 @@ public class MediaWikiPane
    * @param position Position in the text.
    * @return Chapters.
    */
-  LinkedList<String> getChapterPosition(int position) {
-    LinkedList<String> chapters = null;
+  List<String> getChapterPosition(int position) {
+    List<String> chapters = null;
     try {
       int currentLevel = Integer.MAX_VALUE;
       while ((position >= 0) && (currentLevel > 1)) {
@@ -937,7 +938,7 @@ public class MediaWikiPane
         if ((level > 0) && (level < currentLevel)) {
           currentLevel = level;
           if (chapters == null) {
-            chapters = new LinkedList<String>();
+            chapters = new ArrayList<String>();
           }
           chapters.add(0, "" + (currentLevel - 1) + " - " + value.substring(start, end + 1).trim());
         }
@@ -963,9 +964,9 @@ public class MediaWikiPane
   /**
    * @return List of fonts that can display all characters.
    */
-  public ArrayList<Font> getPossibleFonts() {
+  public List<Font> getPossibleFonts() {
     String text = getText();
-    ArrayList<Font> possibleFonts = new ArrayList<Font>();
+    List<Font> possibleFonts = new ArrayList<Font>();
     Font[] allFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
     for (int i = 0; i < allFonts.length; i++) {
       if (allFonts[i].canDisplayUpTo(text) == -1) {

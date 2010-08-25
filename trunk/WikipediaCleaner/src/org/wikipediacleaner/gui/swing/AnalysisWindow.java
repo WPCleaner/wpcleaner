@@ -99,7 +99,7 @@ public class AnalysisWindow extends PageWindow {
   private JButton buttonDisambiguationLink;
   private JButton buttonWatchLink;
 
-  ArrayList<Page> knownPages;
+  List<Page> knownPages;
 
   /**
    * Create and display a AnalysisWindow.
@@ -110,7 +110,7 @@ public class AnalysisWindow extends PageWindow {
    */
   public static void createAnalysisWindow(
       final String page,
-      final ArrayList<Page> knownPages,
+      final List<Page> knownPages,
       final EnumWikipedia wikipedia) {
     createWindow(
         "AnalysisWindow",
@@ -479,7 +479,7 @@ public class AnalysisWindow extends PageWindow {
       if (e.getSource() instanceof JList) {
         JList list = (JList) e.getSource();
         Object[] selection = list.getSelectedValues();
-        ArrayList<Page> pages = new ArrayList<Page>();
+        List<Page> pages = new ArrayList<Page>();
         if (selection != null) {
           for (int i = 0; i < selection.length; i++) {
             if (selection[i] instanceof Page) {
@@ -487,7 +487,7 @@ public class AnalysisWindow extends PageWindow {
             }
           }
         }
-        ArrayList<Page> oldPages = getTextContents().getInternalLinks();
+        List<Page> oldPages = getTextContents().getInternalLinks();
         if (!pages.equals(oldPages)) {
           getTextContents().setInternalLinks(pages);
         }
@@ -583,7 +583,7 @@ public class AnalysisWindow extends PageWindow {
     super.afterFinishedReloadWorker();
     Page page = getPage();
     if ((page != null) && (page.getLinks() != null)) {
-      ArrayList<Page> links = page.getLinks();
+      List<Page> links = page.getLinks();
       for (Page p : links) {
         modelLinks.addElement(p);
       }

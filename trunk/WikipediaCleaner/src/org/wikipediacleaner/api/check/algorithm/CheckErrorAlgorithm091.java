@@ -18,7 +18,6 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -92,7 +91,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
           String defaultSort = null;
           if (currentPos < endIndex) {
             MagicWord magicDefaultsort = page.getWikipedia().getMagicWord(MagicWord.DEFAULT_SORT);
-            ArrayList<String> aliases = magicDefaultsort.getAliases();
+            List<String> aliases = magicDefaultsort.getAliases();
             for (int i = 0; (i < aliases.size()) && (defaultSort == null); i++) {
               if (contents.startsWith(aliases.get(i), currentPos)) {
                 currentPos += aliases.get(i).length();

@@ -18,7 +18,7 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.APIException;
@@ -34,7 +34,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 public class FullAnalysisWorker extends BasicWorker {
 
   private final Page page;
-  private final ArrayList<Page> knownPages;
+  private final List<Page> knownPages;
 
   /**
    * @param wikipedia Wikipedia.
@@ -43,7 +43,7 @@ public class FullAnalysisWorker extends BasicWorker {
    * @param knownPages
    */
   public FullAnalysisWorker(
-      EnumWikipedia wikipedia, BasicWindow window, Page page, ArrayList<Page> knownPages) {
+      EnumWikipedia wikipedia, BasicWindow window, Page page, List<Page> knownPages) {
     super(wikipedia, window);
     this.page = page;
     this.knownPages = knownPages;

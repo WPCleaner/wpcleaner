@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.check;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.wikipediacleaner.i18n.GT;
 
@@ -33,8 +34,8 @@ public class CheckErrorResult {
   private final int endPosition;
   private final ErrorLevel errorLevel;
 
-  private ArrayList<Actionnable> possibleActions;
-  private ArrayList<Actionnable> possibleReplacements;
+  private List<Actionnable> possibleActions;
+  private List<Actionnable> possibleReplacements;
 
   /**
    * Error levels.
@@ -199,7 +200,7 @@ public class CheckErrorResult {
   /**
    * @return Possible actions.
    */
-  public ArrayList<Actionnable> getPossibleActions() {
+  public List<Actionnable> getPossibleActions() {
     return possibleActions;
   }
 }

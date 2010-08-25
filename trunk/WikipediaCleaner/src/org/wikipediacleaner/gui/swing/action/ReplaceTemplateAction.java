@@ -20,6 +20,7 @@ package org.wikipediacleaner.gui.swing.action;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JTextPane;
 import javax.swing.text.Element;
@@ -32,8 +33,6 @@ import org.wikipediacleaner.api.data.TemplateReplacement;
 import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
 import org.wikipediacleaner.gui.swing.component.MenuCreator;
 
-//TODO
-
 /**
  * An action listener for replacing templates.
  */
@@ -41,7 +40,7 @@ import org.wikipediacleaner.gui.swing.component.MenuCreator;
 public class ReplaceTemplateAction extends TextAction {
 
   private final String template;
-  private ArrayList<TemplateParameter> parameters;
+  private List<TemplateParameter> parameters;
   private final TemplateReplacement replacement;
   private final String oldTitle;
   private final String newTitle;
@@ -51,7 +50,7 @@ public class ReplaceTemplateAction extends TextAction {
 
   public ReplaceTemplateAction(
       String template,
-      ArrayList<TemplateParameter> parameters,
+      List<TemplateParameter> parameters,
       TemplateReplacement replacement,
       String oldTitle,
       String newTitle,
@@ -118,7 +117,7 @@ public class ReplaceTemplateAction extends TextAction {
       newText.append(template);
       boolean notFound = false;
       int paramNumber = 0;
-      ArrayList<String> parametersDone = new ArrayList<String>(parameters.size() + 1);
+      List<String> parametersDone = new ArrayList<String>(parameters.size() + 1);
       while (!notFound) {
         paramNumber++;
         notFound = true;

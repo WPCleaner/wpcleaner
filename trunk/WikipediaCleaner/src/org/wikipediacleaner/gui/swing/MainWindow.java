@@ -952,7 +952,7 @@ public class MainWindow
   private void actionWatchedPages() {
     Configuration config = Configuration.getConfiguration();
     List<String> pageNames = config.getStringList(Configuration.ARRAY_WATCH_PAGES);
-    ArrayList<Page> pages = new ArrayList<Page>(
+    List<Page> pages = new ArrayList<Page>(
         (pageNames != null) ? pageNames.size() : 0);
     if (pageNames != null) {
       for (String name : pageNames) {

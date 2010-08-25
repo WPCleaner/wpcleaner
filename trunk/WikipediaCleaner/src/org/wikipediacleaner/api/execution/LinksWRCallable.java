@@ -18,7 +18,7 @@
 
 package org.wikipediacleaner.api.execution;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.wikipediacleaner.api.MediaWikiListener;
 import org.wikipediacleaner.api.base.API;
@@ -35,7 +35,7 @@ public class LinksWRCallable extends MediaWikiCallable<Page> {
 
   private final Page page;
   private final Integer namespace;
-  private final ArrayList<Page> knownPages;
+  private final List<Page> knownPages;
 
   /**
    * @param wikipedia Wikipedia.
@@ -47,7 +47,7 @@ public class LinksWRCallable extends MediaWikiCallable<Page> {
    */
   public LinksWRCallable(
       EnumWikipedia wikipedia, MediaWikiListener listener, API api,
-      Page page, Integer namespace, ArrayList<Page> knownPages) {
+      Page page, Integer namespace, List<Page> knownPages) {
     super(wikipedia, listener, api);
     this.page = page;
     this.namespace = namespace;

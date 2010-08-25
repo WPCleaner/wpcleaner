@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -489,7 +490,7 @@ public class DisambiguationWindow extends PageWindow {
   protected void afterFinishedReloadWorker() {
     super.afterFinishedReloadWorker();
     Page page = getPage();
-    ArrayList<Page> links = page.getBackLinksWithRedirects();
+    List<Page> links = page.getBackLinksWithRedirects();
     if (links != null) {
       for (Page p : links) {
         modelLinks.addElement(p);
@@ -626,7 +627,7 @@ public class DisambiguationWindow extends PageWindow {
             replacementValue.getReplacementText());
       }
     }
-    HashMap<String, Properties> replacements = new HashMap<String, Properties>();
+    Map<String, Properties> replacements = new HashMap<String, Properties>();
     replacements.put("[[" + getPage().getTitle() + "]]", replacement);
     AutomaticDisambiguationWorker dabWorker = new AutomaticDisambiguationWorker(
         getWikipedia(), this, pages, replacements,
@@ -683,7 +684,7 @@ public class DisambiguationWindow extends PageWindow {
    * Action called when Full analysis button is pressed.
    */
   private void actionFullAnalysisLink() {
-    ArrayList<Page> knownPages = null;
+    List<Page> knownPages = null;
     if (getPage() != null) {
       knownPages = new ArrayList<Page>(1);
       knownPages.add(getPage());

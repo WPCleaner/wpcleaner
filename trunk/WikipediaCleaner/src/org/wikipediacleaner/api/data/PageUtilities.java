@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.data;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,7 +58,7 @@ public class PageUtilities {
         pattern = createPatternForTemplate(template);
         matcher = pattern.matcher(pageText);
         while (matcher.find()) {
-          ArrayList<TemplateParameter> parameters = analyzeTemplateParameters(template, matcher, page);
+          List<TemplateParameter> parameters = analyzeTemplateParameters(template, matcher, page);
           if (parameters != null) {
             for (TemplateParameter param : parameters) {
               // Count page
@@ -141,7 +142,7 @@ public class PageUtilities {
    * @param page Page.
    * @return Template parameters.
    */
-  public static ArrayList<TemplateParameter> analyzeTemplateParameters(
+  public static List<TemplateParameter> analyzeTemplateParameters(
       TemplateMatch template, Matcher matcher, Page page) {
     String text = null;
     if (matcher.group(matcher.groupCount()) != null) {
@@ -160,13 +161,13 @@ public class PageUtilities {
    * @param page Page.
    * @return Template parameters.
    */
-  public static ArrayList<TemplateParameter> analyzeTemplateParameters(
+  public static List<TemplateParameter> analyzeTemplateParameters(
       TemplateMatch template, String text, Page page) {
     String[] parameters = text.split("\\|");
     if ((parameters == null) || (parameters.length == 0)) {
       return null;
     }
-    ArrayList<TemplateParameter> result = new ArrayList<TemplateParameter>(parameters.length);
+    List<TemplateParameter> result = new ArrayList<TemplateParameter>(parameters.length);
     int currentParam = 0;
     for (int param = 0; param < parameters.length; param++) {
       // Analyze each parameter

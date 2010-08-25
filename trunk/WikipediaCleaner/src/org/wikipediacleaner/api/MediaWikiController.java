@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -41,7 +42,7 @@ public abstract class MediaWikiController implements MediaWikiListener {
 
   private final MediaWikiListener listener;
   private final ExecutorService executor;
-  private final LinkedList<Future<?>> results;
+  private final List<Future<?>> results;
 
   /**
    * Create a MediaWikiController.

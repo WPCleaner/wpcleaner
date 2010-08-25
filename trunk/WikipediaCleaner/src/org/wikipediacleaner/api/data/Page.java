@@ -23,9 +23,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,11 +50,11 @@ public class Page implements Comparable<Page> {
   private Boolean wiktionaryLink;
   private Boolean exist;
 
-  private ArrayList<Page> links;
-  private ArrayList<Page> backLinks;
-  private ArrayList<Page> embeddedIn;
-  private ArrayList<Page> templates;
-  private ArrayList<Page> redirects;
+  private List<Page> links;
+  private List<Page> backLinks;
+  private List<Page> embeddedIn;
+  private List<Page> templates;
+  private List<Page> redirects;
   private int countOccurence;
 
   private PageComment comment;
@@ -382,7 +382,7 @@ public class Page implements Comparable<Page> {
   /**
    * @return Redirection.
    */
-  public ArrayList<Page> getRedirects() {
+  public List<Page> getRedirects() {
     return redirects;
   }
 
@@ -454,7 +454,7 @@ public class Page implements Comparable<Page> {
   /**
    * @param redirect Redirection.
    */
-  public void setRedirects(ArrayList<Page> redirect) {
+  public void setRedirects(List<Page> redirect) {
     this.redirects = redirect;
   }
 
@@ -511,17 +511,17 @@ public class Page implements Comparable<Page> {
   /**
    * @return Links from the page.
    */
-  public ArrayList<Page> getLinks() {
+  public List<Page> getLinks() {
     return links;
   }
 
   /**
    * @return Links from the page (working if the page is a redirection).
    */
-  public ArrayList<Page> getLinksWithRedirect() {
+  public List<Page> getLinksWithRedirect() {
     if (redirects != null) {
       for (int i = 0; i < redirects.size(); i++) {
-        ArrayList<Page> redirectLinks = redirects.get(i).links;
+        List<Page> redirectLinks = redirects.get(i).links;
         if ((redirectLinks != null) && (!redirectLinks.isEmpty())) {
           return redirectLinks;
         }
@@ -534,11 +534,11 @@ public class Page implements Comparable<Page> {
    * @param anchors Anchors among the link (OUT).
    * @return Links from the page (working if the page is a redirection).
    */
-  public ArrayList<Page> getLinksWithRedirect(HashMap<Page, List<String>> anchors) {
+  public List<Page> getLinksWithRedirect(Map<Page, List<String>> anchors) {
     if (redirects != null) {
       for (int i = 0; i < redirects.size(); i++) {
         Page page = redirects.get(i);
-        ArrayList<Page> redirectLinks = page.links;
+        List<Page> redirectLinks = page.links;
         if ((redirectLinks != null) && (!redirectLinks.isEmpty())) {
           getAnchors(page.getContents(), redirectLinks, anchors);
           return redirectLinks;
@@ -558,7 +558,7 @@ public class Page implements Comparable<Page> {
    * @param pageLinks Page links.
    * @param anchors Anchors (OUT)
    */
-  private void getAnchors(String pageContents, ArrayList<Page> pageLinks, HashMap<Page, List<String>> anchors) {
+  private void getAnchors(String pageContents, List<Page> pageLinks, Map<Page, List<String>> anchors) {
     if ((pageContents != null) && (pageContents.length() > 0) && (anchors != null)) {
       int currentPos = 0;
       int nextSharp = 0;
@@ -648,7 +648,7 @@ public class Page implements Comparable<Page> {
    * @return Iterator for the page + redirects
    */
   public Iterator<Page> getRedirectIteratorWithPage() {
-    ArrayList<Page> list = new ArrayList<Page>(
+    List<Page> list = new ArrayList<Page>(
         (redirects != null) ? redirects.size() + 1 : 1);
     list.add(this);
     if (redirects != null) {
@@ -660,7 +660,7 @@ public class Page implements Comparable<Page> {
   /**
    * @param links Links from the page.
    */
-  public void setLinks(ArrayList<Page> links) {
+  public void setLinks(List<Page> links) {
     this.links = links;
     if (this.links != null) {
       Collections.sort(this.links);
@@ -670,31 +670,31 @@ public class Page implements Comparable<Page> {
   /**
    * @return Back links of the page.
    */
-  public ArrayList<Page> getBackLinks() {
+  public List<Page> getBackLinks() {
     return backLinks;
   }
 
   /**
    * @param links Back links of the page.
    */
-  public void setBackLinks(ArrayList<Page> links) {
+  public void setBackLinks(List<Page> links) {
     this.backLinks = links;
   }
 
   /**
    * @return Back links of the page (including redirects).
    */
-  public ArrayList<Page> getBackLinksWithRedirects() {
-    ArrayList<Page> result = backLinks;
+  public List<Page> getBackLinksWithRedirects() {
+    List<Page> result = backLinks;
     boolean originalList = true;
     if (backLinks != null) {
       for (Page p : backLinks) {
         if (p.isRedirect()) {
-          ArrayList<Page> tmpRedirects = p.getRedirects();
+          List<Page> tmpRedirects = p.getRedirects();
           for (int i = 0; i < tmpRedirects.size(); i++) {
             Page tmp = tmpRedirects.get(i);
             if (areSameTitle(title, tmp.getTitle())) {
-              ArrayList<Page> tmpBackLinks = p.getBackLinksWithRedirects();
+              List<Page> tmpBackLinks = p.getBackLinksWithRedirects();
               if ((tmpBackLinks != null) && (!tmpBackLinks.isEmpty())) {
                 if (originalList) {
                   result = new ArrayList<Page>(result);
@@ -725,7 +725,7 @@ public class Page implements Comparable<Page> {
    * @return Backlinks count.
    */
   public Integer getBacklinksCount() {
-    ArrayList<Page> backlinks = getBackLinksWithRedirects();
+    List<Page> backlinks = getBackLinksWithRedirects();
     if (backlinks != null) {
       return backlinks.size();
     }
@@ -752,7 +752,7 @@ public class Page implements Comparable<Page> {
    * @return Backlinks count in article namespace.
    */
   public Integer getBacklinksCountInMainNamespace() {
-    ArrayList<Page> backlinks = getBackLinksWithRedirects();
+    List<Page> backlinks = getBackLinksWithRedirects();
     if (backlinks != null) {
       int count = 0;
       for (int i = 0; i < backlinks.size(); i++) {
@@ -785,7 +785,7 @@ public class Page implements Comparable<Page> {
    * @return Backlinks count in template namespace.
    */
   public Integer getBacklinksCountInTemplateNamespace() {
-    ArrayList<Page> backlinks = getBackLinksWithRedirects();
+    List<Page> backlinks = getBackLinksWithRedirects();
     if (backlinks != null) {
       int count = 0;
       for (int i = 0; i < backlinks.size(); i++) {
@@ -817,36 +817,36 @@ public class Page implements Comparable<Page> {
   /**
    * @return Pages embedding this page.
    */
-  public ArrayList<Page> getEmbeddedIn() {
+  public List<Page> getEmbeddedIn() {
     return embeddedIn;
   }
 
   /**
    * @param pages Pages embedding this page.
    */
-  public void setEmbeddedIn(ArrayList<Page> pages) {
+  public void setEmbeddedIn(List<Page> pages) {
     this.embeddedIn = pages;
   }
 
   /**
    * @return Templates of the page.
    */
-  public ArrayList<Page> getTemplates() {
+  public List<Page> getTemplates() {
     return templates;
   }
 
   /**
    * @return Links to the wiktionary.
    */
-  public ArrayList<String> getWiktionaryLinks() {
-    ArrayList<String> wiktionary = null;
+  public List<String> getWiktionaryLinks() {
+    List<String> wiktionary = null;
     if ((contents != null) && (wikipedia != null)) {
       for (int i = 0; i < wikipedia.getWiktionaryMatchesCount(); i++) {
         TemplateMatch template = wikipedia.getWiktionaryMatch(i);
         Pattern pattern = PageUtilities.createPatternForTemplate(template);
         Matcher matcher = pattern.matcher(contents);
         while (matcher.find()) {
-          ArrayList<TemplateParameter> parameters = PageUtilities.analyzeTemplateParameters(template, matcher, this);
+          List<TemplateParameter> parameters = PageUtilities.analyzeTemplateParameters(template, matcher, this);
           for (TemplateParameter param : parameters) {
             if (param.isRelevant()) {
               if (wiktionary == null) {
@@ -864,7 +864,7 @@ public class Page implements Comparable<Page> {
   /**
    * @param templates Templates of the page.
    */
-  public void setTemplates(ArrayList<Page> templates) {
+  public void setTemplates(List<Page> templates) {
     this.templates = templates;
   }
 
