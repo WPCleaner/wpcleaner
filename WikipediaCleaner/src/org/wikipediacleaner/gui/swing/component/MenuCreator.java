@@ -26,8 +26,8 @@ import java.awt.font.TextAttribute;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.JCheckBox;
@@ -77,10 +77,10 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public class MenuCreator {
 
-  private final static HashMap<String, String> lastReplacement = new HashMap<String, String>();
+  private final static Map<String, String> lastReplacement = new HashMap<String, String>();
 
-  final private static HashMap<TextAttribute, Color> disambiguationAttributes = new HashMap<TextAttribute, Color>();
-  final private static HashMap<TextAttribute, Boolean> missingAttributes = new HashMap<TextAttribute, Boolean>();
+  final private static Map<TextAttribute, Color> disambiguationAttributes = new HashMap<TextAttribute, Color>();
+  final private static Map<TextAttribute, Boolean> missingAttributes = new HashMap<TextAttribute, Boolean>();
 
   final private static Configuration configuration = Configuration.getConfiguration();
 
@@ -145,7 +145,7 @@ public class MenuCreator {
     popup.add(new JSeparator());
 
     // Actions
-    ArrayList<Actionnable> possibleActions = info.getPossibleActions();
+    List<Actionnable> possibleActions = info.getPossibleActions();
     if (possibleActions != null) {
       for (Actionnable possibleAction : possibleActions) {
         if (possibleAction.isCompositeAction()) {
@@ -180,7 +180,7 @@ public class MenuCreator {
       return;
     }
     MediaWikiPane pane = (MediaWikiPane) textPane;
-    LinkedList<String> chapters = pane.getChapterPosition(position);
+    List<String> chapters = pane.getChapterPosition(position);
     if ((chapters != null) && !chapters.isEmpty()) {
       JMenu submenu = new JMenu(GT._("Current chapter"));
       for (String chapter : chapters) {
@@ -231,9 +231,9 @@ public class MenuCreator {
         Configuration.SUB_ARRAY_PREFERRED_DAB, disambigPage.getTitle());
 
     // Retrieve various informations
-    ArrayList<String> wiktionary = disambigPage.getWiktionaryLinks();
-    HashMap<Page, List<String>> anchorsMap = new HashMap<Page, List<String>>();
-    ArrayList<Page> links = disambigPage.getLinksWithRedirect(anchorsMap);
+    List<String> wiktionary = disambigPage.getWiktionaryLinks();
+    Map<Page, List<String>> anchorsMap = new HashMap<Page, List<String>>();
+    List<Page> links = disambigPage.getLinksWithRedirect(anchorsMap);
 
     // Checking all possible replacements
     JMenuItem menuItem = null;
@@ -300,7 +300,7 @@ public class MenuCreator {
           for (Page p : links) {
             if (p.isRedirect()) {
               JMenu submenu1 = new JMenu(p.getTitle());
-              HashMap<Page, List<String>> anchorsRedirectMap = new HashMap<Page, List<String>>();
+              Map<Page, List<String>> anchorsRedirectMap = new HashMap<Page, List<String>>();
               p.getLinksWithRedirect(anchorsRedirectMap);
               
               Iterator<Page> iter = p.getRedirectIteratorWithPage();
@@ -422,14 +422,14 @@ public class MenuCreator {
     if (tm == null) {
       return;
     }
-    ArrayList<TemplateParameter> templateParams = PageUtilities.analyzeTemplateParameters(tm, params, page);
+    List<TemplateParameter> templateParams = PageUtilities.analyzeTemplateParameters(tm, params, page);
     for (TemplateParameter param : templateParams) {
       if (Page.areSameTitle(param.getValue(), disambigPage.getTitle())) {
         TemplateReplacement replacement = tm.getReplacement(param.getName());
         if (replacement != null) {
           JMenuItem menuItem = null;
           ActionListener action = null;
-          ArrayList<Page> links = disambigPage.getLinksWithRedirect();
+          List<Page> links = disambigPage.getLinksWithRedirect();
           JMenu submenuLink = new JMenu(GT._("Link parameter {0} to", param.getName()));
           JMenu submenuReplace = new JMenu(GT._("Replace parameter {0} with", param.getName()));
 
@@ -572,14 +572,14 @@ public class MenuCreator {
 
     // Disambiguation page
     if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
-      HashMap<Page, List<String>> anchorsMap = new HashMap<Page, List<String>>();
-      ArrayList<Page> links = page.getLinksWithRedirect(anchorsMap);
+      Map<Page, List<String>> anchorsMap = new HashMap<Page, List<String>>();
+      List<Page> links = page.getLinksWithRedirect(anchorsMap);
       JMenu submenuLink = new JMenu(GT._("Link to"));
       JMenu submenuReplace = new JMenu(GT._("Replace with"));
       JMenu submenuAddPreferred = new JMenu(GT._("Add to preferred disambiguations"));
 
       // Determine if separators are needed
-      ArrayList<String> wiktionary = page.getWiktionaryLinks();
+      List<String> wiktionary = page.getWiktionaryLinks();
       boolean separators = false;
       if (((links != null) && (links.size() > 0)) ||
           ((wiktionary != null) && (wiktionary.size() > 0))) {
@@ -652,7 +652,7 @@ public class MenuCreator {
           if (p.isRedirect()) {
             JMenu submenu1 = new JMenu(p.getTitle());
             JMenu submenu2 = new JMenu(p.getTitle());
-            HashMap<Page, List<String>> anchorsRedirectMap = new HashMap<Page, List<String>>();
+            Map<Page, List<String>> anchorsRedirectMap = new HashMap<Page, List<String>>();
             p.getLinksWithRedirect(anchorsRedirectMap);
             
             Iterator<Page> iter = p.getRedirectIteratorWithPage();
@@ -873,7 +873,7 @@ public class MenuCreator {
       JPopupMenu popup, Page page, MediaWikiPane textPane) {
     JMenuItem menuItem = null;
     ActionListener action = null;
-    ArrayList<Page> links = page.getLinksWithRedirect();
+    List<Page> links = page.getLinksWithRedirect();
     if ((links != null) && (links.size() > 0)) {
       JMenu submenuLink = new JMenu(GT._("Link to"));
       //JMenu submenuReplace = new JMenu(GT._("Replace with"));
@@ -1127,7 +1127,7 @@ public class MenuCreator {
     }
     JMenuItem menuItem = null;
     ActionListener action = null;
-    ArrayList<Page> links = page.getLinksWithRedirect();
+    List<Page> links = page.getLinksWithRedirect();
     if (((links != null) && (links.size() > 0)) || page.isRedirect()) {
       int fixedBegin = 0;
       int fixedEnd = 0;
@@ -1194,7 +1194,7 @@ public class MenuCreator {
     }
     JMenuItem menuItem = null;
     ActionListener action = null;
-    ArrayList<Page> links = page.getLinksWithRedirect();
+    List<Page> links = page.getLinksWithRedirect();
     if (Utilities.isDesktopSupported()) {
       if (((links != null) && (links.size() > 0)) || page.isRedirect()) {
         int fixedBegin = 0;
@@ -1414,7 +1414,7 @@ public class MenuCreator {
         config.getInt(Configuration.INTEGER_MENU_SIZE, Configuration.DEFAULT_MENU_SIZE),
         begin + end + 2);
     if (submenu.getMenuComponentCount() > maxElements) {
-      ArrayList<JMenu> menuList = new ArrayList<JMenu>();
+      List<JMenu> menuList = new ArrayList<JMenu>();
       while (submenu.getMenuComponentCount() > begin + end + 1) {
         int count = Math.min(maxElements, submenu.getMenuComponentCount() - begin - end);
         JMenu newMenu = new JMenu(submenu.getItem(begin).getText() + "...");

@@ -18,7 +18,7 @@
 
 package org.wikipediacleaner.api.data;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
@@ -66,7 +66,7 @@ public class PageElementDefaultsort {
     }
     String defaultSort = null;
     MagicWord magicDefaultsort = wikipedia.getMagicWord(MagicWord.DEFAULT_SORT);
-    ArrayList<String> aliases = magicDefaultsort.getAliases();
+    List<String> aliases = magicDefaultsort.getAliases();
     for (int i = 0; (i < aliases.size()) && (defaultSort == null); i++) {
       if (contents.startsWith(aliases.get(i), tmpIndex)) {
         tmpIndex += aliases.get(i).length();

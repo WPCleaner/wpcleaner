@@ -19,8 +19,9 @@
 package org.wikipediacleaner.api;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
@@ -110,7 +111,7 @@ public class MediaWiki extends MediaWikiController {
    * @throws APIException
    */
   public void retrieveContents(
-      EnumWikipedia wikipedia, ArrayList<Page> pages,
+      EnumWikipedia wikipedia, List<Page> pages,
       boolean block, boolean withRedirects) throws APIException {
     if (pages == null) {
       return;
@@ -137,7 +138,7 @@ public class MediaWiki extends MediaWikiController {
    * @throws APIException
    */
   public int replaceText(
-      Page[] pages, HashMap<String, Properties> replacements,
+      Page[] pages, Map<String, Properties> replacements,
       EnumWikipedia wikipedia, String comment,
       StringBuilder description) throws APIException {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
@@ -282,7 +283,7 @@ public class MediaWiki extends MediaWikiController {
   public void retrieveAllLinks(
       EnumWikipedia wikipedia,
       Page page, Integer namespace,
-      ArrayList<Page> knownPages,
+      List<Page> knownPages,
       boolean block) throws APIException {
     if (page == null) {
       return;
@@ -332,7 +333,7 @@ public class MediaWiki extends MediaWikiController {
       if (result != null) {
         if (result instanceof Page) {
           final Page page = (Page) result;
-          ArrayList<Page> backlinks = page.getBackLinks();
+          List<Page> backlinks = page.getBackLinks();
           Iterator<Page> iter1 = backlinks.iterator();
           while (iter1.hasNext()) {
             final Page p = iter1.next();
@@ -360,7 +361,7 @@ public class MediaWiki extends MediaWikiController {
    * @throws APIException
    */
   public void retrieveAllEmbeddedIn(
-      EnumWikipedia wikipedia, ArrayList<Page> pageList) throws APIException {
+      EnumWikipedia wikipedia, List<Page> pageList) throws APIException {
     if ((pageList == null) || (pageList.size() == 0)) {
       return;
     }
@@ -383,7 +384,7 @@ public class MediaWiki extends MediaWikiController {
    */
   public void retrieveDisambiguationInformation(
       EnumWikipedia wikipedia,
-      ArrayList<Page> pageList, ArrayList<Page> knownPages,
+      List<Page> pageList, List<Page> knownPages,
       boolean disambiguations, boolean block) throws APIException {
     if ((pageList == null) || (pageList.isEmpty())) {
       return;
@@ -392,7 +393,7 @@ public class MediaWiki extends MediaWikiController {
 
     // Retrieving disambiguation status
     final int maxPages = api.getMaxPagesPerQuery();
-    ArrayList<Page> filteredList = pageList;
+    List<Page> filteredList = pageList;
     if (knownPages != null) {
       filteredList = new ArrayList<Page>(pageList);
       filteredList.removeAll(knownPages);
@@ -402,7 +403,7 @@ public class MediaWiki extends MediaWikiController {
     } else {
       int index = 0;
       while (index < filteredList.size()) {
-        ArrayList<Page> tmpList = new ArrayList<Page>(api.getMaxPagesPerQuery());
+        List<Page> tmpList = new ArrayList<Page>(api.getMaxPagesPerQuery());
         for (int i = 0; (i < maxPages) && (index < filteredList.size()); i++, index++) {
           tmpList.add(filteredList.get(index));
         }
@@ -419,7 +420,7 @@ public class MediaWiki extends MediaWikiController {
           p = iter.next();
           if ((Boolean.TRUE.equals(p.isDisambiguationPage())) &&
               (!p.isRedirect())) {
-            ArrayList<Page> links = p.getLinks();
+            List<Page> links = p.getLinks();
             if ((links == null) || (links.size() == 0)) {
               addTask(new LinksWRCallable(wikipedia, this, api, p, null, null));
             }

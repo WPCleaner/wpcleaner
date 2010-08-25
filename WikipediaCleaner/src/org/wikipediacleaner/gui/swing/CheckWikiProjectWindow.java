@@ -125,7 +125,7 @@ public class CheckWikiProjectWindow extends PageWindow {
 
   private SpinnerNumberModel modelMaxErrors;
 
-  ArrayList<CheckError> errors;
+  List<CheckError> errors;
   Properties checkWikiConfig;
   JComboBox listAllErrors;
   DefaultComboBoxModel modelAllErrors;
@@ -1169,7 +1169,7 @@ public class CheckWikiProjectWindow extends PageWindow {
      * @param errorsFixed Errors fixed
      * @return Comment.
      */
-    private String getComment(ArrayList<CheckErrorAlgorithm> errorsFixed) {
+    private String getComment(List<CheckErrorAlgorithm> errorsFixed) {
       StringBuilder comment = new StringBuilder();
       if (errorsFixed != null) {
         for (int pos = 0; pos < errorsFixed.size(); pos++) {
@@ -1204,8 +1204,8 @@ public class CheckWikiProjectWindow extends PageWindow {
     /**
      * @return Errors fixed.
      */
-    private ArrayList<CheckErrorAlgorithm> computeErrorsFixed() {
-      final ArrayList<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
+    private List<CheckErrorAlgorithm> computeErrorsFixed() {
+      final List<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
       if (initialErrors != null) {
         for (CheckErrorPage initialError : initialErrors) {
           CheckError.analyzeError(initialError, textPage.getText());
@@ -1222,7 +1222,7 @@ public class CheckWikiProjectWindow extends PageWindow {
      */
     private void actionSend() {
       // Check page text to see what errors are still present
-      final ArrayList<CheckErrorAlgorithm> errorsFixed = computeErrorsFixed();
+      final List<CheckErrorAlgorithm> errorsFixed = computeErrorsFixed();
       updateComment(errorsFixed);
 
       // Check that a comment is available
@@ -1248,7 +1248,7 @@ public class CheckWikiProjectWindow extends PageWindow {
             pane.remove(CheckWikiContentPanel.this);
 
             // Remove errors fixed
-            ArrayList<CheckError> errorsToBeRemoved = new ArrayList<CheckError>();
+            List<CheckError> errorsToBeRemoved = new ArrayList<CheckError>();
             for (CheckErrorAlgorithm algoFixed : errorsFixed) {
               boolean marked = false;
               for (int posError = 0; posError < modelAllErrors.getSize(); posError++) {
@@ -1340,7 +1340,7 @@ public class CheckWikiProjectWindow extends PageWindow {
      * 
      * @param errorsFixed Errors.
      */
-    private void updateComment(ArrayList<CheckErrorAlgorithm> errorsFixed) {
+    private void updateComment(List<CheckErrorAlgorithm> errorsFixed) {
       if ((chkAutomaticComment != null) &&
           (textComment != null)) {
         textComment.setEditable(!chkAutomaticComment.isSelected());
@@ -1698,7 +1698,7 @@ public class CheckWikiProjectWindow extends PageWindow {
    */
   void actionSelectPage() {
     Object[] selection = listPages.getSelectedValues();
-    final ArrayList<Page> pages = new ArrayList<Page>();
+    final List<Page> pages = new ArrayList<Page>();
     if (selection != null) {
       for (int i = 0; i < selection.length; i++) {
         CheckErrorPage errorPage = (CheckErrorPage) selection[i];
@@ -1715,7 +1715,7 @@ public class CheckWikiProjectWindow extends PageWindow {
         @Override
         public void beforeFinished(BasicWorker worker) {
           super.beforeFinished(worker);
-          final ArrayList<CheckWikiContentPanel> contentPanels = new ArrayList<CheckWikiContentPanel>();
+          final List<CheckWikiContentPanel> contentPanels = new ArrayList<CheckWikiContentPanel>();
           for (Page page : pages) {
             while (page != null) {
               final CheckWikiContentPanel contentPanel = createContentsComponents(
@@ -1725,7 +1725,7 @@ public class CheckWikiProjectWindow extends PageWindow {
               contentPane.setSelectedComponent(contentPanel);
               contentPanels.add(contentPanel);
               if (page.isRedirect()) {
-                ArrayList<Page> redirects = page.getRedirects();
+                List<Page> redirects = page.getRedirects();
                 if (redirects.size() > 0) {
                   page = redirects.get(0);
                 } else {

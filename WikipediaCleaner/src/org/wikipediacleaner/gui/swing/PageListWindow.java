@@ -67,7 +67,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   private final static String ACTION_UPDATE         = "UPDATE INFO";
 
   String title;
-  ArrayList<Page> pages;
+  List<Page> pages;
   boolean watchList;
 
   PageListTableModel modelPages;
@@ -92,7 +92,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
    */
   public static void createPageListWindow(
       final String title,
-      final ArrayList<Page> pages,
+      final List<Page> pages,
       final EnumWikipedia wikipedia,
       final boolean watchList) {
     createWindow(
@@ -295,8 +295,8 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     }
     Page[] selectedPages = getSelectedPages();
     modelPages.removePages(selectedPages);
-    ArrayList<Page> tmpPages = modelPages.getPages();
-    ArrayList<String> watchedPages = new ArrayList<String>(tmpPages.size());
+    List<Page> tmpPages = modelPages.getPages();
+    List<String> watchedPages = new ArrayList<String>(tmpPages.size());
     for (Page p : tmpPages) {
       watchedPages.add(p.getTitle());
     }

@@ -19,7 +19,7 @@
 package org.wikipediacleaner.gui.swing;
 
 import java.awt.Component;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -44,7 +44,7 @@ public class Controller {
    * @param wikipedia Wikipedia
    */
   public static void runFullAnalysis(
-      String page, ArrayList<Page> knownPages, EnumWikipedia wikipedia) {
+      String page, List<Page> knownPages, EnumWikipedia wikipedia) {
     if (page != null) {
       AnalysisWindow.createAnalysisWindow(page, knownPages, wikipedia);
     }
@@ -60,7 +60,7 @@ public class Controller {
    */
   public static void runFullAnalysis(
       Component parentComponent, Object[] pages,
-      ArrayList<Page> knownPages,
+      List<Page> knownPages,
       EnumWikipedia wikipedia) {
     if (pages == null) {
       return;

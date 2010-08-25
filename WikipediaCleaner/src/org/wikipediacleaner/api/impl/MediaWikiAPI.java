@@ -139,7 +139,7 @@ public class MediaWikiAPI implements API {
     lguserid = null;
     LoginResult result = null;
     if (login) {
-      HashMap<String, String> properties = getProperties(ACTION_API_LOGIN, true);
+      Map<String, String> properties = getProperties(ACTION_API_LOGIN, true);
       properties.put("lgname", username);
       properties.put("lgpassword", password);
       try {
@@ -336,7 +336,7 @@ public class MediaWikiAPI implements API {
    */
   public void retrieveContents(EnumWikipedia wikipedia, Page page, boolean withRedirects)
       throws APIException {
-    HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("prop", "revisions|info");
     properties.put("titles", page.getTitle());
     properties.put("rvprop", "content|ids|timestamp");
@@ -349,7 +349,7 @@ public class MediaWikiAPI implements API {
           getRoot(wikipedia, properties, MAX_ATTEMPTS),
           "/api/query/pages/page");
       if (redirect && withRedirects) {
-        ArrayList<Page> pages = new ArrayList<Page>(1);
+        List<Page> pages = new ArrayList<Page>(1);
         pages.add(page);
         initializeRedirect(wikipedia, pages);
       }
@@ -364,9 +364,9 @@ public class MediaWikiAPI implements API {
    * @param pages List of pages.
    * @throws APIException
    */
-  public void retrieveContentsWithoutRedirects(EnumWikipedia wikipedia, ArrayList<Page> pages)
+  public void retrieveContentsWithoutRedirects(EnumWikipedia wikipedia, List<Page> pages)
       throws APIException {
-    HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("prop", "revisions");
     properties.put("rvprop", "content");
     StringBuilder titles = new StringBuilder();
@@ -402,7 +402,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    */
   public String expandTemplates(EnumWikipedia wikipedia, String title, String text) throws APIException {
-    HashMap<String, String> properties = getProperties(ACTION_API_EXPAND, true);
+    Map<String, String> properties = getProperties(ACTION_API_EXPAND, true);
     properties.put("title", title);
     properties.put("text", text);
     try {
@@ -425,7 +425,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    */
   public String parseText(EnumWikipedia wikipedia, String title, String text) throws APIException {
-    HashMap<String, String> properties = getProperties(ACTION_API_PARSE, true);
+    Map<String, String> properties = getProperties(ACTION_API_PARSE, true);
     properties.put("title", title);
     properties.put("text", text);
     try {
@@ -466,7 +466,7 @@ public class MediaWikiAPI implements API {
       throw new APIException("You must be logged in to update pages");
     }
     QueryResult result = null;
-    HashMap<String, String> properties = getProperties(ACTION_API_EDIT, true);
+    Map<String, String> properties = getProperties(ACTION_API_EDIT, true);
     properties.put("assert", "user");
     properties.put("basetimestamp", page.getContentsTimestamp());
     properties.put("bot", "");
@@ -515,7 +515,7 @@ public class MediaWikiAPI implements API {
       throw new APIException("You must be logged in to update pages");
     }
     QueryResult result = null;
-    HashMap<String, String> properties = getProperties(ACTION_API_EDIT, true);
+    Map<String, String> properties = getProperties(ACTION_API_EDIT, true);
     properties.put("minor", "");
     properties.put("section", "new");
     properties.put("summary", title);
@@ -544,7 +544,7 @@ public class MediaWikiAPI implements API {
    */
   public void purgePageCache(EnumWikipedia wikipedia, Page page)
       throws APIException {
-    HashMap<String, String> properties = getProperties(ACTION_API_PURGE, true);
+    Map<String, String> properties = getProperties(ACTION_API_PURGE, true);
     properties.put("titles", page.getTitle());
     try {
       checkForError(getRoot(wikipedia, properties, MAX_ATTEMPTS));
@@ -563,7 +563,7 @@ public class MediaWikiAPI implements API {
    */
   public String getLanguageLink(EnumWikipedia from, EnumWikipedia to, String title)
       throws APIException {
-    HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("lllimit", "max");
     properties.put("prop", "langlinks");
     properties.put("titles", title);
@@ -612,7 +612,7 @@ public class MediaWikiAPI implements API {
    */
   public void retrieveLinks(EnumWikipedia wikipedia, Page page)
       throws APIException {
-    HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("pllimit", "max");
     properties.put("prop", "links");
     properties.put("titles", page.getTitle());
@@ -637,9 +637,9 @@ public class MediaWikiAPI implements API {
    */
   public void retrieveLinksWithRedirects(
       EnumWikipedia wikipedia,
-      Page page, Integer namespace, ArrayList<Page> knownPages)
+      Page page, Integer namespace, List<Page> knownPages)
       throws APIException {
-    HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("generator", "links");
     properties.put("gpllimit", "max");
     if (namespace != null) {
@@ -649,7 +649,7 @@ public class MediaWikiAPI implements API {
     properties.put("titles", page.getTitle());
     boolean keepLinks = false;
     boolean gplcontinue = false;
-    ArrayList<Page> redirects = new ArrayList<Page>();
+    List<Page> redirects = new ArrayList<Page>();
     do {
       try {
         Element root = getRoot(wikipedia, properties, MAX_ATTEMPTS);
@@ -688,11 +688,11 @@ public class MediaWikiAPI implements API {
    */
   public void retrieveBackLinks(EnumWikipedia wikipedia, Page page)
       throws APIException {
-    HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("list", "backlinks");
     properties.put("bltitle", page.getTitle());
     properties.put("bllimit", /*"max"*/ "500"); // TODO
-    ArrayList<Page> links = new ArrayList<Page>();
+    List<Page> links = new ArrayList<Page>();
     boolean blcontinue = false;
     do {
       try {
@@ -700,7 +700,7 @@ public class MediaWikiAPI implements API {
         Element root = getRoot(wikipedia, properties, MAX_ATTEMPTS);
         List results = xpa.selectNodes(root);
         Iterator iter = results.iterator();
-        links.ensureCapacity(links.size() + results.size());
+        //links.ensureCapacity(links.size() + results.size());
         XPath xpaPageId = XPath.newInstance("./@pageid");
         XPath xpaNs = XPath.newInstance("./@ns");
         XPath xpaTitle = XPath.newInstance("./@title");
@@ -740,12 +740,12 @@ public class MediaWikiAPI implements API {
    */
   public void retrieveBackLinksWithRedirects(EnumWikipedia wikipedia, Page page)
       throws APIException {
-    HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("generator", "backlinks");
     properties.put("prop", "info");
     properties.put("gbltitle", page.getTitle());
     properties.put("gbllimit", /*"max"*/ "500"); // TODO
-    ArrayList<Page> links = new ArrayList<Page>();
+    List<Page> links = new ArrayList<Page>();
     boolean blcontinue = false;
     do {
       try {
@@ -753,7 +753,7 @@ public class MediaWikiAPI implements API {
         Element root = getRoot(wikipedia, properties, MAX_ATTEMPTS);
         List results = xpa.selectNodes(root);
         Iterator iter = results.iterator();
-        links.ensureCapacity(links.size() + results.size());
+        //links.ensureCapacity(links.size() + results.size());
         XPath xpaPageId = XPath.newInstance("./@pageid");
         XPath xpaNs = XPath.newInstance("./@ns");
         XPath xpaTitle = XPath.newInstance("./@title");
@@ -802,11 +802,11 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    */
   public void retrieveEmbeddedIn(EnumWikipedia wikipedia, Page page) throws APIException {
-    HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("list", "embeddedin");
     properties.put("eititle", page.getTitle());
     properties.put("eilimit", "max" /*"500"*/);
-    ArrayList<Page> links = new ArrayList<Page>();
+    List<Page> links = new ArrayList<Page>();
     boolean eicontinue = false;
     do {
       try {
@@ -814,7 +814,7 @@ public class MediaWikiAPI implements API {
         Element root = getRoot(wikipedia, properties, MAX_ATTEMPTS);
         List results = xpa.selectNodes(root);
         Iterator iter = results.iterator();
-        links.ensureCapacity(links.size() + results.size());
+        //links.ensureCapacity(links.size() + results.size());
         XPath xpaPageId = XPath.newInstance("./@pageid");
         XPath xpaNs = XPath.newInstance("./@ns");
         XPath xpaTitle = XPath.newInstance("./@title");
@@ -855,12 +855,12 @@ public class MediaWikiAPI implements API {
    */
   public void retrieveTemplates(EnumWikipedia wikipedia, Page page)
       throws APIException {
-    ArrayList<Page> templates = new ArrayList<Page>();
-    ArrayList<Page> newTemplates = new ArrayList<Page>();
+    List<Page> templates = new ArrayList<Page>();
+    List<Page> newTemplates = new ArrayList<Page>();
     newTemplates.add(page);
     StringBuilder titles = new StringBuilder();
     do {
-      HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+      Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
       titles.setLength(0);
       int count = 0;
       while ((count < (MAX_PAGES_PER_QUERY / 5)) && !newTemplates.isEmpty()) {
@@ -899,11 +899,11 @@ public class MediaWikiAPI implements API {
    * @param pages List of pages.
    * @throws APIException
    */
-  public void initializeRedirect(EnumWikipedia wikipedia, ArrayList<Page> pages) throws APIException {
+  public void initializeRedirect(EnumWikipedia wikipedia, List<Page> pages) throws APIException {
     if ((pages == null) || (pages.isEmpty())) {
       return;
     }
-    HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("redirects", "");
     StringBuilder titles = new StringBuilder();
     for (int i = 0; i < pages.size();) {
@@ -936,15 +936,15 @@ public class MediaWikiAPI implements API {
    * @param pages List of pages.
    * @throws APIException
    */
-  public void initializeDisambiguationStatus(EnumWikipedia wikipedia, ArrayList<Page> pages)
+  public void initializeDisambiguationStatus(EnumWikipedia wikipedia, List<Page> pages)
       throws APIException {
     if ((pages == null) || (pages.isEmpty())) {
       return;
     }
-    HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("prop", "templates");
     properties.put("tllimit", "max");
-    ArrayList<Page> tmpPages = new ArrayList<Page>();
+    List<Page> tmpPages = new ArrayList<Page>();
     for (int i = 0; i < pages.size(); i++) {
       Iterator<Page> iter = pages.get(i).getRedirectIteratorWithPage();
       while (iter.hasNext()) {
@@ -1005,7 +1005,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    */
   private void loadSiteInfo(EnumWikipedia wikipedia) throws APIException {
-    HashMap<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("meta", "siteinfo");
     properties.put("siprop", "namespaces|namespacealiases|languages|interwikimap|magicwords");
     try {
@@ -1151,7 +1151,7 @@ public class MediaWikiAPI implements API {
 
     // Retrieve languages
     try {
-      LinkedList<Language> languages = new LinkedList<Language>();
+      List<Language> languages = new ArrayList<Language>();
       XPath xpa = XPath.newInstance(query + "/languages/lang");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
@@ -1169,7 +1169,7 @@ public class MediaWikiAPI implements API {
 
     // Retrieve interwikis
     try {
-      LinkedList<Interwiki> interwikis = new LinkedList<Interwiki>();
+      List<Interwiki> interwikis = new ArrayList<Interwiki>();
       XPath xpa = XPath.newInstance(query + "/interwikimap/iw");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
@@ -1193,7 +1193,7 @@ public class MediaWikiAPI implements API {
 
     // Retrieve magic words
     try {
-      HashMap<String, MagicWord> magicWords = new HashMap<String, MagicWord>();
+      Map<String, MagicWord> magicWords = new HashMap<String, MagicWord>();
       XPath xpa = XPath.newInstance(query + "/magicwords/magicword");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
@@ -1203,7 +1203,7 @@ public class MediaWikiAPI implements API {
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
         String magicWord = xpaName.valueOf(currentNode);
-        ArrayList<String> aliases = new ArrayList<String>();
+        List<String> aliases = new ArrayList<String>();
         List resultsAlias = xpaAlias.selectNodes(currentNode);
         Iterator iterAlias = resultsAlias.iterator();
         while (iterAlias.hasNext()) {
@@ -1231,7 +1231,7 @@ public class MediaWikiAPI implements API {
     if (page == null) {
       throw new APIException("Page is null");
     }
-    ArrayList<Page> links = null;
+    List<Page> links = null;
     try {
       XPath xpa = XPath.newInstance(query);
       List results = xpa.selectNodes(root);
@@ -1264,14 +1264,14 @@ public class MediaWikiAPI implements API {
    */
   private void constructLinksWithRedirects(
       Page page, Element root, String query,
-      ArrayList<Page> knownPages,
-      ArrayList<Page> redirects,
+      List<Page> knownPages,
+      List<Page> redirects,
       boolean keepExistingLinks)
       throws APIException {
     if (page == null) {
       throw new APIException("Page is null");
     }
-    ArrayList<Page> links = null;
+    List<Page> links = null;
     try {
       XPath xpa = XPath.newInstance(query);
       List results = xpa.selectNodes(root);
@@ -1322,7 +1322,7 @@ public class MediaWikiAPI implements API {
    */
   private void constructTemplates(
       EnumWikipedia wikipedia,
-      ArrayList<Page> newTemplates, ArrayList<Page> templates,
+      List<Page> newTemplates, List<Page> templates,
       Element root, String query)
       throws APIException {
     if ((newTemplates == null) || (templates == null)) {
@@ -1420,7 +1420,7 @@ public class MediaWikiAPI implements API {
    * @param query XPath query to retrieve the contents 
    * @throws APIException
    */
-  private void constructContents(ArrayList<Page> pages, Element root, String query)
+  private void constructContents(List<Page> pages, Element root, String query)
       throws APIException {
     if (pages == null) {
       throw new APIException("Pages is null");
@@ -1460,7 +1460,7 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    */
   private void updateRedirectStatus(
-      ArrayList<Page> pages,
+      List<Page> pages,
       Element root,
       String queryRedirects,
       String queryPages)
@@ -1546,7 +1546,7 @@ public class MediaWikiAPI implements API {
    */
   private void updateDisambiguationStatus(
       EnumWikipedia wikipedia,
-      ArrayList<Page> pages,
+      List<Page> pages,
       Element root,
       String query)
       throws APIException {
@@ -1601,10 +1601,10 @@ public class MediaWikiAPI implements API {
    * @param newApi New API (api.php) or not (query.php).
    * @return Properties.
    */
-  private HashMap<String, String> getProperties(
+  private Map<String, String> getProperties(
       String action,
       boolean newApi) {
-    HashMap<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<String, String>();
     properties.put(newApi ? "action" : "what", action);
     properties.put("format", "xml");
     return properties;
@@ -1620,9 +1620,9 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    */
   private Element getRoot(
-      EnumWikipedia           wikipedia,
-      HashMap<String, String> properties,
-      int                     maxTry)
+      EnumWikipedia       wikipedia,
+      Map<String, String> properties,
+      int                 maxTry)
       throws JDOMParseException, APIException {
     Element root = null;
     PostMethod method = null;

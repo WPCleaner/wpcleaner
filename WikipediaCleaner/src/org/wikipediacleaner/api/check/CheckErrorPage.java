@@ -18,7 +18,7 @@
 
 package org.wikipediacleaner.api.check;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.data.Page;
@@ -33,7 +33,7 @@ public class CheckErrorPage {
   private final Page page;
   private final boolean inWhiteList;
   private boolean errorFound;
-  private ArrayList<CheckErrorResult> results;
+  private List<CheckErrorResult> results;
 
   /**
    * @param page Page.
@@ -75,7 +75,7 @@ public class CheckErrorPage {
    */
   public void setResults(
       boolean errorFound,
-      ArrayList<CheckErrorResult> results) {
+      List<CheckErrorResult> results) {
     this.errorFound = errorFound;
     this.results = results;
   }
@@ -90,7 +90,7 @@ public class CheckErrorPage {
   /**
    * @return Results.
    */
-  public ArrayList<CheckErrorResult> getResults() {
+  public List<CheckErrorResult> getResults() {
     return results;
   }
 

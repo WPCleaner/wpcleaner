@@ -20,6 +20,7 @@ package org.wikipediacleaner.gui.swing.worker;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.APIException;
@@ -36,7 +37,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class DisambiguationListWorker extends BasicWorker {
 
-  private final ArrayList<Page> disambiguationList;
+  private final List<Page> disambiguationList;
 
   /**
    * @param wikipedia Wikipedia.
@@ -68,7 +69,7 @@ public class DisambiguationListWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      ArrayList<Page> pages = new ArrayList<Page>();
+      List<Page> pages = new ArrayList<Page>();
       for (String dabList : getWikipedia().getDisambiguationList()) {
         Page page = DataManager.getPage(getWikipedia(), dabList, null, null);
         mw.retrieveAllLinks(getWikipedia(), page, null, null, true);

@@ -19,6 +19,7 @@
 package org.wikipediacleaner.gui.swing.worker;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.APIException;
@@ -34,15 +35,15 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class EmbeddedInWorker extends BasicWorker {
 
-  private final ArrayList<Page> embeddedInList;
-  private final ArrayList<Page> pages;
+  private final List<Page> embeddedInList;
+  private final List<Page> pages;
 
   /**
    * @param wikipedia Wikipedia.
    * @param window Window.
    * @param pages Pages.
    */
-  public EmbeddedInWorker(EnumWikipedia wikipedia, BasicWindow window, ArrayList<Page> pages) {
+  public EmbeddedInWorker(EnumWikipedia wikipedia, BasicWindow window, List<Page> pages) {
     super(wikipedia, window);
     this.pages = pages;
     embeddedInList = new ArrayList<Page>();
