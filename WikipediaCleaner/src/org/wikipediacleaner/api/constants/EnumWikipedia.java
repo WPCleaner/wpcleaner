@@ -256,7 +256,7 @@ public enum EnumWikipedia {
   private String[] templatesForNeedingHelp;
   private String[] templatesForHelpRequested;
   private String[] templatesForLinkingText;
-  private String[] disambiguationList;
+  private List<String> disambiguationList;
   private List<Page> disambiguationTemplates;
   private final TemplateMatch[] disambiguationMatches;
   private String checkWikiProject;
@@ -358,7 +358,12 @@ public enum EnumWikipedia {
     this.templatesForDisambiguationLink = templatesForDisambiguationLink;
     this.templatesForNeedingHelp = templatesForNeedingHelp;
     this.templatesForHelpRequested = templatesForHelpRequested;
-    this.disambiguationList = disambiguationList;
+    if (disambiguationList != null) {
+      this.disambiguationList = new ArrayList<String>();
+      for (int i = 0; i < disambiguationList.length; i++) {
+        this.disambiguationList.add(disambiguationList[i]);
+      }
+    }
     this.disambiguationMatches = templateMatches;
     this.checkWikiProject = checkWikiProject;
     this.checkWikiTranslation = checkWikiTraduction;
@@ -642,11 +647,8 @@ public enum EnumWikipedia {
   /**
    * @return Pages containing the list of disambiguation pages.
    */
-  public String[] getDisambiguationList() {
-    if (disambiguationList != null) {
-      return disambiguationList;
-    }
-    return null;
+  public List<String> getDisambiguationList() {
+    return disambiguationList;
   }
 
   /**
@@ -782,7 +784,7 @@ public enum EnumWikipedia {
       // Disambiguation list
       tmp = configuration.getProperty("dab_list", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
-        disambiguationList = convertPropertyToStringArray(tmp);
+        disambiguationList = convertPropertyToStringList(tmp);
       }
 
       // Templates for normal links to disambiguation pages
