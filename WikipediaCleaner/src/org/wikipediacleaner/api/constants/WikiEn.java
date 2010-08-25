@@ -44,6 +44,6 @@ class WikiEn {
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
     new TemplateMatch("Ambiguous link", "1", "", false, true),
     new TemplateMatch("Dn", "1", "", false, true),
-    new TemplateMatch("Otherpeople2", "1", "", true, false),
+    //new TemplateMatch("Otherpeople2", "1", "", true, false),
   };
 }

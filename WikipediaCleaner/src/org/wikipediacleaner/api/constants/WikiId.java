@@ -43,7 +43,7 @@ class WikiId {
 
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
     new TemplateMatch("Disambig", "1", "", false, false),
-    new TemplateMatch("Disambig info", "1", "", true, false),
+    //new TemplateMatch("Disambig info", "1", "", true, false),
     new TemplateMatch("Disambig karya", "1", "", false, false),
     new TemplateMatch("Disambig nama", "1", "", false, false),
     new TemplateMatch("Disambig tempat", "1", "", false, false),

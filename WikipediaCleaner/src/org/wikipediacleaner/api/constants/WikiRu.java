@@ -42,8 +42,8 @@ class WikiRu {
   final static String configuration = "Участник:NicoV/WikiCleanerConfiguration";
 
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
-    new TemplateMatch("Другие значения", "1", "{{PAGENAME}} (значения)", true, false),
-    new TemplateMatch("Другое значение", "1", "{{PAGENAME}}", true, false),
-    new TemplateMatch("Однофамильцы", "1", "{{PAGENAME}}", true, false)
+    //new TemplateMatch("Другие значения", "1", "{{PAGENAME}} (значения)", true, false),
+    //new TemplateMatch("Другое значение", "1", "{{PAGENAME}}", true, false),
+    //new TemplateMatch("Однофамильцы", "1", "{{PAGENAME}}", true, false)
   };
 }
