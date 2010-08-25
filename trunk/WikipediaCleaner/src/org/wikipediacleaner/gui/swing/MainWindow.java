@@ -94,7 +94,7 @@ public class MainWindow
   private final static String ACTION_HELP            = "HELP";
   private final static String ACTION_HELP_REQUESTED  = "HELP_REQUESTED";
   private final static String ACTION_IDEA            = "IDEA";
-  private final static String ACTION_LINKS           = "LINKS";
+  private final static String ACTION_INTERNAL_LINKS  = "INTERNAL LINKS";
   private final static String ACTION_LOGIN           = "LOGIN";
   private final static String ACTION_LOGOUT          = "LOGOUT";
   private final static String ACTION_OPTIONS         = "OPTIONS";
@@ -128,7 +128,7 @@ public class MainWindow
   private JButton buttonDisambiguation;
   private JButton buttonFullAnalysis;
   private JButton buttonHelpRequested;
-  private JButton buttonLinks;
+  private JButton buttonInternalLinks;
   private JButton buttonRandomPage;
   private JButton buttonWatchedPages;
   private JButton buttonBotTools;
@@ -221,7 +221,7 @@ public class MainWindow
     textPagename.setEnabled(logged);
     buttonFullAnalysis.setEnabled(logged);
     buttonDisambiguation.setEnabled(logged);
-    buttonLinks.setEnabled(logged);
+    buttonInternalLinks.setEnabled(logged);
     buttonCurrentList.setEnabled(logged);
     buttonHelpRequested.setEnabled(logged);
     buttonCheckWiki.setEnabled(logged);
@@ -479,10 +479,10 @@ public class MainWindow
     constraints.gridy++;
 
     // Links button
-    buttonLinks = Utilities.createJButton(GT._("Links"));
-    buttonLinks.setActionCommand(ACTION_LINKS);
-    buttonLinks.addActionListener(this);
-    panel.add(buttonLinks, constraints);
+    buttonInternalLinks = Utilities.createJButton(GT._("Internal links"));
+    buttonInternalLinks.setActionCommand(ACTION_INTERNAL_LINKS);
+    buttonInternalLinks.addActionListener(this);
+    panel.add(buttonInternalLinks, constraints);
     constraints.gridy++;
 
     // Random page button
@@ -625,8 +625,8 @@ public class MainWindow
       actionFullAnalysis();
     } else if (ACTION_DISAMBIGUATION.equals(e.getActionCommand())) {
       actionDisambiguation();
-    } else if (ACTION_LINKS.equals(e.getActionCommand())) {
-      actionLinks();
+    } else if (ACTION_INTERNAL_LINKS.equals(e.getActionCommand())) {
+      actionInternalLinks();
     } else if (ACTION_CURRENT_LIST.equals(e.getActionCommand())) {
       actionCurrentList();
     } else if (ACTION_RANDOM_PAGE.equals(e.getActionCommand())) {
@@ -876,14 +876,14 @@ public class MainWindow
   }
 
   /**
-   * Action called when Links button is pressed.
+   * Action called when Internal Links button is pressed.
    */
-  private void actionLinks() {
+  private void actionInternalLinks() {
     if ((textPagename == null) ||
         (textPagename.getText() == null) ||
         ("".equals(textPagename.getText().trim()))) {
       displayWarning(
-          GT._("You must input a page name for retrieving the list of links"),
+          GT._("You must input a page name for retrieving the list of internal links"),
           textPagename);
       return;
     }
@@ -892,7 +892,8 @@ public class MainWindow
     config.save();
     new PageListWorker(
         getWikipedia(), this,
-        Collections.singletonList(textPagename.getText().trim())).start();
+        Collections.singletonList(textPagename.getText().trim()),
+        GT._("Internal links in {0}", textPagename.getText().trim())).start();
   }
 
   /**
@@ -916,7 +917,10 @@ public class MainWindow
       }
       return;
     }
-    new PageListWorker(wikipedia, this, wikipedia.getDisambiguationList()).start();
+    new PageListWorker(
+        wikipedia, this,
+        wikipedia.getDisambiguationList(),
+        GT._("Current disambiguation list")).start();
   }
 
   /**

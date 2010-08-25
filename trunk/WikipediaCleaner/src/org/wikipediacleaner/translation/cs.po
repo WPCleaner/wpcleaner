@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-25 19:03+0200\n"
+"POT-Creation-Date: 2010-08-25 19:19+0200\n"
 "PO-Revision-Date: 2010-08-21 00:04+0000\n"
 "Last-Translator: Konki <pavel.konkol@seznam.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -694,7 +694,7 @@ msgid "Message"
 msgstr "Zpráva"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:255
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1049
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1053
 msgid "Login"
 msgstr "Přihlašuji uživatele"
 
@@ -760,8 +760,8 @@ msgstr "Stránka"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:482
 #, fuzzy
-msgid "Links"
-msgstr "Připojit k"
+msgid "Internal links"
+msgstr "Obecné možnosti"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:489
 msgid "&Random page"
@@ -855,10 +855,15 @@ msgstr "Musíte zadat název stránky pro analýzu rozcestníků"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:886
 #, fuzzy
-msgid "You must input a page name for retrieving the list of links"
+msgid "You must input a page name for retrieving the list of internal links"
 msgstr "Musíte zadat název stránky pro plnou analýzu"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:911
+#: org/wikipediacleaner/gui/swing/MainWindow.java:896
+#, java-format
+msgid "Internal links in {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:912
 msgid ""
 "There's no known list of disambiguation pages for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -866,7 +871,11 @@ msgstr ""
 "Neexistuje seznam rozcestníků na této Wikipedii.\n"
 "Informace o konfiguraci programu Wikipedia Cleaner najdete na této adrese:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:934
+#: org/wikipediacleaner/gui/swing/MainWindow.java:923
+msgid "Current disambiguation list"
+msgstr "Současný seznam rozcestníků"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:938
 msgid ""
 "There's no known template for requesting help for the Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -874,7 +883,7 @@ msgstr ""
 "Neexistuje šablona pro žádost o pomoc na této Wikipedii.\n"
 "Informace o konfiguraci programu Wikipedia Cleaner najdete na této adrese:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:957
+#: org/wikipediacleaner/gui/swing/MainWindow.java:961
 msgid ""
 "There's no known Check Wikipedia Project for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -882,11 +891,11 @@ msgstr ""
 "Neexistuje projekt Check Wikipedia na této Wikipedii.\n"
 "Informace o konfiguraci programu Wikipedia Cleaner najdete na této adrese:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:996
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1000
 msgid "Watched pages"
 msgstr "Sledované stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1047
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1051
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:67
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:69
@@ -896,12 +905,12 @@ msgstr "Sledované stránky"
 msgid "Retrieving MediaWiki API"
 msgstr "Získávám MediaWiki API"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1069
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1073
 msgid "Retrieving disambiguation templates"
 msgstr "Získávám rozcestníkové šablony"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1075
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1099
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1079
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1103
 msgid "Retrieving Check Wiki configuration"
 msgstr "Přijímám konfiguraci Check Wikipedia"
 
@@ -1671,10 +1680,6 @@ msgstr "Vyžadovaná pomoc na stránkách"
 msgid "Adding comment"
 msgstr "Přidávám komentář"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:64
-msgid "Current disambiguation list"
-msgstr "Současný seznam rozcestníků"
-
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:56
 msgid "Getting random page"
 msgstr "Získávám náhodou stránku"
@@ -1686,6 +1691,10 @@ msgstr "Aktualizuji obsah stránky"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:75
 msgid "Error 'badtoken' detected: Retrying"
 msgstr "Chyba 'badtoken' detekována: Opakuji"
+
+#, fuzzy
+#~ msgid "Links"
+#~ msgstr "Připojit k"
 
 #~ msgid "Square brackets not correct end"
 #~ msgstr "Čtvercové závorky nemají korektní konec"

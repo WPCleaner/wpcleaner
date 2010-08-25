@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-25 19:03+0200\n"
+"POT-Creation-Date: 2010-08-25 19:19+0200\n"
 "PO-Revision-Date: 2010-05-30 10:12+0000\n"
 "Last-Translator: Sergey Sedov <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -698,7 +698,7 @@ msgid "Message"
 msgstr "Сообщение"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:255
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1049
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1053
 msgid "Login"
 msgstr "Войти"
 
@@ -765,8 +765,8 @@ msgstr "Страница"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:482
 #, fuzzy
-msgid "Links"
-msgstr "Ссылка на"
+msgid "Internal links"
+msgstr "Общие настройки"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:489
 msgid "&Random page"
@@ -859,32 +859,41 @@ msgstr "Вы должны ввести имя страницы, чтобы за�
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:886
 #, fuzzy
-msgid "You must input a page name for retrieving the list of links"
+msgid "You must input a page name for retrieving the list of internal links"
 msgstr "Вы должны ввести название страницы, чтобы запустить полный анализ"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:911
+#: org/wikipediacleaner/gui/swing/MainWindow.java:896
+#, java-format
+msgid "Internal links in {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:912
 msgid ""
 "There's no known list of disambiguation pages for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:934
+#: org/wikipediacleaner/gui/swing/MainWindow.java:923
+msgid "Current disambiguation list"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:938
 msgid ""
 "There's no known template for requesting help for the Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:957
+#: org/wikipediacleaner/gui/swing/MainWindow.java:961
 msgid ""
 "There's no known Check Wikipedia Project for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:996
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1000
 msgid "Watched pages"
 msgstr "Наблюдаемые страницы"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1047
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1051
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:67
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:69
@@ -894,12 +903,12 @@ msgstr "Наблюдаемые страницы"
 msgid "Retrieving MediaWiki API"
 msgstr "Получение MediaWiki API"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1069
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1073
 msgid "Retrieving disambiguation templates"
 msgstr "Получение шаблонов значений"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1075
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1099
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1079
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1103
 msgid "Retrieving Check Wiki configuration"
 msgstr ""
 
@@ -1671,10 +1680,6 @@ msgstr ""
 msgid "Adding comment"
 msgstr "Добавление комментария"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:64
-msgid "Current disambiguation list"
-msgstr ""
-
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:56
 msgid "Getting random page"
 msgstr "Получение случайной страницы"
@@ -1686,6 +1691,10 @@ msgstr "Обновление содержимого страницы"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:75
 msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Links"
+#~ msgstr "Ссылка на"
 
 #~ msgid "Work"
 #~ msgstr "Работа"

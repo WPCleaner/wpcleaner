@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-25 19:03+0200\n"
+"POT-Creation-Date: 2010-08-25 19:19+0200\n"
 "PO-Revision-Date: 2010-08-23 06:19+0000\n"
 "Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -705,7 +705,7 @@ msgid "Message"
 msgstr "Message"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:255
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1049
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1053
 msgid "Login"
 msgstr "Connexion"
 
@@ -771,8 +771,8 @@ msgstr "Article"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:482
 #, fuzzy
-msgid "Links"
-msgstr "Lier à"
+msgid "Internal links"
+msgstr "Options générales"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:489
 msgid "&Random page"
@@ -869,10 +869,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:886
 #, fuzzy
-msgid "You must input a page name for retrieving the list of links"
+msgid "You must input a page name for retrieving the list of internal links"
 msgstr "Vous devez saisir le nom d'une page pour lancer une analyse complète"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:911
+#: org/wikipediacleaner/gui/swing/MainWindow.java:896
+#, fuzzy, java-format
+msgid "Internal links in {0}"
+msgstr "Lien externe comprenant un saut de ligne"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:912
 msgid ""
 "There's no known list of disambiguation pages for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -880,7 +885,11 @@ msgstr ""
 "Il n’y a pas de liste de page d’homonymie sur cette Wikipédia.\n"
 "Vous pouvez apprendre comment configurer WikiCleaner à cette adresse  :"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:934
+#: org/wikipediacleaner/gui/swing/MainWindow.java:923
+msgid "Current disambiguation list"
+msgstr "Liste d'homonymies à traiter"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:938
 msgid ""
 "There's no known template for requesting help for the Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -888,7 +897,7 @@ msgstr ""
 "Il n'y a pas de modèle connu pour demander de l’aide sur cette Wikipédia.\n"
 "Vous pouvez apprendre comment configurer WikiCleaner à cette adresse :"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:957
+#: org/wikipediacleaner/gui/swing/MainWindow.java:961
 msgid ""
 "There's no known Check Wikipedia Project for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -897,11 +906,11 @@ msgstr ""
 "Wikipédia.\n"
 "Vous pouvez apprendre comment configurer WikiCleaner à cette adresse :"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:996
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1000
 msgid "Watched pages"
 msgstr "Pages suivies"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1047
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1051
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:67
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:69
@@ -911,12 +920,12 @@ msgstr "Pages suivies"
 msgid "Retrieving MediaWiki API"
 msgstr "Récupération de l'API MediaWiki"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1069
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1073
 msgid "Retrieving disambiguation templates"
 msgstr "Récupération des modèles d'homonymie"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1075
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1099
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1079
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1103
 msgid "Retrieving Check Wiki configuration"
 msgstr "Récupération de la configuration du projet de correction syntaxique"
 
@@ -1685,10 +1694,6 @@ msgstr "Aide requise sur les pages"
 msgid "Adding comment"
 msgstr "Ajout d'un commentaire"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:64
-msgid "Current disambiguation list"
-msgstr "Liste d'homonymies à traiter"
-
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:56
 msgid "Getting random page"
 msgstr "Récupération d'une page aléatoire"
@@ -1700,6 +1705,10 @@ msgstr "Mise à jour du contenu de la page"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:75
 msgid "Error 'badtoken' detected: Retrying"
 msgstr "Erreur « badtoken » détectée : nouvelle tentative"
+
+#, fuzzy
+#~ msgid "Links"
+#~ msgstr "Lier à"
 
 #~ msgid "Retrieving namespaces"
 #~ msgstr "Récupération des espaces de nom"
@@ -1733,9 +1742,6 @@ msgstr "Erreur « badtoken » détectée : nouvelle tentative"
 
 #~ msgid "Headline should end with \"=\""
 #~ msgstr "Titre de section ne finissant pas par « = »"
-
-#~ msgid "External link with line break"
-#~ msgstr "Lien externe comprenant un saut de ligne"
 
 #~ msgid "Reference duplication"
 #~ msgstr "Référence en double"

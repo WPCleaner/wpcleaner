@@ -30,7 +30,6 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.PageListWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
-import org.wikipediacleaner.i18n.GT;
 
 /**
  * SwingWorker for getting current disambiguation list. 
@@ -39,17 +38,21 @@ public class PageListWorker extends BasicWorker {
 
   private final List<String> pageNames;
   private final List<Page> pageList;
+  private final String message;
 
   /**
    * @param wikipedia Wikipedia.
    * @param window Window.
+   * @param pageNames List of pages in which the internal links have to be retrieved.
+   * @param message Window title.
    */
   public PageListWorker(
       EnumWikipedia wikipedia, BasicWindow window,
-      List<String> pageNames) {
+      List<String> pageNames, String message) {
     super(wikipedia, window);
     this.pageList = new ArrayList<Page>();
     this.pageNames = pageNames;
+    this.message = message;
   }
 
   /* (non-Javadoc)
@@ -61,8 +64,7 @@ public class PageListWorker extends BasicWorker {
     Object result = get();
     if (!(result instanceof Throwable)) {
       PageListWindow.createPageListWindow(
-          GT._("Current disambiguation list"),
-          pageList, getWikipedia(), false);
+          message, pageList, getWikipedia(), false);
     }
   }
 
