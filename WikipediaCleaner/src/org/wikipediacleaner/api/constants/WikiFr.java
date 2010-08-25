@@ -49,7 +49,7 @@ class WikiFr {
     new TemplateMatch("Jumelage", "1,2", "", false, false, new TemplateReplacement[] {
         new TemplateReplacement("1", "1", "ville") } ),
     new TemplateMatch("Homon", "1,2,3,4,5", "{{PAGENAME}} (homonymie)", true, false),
-    new TemplateMatch("Homonyme", "1,2,3,4,5", "{{PAGENAME}} (homonymie)", true, false),
+    //new TemplateMatch("Homonyme", "1,2,3,4,5", "{{PAGENAME}} (homonymie)", true, false),
     new TemplateMatch("Homophonie", "1,2,3,4,5,6,7", "{{PAGENAME}} (homophonie)", true, false),
     new TemplateMatch("Lh", "1", "", false, true),
     new TemplateMatch("Lien homonymie", "1", "", false, true),
