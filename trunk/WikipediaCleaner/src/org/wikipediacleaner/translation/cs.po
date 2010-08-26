@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-08-25 19:19+0200\n"
-"PO-Revision-Date: 2010-08-21 00:04+0000\n"
-"Last-Translator: Konki <pavel.konkol@seznam.cz>\n"
+"PO-Revision-Date: 2010-08-26 18:27+0000\n"
+"Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-08-21 09:00+0000\n"
+"X-Launchpad-Export-Date: 2010-08-26 22:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:38
@@ -122,7 +122,7 @@ msgstr "Odstranit zalomení v seznamu"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:205
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
-msgstr ""
+msgstr "Použito jako oddělovač mezi po sobě jdoucích značkách {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:202
 #, java-format
@@ -240,9 +240,9 @@ msgstr "Výskyt"
 #: org/wikipediacleaner/api/data/TemplateMatcher1L.java:82
 #: org/wikipediacleaner/api/data/TemplateMatcher1LT.java:82
 #: org/wikipediacleaner/api/data/TemplateMatcher1LT.java:89
-#, fuzzy, java-format
+#, java-format
 msgid "Replace parameter {0} with {1}"
-msgstr "Nahradit parametr {0} za"
+msgstr "Nahradit parametr {0} parametrem {1}"
 
 #: org/wikipediacleaner/api/execution/BacklinksWRCallable.java:53
 #: org/wikipediacleaner/api/execution/LinksWRCallable.java:61
@@ -380,7 +380,8 @@ msgstr "Můžou změnit nožství stránek v krátkém čase."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:609
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Na některých projektech Wikimedia potřebuješ pro tyto funkce příznak Bot."
 
@@ -759,9 +760,8 @@ msgid "Page"
 msgstr "Stránka"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:482
-#, fuzzy
 msgid "Internal links"
-msgstr "Obecné možnosti"
+msgstr "Interní odkazy"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:489
 msgid "&Random page"
@@ -823,7 +823,8 @@ msgstr "Než se přihlásíte, musíte zadat heslo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:787
 msgid "You can learn how to configure WikiCleaner at the following URL:"
-msgstr "Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
+msgstr ""
+"Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:804
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
@@ -854,14 +855,13 @@ msgid "You must input a page name for running a disambiguation analysis"
 msgstr "Musíte zadat název stránky pro analýzu rozcestníků"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:886
-#, fuzzy
 msgid "You must input a page name for retrieving the list of internal links"
-msgstr "Musíte zadat název stránky pro plnou analýzu"
+msgstr "Musíte vložit název stránky pro získání seznamu interních odkazů"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:896
 #, java-format
 msgid "Internal links in {0}"
-msgstr ""
+msgstr "Interní odkazy v {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:912
 msgid ""
@@ -1549,11 +1549,11 @@ msgstr "Přidat k oblíbeným rozcestníkům"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:805
 msgid "Add other preferred disambiguation..."
-msgstr ""
+msgstr "Přidal jiný oblíbený rozcestník…"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:808
 msgid "What link do you want to add to the preferred disambiguations?"
-msgstr ""
+msgstr "Jaký odkaz chcete přidat k oblíbeným rozcestníkům?"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:815
 msgid "Remove from preferred disambiguations"
@@ -1613,9 +1613,8 @@ msgid "Analyze"
 msgstr "Analyzovat"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1173
-#, fuzzy
 msgid "Analyze template"
-msgstr "Analyzovat stránku"
+msgstr "Analyzovat šablonu"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1175
 msgid "Analyze page"
@@ -1628,9 +1627,8 @@ msgid "External Viewer"
 msgstr "Externí prohlížeč"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1255
-#, fuzzy
 msgid "Template External Viewer"
-msgstr "Externí prohlížeč"
+msgstr "Externí zobrazení šablony"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1310
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1315
@@ -1691,10 +1689,6 @@ msgstr "Aktualizuji obsah stránky"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:75
 msgid "Error 'badtoken' detected: Retrying"
 msgstr "Chyba 'badtoken' detekována: Opakuji"
-
-#, fuzzy
-#~ msgid "Links"
-#~ msgstr "Připojit k"
 
 #~ msgid "Square brackets not correct end"
 #~ msgstr "Čtvercové závorky nemají korektní konec"

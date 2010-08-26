@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-08-25 19:19+0200\n"
-"PO-Revision-Date: 2010-08-23 06:19+0000\n"
+"PO-Revision-Date: 2010-08-26 09:19+0000\n"
 "Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-08-23 16:08+0000\n"
+"X-Launchpad-Export-Date: 2010-08-26 22:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -385,7 +385,8 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:609
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -770,9 +771,8 @@ msgid "Page"
 msgstr "Article"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:482
-#, fuzzy
 msgid "Internal links"
-msgstr "Options générales"
+msgstr "Liens internes"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:489
 msgid "&Random page"
@@ -868,14 +868,14 @@ msgstr ""
 "Vous devez saisir un nom de page avant d'effectuer une analyse d'homonymie"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:886
-#, fuzzy
 msgid "You must input a page name for retrieving the list of internal links"
-msgstr "Vous devez saisir le nom d'une page pour lancer une analyse complète"
+msgstr ""
+"Vous devez saisir un nom de page pour obtenir la liste des liens internes"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:896
-#, fuzzy, java-format
+#, java-format
 msgid "Internal links in {0}"
-msgstr "Lien externe comprenant un saut de ligne"
+msgstr "Liens internes dans {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:912
 msgid ""
@@ -1175,7 +1175,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:402
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr ""
+"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:286
 msgid "&Page :"
@@ -1643,7 +1644,7 @@ msgstr "Visualisateur externe"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1255
 msgid "Template External Viewer"
-msgstr ""
+msgstr "Voir le modèle dans un navigateur externe"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1310
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1315
@@ -1705,10 +1706,6 @@ msgstr "Mise à jour du contenu de la page"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:75
 msgid "Error 'badtoken' detected: Retrying"
 msgstr "Erreur « badtoken » détectée : nouvelle tentative"
-
-#, fuzzy
-#~ msgid "Links"
-#~ msgstr "Lier à"
 
 #~ msgid "Retrieving namespaces"
 #~ msgstr "Récupération des espaces de nom"
@@ -1784,8 +1781,8 @@ msgstr "Erreur « badtoken » détectée : nouvelle tentative"
 
 #~ msgid "Comma separated list of errors to ignore."
 #~ msgstr ""
-#~ "Liste des numéros d'erreurs à ignorer séparés d'une virgule (par ex. 17, "
-#~ "46, 53)."
+#~ "Liste des numéros d'erreurs à ignorer séparés d'une virgule (par ex. 17, 46, "
+#~ "53)."
 
 #~ msgid "Comma separated list of errors to work on."
 #~ msgstr ""
