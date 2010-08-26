@@ -43,8 +43,8 @@ class WikiFr {
   final static String configuration = "Utilisateur:NicoV/WikiCleanerConfiguration";
 
   final static TemplateMatch[] dabMatches = new TemplateMatch[] {
-    new TemplateMatch("A", "1", "", false, false),
-    new TemplateMatch("Article détaillé", "1,2,3,4,5,6,7,8,9,10", "", false, false),
+    //new TemplateMatch("A", "1", "", false, false),
+    //new TemplateMatch("Article détaillé", "1,2,3,4,5,6,7,8,9,10", "", false, false),
     new TemplateMatch("Dn", "1", "", false, true),
     new TemplateMatch("Jumelage", "1,2", "", false, false, new TemplateReplacement[] {
         new TemplateReplacement("1", "1", "ville") } ),
@@ -54,7 +54,7 @@ class WikiFr {
     new TemplateMatch("Lh", "1", "", false, true),
     new TemplateMatch("Lien homonymie", "1", "", false, true),
     new TemplateMatch("Lien vers un homonyme", "1", "", false, true),
-    new TemplateMatch("Loupe", "1,2,3,4,5,6,7,8,9,10", "", false, false),
+    //new TemplateMatch("Loupe", "1,2,3,4,5,6,7,8,9,10", "", false, false),
     //new TemplateMatch("Page h", "1", "", true, false),
     //new TemplateMatch("Page h'", "1", "", true, false),
     //new TemplateMatch("Page l", "1", "", true, false),
