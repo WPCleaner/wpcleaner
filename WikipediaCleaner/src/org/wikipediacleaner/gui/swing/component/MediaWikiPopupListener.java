@@ -150,6 +150,13 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
       JMenuItem menuItem = new JMenuItem(templateTitle);
       menuItem.setEnabled(false);
       popup.add(menuItem);
+      if ((matcher != null) &&
+          (matcher.getExplanation() != null) &&
+          (matcher.getExplanation().length() > 0)) {
+        menuItem = new JMenuItem("=> " + matcher.getExplanation() + " <=");
+        menuItem.setEnabled(false);
+        popup.add(menuItem);
+      }
       MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
 
       popup.addSeparator();

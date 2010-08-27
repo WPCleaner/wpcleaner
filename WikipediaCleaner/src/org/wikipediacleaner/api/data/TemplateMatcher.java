@@ -30,21 +30,24 @@ public abstract class TemplateMatcher {
 
   private final EnumWikipedia wikipedia;
   private final String templateName;
+  private final String explanation;
   private final boolean good;
   private final boolean helpNeeded;
 
   /**
    * @param wikipedia Wikipedia.
    * @param templateName Template name.
+   * @param explanation Explanation.
    * @param isGood Is good ?
    * @param helpNeeded Is help needed ?
    */
   public TemplateMatcher(
       EnumWikipedia wikipedia,
-      String templateName,
+      String templateName, String explanation,
       boolean isGood, boolean helpNeeded) {
     this.wikipedia = wikipedia;
     this.templateName = (templateName != null) ? Page.getStringUcFirst(templateName) : null;
+    this.explanation = explanation;
     this.good = isGood;
     this.helpNeeded = helpNeeded;
   }
@@ -83,6 +86,13 @@ public abstract class TemplateMatcher {
    */
   public String getTemplateName() {
     return templateName;
+  }
+
+  /**
+   * @return Explanation.
+   */
+  public String getExplanation() {
+    return explanation;
   }
 
   /**
