@@ -746,7 +746,7 @@ public enum EnumWikipedia {
             String[] parameterNames = parameterList.split(",");
             for (String parameterName : parameterNames) {
               TemplateMatcher matcher = new TemplateMatcher1L(
-                  this, templateName, explanation, false,
+                  this, templateName, explanation, false, false,
                   parameterName, defaultValue, neededParameter);
               list.add(matcher);
             }
@@ -772,7 +772,33 @@ public enum EnumWikipedia {
             String[] parameterNames = parameterList.split(",");
             for (String parameterName : parameterNames) {
               TemplateMatcher matcher = new TemplateMatcher1L(
-                  this, templateName, explanation, true,
+                  this, templateName, explanation, true, false,
+                  parameterName, defaultValue, neededParameter);
+              list.add(matcher);
+            }
+            templateMatchers.put(templateName, list);
+          }
+        }
+      }
+      tmp = configuration.getProperty("general_help_1l_templates", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        List<String> tmpList = convertPropertyToStringList(tmp);
+        for (String template : tmpList) {
+          String[] elements = template.split("\\|");
+          String templateName = (elements.length > 0) ? normalizeTitle(elements[0]) : null;
+          String parameterList = (elements.length > 1) ? elements[1] : null;
+          String explanation = (elements.length > 2) ? elements[2] : null;
+          String defaultValue = (elements.length > 3) ? elements[3] : null;
+          String neededParameter = (elements.length > 4) ? elements[4] : null;
+          if ((templateName != null) && (parameterList != null)) {
+            List<TemplateMatcher> list = templateMatchers.get(templateName);
+            if (list == null) {
+              list = new ArrayList<TemplateMatcher>();
+            }
+            String[] parameterNames = parameterList.split(",");
+            for (String parameterName : parameterNames) {
+              TemplateMatcher matcher = new TemplateMatcher1L(
+                  this, templateName, explanation, false, true,
                   parameterName, defaultValue, neededParameter);
               list.add(matcher);
             }
@@ -800,7 +826,7 @@ public enum EnumWikipedia {
             String[] parameterNames = parameterList.split(",");
             for (String parameterName : parameterNames) {
               TemplateMatcher matcher = new TemplateMatcher1LT(
-                  this, templateName, explanation, false,
+                  this, templateName, explanation, false, false,
                   parameterName, defaultValue, neededParameter);
               list.add(matcher);
             }
@@ -826,7 +852,33 @@ public enum EnumWikipedia {
             String[] parameterNames = parameterList.split(",");
             for (String parameterName : parameterNames) {
               TemplateMatcher matcher = new TemplateMatcher1LT(
-                  this, templateName, explanation, true,
+                  this, templateName, explanation, true, false,
+                  parameterName, defaultValue, neededParameter);
+              list.add(matcher);
+            }
+            templateMatchers.put(templateName, list);
+          }
+        }
+      }
+      tmp = configuration.getProperty("general_help_1lt_templates", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        List<String> tmpList = convertPropertyToStringList(tmp);
+        for (String template : tmpList) {
+          String[] elements = template.split("\\|");
+          String templateName = (elements.length > 0) ? normalizeTitle(elements[0]) : null;
+          String parameterList = (elements.length > 1) ? elements[1] : null;
+          String explanation = (elements.length > 2) ? elements[2] : null;
+          String defaultValue = (elements.length > 3) ? elements[3] : null;
+          String neededParameter = (elements.length > 4) ? elements[4] : null;
+          if ((templateName != null) && (parameterList != null)) {
+            List<TemplateMatcher> list = templateMatchers.get(templateName);
+            if (list == null) {
+              list = new ArrayList<TemplateMatcher>();
+            }
+            String[] parameterNames = parameterList.split(",");
+            for (String parameterName : parameterNames) {
+              TemplateMatcher matcher = new TemplateMatcher1LT(
+                  this, templateName, explanation, false, true,
                   parameterName, defaultValue, neededParameter);
               list.add(matcher);
             }
