@@ -37,6 +37,7 @@ import org.wikipediacleaner.utils.Configuration;
 public class WikipediaCleaner {
 
   private final static boolean CHECK_EDT = false;
+  private final static boolean SYSTEM_LF = true;
 
   /**
    * @param args
@@ -50,16 +51,18 @@ public class WikipediaCleaner {
     }
 
     // User Interface
-    try {
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    } catch (ClassNotFoundException e) {
-      // Not important
-    } catch (InstantiationException e) {
-      // Not important
-    } catch (IllegalAccessException e) {
-      // Not important
-    } catch (UnsupportedLookAndFeelException e) {
-      // Not important
+    if (SYSTEM_LF) {
+      try {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+      } catch (ClassNotFoundException e) {
+        // Not important
+      } catch (InstantiationException e) {
+        // Not important
+      } catch (IllegalAccessException e) {
+        // Not important
+      } catch (UnsupportedLookAndFeelException e) {
+        // Not important
+      }
     }
 
     // Language
