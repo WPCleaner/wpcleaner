@@ -40,16 +40,17 @@ public class TemplateMatcher1L extends TemplateMatcher {
    * @param templateName Template name.
    * @param explanation Explanation.
    * @param isGood Is good ?
+   * @param helpNeeded Is help needed ?
    * @param parameterName Parameter name.
    * @param parameterDefaultValue Parameter default value.
    * @param neededParameter Parameter eventually required.
    */
   public TemplateMatcher1L(
       EnumWikipedia wikipedia, String templateName,
-      String explanation, boolean isGood,
+      String explanation, boolean isGood, boolean helpNeeded,
       String parameterName, String parameterDefaultValue,
       String neededParameter) {
-    super(wikipedia, templateName, explanation, isGood, false);
+    super(wikipedia, templateName, explanation, isGood, helpNeeded);
     this.parameterName = parameterName;
     this.parameterDefaultValue = parameterDefaultValue;
     this.neededParameter = neededParameter;
