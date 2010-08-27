@@ -601,13 +601,17 @@ public class MenuCreator {
           menuItem = new JMenuItem(title);
           action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
           menuItem.addActionListener(action);
-          menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+          if (preferredDabs.size() == 1) {
+            menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+          }
           submenuLink.add(menuItem);
           fixedBeginLink++;
           menuItem = new JMenuItem(title);
           action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
           menuItem.addActionListener(action);
-          menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+          if (preferredDabs.size() == 1) {
+            menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+          }
           submenuReplace.add(menuItem);
           fixedBeginReplace++;
         }
@@ -766,13 +770,17 @@ public class MenuCreator {
             menuItem = new JMenuItem(title);
             action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
             menuItem.addActionListener(action);
-            menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+            if (preferredDabs.size() == 1) {
+              menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+            }
             submenuLink.add(menuItem);
             fixedEndLink++;
             menuItem = new JMenuItem(title);
             action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
             menuItem.addActionListener(action);
-            menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+            if (preferredDabs.size() == 1) {
+              menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+            }
             submenuReplace.add(menuItem);
             fixedEndReplace++;
           }
