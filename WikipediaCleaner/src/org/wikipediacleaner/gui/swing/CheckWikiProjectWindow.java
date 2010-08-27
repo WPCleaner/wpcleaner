@@ -433,7 +433,7 @@ public class CheckWikiProjectWindow extends PageWindow {
           }
           menuItemAlgorithms.set(errorNumber, menuItem);
 
-          menuItem = new JCheckBoxMenuItem(label, selectedAlgorithms.contains(algorithm));
+          menuItem = new JMenuItem(label);
           if (!CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
             menuItem.setEnabled(false);
             menuItem.setFont(menuItem.getFont().deriveFont(inactiveAttributes));
