@@ -737,7 +737,7 @@ public class MediaWikiPane
     if (internalLinks != null) {
       String contents = getText();
       long beginTime1 = System.nanoTime();
-      if (wikipedia.hasDirectInternalLinkMatchers()) {
+      if (wikipedia.hasTemplateMatchers()) {
         int currentIndex = 0;
         while (currentIndex < contents.length()) {
           PageElementTemplate template = PageContents.findNextTemplate(page, contents, currentIndex);
