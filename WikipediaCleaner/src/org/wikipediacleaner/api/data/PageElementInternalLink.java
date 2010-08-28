@@ -86,8 +86,8 @@ public class PageElementInternalLink {
       return new PageElementInternalLink(
           index, endIndex + 2,
           contents.substring(beginIndex, pipeIndex),
-          contents.substring(pipeIndex + 1, endIndex),
-          null);
+          null,
+          contents.substring(pipeIndex + 1, endIndex));
     }
     if ((anchorIndex >= 0) && (anchorIndex < endIndex)) {
       return new PageElementInternalLink(
