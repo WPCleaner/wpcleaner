@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-28 17:17+0200\n"
+"POT-Creation-Date: 2010-08-28 19:46+0200\n"
 "PO-Revision-Date: 2010-08-26 09:19+0000\n"
 "Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -251,6 +251,12 @@ msgstr "Occurrence"
 #, java-format
 msgid "Replace parameter {0} with {1}"
 msgstr "Remplacer le paramètre {0} par {1}"
+
+#: org/wikipediacleaner/api/data/TemplateMatcher1L2T.java:74
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:433
+#, java-format
+msgid "Link parameter {0} to"
+msgstr "Lier le paramètre {0} à"
 
 #: org/wikipediacleaner/api/execution/BacklinksWRCallable.java:53
 #: org/wikipediacleaner/api/execution/LinksWRCallable.java:61
@@ -1541,11 +1547,6 @@ msgstr "Fermer cet onglet"
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:185
 msgid "Current chapter"
 msgstr "Chapitre courant"
-
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:433
-#, java-format
-msgid "Link parameter {0} to"
-msgstr "Lier le paramètre {0} à"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:434
 #, java-format

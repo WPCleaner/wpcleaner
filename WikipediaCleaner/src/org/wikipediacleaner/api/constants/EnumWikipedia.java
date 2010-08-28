@@ -41,6 +41,7 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TemplateMatch;
 import org.wikipediacleaner.api.data.TemplateMatcher;
+import org.wikipediacleaner.api.data.TemplateMatcher1L2T;
 import org.wikipediacleaner.api.data.TemplateMatcher1LT;
 import org.wikipediacleaner.api.data.TemplateMatcher1L;
 import org.wikipediacleaner.utils.Configuration;
@@ -882,6 +883,30 @@ public enum EnumWikipedia {
                   parameterName, defaultValue, neededParameter);
               list.add(matcher);
             }
+            templateMatchers.put(templateName, list);
+          }
+        }
+      }
+
+      // Templates creating internal links from parameter value
+      tmp = configuration.getProperty("general_dab_1l2t_templates", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        List<String> tmpList = convertPropertyToStringList(tmp);
+        for (String template : tmpList) {
+          String[] elements = template.split("\\|");
+          String templateName = (elements.length > 0) ? normalizeTitle(elements[0]) : null;
+          String parameterName1 = (elements.length > 1) ? elements[1] : null;
+          String parameterName2 = (elements.length > 2) ? elements[2] : null;
+          String explanation = (elements.length > 3) ? elements[3] : null;
+          if ((templateName != null) && (parameterName1 != null) && (parameterName2 != null)) {
+            List<TemplateMatcher> list = templateMatchers.get(templateName);
+            if (list == null) {
+              list = new ArrayList<TemplateMatcher>();
+            }
+            TemplateMatcher matcher = new TemplateMatcher1L2T(
+                this, templateName, explanation,
+                parameterName1, parameterName2);
+            list.add(matcher);
             templateMatchers.put(templateName, list);
           }
         }
