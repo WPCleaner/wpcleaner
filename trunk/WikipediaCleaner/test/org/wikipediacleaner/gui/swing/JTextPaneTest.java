@@ -30,6 +30,7 @@ import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
 
@@ -71,6 +72,10 @@ public class JTextPaneTest extends JPanel {
       
       public void run() {
         try {
+          LookAndFeelInfo[] infos = UIManager.getInstalledLookAndFeels();
+          for (int i = 0; i < infos.length; i++) {
+            System.out.println(infos[i].getClassName());
+          }
           System.out.println(System.getProperty("java.version"));
           System.out.println(UIManager.getSystemLookAndFeelClassName());
           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
