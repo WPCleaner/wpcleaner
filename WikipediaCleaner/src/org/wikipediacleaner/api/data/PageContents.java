@@ -25,6 +25,40 @@ package org.wikipediacleaner.api.data;
 public class PageContents {
 
   // ==========================================================================
+  // Internal link management
+  // ==========================================================================
+
+  /**
+   * Find the first internal link after an index in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param currentIndex The last index.
+   * @return Internal link found.
+   */
+  public static PageElementInternalLink findNextInternalLink(
+      Page page, String contents,
+      int currentIndex) {
+    if (contents == null) {
+      return null;
+    }
+    while ((currentIndex < contents.length())) {
+      int tmpIndex = contents.indexOf("[[", currentIndex);
+      if (tmpIndex < 0) {
+        currentIndex = contents.length();
+      } else {
+        PageElementInternalLink link = PageElementInternalLink.analyzeBlock(
+            page.getWikipedia(), contents, tmpIndex);
+        if (link!= null) {
+          return link;
+        }
+        currentIndex = tmpIndex + 2;
+      }
+    }
+    return null;
+  }
+
+  // ==========================================================================
   // DEFAULTSORT management
   // ==========================================================================
 
