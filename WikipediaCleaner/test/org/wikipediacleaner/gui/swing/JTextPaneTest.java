@@ -71,6 +71,7 @@ public class JTextPaneTest extends JPanel {
       
       public void run() {
         try {
+          System.out.println(System.getProperty("java.version"));
           System.out.println(UIManager.getSystemLookAndFeelClassName());
           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
