@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-28 19:46+0200\n"
+"POT-Creation-Date: 2010-08-28 23:15+0200\n"
 "PO-Revision-Date: 2010-07-27 14:53+0000\n"
 "Last-Translator: Jonay <jonay.santana@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -123,6 +123,11 @@ msgstr "Quitar saltos en la lista"
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:91
+#, fuzzy
+msgid "Remove <small> tag"
+msgstr "Remover todos los enlaces"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:202
 #, java-format
