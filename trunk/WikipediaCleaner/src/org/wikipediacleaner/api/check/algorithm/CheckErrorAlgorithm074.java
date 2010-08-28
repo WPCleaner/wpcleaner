@@ -18,14 +18,60 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.List;
+
+import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
+
 
 /**
  * Algorithm for analyzing error 74 of check wikipedia project.
  * Error 74: Link with no target
  */
-public class CheckErrorAlgorithm074 extends CheckErrorAlgorithmUnavailable {
+public class CheckErrorAlgorithm074 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm074() {
     super("Link with no target");
+  }
+
+  /**
+   * Analyze a page to check if errors are present.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyze(
+      Page page, String contents,
+      List<CheckErrorResult> errors) {
+    if ((page == null) || (contents == null)) {
+      return false;
+    }
+
+    // Analyzing the text from the beginning
+    boolean result = false;
+    int startIndex = 0;
+    while (startIndex < contents.length()) {
+      PageElementInternalLink link = PageContents.findNextInternalLink(page, contents, startIndex);
+      if (link != null) {
+        startIndex = link.getEndIndex();
+        if (link.getFullLink().trim().length() == 0) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              page, link.getBeginIndex(), link.getEndIndex());
+          errors.add(errorResult);
+        }
+      } else {
+        startIndex = contents.length();
+      }
+    }
+
+    return result;
   }
 }
