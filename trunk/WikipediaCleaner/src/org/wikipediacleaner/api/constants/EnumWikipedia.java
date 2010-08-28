@@ -494,7 +494,7 @@ public enum EnumWikipedia {
   /**
    * @return Some matchers exist ?
    */
-  public boolean hasDirectInternalLinkMatchers() {
+  public boolean hasTemplateMatchers() {
     if (templateMatchers == null) {
       return false;
     }
