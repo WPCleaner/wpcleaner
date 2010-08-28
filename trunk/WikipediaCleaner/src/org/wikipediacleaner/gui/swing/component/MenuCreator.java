@@ -373,7 +373,7 @@ public class MenuCreator {
             }
           } else {
             // Last replacement
-            String title = getLastReplacement(page.getTitle());
+            String title = getLastReplacement(disambigPage.getTitle());
             if (title != null) {
               submenu.addSeparator();
               fixedEnd++;
