@@ -656,6 +656,7 @@ public class MenuCreator {
           if (p.isRedirect()) {
             JMenu submenu1 = new JMenu(p.getTitle());
             JMenu submenu2 = new JMenu(p.getTitle());
+            JMenu submenu3 = new JMenu(p.getTitle());
             Map<Page, List<String>> anchorsRedirectMap = new HashMap<Page, List<String>>();
             p.getLinksWithRedirect(anchorsRedirectMap);
             
@@ -676,13 +677,11 @@ public class MenuCreator {
               menuItem.addActionListener(action);
               submenu2.add(menuItem);
 
-              if (!preferredDabs.contains(pageTmp.getTitle())) {
-                menuItem = new JMenuItem(pageTmp.getTitle());
-                updateFont(menuItem, pageTmp);
-                action = new ChangePreferredDisambiguationAction(page.getTitle(), pageTmp.getTitle(), true);
-                menuItem.addActionListener(action);
-                submenuAddPreferred.add(menuItem);
-              }
+              menuItem = new JMenuItem(pageTmp.getTitle());
+              updateFont(menuItem, pageTmp);
+              action = new ChangePreferredDisambiguationAction(page.getTitle(), pageTmp.getTitle(), true);
+              menuItem.addActionListener(action);
+              submenu3.add(menuItem);
 
               if ((anchors != null) && (anchors.size() > 0)) {
                 for (String anchor : anchors) {
@@ -703,7 +702,7 @@ public class MenuCreator {
                     updateFont(menuItem, pageTmp);
                     action = new ChangePreferredDisambiguationAction(page.getTitle(), anchor, true);
                     menuItem.addActionListener(action);
-                    submenuAddPreferred.add(menuItem);
+                    submenu3.add(menuItem);
                   }
                 }
               }
@@ -711,6 +710,7 @@ public class MenuCreator {
             
             submenuLink.add(submenu1);
             submenuReplace.add(submenu2);
+            submenuAddPreferred.add(submenu3);
           } else {
             menuItem = new JMenuItem(p.getTitle());
             updateFont(menuItem, p);
