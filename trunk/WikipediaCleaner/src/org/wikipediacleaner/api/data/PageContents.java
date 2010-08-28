@@ -25,6 +25,32 @@ package org.wikipediacleaner.api.data;
 public class PageContents {
 
   // ==========================================================================
+  // General methods
+  // ==========================================================================
+
+  /**
+   * Find the first occurence of a character in a substring.
+   * 
+   * @param text String.
+   * @param character Character.
+   * @param begin Beginning of the substring.
+   * @param end End of the substring.
+   * @return First occurence of character.
+   */
+  public static int findCharacter(
+      String text, char character, int begin, int end) {
+    if (text == null) {
+      return -1;
+    }
+    for (int i = begin; i < end; i++) {
+      if (text.charAt(i) == character) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  // ==========================================================================
   // Internal link management
   // ==========================================================================
 
@@ -49,8 +75,42 @@ public class PageContents {
       } else {
         PageElementInternalLink link = PageElementInternalLink.analyzeBlock(
             page.getWikipedia(), contents, tmpIndex);
-        if (link!= null) {
+        if (link != null) {
           return link;
+        }
+        currentIndex = tmpIndex + 2;
+      }
+    }
+    return null;
+  }
+
+  // ==========================================================================
+  // Image management
+  // ==========================================================================
+
+  /**
+   * Find the first image after an index in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param currentIndex The last index.
+   * @return Image found.
+   */
+  public static PageElementImage findNextImage(
+      Page page, String contents,
+      int currentIndex) {
+    if (contents == null) {
+      return null;
+    }
+    while ((currentIndex < contents.length())) {
+      int tmpIndex = contents.indexOf("[[", currentIndex);
+      if (tmpIndex < 0) {
+        currentIndex = contents.length();
+      } else {
+        PageElementImage image = PageElementImage.analyzeBlock(
+            page.getWikipedia(), contents, tmpIndex);
+        if (image != null) {
+          return image;
         }
         currentIndex = tmpIndex + 2;
       }

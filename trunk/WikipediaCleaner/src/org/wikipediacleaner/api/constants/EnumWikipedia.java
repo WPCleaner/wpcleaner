@@ -1258,8 +1258,8 @@ public enum EnumWikipedia {
         (getMagicWord(MagicWord.IMG_TEXT_TOP).isPossibleAlias(text)) ||
         (getMagicWord(MagicWord.IMG_THUMBNAIL).isPossibleAlias(text)) ||
         (getMagicWord(MagicWord.IMG_TOP).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_UPRIGHT).isPossibleAlias(text, "[0-9]*")) ||
-        (getMagicWord(MagicWord.IMG_WIDTH).isPossibleAlias(text, "[0-9]*"))) {
+        (getMagicWord(MagicWord.IMG_UPRIGHT).isPossibleAlias(text, "[0-9 ]*")) ||
+        (getMagicWord(MagicWord.IMG_WIDTH).isPossibleAlias(text, "[0-9 ]*"))) {
       return true;
     }
     return false;

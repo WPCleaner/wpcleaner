@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-28 19:46+0200\n"
+"POT-Creation-Date: 2010-08-28 23:15+0200\n"
 "PO-Revision-Date: 2010-08-26 18:27+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -123,6 +123,11 @@ msgstr "Odstranit zalomení v seznamu"
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
 msgstr "Použito jako oddělovač mezi po sobě jdoucích značkách {0}"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:91
+#, fuzzy
+msgid "Remove <small> tag"
+msgstr "Odebrat všechny odkazy"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:202
 #, java-format
