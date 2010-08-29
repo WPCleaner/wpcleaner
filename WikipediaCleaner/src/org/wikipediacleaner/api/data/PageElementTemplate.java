@@ -205,9 +205,11 @@ public class PageElementTemplate {
         tmpIndex += 2;
         depthSquareBrackets--;
       } else {
-        if ((depthCurlyBrackets == 0) &&
-            (depthSquareBrackets == 0) &&
+        if ((depthCurlyBrackets <= 0) &&
+            (depthSquareBrackets <= 0) &&
             (strParameters.charAt(tmpIndex) == '|')) {
+          depthCurlyBrackets = 0;
+          depthSquareBrackets = 0;
           addParameter(parameters, strParameters.substring(beginIndex, tmpIndex), offset + beginIndex);
           tmpIndex++;
           beginIndex = tmpIndex;
