@@ -119,6 +119,74 @@ public class PageContents {
   }
 
   // ==========================================================================
+  // Category management
+  // ==========================================================================
+
+  /**
+   * Find the first category after an index in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param currentIndex The last index.
+   * @return Category found.
+   */
+  public static PageElementCategory findNextCategory(
+      Page page, String contents,
+      int currentIndex) {
+    if (contents == null) {
+      return null;
+    }
+    while ((currentIndex < contents.length())) {
+      int tmpIndex = contents.indexOf("[[", currentIndex);
+      if (tmpIndex < 0) {
+        currentIndex = contents.length();
+      } else {
+        PageElementCategory category = PageElementCategory.analyzeBlock(
+            page.getWikipedia(), contents, tmpIndex);
+        if (category != null) {
+          return category;
+        }
+        currentIndex = tmpIndex + 2;
+      }
+    }
+    return null;
+  }
+
+  // ==========================================================================
+  // Language links management
+  // ==========================================================================
+
+  /**
+   * Find the first language link after an index in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param currentIndex The last index.
+   * @return Language link found.
+   */
+  public static PageElementLanguageLink findNextLanguageLink(
+      Page page, String contents,
+      int currentIndex) {
+    if (contents == null) {
+      return null;
+    }
+    while ((currentIndex < contents.length())) {
+      int tmpIndex = contents.indexOf("[[", currentIndex);
+      if (tmpIndex < 0) {
+        currentIndex = contents.length();
+      } else {
+        PageElementLanguageLink link = PageElementLanguageLink.analyzeBlock(
+            page.getWikipedia(), contents, tmpIndex);
+        if (link != null) {
+          return link;
+        }
+        currentIndex = tmpIndex + 2;
+      }
+    }
+    return null;
+  }
+
+  // ==========================================================================
   // DEFAULTSORT management
   // ==========================================================================
 

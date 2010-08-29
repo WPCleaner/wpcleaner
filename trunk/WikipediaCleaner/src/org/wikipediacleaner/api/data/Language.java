@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.List;
+
 
 /**
  * Informations about languages.
@@ -26,6 +28,23 @@ public class Language implements Comparable<Language> {
 
   private final String code;
   private final String name;
+
+  /**
+   * @param languages List of languages.
+   * @param code Language code;
+   * @return Language exist ?
+   */
+  public static boolean isLanguageCode(List<Language> languages, String code) {
+    if ((languages == null) || (code == null)) {
+      return false;
+    }
+    for (Language language : languages) {
+      if ((language != null) && (code.equals(language.getCode()))) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   /**
    * @param code Language code.
