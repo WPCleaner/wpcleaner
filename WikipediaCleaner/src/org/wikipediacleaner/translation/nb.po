@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-29 15:31+0200\n"
+"POT-Creation-Date: 2010-08-29 17:38+0200\n"
 "PO-Revision-Date: 2008-11-30 16:28+0000\n"
 "Last-Translator: Røed <roed.wikipedia@gmail.com>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
@@ -45,16 +45,17 @@ msgstr ""
 msgid "Updating page {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:213
+#: org/wikipediacleaner/api/check/CheckError.java:214
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckError.java:220
+#: org/wikipediacleaner/api/check/CheckError.java:221
 msgid "Error unkown from WikiCleaner"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm027.java:87
 #, fuzzy, java-format
 msgid "Replace with {0}"
 msgstr "Erstatt med {0}"
@@ -550,55 +551,55 @@ msgstr ""
 msgid "The page {0} doesn't exist on Wikipedia"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:970
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:972
 #, java-format
 msgid ""
 "The error n°{0} hasn''t been found in the page {1}.\n"
 "Do you want to mark it as fixed ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1081
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1083
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1092
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1094
 #, java-format
 msgid ""
 "The error n°{0} is still found {1} times in the page.\n"
 "Are you really sure that you want to mark it as fixed ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1099
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1101
 #, java-format
 msgid ""
 "The error n°{0} is still found in the page.\n"
 "Are you really sure that you want to mark it as fixed ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1111
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1113
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1231
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1233
 msgid "A comment is required for sending the page."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1372
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1374
 #, java-format
 msgid "Detection by [[{0}]]"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1454
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1456
 #, java-format
 msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1665
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1667
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
