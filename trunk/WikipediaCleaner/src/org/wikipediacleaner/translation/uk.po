@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-28 23:15+0200\n"
+"POT-Creation-Date: 2010-08-29 15:31+0200\n"
 "PO-Revision-Date: 2010-08-29 07:38+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -31,8 +31,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:42
 msgid "Many new features added for the Check Wiki project : try them !"
-msgstr ""
-"До проекту Check Wiki додано багато нових можливостей : Спробуйте їх !"
+msgstr "До проекту Check Wiki додано багато нових можливостей : Спробуйте їх !"
 
 #: org/wikipediacleaner/Version.java:44
 msgid "Please, report any other problem you find to me."
@@ -118,6 +117,11 @@ msgstr "Вилучити всі посилання на загаловок"
 msgid "Remove breaks in list"
 msgstr "Вилучити розбивку в списку"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:88
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:299
+msgid "Remove"
+msgstr "Вилучити"
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:163
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:205
 #, java-format
@@ -168,20 +172,20 @@ msgid "Add a description and convert into <ref> tag"
 msgstr "Додати опис та перетворити його в <ref> позначку"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:119
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:112
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:113
 msgid "External viewer"
 msgstr "Зовнішній переглядач"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:102
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:103
 msgid "Give a name to the <ref> tag"
 msgstr "Дати назву <ref> позначці"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:108
 msgid "What name would like to use for the <ref> tag ?"
 msgstr "Яку назву ви хотіли б використовувати для цієї <ref> позначки ?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:111
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:123
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:112
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:128
 msgid "Existing references"
 msgstr "Наявні виноски"
 
@@ -372,8 +376,7 @@ msgstr "Додати до &списку спостереження"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:651
 msgid "Would you like to add these pages on your local Watch list ?"
-msgstr ""
-"Хочете додати ці сторінки до вашого локального списку спостереження ?"
+msgstr "Хочете додати ці сторінки до вашого локального списку спостереження ?"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:74
 #: org/wikipediacleaner/gui/swing/MainWindow.java:554
@@ -395,8 +398,7 @@ msgstr "Вони можуть змінити багато сторінок за 
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:609
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "В деяких проектах Вікіпедії потрібен статус бота, щоб виконувати такі "
 "функції."
@@ -608,8 +610,8 @@ msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
 msgstr ""
-"Помилка n°{0} може бути сконфігурована з такими параметрами у <a "
-"href=\"{1}\">файлі перекладу</a> :"
+"Помилка n°{0} може бути сконфігурована з такими параметрами у <a href=\"{1}"
+"\">файлі перекладу</a> :"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1665
 #, java-format
@@ -646,10 +648,6 @@ msgstr "Автоматичне виправлення сторінок знач�
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:631
 msgid "Add"
 msgstr "Додати"
-
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:299
-msgid "Remove"
-msgstr "Вилучити"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:303
 msgid "Modify"

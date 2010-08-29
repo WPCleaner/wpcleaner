@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-28 23:15+0200\n"
+"POT-Creation-Date: 2010-08-29 15:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,6 +114,11 @@ msgstr ""
 msgid "Remove breaks in list"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:88
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:299
+msgid "Remove"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:163
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:205
 #, java-format
@@ -162,20 +167,20 @@ msgid "Add a description and convert into <ref> tag"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:119
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:112
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:113
 msgid "External viewer"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:102
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:103
 msgid "Give a name to the <ref> tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:108
 msgid "What name would like to use for the <ref> tag ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:111
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:123
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:112
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:128
 msgid "Existing references"
 msgstr ""
 
@@ -617,10 +622,6 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:293
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:631
 msgid "Add"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:299
-msgid "Remove"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:303

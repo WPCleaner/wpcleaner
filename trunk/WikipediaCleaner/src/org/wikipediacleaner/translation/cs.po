@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-28 23:15+0200\n"
+"POT-Creation-Date: 2010-08-29 15:31+0200\n"
 "PO-Revision-Date: 2010-08-26 18:27+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -118,6 +118,11 @@ msgstr "Odstranit všechny odkazy na článek"
 msgid "Remove breaks in list"
 msgstr "Odstranit zalomení v seznamu"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:88
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:299
+msgid "Remove"
+msgstr "Odebrat"
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:163
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:205
 #, java-format
@@ -169,20 +174,20 @@ msgid "Add a description and convert into <ref> tag"
 msgstr "Přidat popis a převést na značku <ref>"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:119
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:112
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:113
 msgid "External viewer"
 msgstr "Externí prohlížeč"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:102
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:103
 msgid "Give a name to the <ref> tag"
 msgstr "Přidat jméno ke značce <ref>"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:108
 msgid "What name would like to use for the <ref> tag ?"
 msgstr "Jaké jméno chcete použít pro značku <ref>?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:111
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:123
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:112
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:128
 msgid "Existing references"
 msgstr "Existující reference"
 
@@ -643,10 +648,6 @@ msgstr "Automatické řešení rozcestníků"
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:631
 msgid "Add"
 msgstr "Přidat"
-
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:299
-msgid "Remove"
-msgstr "Odebrat"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:303
 msgid "Modify"
