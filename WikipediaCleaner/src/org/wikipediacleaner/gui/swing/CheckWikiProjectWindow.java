@@ -397,7 +397,7 @@ public class CheckWikiProjectWindow extends PageWindow {
       if (algorithm != null) {
         int errorNumber = algorithm.getErrorNumber();
         if (errorNumber > 0) {
-          int part = errorNumber / PART_SIZE;
+          int part = (errorNumber - 1) / PART_SIZE;
           if ((subMenu == null) || (subMenu2 == null) || (part > lastPart)) {
             int from = (part * PART_SIZE) + 1;
             int to = (part + 1) * PART_SIZE;
