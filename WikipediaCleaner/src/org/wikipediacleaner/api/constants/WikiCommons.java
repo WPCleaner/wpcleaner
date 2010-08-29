@@ -20,8 +20,6 @@ package org.wikipediacleaner.api.constants;
 
 import java.awt.ComponentOrientation;
 
-import org.wikipediacleaner.api.data.TemplateMatch;
-
 
 /**
  * Configuration for <a href="http://commons.wikipedia.org/w/index.php">Commons wikipedia</a>.
@@ -40,6 +38,4 @@ class WikiCommons {
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
   final static String configuration = "User:NicoV/WikiCleanerConfiguration";
-
-  final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
 }

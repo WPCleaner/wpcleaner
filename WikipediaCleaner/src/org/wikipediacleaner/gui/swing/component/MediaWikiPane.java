@@ -55,9 +55,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageUtilities;
-import org.wikipediacleaner.api.data.TemplateMatch;
 import org.wikipediacleaner.api.data.TemplateMatcher;
-import org.wikipediacleaner.api.data.TemplateParameter;
 import org.wikipediacleaner.gui.swing.action.FindTextAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceLinkAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -736,7 +734,6 @@ public class MediaWikiPane
     // Analyze templates
     if (internalLinks != null) {
       String contents = getText();
-      long beginTime1 = System.nanoTime();
       if (wikipedia.hasTemplateMatchers()) {
         int currentIndex = 0;
         while (currentIndex < contents.length()) {
@@ -803,71 +800,6 @@ public class MediaWikiPane
           }
         }
       }
-      long endTime1 = System.nanoTime();
-
-      long beginTime2 = System.nanoTime();
-      for (int numT = 0; numT < wikipedia.getDisambiguationMatchesCount(); numT++) {
-        TemplateMatch template = wikipedia.getDisambiguationMatch(numT);
-        Pattern pattern = PageUtilities.createPatternForTemplate(template);
-        Matcher matcher = pattern.matcher(contents);
-        while (matcher.find()) {
-          int start = matcher.start();
-          int end = matcher.end();
-          List<TemplateParameter> parameters = PageUtilities.analyzeTemplateParameters(template, matcher, page);
-          if (parameters != null) {
-            for (TemplateParameter param : parameters) {
-              // Analyze each page
-              if (param.isRelevant()) {
-                for (int i = 0; i < internalLinks.size(); i++) {
-                  Page link = internalLinks.get(i);
-                  if (Page.areSameTitle(link.getTitle(), param.getValue())) {
-                    String styleName = null;
-                    if (template.isGood() || !Boolean.FALSE.equals(link.isDisambiguationPage())) {
-                      styleName = MediaWikiConstants.STYLE_NORMAL_TEMPLATE;
-                    } else {
-                      if (template.isHelpNeeded()) {
-                        styleName = MediaWikiConstants.STYLE_HELP_REQUESTED_LINK;
-                      } else {
-                        styleName = MediaWikiConstants.STYLE_DISAMBIGUATION_TEMPLATE;
-                      }
-                    }
-                    Style attr = getStyle(styleName);
-                    attr = (Style) attr.copyAttributes();
-                    attr.addAttribute(MediaWikiConstants.ATTRIBUTE_PAGE, link);
-                    if ((template.isHelpNeeded()) && (parameters.size() > 0)) {
-                      attr.addAttribute(
-                          MediaWikiConstants.ATTRIBUTE_TEXT,
-                          (parameters.size() > 1) ? parameters.get(1).getValue() : parameters.get(0).getValue());
-                    }
-                    doc.setCharacterAttributes(start, end - start, attr, true);
-                    if (template.isGood() || !Boolean.FALSE.equals(link.isDisambiguationPage())) {
-                      if (start < thirdStartPosition) {
-                        thirdStartPosition = start;
-                        thirdEndPosition = end;
-                      }
-                    } else if (template.isHelpNeeded()) {
-                      if (start < secondStartPosition) {
-                        secondStartPosition = start;
-                        secondEndPosition = end;
-                      }
-                    } else {
-                      if (start < startPosition) {
-                        startPosition = start;
-                        endPosition = end;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      long endTime2 = System.nanoTime();
-      System.err.println(
-          "Template analysis : " +
-          Long.toString(endTime1 - beginTime1) + "/" +
-          Long.toString(endTime2 - beginTime2));
     }
 
     // Move caret to force first element to be visible

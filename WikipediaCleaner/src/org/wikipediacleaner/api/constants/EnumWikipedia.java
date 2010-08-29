@@ -81,160 +81,121 @@ public enum EnumWikipedia {
 
   AF( WikiAf.code, WikiAf.name,
       WikiAf.apiUrl, WikiAf.indexUrl,
-      WikiAf.orientation, WikiAf.configuration,
-      WikiAf.dabMatches),
+      WikiAf.orientation, WikiAf.configuration),
   AR( WikiAr.code, WikiAr.name,
       WikiAr.apiUrl, WikiAr.indexUrl,
-      WikiAr.orientation, WikiAr.configuration,
-      WikiAr.dabMatches),
+      WikiAr.orientation, WikiAr.configuration),
   BAR(WikiBar.code, WikiBar.name,
       WikiBar.apiUrl, WikiBar.indexUrl,
-      WikiBar.orientation, WikiBar.configuration,
-      WikiBar.dabMatches),
+      WikiBar.orientation, WikiBar.configuration),
   CA( WikiCa.code, WikiCa.name,
       WikiCa.apiUrl, WikiCa.indexUrl,
-      WikiCa.orientation, WikiCa.configuration,
-      WikiCa.dabMatches),
+      WikiCa.orientation, WikiCa.configuration),
   CS( WikiCs.code, WikiCs.name,
       WikiCs.apiUrl, WikiCs.indexUrl,
-      WikiCs.orientation, WikiCs.configuration,
-      WikiCs.dabMatches),
+      WikiCs.orientation, WikiCs.configuration),
   CY( WikiCy.code, WikiCy.name,
       WikiCy.apiUrl, WikiCy.indexUrl,
-      WikiCy.orientation, WikiCy.configuration,
-      WikiCy.dabMatches),
+      WikiCy.orientation, WikiCy.configuration),
   DA( WikiDa.code, WikiDa.name,
       WikiDa.apiUrl, WikiDa.indexUrl,
-      WikiDa.orientation, WikiDa.configuration,
-      WikiDa.dabMatches),
+      WikiDa.orientation, WikiDa.configuration),
   DE( WikiDe.code, WikiDe.name,
       WikiDe.apiUrl, WikiDe.indexUrl,
-      WikiDe.orientation, WikiDe.configuration,
-      WikiDe.dabMatches),
+      WikiDe.orientation, WikiDe.configuration),
   EN( WikiEn.code, WikiEn.name,
       WikiEn.apiUrl, WikiEn.indexUrl,
-      WikiEn.orientation, WikiEn.configuration,
-      WikiEn.dabMatches),
+      WikiEn.orientation, WikiEn.configuration),
   EO( WikiEo.code, WikiEo.name,
       WikiEo.apiUrl, WikiEo.indexUrl,
-      WikiEo.orientation, WikiEo.configuration,
-      WikiEo.dabMatches),
+      WikiEo.orientation, WikiEo.configuration),
   ES( WikiEs.code, WikiEs.name,
       WikiEs.apiUrl, WikiEs.indexUrl,
-      WikiEs.orientation, WikiEs.configuration,
-      WikiEs.dabMatches),
+      WikiEs.orientation, WikiEs.configuration),
   FI( WikiFi.code, WikiFi.name,
       WikiFi.apiUrl, WikiFi.indexUrl,
-      WikiFi.orientation, WikiFi.configuration,
-      WikiFi.dabMatches),
+      WikiFi.orientation, WikiFi.configuration),
   FR( WikiFr.code, WikiFr.name,
       WikiFr.apiUrl, WikiFr.indexUrl,
-      WikiFr.orientation, WikiFr.configuration,
-      WikiFr.dabMatches),
+      WikiFr.orientation, WikiFr.configuration),
   FY( WikiFy.code, WikiFy.name,
       WikiFy.apiUrl, WikiFy.indexUrl,
-      WikiFy.orientation, WikiFy.configuration,
-      WikiFy.dabMatches),
+      WikiFy.orientation, WikiFy.configuration),
   GD( WikiGd.code, WikiGd.name,
       WikiGd.apiUrl, WikiGd.indexUrl,
-      WikiGd.orientation, WikiGd.configuration,
-      WikiGd.dabMatches),
+      WikiGd.orientation, WikiGd.configuration),
   HE( WikiHe.code, WikiHe.name,
       WikiHe.apiUrl, WikiHe.indexUrl,
-      WikiHe.orientation, WikiHe.configuration,
-      WikiHe.dabMatches),
+      WikiHe.orientation, WikiHe.configuration),
   HU( WikiHu.code, WikiHu.name,
       WikiHu.apiUrl, WikiHu.indexUrl,
-      WikiHu.orientation, WikiHu.configuration,
-      WikiHu.dabMatches),
+      WikiHu.orientation, WikiHu.configuration),
   ID( WikiId.code, WikiId.name,
       WikiId.apiUrl, WikiId.indexUrl,
-      WikiId.orientation, WikiId.configuration,
-      WikiId.dabMatches),
+      WikiId.orientation, WikiId.configuration),
   IS( WikiIs.code, WikiIs.name,
       WikiIs.apiUrl, WikiIs.indexUrl,
-      WikiIs.orientation, WikiIs.configuration,
-      WikiIs.dabMatches),
+      WikiIs.orientation, WikiIs.configuration),
   IT( WikiIt.code, WikiIt.name,
       WikiIt.apiUrl, WikiIt.indexUrl,
-      WikiIt.orientation, WikiIt.configuration,
-      WikiIt.dabMatches),
+      WikiIt.orientation, WikiIt.configuration),
   JA( WikiJa.code, WikiJa.name,
       WikiJa.apiUrl, WikiJa.indexUrl,
-      WikiJa.orientation, WikiJa.configuration,
-      WikiJa.dabMatches),
+      WikiJa.orientation, WikiJa.configuration),
   LA( WikiLa.code, WikiLa.name,
       WikiLa.apiUrl, WikiLa.indexUrl,
-      WikiLa.orientation, WikiLa.configuration,
-      WikiLa.dabMatches),
+      WikiLa.orientation, WikiLa.configuration),
   NDS(WikiNds.code, WikiNds.name,
       WikiNds.apiUrl, WikiNds.indexUrl,
-      WikiNds.orientation, WikiNds.configuration,
-      WikiNds.dabMatches),
+      WikiNds.orientation, WikiNds.configuration),
   NDS_NL(WikiNdsNl.code, WikiNdsNl.name,
       WikiNdsNl.apiUrl, WikiNdsNl.indexUrl,
-      WikiNdsNl.orientation, WikiNdsNl.configuration,
-      WikiNdsNl.dabMatches),
+      WikiNdsNl.orientation, WikiNdsNl.configuration),
   NL( WikiNl.code, WikiNl.name,
       WikiNl.apiUrl, WikiNl.indexUrl,
-      WikiNl.orientation, WikiNl.configuration,
-      WikiNl.dabMatches),
+      WikiNl.orientation, WikiNl.configuration),
   NO( WikiNo.code, WikiNo.name,
       WikiNo.apiUrl, WikiNo.indexUrl,
-      WikiNo.orientation, WikiNo.configuration,
-      WikiNo.dabMatches),
+      WikiNo.orientation, WikiNo.configuration),
   PDC(WikiPdc.code, WikiPdc.name,
       WikiPdc.apiUrl, WikiPdc.indexUrl,
-      WikiPdc.orientation, WikiPdc.configuration,
-      WikiPdc.dabMatches),
+      WikiPdc.orientation, WikiPdc.configuration),
   PL( WikiPl.code, WikiPl.name,
       WikiPl.apiUrl, WikiPl.indexUrl,
-      WikiPl.orientation, WikiPl.configuration,
-      WikiPl.dabMatches),
+      WikiPl.orientation, WikiPl.configuration),
   PT( WikiPt.code, WikiPt.name,
       WikiPt.apiUrl, WikiPt.indexUrl,
-      WikiPt.orientation, WikiPt.configuration,
-      WikiPt.dabMatches),
+      WikiPt.orientation, WikiPt.configuration),
   RO( WikiRo.code, WikiRo.name,
       WikiRo.apiUrl, WikiRo.indexUrl,
-      WikiRo.orientation, WikiRo.configuration,
-      WikiRo.dabMatches),
+      WikiRo.orientation, WikiRo.configuration),
   RU( WikiRu.code, WikiRu.name,
       WikiRu.apiUrl, WikiRu.indexUrl,
-      WikiRu.orientation, WikiRu.configuration,
-      WikiRu.dabMatches),
+      WikiRu.orientation, WikiRu.configuration),
   SK( WikiSk.code, WikiSk.name,
       WikiSk.apiUrl, WikiSk.indexUrl,
-      WikiSk.orientation, WikiSk.configuration,
-      WikiSk.dabMatches),
+      WikiSk.orientation, WikiSk.configuration),
   SL( WikiSl.code, WikiSl.name,
       WikiSl.apiUrl, WikiSl.indexUrl,
-      WikiSl.orientation, WikiSl.configuration,
-      WikiSl.dabMatches),
+      WikiSl.orientation, WikiSl.configuration),
   SV( WikiSv.code, WikiSv.name,
       WikiSv.apiUrl, WikiSv.indexUrl,
-      WikiSv.orientation, WikiSv.configuration,
-      WikiSv.dabMatches),
+      WikiSv.orientation, WikiSv.configuration),
   TR( WikiTr.code, WikiTr.name,
       WikiTr.apiUrl, WikiTr.indexUrl,
-      WikiTr.orientation, WikiTr.configuration,
-      WikiTr.dabMatches),
+      WikiTr.orientation, WikiTr.configuration),
   UK( WikiUk.code, WikiUk.name,
       WikiUk.apiUrl, WikiUk.indexUrl,
-      WikiUk.orientation, WikiUk.configuration,
-      WikiUk.dabMatches),
+      WikiUk.orientation, WikiUk.configuration),
   YI( WikiYi.code, WikiYi.name,
       WikiYi.apiUrl, WikiYi.indexUrl,
-      WikiYi.orientation, WikiYi.configuration,
-      WikiYi.dabMatches),
+      WikiYi.orientation, WikiYi.configuration),
   ZH( WikiZh.code, WikiZh.name,
       WikiZh.apiUrl, WikiZh.indexUrl,
-      WikiZh.orientation, WikiZh.configuration,
-      WikiZh.dabMatches),
+      WikiZh.orientation, WikiZh.configuration),
   COMMONS(WikiCommons.code, WikiCommons.name,
           WikiCommons.apiUrl, WikiCommons.indexUrl,
-          WikiCommons.orientation, WikiCommons.configuration,
-          WikiCommons.dabMatches);
+          WikiCommons.orientation, WikiCommons.configuration);
 
   private final String code;
   private final String title;
@@ -259,7 +220,6 @@ public enum EnumWikipedia {
   private String[] templatesForLinkingText;
   private List<String> disambiguationList;
   private List<Page> disambiguationTemplates;
-  private final TemplateMatch[] disambiguationMatches;
   private String checkWikiProject;
   private String checkWikiTranslation;
 
@@ -276,7 +236,6 @@ public enum EnumWikipedia {
    * @param apiUrl URL of api.php.
    * @param wikiUrl URL of the wiki.
    * @param configPage Configuration page.
-   * @param templateMatches List of templates to analyze when looking for links.
    */
   EnumWikipedia(
       String code,
@@ -284,8 +243,7 @@ public enum EnumWikipedia {
       String apiUrl,
       String wikiUrl,
       ComponentOrientation componentOrientation,
-      String configPage,
-      TemplateMatch[] templateMatches) {
+      String configPage) {
     this.code = code;
     this.title = title;
     this.apiUrl = apiUrl;
@@ -303,7 +261,6 @@ public enum EnumWikipedia {
     this.templatesForHelpRequested = null;
     this.templatesForLinkingText = null;
     this.disambiguationList = null;
-    this.disambiguationMatches = templateMatches;
     this.checkWikiProject = null;
     this.checkWikiTranslation = null;
   }
@@ -322,7 +279,6 @@ public enum EnumWikipedia {
    * @param templatesForNeedingHelp Templates used to indicate a link needed help to fix.
    * @param templatesForHelpRequested Templates used to find pages where help is requested.
    * @param disambiguationList Page(s) containing the list of disambiguation pages to work on.
-   * @param templateMatches List of templates to analyze when looking for links.
    * @param checkWikiProject Project Check Wikipedia page.
    * @param checkWikiTraduction Project Check Wikipedia traduction.
    */
@@ -341,7 +297,6 @@ public enum EnumWikipedia {
       String[] templatesForNeedingHelp,
       String[] templatesForHelpRequested,
       String[] disambiguationList,
-      TemplateMatch[] templateMatches,
       String checkWikiProject,
       String checkWikiTraduction) {
     this.code = code;
@@ -365,7 +320,6 @@ public enum EnumWikipedia {
         this.disambiguationList.add(disambiguationList[i]);
       }
     }
-    this.disambiguationMatches = templateMatches;
     this.checkWikiProject = checkWikiProject;
     this.checkWikiTranslation = checkWikiTraduction;
   }
@@ -1113,34 +1067,6 @@ public enum EnumWikipedia {
       }
     }
     return false;
-  }
-
-  /**
-   * @return Count of disambiguation templates.
-   */
-  public int getDisambiguationMatchesCount() {
-    return (disambiguationMatches != null) ? disambiguationMatches.length : 0;
-  }
-
-  /**
-   * @param index Disambiguation template index.
-   * @return Disambiguation template to analyze for links.
-   */
-  public TemplateMatch getDisambiguationMatch(int index) {
-    return disambiguationMatches[index];
-  }
-
-  /**
-   * @param templateTitle Template's title.
-   * @return Disambiguation template.
-   */
-  public TemplateMatch getDisambiguationMatch(String templateTitle) {
-    for (TemplateMatch tm : disambiguationMatches) {
-      if ((tm != null) && (Page.areSameTitle(tm.getName(), templateTitle))) {
-        return tm;
-      }
-    }
-    return null;
   }
 
   /**

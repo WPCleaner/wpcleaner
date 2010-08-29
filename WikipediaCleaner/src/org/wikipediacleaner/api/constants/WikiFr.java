@@ -20,8 +20,6 @@ package org.wikipediacleaner.api.constants;
 
 import java.awt.ComponentOrientation;
 
-import org.wikipediacleaner.api.data.TemplateMatch;
-
 
 /**
  * Configuration for <a href="http://fr.wikipedia.org/w/index.php">French wikipedia</a>.
@@ -40,29 +38,4 @@ class WikiFr {
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
   final static String configuration = "Utilisateur:NicoV/WikiCleanerConfiguration";
-
-  final static TemplateMatch[] dabMatches = new TemplateMatch[] {
-    //new TemplateMatch("A", "1", "", false, false),
-    //new TemplateMatch("Article détaillé", "1,2,3,4,5,6,7,8,9,10", "", false, false),
-    //new TemplateMatch("Dn", "1", "", false, true),
-    //new TemplateMatch("Jumelage", "1,2", "", false, false, new TemplateReplacement[] {
-    //    new TemplateReplacement("1", "1", "ville") } ),
-    //new TemplateMatch("Homon", "1,2,3,4,5", "{{PAGENAME}} (homonymie)", true, false),
-    //new TemplateMatch("Homonyme", "1,2,3,4,5", "{{PAGENAME}} (homonymie)", true, false),
-    //new TemplateMatch("Homophonie", "1,2,3,4,5,6,7", "{{PAGENAME}} (homophonie)", true, false),
-    //new TemplateMatch("Lh", "1", "", false, true),
-    //new TemplateMatch("Lien homonymie", "1", "", false, true),
-    //new TemplateMatch("Lien vers un homonyme", "1", "", false, true),
-    //new TemplateMatch("Loupe", "1,2,3,4,5,6,7,8,9,10", "", false, false),
-    //new TemplateMatch("Page h", "1", "", true, false),
-    //new TemplateMatch("Page h'", "1", "", true, false),
-    //new TemplateMatch("Page l", "1", "", true, false),
-    //new TemplateMatch("Paronyme", "1,2,3,4", "", true, false),
-    //new TemplateMatch("Voir homonyme", "1", "", true, false),
-    //new TemplateMatch("Voir homonymie", "1,2,3,4,5", "{{PAGENAME}} (homonymie)", true, false),
-    //new TemplateMatch("Voir homonymes", "1,2,3,4,5", "{{PAGENAME}} (homonymie)", true, false),
-    //new TemplateMatch("Voir homophone", "1,2,3,4,5,6,7", "{{PAGENAME}} (homophonie)", true, false),
-    //new TemplateMatch("Voir homophones", "1,2,3,4,5,6,7", "{{PAGENAME}} (homophonie)", true, false),
-    //new TemplateMatch("Voir paronymes", "1,2,3,4", "{{PAGENAME}} (paronymie)", true, false),
-  };
 }

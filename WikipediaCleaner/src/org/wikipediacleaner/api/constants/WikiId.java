@@ -20,8 +20,6 @@ package org.wikipediacleaner.api.constants;
 
 import java.awt.ComponentOrientation;
 
-import org.wikipediacleaner.api.data.TemplateMatch;
-
 
 /**
  * Configuration for <a href="http://id.wikipedia.org/w/index.php">Indonesian wikipedia</a>.
@@ -40,12 +38,4 @@ class WikiId {
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
   final static String configuration = "Pengguna:NicoV/WikiCleanerConfiguration";
-
-  final static TemplateMatch[] dabMatches = new TemplateMatch[] {
-    //new TemplateMatch("Disambig", "1", "", false, false),
-    //new TemplateMatch("Disambig info", "1", "", true, false),
-    //new TemplateMatch("Disambig karya", "1", "", false, false),
-    //new TemplateMatch("Disambig nama", "1", "", false, false),
-    //new TemplateMatch("Disambig tempat", "1", "", false, false),
-  };
 }
