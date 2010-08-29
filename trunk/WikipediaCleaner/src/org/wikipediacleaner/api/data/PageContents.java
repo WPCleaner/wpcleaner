@@ -18,6 +18,10 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.List;
+
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+
 
 /**
  * Utility class to manage page contents.
@@ -82,6 +86,83 @@ public class PageContents {
       }
     }
     return null;
+  }
+
+  /**
+   * Find internal links in a page.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param links Links that are requested.
+   * @param notification For notifying when a link is found.
+   */
+  public static void findInternalLinks(
+      EnumWikipedia wikipedia,
+      Page page, String contents,
+      List<Page> links, InternalLinkNotification notification) {
+    if ((contents == null) || (links == null) || (notification == null)) {
+      return;
+    }
+
+    // Search for simple internal links [[link]], [[link|text]], [[link#anchor|text]], ...
+    int currentIndex = 0;
+    while ((currentIndex < contents.length())) {
+      PageElementInternalLink internalLink = findNextInternalLink(page, contents, currentIndex);
+      if (internalLink != null) {
+        currentIndex = internalLink.getEndIndex();
+        for (Page link : links) {
+          if (Page.areSameTitle(link.getTitle(), internalLink.getLink())) {
+            notification.linkFound(link, internalLink);
+          }
+        }
+      } else {
+        currentIndex = contents.length();
+      }
+    }
+
+    // Search for internal links created by templates
+    if (wikipedia.hasTemplateMatchers()) {
+      currentIndex = 0;
+      while (currentIndex < contents.length()) {
+        PageElementTemplate template = PageContents.findNextTemplate(page, contents, currentIndex);
+        if (template != null) {
+          currentIndex = template.getBeginIndex() + 2;
+          List<? extends TemplateMatcher> matchers =
+            wikipedia.getTemplateMatchers(template.getTemplateName());
+          if (matchers != null) {
+            for (TemplateMatcher matcher : matchers) {
+              String linkTo = matcher.linksTo(template);
+              if (linkTo != null) {
+                for (Page link : links) {
+                  if (Page.areSameTitle(link.getTitle(), linkTo)) {
+                    notification.linkFound(link, template, matcher);
+                  }
+                }
+              }
+            }
+          }
+        } else {
+          currentIndex = contents.length();
+        }
+      }
+    }
+  }
+
+  /**
+   * Count internal links in a page.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param links Links that are requested.
+   */
+  public static void countInternalLinks(
+      EnumWikipedia wikipedia,
+      Page page, String contents,
+      List<Page> links) {
+    InternalLinkNotification counter = new InternalLinkCounter(links);
+    findInternalLinks(wikipedia, page, contents, links, counter);
   }
 
   // ==========================================================================
