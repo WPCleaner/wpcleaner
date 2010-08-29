@@ -20,8 +20,6 @@ package org.wikipediacleaner.api.constants;
 
 import java.awt.ComponentOrientation;
 
-import org.wikipediacleaner.api.data.TemplateMatch;
-
 
 /**
  * Configuration for <a href="http://ru.wikipedia.org/w/index.php">Russian wikipedia</a>.
@@ -40,10 +38,4 @@ class WikiRu {
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
   final static String configuration = "Участник:NicoV/WikiCleanerConfiguration";
-
-  final static TemplateMatch[] dabMatches = new TemplateMatch[] {
-    //new TemplateMatch("Другие значения", "1", "{{PAGENAME}} (значения)", true, false),
-    //new TemplateMatch("Другое значение", "1", "{{PAGENAME}}", true, false),
-    //new TemplateMatch("Однофамильцы", "1", "{{PAGENAME}}", true, false)
-  };
 }

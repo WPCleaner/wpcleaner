@@ -20,8 +20,6 @@ package org.wikipediacleaner.api.constants;
 
 import java.awt.ComponentOrientation;
 
-import org.wikipediacleaner.api.data.TemplateMatch;
-
 
 /**
  * Configuration for <a href="http://yi.wikipedia.org/w/index.php">Yiddish wikipedia</a>.
@@ -40,6 +38,4 @@ class WikiYi {
   final static ComponentOrientation orientation = ComponentOrientation.RIGHT_TO_LEFT;
 
   final static String configuration = "User:NicoV/WikiCleanerConfiguration";
-
-  final static TemplateMatch[] dabMatches = new TemplateMatch[] {};
 }

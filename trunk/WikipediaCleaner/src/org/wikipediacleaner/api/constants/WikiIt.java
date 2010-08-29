@@ -20,8 +20,6 @@ package org.wikipediacleaner.api.constants;
 
 import java.awt.ComponentOrientation;
 
-import org.wikipediacleaner.api.data.TemplateMatch;
-
 
 /**
  * Configuration for <a href="http://it.wikipedia.org/w/index.php">Italian wikipedia</a>.
@@ -40,8 +38,4 @@ class WikiIt {
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
   final static String configuration = "Utente:NicoV/WikiCleanerConfiguration";
-
-  final static TemplateMatch[] dabMatches = new TemplateMatch[] {
-    //new TemplateMatch("Nota disambigua", "1,2,3", "(omonimia) {{PAGENAME}}", true, false),
-  };
 }

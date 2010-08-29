@@ -276,8 +276,6 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
               if (foundText.length() > 0) {
                 String template = foundText.substring(0, separatorIndex);
                 String title = "Template:" + template;
-                String params = (separatorIndex < foundText.length()) ?
-                    foundText.substring(separatorIndex + 1) : "";
                 Page templatePage = DataManager.getPage(wikipedia, title, null, null);
                 JPopupMenu popup = new JPopupMenu();
                 JMenuItem menuItem = new JMenuItem(templatePage.getTitle());
@@ -286,9 +284,6 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
                 MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
                 if (page != null) {
                   popup.add(new JSeparator());
-                  MenuCreator.addReplaceTemplateToMenu(
-                      wikipedia, popup, template, params, page,
-                      null /*TODO*/, element, textPane);
                   MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
                   MenuCreator.addViewToMenu(wikipedia, popup, page);
                   MenuCreator.addDisambiguationToMenu(wikipedia, popup, page);

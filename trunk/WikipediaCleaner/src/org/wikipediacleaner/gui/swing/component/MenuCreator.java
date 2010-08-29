@@ -44,11 +44,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTemplate;
-import org.wikipediacleaner.api.data.PageUtilities;
-import org.wikipediacleaner.api.data.TemplateMatch;
 import org.wikipediacleaner.api.data.TemplateMatcher;
-import org.wikipediacleaner.api.data.TemplateParameter;
-import org.wikipediacleaner.api.data.TemplateReplacement;
 import org.wikipediacleaner.gui.swing.action.ChangePreferredDisambiguationAction;
 import org.wikipediacleaner.gui.swing.action.DisambiguationAnalysisAction;
 import org.wikipediacleaner.gui.swing.action.FindTextAction;
@@ -62,7 +58,6 @@ import org.wikipediacleaner.gui.swing.action.RemoveAllLinksAction;
 import org.wikipediacleaner.gui.swing.action.RemoveLinkAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceLinkAction;
-import org.wikipediacleaner.gui.swing.action.ReplaceTemplateAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceTextAction;
 import org.wikipediacleaner.gui.swing.action.RevertLinkAction;
 import org.wikipediacleaner.gui.swing.action.TemplatesAnalysisAction;
@@ -390,165 +385,6 @@ public class MenuCreator {
         }
 
         addSubmenu(popup, submenu, fixedBegin, fixedEnd);
-      }
-    }
-  }
-
-  /**
-   * Add submenus for replacing templates.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param popup Popup menu.
-   * @param template Template name.
-   * @param params Templates parameters.
-   * @param disambigPage Disambiguation page.
-   * @param page Page containing the text.
-   * @param element Element.
-   * @param textPane Text pane.
-   */
-  public static void addReplaceTemplateToMenu(
-      EnumWikipedia wikipedia, JPopupMenu popup, String template, String params,
-      Page disambigPage, Page page, Element element, JTextPane textPane) {
-    if ((popup == null) ||
-        (template == null) ||
-        (params == null) ||
-        (wikipedia == null)) {
-      return;
-    }
-    if (!Boolean.TRUE.equals(disambigPage.isDisambiguationPage())) {
-      return;
-    }
-    TemplateMatch tm = wikipedia.getDisambiguationMatch(template);
-    if (tm == null) {
-      return;
-    }
-    List<TemplateParameter> templateParams = PageUtilities.analyzeTemplateParameters(tm, params, page);
-    for (TemplateParameter param : templateParams) {
-      if (Page.areSameTitle(param.getValue(), disambigPage.getTitle())) {
-        TemplateReplacement replacement = tm.getReplacement(param.getName());
-        if (replacement != null) {
-          JMenuItem menuItem = null;
-          ActionListener action = null;
-          List<Page> links = disambigPage.getLinksWithRedirect();
-          JMenu submenuLink = new JMenu(GT._("Link parameter {0} to", param.getName()));
-          JMenu submenuReplace = new JMenu(GT._("Replace parameter {0} with", param.getName()));
-
-          // Determine if separators are needed
-          boolean separators = false;
-          if ((links != null) && (links.size() > 0)) {
-            separators = true;
-          }
-
-          // Last replacement
-          int fixedBeginLink = 0;
-          int fixedEndLink = 0;
-          int fixedBeginReplace = 0;
-          int fixedEndReplace = 0;
-          String title = getLastReplacement(disambigPage.getTitle());
-          if (title != null) {
-            menuItem = new JMenuItem(title);
-            action = new ReplaceTemplateAction(
-                tm.getName(), templateParams, replacement,
-                disambigPage.getTitle(), title, element, textPane, false);
-            menuItem.addActionListener(action);
-            menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
-            submenuLink.add(menuItem);
-            fixedBeginLink++;
-            menuItem = new JMenuItem(title);
-            action = new ReplaceTemplateAction(
-                tm.getName(), templateParams, replacement,
-                disambigPage.getTitle(), title, element, textPane, true);
-            menuItem.addActionListener(action);
-            menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
-            submenuReplace.add(menuItem);
-            fixedBeginReplace++;
-          }
-
-          // Separators
-          if (separators) {
-            fixedBeginLink += addSeparator(submenuLink);
-            fixedBeginReplace += addSeparator(submenuReplace);
-          }
-
-          // Possible links
-          if ((links != null) && (links.size() > 0)) {
-            for (Page p : links) {
-              if (p.isRedirect()) {
-                JMenu submenu1 = new JMenu(p.getTitle());
-                JMenu submenu2 = new JMenu(p.getTitle());
-                
-                Iterator<Page> iter = p.getRedirectIteratorWithPage();
-                while (iter.hasNext()) {
-                  Page pageTmp = iter.next();
-                  
-                  menuItem = new JMenuItem(pageTmp.getTitle());
-                  updateFont(menuItem, pageTmp);
-                  action = new ReplaceTemplateAction(
-                      tm.getName(), templateParams, replacement,
-                      disambigPage.getTitle(), pageTmp.getTitle(), element, textPane, false);
-                  menuItem.addActionListener(action);
-                  submenu1.add(menuItem);
-          
-                  menuItem = new JMenuItem(pageTmp.getTitle());
-                  updateFont(menuItem, pageTmp);
-                  action = new ReplaceTemplateAction(
-                      tm.getName(), templateParams, replacement,
-                      disambigPage.getTitle(), pageTmp.getTitle(), element, textPane, true);
-                  menuItem.addActionListener(action);
-                  submenu2.add(menuItem);
-                }
-                
-                submenuLink.add(submenu1);
-                submenuReplace.add(submenu2);
-              } else {
-                menuItem = new JMenuItem(p.getTitle());
-                updateFont(menuItem, p);
-                action = new ReplaceTemplateAction(
-                    tm.getName(), templateParams, replacement,
-                    disambigPage.getTitle(), p.getTitle(), element, textPane, false);
-                menuItem.addActionListener(action);
-                submenuLink.add(menuItem);
-        
-                menuItem = new JMenuItem(p.getTitle());
-                updateFont(menuItem, p);
-                action = new ReplaceTemplateAction(
-                    tm.getName(), templateParams, replacement,
-                    disambigPage.getTitle(), p.getTitle(), element, textPane, true);
-                menuItem.addActionListener(action);
-                submenuReplace.add(menuItem);
-              }
-            }
-          }
-
-          // Last replacement
-          if (separators) {
-            title = getLastReplacement(disambigPage.getTitle());
-            if (title != null) {
-              fixedEndLink += addSeparator(submenuLink);
-              menuItem = new JMenuItem(title);
-              action = new ReplaceTemplateAction(
-                  tm.getName(), templateParams, replacement,
-                  disambigPage.getTitle(), title, element, textPane, false);
-              menuItem.addActionListener(action);
-              menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
-              submenuLink.add(menuItem);
-              fixedEndLink++;
-      
-              fixedEndReplace += addSeparator(submenuReplace);
-              menuItem = new JMenuItem(title);
-              action = new ReplaceTemplateAction(
-                  tm.getName(), templateParams, replacement,
-                  disambigPage.getTitle(), title, element, textPane, true);
-              menuItem.addActionListener(action);
-              menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
-              submenuReplace.add(menuItem);
-              fixedEndReplace++;
-            }
-          }
-
-          addSubmenu(popup, submenuLink, fixedBeginLink, fixedEndLink);
-          addSubmenu(popup, submenuReplace, fixedBeginReplace, fixedEndReplace);
-        }
       }
     }
   }
