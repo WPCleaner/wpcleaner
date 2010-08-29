@@ -30,7 +30,6 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.ActionMap;
@@ -51,8 +50,10 @@ import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.InternalLinkNotification;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageUtilities;
 import org.wikipediacleaner.api.data.TemplateMatcher;
@@ -658,6 +659,106 @@ public class MediaWikiPane
   }
 
   /**
+   * Notification of links found. 
+   */
+  class InternalLinkFound implements InternalLinkNotification {
+
+    int startPosition = Integer.MAX_VALUE;
+    int endPosition = Integer.MAX_VALUE;
+    int secondStartPosition = Integer.MAX_VALUE;
+    int secondEndPosition = Integer.MAX_VALUE;
+    int thirdStartPosition = Integer.MAX_VALUE;
+    int thirdEndPosition = Integer.MAX_VALUE;
+
+    /**
+     * Notification of a link found in an internal link.
+     * 
+     * @param link Link found.
+     * @param internalLink Internal link in which the link is found.
+     */
+    public void linkFound(Page link, PageElementInternalLink internalLink) {
+      int start = internalLink.getBeginIndex();
+      int end = internalLink.getEndIndex();
+      boolean disambiguation = Boolean.TRUE.equals(link.isDisambiguationPage());
+      Style attr = getStyle(disambiguation ?
+          MediaWikiConstants.STYLE_DISAMBIGUATION_LINK :
+          link.isRedirect() ?
+              MediaWikiConstants.STYLE_REDIRECT_LINK :
+              link.isExisting() ?
+                  MediaWikiConstants.STYLE_NORMAL_LINK :
+                  MediaWikiConstants.STYLE_MISSING_LINK);
+      attr = (Style) attr.copyAttributes();
+      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_PAGE, link);
+      String text = internalLink.getText();
+      if (text == null) {
+        text = internalLink.getFullLink();
+      }
+      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_TEXT, text);
+      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_UUID, UUID.randomUUID());
+      StyledDocument doc = getStyledDocument();
+      doc.setCharacterAttributes(start, end - start, attr, true);
+      if (start < startPosition) {
+        startPosition = start;
+        endPosition = end;
+      }
+    }
+
+    /**
+     * Notification of a link found in a template.
+     * 
+     * @param link Link found.
+     * @param template Template in which the link is found.
+     * @param matcher Matcher used to find the link in the template.
+     */
+    public void linkFound(Page link, PageElementTemplate template,
+        TemplateMatcher matcher) {
+      int start = template.getBeginIndex();
+      int end = template.getEndIndex();
+      String styleName = null;
+      if (matcher.isGood() || Boolean.FALSE.equals(link.isDisambiguationPage())) {
+        styleName = MediaWikiConstants.STYLE_NORMAL_TEMPLATE;
+      } else {
+        if (matcher.isHelpNeeded()) {
+          styleName = MediaWikiConstants.STYLE_HELP_REQUESTED_LINK;
+        } else {
+          styleName = MediaWikiConstants.STYLE_DISAMBIGUATION_TEMPLATE;
+        }
+      }
+      Style attr = getStyle(styleName);
+      attr = (Style) attr.copyAttributes();
+      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_PAGE, link);
+      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_PAGE_ELEMENT, template);
+      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_TEMPLATE_MATCHER, matcher);
+      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_UUID, UUID.randomUUID());
+      if ((matcher.isHelpNeeded()) && (template.getParameterCount() > 0)) {
+        attr.addAttribute(
+            MediaWikiConstants.ATTRIBUTE_TEXT,
+            (template.getParameterCount() > 1) ?
+                template.getParameterValue(1) : template.getParameterValue(0));
+      }
+      StyledDocument doc = getStyledDocument();
+      doc.setCharacterAttributes(start, end - start, attr, true);
+      if (matcher.isGood() || !Boolean.FALSE.equals(link.isDisambiguationPage())) {
+        if (start < thirdStartPosition) {
+          thirdStartPosition = start;
+          thirdEndPosition = end;
+        }
+      } else if (matcher.isHelpNeeded()) {
+        if (start < secondStartPosition) {
+          secondStartPosition = start;
+          secondEndPosition = end;
+        }
+      } else {
+        if (start < startPosition) {
+          startPosition = start;
+          endPosition = end;
+        }
+      }
+    }
+    
+  }
+
+  /**
    * Reset attributes of the document.
    * This method should be called after modifications are done.
    */
@@ -687,131 +788,22 @@ public class MediaWikiPane
       }
     }
 
-    int startPosition = Integer.MAX_VALUE;
-    int endPosition = Integer.MAX_VALUE;
-    int secondStartPosition = Integer.MAX_VALUE;
-    int secondEndPosition = Integer.MAX_VALUE;
-    int thirdStartPosition = Integer.MAX_VALUE;
-    int thirdEndPosition = Integer.MAX_VALUE;
-
-    // Look for disambiguation links
-    if (internalLinks != null) {
-      for (int i = 0; i < internalLinks.size(); i++) {
-        Page link = internalLinks.get(i);
-        Pattern pattern = PageUtilities.createPatternForInternalLink(link);
-        Matcher matcher = pattern.matcher(getText());
-        while (matcher.find()) {
-          int start = matcher.start();
-          int end = matcher.end();
-          boolean disambiguation = Boolean.TRUE.equals(link.isDisambiguationPage());
-          Style attr = getStyle(disambiguation ?
-              MediaWikiConstants.STYLE_DISAMBIGUATION_LINK :
-              link.isRedirect() ?
-                  MediaWikiConstants.STYLE_REDIRECT_LINK :
-                  link.isExisting() ?
-                      MediaWikiConstants.STYLE_NORMAL_LINK :
-                      MediaWikiConstants.STYLE_MISSING_LINK);
-          attr = (Style) attr.copyAttributes();
-          attr.addAttribute(MediaWikiConstants.ATTRIBUTE_PAGE, link);
-          String text = matcher.group(matcher.groupCount());
-          if (text == null) {
-            text = matcher.group(1);
-            if (matcher.group(matcher.groupCount() - 1) != null) {
-              text = text.replaceAll("\\s*\\(.*\\)\\s*$", "");
-            }
-          }
-          attr.addAttribute(MediaWikiConstants.ATTRIBUTE_TEXT, text);
-          attr.addAttribute(MediaWikiConstants.ATTRIBUTE_UUID, UUID.randomUUID());
-          doc.setCharacterAttributes(start, end - start, attr, true);
-          if (start < startPosition) {
-            startPosition = start;
-            endPosition = end;
-          }
-        }
-      }
-    }
-
-    // Analyze templates
-    if (internalLinks != null) {
-      String contents = getText();
-      if (wikipedia.hasTemplateMatchers()) {
-        int currentIndex = 0;
-        while (currentIndex < contents.length()) {
-          PageElementTemplate template = PageContents.findNextTemplate(page, contents, currentIndex);
-          if (template != null) {
-            currentIndex = template.getBeginIndex() + 2;
-            List<? extends TemplateMatcher> matchers =
-              wikipedia.getTemplateMatchers(template.getTemplateName());
-            if (matchers != null) {
-              for (TemplateMatcher matcher : matchers) {
-                String linkTo = matcher.linksTo(template);
-                if (linkTo != null) {
-                  for (int i = 0; i < internalLinks.size(); i++) {
-                    Page link = internalLinks.get(i);
-                    if (Page.areSameTitle(link.getTitle(), linkTo)) {
-                      int start = template.getBeginIndex();
-                      int end = template.getEndIndex();
-                      String styleName = null;
-                      if (matcher.isGood() || Boolean.FALSE.equals(link.isDisambiguationPage())) {
-                        styleName = MediaWikiConstants.STYLE_NORMAL_TEMPLATE;
-                      } else {
-                        if (matcher.isHelpNeeded()) {
-                          styleName = MediaWikiConstants.STYLE_HELP_REQUESTED_LINK;
-                        } else {
-                          styleName = MediaWikiConstants.STYLE_DISAMBIGUATION_TEMPLATE;
-                        }
-                      }
-                      Style attr = getStyle(styleName);
-                      attr = (Style) attr.copyAttributes();
-                      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_PAGE, link);
-                      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_PAGE_ELEMENT, template);
-                      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_TEMPLATE_MATCHER, matcher);
-                      attr.addAttribute(MediaWikiConstants.ATTRIBUTE_UUID, UUID.randomUUID());
-                      if ((matcher.isHelpNeeded()) && (template.getParameterCount() > 0)) {
-                        attr.addAttribute(
-                            MediaWikiConstants.ATTRIBUTE_TEXT,
-                            (template.getParameterCount() > 1) ?
-                                template.getParameterValue(1) : template.getParameterValue(0));
-                      }
-                      doc.setCharacterAttributes(start, end - start, attr, true);
-                      if (matcher.isGood() || !Boolean.FALSE.equals(link.isDisambiguationPage())) {
-                        if (start < thirdStartPosition) {
-                          thirdStartPosition = start;
-                          thirdEndPosition = end;
-                        }
-                      } else if (matcher.isHelpNeeded()) {
-                        if (start < secondStartPosition) {
-                          secondStartPosition = start;
-                          secondEndPosition = end;
-                        }
-                      } else {
-                        if (start < startPosition) {
-                          startPosition = start;
-                          endPosition = end;
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          } else {
-            currentIndex = contents.length();
-          }
-        }
-      }
-    }
+    // Look for links
+    String contents = getText();
+    InternalLinkFound notification = new InternalLinkFound();
+    PageContents.findInternalLinks(
+        wikipedia, page, contents, internalLinks, notification);
 
     // Move caret to force first element to be visible
-    if (startPosition < Integer.MAX_VALUE) {
-      setCaretPosition(startPosition);
-      moveCaretPosition(endPosition);
-    } else if (secondStartPosition < Integer.MAX_VALUE) {
-      setCaretPosition(secondStartPosition);
-      moveCaretPosition(secondEndPosition);
-    } else if (thirdStartPosition < Integer.MAX_VALUE) {
-      setCaretPosition(thirdStartPosition);
-      moveCaretPosition(thirdEndPosition);
+    if (notification.startPosition < Integer.MAX_VALUE) {
+      setCaretPosition(notification.startPosition);
+      moveCaretPosition(notification.endPosition);
+    } else if (notification.secondStartPosition < Integer.MAX_VALUE) {
+      setCaretPosition(notification.secondStartPosition);
+      moveCaretPosition(notification.secondEndPosition);
+    } else if (notification.thirdStartPosition < Integer.MAX_VALUE) {
+      setCaretPosition(notification.thirdStartPosition);
+      moveCaretPosition(notification.thirdEndPosition);
     }
 
     isInInternalModification = oldState;
