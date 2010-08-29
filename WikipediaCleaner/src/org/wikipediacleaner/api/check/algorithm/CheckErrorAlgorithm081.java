@@ -74,6 +74,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
               }
               result = true;
               String previousName = previousRef.getParameter("name");
+              String previousGroup = previousRef.getParameter("group");
               if (errorResults.get(previousRef) == null) {
                 CheckErrorResult errorResult = createCheckErrorResult(
                     page,
@@ -117,7 +118,11 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                   page,
                   ref.getStartTagBeginIndex(), ref.getEndTagEndIndex() + 1);
               if (previousName != null) {
-                errorResult.addReplacement("<ref name=" + previousName + "/>");
+                if (previousGroup != null) {
+                  errorResult.addReplacement("<ref group=" + previousGroup + " name=" + previousName + "/>");
+                } else {
+                  errorResult.addReplacement("<ref name=" + previousName + "/>");
+                }
               }
               errorResult.addPossibleAction(
                   new CompositeAction(GT._("Existing references"), existingNames));
