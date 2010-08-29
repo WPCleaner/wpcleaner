@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-29 15:31+0200\n"
+"POT-Creation-Date: 2010-08-29 17:38+0200\n"
 "PO-Revision-Date: 2010-08-26 09:19+0000\n"
 "Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -52,16 +52,17 @@ msgstr "Page {0} :"
 msgid "Updating page {0}"
 msgstr "Mise à jour de {0}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:213
+#: org/wikipediacleaner/api/check/CheckError.java:214
 #, java-format
 msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "Erreur n°{0} ({1} - {2}) - {3}"
 
-#: org/wikipediacleaner/api/check/CheckError.java:220
+#: org/wikipediacleaner/api/check/CheckError.java:221
 msgid "Error unkown from WikiCleaner"
 msgstr "Erreur inconnue de WikiCleaner"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm027.java:87
 #, java-format
 msgid "Replace with {0}"
 msgstr "Remplacer par {0}"
@@ -562,7 +563,7 @@ msgstr "Marqué comme corrigé"
 msgid "The page {0} doesn't exist on Wikipedia"
 msgstr "L’article {0} n’existe pas sur Wikipédia."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:970
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:972
 #, java-format
 msgid ""
 "The error n°{0} hasn''t been found in the page {1}.\n"
@@ -571,12 +572,12 @@ msgstr ""
 "L''erreur n°{0} n''a pas été trouvée dans la page {1}.\n"
 "Voulez-vous la marquer comme corrigée ?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1081
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1083
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr "Marquer l’erreur n° {1} de l’article {0} comme corrigée ?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1092
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1094
 #, java-format
 msgid ""
 "The error n°{0} is still found {1} times in the page.\n"
@@ -585,7 +586,7 @@ msgstr ""
 "L’erreur n° {0} est toujours {1} fois dans la page.\n"
 "Êtes-vous certains de vouloir la marquer comme corrigée ?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1099
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1101
 #, java-format
 msgid ""
 "The error n°{0} is still found in the page.\n"
@@ -594,7 +595,7 @@ msgstr ""
 "L’erreur n° {0} est toujours présente dans la page.\n"
 "Êtes-vous certain de vouloir la marquer comme corrigée ?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1111
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1113
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
@@ -602,16 +603,16 @@ msgstr ""
 "Vous avez déjà corrigé cette erreur en modifiant la page.\n"
 "Vous devriez envoyer vos modifications, la page sera marquée comme corrigée."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1231
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1233
 msgid "A comment is required for sending the page."
 msgstr "Un commentaire est requis pour envoyer cette page."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1372
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1374
 #, java-format
 msgid "Detection by [[{0}]]"
 msgstr "projet [[{0}|correction syntaxique]]"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1454
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1456
 #, java-format
 msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
@@ -620,7 +621,7 @@ msgstr ""
 "L’erreur n° {0} peut être configurée sur la <a href=\"{1}\">page de "
 "traduction</a> avec le paramètres suivants :"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1665
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1667
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"

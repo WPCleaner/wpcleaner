@@ -46,7 +46,7 @@ public class CheckError {
   /**
    * Analyze a page to find error types.
    * 
-   * @param errors Possible error types.
+   * @param algorithms Possible algorithms.
    * @param page Page to be analyzed.
    * @param contents Page contents (may be different from page.getContents()).
    * @return Errors found in the page.
