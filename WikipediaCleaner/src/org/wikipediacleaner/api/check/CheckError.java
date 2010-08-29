@@ -52,18 +52,19 @@ public class CheckError {
    * @return Errors found in the page.
    */
   public static List<CheckErrorPage> analyzeErrors(
-      List<CheckError> errors, Page page, String contents) {
+      List<CheckErrorAlgorithm> algorithms, Page page, String contents) {
     List<CheckErrorPage> errorsFound = new ArrayList<CheckErrorPage>();
-    if ((errors != null) && (page != null)) {
+    if ((algorithms != null) && (page != null)) {
       if (contents == null) {
         contents = page.getContents();
       }
-      for (CheckError error : errors) {
-        if ((error.algorithm != null) && (error.algorithm.isAvailable())) {
+      for (CheckErrorAlgorithm algorithm : algorithms) {
+        if ((algorithm != null) &&
+            (algorithm.isAvailable()) &&
+            (CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()))) {
           List<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
-          //System.out.println("Checking error n°" + error.getErrorNumber() + " for " + page.getTitle());
-          if (error.algorithm.analyze(page, contents, results)) {
-            CheckErrorPage errorPage = new CheckErrorPage(page, error.algorithm);
+          if (algorithm.analyze(page, contents, results)) {
+            CheckErrorPage errorPage = new CheckErrorPage(page, algorithm);
             errorPage.setResults(true, results);
             errorsFound.add(errorPage);
           }

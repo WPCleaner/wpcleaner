@@ -114,7 +114,7 @@ import org.xml.sax.SAXException;
  */
 public class CheckWikiProjectWindow extends PageWindow {
 
-  private List<CheckErrorAlgorithm> allAlgorithms;
+  List<CheckErrorAlgorithm> allAlgorithms;
   private List<CheckErrorAlgorithm> selectedAlgorithms;
   private List<JMenuItem> menuItemAlgorithms;
   private JPopupMenu popupSelectErrors;
@@ -940,7 +940,7 @@ public class CheckWikiProjectWindow extends PageWindow {
       textPage.setText(page.getContents());
       textPage.setModified(false);
       List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-          errors, page, textPage.getText());
+          allAlgorithms, page, textPage.getText());
       modelErrors.clear();
       initialErrors = new ArrayList<CheckErrorPage>();
       boolean errorFound = false;
@@ -950,7 +950,9 @@ public class CheckWikiProjectWindow extends PageWindow {
           modelErrors.addElement(tmpError);
           initialErrors.add(tmpError);
           errorCount++;
-          if ((error != null) && (error.getAlgorithm().equals(tmpError.getAlgorithm()))) {
+          if ((error != null) &&
+              (error.getAlgorithm() != null) &&
+              (error.getAlgorithm().getErrorNumber()== tmpError.getAlgorithm().getErrorNumber())) {
             errorFound = true;
           }
         }
@@ -1289,7 +1291,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     private void actionValidate() {
       // Check for new errors
       List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-          errors, page, textPage.getText());
+          allAlgorithms, page, textPage.getText());
       if (errorsFound != null) {
         for (CheckErrorPage tmpError : errorsFound) {
           boolean errorFound = false;
