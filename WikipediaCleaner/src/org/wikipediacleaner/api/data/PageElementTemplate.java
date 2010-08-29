@@ -310,6 +310,9 @@ public class PageElementTemplate {
    * @return Parameter value.
    */
   public String getParameterValue(String name) {
+    if (parameters == null) {
+      return null;
+    }
     int index = 0;
     int paramNum = 1;
     while (index < parameters.size()) {
