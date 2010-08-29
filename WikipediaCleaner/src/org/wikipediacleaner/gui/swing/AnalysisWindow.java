@@ -55,7 +55,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
-import org.wikipediacleaner.api.data.PageUtilities;
+import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
@@ -694,18 +694,19 @@ public class AnalysisWindow extends PageWindow {
   void countOccurences(String text) {
     Page page = getPage();
     if ((page != null) && (page.getLinks() != null)) {
-      for (Page p : page.getLinks()) {
-        if (p != null) {
+      List<Page> links = new ArrayList<Page>();
+      for (Page link : page.getLinks()) {
+        if (link != null) {
           boolean count = false;
-          if (Boolean.TRUE.equals(p.isDisambiguationPage())) {
+          if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
             if (modelLinks.getCountDisambiguation()) {
               count = true;
             }
-          } else if (p.isRedirect()) {
+          } else if (link.isRedirect()) {
             if (modelLinks.getCountRedirect()) {
               count = true;
             }
-          } else if (Boolean.FALSE.equals(p.isExisting())) {
+          } else if (Boolean.FALSE.equals(link.isExisting())) {
             if (modelLinks.getCountMissing()) {
               count = true;
             }
@@ -715,10 +716,11 @@ public class AnalysisWindow extends PageWindow {
             }
           }
           if (count) {
-            PageUtilities.countLinkOccurencesInText(getWikipedia(), page, text, p);
+            links.add(link);
           }
         }
       }
+      PageContents.countInternalLinks(getWikipedia(), page, text, links);
     }
   }
 

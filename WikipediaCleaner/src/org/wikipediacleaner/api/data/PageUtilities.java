@@ -23,56 +23,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.wikipediacleaner.api.constants.EnumWikipedia;
-
 
 /**
  * Utilities methods for Page.
  */
 public class PageUtilities {
-
-  /**
-   * Count occurences of links in the text.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param page Currently analyzed page.
-   * @param pageText Page text.
-   * @param link Link counted.
-   */
-  public static void countLinkOccurencesInText(
-      EnumWikipedia wikipedia, Page page,
-      String pageText, Page link) {
-    int count = 0;
-
-    // Look for disambiguation links
-    Pattern pattern = createPatternForInternalLink(link);
-    Matcher matcher = pattern.matcher(pageText);
-    while (matcher.find()) {
-      count++;
-    }
-
-    // Analyze templates
-    for (int numT = 0; numT < wikipedia.getDisambiguationMatchesCount(); numT++) {
-      TemplateMatch template = wikipedia.getDisambiguationMatch(numT);
-      if (!template.isGood()) {
-        pattern = createPatternForTemplate(template);
-        matcher = pattern.matcher(pageText);
-        while (matcher.find()) {
-          List<TemplateParameter> parameters = analyzeTemplateParameters(template, matcher, page);
-          if (parameters != null) {
-            for (TemplateParameter param : parameters) {
-              // Count page
-              if (param.isRelevant() && link.getTitle().equals(param.getValue())) {
-                count++;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    link.setCountOccurence(count);
-  }
 
   /**
    * Creates a Pattern for matching internal links to give <code>page</code>.
