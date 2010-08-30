@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.check;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
@@ -44,13 +45,13 @@ public class SpecialCharacters {
   /**
    * Characters authorized for specific Wikipedia. 
    */
-  private final static HashMap<EnumWikipedia, String> localAuthorizedCharacters =
+  private final static Map<EnumWikipedia, String> localAuthorizedCharacters =
     new HashMap<EnumWikipedia, String>();
 
   /**
    * Possible replacements for unauthorized characters.
    */
-  private final static HashMap<Character, String> replacements = new HashMap<Character, String>();
+  private final static Map<Character, String> replacements = new HashMap<Character, String>();
 
   static {
     // Locally authorized characters

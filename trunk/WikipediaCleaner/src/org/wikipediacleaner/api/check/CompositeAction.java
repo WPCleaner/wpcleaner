@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.check;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Action;
 import javax.swing.JTextPane;
@@ -31,7 +32,7 @@ import javax.swing.text.Element;
 public class CompositeAction implements Actionnable {
 
   private final String name;
-  private final ArrayList<Actionnable> actions;
+  private final List<Actionnable> actions;
 
   /**
    * @param name Action name.
@@ -44,7 +45,7 @@ public class CompositeAction implements Actionnable {
    * @param name Action name.
    * @param actions Actions.
    */
-  public CompositeAction(String name, ArrayList<Actionnable> actions) {
+  public CompositeAction(String name, List<Actionnable> actions) {
     this.name = name;
     this.actions = actions;
   }
@@ -72,7 +73,7 @@ public class CompositeAction implements Actionnable {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.Actionnable#getActions()
    */
-  public ArrayList<Actionnable> getActions() {
+  public List<Actionnable> getActions() {
     return actions;
   }
 

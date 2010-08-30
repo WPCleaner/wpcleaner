@@ -46,7 +46,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
    * @return Page comparator with template first (Default for disambiguation window).
    */
   public static CompositeComparator<Page> getTemplateFirstComparator() {
-    LinkedList<NamedComparator<Page>> unitComparators = new LinkedList<NamedComparator<Page>>();
+    List<NamedComparator<Page>> unitComparators = new LinkedList<NamedComparator<Page>>();
     unitComparators.add(templateComparator);
     unitComparators.add(redirectComparator);
     unitComparators.add(namespaceComparator);
@@ -63,7 +63,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
    * @return Page comparator with revision first.
    */
   public static CompositeComparator<Page> getRevisionIdFirstComparator() {
-    LinkedList<NamedComparator<Page>> unitComparators = new LinkedList<NamedComparator<Page>>();
+    List<NamedComparator<Page>> unitComparators = new LinkedList<NamedComparator<Page>>();
     unitComparators.add(revisionIdComparator);
     unitComparators.add(templateComparator);
     unitComparators.add(redirectComparator);
@@ -80,7 +80,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
    * @return Page comparator with namespace first (Default for analysis window).
    */
   public static CompositeComparator<Page> getNamespaceFirstComparator() {
-    LinkedList<NamedComparator<Page>> unitComparators = new LinkedList<NamedComparator<Page>>();
+    List<NamedComparator<Page>> unitComparators = new LinkedList<NamedComparator<Page>>();
     unitComparators.add(namespaceComparator);
     unitComparators.add(titleComparator);
     unitComparators.add(revisionIdComparator);
@@ -97,7 +97,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
    * @return Page comparator with namespace first then occurence.
    */
   public static CompositeComparator<Page> getOccurenceFirstComparator() {
-    LinkedList<NamedComparator<Page>> unitComparators = new LinkedList<NamedComparator<Page>>();
+    List<NamedComparator<Page>> unitComparators = new LinkedList<NamedComparator<Page>>();
     unitComparators.add(namespaceComparator);
     unitComparators.add(occurenceComparator);
     unitComparators.add(titleComparator);
@@ -115,7 +115,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
    * @return Comparator initialized with default order.
    */
   public static CompositeComparator<Page> createComparator(String name) {
-    LinkedList<NamedComparator<Page>> unitComparators = new LinkedList<NamedComparator<Page>>();
+    List<NamedComparator<Page>> unitComparators = new LinkedList<NamedComparator<Page>>();
     unitComparators.add(namespaceComparator);
     unitComparators.add(titleComparator);
     unitComparators.add(revisionIdComparator);

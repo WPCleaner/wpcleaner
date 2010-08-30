@@ -18,7 +18,7 @@
 
 package org.wikipediacleaner.api.check;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Action;
 import javax.swing.JTextPane;
@@ -74,7 +74,7 @@ public class SimpleAction implements Actionnable {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.Actionnable#getActions()
    */
-  public ArrayList<Actionnable> getActions() {
+  public List<Actionnable> getActions() {
     return null;
   }
 
