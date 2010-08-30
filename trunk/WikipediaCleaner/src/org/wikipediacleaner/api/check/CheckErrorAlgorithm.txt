@@ -363,6 +363,7 @@ Status: DONE
 
 ===============================================================================
 Error 082: Link to other wikiproject
+Status: DONE
 
 ===============================================================================
 Error 083: Headlines start with three "=" and later with level two

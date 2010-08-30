@@ -234,6 +234,40 @@ public class PageContents {
   }
 
   // ==========================================================================
+  // Interwiki links management
+  // ==========================================================================
+
+  /**
+   * Find the first interwiki link after an index in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param currentIndex The last index.
+   * @return Interwiki link found.
+   */
+  public static PageElementInterwikiLink findNextInterwikiLink(
+      Page page, String contents,
+      int currentIndex) {
+    if (contents == null) {
+      return null;
+    }
+    while ((currentIndex < contents.length())) {
+      int tmpIndex = contents.indexOf("[[", currentIndex);
+      if (tmpIndex < 0) {
+        currentIndex = contents.length();
+      } else {
+        PageElementInterwikiLink link = PageElementInterwikiLink.analyzeBlock(
+            page.getWikipedia(), contents, tmpIndex);
+        if (link != null) {
+          return link;
+        }
+        currentIndex = tmpIndex + 2;
+      }
+    }
+    return null;
+  }
+
+  // ==========================================================================
   // Language links management
   // ==========================================================================
 
