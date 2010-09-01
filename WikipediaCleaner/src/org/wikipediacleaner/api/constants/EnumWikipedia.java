@@ -210,6 +210,7 @@ public enum EnumWikipedia {
   private String helpPage;
 
   private String pipeTemplate;
+  private String disambiguationWarningTemplate;
   private Map<String, List<TemplateMatcher>> templateMatchers;
 
   private final String configPage;
@@ -476,6 +477,13 @@ public enum EnumWikipedia {
    */
   public String getPipeTemplate() {
     return pipeTemplate;
+  }
+
+  /**
+   * @return Template for warning about disambiguation links in a page.
+   */
+  public String getDisambiguationWarningTemplate() {
+    return disambiguationWarningTemplate;
   }
 
   /**
@@ -903,6 +911,12 @@ public enum EnumWikipedia {
       tmp = configuration.getProperty("dab_comment", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         disambiguationText = tmp.trim();
+      }
+
+      // Disambiguation warning template
+      tmp = configuration.getProperty("dab_warning_template", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        disambiguationWarningTemplate = tmp.trim();
       }
 
       // Disambiguation list

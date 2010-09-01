@@ -66,6 +66,7 @@ import org.wikipediacleaner.gui.swing.component.PageListModel;
 import org.wikipediacleaner.gui.swing.component.PageListPopupListener;
 import org.wikipediacleaner.gui.swing.worker.FullAnalysisWorker;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -74,9 +75,10 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public class AnalysisWindow extends PageWindow {
 
-  private final static String ACTION_DISAMBIGUATION_LINK  = "DISAMBIGUATION LINK";
-  private final static String ACTION_FULL_ANALYSIS_LINK   = "FULL ANALYSIS LINK";
-  private final static String ACTION_WATCH_LINK           = "WATCH LINK";
+  private final static String ACTION_DISAMBIGUATION_LINK    = "DISAMBIGUATION LINK";
+  private final static String ACTION_FULL_ANALYSIS_LINK     = "FULL ANALYSIS LINK";
+  private final static String ACTION_WATCH_LINK             = "WATCH LINK";
+  private final static String ACTION_DISAMBIGUATION_WARNING = "DISAMBIGUATION WARNING";
 
   private JButton buttonFirst;
   private JButton buttonPrevious;
@@ -98,6 +100,7 @@ public class AnalysisWindow extends PageWindow {
   private JButton buttonFullAnalysisLink;
   private JButton buttonDisambiguationLink;
   private JButton buttonWatchLink;
+  private JButton buttonDisambiguationWarning;
 
   List<Page> knownPages;
 
@@ -198,6 +201,7 @@ public class AnalysisWindow extends PageWindow {
     buttonNext.setEnabled(isPageLoaded());
     buttonLast.setEnabled(isPageLoaded());
     buttonValidate.setEnabled(isPageLoaded());
+    buttonDisambiguationWarning.setEnabled(isPageLoaded());
     super.updateComponentState();
   }
 
@@ -320,6 +324,13 @@ public class AnalysisWindow extends PageWindow {
     toolbarButtons.add(buttonValidate);
     addButtonSend(toolbarButtons, true);
     addButtonRedirect(toolbarButtons);
+    buttonDisambiguationWarning = Utilities.createJButton(
+        "gnome-dialog-warning.png", EnumImageSize.NORMAL,
+        GT._("Add a warning on the talk page about the links to disambiguation pages"),
+        false); 
+    buttonDisambiguationWarning.setActionCommand(ACTION_DISAMBIGUATION_WARNING);
+    buttonDisambiguationWarning.addActionListener(this);
+    toolbarButtons.add(buttonDisambiguationWarning);
     toolbarButtons.addSeparator();
     addButtonReload(toolbarButtons, true);
     addButtonView(toolbarButtons, true);
@@ -549,6 +560,8 @@ public class AnalysisWindow extends PageWindow {
       actionNextOccurence();
     } else if (ACTION_LAST_OCCURENCE.equals(e.getActionCommand())) {
       actionLastOccurence();
+    } else if (ACTION_DISAMBIGUATION_WARNING.equals(e.getActionCommand())) {
+      actionDisambiguationWarning();
     }
   }
 
@@ -673,6 +686,18 @@ public class AnalysisWindow extends PageWindow {
         getParentComponent(),
         listLinks.getSelectedValues(),
         getWikipedia());
+  }
+
+  /**
+   * Action called when Disambiguation warning button is pressed.  
+   */
+  private void actionDisambiguationWarning() {
+    String template = getWikipedia().getDisambiguationWarningTemplate();
+    if ((template == null) || (template.trim().length() == 0)) {
+      Utilities.displayWarning(
+          getParentComponent(),
+          GT._("You need to define the 'dab_warning_template' property in WikiCleaner configuration."));
+    }
   }
 
   /**
