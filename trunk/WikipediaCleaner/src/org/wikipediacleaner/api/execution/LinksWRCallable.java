@@ -58,7 +58,7 @@ public class LinksWRCallable extends MediaWikiCallable<Page> {
    * @see java.util.concurrent.Callable#call()
    */
   public Page call() throws APIException {
-    setText(GT._("Retrieving page back links") + " - " + page.getTitle());
+    setText(GT._("Retrieving page links") + " - " + page.getTitle());
     api.retrieveLinksWithRedirects(getWikipedia(), page, namespace, knownPages);
     return page;
   }
