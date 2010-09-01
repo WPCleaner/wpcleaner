@@ -22,6 +22,8 @@ import java.awt.ComponentOrientation;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -405,6 +407,37 @@ public enum EnumWikipedia {
    */
   public String getWikiURL() {
     return wikiUrl;
+  }
+
+  /**
+   * @param pageTitle Title.
+   * @param redirect Follow redirect ?
+   * @return URL of the wiki.
+   */
+  public String getWikiURL(String pageTitle, boolean redirect) {
+    try {
+      return getWikiURL() +
+             "?title=" + URLEncoder.encode(pageTitle, "UTF-8") +
+             (redirect ? "" : "&redirect=no");
+    } catch (UnsupportedEncodingException e) {
+      return getWikiURL();
+    }
+  }
+
+  /**
+   * @param pageTitle Title.
+   * @param action Action.
+   * @return URL of the wiki.
+   */
+  public String getWikiURL(String pageTitle, String action) {
+    try {
+      return getWikiURL() +
+             "?title=" + URLEncoder.encode(pageTitle, "UTF-8") +
+             "&redirect=no" +
+             "&action=" + action;
+    } catch (UnsupportedEncodingException e) {
+      return getWikiURL();
+    }
   }
 
   /**

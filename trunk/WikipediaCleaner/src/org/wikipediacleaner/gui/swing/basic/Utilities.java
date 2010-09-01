@@ -19,14 +19,12 @@
 package org.wikipediacleaner.gui.swing.basic;
 
 import java.awt.Component;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLEncoder;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -512,15 +510,7 @@ public class Utilities {
    * @param action Page action.
    */
   public static void browseURL(EnumWikipedia wiki, String title, String action) {
-    try {
-      browseURL(
-          wiki.getWikiURL() +
-          "?title=" + URLEncoder.encode(title, "UTF-8") +
-          "&redirect=no" +
-          "&action=" + action);
-    } catch (UnsupportedEncodingException e) {
-      // Nothing to be done
-    }
+    browseURL(wiki.getWikiURL(title, action));
   }
 
   /**
@@ -531,14 +521,7 @@ public class Utilities {
    * @param redirect Flag indicating if redirects should be followed.
    */
   public static void browseURL(EnumWikipedia wiki, String title, boolean redirect) {
-    try {
-      browseURL(
-          wiki.getWikiURL() +
-          "?title=" + URLEncoder.encode(title, "UTF-8") +
-          (redirect ? "" : "&redirect=no"));
-    } catch (UnsupportedEncodingException e) {
-      // Nothing to be done
-    }
+    browseURL(wiki.getWikiURL(title, redirect));
   }
 
   /**
