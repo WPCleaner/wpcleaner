@@ -78,12 +78,14 @@ public class PageElementInternalLink {
     if ((pipeIndex >= 0) && (pipeIndex < endIndex)) {
       if ((anchorIndex >= 0) && (anchorIndex < pipeIndex)) {
         return new PageElementInternalLink(
+            wikipedia,
             index, endIndex + 2,
             contents.substring(beginIndex, anchorIndex),
             contents.substring(anchorIndex + 1, pipeIndex),
             contents.substring(pipeIndex + 1, endIndex));
       }
       return new PageElementInternalLink(
+          wikipedia,
           index, endIndex + 2,
           contents.substring(beginIndex, pipeIndex),
           null,
@@ -91,11 +93,13 @@ public class PageElementInternalLink {
     }
     if ((anchorIndex >= 0) && (anchorIndex < endIndex)) {
       return new PageElementInternalLink(
+          wikipedia,
           index, endIndex + 2,
           contents.substring(beginIndex, anchorIndex),
           contents.substring(anchorIndex + 1, endIndex), null);
     }
     return new PageElementInternalLink(
+        wikipedia,
         index, endIndex + 2,
         contents.substring(beginIndex, endIndex),
         null, null);
@@ -129,12 +133,13 @@ public class PageElementInternalLink {
   }
 
   private PageElementInternalLink(
+      EnumWikipedia wikipedia,
       int beginIndex, int endIndex,
       String link, String anchor, String text) {
     this.beginIndex = beginIndex;
     this.endIndex = endIndex;
     this.linkNotTrimmed = link;
-    this.link = (link != null) ? Page.getStringUcFirst(link.trim()) : null;
+    this.link = (link != null) ? wikipedia.normalizeTitle(link.trim()) : null;
     this.anchorNotTrimmed = anchor;
     this.anchor = (anchor != null) ? anchor.trim() : null;
     this.textNotTrimmed = text;

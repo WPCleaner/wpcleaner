@@ -371,10 +371,10 @@ public enum EnumWikipedia {
    * @return Normalized title.
    */
   public String normalizeTitle(String pageTitle) {
-    if (title == null) {
+    if (pageTitle == null) {
       return null;
     }
-    String result = pageTitle;
+    String result = pageTitle.trim();
     result = result.replaceAll("_", " ");
     result = result.replaceAll(" +", " ");
     result = result.trim();
