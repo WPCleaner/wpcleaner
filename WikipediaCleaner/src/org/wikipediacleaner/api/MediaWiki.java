@@ -173,15 +173,19 @@ public class MediaWiki extends MediaWikiController {
               if (!newContents.equals(tmpContents)) {
                 if (description != null) {
                   if (!changed) {
-                    description.append(GT._("Page {0}:", page.getTitle()));
+                    String title =
+                      "<a href=\"" + wikipedia.getWikiURL(page.getTitle(), false) + "\">" +
+                      page.getTitle() + "</a>";
+                    description.append(GT._("Page {0}:", title));
                     description.append("\n");
+                    description.append("<ul>\n");
                     changed = true;
                   }
-                  description.append(" - ");
+                  description.append("<li>");
                   description.append(from);
                   description.append(" => ");
                   description.append(to);
-                  description.append("\n");
+                  description.append("</li>\n");
                 }
                 if (!replacementUsed) {
                   replacementUsed = true;
@@ -192,6 +196,9 @@ public class MediaWiki extends MediaWikiController {
                 }
               }
             }
+          }
+          if ((description != null) && (changed)) {
+            description.append("</ul>\n");
           }
           if (!oldContents.equals(newContents)) {
             setText(GT._("Updating page {0}", page.getTitle()));

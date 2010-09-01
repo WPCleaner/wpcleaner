@@ -18,7 +18,6 @@
 
 package org.wikipediacleaner.gui.swing;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -27,21 +26,28 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.StringReader;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
+import org.lobobrowser.html.HtmlRendererContext;
+import org.lobobrowser.html.UserAgentContext;
+import org.lobobrowser.html.gui.HtmlPanel;
+import org.lobobrowser.html.parser.DocumentBuilderImpl;
+import org.lobobrowser.html.test.SimpleUserAgentContext;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
 import org.wikipediacleaner.i18n.GT;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 
 /**
@@ -56,7 +62,9 @@ public class InformationWindow
   String title;
   String information;
   JLabel lblTitle;
-  JTextPane textInformation;
+  HtmlPanel textInformation;
+  UserAgentContext ucontextInformation;
+  HtmlRendererContext rcontextInformation;
   private JButton buttonClose;
 
   /**
@@ -88,12 +96,29 @@ public class InformationWindow
           public void displayWindow(BasicWindow window) {
             if (window instanceof InformationWindow) {
               InformationWindow info = (InformationWindow) window;
-              info.lblTitle.setText(info.title);
-              info.textInformation.setText(info.information);
+              info.updateInformation();
             }
           }
           
         });
+  }
+
+  /**
+   * Update information.
+   */
+  void updateInformation() {
+    try {
+      lblTitle.setText(title);
+      DocumentBuilderImpl dbi = new DocumentBuilderImpl(
+          ucontextInformation, rcontextInformation);
+      InputSource is = new InputSource(new StringReader(information));
+      is.setSystemId("http://localhost");
+      textInformation.setDocument(dbi.parse(is), rcontextInformation);
+    } catch (SAXException e) {
+      // Nothing
+    } catch (IOException e) {
+      // Nothing
+    }
   }
 
   /* (non-Javadoc)
@@ -133,19 +158,17 @@ public class InformationWindow
     constraints.gridy++;
 
     // Informations
-    textInformation = new JTextPane();
-    textInformation.setBackground(Color.WHITE);
-    textInformation.setEditable(false);
+    textInformation = new HtmlPanel();
+    ucontextInformation = new SimpleUserAgentContext();
+    rcontextInformation = new MediaWikiHtmlRendererContext(textInformation, ucontextInformation);
+    textInformation.setPreferredSize(new Dimension(500, 500));
+    textInformation.setMaximumSize(new Dimension(100, 100));
     lblTitle.setLabelFor(textInformation);
-    JScrollPane scrollInformation = new JScrollPane(textInformation);
-    scrollInformation.setMinimumSize(new Dimension(100, 100));
-    scrollInformation.setPreferredSize(new Dimension(500, 500));
-    scrollInformation.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     constraints.fill = GridBagConstraints.BOTH;
     constraints.gridx = 0;
     constraints.weighty = 1;
     constraints.weightx = 1;
-    panel.add(scrollInformation, constraints);
+    panel.add(textInformation, constraints);
     constraints.gridy++;
 
     // Buttons
