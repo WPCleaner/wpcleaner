@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-01 21:11+0200\n"
+"POT-Creation-Date: 2010-09-01 21:32+0200\n"
 "PO-Revision-Date: 2009-08-01 22:01+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
@@ -262,7 +262,6 @@ msgid "Link parameter {0} to"
 msgstr ""
 
 #: org/wikipediacleaner/api/execution/BacklinksWRCallable.java:53
-#: org/wikipediacleaner/api/execution/LinksWRCallable.java:61
 msgid "Retrieving page back links"
 msgstr "Recuperacion de las paginas ligadas"
 
@@ -281,6 +280,11 @@ msgstr ""
 #: org/wikipediacleaner/api/execution/ExpandTemplatesCallable.java:55
 msgid "Expanding templates"
 msgstr "Desvolopament dels modèls"
+
+#: org/wikipediacleaner/api/execution/LinksWRCallable.java:61
+#, fuzzy
+msgid "Retrieving page links"
+msgstr "Recuperacion de las paginas ligadas"
 
 #: org/wikipediacleaner/api/execution/ParseTextCallable.java:55
 msgid "Parsing text"
