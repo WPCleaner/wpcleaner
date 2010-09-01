@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-01 21:32+0200\n"
+"POT-Creation-Date: 2010-09-01 23:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -384,6 +384,10 @@ msgstr ""
 msgid ""
 "You need to define the 'dab_warning_template' property in WikiCleaner "
 "configuration."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:722
+msgid "Warning for disambiguation links"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:74
