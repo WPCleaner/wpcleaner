@@ -698,6 +698,28 @@ public class AnalysisWindow extends PageWindow {
           getParentComponent(),
           GT._("You need to define the 'dab_warning_template' property in WikiCleaner configuration."));
     }
+    countOccurences(getTextContents().getText());
+    List<Page> dabPages = new ArrayList<Page>();
+    for (Page link : getPage().getLinks()) {
+      if ((link != null) &&
+          (Boolean.TRUE.equals(link.isDisambiguationPage())) &&
+          (link.getCountOccurence() > 0)) {
+        dabPages.add(link);
+      }
+    }
+    if (dabPages.isEmpty()) {
+      return;
+    }
+    StringBuilder sb = new StringBuilder();
+    sb.append("{{");
+    sb.append(template);
+    for (Page link : dabPages) {
+      sb.append("|");
+      sb.append(link.getTitle());
+    }
+    sb.append("}}");
+    InformationWindow.createInformationWindow(
+        GT._("Warning for disambiguation links"), sb.toString(), getWikipedia());
   }
 
   /**
