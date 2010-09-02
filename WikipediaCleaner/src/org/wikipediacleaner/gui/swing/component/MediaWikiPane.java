@@ -689,10 +689,7 @@ public class MediaWikiPane
                   MediaWikiConstants.STYLE_MISSING_LINK);
       attr = (Style) attr.copyAttributes();
       attr.addAttribute(MediaWikiConstants.ATTRIBUTE_PAGE, link);
-      String text = internalLink.getText();
-      if (text == null) {
-        text = internalLink.getFullLink();
-      }
+      String text = internalLink.getDisplayedText();
       attr.addAttribute(MediaWikiConstants.ATTRIBUTE_TEXT, text);
       attr.addAttribute(MediaWikiConstants.ATTRIBUTE_UUID, UUID.randomUUID());
       StyledDocument doc = getStyledDocument();
