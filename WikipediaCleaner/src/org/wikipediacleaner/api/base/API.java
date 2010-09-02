@@ -106,6 +106,16 @@ public interface API {
   public void retrieveContents(EnumWikipedia wikipedia, Page page, boolean withRedirects) throws APIException;
 
   /**
+   * Retrieves the contents of a section in a <code>page</code>.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param page Page.
+   * @param section Section number.
+   * @throws APIException
+   */
+  public void retrieveSectionContents(EnumWikipedia wikipedia, Page page, int section) throws APIException;
+
+  /**
    * Expand templates in a text.
    * 
    * @param wikipedia Wikipedia.
