@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-09-01 23:17+0200\n"
-"PO-Revision-Date: 2010-08-29 13:42+0000\n"
+"PO-Revision-Date: 2010-09-02 08:23+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-08-30 08:56+0000\n"
+"X-Launchpad-Export-Date: 2010-09-02 16:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:38
@@ -31,7 +31,8 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:42
 msgid "Many new features added for the Check Wiki project : try them !"
-msgstr "До проекту Check Wiki додано багато нових можливостей : Спробуйте їх !"
+msgstr ""
+"До проекту Check Wiki додано багато нових можливостей : Спробуйте їх !"
 
 #: org/wikipediacleaner/Version.java:44
 msgid "Please, report any other problem you find to me."
@@ -283,9 +284,8 @@ msgid "Expanding templates"
 msgstr "Розгортання шаблонів"
 
 #: org/wikipediacleaner/api/execution/LinksWRCallable.java:61
-#, fuzzy
 msgid "Retrieving page links"
-msgstr "Отримання зворотніх посилань сторінки"
+msgstr "Пошук посилань на сорінці"
 
 #: org/wikipediacleaner/api/execution/ParseTextCallable.java:55
 msgid "Parsing text"
@@ -315,9 +315,10 @@ msgid "Link count"
 msgstr "Кількість посилань"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:329
-#, fuzzy
-msgid "Add a warning on the talk page about the links to disambiguation pages"
-msgstr "Аналіз посилань на сторінки значень"
+msgid ""
+"Add a warning on the talk page about the links to disambiguation pages"
+msgstr ""
+"Додати попередження на сторінці обговорення про посилання на сторінки значень"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:365
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:423
@@ -385,18 +386,20 @@ msgstr "Додати до &списку спостереження"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:664
 msgid "Would you like to add these pages on your local Watch list ?"
-msgstr "Хочете додати ці сторінки до вашого локального списку спостереження ?"
+msgstr ""
+"Хочете додати ці сторінки до вашого локального списку спостереження ?"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:699
 msgid ""
 "You need to define the 'dab_warning_template' property in WikiCleaner "
 "configuration."
 msgstr ""
+"Потрібно визначити властивість 'dab_warning_template' в конфігурації "
+"WikiCleaner."
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:722
-#, fuzzy
 msgid "Warning for disambiguation links"
-msgstr "Чинний список значень"
+msgstr "Попередження для посилань на сторінки значень"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:74
 #: org/wikipediacleaner/gui/swing/MainWindow.java:554
@@ -418,7 +421,8 @@ msgstr "Вони можуть змінити багато сторінок за 
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:609
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "В деяких проектах Вікіпедії потрібен статус бота, щоб виконувати такі "
 "функції."
@@ -630,8 +634,8 @@ msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
 msgstr ""
-"Помилка n°{0} може бути сконфігурована з такими параметрами у <a href=\"{1}"
-"\">файлі перекладу</a> :"
+"Помилка n°{0} може бути сконфігурована з такими параметрами у <a "
+"href=\"{1}\">файлі перекладу</a> :"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1667
 #, java-format
@@ -1715,9 +1719,6 @@ msgstr "Оновлення вмісту сторінок"
 msgid "Error 'badtoken' detected: Retrying"
 msgstr "Виявлена помилка «неправильна лексема»: Повторна спроба"
 
-#~ msgid "Replace parameter {0} with"
-#~ msgstr "Замінити параметр {0} на"
-
 #~ msgid "only"
 #~ msgstr "лише"
 
@@ -1732,3 +1733,7 @@ msgstr "Виявлена помилка «неправильна лексема�
 
 #~ msgid "Comma separated list of errors to ignore."
 #~ msgstr "Розділений комами список ігнорованих помилок."
+
+#, java-format
+#~ msgid "Replace parameter {0} with"
+#~ msgstr "Замінити параметр {0} на"
