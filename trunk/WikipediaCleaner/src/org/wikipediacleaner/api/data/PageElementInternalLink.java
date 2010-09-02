@@ -132,6 +132,15 @@ public class PageElementInternalLink {
     return text;
   }
 
+  public String getDisplayedText() {
+    if (text != null) {
+      return text;
+    }
+    if (anchor == null) {
+      return linkNotTrimmed;
+    }
+    return linkNotTrimmed + "#" + anchorNotTrimmed;
+  }
   private PageElementInternalLink(
       EnumWikipedia wikipedia,
       int beginIndex, int endIndex,
