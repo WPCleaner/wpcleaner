@@ -360,6 +360,35 @@ public class MediaWikiAPI implements API {
   }
 
   /**
+   * Retrieves the contents of a section in a <code>page</code>.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param page Page.
+   * @param section Section number.
+   * @throws APIException
+   */
+  public void retrieveSectionContents(EnumWikipedia wikipedia, Page page, int section)
+    throws APIException {
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    properties.put("prop", "revisions|info");
+    properties.put("titles", page.getTitle());
+    properties.put("rvprop", "content|ids|timestamp");
+    properties.put("rvsection", Integer.toString(section));
+    if (lgtoken != null) {
+      properties.put("intoken", "edit");
+    }
+    try {
+      constructContents(
+          page,
+          getRoot(wikipedia, properties, MAX_ATTEMPTS),
+          "/api/query/pages/page");
+    } catch (JDOMParseException e) {
+      log.error("Error retrieving page content", e);
+      throw new APIException("Error parsing XML", e);
+    }
+  }
+
+  /**
    * @param wikipedia Wikipedia.
    * @param pages List of pages.
    * @throws APIException
