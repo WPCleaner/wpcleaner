@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-09-01 23:17+0200\n"
-"PO-Revision-Date: 2010-08-30 06:26+0000\n"
-"Last-Translator: Gaël Desbois <Unknown>\n"
+"PO-Revision-Date: 2010-09-02 11:42+0000\n"
+"Last-Translator: Bruno Veilleux <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-08-30 08:56+0000\n"
+"X-Launchpad-Export-Date: 2010-09-02 16:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -288,9 +288,8 @@ msgid "Expanding templates"
 msgstr "Développement des modèles"
 
 #: org/wikipediacleaner/api/execution/LinksWRCallable.java:61
-#, fuzzy
 msgid "Retrieving page links"
-msgstr "Récupération des pages liées"
+msgstr "Récupération des liens"
 
 #: org/wikipediacleaner/api/execution/ParseTextCallable.java:55
 msgid "Parsing text"
@@ -320,9 +319,11 @@ msgid "Link count"
 msgstr "Compte de liens"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:329
-#, fuzzy
-msgid "Add a warning on the talk page about the links to disambiguation pages"
-msgstr "Analyser les liens pour les pages d'homonymie"
+msgid ""
+"Add a warning on the talk page about the links to disambiguation pages"
+msgstr ""
+"Ajouter un avertissement sur la page de discussion à propos des liens vers "
+"les pages d'homonymies"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:365
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:423
@@ -399,9 +400,8 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:722
-#, fuzzy
 msgid "Warning for disambiguation links"
-msgstr "Liste d'homonymies à traiter"
+msgstr "Avertissement pour les liens d'homonymie"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:74
 #: org/wikipediacleaner/gui/swing/MainWindow.java:554
@@ -424,7 +424,8 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:609
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -1209,7 +1210,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:402
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr ""
+"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:286
 msgid "&Page :"
@@ -1730,9 +1732,6 @@ msgstr "Mise à jour du contenu de la page"
 msgid "Error 'badtoken' detected: Retrying"
 msgstr "Erreur « badtoken » détectée : nouvelle tentative"
 
-#~ msgid "Replace parameter {0} with"
-#~ msgstr "Remplacer le paramètre {0} par"
-
 #~ msgid "Retrieving namespaces"
 #~ msgstr "Récupération des espaces de nom"
 
@@ -1793,6 +1792,10 @@ msgstr "Erreur « badtoken » détectée : nouvelle tentative"
 #~ msgid "]]"
 #~ msgstr "]]"
 
+#, java-format
+#~ msgid "Replace parameter {0} with"
+#~ msgstr "Remplacer le paramètre {0} par"
+
 #~ msgid "Work"
 #~ msgstr "Travail"
 
@@ -1807,8 +1810,8 @@ msgstr "Erreur « badtoken » détectée : nouvelle tentative"
 
 #~ msgid "Comma separated list of errors to ignore."
 #~ msgstr ""
-#~ "Liste des numéros d'erreurs à ignorer séparés d'une virgule (par ex. 17, "
-#~ "46, 53)."
+#~ "Liste des numéros d'erreurs à ignorer séparés d'une virgule (par ex. 17, 46, "
+#~ "53)."
 
 #~ msgid "Comma separated list of errors to work on."
 #~ msgstr ""
