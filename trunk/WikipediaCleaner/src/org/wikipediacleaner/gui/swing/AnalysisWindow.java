@@ -203,7 +203,10 @@ public class AnalysisWindow extends PageWindow {
     buttonNext.setEnabled(isPageLoaded());
     buttonLast.setEnabled(isPageLoaded());
     buttonValidate.setEnabled(isPageLoaded());
-    buttonDisambiguationWarning.setEnabled(isPageLoaded());
+    buttonDisambiguationWarning.setEnabled(
+        isPageLoaded() &&
+        (getPage() != null) &&
+        (getPage().isSubjectPage()));
     super.updateComponentState();
   }
 
@@ -713,14 +716,15 @@ public class AnalysisWindow extends PageWindow {
     if (dabPages.isEmpty()) {
       return;
     }
+    Collections.sort(dabPages);
     StringBuilder sb = new StringBuilder();
     sb.append("{{");
     sb.append(template);
     for (String link : dabPages) {
-      sb.append("|");
+      sb.append(" | ");
       sb.append(link);
     }
-    sb.append("}}");
+    sb.append(" }}");
     InformationWindow.createInformationWindow(
         GT._("Warning for disambiguation links"), sb.toString(), getWikipedia());
   }
