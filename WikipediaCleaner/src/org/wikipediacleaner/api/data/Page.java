@@ -491,13 +491,33 @@ public class Page implements Comparable<Page> {
 
   /**
    * @param namespaces List of namespaces.
+   * @return Talk page.
+   */
+  public Page getTalkPage(List<Namespace> namespaces) {
+    String talkPageName = getTalkPageName(namespaces);
+    if (talkPageName == null) {
+      return null;
+    }
+    Page talkPage = DataManager.getPage(getWikipedia(), talkPageName, null, null);
+    if (talkPage != null) {
+      talkPage.setEditToken(getEditToken());
+    }
+    return talkPage;
+  }
+
+  /**
+   * @param namespaces List of namespaces.
    * @return Talk page title.
    */
-  public String getTalkPage(List<Namespace> namespaces) {
+  public String getTalkPageName(List<Namespace> namespaces) {
     if (!isArticle() || (namespace == null) || (namespaces == null)) {
       return null;
     }
     if (Namespace.MAIN == namespace.intValue()) {
+      Namespace n = Namespace.getNamespace(Namespace.MAIN_TALK, namespaces);
+      if (n != null) {
+        return n.getTitle() + ":" + title;
+      }
       return "Talk:" + title;
     }
     Namespace n = Namespace.getNamespace(namespace.intValue() + 1, namespaces);

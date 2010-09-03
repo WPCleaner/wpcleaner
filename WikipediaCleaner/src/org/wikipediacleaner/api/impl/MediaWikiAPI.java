@@ -497,11 +497,15 @@ public class MediaWikiAPI implements API {
     QueryResult result = null;
     Map<String, String> properties = getProperties(ACTION_API_EDIT, true);
     properties.put("assert", "user");
-    properties.put("basetimestamp", page.getContentsTimestamp());
+    if (page.getContentsTimestamp() != null) {
+      properties.put("basetimestamp", page.getContentsTimestamp());
+    }
     properties.put("bot", "");
     properties.put("minor", "");
+    if (page.getStartTimestamp() != null) {
+      properties.put("starttimestamp", page.getStartTimestamp());
+    }
     properties.put("summary", comment);
-    properties.put("starttimestamp", page.getStartTimestamp());
     properties.put("text", newContents);
     properties.put("title", page.getTitle());
     properties.put("token", page.getEditToken());
@@ -523,14 +527,51 @@ public class MediaWikiAPI implements API {
    * @param page Page.
    * @param title Title of the new section.
    * @param contents Contents.
-   * @param editToken Edit token.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
    * @throws APIException
    */
   public QueryResult addNewSection(
       EnumWikipedia wikipedia,
-      String page, String title, String contents, String editToken, boolean forceWatch) throws APIException {
+      Page page, String title, String contents, boolean forceWatch) throws APIException {
+    return updateSection(wikipedia, page, title, "new", contents, forceWatch);
+  }
+
+  /**
+   * Update a section in a page.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param page Page.
+   * @param title Title of the new section.
+   * @param section Section. 
+   * @param contents Contents.
+   * @param forceWatch Force watching the page.
+   * @return Result of the command.
+   * @throws APIException
+   */
+  public QueryResult updateSection(
+      EnumWikipedia wikipedia,
+      Page page, String title, int section,
+      String contents, boolean forceWatch) throws APIException {
+    return updateSection(wikipedia, page, title, Integer.toString(section), contents, forceWatch);
+  }
+
+  /**
+   * Update a section or create a new section in a page.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param page Page.
+   * @param title Title of the new section.
+   * @param section Section ("new" for a new section). 
+   * @param contents Contents.
+   * @param forceWatch Force watching the page.
+   * @return Result of the command.
+   * @throws APIException
+   */
+  private QueryResult updateSection(
+      EnumWikipedia wikipedia,
+      Page page, String title, String section,
+      String contents, boolean forceWatch) throws APIException {
     if (page == null) {
       throw new APIException("Page is null");
     }
@@ -545,12 +586,20 @@ public class MediaWikiAPI implements API {
     }
     QueryResult result = null;
     Map<String, String> properties = getProperties(ACTION_API_EDIT, true);
+    properties.put("assert", "user");
+    if (page.getContentsTimestamp() != null) {
+      properties.put("basetimestamp", page.getContentsTimestamp());
+    }
+    properties.put("bot", "");
     properties.put("minor", "");
-    properties.put("section", "new");
+    properties.put("section", section);
+    if (page.getStartTimestamp() != null) {
+      properties.put("starttimestamp", page.getStartTimestamp());
+    }
     properties.put("summary", title);
-    properties.put("title", page);
     properties.put("text", contents);
-    properties.put("token", editToken);
+    properties.put("title", page.getTitle());
+    properties.put("token", page.getEditToken());
     if (forceWatch) {
       properties.put("watch", "");
     }

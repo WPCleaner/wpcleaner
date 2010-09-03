@@ -43,6 +43,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.BadLocationException;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -62,9 +63,8 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(2);
 
-  String pageName;
+  Page page;
   String articleText;
-  String editToken;
 
   private JTextField textTitle;
   private JCheckBox chkForceWatch;
@@ -80,13 +80,11 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
    * 
    * @param page Page name.
    * @param articleText Text of the article.
-   * @param editToken Edit token.
    * @param wikipedia Wikipedia.
    */
   public static void createNewSectionWindow(
-      final String page,
+      final Page page,
       final String articleText,
-      final String editToken,
       final EnumWikipedia wikipedia) {
     createWindow(
         "NewSectionWindow",
@@ -98,9 +96,8 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
           public void initializeWindow(BasicWindow window) {
             if (window instanceof NewSectionWindow) {
               NewSectionWindow newSection = (NewSectionWindow) window;
-              newSection.pageName = page;
+              newSection.page = page;
               newSection.articleText = articleText;
-              newSection.editToken = editToken;
             }
           }
         });
@@ -111,7 +108,7 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
    */
   @Override
   public String getTitle() {
-    return GT._("New section in {0}", pageName);
+    return GT._("New section in {0}", page.getTitle());
   }
 
   /**
@@ -254,7 +251,7 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
     }
     new NewSectionWorker(
         getWikipedia(), this,
-        pageName, section, text, editToken,
+        page, section, text,
         chkForceWatch.isSelected()).start();
   }
 

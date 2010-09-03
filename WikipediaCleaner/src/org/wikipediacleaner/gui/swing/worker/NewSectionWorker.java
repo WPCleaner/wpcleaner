@@ -22,6 +22,7 @@ import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -31,10 +32,9 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class NewSectionWorker extends BasicWorker {
 
-  private final String page;
+  private final Page page;
   private final String section;
   private final String text;
-  private final String editToken;
   private final boolean forceWatch;
 
   /**
@@ -43,17 +43,15 @@ public class NewSectionWorker extends BasicWorker {
    * @param page Page.
    * @param section Section title.
    * @param text Section text.
-   * @param editToken Edit token.
    * @param forceWatch Force watch.
    */
   public NewSectionWorker(
-      EnumWikipedia wikipedia, BasicWindow window, String page,
-      String section, String text, String editToken, boolean forceWatch) {
+      EnumWikipedia wikipedia, BasicWindow window, Page page,
+      String section, String text, boolean forceWatch) {
     super(wikipedia, window);
     this.page = page;
     this.section = section;
     this.text = text;
-    this.editToken = editToken;
     this.forceWatch = forceWatch;
   }
 
@@ -75,7 +73,7 @@ public class NewSectionWorker extends BasicWorker {
       setText(GT._("Retrieving MediaWiki API"));
       API api = APIFactory.getAPI();
       setText(GT._("Adding comment"));
-      api.addNewSection(getWikipedia(), page, section, text, editToken, forceWatch);
+      api.addNewSection(getWikipedia(), page, section, text, forceWatch);
     } catch (APIException e) {
       return e;
     }

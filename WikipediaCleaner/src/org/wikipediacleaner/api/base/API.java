@@ -160,14 +160,31 @@ public interface API {
    * @param page Page.
    * @param title Title of the new section.
    * @param contents Contents.
-   * @param editToken Edit token.
    * @param forceWatch Force watching the page.
    * @return Result of the command.
    * @throws APIException
    */
   public QueryResult addNewSection(
       EnumWikipedia wikipedia,
-      String page, String title, String contents, String editToken, boolean forceWatch) throws APIException;
+      Page page, String title, String contents, boolean forceWatch) throws APIException;
+
+
+  /**
+   * Update a section in a page.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param page Page.
+   * @param title Title of the new section.
+   * @param section Section. 
+   * @param contents Contents.
+   * @param forceWatch Force watching the page.
+   * @return Result of the command.
+   * @throws APIException
+   */
+  public QueryResult updateSection(
+      EnumWikipedia wikipedia,
+      Page page, String title, int section,
+      String contents, boolean forceWatch) throws APIException;
 
   /**
    * Purge page cache on Wikipedia.

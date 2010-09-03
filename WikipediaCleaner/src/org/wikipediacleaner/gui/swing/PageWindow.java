@@ -234,6 +234,7 @@ public abstract class PageWindow
   private JCheckBox chkAutomaticComment;
   JCheckBox chkCloseAfterSend;
   private JCheckBox chkEditTalkPage;
+  private JCheckBox chkUpdateWarning;
   private JLabel lblLastModified;
 
   private MediaWikiPane textContents;
@@ -244,6 +245,7 @@ public abstract class PageWindow
   @Override
   protected void updateComponentState() {
     boolean redirect = (page != null) && (page.isRedirect());
+    boolean article = (page != null) && (page.isArticle());
     if (textContents != null) {
       textContents.setEnabled(pageLoaded);
     }
@@ -265,7 +267,12 @@ public abstract class PageWindow
       buttonDisambiguationRedirect.setVisible(redirect);
     }
     if (chkEditTalkPage != null) {
-      chkEditTalkPage.setEnabled(pageLoaded && (page != null) && (page.isArticle()));
+      chkEditTalkPage.setEnabled(pageLoaded && article);
+    }
+    if (chkUpdateWarning != null) {
+      chkUpdateWarning.setEnabled(
+          pageLoaded && article &&
+          (getWikipedia().getDisambiguationWarningTemplate() != null));
     }
     if ((textComment != null) && (chkAutomaticComment != null)) {
       textComment.setEnabled(!chkAutomaticComment.isSelected());
@@ -722,6 +729,19 @@ public abstract class PageWindow
   }
 
   /**
+   * Add a component for the Update warning checkbox.
+   * 
+   * @param panel Container.
+   */
+  protected void addChkUpdateWarning(JPanel panel) {
+    chkUpdateWarning = Utilities.createJCheckBox(
+        GT._("Update disambiguation warning on talk page"),
+        false);
+    panel.add(chkUpdateWarning);
+    
+  }
+
+  /**
    * Add a component for the Last modified label.
    * 
    * @param panel Container.
@@ -1062,7 +1082,6 @@ public abstract class PageWindow
       Controller.runNewSection(
           page.getTalkPage(getWikipedia().getNamespaces()),
           getTextContents().getText(),
-          page.getEditToken(),
           getWikipedia());
     }
     Configuration config = Configuration.getConfiguration();
@@ -1073,6 +1092,7 @@ public abstract class PageWindow
         Configuration.BOOLEAN_FORCE_WATCH,
         Configuration.DEFAULT_FORCE_WATCH);
     final int oldState = getParentComponent().getExtendedState();
+    final boolean updateWarning = (chkUpdateWarning != null) && (chkUpdateWarning.isSelected());
     if (hideWindow) {
       getParentComponent().setExtendedState(Frame.ICONIFIED);
     }
@@ -1080,7 +1100,7 @@ public abstract class PageWindow
     SendWorker sendWorker = new SendWorker(
         getWikipedia(), this, page, getTextContents().getText(),
         (textComment != null) ? textComment.getText() : getWikipedia().getUpdatePageMessage(),
-        forceWatch);
+        forceWatch, updateWarning);
     sendWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(
