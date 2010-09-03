@@ -206,7 +206,7 @@ public class AnalysisWindow extends PageWindow {
     buttonDisambiguationWarning.setEnabled(
         isPageLoaded() &&
         (getPage() != null) &&
-        (getPage().isSubjectPage()));
+        (getPage().isArticle()));
     super.updateComponentState();
   }
 
