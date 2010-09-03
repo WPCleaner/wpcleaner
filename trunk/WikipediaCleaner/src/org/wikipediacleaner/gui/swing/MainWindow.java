@@ -18,7 +18,6 @@
 
 package org.wikipediacleaner.gui.swing;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -55,6 +54,11 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
+import org.lobobrowser.html.HtmlRendererContext;
+import org.lobobrowser.html.UserAgentContext;
+import org.lobobrowser.html.gui.HtmlPanel;
+import org.lobobrowser.html.parser.DocumentBuilderImpl;
+import org.lobobrowser.html.test.SimpleUserAgentContext;
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.API;
@@ -69,12 +73,15 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.worker.PageListWorker;
 import org.wikipediacleaner.gui.swing.worker.EmbeddedInWorker;
 import org.wikipediacleaner.gui.swing.worker.RandomPageWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 
 /**
@@ -237,12 +244,24 @@ public class MainWindow
     JPanel panel = new JPanel(new GridLayout(1, 0));
     panel.setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), GT._("Message")));
-    JLabel labelMessage = Utilities.createJLabel(Version.MESSAGE);
-    labelMessage.setHorizontalAlignment(SwingConstants.LEADING);
-    if (Version.HIGHLIGHT) {
-      labelMessage.setForeground(Color.RED);
+    HtmlPanel textMessage = new HtmlPanel();
+    UserAgentContext ucontextMessage = new SimpleUserAgentContext();
+    HtmlRendererContext rcontextMessage = new MediaWikiHtmlRendererContext(
+        textMessage, ucontextMessage);
+    textMessage.setPreferredSize(new Dimension(500, 150));
+    textMessage.setMinimumSize(new Dimension(100, 100));
+    DocumentBuilderImpl dbi = new DocumentBuilderImpl(
+        ucontextMessage, rcontextMessage);
+    InputSource is = new InputSource(new StringReader(Version.MESSAGE));
+    is.setSystemId(EnumWikipedia.EN.getHelpURL());
+    try {
+      textMessage.setDocument(dbi.parse(is), rcontextMessage);
+    } catch (SAXException e) {
+      // Nothing
+    } catch (IOException e) {
+      // Nothing
     }
-    panel.add(labelMessage);
+    panel.add(textMessage);
     return panel;
   }
 

@@ -162,7 +162,7 @@ public class InformationWindow
     ucontextInformation = new SimpleUserAgentContext();
     rcontextInformation = new MediaWikiHtmlRendererContext(textInformation, ucontextInformation);
     textInformation.setPreferredSize(new Dimension(500, 500));
-    textInformation.setMaximumSize(new Dimension(100, 100));
+    textInformation.setMinimumSize(new Dimension(100, 100));
     lblTitle.setLabelFor(textInformation);
     constraints.fill = GridBagConstraints.BOTH;
     constraints.gridx = 0;
