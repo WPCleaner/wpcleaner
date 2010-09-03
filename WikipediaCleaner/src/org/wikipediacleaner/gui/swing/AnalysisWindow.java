@@ -29,6 +29,8 @@ import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -698,13 +700,14 @@ public class AnalysisWindow extends PageWindow {
           getParentComponent(),
           GT._("You need to define the 'dab_warning_template' property in WikiCleaner configuration."));
     }
+    Map<String, Integer> linkCount = PageContents.countInternalDisambiguationLinks(
+        getWikipedia(), getPage(), getTextContents().getText(), getPage().getLinks());
     countOccurences(getTextContents().getText());
-    List<Page> dabPages = new ArrayList<Page>();
-    for (Page link : getPage().getLinks()) {
-      if ((link != null) &&
-          (Boolean.TRUE.equals(link.isDisambiguationPage())) &&
-          (link.getCountOccurence() > 0)) {
-        dabPages.add(link);
+    List<String> dabPages = new ArrayList<String>();
+    for (Entry<String, Integer> count : linkCount.entrySet()) {
+      if ((count.getValue() != null) &&
+          (count.getValue().intValue() > 0)) {
+        dabPages.add(count.getKey());
       }
     }
     if (dabPages.isEmpty()) {
@@ -713,9 +716,9 @@ public class AnalysisWindow extends PageWindow {
     StringBuilder sb = new StringBuilder();
     sb.append("{{");
     sb.append(template);
-    for (Page link : dabPages) {
+    for (String link : dabPages) {
       sb.append("|");
-      sb.append(link.getTitle());
+      sb.append(link);
     }
     sb.append("}}");
     InformationWindow.createInformationWindow(

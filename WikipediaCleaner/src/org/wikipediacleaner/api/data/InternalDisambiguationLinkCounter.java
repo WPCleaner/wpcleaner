@@ -18,23 +18,23 @@
 
 package org.wikipediacleaner.api.data;
 
-import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
- * A notification class to count links in a page.
+ * A notification class to count disambiguation links in a page.
  */
-public class InternalLinkCounter implements InternalLinkNotification {
+public class InternalDisambiguationLinkCounter implements InternalLinkNotification {
+
+  final private Map<String, Integer> linkCount;
 
   /**
    * Constructor.
    */
-  public InternalLinkCounter(List<Page> links) {
-    if (links != null) {
-      for (Page link : links) {
-        link.setCountOccurence(0);
-      }
-    }
+  public InternalDisambiguationLinkCounter() {
+    linkCount = new HashMap<String, Integer>();
   }
 
   /**
@@ -45,7 +45,9 @@ public class InternalLinkCounter implements InternalLinkNotification {
    */
   public void linkFound(
       Page link, PageElementInternalLink internalLink) {
-    countLink(link);
+    if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
+      countLink(link);
+    }
   }
 
   /**
@@ -58,7 +60,10 @@ public class InternalLinkCounter implements InternalLinkNotification {
   public void linkFound(
       Page link, PageElementTemplate template,
       TemplateMatcher matcher) {
-    countLink(link);
+    if ((Boolean.TRUE.equals(link.isDisambiguationPage())) &&
+        ((!matcher.isGood()) || (matcher.isHelpNeeded()))) {
+      countLink(link);
+    }
   }
 
   /**
@@ -70,6 +75,19 @@ public class InternalLinkCounter implements InternalLinkNotification {
     if (link == null) {
       return;
     }
-    link.setCountOccurence(link.getCountOccurence() + 1);
+    Integer currentCount = linkCount.get(link.getTitle());
+    if (currentCount == null) {
+      currentCount = Integer.valueOf(1);
+    } else {
+      currentCount = Integer.valueOf(currentCount.intValue() + 1);
+    }
+    linkCount.put(link.getTitle(), currentCount);
+  }
+
+  /**
+   * @return Link count.
+   */
+  public Map<String, Integer> getLinkCount() {
+    return Collections.unmodifiableMap(linkCount);
   }
 }

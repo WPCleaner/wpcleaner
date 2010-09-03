@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.data;
 
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
@@ -163,6 +164,24 @@ public class PageContents {
       List<Page> links) {
     InternalLinkNotification counter = new InternalLinkCounter(links);
     findInternalLinks(wikipedia, page, contents, links, counter);
+  }
+
+  /**
+   * Count internal disambiguation links in a page.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param links Links that are requested.
+   * @return Link count.
+   */
+  public static Map<String, Integer> countInternalDisambiguationLinks(
+      EnumWikipedia wikipedia,
+      Page page, String contents,
+      List<Page> links) {
+    InternalDisambiguationLinkCounter counter = new InternalDisambiguationLinkCounter();
+    findInternalLinks(wikipedia, page, contents, links, counter);
+    return counter.getLinkCount();
   }
 
   // ==========================================================================
