@@ -188,16 +188,14 @@ public class Controller {
    * 
    * @param page Page.
    * @param articleText Text of the article.
-   * @param editToken Edit token.
    * @param wikipedia Wikipedia
    */
   public static void runNewSection(
-      String page,
+      Page page,
       String articleText,
-      String editToken,
       EnumWikipedia wikipedia) {
     if ((page != null) && (wikipedia != null)) {
-      NewSectionWindow.createNewSectionWindow(page, articleText, editToken, wikipedia);
+      NewSectionWindow.createNewSectionWindow(page, articleText, wikipedia);
     }
   }
 

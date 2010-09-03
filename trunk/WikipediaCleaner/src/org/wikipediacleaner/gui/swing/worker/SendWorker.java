@@ -18,11 +18,18 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -36,6 +43,7 @@ public class SendWorker extends BasicWorker {
   private final String text;
   private final String comment;
   private final boolean forceWatch;
+  private final boolean updateWarning;
 
   /**
    * @param wikipedia Wikipedia.
@@ -44,16 +52,18 @@ public class SendWorker extends BasicWorker {
    * @param text Page contents.
    * @param comment Comment.
    * @param forceWatch Force watching the page.
+   * @param updateWarning Update warning on talk page.
    */
   public SendWorker(
       EnumWikipedia wikipedia, BasicWindow window,
       Page page, String text, String comment,
-      boolean forceWatch) {
+      boolean forceWatch, boolean updateWarning) {
     super(wikipedia, window);
     this.page = page;
     this.text = text;
     this.comment = comment;
     this.forceWatch = forceWatch;
+    this.updateWarning = updateWarning;
   }
 
   /* (non-Javadoc)
@@ -63,6 +73,8 @@ public class SendWorker extends BasicWorker {
   public Object construct() {
     setText(GT._("Retrieving MediaWiki API"));
     API api = APIFactory.getAPI();
+
+    // Updating page contents
     try {
       setText(GT._("Updating page contents"));
       api.updatePage(
@@ -82,6 +94,74 @@ public class SendWorker extends BasicWorker {
           return e2;
         }
       } else {
+        return e;
+      }
+    }
+
+    // Updating disambiguation warning
+    if ((updateWarning) && (getWikipedia().getDisambiguationWarningTemplate() != null)) {
+      Page talkPage = page.getTalkPage(getWikipedia().getNamespaces());
+      try {
+        setText(GT._("Retrieving first section contents - {0}", talkPage.getTitle()));
+        api.retrieveSectionContents(getWikipedia(), talkPage, 0);
+        PageElementTemplate templateWarning = PageContents.findNextTemplate(
+            talkPage, talkPage.getContents(),
+            getWikipedia().getDisambiguationWarningTemplate(),
+            0);
+        Map<String, Integer> linkCount = PageContents.countInternalDisambiguationLinks(
+            getWikipedia(), page, text, page.getLinks());
+        List<String> dabLinks = new ArrayList<String>(linkCount.keySet());
+        Collections.sort(dabLinks);
+        if (templateWarning == null) {
+
+          // Template warning absent
+          if (dabLinks.isEmpty()) {
+
+            // No dab links : nothing to do
+          } else {
+
+            // Dab links : warning template must be added
+            StringBuilder templateText = new StringBuilder();
+            templateText.append("{{ ");
+            templateText.append(getWikipedia().getDisambiguationWarningTemplate());
+            for (String dabLink : dabLinks) {
+              templateText.append(" | ");
+              templateText.append(dabLink);
+            }
+            templateText.append(" }}");
+            if ((talkPage.getContents() != null) &&
+                (talkPage.getContents().trim().length() > 0)) {
+              templateText.append("\n");
+              templateText.append(talkPage.getContents().trim());
+            }
+            setText(GT._("Updating disambiguation warning on talk page"));
+            try {
+              api.updateSection(
+                  getWikipedia(), talkPage,
+                  getWikipedia().getDisambiguationWarningTemplate(), 0,
+                  templateText.toString(), forceWatch);
+            } catch (APIException e) {
+              if (APIException.ERROR_BAD_TOKEN.equals(e.getErrorCode())) {
+                try {
+                  setText(GT._("Error 'badtoken' detected: Retrying"));
+                  api.updateSection(
+                      getWikipedia(), talkPage,
+                      getWikipedia().getDisambiguationWarningTemplate(), 0,
+                      templateText.toString(), forceWatch);
+                } catch (APIException e2) {
+                  return e2;
+                }
+              } else {
+                return e;
+              }
+            }
+          }
+        } else {
+
+          // Template warning already existing
+          // TODO
+        }
+      } catch (APIException e) {
         return e;
       }
     }

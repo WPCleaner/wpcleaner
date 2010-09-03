@@ -198,15 +198,13 @@ public class AnalysisWindow extends PageWindow {
    */
   @Override
   protected void updateComponentState() {
+    boolean article = (isPageLoaded()) && (getPage() != null) && (getPage().isArticle());
     buttonFirst.setEnabled(isPageLoaded());
     buttonPrevious.setEnabled(isPageLoaded());
     buttonNext.setEnabled(isPageLoaded());
     buttonLast.setEnabled(isPageLoaded());
     buttonValidate.setEnabled(isPageLoaded());
-    buttonDisambiguationWarning.setEnabled(
-        isPageLoaded() &&
-        (getPage() != null) &&
-        (getPage().isArticle()));
+    buttonDisambiguationWarning.setEnabled(article);
     super.updateComponentState();
   }
 
@@ -272,6 +270,9 @@ public class AnalysisWindow extends PageWindow {
 
     // Check box for adding a note on the talk page
     addChkEditTalkPage(panelInformation);
+
+    // Check box for updating disambiguation warning on the talk page
+    addChkUpdateWarning(panelInformation);
 
     // Comment
     GridBagConstraints constraints = new GridBagConstraints();

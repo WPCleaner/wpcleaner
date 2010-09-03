@@ -1239,7 +1239,8 @@ public class CheckWikiProjectWindow extends PageWindow {
       SendWorker sendWorker = new SendWorker(
           getWikipedia(), CheckWikiProjectWindow.this,
           page, textPage.getText(), textComment.getText(),
-          configuration.getBoolean(Configuration.BOOLEAN_FORCE_WATCH, Configuration.DEFAULT_FORCE_WATCH));
+          configuration.getBoolean(Configuration.BOOLEAN_FORCE_WATCH, Configuration.DEFAULT_FORCE_WATCH),
+          false);
       sendWorker.setListener(new DefaultBasicWorkerListener() {
         @Override
         public void afterFinished(
