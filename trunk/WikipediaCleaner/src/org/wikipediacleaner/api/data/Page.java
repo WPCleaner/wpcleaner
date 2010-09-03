@@ -134,26 +134,6 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @return True if the page is a subject page (not a talk page).
-   */
-  public boolean isSubjectPage() {
-    if (namespace == null) {
-      return false;
-    }
-    return ((namespace.intValue() % 2) == 0);
-  }
-
-  /**
-   * @return True if the page is a talk page.
-   */
-  public boolean isTalkPage() {
-    if (namespace == null) {
-      return false;
-    }
-    return ((namespace.intValue() % 2) != 0);
-  }
-
-  /**
    * @return Wikipedia.
    */
   public EnumWikipedia getWikipedia() {
