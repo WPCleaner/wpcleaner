@@ -34,14 +34,16 @@ public final class Version {
   public final static Date   DATE = new GregorianCalendar(2010, Calendar.JUNE, 1).getTime();
 
   public final static String MESSAGE =
-    "<html>" +
     GT._("I hope you'll like WikiCleaner.") +
     "<br><br>" +
-    GT._("!NEW! - WikiCleaner configuration is now available online, check the System configuration.") +
+    GT._(
+        "WikiCleaner configuration is available online, check the {0}System configuration{1}.",
+        new Object[] { "<a href=\"http://fr.wikipedia.org/wiki/Utilisateur:NicoV/WikiCleanerConfigurationDocumentation\">", "</a>" }) +
     "<br>" +
-    GT._("Many new features added for the Check Wiki project : try them !") +
+    GT._(
+        "Many new features added for the {0}Check Wiki project{1} : try them !",
+        new Object[] { "<a href=\"http://de.wikipedia.org/wiki/Benutzer:Stefan_K%C3%BChn/Check_Wikipedia\">", "</a>" }) +
     "<br><br>" +
-    GT._("Please, report any other problem you find to me.") +
-    "</html>";
+    GT._("Please, report any other problem you find to me.");
   public final static boolean HIGHLIGHT = false;
 }
