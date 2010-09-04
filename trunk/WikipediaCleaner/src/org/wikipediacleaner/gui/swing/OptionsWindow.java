@@ -98,6 +98,8 @@ public class OptionsWindow
   private JSpinner spinInterrogationThreads;
   private JTextField txtSignature;
 
+  private JCheckBox chkAnalysisUpdateWarning;
+  private JCheckBox chkAnalysisUpdateWarningAll;
   private JCheckBox chkAnalysisCountDisambig;
   private JCheckBox chkAnalysisCountMissing;
   private JCheckBox chkAnalysisCountOther;
@@ -438,6 +440,24 @@ public class OptionsWindow
             Configuration.BOOLEAN_CLOSE_FULL,
             Configuration.DEFAULT_CLOSE_FULL));
     panel.add(chkCloseFull, constraints);
+    constraints.gridy++;
+
+    // Update disambiguation warning in main namespace
+    chkAnalysisUpdateWarning = Utilities.createJCheckBox(
+        GT._("Update disambiguation warning on talk page (in main namespace)"),
+        configuration.getBoolean(
+            Configuration.BOOLEAN_UPDATE_WARNING,
+            Configuration.DEFAULT_UPDATE_WARNING));
+    panel.add(chkAnalysisUpdateWarning, constraints);
+    constraints.gridy++;
+
+    // Update disambiguation warning in other namespace
+    chkAnalysisUpdateWarningAll = Utilities.createJCheckBox(
+        GT._("Update disambiguation warning on talk page (in other namespaces)"),
+        configuration.getBoolean(
+            Configuration.BOOLEAN_UPDATE_WARNING_ALL,
+            Configuration.DEFAULT_UPDATE_WARNING_ALL));
+    panel.add(chkAnalysisUpdateWarningAll, constraints);
     constraints.gridy++;
 
     // Show Disambiguation pages
@@ -832,6 +852,8 @@ public class OptionsWindow
     config.setBoolean(Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT, chkSaveLastReplacement.isSelected());
     config.setBoolean(Configuration.BOOLEAN_SAVE_WINDOW, chkSaveWindowPosition.isSelected());
     config.setBoolean(Configuration.BOOLEAN_SHORT_NOTATION, chkShortNotation.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_UPDATE_WARNING, chkAnalysisUpdateWarning.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_UPDATE_WARNING_ALL, chkAnalysisUpdateWarningAll.isSelected());
     config.setBoolean(Configuration.BOOLEAN_WIKICLEANER_COMMENT, chkWikiInComments.isSelected());
 
     // Integer values
@@ -892,6 +914,12 @@ public class OptionsWindow
     chkAnalysisRedirect.setSelected(config.getBoolean(
         Configuration.BOOLEAN_ANALYSIS_REDIRECT_PAGES,
         Configuration.DEFAULT_ANALYSIS_REDIRECT_PAGES));
+    chkAnalysisUpdateWarning.setSelected(config.getBoolean(
+        Configuration.BOOLEAN_UPDATE_WARNING,
+        Configuration.DEFAULT_UPDATE_WARNING));
+    chkAnalysisUpdateWarningAll.setSelected(config.getBoolean(
+        Configuration.BOOLEAN_UPDATE_WARNING_ALL,
+        Configuration.DEFAULT_UPDATE_WARNING_ALL));
     chkShow0ErrorsCheckWiki.setSelected(config.getBoolean(
         Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
         Configuration.DEFAULT_CHECK_SHOW_0_ERRORS));
