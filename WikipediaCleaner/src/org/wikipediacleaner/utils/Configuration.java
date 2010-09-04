@@ -103,6 +103,8 @@ public class Configuration implements WindowListener {
   public  final static String  BOOLEAN_SAVE_LAST_REPLACEMENT   = "SaveLastReplacement";
   public  final static String  BOOLEAN_SAVE_WINDOW             = "SaveWindow";
   public  final static String  BOOLEAN_SHORT_NOTATION          = "ShortNotation";
+  public  final static String  BOOLEAN_UPDATE_WARNING          = "UpdateWarning";
+  public  final static String  BOOLEAN_UPDATE_WARNING_ALL      = "UpdateWarningAll";
   public  final static String  BOOLEAN_WIKICLEANER_COMMENT     = "WikiCleanerComment";
 
   public  final static boolean DEFAULT_ADVANCED_FEATURES       = false;
@@ -126,6 +128,8 @@ public class Configuration implements WindowListener {
   public  final static boolean DEFAULT_SAVE_LAST_REPLACEMENT   = false;
   public  final static boolean DEFAULT_SAVE_WINDOW             = true;
   public  final static boolean DEFAULT_SHORT_NOTATION          = false;
+  public  final static boolean DEFAULT_UPDATE_WARNING          = false;
+  public  final static boolean DEFAULT_UPDATE_WARNING_ALL      = false;
   public  final static boolean DEFAULT_WIKICLEANER_COMMENT     = true;
 
   // Special properties

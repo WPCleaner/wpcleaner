@@ -594,6 +594,8 @@ public class AnalysisWindow extends PageWindow {
     reloadWorker.start();
   }
 
+  private boolean firstReload = true;
+
   /**
    * Callback called at the end of the Reload Worker.
    */
@@ -611,6 +613,23 @@ public class AnalysisWindow extends PageWindow {
     selectLinks(0);
     modelLinks.updateLinkCount();
     createFixRedirectsMenu();
+    if (firstReload) {
+      firstReload = false;
+      boolean isArticle = (getPage() != null) && (getPage().isArticle());
+      if (isArticle) {
+        boolean isMainNamespace = getPage().isInMainNamespace();
+        Configuration config = Configuration.getConfiguration();
+        if (isMainNamespace) {
+          chkUpdateWarning.setSelected(config.getBoolean(
+              Configuration.BOOLEAN_UPDATE_WARNING,
+              Configuration.DEFAULT_UPDATE_WARNING));
+        } else {
+          chkUpdateWarning.setSelected(config.getBoolean(
+              Configuration.BOOLEAN_UPDATE_WARNING_ALL,
+              Configuration.DEFAULT_UPDATE_WARNING_ALL));
+        }
+      }
+    }
     updateComponentState();
   }
 

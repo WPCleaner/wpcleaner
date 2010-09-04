@@ -234,7 +234,7 @@ public abstract class PageWindow
   private JCheckBox chkAutomaticComment;
   JCheckBox chkCloseAfterSend;
   private JCheckBox chkEditTalkPage;
-  private JCheckBox chkUpdateWarning;
+  JCheckBox chkUpdateWarning;
   private JLabel lblLastModified;
 
   private MediaWikiPane textContents;
