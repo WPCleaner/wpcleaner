@@ -121,20 +121,20 @@ public class SendWorker extends BasicWorker {
           } else {
 
             // Dab links : warning template must be added
-            StringBuilder templateText = new StringBuilder();
-            templateText.append("{{ ");
-            templateText.append(getWikipedia().getDisambiguationWarningTemplate());
+            StringBuilder talkText = new StringBuilder();
+            talkText.append("{{ ");
+            talkText.append(getWikipedia().getDisambiguationWarningTemplate());
             for (String dabLink : dabLinks) {
-              templateText.append(" | ");
-              templateText.append(dabLink);
+              talkText.append(" | ");
+              talkText.append(dabLink);
             }
-            templateText.append(" }}");
+            talkText.append(" }}");
             if ((talkPage.getContents() != null) &&
                 (talkPage.getContents().trim().length() > 0)) {
-              templateText.append("\n");
-              templateText.append(talkPage.getContents().trim());
+              talkText.append("\n");
+              talkText.append(talkPage.getContents().trim());
             }
-            updateDisambiguationWarning(talkPage, templateText.toString());
+            updateDisambiguationWarning(talkPage, talkText.toString());
           }
         } else {
 
@@ -153,8 +153,42 @@ public class SendWorker extends BasicWorker {
             updateDisambiguationWarning(talkPage, talkText.toString());
           } else {
 
-            // Dab links : warning template must be updated
-            // TODO
+            // Dab links : warning template must be updated (if necessary)
+            List<String> oldList = new ArrayList<String>();
+            for (int i = 0; i < templateWarning.getParameterCount(); i++) {
+              String paramValue = templateWarning.getParameterValue(Integer.toString(i + 1));
+              if (paramValue != null) {
+                oldList.add(paramValue);
+              }
+            }
+            boolean sameList = true;
+            if (oldList.size() != dabLinks.size()) {
+              sameList = false;
+            } else {
+              for (int i = 0; i < oldList.size(); i++) {
+                if (!oldList.get(i).equals(dabLinks.get(i))) {
+                  sameList = false;
+                }
+              }
+            }
+            if (!sameList) {
+              String talkPageContents = talkPage.getContents();
+              StringBuilder talkText = new StringBuilder();
+              if (templateWarning.getBeginIndex() > 0) {
+                talkText.append(talkPageContents.substring(0, templateWarning.getBeginIndex()));
+              }
+              talkText.append("{{ ");
+              talkText.append(getWikipedia().getDisambiguationWarningTemplate());
+              for (String dabLink : dabLinks) {
+                talkText.append(" | ");
+                talkText.append(dabLink);
+              }
+              talkText.append(" }}");
+              if (templateWarning.getEndIndex() < talkPageContents.length()) {
+                talkText.append(talkPageContents.substring(templateWarning.getEndIndex()));
+              }
+              updateDisambiguationWarning(talkPage, talkText.toString());
+            }
           }
         }
       } catch (APIException e) {

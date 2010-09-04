@@ -585,7 +585,7 @@ public class Page implements Comparable<Page> {
       // Check each internal link
       while ((currentPos >= 0) && (currentPos < pageContents.length())) {
         currentPos = pageContents.indexOf("[[", currentPos);
-        if (currentPos > 0) {
+        if (currentPos >= 0) {
           int tmpPos = currentPos + 2;
           // Check the next anchor
           if (nextSharp < currentPos) {
