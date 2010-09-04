@@ -50,6 +50,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
 
   private final EnumWikipedia wikipedia;
   private JCheckBox chkAddNote;
+  private JCheckBox chkUpdateWarning;
   private BasicWindow window;
 
   public MediaWikiPopupListener(EnumWikipedia wikipedia, BasicWindow window) {
@@ -62,6 +63,13 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
    */
   public void setCheckBoxAddNote(JCheckBox chk) {
     chkAddNote = chk;
+  }
+
+  /**
+   * @param chk CheckBox used for updating warning on talk page.
+   */
+  public void setCheckBoxUpdateWarning(JCheckBox chk) {
+    chkUpdateWarning = chk;
   }
 
   /**
@@ -314,10 +322,16 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
     popup.add(new JSeparator());
 
     // Create sub menus
+    JCheckBox chk = null;
+    if ((chkUpdateWarning != null) && (chkUpdateWarning.isEnabled())) {
+      chk = chkUpdateWarning;
+    } else if ((chkAddNote != null) && (chkAddNote.isEnabled())) {
+      chk = chkAddNote;
+    }
     MenuCreator.addReplaceLinkToMenu(popup, page, text, element, textPane);
     MenuCreator.addRemoveLinkToMenu(popup, text, element, textPane);
     MenuCreator.addMarkAsNormalToMenu(wikipedia, popup, page, text, element, textPane);
-    MenuCreator.addMarkAsNeedingHelpToMenu(wikipedia, popup, page, text, element, textPane, chkAddNote);
+    MenuCreator.addMarkAsNeedingHelpToMenu(wikipedia, popup, page, text, element, textPane, chk);
     MenuCreator.addLinkTextToMenu(wikipedia, popup, page, text, element, textPane);
     popup.add(new JSeparator());
     MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);

@@ -258,6 +258,15 @@ public abstract class PageWindow
     if ((buttonSend != null) && (textContents != null)) {
       buttonSend.setEnabled(pageLoaded && textContents.isModified());
     }
+    if (buttonDisambiguation != null) {
+      buttonDisambiguation.setEnabled(pageLoaded);
+    }
+    if (buttonFullAnalysis != null) {
+      buttonFullAnalysis.setEnabled(pageLoaded);
+    }
+    if (buttonWatch != null) {
+      buttonWatch.setEnabled(pageLoaded);
+    }
     if (buttonFullAnalysisRedirect != null) {
       buttonFullAnalysisRedirect.setEnabled(redirect);
       buttonFullAnalysisRedirect.setVisible(redirect);
@@ -265,6 +274,9 @@ public abstract class PageWindow
     if (buttonDisambiguationRedirect != null) {
       buttonDisambiguationRedirect.setEnabled(redirect);
       buttonDisambiguationRedirect.setVisible(redirect);
+    }
+    if (chkCloseAfterSend != null) {
+      chkCloseAfterSend.setEnabled(pageLoaded);
     }
     if (chkEditTalkPage != null) {
       chkEditTalkPage.setEnabled(pageLoaded && article);
@@ -734,11 +746,13 @@ public abstract class PageWindow
    * @param panel Container.
    */
   protected void addChkUpdateWarning(JPanel panel) {
-    chkUpdateWarning = Utilities.createJCheckBox(
-        GT._("Update disambiguation warning on talk page"),
-        false);
-    panel.add(chkUpdateWarning);
-    
+    if (getTextContents() != null) {
+      chkUpdateWarning = Utilities.createJCheckBox(
+          GT._("Update disambiguation warning on talk page"),
+          false);
+      getTextContents().setCheckBoxUpdateWarning(chkUpdateWarning);
+      panel.add(chkUpdateWarning);
+    }
   }
 
   /**
