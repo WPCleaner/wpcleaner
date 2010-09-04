@@ -134,37 +134,55 @@ public class SendWorker extends BasicWorker {
               templateText.append("\n");
               templateText.append(talkPage.getContents().trim());
             }
-            setText(GT._("Updating disambiguation warning on talk page"));
-            try {
-              api.updateSection(
-                  getWikipedia(), talkPage,
-                  getWikipedia().getDisambiguationWarningTemplate(), 0,
-                  templateText.toString(), forceWatch);
-            } catch (APIException e) {
-              if (APIException.ERROR_BAD_TOKEN.equals(e.getErrorCode())) {
-                try {
-                  setText(GT._("Error 'badtoken' detected: Retrying"));
-                  api.updateSection(
-                      getWikipedia(), talkPage,
-                      getWikipedia().getDisambiguationWarningTemplate(), 0,
-                      templateText.toString(), forceWatch);
-                } catch (APIException e2) {
-                  return e2;
-                }
-              } else {
-                return e;
-              }
-            }
+            updateDisambiguationWarning(talkPage, templateText.toString());
           }
         } else {
 
           // Template warning already existing
-          // TODO
+          if (dabLinks.isEmpty()) {
+
+            // No dab links : warning template must be removed
+            String talkPageContents = talkPage.getContents();
+            StringBuilder talkText = new StringBuilder();
+            if (templateWarning.getBeginIndex() > 0) {
+              talkText.append(talkPageContents.substring(0, templateWarning.getBeginIndex()));
+            }
+            if (templateWarning.getEndIndex() < talkPageContents.length()) {
+              talkText.append(talkPageContents.substring(templateWarning.getEndIndex()));
+            }
+            updateDisambiguationWarning(talkPage, talkText.toString());
+          } else {
+
+            // Dab links : warning template must be updated
+            // TODO
+          }
         }
       } catch (APIException e) {
         return e;
       }
     }
     return null;
+  }
+
+  private void updateDisambiguationWarning(
+      Page talkPage, String talkText) throws APIException {
+    setText(GT._("Updating disambiguation warning on talk page"));
+    API api = APIFactory.getAPI();
+   try {
+      api.updateSection(
+          getWikipedia(), talkPage,
+          getWikipedia().getDisambiguationWarningTemplate(), 0,
+          talkText, forceWatch);
+    } catch (APIException e) {
+      if (APIException.ERROR_BAD_TOKEN.equals(e.getErrorCode())) {
+        setText(GT._("Error 'badtoken' detected: Retrying"));
+        api.updateSection(
+            getWikipedia(), talkPage,
+            getWikipedia().getDisambiguationWarningTemplate(), 0,
+            talkText, forceWatch);
+      } else {
+        throw e;
+      }
+    }
   }
 }
