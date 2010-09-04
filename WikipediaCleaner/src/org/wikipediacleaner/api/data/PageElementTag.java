@@ -64,7 +64,8 @@ public class PageElementTag {
     }
 
     // Check Tag Name
-    if ((tmpIndex >= contents.length()) || (!contents.startsWith(tagName, tmpIndex))) {
+    if ((tmpIndex >= contents.length()) ||
+        (!tagName.equalsIgnoreCase(contents.substring(tmpIndex, tmpIndex + tagName.length())))) {
       return null;
     }
     tmpIndex += tagName.length();
