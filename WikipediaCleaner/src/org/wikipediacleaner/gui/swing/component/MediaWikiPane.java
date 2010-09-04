@@ -293,6 +293,15 @@ public class MediaWikiPane
   }
 
   /**
+   * @param chk JCheckBox used for updating warning in the Talk page.
+   */
+  public void setCheckBoxUpdateWarning(JCheckBox chk) {
+    if (popupListener != null) {
+      popupListener.setCheckBoxUpdateWarning(chk);
+    }
+  }
+
+  /**
    * Initialize styles. 
    */
   private void initialize() {
