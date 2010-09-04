@@ -1150,7 +1150,31 @@ public class MediaWikiAPI implements API {
         XPath xpaResult = XPath.newInstance("./@result");
         String result = xpaResult.valueOf(node);
         if ("Success".equalsIgnoreCase(result)) {
-          return QueryResult.createCorrectQuery();
+          XPath xpaPageId = XPath.newInstance("./@pageid");
+          Integer pageId = null;
+          try {
+            pageId = Integer.valueOf(xpaPageId.valueOf(node));
+          } catch (NumberFormatException e) {
+            //
+          }
+          XPath xpaPageTitle = XPath.newInstance("./@title");
+          XPath xpaPageOldRevId = XPath.newInstance("./@oldrevid");
+          Integer pageOldRevId = null;
+          try {
+            pageOldRevId = Integer.valueOf(xpaPageOldRevId.valueOf(node));
+          } catch (NumberFormatException e) {
+            //
+          }
+          XPath xpaPageNewRevId = XPath.newInstance("./@newrevid");
+          Integer pageNewRevId = null;
+          try {
+            pageNewRevId = Integer.valueOf(xpaPageNewRevId.valueOf(node));
+          } catch (NumberFormatException e) {
+            //
+          }
+          return QueryResult.createCorrectQuery(
+              pageId, xpaPageTitle.valueOf(node),
+              pageOldRevId, pageNewRevId);
         }
         XPath xpaWait = XPath.newInstance("./@wait");
         XPath xpaDetails = XPath.newInstance("./@details");
