@@ -532,26 +532,41 @@ public enum EnumWikipedia {
    * @return Full comment.
    */
   public String createUpdatePageComment(String text, String details) {
+    return formatComment(
+           (((text != null) && (text.length() > 0)) ? text : "") +
+           (((details != null) && (details.length() > 0)) ? " - " + details : ""));
+  }
+
+  /**
+   * Format a comment.
+   * 
+   * @param comment Original comment.
+   * @return Formatted comment (with WikiCleaner version).
+   */
+  public String formatComment(String comment) {
     Configuration config = Configuration.getConfiguration();
-    boolean comment = config.getBoolean(
+    boolean showWikiCleaner = config.getBoolean(
         Configuration.BOOLEAN_WIKICLEANER_COMMENT,
         Configuration.DEFAULT_WIKICLEANER_COMMENT);
-
-    if (comment) {
+    StringBuilder formattedComment = new StringBuilder();
+    if (showWikiCleaner) {
       String link = getHelpPage();
-      String wikiCleaner = null;
-      if ((link == null) || (link.trim().length() == 0)) {
-        wikiCleaner = "WikiCleaner ";
+      if ((link != null) && (link.trim().length() > 0)) {
+        formattedComment.append("[[");
+        formattedComment.append(link);
+        formattedComment.append("|WikiCleaner]] ");
       } else {
-        wikiCleaner = "[[" + link + "|WikiCleaner]] ";
+        formattedComment.append("WikiCleaner");
       }
-      return wikiCleaner + Version.VERSION +
-             (((text != null) && (text.length() > 0)) ? " - " + text : "") +
-             (((details != null) && (details.length() > 0)) ? " - " + details : "");
+      formattedComment.append(Version.VERSION);
     }
-    return "" +
-           (((text != null) && (text.length() > 0)) ? text : "") +
-           (((details != null) && (details.length() > 0)) ? " - " + details : "");
+    if (comment != null) {
+      if (formattedComment.length() > 0) {
+        formattedComment.append(" - ");
+      }
+      formattedComment.append(comment);
+    }
+    return formattedComment.toString();
   }
 
   /**

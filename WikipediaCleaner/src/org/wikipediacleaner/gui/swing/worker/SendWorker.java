@@ -205,14 +205,14 @@ public class SendWorker extends BasicWorker {
    try {
       api.updateSection(
           getWikipedia(), talkPage,
-          getWikipedia().getDisambiguationWarningTemplate(), 0,
+          getWikipedia().formatComment(getWikipedia().getDisambiguationWarningTemplate()), 0,
           talkText, forceWatch);
     } catch (APIException e) {
       if (APIException.ERROR_BAD_TOKEN.equals(e.getErrorCode())) {
         setText(GT._("Error 'badtoken' detected: Retrying"));
         api.updateSection(
             getWikipedia(), talkPage,
-            getWikipedia().getDisambiguationWarningTemplate(), 0,
+            getWikipedia().formatComment(getWikipedia().getDisambiguationWarningTemplate()), 0,
             talkText, forceWatch);
       } else {
         throw e;
