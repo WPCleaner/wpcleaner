@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -75,9 +76,10 @@ public class SendWorker extends BasicWorker {
     API api = APIFactory.getAPI();
 
     // Updating page contents
+    QueryResult queryResult = null;
     try {
       setText(GT._("Updating page contents"));
-      api.updatePage(
+      queryResult = api.updatePage(
           getWikipedia(), page, text,
           getWikipedia().createUpdatePageComment(comment, null),
           forceWatch);
@@ -86,7 +88,7 @@ public class SendWorker extends BasicWorker {
         try {
           setText(GT._("Error 'badtoken' detected: Retrying"));
           api.retrieveContents(getWikipedia(), page, false);
-          api.updatePage(
+          queryResult = api.updatePage(
               getWikipedia(), page, text,
               getWikipedia().createUpdatePageComment(comment, null),
               forceWatch);
@@ -124,6 +126,10 @@ public class SendWorker extends BasicWorker {
             StringBuilder talkText = new StringBuilder();
             talkText.append("{{ ");
             talkText.append(getWikipedia().getDisambiguationWarningTemplate());
+            if ((queryResult != null) && (queryResult.getPageNewRevId() != null)) {
+              talkText.append(" | revisionid=");
+              talkText.append(queryResult.getPageNewRevId());
+            }
             for (String dabLink : dabLinks) {
               talkText.append(" | ");
               talkText.append(dabLink);
@@ -179,6 +185,10 @@ public class SendWorker extends BasicWorker {
               }
               talkText.append("{{ ");
               talkText.append(getWikipedia().getDisambiguationWarningTemplate());
+              if ((queryResult != null) && (queryResult.getPageNewRevId() != null)) {
+                talkText.append(" | revisionid=");
+                talkText.append(queryResult.getPageNewRevId());
+              }
               for (String dabLink : dabLinks) {
                 talkText.append(" | ");
                 talkText.append(dabLink);
