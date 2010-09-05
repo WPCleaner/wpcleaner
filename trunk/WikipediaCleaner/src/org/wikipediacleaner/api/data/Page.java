@@ -635,7 +635,7 @@ public class Page implements Comparable<Page> {
                          (pageContents.charAt(currentPos + currentIndex) == ' ')) {
                     currentIndex++;
                   }
-                  if (tmpPos + currentIndex == nextSharp) {
+                  if ((equals == true) && (tmpPos + currentIndex == nextSharp)) {
                     int nextPipe = contents.indexOf("|", nextSharp);
                     String anchor;
                     if ((nextPipe >= 0) && (nextPipe < nextEnd)) {
