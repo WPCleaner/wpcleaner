@@ -111,7 +111,7 @@ public class PageContents {
     while ((currentIndex < contents.length())) {
       PageElementInternalLink internalLink = findNextInternalLink(page, contents, currentIndex);
       if (internalLink != null) {
-        currentIndex = internalLink.getEndIndex();
+        currentIndex = internalLink.getBeginIndex() + 2;
         for (Page link : links) {
           if (Page.areSameTitle(link.getTitle(), internalLink.getLink())) {
             notification.linkFound(link, internalLink);
