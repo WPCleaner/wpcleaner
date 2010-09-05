@@ -148,6 +148,19 @@ public class Page implements Comparable<Page> {
   }
 
   /**
+   * @return Value for {{PAGENAME}} magic word.
+   */
+  public String getValuePAGENAME() {
+    if ((title == null) || (namespace == null) || (Namespace.MAIN == namespace.intValue())) {
+      return title;
+    }
+    int colonIndex = title.indexOf(':');
+    if (colonIndex >= 0) {
+      return title.substring(colonIndex + 1);
+    }
+    return title;
+  }
+  /**
    * @param text Original text.
    * @return Same text with the first letter in upper case.
    */

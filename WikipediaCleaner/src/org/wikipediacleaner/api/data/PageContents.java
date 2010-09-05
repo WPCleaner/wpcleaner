@@ -55,6 +55,22 @@ public class PageContents {
     return -1;
   }
 
+  /**
+   * Expand text for a page (for example, replacing {{PAGENAME}}).
+   * 
+   * @param page Page.
+   * @param text Text to expand.
+   * @return Expanded text.
+   */
+  public static String expandText(Page page, String text) {
+    if ((page == null) || (text == null)) {
+      return text;
+    }
+    String result = text;
+    result = result.replaceAll("\\{\\{PAGENAME\\}\\}", page.getValuePAGENAME());
+    return result;
+  }
+
   // ==========================================================================
   // Internal link management
   // ==========================================================================
@@ -133,7 +149,7 @@ public class PageContents {
             wikipedia.getTemplateMatchers(template.getTemplateName());
           if (matchers != null) {
             for (TemplateMatcher matcher : matchers) {
-              String linkTo = matcher.linksTo(template);
+              String linkTo = matcher.linksTo(page, template);
               if (linkTo != null) {
                 for (Page link : links) {
                   if (Page.areSameTitle(link.getTitle(), linkTo)) {

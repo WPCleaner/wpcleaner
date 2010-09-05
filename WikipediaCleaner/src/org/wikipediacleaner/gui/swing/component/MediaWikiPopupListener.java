@@ -126,6 +126,10 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
     if (element == null) {
       return;
     }
+    Page originalPage = null;
+    if (textPane instanceof MediaWikiPane) {
+      originalPage = ((MediaWikiPane) textPane).getWikiPage();
+    }
 
     // Retrieve main attributes
     AttributeSet attributes = element.getAttributes();
@@ -170,7 +174,9 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
       popup.addSeparator();
       Page templatePage = DataManager.getPage(wikipedia, templateTitle, null, null);
 
-      MenuCreator.addReplaceTemplateToMenu(wikipedia, popup, template, matcher, page, null, element, textPane);
+      MenuCreator.addReplaceTemplateToMenu(
+          wikipedia, popup, template, matcher,
+          page, originalPage, element, textPane);
       MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
       MenuCreator.addAnalyzeToMenu(wikipedia, popup, templatePage);
       MenuCreator.addViewToMenu(wikipedia, popup, page);

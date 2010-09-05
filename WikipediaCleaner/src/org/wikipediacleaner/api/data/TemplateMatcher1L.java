@@ -57,11 +57,12 @@ public class TemplateMatcher1L extends TemplateMatcher {
   }
 
   /**
+   * @param page Page.
    * @param template Template being analyzed.
    * @return Link (if any) created by the template for this matcher.
    */
   @Override
-  public String linksTo(PageElementTemplate template) {
+  public String linksTo(Page page, PageElementTemplate template) {
     if ((template == null) || (parameterName == null)) {
       return null;
     }
@@ -71,15 +72,16 @@ public class TemplateMatcher1L extends TemplateMatcher {
         return null;
       }
     }
-    return getParameterValue(template);
+    return getParameterValue(page, template);
   }
 
   /**
+   * @param page Page.
    * @param template Template.
    * @return List of possible kinds of replacements.
    */
   @Override
-  public List<String> getReplacements(PageElementTemplate template) {
+  public List<String> getReplacements(Page page, PageElementTemplate template) {
     List<String> replacements = new ArrayList<String>();
     if (!isGood()) {
       replacements.add(GT._(
@@ -92,6 +94,7 @@ public class TemplateMatcher1L extends TemplateMatcher {
   }
 
   /**
+   * @param page Page.
    * @param template Template.
    * @param index Replacement index.
    * @param text Replacement text.
@@ -99,7 +102,7 @@ public class TemplateMatcher1L extends TemplateMatcher {
    */
   @Override
   public String getReplacement(
-      PageElementTemplate template,
+      Page page, PageElementTemplate template,
       int index, String text) {
     String parameterValue = null;
     switch (index) {
@@ -114,14 +117,15 @@ public class TemplateMatcher1L extends TemplateMatcher {
   }
 
   /**
+   * @param page Page.
    * @param template Template
    * @return Parameter value.
    */
-  private String getParameterValue(PageElementTemplate template) {
+  private String getParameterValue(Page page, PageElementTemplate template) {
     String value = template.getParameterValue(parameterName);
     if (value == null) {
       value = parameterDefaultValue;
     }
-    return value;
+    return PageContents.expandText(page, value);
   }
 }

@@ -215,7 +215,7 @@ public class MenuCreator {
     }
 
     // Retrieve possible replacements
-    List<String> replacements = matcher.getReplacements(template);
+    List<String> replacements = matcher.getReplacements(disambigPage, template);
     if ((replacements == null) || (replacements.isEmpty())) {
       return;
     }
@@ -247,7 +247,7 @@ public class MenuCreator {
           for (String preferredDab : preferredDabs) {
             menuItem = new JMenuItem(preferredDab);
             action = new ReplaceTextAction(
-                matcher.getReplacement(template, indexReplacement, preferredDab),
+                matcher.getReplacement(page, template, indexReplacement, preferredDab),
                 element, textPane);
             menuItem.addActionListener(action);
             submenu.add(menuItem);
@@ -259,7 +259,7 @@ public class MenuCreator {
           if (title != null) {
             menuItem = new JMenuItem(title);
             action = new ReplaceTextAction(
-                matcher.getReplacement(template, indexReplacement, title),
+                matcher.getReplacement(page, template, indexReplacement, title),
                 element, textPane);
             menuItem.addActionListener(action);
             submenu.add(menuItem);
@@ -278,7 +278,7 @@ public class MenuCreator {
             String name = "wikt:" + wikt;
             menuItem = new JMenuItem(name);
             action = new ReplaceTextAction(
-                matcher.getReplacement(template, indexReplacement, name),
+                matcher.getReplacement(page, template, indexReplacement, name),
                 element, textPane);
             menuItem.addActionListener(action);
             submenu.add(menuItem);
@@ -306,7 +306,7 @@ public class MenuCreator {
                 menuItem = new JMenuItem(pageTmp.getTitle());
                 updateFont(menuItem, pageTmp);
                 action = new ReplaceTextAction(
-                    matcher.getReplacement(template, indexReplacement, pageTmp.getTitle()),
+                    matcher.getReplacement(page, template, indexReplacement, pageTmp.getTitle()),
                     element, textPane);
                 menuItem.addActionListener(action);
                 submenu1.add(menuItem);
@@ -316,7 +316,7 @@ public class MenuCreator {
                     menuItem = new JMenuItem(anchor);
                     updateFont(menuItem, pageTmp);
                     action = new ReplaceTextAction(
-                        matcher.getReplacement(template, indexReplacement, anchor),
+                        matcher.getReplacement(page, template, indexReplacement, anchor),
                         element, textPane);
                     menuItem.addActionListener(action);
                     submenu1.add(menuItem);
@@ -329,7 +329,7 @@ public class MenuCreator {
               menuItem = new JMenuItem(p.getTitle());
               updateFont(menuItem, p);
               action = new ReplaceTextAction(
-                  matcher.getReplacement(template, indexReplacement, p.getTitle()),
+                  matcher.getReplacement(page, template, indexReplacement, p.getTitle()),
                   element, textPane);
               menuItem.addActionListener(action);
               submenu.add(menuItem);
@@ -341,7 +341,7 @@ public class MenuCreator {
                   menuItem = new JMenuItem(anchor);
                   updateFont(menuItem, p);
                   action = new ReplaceTextAction(
-                      matcher.getReplacement(template, indexReplacement, anchor),
+                      matcher.getReplacement(page, template, indexReplacement, anchor),
                       element, textPane);
                   menuItem.addActionListener(action);
                   submenu.add(menuItem);
@@ -360,7 +360,7 @@ public class MenuCreator {
             for (String preferredDab : preferredDabs) {
               menuItem = new JMenuItem(preferredDab);
               action = new ReplaceTextAction(
-                  matcher.getReplacement(template, indexReplacement, preferredDab),
+                  matcher.getReplacement(page, template, indexReplacement, preferredDab),
                   element, textPane);
               menuItem.addActionListener(action);
               submenu.add(menuItem);
@@ -375,7 +375,7 @@ public class MenuCreator {
   
               menuItem = new JMenuItem(title);
               action = new ReplaceTextAction(
-                  matcher.getReplacement(template, indexReplacement, title),
+                  matcher.getReplacement(page, template, indexReplacement, title),
                   element, textPane);
               menuItem.addActionListener(action);
               submenu.add(menuItem);

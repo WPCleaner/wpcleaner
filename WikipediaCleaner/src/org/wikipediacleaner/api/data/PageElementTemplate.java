@@ -384,9 +384,11 @@ public class PageElementTemplate {
   public String getParameterReplacement(
       String parameterName, String parameterValue, String previousParameter) {
     boolean parameterExist = false;
-    for (Parameter parameter : parameters) {
-      if (parameter.name.equals(parameterName)) {
-        parameterExist = true;
+    if (parameters != null) {
+      for (Parameter parameter : parameters) {
+        if (parameter.name.equals(parameterName)) {
+          parameterExist = true;
+        }
       }
     }
     StringBuilder sb = new StringBuilder();
@@ -395,79 +397,85 @@ public class PageElementTemplate {
     String tmpParameterName = parameterName;
     String tmpParameterValue = parameterValue;
     int paramNum = 1;
-    for (Parameter parameter : parameters) {
-
-      // Managing unname
-      String currentParameterName = parameter.name;
-      if ((currentParameterName == null) || (currentParameterName.length() == 0)) {
-        currentParameterName = Integer.toString(paramNum);
-      }
-      if (currentParameterName.equals(Integer.toString(paramNum))) {
-        paramNum++;
-      }
-
-      // Manage whitespace characters before/after name/value
-      tmpParameterName = parameterName;
-      tmpParameterValue = parameterValue;
-      if ((parameter.name != null) && (parameter.name.length() > 0)) {
-        // Whitespace characters before name
-        int spaces = 0;
-        while ((spaces < parameter.nameNotTrimmed.length()) &&
-               (Character.isWhitespace(parameter.nameNotTrimmed.charAt(spaces)))) {
-          spaces++;
+    if (parameters != null) {
+      for (Parameter parameter : parameters) {
+  
+        // Managing unname
+        String currentParameterName = parameter.name;
+        if ((currentParameterName == null) || (currentParameterName.length() == 0)) {
+          currentParameterName = Integer.toString(paramNum);
         }
-        if (spaces > 0) {
-          tmpParameterName = parameter.nameNotTrimmed.substring(0, spaces) + parameterName;
+        if (currentParameterName.equals(Integer.toString(paramNum))) {
+          paramNum++;
         }
-
-        // Whitespace characters after name
-        spaces = parameter.nameNotTrimmed.length();
-        while ((spaces > 0) &&
-               (Character.isWhitespace(parameter.nameNotTrimmed.charAt(spaces - 1)))) {
-          spaces--;
+  
+        // Manage whitespace characters before/after name/value
+        tmpParameterName = parameterName;
+        tmpParameterValue = parameterValue;
+        if ((parameter.name != null) && (parameter.name.length() > 0)) {
+          // Whitespace characters before name
+          int spaces = 0;
+          while ((spaces < parameter.nameNotTrimmed.length()) &&
+                 (Character.isWhitespace(parameter.nameNotTrimmed.charAt(spaces)))) {
+            spaces++;
+          }
+          if (spaces > 0) {
+            tmpParameterName = parameter.nameNotTrimmed.substring(0, spaces) + parameterName;
+          }
+  
+          // Whitespace characters after name
+          spaces = parameter.nameNotTrimmed.length();
+          while ((spaces > 0) &&
+                 (Character.isWhitespace(parameter.nameNotTrimmed.charAt(spaces - 1)))) {
+            spaces--;
+          }
+          if (spaces < parameter.nameNotTrimmed.length()) {
+            tmpParameterName += parameter.nameNotTrimmed.substring(spaces);
+          }
         }
-        if (spaces < parameter.nameNotTrimmed.length()) {
-          tmpParameterName += parameter.nameNotTrimmed.substring(spaces);
+  
+        if (parameter.value != null) {
+          // Whitespace characters before value
+          int spaces = 0;
+          while ((spaces < parameter.valueNotTrimmed.length()) &&
+                 (Character.isWhitespace(parameter.valueNotTrimmed.charAt(spaces)))) {
+            spaces++;
+          }
+          if (spaces > 0) {
+            tmpParameterValue = parameter.valueNotTrimmed.substring(0, spaces) + parameterValue;
+          }
+  
+          // Whitespace characters after value
+          spaces = parameter.valueNotTrimmed.length();
+          while ((spaces > 0) &&
+                 (Character.isWhitespace(parameter.valueNotTrimmed.charAt(spaces - 1)))) {
+            spaces--;
+          }
+          if (spaces < parameter.valueNotTrimmed.length()) {
+            tmpParameterValue += parameter.valueNotTrimmed.substring(spaces);
+          }
         }
-      }
-
-      if (parameter.value != null) {
-        // Whitespace characters before value
-        int spaces = 0;
-        while ((spaces < parameter.valueNotTrimmed.length()) &&
-               (Character.isWhitespace(parameter.valueNotTrimmed.charAt(spaces)))) {
-          spaces++;
+  
+        // Add parameter
+        if (currentParameterName.equals(parameterName)) {
+          addParameter(sb, parameter.nameNotTrimmed, tmpParameterValue);
+          parameterAdded = true;
+        } else if ((!parameterExist) &&
+                   (currentParameterName.equals(previousParameter))) {
+          addParameter(sb, parameter.nameNotTrimmed, parameter.valueNotTrimmed);
+          addParameter(sb, tmpParameterName, tmpParameterValue);
+          parameterAdded = true;
+        } else {
+          addParameter(sb, parameter.nameNotTrimmed, parameter.valueNotTrimmed);
         }
-        if (spaces > 0) {
-          tmpParameterValue = parameter.valueNotTrimmed.substring(0, spaces) + parameterValue;
-        }
-
-        // Whitespace characters after value
-        spaces = parameter.valueNotTrimmed.length();
-        while ((spaces > 0) &&
-               (Character.isWhitespace(parameter.valueNotTrimmed.charAt(spaces - 1)))) {
-          spaces--;
-        }
-        if (spaces < parameter.valueNotTrimmed.length()) {
-          tmpParameterValue += parameter.valueNotTrimmed.substring(spaces);
-        }
-      }
-
-      // Add parameter
-      if (currentParameterName.equals(parameterName)) {
-        addParameter(sb, parameter.nameNotTrimmed, tmpParameterValue);
-        parameterAdded = true;
-      } else if ((!parameterExist) &&
-                 (currentParameterName.equals(previousParameter))) {
-        addParameter(sb, parameter.nameNotTrimmed, parameter.valueNotTrimmed);
-        addParameter(sb, tmpParameterName, tmpParameterValue);
-        parameterAdded = true;
-      } else {
-        addParameter(sb, parameter.nameNotTrimmed, parameter.valueNotTrimmed);
       }
     }
     if (!parameterAdded) {
-      addParameter(sb, tmpParameterName, tmpParameterValue);
+      if (tmpParameterName.equals(Integer.toString(paramNum))) {
+        addParameter(sb, null, tmpParameterValue);
+      } else {
+        addParameter(sb, tmpParameterName, tmpParameterValue);
+      }
     }
     sb.append("}}");
     return sb.toString();
