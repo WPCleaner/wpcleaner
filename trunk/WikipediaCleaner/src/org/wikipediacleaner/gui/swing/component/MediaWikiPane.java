@@ -260,8 +260,15 @@ public class MediaWikiPane
   /**
    * @param page Page.
    */
-  public void setPage(Page page) {
+  public void setWikiPage(Page page) {
     this.page = page;
+  }
+
+  /**
+   * @return page Page.
+   */
+  public Page getWikiPage() {
+    return page;
   }
 
   /**

@@ -53,25 +53,28 @@ public abstract class TemplateMatcher {
   }
 
   /**
+   * @param page Page.
    * @param template Template being analyzed.
    * @return Link (if any) created by the template for this matcher.
    */
-  public abstract String linksTo(PageElementTemplate template);
+  public abstract String linksTo(Page page, PageElementTemplate template);
 
   /**
+   * @param page Page.
    * @param template Template.
    * @return List of possible kinds of replacements.
    */
-  public abstract List<String> getReplacements(PageElementTemplate template);
+  public abstract List<String> getReplacements(Page page, PageElementTemplate template);
 
   /**
+   * @param page Page.
    * @param template Template.
    * @param index Replacement index.
    * @param text Replacement text.
    * @return Full replacement.
    */
   public abstract String getReplacement(
-      PageElementTemplate template,
+      Page page, PageElementTemplate template,
       int index, String text);
 
   /**

@@ -839,7 +839,7 @@ public abstract class PageWindow
   void setContents() {
     if (SwingUtilities.isEventDispatchThread()) {
       if (getTextContents() != null) {
-        getTextContents().setPage(page);
+        getTextContents().setWikiPage(page);
         getTextContents().setText(page.getContents());
       }
       if (lblLastModified != null) {

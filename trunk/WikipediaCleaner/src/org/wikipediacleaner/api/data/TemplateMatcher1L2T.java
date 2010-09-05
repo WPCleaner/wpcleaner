@@ -52,23 +52,25 @@ public class TemplateMatcher1L2T extends TemplateMatcher {
   }
 
   /**
+   * @param page Page.
    * @param template Template being analyzed.
    * @return Link (if any) created by the template for this matcher.
    */
   @Override
-  public String linksTo(PageElementTemplate template) {
+  public String linksTo(Page page, PageElementTemplate template) {
     if ((template == null) || (parameterName1 == null) || (parameterName2 == null)) {
       return null;
     }
-    return getParameterValue1(template);
+    return getParameterValue1(page, template);
   }
 
   /**
+   * @param page Page.
    * @param template Template.
    * @return List of possible kinds of replacements.
    */
   @Override
-  public List<String> getReplacements(PageElementTemplate template) {
+  public List<String> getReplacements(Page page, PageElementTemplate template) {
     List<String> replacements = new ArrayList<String>();
     if (!isGood()) {
       replacements.add(GT._("Link parameter {0} to", parameterName1));
@@ -77,6 +79,7 @@ public class TemplateMatcher1L2T extends TemplateMatcher {
   }
 
   /**
+   * @param page Page.
    * @param template Template.
    * @param index Replacement index.
    * @param text Replacement text.
@@ -84,12 +87,12 @@ public class TemplateMatcher1L2T extends TemplateMatcher {
    */
   @Override
   public String getReplacement(
-      PageElementTemplate template,
+      Page page, PageElementTemplate template,
       int index, String text) {
     String parameterValue1 = text;
-    String parameterValue2 = getParameterValue2(template);
+    String parameterValue2 = getParameterValue2(page, template);
     if (parameterValue2 == null) {
-      parameterValue2 = getParameterValue1(template);
+      parameterValue2 = getParameterValue1(page, template);
     }
     return template.getParameterReplacement(
         parameterName1, parameterValue1,
@@ -97,20 +100,22 @@ public class TemplateMatcher1L2T extends TemplateMatcher {
   }
 
   /**
+   * @param page Page.
    * @param template Template
    * @return Parameter value.
    */
-  private String getParameterValue1(PageElementTemplate template) {
+  private String getParameterValue1(Page page, PageElementTemplate template) {
     String value = template.getParameterValue(parameterName1);
-    return value;
+    return PageContents.expandText(page, value);
   }
 
   /**
+   * @param page Page.
    * @param template Template
    * @return Parameter value.
    */
-  private String getParameterValue2(PageElementTemplate template) {
+  private String getParameterValue2(Page page, PageElementTemplate template) {
     String value = template.getParameterValue(parameterName2);
-    return value;
+    return PageContents.expandText(page, value);
   }
 }
