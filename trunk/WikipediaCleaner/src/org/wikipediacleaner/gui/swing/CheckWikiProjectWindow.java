@@ -1760,7 +1760,9 @@ public class CheckWikiProjectWindow extends PageWindow {
   protected void actionReload() {
     clean();
     contentPane.removeAll();
-    errors = new ArrayList<CheckError>();
+    if (errors == null) {
+      errors = new ArrayList<CheckError>();
+    }
     CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
         getWikipedia(), this, errors, selectedAlgorithms,
         true, modelMaxErrors.getNumber().intValue());
