@@ -1777,11 +1777,10 @@ public class CheckWikiProjectWindow extends PageWindow {
     Object selected = listAllErrors.getSelectedItem();
     if (selected instanceof CheckError) {
       CheckError error = (CheckError) selected;
-      List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>(1);
-      algorithms.add(error.getAlgorithm());
+      List<CheckErrorAlgorithm> algorithms = Collections.singletonList(error.getAlgorithm());
       CheckWikiProjectWorker reloadWorker = new CheckWikiProjectWorker(
           getWikipedia(), this, errors, algorithms,
-          false, modelMaxErrors.getNumber().intValue());
+          true, modelMaxErrors.getNumber().intValue());
       setupReloadWorker(reloadWorker);
       reloadWorker.start();
     }
