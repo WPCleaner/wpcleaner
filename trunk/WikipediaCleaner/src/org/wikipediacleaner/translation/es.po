@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-09-04 13:43+0200\n"
-"PO-Revision-Date: 2010-09-07 05:29+0000\n"
+"PO-Revision-Date: 2010-09-07 19:17+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-09-07 12:56+0000\n"
+"X-Launchpad-Export-Date: 2010-09-07 20:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: Spanish\n"
 
@@ -132,7 +132,7 @@ msgstr "Eliminar"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:205
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
-msgstr ""
+msgstr "Usado como un separador entre {0} etiquetas consecutivas"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:91
 msgid "Remove <small> tag"
@@ -640,8 +640,8 @@ msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
 msgstr ""
-"El error nº{0} puede ser configurada con el siguiente parámetro en <a "
-"href=\"{1}\">el archivo de traducción</a> :"
+"El error nº{0} puede ser configurado con los siguiente parámetros en el <a "
+"href=\"{1}\">archivo de traducción</a> :"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1668
 #, java-format
