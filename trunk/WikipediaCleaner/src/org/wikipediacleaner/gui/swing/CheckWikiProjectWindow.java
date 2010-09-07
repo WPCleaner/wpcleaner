@@ -344,11 +344,23 @@ public class CheckWikiProjectWindow extends PageWindow {
 
     // Message with an explicit list of errors
     StringBuilder msg = new StringBuilder();
-    for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
+    for (int i = 0; i < selectedAlgorithms.size(); i++) {
+      int j = i;
+      while ((j + 1 < selectedAlgorithms.size()) &&
+             (selectedAlgorithms.get(j).getErrorNumber() + 1 == selectedAlgorithms.get(j + 1).getErrorNumber())) {
+        j++;
+      }
       if (msg.length() > 0) {
         msg.append(", ");
       }
-      msg.append(algorithm.getErrorNumber());
+      if (j > i + 1) {
+        msg.append(selectedAlgorithms.get(i).getErrorNumber());
+        msg.append("-");
+        msg.append(selectedAlgorithms.get(j).getErrorNumber());
+        i = j;
+      } else {
+        msg.append(selectedAlgorithms.get(i).getErrorNumber());
+      }
     }
     return GT._("Load errors {0}", msg.toString());
   }
