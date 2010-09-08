@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-09-04 13:43+0200\n"
-"PO-Revision-Date: 2010-09-04 13:43+0000\n"
-"Last-Translator: Ragimiri <Unknown>\n"
+"PO-Revision-Date: 2010-09-08 18:30+0000\n"
+"Last-Translator: Konki <pavel.konkol@seznam.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-09-04 16:16+0000\n"
+"X-Launchpad-Export-Date: 2010-09-08 21:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:37
@@ -1073,10 +1073,14 @@ msgstr "Zavřít okno po provedení plné analýzy"
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:447
 msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
+"Aktualizovat rozcestník upozornění na diskuzní stránce (ve vlastním jmenném "
+"prostoru)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:456
 msgid "Update disambiguation warning on talk page (in other namespaces)"
 msgstr ""
+"Aktualizovat rozcestník upozornění na diskuzní stránce (v dalších jmenných "
+"prostorech)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:501
 msgid "Count &disambiguation pages"
