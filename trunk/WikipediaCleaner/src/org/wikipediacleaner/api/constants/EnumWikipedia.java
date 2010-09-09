@@ -210,7 +210,10 @@ public enum EnumWikipedia {
   private String helpPage;
 
   private String pipeTemplate;
+  private List<String> todoTemplates;
+  private String todoSubpage;
   private String disambiguationWarningTemplate;
+  private String disambiguationWarningComment;
   private Map<String, List<TemplateMatcher>> templateMatchers;
 
   private final String configPage;
@@ -480,9 +483,33 @@ public enum EnumWikipedia {
   }
 
   /**
+   * @return Templates creating todo lists.
+   */
+  public List<String> getTodoTemplates() {
+    return todoTemplates;
+  }
+
+  /**
+   * @return Todo subpage.
+   */
+  public String getTodoSubpage() {
+    return todoSubpage;
+  }
+
+  /**
    * @return Template for warning about disambiguation links in a page.
    */
   public String getDisambiguationWarningTemplate() {
+    return disambiguationWarningTemplate;
+  }
+
+  /**
+   * @return Comment for warning about disambiguation links in a page.
+   */
+  public String getDisambiguationWarningComment() {
+    if (disambiguationWarningComment != null) {
+      return disambiguationWarningComment;
+    }
     return disambiguationWarningTemplate;
   }
 
@@ -736,6 +763,18 @@ public enum EnumWikipedia {
         pipeTemplate = tmp.trim();
       }
 
+      // Todo templates
+      tmp = configuration.getProperty("general_todo_templates", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        todoTemplates = convertPropertyToStringList(tmp);
+      }
+
+      // Todo subpage
+      tmp = configuration.getProperty("general_todo_subpage", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        todoSubpage = tmp.trim();
+      }
+
       templateMatchers = new HashMap<String, List<TemplateMatcher>>();
 
       // Templates creating internal links from parameter value
@@ -932,6 +971,12 @@ public enum EnumWikipedia {
       tmp = configuration.getProperty("dab_warning_template", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         disambiguationWarningTemplate = tmp.trim();
+      }
+
+      // Disambiguation warning comment
+      tmp = configuration.getProperty("dab_warning_comment", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        disambiguationWarningComment = tmp.trim();
       }
 
       // Disambiguation list
