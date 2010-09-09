@@ -45,6 +45,7 @@ public class WikipediaCleaner {
   public static void main(String[] args) {
     // Log levels
     Logger.getLogger("org.lobobrowser").setLevel(Level.WARNING);
+    Logger.getLogger("").setLevel(Level.WARNING);
 
     if (CHECK_EDT) {
       RepaintManager.setCurrentManager(new CheckThreadViolationRepaintManager());
