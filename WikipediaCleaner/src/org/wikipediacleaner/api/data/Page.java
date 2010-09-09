@@ -542,6 +542,18 @@ public class Page implements Comparable<Page> {
   }
 
   /**
+   * @param subpage Subpage name.
+   * @return Subpage.
+   */
+  public Page getSubPage(String subpage) {
+    Page subPage = DataManager.getPage(getWikipedia(), getTitle() + "/" + subpage, null, null);
+    if (subPage != null) {
+      subPage.setEditToken(getEditToken());
+    }
+    return subPage;
+  }
+
+  /**
    * @return Links from the page.
    */
   public List<Page> getLinks() {
