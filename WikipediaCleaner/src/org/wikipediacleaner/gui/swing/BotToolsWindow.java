@@ -36,6 +36,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 
 
 /**
@@ -45,10 +46,12 @@ public class BotToolsWindow
   extends BasicWindow
   implements ActionListener {
 
-  private final static String ACTION_AUTOMATIC_FIXING = "AUTOMATIC FIXING";
-  private final static String ACTION_CLOSE            = "CLOSE";
+  private final static String ACTION_AUTOMATIC_FIXING   = "AUTOMATIC FIXING";
+  private final static String ACTION_CLOSE              = "CLOSE";
+  private final static String ACTION_UPDATE_DAB_WARNING = "UPDATE DAB WARNING";
 
   private JButton buttonAutomaticFixing;
+  private JButton buttonUpdateDabWarning;
   private JButton buttonClose;
 
   /**
@@ -88,7 +91,7 @@ public class BotToolsWindow
     constraints.gridwidth = 1;
     constraints.gridx = 0;
     constraints.gridy = 0;
-    constraints.insets = new Insets(2, 2, 2, 2);
+    constraints.insets = new Insets(0, 0, 0, 0);
     constraints.ipadx = 0;
     constraints.ipady = 0;
     constraints.weightx = 0;
@@ -111,7 +114,9 @@ public class BotToolsWindow
     constraints.gridy++;
 
     // Tools
-    buttonAutomaticFixing = Utilities.createJButton(GT._("Semi-automatic disambiguation fixing"));
+    buttonAutomaticFixing = Utilities.createJButton(
+        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        GT._("Semi-automatic disambiguation fixing"), true);
     buttonAutomaticFixing.setActionCommand(ACTION_AUTOMATIC_FIXING);
     buttonAutomaticFixing.addActionListener(this);
     constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -119,6 +124,14 @@ public class BotToolsWindow
     constraints.weighty = 1;
     constraints.weightx = 0;
     panel.add(buttonAutomaticFixing, constraints);
+    constraints.gridy++;
+
+    buttonUpdateDabWarning = Utilities.createJButton(
+        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        GT._("Update existing disambiguation warning messages"), true);
+    buttonUpdateDabWarning.setActionCommand(ACTION_UPDATE_DAB_WARNING);
+    buttonUpdateDabWarning.addActionListener(this);
+    panel.add(buttonUpdateDabWarning, constraints);
     constraints.gridy++;
 
     // Buttons
@@ -134,7 +147,18 @@ public class BotToolsWindow
     panel.add(buttonPanel, constraints);
     constraints.gridy++;
 
+    updateComponentState();
     return panel;
+  }
+
+  /**
+   * Update components states.
+   */
+  @Override
+  protected void updateComponentState() {
+    super.updateComponentState();
+    buttonAutomaticFixing.setEnabled(false);
+    buttonUpdateDabWarning.setEnabled(false);
   }
 
   /**
@@ -152,6 +176,8 @@ public class BotToolsWindow
       actionClose();
     } else if (ACTION_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
       actionAutomaticFixing();
+    } else if (ACTION_UPDATE_DAB_WARNING.equals(e.getActionCommand())) {
+      actionUpdateDabWarning();
     }
   }
 
@@ -166,6 +192,13 @@ public class BotToolsWindow
    * Action called when Automatic Fixing button is pressed.
    */
   private void actionAutomaticFixing() {
-    //
+    // TODO
+  }
+
+  /**
+   * Action called when Update Dab Warning button is pressed.
+   */
+  private void actionUpdateDabWarning() {
+    // TODO
   }
 }

@@ -234,7 +234,7 @@ public class MainWindow
     buttonCheckWiki.setEnabled(logged);
     buttonRandomPage.setEnabled(logged);
     buttonWatchedPages.setEnabled(logged);
-    buttonBotTools.setEnabled(logged);
+    buttonBotTools.setEnabled(logged && false);
   }
 
   /**
@@ -466,7 +466,7 @@ public class MainWindow
     constraints.gridwidth = 1;
     constraints.gridx = 0;
     constraints.gridy = 0;
-    constraints.insets = new Insets(1, 1, 1, 1);
+    constraints.insets = new Insets(0, 1, 0, 1);
     constraints.ipadx = 0;
     constraints.ipady = 0;
     constraints.weightx = 1;
@@ -529,7 +529,7 @@ public class MainWindow
     constraints.gridwidth = 1;
     constraints.gridx = 0;
     constraints.gridy = 0;
-    constraints.insets = new Insets(1, 1, 1, 1);
+    constraints.insets = new Insets(0, 1, 0, 1);
     constraints.ipadx = 0;
     constraints.ipady = 0;
     constraints.weightx = 1;
@@ -570,11 +570,13 @@ public class MainWindow
     constraints.gridy++;
 
     // Bot tools button
-    buttonBotTools = Utilities.createJButton(GT._("Bot tools"));
+    buttonBotTools = Utilities.createJButton(
+        "commons-nuvola-apps-kcmsystem.png", EnumImageSize.NORMAL,
+        GT._("Bot tools"), true);
     buttonBotTools.setActionCommand(ACTION_BOT_TOOLS);
     buttonBotTools.addActionListener(this);
-    /*panel.add(buttonBotTools, constraints);
-    constraints.gridy++;*/
+    panel.add(buttonBotTools, constraints);
+    constraints.gridy++;
 
     return panel;
   }
