@@ -223,9 +223,12 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
     return panel;
   }
 
-  /* (non-Javadoc)
-   * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+  /**
+   * Invoked when an action occurs.
+   * 
+   * @param e Event.
    */
+  @Override
   public void actionPerformed(ActionEvent e) {
     if (e == null) {
       return;

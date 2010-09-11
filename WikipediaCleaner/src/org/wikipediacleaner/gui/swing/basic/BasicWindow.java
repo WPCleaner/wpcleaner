@@ -21,6 +21,8 @@ package org.wikipediacleaner.gui.swing.basic;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 
 import javax.swing.JFrame;
@@ -38,7 +40,7 @@ import org.wikipediacleaner.utils.Configuration;
 /**
  * A base class for all Wikipedia Cleaner windows.
  */
-public abstract class BasicWindow {
+public abstract class BasicWindow implements ActionListener {
 
   private JFrame parentComponent;
   private ProgressPanel glassPane;
@@ -362,5 +364,18 @@ public abstract class BasicWindow {
    */
   protected void logError(Object message, Throwable error) {
     log.error(message, error);
+  }
+
+  /* ====================================================================== */
+  /* ActionListener                                                         */
+  /* ====================================================================== */
+
+  /**
+   * Invoked when an action occurs.
+   * 
+   * @param e Event.
+   */
+  public void actionPerformed(ActionEvent e) {
+    //
   }
 }
