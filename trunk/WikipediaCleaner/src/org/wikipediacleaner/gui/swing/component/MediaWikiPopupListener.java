@@ -50,7 +50,8 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
 
   private final EnumWikipedia wikipedia;
   private JCheckBox chkAddNote;
-  private JCheckBox chkUpdateWarning;
+  private JCheckBox chkUpdateDabWarning;
+  private JCheckBox chkCreateDabWarning;
   private BasicWindow window;
 
   public MediaWikiPopupListener(EnumWikipedia wikipedia, BasicWindow window) {
@@ -66,10 +67,17 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
   }
 
   /**
-   * @param chk CheckBox used for updating warning on talk page.
+   * @param chk CheckBox used for updating disambiguation warning on talk page.
    */
-  public void setCheckBoxUpdateWarning(JCheckBox chk) {
-    chkUpdateWarning = chk;
+  public void setCheckBoxUpdateDabWarning(JCheckBox chk) {
+    chkUpdateDabWarning = chk;
+  }
+
+  /**
+   * @param chk CheckBox used for creating disambiguation warning on talk page.
+   */
+  public void setCheckBoxCreateDabWarning(JCheckBox chk) {
+    chkCreateDabWarning = chk;
   }
 
   /**
@@ -329,8 +337,10 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
 
     // Create sub menus
     JCheckBox chk = null;
-    if ((chkUpdateWarning != null) && (chkUpdateWarning.isEnabled())) {
-      chk = chkUpdateWarning;
+    if ((chkCreateDabWarning != null) && (chkCreateDabWarning.isEnabled())) {
+      chk = chkCreateDabWarning;
+    } else if ((chkUpdateDabWarning != null) && (chkUpdateDabWarning.isEnabled())) {
+      chk = chkUpdateDabWarning;
     } else if ((chkAddNote != null) && (chkAddNote.isEnabled())) {
       chk = chkAddNote;
     }

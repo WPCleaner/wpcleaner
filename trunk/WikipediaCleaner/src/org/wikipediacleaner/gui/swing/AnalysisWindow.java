@@ -271,8 +271,9 @@ public class AnalysisWindow extends PageWindow {
     // Check box for adding a note on the talk page
     addChkEditTalkPage(panelInformation);
 
-    // Check box for updating disambiguation warning on the talk page
-    addChkUpdateWarning(panelInformation);
+    // Check box for updating and creating disambiguation warning on the talk page
+    addChkUpdateDabWarning(panelInformation);
+    addChkCreateDabWarning(panelInformation);
 
     // Comment
     GridBagConstraints constraints = new GridBagConstraints();
@@ -620,13 +621,19 @@ public class AnalysisWindow extends PageWindow {
         boolean isMainNamespace = getPage().isInMainNamespace();
         Configuration config = Configuration.getConfiguration();
         if (isMainNamespace) {
-          chkUpdateWarning.setSelected(config.getBoolean(
-              Configuration.BOOLEAN_UPDATE_WARNING,
-              Configuration.DEFAULT_UPDATE_WARNING));
+          chkUpdateDabWarning.setSelected(config.getBoolean(
+              Configuration.BOOLEAN_UPDATE_DAB_WARNING,
+              Configuration.DEFAULT_UPDATE_DAB_WARNING));
+          chkCreateDabWarning.setSelected(config.getBoolean(
+              Configuration.BOOLEAN_CREATE_DAB_WARNING,
+              Configuration.DEFAULT_CREATE_DAB_WARNING));
         } else {
-          chkUpdateWarning.setSelected(config.getBoolean(
-              Configuration.BOOLEAN_UPDATE_WARNING_ALL,
-              Configuration.DEFAULT_UPDATE_WARNING_ALL));
+          chkUpdateDabWarning.setSelected(config.getBoolean(
+              Configuration.BOOLEAN_UPDATE_DAB_WARNING_ALL,
+              Configuration.DEFAULT_UPDATE_DAB_WARNING_ALL));
+          chkCreateDabWarning.setSelected(config.getBoolean(
+              Configuration.BOOLEAN_CREATE_DAB_WARNING_ALL,
+              Configuration.DEFAULT_CREATE_DAB_WARNING_ALL));
         }
       }
     }

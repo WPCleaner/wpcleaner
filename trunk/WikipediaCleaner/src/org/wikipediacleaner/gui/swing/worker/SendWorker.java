@@ -45,6 +45,7 @@ public class SendWorker extends BasicWorker {
   private final String comment;
   private final boolean forceWatch;
   private final boolean updateWarning;
+  private final boolean createWarning;
 
   /**
    * @param wikipedia Wikipedia.
@@ -54,17 +55,19 @@ public class SendWorker extends BasicWorker {
    * @param comment Comment.
    * @param forceWatch Force watching the page.
    * @param updateWarning Update warning on talk page.
+   * @param createWarning Create warning on talk page.
    */
   public SendWorker(
       EnumWikipedia wikipedia, BasicWindow window,
       Page page, String text, String comment,
-      boolean forceWatch, boolean updateWarning) {
+      boolean forceWatch, boolean updateWarning, boolean createWarning) {
     super(wikipedia, window);
     this.page = page;
     this.text = text;
     this.comment = comment;
     this.forceWatch = forceWatch;
     this.updateWarning = updateWarning;
+    this.createWarning = createWarning;
   }
 
   /* (non-Javadoc)
@@ -251,15 +254,17 @@ public class SendWorker extends BasicWorker {
             if (templateWarningSubpage == null) {
 
               // Dab links existing, todo subpage existing, no template warning => Add warning
-              StringBuilder tmp = new StringBuilder();
-              if ((pageTodoSubpageContents.trim().length() > 0)) {
-                tmp.append(pageTodoSubpageContents.trim());
-                tmp.append("\n");
+              if (createWarning) {
+                StringBuilder tmp = new StringBuilder();
+                if ((pageTodoSubpageContents.trim().length() > 0)) {
+                  tmp.append(pageTodoSubpageContents.trim());
+                  tmp.append("\n");
+                }
+                tmp.append("* ");
+                addWarning(tmp, queryResult.getPageNewRevId(), dabLinks);
+                updateDisambiguationWarning(
+                    pageTodoSubpage, tmp.toString(), false);
               }
-              tmp.append("* ");
-              addWarning(tmp, queryResult.getPageNewRevId(), dabLinks);
-              updateDisambiguationWarning(
-                  pageTodoSubpage, tmp.toString(), false);
 
             } else {
 
@@ -309,39 +314,43 @@ public class SendWorker extends BasicWorker {
             } else if (templateTodo != null) {
 
               // Dab link existing, no todo subpage, todo existing without warning => Add warning in todo
-              StringBuilder tmp = new StringBuilder();
-              if (templateTodo.getBeginIndex() > 0) {
-                tmp.append(talkPageContents.substring(0, templateTodo.getBeginIndex()));
+              if (createWarning) {
+                StringBuilder tmp = new StringBuilder();
+                if (templateTodo.getBeginIndex() > 0) {
+                  tmp.append(talkPageContents.substring(0, templateTodo.getBeginIndex()));
+                }
+                tmp.append("{{");
+                tmp.append(templateTodo.getTemplateName());
+                tmp.append("|");
+                if (templateTodo.getParameterValue("1") != null) {
+                  tmp.append(templateTodo.getParameterValue("1"));
+                  tmp.append("\n");
+                }
+                tmp.append("* ");
+                addWarning(tmp, queryResult.getPageNewRevId(), dabLinks);
+                tmp.append("}}");
+                if (templateTodo.getEndIndex() < talkPageContents.length()) {
+                  tmp.append(talkPageContents.substring(templateTodo.getEndIndex()));
+                }
+                updateDisambiguationWarning(talkPage, tmp.toString(), true);
               }
-              tmp.append("{{");
-              tmp.append(templateTodo.getTemplateName());
-              tmp.append("|");
-              if (templateTodo.getParameterValue("1") != null) {
-                tmp.append(templateTodo.getParameterValue("1"));
-                tmp.append("\n");
-              }
-              tmp.append("* ");
-              addWarning(tmp, queryResult.getPageNewRevId(), dabLinks);
-              tmp.append("}}");
-              if (templateTodo.getEndIndex() < talkPageContents.length()) {
-                tmp.append(talkPageContents.substring(templateTodo.getEndIndex()));
-              }
-              updateDisambiguationWarning(talkPage, tmp.toString(), true);
 
             } else {
 
               // Dab link existing, no todo subpage, no warning => Add warning
-              StringBuilder tmp = new StringBuilder();
-              tmp.append("{{");
-              tmp.append(todoTemplates.get(0));
-              tmp.append("|* ");
-              addWarning(tmp, queryResult.getPageNewRevId(), dabLinks);
-              tmp.append(" }}");
-              if (talkPageContents.trim().length() > 0) {
-                tmp.append("\n");
-                tmp.append(talkPageContents.trim());
+              if (createWarning) {
+                StringBuilder tmp = new StringBuilder();
+                tmp.append("{{");
+                tmp.append(todoTemplates.get(0));
+                tmp.append("|* ");
+                addWarning(tmp, queryResult.getPageNewRevId(), dabLinks);
+                tmp.append(" }}");
+                if (talkPageContents.trim().length() > 0) {
+                  tmp.append("\n");
+                  tmp.append(talkPageContents.trim());
+                }
+                updateDisambiguationWarning(talkPage, tmp.toString(), true);
               }
-              updateDisambiguationWarning(talkPage, tmp.toString(), true);
             }
           }
         }
