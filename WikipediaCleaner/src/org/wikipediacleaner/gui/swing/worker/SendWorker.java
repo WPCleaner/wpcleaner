@@ -127,6 +127,7 @@ public class SendWorker extends BasicWorker {
         PageElementTemplate templateTodo = null;
         PageElementTemplate templateWarningTodo = null;
         PageElementTemplate templateWarning = null;
+        PageElementTemplate templateLast = null;
         int startIndex = 0;
         while ((startIndex < talkPageContents.length()) &&
                (templateWarningTodo == null) &&
@@ -149,6 +150,14 @@ public class SendWorker extends BasicWorker {
             }
             if (dabWarningTemplate.equals(template.getTemplateName())) {
               templateWarning = template;
+            }
+            List<String> afterTemplates = getWikipedia().getDisambiguationWarningAfterTemplates();
+            if (afterTemplates != null) {
+              for (String afterTemplate : afterTemplates) {
+                if (Page.areSameTitle(afterTemplate, template.getTemplateName())) {
+                  templateLast = template;
+                }
+              }
             }
           }
         }
@@ -340,14 +349,24 @@ public class SendWorker extends BasicWorker {
               // Dab link existing, no todo subpage, no warning => Add warning
               if (createWarning) {
                 StringBuilder tmp = new StringBuilder();
+                if (templateLast != null) {
+                  tmp.append(talkPageContents.substring(0, templateLast.getEndIndex()));
+                  tmp.append("\n");
+                }
                 tmp.append("{{");
                 tmp.append(todoTemplates.get(0));
                 tmp.append("|* ");
                 addWarning(tmp, queryResult.getPageNewRevId(), dabLinks);
                 tmp.append(" }}");
-                if (talkPageContents.trim().length() > 0) {
-                  tmp.append("\n");
-                  tmp.append(talkPageContents.trim());
+                if (templateLast != null) {
+                  if (templateLast.getEndIndex() < talkPageContents.length()) {
+                    tmp.append(talkPageContents.substring(templateLast.getEndIndex()));
+                  }
+                } else {
+                  if (talkPageContents.trim().length() > 0) {
+                    tmp.append("\n");
+                    tmp.append(talkPageContents.trim());
+                  }
                 }
                 updateDisambiguationWarning(talkPage, tmp.toString(), true);
               }
