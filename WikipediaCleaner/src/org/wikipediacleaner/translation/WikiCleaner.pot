@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-09 23:51+0200\n"
+"POT-Creation-Date: 2010-09-11 16:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,7 +62,7 @@ msgid "Replace with {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:114
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:156
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:79
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:84
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:656
@@ -107,6 +107,10 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:117
 msgid "View image"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:42
+msgid "Add DEFAULTSORT"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:37
@@ -1679,7 +1683,7 @@ msgstr ""
 msgid "Retrieving page contents - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:392
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:414
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr ""
