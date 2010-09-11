@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-09 23:51+0200\n"
+"POT-Creation-Date: 2010-09-11 16:17+0200\n"
 "PO-Revision-Date: 2010-09-09 18:21+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -66,7 +66,7 @@ msgid "Replace with {0}"
 msgstr "Nahradit za {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:114
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:156
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:79
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:84
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:656
@@ -112,6 +112,11 @@ msgstr "Ověřit kategorii"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:117
 msgid "View image"
 msgstr "Zobrazit obrázek"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:42
+#, fuzzy
+msgid "Add DEFAULTSORT"
+msgstr "Opravit DEFAULTSORT"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:37
 msgid "Remove all links to title"
@@ -1739,7 +1744,7 @@ msgstr "Získávám obsahy první sekce - {0}"
 msgid "Retrieving page contents - {0}"
 msgstr "Získávám obsahy první sekce - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:392
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:414
 #, fuzzy, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Aktualizuji rozcestníkové varování na diskuzní stránce"

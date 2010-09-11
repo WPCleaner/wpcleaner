@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-09 23:51+0200\n"
+"POT-Creation-Date: 2010-09-11 16:17+0200\n"
 "PO-Revision-Date: 2010-05-23 23:57+0000\n"
 "Last-Translator: Modernday <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -63,7 +63,7 @@ msgid "Replace with {0}"
 msgstr "Sostituisci con {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:114
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:156
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:79
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:84
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:656
@@ -111,6 +111,10 @@ msgstr "Controlla la categoria"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:117
 msgid "View image"
 msgstr "Guarda l'immagine"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:42
+msgid "Add DEFAULTSORT"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:37
 #, fuzzy
@@ -1729,7 +1733,7 @@ msgstr "Recupero contenuti"
 msgid "Retrieving page contents - {0}"
 msgstr "Recupero contenuti"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:392
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:414
 #, fuzzy, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Lista di disambiguazione attuale"
