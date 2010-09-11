@@ -24,6 +24,8 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTagData;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
@@ -70,49 +72,90 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
         for (int i = 0; i < template.getParameterCount(); i++) {
           String parameterValue = template.getParameterValue(i);
           if (parameterValue != null) {
-            boolean ok = true;
-            int tmpIndex = parameterValue.length() - 1;
-            while ((tmpIndex >= 0) && (parameterValue.charAt(tmpIndex) == ' ')) {
-              tmpIndex--;
-            }
-            int endIndex = tmpIndex;
-            if ((tmpIndex >= 0) && (parameterValue.charAt(tmpIndex) == '>')) {
-              tmpIndex--;
-            } else {
-              ok = false;
-            }
-            if ((tmpIndex >= 0) && (parameterValue.charAt(tmpIndex) == '/')) {
-              tmpIndex--;
-            } else {
-              ok = false;
-            }
-            while ((tmpIndex >= 0) && (parameterValue.charAt(tmpIndex) == ' ')) {
-              tmpIndex--;
-            }
-            if ((tmpIndex >= 1) && (parameterValue.startsWith("br", tmpIndex - 1))) {
-              tmpIndex -= 2;
-            } else {
-              ok = false;
-            }
-            while ((tmpIndex >= 0) && (parameterValue.charAt(tmpIndex) == ' ')) {
-              tmpIndex--;
-            }
-            if ((tmpIndex >= 0) && (parameterValue.charAt(tmpIndex) == '<')) {
-              tmpIndex--;
-            } else {
-              ok = false;
-            }
-            if (ok) {
-              if (errors == null) {
-                return true;
+
+            // Find last <br> tag
+            PageElementTag lastTag = null;
+            int currentIndex = 0;
+            while (currentIndex < parameterValue.length()) {
+              PageElementTag tag = PageContents.findNextTag(page, parameterValue, "br", currentIndex);
+              if (tag != null) {
+                currentIndex = tag.getEndTagEndIndex();
+                lastTag = tag;
+              } else {
+                currentIndex = parameterValue.length();
               }
-              errorFound = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  page,
-                  template.getParameterValueOffset(i) + tmpIndex + 1,
-                  template.getParameterValueOffset(i) + endIndex + 1);
-              errorResult.addReplacement("", GT._("Delete"));
-              errors.add(errorResult);
+            }
+            PageElementTagData lastTagData = null;
+            currentIndex = 0;
+            while (currentIndex < parameterValue.length()) {
+              PageElementTagData tag = PageContents.findNextStartTag(page, parameterValue, "br", currentIndex);
+              if (tag != null) {
+                currentIndex = tag.getEndIndex();
+                lastTagData = tag;
+              } else {
+                currentIndex = parameterValue.length();
+              }
+            }
+            currentIndex = 0;
+            while (currentIndex < parameterValue.length()) {
+              PageElementTagData tag = PageContents.findNextEndTag(page, parameterValue, "br", currentIndex);
+              if (tag != null) {
+                currentIndex = tag.getEndIndex();
+                if ((lastTagData == null) || (lastTagData.getEndIndex() < tag.getEndIndex())) {
+                  lastTagData = tag;
+                }
+              } else {
+                currentIndex = parameterValue.length();
+              }
+            }
+
+            if ((lastTag != null) && (lastTagData != null)) {
+              if (lastTag.getEndTagEndIndex() < lastTagData.getEndIndex()) {
+                lastTag = null;
+              } else {
+                lastTagData = null;
+              }
+            }
+            if ((lastTag != null) || (lastTagData != null)) {
+              int startTagIndex = 0;
+              int endTagIndex = 0;
+              if (lastTag != null) {
+                startTagIndex = lastTag.getStartTagBeginIndex();
+                endTagIndex = lastTag.getEndTagEndIndex();
+              } else if (lastTagData != null) {
+                startTagIndex = lastTagData.getStartIndex();
+                endTagIndex = lastTagData.getEndIndex() - 1;
+              }
+              currentIndex = endTagIndex + 1;
+              boolean ok = true;
+              while (currentIndex < parameterValue.length()) {
+                if (Character.isWhitespace(parameterValue.charAt(currentIndex))) {
+                  currentIndex++;
+                } else if (parameterValue.startsWith("<!--", currentIndex)) {
+                  int endIndex = parameterValue.indexOf("-->", currentIndex + 4);
+                  if (endIndex < 0) {
+                    currentIndex = parameterValue.length();
+                    ok = false;
+                  } else {
+                    currentIndex = endIndex + 3;
+                  }
+                } else {
+                  currentIndex = parameterValue.length();
+                  ok = false;
+                }
+              }
+              if (ok) {
+                if (errors == null) {
+                  return true;
+                }
+                errorFound = true;
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    page,
+                    template.getParameterValueOffset(i) + startTagIndex,
+                    template.getParameterValueOffset(i) + endTagIndex + 1);
+                errorResult.addReplacement("", GT._("Delete"));
+                errors.add(errorResult);
+              }
             }
           }
         }
