@@ -1001,9 +1001,12 @@ public abstract class PageWindow
   public final static String ACTION_VIEW_HISTORY         = "VIEW_HISTORY";
   public final static String ACTION_WATCH                = "WATCH";
 
-  /* (non-Javadoc)
-   * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+  /**
+   * Invoked when an action occurs.
+   * 
+   * @param e Event.
    */
+  @Override
   public void actionPerformed(ActionEvent e) {
     if (e == null) {
       return;
