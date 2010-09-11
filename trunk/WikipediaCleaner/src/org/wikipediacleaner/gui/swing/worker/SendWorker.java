@@ -306,6 +306,28 @@ public class SendWorker extends BasicWorker {
               }
               updateDisambiguationWarning(talkPage, tmp.toString(), true);
 
+            } else if (templateTodo != null) {
+
+              // Dab link existing, no todo subpage, todo existing without warning => Add warning in todo
+              StringBuilder tmp = new StringBuilder();
+              if (templateTodo.getBeginIndex() > 0) {
+                tmp.append(talkPageContents.substring(0, templateTodo.getBeginIndex()));
+              }
+              tmp.append("{{");
+              tmp.append(templateTodo.getTemplateName());
+              tmp.append("|");
+              if (templateTodo.getParameterValue("1") != null) {
+                tmp.append(templateTodo.getParameterValue("1"));
+                tmp.append("\n");
+              }
+              tmp.append("* ");
+              addWarning(tmp, queryResult.getPageNewRevId(), dabLinks);
+              tmp.append("}}");
+              if (templateTodo.getEndIndex() < talkPageContents.length()) {
+                tmp.append(talkPageContents.substring(templateTodo.getEndIndex()));
+              }
+              updateDisambiguationWarning(talkPage, tmp.toString(), true);
+
             } else {
 
               // Dab link existing, no todo subpage, no warning => Add warning
