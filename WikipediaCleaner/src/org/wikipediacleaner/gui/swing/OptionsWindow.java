@@ -98,8 +98,10 @@ public class OptionsWindow
   private JSpinner spinInterrogationThreads;
   private JTextField txtSignature;
 
-  private JCheckBox chkAnalysisUpdateWarning;
-  private JCheckBox chkAnalysisUpdateWarningAll;
+  private JCheckBox chkAnalysisCreateDabWarning;
+  private JCheckBox chkAnalysisCreateDabWarningAll;
+  private JCheckBox chkAnalysisUpdateDabWarning;
+  private JCheckBox chkAnalysisUpdateDabWarningAll;
   private JCheckBox chkAnalysisCountDisambig;
   private JCheckBox chkAnalysisCountMissing;
   private JCheckBox chkAnalysisCountOther;
@@ -442,22 +444,40 @@ public class OptionsWindow
     panel.add(chkCloseFull, constraints);
     constraints.gridy++;
 
+    // Create disambiguation warning in main namespace
+    chkAnalysisCreateDabWarning = Utilities.createJCheckBox(
+        GT._("Create disambiguation warning on talk page (in main namespace)"),
+        configuration.getBoolean(
+            Configuration.BOOLEAN_CREATE_DAB_WARNING,
+            Configuration.DEFAULT_CREATE_DAB_WARNING));
+    panel.add(chkAnalysisCreateDabWarning, constraints);
+    constraints.gridy++;
+
+    // Create disambiguation warning in other namespace
+    chkAnalysisCreateDabWarningAll = Utilities.createJCheckBox(
+        GT._("Create disambiguation warning on talk page (in other namespaces)"),
+        configuration.getBoolean(
+            Configuration.BOOLEAN_CREATE_DAB_WARNING_ALL,
+            Configuration.DEFAULT_CREATE_DAB_WARNING_ALL));
+    panel.add(chkAnalysisCreateDabWarningAll, constraints);
+    constraints.gridy++;
+
     // Update disambiguation warning in main namespace
-    chkAnalysisUpdateWarning = Utilities.createJCheckBox(
+    chkAnalysisUpdateDabWarning = Utilities.createJCheckBox(
         GT._("Update disambiguation warning on talk page (in main namespace)"),
         configuration.getBoolean(
-            Configuration.BOOLEAN_UPDATE_WARNING,
-            Configuration.DEFAULT_UPDATE_WARNING));
-    panel.add(chkAnalysisUpdateWarning, constraints);
+            Configuration.BOOLEAN_UPDATE_DAB_WARNING,
+            Configuration.DEFAULT_UPDATE_DAB_WARNING));
+    panel.add(chkAnalysisUpdateDabWarning, constraints);
     constraints.gridy++;
 
     // Update disambiguation warning in other namespace
-    chkAnalysisUpdateWarningAll = Utilities.createJCheckBox(
+    chkAnalysisUpdateDabWarningAll = Utilities.createJCheckBox(
         GT._("Update disambiguation warning on talk page (in other namespaces)"),
         configuration.getBoolean(
-            Configuration.BOOLEAN_UPDATE_WARNING_ALL,
-            Configuration.DEFAULT_UPDATE_WARNING_ALL));
-    panel.add(chkAnalysisUpdateWarningAll, constraints);
+            Configuration.BOOLEAN_UPDATE_DAB_WARNING_ALL,
+            Configuration.DEFAULT_UPDATE_DAB_WARNING_ALL));
+    panel.add(chkAnalysisUpdateDabWarningAll, constraints);
     constraints.gridy++;
 
     // Show Disambiguation pages
@@ -846,14 +866,16 @@ public class OptionsWindow
     config.setBoolean(Configuration.BOOLEAN_CHECK_LINK_ERRORS, chkLinkErrorsCheckWiki.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CLOSE_DISAMBIG, chkCloseDisambig.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CLOSE_FULL, chkCloseFull.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_CREATE_DAB_WARNING, chkAnalysisCreateDabWarning.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_CREATE_DAB_WARNING_ALL, chkAnalysisCreateDabWarningAll.isSelected());
     config.setBoolean(Configuration.BOOLEAN_FORCE_WATCH, chkForceWatch.isSelected());
     config.setBoolean(Configuration.BOOLEAN_REMEMBER_LAST_PAGE, chkRememberLastPage.isSelected());
     config.setBoolean(Configuration.BOOLEAN_RESTORE_WINDOW, chkRestoreWindowPosition.isSelected());
     config.setBoolean(Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT, chkSaveLastReplacement.isSelected());
     config.setBoolean(Configuration.BOOLEAN_SAVE_WINDOW, chkSaveWindowPosition.isSelected());
     config.setBoolean(Configuration.BOOLEAN_SHORT_NOTATION, chkShortNotation.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_UPDATE_WARNING, chkAnalysisUpdateWarning.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_UPDATE_WARNING_ALL, chkAnalysisUpdateWarningAll.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_UPDATE_DAB_WARNING, chkAnalysisUpdateDabWarning.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_UPDATE_DAB_WARNING_ALL, chkAnalysisUpdateDabWarningAll.isSelected());
     config.setBoolean(Configuration.BOOLEAN_WIKICLEANER_COMMENT, chkWikiInComments.isSelected());
 
     // Integer values
@@ -899,6 +921,12 @@ public class OptionsWindow
     chkAnalysisCountRedirect.setSelected(config.getBoolean(
         Configuration.BOOLEAN_ANALYSIS_COUNT_REDIRECT,
         Configuration.DEFAULT_ANALYSIS_COUNT_REDIRECT));
+    chkAnalysisCreateDabWarning.setSelected(config.getBoolean(
+        Configuration.BOOLEAN_CREATE_DAB_WARNING,
+        Configuration.DEFAULT_CREATE_DAB_WARNING));
+    chkAnalysisCreateDabWarningAll.setSelected(config.getBoolean(
+        Configuration.BOOLEAN_CREATE_DAB_WARNING_ALL,
+        Configuration.DEFAULT_CREATE_DAB_WARNING_ALL));
     chkAnalysisDisambig.setSelected(config.getBoolean(
         Configuration.BOOLEAN_ANALYSIS_DISAMBIG_PAGES,
         Configuration.DEFAULT_ANALYSIS_DISAMBIG_PAGES));
@@ -914,12 +942,12 @@ public class OptionsWindow
     chkAnalysisRedirect.setSelected(config.getBoolean(
         Configuration.BOOLEAN_ANALYSIS_REDIRECT_PAGES,
         Configuration.DEFAULT_ANALYSIS_REDIRECT_PAGES));
-    chkAnalysisUpdateWarning.setSelected(config.getBoolean(
-        Configuration.BOOLEAN_UPDATE_WARNING,
-        Configuration.DEFAULT_UPDATE_WARNING));
-    chkAnalysisUpdateWarningAll.setSelected(config.getBoolean(
-        Configuration.BOOLEAN_UPDATE_WARNING_ALL,
-        Configuration.DEFAULT_UPDATE_WARNING_ALL));
+    chkAnalysisUpdateDabWarning.setSelected(config.getBoolean(
+        Configuration.BOOLEAN_UPDATE_DAB_WARNING,
+        Configuration.DEFAULT_UPDATE_DAB_WARNING));
+    chkAnalysisUpdateDabWarningAll.setSelected(config.getBoolean(
+        Configuration.BOOLEAN_UPDATE_DAB_WARNING_ALL,
+        Configuration.DEFAULT_UPDATE_DAB_WARNING_ALL));
     chkShow0ErrorsCheckWiki.setSelected(config.getBoolean(
         Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
         Configuration.DEFAULT_CHECK_SHOW_0_ERRORS));

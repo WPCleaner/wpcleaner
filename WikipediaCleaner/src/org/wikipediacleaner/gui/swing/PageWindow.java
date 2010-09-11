@@ -234,7 +234,8 @@ public abstract class PageWindow
   private JCheckBox chkAutomaticComment;
   JCheckBox chkCloseAfterSend;
   private JCheckBox chkEditTalkPage;
-  JCheckBox chkUpdateWarning;
+  JCheckBox chkUpdateDabWarning;
+  JCheckBox chkCreateDabWarning;
   private JLabel lblLastModified;
 
   private MediaWikiPane textContents;
@@ -281,10 +282,18 @@ public abstract class PageWindow
     if (chkEditTalkPage != null) {
       chkEditTalkPage.setEnabled(pageLoaded && article);
     }
-    if (chkUpdateWarning != null) {
-      chkUpdateWarning.setEnabled(
-          pageLoaded && article &&
-          (getWikipedia().getDisambiguationWarningTemplate() != null));
+    boolean dabWarning =
+      article &&
+      (getWikipedia().getDisambiguationWarningTemplate() != null) &&
+      (getWikipedia().getTodoTemplates() != null);
+    if (chkUpdateDabWarning != null) {
+      chkUpdateDabWarning.setEnabled(pageLoaded && dabWarning);
+    }
+    if (chkCreateDabWarning != null) {
+      chkCreateDabWarning.setEnabled(
+          pageLoaded && dabWarning &&
+          (chkUpdateDabWarning != null) &&
+          (chkUpdateDabWarning.isSelected()));
     }
     if ((textComment != null) && (chkAutomaticComment != null)) {
       textComment.setEnabled(!chkAutomaticComment.isSelected());
@@ -741,17 +750,32 @@ public abstract class PageWindow
   }
 
   /**
-   * Add a component for the Update warning checkbox.
+   * Add a component for the Update disambiguation warning checkbox.
    * 
    * @param panel Container.
    */
-  protected void addChkUpdateWarning(JPanel panel) {
+  protected void addChkUpdateDabWarning(JPanel panel) {
     if (getTextContents() != null) {
-      chkUpdateWarning = Utilities.createJCheckBox(
+      chkUpdateDabWarning = Utilities.createJCheckBox(
           GT._("Update disambiguation warning on talk page"),
           false);
-      getTextContents().setCheckBoxUpdateWarning(chkUpdateWarning);
-      panel.add(chkUpdateWarning);
+      getTextContents().setCheckBoxUpdateDabWarning(chkUpdateDabWarning);
+      panel.add(chkUpdateDabWarning);
+    }
+  }
+
+  /**
+   * Add a component for the Create disambiguation warning checkbox.
+   * 
+   * @param panel Container.
+   */
+  protected void addChkCreateDabWarning(JPanel panel) {
+    if (getTextContents() != null) {
+      chkCreateDabWarning = Utilities.createJCheckBox(
+          GT._("Create disambiguation warning on talk page"),
+          false);
+      getTextContents().setCheckBoxUpdateDabWarning(chkCreateDabWarning);
+      panel.add(chkCreateDabWarning);
     }
   }
 
@@ -1106,7 +1130,8 @@ public abstract class PageWindow
         Configuration.BOOLEAN_FORCE_WATCH,
         Configuration.DEFAULT_FORCE_WATCH);
     final int oldState = getParentComponent().getExtendedState();
-    final boolean updateWarning = (chkUpdateWarning != null) && (chkUpdateWarning.isSelected());
+    final boolean updateDabWarning = (chkUpdateDabWarning != null) && (chkUpdateDabWarning.isSelected());
+    final boolean createDabWarning = (chkCreateDabWarning != null) && (chkCreateDabWarning.isSelected());
     if (hideWindow) {
       getParentComponent().setExtendedState(Frame.ICONIFIED);
     }
@@ -1114,7 +1139,7 @@ public abstract class PageWindow
     SendWorker sendWorker = new SendWorker(
         getWikipedia(), this, page, getTextContents().getText(),
         (textComment != null) ? textComment.getText() : getWikipedia().getUpdatePageMessage(),
-        forceWatch, updateWarning);
+        forceWatch, updateDabWarning, createDabWarning);
     sendWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(

@@ -300,11 +300,20 @@ public class MediaWikiPane
   }
 
   /**
-   * @param chk JCheckBox used for updating warning in the Talk page.
+   * @param chk JCheckBox used for updating disambiguation warning in the Talk page.
    */
-  public void setCheckBoxUpdateWarning(JCheckBox chk) {
+  public void setCheckBoxUpdateDabWarning(JCheckBox chk) {
     if (popupListener != null) {
-      popupListener.setCheckBoxUpdateWarning(chk);
+      popupListener.setCheckBoxUpdateDabWarning(chk);
+    }
+  }
+
+  /**
+   * @param chk JCheckBox used for creating disambiguation warning in the Talk page.
+   */
+  public void setCheckBoxCreateDabWarning(JCheckBox chk) {
+    if (popupListener != null) {
+      popupListener.setCheckBoxCreateDabWarning(chk);
     }
   }
 
