@@ -312,7 +312,7 @@ public class SendWorker extends BasicWorker {
               StringBuilder tmp = new StringBuilder();
               tmp.append("{{");
               tmp.append(todoTemplates.get(0));
-              tmp.append("|");
+              tmp.append("|* ");
               addWarning(tmp, queryResult.getPageNewRevId(), dabLinks);
               tmp.append(" }}");
               if (talkPageContents.trim().length() > 0) {
