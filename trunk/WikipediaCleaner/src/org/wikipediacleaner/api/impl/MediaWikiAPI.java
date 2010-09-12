@@ -509,6 +509,7 @@ public class MediaWikiAPI implements API {
     properties.put("text", newContents);
     properties.put("title", page.getTitle());
     properties.put("token", page.getEditToken());
+    properties.put("watchlist", forceWatch ? "watch" : "nochange");
     try {
       result = constructEdit(
           getRoot(wikipedia, properties, 1),
@@ -600,9 +601,7 @@ public class MediaWikiAPI implements API {
     properties.put("text", contents);
     properties.put("title", page.getTitle());
     properties.put("token", page.getEditToken());
-    if (forceWatch) {
-      properties.put("watch", "");
-    }
+    properties.put("watchlist", forceWatch ? "watch" : "nochange");
     try {
       result = constructEdit(
           getRoot(wikipedia, properties, 1),
