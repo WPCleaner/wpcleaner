@@ -1492,7 +1492,13 @@ public class CheckWikiProjectWindow extends PageWindow {
       int nbPages = error.getPageCount();
       for (int numPage = 0; numPage < nbPages; numPage++) {
         Page page = error.getPage(numPage);
-        modelPages.addElement(new CheckErrorPage(page, error.getAlgorithm()));
+        CheckErrorPage errorPage = new CheckErrorPage(page, error.getAlgorithm());
+        if ((errorPage.isInWhiteList()) && (page.getPageId() != null)) {
+          // TODO: Need page id (either retrieve it when needed or wait to have it directly from toolserver)
+          markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
+        } else {
+          modelPages.addElement(errorPage);
+        }
       }
       setPageLoaded(false);
       actionSelectPage();
