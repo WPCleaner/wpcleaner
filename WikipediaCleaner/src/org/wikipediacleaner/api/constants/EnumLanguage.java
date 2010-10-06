@@ -43,6 +43,7 @@ public enum EnumLanguage {
   ID   ("id"   , "Indonesian"),
   IS   ("is"   , "Icelandic"),
   IT   ("it"   , "Italian"),
+  JA   ("ja"   , "Japanese"),
   KO   ("ko"   , "Korean"),
   NB   ("nb"   , "Norwegian Bokmal"),
   NL   ("nl"   , "Dutch"),
