@@ -94,6 +94,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
     { "&times;" , "×" },
 
     { "&Uuml;"  , "Ü" },
+    { "&uuml;"  , "ü" },
   };
 
   public CheckErrorAlgorithm011() {
