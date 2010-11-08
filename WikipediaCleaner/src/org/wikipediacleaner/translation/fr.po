@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-09-11 18:33+0200\n"
-"PO-Revision-Date: 2010-09-12 18:15+0000\n"
+"PO-Revision-Date: 2010-11-08 11:32+0000\n"
 "Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-09-13 17:52+0000\n"
+"X-Launchpad-Export-Date: 2010-11-08 17:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -453,7 +453,7 @@ msgstr "Correction d'homonymie semi-automatique"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:131
 msgid "Update existing disambiguation warning messages"
-msgstr ""
+msgstr "Mettre à jour le message d'avertissement existant"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:175
 msgid "Check Wikipedia"
@@ -1100,10 +1100,14 @@ msgstr "Fermer la fenêtre d'analyse complète après l'envoi"
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:449
 msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
+"créer un message d'avertissement en page de discussion (dans l'espace "
+"principal)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:458
 msgid "Create disambiguation warning on talk page (in other namespaces)"
 msgstr ""
+"créer un message d'avertissement en page de discussion (dans les autres "
+"espaces)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:467
 msgid "Update disambiguation warning on talk page (in main namespace)"
@@ -1363,7 +1367,7 @@ msgstr "Mettre à jour l'avertissement homonymie en page de discussion"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:775
 msgid "Create disambiguation warning on talk page"
-msgstr ""
+msgstr "Créer le message d'avertissement en page de discussion"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:876
 #: org/wikipediacleaner/gui/swing/PageWindow.java:881
