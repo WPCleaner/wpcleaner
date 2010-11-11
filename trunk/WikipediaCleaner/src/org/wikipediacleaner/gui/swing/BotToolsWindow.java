@@ -35,6 +35,7 @@ import javax.swing.WindowConstants;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 
@@ -158,7 +159,7 @@ public class BotToolsWindow
   protected void updateComponentState() {
     super.updateComponentState();
     buttonAutomaticFixing.setEnabled(false);
-    buttonUpdateDabWarning.setEnabled(false);
+    buttonUpdateDabWarning.setEnabled(true);
   }
 
   /**
@@ -199,6 +200,8 @@ public class BotToolsWindow
    * Action called when Update Dab Warning button is pressed.
    */
   private void actionUpdateDabWarning() {
-    // TODO
+    UpdateDabWarningWorker worker = new UpdateDabWarningWorker(
+        getWikipedia(), this);
+    worker.start();
   }
 }
