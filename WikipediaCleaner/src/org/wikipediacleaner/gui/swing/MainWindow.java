@@ -145,6 +145,7 @@ public class MainWindow
   private JButton buttonAbout;
 
   boolean logged = false;
+  boolean userLogged = false;
 
   /**
    * Create and display a MainWindow.
@@ -234,7 +235,7 @@ public class MainWindow
     buttonCheckWiki.setEnabled(logged);
     buttonRandomPage.setEnabled(logged);
     buttonWatchedPages.setEnabled(logged);
-    buttonBotTools.setEnabled(logged && false);
+    buttonBotTools.setEnabled(userLogged);
   }
 
   /**
@@ -795,6 +796,7 @@ public class MainWindow
     API api = APIFactory.getAPI();
     api.logout();
     logged = false;
+    userLogged = false;
     updateComponentState();
   }
 
@@ -1082,6 +1084,7 @@ public class MainWindow
           }
         }
         logged = true;
+        userLogged = login;
 
         // Saving settings
         Configuration configuration = Configuration.getConfiguration();
