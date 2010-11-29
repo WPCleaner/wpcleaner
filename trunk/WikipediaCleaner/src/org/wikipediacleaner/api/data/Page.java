@@ -427,14 +427,20 @@ public class Page implements Comparable<Page> {
         }
         // Removing REDIRECT
         if (ok) {
-          final String r1 = "#REDIRECTION";
-          final String r2 = "#REDIRECT";
-          if (r1.equalsIgnoreCase(pageContents.substring(startIndex, startIndex + r1.length()))) {
-            startIndex += r1.length();
-          } else if (r2.equalsIgnoreCase(pageContents.substring(startIndex, startIndex + r2.length()))) {
-            startIndex += r2.length();
-          } else {
-            ok = false;
+          ok = false;
+          MagicWord magicRedirect = wikipedia.getMagicWord(MagicWord.REDIRECT);
+          if ((magicRedirect != null) && (magicRedirect.getAliases() != null)) {
+            int length = 0;
+            for (String magic : magicRedirect.getAliases()) {
+              if ((pageContents.length() > startIndex + magic.length()) &&
+                  (magic.length() > length)) {
+                if (magic.equalsIgnoreCase(pageContents.substring(startIndex, startIndex + magic.length()))) {
+                  ok = true;
+                  length = magic.length();
+                }
+              }
+            }
+            startIndex += length;
           }
         }
         // Removing white spaces
