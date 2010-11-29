@@ -8,18 +8,18 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-11-11 18:48+0100\n"
-"PO-Revision-Date: 2009-08-01 22:01+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"PO-Revision-Date: 2010-11-29 18:31+0000\n"
+"Last-Translator: Ekrem Kocadere <ekocadere@hotmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-08 18:40+0000\n"
+"X-Launchpad-Export-Date: 2010-11-29 19:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
-msgstr ""
+msgstr "Umarım WikiCleaner'ı beğenirsiniz."
 
 #: org/wikipediacleaner/Version.java:40
 #, java-format
@@ -316,7 +316,8 @@ msgid "Link count"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:336
-msgid "Add a warning on the talk page about the links to disambiguation pages"
+msgid ""
+"Add a warning on the talk page about the links to disambiguation pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:372
@@ -417,7 +418,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:106
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:609
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:107
@@ -527,9 +529,8 @@ msgid "Use selection"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:474
-#, fuzzy
 msgid "Delete selection"
-msgstr "Sil"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:561
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:350
@@ -550,9 +551,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:622
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:127
-#, fuzzy
 msgid "Detail"
-msgstr "Ayrıntılar"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:629
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:133
@@ -766,32 +766,28 @@ msgid "Options (Alt + &O)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:420
-#, fuzzy
 msgid "System Options (Alt + &Y)"
-msgstr "&Seçenekler"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:424
 msgid "&Idea ? Bug ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:460
-#, fuzzy
 msgid "Page"
-msgstr "Sayfa  ıd"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:502
-#, fuzzy
 msgid "Internal links"
-msgstr "Genel seçenekler"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:509
 msgid "&Random page"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:524
-#, fuzzy
 msgid "Projects"
-msgstr "Proje - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:542
 msgid "&Current Disambiguation List"
@@ -1193,24 +1189,20 @@ msgid "Disambiguation"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:355
-#, fuzzy
 msgid "First occurrence (Alt + &F)"
-msgstr "Olay"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:357
-#, fuzzy
 msgid "&First occurrence"
-msgstr "Olay"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:409
-#, fuzzy
 msgid "Last occurrence (Alt + &L)"
-msgstr "Olay"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:411
-#, fuzzy
 msgid "&Last occurrence"
-msgstr "Olay"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:430
 msgid "Next occurrence (Alt + &N)"
@@ -1221,14 +1213,12 @@ msgid "&Next occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:451
-#, fuzzy
 msgid "Previous occurrence (Alt + &P)"
-msgstr "Olay"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:453
-#, fuzzy
 msgid "&Previous occurrence"
-msgstr "Olay"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:467
 msgid "Full analysis of redirect"
@@ -1247,9 +1237,8 @@ msgid "&Reload"
 msgstr "&Tekrar Yükle"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:537
-#, fuzzy
 msgid "Send (Alt + &S)"
-msgstr "&Seçenekler"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:539
 msgid "&Send"
@@ -1619,18 +1608,16 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:939
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:950
-#, fuzzy
 msgid "Link text"
-msgstr "Metin bul"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:978
 msgid "Analyze"
 msgstr "Analiz"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1017
-#, fuzzy
 msgid "Analyze template"
-msgstr "Sayfa analizi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1019
 msgid "Analyze page"
@@ -1729,10 +1716,6 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:70
 msgid "Constructing list of articles with disambiguation warning"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Links"
-#~ msgstr "Giriş"
 
 #~ msgid "Work"
 #~ msgstr "İş"
