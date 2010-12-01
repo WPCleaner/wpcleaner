@@ -124,6 +124,7 @@ public class CheckError {
           // TODO: Use something like Apache Commons Lang StringEscapeUtils ?
           line = line.replaceAll(Pattern.quote("&#039;"), "'");
           line = line.replaceAll(Pattern.quote("&quot;"), "\"");
+          line = line.replaceAll(Pattern.quote("&amp;"), "&");
           error.addPage(line);
         }
       } catch (UnsupportedEncodingException e) {
