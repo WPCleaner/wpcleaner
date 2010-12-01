@@ -125,6 +125,13 @@ public class MenuCreator {
     return null;
   }
 
+  /**
+   * @param popup Popup menu.
+   * @param element Text element.
+   * @param textPane Text pane.
+   * @param position Position in text.
+   * @param info Information.
+   */
   public static void addInfoToMenu(
       JPopupMenu popup, Element element, JTextPane textPane,
       int position, CheckErrorResult info) {
@@ -133,11 +140,12 @@ public class MenuCreator {
     }
     
     // Current chapter
-    JMenuItem menuItem = new JMenuItem(info.getErrorType());
+    JMenuItem menuItem = null;
+    /*menuItem = new JMenuItem(info.getErrorType());
     menuItem.setEnabled(false);
     popup.add(menuItem);
     addCurrentChapterToMenu(popup, textPane, position);
-    popup.add(new JSeparator());
+    popup.add(new JSeparator());*/
 
     // Actions
     List<Actionnable> possibleActions = info.getPossibleActions();
