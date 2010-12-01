@@ -388,8 +388,18 @@ public class CheckWikiProjectWindow extends PageWindow {
     menuItem.addActionListener(this);
     popupSelectErrors.add(menuItem);
 
+    menuItem = new JMenuItem(GT._("Select middle priority errors"));
+    menuItem.setActionCommand(ACTION_SELECT_ERRORS + "P2");
+    menuItem.addActionListener(this);
+    popupSelectErrors.add(menuItem);
+
     menuItem = new JMenuItem(GT._("Select lowest priority (and above) errors"));
     menuItem.setActionCommand(ACTION_SELECT_ERRORS + "P1,P2,P3");
+    menuItem.addActionListener(this);
+    popupSelectErrors.add(menuItem);
+
+    menuItem = new JMenuItem(GT._("Select lowest priority errors"));
+    menuItem.setActionCommand(ACTION_SELECT_ERRORS + "P3");
     menuItem.addActionListener(this);
     popupSelectErrors.add(menuItem);
 
@@ -398,30 +408,21 @@ public class CheckWikiProjectWindow extends PageWindow {
     final Map<TextAttribute, Boolean> inactiveAttributes = new HashMap<TextAttribute, Boolean>();
     inactiveAttributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
 
-    // Select only
-    JMenu subMenuSelectOnly = new JMenu(GT._("Select only"));
-
     final int PART_SIZE = 20; 
     int lastPart = -1;
     JMenu subMenu = null;
-    JMenu subMenu2 = null;
     for (CheckErrorAlgorithm algorithm : allAlgorithms) {
       if (algorithm != null) {
         int errorNumber = algorithm.getErrorNumber();
         if (errorNumber > 0) {
           int part = (errorNumber - 1) / PART_SIZE;
-          if ((subMenu == null) || (subMenu2 == null) || (part > lastPart)) {
+          if ((subMenu == null) || (part > lastPart)) {
             int from = (part * PART_SIZE) + 1;
             int to = (part + 1) * PART_SIZE;
             subMenu = new JMenu(GT._(
                 "Errors from {0} to {1}",
                 new Object[] { Integer.valueOf(from), Integer.valueOf(to) }));
             popupSelectErrors.add(subMenu);
-
-            subMenu2 = new JMenu(GT._(
-                "Errors from {0} to {1}",
-                new Object[] { Integer.valueOf(from), Integer.valueOf(to) }));
-            subMenuSelectOnly.add(subMenu2);
 
             lastPart = part;
           }
@@ -444,6 +445,39 @@ public class CheckWikiProjectWindow extends PageWindow {
             menuItemAlgorithms.add(null);
           }
           menuItemAlgorithms.set(errorNumber, menuItem);
+        }
+      }
+    }
+
+    // Select only
+    popupSelectErrors.addSeparator();
+    lastPart = -1;
+    subMenu = null;
+    for (CheckErrorAlgorithm algorithm : allAlgorithms) {
+      if (algorithm != null) {
+        int errorNumber = algorithm.getErrorNumber();
+        if (errorNumber > 0) {
+          int part = (errorNumber - 1) / PART_SIZE;
+          if ((subMenu == null) || (part > lastPart)) {
+            int from = (part * PART_SIZE) + 1;
+            int to = (part + 1) * PART_SIZE;
+            subMenu = new JMenu(
+                GT._("Select only") + " - " +
+                GT._(
+                    "Errors from {0} to {1}",
+                    new Object[] { Integer.valueOf(from), Integer.valueOf(to) }));
+            popupSelectErrors.add(subMenu);
+
+            lastPart = part;
+          }
+          String label =
+            algorithm.getErrorNumberString() + " - " +
+            algorithm.getShortDescriptionReplaced();
+
+          while (menuItemAlgorithms.size() <= errorNumber) {
+            menuItemAlgorithms.add(null);
+          }
+          menuItemAlgorithms.set(errorNumber, menuItem);
 
           menuItem = new JMenuItem(label);
           if (!CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
@@ -454,14 +488,10 @@ public class CheckWikiProjectWindow extends PageWindow {
           }
           menuItem.setActionCommand(ACTION_SELECT_ERRORS + algorithm.getErrorNumberString());
           menuItem.addActionListener(this);
-          subMenu2.add(menuItem);
+          subMenu.add(menuItem);
         }
       }
     }
-
-    // Select only
-    popupSelectErrors.addSeparator();
-    popupSelectErrors.add(subMenuSelectOnly);
 
     // Saved selections
     popupSelectErrors.addSeparator();
