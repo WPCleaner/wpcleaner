@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-12-01 19:20+0100\n"
-"PO-Revision-Date: 2010-12-02 16:42+0000\n"
+"PO-Revision-Date: 2010-12-02 17:18+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-12-02 16:48+0000\n"
+"X-Launchpad-Export-Date: 2010-12-02 17:24+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:37
@@ -196,7 +196,7 @@ msgstr "Istniejące przypisy"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:245
 msgid "Title of the article describing this type of error"
-msgstr ""
+msgstr "Nazwa artykułu opisującego ten typ błędu"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:246
 msgid "List of false positives for this type of error"
@@ -264,7 +264,7 @@ msgstr "Zastąp parametr {0} przez {1}"
 #: org/wikipediacleaner/api/data/TemplateMatcher1L2T.java:76
 #, java-format
 msgid "Link parameter {0} to"
-msgstr ""
+msgstr "Linkuj parametr {0} do"
 
 #: org/wikipediacleaner/api/execution/BacklinksWRCallable.java:53
 msgid "Retrieving page back links"
@@ -449,7 +449,7 @@ msgstr "Check Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:246
 msgid "No errors available"
-msgstr ""
+msgstr "Brak dostępnych błędów"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:249
 msgid "No errors selected"
@@ -841,6 +841,9 @@ msgid ""
 "You won't be able to modify pages on Wikipedia in Demo mode.\n"
 "Do you want to continue ?"
 msgstr ""
+"Tryb demo dostępny jest tylko do testowania programu WikiCleaner.\n"
+"W tym trybie nie ma możliwości modyfikowania stron Wikipedii.\n"
+"Kontynuować?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:707
 msgid "You can learn how to add other Wikipedia at the following URL:"
@@ -870,6 +873,7 @@ msgstr "Musisz wpisać swoje hasło przed zalogowaniem"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:813
 msgid "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
+"Informacje o konfiguracji programu WikiCleaner znajdują się pod adresem:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:830
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
@@ -908,13 +912,15 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:922
 #, java-format
 msgid "Internal links in {0}"
-msgstr ""
+msgstr "Linki wewnętrzne w  {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:938
 msgid ""
 "There's no known list of disambiguation pages for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
+"Brak listy stron ujednoznaczniających na tej wersji Wikipedii.\n"
+"Informacje o konfiguracji programu WikiCleaner znajdują się pod adresem:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:949
 msgid "Current disambiguation list"
@@ -925,12 +931,16 @@ msgid ""
 "There's no known template for requesting help for the Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
+"Brak szablonu prośby o pomoc na tej wersji Wikipedii.\n"
+"Informacje o konfiguracji programu WikiCleaner znajdują się pod adresem:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:987
 msgid ""
 "There's no known Check Wikipedia Project for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
+"Brak projektu Check Wikipedia na tej wersji Wikipedii.\n"
+"Informacje o konfiguracji programu WikiCleaner znajdują się pod adresem:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1026
 msgid "Watched pages"
@@ -1038,19 +1048,19 @@ msgstr "Używaj zaawansowanych opcji (eksperymentalne)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:266
 msgid "Display WikiCleaner link in update comments"
-msgstr ""
+msgstr "Umieszczaj w opisie link do WikiCleaner"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:277
 msgid "Show errors with no detection found"
-msgstr ""
+msgstr "Pokazuj błędy, których nie wykryto na żadnej stronie"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:288
 msgid "Add link to error description in comments"
-msgstr ""
+msgstr "Umieszczaj w opisie nazwę błędu"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:299
 msgid "Watch all edited pages"
-msgstr ""
+msgstr "Obserwuj wszystkie edytowane strony"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:313
 msgid "Maximum number of items in a menu :"
@@ -1122,7 +1132,7 @@ msgstr "Sc&howaj okno podczas wysyłania"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:566
 msgid "Save last replacement used"
-msgstr ""
+msgstr "Zapisz ostatnią zamianę"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:575
 msgid "Remember last edited page"
