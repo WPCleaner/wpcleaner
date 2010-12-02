@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-12-01 19:20+0100\n"
-"PO-Revision-Date: 2010-11-25 14:25+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"PO-Revision-Date: 2010-12-02 01:21+0000\n"
+"Last-Translator: A2 <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-11-25 16:04+0000\n"
+"X-Launchpad-Export-Date: 2010-12-02 08:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -31,8 +31,8 @@ msgid ""
 "WikiCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
-"La configuration de WikiCleaner est disponible en ligne, essayez la {0}"
-"Configuration système{1}."
+"La configuration de WikiCleaner est disponible en ligne, essayez la "
+"{0}Configuration système{1}."
 
 #: org/wikipediacleaner/Version.java:44
 #, java-format
@@ -326,7 +326,8 @@ msgid "Link count"
 msgstr "Compte de liens"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:336
-msgid "Add a warning on the talk page about the links to disambiguation pages"
+msgid ""
+"Add a warning on the talk page about the links to disambiguation pages"
 msgstr ""
 "Ajouter un avertissement sur la page de discussion à propos des liens vers "
 "les pages d'homonymies"
@@ -432,7 +433,8 @@ msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:106
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:609
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
@@ -524,18 +526,16 @@ msgid "Select middle priority (and above) errors"
 msgstr "Sélectionner les erreurs de priorité moyenne et supérieure"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:391
-#, fuzzy
 msgid "Select middle priority errors"
-msgstr "Sélectionner les erreurs de priorité maximale"
+msgstr "Sélectionner les erreurs de priorité moyenne"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:396
 msgid "Select lowest priority (and above) errors"
 msgstr "Sélectionner les erreurs de priorité basse et supérieure"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:401
-#, fuzzy
 msgid "Select lowest priority errors"
-msgstr "Sélectionner les erreurs de priorité basse et supérieure"
+msgstr "Sélectionner les erreurs de priorité basse"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:423
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:467
@@ -1258,7 +1258,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:405
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
+msgstr ""
+"Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:314
 msgid "&Page :"
@@ -1809,7 +1810,8 @@ msgstr "Récupération des pages de discussion incluant {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:71
 msgid "Constructing list of articles with disambiguation warning"
-msgstr "Construction de la liste des articles avec un message d'avertissement"
+msgstr ""
+"Construction de la liste des articles avec un message d'avertissement"
 
 #~ msgid "Retrieving namespaces"
 #~ msgstr "Récupération des espaces de nom"
@@ -1871,6 +1873,7 @@ msgstr "Construction de la liste des articles avec un message d'avertissement"
 #~ msgid "]]"
 #~ msgstr "]]"
 
+#, java-format
 #~ msgid "Replace parameter {0} with"
 #~ msgstr "Remplacer le paramètre {0} par"
 
@@ -1888,8 +1891,8 @@ msgstr "Construction de la liste des articles avec un message d'avertissement"
 
 #~ msgid "Comma separated list of errors to ignore."
 #~ msgstr ""
-#~ "Liste des numéros d'erreurs à ignorer séparés d'une virgule (par ex. 17, "
-#~ "46, 53)."
+#~ "Liste des numéros d'erreurs à ignorer séparés d'une virgule (par ex. 17, 46, "
+#~ "53)."
 
 #~ msgid "Comma separated list of errors to work on."
 #~ msgstr ""
