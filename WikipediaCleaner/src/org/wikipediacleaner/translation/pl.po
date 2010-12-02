@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-12-01 19:20+0100\n"
-"PO-Revision-Date: 2010-12-02 16:01+0000\n"
+"PO-Revision-Date: 2010-12-02 16:42+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-12-02 16:32+0000\n"
+"X-Launchpad-Export-Date: 2010-12-02 16:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:37
@@ -142,6 +142,8 @@ msgstr "Usuń znacznik <small>"
 msgid ""
 "A list of abbreviations that generate false positives when placed before {0}"
 msgstr ""
+"Lista wyjątków - skrótów powodujących fałszywy alarm, kiedy są umieszczone "
+"przed {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:100
 msgid "Check language links"
@@ -198,7 +200,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:246
 msgid "List of false positives for this type of error"
-msgstr ""
+msgstr "Lista wyjątków - fałszywych alarmów dla tego typu błędu"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithms.java:226
 msgid "Deactivated"
@@ -1124,7 +1126,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:575
 msgid "Remember last edited page"
-msgstr ""
+msgstr "Pamiętaj ostatnio edytowaną stronę"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:587
 msgid "Number of links selected :"
