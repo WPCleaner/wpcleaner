@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2010-12-01 19:20+0100\n"
-"PO-Revision-Date: 2010-08-06 09:42+0000\n"
-"Last-Translator: Donkade <Unknown>\n"
+"PO-Revision-Date: 2010-12-04 16:38+0000\n"
+"Last-Translator: Redmar <redmar@ubuntu-nl.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-08-06 16:42+0000\n"
+"X-Launchpad-Export-Date: 2010-12-04 17:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: org/wikipediacleaner/Version.java:37
@@ -22,20 +22,16 @@ msgid "I hope you'll like WikiCleaner."
 msgstr "Ik hoop dat u WikiCleaner leuk vindt."
 
 #: org/wikipediacleaner/Version.java:40
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "WikiCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
-"!NIEUW! - WikiCleaner configuraties zijn nu online beschikbaar, zie ook de "
-"Systeem-configuraties."
 
 #: org/wikipediacleaner/Version.java:44
-#, fuzzy, java-format
+#, java-format
 msgid "Many new features added for the {0}Check Wiki project{1} : try them !"
 msgstr ""
-"Er zijn vele nieuwe mogelijkheden toegevoegd voor het Check Wiki project: "
-"probeer ze uit!"
 
 #: org/wikipediacleaner/Version.java:47
 msgid "Please, report any other problem you find to me."
@@ -115,9 +111,8 @@ msgid "View image"
 msgstr "Afbeelding bekijken"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:42
-#, fuzzy
 msgid "Add DEFAULTSORT"
-msgstr "Repareer DEFAULTSORT"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:37
 msgid "Remove all links to title"
@@ -223,7 +218,7 @@ msgstr "hoogste prioriteit"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithms.java:234
 msgid "For Bot"
-msgstr ""
+msgstr "Voor bot"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithms.java:236
 msgid "Priority unknown"
@@ -260,9 +255,9 @@ msgstr "Voorkomen"
 #: org/wikipediacleaner/api/data/TemplateMatcher1L.java:88
 #: org/wikipediacleaner/api/data/TemplateMatcher1LT.java:88
 #: org/wikipediacleaner/api/data/TemplateMatcher1LT.java:95
-#, fuzzy, java-format
+#, java-format
 msgid "Replace parameter {0} with {1}"
-msgstr "Vervang met {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/TemplateMatcher1L2T.java:76
 #, java-format
@@ -290,9 +285,8 @@ msgid "Expanding templates"
 msgstr "Uitbreiden sjablonen"
 
 #: org/wikipediacleaner/api/execution/LinksWRCallable.java:61
-#, fuzzy
 msgid "Retrieving page links"
-msgstr "Vorige pagina-links terughalen"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/ParseTextCallable.java:55
 msgid "Parsing text"
@@ -322,7 +316,8 @@ msgid "Link count"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:336
-msgid "Add a warning on the talk page about the links to disambiguation pages"
+msgid ""
+"Add a warning on the talk page about the links to disambiguation pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:372
@@ -337,7 +332,7 @@ msgstr "&Opties"
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:388
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:485
 msgid "Show &disambiguation pages"
-msgstr ""
+msgstr "Laat &disambiguation-pagina's zien"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:392
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:494
@@ -400,9 +395,8 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:756
-#, fuzzy
 msgid "Warning for disambiguation links"
-msgstr "Tel pagina's waarvan de naam"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
 #: org/wikipediacleaner/gui/swing/MainWindow.java:576
@@ -428,7 +422,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:106
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:609
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Op enkele Wikipedia-projecten moet u misschien de bot-status gebruiken om "
 "dit te doen."
@@ -446,9 +441,8 @@ msgid "Semi-automatic disambiguation fixing"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:132
-#, fuzzy
 msgid "Update existing disambiguation warning messages"
-msgstr "Tel pagina's waarvan de naam"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:175
 msgid "Check Wikipedia"
@@ -459,14 +453,12 @@ msgid "No errors available"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:249
-#, fuzzy
 msgid "No errors selected"
-msgstr "Lijst van fouten die ontdekt zijn:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:302
-#, fuzzy
 msgid "Load all errors"
-msgstr "Alle foutmeldingen"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:307
 msgid "Load all high priority errors"
@@ -477,9 +469,8 @@ msgid "Load all high and middle priority errors"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:317
-#, fuzzy
 msgid "Load all middle priority errors"
-msgstr "Middelmatige prioriteit"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:322
 msgid "Load all high, middle and lowest priority errors"
@@ -502,20 +493,18 @@ msgid "Load all errors for bots"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:365
-#, fuzzy, java-format
+#, java-format
 msgid "Load errors {0}"
-msgstr "Herlaad de fout"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:372
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:601
-#, fuzzy
 msgid "Select errors"
-msgstr "Alle foutmeldingen"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:376
-#, fuzzy
 msgid "Select all errors"
-msgstr "Alle foutmeldingen"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:381
 msgid "Select high priority errors"
@@ -526,18 +515,16 @@ msgid "Select middle priority (and above) errors"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:391
-#, fuzzy
 msgid "Select middle priority errors"
-msgstr "Middelmatige prioriteit"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:396
 msgid "Select lowest priority (and above) errors"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:401
-#, fuzzy
 msgid "Select lowest priority errors"
-msgstr "Middelmatige prioriteit"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:423
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:467
@@ -546,9 +533,8 @@ msgid "Errors from {0} to {1}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:465
-#, fuzzy
 msgid "Select only"
-msgstr "Alle foutmeldingen"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:498
 msgid "Save current selection"
@@ -818,9 +804,8 @@ msgid "Page"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:502
-#, fuzzy
 msgid "Internal links"
-msgstr "Algemene instellingen"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:509
 msgid "&Random page"
@@ -1080,24 +1065,20 @@ msgid "Close full analysis window after sending"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:449
-#, fuzzy
 msgid "Create disambiguation warning on talk page (in main namespace)"
-msgstr "Tel pagina's waarvan de naam"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:458
-#, fuzzy
 msgid "Create disambiguation warning on talk page (in other namespaces)"
-msgstr "Tel pagina's waarvan de naam"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:467
-#, fuzzy
 msgid "Update disambiguation warning on talk page (in main namespace)"
-msgstr "Tel pagina's waarvan de naam"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:476
-#, fuzzy
 msgid "Update disambiguation warning on talk page (in other namespaces)"
-msgstr "Tel pagina's waarvan de naam"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:521
 msgid "Count &disambiguation pages"
@@ -1336,14 +1317,12 @@ msgid "&Add a note on talk page"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:760
-#, fuzzy
 msgid "Update disambiguation warning on talk page"
-msgstr "Tel pagina's waarvan de naam"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:775
-#, fuzzy
 msgid "Create disambiguation warning on talk page"
-msgstr "Tel pagina's waarvan de naam"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:876
 #: org/wikipediacleaner/gui/swing/PageWindow.java:881
@@ -1677,9 +1656,8 @@ msgid "External Viewer"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1107
-#, fuzzy
 msgid "Template External Viewer"
-msgstr "Externe kijker"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1162
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1167
@@ -1742,49 +1720,28 @@ msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:119
-#, fuzzy, java-format
+#, java-format
 msgid "Retrieving first section contents - {0}"
-msgstr "Content terughalen"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:167
-#, fuzzy, java-format
+#, java-format
 msgid "Retrieving page contents - {0}"
-msgstr "Content terughalen"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:442
-#, fuzzy, java-format
+#, java-format
 msgid "Updating disambiguation warning - {0}"
-msgstr "Tel pagina's waarvan de naam"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:63
-#, fuzzy, java-format
+#, java-format
 msgid "Retrieving talk pages including {0}"
-msgstr "Vorige pagina-links terughalen"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:71
 msgid "Constructing list of articles with disambiguation warning"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Links"
-#~ msgstr "Login"
-
-#~ msgid "Load"
-#~ msgstr "Laden"
-
-#~ msgid "only"
-#~ msgstr "alleen"
-
-#~ msgid "Comma separated list of errors to work on."
-#~ msgstr ""
-#~ "Lijst van fouten waar aan gewerkt moet worden, gescheiden door komma's."
-
-#~ msgid "except"
-#~ msgstr "uitzonderen"
-
-#~ msgid "Comma separated list of errors to ignore."
-#~ msgstr ""
-#~ "Lijst van fouten die genegeerd moeten worden, gescheiden door komma's."
 
 #~ msgid "Square brackets not correct end"
 #~ msgstr "Foute links"
@@ -1812,3 +1769,20 @@ msgstr ""
 
 #~ msgid "Headline should end with \"=\""
 #~ msgstr "Kop gevonden die niet eindigt op \"=\""
+
+#~ msgid "except"
+#~ msgstr "uitzonderen"
+
+#~ msgid "only"
+#~ msgstr "alleen"
+
+#~ msgid "Load"
+#~ msgstr "Laden"
+
+#~ msgid "Comma separated list of errors to work on."
+#~ msgstr ""
+#~ "Lijst van fouten waar aan gewerkt moet worden, gescheiden door komma's."
+
+#~ msgid "Comma separated list of errors to ignore."
+#~ msgstr ""
+#~ "Lijst van fouten die genegeerd moeten worden, gescheiden door komma's."
