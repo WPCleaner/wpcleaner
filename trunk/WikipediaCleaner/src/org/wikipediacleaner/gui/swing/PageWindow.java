@@ -237,6 +237,7 @@ public abstract class PageWindow
   JCheckBox chkUpdateDabWarning;
   JCheckBox chkCreateDabWarning;
   private JLabel lblLastModified;
+  private JLabel lblEditProtectionLevel;
 
   private MediaWikiPane textContents;
 
@@ -790,6 +791,17 @@ public abstract class PageWindow
   }
 
   /**
+   * Add a component for the Edit protection level.
+   * 
+   * @param panel Container.
+   */
+  protected void addLblEditProtectionLevel(JComponent panel) {
+    lblEditProtectionLevel = Utilities.createJLabel(" ");
+    lblEditProtectionLevel.setToolTipText(GT._("Protection level for editing the page"));
+    panel.add(lblEditProtectionLevel);
+  }
+
+  /**
    * Add a component for the Text.
    * 
    * @param panel Container.
@@ -889,6 +901,18 @@ public abstract class PageWindow
           lblLastModified.setVisible(true);
         } else {
           lblLastModified.setVisible(false);
+        }
+      }
+      if (lblEditProtectionLevel != null) {
+        if ((page.getEditProtectionLevel() != null) && (!page.getEditProtectionLevel().equals(""))) {
+          if ("sysop".equals(page.getEditProtectionLevel())) {
+            lblEditProtectionLevel.setForeground(Color.RED);
+          } else {
+            lblEditProtectionLevel.setForeground(Color.ORANGE);
+          }
+          lblEditProtectionLevel.setText(" (" + page.getEditProtectionLevel() + ")");
+        } else {
+          lblEditProtectionLevel.setVisible(false);
         }
       }
       updateComponentState();

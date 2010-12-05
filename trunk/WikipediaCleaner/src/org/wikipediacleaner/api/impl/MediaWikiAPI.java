@@ -337,6 +337,7 @@ public class MediaWikiAPI implements API {
   public void retrieveContents(EnumWikipedia wikipedia, Page page, boolean withRedirects)
       throws APIException {
     Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    properties.put("inprop", "protection");
     properties.put("prop", "revisions|info");
     properties.put("titles", page.getTitle());
     properties.put("rvprop", "content|ids|timestamp");
@@ -1512,6 +1513,12 @@ public class MediaWikiAPI implements API {
         page.setExisting(Boolean.TRUE);
         page.setRevisionId(xpaRevision.valueOf(node));
         page.setContentsTimestamp(xpaTimestamp.valueOf(node));
+      }
+      xpa = XPath.newInstance(query + "/protection/pr[@type=\"edit\"]");
+      node = (Element) xpa.selectSingleNode(root);
+      if (node != null) {
+        XPath xpaLevel = XPath.newInstance("./@level");
+        page.setEditProtectionLevel(xpaLevel.valueOf(node));
       }
     } catch (JDOMException e) {
       log.error("Error contents for page " + page.getTitle(), e);
