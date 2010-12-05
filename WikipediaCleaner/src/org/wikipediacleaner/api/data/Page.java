@@ -45,6 +45,7 @@ public class Page implements Comparable<Page> {
   private Integer revisionId;
   private String  contentsTimestamp;
   private String  startTimestamp;
+  private String  editProtectionLevel;
   private String  editToken;
   private Boolean disambiguation;
   private Boolean wiktionaryLink;
@@ -282,6 +283,20 @@ public class Page implements Comparable<Page> {
    */
   public void setStartTimestamp(String timestamp) {
     this.startTimestamp = timestamp;
+  }
+
+  /**
+   * @return Edit protection level.
+   */
+  public String getEditProtectionLevel() {
+    return editProtectionLevel;
+  }
+
+  /**
+   * @param level Edit protection level.
+   */
+  public void setEditProtectionLevel(String level) {
+    editProtectionLevel = level;
   }
 
   /**

@@ -347,6 +347,7 @@ public class AnalysisWindow extends PageWindow {
     addButtonDisambiguation(toolbarButtons, true);
     toolbarButtons.addSeparator();
     addLblLastModified(toolbarButtons);
+    addLblEditProtectionLevel(toolbarButtons);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
     constraints.weightx = 1;
