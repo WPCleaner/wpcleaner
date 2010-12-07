@@ -598,7 +598,7 @@ public class MainWindow
     constraints.insets = new Insets(0, 0, 0, 0);
     constraints.ipadx = 0;
     constraints.ipady = 0;
-    constraints.weightx = 0;
+    constraints.weightx = 1;
     constraints.weighty = 0;
 
     // Projects components
