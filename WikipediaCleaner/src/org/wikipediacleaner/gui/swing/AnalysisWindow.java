@@ -28,6 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -90,6 +91,7 @@ public class AnalysisWindow extends PageWindow {
 
   JList listLinks;
   PageListModel modelLinks;
+  Map<String, Integer> mapLinksCount;
   private PageListPopupListener popupListenerLinks;
   JCheckBoxMenuItem menuItemShowDisambiguation;
   JCheckBoxMenuItem menuItemShowMissing;
@@ -605,12 +607,18 @@ public class AnalysisWindow extends PageWindow {
   protected void afterFinishedReloadWorker() {
     super.afterFinishedReloadWorker();
     Page page = getPage();
+    mapLinksCount = new HashMap<String, Integer>();
     if ((page != null) && (page.getLinks() != null)) {
       List<Page> links = page.getLinks();
       for (Page p : links) {
         modelLinks.addElement(p);
       }
-      countOccurences(page.getContents());
+      countOccurences(page.getContents(), true);
+      for (Page p : links) {
+        if ((p.isDisambiguationPage()) && (p.getCountOccurence() > 0)) {
+          mapLinksCount.put(p.getTitle(), Integer.valueOf(p.getCountOccurence()));
+        }
+      }
     }
     selectLinks(0);
     modelLinks.updateLinkCount();
@@ -733,7 +741,7 @@ public class AnalysisWindow extends PageWindow {
     }
     Map<String, Integer> linkCount = PageContents.countInternalDisambiguationLinks(
         getWikipedia(), getPage(), getTextContents().getText(), getPage().getLinks());
-    countOccurences(getTextContents().getText());
+    countOccurences(getTextContents().getText(), true);
     List<String> dabPages = new ArrayList<String>();
     for (Entry<String, Integer> count : linkCount.entrySet()) {
       if ((count.getValue() != null) &&
@@ -772,8 +780,9 @@ public class AnalysisWindow extends PageWindow {
    * Count pages occurences.
    * 
    * @param text Page text.
+   * @param forceDisambiguation Flag indicating if disambiguation should be counted.
    */
-  void countOccurences(String text) {
+  void countOccurences(String text, boolean forceDisambiguation) {
     Page page = getPage();
     if ((page != null) && (page.getLinks() != null)) {
       List<Page> links = new ArrayList<Page>();
@@ -781,7 +790,7 @@ public class AnalysisWindow extends PageWindow {
         if (link != null) {
           boolean count = false;
           if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
-            if (modelLinks.getCountDisambiguation()) {
+            if (forceDisambiguation || modelLinks.getCountDisambiguation()) {
               count = true;
             }
           } else if (link.isRedirect()) {
@@ -812,7 +821,7 @@ public class AnalysisWindow extends PageWindow {
   @Override
   protected void actionValidate() {
     getTextContents().resetAttributes();
-    countOccurences(getTextContents().getText());
+    countOccurences(getTextContents().getText(), false);
     listLinks.repaint();
 
     // If the selected links are fixed, select the next one
@@ -834,6 +843,35 @@ public class AnalysisWindow extends PageWindow {
         selectLinks(selected);
       }
     }
+
+    // Update comment
+    String comment = getDefaultComment();
+    if (mapLinksCount != null) {
+      int linksFixed = 0;
+      for (Entry<String, Integer> p : mapLinksCount.entrySet()) {
+        if ((p != null) && (p.getKey() != null) && (p.getValue() != null)) {
+          Integer currentCount = null;
+          Page page = getPage();
+          if ((page != null) && (page.getLinks() != null)) {
+            for (Page link : page.getLinks()) {
+              if (Page.areSameTitle(p.getKey(), link.getTitle())) {
+                currentCount = link.getCountOccurence();
+              }
+            }
+          }
+          if ((currentCount == null) || (currentCount < p.getValue().intValue())) {
+            if (linksFixed > 0) {
+              comment += ", ";
+            } else {
+              comment += " - ";
+            }
+            linksFixed++;
+            comment += "[[" + p.getKey() + "]]";
+          }
+        }
+      }
+    }
+    setComment(comment);
 
     modelLinks.updateLinkCount();
     getTextContents().requestFocusInWindow();

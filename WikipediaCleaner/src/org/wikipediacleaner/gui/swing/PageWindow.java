@@ -148,6 +148,19 @@ public abstract class PageWindow
   }
 
   /**
+   * @param comment Comment.
+   */
+  protected void setComment(String comment) {
+    if (textComment == null) {
+      return;
+    }
+    if ((chkAutomaticComment != null) && (!chkAutomaticComment.isSelected())) {
+      return;
+    }
+    textComment.setText(comment);
+  }
+
+  /**
    * Clean page. 
    */
   protected void clean() {
@@ -1142,6 +1155,7 @@ public abstract class PageWindow
    * Action called when Send button is pressed.
    */
   private void actionSend() {
+    actionValidate();
     if ((chkEditTalkPage != null) && chkEditTalkPage.isSelected() &&
         (page != null) && (page.getTalkPage(getWikipedia().getNamespaces()) != null)) {
       Controller.runNewSection(
