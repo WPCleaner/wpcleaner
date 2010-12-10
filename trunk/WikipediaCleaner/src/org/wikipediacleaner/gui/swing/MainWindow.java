@@ -36,7 +36,6 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
@@ -918,7 +917,7 @@ public class MainWindow
     config.save();
     new PageListWorker(
         getWikipedia(), this,
-        Collections.singletonList(textPagename.getText().trim()),
+        Collections.singletonList(textPagename.getText().trim()), true, false,
         GT._("Internal links in {0}", textPagename.getText().trim())).start();
   }
 
@@ -945,7 +944,7 @@ public class MainWindow
     }
     new PageListWorker(
         wikipedia, this,
-        wikipedia.getDisambiguationList(),
+        wikipedia.getDisambiguationList(), true, false,
         GT._("Current disambiguation list")).start();
   }
 
@@ -1015,16 +1014,14 @@ public class MainWindow
   private void actionWatchedPages() {
     Configuration config = Configuration.getConfiguration();
     List<String> pageNames = config.getStringList(Configuration.ARRAY_WATCH_PAGES);
-    List<Page> pages = new ArrayList<Page>(
-        (pageNames != null) ? pageNames.size() : 0);
-    if (pageNames != null) {
-      for (String name : pageNames) {
-        pages.add(DataManager.getPage(getWikipedia(), name, null, null));
-      }
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia == null) {
+      return;
     }
-    PageListWindow.createPageListWindow(
-        GT._("Watched pages"), pages,
-        getWikipedia(), true);
+    new PageListWorker(
+        wikipedia, this,
+        pageNames, false, true,
+        GT._("Watched pages")).start();
   }
 
   /**

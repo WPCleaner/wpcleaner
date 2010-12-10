@@ -71,6 +71,9 @@ public class DataManager {
           }
         }
       }
+      if (page.getNamespace() == null) {
+        page.setNamespace(Namespace.MAIN);
+      }
     }
 
     // Manage comments
