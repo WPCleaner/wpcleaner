@@ -329,11 +329,6 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
     // Menu name
     String text = (String) attrText;
     JPopupMenu popup = new JPopupMenu();
-    JMenuItem menuItem = new JMenuItem(page.getTitle());
-    menuItem.setEnabled(false);
-    popup.add(menuItem);
-    MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
-    popup.add(new JSeparator());
 
     // Create sub menus
     JCheckBox chk = null;
@@ -349,6 +344,11 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
     MenuCreator.addMarkAsNormalToMenu(wikipedia, popup, page, text, element, textPane);
     MenuCreator.addMarkAsNeedingHelpToMenu(wikipedia, popup, page, text, element, textPane, chk);
     MenuCreator.addLinkTextToMenu(wikipedia, popup, page, text, element, textPane);
+    popup.add(new JSeparator());
+    JMenuItem menuItem = new JMenuItem(page.getTitle());
+    menuItem.setEnabled(false);
+    popup.add(menuItem);
+    MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
     popup.add(new JSeparator());
     MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
     MenuCreator.addViewToMenu(wikipedia, popup, page);
