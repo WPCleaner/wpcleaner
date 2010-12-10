@@ -23,7 +23,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.wikipediacleaner.api.MediaWiki;
+import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -37,21 +39,27 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 public class PageListWorker extends BasicWorker {
 
   private final List<String> pageNames;
+  private final boolean searchLinks;
+  private final boolean watchList;
   private final List<Page> pageList;
   private final String message;
 
   /**
    * @param wikipedia Wikipedia.
    * @param window Window.
-   * @param pageNames List of pages in which the internal links have to be retrieved.
+   * @param pageNames List of pages.
+   * @param searchLinks If true, the list of pages is used to find the internal links.
    * @param message Window title.
    */
   public PageListWorker(
       EnumWikipedia wikipedia, BasicWindow window,
-      List<String> pageNames, String message) {
+      List<String> pageNames, boolean searchLinks,
+      boolean watchList, String message) {
     super(wikipedia, window);
     this.pageList = new ArrayList<Page>();
     this.pageNames = pageNames;
+    this.searchLinks = searchLinks;
+    this.watchList = watchList;
     this.message = message;
   }
 
@@ -64,7 +72,7 @@ public class PageListWorker extends BasicWorker {
     Object result = get();
     if (!(result instanceof Throwable)) {
       PageListWindow.createPageListWindow(
-          message, pageList, getWikipedia(), false);
+          message, pageList, getWikipedia(), watchList);
     }
   }
 
@@ -76,18 +84,26 @@ public class PageListWorker extends BasicWorker {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       List<Page> pages = new ArrayList<Page>();
-      for (String dabList : pageNames) {
-        Page page = DataManager.getPage(getWikipedia(), dabList, null, null);
-        mw.retrieveAllLinks(getWikipedia(), page, null, null, true);
-        Iterator<Page> iter = page.getLinks().iterator();
-        while (iter.hasNext()) {
-          Page link = iter.next();
-          if ((link != null) &&
-              (link.isInMainNamespace()) &&
-              (!pages.contains(link))) {
-            pages.add(link);
+      if (searchLinks) {
+        for (String dabList : pageNames) {
+          Page page = DataManager.getPage(getWikipedia(), dabList, null, null);
+          mw.retrieveAllLinks(getWikipedia(), page, null, null, true);
+          Iterator<Page> iter = page.getLinks().iterator();
+          while (iter.hasNext()) {
+            Page link = iter.next();
+            if ((link != null) &&
+                (link.isInMainNamespace()) &&
+                (!pages.contains(link))) {
+              pages.add(link);
+            }
           }
         }
+      } else {
+        for (String page : pageNames) {
+          pages.add(DataManager.getPage(getWikipedia(), page, null, null));
+        }
+        final API api = APIFactory.getAPI();
+        api.initializeRedirect(getWikipedia(), pages);
       }
       mw.retrieveDisambiguationInformation(getWikipedia(), pages, null, false, true);
       if (!shouldContinue()) {
