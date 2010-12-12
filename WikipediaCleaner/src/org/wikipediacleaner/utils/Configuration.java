@@ -35,6 +35,7 @@ import java.util.prefs.Preferences;
 import org.wikipediacleaner.WikipediaCleaner;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.impl.MediaWikiAPI;
 
 
 /**
@@ -99,6 +100,9 @@ public class Configuration implements WindowListener {
   public  final static String  BOOLEAN_CLOSE_FULL              = "CloseFullAnalysis";
   public  final static String  BOOLEAN_CREATE_DAB_WARNING      = "CreateDabWarning";
   public  final static String  BOOLEAN_CREATE_DAB_WARNING_ALL  = "CreateDabWarningAll";
+  public  final static String  BOOLEAN_DEBUG_TIME              = "DebugTime";
+  public  final static String  BOOLEAN_DEBUG_URL               = "DebugURL";
+  public  final static String  BOOLEAN_DEBUG_XML               = "DebugXML";
   public  final static String  BOOLEAN_FORCE_WATCH             = "ForceWatch";
   public  final static String  BOOLEAN_REMEMBER_LAST_PAGE      = "RememberLastPage";
   public  final static String  BOOLEAN_RESTORE_WINDOW          = "RestoreWindow";
@@ -126,6 +130,9 @@ public class Configuration implements WindowListener {
   public  final static boolean DEFAULT_CLOSE_FULL              = true;
   public  final static boolean DEFAULT_CREATE_DAB_WARNING      = true;
   public  final static boolean DEFAULT_CREATE_DAB_WARNING_ALL  = false;
+  public  final static boolean DEFAULT_DEBUG_TIME              = false;
+  public  final static boolean DEFAULT_DEBUG_URL               = true;
+  public  final static boolean DEFAULT_DEBUG_XML               = false;
   public  final static boolean DEFAULT_FORCE_WATCH             = false;
   public  final static boolean DEFAULT_REMEMBER_LAST_PAGE      = true;
   public  final static boolean DEFAULT_RESTORE_WINDOW          = true;
@@ -745,6 +752,13 @@ public class Configuration implements WindowListener {
     if ((preferences != null) && (language != null)) {
       preferences.put(PROPERTY_LANGUAGE, language.getCode());
     }
+  }
+
+  /**
+   * Method to be called when the configuration has been updated. 
+   */
+  public void updateConfiguration() {
+    MediaWikiAPI.updateConfiguration();
   }
 
   /**
