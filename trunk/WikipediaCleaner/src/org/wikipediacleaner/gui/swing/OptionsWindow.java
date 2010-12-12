@@ -129,6 +129,10 @@ public class OptionsWindow
   private JButton buttonSortUp;
   private JButton buttonSortDown;
 
+  private JCheckBox chkDebugTime;
+  private JCheckBox chkDebugURL;
+  private JCheckBox chkDebugXML;
+
   private JButton buttonApply;
   private JButton buttonCancel;
   private JButton buttonDefault;
@@ -177,6 +181,7 @@ public class OptionsWindow
     pane.addTab(GT._("General"), createGeneralComponents());
     pane.addTab(GT._("Full analysis"), createAnalysisComponents());
     pane.addTab(GT._("Sorting"), createSortingComponents());
+    pane.addTab(GT._("Debug"), createDebugComponents());
     panel.add(pane);
 
     return panel;
@@ -735,6 +740,69 @@ public class OptionsWindow
   }
 
   /**
+   * @return Debug options components.
+   */
+  private Component createDebugComponents() {
+    JPanel panel = new JPanel(new GridBagLayout());
+    panel.setBorder(BorderFactory.createTitledBorder(
+        BorderFactory.createEtchedBorder(), GT._("Debug options")));
+    Configuration configuration = Configuration.getConfiguration();
+
+    // Initialize constraints
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridheight = 1;
+    constraints.gridwidth = 1;
+    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.insets = new Insets(2, 2, 2, 2);
+    constraints.ipadx = 0;
+    constraints.ipady = 0;
+    constraints.weightx = 1;
+    constraints.weighty = 0;
+
+    constraints.gridwidth = 3;
+
+    // Debug URL
+    chkDebugURL = Utilities.createJCheckBox(
+        GT._("Log all URL called by WikiCleaner"),
+        configuration.getBoolean(
+            Configuration.BOOLEAN_DEBUG_URL,
+            Configuration.DEFAULT_DEBUG_URL));
+    panel.add(chkDebugURL, constraints);
+    constraints.gridy++;
+
+    // Debug XML
+    chkDebugXML = Utilities.createJCheckBox(
+        GT._("Log all answers to MediaWiki API calls"),
+        configuration.getBoolean(
+            Configuration.BOOLEAN_DEBUG_XML,
+            Configuration.DEFAULT_DEBUG_XML));
+    panel.add(chkDebugXML, constraints);
+    constraints.gridy++;
+
+    // Debug time
+    chkDebugTime = Utilities.createJCheckBox(
+        GT._("Add a timestamp to logs"),
+        configuration.getBoolean(
+            Configuration.BOOLEAN_DEBUG_TIME,
+            Configuration.DEFAULT_DEBUG_TIME));
+    panel.add(chkDebugTime, constraints);
+    constraints.gridy++;
+
+    // Empty panel
+    JPanel emptyPanel = new JPanel();
+    emptyPanel.setMinimumSize(new Dimension(0, 0));
+    emptyPanel.setPreferredSize(new Dimension(0, 0));
+    constraints.fill = GridBagConstraints.BOTH;
+    constraints.insets = new Insets(0, 0, 0, 0);
+    constraints.weighty = 1;
+    panel.add(emptyPanel, constraints);
+
+    return panel;
+  }
+
+  /**
    * @return Login components.
    */
   private Component createCommandComponents() {
@@ -900,6 +968,8 @@ public class OptionsWindow
       }
     }
     PageComparator.setComparators(comparators);
+
+    config.updateConfiguration();
   }
 
   /**

@@ -65,6 +65,7 @@ import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
+import org.wikipediacleaner.utils.Configuration;
 
 
 /**
@@ -84,9 +85,9 @@ public class MediaWikiAPI implements API {
   private final static int MAX_PAGES_PER_QUERY = 50;
   private final static int MAX_ATTEMPTS = 2;
 
-  private final static boolean DEBUG_TIME = false;
-  private final static boolean DEBUG_URL = true;
-  private final static boolean DEBUG_XML = false;
+  private static boolean DEBUG_TIME = false;
+  private static boolean DEBUG_URL = true;
+  private static boolean DEBUG_XML = false;
   private static XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
 
   private HttpClient httpClient;
@@ -106,6 +107,16 @@ public class MediaWikiAPI implements API {
     httpClient.getParams().setParameter(
         HttpMethodParams.USER_AGENT,
         "WikiCleaner (+http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation)");
+  }
+
+  /**
+   * Update configuration.
+   */
+  public static void updateConfiguration() {
+    Configuration config = Configuration.getConfiguration();
+    DEBUG_TIME = config.getBoolean(Configuration.BOOLEAN_DEBUG_TIME, Configuration.DEFAULT_DEBUG_TIME);
+    DEBUG_URL = config.getBoolean(Configuration.BOOLEAN_DEBUG_URL, Configuration.DEFAULT_DEBUG_URL);
+    DEBUG_XML = config.getBoolean(Configuration.BOOLEAN_DEBUG_XML, Configuration.DEFAULT_DEBUG_XML);
   }
 
   /**
@@ -211,11 +222,7 @@ public class MediaWikiAPI implements API {
                 parameters[i].getName() + "=" + parameters[i].getValue());
           }
         }
-        if (DEBUG_TIME) {
-          System.out.println("" + System.currentTimeMillis() + ": " + debugUrl.toString());
-        } else {
-          System.out.println(debugUrl.toString());
-        }
+        debugText(debugUrl.toString());
       }
       HttpClient toolClient = new HttpClient(new MultiThreadedHttpConnectionManager());
       int statusCode = toolClient.executeMethod(method);
@@ -259,11 +266,7 @@ public class MediaWikiAPI implements API {
       method.getParams().setContentCharset("UTF-8");
       method.setRequestHeader("Accept-Encoding", "gzip");
       if (DEBUG_URL) {
-        if (DEBUG_TIME) {
-          System.out.println("" + System.currentTimeMillis() + ": " + debugUrl.toString());
-        } else {
-          System.out.println(debugUrl.toString());
-        }
+        debugText(debugUrl.toString());
       }
       HttpClient toolClient = new HttpClient(new MultiThreadedHttpConnectionManager());
       int statusCode = toolClient.executeMethod(method);
@@ -1773,11 +1776,7 @@ public class MediaWikiAPI implements API {
               }
             }
             if (DEBUG_URL) {
-              if (DEBUG_TIME) {
-                System.out.println("" + System.currentTimeMillis() + ": " + debugUrl.toString());
-              } else {
-                System.out.println(debugUrl.toString());
-              }
+              debugText(debugUrl.toString());
             }
           }
           if (lgtoken != null) {
@@ -1837,6 +1836,17 @@ public class MediaWikiAPI implements API {
       }
     } while (attempt < maxTry);
     return root;
+  }
+
+  /**
+   * @param text Text to add to debug.
+   */
+  private void debugText(String text) {
+    if (DEBUG_TIME) {
+      System.out.println("" + System.currentTimeMillis() + ": " + text);
+    } else {
+      System.out.println(text);
+    }
   }
 
   /**
