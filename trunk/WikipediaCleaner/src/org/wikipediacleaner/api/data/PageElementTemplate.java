@@ -227,18 +227,18 @@ public class PageElementTemplate {
     int equalIndex = parameter.indexOf('=');
     if (equalIndex < 0) {
       int spaces = 0;
-      while ((spaces < parameter.length()) && (parameter.charAt(spaces) == ' ')) {
+      while ((spaces < parameter.length()) && (Character.isWhitespace(parameter.charAt(spaces)))) {
         spaces++;
       }
       parameters.add(new Parameter(
           "", offset + spaces, parameter, offset + spaces));
     } else {
       int spacesName = 0;
-      while ((spacesName < equalIndex) && (parameter.charAt(spacesName) == ' ')) {
+      while ((spacesName < equalIndex) && (Character.isWhitespace(parameter.charAt(spacesName)))) {
         spacesName++;
       }
       int spacesValue = equalIndex + 1;
-      while ((spacesValue < parameter.length()) && (parameter.charAt(spacesValue) == ' ')) {
+      while ((spacesValue < parameter.length()) && (Character.isWhitespace(parameter.charAt(spacesValue)))) {
         spacesValue++;
       }
       parameters.add(new Parameter(
