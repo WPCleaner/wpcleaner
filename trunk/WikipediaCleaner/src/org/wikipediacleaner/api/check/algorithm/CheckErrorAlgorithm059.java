@@ -40,14 +40,6 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
     super("Template value end with break");
   }
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#isFullDetection()
-   */
-  @Override
-  public boolean isFullDetection() {
-    return false;
-  }
-
   /**
    * Analyze a page to check if errors are present.
    * 
