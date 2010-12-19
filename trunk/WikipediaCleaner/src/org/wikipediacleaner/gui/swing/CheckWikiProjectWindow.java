@@ -90,6 +90,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
@@ -1452,6 +1453,9 @@ public class CheckWikiProjectWindow extends PageWindow {
             modelAllErrors.addElement(error);
           }
         }
+        if (modelAllErrors.getSize() > 1) {
+          modelAllErrors.insertElementAt(GT._("Pages with several errors"), 0);
+        }
       }
       if (listAllErrors.getItemCount() > selectedIndex) {
         listAllErrors.setSelectedIndex(selectedIndex);
@@ -1518,6 +1522,7 @@ public class CheckWikiProjectWindow extends PageWindow {
       } catch (IOException e) {
         textParameters.clearDocument();
       }
+
       // Pages
       int nbPages = error.getPageCount();
       for (int numPage = 0; numPage < nbPages; numPage++) {
@@ -1536,6 +1541,35 @@ public class CheckWikiProjectWindow extends PageWindow {
       buttonReloadError.setEnabled(false);
       buttonErrorDetail.setEnabled(false);
       buttonErrorList.setEnabled(false);
+      textDescription.clearDocument();
+      textParameters.clearDocument();
+
+      if (selection instanceof String) {
+        List<String> listTmp = new ArrayList<String>();
+        for (CheckError error : errors) {
+          int nbPages = error.getPageCount();
+          for (int numPage = 0; numPage < nbPages; numPage++) {
+            Page page = error.getPage(numPage);
+            listTmp.add(page.getTitle());
+          }
+        }
+        Collections.sort(listTmp);
+        List<String> listErrorPages = new ArrayList<String>();
+        for (int listPosition = 1; listPosition < listTmp.size(); listPosition++) {
+          if (listTmp.get(listPosition - 1).equals(listTmp.get(listPosition))) {
+            if (!listErrorPages.contains(listTmp.get(listPosition))) {
+              listErrorPages.add(listTmp.get(listPosition));
+            }
+          }
+        }
+        for (String page : listErrorPages) {
+          CheckErrorPage errorPage = new CheckErrorPage(DataManager.getPage(getWikipedia(), page, null, null), null);
+          modelPages.addElement(errorPage);
+        }
+      }
+
+      setPageLoaded(false);
+      actionSelectPage();
     }
   }
 
@@ -1769,9 +1803,10 @@ public class CheckWikiProjectWindow extends PageWindow {
           final List<CheckWikiContentPanel> contentPanels = new ArrayList<CheckWikiContentPanel>();
           for (Page page : pages) {
             while (page != null) {
+              Object errorSelected = modelAllErrors.getSelectedItem();
               final CheckWikiContentPanel contentPanel = createContentsComponents(
                   contentPane, page,
-                  (CheckError) modelAllErrors.getSelectedItem());
+                  (errorSelected instanceof CheckError) ? (CheckError) errorSelected : null);
               contentPane.add(contentPanel);
               contentPane.setSelectedComponent(contentPanel);
               contentPanels.add(contentPanel);
