@@ -690,11 +690,15 @@ public class MediaWikiAPI implements API {
    * 
    * @param wikipedia Wikipedia.
    * @param page The page.
+   * @param namespace Restrict links to a specific namespace.
    */
-  public void retrieveLinks(EnumWikipedia wikipedia, Page page)
+  public void retrieveLinks(EnumWikipedia wikipedia, Page page, Integer namespace)
       throws APIException {
     Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("pllimit", "max");
+    if (namespace != null) {
+      properties.put("plnamespace", namespace.toString());
+    }
     properties.put("prop", "links");
     properties.put("titles", page.getTitle());
     try {

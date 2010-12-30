@@ -200,9 +200,10 @@ public interface API {
    * 
    * @param wikipedia Wikipedia.
    * @param page The page.
+   * @param namespace Restrict links to a specific namespace.
    * @throws APIException
    */
-  public void retrieveLinks(EnumWikipedia wikipedia, Page page) throws APIException;
+  public void retrieveLinks(EnumWikipedia wikipedia, Page page, Integer namespace) throws APIException;
 
   /**
    * Retrieves the links of <code>page</code> and initialize redirect status.
