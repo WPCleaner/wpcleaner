@@ -114,7 +114,7 @@ public class BotToolsWindow
     panel.add(lblWarning, constraints);
     constraints.gridy++;
 
-    // Tools
+    // Tools : automatic disambiguation fixing
     buttonAutomaticFixing = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Semi-automatic disambiguation fixing"), true);
@@ -127,6 +127,7 @@ public class BotToolsWindow
     panel.add(buttonAutomaticFixing, constraints);
     constraints.gridy++;
 
+    // Tools : update disambiguation warning
     buttonUpdateDabWarning = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Update existing disambiguation warning messages"), true);
@@ -200,8 +201,14 @@ public class BotToolsWindow
    * Action called when Update Dab Warning button is pressed.
    */
   private void actionUpdateDabWarning() {
+    String start = askForValue(
+        GT._("At what page do you wish to start updating the disambiguation warning ?"),
+        "", null);
+    if (start == null) {
+      return;
+    }
     UpdateDabWarningWorker worker = new UpdateDabWarningWorker(
-        getWikipedia(), this);
+        getWikipedia(), this, start);
     worker.start();
   }
 }

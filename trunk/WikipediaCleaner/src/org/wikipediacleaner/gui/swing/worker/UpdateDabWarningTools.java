@@ -636,17 +636,17 @@ public class UpdateDabWarningTools {
   private void addWarning(
       StringBuilder talkText,
       Integer pageRevId, Collection<String> dabLinks) {
-    talkText.append("{{");
+    talkText.append("{{ ");
     talkText.append(wikipedia.getDisambiguationWarningTemplate());
     if (pageRevId != null) {
-      talkText.append("|revisionid=");
+      talkText.append(" | revisionid=");
       talkText.append(pageRevId);
     }
     for (String dabLink : dabLinks) {
-      talkText.append("|");
+      talkText.append(" | ");
       talkText.append(dabLink);
     }
-    talkText.append("}}");
+    talkText.append(" }}");
     if (wikipedia.getDisambiguationWarningTemplateComment() != null) {
       talkText.append(" <!-- ");
       talkText.append(wikipedia.getDisambiguationWarningTemplateComment());

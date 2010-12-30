@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-12-30 20:59+0100\n"
+"POT-Creation-Date: 2010-12-30 22:05+0100\n"
 "PO-Revision-Date: 2010-12-23 13:51+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -305,7 +305,7 @@ msgid "About"
 msgstr "Acerca de"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:279
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:140
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:141
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:176
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:226
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:218
@@ -447,9 +447,16 @@ msgstr ""
 msgid "Semi-automatic disambiguation fixing"
 msgstr "Reparación semiautomática de desambiguación"
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:132
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:133
 msgid "Update existing disambiguation warning messages"
 msgstr "Actualizar mensajes de advertencia de desambiguación"
+
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:205
+#, fuzzy
+msgid "At what page do you wish to start updating the disambiguation warning ?"
+msgstr ""
+"Debe ingresar el nombre de una página para ejecutar un análisis de "
+"desambiguación"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:176
 msgid "Check Wikipedia"
@@ -985,7 +992,7 @@ msgstr "Páginas vigiladas"
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:54
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:78
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:58
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:62
 msgid "Retrieving MediaWiki API"
 msgstr "Recuperando API de MediaWiki"
 
@@ -1846,12 +1853,12 @@ msgstr "Actualizando advertencia de desambiguación - {0}"
 msgid "Removing disambiguation warning - {0}"
 msgstr "Actualizando advertencia de desambiguación - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:66
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:70
 #, java-format
 msgid "Retrieving talk pages including {0}"
 msgstr "Obteniendo páginas de discusión que incluye {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:74
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:78
 msgid "Constructing list of articles with disambiguation warning"
 msgstr "Construyendo la lista de artículos con advertencia de desambiguación"
 

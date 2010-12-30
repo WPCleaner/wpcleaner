@@ -40,12 +40,16 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class UpdateDabWarningWorker extends BasicWorker {
 
+  private final String start;
+
   /**
    * @param wikipedia Wikipedia.
    * @param window Window.
+   * @param start Start at this page.
    */
-  public UpdateDabWarningWorker(EnumWikipedia wikipedia, BasicWindow window) {
+  public UpdateDabWarningWorker(EnumWikipedia wikipedia, BasicWindow window, String start) {
     super(wikipedia, window);
+    this.start = (start != null) ? start.trim() : "";
   }
 
   /* (non-Javadoc)
@@ -98,14 +102,20 @@ public class UpdateDabWarningWorker extends BasicWorker {
         // Creating sublist
         int size = Math.min(1, dabWarningPages.size());
         List<Page> sublist = new ArrayList<Page>(size);
-        for (int i = 0; i < size; i++) {
-          sublist.add(dabWarningPages.remove(0));
+        while ((sublist.size() < size) && (dabWarningPages.size() > 0)) {
+          Page page = dabWarningPages.remove(0);
+          if ((start.length() == 0) || (start.compareTo(page.getTitle()) < 0)) {
+            sublist.add(page);
+          }
+        }
+        if (sublist.isEmpty()) {
+          return Integer.valueOf(count);
         }
 
         // Update disambiguation warning
         count += tools.updateDabWarning(sublist);
         if (shouldStop()) {
-          return null;
+          return Integer.valueOf(count);
         }
 
         if (count > lastCount) {
