@@ -191,6 +191,7 @@ public class PageElementTemplate {
     int tmpIndex = 0;
     int depthCurlyBrackets = 0;
     int depthSquareBrackets = 0;
+    int equalIndex = -1;
     while (tmpIndex < strParameters.length()) {
       if (strParameters.startsWith("{{", tmpIndex)) {
         tmpIndex += 2;
@@ -207,10 +208,18 @@ public class PageElementTemplate {
       } else {
         if ((depthCurlyBrackets <= 0) &&
             (depthSquareBrackets <= 0) &&
+            (equalIndex < 0) &&
+            (strParameters.charAt(tmpIndex) == '=')) {
+          equalIndex = tmpIndex;
+          tmpIndex++;
+        } else if ((depthCurlyBrackets <= 0) &&
+            (depthSquareBrackets <= 0) &&
             (strParameters.charAt(tmpIndex) == '|')) {
           depthCurlyBrackets = 0;
           depthSquareBrackets = 0;
-          addParameter(parameters, strParameters.substring(beginIndex, tmpIndex), offset + beginIndex);
+          addParameter(
+              parameters, strParameters.substring(beginIndex, tmpIndex),
+              equalIndex - beginIndex, offset + beginIndex);
           tmpIndex++;
           beginIndex = tmpIndex;
         } else {
@@ -218,13 +227,15 @@ public class PageElementTemplate {
         }
       }
     }
-    addParameter(parameters, strParameters.substring(beginIndex), offset + beginIndex);
+    addParameter(
+        parameters, strParameters.substring(beginIndex),
+        equalIndex - beginIndex, offset + beginIndex);
     return true;
   }
 
   private static void addParameter(
-      List<Parameter> parameters, String parameter, int offset) {
-    int equalIndex = parameter.indexOf('=');
+      List<Parameter> parameters, String parameter,
+      int equalIndex, int offset) {
     if (equalIndex < 0) {
       int spaces = 0;
       while ((spaces < parameter.length()) && (Character.isWhitespace(parameter.charAt(spaces)))) {
@@ -405,8 +416,9 @@ public class PageElementTemplate {
         if ((currentParameterName == null) || (currentParameterName.length() == 0)) {
           currentParameterName = Integer.toString(paramNum);
         }
+        int tmpParamNum = paramNum;
         if (currentParameterName.equals(Integer.toString(paramNum))) {
-          paramNum++;
+          tmpParamNum++;
         }
   
         // Manage whitespace characters before/after name/value
@@ -441,7 +453,7 @@ public class PageElementTemplate {
                  (Character.isWhitespace(parameter.valueNotTrimmed.charAt(spaces)))) {
             spaces++;
           }
-          if (spaces > 0) {
+          if ((spaces > 0) && (tmpParameterValue != null)) {
             tmpParameterValue = parameter.valueNotTrimmed.substring(0, spaces) + parameterValue;
           }
   
@@ -451,22 +463,27 @@ public class PageElementTemplate {
                  (Character.isWhitespace(parameter.valueNotTrimmed.charAt(spaces - 1)))) {
             spaces--;
           }
-          if (spaces < parameter.valueNotTrimmed.length()) {
+          if ((spaces < parameter.valueNotTrimmed.length()) && (tmpParameterValue != null)) {
             tmpParameterValue += parameter.valueNotTrimmed.substring(spaces);
           }
         }
   
         // Add parameter
         if (currentParameterName.equals(parameterName)) {
-          addParameter(sb, parameter.nameNotTrimmed, tmpParameterValue);
+          if (tmpParameterValue != null) {
+            addParameter(sb, parameter.nameNotTrimmed, tmpParameterValue);
+            paramNum = tmpParamNum;
+          }
           parameterAdded = true;
         } else if ((!parameterExist) &&
                    (currentParameterName.equals(previousParameter))) {
           addParameter(sb, parameter.nameNotTrimmed, parameter.valueNotTrimmed);
           addParameter(sb, tmpParameterName, tmpParameterValue);
+          paramNum = tmpParamNum;
           parameterAdded = true;
         } else {
           addParameter(sb, parameter.nameNotTrimmed, parameter.valueNotTrimmed);
+          paramNum = tmpParamNum;
         }
       }
     }

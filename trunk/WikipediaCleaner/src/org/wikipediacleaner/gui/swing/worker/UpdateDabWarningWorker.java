@@ -21,7 +21,8 @@ package org.wikipediacleaner.gui.swing.worker;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.wikipediacleaner.api.MediaWiki;
+import javax.swing.JOptionPane;
+
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
@@ -56,6 +57,8 @@ public class UpdateDabWarningWorker extends BasicWorker {
 
     setText(GT._("Retrieving MediaWiki API"));
     API api = APIFactory.getAPI();
+    int count = 0;
+    int lastCount = count;
 
     try {
       // Retrieve talk pages including a disambiguation warning
@@ -90,45 +93,39 @@ public class UpdateDabWarningWorker extends BasicWorker {
       }
 
       // Working with sublists
-      MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      List<Page> knownPages = new ArrayList<Page>();
+      UpdateDabWarningTools tools = new UpdateDabWarningTools(wikipedia, this);
       while (!dabWarningPages.isEmpty()) {
         // Creating sublist
-        int size = Math.min(10, dabWarningPages.size());
+        int size = Math.min(1, dabWarningPages.size());
         List<Page> sublist = new ArrayList<Page>(size);
         for (int i = 0; i < size; i++) {
           sublist.add(dabWarningPages.remove(0));
         }
 
-        // Retrieving links in each page
-        for (Page dabWarningPage : sublist) {
-          mw.retrieveAllLinks(wikipedia, dabWarningPage, Namespace.MAIN, null, false);
-        }
-        mw.block(true);
-        if (shouldStop()) {
-          return null;
-        }
-  
-        // Retrieving disambiguation information in each page
-        for (Page dabWarningPage : sublist) {
-          mw.retrieveDisambiguationInformation(wikipedia, dabWarningPage.getLinks(), knownPages, true, false);
-        }
-        mw.block(true);
+        // Update disambiguation warning
+        count += tools.updateDabWarning(sublist);
         if (shouldStop()) {
           return null;
         }
 
-        // TODO
-        if (getWindow() != null) {
-          getWindow().displayWarning("This feature is currently under development");
+        if (count > lastCount) {
+          lastCount = count;
+          if (getWindow() != null) {
+            int answer = getWindow().displayYesNoWarning(
+                "This feature is currently under development, please check the modification.\n" +
+                "Do you want to continue ?");
+            if (answer != JOptionPane.YES_OPTION) {
+              return Integer.valueOf(count);
+            }
+          } else {
+            return Integer.valueOf(count);
+          }
         }
-        return null;
       }
     } catch (APIException e) {
       return e;
     }
 
-    return null;
+    return Integer.valueOf(count);
   }
-
 }

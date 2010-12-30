@@ -246,7 +246,7 @@ public abstract class BasicWindow implements ActionListener {
   /**
    * @return Parent window.
    */
-  protected JFrame getParentComponent() {
+  public JFrame getParentComponent() {
     return parentComponent;
   }
 

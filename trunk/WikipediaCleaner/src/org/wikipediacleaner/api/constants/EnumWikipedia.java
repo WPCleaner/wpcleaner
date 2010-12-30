@@ -213,6 +213,7 @@ public enum EnumWikipedia {
   private List<String> todoTemplates;
   private String todoSubpage;
   private String disambiguationWarningTemplate;
+  private String disambiguationWarningTemplateComment;
   private String disambiguationWarningComment;
   private List<String> disambiguationWarningAfterTemplates;
   private Map<String, List<TemplateMatcher>> templateMatchers;
@@ -502,6 +503,13 @@ public enum EnumWikipedia {
    */
   public String getDisambiguationWarningTemplate() {
     return disambiguationWarningTemplate;
+  }
+
+  /**
+   * @return Comment for warning template about disambiguation links in a page.
+   */
+  public String getDisambiguationWarningTemplateComment() {
+    return disambiguationWarningTemplateComment;
   }
 
   /**
@@ -981,6 +989,12 @@ public enum EnumWikipedia {
         disambiguationWarningTemplate = tmp.trim();
       }
 
+      // Disambiguation warning template comment
+      tmp = configuration.getProperty("dab_warning_template_comment", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        disambiguationWarningTemplateComment = tmp.trim();
+      }
+
       // Disambiguation warning comment
       tmp = configuration.getProperty("dab_warning_comment", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
@@ -1162,7 +1176,7 @@ public enum EnumWikipedia {
             this, "Mediawiki:Disambiguationspage",
             null, null);
         try {
-          api.retrieveLinks(this, page);
+          api.retrieveLinks(this, page, null);
         } catch (APIException e) {
           // Error retrieving Disambiguation templates list
         }

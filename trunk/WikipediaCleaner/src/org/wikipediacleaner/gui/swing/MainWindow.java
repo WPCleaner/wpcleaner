@@ -76,6 +76,7 @@ import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.worker.PageListWorker;
 import org.wikipediacleaner.gui.swing.worker.EmbeddedInWorker;
 import org.wikipediacleaner.gui.swing.worker.RandomPageWorker;
+import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningTools;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -109,6 +110,7 @@ public class MainWindow
   private final static String ACTION_OTHER_WIKIPEDIA = "OTHER WIKIPEDIA";
   private final static String ACTION_RANDOM_PAGE     = "RANDOM PAGE";
   private final static String ACTION_SAVE_PASSWORD   = "SAVE PASSWORD";
+  private final static String ACTION_UPDATE_DAB      = "UPDATE DAB WARNING";
   private final static String ACTION_WATCHED_PAGES   = "WATCHED PAGES";
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(3);
@@ -128,16 +130,19 @@ public class MainWindow
   private JButton buttonLogout;
   private JButton buttonHelp;
 
-  JTextField textPagename;
-  private JButton buttonCheckWiki;
   private JButton buttonCurrentList;
-  private JButton buttonDisambiguation;
-  private JButton buttonFullAnalysis;
+  private JButton buttonCheckWiki;
   private JButton buttonHelpRequested;
-  private JButton buttonInternalLinks;
-  private JButton buttonRandomPage;
   private JButton buttonWatchedPages;
   private JButton buttonBotTools;
+
+  JTextField textPagename;
+  private JButton buttonFullAnalysis;
+  private JButton buttonDisambiguation;
+  private JButton buttonInternalLinks;
+  private JButton buttonUpdateDabWarning;
+  private JButton buttonRandomPage;
+
   private JButton buttonOptions;
   private JButton buttonOptionsSystem;
   private JButton buttonIdea;
@@ -225,16 +230,18 @@ public class MainWindow
     buttonLogout.setEnabled(logged);
     buttonOptionsSystem.setEnabled(logged);
 
+    buttonCurrentList.setEnabled(logged);
+    buttonCheckWiki.setEnabled(logged);
+    buttonHelpRequested.setEnabled(logged);
+    buttonWatchedPages.setEnabled(logged);
+    buttonBotTools.setEnabled(userLogged);
+
     textPagename.setEnabled(logged);
     buttonFullAnalysis.setEnabled(logged);
     buttonDisambiguation.setEnabled(logged);
     buttonInternalLinks.setEnabled(logged);
-    buttonCurrentList.setEnabled(logged);
-    buttonHelpRequested.setEnabled(logged);
-    buttonCheckWiki.setEnabled(logged);
+    buttonUpdateDabWarning.setEnabled(logged);
     buttonRandomPage.setEnabled(logged);
-    buttonWatchedPages.setEnabled(logged);
-    buttonBotTools.setEnabled(userLogged);
   }
 
   /**
@@ -504,6 +511,13 @@ public class MainWindow
     panel.add(buttonInternalLinks, constraints);
     constraints.gridy++;
 
+    // Update disambiguation warning
+    buttonUpdateDabWarning = Utilities.createJButton(GT._("Update disambiguation warning"));
+    buttonUpdateDabWarning.setActionCommand(ACTION_UPDATE_DAB);
+    buttonUpdateDabWarning.addActionListener(this);
+    panel.add(buttonUpdateDabWarning, constraints);
+    constraints.gridy++;
+
     // Random page button
     buttonRandomPage = Utilities.createJButton(GT._("&Random page"));
     buttonRandomPage.setActionCommand(ACTION_RANDOM_PAGE);
@@ -671,6 +685,8 @@ public class MainWindow
       actionCheckWiki();
     } else if (ACTION_BOT_TOOLS.equals(e.getActionCommand())) {
       actionBotTools();
+    } else if (ACTION_UPDATE_DAB.equals(e.getActionCommand())) {
+      actionUpdateDabWarning();
     }
   }
 
@@ -898,6 +914,27 @@ public class MainWindow
     Controller.runDisambiguationAnalysis(
         textPagename.getText().trim(),
         getWikipedia());
+  }
+
+  /**
+   * Action called when Update Dab Warning button is pressed.
+   */
+  private void actionUpdateDabWarning() {
+    if ((textPagename == null) ||
+        (textPagename.getText() == null) ||
+        ("".equals(textPagename.getText().trim()))) {
+      displayWarning(
+          GT._("You must input a page name for updating the disambiguation warning"),
+          textPagename);
+      return;
+    }
+    try {
+      UpdateDabWarningTools tools = new UpdateDabWarningTools(getWikipedia(), this);
+      tools.updateDabWarning(Collections.singletonList(
+          DataManager.getPage(getWikipedia(), textPagename.getText(), null, null)));
+    } catch (APIException e) {
+      // TODO
+    }
   }
 
   /**

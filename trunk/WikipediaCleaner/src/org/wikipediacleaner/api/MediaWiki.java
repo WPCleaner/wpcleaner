@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +112,7 @@ public class MediaWiki extends MediaWikiController {
    * @throws APIException
    */
   public void retrieveContents(
-      EnumWikipedia wikipedia, List<Page> pages,
+      EnumWikipedia wikipedia, Collection<Page> pages,
       boolean block, boolean withRedirects) throws APIException {
     if (pages == null) {
       return;
