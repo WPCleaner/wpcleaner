@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-12-30 20:59+0100\n"
+"POT-Creation-Date: 2010-12-30 22:05+0100\n"
 "PO-Revision-Date: 2010-09-16 07:39+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -303,7 +303,7 @@ msgid "About"
 msgstr "Про програму"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:279
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:140
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:141
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:176
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:226
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:218
@@ -442,9 +442,14 @@ msgstr ""
 msgid "Semi-automatic disambiguation fixing"
 msgstr "Полуавтоматичне виправлення сторінок значень"
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:132
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:133
 msgid "Update existing disambiguation warning messages"
 msgstr "Оновлення наявних повідомлень сторінки значень"
+
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:205
+#, fuzzy
+msgid "At what page do you wish to start updating the disambiguation warning ?"
+msgstr "Потрібно ввести назву сторінки, щоб виконати аналіз значень"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:176
 msgid "Check Wikipedia"
@@ -972,7 +977,7 @@ msgstr "Сторінки спостереження"
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:54
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:78
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:58
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:62
 msgid "Retrieving MediaWiki API"
 msgstr "Отримання MediaWiki API"
 
@@ -1835,12 +1840,12 @@ msgstr "Оновлення повідомлень сторінки значен�
 msgid "Removing disambiguation warning - {0}"
 msgstr "Оновлення повідомлень сторінки значень - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:66
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:70
 #, fuzzy, java-format
 msgid "Retrieving talk pages including {0}"
 msgstr "Пошук посилань на сорінці"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:74
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:78
 msgid "Constructing list of articles with disambiguation warning"
 msgstr ""
 

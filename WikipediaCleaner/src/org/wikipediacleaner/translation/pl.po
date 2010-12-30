@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-12-30 20:59+0100\n"
+"POT-Creation-Date: 2010-12-30 22:05+0100\n"
 "PO-Revision-Date: 2010-12-21 14:30+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -300,7 +300,7 @@ msgid "About"
 msgstr "O programie"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:279
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:140
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:141
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:176
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:226
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:218
@@ -436,9 +436,16 @@ msgstr "Sprawdź proszę w zasadach, czy masz obowiązek zwrócić się flagę b
 msgid "Semi-automatic disambiguation fixing"
 msgstr "Półautomatyczna naprawa linków do ujednoznacznień"
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:132
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:133
 msgid "Update existing disambiguation warning messages"
 msgstr "Aktualizacja istniejących komunikatów o ujednoznacznieniach"
+
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:205
+#, fuzzy
+msgid "At what page do you wish to start updating the disambiguation warning ?"
+msgstr ""
+"Musisz wpisać nazwę strony, żeby przeprowadzić analizę stron "
+"ujednoznaczniających"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:176
 msgid "Check Wikipedia"
@@ -969,7 +976,7 @@ msgstr "Obserwowane"
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:54
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:78
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:58
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:62
 msgid "Retrieving MediaWiki API"
 msgstr "Pobieranie API MediaWiki"
 
@@ -1828,12 +1835,12 @@ msgstr "Aktualizowanie komunikatu o ujednoznacznieniach - {0}"
 msgid "Removing disambiguation warning - {0}"
 msgstr "Aktualizowanie komunikatu o ujednoznacznieniach - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:66
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:70
 #, java-format
 msgid "Retrieving talk pages including {0}"
 msgstr "Pobieranie stron dyskusji zawierających {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:74
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:78
 msgid "Constructing list of articles with disambiguation warning"
 msgstr "Budowanie listy haseł z komunikatem o ujednoznacznieniach"
 

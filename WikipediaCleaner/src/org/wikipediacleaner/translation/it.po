@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-12-30 20:59+0100\n"
+"POT-Creation-Date: 2010-12-30 22:05+0100\n"
 "PO-Revision-Date: 2010-10-01 18:14+0000\n"
 "Last-Translator: Luisa Ravelli <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -299,7 +299,7 @@ msgid "About"
 msgstr "Informazioni su"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:279
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:140
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:141
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:176
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:226
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:218
@@ -431,9 +431,16 @@ msgstr ""
 msgid "Semi-automatic disambiguation fixing"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:132
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:133
 msgid "Update existing disambiguation warning messages"
 msgstr ""
+
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:205
+#, fuzzy
+msgid "At what page do you wish to start updating the disambiguation warning ?"
+msgstr ""
+"Devi inserire un nome pagina per far partire una analisi delle "
+"disambiguazioni"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:176
 msgid "Check Wikipedia"
@@ -941,7 +948,7 @@ msgstr "Pagine osservate"
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:54
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:78
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:58
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:62
 msgid "Retrieving MediaWiki API"
 msgstr "Recupero API MediaWiki"
 
@@ -1784,12 +1791,12 @@ msgstr ""
 msgid "Removing disambiguation warning - {0}"
 msgstr "Recupero di possili disambiguazioni per {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:66
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:70
 #, fuzzy, java-format
 msgid "Retrieving talk pages including {0}"
 msgstr "Recupero Backlink della pagina"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:74
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:78
 msgid "Constructing list of articles with disambiguation warning"
 msgstr ""
 
