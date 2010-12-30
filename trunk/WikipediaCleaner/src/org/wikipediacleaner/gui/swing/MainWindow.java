@@ -488,7 +488,24 @@ public class MainWindow
     }
     textPagename = new JTextField(lastPage, 20);
     panel.add(textPagename, constraints);
+    constraints.gridx++;
+
+    // Random page button
+    JToolBar toolbarRandom = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbarRandom.setFloatable(false);
+    buttonRandomPage = Utilities.createJButton(
+        "commons-nuvola-apps-atlantik.png", EnumImageSize.SMALL,
+        GT._("Random page (Alt + &R)"), false);
+    buttonRandomPage.setActionCommand(ACTION_RANDOM_PAGE);
+    buttonRandomPage.addActionListener(this);
+    toolbarRandom.add(buttonRandomPage);
+    constraints.weightx = 0;
+    panel.add(toolbarRandom, constraints);
     constraints.gridy++;
+
+    constraints.gridwidth = 2;
+    constraints.gridx = 0;
+    constraints.weightx = 1;
 
     // Full analysis button
     buttonFullAnalysis = Utilities.createJButton(GT._("&Full analysis"));
@@ -516,13 +533,6 @@ public class MainWindow
     buttonUpdateDabWarning.setActionCommand(ACTION_UPDATE_DAB);
     buttonUpdateDabWarning.addActionListener(this);
     panel.add(buttonUpdateDabWarning, constraints);
-    constraints.gridy++;
-
-    // Random page button
-    buttonRandomPage = Utilities.createJButton(GT._("&Random page"));
-    buttonRandomPage.setActionCommand(ACTION_RANDOM_PAGE);
-    buttonRandomPage.addActionListener(this);
-    panel.add(buttonRandomPage, constraints);
     constraints.gridy++;
 
     return panel;
