@@ -15,6 +15,7 @@ The files in the images directory and its subdirectories are from :
 The following files are available in the "normal" directory:
 - commons-approve-icon.png (Commons - Author: Akela NDE - http://commons.wikimedia.org/wiki/File:Approve_icon.svg - GFDL 1.2 or +, CC-BY-SA 3.0)
 - commons-disambig-colour.png (Commons - Author: Bub's - http://commons.wikimedia.org/wiki/File:Disambig_colour.svg - public domain)
+- commons-nuvola-apps-atlantik.png (Commons - Author: David Vignoni - http://commons.wikimedia.org/wiki/File:Nuvola_apps_atlantik.png - LPGPL 2.1 or +)
 - commons-nuvola-apps-kcmsystem.png (Commons - http://commons.wikimedia.org/wiki/File:Nuvola_apps_kcmsystem.svg - LGPL 2.1 or +)
 - commons-nuvola-web-broom.png (Commons - Author: Seahen - http://commons.wikimedia.org/wiki/Image:Nuvola_web_broom.svg - GPL 2.1 or +) 
 - gnome-applications-internet.png (Gnome)
@@ -49,6 +50,7 @@ The following files are available in the "normal" directory:
 - tango-view-refresh.png (Tango)
 
 The following files are available in the "small" directory:
+- commons-nuvola-apps-atlantik.png (Commons - Author: David Vignoni - http://commons.wikimedia.org/wiki/File:Nuvola_apps_atlantik.png - LPGPL 2.1 or +)
 - gnome-system-run.png (Gnome)
 - gnome-view-refresh.png (Gnome)
 - tango-go-next.png (Tango)
