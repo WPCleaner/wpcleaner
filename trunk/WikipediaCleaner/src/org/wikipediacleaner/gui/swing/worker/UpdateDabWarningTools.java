@@ -88,10 +88,6 @@ public class UpdateDabWarningTools {
     }
     MediaWiki mw = MediaWiki.getMediaWikiAccess(worker);
 
-    // Retrieving page contents
-    // TODO: page contents is needed only if links to dab pages
-    mw.retrieveContents(wikipedia, pages, false, false);
-
     // Retrieving links in each page
     for (Page page : pages) {
       mw.retrieveAllLinks(wikipedia, page, Namespace.MAIN, null, false);
@@ -103,11 +99,13 @@ public class UpdateDabWarningTools {
 
     // Retrieving disambiguation information in each page
     List<Page> tmpPages = new ArrayList<Page>();
+    boolean hasDisambiguationLink = false;
     for (Page page : pages) {
       for (int numLink = 0; numLink < page.getLinks().size(); numLink++) {
         Page link = page.getLinks().get(numLink);
         if (dabPages.containsKey(link.getTitle())) {
           page.getLinks().set(numLink, dabPages.get(link.getTitle()));
+          hasDisambiguationLink = true;
         } else if (nonDabPages.containsKey(link.getTitle())) {
           page.getLinks().set(numLink, nonDabPages.get(link.getTitle()));
         } else {
@@ -121,12 +119,18 @@ public class UpdateDabWarningTools {
     for (Page page : tmpPages) {
       if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
         dabPages.put(page.getTitle(), page);
+        hasDisambiguationLink = true;
       } else {
         nonDabPages.put(page.getTitle(), page);
       }
     }
     if (shouldStop()) {
       return 0;
+    }
+
+    // Retrieving page contents
+    if (hasDisambiguationLink) {
+      mw.retrieveContents(wikipedia, pages, true, false);
     }
 
     // Update disambiguation warning
@@ -157,9 +161,8 @@ public class UpdateDabWarningTools {
     Page todoSubpage = talkPage.getSubPage(wikipedia.getTodoSubpage());
 
     // Retrieving talk page contents
-    // TODO: only section 0 ?
     setText(GT._("Retrieving page contents - {0}", talkPage.getTitle()));
-    api.retrieveContents(wikipedia, talkPage, false);
+    api.retrieveSectionContents(wikipedia, talkPage, 0);
 
     // Retrieving todo subpage contents
     setText(GT._("Retrieving page contents - {0}", todoSubpage.getTitle()));
@@ -371,7 +374,7 @@ public class UpdateDabWarningTools {
     }
     String contents = talkPage.getContents();
     if (contents == null) {
-      contents = "";
+      return false;
     }
 
     // Search todo in the talk page
@@ -423,9 +426,10 @@ public class UpdateDabWarningTools {
         if (templateTodo.getEndIndex() < contents.length()) {
           tmp.append(contents.substring(templateTodo.getEndIndex()));
         }
-        api.updatePage(
-            wikipedia, talkPage, tmp.toString(),
-            wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()), false);
+        api.updateSection(
+            wikipedia, talkPage,
+            wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+            0, tmp.toString(), false);
         return true;
       }
     }
@@ -455,9 +459,10 @@ public class UpdateDabWarningTools {
         }
         tmp.append(contents.substring(index));
       }
-      api.updatePage(
-          wikipedia, talkPage, tmp.toString(),
-          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()), false);
+      api.updateSection(
+          wikipedia, talkPage,
+          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+          0, tmp.toString(), false);
       return true;
     }*/
 
@@ -479,7 +484,7 @@ public class UpdateDabWarningTools {
     }
     String contents = talkPage.getContents();
     if (contents == null) {
-      contents = "";
+      return false;
     }
 
     // Search todo in the talk page
@@ -531,9 +536,10 @@ public class UpdateDabWarningTools {
         if (templateTodo.getEndIndex() < contents.length()) {
           tmp.append(contents.substring(templateTodo.getEndIndex()));
         }
-        api.updatePage(
-            wikipedia, talkPage, tmp.toString(),
-            wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()), false);
+        api.updateSection(
+            wikipedia, talkPage,
+            wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+            0, tmp.toString(), false);
         return true;
       }
     }
@@ -563,9 +569,10 @@ public class UpdateDabWarningTools {
         }
         tmp.append(contents.substring(index));
       }
-      api.updatePage(
-          wikipedia, talkPage, tmp.toString(),
-          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()), false);
+      api.updateSection(
+          wikipedia, talkPage,
+          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+          0, tmp.toString(), false);
       return true;
     }*/
 
@@ -580,7 +587,7 @@ public class UpdateDabWarningTools {
    * @return List of links to disambiguation pages.
    */
   private Collection<String> findDabLinks(Page page, String text) {
-    if (page == null) {
+    if ((page == null) || (page.getContents() == null)) {
       return null;
     }
     Map<String, Integer> linkCount = PageContents.countInternalDisambiguationLinks(
