@@ -917,15 +917,15 @@ public class MediaWikiAPI implements API {
           links.add(link);
         }
         XPath xpaContinue = XPath.newInstance("/api/query-continue/embeddedin");
-        XPath xpaBlContinue = XPath.newInstance("./@eicontinue");
+        XPath xpaEiContinue = XPath.newInstance("./@eicontinue");
         results = xpaContinue.selectNodes(root);
         iter = results.iterator();
         eicontinue = false;
         while (iter.hasNext()) {
           Element currentNode = (Element) iter.next();
-          properties.remove("eititle");
+          //properties.remove("eititle");
           eicontinue = true;
-          properties.put("blcontinue", xpaBlContinue.valueOf(currentNode));
+          properties.put("eicontinue", xpaEiContinue.valueOf(currentNode));
           
         }
       } catch (JDOMException e) {
