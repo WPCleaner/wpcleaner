@@ -275,7 +275,6 @@ public class UpdateDabWarningTools {
 
     // Check if modifications are needed
     if (isModified(dabLinks, templateWarning)) {
-      System.err.println("Modified " + todoSubpage.getTitle());
       StringBuilder tmp = new StringBuilder();
       int index = templateWarning.getBeginIndex();
       while ((index > 0) && (contents.charAt(index) != '\n')) {
@@ -419,11 +418,33 @@ public class UpdateDabWarningTools {
           tmpParameter += parameter.substring(index);
         }
         if (tmpParameter.length() > 0) {
+          if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
+            tmp.append('\n');
+          }
           tmp.append(templateTodo.getParameterReplacement("1", tmpParameter, null));
         } else {
-          tmp.append(templateTodo.getParameterReplacement("1", null, null));
+          // Search todo link
+          PageElementTemplate templateTodoLink = null;
+          if (wikipedia.getTodoLinkTemplates() != null) {
+            for (String templateName : wikipedia.getTodoLinkTemplates()) {
+              PageElementTemplate templateTmp = PageContents.findNextTemplate(
+                  talkPage, contents, templateName, 0);
+              if (templateTmp != null) {
+                templateTodoLink = templateTmp;
+              }
+            }
+          }
+          if (templateTodoLink == null) {
+            if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
+              tmp.append('\n');
+            }
+            tmp.append(templateTodo.getParameterReplacement("1", null, null));
+          }
         }
         if (templateTodo.getEndIndex() < contents.length()) {
+          if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
+            tmp.append('\n');
+          }
           tmp.append(contents.substring(templateTodo.getEndIndex()));
         }
         api.updateSection(

@@ -211,6 +211,7 @@ public enum EnumWikipedia {
 
   private String pipeTemplate;
   private List<String> todoTemplates;
+  private List<String> todoLinkTemplates;
   private String todoSubpage;
   private String disambiguationWarningTemplate;
   private String disambiguationWarningTemplateComment;
@@ -489,6 +490,13 @@ public enum EnumWikipedia {
    */
   public List<String> getTodoTemplates() {
     return todoTemplates;
+  }
+
+  /**
+   * @return Templates creating links to todo lists.
+   */
+  public List<String> getTodoLinkTemplates() {
+    return todoLinkTemplates;
   }
 
   /**
@@ -783,6 +791,12 @@ public enum EnumWikipedia {
       tmp = configuration.getProperty("general_todo_templates", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         todoTemplates = convertPropertyToStringList(tmp);
+      }
+
+      // Todo link templates
+      tmp = configuration.getProperty("general_todo_link_templates", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        todoLinkTemplates = convertPropertyToStringList(tmp);
       }
 
       // Todo subpage

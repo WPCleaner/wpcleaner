@@ -89,7 +89,9 @@ public class PageElementTemplate {
     int startTemplateName = tmpIndex;
 
     // Possible whitespaces characters
-    while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
+    while ((tmpIndex < contents.length()) &&
+           ((contents.charAt(tmpIndex) == ' ') ||
+            (contents.charAt(tmpIndex) == '\n'))) {
       tmpIndex++;
     }
 
@@ -129,7 +131,9 @@ public class PageElementTemplate {
     }
 
     // Possible whitespaces characters
-    while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
+    while ((tmpIndex < contents.length()) &&
+           ((contents.charAt(tmpIndex) == ' ') ||
+            (contents.charAt(tmpIndex) == '\n'))) {
       tmpIndex++;
     }
     if (tmpIndex >= contents.length()) {
