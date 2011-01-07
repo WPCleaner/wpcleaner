@@ -100,7 +100,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
       UpdateDabWarningTools tools = new UpdateDabWarningTools(wikipedia, this);
       while (!dabWarningPages.isEmpty()) {
         // Creating sublist
-        int size = Math.min(1, dabWarningPages.size());
+        int size = Math.min(10, dabWarningPages.size());
         List<Page> sublist = new ArrayList<Page>(size);
         while ((sublist.size() < size) && (dabWarningPages.size() > 0)) {
           Page page = dabWarningPages.remove(0);
