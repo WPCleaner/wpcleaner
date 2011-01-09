@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-12-30 22:05+0100\n"
+"POT-Creation-Date: 2011-01-09 18:25+0100\n"
 "PO-Revision-Date: 2010-09-16 07:39+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -976,7 +976,7 @@ msgstr "Сторінки спостереження"
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:69
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:54
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:78
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:71
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:62
 msgid "Retrieving MediaWiki API"
 msgstr "Отримання MediaWiki API"
@@ -1807,35 +1807,30 @@ msgstr "Додавання коментаря"
 msgid "Getting random page"
 msgstr "Отримання випадкової сторінки"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:84
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:77
 msgid "Updating page contents"
 msgstr "Оновлення вмісту сторінок"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:92
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:85
 msgid "Error 'badtoken' detected: Retrying"
 msgstr "Виявлена помилка «неправильна лексема»: Повторна спроба"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:119
-#, java-format
-msgid "Retrieving first section contents - {0}"
-msgstr "Отримання вмісту першого розділу - {0}"
-
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:167
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:161
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:165
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:188
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:196
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Отримання вмісту сторінки - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:442
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:258
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:301
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:408
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:608
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Оновлення повідомлень сторінки значень - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:330
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:395
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:503
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:642
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:743
 #, fuzzy, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Оновлення повідомлень сторінки значень - {0}"
@@ -1848,6 +1843,9 @@ msgstr "Пошук посилань на сорінці"
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:78
 msgid "Constructing list of articles with disambiguation warning"
 msgstr ""
+
+#~ msgid "Retrieving first section contents - {0}"
+#~ msgstr "Отримання вмісту першого розділу - {0}"
 
 #~ msgid "&Random page"
 #~ msgstr "Ви&падкова сторінка"

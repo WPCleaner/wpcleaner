@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2010-12-30 22:05+0100\n"
+"POT-Creation-Date: 2011-01-09 18:25+0100\n"
 "PO-Revision-Date: 2010-12-23 13:51+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -991,7 +991,7 @@ msgstr "Páginas vigiladas"
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:69
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:54
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:78
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:71
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:62
 msgid "Retrieving MediaWiki API"
 msgstr "Recuperando API de MediaWiki"
@@ -1820,35 +1820,30 @@ msgstr "Agregar comentario"
 msgid "Getting random page"
 msgstr "Obteniendo página aleatoria"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:84
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:77
 msgid "Updating page contents"
 msgstr "Actualizando contenidos de la página"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:92
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:85
 msgid "Error 'badtoken' detected: Retrying"
 msgstr "Error 'badtoken' detectado: Reintentando"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:119
-#, java-format
-msgid "Retrieving first section contents - {0}"
-msgstr "Recuperando los contenidos de la primera sección - {0}"
-
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:167
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:161
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:165
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:188
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:196
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Obteniendo página - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:442
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:258
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:301
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:408
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:608
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Actualizando advertencia de desambiguación - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:330
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:395
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:503
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:642
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:743
 #, fuzzy, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Actualizando advertencia de desambiguación - {0}"
@@ -1861,6 +1856,9 @@ msgstr "Obteniendo páginas de discusión que incluye {0}"
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:78
 msgid "Constructing list of articles with disambiguation warning"
 msgstr "Construyendo la lista de artículos con advertencia de desambiguación"
+
+#~ msgid "Retrieving first section contents - {0}"
+#~ msgstr "Recuperando los contenidos de la primera sección - {0}"
 
 #~ msgid "&Random page"
 #~ msgstr "&Página al azar"
