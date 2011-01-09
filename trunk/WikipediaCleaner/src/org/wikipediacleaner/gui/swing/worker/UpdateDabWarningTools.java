@@ -47,29 +47,50 @@ public class UpdateDabWarningTools {
   private final EnumWikipedia wikipedia;
   private final BasicWorker worker;
   private final BasicWindow window;
+  private final boolean createWarning;
   private final Map<String, Page> dabPages;
   private final Map<String, Page> nonDabPages;
   private final API api;
 
   /**
    * @param wikipedia Wikipedia.
+   * @param worker Worker.
    */
   public UpdateDabWarningTools(EnumWikipedia wikipedia, BasicWorker worker) {
-    this.wikipedia = wikipedia;
-    this.worker = worker;
-    this.window = (worker != null) ? worker.getWindow() : null;
-    this.dabPages = new HashMap<String, Page>();
-    this.nonDabPages = new HashMap<String, Page>();
-    this.api = APIFactory.getAPI();
+    this(wikipedia, worker, true);
   }
 
   /**
    * @param wikipedia Wikipedia.
+   * @param worker Worker.
+   * @param createWarning Create warning if necessary.
+   */
+  public UpdateDabWarningTools(EnumWikipedia wikipedia, BasicWorker worker, boolean createWarning) {
+    this(wikipedia, worker, (worker != null) ? worker.getWindow() : null, createWarning);
+  }
+
+  /**
+   * @param wikipedia Wikipedia.
+   * @param window Window.
    */
   public UpdateDabWarningTools(EnumWikipedia wikipedia, BasicWindow window) {
+    this(wikipedia, null, window, true);
+  }
+
+  /**
+   * @param wikipedia Wikipedia.
+   * @param worker Worker.
+   * @param window Window.
+   * @param createWarning Create warning if necessary.
+   */
+  private UpdateDabWarningTools(
+      EnumWikipedia wikipedia,
+      BasicWorker worker, BasicWindow window,
+      boolean createWarning) {
     this.wikipedia = wikipedia;
-    this.worker = null;
+    this.worker = worker;
     this.window = window;
+    this.createWarning = createWarning;
     this.dabPages = new HashMap<String, Page>();
     this.nonDabPages = new HashMap<String, Page>();
     this.api = APIFactory.getAPI();
@@ -136,7 +157,7 @@ public class UpdateDabWarningTools {
     // Update disambiguation warning
     int count = 0;
     for (Page page : pages) {
-      if (updateDabWarning(page, page.getContents())) {
+      if (updateDabWarning(page, page.getRevisionId(), page.getContents())) {
         count++;
       }
     }
@@ -147,43 +168,56 @@ public class UpdateDabWarningTools {
    * Update disambiguation warning for a page.
    * 
    * @param page Page (must have enough information to compute the list of disambiguation links).
+   * @param pageRevId Page revision id.
    * @param text Page contents (can be different than the current page text).
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
-  private boolean updateDabWarning(Page page, String text) throws APIException {
+  public boolean updateDabWarning(
+      Page page, Integer pageRevId, String text) throws APIException {
     if (page == null) {
       return false;
     }
-
-    // Finding talk page and todo subpage
-    Page talkPage = page.getTalkPage(wikipedia.getNamespaces());
-    Page todoSubpage = talkPage.getSubPage(wikipedia.getTodoSubpage());
+    if ((wikipedia.getTodoTemplates() == null) ||
+        (wikipedia.getTodoTemplates().isEmpty())) {
+      return false;
+    }
 
     // Retrieving talk page contents
+    Page talkPage = page.getTalkPage(wikipedia.getNamespaces());
     setText(GT._("Retrieving page contents - {0}", talkPage.getTitle()));
     api.retrieveSectionContents(wikipedia, talkPage, 0);
 
-    // Retrieving todo subpage contents
-    setText(GT._("Retrieving page contents - {0}", todoSubpage.getTitle()));
-    api.retrieveContents(wikipedia, todoSubpage, false);
+    // Todo subpage
+    if (wikipedia.getTodoSubpage() != null) {
 
-    // If todo subpage exists, the disambiguation warning must be on it
-    if (Boolean.TRUE.equals(todoSubpage.isExisting())) {
-      return manageDabWarningOnTodoSubpage(page, page.getRevisionId(), text, todoSubpage, talkPage);
-    }
+      // Retrieving todo subpage contents
+      Page todoSubpage = talkPage.getSubPage(wikipedia.getTodoSubpage());
+      setText(GT._("Retrieving page contents - {0}", todoSubpage.getTitle()));
+      api.retrieveContents(wikipedia, todoSubpage, false);
 
-    // If talk page has a link to the todo subpage, the disambiguation warning must be on the todo subpage
-    api.retrieveLinks(wikipedia, talkPage, talkPage.getNamespace());
-    if (talkPage.getLinks() != null) {
-      for (Page link : talkPage.getLinks()) {
-        if (Page.areSameTitle(link.getTitle(), todoSubpage.getTitle())) {
-          return manageDabWarningOnTodoSubpage(page, page.getRevisionId(), text, todoSubpage, talkPage);
+      // If we force the use of todo subpage, the disambiguation warning must be on it
+      if (wikipedia.getTodoSubpageForce()) {
+        return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
+      }
+
+      // If todo subpage exists, the disambiguation warning must be on it
+      if (Boolean.TRUE.equals(todoSubpage.isExisting())) {
+        return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
+      }
+
+      // If talk page has a link to the todo subpage, the disambiguation warning must be on the todo subpage
+      api.retrieveLinks(wikipedia, talkPage, talkPage.getNamespace());
+      if (talkPage.getLinks() != null) {
+        for (Page link : talkPage.getLinks()) {
+          if (Page.areSameTitle(link.getTitle(), todoSubpage.getTitle())) {
+            return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
+          }
         }
       }
     }
 
-    return manageDabWarningOnTalkPage(todoSubpage, text, talkPage);
+    return manageDabWarningOnTalkPage(page, pageRevId, text, talkPage);
   }
 
   /**
@@ -207,7 +241,9 @@ public class UpdateDabWarningTools {
       result |= removeDabWarningOnTalkPage(talkPage);
     } else {
       result |= updateDabWarningOnTodoSubpage(pageRevId, todoSubpage, dabLinks);
-      result |= cleanDabWarningOnTalkPage(talkPage);
+      if (createWarning) {
+        result |= cleanDabWarningOnTalkPage(talkPage);
+      }
     }
     return result;
   }
@@ -216,19 +252,20 @@ public class UpdateDabWarningTools {
    * Update disambiguation warning on the talk page.
    * 
    * @param page Page (must have enough information to compute the list of disambiguation links).
+   * @param pageRevId Page revision id.
    * @param text Page contents (can be different than the current page text).
    * @param talkPage Talk page.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
   private boolean manageDabWarningOnTalkPage(
-      Page page, String text, Page talkPage) throws APIException {
+      Page page, Integer pageRevId, String text, Page talkPage) throws APIException {
     Collection<String> dabLinks = findDabLinks(page, text);
     boolean result = false;
     if ((dabLinks == null) || (dabLinks.isEmpty())) {
       result = removeDabWarningOnTalkPage(talkPage);
     } else {
-      // TODO
+      result |= updateDabWarningOnTalkPage(pageRevId, talkPage, dabLinks);
     }
     return result;
   }
@@ -258,6 +295,9 @@ public class UpdateDabWarningTools {
 
     // If disambiguation warning is missing, add it
     if (templateWarning == null) {
+      if (!createWarning) {
+        return false;
+      }
       setText(GT._("Updating disambiguation warning - {0}", todoSubpage.getTitle()));
       StringBuilder tmp = new StringBuilder(contents);
       if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
@@ -300,6 +340,137 @@ public class UpdateDabWarningTools {
           false);
       return true;
     }
+
+    return false;
+  }
+
+  /**
+   * Create/update disambiguation warning on the talk page.
+   * 
+   * @param pageRevId Page revision id.
+   * @param talkPage Talk page.
+   * @param dabLinks List of existing dab links.
+   * @return True if the disambiguation warning has been updated.
+   * @throws APIException
+   */
+  private boolean updateDabWarningOnTalkPage(
+      Integer pageRevId, Page talkPage, Collection<String> dabLinks) throws APIException {
+    if ((talkPage == null) || (dabLinks == null)) {
+      return false;
+    }
+
+    // Search todo template in the talk page
+    String contents = talkPage.getContents();
+    if (contents == null) {
+      contents = "";
+    }
+    PageElementTemplate templateTodo = null;
+    if ((wikipedia.getTodoTemplates() == null) ||
+        (wikipedia.getTodoTemplates().isEmpty())) {
+      return false;
+    }
+    for (String todoTemplate : wikipedia.getTodoTemplates()) {
+      PageElementTemplate templateTmp = PageContents.findNextTemplate(
+          talkPage, contents, todoTemplate, 0);
+      if (templateTmp != null) {
+        if ((templateTodo == null) || (templateTmp.getBeginIndex() < templateTodo.getBeginIndex())) {
+          templateTodo = templateTmp;
+        }
+      }
+    }
+
+    // If todo template is missing, add it
+    if (templateTodo == null) {
+      if (!createWarning) {
+        return false;
+      }
+
+      // Search where to add todo template
+      PageElementTemplate templatePrevious = null;
+      if (wikipedia.getDisambiguationWarningAfterTemplates() != null) {
+        for (String previousTemplate : wikipedia.getDisambiguationWarningAfterTemplates()) {
+          int index = 0;
+          while (index < contents.length()) {
+            PageElementTemplate templateTmp = PageContents.findNextTemplate(
+                talkPage, contents, previousTemplate, index);
+            if (templateTmp != null) {
+              if ((templatePrevious == null) || (templateTmp.getEndIndex() > templatePrevious.getEndIndex())) {
+                templatePrevious = templateTmp;
+              }
+            } else {
+              index = contents.length();
+            }
+          }
+        }
+      }
+
+      // Add warning
+      setText(GT._("Updating disambiguation warning - {0}", talkPage.getTitle()));
+      StringBuilder tmp = new StringBuilder();
+      int indexStart = (templatePrevious != null) ? templatePrevious.getEndIndex() : 0;
+      if (indexStart > 0) {
+        tmp.append(contents.substring(0, indexStart));
+        if (tmp.charAt(tmp.length() - 1) != '\n') {
+          tmp.append("\n");
+        }
+      }
+      tmp.append("{{");
+      tmp.append(wikipedia.getTodoTemplates().get(0));
+      tmp.append("|* ");
+      addWarning(tmp, pageRevId, dabLinks);
+      tmp.append("}}");
+      if (indexStart < contents.length()) {
+        if (contents.charAt(indexStart) != '\n') {
+          tmp.append("\n");
+        }
+        tmp.append(contents.substring(indexStart));
+      }
+      api.updateSection(
+          wikipedia, talkPage,
+          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+          0, tmp.toString(), false);
+      return true;
+    }
+
+    // Search disambiguation warning in the todo parameter
+    String parameter = templateTodo.getParameterValue("1");
+    PageElementTemplate templateWarning = PageContents.findNextTemplate(
+        talkPage, parameter,
+        wikipedia.getDisambiguationWarningTemplate(), 0);
+    if (templateWarning == null) {
+      StringBuilder tmp = new StringBuilder();
+      int indexStart = templateTodo.getBeginIndex();
+      if (indexStart > 0) {
+        tmp.append(contents.substring(0, indexStart));
+        if (tmp.charAt(tmp.length() - 1) != '\n') {
+          tmp.append("\n");
+        }
+      }
+      StringBuilder tmpParameter = new StringBuilder(parameter);
+      if ((tmpParameter.length() == 0) ||
+          (tmpParameter.charAt(tmpParameter.length() - 1) != '\n')) {
+        tmpParameter.append("\n");
+      }
+      tmpParameter.append("* ");
+      addWarning(tmpParameter, pageRevId, dabLinks);
+      tmpParameter.append("\n");
+      tmp.append(templateTodo.getParameterReplacement("1", tmpParameter.toString(), null));
+      int indexEnd = templateTodo.getEndIndex();
+      if (indexEnd < contents.length()) {
+        if ((tmp.charAt(tmp.length() - 1) != '\n') &&
+            (contents.charAt(indexEnd) != '\n')) {
+          tmp.append("\n");
+        }
+        tmp.append(contents.substring(indexEnd));
+      }
+      api.updateSection(
+          wikipedia, talkPage,
+          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+          0, tmp.toString(), false);
+      return true;
+    }
+
+    // TODO
 
     return false;
   }
@@ -367,10 +538,18 @@ public class UpdateDabWarningTools {
    */
   private boolean cleanDabWarningOnTalkPage(
       Page talkPage) throws APIException {
-    // Check if page is already empty
-    if ((talkPage == null) || (Boolean.FALSE.equals(talkPage.isExisting()))) {
+    // Check if page exists
+    if (talkPage == null) {
       return false;
     }
+    if (Boolean.FALSE.equals(talkPage.isExisting())) {
+      api.updateSection(
+          wikipedia, talkPage,
+          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+          0, "{{" + wikipedia.getTodoTemplates().get(0) + "}}", false);
+      return true;
+    }
+
     String contents = talkPage.getContents();
     if (contents == null) {
       return false;
@@ -387,105 +566,140 @@ public class UpdateDabWarningTools {
         }
       }
     }
-    if ((templateTodo != null) && (templateTodo.getParameterValue("1") != null)) {
-      // Search disambiguation warning in the todo parameter
-      String parameter = templateTodo.getParameterValue("1");
-      PageElementTemplate templateWarning = PageContents.findNextTemplate(
-          talkPage, parameter,
-          wikipedia.getDisambiguationWarningTemplate(), 0);
-      if (templateWarning != null) {
-        setText(GT._("Removing disambiguation warning - {0}", talkPage.getTitle()));
-        StringBuilder tmp = new StringBuilder();
-        if (templateTodo.getBeginIndex() > 0) {
-          tmp.append(contents.substring(0, templateTodo.getBeginIndex()));
-        }
-        String tmpParameter = "";
-        int index = templateWarning.getBeginIndex();
-        while ((index > 0) && (parameter.charAt(index) != '\n')) {
-          index--;
-        }
-        if (index > 0) {
-          tmpParameter += parameter.substring(0, index);
-        }
-        index = templateWarning.getEndIndex();
-        while ((index < parameter.length()) && (parameter.charAt(index) != '\n')) {
-          index++;
-        }
-        if (index < parameter.length()) {
-          if (tmpParameter.length() > 0) {
-            tmpParameter += "\n";
-          }
-          tmpParameter += parameter.substring(index);
-        }
-        if (tmpParameter.length() > 0) {
-          if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
-            tmp.append('\n');
-          }
-          tmp.append(templateTodo.getParameterReplacement("1", tmpParameter, null));
-        } else {
-          // Search todo link
-          PageElementTemplate templateTodoLink = null;
-          if (wikipedia.getTodoLinkTemplates() != null) {
-            for (String templateName : wikipedia.getTodoLinkTemplates()) {
-              PageElementTemplate templateTmp = PageContents.findNextTemplate(
-                  talkPage, contents, templateName, 0);
-              if (templateTmp != null) {
-                templateTodoLink = templateTmp;
-              }
-            }
-          }
-          if (templateTodoLink == null) {
-            if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
-              tmp.append('\n');
-            }
-            tmp.append(templateTodo.getParameterReplacement("1", null, null));
-          }
-        }
-        if (templateTodo.getEndIndex() < contents.length()) {
-          if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
-            tmp.append('\n');
-          }
-          tmp.append(contents.substring(templateTodo.getEndIndex()));
-        }
-        api.updateSection(
-            wikipedia, talkPage,
-            wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
-            0, tmp.toString(), false);
-        return true;
-      }
-    }
 
-    // Search disambiguation warning in the talk page
-    /* It shouldn't happen because it should be included in a todo template
-    PageElementTemplate templateWarning = PageContents.findNextTemplate(
-        talkPage, contents, wikipedia.getDisambiguationWarningTemplate(), 0);
-    if (templateWarning != null) {
-      setText(GT._("Removing disambiguation warning - {0}", talkPage.getTitle()));
-      System.err.println("Removing disambiguation warning - " + talkPage.getTitle());
-      StringBuilder tmp = new StringBuilder();
-      int index = templateWarning.getBeginIndex();
-      while ((index > 0) && (contents.charAt(index) != '\n')) {
-        index--;
-      }
-      if (index > 0) {
-        tmp.append(contents.substring(0, index));
-      }
-      index = templateWarning.getEndIndex();
-      while ((index < contents.length()) && (contents.charAt(index) != '\n')) {
-        index++;
-      }
-      if (index < contents.length()) {
-        if (tmp.length() > 0) {
-          tmp.append('\n');
+    // If template is missing, verify that a link to the todo subpage exists
+    if (templateTodo == null) {
+      PageElementTemplate templateTodoLink = null;
+      if (wikipedia.getTodoLinkTemplates() != null) {
+        for (String todoLink : wikipedia.getTodoLinkTemplates()) {
+          PageElementTemplate templateTmp = PageContents.findNextTemplate(
+              talkPage, contents, todoLink, 0);
+          if (templateTmp != null) {
+            templateTodoLink = templateTmp;
+          }
         }
-        tmp.append(contents.substring(index));
+      }
+
+      // If link exists, nothing more to do
+      if (templateTodoLink != null) {
+        return false;
+      }
+
+      // Search where to add todo template
+      PageElementTemplate templatePrevious = null;
+      if (wikipedia.getDisambiguationWarningAfterTemplates() != null) {
+        for (String previousTemplate : wikipedia.getDisambiguationWarningAfterTemplates()) {
+          int index = 0;
+          while (index < contents.length()) {
+            PageElementTemplate templateTmp = PageContents.findNextTemplate(
+                talkPage, contents, previousTemplate, index);
+            if (templateTmp != null) {
+              if ((templatePrevious == null) || (templateTmp.getEndIndex() > templatePrevious.getEndIndex())) {
+                templatePrevious = templateTmp;
+              }
+            } else {
+              index = contents.length();
+            }
+          }
+        }
+      }
+
+      // Add warning
+      setText(GT._("Updating disambiguation warning - {0}", talkPage.getTitle()));
+      StringBuilder tmp = new StringBuilder();
+      int indexStart = (templatePrevious != null) ? templatePrevious.getEndIndex() : 0;
+      if (indexStart > 0) {
+        tmp.append(contents.substring(0, indexStart));
+        if (tmp.charAt(tmp.length() - 1) != '\n') {
+          tmp.append("\n");
+        }
+      }
+      tmp.append("{{");
+      tmp.append(wikipedia.getTodoTemplates().get(0));
+      tmp.append("}}");
+      if (indexStart < contents.length()) {
+        if (contents.charAt(indexStart) != '\n') {
+          tmp.append("\n");
+        }
+        tmp.append(contents.substring(indexStart));
       }
       api.updateSection(
           wikipedia, talkPage,
           wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
           0, tmp.toString(), false);
       return true;
-    }*/
+    }
+    if (templateTodo.getParameterValue("1") == null) {
+      return false;
+    }
+
+    // Search disambiguation warning in the todo parameter
+    String parameter = templateTodo.getParameterValue("1");
+    PageElementTemplate templateWarning = PageContents.findNextTemplate(
+        talkPage, parameter,
+        wikipedia.getDisambiguationWarningTemplate(), 0);
+    if (templateWarning != null) {
+      setText(GT._("Removing disambiguation warning - {0}", talkPage.getTitle()));
+      StringBuilder tmp = new StringBuilder();
+      if (templateTodo.getBeginIndex() > 0) {
+        tmp.append(contents.substring(0, templateTodo.getBeginIndex()));
+      }
+      String tmpParameter = "";
+      int index = templateWarning.getBeginIndex();
+      while ((index > 0) && (parameter.charAt(index) != '\n')) {
+        index--;
+      }
+      if (index > 0) {
+        tmpParameter += parameter.substring(0, index);
+      }
+      index = templateWarning.getEndIndex();
+      while ((index < parameter.length()) && (parameter.charAt(index) != '\n')) {
+        index++;
+      }
+      if (index < parameter.length()) {
+        if (tmpParameter.length() > 0) {
+          tmpParameter += "\n";
+        }
+        tmpParameter += parameter.substring(index);
+      }
+      if (tmpParameter.length() > 0) {
+        if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
+          tmp.append('\n');
+        }
+        tmp.append(templateTodo.getParameterReplacement("1", tmpParameter, null));
+      } else {
+        // Search todo link
+        PageElementTemplate templateTodoLink = null;
+        if (wikipedia.getTodoLinkTemplates() != null) {
+          for (String templateName : wikipedia.getTodoLinkTemplates()) {
+            PageElementTemplate templateTmp = PageContents.findNextTemplate(
+                talkPage, contents, templateName, 0);
+            if (templateTmp != null) {
+              templateTodoLink = templateTmp;
+            }
+          }
+        }
+        if (templateTodoLink == null) {
+          if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
+            tmp.append('\n');
+          }
+          tmp.append(templateTodo.getParameterReplacement("1", null, null));
+        }
+      }
+      if (templateTodo.getEndIndex() < contents.length()) {
+        if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
+          if (contents.charAt(templateTodo.getEndIndex()) != '\n') {
+            tmp.append('\n');
+          }
+        }
+        tmp.append(contents.substring(templateTodo.getEndIndex()));
+      }
+      api.updateSection(
+          wikipedia, talkPage,
+          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+          0, tmp.toString(), false);
+      return true;
+    }
 
     return false;
   }
@@ -564,38 +778,6 @@ public class UpdateDabWarningTools {
         return true;
       }
     }
-
-    // Search disambiguation warning in the talk page
-    /* It shouldn't happen because it should be included in a todo template
-    PageElementTemplate templateWarning = PageContents.findNextTemplate(
-        talkPage, contents, wikipedia.getDisambiguationWarningTemplate(), 0);
-    if (templateWarning != null) {
-      setText(GT._("Removing disambiguation warning - {0}", talkPage.getTitle()));
-      System.err.println("Removing disambiguation warning - " + talkPage.getTitle());
-      StringBuilder tmp = new StringBuilder();
-      int index = templateWarning.getBeginIndex();
-      while ((index > 0) && (contents.charAt(index) != '\n')) {
-        index--;
-      }
-      if (index > 0) {
-        tmp.append(contents.substring(0, index));
-      }
-      index = templateWarning.getEndIndex();
-      while ((index < contents.length()) && (contents.charAt(index) != '\n')) {
-        index++;
-      }
-      if (index < contents.length()) {
-        if (tmp.length() > 0) {
-          tmp.append('\n');
-        }
-        tmp.append(contents.substring(index));
-      }
-      api.updateSection(
-          wikipedia, talkPage,
-          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
-          0, tmp.toString(), false);
-      return true;
-    }*/
 
     return false;
   }

@@ -213,6 +213,7 @@ public enum EnumWikipedia {
   private List<String> todoTemplates;
   private List<String> todoLinkTemplates;
   private String todoSubpage;
+  private boolean todoSubpageForce;
   private String disambiguationWarningTemplate;
   private String disambiguationWarningTemplateComment;
   private String disambiguationWarningComment;
@@ -507,6 +508,13 @@ public enum EnumWikipedia {
   }
 
   /**
+   * @return Force usage of todo subpage.
+   */
+  public boolean getTodoSubpageForce() {
+    return todoSubpageForce;
+  }
+
+  /**
    * @return Template for warning about disambiguation links in a page.
    */
   public String getDisambiguationWarningTemplate() {
@@ -605,9 +613,9 @@ public enum EnumWikipedia {
       if ((link != null) && (link.trim().length() > 0)) {
         formattedComment.append("[[");
         formattedComment.append(link);
-        formattedComment.append("|WikiCleaner]] ");
+        formattedComment.append("|WPCleaner]] ");
       } else {
-        formattedComment.append("WikiCleaner");
+        formattedComment.append("WPCleaner");
       }
       formattedComment.append(Version.VERSION);
     }
@@ -803,6 +811,12 @@ public enum EnumWikipedia {
       tmp = configuration.getProperty("general_todo_subpage", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         todoSubpage = tmp.trim();
+      }
+
+      // Todo subpage force
+      tmp = configuration.getProperty("general_todo_subpage_force", "false");
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        todoSubpageForce = Boolean.parseBoolean(tmp.trim());
       }
 
       templateMatchers = new HashMap<String, List<TemplateMatcher>>();
