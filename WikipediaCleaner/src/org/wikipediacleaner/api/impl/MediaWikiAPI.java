@@ -389,6 +389,14 @@ public class MediaWikiAPI implements API {
     } catch (JDOMParseException e) {
       log.error("Error retrieving page content", e);
       throw new APIException("Error parsing XML", e);
+    } catch (APIException e) {
+      // API Bug https://bugzilla.wikimedia.org/show_bug.cgi?id=26627
+      if (APIException.ERROR_RV_NO_SUCH_SECTION.equalsIgnoreCase(e.getErrorCode())) {
+        page.setExisting(Boolean.FALSE);
+        page.setContents(null);
+        return;
+      }
+      throw e;
     }
   }
 
