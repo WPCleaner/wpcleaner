@@ -45,6 +45,7 @@ public class APIException extends Exception {
   public static final String ERROR_PROTECTED_PAGE = "protectedpage";
   public static final String ERROR_RATE_LIMITED = "ratelimited";
   public static final String ERROR_READ_ONLY = "readonly";
+  public static final String ERROR_RV_NO_SUCH_SECTION = "rvnosuchsection";
   public static final String ERROR_UNKNOWN_ERROR = "unknownerror";
   public static final String ERROR_UNSUPPORTED_NAMESPACE = "unsupportednamespace";
 
