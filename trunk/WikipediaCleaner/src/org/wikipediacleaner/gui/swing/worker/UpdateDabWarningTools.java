@@ -242,7 +242,7 @@ public class UpdateDabWarningTools {
     } else {
       result |= updateDabWarningOnTodoSubpage(pageRevId, todoSubpage, dabLinks);
       if (createWarning) {
-        result |= cleanDabWarningOnTalkPage(talkPage);
+        result |= cleanDabWarningOnTalkPage(talkPage, dabLinks);
       }
     }
     return result;
@@ -308,7 +308,7 @@ public class UpdateDabWarningTools {
       tmp.append('\n');
       api.updatePage(
           wikipedia, todoSubpage, tmp.toString(),
-          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           false);
       return true;
     }
@@ -336,7 +336,7 @@ public class UpdateDabWarningTools {
       }
       api.updatePage(
           wikipedia, todoSubpage, tmp.toString(),
-          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           false);
       return true;
     }
@@ -427,7 +427,7 @@ public class UpdateDabWarningTools {
       }
       api.updateSection(
           wikipedia, talkPage,
-          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           0, tmp.toString(), false);
       return true;
     }
@@ -465,7 +465,7 @@ public class UpdateDabWarningTools {
       }
       api.updateSection(
           wikipedia, talkPage,
-          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           0, tmp.toString(), false);
       return true;
     }
@@ -523,7 +523,7 @@ public class UpdateDabWarningTools {
     // Remove the disambiguation warning
     api.updatePage(
         wikipedia, todoSubpage, tmp.toString(),
-        wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+        wikipedia.formatComment(wikipedia.getDisambiguationWarningCommentDone()),
         false);
 
     return true;
@@ -533,11 +533,12 @@ public class UpdateDabWarningTools {
    * Remove disambiguation warning on the talk page.
    * 
    * @param talkPage Talk page.
+   * @param dabLinks Links to dab pages.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
   private boolean cleanDabWarningOnTalkPage(
-      Page talkPage) throws APIException {
+      Page talkPage, Collection<String> dabLinks) throws APIException {
     // Check if page exists
     if (talkPage == null) {
       return false;
@@ -545,7 +546,7 @@ public class UpdateDabWarningTools {
     if (Boolean.FALSE.equals(talkPage.isExisting())) {
       api.updateSection(
           wikipedia, talkPage,
-          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           0, "{{" + wikipedia.getTodoTemplates().get(0) + "}}", false);
       return true;
     }
@@ -626,7 +627,7 @@ public class UpdateDabWarningTools {
       }
       api.updateSection(
           wikipedia, talkPage,
-          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           0, tmp.toString(), false);
       return true;
     }
@@ -697,7 +698,7 @@ public class UpdateDabWarningTools {
       }
       api.updateSection(
           wikipedia, talkPage,
-          wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           0, tmp.toString(), false);
       return true;
     }
@@ -774,7 +775,7 @@ public class UpdateDabWarningTools {
         }
         api.updateSection(
             wikipedia, talkPage,
-            wikipedia.formatComment(wikipedia.getDisambiguationWarningComment()),
+            wikipedia.formatComment(wikipedia.getDisambiguationWarningCommentDone()),
             0, tmp.toString(), false);
         return true;
       }
@@ -799,6 +800,30 @@ public class UpdateDabWarningTools {
     List<String> dabLinks = new ArrayList<String>(linkCount.keySet());
     Collections.sort(dabLinks);
     return dabLinks;
+  }
+
+  /**
+   * @param dabLinks Links to dab pages.
+   * @return Comment.
+   */
+  private String getDisambiguationWarningComment(Collection<String> dabLinks) {
+    if ((dabLinks == null) || (dabLinks.isEmpty())) {
+      return wikipedia.getDisambiguationWarningComment();
+    }
+    StringBuilder result = new StringBuilder(wikipedia.getDisambiguationWarningComment());
+    boolean first = true;
+    for (String dabLink : dabLinks) {
+      if (first) {
+        result.append(" - ");
+        first = false;
+      } else {
+        result.append(", ");
+      }
+      result.append("[[");
+      result.append(dabLink);
+      result.append("]]");
+    }
+    return result.toString();
   }
 
   /**
