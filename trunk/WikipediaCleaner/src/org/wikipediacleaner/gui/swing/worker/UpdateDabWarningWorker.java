@@ -21,8 +21,6 @@ package org.wikipediacleaner.gui.swing.worker;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
@@ -120,7 +118,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
 
         if (count > lastCount) {
           lastCount = count;
-          if (getWindow() != null) {
+          /*if (getWindow() != null) {
             int answer = getWindow().displayYesNoWarning(
                 "This feature is currently under development, please check the modification.\n" +
                 "Do you want to continue ?");
@@ -129,7 +127,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
             }
           } else {
             return Integer.valueOf(count);
-          }
+          }*/
         }
       }
     } catch (APIException e) {
