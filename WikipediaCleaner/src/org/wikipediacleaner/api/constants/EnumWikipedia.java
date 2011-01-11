@@ -217,6 +217,7 @@ public enum EnumWikipedia {
   private String disambiguationWarningTemplate;
   private String disambiguationWarningTemplateComment;
   private String disambiguationWarningComment;
+  private String disambiguationWarningCommentDone;
   private List<String> disambiguationWarningAfterTemplates;
   private Map<String, List<TemplateMatcher>> templateMatchers;
 
@@ -534,6 +535,16 @@ public enum EnumWikipedia {
   public String getDisambiguationWarningComment() {
     if (disambiguationWarningComment != null) {
       return disambiguationWarningComment;
+    }
+    return disambiguationWarningTemplate;
+  }
+
+  /**
+   * @return Comment for telling that disambiguation links have been fixed.
+   */
+  public String getDisambiguationWarningCommentDone() {
+    if (disambiguationWarningCommentDone != null) {
+      return disambiguationWarningCommentDone;
     }
     return disambiguationWarningTemplate;
   }
@@ -1027,6 +1038,12 @@ public enum EnumWikipedia {
       tmp = configuration.getProperty("dab_warning_comment", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         disambiguationWarningComment = tmp.trim();
+      }
+
+      // Disambiguation warning comment done
+      tmp = configuration.getProperty("dab_warning_comment_done", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        disambiguationWarningCommentDone = tmp.trim();
       }
 
       // Templates coming before disambiguation warning
