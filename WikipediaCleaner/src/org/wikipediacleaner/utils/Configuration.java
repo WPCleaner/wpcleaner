@@ -100,6 +100,7 @@ public class Configuration implements WindowListener {
   public  final static String  BOOLEAN_CLOSE_FULL              = "CloseFullAnalysis";
   public  final static String  BOOLEAN_CREATE_DAB_WARNING      = "CreateDabWarning";
   public  final static String  BOOLEAN_CREATE_DAB_WARNING_ALL  = "CreateDabWarningAll";
+  public  final static String  BOOLEAN_CREATE_DAB_WARNING_ENCY = "CreateDabWarningEncyclo";
   public  final static String  BOOLEAN_DEBUG_TIME              = "DebugTime";
   public  final static String  BOOLEAN_DEBUG_URL               = "DebugURL";
   public  final static String  BOOLEAN_DEBUG_XML               = "DebugXML";
@@ -111,6 +112,7 @@ public class Configuration implements WindowListener {
   public  final static String  BOOLEAN_SHORT_NOTATION          = "ShortNotation";
   public  final static String  BOOLEAN_UPDATE_DAB_WARNING      = "UpdateDabWarning";
   public  final static String  BOOLEAN_UPDATE_DAB_WARNING_ALL  = "UpdateDabWarningAll";
+  public  final static String  BOOLEAN_UPDATE_DAB_WARNING_ENCY = "UpdateDabWarningEncyclo";
   public  final static String  BOOLEAN_WIKICLEANER_COMMENT     = "WikiCleanerComment";
 
   public  final static boolean DEFAULT_ADVANCED_FEATURES       = false;
@@ -130,6 +132,7 @@ public class Configuration implements WindowListener {
   public  final static boolean DEFAULT_CLOSE_FULL              = true;
   public  final static boolean DEFAULT_CREATE_DAB_WARNING      = true;
   public  final static boolean DEFAULT_CREATE_DAB_WARNING_ALL  = false;
+  public  final static boolean DEFAULT_CREATE_DAB_WARNING_ENCY = true;
   public  final static boolean DEFAULT_DEBUG_TIME              = false;
   public  final static boolean DEFAULT_DEBUG_URL               = true;
   public  final static boolean DEFAULT_DEBUG_XML               = false;
@@ -141,6 +144,7 @@ public class Configuration implements WindowListener {
   public  final static boolean DEFAULT_SHORT_NOTATION          = false;
   public  final static boolean DEFAULT_UPDATE_DAB_WARNING      = true;
   public  final static boolean DEFAULT_UPDATE_DAB_WARNING_ALL  = true;
+  public  final static boolean DEFAULT_UPDATE_DAB_WARNING_ENCY = true;
   public  final static boolean DEFAULT_WIKICLEANER_COMMENT     = true;
 
   // Special properties

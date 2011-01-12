@@ -99,8 +99,10 @@ public class OptionsWindow
   private JTextField txtSignature;
 
   private JCheckBox chkAnalysisCreateDabWarning;
+  private JCheckBox chkAnalysisCreateDabWarningEncyclo;
   private JCheckBox chkAnalysisCreateDabWarningAll;
   private JCheckBox chkAnalysisUpdateDabWarning;
+  private JCheckBox chkAnalysisUpdateDabWarningEncyclo;
   private JCheckBox chkAnalysisUpdateDabWarningAll;
   private JCheckBox chkAnalysisCountDisambig;
   private JCheckBox chkAnalysisCountMissing;
@@ -458,6 +460,15 @@ public class OptionsWindow
     panel.add(chkAnalysisCreateDabWarning, constraints);
     constraints.gridy++;
 
+    // Create disambiguation warning in encyclopedic namespaces
+    chkAnalysisCreateDabWarningEncyclo = Utilities.createJCheckBox(
+        GT._("Create disambiguation warning on talk page (in encyclopedic namespaces)"),
+        configuration.getBoolean(
+            Configuration.BOOLEAN_CREATE_DAB_WARNING_ENCY,
+            Configuration.DEFAULT_CREATE_DAB_WARNING_ENCY));
+    panel.add(chkAnalysisCreateDabWarning, constraints);
+    constraints.gridy++;
+
     // Create disambiguation warning in other namespace
     chkAnalysisCreateDabWarningAll = Utilities.createJCheckBox(
         GT._("Create disambiguation warning on talk page (in other namespaces)"),
@@ -473,6 +484,15 @@ public class OptionsWindow
         configuration.getBoolean(
             Configuration.BOOLEAN_UPDATE_DAB_WARNING,
             Configuration.DEFAULT_UPDATE_DAB_WARNING));
+    panel.add(chkAnalysisUpdateDabWarning, constraints);
+    constraints.gridy++;
+
+    // Update disambiguation warning in encyclopedic namespaces
+    chkAnalysisUpdateDabWarning = Utilities.createJCheckBox(
+        GT._("Update disambiguation warning on talk page (in encyclopedic namespaces)"),
+        configuration.getBoolean(
+            Configuration.BOOLEAN_UPDATE_DAB_WARNING_ENCY,
+            Configuration.DEFAULT_UPDATE_DAB_WARNING_ENCY));
     panel.add(chkAnalysisUpdateDabWarning, constraints);
     constraints.gridy++;
 
@@ -939,6 +959,7 @@ public class OptionsWindow
     config.setBoolean(Configuration.BOOLEAN_CLOSE_FULL, chkCloseFull.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CREATE_DAB_WARNING, chkAnalysisCreateDabWarning.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CREATE_DAB_WARNING_ALL, chkAnalysisCreateDabWarningAll.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_CREATE_DAB_WARNING_ENCY, chkAnalysisCreateDabWarningEncyclo.isSelected());
     config.setBoolean(Configuration.BOOLEAN_FORCE_WATCH, chkForceWatch.isSelected());
     config.setBoolean(Configuration.BOOLEAN_REMEMBER_LAST_PAGE, chkRememberLastPage.isSelected());
     config.setBoolean(Configuration.BOOLEAN_RESTORE_WINDOW, chkRestoreWindowPosition.isSelected());
@@ -947,6 +968,7 @@ public class OptionsWindow
     config.setBoolean(Configuration.BOOLEAN_SHORT_NOTATION, chkShortNotation.isSelected());
     config.setBoolean(Configuration.BOOLEAN_UPDATE_DAB_WARNING, chkAnalysisUpdateDabWarning.isSelected());
     config.setBoolean(Configuration.BOOLEAN_UPDATE_DAB_WARNING_ALL, chkAnalysisUpdateDabWarningAll.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_UPDATE_DAB_WARNING_ENCY, chkAnalysisUpdateDabWarningEncyclo.isSelected());
     config.setBoolean(Configuration.BOOLEAN_WIKICLEANER_COMMENT, chkWikiInComments.isSelected());
 
     // Integer values
@@ -1000,6 +1022,9 @@ public class OptionsWindow
     chkAnalysisCreateDabWarningAll.setSelected(config.getBoolean(
         Configuration.BOOLEAN_CREATE_DAB_WARNING_ALL,
         Configuration.DEFAULT_CREATE_DAB_WARNING_ALL));
+    chkAnalysisCreateDabWarningEncyclo.setSelected(config.getBoolean(
+        Configuration.BOOLEAN_CREATE_DAB_WARNING_ENCY,
+        Configuration.DEFAULT_CREATE_DAB_WARNING_ENCY));
     chkAnalysisDisambig.setSelected(config.getBoolean(
         Configuration.BOOLEAN_ANALYSIS_DISAMBIG_PAGES,
         Configuration.DEFAULT_ANALYSIS_DISAMBIG_PAGES));
@@ -1021,6 +1046,9 @@ public class OptionsWindow
     chkAnalysisUpdateDabWarningAll.setSelected(config.getBoolean(
         Configuration.BOOLEAN_UPDATE_DAB_WARNING_ALL,
         Configuration.DEFAULT_UPDATE_DAB_WARNING_ALL));
+    chkAnalysisUpdateDabWarningEncyclo.setSelected(config.getBoolean(
+        Configuration.BOOLEAN_UPDATE_DAB_WARNING_ENCY,
+        Configuration.DEFAULT_UPDATE_DAB_WARNING_ENCY));
     chkShow0ErrorsCheckWiki.setSelected(config.getBoolean(
         Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
         Configuration.DEFAULT_CHECK_SHOW_0_ERRORS));

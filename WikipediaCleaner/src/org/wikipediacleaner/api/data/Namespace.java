@@ -49,6 +49,10 @@ public class Namespace implements Comparable<Namespace> {
   private final String canonicalTitle;
   private final LinkedList<String> aliases;
 
+  private final static int[] encyclopedicNamespaces = {
+      MAIN, IMAGE, TEMPLATE, CATEGORY
+  };
+
   /**
    * @param id Namespace Id.
    * @param title Namespace title.
@@ -103,6 +107,19 @@ public class Namespace implements Comparable<Namespace> {
       return namespace.getTitle() + ":" + title;
     }
     return title;
+  }
+
+  /**
+   * @param namespaceId Namespace identifier.
+   * @return True if the namespace is encyclopedic.
+   */
+  public static boolean isEncyclopedicNamespace(int namespaceId) {
+    for (int i = 0; i < encyclopedicNamespaces.length; i++) {
+      if (namespaceId == encyclopedicNamespaces[i]) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
