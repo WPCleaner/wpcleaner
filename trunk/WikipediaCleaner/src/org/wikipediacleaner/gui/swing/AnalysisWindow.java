@@ -56,6 +56,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CompositeComparator;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.api.data.PageContents;
@@ -627,15 +628,22 @@ public class AnalysisWindow extends PageWindow {
       firstReload = false;
       boolean isArticle = (getPage() != null) && (getPage().isArticle());
       if (isArticle) {
-        boolean isMainNamespace = getPage().isInMainNamespace();
         Configuration config = Configuration.getConfiguration();
-        if (isMainNamespace) {
+        if (getPage().isInMainNamespace()) {
           chkUpdateDabWarning.setSelected(config.getBoolean(
               Configuration.BOOLEAN_UPDATE_DAB_WARNING,
               Configuration.DEFAULT_UPDATE_DAB_WARNING));
           chkCreateDabWarning.setSelected(config.getBoolean(
               Configuration.BOOLEAN_CREATE_DAB_WARNING,
               Configuration.DEFAULT_CREATE_DAB_WARNING));
+        } else if ((getPage().getNamespace() != null) &&
+                   (Namespace.isEncyclopedicNamespace(getPage().getNamespace().intValue()))) {
+          chkUpdateDabWarning.setSelected(config.getBoolean(
+              Configuration.BOOLEAN_UPDATE_DAB_WARNING_ENCY,
+              Configuration.DEFAULT_UPDATE_DAB_WARNING_ENCY));
+          chkCreateDabWarning.setSelected(config.getBoolean(
+              Configuration.BOOLEAN_CREATE_DAB_WARNING_ENCY,
+              Configuration.DEFAULT_CREATE_DAB_WARNING_ENCY));
         } else {
           chkUpdateDabWarning.setSelected(config.getBoolean(
               Configuration.BOOLEAN_UPDATE_DAB_WARNING_ALL,
