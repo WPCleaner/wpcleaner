@@ -70,27 +70,33 @@ public class UpdateDabWarningWorker extends BasicWorker {
           wikipedia,
           Namespace.getTitle(Namespace.TEMPLATE, wikipedia.getNamespaces(), dabWarningTemplateName),
           null, null);
-      api.retrieveEmbeddedIn(wikipedia, dabWarningTemplate, Namespace.MAIN_TALK);
+      api.retrieveEmbeddedIn(wikipedia, dabWarningTemplate, Namespace.getEncyclopedicTalkNamespaces());
 
       // Construct list of articles with disambiguation warning
       setText(GT._("Constructing list of articles with disambiguation warning"));
-      Namespace namespaceTalk = Namespace.getNamespace(Namespace.MAIN_TALK, wikipedia.getNamespaces());
       List<Page> dabWarningTalkPages = dabWarningTemplate.getEmbeddedIn();
       List<Page> dabWarningPages = new ArrayList<Page>();
       for (Page dabWarningPage : dabWarningTalkPages) {
         String title = dabWarningPage.getTitle();
-        int colonIndex = title.indexOf(':');
-        if (colonIndex >= 0) {
-          if (namespaceTalk.isPossibleName(title.substring(0, colonIndex))) {
-            title = title.substring(colonIndex + 1);
-          }
-        }
         if (title.endsWith("/" + wikipedia.getTodoSubpage())) {
           title = title.substring(0, title.length() - 1 - wikipedia.getTodoSubpage().length());
         }
-        Page page = DataManager.getPage(wikipedia, title, null, null);
-        if (!dabWarningPages.contains(page)) {
-          dabWarningPages.add(page);
+        int colonIndex = title.indexOf(':');
+        if (colonIndex >= 0) {
+          for (int namespace : Namespace.getEncyclopedicTalkNamespaces()) {
+            Namespace namespaceTalk = Namespace.getNamespace(namespace, wikipedia.getNamespaces());
+            if ((namespaceTalk != null) &&
+                (namespaceTalk.isPossibleName(title.substring(0, colonIndex)))) {
+              String tmpTitle = title.substring(colonIndex + 1);
+              if (namespace != Namespace.MAIN_TALK) {
+                tmpTitle = Namespace.getTitle(namespace - 1, wikipedia.getNamespaces(), tmpTitle);
+              }
+              Page page = DataManager.getPage(wikipedia, tmpTitle, null, null);
+              if (!dabWarningPages.contains(page)) {
+                dabWarningPages.add(page);
+              }
+            }
+          }
         }
       }
 

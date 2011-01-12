@@ -249,6 +249,17 @@ public interface API {
       EnumWikipedia wikipedia, Page page, Integer namespace) throws APIException;
 
   /**
+   * Retrieves the pages in which <code>page</code> is embedded.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param page Page.
+   * @param namespaces Limit to some namespaces.
+   * @throws APIException
+   */
+  public void retrieveEmbeddedIn(
+      EnumWikipedia wikipedia, Page page, int[] namespaces) throws APIException;
+
+  /**
    * Retrieves the templates of <code>page</code>.
    * 
    * @param wikipedia Wikipedia.

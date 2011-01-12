@@ -52,6 +52,9 @@ public class Namespace implements Comparable<Namespace> {
   private final static int[] encyclopedicNamespaces = {
       MAIN, IMAGE, TEMPLATE, CATEGORY
   };
+  private final static int[] encyclopedicTalkNamespaces = {
+      MAIN_TALK, IMAGE_TALK, TEMPLATE_TALK, CATEGORY_TALK
+  };
 
   /**
    * @param id Namespace Id.
@@ -110,6 +113,13 @@ public class Namespace implements Comparable<Namespace> {
   }
 
   /**
+   * @return Encyclopedic namespaces.
+   */
+  public static int[] getEncyclopedicNamespaces() {
+    return encyclopedicNamespaces;
+  }
+
+  /**
    * @param namespaceId Namespace identifier.
    * @return True if the namespace is encyclopedic.
    */
@@ -120,6 +130,13 @@ public class Namespace implements Comparable<Namespace> {
       }
     }
     return false;
+  }
+
+  /**
+   * @return Encyclopedic talk namespaces.
+   */
+  public static int[] getEncyclopedicTalkNamespaces() {
+    return encyclopedicTalkNamespaces;
   }
 
   /**
