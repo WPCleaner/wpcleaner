@@ -899,9 +899,74 @@ public class MediaWikiAPI implements API {
       EnumWikipedia wikipedia, Page page, Integer namespace) throws APIException {
     Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("list", "embeddedin");
-    properties.put("eilimit", "max" /*"500"*/);
+    properties.put("eilimit", "max");
     if (namespace != null) {
       properties.put("einamespace", namespace.toString());
+    }
+    properties.put("eititle", page.getTitle());
+    List<Page> links = new ArrayList<Page>();
+    boolean eicontinue = false;
+    do {
+      try {
+        XPath xpa = XPath.newInstance("/api/query/embeddedin/ei");
+        Element root = getRoot(wikipedia, properties, MAX_ATTEMPTS);
+        List results = xpa.selectNodes(root);
+        Iterator iter = results.iterator();
+        //links.ensureCapacity(links.size() + results.size());
+        XPath xpaPageId = XPath.newInstance("./@pageid");
+        XPath xpaNs = XPath.newInstance("./@ns");
+        XPath xpaTitle = XPath.newInstance("./@title");
+        while (iter.hasNext()) {
+          Element currentNode = (Element) iter.next();
+          Page link = DataManager.getPage(
+              page.getWikipedia(), xpaTitle.valueOf(currentNode), null, null);
+          link.setNamespace(xpaNs.valueOf(currentNode));
+          link.setPageId(xpaPageId.valueOf(currentNode));
+          links.add(link);
+        }
+        XPath xpaContinue = XPath.newInstance("/api/query-continue/embeddedin");
+        XPath xpaEiContinue = XPath.newInstance("./@eicontinue");
+        results = xpaContinue.selectNodes(root);
+        iter = results.iterator();
+        eicontinue = false;
+        while (iter.hasNext()) {
+          Element currentNode = (Element) iter.next();
+          //properties.remove("eititle");
+          eicontinue = true;
+          properties.put("eicontinue", xpaEiContinue.valueOf(currentNode));
+          
+        }
+      } catch (JDOMException e) {
+        log.error("Error backlinks for page " + page.getTitle(), e);
+        throw new APIException("Error parsing XML result", e);
+      }
+    } while (eicontinue);
+    Collections.sort(links);
+    page.setEmbeddedIn(links);
+  }
+
+  /**
+   * Retrieves the pages in which <code>page</code> is embedded.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param page Page.
+   * @param namespaces Limit to some namespaces.
+   * @throws APIException
+   */
+  public void retrieveEmbeddedIn(
+      EnumWikipedia wikipedia, Page page, int[] namespaces) throws APIException {
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    properties.put("list", "embeddedin");
+    properties.put("eilimit", "max");
+    if ((namespaces != null) && (namespaces.length > 0)) {
+      StringBuilder tmp = new StringBuilder();
+      for (int i = 0; i < namespaces.length; i++) {
+        if (i > 0) {
+          tmp.append("|");
+        }
+        tmp.append(namespaces[i]);
+      }
+      properties.put("einamespace", tmp.toString());
     }
     properties.put("eititle", page.getTitle());
     List<Page> links = new ArrayList<Page>();
