@@ -49,13 +49,6 @@ public class Namespace implements Comparable<Namespace> {
   private final String canonicalTitle;
   private final LinkedList<String> aliases;
 
-  private final static int[] encyclopedicNamespaces = {
-      MAIN, IMAGE, TEMPLATE, CATEGORY
-  };
-  private final static int[] encyclopedicTalkNamespaces = {
-      MAIN_TALK, IMAGE_TALK, TEMPLATE_TALK, CATEGORY_TALK
-  };
-
   /**
    * @param id Namespace Id.
    * @param title Namespace title.
@@ -110,33 +103,6 @@ public class Namespace implements Comparable<Namespace> {
       return namespace.getTitle() + ":" + title;
     }
     return title;
-  }
-
-  /**
-   * @return Encyclopedic namespaces.
-   */
-  public static int[] getEncyclopedicNamespaces() {
-    return encyclopedicNamespaces;
-  }
-
-  /**
-   * @param namespaceId Namespace identifier.
-   * @return True if the namespace is encyclopedic.
-   */
-  public static boolean isEncyclopedicNamespace(int namespaceId) {
-    for (int i = 0; i < encyclopedicNamespaces.length; i++) {
-      if (namespaceId == encyclopedicNamespaces[i]) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * @return Encyclopedic talk namespaces.
-   */
-  public static int[] getEncyclopedicTalkNamespaces() {
-    return encyclopedicTalkNamespaces;
   }
 
   /**

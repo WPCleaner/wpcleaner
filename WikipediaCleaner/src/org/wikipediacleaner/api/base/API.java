@@ -257,7 +257,7 @@ public interface API {
    * @throws APIException
    */
   public void retrieveEmbeddedIn(
-      EnumWikipedia wikipedia, Page page, int[] namespaces) throws APIException;
+      EnumWikipedia wikipedia, Page page, List<Integer> namespaces) throws APIException;
 
   /**
    * Retrieves the templates of <code>page</code>.
