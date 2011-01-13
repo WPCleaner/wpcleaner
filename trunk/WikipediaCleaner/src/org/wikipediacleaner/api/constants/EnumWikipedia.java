@@ -214,6 +214,7 @@ public enum EnumWikipedia {
   private List<String> todoLinkTemplates;
   private String todoSubpage;
   private boolean todoSubpageForce;
+  private boolean todoSubpageForceOther;
   private String disambiguationWarningTemplate;
   private String disambiguationWarningTemplateComment;
   private String disambiguationWarningComment;
@@ -509,10 +510,17 @@ public enum EnumWikipedia {
   }
 
   /**
-   * @return Force usage of todo subpage.
+   * @return Force usage of todo subpage in main namespace.
    */
   public boolean getTodoSubpageForce() {
     return todoSubpageForce;
+  }
+
+  /**
+   * @return Force usage of todo subpage in other namespaces.
+   */
+  public boolean getTodoSubpageForceOther() {
+    return todoSubpageForceOther;
   }
 
   /**
@@ -828,6 +836,10 @@ public enum EnumWikipedia {
       tmp = configuration.getProperty("general_todo_subpage_force", "false");
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         todoSubpageForce = Boolean.parseBoolean(tmp.trim());
+      }
+      tmp = configuration.getProperty("general_todo_subpage_force_other", "false");
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        todoSubpageForceOther = Boolean.parseBoolean(tmp.trim());
       }
 
       templateMatchers = new HashMap<String, List<TemplateMatcher>>();

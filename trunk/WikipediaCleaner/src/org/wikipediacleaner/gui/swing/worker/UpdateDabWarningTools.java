@@ -197,7 +197,12 @@ public class UpdateDabWarningTools {
       api.retrieveContents(wikipedia, todoSubpage, false);
 
       // If we force the use of todo subpage, the disambiguation warning must be on it
-      if (wikipedia.getTodoSubpageForce()) {
+      if ((page.getNamespace() != null) &&
+          (page.getNamespace().intValue() == Namespace.MAIN)) {
+        if (wikipedia.getTodoSubpageForce()) {
+          return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
+        }
+      } else if (wikipedia.getTodoSubpageForceOther()) {
         return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
       }
 
