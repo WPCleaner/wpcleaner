@@ -93,8 +93,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
               }
               Page page = DataManager.getPage(wikipedia, tmpTitle, null, null);
               if (!dabWarningPages.contains(page)) {
-                System.err.println(page.getTitle());
-                //dabWarningPages.add(page);
+                dabWarningPages.add(page);
               }
             }
           }
