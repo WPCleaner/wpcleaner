@@ -14,9 +14,11 @@
     <mkdir dir="${build.dir}" />
     <move todir="${build.dir}" includeemptydirs="false">
       <fileset dir="${launchpad.export.files}">
-        <include name="wikicleaner_wikicleaner-*.po" />
+        <include name="src_org_wikipediacleaner_translation_WikiCleaner-*.po" />
       </fileset>
-      <mapper type="glob" from="wikicleaner_wikicleaner-*.po" to="*.po" />
+      <mapper type="glob"
+              from="src_org_wikipediacleaner_translation_WikiCleaner-*.po"
+              to="*.po" />
     </move>
     <copy todir="src/org/wikipediacleaner/translation">
       <fileset dir="${build.dir}" includes="*.po" />
