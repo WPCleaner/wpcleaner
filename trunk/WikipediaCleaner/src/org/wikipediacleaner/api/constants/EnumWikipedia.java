@@ -210,6 +210,8 @@ public enum EnumWikipedia {
   private String helpPage;
 
   private String pipeTemplate;
+  private List<Integer> encyclopedicNamespaces;
+  private List<Integer> encyclopedicTalkNamespaces;
   private List<String> todoTemplates;
   private List<String> todoLinkTemplates;
   private String todoSubpage;
@@ -486,6 +488,36 @@ public enum EnumWikipedia {
    */
   public String getPipeTemplate() {
     return pipeTemplate;
+  }
+
+  /**
+   * @return Encyclopedic namespaces.
+   */
+  public List<Integer> getEncyclopedicNamespaces() {
+    return encyclopedicNamespaces;
+  }
+
+  /**
+   * @param namespace Namespace.
+   * @return True if the namespace is encyclopedic.
+   */
+  public boolean isEncyclopedicNamespace(Integer namespace) {
+    if ((encyclopedicNamespaces == null) || (namespace == null)) {
+      return false;
+    }
+    for (Integer tmp : encyclopedicNamespaces) {
+      if (namespace.equals(tmp)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * @return Encyclopedic talk namespaces.
+   */
+  public List<Integer> getEncyclopedicTalkNamespaces() {
+    return encyclopedicTalkNamespaces;
   }
 
   /**
@@ -812,6 +844,34 @@ public enum EnumWikipedia {
       tmp = configuration.getProperty("general_pipe_template", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         pipeTemplate = tmp.trim();
+      }
+
+      // Encyclopedic namespaces
+      encyclopedicNamespaces = new ArrayList<Integer>();
+      tmp = configuration.getProperty("general_encyclopedic_namespaces", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        List<String> tmpList = convertPropertyToStringList(tmp);
+        if (tmpList != null) {
+          for (String tmpValue : tmpList) {
+            try {
+              Integer value = Integer.valueOf(tmpValue);
+              if (value.intValue() % 2 == 0) {
+                encyclopedicNamespaces.add(value);
+              }
+            } catch (NumberFormatException e) {
+              //
+            }
+          }
+        }
+      } else {
+        encyclopedicNamespaces.add(Integer.valueOf(Namespace.MAIN));
+        encyclopedicNamespaces.add(Integer.valueOf(Namespace.IMAGE));
+        encyclopedicNamespaces.add(Integer.valueOf(Namespace.TEMPLATE));
+        encyclopedicNamespaces.add(Integer.valueOf(Namespace.CATEGORY));
+      }
+      encyclopedicTalkNamespaces = new ArrayList<Integer>(encyclopedicNamespaces.size());
+      for (Integer namespace : encyclopedicNamespaces) {
+        encyclopedicTalkNamespaces.add(Integer.valueOf(namespace.intValue() + 1));
       }
 
       // Todo templates

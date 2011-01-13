@@ -954,17 +954,17 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    */
   public void retrieveEmbeddedIn(
-      EnumWikipedia wikipedia, Page page, int[] namespaces) throws APIException {
+      EnumWikipedia wikipedia, Page page, List<Integer> namespaces) throws APIException {
     Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("list", "embeddedin");
     properties.put("eilimit", "max");
-    if ((namespaces != null) && (namespaces.length > 0)) {
+    if ((namespaces != null) && (namespaces.size() > 0)) {
       StringBuilder tmp = new StringBuilder();
-      for (int i = 0; i < namespaces.length; i++) {
+      for (int i = 0; i < namespaces.size(); i++) {
         if (i > 0) {
           tmp.append("|");
         }
-        tmp.append(namespaces[i]);
+        tmp.append(namespaces.get(i));
       }
       properties.put("einamespace", tmp.toString());
     }

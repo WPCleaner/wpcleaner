@@ -56,7 +56,6 @@ import javax.swing.event.ListSelectionListener;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CompositeComparator;
-import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.api.data.PageContents;
@@ -637,7 +636,7 @@ public class AnalysisWindow extends PageWindow {
               Configuration.BOOLEAN_CREATE_DAB_WARNING,
               Configuration.DEFAULT_CREATE_DAB_WARNING));
         } else if ((getPage().getNamespace() != null) &&
-                   (Namespace.isEncyclopedicNamespace(getPage().getNamespace().intValue()))) {
+                   (getWikipedia().isEncyclopedicNamespace(getPage().getNamespace()))) {
           chkUpdateDabWarning.setSelected(config.getBoolean(
               Configuration.BOOLEAN_UPDATE_DAB_WARNING_ENCY,
               Configuration.DEFAULT_UPDATE_DAB_WARNING_ENCY));

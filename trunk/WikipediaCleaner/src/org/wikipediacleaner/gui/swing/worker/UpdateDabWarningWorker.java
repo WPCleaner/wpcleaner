@@ -70,7 +70,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
           wikipedia,
           Namespace.getTitle(Namespace.TEMPLATE, wikipedia.getNamespaces(), dabWarningTemplateName),
           null, null);
-      api.retrieveEmbeddedIn(wikipedia, dabWarningTemplate, Namespace.getEncyclopedicTalkNamespaces());
+      api.retrieveEmbeddedIn(wikipedia, dabWarningTemplate, wikipedia.getEncyclopedicTalkNamespaces());
 
       // Construct list of articles with disambiguation warning
       setText(GT._("Constructing list of articles with disambiguation warning"));
@@ -83,7 +83,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
         }
         int colonIndex = title.indexOf(':');
         if (colonIndex >= 0) {
-          for (int namespace : Namespace.getEncyclopedicTalkNamespaces()) {
+          for (Integer namespace : wikipedia.getEncyclopedicTalkNamespaces()) {
             Namespace namespaceTalk = Namespace.getNamespace(namespace, wikipedia.getNamespaces());
             if ((namespaceTalk != null) &&
                 (namespaceTalk.isPossibleName(title.substring(0, colonIndex)))) {
@@ -93,7 +93,8 @@ public class UpdateDabWarningWorker extends BasicWorker {
               }
               Page page = DataManager.getPage(wikipedia, tmpTitle, null, null);
               if (!dabWarningPages.contains(page)) {
-                dabWarningPages.add(page);
+                System.err.println(page.getTitle());
+                //dabWarningPages.add(page);
               }
             }
           }
