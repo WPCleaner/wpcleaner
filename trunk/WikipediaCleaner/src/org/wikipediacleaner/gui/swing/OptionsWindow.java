@@ -466,7 +466,7 @@ public class OptionsWindow
         configuration.getBoolean(
             Configuration.BOOLEAN_CREATE_DAB_WARNING_ENCY,
             Configuration.DEFAULT_CREATE_DAB_WARNING_ENCY));
-    panel.add(chkAnalysisCreateDabWarning, constraints);
+    panel.add(chkAnalysisCreateDabWarningEncyclo, constraints);
     constraints.gridy++;
 
     // Create disambiguation warning in other namespace
@@ -488,12 +488,12 @@ public class OptionsWindow
     constraints.gridy++;
 
     // Update disambiguation warning in encyclopedic namespaces
-    chkAnalysisUpdateDabWarning = Utilities.createJCheckBox(
+    chkAnalysisUpdateDabWarningEncyclo = Utilities.createJCheckBox(
         GT._("Update disambiguation warning on talk page (in encyclopedic namespaces)"),
         configuration.getBoolean(
             Configuration.BOOLEAN_UPDATE_DAB_WARNING_ENCY,
             Configuration.DEFAULT_UPDATE_DAB_WARNING_ENCY));
-    panel.add(chkAnalysisUpdateDabWarning, constraints);
+    panel.add(chkAnalysisUpdateDabWarningEncyclo, constraints);
     constraints.gridy++;
 
     // Update disambiguation warning in other namespace
@@ -960,6 +960,9 @@ public class OptionsWindow
     config.setBoolean(Configuration.BOOLEAN_CREATE_DAB_WARNING, chkAnalysisCreateDabWarning.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CREATE_DAB_WARNING_ALL, chkAnalysisCreateDabWarningAll.isSelected());
     config.setBoolean(Configuration.BOOLEAN_CREATE_DAB_WARNING_ENCY, chkAnalysisCreateDabWarningEncyclo.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_DEBUG_TIME, chkDebugTime.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_DEBUG_URL, chkDebugURL.isSelected());
+    config.setBoolean(Configuration.BOOLEAN_DEBUG_XML, chkDebugXML.isSelected());
     config.setBoolean(Configuration.BOOLEAN_FORCE_WATCH, chkForceWatch.isSelected());
     config.setBoolean(Configuration.BOOLEAN_REMEMBER_LAST_PAGE, chkRememberLastPage.isSelected());
     config.setBoolean(Configuration.BOOLEAN_RESTORE_WINDOW, chkRestoreWindowPosition.isSelected());
