@@ -1117,6 +1117,7 @@ public class MediaWikiAPI implements API {
             tmpPages.add(page);
           }
         } else {
+          System.err.println("not dab: " + page.getTitle());
           page.setDisambiguationPage(Boolean.FALSE);
         }
       }
@@ -1754,29 +1755,34 @@ public class MediaWikiAPI implements API {
         Element currentNode = (Element) iterPages.next();
         String title = xpaTitle.valueOf(currentNode);
         for (Page p : pages) {
-          if ((p.getTitle() != null) &&
-              (p.getTitle().equals(title))) {
-            Boolean disambiguation = Boolean.FALSE;
-            Boolean wiktionaryLink = Boolean.FALSE;
-            List listTemplates = xpaTemplate.selectNodes(currentNode);
-            Iterator iterTemplates = listTemplates.iterator();
-            while (iterTemplates.hasNext()) {
-              Element currentTemplate = (Element) iterTemplates.next();
-              String templateName = xpaTemplateName.valueOf(currentTemplate);
-              if (wikipedia.isDisambiguationTemplate(templateName, this)) {
-                disambiguation = Boolean.TRUE;
+          Iterator<Page> it = p.getRedirectIteratorWithPage();
+          while (it.hasNext()) {
+            Page p2 = it.next();
+            if ((p2.getTitle() != null) &&
+                (p2.getTitle().equals(title))) {
+              Boolean disambiguation = Boolean.FALSE;
+              Boolean wiktionaryLink = Boolean.FALSE;
+              List listTemplates = xpaTemplate.selectNodes(currentNode);
+              Iterator iterTemplates = listTemplates.iterator();
+              while (iterTemplates.hasNext()) {
+                Element currentTemplate = (Element) iterTemplates.next();
+                String templateName = xpaTemplateName.valueOf(currentTemplate);
+                if (wikipedia.isDisambiguationTemplate(templateName, this)) {
+                  disambiguation = Boolean.TRUE;
+                }
+                if (wikipedia.isWiktionaryTemplate(templateName)) {
+                  wiktionaryLink = Boolean.TRUE;
+                }
               }
-              if (wikipedia.isWiktionaryTemplate(templateName)) {
-                wiktionaryLink = Boolean.TRUE;
+              if ((p2.isDisambiguationPage() == null) ||
+                  (Boolean.TRUE.equals(disambiguation))) {
+                System.err.println("dab: " + p2.getTitle() + ": " + disambiguation + " " + p2.isRedirect());
+                p2.setDisambiguationPage(disambiguation);
               }
-            }
-            if ((p.isDisambiguationPage() == null) ||
-                (Boolean.TRUE.equals(disambiguation))) {
-              p.setDisambiguationPage(disambiguation);
-            }
-            if ((p.hasWiktionaryLink() == null) ||
-                (Boolean.TRUE.equals(wiktionaryLink))) {
-              p.setWiktionaryLink(wiktionaryLink);
+              if ((p2.hasWiktionaryLink() == null) ||
+                  (Boolean.TRUE.equals(wiktionaryLink))) {
+                p2.setWiktionaryLink(wiktionaryLink);
+              }
             }
           }
         }
