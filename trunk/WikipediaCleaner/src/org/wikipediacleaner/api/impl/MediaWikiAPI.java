@@ -1117,7 +1117,6 @@ public class MediaWikiAPI implements API {
             tmpPages.add(page);
           }
         } else {
-          System.err.println("not dab: " + page.getTitle());
           page.setDisambiguationPage(Boolean.FALSE);
         }
       }
@@ -1776,7 +1775,6 @@ public class MediaWikiAPI implements API {
               }
               if ((p2.isDisambiguationPage() == null) ||
                   (Boolean.TRUE.equals(disambiguation))) {
-                System.err.println("dab: " + p2.getTitle() + ": " + disambiguation + " " + p2.isRedirect());
                 p2.setDisambiguationPage(disambiguation);
               }
               if ((p2.hasWiktionaryLink() == null) ||
