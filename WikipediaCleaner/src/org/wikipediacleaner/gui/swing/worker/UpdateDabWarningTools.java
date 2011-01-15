@@ -211,15 +211,21 @@ public class UpdateDabWarningTools {
         return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
       }
 
+      // If talk page has a template linking to the todo subpage, the dab warning must be on the todo subpage
+      PageElementTemplate templateTodoLink = getExistingTemplateTodoLink(talkPage, talkPage.getContents());
+      if (templateTodoLink != null) {
+        return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
+      }
+
       // If talk page has a link to the todo subpage, the disambiguation warning must be on the todo subpage
-      api.retrieveLinks(wikipedia, talkPage, talkPage.getNamespace());
+      /*api.retrieveLinks(wikipedia, talkPage, talkPage.getNamespace());
       if (talkPage.getLinks() != null) {
         for (Page link : talkPage.getLinks()) {
           if (Page.areSameTitle(link.getTitle(), todoSubpage.getTitle())) {
             return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
           }
         }
-      }
+      }*/
     }
 
     return manageDabWarningOnTalkPage(page, pageRevId, text, talkPage);
@@ -575,18 +581,9 @@ public class UpdateDabWarningTools {
 
     // If template is missing, verify that a link to the todo subpage exists
     if (templateTodo == null) {
-      PageElementTemplate templateTodoLink = null;
-      if (wikipedia.getTodoLinkTemplates() != null) {
-        for (String todoLink : wikipedia.getTodoLinkTemplates()) {
-          PageElementTemplate templateTmp = PageContents.findNextTemplate(
-              talkPage, contents, todoLink, 0);
-          if (templateTmp != null) {
-            templateTodoLink = templateTmp;
-          }
-        }
-      }
 
       // If link exists, nothing more to do
+      PageElementTemplate templateTodoLink = getExistingTemplateTodoLink(talkPage, contents);
       if (templateTodoLink != null) {
         return false;
       }
@@ -807,6 +804,24 @@ public class UpdateDabWarningTools {
     return dabLinks;
   }
 
+  /**
+   * @param talkPage Talk page
+   * @param contents Talk page contents.
+   * @return Template containing a list to the todo subpage.
+   */
+  private PageElementTemplate getExistingTemplateTodoLink(Page talkPage, String contents) {
+    PageElementTemplate templateTodoLink = null;
+    if (wikipedia.getTodoLinkTemplates() != null) {
+      for (String todoLink : wikipedia.getTodoLinkTemplates()) {
+        PageElementTemplate templateTmp = PageContents.findNextTemplate(
+            talkPage, contents, todoLink, 0);
+        if (templateTmp != null) {
+          templateTodoLink = templateTmp;
+        }
+      }
+    }
+    return templateTodoLink;
+  }
   /**
    * @param dabLinks Links to dab pages.
    * @return Comment.
