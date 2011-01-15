@@ -21,6 +21,8 @@ package org.wikipediacleaner.gui.swing.worker;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
@@ -117,9 +119,25 @@ public class UpdateDabWarningWorker extends BasicWorker {
         }
 
         // Update disambiguation warning
-        count += tools.updateDabWarning(sublist);
-        if (shouldStop()) {
-          return Integer.valueOf(count);
+        boolean finish = false;
+        while (!finish) {
+          finish = true;
+          try {
+            count += tools.updateDabWarning(sublist);
+          } catch (APIException e) {
+            if (getWindow() != null) {
+              int answer = getWindow().displayYesNoWarning(GT._(
+                  "An error occured when updating disambiguation warnings. Do you want to continue ?\n\n" +
+                  "Error: {0}", e.getMessage()));
+              if (answer != JOptionPane.YES_OPTION) {
+                return e;
+              }
+              finish = false;
+            }
+          }
+          if (shouldStop()) {
+            return Integer.valueOf(count);
+          }
         }
 
         if (count > lastCount) {
