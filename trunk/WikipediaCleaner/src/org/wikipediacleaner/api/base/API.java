@@ -89,11 +89,14 @@ public interface API {
       boolean         stream) throws APIException;
 
   /**
+   * Retrieves random pages.
+   * 
    * @param wikipedia Wikipedia.
-   * @return The title of a random page.
+   * @param count Number of random pages.
    * @throws APIException
    */
-  public String getRandomPage(EnumWikipedia wikipedia) throws APIException;
+  public List<Page> getRandomPages(
+      EnumWikipedia wikipedia, int count) throws APIException;
 
   /**
    * Retrieves the contents of <code>page</code>.

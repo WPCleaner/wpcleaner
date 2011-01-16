@@ -19,12 +19,8 @@
 package org.wikipediacleaner.api.impl;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -297,37 +293,41 @@ public class MediaWikiAPI implements API {
   }
 
   /**
+   * Retrieves random pages.
+   * 
    * @param wikipedia Wikipedia.
-   * @return The title of a random page.
+   * @param count Number of random pages.
    * @throws APIException
    */
-  //TODO: Use api.php: action=query&list=random
-  public String getRandomPage(EnumWikipedia wikipedia) throws APIException {
-    BufferedReader in = null;
+  public List<Page> getRandomPages(
+      EnumWikipedia wikipedia, int count) throws APIException {
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    properties.put("list", "random");
+    properties.put("rnlimit", Integer.toString(count));
+    properties.put("rnnamespace", Integer.toString(Namespace.MAIN));
+    List<Page> pages = new ArrayList<Page>(count);
     try {
-      String url = wikipedia.getWikiURL() + "?title=Special:Random";
-      URLConnection connection = new URL(url).openConnection();
-      in = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-      String line = null;
-      while ((line = in.readLine()) != null) {
-        if (line.indexOf("wgTitle") != -1) {
-          int x = line.indexOf("\"") + 1;
-          return line.substring(x, line.indexOf('\"', x)).replaceAll("\\\\'", "'");
-        }
+      XPath xpa = XPath.newInstance("/api/query/random/page");
+      Element root = getRoot(wikipedia, properties, MAX_ATTEMPTS);
+      List results = xpa.selectNodes(root);
+      Iterator iter = results.iterator();
+      XPath xpaPageId = XPath.newInstance("./@id");
+      XPath xpaNs = XPath.newInstance("./@ns");
+      XPath xpaTitle = XPath.newInstance("./@title");
+      while (iter.hasNext()) {
+        Element currentNode = (Element) iter.next();
+        Page page = DataManager.getPage(
+            wikipedia, xpaTitle.valueOf(currentNode), null, null);
+        page.setNamespace(xpaNs.valueOf(currentNode));
+        page.setPageId(xpaPageId.valueOf(currentNode));
+        pages.add(page);
       }
-    } catch (IOException e) {
-      log.error("Couldn't get random page", e);
-      throw new APIException("Error getting random page");
-    } finally {
-      if (in != null) {
-        try {
-          in.close();
-        } catch (IOException e) {
-          log.error("Error closing Reader", e);
-        }
-      }
+    } catch (JDOMException e) {
+      log.error("Error random pages", e);
+      throw new APIException("Error parsing XML result", e);
     }
-    return null;
+    Collections.sort(pages);
+    return pages;
   }
 
   /**
@@ -964,7 +964,7 @@ public class MediaWikiAPI implements API {
               properties.put("cmcontinue", xpaCmContinue.valueOf(currentNode));
             }
           } catch (JDOMException e) {
-            log.error("Error backlinks for category " + category, e);
+            log.error("Error for category members " + category, e);
             throw new APIException("Error parsing XML result", e);
           }
         } while (cmcontinue);

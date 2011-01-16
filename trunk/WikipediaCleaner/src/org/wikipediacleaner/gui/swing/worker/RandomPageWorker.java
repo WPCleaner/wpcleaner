@@ -18,12 +18,15 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.util.List;
+
 import javax.swing.text.JTextComponent;
 
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -54,8 +57,12 @@ public class RandomPageWorker extends BasicWorker {
       setText(GT._("Retrieving MediaWiki API"));
       API api = APIFactory.getAPI();
       setText(GT._("Getting random page"));
-      String title = api.getRandomPage(getWikipedia());
-      text.setText(title);
+      List<Page> pages = api.getRandomPages(getWikipedia(), 1);
+      if (pages.size() > 0) {
+        text.setText(pages.get(0).getTitle());
+      } else {
+        text.setText("");
+      }
     } catch (APIException e) {
       return e;
     }
