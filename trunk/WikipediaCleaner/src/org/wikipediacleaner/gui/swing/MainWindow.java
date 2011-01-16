@@ -76,7 +76,7 @@ import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.worker.PageListWorker;
 import org.wikipediacleaner.gui.swing.worker.EmbeddedInWorker;
 import org.wikipediacleaner.gui.swing.worker.RandomPageWorker;
-import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningTools;
+import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -93,6 +93,7 @@ public class MainWindow
 
   private final static String ACTION_ABOUT           = "ABOUT";
   private final static String ACTION_BOT_TOOLS       = "BOT TOOLS";
+  private final static String ACTION_CAT_MEMBERS     = "CAT_MEMBERS";
   private final static String ACTION_CHECK_WIKI      = "CHECK WIKI";
   private final static String ACTION_CURRENT_LIST    = "CURRENT LIST";
   private final static String ACTION_DEMO            = "DEMO";
@@ -140,6 +141,7 @@ public class MainWindow
   private JButton buttonFullAnalysis;
   private JButton buttonDisambiguation;
   private JButton buttonInternalLinks;
+  private JButton buttonCategoryMembers;
   private JButton buttonUpdateDabWarning;
   private JButton buttonRandomPage;
 
@@ -240,6 +242,7 @@ public class MainWindow
     buttonFullAnalysis.setEnabled(logged);
     buttonDisambiguation.setEnabled(logged);
     buttonInternalLinks.setEnabled(logged);
+    buttonCategoryMembers.setEnabled(logged);
     buttonUpdateDabWarning.setEnabled(logged);
     buttonRandomPage.setEnabled(logged);
   }
@@ -528,6 +531,13 @@ public class MainWindow
     panel.add(buttonInternalLinks, constraints);
     constraints.gridy++;
 
+    // Category members
+    buttonCategoryMembers = Utilities.createJButton(GT._("Category members"));
+    buttonCategoryMembers.setActionCommand(ACTION_CAT_MEMBERS);
+    buttonCategoryMembers.addActionListener(this);
+    panel.add(buttonCategoryMembers, constraints);
+    constraints.gridy++;
+
     // Update disambiguation warning
     buttonUpdateDabWarning = Utilities.createJButton(GT._("Update disambiguation warning"));
     buttonUpdateDabWarning.setActionCommand(ACTION_UPDATE_DAB);
@@ -675,6 +685,8 @@ public class MainWindow
       actionDisambiguation();
     } else if (ACTION_INTERNAL_LINKS.equals(e.getActionCommand())) {
       actionInternalLinks();
+    } else if (ACTION_CAT_MEMBERS.equals(e.getActionCommand())) {
+      actionCategoryMembers();
     } else if (ACTION_CURRENT_LIST.equals(e.getActionCommand())) {
       actionCurrentList();
     } else if (ACTION_RANDOM_PAGE.equals(e.getActionCommand())) {
@@ -938,13 +950,10 @@ public class MainWindow
           textPagename);
       return;
     }
-    try {
-      UpdateDabWarningTools tools = new UpdateDabWarningTools(getWikipedia(), this);
-      tools.updateDabWarning(Collections.singletonList(
-          DataManager.getPage(getWikipedia(), textPagename.getText(), null, null)));
-    } catch (APIException e) {
-      // TODO
-    }
+    UpdateDabWarningWorker worker = new UpdateDabWarningWorker(
+        getWikipedia(), this,
+        Collections.singletonList(DataManager.getPage(getWikipedia(), textPagename.getText(), null, null)));
+    worker.start();
   }
 
   /**
@@ -964,8 +973,31 @@ public class MainWindow
     config.save();
     new PageListWorker(
         getWikipedia(), this,
-        Collections.singletonList(textPagename.getText().trim()), true, false,
+        Collections.singletonList(textPagename.getText().trim()),
+        PageListWorker.Mode.INTERNAL_LINKS, false,
         GT._("Internal links in {0}", textPagename.getText().trim())).start();
+  }
+
+  /**
+   * Action called when Category Members button is pressed.
+   */
+  private void actionCategoryMembers() {
+    if ((textPagename == null) ||
+        (textPagename.getText() == null) ||
+        ("".equals(textPagename.getText().trim()))) {
+      displayWarning(
+          GT._("You must input a page name for retrieving the list of category members"),
+          textPagename);
+      return;
+    }
+    Configuration config = Configuration.getConfiguration();
+    config.setString(Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
+    config.save();
+    new PageListWorker(
+        getWikipedia(), this,
+        Collections.singletonList(textPagename.getText().trim()),
+        PageListWorker.Mode.CATEGORY_MEMBERS, false,
+        GT._("Category members of {0}", textPagename.getText().trim())).start();
   }
 
   /**
@@ -991,7 +1023,8 @@ public class MainWindow
     }
     new PageListWorker(
         wikipedia, this,
-        wikipedia.getDisambiguationList(), true, false,
+        wikipedia.getDisambiguationList(),
+        PageListWorker.Mode.INTERNAL_LINKS, false,
         GT._("Current disambiguation list")).start();
   }
 
@@ -1067,7 +1100,7 @@ public class MainWindow
     }
     new PageListWorker(
         wikipedia, this,
-        pageNames, false, true,
+        pageNames, PageListWorker.Mode.DIRECT, true,
         GT._("Watched pages")).start();
   }
 

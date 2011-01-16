@@ -49,6 +49,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateInfoWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -65,6 +66,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   private final static String ACTION_REMOVE         = "REMOVE";
   private final static String ACTION_SET_COMMENTS   = "SET COMMENTS";
   private final static String ACTION_UPDATE         = "UPDATE INFO";
+  private final static String ACTION_UPDATE_DAB     = "UPDATE DAB WARNING";
 
   String title;
   List<Page> pages;
@@ -77,6 +79,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   
   private JButton buttonFullAnalysis;
   private JButton buttonDisambiguation;
+  private JButton buttonUpdateDabWarning;
   private JButton buttonRemove;
   private JButton buttonUpdateInfo;
   private JButton buttonComments;
@@ -200,6 +203,15 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     panel.add(buttonDisambiguation, constraints);
     constraints.gridy++;
 
+    // Update dab warning button
+    buttonUpdateDabWarning = Utilities.createJButton(GT._("Update disambiguation warning"));
+    buttonUpdateDabWarning.setActionCommand(ACTION_UPDATE_DAB);
+    buttonUpdateDabWarning.addActionListener(this);
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.weightx = 1;
+    panel.add(buttonUpdateDabWarning, constraints);
+    constraints.gridy++;
+
     // Update information button
     buttonUpdateInfo = Utilities.createJButton(GT._("&Update page information"));
     buttonUpdateInfo.setActionCommand(ACTION_UPDATE);
@@ -256,6 +268,8 @@ public class PageListWindow extends BasicWindow implements ActionListener {
       actionFullAnalysis();
     } else if (ACTION_DISAMBIGUATION.equals(e.getActionCommand())) {
       actionDisambiguation();
+    } else if (ACTION_UPDATE_DAB.equals(e.getActionCommand())) {
+      actionUpdateDabWarning();
     } else if (ACTION_REMOVE.equals(e.getActionCommand())) {
       actionRemove();
     } else if (ACTION_SET_COMMENTS.equals(e.getActionCommand())) {
@@ -285,6 +299,18 @@ public class PageListWindow extends BasicWindow implements ActionListener {
         getParentComponent(),
         getSelectedPages(),
         getWikipedia());
+  }
+
+  /**
+   * Action called when Update Dab Warning button is pressed.
+   */
+  private void actionUpdateDabWarning() {
+    List<Page> tmpPages = new ArrayList<Page>();
+    for (int i = 0; i < getSelectedPages().length; i++) {
+      tmpPages.add(getSelectedPages()[i]);
+    }
+    UpdateDabWarningWorker worker = new UpdateDabWarningWorker(getWikipedia(), this, tmpPages);
+    worker.start();
   }
 
   /**

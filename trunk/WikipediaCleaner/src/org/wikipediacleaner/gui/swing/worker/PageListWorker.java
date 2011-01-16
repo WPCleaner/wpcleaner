@@ -38,8 +38,14 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
  */
 public class PageListWorker extends BasicWorker {
 
+  public static enum Mode {
+    DIRECT,
+    INTERNAL_LINKS,
+    CATEGORY_MEMBERS
+  }
+
   private final List<String> pageNames;
-  private final boolean searchLinks;
+  private final Mode mode;
   private final boolean watchList;
   private final List<Page> pageList;
   private final String message;
@@ -49,16 +55,17 @@ public class PageListWorker extends BasicWorker {
    * @param window Window.
    * @param pageNames List of pages.
    * @param searchLinks If true, the list of pages is used to find the internal links.
+   * @param searchCategory If true, the list of pages is used to find category members.
    * @param message Window title.
    */
   public PageListWorker(
       EnumWikipedia wikipedia, BasicWindow window,
-      List<String> pageNames, boolean searchLinks,
+      List<String> pageNames, Mode mode,
       boolean watchList, String message) {
     super(wikipedia, window);
     this.pageList = new ArrayList<Page>();
     this.pageNames = pageNames;
-    this.searchLinks = searchLinks;
+    this.mode = mode;
     this.watchList = watchList;
     this.message = message;
   }
@@ -84,7 +91,7 @@ public class PageListWorker extends BasicWorker {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       List<Page> pages = new ArrayList<Page>();
-      if (searchLinks) {
+      if (mode == Mode.INTERNAL_LINKS) {
         for (String dabList : pageNames) {
           Page page = DataManager.getPage(getWikipedia(), dabList, null, null);
           mw.retrieveAllLinks(getWikipedia(), page, null, null, true);
@@ -95,6 +102,18 @@ public class PageListWorker extends BasicWorker {
                 (link.isInMainNamespace()) &&
                 (!pages.contains(link))) {
               pages.add(link);
+            }
+          }
+        }
+      } else if (mode == Mode.CATEGORY_MEMBERS) {
+        final API api = APIFactory.getAPI();
+        for (String pageName : pageNames) {
+          List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0);
+          if (tmpPages != null) {
+            for (Page tmpPage : tmpPages) {
+              if (!pages.contains(tmpPage)) {
+                pages.add(tmpPage);
+              }
             }
           }
         }
