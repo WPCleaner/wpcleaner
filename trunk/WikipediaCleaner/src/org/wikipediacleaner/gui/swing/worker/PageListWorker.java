@@ -54,8 +54,7 @@ public class PageListWorker extends BasicWorker {
    * @param wikipedia Wikipedia.
    * @param window Window.
    * @param pageNames List of pages.
-   * @param searchLinks If true, the list of pages is used to find the internal links.
-   * @param searchCategory If true, the list of pages is used to find category members.
+   * @param mode Mode for determining the list of pages.
    * @param message Window title.
    */
   public PageListWorker(
