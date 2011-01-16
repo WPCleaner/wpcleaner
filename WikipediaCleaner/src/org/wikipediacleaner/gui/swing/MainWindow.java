@@ -36,6 +36,7 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
@@ -110,6 +111,7 @@ public class MainWindow
   private final static String ACTION_OTHER_LANGUAGE  = "OTHER LANGUAGE";
   private final static String ACTION_OTHER_WIKIPEDIA = "OTHER WIKIPEDIA";
   private final static String ACTION_RANDOM_PAGE     = "RANDOM PAGE";
+  private final static String ACTION_RANDOM_PAGES    = "RANDOM PAGES";
   private final static String ACTION_SAVE_PASSWORD   = "SAVE PASSWORD";
   private final static String ACTION_UPDATE_DAB      = "UPDATE DAB WARNING";
   private final static String ACTION_WATCHED_PAGES   = "WATCHED PAGES";
@@ -135,6 +137,7 @@ public class MainWindow
   private JButton buttonCheckWiki;
   private JButton buttonHelpRequested;
   private JButton buttonWatchedPages;
+  private JButton buttonRandomPages;
   private JButton buttonBotTools;
 
   JTextField textPagename;
@@ -201,12 +204,14 @@ public class MainWindow
     constraints.weighty = 1;
     panel.add(createLoginComponents(), constraints);
     constraints.gridx++;
-    panel.add(createWorkComponents(), constraints);
+    panel.add(createProjectsComponents(), constraints);
+    constraints.gridx++;
+    panel.add(createPageComponents(), constraints);
     constraints.gridy++;
 
     // Message components
     if ((Version.MESSAGE != null) && !Version.MESSAGE.equals("")) {
-      constraints.gridwidth = 2;
+      constraints.gridwidth = 3;
       constraints.gridx = 0;
       constraints.weighty = 0;
       panel.add(createMessageComponents(), constraints);
@@ -236,6 +241,7 @@ public class MainWindow
     buttonCheckWiki.setEnabled(logged);
     buttonHelpRequested.setEnabled(logged);
     buttonWatchedPages.setEnabled(logged);
+    buttonRandomPages.setEnabled(logged);
     buttonBotTools.setEnabled(userLogged);
 
     textPagename.setEnabled(logged);
@@ -518,7 +524,9 @@ public class MainWindow
     constraints.gridy++;
 
     // Disambiguation button
-    buttonDisambiguation = Utilities.createJButton(GT._("&Disambiguation"));
+    buttonDisambiguation = Utilities.createJButton(
+        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        GT._("&Disambiguation"), true);
     buttonDisambiguation.setActionCommand(ACTION_DISAMBIGUATION);
     buttonDisambiguation.addActionListener(this);
     panel.add(buttonDisambiguation, constraints);
@@ -532,17 +540,30 @@ public class MainWindow
     constraints.gridy++;
 
     // Category members
-    buttonCategoryMembers = Utilities.createJButton(GT._("Category members"));
+    buttonCategoryMembers = Utilities.createJButton(
+        "commons-nuvola-apps-kpager.png", EnumImageSize.NORMAL,
+        GT._("Category members"), true);
     buttonCategoryMembers.setActionCommand(ACTION_CAT_MEMBERS);
     buttonCategoryMembers.addActionListener(this);
     panel.add(buttonCategoryMembers, constraints);
     constraints.gridy++;
 
     // Update disambiguation warning
-    buttonUpdateDabWarning = Utilities.createJButton(GT._("Update disambiguation warning"));
+    buttonUpdateDabWarning = Utilities.createJButton(
+        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        GT._("Update disambiguation warning"), true);
     buttonUpdateDabWarning.setActionCommand(ACTION_UPDATE_DAB);
     buttonUpdateDabWarning.addActionListener(this);
     panel.add(buttonUpdateDabWarning, constraints);
+    constraints.gridy++;
+
+    // Empty panel
+    JPanel emptyPanel = new JPanel();
+    emptyPanel.setMinimumSize(new Dimension(0, 0));
+    emptyPanel.setPreferredSize(new Dimension(0, 0));
+    constraints.fill = GridBagConstraints.BOTH;
+    constraints.weighty = 1;
+    panel.add(emptyPanel, constraints);
     constraints.gridy++;
 
     return panel;
@@ -603,6 +624,15 @@ public class MainWindow
     panel.add(buttonWatchedPages, constraints);
     constraints.gridy++;
 
+    // Random pages button
+    buttonRandomPages = Utilities.createJButton(
+        "commons-nuvola-apps-atlantik.png", EnumImageSize.NORMAL,
+        GT._("Random pages"), true);
+    buttonRandomPages.setActionCommand(ACTION_RANDOM_PAGES);
+    buttonRandomPages.addActionListener(this);
+    panel.add(buttonRandomPages, constraints);
+    constraints.gridy++;
+
     // Bot tools button
     buttonBotTools = Utilities.createJButton(
         "commons-nuvola-apps-kcmsystem.png", EnumImageSize.NORMAL,
@@ -610,36 +640,6 @@ public class MainWindow
     buttonBotTools.setActionCommand(ACTION_BOT_TOOLS);
     buttonBotTools.addActionListener(this);
     panel.add(buttonBotTools, constraints);
-    constraints.gridy++;
-
-    return panel;
-  }
-
-  /**
-   * @return Work components.
-   */
-  private Component createWorkComponents() {
-    JPanel panel = new JPanel(new GridBagLayout());
-
-    // Initialize constraints
-    GridBagConstraints constraints = new GridBagConstraints();
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridheight = 1;
-    constraints.gridwidth = 1;
-    constraints.gridx = 0;
-    constraints.gridy = 0;
-    constraints.insets = new Insets(0, 0, 0, 0);
-    constraints.ipadx = 0;
-    constraints.ipady = 0;
-    constraints.weightx = 1;
-    constraints.weighty = 0;
-
-    // Projects components
-    panel.add(createProjectsComponents(), constraints);
-    constraints.gridy++;
-
-    // Page components
-    panel.add(createPageComponents(), constraints);
     constraints.gridy++;
 
     // Empty panel
@@ -705,6 +705,8 @@ public class MainWindow
       actionHelpRequestedOn();
     } else if (ACTION_CHECK_WIKI.equals(e.getActionCommand())) {
       actionCheckWiki();
+    } else if (ACTION_RANDOM_PAGES.equals(e.getActionCommand())) {
+      actionRandomPages();
     } else if (ACTION_BOT_TOOLS.equals(e.getActionCommand())) {
       actionBotTools();
     } else if (ACTION_UPDATE_DAB.equals(e.getActionCommand())) {
@@ -1102,6 +1104,39 @@ public class MainWindow
         wikipedia, this,
         pageNames, PageListWorker.Mode.DIRECT, true,
         GT._("Watched pages")).start();
+  }
+
+  /**
+   * Action called when Random Pages is pressed.
+   */
+  private void actionRandomPages() {
+    String answer = askForValue(
+        GT._("How many pages do you want?"),
+        "100", null);
+    if (answer == null) {
+      return;
+    }
+    int count = 1;
+    try {
+      count = Integer.parseInt(answer);
+    } catch (NumberFormatException e) {
+      return;
+    }
+    API api = APIFactory.getAPI();
+    try {
+      List<Page> pages = api.getRandomPages(getWikipedia(), count);
+      List<String> pageNames = new ArrayList<String>(pages.size());
+      for (int i = 0; i < pages.size(); i++) {
+        pageNames.add(pages.get(i).getTitle());
+      }
+      new PageListWorker(
+          getWikipedia(), this, pageNames,
+          PageListWorker.Mode.DIRECT, false,
+          GT._("Random pages")).start();
+    } catch (APIException e) {
+      displayError(e);
+      return;
+    }
   }
 
   /**
