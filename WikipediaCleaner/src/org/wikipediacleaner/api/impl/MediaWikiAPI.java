@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.httpclient.Header;
@@ -891,6 +892,92 @@ public class MediaWikiAPI implements API {
    * Retrieves the pages in which <code>page</code> is embedded.
    * 
    * @param wikipedia Wikipedia.
+   * @param category Category.
+   * @param depth Depth of lookup for sub-categories.
+   * @throws APIException
+   */
+  public List<Page> retrieveCategoryMembers(
+      EnumWikipedia wikipedia, String category, int depth) throws APIException {
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    properties.put("list", "categorymembers");
+    properties.put("cmlimit", "max");
+    List<Page> categoryMembers = new ArrayList<Page>();
+    List<String> categoryAnalyzed = new ArrayList<String>();
+    Map<String, Integer> categories = new HashMap<String, Integer>();
+    categories.put(category, Integer.valueOf(0));
+    while (!categories.isEmpty()) {
+
+      // Find category to analyze
+      Entry<String, Integer> entry = categories.entrySet().iterator().next();
+      String categoryName = entry.getKey();
+      categories.remove(categoryName);
+      int colonIndex = categoryName.indexOf(':');
+      if (colonIndex < 0) {
+        categoryName = Namespace.getTitle(Namespace.CATEGORY, wikipedia.getNamespaces(), categoryName);
+      } else {
+        Namespace namespaceCategory = Namespace.getNamespace(Namespace.CATEGORY, wikipedia.getNamespaces());
+        if (!namespaceCategory.isPossibleName(categoryName.substring(0, colonIndex))) {
+          categoryName = Namespace.getTitle(Namespace.CATEGORY, wikipedia.getNamespaces(), categoryName);
+        }
+      }
+
+      // Analyze category
+      if (!categoryAnalyzed.contains(categoryName)) {
+        categoryAnalyzed.add(categoryName);
+        properties.put("cmtitle", categoryName);
+        properties.remove("cmcontinue");
+        boolean cmcontinue = false;
+        do {
+          try {
+            XPath xpa = XPath.newInstance("/api/query/categorymembers/cm");
+            Element root = getRoot(wikipedia, properties, MAX_ATTEMPTS);
+            List results = xpa.selectNodes(root);
+            Iterator iter = results.iterator();
+            XPath xpaPageId = XPath.newInstance("./@pageid");
+            XPath xpaNs = XPath.newInstance("./@ns");
+            XPath xpaTitle = XPath.newInstance("./@title");
+            while (iter.hasNext()) {
+              Element currentNode = (Element) iter.next();
+              Page page = DataManager.getPage(
+                  wikipedia, xpaTitle.valueOf(currentNode), null, null);
+              page.setNamespace(xpaNs.valueOf(currentNode));
+              page.setPageId(xpaPageId.valueOf(currentNode));
+              if ((page.getNamespace() != null) &&
+                  (page.getNamespace().intValue() == Namespace.CATEGORY)) {
+                if (entry.getValue().intValue() < depth) {
+                  categories.put(page.getTitle(), Integer.valueOf(entry.getValue().intValue() + 1));
+                }
+              } else {
+                if (!categoryMembers.contains(page)) {
+                  categoryMembers.add(page);
+                }
+              }
+            }
+            XPath xpaContinue = XPath.newInstance("/api/query-continue/categorymembers");
+            XPath xpaCmContinue = XPath.newInstance("./@cmcontinue");
+            results = xpaContinue.selectNodes(root);
+            iter = results.iterator();
+            cmcontinue = false;
+            while (iter.hasNext()) {
+              Element currentNode = (Element) iter.next();
+              cmcontinue = true;
+              properties.put("cmcontinue", xpaCmContinue.valueOf(currentNode));
+            }
+          } catch (JDOMException e) {
+            log.error("Error backlinks for category " + category, e);
+            throw new APIException("Error parsing XML result", e);
+          }
+        } while (cmcontinue);
+      }
+    }
+    Collections.sort(categoryMembers);
+    return categoryMembers;
+  }
+
+  /**
+   * Retrieves the pages in which <code>page</code> is embedded.
+   * 
+   * @param wikipedia Wikipedia.
    * @param page Page.
    * @param namespace Limit to namespace (optional).
    * @throws APIException
@@ -934,7 +1021,6 @@ public class MediaWikiAPI implements API {
           //properties.remove("eititle");
           eicontinue = true;
           properties.put("eicontinue", xpaEiContinue.valueOf(currentNode));
-          
         }
       } catch (JDOMException e) {
         log.error("Error backlinks for page " + page.getTitle(), e);

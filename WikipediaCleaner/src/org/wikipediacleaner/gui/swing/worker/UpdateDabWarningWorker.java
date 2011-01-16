@@ -41,6 +41,8 @@ import org.wikipediacleaner.i18n.GT;
 public class UpdateDabWarningWorker extends BasicWorker {
 
   private final String start;
+  private final List<Page> dabWarningPages;
+  private final boolean useList;
 
   /**
    * @param wikipedia Wikipedia.
@@ -50,6 +52,20 @@ public class UpdateDabWarningWorker extends BasicWorker {
   public UpdateDabWarningWorker(EnumWikipedia wikipedia, BasicWindow window, String start) {
     super(wikipedia, window);
     this.start = (start != null) ? start.trim() : "";
+    this.dabWarningPages = new ArrayList<Page>();
+    this.useList = false;
+  }
+
+  /**
+   * @param wikipedia Wikipedia.
+   * @param window Window.
+   * @param pages Pages to analyze.
+   */
+  public UpdateDabWarningWorker(EnumWikipedia wikipedia, BasicWindow window, List<Page> pages) {
+    super(wikipedia, window);
+    this.start = "";
+    this.dabWarningPages = pages;
+    this.useList = true;
   }
 
   /* (non-Javadoc)
@@ -65,37 +81,38 @@ public class UpdateDabWarningWorker extends BasicWorker {
     int lastCount = count;
 
     try {
-      // Retrieve talk pages including a disambiguation warning
-      String dabWarningTemplateName = wikipedia.getDisambiguationWarningTemplate();
-      setText(GT._("Retrieving talk pages including {0}", "{{" + dabWarningTemplateName + "}}"));
-      Page dabWarningTemplate = DataManager.getPage(
-          wikipedia,
-          Namespace.getTitle(Namespace.TEMPLATE, wikipedia.getNamespaces(), dabWarningTemplateName),
-          null, null);
-      api.retrieveEmbeddedIn(wikipedia, dabWarningTemplate, wikipedia.getEncyclopedicTalkNamespaces());
-
-      // Construct list of articles with disambiguation warning
-      setText(GT._("Constructing list of articles with disambiguation warning"));
-      List<Page> dabWarningTalkPages = dabWarningTemplate.getEmbeddedIn();
-      List<Page> dabWarningPages = new ArrayList<Page>();
-      for (Page dabWarningPage : dabWarningTalkPages) {
-        String title = dabWarningPage.getTitle();
-        if (title.endsWith("/" + wikipedia.getTodoSubpage())) {
-          title = title.substring(0, title.length() - 1 - wikipedia.getTodoSubpage().length());
-        }
-        int colonIndex = title.indexOf(':');
-        if (colonIndex >= 0) {
-          for (Integer namespace : wikipedia.getEncyclopedicTalkNamespaces()) {
-            Namespace namespaceTalk = Namespace.getNamespace(namespace, wikipedia.getNamespaces());
-            if ((namespaceTalk != null) &&
-                (namespaceTalk.isPossibleName(title.substring(0, colonIndex)))) {
-              String tmpTitle = title.substring(colonIndex + 1);
-              if (namespace != Namespace.MAIN_TALK) {
-                tmpTitle = Namespace.getTitle(namespace - 1, wikipedia.getNamespaces(), tmpTitle);
-              }
-              Page page = DataManager.getPage(wikipedia, tmpTitle, null, null);
-              if (!dabWarningPages.contains(page)) {
-                dabWarningPages.add(page);
+      if (!useList) {
+        // Retrieve talk pages including a disambiguation warning
+        String dabWarningTemplateName = wikipedia.getDisambiguationWarningTemplate();
+        setText(GT._("Retrieving talk pages including {0}", "{{" + dabWarningTemplateName + "}}"));
+        Page dabWarningTemplate = DataManager.getPage(
+            wikipedia,
+            Namespace.getTitle(Namespace.TEMPLATE, wikipedia.getNamespaces(), dabWarningTemplateName),
+            null, null);
+        api.retrieveEmbeddedIn(wikipedia, dabWarningTemplate, wikipedia.getEncyclopedicTalkNamespaces());
+  
+        // Construct list of articles with disambiguation warning
+        setText(GT._("Constructing list of articles with disambiguation warning"));
+        List<Page> dabWarningTalkPages = dabWarningTemplate.getEmbeddedIn();
+        for (Page dabWarningPage : dabWarningTalkPages) {
+          String title = dabWarningPage.getTitle();
+          if (title.endsWith("/" + wikipedia.getTodoSubpage())) {
+            title = title.substring(0, title.length() - 1 - wikipedia.getTodoSubpage().length());
+          }
+          int colonIndex = title.indexOf(':');
+          if (colonIndex >= 0) {
+            for (Integer namespace : wikipedia.getEncyclopedicTalkNamespaces()) {
+              Namespace namespaceTalk = Namespace.getNamespace(namespace, wikipedia.getNamespaces());
+              if ((namespaceTalk != null) &&
+                  (namespaceTalk.isPossibleName(title.substring(0, colonIndex)))) {
+                String tmpTitle = title.substring(colonIndex + 1);
+                if (namespace != Namespace.MAIN_TALK) {
+                  tmpTitle = Namespace.getTitle(namespace - 1, wikipedia.getNamespaces(), tmpTitle);
+                }
+                Page page = DataManager.getPage(wikipedia, tmpTitle, null, null);
+                if (!dabWarningPages.contains(page)) {
+                  dabWarningPages.add(page);
+                }
               }
             }
           }

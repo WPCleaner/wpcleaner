@@ -241,6 +241,17 @@ public interface API {
    * Retrieves the pages in which <code>page</code> is embedded.
    * 
    * @param wikipedia Wikipedia.
+   * @param category Category.
+   * @param depth Depth of lookup for sub-categories.
+   * @throws APIException
+   */
+  public List<Page> retrieveCategoryMembers(
+      EnumWikipedia wikipedia, String category, int depth) throws APIException;
+
+  /**
+   * Retrieves the pages in which <code>page</code> is embedded.
+   * 
+   * @param wikipedia Wikipedia.
    * @param page Page.
    * @param namespace Limit to namespace (optional).
    * @throws APIException
