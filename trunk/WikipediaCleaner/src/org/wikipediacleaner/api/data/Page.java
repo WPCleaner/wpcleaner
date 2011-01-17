@@ -870,7 +870,9 @@ public class Page implements Comparable<Page> {
               if (wiktionary == null) {
                 wiktionary = new ArrayList<String>();
               }
-              wiktionary.add(param.getValue());
+              if (!wiktionary.contains(param.getValue())) {
+                wiktionary.add(param.getValue());
+              }
             }
           }
         }
