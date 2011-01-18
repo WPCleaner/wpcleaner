@@ -550,7 +550,7 @@ public class MainWindow
 
     // Update disambiguation warning
     buttonUpdateDabWarning = Utilities.createJButton(
-        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        "gnome-dialog-warning.png", EnumImageSize.NORMAL,
         GT._("Update disambiguation warning"), true);
     buttonUpdateDabWarning.setActionCommand(ACTION_UPDATE_DAB);
     buttonUpdateDabWarning.addActionListener(this);
