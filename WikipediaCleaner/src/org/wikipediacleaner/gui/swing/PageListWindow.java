@@ -52,6 +52,7 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateInfoWorker;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -195,7 +196,9 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     constraints.gridy++;
 
     // Disambiguation button
-    buttonDisambiguation = Utilities.createJButton(GT._("&Disambiguation"));
+    buttonDisambiguation = Utilities.createJButton(
+        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        GT._("&Disambiguation"), true);
     buttonDisambiguation.setActionCommand(ACTION_DISAMBIGUATION);
     buttonDisambiguation.addActionListener(this);
     constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -204,7 +207,9 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     constraints.gridy++;
 
     // Update dab warning button
-    buttonUpdateDabWarning = Utilities.createJButton(GT._("Update disambiguation warning"));
+    buttonUpdateDabWarning = Utilities.createJButton(
+        "gnome-dialog-warning.png", EnumImageSize.NORMAL,
+        GT._("Update disambiguation warning"), true);
     buttonUpdateDabWarning.setActionCommand(ACTION_UPDATE_DAB);
     buttonUpdateDabWarning.addActionListener(this);
     constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -232,7 +237,9 @@ public class PageListWindow extends BasicWindow implements ActionListener {
 
     // Add / Remove button
     if (watchList) {
-      buttonRemove = Utilities.createJButton(GT._("&Remove page"));
+      buttonRemove = Utilities.createJButton(
+          "gnome-list-remove.png", EnumImageSize.NORMAL,
+          GT._("&Remove page"), true);
       buttonRemove.setActionCommand(ACTION_REMOVE);
       buttonRemove.addActionListener(this);
       constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -241,7 +248,9 @@ public class PageListWindow extends BasicWindow implements ActionListener {
       panel.add(buttonRemove, constraints);
       constraints.gridx++;
 
-      buttonAdd = Utilities.createJButton(GT._("&Add page"));
+      buttonAdd = Utilities.createJButton(
+          "gnome-list-add.png", EnumImageSize.NORMAL,
+          GT._("&Add page"), true);
       buttonAdd.setActionCommand(ACTION_ADD);
       buttonAdd.addActionListener(this);
       constraints.fill = GridBagConstraints.HORIZONTAL;

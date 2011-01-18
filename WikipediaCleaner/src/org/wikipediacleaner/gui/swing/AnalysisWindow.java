@@ -68,6 +68,7 @@ import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
 import org.wikipediacleaner.gui.swing.component.PageListPopupListener;
 import org.wikipediacleaner.gui.swing.worker.FullAnalysisWorker;
+import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -746,30 +747,17 @@ public class AnalysisWindow extends PageWindow {
           getParentComponent(),
           GT._("You need to define the 'dab_warning_template' property in WikiCleaner configuration."));
     }
-    Map<String, Integer> linkCount = PageContents.countInternalDisambiguationLinks(
-        getWikipedia(), getPage(), getTextContents().getText(), getPage().getLinks());
-    countOccurences(getTextContents().getText(), true);
-    List<String> dabPages = new ArrayList<String>();
-    for (Entry<String, Integer> count : linkCount.entrySet()) {
-      if ((count.getValue() != null) &&
-          (count.getValue().intValue() > 0)) {
-        dabPages.add(count.getKey());
-      }
-    }
-    if (dabPages.isEmpty()) {
+    int answer = Utilities.displayYesNoWarning(
+        getParentComponent(),
+        GT._("Do you want to update the disambiguation warning in talk page ?"));
+    if (answer != JOptionPane.YES_OPTION) {
       return;
     }
-    Collections.sort(dabPages);
-    StringBuilder sb = new StringBuilder();
-    sb.append("{{");
-    sb.append(template);
-    for (String link : dabPages) {
-      sb.append(" | ");
-      sb.append(link);
-    }
-    sb.append(" }}");
-    InformationWindow.createInformationWindow(
-        GT._("Warning for disambiguation links"), sb.toString(), getWikipedia());
+    UpdateDabWarningWorker worker = new UpdateDabWarningWorker(
+        getWikipedia(), this,
+        Collections.singletonList(getPage()),
+        true, true, true);
+    worker.start();
   }
 
   /**

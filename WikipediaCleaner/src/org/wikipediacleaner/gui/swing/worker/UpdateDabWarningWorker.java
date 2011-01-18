@@ -43,6 +43,9 @@ public class UpdateDabWarningWorker extends BasicWorker {
   private final String start;
   private final List<Page> dabWarningPages;
   private final boolean useList;
+  private final boolean contentsAvailable;
+  private final boolean linksAvailable;
+  private final boolean dabInformationAvailable;
 
   /**
    * @param wikipedia Wikipedia.
@@ -54,6 +57,9 @@ public class UpdateDabWarningWorker extends BasicWorker {
     this.start = (start != null) ? start.trim() : "";
     this.dabWarningPages = new ArrayList<Page>();
     this.useList = false;
+    this.contentsAvailable = false;
+    this.linksAvailable = false;
+    this.dabInformationAvailable = false;
   }
 
   /**
@@ -61,11 +67,29 @@ public class UpdateDabWarningWorker extends BasicWorker {
    * @param window Window.
    * @param pages Pages to analyze.
    */
-  public UpdateDabWarningWorker(EnumWikipedia wikipedia, BasicWindow window, List<Page> pages) {
+  public UpdateDabWarningWorker(
+      EnumWikipedia wikipedia, BasicWindow window, List<Page> pages) {
+    this(wikipedia, window, pages, false, false, false);
+  }
+
+  /**
+   * @param wikipedia Wikipedia.
+   * @param window Window.
+   * @param pages Pages to analyze.
+   * @param contentsAvailable True if contents is already available in pages.
+   * @param linksAvailable True if links are already available in pages.
+   * @param dabInformationAvailable True if dab information is already available in pages.
+   */
+  public UpdateDabWarningWorker(
+      EnumWikipedia wikipedia, BasicWindow window, List<Page> pages,
+      boolean contentsAvailable, boolean linksAvailable, boolean dabInformationAvailable) {
     super(wikipedia, window);
     this.start = "";
-    this.dabWarningPages = pages;
+    this.dabWarningPages = new ArrayList<Page>(pages);
     this.useList = true;
+    this.contentsAvailable = contentsAvailable;
+    this.linksAvailable = linksAvailable;
+    this.dabInformationAvailable = dabInformationAvailable;
   }
 
   /* (non-Javadoc)
@@ -140,7 +164,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
         while (!finish) {
           finish = true;
           try {
-            count += tools.updateDabWarning(sublist);
+            count += tools.updateDabWarning(sublist, contentsAvailable, linksAvailable, dabInformationAvailable);
           } catch (APIException e) {
             if (getWindow() != null) {
               int answer = getWindow().displayYesNoWarning(GT._(

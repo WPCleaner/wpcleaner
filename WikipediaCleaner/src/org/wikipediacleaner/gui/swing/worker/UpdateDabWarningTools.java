@@ -100,57 +100,66 @@ public class UpdateDabWarningTools {
    * Update disambiguation warning for a list of pages.
    * 
    * @param pages List of pages.
+   * @param contentsAvailable True if contents is already available in pages.
+   * @param linksAvailable True if links are already available in pages.
+   * @param dabInformationAvailable True if dab information is already available in pages.
    * @return Number of pages updated
    * @throws APIException
    */
-  public int updateDabWarning(List<Page> pages) throws APIException {
+  public int updateDabWarning(
+      List<Page> pages, boolean contentsAvailable,
+      boolean linksAvailable, boolean dabInformationAvailable) throws APIException {
     if ((pages == null) || (pages.isEmpty())) {
       return 0;
     }
     MediaWiki mw = MediaWiki.getMediaWikiAccess(worker);
 
     // Retrieving links in each page
-    for (Page page : pages) {
-      mw.retrieveAllLinks(wikipedia, page, Namespace.MAIN, null, false);
-    }
-    mw.block(true);
-    if (shouldStop()) {
-      return 0;
+    if (!linksAvailable) {
+      for (Page page : pages) {
+        mw.retrieveAllLinks(wikipedia, page, Namespace.MAIN, null, false);
+      }
+      mw.block(true);
+      if (shouldStop()) {
+        return 0;
+      }
     }
 
     // Retrieving disambiguation information in each page
-    List<Page> tmpPages = new ArrayList<Page>();
     boolean hasDisambiguationLink = false;
-    for (Page page : pages) {
-      for (int numLink = 0; numLink < page.getLinks().size(); numLink++) {
-        Page link = page.getLinks().get(numLink);
-        if (dabPages.containsKey(link.getTitle())) {
-          page.getLinks().set(numLink, dabPages.get(link.getTitle()));
-          hasDisambiguationLink = true;
-        } else if (nonDabPages.containsKey(link.getTitle())) {
-          page.getLinks().set(numLink, nonDabPages.get(link.getTitle()));
-        } else {
-          tmpPages.add(link);
+    if (!dabInformationAvailable) {
+      List<Page> tmpPages = new ArrayList<Page>();
+      for (Page page : pages) {
+        for (int numLink = 0; numLink < page.getLinks().size(); numLink++) {
+          Page link = page.getLinks().get(numLink);
+          if (dabPages.containsKey(link.getTitle())) {
+            page.getLinks().set(numLink, dabPages.get(link.getTitle()));
+            hasDisambiguationLink = true;
+          } else if (nonDabPages.containsKey(link.getTitle())) {
+            page.getLinks().set(numLink, nonDabPages.get(link.getTitle()));
+          } else {
+            tmpPages.add(link);
+          }
         }
       }
-    }
-    if (!tmpPages.isEmpty()) {
-      mw.retrieveDisambiguationInformation(wikipedia, tmpPages, null, false, true);
-    }
-    for (Page page : tmpPages) {
-      if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
-        dabPages.put(page.getTitle(), page);
-        hasDisambiguationLink = true;
-      } else {
-        nonDabPages.put(page.getTitle(), page);
+      if (!tmpPages.isEmpty()) {
+        mw.retrieveDisambiguationInformation(wikipedia, tmpPages, null, false, true);
       }
-    }
-    if (shouldStop()) {
-      return 0;
+      for (Page page : tmpPages) {
+        if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
+          dabPages.put(page.getTitle(), page);
+          hasDisambiguationLink = true;
+        } else {
+          nonDabPages.put(page.getTitle(), page);
+        }
+      }
+      if (shouldStop()) {
+        return 0;
+      }
     }
 
     // Retrieving page contents
-    if (hasDisambiguationLink) {
+    if (hasDisambiguationLink && !contentsAvailable) {
       mw.retrieveContents(wikipedia, pages, true, false);
     }
 
