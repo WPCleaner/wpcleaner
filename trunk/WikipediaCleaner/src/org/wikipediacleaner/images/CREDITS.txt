@@ -20,6 +20,8 @@ The following files are available in the "normal" directory:
 - commons-nuvola-apps-kpager.png (Commons - http://commons.wikimedia.org/wiki/File:Nuvola_apps_kpager.svg - LGPL 2.1 or +)
 - commons-nuvola-web-broom.png (Commons - Author: Seahen - http://commons.wikimedia.org/wiki/Image:Nuvola_web_broom.svg - GPL 2.1 or +) 
 - gnome-applications-internet.png (Gnome)
+- gnome-dialog-warning.png (Gnome)
+- gnome-document-send.png (Gnome)
 - gnome-edit-clear.png (Gnome)
 - gnome-edit-delete.png (Gnome)
 - gnome-edit-find.png (Gnome)
@@ -39,6 +41,7 @@ The following files are available in the "normal" directory:
 - gnome-list-remove.png (Gnome)
 - gnome-logviewer.png (Gnome)
 - gnome-media-floppy.png (Gnome)
+- gnome-preferences-desktop.png (Gnome)
 - gnome-preferences-other.png (Gnome)
 - gnome-preferences-system.png (Gnome)
 - gnome-system-run.png (Gnome)
@@ -52,10 +55,10 @@ The following files are available in the "normal" directory:
 
 The following files are available in the "small" directory:
 - commons-nuvola-apps-atlantik.png (Commons - Author: David Vignoni - http://commons.wikimedia.org/wiki/File:Nuvola_apps_atlantik.png - LPGPL 2.1 or +)
+- gnome-dialog-warning.png (Gnome)
 - gnome-system-run.png (Gnome)
 - gnome-view-refresh.png (Gnome)
 - tango-go-next.png (Tango)
 - tango-help-browser.png (Tango)
 - tango-internet-web-browser.png (Tango)
 - tango-view-refresh.png (Tango)
- 
