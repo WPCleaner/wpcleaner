@@ -160,7 +160,21 @@ public class UpdateDabWarningTools {
 
     // Retrieving page contents
     if (hasDisambiguationLink && !contentsAvailable) {
-      mw.retrieveContents(wikipedia, pages, true, false);
+      List<Page> tmpPages = new ArrayList<Page>();
+      for (Page page : pages) {
+        boolean toAdd = false;
+        for (Page link : page.getLinks()) {
+          if (dabPages.containsKey(link.getTitle())) {
+            toAdd = true;
+          }
+        }
+        if (toAdd) {
+          tmpPages.add(page);
+        }
+      }
+      if (!tmpPages.isEmpty()) {
+        mw.retrieveContents(wikipedia, tmpPages, true, false);
+      }
     }
 
     // Update disambiguation warning
