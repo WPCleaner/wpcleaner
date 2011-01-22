@@ -1322,6 +1322,13 @@ public enum EnumWikipedia {
   }
 
   /**
+   * @return List of disambiguation templates 
+   */
+  public List<Page> getDisambiguationTemplates() {
+    return disambiguationTemplates;
+  }
+
+  /**
    * @return Flag indicating if the Check Wiki project is available.
    */
   public boolean isCheckWikiProjectAvailable() {

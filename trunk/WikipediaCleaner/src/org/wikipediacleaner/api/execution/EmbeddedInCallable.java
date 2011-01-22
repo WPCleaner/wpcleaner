@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.execution;
 
+import java.util.List;
+
 import org.wikipediacleaner.api.MediaWikiListener;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
@@ -29,7 +31,7 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * A Callable implementation for retrieving Embedded In pages.
  */
-public class EmbeddedInCallable extends MediaWikiCallable<Page> {
+public class EmbeddedInCallable extends MediaWikiCallable<List<Page>> {
 
   private final Page page;
 
@@ -49,10 +51,9 @@ public class EmbeddedInCallable extends MediaWikiCallable<Page> {
   /* (non-Javadoc)
    * @see java.util.concurrent.Callable#call()
    */
-  public Page call() throws APIException {
+  public List<Page> call() throws APIException {
     setText(GT._("Retrieving page usage") + " - " + page.getTitle());
-    api.retrieveEmbeddedIn(getWikipedia(), page, (Integer) null);
-    return page;
+    return api.retrieveEmbeddedIn(getWikipedia(), page, (Integer) null);
   }
 
 }

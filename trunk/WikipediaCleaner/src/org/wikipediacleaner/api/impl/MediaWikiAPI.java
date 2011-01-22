@@ -980,9 +980,10 @@ public class MediaWikiAPI implements API {
    * @param wikipedia Wikipedia.
    * @param page Page.
    * @param namespace Limit to namespace (optional).
+   * @return List of pages where <code>page</code> is embedded.
    * @throws APIException
    */
-  public void retrieveEmbeddedIn(
+  public List<Page> retrieveEmbeddedIn(
       EnumWikipedia wikipedia, Page page, Integer namespace) throws APIException {
     Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("list", "embeddedin");
@@ -1028,7 +1029,7 @@ public class MediaWikiAPI implements API {
       }
     } while (eicontinue);
     Collections.sort(links);
-    page.setEmbeddedIn(links);
+    return links;
   }
 
   /**
@@ -1037,9 +1038,10 @@ public class MediaWikiAPI implements API {
    * @param wikipedia Wikipedia.
    * @param page Page.
    * @param namespaces Limit to some namespaces.
+   * @return List of pages where <code>page</code> is embedded.
    * @throws APIException
    */
-  public void retrieveEmbeddedIn(
+  public List<Page> retrieveEmbeddedIn(
       EnumWikipedia wikipedia, Page page, List<Integer> namespaces) throws APIException {
     Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
     properties.put("list", "embeddedin");
@@ -1093,7 +1095,7 @@ public class MediaWikiAPI implements API {
       }
     } while (eicontinue);
     Collections.sort(links);
-    page.setEmbeddedIn(links);
+    return links;
   }
 
   /**

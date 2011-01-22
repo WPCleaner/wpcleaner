@@ -53,7 +53,6 @@ public class Page implements Comparable<Page> {
 
   private List<Page> links;
   private List<Page> backLinks;
-  private List<Page> embeddedIn;
   private List<Page> templates;
   private List<Page> redirects;
   private int countOccurence;
@@ -830,20 +829,6 @@ public class Page implements Comparable<Page> {
       backLinksTemplateProgression.setGoal(null);
     }
     return backLinksTemplateProgression;
-  }
-
-  /**
-   * @return Pages embedding this page.
-   */
-  public List<Page> getEmbeddedIn() {
-    return embeddedIn;
-  }
-
-  /**
-   * @param pages Pages embedding this page.
-   */
-  public void setEmbeddedIn(List<Page> pages) {
-    this.embeddedIn = pages;
   }
 
   /**
