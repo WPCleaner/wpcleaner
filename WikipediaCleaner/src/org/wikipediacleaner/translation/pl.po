@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-01-22 11:14+0100\n"
+"POT-Creation-Date: 2011-01-22 20:50+0100\n"
 "PO-Revision-Date: 2011-01-12 22:11+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -390,6 +390,8 @@ msgid "Would you like to add these pages on your local Watch list ?"
 msgstr "Czy chcesz dodać te strony do lokalnej listy obserwowanych?"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:748
+#: org/wikipediacleaner/gui/swing/MainWindow.java:959
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:328
 msgid ""
 "You need to define the 'dab_warning_template' property in WikiCleaner "
 "configuration."
@@ -398,6 +400,8 @@ msgstr ""
 "WikiCleaner"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:752
+#: org/wikipediacleaner/gui/swing/MainWindow.java:963
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:332
 #, fuzzy
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr "Aktualizuj na stronie dyskusji komunikat o ujednoznacznieniach"
@@ -752,7 +756,7 @@ msgid "Message"
 msgstr "Wiadomość"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:290
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1191
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1203
 msgid "Login"
 msgstr "Logowanie"
 
@@ -854,7 +858,7 @@ msgid "Local &Watch list"
 msgstr "Lokalna lista o&bserwowanych"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:630
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1135
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1147
 #, fuzzy
 msgid "Random pages"
 msgstr "&Losowa strona"
@@ -930,30 +934,30 @@ msgstr ""
 msgid "You must input a page name for updating the disambiguation warning"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:969
+#: org/wikipediacleaner/gui/swing/MainWindow.java:981
 msgid "You must input a page name for retrieving the list of internal links"
 msgstr ""
 "Musisz podać nazwę strony, dla której będzie pobrana lista linków "
 "wewnętrznych"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:980
+#: org/wikipediacleaner/gui/swing/MainWindow.java:992
 #, java-format
 msgid "Internal links in {0}"
 msgstr "Linki wewnętrzne w  {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:991
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1003
 #, fuzzy
 msgid "You must input a page name for retrieving the list of category members"
 msgstr ""
 "Musisz podać nazwę strony, dla której będzie pobrana lista linków "
 "wewnętrznych"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1002
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1014
 #, java-format
 msgid "Category members of {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1018
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1030
 msgid ""
 "There's no known list of disambiguation pages for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -961,11 +965,11 @@ msgstr ""
 "Brak listy stron ujednoznaczniających na tej wersji Wikipedii.\n"
 "Informacje o konfiguracji programu WikiCleaner znajdują się pod adresem:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1030
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1042
 msgid "Current disambiguation list"
 msgstr "Obecna lista stron ujednoznaczniających"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1045
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1057
 msgid ""
 "There's no known template for requesting help for the Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -973,7 +977,7 @@ msgstr ""
 "Brak szablonu prośby o pomoc na tej wersji Wikipedii.\n"
 "Informacje o konfiguracji programu WikiCleaner znajdują się pod adresem:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1068
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1080
 msgid ""
 "There's no known Check Wikipedia Project for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -981,15 +985,15 @@ msgstr ""
 "Brak projektu Check Wikipedia na tej wersji Wikipedii.\n"
 "Informacje o konfiguracji programu WikiCleaner znajdują się pod adresem:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1106
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1118
 msgid "Watched pages"
 msgstr "Obserwowane"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1114
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1126
 msgid "How many pages do you want?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1189
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1201
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:67
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:69
@@ -1000,12 +1004,12 @@ msgstr ""
 msgid "Retrieving MediaWiki API"
 msgstr "Pobieranie API MediaWiki"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1212
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1224
 msgid "Retrieving disambiguation templates"
 msgstr "Pobieranie szablonów przekierowań"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1218
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1242
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1230
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1254
 msgid "Retrieving Check Wiki configuration"
 msgstr "Pobieranie konfiguracji Check Wikipedia"
 
@@ -1291,7 +1295,7 @@ msgstr "&Usuń stronę"
 msgid "&Add page"
 msgstr "&Dodaj stronę"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:330
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:345
 msgid ""
 "You are about to remove the pages from your local Watch list.\n"
 "Are you sure ?"
@@ -1299,11 +1303,11 @@ msgstr ""
 "Masz zamiar usunąć strony z lokalnej listy obserwowanych.\n"
 "Na pewno?"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:350
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:365
 msgid "Enter the page title you want to add to your local watch list"
 msgstr "Wpisz tytuł strony, którą chcesz dodać do lokalnej listy obserwowanych"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:440
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:455
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr "Linkujące - z przestrzeni głównej: {0}, z wszystkich przestrzeni: {1}"

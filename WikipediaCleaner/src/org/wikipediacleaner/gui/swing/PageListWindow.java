@@ -318,6 +318,21 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     for (int i = 0; i < getSelectedPages().length; i++) {
       tmpPages.add(getSelectedPages()[i]);
     }
+    if (tmpPages.isEmpty()) {
+      return;
+    }
+    String template = getWikipedia().getDisambiguationWarningTemplate();
+    if ((template == null) || (template.trim().length() == 0)) {
+      Utilities.displayWarning(
+          getParentComponent(),
+          GT._("You need to define the 'dab_warning_template' property in WikiCleaner configuration."));
+    }
+    int answer = Utilities.displayYesNoWarning(
+        getParentComponent(),
+        GT._("Do you want to update the disambiguation warning in talk page ?"));
+    if (answer != JOptionPane.YES_OPTION) {
+      return;
+    }
     UpdateDabWarningWorker worker = new UpdateDabWarningWorker(getWikipedia(), this, tmpPages);
     worker.start();
   }
