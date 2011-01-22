@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-01-18 23:25+0100\n"
+"POT-Creation-Date: 2011-01-22 11:14+0100\n"
 "PO-Revision-Date: 2011-01-12 22:11+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -278,7 +278,7 @@ msgstr "Pobieranie zawartości"
 msgid "Retrieving disambiguation informations"
 msgstr "Pobieranie informacji o przekierowaniu"
 
-#: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:53
+#: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:55
 msgid "Retrieving page usage"
 msgstr "Pobieranie użycia strony"
 
@@ -996,7 +996,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:57
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:71
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:102
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:104
 msgid "Retrieving MediaWiki API"
 msgstr "Pobieranie API MediaWiki"
 
@@ -1838,42 +1838,55 @@ msgstr "Odświeżanie zawartości strony"
 msgid "Error 'badtoken' detected: Retrying"
 msgstr "Wykryto błąd 'badtoken': ponowna próba"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:197
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:205
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:262
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:270
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Pobieranie zawartości strony - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:321
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:428
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:621
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:386
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:493
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:686
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Aktualizowanie komunikatu o ujednoznacznieniach - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:523
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:655
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:756
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:588
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:720
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:821
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:111
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:114
 #, java-format
 msgid "Retrieving talk pages including {0}"
 msgstr "Pobieranie stron dyskusji zawierających {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:119
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:123
 msgid "Constructing list of articles with disambiguation warning"
 msgstr "Budowanie listy haseł z komunikatem o ujednoznacznieniach"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:171
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:152
+#, fuzzy
+msgid "Retrieving disambiguation pages"
+msgstr "Pobieranie szablonów przekierowań"
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:179
 #, java-format
 msgid ""
 "An error occured when updating disambiguation warnings. Do you want to "
 "continue ?\n"
 "\n"
 "Error: {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:215
+#, java-format
+msgid ""
+"Disambiguation links have been analyzed in {0} pages.\n"
+"The disambiguation warning has been updated in {1} pages.\n"
+"It took {2} seconds."
 msgstr ""
 
 #~ msgid "Warning for disambiguation links"

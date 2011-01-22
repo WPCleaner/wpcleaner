@@ -257,9 +257,10 @@ public interface API {
    * @param wikipedia Wikipedia.
    * @param page Page.
    * @param namespace Limit to namespace (optional).
+   * @return List of pages where <code>page</code> is embedded.
    * @throws APIException
    */
-  public void retrieveEmbeddedIn(
+  public List<Page> retrieveEmbeddedIn(
       EnumWikipedia wikipedia, Page page, Integer namespace) throws APIException;
 
   /**
@@ -268,9 +269,10 @@ public interface API {
    * @param wikipedia Wikipedia.
    * @param page Page.
    * @param namespaces Limit to some namespaces.
+   * @return List of pages where <code>page</code> is embedded.
    * @throws APIException
    */
-  public void retrieveEmbeddedIn(
+  public List<Page> retrieveEmbeddedIn(
       EnumWikipedia wikipedia, Page page, List<Integer> namespaces) throws APIException;
 
   /**

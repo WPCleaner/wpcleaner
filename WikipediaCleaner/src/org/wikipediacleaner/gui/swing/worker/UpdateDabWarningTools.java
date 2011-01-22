@@ -48,6 +48,7 @@ public class UpdateDabWarningTools {
   private final BasicWorker worker;
   private final BasicWindow window;
   private final boolean createWarning;
+  private boolean dabPagesPreloaded;
   private final Map<String, Page> dabPages;
   private final Map<String, Page> nonDabPages;
   private final API api;
@@ -94,6 +95,28 @@ public class UpdateDabWarningTools {
     this.dabPages = new HashMap<String, Page>();
     this.nonDabPages = new HashMap<String, Page>();
     this.api = APIFactory.getAPI();
+    this.dabPagesPreloaded = false;
+  }
+
+  /**
+   * Preload disambiguation pages.
+   */
+  public void preloadDabPages() {
+    dabPagesPreloaded = false;
+    dabPages.clear();
+    nonDabPages.clear();
+    try {
+      for (Page dab : wikipedia.getDisambiguationTemplates()) {
+        List<Page> tmpPages = api.retrieveEmbeddedIn(wikipedia, dab, Namespace.MAIN);
+        for (Page tmpPage : tmpPages) {
+          tmpPage.setDisambiguationPage(Boolean.TRUE);
+          dabPages.put(tmpPage.getTitle(), tmpPage);
+        }
+      }
+      dabPagesPreloaded = true;
+    } catch (APIException e) {
+      //
+    }
   }
 
   /**
@@ -128,29 +151,57 @@ public class UpdateDabWarningTools {
     // Retrieving disambiguation information in each page
     boolean hasDisambiguationLink = false;
     if (!dabInformationAvailable) {
-      List<Page> tmpPages = new ArrayList<Page>();
-      for (Page page : pages) {
-        for (int numLink = 0; numLink < page.getLinks().size(); numLink++) {
-          Page link = page.getLinks().get(numLink);
-          if (dabPages.containsKey(link.getTitle())) {
-            page.getLinks().set(numLink, dabPages.get(link.getTitle()));
-            hasDisambiguationLink = true;
-          } else if (nonDabPages.containsKey(link.getTitle())) {
-            page.getLinks().set(numLink, nonDabPages.get(link.getTitle()));
-          } else {
-            tmpPages.add(link);
+      if (!dabPagesPreloaded) {
+        List<Page> tmpPages = new ArrayList<Page>();
+        for (Page page : pages) {
+          for (int numLink = 0; numLink < page.getLinks().size(); numLink++) {
+            Page link = page.getLinks().get(numLink);
+            if (dabPages.containsKey(link.getTitle())) {
+              page.getLinks().set(numLink, dabPages.get(link.getTitle()));
+              hasDisambiguationLink = true;
+            } else if (nonDabPages.containsKey(link.getTitle())) {
+              page.getLinks().set(numLink, nonDabPages.get(link.getTitle()));
+            } else {
+              tmpPages.add(link);
+            }
           }
         }
-      }
-      if (!tmpPages.isEmpty()) {
-        mw.retrieveDisambiguationInformation(wikipedia, tmpPages, null, false, true);
-      }
-      for (Page page : tmpPages) {
-        if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
-          dabPages.put(page.getTitle(), page);
-          hasDisambiguationLink = true;
-        } else {
-          nonDabPages.put(page.getTitle(), page);
+        if (!tmpPages.isEmpty()) {
+          mw.retrieveDisambiguationInformation(wikipedia, tmpPages, null, false, true);
+        }
+        for (Page page : tmpPages) {
+          if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
+            dabPages.put(page.getTitle(), page);
+            hasDisambiguationLink = true;
+          } else {
+            nonDabPages.put(page.getTitle(), page);
+          }
+        }
+      } else {
+        for (Page page : pages) {
+          List<Page> links = page.getLinksWithRedirect();
+          for (int numLink = 0; numLink < links.size(); numLink++) {
+            Page link = links.get(numLink);
+            if (dabPages.containsKey(link.getTitle())) {
+              link.setDisambiguationPage(Boolean.TRUE);
+              hasDisambiguationLink = true;
+            } else if (link.isRedirect()) {
+              List<Page> redirects = link.getRedirects();
+              if ((redirects != null) && (redirects.size() > 0)) {
+                if (dabPages.containsKey(redirects.get(redirects.size() - 1).getTitle())) {
+                  dabPages.put(link.getTitle(), link);
+                  link.setDisambiguationPage(Boolean.TRUE);
+                  hasDisambiguationLink = true;
+                } else {
+                  link.setDisambiguationPage(Boolean.FALSE);
+                }
+              } else {
+                link.setDisambiguationPage(Boolean.FALSE);
+              }
+            } else {
+              link.setDisambiguationPage(Boolean.FALSE);
+            }
+          }
         }
       }
       if (shouldStop()) {

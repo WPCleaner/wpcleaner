@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-01-18 23:25+0100\n"
+"POT-Creation-Date: 2011-01-22 11:14+0100\n"
 "PO-Revision-Date: 2008-11-30 16:28+0000\n"
 "Last-Translator: Røed <roed.wikipedia@gmail.com>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
@@ -277,7 +277,7 @@ msgstr ""
 msgid "Retrieving disambiguation informations"
 msgstr "henter pekerinformasjon"
 
-#: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:53
+#: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:55
 msgid "Retrieving page usage"
 msgstr ""
 
@@ -961,7 +961,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:57
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:71
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:102
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:104
 msgid "Retrieving MediaWiki API"
 msgstr ""
 
@@ -1793,42 +1793,55 @@ msgstr ""
 msgid "Error 'badtoken' detected: Retrying"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:197
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:205
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:262
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:270
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:321
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:428
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:621
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:386
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:493
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:686
 #, fuzzy, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "henter pekerinformasjon"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:523
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:655
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:756
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:588
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:720
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:821
 #, fuzzy, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "henter pekerinformasjon"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:111
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:114
 #, java-format
 msgid "Retrieving talk pages including {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:119
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:123
 msgid "Constructing list of articles with disambiguation warning"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:171
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:152
+#, fuzzy
+msgid "Retrieving disambiguation pages"
+msgstr "henter pekerinformasjon"
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:179
 #, java-format
 msgid ""
 "An error occured when updating disambiguation warnings. Do you want to "
 "continue ?\n"
 "\n"
 "Error: {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:215
+#, java-format
+msgid ""
+"Disambiguation links have been analyzed in {0} pages.\n"
+"The disambiguation warning has been updated in {1} pages.\n"
+"It took {2} seconds."
 msgstr ""
 
 #, fuzzy

@@ -32,6 +32,7 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
+import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -97,12 +98,14 @@ public class UpdateDabWarningWorker extends BasicWorker {
    */
   @Override
   public Object construct() {
+    long startTime = System.currentTimeMillis();
     EnumWikipedia wikipedia = getWikipedia();
 
     setText(GT._("Retrieving MediaWiki API"));
     API api = APIFactory.getAPI();
-    int count = 0;
-    int lastCount = count;
+    int countAnalyzed = 0;
+    int countUpdated = 0;
+    int lastCount = countUpdated;
 
     try {
       if (!useList) {
@@ -113,11 +116,11 @@ public class UpdateDabWarningWorker extends BasicWorker {
             wikipedia,
             Namespace.getTitle(Namespace.TEMPLATE, wikipedia.getNamespaces(), dabWarningTemplateName),
             null, null);
-        api.retrieveEmbeddedIn(wikipedia, dabWarningTemplate, wikipedia.getEncyclopedicTalkNamespaces());
+        List<Page> dabWarningTalkPages = api.retrieveEmbeddedIn(
+            wikipedia, dabWarningTemplate, wikipedia.getEncyclopedicTalkNamespaces());
   
         // Construct list of articles with disambiguation warning
         setText(GT._("Constructing list of articles with disambiguation warning"));
-        List<Page> dabWarningTalkPages = dabWarningTemplate.getEmbeddedIn();
         for (Page dabWarningPage : dabWarningTalkPages) {
           String title = dabWarningPage.getTitle();
           if (title.endsWith("/" + wikipedia.getTodoSubpage())) {
@@ -145,6 +148,10 @@ public class UpdateDabWarningWorker extends BasicWorker {
 
       // Working with sublists
       UpdateDabWarningTools tools = new UpdateDabWarningTools(wikipedia, this);
+      if (!useList) {
+        setText(GT._("Retrieving disambiguation pages"));
+        tools.preloadDabPages();
+      }
       while (!dabWarningPages.isEmpty()) {
         // Creating sublist
         int size = Math.min(10, dabWarningPages.size());
@@ -156,7 +163,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
           }
         }
         if (sublist.isEmpty()) {
-          return Integer.valueOf(count);
+          return Integer.valueOf(countUpdated);
         }
 
         // Update disambiguation warning
@@ -164,7 +171,8 @@ public class UpdateDabWarningWorker extends BasicWorker {
         while (!finish) {
           finish = true;
           try {
-            count += tools.updateDabWarning(sublist, contentsAvailable, linksAvailable, dabInformationAvailable);
+            countUpdated += tools.updateDabWarning(sublist, contentsAvailable, linksAvailable, dabInformationAvailable);
+            countAnalyzed += sublist.size();
           } catch (APIException e) {
             if (getWindow() != null) {
               int answer = getWindow().displayYesNoWarning(GT._(
@@ -177,12 +185,12 @@ public class UpdateDabWarningWorker extends BasicWorker {
             }
           }
           if (shouldStop()) {
-            return Integer.valueOf(count);
+            return Integer.valueOf(countUpdated);
           }
         }
 
-        if (count > lastCount) {
-          lastCount = count;
+        if (countUpdated > lastCount) {
+          lastCount = countUpdated;
           /*if (getWindow() != null) {
             int answer = getWindow().displayYesNoWarning(
                 "This feature is currently under development, please check the modification.\n" +
@@ -199,6 +207,19 @@ public class UpdateDabWarningWorker extends BasicWorker {
       return e;
     }
 
-    return Integer.valueOf(count);
+    long endTime = System.currentTimeMillis();
+    if ((!useList) && (getWindow() != null)) {
+      Utilities.displayInformationMessage(
+          getWindow().getParentComponent(),
+          GT._(
+              "Disambiguation links have been analyzed in {0} pages.\n" +
+              "The disambiguation warning has been updated in {1} pages.\n" +
+              "It took {2} seconds.",
+              new Object[] {
+                  Integer.valueOf(countAnalyzed),
+                  Integer.valueOf(countUpdated),
+                  Long.valueOf((endTime - startTime) / 1000) } ));
+    }
+    return Integer.valueOf(countUpdated);
   }
 }

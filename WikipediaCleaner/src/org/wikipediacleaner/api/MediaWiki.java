@@ -368,16 +368,24 @@ public class MediaWiki extends MediaWikiController {
    * @param pageList List of pages.
    * @throws APIException
    */
-  public void retrieveAllEmbeddedIn(
+  @SuppressWarnings("unchecked")
+  public List<Page> retrieveAllEmbeddedIn(
       EnumWikipedia wikipedia, List<Page> pageList) throws APIException {
     if ((pageList == null) || (pageList.size() == 0)) {
-      return;
+      return null;
     }
     final API api = APIFactory.getAPI();
     for (final Page page : pageList) {
       addTask(new EmbeddedInCallable(wikipedia, this, api, page));
     }
-    block(true);
+    List<Page> resultList = new ArrayList<Page>();
+    while (hasRemainingTask() && !shouldStop()) {
+      Object result = getNextResult();
+      if (result instanceof List<?>) {
+        resultList.addAll((List<Page>) result);
+      }
+    }
+    return resultList;
   }
 
   /**

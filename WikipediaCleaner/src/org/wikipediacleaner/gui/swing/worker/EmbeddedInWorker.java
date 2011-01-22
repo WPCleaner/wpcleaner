@@ -70,13 +70,11 @@ public class EmbeddedInWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveAllEmbeddedIn(getWikipedia(), pages);
+      List<Page> result = mw.retrieveAllEmbeddedIn(getWikipedia(), pages);
       if (!shouldContinue()) {
         return null;
       }
-      for (Page page : pages) {
-        embeddedInList.addAll(page.getEmbeddedIn());
-      }
+      embeddedInList.addAll(result);
     } catch (APIException e) {
       return e;
     }
