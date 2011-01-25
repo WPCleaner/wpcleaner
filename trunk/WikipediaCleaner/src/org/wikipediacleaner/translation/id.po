@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-01-22 20:50+0100\n"
+"POT-Creation-Date: 2011-01-25 19:07+0100\n"
 "PO-Revision-Date: 2010-05-01 07:19+0000\n"
 "Last-Translator: Iwan Novirion <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -230,31 +230,31 @@ msgstr ""
 msgid "Priority unknown"
 msgstr "Prioritas tidak diketahui"
 
-#: org/wikipediacleaner/api/data/PageComparator.java:212
+#: org/wikipediacleaner/api/data/PageComparator.java:229
 msgid "Namespace"
 msgstr "Ruangnama"
 
-#: org/wikipediacleaner/api/data/PageComparator.java:253
+#: org/wikipediacleaner/api/data/PageComparator.java:270
 msgid "Title"
 msgstr "Judul"
 
-#: org/wikipediacleaner/api/data/PageComparator.java:294
+#: org/wikipediacleaner/api/data/PageComparator.java:311
 msgid "Revision Id"
 msgstr "Id revisi"
 
-#: org/wikipediacleaner/api/data/PageComparator.java:335
+#: org/wikipediacleaner/api/data/PageComparator.java:352
 msgid "Page Id"
 msgstr "Id halaman"
 
-#: org/wikipediacleaner/api/data/PageComparator.java:385
+#: org/wikipediacleaner/api/data/PageComparator.java:402
 msgid "Template"
 msgstr "Templat"
 
-#: org/wikipediacleaner/api/data/PageComparator.java:423
+#: org/wikipediacleaner/api/data/PageComparator.java:440
 msgid "Redirect"
 msgstr "Alihkan"
 
-#: org/wikipediacleaner/api/data/PageComparator.java:457
+#: org/wikipediacleaner/api/data/PageComparator.java:474
 msgid "Occurrence"
 msgstr "Ditemukan"
 
@@ -1016,7 +1016,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:57
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:71
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:104
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:106
 msgid "Retrieving MediaWiki API"
 msgstr "Kembalikan MediaWiki API"
 
@@ -1897,21 +1897,28 @@ msgstr "Kembalikan templat disambiguasi"
 msgid "Removing disambiguation warning - {0}"
 msgstr "Kembalikan templat disambiguasi"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:114
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:116
 #, fuzzy, java-format
 msgid "Retrieving talk pages including {0}"
 msgstr "Kembalikan pranala balik"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:123
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:125
 msgid "Constructing list of articles with disambiguation warning"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:152
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:162
+#, fuzzy, java-format
+msgid ""
+"Analysis found {0} articles with disambiguation warning {1}.\n"
+"Do you want to update the disambiguation warnings ?"
+msgstr "Ketik judul artikel untuk melakukan analisa disambiguasi"
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:174
 #, fuzzy
 msgid "Retrieving disambiguation pages"
 msgstr "Kembalikan templat disambiguasi"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:179
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:201
 #, java-format
 msgid ""
 "An error occured when updating disambiguation warnings. Do you want to "
@@ -1920,7 +1927,7 @@ msgid ""
 "Error: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:215
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:237
 #, java-format
 msgid ""
 "Disambiguation links have been analyzed in {0} pages.\n"

@@ -92,6 +92,23 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
         "Namespace first", unitComparators);
     return comparator;
   }
+
+  /**
+   * @return Page comparator with title first.
+   */
+  public static CompositeComparator<Page> getTitleFirstComparator() {
+    List<NamedComparator<Page>> unitComparators = new LinkedList<NamedComparator<Page>>();
+    unitComparators.add(titleComparator);
+    unitComparators.add(revisionIdComparator);
+    unitComparators.add(pageIdComparator);
+    unitComparators.add(namespaceComparator);
+    unitComparators.add(templateComparator);
+    unitComparators.add(redirectComparator);
+    unitComparators.add(occurenceComparator);
+    CompositeComparator<Page> comparator = new CompositeComparator<Page>(
+        "Title first", unitComparators);
+    return comparator;
+  }
   
   /**
    * @return Page comparator with namespace first then occurence.
@@ -109,7 +126,7 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
         "Occurence first", unitComparators);
     return comparator;
   }
-  
+
   /**
    * @param name Comparator name.
    * @return Comparator initialized with default order.

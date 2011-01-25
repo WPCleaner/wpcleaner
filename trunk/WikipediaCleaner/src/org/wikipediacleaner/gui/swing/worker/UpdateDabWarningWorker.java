@@ -19,6 +19,7 @@
 package org.wikipediacleaner.gui.swing.worker;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -30,6 +31,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -142,6 +144,26 @@ public class UpdateDabWarningWorker extends BasicWorker {
                 }
               }
             }
+          }
+        }
+
+        // Sort the list of articles
+        Collections.sort(dabWarningPages, PageComparator.getTitleFirstComparator());
+        for (int pos = dabWarningPages.size() - 1; pos >= 0; pos--) {
+          if ((start.length() != 0) && (start.compareTo(dabWarningPages.get(pos).getTitle()) >= 0)) {
+            dabWarningPages.remove(pos);
+          }
+        }
+        if (dabWarningPages.isEmpty()) {
+          return Integer.valueOf(0);
+        }
+        if (getWindow() != null) {
+          int answer = getWindow().displayYesNoWarning(GT._(
+              "Analysis found {0} articles with disambiguation warning {1}.\n" +
+              "Do you want to update the disambiguation warnings ?",
+              new Object[] { Integer.valueOf(dabWarningPages.size()), "{{" + dabWarningTemplateName + "}}" }));
+          if (answer != JOptionPane.YES_OPTION) {
+            return Integer.valueOf(0);
           }
         }
       }
