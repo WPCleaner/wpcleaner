@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-01-22 20:50+0100\n"
+"POT-Creation-Date: 2011-01-25 19:07+0100\n"
 "PO-Revision-Date: 2010-05-01 06:49+0000\n"
 "Last-Translator: Bundo <bundo@bundo.biz>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -225,31 +225,31 @@ msgstr ""
 msgid "Priority unknown"
 msgstr "알수 없는 순위"
 
-#: org/wikipediacleaner/api/data/PageComparator.java:212
+#: org/wikipediacleaner/api/data/PageComparator.java:229
 msgid "Namespace"
 msgstr "이름공간"
 
-#: org/wikipediacleaner/api/data/PageComparator.java:253
+#: org/wikipediacleaner/api/data/PageComparator.java:270
 msgid "Title"
 msgstr "제목"
 
-#: org/wikipediacleaner/api/data/PageComparator.java:294
+#: org/wikipediacleaner/api/data/PageComparator.java:311
 msgid "Revision Id"
 msgstr "판 번호"
 
-#: org/wikipediacleaner/api/data/PageComparator.java:335
+#: org/wikipediacleaner/api/data/PageComparator.java:352
 msgid "Page Id"
 msgstr "페이지 ID"
 
-#: org/wikipediacleaner/api/data/PageComparator.java:385
+#: org/wikipediacleaner/api/data/PageComparator.java:402
 msgid "Template"
 msgstr "틀"
 
-#: org/wikipediacleaner/api/data/PageComparator.java:423
+#: org/wikipediacleaner/api/data/PageComparator.java:440
 msgid "Redirect"
 msgstr "넘겨주기"
 
-#: org/wikipediacleaner/api/data/PageComparator.java:457
+#: org/wikipediacleaner/api/data/PageComparator.java:474
 msgid "Occurrence"
 msgstr "발생"
 
@@ -968,7 +968,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:57
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:71
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:104
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:106
 msgid "Retrieving MediaWiki API"
 msgstr ""
 
@@ -1810,21 +1810,28 @@ msgstr ""
 msgid "Removing disambiguation warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:114
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:116
 #, fuzzy, java-format
 msgid "Retrieving talk pages including {0}"
 msgstr "페이지 사용량을 가져오는 중"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:123
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:125
 msgid "Constructing list of articles with disambiguation warning"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:152
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:162
+#, java-format
+msgid ""
+"Analysis found {0} articles with disambiguation warning {1}.\n"
+"Do you want to update the disambiguation warnings ?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:174
 #, fuzzy
 msgid "Retrieving disambiguation pages"
 msgstr "페이지 사용량을 가져오는 중"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:179
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:201
 #, java-format
 msgid ""
 "An error occured when updating disambiguation warnings. Do you want to "
@@ -1833,7 +1840,7 @@ msgid ""
 "Error: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:215
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:237
 #, java-format
 msgid ""
 "Disambiguation links have been analyzed in {0} pages.\n"
