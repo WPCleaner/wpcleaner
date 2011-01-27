@@ -293,7 +293,7 @@ public class Utilities {
    * @param iconName Icon name.
    * @param size Icon size.
    * @param message Label text with optional mnemonic inside.
-   * @param showMessage TODO
+   * @param showMessage Use message for the button text or for tooltip.
    * @return Button initialized with text and mnemonic.
    */
   public static JButton createJButton(
