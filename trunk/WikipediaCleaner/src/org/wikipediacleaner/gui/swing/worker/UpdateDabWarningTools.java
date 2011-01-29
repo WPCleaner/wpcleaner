@@ -976,7 +976,7 @@ public class UpdateDabWarningTools {
       talkText.append(" | ");
       talkText.append(dabLink);
     }
-    talkText.append(" }}");
+    talkText.append(" }} -- ~~~~~");
     if (wikipedia.getDisambiguationWarningTemplateComment() != null) {
       talkText.append(" <!-- ");
       talkText.append(wikipedia.getDisambiguationWarningTemplateComment());
