@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-01-25 19:07+0100\n"
-"PO-Revision-Date: 2011-01-12 22:11+0000\n"
+"PO-Revision-Date: 2011-02-05 20:49+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-01-13 11:42+0000\n"
-"X-Generator: Launchpad (build 12177)\n"
+"X-Launchpad-Export-Date: 2011-02-05 21:04+0000\n"
+"X-Generator: Launchpad (build 12309)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -318,7 +318,8 @@ msgid "Link count"
 msgstr "Liczba linków"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:339
-msgid "Add a warning on the talk page about the links to disambiguation pages"
+msgid ""
+"Add a warning on the talk page about the links to disambiguation pages"
 msgstr "Dodaj na stronie dyskusji komunikat o linkach do ujednoznacznień"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:376
@@ -402,9 +403,9 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:752
 #: org/wikipediacleaner/gui/swing/MainWindow.java:963
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:332
-#, fuzzy
 msgid "Do you want to update the disambiguation warning in talk page ?"
-msgstr "Aktualizuj na stronie dyskusji komunikat o ujednoznacznieniach"
+msgstr ""
+"Czy chcesz aktualizować komunikat o ujednoznacznianiach na stronie dyskusji?"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
 #: org/wikipediacleaner/gui/swing/MainWindow.java:639
@@ -426,7 +427,8 @@ msgstr "Mogą one dokonać zmian w dużej liczbie stron w krótkim czasie."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:106
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:609
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Aby z nich skorzystać, na niektórych projektach Wikimedia wymagana będzie "
 "flaga bota."
@@ -435,7 +437,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:610
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
-msgstr "Sprawdź proszę w zasadach, czy masz obowiązek zwrócić się flagę bota."
+msgstr ""
+"Sprawdź proszę w zasadach, czy masz obowiązek zwrócić się flagę bota."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:120
 msgid "Semi-automatic disambiguation fixing"
@@ -446,7 +449,8 @@ msgid "Update existing disambiguation warning messages"
 msgstr "Aktualizacja istniejących komunikatów o ujednoznacznieniach"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:205
-msgid "At what page do you wish to start updating the disambiguation warning ?"
+msgid ""
+"At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:176
@@ -822,7 +826,7 @@ msgstr "Strona"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:507
 msgid "Random page (Alt + &R)"
-msgstr ""
+msgstr "Losowa strona"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:536
 msgid "Internal links"
@@ -830,12 +834,12 @@ msgstr "Linki wewnętrzne"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:545
 msgid "Category members"
-msgstr ""
+msgstr "Zawartość kategorii"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:554
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:212
 msgid "Update disambiguation warning"
-msgstr ""
+msgstr "Aktualizacja komunikatów o ujednoznacznieniach"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:578
 msgid "Projects"
@@ -859,9 +863,8 @@ msgstr "Lokalna lista o&bserwowanych"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:630
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1147
-#, fuzzy
 msgid "Random pages"
-msgstr "&Losowa strona"
+msgstr "Losowe strony"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:729
 msgid ""
@@ -883,7 +886,8 @@ msgstr "Dowiedz się, jak dodać inny język, pod adresem:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:775
 msgid "You must select which Wikipedia you want to work on before login"
-msgstr "Przed zalogowaniem musisz wybrać, na której Wikipedii chcesz pracować"
+msgstr ""
+"Przed zalogowaniem musisz wybrać, na której Wikipedii chcesz pracować"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:784
 msgid "You must select a language before login"
@@ -946,16 +950,14 @@ msgid "Internal links in {0}"
 msgstr "Linki wewnętrzne w  {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1003
-#, fuzzy
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
-"Musisz podać nazwę strony, dla której będzie pobrana lista linków "
-"wewnętrznych"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1014
 #, java-format
 msgid "Category members of {0}"
-msgstr ""
+msgstr "Strony należące do kategorii {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1030
 msgid ""
@@ -991,7 +993,7 @@ msgstr "Obserwowane"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1126
 msgid "How many pages do you want?"
-msgstr ""
+msgstr "Ile stron mam wybrać losowo?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1201
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
@@ -1144,30 +1146,36 @@ msgstr ""
 "głównej)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:465
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
+"Twórz na stronie dyskusji komunikat o ujednoznacznieniach (w przestrzeniach "
+"encyklopedycznych)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:474
 msgid "Create disambiguation warning on talk page (in other namespaces)"
 msgstr ""
-"Twórz na stronie dyskusji komunikat o ujednoznacznieniach (w przestrzeni "
-"głównej)"
+"Twórz na stronie dyskusji komunikat o ujednoznacznieniach (w pozostałych "
+"przestrzeniach)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:483
 msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
-"Aktualizuj na stronie dyskusji komunikat o ujednoznacznieniach (poza "
-"przestrzenią główną)"
+"Aktualizuj na stronie dyskusji komunikat o ujednoznacznieniach (w "
+"przestrzeni głównej)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:492
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
+"Aktualizuj na stronie dyskusji komunikat o ujednoznacznieniach (w "
+"przestrzeniach encyklopedycznych)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:501
 msgid "Update disambiguation warning on talk page (in other namespaces)"
 msgstr ""
-"Aktualizuj na stronie dyskusji komunikat o ujednoznacznieniach (poza "
-"przestrzenią główną)"
+"Aktualizuj na stronie dyskusji komunikat o ujednoznacznieniach (w "
+"pozostałych przestrzeniach)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:546
 msgid "Count &disambiguation pages"
@@ -1305,12 +1313,14 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:365
 msgid "Enter the page title you want to add to your local watch list"
-msgstr "Wpisz tytuł strony, którą chcesz dodać do lokalnej listy obserwowanych"
+msgstr ""
+"Wpisz tytuł strony, którą chcesz dodać do lokalnej listy obserwowanych"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:455
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Linkujące - z przestrzeni głównej: {0}, z wszystkich przestrzeni: {1}"
+msgstr ""
+"Linkujące - z przestrzeni głównej: {0}, z wszystkich przestrzeni: {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:328
 msgid "&Page :"
@@ -1860,7 +1870,7 @@ msgstr "Aktualizowanie komunikatu o ujednoznacznieniach - {0}"
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:821
 #, java-format
 msgid "Removing disambiguation warning - {0}"
-msgstr ""
+msgstr "Usuwanie komunikatu o ujednoznacznieniach - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:116
 #, java-format
@@ -1879,9 +1889,8 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:174
-#, fuzzy
 msgid "Retrieving disambiguation pages"
-msgstr "Pobieranie szablonów przekierowań"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:201
 #, java-format
@@ -1900,24 +1909,25 @@ msgid ""
 "It took {2} seconds."
 msgstr ""
 
-#~ msgid "Warning for disambiguation links"
-#~ msgstr "Komunikat o linkach do ujednoznacznień"
-
 #~ msgid "Work"
 #~ msgstr "Praca"
 
+#~ msgid "&Random page"
+#~ msgstr "&Losowa strona"
+
 #~ msgid "Retrieving namespaces"
 #~ msgstr "Pobieranie przestrzeni nazw"
+
+#~ msgid "There's no known list of disambiguation pages for this Wikipedia."
+#~ msgstr "Brak znanej listy stron ujednoznaczniających dla tej Wikipedii."
 
 #~ msgid ""
 #~ "!!! WARNING !!!\n"
 #~ "This function will do all the replacements in all selected pages.\n"
 #~ "It may modify a lot of pages in a short period of time.\n"
 #~ "On some Wikipedia projects, you may need the bot status for doing this.\n"
-#~ "Please, check if you need the bot status by reading the rules of "
-#~ "Wikipedia.\n"
-#~ "Also, verify again the texts you have inputed before running this "
-#~ "function.\n"
+#~ "Please, check if you need the bot status by reading the rules of Wikipedia.\n"
+#~ "Also, verify again the texts you have inputed before running this function.\n"
 #~ "Do you want to continue ?"
 #~ msgstr ""
 #~ "!!! OSTRZEŻENIE !!!\n"
@@ -1929,15 +1939,18 @@ msgstr ""
 #~ "Czy chcesz kontynuować?"
 
 #~ msgid ""
-#~ "The page {0} has been modified on Wikipedia since you have loaded the "
-#~ "page.\n"
-#~ "To avoid modification conflicts, you need to reload the page and make "
-#~ "your modifications again.\n"
+#~ "The page {0} has been modified on Wikipedia since you have loaded the page.\n"
+#~ "To avoid modification conflicts, you need to reload the page and make your "
+#~ "modifications again.\n"
 #~ "(Local revision: {1}, Wikipedia revision: {2})"
 #~ msgstr ""
 #~ "Strona {0} została zmodyfikowana na Wikipedii od czasu załadowania.\n"
 #~ "Aby uniknąć konfliktu edycji, odśwież stronę i wprowadź zmiany ponownie.\n"
 #~ "(Wersja lokalna: {1}, wersja Wikipedii: {2})"
 
+#, java-format
 #~ msgid "Retrieving first section contents - {0}"
 #~ msgstr "Pobieranie zawartości pierwszej sekcji - {0}"
+
+#~ msgid "Warning for disambiguation links"
+#~ msgstr "Komunikat o linkach do ujednoznacznień"
