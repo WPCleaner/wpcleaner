@@ -46,6 +46,8 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
     { "&agrave;", "à" },
     { "&atilde;", "ã" },
 
+    { "&bull;"   , "•" },
+
     { "&cap;"   , "∩" },
     { "&ccedil;", "ç" },
     { "&copy;"  , "©" },
