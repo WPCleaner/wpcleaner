@@ -93,6 +93,7 @@ public class MainWindow
   implements ActionListener, ItemListener {
 
   private final static String ACTION_ABOUT           = "ABOUT";
+  private final static String ACTION_ALL_DAB         = "ALL DAB";
   private final static String ACTION_BOT_TOOLS       = "BOT TOOLS";
   private final static String ACTION_CAT_MEMBERS     = "CAT_MEMBERS";
   private final static String ACTION_CHECK_WIKI      = "CHECK WIKI";
@@ -136,6 +137,7 @@ public class MainWindow
   private JButton buttonCurrentList;
   private JButton buttonCheckWiki;
   private JButton buttonHelpRequested;
+  private JButton buttonAllDab;
   private JButton buttonWatchedPages;
   private JButton buttonRandomPages;
   private JButton buttonBotTools;
@@ -240,6 +242,7 @@ public class MainWindow
     buttonCurrentList.setEnabled(logged);
     buttonCheckWiki.setEnabled(logged);
     buttonHelpRequested.setEnabled(logged);
+    buttonAllDab.setEnabled(logged && false);
     buttonWatchedPages.setEnabled(logged);
     buttonRandomPages.setEnabled(logged);
     buttonBotTools.setEnabled(userLogged);
@@ -615,6 +618,15 @@ public class MainWindow
     panel.add(buttonHelpRequested, constraints);
     constraints.gridy++;
 
+    // All disambiguation pages button
+    buttonAllDab = Utilities.createJButton(
+        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        GT._("All disambiguations pages"), true);
+    buttonAllDab.setActionCommand(ACTION_ALL_DAB);
+    buttonAllDab.addActionListener(this);
+    panel.add(buttonAllDab, constraints);
+    constraints.gridy++;
+
     // Watched pages button
     buttonWatchedPages = Utilities.createJButton(
         "gnome-logviewer.png", EnumImageSize.NORMAL,
@@ -703,6 +715,8 @@ public class MainWindow
       actionOtherWikipedia();
     } else if (ACTION_HELP_REQUESTED.equals(e.getActionCommand())) {
       actionHelpRequestedOn();
+    } else if (ACTION_ALL_DAB.equals(e.getActionCommand())) {
+      actionAllDab();
     } else if (ACTION_CHECK_WIKI.equals(e.getActionCommand())) {
       actionCheckWiki();
     } else if (ACTION_RANDOM_PAGES.equals(e.getActionCommand())) {
@@ -1062,6 +1076,19 @@ public class MainWindow
       }
     } else {
       new EmbeddedInWorker(wikipedia, this, wikipedia.getTemplatesForHelpRequested()).start();
+    }
+  }
+
+  /**
+   * Action called when All disambiguations pages is pressed.
+   */
+  private void actionAllDab() {
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia == null) {
+      return;
+    }
+    if (wikipedia.getDisambiguationTemplates() != null) {
+      new EmbeddedInWorker(wikipedia, this, wikipedia.getDisambiguationTemplates()).start();
     }
   }
 
