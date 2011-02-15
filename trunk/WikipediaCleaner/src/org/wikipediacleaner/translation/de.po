@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-02-14 23:32+0100\n"
-"PO-Revision-Date: 2011-02-13 14:16+0000\n"
+"PO-Revision-Date: 2011-02-15 09:47+0000\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@googlemail.com>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-02-13 20:32+0000\n"
-"X-Generator: Launchpad (build 12351)\n"
+"X-Launchpad-Export-Date: 2011-02-15 18:04+0000\n"
+"X-Generator: Launchpad (build 12372)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -318,7 +318,8 @@ msgid "Link count"
 msgstr "Linkanzahl"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:339
-msgid "Add a warning on the talk page about the links to disambiguation pages"
+msgid ""
+"Add a warning on the talk page about the links to disambiguation pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:376
@@ -424,7 +425,8 @@ msgstr "Sie können viele Seiten in einer kurzen Zeitspanne ändern."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:106
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:609
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Bei einigen Wikipedia-Projekten benötigen Sie den Bot-Status um dies zu tun."
 
@@ -445,7 +447,8 @@ msgid "Update existing disambiguation warning messages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:205
-msgid "At what page do you wish to start updating the disambiguation warning ?"
+msgid ""
+"At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:176
@@ -474,7 +477,7 @@ msgstr "Alle Fehler hoher Priorität laden"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:318
 msgid "Load all middle priority errors"
-msgstr "Alle Fehler hoher und mittlerer Priorität laden"
+msgstr "Alle Fehler mittlerer Priorität laden"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:323
 msgid "Load all high, middle and lowest priority errors"
@@ -835,9 +838,8 @@ msgid "Help requested on..."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:624
-#, fuzzy
 msgid "All disambiguations pages"
-msgstr "Begriffsklärungseiten zählen"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:633
 msgid "Local &Watch list"
@@ -932,7 +934,8 @@ msgid "Internal links in {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1017
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1028
@@ -1119,7 +1122,8 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:465
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:474
@@ -1131,7 +1135,8 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:492
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:501
@@ -1445,7 +1450,8 @@ msgstr "Sende {0}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:1235
 msgid "Would you like to add this page on your local Watch list ?"
-msgstr "Möchten Sie diese Seite zu Ihrer lokalen Beobachtungsliste hinzufügen?"
+msgstr ""
+"Möchten Sie diese Seite zu Ihrer lokalen Beobachtungsliste hinzufügen?"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:131
 #, java-format
@@ -1896,6 +1902,7 @@ msgstr ""
 #~ msgid "Work"
 #~ msgstr "Arbeit"
 
+#, java-format
 #~ msgid "Error n°{0} ({1}) - {2}"
 #~ msgstr "Fehler-No {0} ({1}) - {2}"
 
