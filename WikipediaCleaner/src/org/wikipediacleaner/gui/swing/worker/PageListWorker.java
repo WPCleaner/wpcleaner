@@ -39,9 +39,11 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 public class PageListWorker extends BasicWorker {
 
   public static enum Mode {
+    ALL_DAB_PAGES,
+    CATEGORY_MEMBERS,
     DIRECT,
+    EMBEDDED_IN,
     INTERNAL_LINKS,
-    CATEGORY_MEMBERS
   }
 
   private final List<String> pageNames;
@@ -90,7 +92,52 @@ public class PageListWorker extends BasicWorker {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       List<Page> pages = new ArrayList<Page>();
-      if (mode == Mode.INTERNAL_LINKS) {
+      final API api = APIFactory.getAPI();
+      boolean retrieveDisambiguationInformation = true;
+      switch (mode) {
+
+      // List all disambiguations pages
+      case ALL_DAB_PAGES:
+        if (pageNames != null) {
+          List<Page> tmpPages = new ArrayList<Page>(pageNames.size());
+          for (String pageName : pageNames) {
+            tmpPages.add(DataManager.getPage(getWikipedia(), pageName, null, null));
+          }
+          pages.addAll(mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages));
+          for (Page page : pages) {
+            page.setDisambiguationPage(Boolean.TRUE);
+          }
+          retrieveDisambiguationInformation = false;
+        }
+        break;
+
+      // List members of a category
+      case CATEGORY_MEMBERS:
+        for (String pageName : pageNames) {
+          List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0);
+          if (tmpPages != null) {
+            for (Page tmpPage : tmpPages) {
+              if (!pages.contains(tmpPage)) {
+                pages.add(tmpPage);
+              }
+            }
+          }
+        }
+        break;
+
+      // List pages embedding a template
+      case EMBEDDED_IN:
+        if (pageNames != null) {
+          List<Page> tmpPages = new ArrayList<Page>(pageNames.size());
+          for (String pageName : pageNames) {
+            tmpPages.add(DataManager.getPage(getWikipedia(), pageName, null, null));
+          }
+          pages.addAll(mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages));
+        }
+        break;
+
+      // List internal links in a page
+      case INTERNAL_LINKS:
         for (String dabList : pageNames) {
           Page page = DataManager.getPage(getWikipedia(), dabList, null, null);
           mw.retrieveAllLinks(getWikipedia(), page, null, null, true);
@@ -104,26 +151,18 @@ public class PageListWorker extends BasicWorker {
             }
           }
         }
-      } else if (mode == Mode.CATEGORY_MEMBERS) {
-        final API api = APIFactory.getAPI();
-        for (String pageName : pageNames) {
-          List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0);
-          if (tmpPages != null) {
-            for (Page tmpPage : tmpPages) {
-              if (!pages.contains(tmpPage)) {
-                pages.add(tmpPage);
-              }
-            }
-          }
-        }
-      } else {
+        break;
+
+      default:
         for (String page : pageNames) {
           pages.add(DataManager.getPage(getWikipedia(), page, null, null));
         }
-        final API api = APIFactory.getAPI();
         api.initializeRedirect(getWikipedia(), pages);
+        break;
       }
-      mw.retrieveDisambiguationInformation(getWikipedia(), pages, null, false, true);
+      if (retrieveDisambiguationInformation) {
+        mw.retrieveDisambiguationInformation(getWikipedia(), pages, null, false, true);
+      }
       if (!shouldContinue()) {
         return null;
       }
