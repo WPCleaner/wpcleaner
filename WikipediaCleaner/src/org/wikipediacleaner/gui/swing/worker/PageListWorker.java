@@ -103,9 +103,12 @@ public class PageListWorker extends BasicWorker {
           for (String pageName : pageNames) {
             tmpPages.add(DataManager.getPage(getWikipedia(), pageName, null, null));
           }
-          pages.addAll(mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages));
-          for (Page page : pages) {
-            page.setDisambiguationPage(Boolean.TRUE);
+          tmpPages = mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages);
+          for (Page page : tmpPages) {
+            if (page.isInMainNamespace()) {
+              page.setDisambiguationPage(Boolean.TRUE);
+              pages.add(page);
+            }
           }
           retrieveDisambiguationInformation = false;
         }
