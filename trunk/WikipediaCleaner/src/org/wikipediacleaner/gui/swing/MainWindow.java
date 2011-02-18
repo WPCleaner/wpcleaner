@@ -75,7 +75,6 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.worker.PageListWorker;
-import org.wikipediacleaner.gui.swing.worker.EmbeddedInWorker;
 import org.wikipediacleaner.gui.swing.worker.RandomPageWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -242,7 +241,7 @@ public class MainWindow
     buttonCurrentList.setEnabled(logged);
     buttonCheckWiki.setEnabled(logged);
     buttonHelpRequested.setEnabled(logged);
-    buttonAllDab.setEnabled(logged && false);
+    buttonAllDab.setEnabled(logged);
     buttonWatchedPages.setEnabled(logged);
     buttonRandomPages.setEnabled(logged);
     buttonBotTools.setEnabled(userLogged);
@@ -1075,7 +1074,14 @@ public class MainWindow
         Utilities.browseURL(url);
       }
     } else {
-      new EmbeddedInWorker(wikipedia, this, wikipedia.getTemplatesForHelpRequested()).start();
+      List<String> pageNames = new ArrayList<String>();
+      for (Page template : wikipedia.getTemplatesForHelpRequested()) {
+        pageNames.add(template.getTitle());
+      }
+      new PageListWorker(
+          wikipedia, this,
+          pageNames, PageListWorker.Mode.EMBEDDED_IN, false,
+          GT._("Help requested on...")).start();
     }
   }
 
@@ -1088,7 +1094,14 @@ public class MainWindow
       return;
     }
     if (wikipedia.getDisambiguationTemplates() != null) {
-      new EmbeddedInWorker(wikipedia, this, wikipedia.getDisambiguationTemplates()).start();
+      List<String> pageNames = new ArrayList<String>();
+      for (Page template : wikipedia.getDisambiguationTemplates()) {
+        pageNames.add(template.getTitle());
+      }
+      new PageListWorker(
+          wikipedia, this,
+          pageNames, PageListWorker.Mode.ALL_DAB_PAGES, false,
+          GT._("All disambiguations pages")).start();
     }
   }
 
@@ -1151,7 +1164,7 @@ public class MainWindow
   private void actionRandomPages() {
     String answer = askForValue(
         GT._("How many pages do you want?"),
-        "100", null);
+        "20", null);
     if (answer == null) {
       return;
     }
