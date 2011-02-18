@@ -20,6 +20,7 @@ package org.wikipediacleaner.api;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -382,7 +383,22 @@ public class MediaWiki extends MediaWikiController {
     while (hasRemainingTask() && !shouldStop()) {
       Object result = getNextResult();
       if (result instanceof List<?>) {
-        resultList.addAll((List<Page>) result);
+        List<Page> pageResult = (List<Page>) result;
+        for (Page page : pageResult) {
+          resultList.add(page);
+        }
+      }
+    }
+    Collections.sort(resultList);
+    Iterator<Page> itPage = resultList.iterator();
+    Page previousPage = null;
+    while (itPage.hasNext()) {
+      Page page = itPage.next();
+      if ((previousPage != null) &&
+          (Page.areSameTitle(previousPage.getTitle(), page.getTitle()))) {
+        itPage.remove();
+      } else {
+        previousPage = page;
       }
     }
     return resultList;
