@@ -379,10 +379,11 @@ public abstract class PageWindow
    * Add a component for the Full Analysis button.
    * 
    * @param panel Container.
+   * @param icon Flag indicating if an icon should be used.
    */
-  protected void addButtonFullAnalysis(JPanel panel) {
+  protected void addButtonFullAnalysis(JComponent panel, boolean icon) {
     if (buttonFullAnalysis == null) {
-      buttonFullAnalysis = createButtonFullAnalysis(this, false);
+      buttonFullAnalysis = createButtonFullAnalysis(this, icon);
       panel.add(buttonFullAnalysis);
     }
   }

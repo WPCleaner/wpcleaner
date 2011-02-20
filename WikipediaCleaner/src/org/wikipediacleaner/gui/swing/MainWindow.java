@@ -519,7 +519,9 @@ public class MainWindow
     constraints.weightx = 1;
 
     // Full analysis button
-    buttonFullAnalysis = Utilities.createJButton(GT._("&Full analysis"));
+    buttonFullAnalysis = Utilities.createJButton(
+        "gnome-system-run.png", EnumImageSize.NORMAL,
+        GT._("&Full analysis"), true);
     buttonFullAnalysis.setActionCommand(ACTION_FULL_ANALYSIS);
     buttonFullAnalysis.addActionListener(this);
     panel.add(buttonFullAnalysis, constraints);
