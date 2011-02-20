@@ -222,11 +222,14 @@ public class DisambiguationWindow extends PageWindow {
   private Component createPageComponents() {
     JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     addTextPageName(panel);
-    addButtonReload(panel, false);
-    addButtonView(panel, false);
-    addButtonSend(panel, false);
-    addButtonWatch(panel, false);
-    addButtonFullAnalysis(panel);
+    JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbar.setFloatable(false);
+    addButtonReload(toolbar, true);
+    addButtonView(toolbar, true);
+    addButtonSend(toolbar, true);
+    addButtonWatch(toolbar, true);
+    addButtonFullAnalysis(toolbar, true);
+    panel.add(toolbar);
     return panel;
   }
 
@@ -372,17 +375,31 @@ public class DisambiguationWindow extends PageWindow {
     panel.add(buttonSelectNextLinks, constraints);
     constraints.gridy++;
 
-    // Menu
-    JMenuBar menuBar = new JMenuBar();
-    menuBar.add(Box.createHorizontalGlue());
+    // Button toolbar
+    JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbar.setFloatable(false);
+    buttonFullAnalysisLink = Utilities.createJButton(
+        "gnome-system-run.png", EnumImageSize.NORMAL,
+        GT._("Full analysis (Alt + &F)"), false);
+    buttonFullAnalysisLink.setActionCommand(ACTION_FULL_ANALYSIS_LINK);
+    buttonFullAnalysisLink.addActionListener(this);
+    toolbar.add(buttonFullAnalysisLink);
+    buttonDisambiguationLink = Utilities.createJButton(
+        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        GT._("Disambiguation (Alt + &D)"), false);
+    buttonDisambiguationLink.setActionCommand(ACTION_DISAMBIGUATION_LINK);
+    buttonDisambiguationLink.addActionListener(this);
+    toolbar.add(buttonDisambiguationLink);
+    toolbar.addSeparator();
     linkCount = new JLabel(GT._("Link count"));
-    menuBar.add(linkCount);
-    panel.add(menuBar, constraints);
+    toolbar.add(linkCount);
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.weightx = 1;
+    constraints.weighty = 0;
+    panel.add(toolbar, constraints);
     constraints.gridy++;
 
     // Links
-    constraints.fill = GridBagConstraints.BOTH;
-    constraints.weighty = 1;
     listLinks = new JList(modelLinks);
     listLinks.setCellRenderer(new PageListCellRenderer());
     listLinks.addMouseListener(new PageListPopupListener(getWikipedia(), getTextContents(), this));
@@ -391,26 +408,9 @@ public class DisambiguationWindow extends PageWindow {
     scrollLinks.setMinimumSize(new Dimension(100, 100));
     scrollLinks.setPreferredSize(new Dimension(200, 500));
     scrollLinks.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    constraints.fill = GridBagConstraints.BOTH;
+    constraints.weighty = 1;
     panel.add(scrollLinks, constraints);
-    constraints.gridy++;
-
-    // Full analysis button
-    buttonFullAnalysisLink = Utilities.createJButton(GT._("&Full analysis"));
-    buttonFullAnalysisLink.setActionCommand(ACTION_FULL_ANALYSIS_LINK);
-    buttonFullAnalysisLink.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.weightx = 1;
-    constraints.weighty = 0;
-    panel.add(buttonFullAnalysisLink, constraints);
-    constraints.gridy++;
-
-    // Disambiguation button
-    buttonDisambiguationLink = Utilities.createJButton(GT._("&Disambiguation"));
-    buttonDisambiguationLink.setActionCommand(ACTION_DISAMBIGUATION_LINK);
-    buttonDisambiguationLink.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.weightx = 1;
-    panel.add(buttonDisambiguationLink, constraints);
     constraints.gridy++;
 
     return panel;

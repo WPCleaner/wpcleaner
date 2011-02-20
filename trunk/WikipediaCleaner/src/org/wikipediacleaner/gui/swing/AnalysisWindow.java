@@ -350,6 +350,7 @@ public class AnalysisWindow extends PageWindow {
     addButtonDisambiguation(toolbarButtons, true);
     toolbarButtons.addSeparator();
     addLblLastModified(toolbarButtons);
+    toolbarButtons.addSeparator();
     addLblEditProtectionLevel(toolbarButtons);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
@@ -443,32 +444,30 @@ public class AnalysisWindow extends PageWindow {
     constraints.weightx = 1;
     constraints.weighty = 0;
 
-    // Full analysis button
-    buttonFullAnalysisLink = Utilities.createJButton(GT._("&Full analysis"));
+    // Button toolbar
+    JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbar.setFloatable(false);
+    buttonFullAnalysisLink = Utilities.createJButton(
+        "gnome-system-run.png", EnumImageSize.NORMAL,
+        GT._("Full analysis (Alt + &F)"), false);
     buttonFullAnalysisLink.setActionCommand(ACTION_FULL_ANALYSIS_LINK);
     buttonFullAnalysisLink.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.weightx = 1;
-    constraints.weighty = 0;
-    panel.add(buttonFullAnalysisLink, constraints);
-    constraints.gridy++;
-
-    // Disambiguation button
-    buttonDisambiguationLink = Utilities.createJButton(GT._("&Disambiguation"));
+    toolbar.add(buttonFullAnalysisLink);
+    buttonDisambiguationLink = Utilities.createJButton(
+        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        GT._("Disambiguation (Alt + &D)"), false);
     buttonDisambiguationLink.setActionCommand(ACTION_DISAMBIGUATION_LINK);
     buttonDisambiguationLink.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.weightx = 1;
-    panel.add(buttonDisambiguationLink, constraints);
-    constraints.gridy++;
-
-    // Watch link button
-    buttonWatchLink = Utilities.createJButton(GT._("Add to &Watch list"));
+    toolbar.add(buttonDisambiguationLink);
+    buttonWatchLink = Utilities.createJButton(
+        "gnome-logviewer-add.png", EnumImageSize.NORMAL,
+        GT._("Add to Watch list (Alt + &W)"), false);
     buttonWatchLink.setActionCommand(ACTION_WATCH_LINK);
     buttonWatchLink.addActionListener(this);
+    toolbar.add(buttonWatchLink);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weightx = 1;
-    panel.add(buttonWatchLink, constraints);
+    panel.add(toolbar, constraints);
     constraints.gridy++;
 
     // Links

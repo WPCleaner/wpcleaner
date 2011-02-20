@@ -35,7 +35,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.table.TableColumnModel;
 
@@ -184,80 +186,59 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     constraints.weighty = 0;
     panel.add(labelLinksCount, constraints);
     constraints.gridy++;
-    
-    // Full analysis button
-    buttonFullAnalysis = Utilities.createJButton(GT._("&Full analysis"));
+
+    // Toolbar
+    JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbar.setFloatable(false);
+    buttonFullAnalysis = Utilities.createJButton(
+        "gnome-system-run.png", EnumImageSize.NORMAL,
+        GT._("Full analysis (Alt + &F)"), false);
     buttonFullAnalysis.setActionCommand(ACTION_FULL_ANALYSIS);
     buttonFullAnalysis.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.weightx = 1;
-    constraints.weighty = 0;
-    panel.add(buttonFullAnalysis, constraints);
-    constraints.gridy++;
-
-    // Disambiguation button
+    toolbar.add(buttonFullAnalysis);
     buttonDisambiguation = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("&Disambiguation"), true);
+        GT._("Disambiguation (Alt + &D)"), false);
     buttonDisambiguation.setActionCommand(ACTION_DISAMBIGUATION);
     buttonDisambiguation.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.weightx = 1;
-    panel.add(buttonDisambiguation, constraints);
-    constraints.gridy++;
-
-    // Update dab warning button
+    toolbar.add(buttonDisambiguation);
     buttonUpdateDabWarning = Utilities.createJButton(
         "gnome-dialog-warning.png", EnumImageSize.NORMAL,
-        GT._("Update disambiguation warning"), true);
+        GT._("Update disambiguation warning"), false);
     buttonUpdateDabWarning.setActionCommand(ACTION_UPDATE_DAB);
     buttonUpdateDabWarning.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.weightx = 1;
-    panel.add(buttonUpdateDabWarning, constraints);
-    constraints.gridy++;
-
-    // Update information button
-    buttonUpdateInfo = Utilities.createJButton(GT._("&Update page information"));
+    toolbar.add(buttonUpdateDabWarning);
+    buttonUpdateInfo = Utilities.createJButton(
+        "gnome-view-refresh.png", EnumImageSize.NORMAL,
+        GT._("Update page information (Alt + &U)"), false);
     buttonUpdateInfo.setActionCommand(ACTION_UPDATE);
     buttonUpdateInfo.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.weightx = 1;
-    panel.add(buttonUpdateInfo, constraints);
-    constraints.gridy++;
-
-    // Set comments button
-    buttonComments = Utilities.createJButton(GT._("Set page &comments"));
+    toolbar.add(buttonUpdateInfo);
+    buttonComments = Utilities.createJButton(
+        "tango-internet-group-chat.png", EnumImageSize.NORMAL,
+        GT._("Set page comments (Alt + &C)"), false);
     buttonComments.setActionCommand(ACTION_SET_COMMENTS);
     buttonComments.addActionListener(this);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.weightx = 1;
-    panel.add(buttonComments, constraints);
-    constraints.gridy++;
-
-    // Add / Remove button
+    toolbar.add(buttonComments);
     if (watchList) {
       buttonRemove = Utilities.createJButton(
           "gnome-list-remove.png", EnumImageSize.NORMAL,
-          GT._("&Remove page"), true);
+          GT._("Remove page (Alt + &R)"), false);
       buttonRemove.setActionCommand(ACTION_REMOVE);
       buttonRemove.addActionListener(this);
-      constraints.fill = GridBagConstraints.HORIZONTAL;
-      constraints.gridwidth = 1;
-      constraints.weightx = 1;
-      panel.add(buttonRemove, constraints);
-      constraints.gridx++;
-
+      toolbar.add(buttonRemove);
       buttonAdd = Utilities.createJButton(
           "gnome-list-add.png", EnumImageSize.NORMAL,
-          GT._("&Add page"), true);
+          GT._("Add page (Alt + &A)"), false);
       buttonAdd.setActionCommand(ACTION_ADD);
       buttonAdd.addActionListener(this);
-      constraints.fill = GridBagConstraints.HORIZONTAL;
-      constraints.weightx = 1;
-      panel.add(buttonAdd, constraints);
-      constraints.gridy++;
+      toolbar.add(buttonAdd);
     }
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.weightx = 1;
+    constraints.weighty = 0;
+    panel.add(toolbar, constraints);
+    constraints.gridy++;
 
     return panel;
   }
