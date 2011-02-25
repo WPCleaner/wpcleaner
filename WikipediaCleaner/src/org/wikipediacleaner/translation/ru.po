@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-02-20 11:27+0100\n"
+"POT-Creation-Date: 2011-02-25 22:17+0100\n"
 "PO-Revision-Date: 2010-10-16 10:58+0000\n"
 "Last-Translator: Sergey Basalaev <SBasalaev@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -372,14 +372,14 @@ msgstr "Считать другие страницы"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:452
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:383
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:195
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:199
 #, fuzzy
 msgid "Full analysis (Alt + &F)"
 msgstr "Полный анализ"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:458
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:389
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:201
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:205
 #, fuzzy
 msgid "Disambiguation (Alt + &D)"
 msgstr "Значения"
@@ -395,7 +395,7 @@ msgstr "Хотите добавить эти страницы в ваш лока
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:747
 #: org/wikipediacleaner/gui/swing/MainWindow.java:974
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:309
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:329
 msgid ""
 "You need to define the 'dab_warning_template' property in WikiCleaner "
 "configuration."
@@ -405,7 +405,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:751
 #: org/wikipediacleaner/gui/swing/MainWindow.java:978
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:313
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:333
 #, fuzzy
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr "Обновить предупреждение о страницах значений на странице обсуждений"
@@ -853,7 +853,7 @@ msgid "Category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:558
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:207
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:211
 #, fuzzy
 msgid "Update disambiguation warning"
 msgstr "Обновление предупреждения о значениях - {0}"
@@ -1304,31 +1304,41 @@ msgstr "&OK"
 msgid "&Remove page comments"
 msgstr "&Удалить комментарии к странице"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:182
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:186
 msgid "Backlinks"
 msgstr "Обратные ссылки"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:213
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:217
 #, fuzzy
 msgid "Update page information (Alt + &U)"
 msgstr "&Обновить информацию о странице"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:219
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:223
 #, fuzzy
 msgid "Set page comments (Alt + &C)"
 msgstr "Задать &комментарии к странице"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:226
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:229
+#: org/wikipediacleaner/gui/swing/PageWindow.java:636
+msgid "External Viewer (Alt + &E)"
+msgstr "Внешний просмотрщик (Alt + &E)"
+
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:235
+#: org/wikipediacleaner/gui/swing/PageWindow.java:670
+msgid "History (Alt + &H)"
+msgstr "История (Alt + &H)"
+
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:242
 #, fuzzy
 msgid "Remove page (Alt + &R)"
 msgstr "Перезагрузить (Alt + &R)"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:232
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:248
 #, fuzzy
 msgid "Add page (Alt + &A)"
 msgstr "Перезагрузить (Alt + &R)"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:326
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:346
 msgid ""
 "You are about to remove the pages from your local Watch list.\n"
 "Are you sure ?"
@@ -1336,11 +1346,11 @@ msgstr ""
 "Вы удаляете страницы из вашего локального списка наблюдения.\n"
 "Вы уверены ?"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:346
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:366
 msgid "Enter the page title you want to add to your local watch list"
 msgstr "Введите заголовок страницы для добавления в локаьный список наблюдения"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:436
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:480
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
@@ -1425,17 +1435,9 @@ msgstr "Повторить"
 msgid "Validate (Alt + &V)"
 msgstr "Проверить (Alt + &V)"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:636
-msgid "External Viewer (Alt + &E)"
-msgstr "Внешний просмотрщик (Alt + &E)"
-
 #: org/wikipediacleaner/gui/swing/PageWindow.java:638
 msgid "&External Viewer"
 msgstr "Внешний просмотрщик"
-
-#: org/wikipediacleaner/gui/swing/PageWindow.java:670
-msgid "History (Alt + &H)"
-msgstr "История (Alt + &H)"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:672
 msgid "&History"

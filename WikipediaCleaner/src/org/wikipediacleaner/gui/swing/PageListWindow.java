@@ -70,6 +70,8 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   private final static String ACTION_SET_COMMENTS   = "SET COMMENTS";
   private final static String ACTION_UPDATE         = "UPDATE INFO";
   private final static String ACTION_UPDATE_DAB     = "UPDATE DAB WARNING";
+  private final static String ACTION_VIEW           = "VIEW";
+  private final static String ACTION_VIEW_HISTORY   = "VIEW_HISTORY";
 
   String title;
   List<Page> pages;
@@ -83,9 +85,11 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   private JButton buttonFullAnalysis;
   private JButton buttonDisambiguation;
   private JButton buttonUpdateDabWarning;
-  private JButton buttonRemove;
   private JButton buttonUpdateInfo;
   private JButton buttonComments;
+  private JButton buttonView;
+  private JButton buttonViewHistory;
+  private JButton buttonRemove;
   private JButton buttonAdd;
 
   /**
@@ -220,6 +224,18 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     buttonComments.setActionCommand(ACTION_SET_COMMENTS);
     buttonComments.addActionListener(this);
     toolbar.add(buttonComments);
+    buttonView = Utilities.createJButton(
+        "gnome-emblem-web.png", EnumImageSize.NORMAL,
+        GT._("External Viewer (Alt + &E)"), false);
+    buttonView.setActionCommand(ACTION_VIEW);
+    buttonView.addActionListener(this);
+    toolbar.add(buttonView);
+    buttonViewHistory = Utilities.createJButton(
+        "gnome-emblem-documents.png", EnumImageSize.NORMAL,
+        GT._("History (Alt + &H)"), false);
+    buttonViewHistory.setActionCommand(ACTION_VIEW_HISTORY);
+    buttonViewHistory.addActionListener(this);
+    toolbar.add(buttonViewHistory);
     if (watchList) {
       buttonRemove = Utilities.createJButton(
           "gnome-list-remove.png", EnumImageSize.NORMAL,
@@ -266,6 +282,10 @@ public class PageListWindow extends BasicWindow implements ActionListener {
       actionSetComments();
     } else if (ACTION_UPDATE.equals(e.getActionCommand())) {
       actionUpdateInfo();
+    } else if (ACTION_VIEW.equals(e.getActionCommand())) {
+      actionView();
+    } else if (ACTION_VIEW_HISTORY.equals(e.getActionCommand())) {
+      actionViewHistory();
     } else if (ACTION_ADD.equals(e.getActionCommand())) {
       actionAdd();
     }
@@ -387,6 +407,30 @@ public class PageListWindow extends BasicWindow implements ActionListener {
       
     });
     updateWorker.start();
+  }
+
+  /**
+   * Action called when View button is pressed. 
+   */
+  private void actionView() {
+    Page[] tmpPages = getSelectedPages();
+    if (tmpPages != null) {
+      for (Page page : tmpPages) {
+        Utilities.browseURL(getWikipedia(), page.getTitle(), false);
+      }
+    }
+  }
+
+  /**
+   * Action called when View History button is pressed. 
+   */
+  private void actionViewHistory() {
+    Page[] tmpPages = getSelectedPages();
+    if (tmpPages != null) {
+      for (Page page : tmpPages) {
+        Utilities.browseURL(getWikipedia(), page.getTitle(), "history");
+      }
+    }
   }
 
   /**
