@@ -19,6 +19,7 @@
 package org.wikipediacleaner.gui.swing.component;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 
 import javax.swing.AbstractListModel;
@@ -98,6 +99,31 @@ public class PageListModel extends AbstractListModel {
    */
   public int getSize() {
     return filteredList.size();
+  }
+
+  /**
+   * Resets the list to a given list.
+   * 
+   * @param elements All elements.
+   */
+  public void setElements(Collection<Page> elements) {
+    clear();
+    if ((elements == null) || (elements.isEmpty())) {
+      return;
+    }
+    fullList.addAll(elements);
+    if (comparator != null) {
+      Collections.sort(fullList, comparator);
+    }
+    for (int i = 0; i < fullList.size(); i++) {
+      Page page = fullList.get(i);
+      if (filterPage(page)) {
+        filteredList.add(page);
+      }
+    }
+    if (!filteredList.isEmpty()) {
+      fireIntervalAdded(this, 0, filteredList.size() - 1);
+    }
   }
 
   /**

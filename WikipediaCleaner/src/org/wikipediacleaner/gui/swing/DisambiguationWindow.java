@@ -491,18 +491,14 @@ public class DisambiguationWindow extends PageWindow {
     super.afterFinishedReloadWorker();
     Page page = getPage();
     List<Page> links = page.getBackLinksWithRedirects();
-    if (links != null) {
-      for (Page p : links) {
-        modelLinks.addElement(p);
-      }
-    }
+    modelLinks.setElements(links);
     Integer countMain = page.getBacklinksCountInMainNamespace();
     Integer countTotal = page.getBacklinksCount();
     linkCount.setText(
         ((countMain != null) ? countMain.toString() : "?") +
         " / " +
         ((countTotal != null) ? countTotal.toString() : "?"));
-    
+
     // Update automatic fixing
     Configuration config = Configuration.getConfiguration();
     Object[] automaticFixing = config.getPojoArray(
