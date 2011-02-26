@@ -610,9 +610,7 @@ public class AnalysisWindow extends PageWindow {
     mapLinksCount = new HashMap<String, Integer>();
     if ((page != null) && (page.getLinks() != null)) {
       List<Page> links = page.getLinks();
-      for (Page p : links) {
-        modelLinks.addElement(p);
-      }
+      modelLinks.setElements(links);
       countOccurences(page.getContents(), true);
       for (Page p : links) {
         if ((p.isDisambiguationPage()) && (p.getCountOccurence() > 0)) {

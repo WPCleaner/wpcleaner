@@ -452,10 +452,7 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
       public void afterFinished(
           @SuppressWarnings("unused") BasicWorker worker,
           @SuppressWarnings("unused") boolean ok) {
-        modelPages.clear();
-        for (Page p : page.getBackLinksWithRedirects()) {
-          modelPages.addElement(p);
-        }
+        modelPages.setElements(page.getBackLinksWithRedirects());
       }
     });
     reloadWorker.start();
