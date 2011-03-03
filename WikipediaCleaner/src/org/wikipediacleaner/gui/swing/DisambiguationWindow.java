@@ -82,6 +82,7 @@ public class DisambiguationWindow extends PageWindow {
   private final static String ACTION_ADD_AUTOMATIC_FIXING  = "ADD AUTOMATIC FIXING";
   private final static String ACTION_CLR_AUTOMATIC_FIXING  = "CLR AUTOMATIC FIXING";
   private final static String ACTION_DISAMBIGUATION_LINK   = "DISAMBIGUATION LINK";
+  private final static String ACTION_EXTERNAL_VIEWER_LINK  = "EXTERNAL VIEWER LINK";
   private final static String ACTION_FULL_ANALYSIS_LINK    = "FULL ANALYSIS LINK";
   private final static String ACTION_MDF_AUTOMATIC_FIXING  = "MDF AUTOMATIC FIXING";
   private final static String ACTION_NEXT_LINKS            = "NEXT LINKS";
@@ -105,6 +106,7 @@ public class DisambiguationWindow extends PageWindow {
   JLabel linkCount;
   private JButton buttonFullAnalysisLink;
   private JButton buttonDisambiguationLink;
+  private JButton buttonExternalViewerLink;
   private JButton buttonSelectNextLinks;
 
   /**
@@ -390,6 +392,12 @@ public class DisambiguationWindow extends PageWindow {
     buttonDisambiguationLink.setActionCommand(ACTION_DISAMBIGUATION_LINK);
     buttonDisambiguationLink.addActionListener(this);
     toolbar.add(buttonDisambiguationLink);
+    buttonExternalViewerLink = Utilities.createJButton(
+        "gnome-emblem-web.png", EnumImageSize.NORMAL,
+        GT._("External Viewer"), false);
+    buttonExternalViewerLink.setActionCommand(ACTION_EXTERNAL_VIEWER_LINK);
+    buttonExternalViewerLink.addActionListener(this);
+    toolbar.add(buttonExternalViewerLink);
     toolbar.addSeparator();
     linkCount = new JLabel(GT._("Link count"));
     toolbar.add(linkCount);
@@ -444,6 +452,8 @@ public class DisambiguationWindow extends PageWindow {
       actionFullAnalysisLink();
     } else if (ACTION_DISAMBIGUATION_LINK.equals(e.getActionCommand())) {
       actionDisambiguationLink();
+    } else if (ACTION_EXTERNAL_VIEWER_LINK.equals(e.getActionCommand())) {
+      actionExternalViewerLink();
     } else if (ACTION_NEXT_LINKS.equals(e.getActionCommand())) {
       actionSelectNextLinks();
     } else if (ACTION_ADD_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
@@ -702,6 +712,17 @@ public class DisambiguationWindow extends PageWindow {
   private void actionDisambiguationLink() {
     Controller.runDisambiguationAnalysis(
         getParentComponent(), listLinks.getSelectedValues(), getWikipedia());
+  }
+
+  /**
+   * Action called when External Viewer button is pressed.
+   */
+  private void actionExternalViewerLink() {
+    for (Object selection : listLinks.getSelectedValues()) {
+      if (selection instanceof Page) {
+        Utilities.browseURL(getWikipedia(), ((Page) selection).getTitle(), false);
+      }
+    }
   }
 
   /**
