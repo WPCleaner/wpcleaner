@@ -218,10 +218,10 @@ public class UpdateDabWarningWorker extends BasicWorker {
                 "This feature is currently under development, please check the modification.\n" +
                 "Do you want to continue ?");
             if (answer != JOptionPane.YES_OPTION) {
-              return Integer.valueOf(count);
+              return Integer.valueOf(lastCount);
             }
           } else {
-            return Integer.valueOf(count);
+            return Integer.valueOf(lastCount);
           }*/
         }
       }
