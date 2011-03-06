@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-03-03 23:40+0100\n"
+"POT-Creation-Date: 2011-03-06 10:47+0100\n"
 "PO-Revision-Date: 2010-10-01 18:14+0000\n"
 "Last-Translator: Luisa Ravelli <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1321,6 +1321,11 @@ msgstr ""
 "speciali"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:480
+#, java-format
+msgid "{0} pages"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:482
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
