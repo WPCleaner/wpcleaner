@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-03-03 23:40+0100\n"
+"POT-Creation-Date: 2011-03-06 10:47+0100\n"
 "PO-Revision-Date: 2010-06-18 16:04+0000\n"
 "Last-Translator: Joe Hansen <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -1332,6 +1332,11 @@ msgid "Enter the page title you want to add to your local watch list"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:480
+#, fuzzy, java-format
+msgid "{0} pages"
+msgstr "&Læs sider"
+
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:482
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""

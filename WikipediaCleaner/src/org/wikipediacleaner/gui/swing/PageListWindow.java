@@ -476,9 +476,11 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     } else {
       txtAll = "" + backlinks;
     }
-    labelLinksCount.setText(GT._(
-        "Backlinks - Main namespace: {0}, All namespaces: {1}",
-        new Object[] { txtMain, txtAll }));
+    labelLinksCount.setText(
+        GT._("{0} pages", Integer.toString(pages.size()) ) + ", " +
+        GT._(
+            "Backlinks - Main namespace: {0}, All namespaces: {1}",
+            new Object[] { txtMain, txtAll }));
   }
   
   /**

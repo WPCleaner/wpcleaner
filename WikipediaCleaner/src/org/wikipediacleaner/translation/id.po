@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-03-03 23:40+0100\n"
+"POT-Creation-Date: 2011-03-06 10:47+0100\n"
 "PO-Revision-Date: 2010-05-01 07:19+0000\n"
 "Last-Translator: Iwan Novirion <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -1363,6 +1363,11 @@ msgstr ""
 "Ketik judul artikel yang akan ditambahkan pada daftar pantauan lokal anda"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:480
+#, fuzzy, java-format
+msgid "{0} pages"
+msgstr "&Muat halaman"
+
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:482
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr "Pranala - Ruangnama utama: {0}, Semua ruangnama: {1}"
