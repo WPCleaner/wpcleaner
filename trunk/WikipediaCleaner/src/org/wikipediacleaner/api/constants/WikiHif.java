@@ -22,14 +22,14 @@ import java.awt.ComponentOrientation;
 
 
 /**
- * Configuration for <a href="http://hu.wikipedia.org/w/index.php">Hungarian wikipedia</a>.
+ * Configuration for <a href="http://hif.wikipedia.org/w/index.php">Fiji Hindi wikipedia</a>.
  */
-class WikiHu {
+class WikiHif {
 
-  private final static String baseUrl = "http://hu.wikipedia.org/w/";
+  private final static String baseUrl = "http://hif.wikipedia.org/w/";
 
-  final static String code     = "hu";
-  final static String name     = "Magyar Wikipedia";
+  final static String code     = "hif";
+  final static String name     = "Fiji Hindi Wikipedia";
 
   final static String apiUrl   = baseUrl + "api.php";
   final static String queryUrl = baseUrl + "query.php";
@@ -37,5 +37,5 @@ class WikiHu {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String configuration = "Szerkesztő:NicoV/WikiCleanerConfiguration";
+  final static String configuration = "User:NicoV/WikiCleanerConfiguration";
 }
