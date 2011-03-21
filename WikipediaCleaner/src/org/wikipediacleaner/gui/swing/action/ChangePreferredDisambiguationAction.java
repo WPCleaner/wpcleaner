@@ -79,7 +79,7 @@ public class ChangePreferredDisambiguationAction extends TextAction {
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     Configuration config = Configuration.getConfiguration();
     List<String> preferredDabs = config.getStringSubList(
-        Configuration.SUB_ARRAY_PREFERRED_DAB, page);
+        null, Configuration.SUB_ARRAY_PREFERRED_DAB, page);
     if (add) {
       String value = preferred;
       if (value == null) {
@@ -88,13 +88,13 @@ public class ChangePreferredDisambiguationAction extends TextAction {
       if ((value != null) && !preferredDabs.contains(value)) {
         preferredDabs.add(value);
         Collections.sort(preferredDabs);
-        config.setStringSubList(Configuration.SUB_ARRAY_PREFERRED_DAB, page, preferredDabs);
+        config.setStringSubList(null, Configuration.SUB_ARRAY_PREFERRED_DAB, page, preferredDabs);
       }
     } else {
       if ((preferred != null) && preferredDabs.contains(preferred)) {
         preferredDabs.remove(preferred);
         Collections.sort(preferredDabs);
-        config.setStringSubList(Configuration.SUB_ARRAY_PREFERRED_DAB, page, preferredDabs);
+        config.setStringSubList(null, Configuration.SUB_ARRAY_PREFERRED_DAB, page, preferredDabs);
       }
     }
   }
