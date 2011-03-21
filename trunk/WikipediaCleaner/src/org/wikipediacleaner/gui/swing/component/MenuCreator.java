@@ -231,7 +231,7 @@ public class MenuCreator {
     // Retrieve preferred disambiguations
     Configuration config = Configuration.getConfiguration();
     List<String> preferredDabs = config.getStringSubList(
-        Configuration.SUB_ARRAY_PREFERRED_DAB, disambigPage.getTitle());
+        null, Configuration.SUB_ARRAY_PREFERRED_DAB, disambigPage.getTitle());
 
     // Retrieve various informations
     List<String> wiktionary = disambigPage.getWiktionaryLinks();
@@ -433,7 +433,7 @@ public class MenuCreator {
       // Retrieve preferred disambiguations
       Configuration config = Configuration.getConfiguration();
       List<String> preferredDabs = config.getStringSubList(
-          Configuration.SUB_ARRAY_PREFERRED_DAB, page.getTitle());
+          null, Configuration.SUB_ARRAY_PREFERRED_DAB, page.getTitle());
 
       // Last replacement
       int fixedBeginLink = 0;

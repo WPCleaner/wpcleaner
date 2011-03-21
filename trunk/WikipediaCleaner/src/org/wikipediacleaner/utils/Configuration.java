@@ -177,12 +177,30 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * @return Preferences.
+   */
+  private Preferences getPreferences() {
+    return getPreferences(null);
+  }
+
+  /**
+   * @param wikipedia Wikipedia.
+   * @return Preferences.
+   */
+  private Preferences getPreferences(EnumWikipedia wikipedia) {
+    if (wikipedia == null) {
+      return preferences;
+    }
+    return null;
+  }
+
+  /**
    * Write configuration.
    */
   public void save() {
-    if (preferences != null) {
+    if (getPreferences() != null) {
       try {
-        preferences.flush();
+        getPreferences().flush();
       } catch (BackingStoreException e) {
         // Nothing can be done
       }
@@ -203,8 +221,8 @@ public class Configuration implements WindowListener {
    * @return Property value.
    */
   public String getString(String property, String defaultValue) {
-    if (preferences != null) {
-      return preferences.get(property, defaultValue);
+    if (getPreferences() != null) {
+      return getPreferences().get(property, defaultValue);
     }
     return defaultValue;
   }
@@ -214,11 +232,11 @@ public class Configuration implements WindowListener {
    * @param value Property value.
    */
   public void setString(String property, String value) {
-    if (preferences != null) {
+    if (getPreferences() != null) {
       if (value != null) {
-        preferences.put(property, value);
+        getPreferences().put(property, value);
       } else {
-        preferences.remove(property);
+        getPreferences().remove(property);
       }
     }
   }
@@ -231,7 +249,7 @@ public class Configuration implements WindowListener {
     if (value != null) {
       setString(property, new String(value));
     } else {
-      preferences.remove(property);
+      getPreferences().remove(property);
     }
   }
 
@@ -241,8 +259,8 @@ public class Configuration implements WindowListener {
    * @param value Sub property value.
    */
   public void setSubString(String property, String subProperty, String value) {
-    if (preferences != null) {
-      Preferences node = preferences.node(property);
+    if (getPreferences() != null) {
+      Preferences node = getPreferences().node(property);
       if (value != null) {
         node.put(subProperty, value);
       } else {
@@ -257,9 +275,9 @@ public class Configuration implements WindowListener {
    */
   public Properties getProperties(String property) {
     Properties values = new Properties();
-    if (preferences != null) {
+    if (getPreferences() != null) {
       try {
-        Preferences node = preferences.node(property);
+        Preferences node = getPreferences().node(property);
         String[] children = node.keys();
         for (String child : children) {
           values.setProperty(child, node.get(child, ""));
@@ -295,12 +313,12 @@ public class Configuration implements WindowListener {
    * @param value Property value.
    */
   public void setProperties(String property, Properties value) {
-    if (preferences != null) {
+    if (getPreferences() != null) {
       // First, remove the old properties
-      removeNode(preferences, property);
+      removeNode(getPreferences(), property);
 
       // Create the new ones
-      Preferences node = preferences.node(property);
+      Preferences node = getPreferences().node(property);
       if (value != null) {
         for (Entry<Object, Object> p : value.entrySet()) {
           node.put(p.getKey().toString(), p.getValue().toString());
@@ -315,9 +333,9 @@ public class Configuration implements WindowListener {
    */
   public List<String> getStringList(String property) {
     List<String> result = new ArrayList<String>();
-    if (preferences != null) {
+    if (getPreferences() != null) {
       try {
-        Preferences node = preferences.node(property);
+        Preferences node = getPreferences().node(property);
         String[] children = node.keys();
         for (int i = 0; i < children.length; i++) {
           result.add(node.get(children[i], ""));
@@ -334,12 +352,12 @@ public class Configuration implements WindowListener {
    * @param values Property values.
    */
   public void setStringList(String property, List<String> values) {
-    if (preferences != null) {
+    if (getPreferences() != null) {
       // First, remove the old array list
-      removeNode(preferences, property);
+      removeNode(getPreferences(), property);
 
       // Create the new one
-      Preferences node = preferences.node(property);
+      Preferences node = getPreferences().node(property);
       if (values != null) {
         for (int i = 0; i < values.size(); i++) {
           node.put(Integer.toString(i), values.get(i));
@@ -349,19 +367,21 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param subProperty Sub-property name.
    * @return List of property values.
    */
-  public List<String> getStringSubList(String property, String subProperty) {
+  public List<String> getStringSubList(
+      EnumWikipedia wikipedia, String property, String subProperty) {
     List<String> result = new ArrayList<String>();
-    if (preferences != null) {
+    if (getPreferences(wikipedia) != null) {
       try {
         String nodeName = property + "/" + subProperty;
-        if (!preferences.nodeExists(nodeName)) {
+        if (!getPreferences(wikipedia).nodeExists(nodeName)) {
           return result;
         }
-        Preferences node = preferences.node(nodeName);
+        Preferences node = getPreferences(wikipedia).node(nodeName);
         String[] children = node.keys();
         for (int i = 0; i < children.length; i++) {
           result.add(node.get(children[i], ""));
@@ -374,19 +394,23 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param subProperty Sub-property name.
    * @param values Property values.
    */
-  public void setStringSubList(String property, String subProperty, List<String> values) {
-    if (preferences != null) {
+  public void setStringSubList(
+      EnumWikipedia wikipedia,
+      String property, String subProperty,
+      List<String> values) {
+    if (getPreferences(wikipedia) != null) {
       String nodeName = property + "/" + subProperty;
 
       // First, remove the old array list
-      removeNode(preferences, nodeName);
+      removeNode(getPreferences(wikipedia), nodeName);
 
       // Create the new one
-      Preferences node = preferences.node(nodeName);
+      Preferences node = getPreferences(wikipedia).node(nodeName);
       if (values != null) {
         for (int i = 0; i < values.size(); i++) {
           node.put(Integer.toString(i), values.get(i));
@@ -401,9 +425,9 @@ public class Configuration implements WindowListener {
    * @param idName Name of the field used as an Id.
    */
   public void setPojoMap(String property, Map<String, Object> values, String idName) {
-    if (preferences != null) {
+    if (getPreferences() != null) {
       // First, remove the old array list
-      removeNode(preferences, property);
+      removeNode(getPreferences(), property);
       
       // Create the new one
       if (values != null) {
@@ -422,11 +446,14 @@ public class Configuration implements WindowListener {
    */
   public Object getPojo(String property, String name, Class valueClass) {
     try {
-      if ((preferences != null) && (property != null) && (name != null) && (valueClass != null)) {
-        if (!preferences.nodeExists(property)) {
+      if ((getPreferences() != null) &&
+          (property != null) &&
+          (name != null) &&
+          (valueClass != null)) {
+        if (!getPreferences().nodeExists(property)) {
           return null;
         }
-        Preferences globalNode = preferences.node(property);
+        Preferences globalNode = getPreferences().node(property);
         if (!globalNode.nodeExists(name)) {
           return null;
         }
@@ -483,8 +510,8 @@ public class Configuration implements WindowListener {
    * @param id Id of the value.
    */
   public void removePojo(String property, String id) {
-    if ((preferences != null) && (property != null) && (id != null)) {
-      Preferences globalNode = preferences.node(property);
+    if ((getPreferences() != null) && (property != null) && (id != null)) {
+      Preferences globalNode = getPreferences().node(property);
       try {
         if (globalNode.nodeExists(id)) {
           Preferences node = globalNode.node(id);
@@ -502,10 +529,13 @@ public class Configuration implements WindowListener {
    * @param id Id of the value.
    */
   public void addPojo(String property, Object value, String id) {
-    if ((preferences != null) && (property != null) && (value != null) && (id != null)) {
+    if ((getPreferences() != null) &&
+        (property != null) &&
+        (value != null) &&
+        (id != null)) {
       try {
         // Remove the old object
-        Preferences globalNode = preferences.node(property);
+        Preferences globalNode = getPreferences().node(property);
         removeNode(globalNode, id);
         
         // Add the new object
@@ -554,11 +584,14 @@ public class Configuration implements WindowListener {
    */
   public Object[] getPojoArray(String property, String name, Class valueClass) {
     try {
-      if ((preferences != null) && (property != null) && (name != null) && (valueClass != null)) {
-        if (!preferences.nodeExists(property)) {
+      if ((getPreferences() != null) &&
+          (property != null) &&
+          (name != null) &&
+          (valueClass != null)) {
+        if (!getPreferences().nodeExists(property)) {
           return null;
         }
-        Preferences globalNode = preferences.node(property);
+        Preferences globalNode = getPreferences().node(property);
         if (!globalNode.nodeExists(name)) {
           return null;
         }
@@ -623,10 +656,13 @@ public class Configuration implements WindowListener {
    * @param id Id of the value.
    */
   public void addPojoArray(String property, Object[] values, String id) {
-    if ((preferences != null) && (property != null) && (values != null) && (id != null)) {
+    if ((getPreferences() != null) &&
+        (property != null) &&
+        (values != null) &&
+        (id != null)) {
       try {
         // Remove the old object
-        Preferences globalNode = preferences.node(property);
+        Preferences globalNode = getPreferences().node(property);
         removeNode(globalNode, id);
         
         // Add the new objects
@@ -676,8 +712,8 @@ public class Configuration implements WindowListener {
    * @return Property value.
    */
   public int getInt(String property, int defaultValue) {
-    if (preferences != null) {
-      return preferences.getInt(property, defaultValue);
+    if (getPreferences() != null) {
+      return getPreferences().getInt(property, defaultValue);
     }
     return defaultValue;
   }
@@ -687,8 +723,8 @@ public class Configuration implements WindowListener {
    * @param value Property value.
    */
   public void setInt(String property, int value) {
-    if (preferences != null) {
-      preferences.putInt(property, value);
+    if (getPreferences() != null) {
+      getPreferences().putInt(property, value);
     }
   }
 
@@ -698,8 +734,8 @@ public class Configuration implements WindowListener {
    * @return Property value.
    */
   public boolean getBoolean(String property, boolean defaultValue) {
-    if (preferences != null) {
-      return preferences.getBoolean(property, defaultValue);
+    if (getPreferences() != null) {
+      return getPreferences().getBoolean(property, defaultValue);
     }
     return defaultValue;
   }
@@ -709,8 +745,8 @@ public class Configuration implements WindowListener {
    * @param value Property value.
    */
   public void setBoolean(String property, boolean value) {
-    if (preferences != null) {
-      preferences.putBoolean(property, value);
+    if (getPreferences() != null) {
+      getPreferences().putBoolean(property, value);
     }
   }
 
@@ -718,8 +754,8 @@ public class Configuration implements WindowListener {
    * @return Wikipedia.
    */
   public EnumWikipedia getWikipedia() {
-    if (preferences != null) {
-      String wikipedia = preferences.get(PROPERTY_WIKIPEDIA, null);
+    if (getPreferences() != null) {
+      String wikipedia = getPreferences().get(PROPERTY_WIKIPEDIA, null);
       if (wikipedia != null) {
         return EnumWikipedia.getWikipedia(wikipedia);
       }
@@ -731,8 +767,8 @@ public class Configuration implements WindowListener {
    * @param wikipedia Wikipedia.
    */
   public void setWikipedia(EnumWikipedia wikipedia) {
-    if ((preferences != null) && (wikipedia != null)) {
-      preferences.put(PROPERTY_WIKIPEDIA, wikipedia.getCode());
+    if ((getPreferences() != null) && (wikipedia != null)) {
+      getPreferences().put(PROPERTY_WIKIPEDIA, wikipedia.getCode());
     }
   }
 
@@ -740,8 +776,8 @@ public class Configuration implements WindowListener {
    * @return Language.
    */
   public EnumLanguage getLanguage() {
-    if (preferences != null) {
-      String language = preferences.get(PROPERTY_LANGUAGE, null);
+    if (getPreferences() != null) {
+      String language = getPreferences().get(PROPERTY_LANGUAGE, null);
       if (language != null) {
         return EnumLanguage.getLanguage(language);
       }
@@ -753,8 +789,8 @@ public class Configuration implements WindowListener {
    * @param language Language.
    */
   public void setLanguage(EnumLanguage language) {
-    if ((preferences != null) && (language != null)) {
-      preferences.put(PROPERTY_LANGUAGE, language.getCode());
+    if ((getPreferences() != null) && (language != null)) {
+      getPreferences().put(PROPERTY_LANGUAGE, language.getCode());
     }
   }
 
@@ -776,12 +812,12 @@ public class Configuration implements WindowListener {
     }
     window.addWindowListener(this);
     if (getBoolean(BOOLEAN_RESTORE_WINDOW, DEFAULT_RESTORE_WINDOW) &&
-        (preferences != null)) {
+        (getPreferences() != null)) {
       try {
-        if (!preferences.nodeExists(PROPERTY_WINDOW)) {
+        if (!getPreferences().nodeExists(PROPERTY_WINDOW)) {
           return;
         }
-        Preferences node = preferences.node(PROPERTY_WINDOW);
+        Preferences node = getPreferences().node(PROPERTY_WINDOW);
         if (!node.nodeExists(window.getName())) {
           return;
         }
@@ -817,8 +853,9 @@ public class Configuration implements WindowListener {
    */
   public void saveWindowPosition(Window window) {
     if (getBoolean(BOOLEAN_SAVE_WINDOW, DEFAULT_SAVE_WINDOW) &&
-        (window != null) && (preferences != null)) {
-      Preferences node = preferences.node(PROPERTY_WINDOW);
+        (window != null) &&
+        (getPreferences() != null)) {
+      Preferences node = getPreferences().node(PROPERTY_WINDOW);
       node = node.node(window.getName());
       node.putInt(PROPERTY_WINDOW_X, window.getX());
       node.putInt(PROPERTY_WINDOW_Y, window.getY());
