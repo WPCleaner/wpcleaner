@@ -1311,11 +1311,11 @@ public class MainWindow
             } catch (IOException e) {
               // Nothing
             }
+            CheckErrorAlgorithms.initializeAlgorithms(getWikipedia());
           }
         } catch (APIException e) {
           System.err.println("Error retrieving Check Wiki configuration: " + e.getMessage());
         }
-        CheckErrorAlgorithms.initializeAlgorithms(getWikipedia());
       } catch (APIException e) {
         return e;
       }
