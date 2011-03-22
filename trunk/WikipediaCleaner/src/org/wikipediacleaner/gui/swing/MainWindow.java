@@ -71,6 +71,7 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.gui.swing.basic.BasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
@@ -157,6 +158,29 @@ public class MainWindow
   boolean logged = false;
   boolean userLogged = false;
 
+  private static class MainWindowListener implements BasicWindowListener {
+
+    public MainWindowListener() {
+      //
+    }
+
+    /* (non-Javadoc)
+     * @see org.wikipediacleaner.gui.swing.basic.BasicWindowListener#initializeWindow(org.wikipediacleaner.gui.swing.basic.BasicWindow)
+     */
+    public void initializeWindow(@SuppressWarnings("unused") BasicWindow window) {
+      // Nothing to do
+    }
+
+    /* (non-Javadoc)
+     * @see org.wikipediacleaner.gui.swing.basic.BasicWindowListener#displayWindow(org.wikipediacleaner.gui.swing.basic.BasicWindow)
+     */
+    public void displayWindow(BasicWindow window) {
+      Configuration config = Configuration.getConfiguration();
+      config.checkVersion(window.getParentComponent());
+    }
+    
+  }
+
   /**
    * Create and display a MainWindow.
    */
@@ -166,7 +190,7 @@ public class MainWindow
         null,
         JFrame.EXIT_ON_CLOSE,
         MainWindow.class,
-        null);
+        new MainWindowListener());
   }
 
   /* (non-Javadoc)
