@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.utils;
 
+import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -32,10 +33,13 @@ import java.util.Map.Entry;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import javax.swing.JOptionPane;
+
 import org.wikipediacleaner.WikipediaCleaner;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.impl.MediaWikiAPI;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -81,6 +85,12 @@ public class Configuration implements WindowListener {
   public  final static int     DEFAULT_INTERROG_THREAD   = 30;
   public  final static int     DEFAULT_MAXIMUM_PAGES     = 20;
   public  final static int     DEFAULT_MENU_SIZE         = 30;
+
+  // Configuration version :
+  //   1 : Initial version
+  //   2 : Configuration for each wikipedia
+  public  final static String  INTEGER_CONFIG_VERSION    = "ConfigurationVersion";
+  public  final static int     DEFAULT_CONFIG_VERSION    = 1;
 
   // Boolean properties
   public  final static String  BOOLEAN_ADVANCED_FEATURES       = "AdvancedFeatures";
@@ -190,6 +200,72 @@ public class Configuration implements WindowListener {
   private Preferences getPreferences(EnumWikipedia wikipedia) {
     if (wikipedia == null) {
       return preferences;
+    }
+    return null;
+  }
+
+  /**
+   * Check configuration version.
+   * 
+   * @param parent Parent component.
+   */
+  public void checkVersion(Component parent) {
+    try {
+      if (getPreferences() != null) {
+        String[] children = getPreferences().childrenNames();
+        String[] keys = getPreferences().keys();
+
+        // Check if first time
+        if (((children == null) || (children.length == 0)) &&
+            ((keys == null) || (keys.length == 0))) {
+          setInt(INTEGER_CONFIG_VERSION, DEFAULT_CONFIG_VERSION);
+          return;
+        }
+
+        // Check if version is already up to date
+        int version = getInt(INTEGER_CONFIG_VERSION, 1);
+        if (version == DEFAULT_CONFIG_VERSION) {
+          return;
+        }
+        if (version > DEFAULT_CONFIG_VERSION) {
+          setInt(INTEGER_CONFIG_VERSION, DEFAULT_CONFIG_VERSION);
+          return;
+        }
+
+        // Update from version 1 to 2
+        EnumWikipedia preferredWikipedia = null;
+        if (version < 2) {
+          preferredWikipedia = askForPreferredWikipedia(parent);
+          if (preferredWikipedia == null) {
+            return;
+          }
+          //
+        }
+        setInt(INTEGER_CONFIG_VERSION, DEFAULT_CONFIG_VERSION);
+      }
+    } catch (BackingStoreException e) {
+      //
+    }
+  }
+
+  /**
+   * Ask user for its preferred Wikipedia.
+   * 
+   * @param parent Parent component.
+   * @return Preferred wikipedia.
+   */
+  private EnumWikipedia askForPreferredWikipedia(Component parent) {
+    Object result = JOptionPane.showInputDialog(
+        parent,
+        GT._(
+            "Wikipedia Cleaner options have changed to allow different settings for each Wikipedia.\n" +
+            "Previously, options were global for every Wikipedia.\n" +
+            "The current options will be saved as the options for your preferred Wikipedia.\n" +
+            "What is your preferred Wikipedia ?"),
+        "Wikipedia Cleaner", JOptionPane.QUESTION_MESSAGE,
+        null, EnumWikipedia.values(), getWikipedia());
+    if ((result != null) && (result instanceof EnumWikipedia)) {
+      return (EnumWikipedia) result;
     }
     return null;
   }
