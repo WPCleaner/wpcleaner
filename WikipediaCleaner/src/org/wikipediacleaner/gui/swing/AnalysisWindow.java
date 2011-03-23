@@ -135,27 +135,35 @@ public class AnalysisWindow extends PageWindow {
               analysis.knownPages = knownPages;
               analysis.modelLinks = new PageListModel();
               analysis.modelLinks.setShowDisambiguation(config.getBoolean(
+                  null,
                   Configuration.BOOLEAN_ANALYSIS_DISAMBIG_PAGES,
                   Configuration.DEFAULT_ANALYSIS_DISAMBIG_PAGES));
               analysis.modelLinks.setShowMissing(config.getBoolean(
+                  null,
                   Configuration.BOOLEAN_ANALYSIS_MISSING_PAGES,
                   Configuration.DEFAULT_ANALYSIS_MISSING_PAGES));
               analysis.modelLinks.setShowOther(config.getBoolean(
+                  null,
                   Configuration.BOOLEAN_ANALYSIS_OTHER_PAGES,
                   Configuration.DEFAULT_ANALYSIS_OTHER_PAGES));
               analysis.modelLinks.setShowRedirect(config.getBoolean(
+                  null,
                   Configuration.BOOLEAN_ANALYSIS_REDIRECT_PAGES,
                   Configuration.DEFAULT_ANALYSIS_REDIRECT_PAGES));
               analysis.modelLinks.setCountDisambiguation(config.getBoolean(
+                  null,
                   Configuration.BOOLEAN_ANALYSIS_COUNT_DISAMBIG,
                   Configuration.DEFAULT_ANALYSIS_COUNT_DISAMBIG));
               analysis.modelLinks.setCountMissing(config.getBoolean(
+                  null,
                   Configuration.BOOLEAN_ANALYSIS_COUNT_MISSING,
                   Configuration.DEFAULT_ANALYSIS_COUNT_MISSING));
               analysis.modelLinks.setCountOther(config.getBoolean(
+                  null,
                   Configuration.BOOLEAN_ANALYSIS_COUNT_OTHER,
                   Configuration.DEFAULT_ANALYSIS_COUNT_OTHER));
               analysis.modelLinks.setCountRedirect(config.getBoolean(
+                  null,
                   Configuration.BOOLEAN_ANALYSIS_COUNT_REDIRECT,
                   Configuration.DEFAULT_ANALYSIS_COUNT_REDIRECT));
               analysis.modelLinks.setComparator(PageComparator.getNamespaceFirstComparator());
@@ -628,24 +636,30 @@ public class AnalysisWindow extends PageWindow {
         Configuration config = Configuration.getConfiguration();
         if (getPage().isInMainNamespace()) {
           chkUpdateDabWarning.setSelected(config.getBoolean(
+              null,
               Configuration.BOOLEAN_UPDATE_DAB_WARNING,
               Configuration.DEFAULT_UPDATE_DAB_WARNING));
           chkCreateDabWarning.setSelected(config.getBoolean(
+              null,
               Configuration.BOOLEAN_CREATE_DAB_WARNING,
               Configuration.DEFAULT_CREATE_DAB_WARNING));
         } else if ((getPage().getNamespace() != null) &&
                    (getWikipedia().isEncyclopedicNamespace(getPage().getNamespace()))) {
           chkUpdateDabWarning.setSelected(config.getBoolean(
+              null,
               Configuration.BOOLEAN_UPDATE_DAB_WARNING_ENCY,
               Configuration.DEFAULT_UPDATE_DAB_WARNING_ENCY));
           chkCreateDabWarning.setSelected(config.getBoolean(
+              null,
               Configuration.BOOLEAN_CREATE_DAB_WARNING_ENCY,
               Configuration.DEFAULT_CREATE_DAB_WARNING_ENCY));
         } else {
           chkUpdateDabWarning.setSelected(config.getBoolean(
+              null,
               Configuration.BOOLEAN_UPDATE_DAB_WARNING_ALL,
               Configuration.DEFAULT_UPDATE_DAB_WARNING_ALL));
           chkCreateDabWarning.setSelected(config.getBoolean(
+              null,
               Configuration.BOOLEAN_CREATE_DAB_WARNING_ALL,
               Configuration.DEFAULT_CREATE_DAB_WARNING_ALL));
         }
@@ -689,6 +703,7 @@ public class AnalysisWindow extends PageWindow {
     }
     Configuration config = Configuration.getConfiguration();
     int maxSelections = config.getInt(
+        null,
         Configuration.INTEGER_ANALYSIS_NB_PAGES,
         Configuration.DEFAULT_ANALYSIS_NB_PAGES);
     int nbSelections = Math.max(Math.min(maxSelections, modelLinks.getSize() - startIndex), 1);
@@ -709,7 +724,7 @@ public class AnalysisWindow extends PageWindow {
     if (displayYesNoWarning(
         GT._("Would you like to add these pages on your local Watch list ?")) == JOptionPane.YES_OPTION) {
       Configuration config = Configuration.getConfiguration();
-      List<String> watch = config.getStringList(Configuration.ARRAY_WATCH_PAGES);
+      List<String> watch = config.getStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES);
       boolean added = false;
       for (Object link : links) {
         if (!watch.contains(link.toString())) {
@@ -719,7 +734,7 @@ public class AnalysisWindow extends PageWindow {
       }
       if (added) {
         Collections.sort(watch);
-        config.setStringList(Configuration.ARRAY_WATCH_PAGES, watch);
+        config.setStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES, watch);
       }
     }
   }

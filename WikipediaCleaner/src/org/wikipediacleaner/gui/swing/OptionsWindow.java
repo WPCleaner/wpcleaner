@@ -217,6 +217,7 @@ public class OptionsWindow
     chkCloseDisambig = Utilities.createJCheckBox(
         GT._("Close disambiguation window after sending"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_CLOSE_DISAMBIG,
             Configuration.DEFAULT_CLOSE_DISAMBIG));
     constraints.gridx = 0;
@@ -228,6 +229,7 @@ public class OptionsWindow
     chkRestoreWindowPosition = Utilities.createJCheckBox(
         GT._("Restore window position"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_RESTORE_WINDOW,
             Configuration.DEFAULT_RESTORE_WINDOW));
     constraints.gridx = 0;
@@ -239,6 +241,7 @@ public class OptionsWindow
     chkSaveWindowPosition = Utilities.createJCheckBox(
         GT._("Save window position"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_SAVE_WINDOW,
             Configuration.DEFAULT_SAVE_WINDOW));
     constraints.gridx = 0;
@@ -250,6 +253,7 @@ public class OptionsWindow
     chkShortNotation = Utilities.createJCheckBox(
         GT._("Use short notation [[Xxxxx (yyy)|]]"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_SHORT_NOTATION,
             Configuration.DEFAULT_SHORT_NOTATION));
     constraints.gridx = 0;
@@ -261,6 +265,7 @@ public class OptionsWindow
     chkAdvancedFeatures = Utilities.createJCheckBox(
         GT._("Use advanced features (experimental)"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_ADVANCED_FEATURES,
             Configuration.DEFAULT_ADVANCED_FEATURES));
     constraints.gridx = 0;
@@ -272,6 +277,7 @@ public class OptionsWindow
     chkWikiInComments = Utilities.createJCheckBox(
         GT._("Display WikiCleaner link in update comments"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_WIKICLEANER_COMMENT,
             Configuration.DEFAULT_WIKICLEANER_COMMENT));
     constraints.gridx = 0;
@@ -283,6 +289,7 @@ public class OptionsWindow
     chkShow0ErrorsCheckWiki = Utilities.createJCheckBox(
         GT._("Show errors with no detection found"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
             Configuration.DEFAULT_CHECK_SHOW_0_ERRORS));
     constraints.gridx = 0;
@@ -294,6 +301,7 @@ public class OptionsWindow
     chkLinkErrorsCheckWiki = Utilities.createJCheckBox(
         GT._("Add link to error description in comments"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_CHECK_LINK_ERRORS,
             Configuration.DEFAULT_CHECK_LINK_ERRORS));
     constraints.gridx = 0;
@@ -305,6 +313,7 @@ public class OptionsWindow
     chkForceWatch = Utilities.createJCheckBox(
         GT._("Watch all edited pages"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_FORCE_WATCH,
             Configuration.DEFAULT_FORCE_WATCH));
     constraints.gridx = 0;
@@ -314,7 +323,10 @@ public class OptionsWindow
 
     // Menu size
     modelMenuSize = new SpinnerNumberModel(
-        configuration.getInt(Configuration.INTEGER_MENU_SIZE, Configuration.DEFAULT_MENU_SIZE),
+        configuration.getInt(
+            null,
+            Configuration.INTEGER_MENU_SIZE,
+            Configuration.DEFAULT_MENU_SIZE),
         2, 999, 1);
     spinMenuSize = new JSpinner(modelMenuSize);
     JLabel labelMenuSize = Utilities.createJLabel(GT._("Maximum number of items in a menu :"));
@@ -332,7 +344,10 @@ public class OptionsWindow
 
     // Max pages
     modelMaxPages = new SpinnerNumberModel(
-        configuration.getInt(Configuration.INTEGER_MAXIMUM_PAGES, Configuration.DEFAULT_MAXIMUM_PAGES),
+        configuration.getInt(
+            null,
+            Configuration.INTEGER_MAXIMUM_PAGES,
+            Configuration.DEFAULT_MAXIMUM_PAGES),
         1, 99, 1);
     spinMaxPages = new JSpinner(modelMaxPages);
     JLabel labelMaxPages = Utilities.createJLabel(GT._("Maximum number of simultaneous analysis :"));
@@ -350,7 +365,10 @@ public class OptionsWindow
 
     // Max errors for Check Wiki
     modelMaxErrorsCheckWiki = new SpinnerNumberModel(
-        configuration.getInt(Configuration.INTEGER_CHECK_NB_ERRORS, Configuration.DEFAULT_CHECK_NB_ERRORS),
+        configuration.getInt(
+            null,
+            Configuration.INTEGER_CHECK_NB_ERRORS,
+            Configuration.DEFAULT_CHECK_NB_ERRORS),
         10, 1000, 5);
     spinMaxErrorsCheckWiki = new JSpinner(modelMaxErrorsCheckWiki);
     JLabel labelMaxErrorsCheckWiki = Utilities.createJLabel(
@@ -369,7 +387,10 @@ public class OptionsWindow
 
     // Interrogation threads
     modelInterrogationThreads = new SpinnerNumberModel(
-        configuration.getInt(Configuration.INTEGER_INTERROG_THREAD, Configuration.DEFAULT_INTERROG_THREAD),
+        configuration.getInt(
+            null,
+            Configuration.INTEGER_INTERROG_THREAD,
+            Configuration.DEFAULT_INTERROG_THREAD),
         1, 99, 1);
     spinInterrogationThreads = new JSpinner(modelInterrogationThreads);
     JLabel labelThreads = Utilities.createJLabel(GT._("Maximum number of interrogation threads :"));
@@ -388,6 +409,7 @@ public class OptionsWindow
     // Signature
     txtSignature = new JTextField(15);
     txtSignature.setText(configuration.getString(
+        null,
         Configuration.STRING_SIGNATURE,
         Configuration.DEFAULT_SIGNATURE));
     JLabel labelSignature = Utilities.createJLabel(GT._("Signature :"));
@@ -446,6 +468,7 @@ public class OptionsWindow
     chkCloseFull = Utilities.createJCheckBox(
         GT._("Close full analysis window after sending"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_CLOSE_FULL,
             Configuration.DEFAULT_CLOSE_FULL));
     panel.add(chkCloseFull, constraints);
@@ -455,6 +478,7 @@ public class OptionsWindow
     chkAnalysisCreateDabWarning = Utilities.createJCheckBox(
         GT._("Create disambiguation warning on talk page (in main namespace)"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_CREATE_DAB_WARNING,
             Configuration.DEFAULT_CREATE_DAB_WARNING));
     panel.add(chkAnalysisCreateDabWarning, constraints);
@@ -464,6 +488,7 @@ public class OptionsWindow
     chkAnalysisCreateDabWarningEncyclo = Utilities.createJCheckBox(
         GT._("Create disambiguation warning on talk page (in encyclopedic namespaces)"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_CREATE_DAB_WARNING_ENCY,
             Configuration.DEFAULT_CREATE_DAB_WARNING_ENCY));
     panel.add(chkAnalysisCreateDabWarningEncyclo, constraints);
@@ -473,6 +498,7 @@ public class OptionsWindow
     chkAnalysisCreateDabWarningAll = Utilities.createJCheckBox(
         GT._("Create disambiguation warning on talk page (in other namespaces)"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_CREATE_DAB_WARNING_ALL,
             Configuration.DEFAULT_CREATE_DAB_WARNING_ALL));
     panel.add(chkAnalysisCreateDabWarningAll, constraints);
@@ -482,6 +508,7 @@ public class OptionsWindow
     chkAnalysisUpdateDabWarning = Utilities.createJCheckBox(
         GT._("Update disambiguation warning on talk page (in main namespace)"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_UPDATE_DAB_WARNING,
             Configuration.DEFAULT_UPDATE_DAB_WARNING));
     panel.add(chkAnalysisUpdateDabWarning, constraints);
@@ -491,6 +518,7 @@ public class OptionsWindow
     chkAnalysisUpdateDabWarningEncyclo = Utilities.createJCheckBox(
         GT._("Update disambiguation warning on talk page (in encyclopedic namespaces)"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_UPDATE_DAB_WARNING_ENCY,
             Configuration.DEFAULT_UPDATE_DAB_WARNING_ENCY));
     panel.add(chkAnalysisUpdateDabWarningEncyclo, constraints);
@@ -500,6 +528,7 @@ public class OptionsWindow
     chkAnalysisUpdateDabWarningAll = Utilities.createJCheckBox(
         GT._("Update disambiguation warning on talk page (in other namespaces)"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_UPDATE_DAB_WARNING_ALL,
             Configuration.DEFAULT_UPDATE_DAB_WARNING_ALL));
     panel.add(chkAnalysisUpdateDabWarningAll, constraints);
@@ -509,6 +538,7 @@ public class OptionsWindow
     chkAnalysisDisambig = Utilities.createJCheckBox(
         GT._("Show &disambiguation pages"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_ANALYSIS_DISAMBIG_PAGES,
             Configuration.DEFAULT_ANALYSIS_DISAMBIG_PAGES));
     panel.add(chkAnalysisDisambig, constraints);
@@ -518,6 +548,7 @@ public class OptionsWindow
     chkAnalysisMissing = Utilities.createJCheckBox(
         GT._("Show &missing pages"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_ANALYSIS_MISSING_PAGES,
             Configuration.DEFAULT_ANALYSIS_MISSING_PAGES));
     panel.add(chkAnalysisMissing, constraints);
@@ -527,6 +558,7 @@ public class OptionsWindow
     chkAnalysisRedirect = Utilities.createJCheckBox(
         GT._("Show &redirect pages"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_ANALYSIS_REDIRECT_PAGES,
             Configuration.DEFAULT_ANALYSIS_REDIRECT_PAGES));
     panel.add(chkAnalysisRedirect, constraints);
@@ -536,6 +568,7 @@ public class OptionsWindow
     chkAnalysisOther = Utilities.createJCheckBox(
         GT._("Show &other pages"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_ANALYSIS_OTHER_PAGES,
             Configuration.DEFAULT_ANALYSIS_OTHER_PAGES));
     panel.add(chkAnalysisOther, constraints);
@@ -545,6 +578,7 @@ public class OptionsWindow
     chkAnalysisCountDisambig = Utilities.createJCheckBox(
         GT._("Count &disambiguation pages"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_ANALYSIS_COUNT_DISAMBIG,
             Configuration.DEFAULT_ANALYSIS_COUNT_DISAMBIG));
     panel.add(chkAnalysisCountDisambig, constraints);
@@ -554,6 +588,7 @@ public class OptionsWindow
     chkAnalysisCountMissing = Utilities.createJCheckBox(
         GT._("Count &missing pages"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_ANALYSIS_COUNT_MISSING,
             Configuration.DEFAULT_ANALYSIS_COUNT_MISSING));
     panel.add(chkAnalysisCountMissing, constraints);
@@ -563,6 +598,7 @@ public class OptionsWindow
     chkAnalysisCountRedirect = Utilities.createJCheckBox(
         GT._("Count &redirect pages"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_ANALYSIS_COUNT_REDIRECT,
             Configuration.DEFAULT_ANALYSIS_COUNT_REDIRECT));
     panel.add(chkAnalysisCountRedirect, constraints);
@@ -572,6 +608,7 @@ public class OptionsWindow
     chkAnalysisCountOther = Utilities.createJCheckBox(
         GT._("Count &other pages"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_ANALYSIS_COUNT_OTHER,
             Configuration.DEFAULT_ANALYSIS_COUNT_OTHER));
     panel.add(chkAnalysisCountOther, constraints);
@@ -581,6 +618,7 @@ public class OptionsWindow
     chkAnalysisHideSending = Utilities.createJCheckBox(
         GT._("&Hide window when sending"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_ANALYSIS_HIDE_SENDING,
             Configuration.DEFAULT_ANALYSIS_HIDE_SENDING));
     panel.add(chkAnalysisHideSending, constraints);
@@ -590,6 +628,7 @@ public class OptionsWindow
     chkSaveLastReplacement = Utilities.createJCheckBox(
         GT._("Save last replacement used"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT,
             Configuration.DEFAULT_SAVE_LAST_REPLACEMENT));
     panel.add(chkSaveLastReplacement, constraints);
@@ -599,6 +638,7 @@ public class OptionsWindow
     chkRememberLastPage = Utilities.createJCheckBox(
         GT._("Remember last edited page"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_REMEMBER_LAST_PAGE,
             Configuration.DEFAULT_REMEMBER_LAST_PAGE));
     panel.add(chkRememberLastPage, constraints);
@@ -606,7 +646,10 @@ public class OptionsWindow
 
     // Nb pages selected
     modelAnalysisNbPages = new SpinnerNumberModel(
-        configuration.getInt(Configuration.INTEGER_ANALYSIS_NB_PAGES, Configuration.DEFAULT_ANALYSIS_NB_PAGES),
+        configuration.getInt(
+            null,
+            Configuration.INTEGER_ANALYSIS_NB_PAGES,
+            Configuration.DEFAULT_ANALYSIS_NB_PAGES),
         1, 99, 1);
     spinAnalysisNbPages = new JSpinner(modelAnalysisNbPages);
     JLabel labelNbPages = Utilities.createJLabel(GT._("Number of links selected :"));
@@ -624,7 +667,10 @@ public class OptionsWindow
 
     // Undo levels
     modelAnalysisUndoLevels = new SpinnerNumberModel(
-        configuration.getInt(Configuration.INTEGER_ANALYSIS_UNDO_LVL, Configuration.DEFAULT_ANALYSIS_UNDO_LVL),
+        configuration.getInt(
+            null,
+            Configuration.INTEGER_ANALYSIS_UNDO_LVL,
+            Configuration.DEFAULT_ANALYSIS_UNDO_LVL),
         0, 99, 1);
     spinAnalysisUndoLevels = new JSpinner(modelAnalysisUndoLevels);
     JLabel labelUndoLevels = Utilities.createJLabel(GT._("Undo levels :"));
@@ -787,6 +833,7 @@ public class OptionsWindow
     chkDebugURL = Utilities.createJCheckBox(
         GT._("Log all URL called by WikiCleaner"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_DEBUG_URL,
             Configuration.DEFAULT_DEBUG_URL));
     panel.add(chkDebugURL, constraints);
@@ -796,6 +843,7 @@ public class OptionsWindow
     chkDebugXML = Utilities.createJCheckBox(
         GT._("Log all answers to MediaWiki API calls"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_DEBUG_XML,
             Configuration.DEFAULT_DEBUG_XML));
     panel.add(chkDebugXML, constraints);
@@ -805,6 +853,7 @@ public class OptionsWindow
     chkDebugTime = Utilities.createJCheckBox(
         GT._("Add a timestamp to logs"),
         configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_DEBUG_TIME,
             Configuration.DEFAULT_DEBUG_TIME));
     panel.add(chkDebugTime, constraints);
@@ -943,46 +992,154 @@ public class OptionsWindow
     Configuration config = Configuration.getConfiguration();
 
     // Boolean values
-    config.setBoolean(Configuration.BOOLEAN_ADVANCED_FEATURES, chkAdvancedFeatures.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_ANALYSIS_COUNT_DISAMBIG, chkAnalysisCountDisambig.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_ANALYSIS_COUNT_MISSING, chkAnalysisCountMissing.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_ANALYSIS_COUNT_OTHER, chkAnalysisCountOther.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_ANALYSIS_COUNT_REDIRECT, chkAnalysisCountRedirect.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_ANALYSIS_DISAMBIG_PAGES, chkAnalysisDisambig.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_ANALYSIS_HIDE_SENDING, chkAnalysisHideSending.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_ANALYSIS_MISSING_PAGES, chkAnalysisMissing.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_ANALYSIS_OTHER_PAGES, chkAnalysisOther.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_ANALYSIS_REDIRECT_PAGES, chkAnalysisRedirect.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS, chkShow0ErrorsCheckWiki.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_CHECK_LINK_ERRORS, chkLinkErrorsCheckWiki.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_CLOSE_DISAMBIG, chkCloseDisambig.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_CLOSE_FULL, chkCloseFull.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_CREATE_DAB_WARNING, chkAnalysisCreateDabWarning.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_CREATE_DAB_WARNING_ALL, chkAnalysisCreateDabWarningAll.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_CREATE_DAB_WARNING_ENCY, chkAnalysisCreateDabWarningEncyclo.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_DEBUG_TIME, chkDebugTime.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_DEBUG_URL, chkDebugURL.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_DEBUG_XML, chkDebugXML.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_FORCE_WATCH, chkForceWatch.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_REMEMBER_LAST_PAGE, chkRememberLastPage.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_RESTORE_WINDOW, chkRestoreWindowPosition.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT, chkSaveLastReplacement.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_SAVE_WINDOW, chkSaveWindowPosition.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_SHORT_NOTATION, chkShortNotation.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_UPDATE_DAB_WARNING, chkAnalysisUpdateDabWarning.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_UPDATE_DAB_WARNING_ALL, chkAnalysisUpdateDabWarningAll.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_UPDATE_DAB_WARNING_ENCY, chkAnalysisUpdateDabWarningEncyclo.isSelected());
-    config.setBoolean(Configuration.BOOLEAN_WIKICLEANER_COMMENT, chkWikiInComments.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_ADVANCED_FEATURES,
+        chkAdvancedFeatures.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_ANALYSIS_COUNT_DISAMBIG,
+        chkAnalysisCountDisambig.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_ANALYSIS_COUNT_MISSING,
+        chkAnalysisCountMissing.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_ANALYSIS_COUNT_OTHER,
+        chkAnalysisCountOther.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_ANALYSIS_COUNT_REDIRECT,
+        chkAnalysisCountRedirect.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_ANALYSIS_DISAMBIG_PAGES,
+        chkAnalysisDisambig.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_ANALYSIS_HIDE_SENDING,
+        chkAnalysisHideSending.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_ANALYSIS_MISSING_PAGES,
+        chkAnalysisMissing.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_ANALYSIS_OTHER_PAGES,
+        chkAnalysisOther.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_ANALYSIS_REDIRECT_PAGES,
+        chkAnalysisRedirect.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
+        chkShow0ErrorsCheckWiki.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_CHECK_LINK_ERRORS,
+        chkLinkErrorsCheckWiki.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_CLOSE_DISAMBIG,
+        chkCloseDisambig.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_CLOSE_FULL,
+        chkCloseFull.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_CREATE_DAB_WARNING,
+        chkAnalysisCreateDabWarning.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_CREATE_DAB_WARNING_ALL,
+        chkAnalysisCreateDabWarningAll.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_CREATE_DAB_WARNING_ENCY,
+        chkAnalysisCreateDabWarningEncyclo.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_DEBUG_TIME,
+        chkDebugTime.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_DEBUG_URL,
+        chkDebugURL.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_DEBUG_XML,
+        chkDebugXML.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_FORCE_WATCH,
+        chkForceWatch.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_REMEMBER_LAST_PAGE,
+        chkRememberLastPage.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_RESTORE_WINDOW,
+        chkRestoreWindowPosition.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT,
+        chkSaveLastReplacement.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_SAVE_WINDOW,
+        chkSaveWindowPosition.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_SHORT_NOTATION,
+        chkShortNotation.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_UPDATE_DAB_WARNING,
+        chkAnalysisUpdateDabWarning.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_UPDATE_DAB_WARNING_ALL,
+        chkAnalysisUpdateDabWarningAll.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_UPDATE_DAB_WARNING_ENCY,
+        chkAnalysisUpdateDabWarningEncyclo.isSelected());
+    config.setBoolean(
+        null,
+        Configuration.BOOLEAN_WIKICLEANER_COMMENT,
+        chkWikiInComments.isSelected());
 
     // Integer values
-    config.setInt(Configuration.INTEGER_ANALYSIS_NB_PAGES, modelAnalysisNbPages.getNumber().intValue());
-    config.setInt(Configuration.INTEGER_CHECK_NB_ERRORS, modelMaxErrorsCheckWiki.getNumber().intValue());
-    config.setInt(Configuration.INTEGER_INTERROG_THREAD, modelInterrogationThreads.getNumber().intValue());
-    config.setInt(Configuration.INTEGER_MENU_SIZE, modelMenuSize.getNumber().intValue());
-    config.setInt(Configuration.INTEGER_MAXIMUM_PAGES, modelMaxPages.getNumber().intValue());
+    config.setInt(
+        null,
+        Configuration.INTEGER_ANALYSIS_NB_PAGES,
+        modelAnalysisNbPages.getNumber().intValue());
+    config.setInt(
+        null,
+        Configuration.INTEGER_CHECK_NB_ERRORS,
+        modelMaxErrorsCheckWiki.getNumber().intValue());
+    config.setInt(
+        null,
+        Configuration.INTEGER_INTERROG_THREAD,
+        modelInterrogationThreads.getNumber().intValue());
+    config.setInt(
+        null,
+        Configuration.INTEGER_MENU_SIZE,
+        modelMenuSize.getNumber().intValue());
+    config.setInt(
+        null,
+        Configuration.INTEGER_MAXIMUM_PAGES,
+        modelMaxPages.getNumber().intValue());
 
     // String values
-    config.setString(Configuration.STRING_SIGNATURE, txtSignature.getText());
+    config.setString(
+        null,
+        Configuration.STRING_SIGNATURE,
+        txtSignature.getText());
 
     // Sorting orders
     List<CompositeComparator<Page>> comparators = new LinkedList<CompositeComparator<Page>>();
@@ -1005,103 +1162,135 @@ public class OptionsWindow
 
     // Boolean values
     chkAdvancedFeatures.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_ADVANCED_FEATURES,
         Configuration.DEFAULT_ADVANCED_FEATURES));
     chkAnalysisCountDisambig.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_ANALYSIS_COUNT_DISAMBIG,
         Configuration.DEFAULT_ANALYSIS_COUNT_DISAMBIG));
     chkAnalysisCountMissing.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_ANALYSIS_COUNT_MISSING,
         Configuration.DEFAULT_ANALYSIS_COUNT_MISSING));
     chkAnalysisCountOther.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_ANALYSIS_COUNT_OTHER,
         Configuration.DEFAULT_ANALYSIS_COUNT_OTHER));
     chkAnalysisCountRedirect.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_ANALYSIS_COUNT_REDIRECT,
         Configuration.DEFAULT_ANALYSIS_COUNT_REDIRECT));
     chkAnalysisCreateDabWarning.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_CREATE_DAB_WARNING,
         Configuration.DEFAULT_CREATE_DAB_WARNING));
     chkAnalysisCreateDabWarningAll.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_CREATE_DAB_WARNING_ALL,
         Configuration.DEFAULT_CREATE_DAB_WARNING_ALL));
     chkAnalysisCreateDabWarningEncyclo.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_CREATE_DAB_WARNING_ENCY,
         Configuration.DEFAULT_CREATE_DAB_WARNING_ENCY));
     chkAnalysisDisambig.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_ANALYSIS_DISAMBIG_PAGES,
         Configuration.DEFAULT_ANALYSIS_DISAMBIG_PAGES));
     chkAnalysisHideSending.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_ANALYSIS_HIDE_SENDING,
         Configuration.DEFAULT_ANALYSIS_HIDE_SENDING));
     chkAnalysisMissing.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_ANALYSIS_MISSING_PAGES,
         Configuration.DEFAULT_ANALYSIS_MISSING_PAGES));
     chkAnalysisOther.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_ANALYSIS_OTHER_PAGES,
         Configuration.DEFAULT_ANALYSIS_OTHER_PAGES));
     chkAnalysisRedirect.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_ANALYSIS_REDIRECT_PAGES,
         Configuration.DEFAULT_ANALYSIS_REDIRECT_PAGES));
     chkAnalysisUpdateDabWarning.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_UPDATE_DAB_WARNING,
         Configuration.DEFAULT_UPDATE_DAB_WARNING));
     chkAnalysisUpdateDabWarningAll.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_UPDATE_DAB_WARNING_ALL,
         Configuration.DEFAULT_UPDATE_DAB_WARNING_ALL));
     chkAnalysisUpdateDabWarningEncyclo.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_UPDATE_DAB_WARNING_ENCY,
         Configuration.DEFAULT_UPDATE_DAB_WARNING_ENCY));
     chkShow0ErrorsCheckWiki.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
         Configuration.DEFAULT_CHECK_SHOW_0_ERRORS));
     chkLinkErrorsCheckWiki.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_CHECK_LINK_ERRORS,
         Configuration.DEFAULT_CHECK_LINK_ERRORS));
     chkCloseDisambig.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_CLOSE_DISAMBIG,
         Configuration.DEFAULT_CLOSE_DISAMBIG));
     chkCloseFull.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_CLOSE_FULL,
         Configuration.DEFAULT_CLOSE_FULL));
     chkForceWatch.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_FORCE_WATCH,
         Configuration.DEFAULT_FORCE_WATCH));
     chkRememberLastPage.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_REMEMBER_LAST_PAGE,
         Configuration.DEFAULT_REMEMBER_LAST_PAGE));
     chkRestoreWindowPosition.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_RESTORE_WINDOW,
         Configuration.DEFAULT_RESTORE_WINDOW));
     chkSaveLastReplacement.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT,
         Configuration.DEFAULT_SAVE_LAST_REPLACEMENT));
     chkSaveWindowPosition.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_SAVE_WINDOW,
         Configuration.DEFAULT_SAVE_WINDOW));
     chkShortNotation.setSelected(config.getBoolean(
+        null,
         Configuration.BOOLEAN_SHORT_NOTATION,
         Configuration.DEFAULT_SHORT_NOTATION));
 
     // Integer values
     modelAnalysisNbPages.setValue(config.getInt(
+        null,
         Configuration.INTEGER_ANALYSIS_NB_PAGES,
         Configuration.DEFAULT_ANALYSIS_NB_PAGES));
     modelMaxErrorsCheckWiki.setValue(config.getInt(
+        null,
         Configuration.INTEGER_CHECK_NB_ERRORS,
         Configuration.DEFAULT_CHECK_NB_ERRORS));
     modelInterrogationThreads.setValue(config.getInt(
+        null,
         Configuration.INTEGER_INTERROG_THREAD,
         Configuration.DEFAULT_INTERROG_THREAD));
     modelMenuSize.setValue(config.getInt(
+        null,
         Configuration.INTEGER_MENU_SIZE,
         Configuration.DEFAULT_MENU_SIZE));
     modelMaxPages.setValue(config.getInt(
+        null,
         Configuration.INTEGER_MAXIMUM_PAGES,
         Configuration.DEFAULT_MAXIMUM_PAGES));
 
     // String values
     txtSignature.setText(config.getString(
+        null,
         Configuration.STRING_SIGNATURE,
         Configuration.DEFAULT_SIGNATURE));
 

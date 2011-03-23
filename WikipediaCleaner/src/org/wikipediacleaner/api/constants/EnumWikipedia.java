@@ -659,6 +659,7 @@ public enum EnumWikipedia {
   public String formatComment(String comment) {
     Configuration config = Configuration.getConfiguration();
     boolean showWikiCleaner = config.getBoolean(
+        null,
         Configuration.BOOLEAN_WIKICLEANER_COMMENT,
         Configuration.DEFAULT_WIKICLEANER_COMMENT);
     StringBuilder formattedComment = new StringBuilder();

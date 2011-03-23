@@ -514,7 +514,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     menuUseSelection.removeAll();
     menuDeleteSelection.removeAll();
     Configuration config = Configuration.getConfiguration();
-    List<String> selections = config.getStringList(Configuration.ARRAY_CHECK_SELECTION);
+    List<String> selections = config.getStringList(null, Configuration.ARRAY_CHECK_SELECTION);
     JMenuItem menuItem = null;
     for (String selection : selections) {
       menuItem = new JMenuItem(selection);
@@ -583,7 +583,10 @@ public class CheckWikiProjectWindow extends PageWindow {
     toolbarLoad.setFloatable(false);
 
     modelMaxErrors = new SpinnerNumberModel(
-        configuration.getInt(Configuration.INTEGER_CHECK_NB_ERRORS, Configuration.DEFAULT_CHECK_NB_ERRORS),
+        configuration.getInt(
+            null,
+            Configuration.INTEGER_CHECK_NB_ERRORS,
+            Configuration.DEFAULT_CHECK_NB_ERRORS),
         10, 1000, 5);
     JSpinner spinMaxErrors = new JSpinner(modelMaxErrors);
     spinMaxErrors.setPreferredSize(new Dimension(80, 20));
@@ -1009,6 +1012,7 @@ public class CheckWikiProjectWindow extends PageWindow {
           answer = Utilities.NO_ALL_OPTION;
         } else {
           if (!config.getBoolean(
+              null,
               Configuration.BOOLEAN_CHECK_MARK_AS_FIXED,
               Configuration.DEFAULT_CHECK_MARK_AS_FIXED)) {
             answer = displayYesNoAllWarning(GT._(
@@ -1167,6 +1171,7 @@ public class CheckWikiProjectWindow extends PageWindow {
       if (error.getPageCount() == 0) {
         Configuration configuration = Configuration.getConfiguration();
         if (!configuration.getBoolean(
+            null,
             Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
             Configuration.DEFAULT_CHECK_SHOW_0_ERRORS)) {
           listAllErrors.removeItem(error);
@@ -1226,6 +1231,7 @@ public class CheckWikiProjectWindow extends PageWindow {
           if ((link != null) &&
               (config != null) &&
               (config.getBoolean(
+                  null,
                   Configuration.BOOLEAN_CHECK_LINK_ERRORS,
                   Configuration.DEFAULT_CHECK_LINK_ERRORS))) {
             comment.append("[[");
@@ -1282,7 +1288,10 @@ public class CheckWikiProjectWindow extends PageWindow {
       SendWorker sendWorker = new SendWorker(
           getWikipedia(), CheckWikiProjectWindow.this,
           page, textPage.getText(), textComment.getText(),
-          configuration.getBoolean(Configuration.BOOLEAN_FORCE_WATCH, Configuration.DEFAULT_FORCE_WATCH),
+          configuration.getBoolean(
+              null,
+              Configuration.BOOLEAN_FORCE_WATCH,
+              Configuration.DEFAULT_FORCE_WATCH),
           false, false);
       sendWorker.setListener(new DefaultBasicWorkerListener() {
         @Override
@@ -1316,6 +1325,7 @@ public class CheckWikiProjectWindow extends PageWindow {
               }
             }
             if (!configuration.getBoolean(
+                null,
                 Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
                 Configuration.DEFAULT_CHECK_SHOW_0_ERRORS)) {
               for (CheckError tmpError : errorsToBeRemoved) {
@@ -1441,6 +1451,7 @@ public class CheckWikiProjectWindow extends PageWindow {
       modelAllErrors.removeAllElements();
       Configuration config = Configuration.getConfiguration();
       boolean showAllErrors = config.getBoolean(
+          null,
           Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
           Configuration.DEFAULT_CHECK_SHOW_0_ERRORS);
       int selectedIndex = 0;
@@ -1643,11 +1654,11 @@ public class CheckWikiProjectWindow extends PageWindow {
 
       // Save configuration
       Configuration config = Configuration.getConfiguration();
-      List<String> selections = config.getStringList(Configuration.ARRAY_CHECK_SELECTION);
+      List<String> selections = config.getStringList(null, Configuration.ARRAY_CHECK_SELECTION);
       if (!selections.contains(strSelection)) {
         selections.add(strSelection);
         Collections.sort(selections);
-        config.setStringList(Configuration.ARRAY_CHECK_SELECTION, selections);
+        config.setStringList(null, Configuration.ARRAY_CHECK_SELECTION, selections);
       }
       updateSavedSelections();
 
@@ -1655,11 +1666,11 @@ public class CheckWikiProjectWindow extends PageWindow {
     } else if (command.startsWith("D")) {
       String selection = command.substring(1);
       Configuration config = Configuration.getConfiguration();
-      List<String> selections = config.getStringList(Configuration.ARRAY_CHECK_SELECTION);
+      List<String> selections = config.getStringList(null, Configuration.ARRAY_CHECK_SELECTION);
       if (selections.contains(selection)) {
         selections.remove(selection);
         Collections.sort(selections);
-        config.setStringList(Configuration.ARRAY_CHECK_SELECTION, selections);
+        config.setStringList(null, Configuration.ARRAY_CHECK_SELECTION, selections);
       }
       updateSavedSelections();
       

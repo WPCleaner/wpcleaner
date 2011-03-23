@@ -25,6 +25,7 @@ import java.util.List;
 
 import javax.swing.text.TextAction;
 
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.utils.Configuration;
 
@@ -35,6 +36,7 @@ import org.wikipediacleaner.utils.Configuration;
 @SuppressWarnings("serial")
 public class ChangePreferredDisambiguationAction extends TextAction {
 
+  private final EnumWikipedia wikipedia;
   private final String page;
   private final String preferred;
   private final boolean add;
@@ -44,10 +46,12 @@ public class ChangePreferredDisambiguationAction extends TextAction {
   private final String unauthorizedCharacters;
 
   public ChangePreferredDisambiguationAction(
+      EnumWikipedia wikipedia,
       String page,
       String preferred,
       boolean add) {
     super("AddPreferredDisambiguation");
+    this.wikipedia = wikipedia;
     this.page = page;
     this.preferred = preferred;
     this.add = add;
@@ -58,12 +62,14 @@ public class ChangePreferredDisambiguationAction extends TextAction {
   }
 
   public ChangePreferredDisambiguationAction(
+      EnumWikipedia wikipedia,
       String page,
       Component parent,
       String message,
       String defaultValue,
       String unauthorizedCharacters) {
     super("AddPreferredDisambiguation");
+    this.wikipedia = wikipedia;
     this.page = page;
     this.preferred = null;
     this.add = true;
@@ -79,7 +85,7 @@ public class ChangePreferredDisambiguationAction extends TextAction {
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     Configuration config = Configuration.getConfiguration();
     List<String> preferredDabs = config.getStringSubList(
-        null, Configuration.SUB_ARRAY_PREFERRED_DAB, page);
+        wikipedia, Configuration.SUB_ARRAY_PREFERRED_DAB, page);
     if (add) {
       String value = preferred;
       if (value == null) {
@@ -88,13 +94,15 @@ public class ChangePreferredDisambiguationAction extends TextAction {
       if ((value != null) && !preferredDabs.contains(value)) {
         preferredDabs.add(value);
         Collections.sort(preferredDabs);
-        config.setStringSubList(null, Configuration.SUB_ARRAY_PREFERRED_DAB, page, preferredDabs);
+        config.setStringSubList(
+            wikipedia, Configuration.SUB_ARRAY_PREFERRED_DAB, page, preferredDabs);
       }
     } else {
       if ((preferred != null) && preferredDabs.contains(preferred)) {
         preferredDabs.remove(preferred);
         Collections.sort(preferredDabs);
-        config.setStringSubList(null, Configuration.SUB_ARRAY_PREFERRED_DAB, page, preferredDabs);
+        config.setStringSubList(
+            wikipedia, Configuration.SUB_ARRAY_PREFERRED_DAB, page, preferredDabs);
       }
     }
   }

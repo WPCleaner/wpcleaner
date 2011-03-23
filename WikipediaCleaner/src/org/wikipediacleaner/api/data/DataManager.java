@@ -79,7 +79,7 @@ public class DataManager {
     // Manage comments
     Configuration config = Configuration.getConfiguration();
     Object comment = config.getPojo(
-        Configuration.POJO_PAGE_COMMENTS, page.getTitle(), PageComment.class);
+        wikipedia, Configuration.POJO_PAGE_COMMENTS, page.getTitle(), PageComment.class);
     if (comment instanceof PageComment) {
       page.setComment((PageComment) comment);
     }

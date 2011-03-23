@@ -62,6 +62,7 @@ public abstract class MediaWikiController implements MediaWikiListener {
     if (staticExecutor == null) {
       Configuration config = Configuration.getConfiguration();
       int nThreads = config.getInt(
+          null,
           Configuration.INTEGER_INTERROG_THREAD,
           Configuration.DEFAULT_INTERROG_THREAD);
       staticExecutor = Executors.newFixedThreadPool(nThreads);

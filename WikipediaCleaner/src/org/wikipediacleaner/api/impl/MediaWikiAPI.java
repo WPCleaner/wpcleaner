@@ -111,9 +111,12 @@ public class MediaWikiAPI implements API {
    */
   public static void updateConfiguration() {
     Configuration config = Configuration.getConfiguration();
-    DEBUG_TIME = config.getBoolean(Configuration.BOOLEAN_DEBUG_TIME, Configuration.DEFAULT_DEBUG_TIME);
-    DEBUG_URL = config.getBoolean(Configuration.BOOLEAN_DEBUG_URL, Configuration.DEFAULT_DEBUG_URL);
-    DEBUG_XML = config.getBoolean(Configuration.BOOLEAN_DEBUG_XML, Configuration.DEFAULT_DEBUG_XML);
+    DEBUG_TIME = config.getBoolean(
+        null, Configuration.BOOLEAN_DEBUG_TIME, Configuration.DEFAULT_DEBUG_TIME);
+    DEBUG_URL = config.getBoolean(
+        null, Configuration.BOOLEAN_DEBUG_URL, Configuration.DEFAULT_DEBUG_URL);
+    DEBUG_XML = config.getBoolean(
+        null, Configuration.BOOLEAN_DEBUG_XML, Configuration.DEFAULT_DEBUG_XML);
   }
 
   /**

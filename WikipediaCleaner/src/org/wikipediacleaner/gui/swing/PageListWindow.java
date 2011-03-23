@@ -355,7 +355,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
       watchedPages.add(p.getTitle());
     }
     Configuration config = Configuration.getConfiguration();
-    config.setStringList(Configuration.ARRAY_WATCH_PAGES, watchedPages);
+    config.setStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES, watchedPages);
   }
 
   /**
@@ -367,11 +367,11 @@ public class PageListWindow extends BasicWindow implements ActionListener {
         "", null);
     if (value != null) {
       Configuration config = Configuration.getConfiguration();
-      List<String> watchedPages = config.getStringList(Configuration.ARRAY_WATCH_PAGES);
+      List<String> watchedPages = config.getStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES);
       if (!watchedPages.contains(value)) {
         watchedPages.add(value);
         Collections.sort(watchedPages);
-        config.setStringList(Configuration.ARRAY_WATCH_PAGES, watchedPages);
+        config.setStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES, watchedPages);
         modelPages.addPage(DataManager.getPage(getWikipedia(), value, null, null));
       }
     }
