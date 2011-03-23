@@ -315,7 +315,7 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
       }
       page.setComment(comment);
       Configuration config = Configuration.getConfiguration();
-      config.addPojo(Configuration.POJO_PAGE_COMMENTS, comment, page.getTitle());
+      config.addPojo(page.getWikipedia(), Configuration.POJO_PAGE_COMMENTS, comment, page.getTitle());
     }
     dispose();
   }
@@ -334,7 +334,7 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     if (page != null) {
       page.setComment(null);
       Configuration config = Configuration.getConfiguration();
-      config.removePojo(Configuration.POJO_PAGE_COMMENTS, page.getTitle());
+      config.removePojo(page.getWikipedia(), Configuration.POJO_PAGE_COMMENTS, page.getTitle());
     }
     dispose();
   }

@@ -90,7 +90,7 @@ public class Configuration implements WindowListener {
   //   1 : Initial version
   //   2 : Configuration for each wikipedia
   public  final static String  INTEGER_CONFIG_VERSION    = "ConfigurationVersion";
-  public  final static int     DEFAULT_CONFIG_VERSION    = 1;
+  public  final static int     DEFAULT_CONFIG_VERSION    = 2;
 
   // Boolean properties
   public  final static String  BOOLEAN_ADVANCED_FEATURES       = "AdvancedFeatures";
@@ -201,7 +201,7 @@ public class Configuration implements WindowListener {
     if (wikipedia == null) {
       return preferences;
     }
-    return null;
+    return preferences.node("Wikipedia/" + wikipedia.getCode());
   }
 
   /**
@@ -218,34 +218,98 @@ public class Configuration implements WindowListener {
         // Check if first time
         if (((children == null) || (children.length == 0)) &&
             ((keys == null) || (keys.length == 0))) {
-          setInt(INTEGER_CONFIG_VERSION, DEFAULT_CONFIG_VERSION);
+          setInt(null, INTEGER_CONFIG_VERSION, DEFAULT_CONFIG_VERSION);
           return;
         }
 
         // Check if version is already up to date
-        int version = getInt(INTEGER_CONFIG_VERSION, 1);
+        int version = getInt(null, INTEGER_CONFIG_VERSION, 1);
         if (version == DEFAULT_CONFIG_VERSION) {
           return;
         }
         if (version > DEFAULT_CONFIG_VERSION) {
-          setInt(INTEGER_CONFIG_VERSION, DEFAULT_CONFIG_VERSION);
+          setInt(null, INTEGER_CONFIG_VERSION, DEFAULT_CONFIG_VERSION);
           return;
         }
 
         // Update from version 1 to 2
         EnumWikipedia preferredWikipedia = null;
+        boolean ok = true;
         if (version < 2) {
           preferredWikipedia = askForPreferredWikipedia(parent);
           if (preferredWikipedia == null) {
             return;
           }
-          //
+          ok &= moveChild(getPreferences(), getPreferences(preferredWikipedia), ARRAY_WATCH_PAGES);
+          ok &= moveChild(getPreferences(), getPreferences(preferredWikipedia), POJO_AUTOMATIC_FIXING);
+          ok &= moveChild(getPreferences(), getPreferences(preferredWikipedia), POJO_PAGE_COMMENTS);
+          ok &= moveChild(getPreferences(), getPreferences(preferredWikipedia), SUB_ARRAY_PREFERRED_DAB);
         }
-        setInt(INTEGER_CONFIG_VERSION, DEFAULT_CONFIG_VERSION);
+        if (ok) {
+          setInt(null, INTEGER_CONFIG_VERSION, DEFAULT_CONFIG_VERSION);
+        }
       }
     } catch (BackingStoreException e) {
       //
     }
+  }
+
+  /**
+   * Move a child.
+   * 
+   * @param oldParent Old parent node.
+   * @param newParent New parent node.
+   * @param childName Child name.
+   * @return True if the child has been completely moved.
+   * @throws BackingStoreException
+   */
+  private boolean moveChild(
+      Preferences oldParent, Preferences newParent, String childName)
+      throws BackingStoreException {
+    if ((oldParent == null) || (childName == null)) {
+      return true;
+    }
+    if (!oldParent.nodeExists(childName)) {
+      return true;
+    }
+    if (newParent == null) {
+      return false;
+    }
+    Preferences oldChild = oldParent.node(childName);
+    Preferences newChild = newParent.node(childName);
+
+    // Move keys
+    String[] keyNames = oldChild.keys();
+    if (keyNames != null) {
+      for (String keyName : keyNames) {
+        String value = oldChild.get(keyName, null);
+        if (value != null) {
+          newChild.put(keyName, value);
+        }
+        oldChild.remove(keyName);
+      }
+    }
+
+    // Move children
+    String[] childNames2 = oldChild.childrenNames();
+    if (childNames2 != null) {
+      for (String childName2 : childNames2) {
+        moveChild(oldChild, newChild, childName2);
+      }
+    }
+
+    // Clean up
+    boolean ok = false;
+    newChild.flush();
+    keyNames = oldChild.keys();
+    childNames2 = oldChild.childrenNames();
+    if (((keyNames == null) || (keyNames.length == 0)) ||
+        ((childNames2 == null) || (childNames2.length == 0))) {
+      oldChild.removeNode();
+      ok = true;
+    }
+    oldChild.flush();
+    return ok;
   }
 
   /**
@@ -284,59 +348,69 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @return Property value.
    */
-  public String getString(String property) {
-    return getString(property, "");
+  public String getString(
+      EnumWikipedia wikipedia, String property) {
+    return getString(wikipedia, property, "");
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param defaultValue Default value.
    * @return Property value.
    */
-  public String getString(String property, String defaultValue) {
-    if (getPreferences() != null) {
-      return getPreferences().get(property, defaultValue);
+  public String getString(
+      EnumWikipedia wikipedia, String property, String defaultValue) {
+    if (getPreferences(wikipedia) != null) {
+      return getPreferences(wikipedia).get(property, defaultValue);
     }
     return defaultValue;
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param value Property value.
    */
-  public void setString(String property, String value) {
-    if (getPreferences() != null) {
+  public void setString(
+      EnumWikipedia wikipedia, String property, String value) {
+    if (getPreferences(wikipedia) != null) {
       if (value != null) {
-        getPreferences().put(property, value);
+        getPreferences(wikipedia).put(property, value);
       } else {
-        getPreferences().remove(property);
+        getPreferences(wikipedia).remove(property);
       }
     }
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param value Property value.
    */
-  public void setString(String property, char[] value) {
+  public void setString(
+      EnumWikipedia wikipedia, String property, char[] value) {
     if (value != null) {
-      setString(property, new String(value));
+      setString(wikipedia, property, new String(value));
     } else {
-      getPreferences().remove(property);
+      getPreferences(wikipedia).remove(property);
     }
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param subProperty Sub property name.
    * @param value Sub property value.
    */
-  public void setSubString(String property, String subProperty, String value) {
-    if (getPreferences() != null) {
-      Preferences node = getPreferences().node(property);
+  public void setSubString(
+      EnumWikipedia wikipedia, String property, String subProperty, String value) {
+    if (getPreferences(wikipedia) != null) {
+      Preferences node = getPreferences(wikipedia).node(property);
       if (value != null) {
         node.put(subProperty, value);
       } else {
@@ -346,14 +420,16 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @return Property value.
    */
-  public Properties getProperties(String property) {
+  public Properties getProperties(
+      EnumWikipedia wikipedia, String property) {
     Properties values = new Properties();
-    if (getPreferences() != null) {
+    if (getPreferences(wikipedia) != null) {
       try {
-        Preferences node = getPreferences().node(property);
+        Preferences node = getPreferences(wikipedia).node(property);
         String[] children = node.keys();
         for (String child : children) {
           values.setProperty(child, node.get(child, ""));
@@ -385,16 +461,18 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param value Property value.
    */
-  public void setProperties(String property, Properties value) {
-    if (getPreferences() != null) {
+  public void setProperties(
+      EnumWikipedia wikipedia, String property, Properties value) {
+    if (getPreferences(wikipedia) != null) {
       // First, remove the old properties
-      removeNode(getPreferences(), property);
+      removeNode(getPreferences(wikipedia), property);
 
       // Create the new ones
-      Preferences node = getPreferences().node(property);
+      Preferences node = getPreferences(wikipedia).node(property);
       if (value != null) {
         for (Entry<Object, Object> p : value.entrySet()) {
           node.put(p.getKey().toString(), p.getValue().toString());
@@ -404,14 +482,16 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @return List of property values.
    */
-  public List<String> getStringList(String property) {
+  public List<String> getStringList(
+      EnumWikipedia wikipedia, String property) {
     List<String> result = new ArrayList<String>();
-    if (getPreferences() != null) {
+    if (getPreferences(wikipedia) != null) {
       try {
-        Preferences node = getPreferences().node(property);
+        Preferences node = getPreferences(wikipedia).node(property);
         String[] children = node.keys();
         for (int i = 0; i < children.length; i++) {
           result.add(node.get(children[i], ""));
@@ -424,16 +504,19 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param values Property values.
    */
-  public void setStringList(String property, List<String> values) {
-    if (getPreferences() != null) {
+  public void setStringList(
+      EnumWikipedia wikipedia,
+      String property, List<String> values) {
+    if (getPreferences(wikipedia) != null) {
       // First, remove the old array list
-      removeNode(getPreferences(), property);
+      removeNode(getPreferences(wikipedia), property);
 
       // Create the new one
-      Preferences node = getPreferences().node(property);
+      Preferences node = getPreferences(wikipedia).node(property);
       if (values != null) {
         for (int i = 0; i < values.size(); i++) {
           node.put(Integer.toString(i), values.get(i));
@@ -496,40 +579,45 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param values Property values.
    * @param idName Name of the field used as an Id.
    */
-  public void setPojoMap(String property, Map<String, Object> values, String idName) {
-    if (getPreferences() != null) {
+  public void setPojoMap(
+      EnumWikipedia wikipedia,
+      String property, Map<String, Object> values, String idName) {
+    if (getPreferences(wikipedia) != null) {
       // First, remove the old array list
-      removeNode(getPreferences(), property);
+      removeNode(getPreferences(wikipedia), property);
       
       // Create the new one
       if (values != null) {
         for (Map.Entry<String, Object> entry : values.entrySet()) {
-          addPojo(property, entry.getValue(), entry.getKey());
+          addPojo(wikipedia, property, entry.getValue(), entry.getKey());
         }
       }
     }
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param name Pojo name.
    * @param valueClass Pojo class.
    * @return Pojo.
    */
-  public Object getPojo(String property, String name, Class valueClass) {
+  public Object getPojo(
+      EnumWikipedia wikipedia, String property, String name, Class valueClass) {
     try {
-      if ((getPreferences() != null) &&
+      if ((getPreferences(wikipedia) != null) &&
           (property != null) &&
           (name != null) &&
           (valueClass != null)) {
-        if (!getPreferences().nodeExists(property)) {
+        if (!getPreferences(wikipedia).nodeExists(property)) {
           return null;
         }
-        Preferences globalNode = getPreferences().node(property);
+        Preferences globalNode = getPreferences(wikipedia).node(property);
         if (!globalNode.nodeExists(name)) {
           return null;
         }
@@ -582,12 +670,14 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param id Id of the value.
    */
-  public void removePojo(String property, String id) {
-    if ((getPreferences() != null) && (property != null) && (id != null)) {
-      Preferences globalNode = getPreferences().node(property);
+  public void removePojo(
+      EnumWikipedia wikipedia, String property, String id) {
+    if ((getPreferences(wikipedia) != null) && (property != null) && (id != null)) {
+      Preferences globalNode = getPreferences(wikipedia).node(property);
       try {
         if (globalNode.nodeExists(id)) {
           Preferences node = globalNode.node(id);
@@ -600,18 +690,20 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param value Property value.
    * @param id Id of the value.
    */
-  public void addPojo(String property, Object value, String id) {
-    if ((getPreferences() != null) &&
+  public void addPojo(
+      EnumWikipedia wikipedia, String property, Object value, String id) {
+    if ((getPreferences(wikipedia) != null) &&
         (property != null) &&
         (value != null) &&
         (id != null)) {
       try {
         // Remove the old object
-        Preferences globalNode = getPreferences().node(property);
+        Preferences globalNode = getPreferences(wikipedia).node(property);
         removeNode(globalNode, id);
         
         // Add the new object
@@ -653,21 +745,23 @@ public class Configuration implements WindowListener {
 
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param name Pojo name.
    * @param valueClass Pojo class.
    * @return Pojo.
    */
-  public Object[] getPojoArray(String property, String name, Class valueClass) {
+  public Object[] getPojoArray(
+      EnumWikipedia wikipedia, String property, String name, Class valueClass) {
     try {
-      if ((getPreferences() != null) &&
+      if ((getPreferences(wikipedia) != null) &&
           (property != null) &&
           (name != null) &&
           (valueClass != null)) {
-        if (!getPreferences().nodeExists(property)) {
+        if (!getPreferences(wikipedia).nodeExists(property)) {
           return null;
         }
-        Preferences globalNode = getPreferences().node(property);
+        Preferences globalNode = getPreferences(wikipedia).node(property);
         if (!globalNode.nodeExists(name)) {
           return null;
         }
@@ -727,18 +821,20 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param values Property value.
    * @param id Id of the value.
    */
-  public void addPojoArray(String property, Object[] values, String id) {
-    if ((getPreferences() != null) &&
+  public void addPojoArray(
+      EnumWikipedia wikipedia, String property, Object[] values, String id) {
+    if ((getPreferences(wikipedia) != null) &&
         (property != null) &&
         (values != null) &&
         (id != null)) {
       try {
         // Remove the old object
-        Preferences globalNode = getPreferences().node(property);
+        Preferences globalNode = getPreferences(wikipedia).node(property);
         removeNode(globalNode, id);
         
         // Add the new objects
@@ -783,46 +879,50 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param defaultValue Default value.
    * @return Property value.
    */
-  public int getInt(String property, int defaultValue) {
-    if (getPreferences() != null) {
-      return getPreferences().getInt(property, defaultValue);
+  public int getInt(EnumWikipedia wikipedia, String property, int defaultValue) {
+    if (getPreferences(wikipedia) != null) {
+      return getPreferences(wikipedia).getInt(property, defaultValue);
     }
     return defaultValue;
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param value Property value.
    */
-  public void setInt(String property, int value) {
-    if (getPreferences() != null) {
-      getPreferences().putInt(property, value);
+  public void setInt(EnumWikipedia wikipedia, String property, int value) {
+    if (getPreferences(wikipedia) != null) {
+      getPreferences(wikipedia).putInt(property, value);
     }
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param defaultValue Default value.
    * @return Property value.
    */
-  public boolean getBoolean(String property, boolean defaultValue) {
-    if (getPreferences() != null) {
-      return getPreferences().getBoolean(property, defaultValue);
+  public boolean getBoolean(EnumWikipedia wikipedia, String property, boolean defaultValue) {
+    if (getPreferences(wikipedia) != null) {
+      return getPreferences(wikipedia).getBoolean(property, defaultValue);
     }
     return defaultValue;
   }
 
   /**
+   * @param wikipedia Wikipedia.
    * @param property Property name.
    * @param value Property value.
    */
-  public void setBoolean(String property, boolean value) {
-    if (getPreferences() != null) {
-      getPreferences().putBoolean(property, value);
+  public void setBoolean(EnumWikipedia wikipedia, String property, boolean value) {
+    if (getPreferences(wikipedia) != null) {
+      getPreferences(wikipedia).putBoolean(property, value);
     }
   }
 
@@ -887,7 +987,7 @@ public class Configuration implements WindowListener {
       return;
     }
     window.addWindowListener(this);
-    if (getBoolean(BOOLEAN_RESTORE_WINDOW, DEFAULT_RESTORE_WINDOW) &&
+    if (getBoolean(null, BOOLEAN_RESTORE_WINDOW, DEFAULT_RESTORE_WINDOW) &&
         (getPreferences() != null)) {
       try {
         if (!getPreferences().nodeExists(PROPERTY_WINDOW)) {
@@ -928,7 +1028,7 @@ public class Configuration implements WindowListener {
    * @param window The window.
    */
   public void saveWindowPosition(Window window) {
-    if (getBoolean(BOOLEAN_SAVE_WINDOW, DEFAULT_SAVE_WINDOW) &&
+    if (getBoolean(null, BOOLEAN_SAVE_WINDOW, DEFAULT_SAVE_WINDOW) &&
         (window != null) &&
         (getPreferences() != null)) {
       Preferences node = getPreferences().node(PROPERTY_WINDOW);

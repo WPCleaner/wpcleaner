@@ -232,6 +232,7 @@ public class Controller {
     int pagesCount = pages.length;
     Configuration config = Configuration.getConfiguration();
     int maxPagesCount = config.getInt(
+        null,
         Configuration.INTEGER_MAXIMUM_PAGES,
         Configuration.DEFAULT_MAXIMUM_PAGES);
     if (pagesCount > maxPagesCount) {

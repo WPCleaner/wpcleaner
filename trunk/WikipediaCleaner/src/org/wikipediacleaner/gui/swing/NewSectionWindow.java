@@ -274,6 +274,7 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
       textNewSection.getDocument().insertString(
           textNewSection.getCaretPosition(),
           config.getString(
+              null,
               Configuration.STRING_SIGNATURE,
               Configuration.DEFAULT_SIGNATURE),
           null);

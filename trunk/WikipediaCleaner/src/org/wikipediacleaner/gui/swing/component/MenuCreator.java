@@ -81,7 +81,7 @@ public class MenuCreator {
 
   static {
     Properties tmp = configuration.getProperties(
-        Configuration.PROPERTIES_LAST_REPLACEMENT);
+        null, Configuration.PROPERTIES_LAST_REPLACEMENT);
     if (tmp != null) {
       for (Object object : tmp.keySet()) {
         if (object instanceof String) {
@@ -103,9 +103,11 @@ public class MenuCreator {
     if ((from != null) && (to != null)) {
       lastReplacement.put(from, to);
       if (configuration.getBoolean(
+          null,
           Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT,
           Configuration.DEFAULT_SAVE_LAST_REPLACEMENT)) {
         configuration.setSubString(
+            null,
             Configuration.PROPERTIES_LAST_REPLACEMENT,
             from, to);
       }
@@ -231,7 +233,9 @@ public class MenuCreator {
     // Retrieve preferred disambiguations
     Configuration config = Configuration.getConfiguration();
     List<String> preferredDabs = config.getStringSubList(
-        null, Configuration.SUB_ARRAY_PREFERRED_DAB, disambigPage.getTitle());
+        disambigPage.getWikipedia(),
+        Configuration.SUB_ARRAY_PREFERRED_DAB,
+        disambigPage.getTitle());
 
     // Retrieve various informations
     List<String> wiktionary = disambigPage.getWiktionaryLinks();
@@ -433,7 +437,7 @@ public class MenuCreator {
       // Retrieve preferred disambiguations
       Configuration config = Configuration.getConfiguration();
       List<String> preferredDabs = config.getStringSubList(
-          null, Configuration.SUB_ARRAY_PREFERRED_DAB, page.getTitle());
+          page.getWikipedia(), Configuration.SUB_ARRAY_PREFERRED_DAB, page.getTitle());
 
       // Last replacement
       int fixedBeginLink = 0;
@@ -523,7 +527,8 @@ public class MenuCreator {
 
               menuItem = new JMenuItem(pageTmp.getTitle());
               updateFont(menuItem, pageTmp);
-              action = new ChangePreferredDisambiguationAction(page.getTitle(), pageTmp.getTitle(), true);
+              action = new ChangePreferredDisambiguationAction(
+                  page.getWikipedia(), page.getTitle(), pageTmp.getTitle(), true);
               menuItem.addActionListener(action);
               submenu3.add(menuItem);
 
@@ -544,7 +549,8 @@ public class MenuCreator {
                   if (!preferredDabs.contains(anchor)) {
                     menuItem = new JMenuItem(anchor);
                     updateFont(menuItem, pageTmp);
-                    action = new ChangePreferredDisambiguationAction(page.getTitle(), anchor, true);
+                    action = new ChangePreferredDisambiguationAction(
+                        page.getWikipedia(), page.getTitle(), anchor, true);
                     menuItem.addActionListener(action);
                     submenu3.add(menuItem);
                   }
@@ -571,7 +577,8 @@ public class MenuCreator {
             if (!preferredDabs.contains(p.getTitle())) {
               menuItem = new JMenuItem(p.getTitle());
               updateFont(menuItem, p);
-              action = new ChangePreferredDisambiguationAction(page.getTitle(), p.getTitle(), true);
+              action = new ChangePreferredDisambiguationAction(
+                  page.getWikipedia(), page.getTitle(), p.getTitle(), true);
               menuItem.addActionListener(action);
               submenuAddPreferred.add(menuItem);
             }
@@ -595,7 +602,8 @@ public class MenuCreator {
                 if (!preferredDabs.contains(anchor)) {
                   menuItem = new JMenuItem(anchor);
                   updateFont(menuItem, p);
-                  action = new ChangePreferredDisambiguationAction(page.getTitle(), anchor, true);
+                  action = new ChangePreferredDisambiguationAction(
+                      page.getWikipedia(), page.getTitle(), anchor, true);
                   menuItem.addActionListener(action);
                   submenuAddPreferred.add(menuItem);
                 }
@@ -656,6 +664,7 @@ public class MenuCreator {
       submenuAddPreferred.addSeparator();
       menuItem = new JMenuItem(GT._("Add other preferred disambiguation..."));
       action = new ChangePreferredDisambiguationAction(
+          page.getWikipedia(),
           page.getTitle(), textPane,
           GT._("What link do you want to add to the preferred disambiguations?"),
           null, "[|]");
@@ -667,7 +676,8 @@ public class MenuCreator {
         JMenu submenuRemove = new JMenu(GT._("Remove from preferred disambiguations"));
         for (String title : preferredDabs) {
           menuItem = new JMenuItem(title);
-          action = new ChangePreferredDisambiguationAction(page.getTitle(), title, false);
+          action = new ChangePreferredDisambiguationAction(
+              page.getWikipedia(), page.getTitle(), title, false);
           menuItem.addActionListener(action);
           submenuRemove.add(menuItem);
         }
@@ -1263,7 +1273,7 @@ public class MenuCreator {
   public static void addSubmenu(JPopupMenu menu, JMenu submenu, int begin, int end) {
     Configuration config = Configuration.getConfiguration();
     final int maxElements = Math.max(
-        config.getInt(Configuration.INTEGER_MENU_SIZE, Configuration.DEFAULT_MENU_SIZE),
+        config.getInt(null, Configuration.INTEGER_MENU_SIZE, Configuration.DEFAULT_MENU_SIZE),
         begin + end + 2);
     if (submenu.getMenuComponentCount() > maxElements) {
       List<JMenu> menuList = new ArrayList<JMenu>();

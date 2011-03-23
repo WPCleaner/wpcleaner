@@ -384,7 +384,7 @@ public class MainWindow
 
     // User name
     textUsername = new JTextField();
-    textUsername.setText(configuration.getString(Configuration.STRING_USER_NAME));
+    textUsername.setText(configuration.getString(null, Configuration.STRING_USER_NAME));
     JLabel labelUsername = Utilities.createJLabel(GT._("&User name :"));
     labelUsername.setLabelFor(textUsername);
     labelUsername.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -398,7 +398,7 @@ public class MainWindow
 
     // Password
     textPassword = new JPasswordField();
-    textPassword.setText(configuration.getString(Configuration.STRING_PASSWORD, null));
+    textPassword.setText(configuration.getString(null, Configuration.STRING_PASSWORD, null));
     echoPassword = textPassword.getEchoChar();
     JLabel labelPassword = Utilities.createJLabel(GT._("&Password :"));
     labelPassword.setLabelFor(textPassword);
@@ -413,7 +413,7 @@ public class MainWindow
 
     chckSavePassword = Utilities.createJCheckBox(
         GT._("&Save password"),
-        configuration.getString(Configuration.STRING_PASSWORD, null) != null);
+        configuration.getString(null, Configuration.STRING_PASSWORD, null) != null);
     chckSavePassword.setActionCommand(ACTION_SAVE_PASSWORD);
     chckSavePassword.addActionListener(this);
     constraints.fill = GridBagConstraints.NONE;
@@ -517,9 +517,10 @@ public class MainWindow
     // Page name
     String lastPage = "";
     if (configuration.getBoolean(
+        null,
         Configuration.BOOLEAN_REMEMBER_LAST_PAGE,
         Configuration.DEFAULT_REMEMBER_LAST_PAGE)) {
-      lastPage = configuration.getString(Configuration.STRING_PAGE_NAME);
+      lastPage = configuration.getString(null, Configuration.STRING_PAGE_NAME);
     }
     textPagename = new JTextField(lastPage, 20);
     panel.add(textPagename, constraints);
@@ -952,7 +953,7 @@ public class MainWindow
       return;
     }
     Configuration config = Configuration.getConfiguration();
-    config.setString(Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
+    config.setString(null, Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
     config.save();
     Controller.runFullAnalysis(
         textPagename.getText().trim(), null,
@@ -972,7 +973,7 @@ public class MainWindow
       return;
     }
     Configuration config = Configuration.getConfiguration();
-    config.setString(Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
+    config.setString(null, Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
     config.save();
     Controller.runDisambiguationAnalysis(
         textPagename.getText().trim(),
@@ -1022,7 +1023,7 @@ public class MainWindow
       return;
     }
     Configuration config = Configuration.getConfiguration();
-    config.setString(Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
+    config.setString(null, Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
     config.save();
     new PageListWorker(
         getWikipedia(), this,
@@ -1044,7 +1045,7 @@ public class MainWindow
       return;
     }
     Configuration config = Configuration.getConfiguration();
-    config.setString(Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
+    config.setString(null, Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
     config.save();
     new PageListWorker(
         getWikipedia(), this,
@@ -1173,7 +1174,7 @@ public class MainWindow
    */
   private void actionWatchedPages() {
     Configuration config = Configuration.getConfiguration();
-    List<String> pageNames = config.getStringList(Configuration.ARRAY_WATCH_PAGES);
+    List<String> pageNames = config.getStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES);
     EnumWikipedia wikipedia = getWikipedia();
     if (wikipedia == null) {
       return;
@@ -1281,8 +1282,8 @@ public class MainWindow
         configuration.setWikipedia(getWikipedia());
         configuration.setLanguage(language);
         if (login) {
-          configuration.setString(Configuration.STRING_USER_NAME, username);
-          configuration.setString(Configuration.STRING_PASSWORD , savePassword ? password : null);
+          configuration.setString(null, Configuration.STRING_USER_NAME, username);
+          configuration.setString(null, Configuration.STRING_PASSWORD , savePassword ? password : null);
         }
         Configuration.getConfiguration().save();
 

@@ -746,7 +746,10 @@ public abstract class PageWindow
     Configuration config = Configuration.getConfiguration();
     chkCloseAfterSend = Utilities.createJCheckBox(
         GT._("&Close after sending"),
-        config.getBoolean(Configuration.BOOLEAN_CLOSE_FULL, Configuration.DEFAULT_CLOSE_FULL));
+        config.getBoolean(
+            null,
+            Configuration.BOOLEAN_CLOSE_FULL,
+            Configuration.DEFAULT_CLOSE_FULL));
     panel.add(chkCloseAfterSend);
   }
 
@@ -842,6 +845,7 @@ public abstract class PageWindow
       textPane.setEditable(true);
       if (undo != null) {
         textPane.setUndoLevels(config.getInt(
+            null,
             Configuration.INTEGER_ANALYSIS_UNDO_LVL,
             Configuration.DEFAULT_ANALYSIS_UNDO_LVL));
       }
@@ -1166,9 +1170,11 @@ public abstract class PageWindow
     }
     Configuration config = Configuration.getConfiguration();
     final boolean hideWindow = config.getBoolean(
+        null,
         Configuration.BOOLEAN_ANALYSIS_HIDE_SENDING,
         Configuration.DEFAULT_ANALYSIS_HIDE_SENDING);
     final boolean forceWatch = config.getBoolean(
+        null,
         Configuration.BOOLEAN_FORCE_WATCH,
         Configuration.DEFAULT_FORCE_WATCH);
     final int oldState = getParentComponent().getExtendedState();
@@ -1235,11 +1241,11 @@ public abstract class PageWindow
     if (displayYesNoWarning(
         GT._("Would you like to add this page on your local Watch list ?")) == JOptionPane.YES_OPTION) {
       Configuration config = Configuration.getConfiguration();
-      List<String> watch = config.getStringList(Configuration.ARRAY_WATCH_PAGES);
+      List<String> watch = config.getStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES);
       if (!watch.contains(page.getTitle())) {
         watch.add(page.getTitle());
         Collections.sort(watch);
-        config.setStringList(Configuration.ARRAY_WATCH_PAGES, watch);
+        config.setStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES, watch);
       }
     }
   }

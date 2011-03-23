@@ -512,7 +512,8 @@ public class DisambiguationWindow extends PageWindow {
     // Update automatic fixing
     Configuration config = Configuration.getConfiguration();
     Object[] automaticFixing = config.getPojoArray(
-        Configuration.POJO_AUTOMATIC_FIXING, page.getTitle(), AutomaticFixing.class);
+        page.getWikipedia(), Configuration.POJO_AUTOMATIC_FIXING,
+        page.getTitle(), AutomaticFixing.class);
     if (automaticFixing != null) {
       modelAutomaticFixing.clear();
       for (int i = 0; i < automaticFixing.length; i++) {
@@ -683,7 +684,9 @@ public class DisambiguationWindow extends PageWindow {
       }
       
     });
-    config.addPojoArray(Configuration.POJO_AUTOMATIC_FIXING, replacements, getPage().getTitle());
+    config.addPojoArray(
+        getPage().getWikipedia(), Configuration.POJO_AUTOMATIC_FIXING,
+        replacements, getPage().getTitle());
   }
 
   /**
@@ -734,6 +737,7 @@ public class DisambiguationWindow extends PageWindow {
     int count = Math.min(
         listLinks.getModel().getSize() - last,
         config.getInt(
+            null,
             Configuration.INTEGER_MAXIMUM_PAGES,
             Configuration.DEFAULT_MAXIMUM_PAGES));
     int indices[] = new int[count];

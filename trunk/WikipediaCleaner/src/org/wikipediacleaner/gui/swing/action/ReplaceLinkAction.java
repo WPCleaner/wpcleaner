@@ -214,7 +214,10 @@ public class ReplaceLinkAction extends TextAction {
 
     // Check with parenthesis removed
     Configuration config = Configuration.getConfiguration();
-    if (config.getBoolean(Configuration.BOOLEAN_SHORT_NOTATION, Configuration.DEFAULT_SHORT_NOTATION)) {
+    if (config.getBoolean(
+        null,
+        Configuration.BOOLEAN_SHORT_NOTATION,
+        Configuration.DEFAULT_SHORT_NOTATION)) {
       String titleRTrimmed = localNewTitle.replaceAll("\\s*\\(.*\\)\\s*$", "");
       if ((newText == null) && firstCharEqual && titleRTrimmed.substring(1).equals(text2)) {
         newText = "[[" + localText.charAt(0) + title2 + "|]]";
