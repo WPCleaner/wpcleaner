@@ -672,8 +672,8 @@ public enum EnumWikipedia {
       } else {
         formattedComment.append("WPCleaner");
       }
-      formattedComment.append(Version.VERSION);
     }
+    formattedComment.append(Version.VERSION);
     if (comment != null) {
       if (formattedComment.length() > 0) {
         formattedComment.append(" - ");
