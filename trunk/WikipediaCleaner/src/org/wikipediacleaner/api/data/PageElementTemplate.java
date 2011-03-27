@@ -188,7 +188,7 @@ public class PageElementTemplate {
   private static boolean analyzeTemplateParameters(
       String strParameters, int offset,
       List<Parameter> parameters) {
-    if ((strParameters == null) || (strParameters.trim().isEmpty())) {
+    if ((strParameters == null) || (strParameters.trim().length() == 0)) {
       return true;
     }
     int beginIndex = 0;
