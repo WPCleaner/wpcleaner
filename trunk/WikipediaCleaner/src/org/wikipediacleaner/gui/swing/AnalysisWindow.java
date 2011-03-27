@@ -299,6 +299,7 @@ public class AnalysisWindow extends PageWindow {
     constraints.weightx = 0;
     constraints.weighty = 0;
     addChkAutomaticComment(panelComment, constraints);
+    setComment("");
 
     panel.add(panelInformation);
     panel.add(panelComment);
@@ -852,9 +853,8 @@ public class AnalysisWindow extends PageWindow {
     }
 
     // Update comment
-    String comment = getDefaultComment();
+    List<String> fixed = new ArrayList<String>();
     if (mapLinksCount != null) {
-      int linksFixed = 0;
       for (Entry<String, Integer> p : mapLinksCount.entrySet()) {
         if ((p != null) && (p.getKey() != null) && (p.getValue() != null)) {
           Integer currentCount = null;
@@ -867,15 +867,24 @@ public class AnalysisWindow extends PageWindow {
             }
           }
           if ((currentCount == null) || (currentCount < p.getValue().intValue())) {
-            if (linksFixed > 0) {
-              comment += ", ";
-            } else {
-              comment += " - ";
-            }
-            linksFixed++;
-            comment += "[[" + p.getKey() + "]]";
+            fixed.add(p.getKey());
           }
         }
+      }
+    }
+    String comment = "";
+    if (fixed.size() > 0) {
+      Collections.sort(fixed);
+      comment = getDefaultComment();
+      int linksFixed = 0;
+      for (String fix : fixed) {
+        if (linksFixed > 0) {
+          comment += ", ";
+        } else {
+          comment += " - ";
+        }
+        linksFixed++;
+        comment += "[[" + fix + "]]";
       }
     }
     setComment(comment);

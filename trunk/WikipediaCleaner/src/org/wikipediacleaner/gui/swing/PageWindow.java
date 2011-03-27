@@ -1161,6 +1161,15 @@ public abstract class PageWindow
    */
   private void actionSend() {
     actionValidate();
+
+    // Check that a comment is available
+    if ((textComment != null) &&
+        (textComment.getText().trim().length() == 0)) {
+      Utilities.displayWarning(getParentComponent(), GT._(
+          "A comment is required for sending the page."));
+      return;
+    }
+
     if ((chkEditTalkPage != null) && chkEditTalkPage.isSelected() &&
         (page != null) && (page.getTalkPage(getWikipedia().getNamespaces()) != null)) {
       Controller.runNewSection(
