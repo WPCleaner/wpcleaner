@@ -26,7 +26,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -100,8 +99,8 @@ public class MediaWikiPane
   private transient MediaWikiPopupListener popupListener;
 
   private int undoLevels;
-  private Deque<String> undoTexts;
-  private Deque<String> redoTexts;
+  private LinkedList<String> undoTexts;
+  private LinkedList<String> redoTexts;
   private JButton undoButton;
   private transient ActionListener undoAction;
   private JButton redoButton;
