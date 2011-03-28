@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-03-27 20:23+0200\n"
-"PO-Revision-Date: 2011-02-05 20:49+0000\n"
+"PO-Revision-Date: 2011-03-27 19:04+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-02-05 21:04+0000\n"
-"X-Generator: Launchpad (build 12309)\n"
+"X-Launchpad-Export-Date: 2011-03-28 06:36+0000\n"
+"X-Generator: Launchpad (build 12670)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -318,7 +318,8 @@ msgid "Link count"
 msgstr "Liczba linków"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:348
-msgid "Add a warning on the talk page about the links to disambiguation pages"
+msgid ""
+"Add a warning on the talk page about the links to disambiguation pages"
 msgstr "Dodaj na stronie dyskusji komunikat o linkach do ujednoznacznień"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:386
@@ -369,16 +370,14 @@ msgstr "Licz inne strony"
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:461
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:385
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:199
-#, fuzzy
 msgid "Full analysis (Alt + &F)"
 msgstr "Pełna analiza"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:467
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:391
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:205
-#, fuzzy
 msgid "Disambiguation (Alt + &D)"
-msgstr "Ujednoznacznianie"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:473
 #: org/wikipediacleaner/gui/swing/PageWindow.java:704
@@ -426,7 +425,8 @@ msgstr "Mogą one dokonać zmian w dużej liczbie stron w krótkim czasie."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:106
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:616
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Aby z nich skorzystać, na niektórych projektach Wikimedia wymagana będzie "
 "flaga bota."
@@ -435,7 +435,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:617
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
-msgstr "Sprawdź proszę w zasadach, czy masz obowiązek zwrócić się flagę bota."
+msgstr ""
+"Sprawdź proszę w zasadach, czy masz obowiązek zwrócić się flagę bota."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:120
 msgid "Semi-automatic disambiguation fixing"
@@ -446,8 +447,11 @@ msgid "Update existing disambiguation warning messages"
 msgstr "Aktualizacja istniejących komunikatów o ujednoznacznieniach"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:205
-msgid "At what page do you wish to start updating the disambiguation warning ?"
+msgid ""
+"At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
+"Od której strony chcesz rozpocząć aktualizowanie komunikatu o "
+"ujednoznacznianiach?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:176
 msgid "Check Wikipedia"
@@ -834,7 +838,7 @@ msgstr "Losowa strona"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:549
 msgid "&Full analysis"
-msgstr "Pełna &analiza"
+msgstr "Pełna analiza"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:558
 msgid "&Disambiguation"
@@ -859,7 +863,7 @@ msgstr "Projekty"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:625
 msgid "&Current Disambiguation List"
-msgstr "&Obecna lista stron ujednoznaczniających"
+msgstr "Lista stron z linkami do ujezdnoznacznień"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:634
 msgid "Project check wikipedia"
@@ -872,9 +876,8 @@ msgstr "Potrzebna pomoc"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:650
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1131
-#, fuzzy
 msgid "All disambiguations pages"
-msgstr "Licz strony ujednoznaczniające"
+msgstr "Wszystkie strony ujednoznaczniające"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:659
 msgid "Local &Watch list"
@@ -905,7 +908,8 @@ msgstr "Dowiedz się, jak dodać inny język, pod adresem:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:815
 msgid "You must select which Wikipedia you want to work on before login"
-msgstr "Przed zalogowaniem musisz wybrać, na której Wikipedii chcesz pracować"
+msgstr ""
+"Przed zalogowaniem musisz wybrać, na której Wikipedii chcesz pracować"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:824
 msgid "You must select a language before login"
@@ -955,6 +959,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:991
 msgid "You must input a page name for updating the disambiguation warning"
 msgstr ""
+"Musisz wpisać nazwę strony do aktualizacji komunikatów o ujednoznacznianiach"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1021
 msgid "You must input a page name for retrieving the list of internal links"
@@ -968,8 +973,9 @@ msgid "Internal links in {0}"
 msgstr "Linki wewnętrzne w  {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1043
-msgid "You must input a page name for retrieving the list of category members"
-msgstr ""
+msgid ""
+"You must input a page name for retrieving the list of category members"
+msgstr "Musisz wpisać nazwę, aby otrzymać listę stron zawartych w kategorii"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1054
 #, java-format
@@ -1090,7 +1096,7 @@ msgstr "Sortowanie"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:186
 msgid "Debug"
-msgstr ""
+msgstr "Debugowanie"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:198
 msgid "General options"
@@ -1163,7 +1169,8 @@ msgstr ""
 "głównej)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:489
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 "Twórz na stronie dyskusji komunikat o ujednoznacznieniach (w przestrzeniach "
 "encyklopedycznych)"
@@ -1181,7 +1188,8 @@ msgstr ""
 "przestrzeni głównej)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:519
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 "Aktualizuj na stronie dyskusji komunikat o ujednoznacznieniach (w "
 "przestrzeniach encyklopedycznych)"
@@ -1303,14 +1311,12 @@ msgid "Backlinks"
 msgstr "Linkujące"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:217
-#, fuzzy
 msgid "Update page information (Alt + &U)"
-msgstr "&Zaktualizuj informacje o stronie"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:223
-#, fuzzy
 msgid "Set page comments (Alt + &C)"
-msgstr "Ustaw &komentarze strony"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:229
 #: org/wikipediacleaner/gui/swing/PageWindow.java:636
@@ -1323,14 +1329,12 @@ msgid "History (Alt + &H)"
 msgstr "Historia edycji (Alt + &H)"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:242
-#, fuzzy
 msgid "Remove page (Alt + &R)"
-msgstr "Losowa strona"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:248
-#, fuzzy
 msgid "Add page (Alt + &A)"
-msgstr "Losowa strona"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:346
 msgid ""
@@ -1342,17 +1346,19 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:366
 msgid "Enter the page title you want to add to your local watch list"
-msgstr "Wpisz tytuł strony, którą chcesz dodać do lokalnej listy obserwowanych"
+msgstr ""
+"Wpisz tytuł strony, którą chcesz dodać do lokalnej listy obserwowanych"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:480
-#, fuzzy, java-format
+#, java-format
 msgid "{0} pages"
-msgstr "Wczytaj stronę"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:482
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Linkujące - z przestrzeni głównej: {0}, z wszystkich przestrzeni: {1}"
+msgstr ""
+"Linkujące - z przestrzeni głównej: {0}, z wszystkich przestrzeni: {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:328
 msgid "&Page :"
@@ -1467,7 +1473,7 @@ msgstr "Twórz na stronie dyskusji komunikat o ujednoznacznieniach"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:817
 msgid "Protection level for editing the page"
-msgstr ""
+msgstr "Poziom zabezpieczenia przed edycją"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:906
 #: org/wikipediacleaner/gui/swing/PageWindow.java:911
@@ -1685,7 +1691,7 @@ msgstr "Wikipedia Cleaner pracuje..."
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:81
 #, java-format
 msgid "An error occured: {0}"
-msgstr "Błąd: {0}"
+msgstr "Wystąpił bład: {0}"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:86
 msgid "An unknown error occured"
@@ -1905,10 +1911,12 @@ msgid ""
 "Analysis found {0} articles with disambiguation warning {1}.\n"
 "Do you want to update the disambiguation warnings ?"
 msgstr ""
+"Znaleziono {0} artykułów z komunikatami o ujednoznacznianiach {1}.\n"
+"Chcesz aktualizować komunikaty o ujednoznacznianiach?"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:174
 msgid "Retrieving disambiguation pages"
-msgstr ""
+msgstr "Pobieranie stron ujednoznaczniających"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:201
 #, java-format
@@ -1918,6 +1926,9 @@ msgid ""
 "\n"
 "Error: {0}"
 msgstr ""
+"Wystąpił błąd podczas aktualizacji komunikatów o ujednoznacznianiach. "
+"Kontynuować?\n"
+"Błąd: {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:237
 #, java-format
@@ -1936,12 +1947,12 @@ msgid ""
 "Wikipedia.\n"
 "What is your preferred Wikipedia ?"
 msgstr ""
-
-#~ msgid "&Remove page"
-#~ msgstr "&Usuń stronę"
-
-#~ msgid "&Add page"
-#~ msgstr "&Dodaj stronę"
+"Opcje programu Wikipedia Cleaner zostały pozmieniane tak, by pozwolić na "
+"różne ustawienia dla każdej Wikipedii.\n"
+"Poprzednio ustawienia były globalne dla wszystkich Wikipedii.\n"
+"Twoje obecnie ustawienia zostaną zachowane jako opcje dla twojej ulubionej "
+"Wikipedii\n"
+"Wskaż twoją ulubioną Wikipedię."
 
 #~ msgid "Work"
 #~ msgstr "Praca"
@@ -1955,15 +1966,25 @@ msgstr ""
 #~ msgid "There's no known list of disambiguation pages for this Wikipedia."
 #~ msgstr "Brak znanej listy stron ujednoznaczniających dla tej Wikipedii."
 
+#~ msgid "&Add page"
+#~ msgstr "&Dodaj stronę"
+
+#~ msgid "&Update page information"
+#~ msgstr "&Zaktualizuj informacje o stronie"
+
+#~ msgid "&Remove page"
+#~ msgstr "&Usuń stronę"
+
+#~ msgid "Set page &comments"
+#~ msgstr "Ustaw &komentarze strony"
+
 #~ msgid ""
 #~ "!!! WARNING !!!\n"
 #~ "This function will do all the replacements in all selected pages.\n"
 #~ "It may modify a lot of pages in a short period of time.\n"
 #~ "On some Wikipedia projects, you may need the bot status for doing this.\n"
-#~ "Please, check if you need the bot status by reading the rules of "
-#~ "Wikipedia.\n"
-#~ "Also, verify again the texts you have inputed before running this "
-#~ "function.\n"
+#~ "Please, check if you need the bot status by reading the rules of Wikipedia.\n"
+#~ "Also, verify again the texts you have inputed before running this function.\n"
 #~ "Do you want to continue ?"
 #~ msgstr ""
 #~ "!!! OSTRZEŻENIE !!!\n"
@@ -1975,16 +1996,16 @@ msgstr ""
 #~ "Czy chcesz kontynuować?"
 
 #~ msgid ""
-#~ "The page {0} has been modified on Wikipedia since you have loaded the "
-#~ "page.\n"
-#~ "To avoid modification conflicts, you need to reload the page and make "
-#~ "your modifications again.\n"
+#~ "The page {0} has been modified on Wikipedia since you have loaded the page.\n"
+#~ "To avoid modification conflicts, you need to reload the page and make your "
+#~ "modifications again.\n"
 #~ "(Local revision: {1}, Wikipedia revision: {2})"
 #~ msgstr ""
 #~ "Strona {0} została zmodyfikowana na Wikipedii od czasu załadowania.\n"
 #~ "Aby uniknąć konfliktu edycji, odśwież stronę i wprowadź zmiany ponownie.\n"
 #~ "(Wersja lokalna: {1}, wersja Wikipedii: {2})"
 
+#, java-format
 #~ msgid "Retrieving first section contents - {0}"
 #~ msgstr "Pobieranie zawartości pierwszej sekcji - {0}"
 
