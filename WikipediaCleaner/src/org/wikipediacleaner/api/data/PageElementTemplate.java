@@ -225,6 +225,7 @@ public class PageElementTemplate {
               parameters, strParameters.substring(beginIndex, tmpIndex),
               equalIndex - beginIndex, offset + beginIndex);
           tmpIndex++;
+          equalIndex = -1;
           beginIndex = tmpIndex;
         } else {
           tmpIndex++;
