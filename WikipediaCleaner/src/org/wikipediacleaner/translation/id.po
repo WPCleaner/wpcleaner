@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-03-27 20:23+0200\n"
+"POT-Creation-Date: 2011-04-05 19:22+0200\n"
 "PO-Revision-Date: 2010-05-01 07:19+0000\n"
 "Last-Translator: Iwan Novirion <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -37,12 +37,12 @@ msgstr ""
 msgid "Please, report any other problem you find to me."
 msgstr ""
 
-#: org/wikipediacleaner/api/MediaWiki.java:181
+#: org/wikipediacleaner/api/MediaWiki.java:182
 #, java-format
 msgid "Page {0}:"
 msgstr "Halaman {0}:"
 
-#: org/wikipediacleaner/api/MediaWiki.java:206
+#: org/wikipediacleaner/api/MediaWiki.java:207
 #, fuzzy, java-format
 msgid "Updating page {0}"
 msgstr "Perbarui isi halaman"
@@ -1901,8 +1901,13 @@ msgstr "Halaman sembarang"
 msgid "Updating page contents"
 msgstr "Perbarui isi halaman"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:85
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:87
 msgid "Error 'badtoken' detected: Retrying"
+msgstr "Galat 'badtoken' terdeteksi: Coba lagi"
+
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:101
+#, fuzzy
+msgid "Error 'readonly' detected: Waiting and retrying"
 msgstr "Galat 'badtoken' terdeteksi: Coba lagi"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:262

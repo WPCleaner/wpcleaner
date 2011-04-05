@@ -394,13 +394,16 @@ public class MediaWikiAPI implements API {
       log.error("Error retrieving page content", e);
       throw new APIException("Error parsing XML", e);
     } catch (APIException e) {
-      // API Bug https://bugzilla.wikimedia.org/show_bug.cgi?id=26627
-      if (APIException.ERROR_RV_NO_SUCH_SECTION.equalsIgnoreCase(e.getErrorCode())) {
+      switch (e.getQueryResult()) {
+      case RV_NO_SUCH_SECTION:
+        // API Bug https://bugzilla.wikimedia.org/show_bug.cgi?id=26627
         page.setExisting(Boolean.FALSE);
         page.setContents(null);
         return;
+
+      default:
+        throw e;
       }
-      throw e;
     }
   }
 
@@ -1989,9 +1992,9 @@ public class MediaWikiAPI implements API {
           log.error("IOException: " + e.getMessage());
           throw new APIException("Error accessing MediaWiki", e);
         } finally {
-          if (method != null) {
+          //if (method != null) {
             method.releaseConnection();
-          }
+          //}
         }
       } catch (JDOMParseException e) {
         if (attempt >= maxTry) {

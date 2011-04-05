@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-03-27 20:23+0200\n"
+"POT-Creation-Date: 2011-04-05 19:22+0200\n"
 "PO-Revision-Date: 2011-03-27 19:04+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -37,12 +37,12 @@ msgstr ""
 msgid "Please, report any other problem you find to me."
 msgstr ""
 
-#: org/wikipediacleaner/api/MediaWiki.java:181
+#: org/wikipediacleaner/api/MediaWiki.java:182
 #, java-format
 msgid "Page {0}:"
 msgstr "Strona {0}:"
 
-#: org/wikipediacleaner/api/MediaWiki.java:206
+#: org/wikipediacleaner/api/MediaWiki.java:207
 #, java-format
 msgid "Updating page {0}"
 msgstr "Aktualizowanie strony {0}"
@@ -318,8 +318,7 @@ msgid "Link count"
 msgstr "Liczba linków"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:348
-msgid ""
-"Add a warning on the talk page about the links to disambiguation pages"
+msgid "Add a warning on the talk page about the links to disambiguation pages"
 msgstr "Dodaj na stronie dyskusji komunikat o linkach do ujednoznacznień"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:386
@@ -425,8 +424,7 @@ msgstr "Mogą one dokonać zmian w dużej liczbie stron w krótkim czasie."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:106
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:616
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Aby z nich skorzystać, na niektórych projektach Wikimedia wymagana będzie "
 "flaga bota."
@@ -435,8 +433,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:617
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
-msgstr ""
-"Sprawdź proszę w zasadach, czy masz obowiązek zwrócić się flagę bota."
+msgstr "Sprawdź proszę w zasadach, czy masz obowiązek zwrócić się flagę bota."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:120
 msgid "Semi-automatic disambiguation fixing"
@@ -447,8 +444,7 @@ msgid "Update existing disambiguation warning messages"
 msgstr "Aktualizacja istniejących komunikatów o ujednoznacznieniach"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:205
-msgid ""
-"At what page do you wish to start updating the disambiguation warning ?"
+msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 "Od której strony chcesz rozpocząć aktualizowanie komunikatu o "
 "ujednoznacznianiach?"
@@ -908,8 +904,7 @@ msgstr "Dowiedz się, jak dodać inny język, pod adresem:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:815
 msgid "You must select which Wikipedia you want to work on before login"
-msgstr ""
-"Przed zalogowaniem musisz wybrać, na której Wikipedii chcesz pracować"
+msgstr "Przed zalogowaniem musisz wybrać, na której Wikipedii chcesz pracować"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:824
 msgid "You must select a language before login"
@@ -973,8 +968,7 @@ msgid "Internal links in {0}"
 msgstr "Linki wewnętrzne w  {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1043
-msgid ""
-"You must input a page name for retrieving the list of category members"
+msgid "You must input a page name for retrieving the list of category members"
 msgstr "Musisz wpisać nazwę, aby otrzymać listę stron zawartych w kategorii"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1054
@@ -1169,8 +1163,7 @@ msgstr ""
 "głównej)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:489
-msgid ""
-"Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 "Twórz na stronie dyskusji komunikat o ujednoznacznieniach (w przestrzeniach "
 "encyklopedycznych)"
@@ -1188,8 +1181,7 @@ msgstr ""
 "przestrzeni głównej)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:519
-msgid ""
-"Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 "Aktualizuj na stronie dyskusji komunikat o ujednoznacznieniach (w "
 "przestrzeniach encyklopedycznych)"
@@ -1346,8 +1338,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:366
 msgid "Enter the page title you want to add to your local watch list"
-msgstr ""
-"Wpisz tytuł strony, którą chcesz dodać do lokalnej listy obserwowanych"
+msgstr "Wpisz tytuł strony, którą chcesz dodać do lokalnej listy obserwowanych"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:480
 #, java-format
@@ -1357,8 +1348,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:482
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr ""
-"Linkujące - z przestrzeni głównej: {0}, z wszystkich przestrzeni: {1}"
+msgstr "Linkujące - z przestrzeni głównej: {0}, z wszystkich przestrzeni: {1}"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:328
 msgid "&Page :"
@@ -1872,8 +1862,13 @@ msgstr "Pobieranie losowej strony"
 msgid "Updating page contents"
 msgstr "Odświeżanie zawartości strony"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:85
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:87
 msgid "Error 'badtoken' detected: Retrying"
+msgstr "Wykryto błąd 'badtoken': ponowna próba"
+
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:101
+#, fuzzy
+msgid "Error 'readonly' detected: Waiting and retrying"
 msgstr "Wykryto błąd 'badtoken': ponowna próba"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:262
@@ -1983,8 +1978,10 @@ msgstr ""
 #~ "This function will do all the replacements in all selected pages.\n"
 #~ "It may modify a lot of pages in a short period of time.\n"
 #~ "On some Wikipedia projects, you may need the bot status for doing this.\n"
-#~ "Please, check if you need the bot status by reading the rules of Wikipedia.\n"
-#~ "Also, verify again the texts you have inputed before running this function.\n"
+#~ "Please, check if you need the bot status by reading the rules of "
+#~ "Wikipedia.\n"
+#~ "Also, verify again the texts you have inputed before running this "
+#~ "function.\n"
 #~ "Do you want to continue ?"
 #~ msgstr ""
 #~ "!!! OSTRZEŻENIE !!!\n"
@@ -1996,16 +1993,16 @@ msgstr ""
 #~ "Czy chcesz kontynuować?"
 
 #~ msgid ""
-#~ "The page {0} has been modified on Wikipedia since you have loaded the page.\n"
-#~ "To avoid modification conflicts, you need to reload the page and make your "
-#~ "modifications again.\n"
+#~ "The page {0} has been modified on Wikipedia since you have loaded the "
+#~ "page.\n"
+#~ "To avoid modification conflicts, you need to reload the page and make "
+#~ "your modifications again.\n"
 #~ "(Local revision: {1}, Wikipedia revision: {2})"
 #~ msgstr ""
 #~ "Strona {0} została zmodyfikowana na Wikipedii od czasu załadowania.\n"
 #~ "Aby uniknąć konfliktu edycji, odśwież stronę i wprowadź zmiany ponownie.\n"
 #~ "(Wersja lokalna: {1}, wersja Wikipedii: {2})"
 
-#, java-format
 #~ msgid "Retrieving first section contents - {0}"
 #~ msgstr "Pobieranie zawartości pierwszej sekcji - {0}"
 

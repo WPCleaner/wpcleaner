@@ -211,13 +211,30 @@ public class MediaWiki extends MediaWikiController {
                   wikipedia.createUpdatePageComment(comment, details.toString()),
                   false);
             } catch (APIException e) {
-              if (APIException.ERROR_BAD_TOKEN.equals(e.getErrorCode())) {
+              switch (e.getQueryResult()) {
+              case BAD_TOKEN:
+                // Bad Token : Retrieve contents and try again
                 api.retrieveContents(wikipedia, page, false);
                 api.updatePage(
                     wikipedia, page, newContents,
                     wikipedia.createUpdatePageComment(comment, details.toString()),
                     false);
-              } else {
+                break;
+
+              case READ_ONLY:
+                // Read Only : Wait a few seconds before retrying
+                try {
+                  Thread.sleep(10000);
+                } catch (InterruptedException e1) {
+                  // Nothing to do 
+                }
+                api.updatePage(
+                    wikipedia, page, newContents,
+                    wikipedia.createUpdatePageComment(comment, details.toString()),
+                    false);
+                break;
+
+              default:
                 throw e;
               }
             }
