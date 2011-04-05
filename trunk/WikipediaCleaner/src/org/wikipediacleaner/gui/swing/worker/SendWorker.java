@@ -80,7 +80,9 @@ public class SendWorker extends BasicWorker {
           getWikipedia().createUpdatePageComment(comment, null),
           forceWatch);
     } catch (APIException e) {
-      if (APIException.ERROR_BAD_TOKEN.equals(e.getErrorCode())) {
+      switch (e.getQueryResult()) {
+      case BAD_TOKEN:
+        // Bad Token : Retrieve contents and try again
         try {
           setText(GT._("Error 'badtoken' detected: Retrying"));
           api.retrieveContents(getWikipedia(), page, false);
@@ -91,7 +93,27 @@ public class SendWorker extends BasicWorker {
         } catch (APIException e2) {
           return e2;
         }
-      } else {
+        break;
+
+      case READ_ONLY:
+        // Read Only : Wait a few seconds before retrying
+        try {
+          setText(GT._("Error 'readonly' detected: Waiting and retrying"));
+          try {
+            Thread.sleep(10000);
+          } catch (InterruptedException e1) {
+            // Nothing to do 
+          }
+          queryResult = api.updatePage(
+              getWikipedia(), page, text,
+              getWikipedia().createUpdatePageComment(comment, null),
+              forceWatch);
+        } catch (APIException e2) {
+          return e2;
+        }
+        break;
+
+      default:
         return e;
       }
     }

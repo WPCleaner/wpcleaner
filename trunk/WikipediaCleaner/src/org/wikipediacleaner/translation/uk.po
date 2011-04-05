@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-03-27 20:23+0200\n"
+"POT-Creation-Date: 2011-04-05 19:22+0200\n"
 "PO-Revision-Date: 2010-09-16 07:39+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -40,12 +40,12 @@ msgstr ""
 msgid "Please, report any other problem you find to me."
 msgstr "Будь ласка, надішліть мені звіт про будь-яку проблему, яку знайдете."
 
-#: org/wikipediacleaner/api/MediaWiki.java:181
+#: org/wikipediacleaner/api/MediaWiki.java:182
 #, java-format
 msgid "Page {0}:"
 msgstr "Сторінка {0}:"
 
-#: org/wikipediacleaner/api/MediaWiki.java:206
+#: org/wikipediacleaner/api/MediaWiki.java:207
 #, java-format
 msgid "Updating page {0}"
 msgstr "Поновлення сторінки {0}"
@@ -1884,8 +1884,13 @@ msgstr "Отримання випадкової сторінки"
 msgid "Updating page contents"
 msgstr "Оновлення вмісту сторінок"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:85
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:87
 msgid "Error 'badtoken' detected: Retrying"
+msgstr "Виявлена помилка «неправильна лексема»: Повторна спроба"
+
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:101
+#, fuzzy
+msgid "Error 'readonly' detected: Waiting and retrying"
 msgstr "Виявлена помилка «неправильна лексема»: Повторна спроба"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:262

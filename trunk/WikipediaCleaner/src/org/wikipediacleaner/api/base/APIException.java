@@ -18,36 +18,13 @@
 
 package org.wikipediacleaner.api.base;
 
+import org.wikipediacleaner.api.constants.EnumQueryResult;
+
 
 /**
  * Generic API Exception.
  */
 public class APIException extends Exception {
-
-  public static final String ERROR_AUTO_BLOCKED = "autoblocked";
-  public static final String ERROR_BAD_TOKEN = "badtoken";
-  public static final String ERROR_BLOCKED = "blocked";
-  public static final String ERROR_CASCADE_PROTECTED = "cascadeprotected";
-  public static final String ERROR_CONFIRM_EMAIL = "confirmemail";
-  public static final String ERROR_CUSTOM_CSS_JS_PROTECTED = "customcssjsprotected";
-  public static final String ERROR_HOOK_ABORTED = "hookaborted";
-  public static final String ERROR_INVALID_TITLE = "invalidtitle";
-  public static final String ERROR_INVALID_USER = "invaliduser";
-  public static final String ERROR_MISSING_TITLE = "missingtitle";
-  public static final String ERROR_MUST_BE_POSTED = "mustbeposted";
-  public static final String ERROR_NO_SUCH_PAGE_ID = "nosuchpageid";
-  public static final String ERROR_NO_SUCH_RC_ID = "nosuchrcid";
-  public static final String ERROR_NO_SUCH_REV_ID = "nosuchrevid";
-  public static final String ERROR_NO_SUCH_USER = "nosuchuser";
-  public static final String ERROR_PERMISSION_DENIED = "permissiondenied";
-  public static final String ERROR_PROTECTED_NAMESPACE = "protectednamespace";
-  public static final String ERROR_PROTECTED_NAMESPACE_INTERFACE = "protectednamespace-interface";
-  public static final String ERROR_PROTECTED_PAGE = "protectedpage";
-  public static final String ERROR_RATE_LIMITED = "ratelimited";
-  public static final String ERROR_READ_ONLY = "readonly";
-  public static final String ERROR_RV_NO_SUCH_SECTION = "rvnosuchsection";
-  public static final String ERROR_UNKNOWN_ERROR = "unknownerror";
-  public static final String ERROR_UNSUPPORTED_NAMESPACE = "unsupportednamespace";
 
   /**
    * 
@@ -116,5 +93,12 @@ public class APIException extends Exception {
    */
   public String getErrorCode() {
     return code;
+  }
+
+  /**
+   * @return Query result.
+   */
+  public EnumQueryResult getQueryResult() {
+    return EnumQueryResult.getEnumByCode(code);
   }
 }
