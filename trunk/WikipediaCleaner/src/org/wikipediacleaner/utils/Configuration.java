@@ -54,9 +54,9 @@ public class Configuration implements WindowListener {
 
   // String properties
   public  final static String  STRING_PAGE_NAME          = "PageName";
-  public  final static String  STRING_PASSWORD           = "Password";
+  private final static String  STRING_PASSWORD           = "Password";
   public  final static String  STRING_SIGNATURE          = "Signature";
-  public  final static String  STRING_USER_NAME          = "UserName";
+  private final static String  STRING_USER_NAME          = "UserName";
 
   public  final static String  DEFAULT_SIGNATURE         = "--~~~~";
 
@@ -78,6 +78,11 @@ public class Configuration implements WindowListener {
   public  final static String  INTEGER_INTERROG_THREAD   = "InterrogationThreads";
   public  final static String  INTEGER_MAXIMUM_PAGES     = "MaximumPages";
   public  final static String  INTEGER_MENU_SIZE         = "MenuSize";
+  public  final static String  INTEGER_SAVE_USER         = "SaveUser";
+
+  public  final static int     VALUE_SAVE_USER_BOTH      = 2;
+  public  final static int     VALUE_SAVE_USER_NAME      = 1;
+  public  final static int     VALUE_SAVE_USER_NONE      = 0;
 
   public  final static int     DEFAULT_ANALYSIS_NB_PAGES = 10;
   public  final static int     DEFAULT_ANALYSIS_UNDO_LVL = 10;
@@ -85,12 +90,14 @@ public class Configuration implements WindowListener {
   public  final static int     DEFAULT_INTERROG_THREAD   = 30;
   public  final static int     DEFAULT_MAXIMUM_PAGES     = 20;
   public  final static int     DEFAULT_MENU_SIZE         = 30;
+  public  final static int     DEFAULT_SAVE_USER         = VALUE_SAVE_USER_NAME;
 
   // Configuration version :
   //   1 : Initial version
   //   2 : Configuration for each wikipedia
+  //   3 : Multiple users
   public  final static String  INTEGER_CONFIG_VERSION    = "ConfigurationVersion";
-  public  final static int     DEFAULT_CONFIG_VERSION    = 2;
+  public  final static int     DEFAULT_CONFIG_VERSION    = 3;
 
   // Boolean properties
   public  final static String  BOOLEAN_ADVANCED_FEATURES       = "AdvancedFeatures";
@@ -156,6 +163,9 @@ public class Configuration implements WindowListener {
   public  final static boolean DEFAULT_UPDATE_DAB_WARNING_ALL  = true;
   public  final static boolean DEFAULT_UPDATE_DAB_WARNING_ENCY = true;
   public  final static boolean DEFAULT_WIKICLEANER_COMMENT     = true;
+
+  // Properties
+  public  final static String  PROPERTIES_USERS          = "Users";
 
   // Special properties
   private final static String  PROPERTY_LANGUAGE         = "Language";
@@ -232,7 +242,7 @@ public class Configuration implements WindowListener {
           return;
         }
 
-        // Update from version 1 to 2
+        // Update from version 1 to 2 : Configuration for each wikipedia
         EnumWikipedia preferredWikipedia = null;
         boolean ok = true;
         if (version < 2) {
@@ -244,6 +254,12 @@ public class Configuration implements WindowListener {
           ok &= moveChild(getPreferences(), getPreferences(preferredWikipedia), POJO_AUTOMATIC_FIXING);
           ok &= moveChild(getPreferences(), getPreferences(preferredWikipedia), POJO_PAGE_COMMENTS);
           ok &= moveChild(getPreferences(), getPreferences(preferredWikipedia), SUB_ARRAY_PREFERRED_DAB);
+        }
+
+        // Update from version 2 to 3 : Several users
+        if (ok && (version < 3)) {
+          removeValue(getPreferences(), STRING_USER_NAME);
+          removeValue(getPreferences(), STRING_PASSWORD);
         }
         if (ok) {
           setInt(null, INTEGER_CONFIG_VERSION, DEFAULT_CONFIG_VERSION);
@@ -427,16 +443,17 @@ public class Configuration implements WindowListener {
   public Properties getProperties(
       EnumWikipedia wikipedia, String property) {
     Properties values = new Properties();
-    if (getPreferences(wikipedia) != null) {
-      try {
+    try {
+      if ((getPreferences(wikipedia) != null) &&
+          (getPreferences(wikipedia).nodeExists(property))) {
         Preferences node = getPreferences(wikipedia).node(property);
         String[] children = node.keys();
         for (String child : children) {
           values.setProperty(child, node.get(child, ""));
         }
-      } catch (BackingStoreException e) {
-        //
       }
+    } catch (BackingStoreException e) {
+      //
     }
     return values;
   }
@@ -457,6 +474,18 @@ public class Configuration implements WindowListener {
       } catch (BackingStoreException e) {
         //
       }
+    }
+  }
+
+  /**
+   * Remove a value.
+   * 
+   * @param prefs Preferences.
+   * @param value Value name.
+   */
+  private void removeValue(Preferences prefs, String value) {
+    if (prefs != null) {
+      prefs.remove(value);
     }
   }
 
