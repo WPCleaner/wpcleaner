@@ -20,7 +20,6 @@ package org.wikipediacleaner.gui.swing;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -42,14 +41,15 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
@@ -83,7 +83,6 @@ import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
 
 /**
  * Main Window of WikipediaCleaner. 
@@ -125,10 +124,13 @@ public class MainWindow
 
   private JComboBox comboWikipedia;
   private JComboBox comboLanguage;
-  private JTextField textUsername;
+  private JComboBox comboUser;
   private JPasswordField textPassword;
   private char echoPassword = '*';
-  private JCheckBox chckSavePassword;
+  private ButtonGroup groupSaveUsernamePassword;
+  private JRadioButton radSavePassword;
+  private JRadioButton radSaveUsername;
+  private JRadioButton radSaveNothing;
   private JButton buttonLogin;
   private JButton buttonDemo;
   private JButton buttonLogout;
@@ -254,7 +256,7 @@ public class MainWindow
   protected void updateComponentState() {
     comboWikipedia.setEnabled(!logged);
     comboLanguage.setEnabled(!logged);
-    textUsername.setEnabled(!logged);
+    comboUser.setEnabled(!logged);
     textPassword.setEnabled(!logged);
     textPassword.setEchoChar(logged ? ' ' : echoPassword);
     buttonLogin.setEnabled(!logged);
@@ -330,9 +332,11 @@ public class MainWindow
     constraints.weighty = 0;
 
     // Wikipedia
+    EnumWikipedia defaultWikipedia = configuration.getWikipedia();
     comboWikipedia = new JComboBox(EnumWikipedia.getList().toArray());
     comboWikipedia.setEditable(false);
-    comboWikipedia.setSelectedItem(configuration.getWikipedia());
+    comboWikipedia.setSelectedItem(defaultWikipedia);
+    comboWikipedia.addItemListener(this);
     JLabel labelWikipedia = Utilities.createJLabel(GT._("&Wikipedia"));
     labelWikipedia.setLabelFor(comboWikipedia);
     labelWikipedia.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -383,22 +387,23 @@ public class MainWindow
     constraints.gridy++;
 
     // User name
-    textUsername = new JTextField();
-    textUsername.setText(configuration.getString(null, Configuration.STRING_USER_NAME));
+    comboUser = new JComboBox();
+    comboUser.setEditable(true);
+    comboUser.addItemListener(this);
     JLabel labelUsername = Utilities.createJLabel(GT._("&User name :"));
-    labelUsername.setLabelFor(textUsername);
+    labelUsername.setLabelFor(comboUser);
     labelUsername.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
     constraints.weightx = 0;
     panel.add(labelUsername, constraints);
     constraints.gridx = 1;
     constraints.weightx = 1;
-    panel.add(textUsername, constraints);
+    panel.add(comboUser, constraints);
     constraints.gridy++;
 
     // Password
     textPassword = new JPasswordField();
-    textPassword.setText(configuration.getString(null, Configuration.STRING_PASSWORD, null));
+    textPassword.setText("");
     echoPassword = textPassword.getEchoChar();
     JLabel labelPassword = Utilities.createJLabel(GT._("&Password :"));
     labelPassword.setLabelFor(textPassword);
@@ -411,69 +416,65 @@ public class MainWindow
     panel.add(textPassword, constraints);
     constraints.gridy++;
 
-    chckSavePassword = Utilities.createJCheckBox(
-        GT._("&Save password"),
-        configuration.getString(null, Configuration.STRING_PASSWORD, null) != null);
-    chckSavePassword.setActionCommand(ACTION_SAVE_PASSWORD);
-    chckSavePassword.addActionListener(this);
-    constraints.fill = GridBagConstraints.NONE;
-    constraints.gridx = 0;
-    constraints.weightx = 0;
-    constraints.gridwidth = 2;
-    panel.add(chckSavePassword, constraints);
-    constraints.gridy++;
-
     // Login/Demo/Logout buttons
-    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    JToolBar buttonToolbar = new JToolBar(SwingConstants.HORIZONTAL);
+    buttonToolbar.setFloatable(false);
     buttonLogin = Utilities.createJButton(GT._("&Login"));
     buttonLogin.setActionCommand(ACTION_LOGIN);
     buttonLogin.addActionListener(this);
-    buttonPanel.add(buttonLogin);
+    buttonToolbar.add(buttonLogin);
+    buttonToolbar.addSeparator();
     buttonDemo = Utilities.createJButton(GT._("&Demo"));
     buttonDemo.setActionCommand(ACTION_DEMO);
     buttonDemo.addActionListener(this);
-    buttonPanel.add(buttonDemo);
+    buttonToolbar.add(buttonDemo);
+    buttonToolbar.addSeparator();
     buttonLogout = Utilities.createJButton(GT._("L&ogout"));
     buttonLogout.setActionCommand(ACTION_LOGOUT);
     buttonLogout.addActionListener(this);
-    buttonPanel.add(buttonLogout);
-    buttonHelp = Utilities.createJButton(GT._("&Help"));
-    buttonHelp.setActionCommand(ACTION_HELP);
-    buttonHelp.addActionListener(this);
-    buttonPanel.add(buttonHelp);
+    buttonToolbar.add(buttonLogout);
     constraints.fill = GridBagConstraints.NONE;
     constraints.gridwidth = 2;
     constraints.gridx = 0;
     constraints.weightx = 1;
-    panel.add(buttonPanel, constraints);
+    panel.add(buttonToolbar, constraints);
     constraints.gridy++;
 
     // Buttons
-    buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    buttonToolbar = new JToolBar(SwingConstants.HORIZONTAL);
+    buttonToolbar.setFloatable(false);
+    buttonHelp = Utilities.createJButton(
+        "tango-help-browser.png", EnumImageSize.NORMAL,
+        GT._("Help (Alt + &H)"), false);
+    buttonHelp.setActionCommand(ACTION_HELP);
+    buttonHelp.addActionListener(this);
+    buttonToolbar.add(buttonHelp);
     buttonOptions = Utilities.createJButton(
         "gnome-preferences-other.png", EnumImageSize.NORMAL,
         GT._("Options (Alt + &O)"), false);
     buttonOptions.setActionCommand(ACTION_OPTIONS);
     buttonOptions.addActionListener(this);
-    buttonPanel.add(buttonOptions);
+    buttonToolbar.add(buttonOptions);
     buttonOptionsSystem = Utilities.createJButton(
         "gnome-preferences-system.png", EnumImageSize.NORMAL,
         GT._("System Options (Alt + &Y)"), false);
     buttonOptionsSystem.setActionCommand(ACTION_OPTIONS_SYSTEM);
     buttonOptionsSystem.addActionListener(this);
-    buttonPanel.add(buttonOptionsSystem);
+    buttonToolbar.add(buttonOptionsSystem);
+    buttonToolbar.addSeparator();
     buttonIdea = Utilities.createJButton(GT._("&Idea ? Bug ?"));
     buttonIdea.setActionCommand(ACTION_IDEA);
     buttonIdea.addActionListener(this);
-    buttonPanel.add(buttonIdea);
+    buttonToolbar.add(buttonIdea);
+    buttonToolbar.addSeparator();
     buttonAbout = Utilities.createJButton(GT._("About"));
     buttonAbout.setActionCommand(ACTION_ABOUT);
     buttonAbout.addActionListener(this);
     buttonAbout.setEnabled(false);
-    buttonPanel.add(buttonAbout);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
+    buttonToolbar.add(buttonAbout);
+    constraints.fill = GridBagConstraints.NONE;
     constraints.weighty = 0;
-    panel.add(buttonPanel, constraints);
+    panel.add(buttonToolbar, constraints);
     constraints.gridy++;
 
     // Empty panel
@@ -488,6 +489,45 @@ public class MainWindow
     constraints.weighty = 1;
     panel.add(emptyPanel, constraints);
     constraints.gridy++;
+
+    // Save password
+    int saveUser = configuration.getInt(
+        null, Configuration.INTEGER_SAVE_USER, Configuration.DEFAULT_SAVE_USER);
+    groupSaveUsernamePassword = new ButtonGroup();
+    radSavePassword = Utilities.createJRadioButton(
+        GT._("Save user name and password"),
+        (saveUser == Configuration.VALUE_SAVE_USER_BOTH));
+    radSavePassword.setActionCommand(ACTION_SAVE_PASSWORD);
+    radSavePassword.addActionListener(this);
+    groupSaveUsernamePassword.add(radSavePassword);
+    constraints.fill = GridBagConstraints.NONE;
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    constraints.gridwidth = 2;
+    panel.add(radSavePassword, constraints);
+    constraints.gridy++;
+    radSaveUsername = Utilities.createJRadioButton(
+        GT._("Save user name only"),
+        (saveUser == Configuration.VALUE_SAVE_USER_NAME));
+    groupSaveUsernamePassword.add(radSaveUsername);
+    constraints.fill = GridBagConstraints.NONE;
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    constraints.gridwidth = 2;
+    panel.add(radSaveUsername, constraints);
+    constraints.gridy++;
+    radSaveNothing = Utilities.createJRadioButton(
+        GT._("Save none of them"),
+        (saveUser != Configuration.VALUE_SAVE_USER_BOTH) && (saveUser != Configuration.VALUE_SAVE_USER_NAME));
+    groupSaveUsernamePassword.add(radSaveNothing);
+    constraints.fill = GridBagConstraints.NONE;
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    constraints.gridwidth = 2;
+    panel.add(radSaveNothing, constraints);
+    constraints.gridy++;
+
+    resetUsersList();
 
     return panel;
   }
@@ -830,12 +870,12 @@ public class MainWindow
 
     // Check that correct values are entered for user name
     if (login) {
-      if ((textUsername == null) ||
-          (textUsername.getText() == null) ||
-          ("".equals(textUsername.getText().trim()))) {
+      if ((comboUser == null) ||
+          (comboUser.getSelectedItem() == null) ||
+          ("".equals(comboUser.getSelectedItem().toString().trim()))) {
         displayWarning(
             GT._("You must input your user name before login"),
-            textUsername);
+            comboUser);
         return;
       }
     }
@@ -862,9 +902,13 @@ public class MainWindow
     new LoginWorker(
         getWikipedia(), this,
         (EnumLanguage) comboLanguage.getSelectedItem(),
-        textUsername.getText(),
+        comboUser.getSelectedItem().toString(),
         textPassword.getPassword(),
-        chckSavePassword.isSelected(),
+        radSavePassword.isSelected() ?
+            Configuration.VALUE_SAVE_USER_BOTH :
+            radSaveUsername.isSelected() ?
+                Configuration.VALUE_SAVE_USER_NAME :
+                Configuration.VALUE_SAVE_USER_NONE,
         login).start();
   }
 
@@ -929,13 +973,13 @@ public class MainWindow
    * Action called when Save Password is changed. 
    */
   private void actionSavePassword() {
-    if ((chckSavePassword.isSelected())) {
+    if ((radSavePassword.isSelected())) {
       int answer = displayYesNoWarning(
           GT._("The password will be saved on your disk, " +
                "so anyone having access to your computer may be able to get it.\n" +
                "Are you sure that you want to save it ?"));
       if (answer != JOptionPane.YES_OPTION) {
-        chckSavePassword.setSelected(false);
+        radSaveUsername.setSelected(true);
       }
     }
   }
@@ -1226,7 +1270,7 @@ public class MainWindow
     private final EnumLanguage language;
     private final String username;
     private final char[] password;
-    private final boolean savePassword;
+    private final int saveUser;
     private final boolean login;
 
     public LoginWorker(
@@ -1235,13 +1279,13 @@ public class MainWindow
         EnumLanguage language,
         String username,
         char[] password,
-        boolean savePassword,
+        int saveUser,
         boolean login) {
       super(wikipedia, window);
       this.language = language;
       this.username = username.trim();
       this.password = password;
-      this.savePassword = savePassword;
+      this.saveUser = saveUser;
       this.login = login;
     }
 
@@ -1281,9 +1325,14 @@ public class MainWindow
         Configuration configuration = Configuration.getConfiguration();
         configuration.setWikipedia(getWikipedia());
         configuration.setLanguage(language);
-        if (login) {
-          configuration.setString(null, Configuration.STRING_USER_NAME, username);
-          configuration.setString(null, Configuration.STRING_PASSWORD , savePassword ? password : null);
+        if (login &&
+            ((saveUser == Configuration.VALUE_SAVE_USER_NAME) ||
+             (saveUser == Configuration.VALUE_SAVE_USER_BOTH))) {
+          Properties props = configuration.getProperties(getWikipedia(), Configuration.PROPERTIES_USERS);
+          props.setProperty(
+              username,
+              (saveUser == Configuration.VALUE_SAVE_USER_BOTH) ? new String(password) : "");
+          configuration.setProperties(getWikipedia(), Configuration.PROPERTIES_USERS, props);
         }
         Configuration.getConfiguration().save();
 
@@ -1396,12 +1445,55 @@ public class MainWindow
       return;
     }
 
-    // New language selected: change default language
+    // New wikipedia selected: change wikipedia
+    if (e.getSource() == comboWikipedia) {
+      resetUsersList();
+      return;
+    }
+
+    // New language selected: change current language
     if (e.getSource() == comboLanguage) {
       if (comboLanguage.getSelectedItem() instanceof EnumLanguage) {
         EnumLanguage language = (EnumLanguage) comboLanguage.getSelectedItem();
         GT.setCurrentLanguage(language);
-        return;
+      }
+      return;
+    }
+  }
+
+  /**
+   * Reset users list based on current wikipedia.
+   */
+  private void resetUsersList() {
+    comboUser.removeAllItems();
+    comboUser.setSelectedItem("");
+    if (comboWikipedia.getSelectedItem() instanceof EnumWikipedia) {
+      EnumWikipedia wikipedia = (EnumWikipedia) comboWikipedia.getSelectedItem();
+      Configuration configuration = Configuration.getConfiguration();
+      Properties users = configuration.getProperties(wikipedia, Configuration.PROPERTIES_USERS);
+      for (Object user : users.keySet()) {
+        comboUser.addItem(user);
+      }
+      if (comboUser.getItemCount() > 0) {
+        comboUser.setSelectedIndex(0);
+      }
+    }
+    resetPassword();
+  }
+
+  /**
+   * Reset password based on current wikipedia and user.
+   */
+  private void resetPassword() {
+    textPassword.setText("");
+    if ((comboWikipedia.getSelectedItem() instanceof EnumWikipedia) &&
+        (comboUser.getSelectedItem() instanceof String)) {
+      EnumWikipedia wikipedia = (EnumWikipedia) comboWikipedia.getSelectedItem();
+      Configuration configuration = Configuration.getConfiguration();
+      Properties users = configuration.getProperties(wikipedia, Configuration.PROPERTIES_USERS);
+      String password = users.getProperty(comboUser.getSelectedItem().toString());
+      if (password != null) {
+        textPassword.setText(password);
       }
     }
   }
