@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-04-06 23:25+0200\n"
+"POT-Creation-Date: 2011-04-07 13:43+0200\n"
 "PO-Revision-Date: 2010-09-16 07:39+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -147,9 +147,17 @@ msgid ""
 msgstr ""
 "Список скорочень, які генерують помилкові спрацьовування розміщені раніше {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:100
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:81
 msgid "Check language links"
 msgstr "Перевірити мовні посилання"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:86
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:397
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1064
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1119
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1137
+msgid "External Viewer"
+msgstr "Зовнішній переглядач"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:126
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:148
@@ -725,13 +733,6 @@ msgstr "Виправити вибрані сторінки"
 msgid "Select &next links"
 msgstr "Вибрати &наступні посилання"
 
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:397
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1064
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1119
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1137
-msgid "External Viewer"
-msgstr "Зовнішній переглядач"
-
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:602
 msgid "You must select the pages on which running automatic disambiguation."
 msgstr ""
@@ -1041,7 +1042,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:57
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:71
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:106
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:107
 msgid "Retrieving MediaWiki API"
 msgstr "Отримання MediaWiki API"
 
@@ -1903,48 +1904,48 @@ msgstr "Виявлена помилка «неправильна лексема�
 msgid "Error 'readonly' detected: Waiting and retrying"
 msgstr "Виявлена помилка «неправильна лексема»: Повторна спроба"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:262
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:270
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:263
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:271
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Отримання вмісту сторінки - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:386
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:493
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:686
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:387
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:494
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:687
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Оновлення повідомлень сторінки значень - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:588
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:720
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:821
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:589
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:721
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:822
 #, fuzzy, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Оновлення повідомлень сторінки значень - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:116
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:117
 #, fuzzy, java-format
 msgid "Retrieving talk pages including {0}"
 msgstr "Пошук посилань на сорінці"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:125
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:126
 msgid "Constructing list of articles with disambiguation warning"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:162
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:166
 #, fuzzy, java-format
 msgid ""
 "Analysis found {0} articles with disambiguation warning {1}.\n"
 "Do you want to update the disambiguation warnings ?"
 msgstr "Потрібно ввести назву сторінки, щоб виконати аналіз значень"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:174
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:178
 #, fuzzy
 msgid "Retrieving disambiguation pages"
 msgstr "Отримання шаблонів значень"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:201
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:205
 #, java-format
 msgid ""
 "An error occured when updating disambiguation warnings. Do you want to "
@@ -1953,7 +1954,7 @@ msgid ""
 "Error: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:237
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:241
 #, java-format
 msgid ""
 "Disambiguation links have been analyzed in {0} pages.\n"
