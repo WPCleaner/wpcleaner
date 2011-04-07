@@ -19,8 +19,12 @@
 package org.wikipediacleaner.gui.swing.worker;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+
+import javax.swing.JOptionPane;
 
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.API;
@@ -32,6 +36,8 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.PageListWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
+import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.i18n.GT;
 
 /**
  * SwingWorker for getting current disambiguation list. 
@@ -79,6 +85,20 @@ public class PageListWorker extends BasicWorker {
     super.finished();
     Object result = get();
     if (!(result instanceof Throwable)) {
+      if (mode == Mode.ALL_DAB_PAGES) {
+        int answer = Utilities.displayYesNoWarning(
+            (getWindow() != null) ? getWindow().getParentComponent() : null,
+            GT._(
+                "You have loaded the list of all disambiguation pages.\n" +
+                "Do you want to use it to speed up page analysis ?"));
+        if (answer == JOptionPane.YES_OPTION) {
+          Set<String> set = new HashSet<String>(pageList.size());
+          for (Page page : pageList) {
+            set.add(page.getTitle());
+          }
+          getWikipedia().setDisambiguationPages(set);
+        }
+      }
       PageListWindow.createPageListWindow(
           message, pageList, getWikipedia(), watchList);
     }

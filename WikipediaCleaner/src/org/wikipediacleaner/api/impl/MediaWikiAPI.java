@@ -1198,59 +1198,65 @@ public class MediaWikiAPI implements API {
     if ((pages == null) || (pages.isEmpty())) {
       return;
     }
-    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
-    properties.put("prop", "templates");
-    properties.put("tllimit", "max");
-    List<Page> tmpPages = new ArrayList<Page>();
-    for (int i = 0; i < pages.size(); i++) {
-      Iterator<Page> iter = pages.get(i).getRedirectIteratorWithPage();
-      while (iter.hasNext()) {
-        Page page = iter.next();
-        if (page.isInMainNamespace()) {
-          if (!tmpPages.contains(page)) {
-            tmpPages.add(page);
+    if (wikipedia.isDisambiguationPagesLoaded()) {
+      for (Page page : pages) {
+        page.setDisambiguationPage(wikipedia.isDisambiguationPage(page));
+      }
+    } else {
+      Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
+      properties.put("prop", "templates");
+      properties.put("tllimit", "max");
+      List<Page> tmpPages = new ArrayList<Page>();
+      for (int i = 0; i < pages.size(); i++) {
+        Iterator<Page> iter = pages.get(i).getRedirectIteratorWithPage();
+        while (iter.hasNext()) {
+          Page page = iter.next();
+          if (page.isInMainNamespace()) {
+            if (!tmpPages.contains(page)) {
+              tmpPages.add(page);
+            }
+          } else {
+            page.setDisambiguationPage(Boolean.FALSE);
           }
-        } else {
-          page.setDisambiguationPage(Boolean.FALSE);
         }
       }
-    }
-    StringBuilder titles = new StringBuilder();
-    for (int i = 0; i < tmpPages.size();) {
-      titles.setLength(0);
-      for (int j = 0; (j < MAX_PAGES_PER_QUERY) && (i < tmpPages.size()); i++, j++) {
-        Page p = tmpPages.get(i);
-        if (j > 0) {
-          titles.append("|");
-        }
-        titles.append(p.getTitle());
-        p.setDisambiguationPage(null);
-      }
-      properties.put("titles", titles.toString());
-      try {
-        boolean tlcontinue = false;
-        do {
-          Element root = getRoot(wikipedia, properties, MAX_ATTEMPTS);
-          updateDisambiguationStatus(
-              wikipedia, tmpPages, root,
-              "/api/query/pages/page");
-          XPath xpaContinue = XPath.newInstance("/api/query-continue/templates");
-          XPath xpaTlContinue = XPath.newInstance("./@tlcontinue");
-          List results = xpaContinue.selectNodes(root);
-          Iterator iter = results.iterator();
-          tlcontinue = false;
-          while (iter.hasNext()) {
-            Element currentNode = (Element) iter.next();
-            tlcontinue = true;
-            properties.put("tlcontinue", xpaTlContinue.valueOf(currentNode));
+      StringBuilder titles = new StringBuilder();
+      for (int i = 0; i < tmpPages.size();) {
+        titles.setLength(0);
+        for (int j = 0; (j < MAX_PAGES_PER_QUERY) && (i < tmpPages.size()); i++, j++) {
+          Page p = tmpPages.get(i);
+          if (j > 0) {
+            titles.append("|");
           }
-        } while (tlcontinue);
-      } catch (JDOMParseException e) {
-        log.error("Error retrieving disambiguation status", e);
-        throw new APIException("Error parsing XML", e);
-      } catch (JDOMException e) {
-        log.error("Error retrieving disambiguation status", e);
-        throw new APIException("Error parsing XML", e);
+          titles.append(p.getTitle());
+          p.setDisambiguationPage(null);
+        }
+        properties.put("titles", titles.toString());
+        try {
+          boolean tlcontinue = false;
+          do {
+            Element root = getRoot(wikipedia, properties, MAX_ATTEMPTS);
+            updateDisambiguationStatus(
+                wikipedia, tmpPages, root,
+                "/api/query/pages/page");
+            XPath xpaContinue = XPath.newInstance("/api/query-continue/templates");
+            XPath xpaTlContinue = XPath.newInstance("./@tlcontinue");
+            List results = xpaContinue.selectNodes(root);
+            Iterator iter = results.iterator();
+            tlcontinue = false;
+            while (iter.hasNext()) {
+              Element currentNode = (Element) iter.next();
+              tlcontinue = true;
+              properties.put("tlcontinue", xpaTlContinue.valueOf(currentNode));
+            }
+          } while (tlcontinue);
+        } catch (JDOMParseException e) {
+          log.error("Error retrieving disambiguation status", e);
+          throw new APIException("Error parsing XML", e);
+        } catch (JDOMException e) {
+          log.error("Error retrieving disambiguation status", e);
+          throw new APIException("Error parsing XML", e);
+        }
       }
     }
   }
