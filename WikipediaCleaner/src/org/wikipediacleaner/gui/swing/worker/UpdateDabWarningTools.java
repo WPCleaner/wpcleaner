@@ -34,6 +34,7 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -391,8 +392,8 @@ public class UpdateDabWarningTools {
       tmp.append("* ");
       addWarning(tmp, pageRevId, dabLinks);
       tmp.append('\n');
-      api.updatePage(
-          wikipedia, todoSubpage, tmp.toString(),
+      updatePage(
+          todoSubpage, tmp.toString(),
           wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           false);
       return true;
@@ -510,8 +511,8 @@ public class UpdateDabWarningTools {
         }
         tmp.append(contents.substring(indexStart));
       }
-      api.updateSection(
-          wikipedia, talkPage,
+      updateSection(
+          talkPage,
           wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           0, tmp.toString(), false);
       return true;
@@ -548,8 +549,8 @@ public class UpdateDabWarningTools {
         }
         tmp.append(contents.substring(indexEnd));
       }
-      api.updateSection(
-          wikipedia, talkPage,
+      updateSection(
+          talkPage,
           wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           0, tmp.toString(), false);
       return true;
@@ -606,8 +607,8 @@ public class UpdateDabWarningTools {
     }
 
     // Remove the disambiguation warning
-    api.updatePage(
-        wikipedia, todoSubpage, tmp.toString(),
+    updatePage(
+        todoSubpage, tmp.toString(),
         wikipedia.formatComment(wikipedia.getDisambiguationWarningCommentDone()),
         false);
 
@@ -629,8 +630,8 @@ public class UpdateDabWarningTools {
       return false;
     }
     if (Boolean.FALSE.equals(talkPage.isExisting())) {
-      api.updateSection(
-          wikipedia, talkPage,
+      updateSection(
+          talkPage,
           wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           0, "{{" + wikipedia.getTodoTemplates().get(0) + "}}", false);
       return true;
@@ -701,8 +702,8 @@ public class UpdateDabWarningTools {
         }
         tmp.append(contents.substring(indexStart));
       }
-      api.updateSection(
-          wikipedia, talkPage,
+      updateSection(
+          talkPage,
           wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           0, tmp.toString(), false);
       return true;
@@ -772,8 +773,8 @@ public class UpdateDabWarningTools {
         }
         tmp.append(contents.substring(templateTodo.getEndIndex()));
       }
-      api.updateSection(
-          wikipedia, talkPage,
+      updateSection(
+          talkPage,
           wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           0, tmp.toString(), false);
       return true;
@@ -849,8 +850,8 @@ public class UpdateDabWarningTools {
         if (templateTodo.getEndIndex() < contents.length()) {
           tmp.append(contents.substring(templateTodo.getEndIndex()));
         }
-        api.updateSection(
-            wikipedia, talkPage,
+        updateSection(
+            talkPage,
             wikipedia.formatComment(wikipedia.getDisambiguationWarningCommentDone()),
             0, tmp.toString(), false);
         return true;
@@ -858,6 +859,72 @@ public class UpdateDabWarningTools {
     }
 
     return false;
+  }
+
+  /**
+   * Update a page on Wikipedia.
+   * 
+   * @param page Page.
+   * @param newContents New contents to use.
+   * @param comment Comment.
+   * @param forceWatch Force watching the page.
+   * @return Result of the command.
+   * @throws APIException
+   */
+  private QueryResult updatePage(
+      Page page,
+      String newContents, String comment,
+      boolean forceWatch) throws APIException {
+    try {
+      return api.updatePage(wikipedia, page, newContents, comment, forceWatch);
+    } catch (APIException e) {
+      switch (e.getQueryResult()) {
+      case READ_ONLY:
+        // Read Only : Wait a few seconds before retrying
+        try {
+          Thread.sleep(10000);
+        } catch (InterruptedException e1) {
+          // Nothing to do
+        }
+        return api.updatePage(wikipedia, page, newContents, comment, forceWatch);
+
+      default:
+        throw e;
+      }
+    }
+  }
+
+  /**
+   * Update a section in a page.
+   * 
+   * @param page Page.
+   * @param title Title of the new section.
+   * @param section Section. 
+   * @param contents Contents.
+   * @param forceWatch Force watching the page.
+   * @return Result of the command.
+   * @throws APIException
+   */
+  private QueryResult updateSection(
+      Page page, String title, int section,
+      String contents, boolean forceWatch) throws APIException {
+    try {
+      return api.updateSection(wikipedia, page, title, section, contents, forceWatch);
+    } catch (APIException e) {
+      switch (e.getQueryResult()) {
+      case READ_ONLY:
+        // Read Only : Wait a few seconds before retrying
+        try {
+          Thread.sleep(10000);
+        } catch (InterruptedException e1) {
+          // Nothing to do
+        }
+        return api.updateSection(wikipedia, page, title, section, contents, forceWatch);
+
+      default:
+        throw e;
+      }
+    }
   }
 
   /**
