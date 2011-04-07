@@ -477,19 +477,6 @@ public class MainWindow
     panel.add(buttonToolbar, constraints);
     constraints.gridy++;
 
-    // Empty panel
-    JPanel emptyPanel = new JPanel();
-    emptyPanel.setMinimumSize(new Dimension(0, 0));
-    emptyPanel.setPreferredSize(new Dimension(0, 0));
-    constraints.fill = GridBagConstraints.BOTH;
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.insets = new Insets(0, 0, 0, 0);
-    constraints.weightx = 1;
-    constraints.weighty = 1;
-    panel.add(emptyPanel, constraints);
-    constraints.gridy++;
-
     // Save password
     int saveUser = configuration.getInt(
         null, Configuration.INTEGER_SAVE_USER, Configuration.DEFAULT_SAVE_USER);
@@ -525,6 +512,19 @@ public class MainWindow
     constraints.weightx = 0;
     constraints.gridwidth = 2;
     panel.add(radSaveNothing, constraints);
+    constraints.gridy++;
+
+    // Empty panel
+    JPanel emptyPanel = new JPanel();
+    emptyPanel.setMinimumSize(new Dimension(0, 0));
+    emptyPanel.setPreferredSize(new Dimension(0, 0));
+    constraints.fill = GridBagConstraints.BOTH;
+    constraints.gridwidth = 2;
+    constraints.gridx = 0;
+    constraints.insets = new Insets(0, 0, 0, 0);
+    constraints.weightx = 1;
+    constraints.weighty = 1;
+    panel.add(emptyPanel, constraints);
     constraints.gridy++;
 
     resetUsersList();
