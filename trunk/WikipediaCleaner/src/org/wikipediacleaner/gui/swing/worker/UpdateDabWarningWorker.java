@@ -20,6 +20,7 @@ package org.wikipediacleaner.gui.swing.worker;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -123,6 +124,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
   
         // Construct list of articles with disambiguation warning
         setText(GT._("Constructing list of articles with disambiguation warning"));
+        HashSet<Page> tmpWarningPages = new HashSet<Page>();
         for (Page dabWarningPage : dabWarningTalkPages) {
           String title = dabWarningPage.getTitle();
           if (title.endsWith("/" + wikipedia.getTodoSubpage())) {
@@ -139,13 +141,15 @@ public class UpdateDabWarningWorker extends BasicWorker {
                   tmpTitle = Namespace.getTitle(namespace - 1, wikipedia.getNamespaces(), tmpTitle);
                 }
                 Page page = DataManager.getPage(wikipedia, tmpTitle, null, null);
-                if (!dabWarningPages.contains(page)) {
-                  dabWarningPages.add(page);
+                if (!tmpWarningPages.contains(page)) {
+                  tmpWarningPages.add(page);
                 }
               }
             }
           }
         }
+        dabWarningPages.addAll(tmpWarningPages);
+        tmpWarningPages.clear();
 
         // Sort the list of articles
         Collections.sort(dabWarningPages, PageComparator.getTitleFirstComparator());
