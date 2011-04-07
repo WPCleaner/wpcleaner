@@ -21,11 +21,15 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.List;
 
+import org.wikipediacleaner.api.check.BasicActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -51,64 +55,50 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
     boolean result = false;
     int startIndex = 0;
     while (startIndex < contents.length()) {
-      // Update position of next [[
-      int beginIndex = contents.indexOf("[[", startIndex);
+      PageElementInternalLink link = PageContents.findNextInternalLink(page, contents, startIndex);
+      if (link != null) {
+        boolean found = false;
 
-      if (beginIndex < 0) {
-        // No more [[
-        startIndex = contents.length();
-      } else {
-        int currentPos = beginIndex + 2;
+        // Check that link starts with :
+        String linkUrl = link.getLink();
+        if ((linkUrl != null) && (linkUrl.startsWith(":"))) {
 
-        // Update position of next ]]
-        int endIndex = contents.indexOf("]]", currentPos);
-
-        if (endIndex < 0) {
-          startIndex = contents.length();
-        } else {
-          // Possible whitespaces
-          while ((currentPos < endIndex) && Character.isWhitespace(contents.charAt(currentPos))) {
-            currentPos++;
-          }
-          // Check that link starts with :
-          if ((currentPos < endIndex) && (contents.charAt(currentPos) == ':')) {
-            currentPos++;
-            int beginLink = currentPos;
-            while ((currentPos < endIndex) &&
-                (contents.charAt(currentPos) != ':') &&
-                (contents.charAt(currentPos) != '|')) {
-              currentPos++;
-            }
-            if ((currentPos < endIndex) && (contents.charAt(currentPos) == ':')) {
-              String namespace = contents.substring(beginLink, currentPos);
-              for (Language lg : page.getWikipedia().getLanguages()) {
-                if (namespace.equals(lg.getCode())) {
-                  if (errors == null) {
-                    return true;
-                  }
-                  result = true;
-                  CheckErrorResult errorResult = createCheckErrorResult(
-                      page, beginIndex, endIndex + 2);
-                  EnumWikipedia fromWikipedia = EnumWikipedia.getWikipedia(lg.getCode());
-                  if (fromWikipedia != null) {
-                    currentPos++;
-                    int beginTitle = currentPos;
-                    while ((currentPos < endIndex) && (contents.charAt(currentPos) != '|')) {
-                      currentPos++;
-                    }
-                    errorResult.addPossibleAction(
-                        GT._("Check language links"),
-                        new CheckLanguageLinkActionProvider(
-                            fromWikipedia, page.getWikipedia(),
-                            contents.substring(beginTitle, currentPos)));
-                  }
-                  errors.add(errorResult);
+          int currentPos = linkUrl.indexOf(":", 1);
+          if (currentPos > 1) {
+            String namespace = linkUrl.substring(1, currentPos);
+            for (Language lg : page.getWikipedia().getLanguages()) {
+              if (namespace.equals(lg.getCode())) {
+                if (errors == null) {
+                  return true;
                 }
+                result = true;
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    page, link.getBeginIndex(), link.getEndIndex());
+                EnumWikipedia fromWikipedia = EnumWikipedia.getWikipedia(lg.getCode());
+                if (fromWikipedia != null) {
+                  String pageTitle = linkUrl.substring(currentPos + 1);
+                  errorResult.addPossibleAction(
+                      GT._("Check language links"),
+                      new CheckLanguageLinkActionProvider(
+                          fromWikipedia, page.getWikipedia(),
+                          pageTitle));
+                  errorResult.addPossibleAction(
+                      GT._("External Viewer"),
+                      new BasicActionProvider(
+                          new PageViewAction(pageTitle, fromWikipedia)));
+                }
+                errors.add(errorResult);
               }
             }
           }
-          startIndex = endIndex + 2;
         }
+        if (found) {
+          startIndex = link.getEndIndex();
+        } else {
+          startIndex = link.getBeginIndex() + 2;
+        }
+      } else {
+        startIndex = contents.length();
       }
     }
     return result;
