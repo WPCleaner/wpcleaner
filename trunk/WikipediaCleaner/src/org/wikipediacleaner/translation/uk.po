@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-04-07 13:43+0200\n"
+"POT-Creation-Date: 2011-04-07 20:30+0200\n"
 "PO-Revision-Date: 2010-09-16 07:39+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -830,16 +830,16 @@ msgstr "Функції системи (Alt + &Y)"
 msgid "&Idea ? Bug ?"
 msgstr "&Ідея ? Помилка ?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:498
+#: org/wikipediacleaner/gui/swing/MainWindow.java:485
 #, fuzzy
 msgid "Save user name and password"
 msgstr "&Зберегти пароль"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:510
+#: org/wikipediacleaner/gui/swing/MainWindow.java:497
 msgid "Save user name only"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:520
+#: org/wikipediacleaner/gui/swing/MainWindow.java:507
 msgid "Save none of them"
 msgstr ""
 
@@ -1887,6 +1887,12 @@ msgstr "Запит на допомогу на сторінках"
 msgid "Adding comment"
 msgstr "Додавання коментаря"
 
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:92
+msgid ""
+"You have loaded the list of all disambiguation pages.\n"
+"Do you want to use it to speed up page analysis ?"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:59
 msgid "Getting random page"
 msgstr "Отримання випадкової сторінки"
@@ -1904,22 +1910,22 @@ msgstr "Виявлена помилка «неправильна лексема�
 msgid "Error 'readonly' detected: Waiting and retrying"
 msgstr "Виявлена помилка «неправильна лексема»: Повторна спроба"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:263
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:271
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:240
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:248
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Отримання вмісту сторінки - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:387
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:494
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:687
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:364
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:471
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:664
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Оновлення повідомлень сторінки значень - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:589
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:721
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:822
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:566
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:698
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:799
 #, fuzzy, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Оновлення повідомлень сторінки значень - {0}"

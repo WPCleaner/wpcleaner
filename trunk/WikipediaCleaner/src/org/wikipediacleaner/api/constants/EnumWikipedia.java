@@ -27,10 +27,12 @@ import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.base.API;
@@ -236,6 +238,7 @@ public enum EnumWikipedia {
   private String[] templatesForHelpRequested;
   private String[] templatesForLinkingText;
   private List<String> disambiguationList;
+  private Set<String> disambiguationPages;
   private List<Page> disambiguationTemplates;
   private String checkWikiProject;
   private String checkWikiTranslation;
@@ -1290,11 +1293,84 @@ public enum EnumWikipedia {
   }
 
   /**
-   * @param api Wikipédia API.
+   * Load all disambiguation pages.
+   * 
+   * @param api Wikipedia API.
+   * @throws APIException
+   */
+  public void loadDisambiguationPages(API api) throws APIException {
+    if (disambiguationTemplates == null) {
+      return;
+    }
+    try {
+      HashSet<String> tmpResult = new HashSet<String>();
+      for (Page dabTemplate : disambiguationTemplates) {
+        List<Page> tmpPages = api.retrieveEmbeddedIn(this, dabTemplate, Namespace.MAIN);
+        for (Page page : tmpPages) {
+          tmpResult.add(page.getTitle());
+        }
+      }
+      disambiguationPages = tmpResult;
+    } catch (APIException e) {
+      disambiguationPages = null;
+      throw e;
+    }
+  }
+
+  /**
+   * @param dabPages List of disambiguation pages.
+   */
+  public void setDisambiguationPages(Set<String> dabPages) {
+    if (dabPages == null) {
+      return;
+    }
+    HashSet<String> tmpResult = new HashSet<String>(dabPages.size());
+    tmpResult.addAll(dabPages);
+    disambiguationPages = tmpResult;
+  }
+
+  /**
+   * @return true if disambiguation pages have been loaded.
+   */
+  public boolean isDisambiguationPagesLoaded() {
+    return (disambiguationPages != null);
+  }
+
+  /**
+   * Tell if a page is a disambiguation page.
+   * 
+   * @param page Page
+   * @return TRUE if it's a disambiguation page.
+   */
+  public Boolean isDisambiguationPage(Page page) {
+    if (page == null) {
+      return null;
+    }
+    if (disambiguationPages == null) {
+      return null;
+    }
+    if (disambiguationPages.contains(page.getTitle())) {
+      return Boolean.TRUE;
+    }
+    if (page.isRedirect()) {
+      for (Page redirect : page.getRedirects()) {
+        if ((redirect != null) &&
+            (disambiguationPages.contains(redirect.getTitle()))) {
+          return Boolean.TRUE;
+        }
+      }
+    }
+    return Boolean.FALSE;
+  }
+
+  /**
+   * Load all disambigutation templates.
+   * 
+   * @param api Wikipedia API.
    */
   public void initDisambiguationTemplates(API api) {
     if (disambiguationTemplates == null) {
-      synchronized(api) {
+      synchronized (api) {
         Page page = DataManager.getPage(
             this, "Mediawiki:Disambiguationspage",
             null, null);
