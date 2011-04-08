@@ -24,6 +24,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.font.TextAttribute;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -73,6 +74,7 @@ import org.wikipediacleaner.utils.Configuration;
 public class MenuCreator {
 
   private final static Map<String, String> lastReplacement = new HashMap<String, String>();
+  private static String lastSuffix = null;
 
   final private static Map<TextAttribute, Color> disambiguationAttributes = new HashMap<TextAttribute, Color>();
   final private static Map<TextAttribute, Boolean> missingAttributes = new HashMap<TextAttribute, Boolean>();
@@ -101,6 +103,11 @@ public class MenuCreator {
    */
   public static void addLastReplacement(String from, String to) {
     if ((from != null) && (to != null)) {
+      if (to.startsWith(from)) {
+        lastSuffix = to.substring(from.length());
+      } else {
+        lastSuffix = null;
+      }
       lastReplacement.put(from, to);
       if (configuration.getBoolean(
           null,
@@ -123,6 +130,27 @@ public class MenuCreator {
   public static String getLastReplacement(String from) {
     if (from != null) {
       return lastReplacement.get(from);
+    }
+    return null;
+  }
+
+  /**
+   * Return a link matching the last suffix replacement.
+   * 
+   * @param from Initial link.
+   * @param links Possible links.
+   * @return Link matching the last suffix replacement if it exists. 
+   */
+  private static String getPossibleLastSuffix(String from, Collection<Page> links) {
+    if ((lastSuffix == null) ||
+        (lastSuffix.length() == 0) ||
+        (links == null)) {
+      return null;
+    }
+    for (Page link : links) {
+      if (link.getTitle().startsWith(from) && link.getTitle().endsWith(lastSuffix)) {
+        return link.getTitle();
+      }
     }
     return null;
   }
@@ -444,8 +472,12 @@ public class MenuCreator {
       int fixedEndLink = 0;
       int fixedBeginReplace = 0;
       int fixedEndReplace = 0;
+      String withLastSuffix = getPossibleLastSuffix(page.getTitle(), links);
       if (!preferredDabs.isEmpty()) {
         for (String title : preferredDabs) {
+          if ((withLastSuffix != null) && (withLastSuffix.equals(title))) {
+            withLastSuffix = null;
+          }
           menuItem = new JMenuItem(title);
           action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
           menuItem.addActionListener(action);
@@ -466,6 +498,9 @@ public class MenuCreator {
       } else {
         String title = getLastReplacement(page.getTitle());
         if (title != null) {
+          if ((withLastSuffix != null) && (withLastSuffix.equals(title))) {
+            withLastSuffix = null;
+          }
           menuItem = new JMenuItem(title);
           action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
           menuItem.addActionListener(action);
@@ -479,6 +514,21 @@ public class MenuCreator {
           submenuReplace.add(menuItem);
           fixedBeginReplace++;
         }
+      }
+      if (withLastSuffix != null) {
+        menuItem = new JMenuItem(withLastSuffix);
+        action = new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, false);
+        menuItem.addActionListener(action);
+        menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+        submenuLink.add(menuItem);
+        fixedBeginLink++;
+
+        menuItem = new JMenuItem(withLastSuffix);
+        action = new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, true);
+        menuItem.addActionListener(action);
+        menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+        submenuReplace.add(menuItem);
+        fixedBeginReplace++;
       }
 
       // Separators
@@ -619,6 +669,9 @@ public class MenuCreator {
           fixedEndLink += addSeparator(submenuLink);
           fixedEndReplace += addSeparator(submenuReplace);
           for (String title : preferredDabs) {
+            if ((withLastSuffix != null) && (withLastSuffix.equals(title))) {
+              withLastSuffix = null;
+            }
             menuItem = new JMenuItem(title);
             action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
             menuItem.addActionListener(action);
@@ -639,6 +692,9 @@ public class MenuCreator {
         } else {
           String title = getLastReplacement(page.getTitle());
           if (title != null) {
+            if ((withLastSuffix != null) && (withLastSuffix.equals(title))) {
+              withLastSuffix = null;
+            }
             fixedEndLink += addSeparator(submenuLink);
             menuItem = new JMenuItem(title);
             action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
@@ -655,6 +711,23 @@ public class MenuCreator {
             submenuReplace.add(menuItem);
             fixedEndReplace++;
           }
+        }
+        if (withLastSuffix != null) {
+          fixedEndLink += addSeparator(submenuLink);
+          menuItem = new JMenuItem(withLastSuffix);
+          action = new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, false);
+          menuItem.addActionListener(action);
+          menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+          submenuLink.add(menuItem);
+          fixedEndLink++;
+  
+          fixedEndReplace += addSeparator(submenuReplace);
+          menuItem = new JMenuItem(withLastSuffix);
+          action = new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, true);
+          menuItem.addActionListener(action);
+          menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+          submenuReplace.add(menuItem);
+          fixedEndReplace++;
         }
       }
 
