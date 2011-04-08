@@ -63,10 +63,10 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.component.DisambiguationPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
-import org.wikipediacleaner.gui.swing.component.PageListPopupListener;
 import org.wikipediacleaner.gui.swing.worker.AutomaticDisambiguationWorker;
 import org.wikipediacleaner.gui.swing.worker.DisambiguationAnalysisWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -101,8 +101,12 @@ public class DisambiguationWindow extends PageWindow {
   private JButton buttonRunAutomaticFixing;
   private JButton buttonSaveAutomaticFixing;
 
+  private Properties backlinksProperties;
+
   JList listLinks;
   PageListModel modelLinks;
+  private PageListCellRenderer listCellRenderer;
+  private DisambiguationPageListPopupListener popupListenerLinks;
   JLabel linkCount;
   private JButton buttonFullAnalysisLink;
   private JButton buttonDisambiguationLink;
@@ -354,6 +358,7 @@ public class DisambiguationWindow extends PageWindow {
    */
   private Component createLinksComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
+    Configuration configuration = Configuration.getConfiguration();
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -409,8 +414,16 @@ public class DisambiguationWindow extends PageWindow {
 
     // Links
     listLinks = new JList(modelLinks);
-    listLinks.setCellRenderer(new PageListCellRenderer());
-    listLinks.addMouseListener(new PageListPopupListener(getWikipedia(), getTextContents(), this));
+    listCellRenderer = new PageListCellRenderer();
+    listCellRenderer.showRedirect(true);
+    if (getPage() != null) {
+      listCellRenderer.setPageProperties(configuration.getSubProperties(
+          getWikipedia(), Configuration.PROPERTIES_BACKLINKS, getPage().getTitle()));
+    }
+    listLinks.setCellRenderer(listCellRenderer);
+    popupListenerLinks = new DisambiguationPageListPopupListener(
+        getWikipedia(), getTextContents(), this);
+    listLinks.addMouseListener(popupListenerLinks);
     listLinks.addMouseListener(new PageListAnalyzeListener(getWikipedia(), this));
     JScrollPane scrollLinks = new JScrollPane(listLinks);
     scrollLinks.setMinimumSize(new Dimension(100, 100));
@@ -499,7 +512,13 @@ public class DisambiguationWindow extends PageWindow {
   @Override
   protected void afterFinishedReloadWorker() {
     super.afterFinishedReloadWorker();
+    Configuration config = Configuration.getConfiguration();
     Page page = getPage();
+    backlinksProperties = config.getSubProperties(
+        getWikipedia(), Configuration.PROPERTIES_BACKLINKS, page.getTitle());
+    listCellRenderer.setPageProperties(backlinksProperties);
+    popupListenerLinks.setPage(page);
+    popupListenerLinks.setBackLinksProperties(backlinksProperties);
     List<Page> links = page.getBackLinksWithRedirects();
     modelLinks.setElements(links);
     Integer countMain = page.getBacklinksCountInMainNamespace();
@@ -510,7 +529,6 @@ public class DisambiguationWindow extends PageWindow {
         ((countTotal != null) ? countTotal.toString() : "?"));
 
     // Update automatic fixing
-    Configuration config = Configuration.getConfiguration();
     Object[] automaticFixing = config.getPojoArray(
         page.getWikipedia(), Configuration.POJO_AUTOMATIC_FIXING,
         page.getTitle(), AutomaticFixing.class);
@@ -741,8 +759,21 @@ public class DisambiguationWindow extends PageWindow {
             Configuration.INTEGER_MAXIMUM_PAGES,
             Configuration.DEFAULT_MAXIMUM_PAGES));
     int indices[] = new int[count];
-    for (int i = 0; i < count; i++) {
-      indices[i] = last + i;
+    int currentIndice = 0;
+    int currentLine = last;
+    while ((currentIndice < count) &&
+           (currentLine < listLinks.getModel().getSize())) {
+      Object value = listLinks.getModel().getElementAt(currentLine);
+      String property = backlinksProperties.getProperty(value.toString());
+      if ((!Configuration.VALUE_PAGE_NORMAL.equals(property)) &&
+          (!Configuration.VALUE_PAGE_HELP_NEEDED.equals(property))) {
+        indices[currentIndice] = currentLine;
+        currentIndice++;
+      }
+      currentLine++;
+    }
+    if (currentIndice < count) {
+      indices = Arrays.copyOf(indices, currentIndice);
     }
     listLinks.setSelectedIndices(indices);
     if (count > 0) {

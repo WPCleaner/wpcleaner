@@ -165,7 +165,11 @@ public class Configuration implements WindowListener {
   public  final static boolean DEFAULT_WIKICLEANER_COMMENT     = true;
 
   // Properties
+  public  final static String  PROPERTIES_BACKLINKS      = "Backlinks";
   public  final static String  PROPERTIES_USERS          = "Users";
+
+  public  final static String  VALUE_PAGE_NORMAL         = "N";
+  public  final static String  VALUE_PAGE_HELP_NEEDED    = "H";
 
   // Special properties
   private final static String  PROPERTY_LANGUAGE         = "Language";
@@ -267,6 +271,37 @@ public class Configuration implements WindowListener {
       }
     } catch (BackingStoreException e) {
       //
+    }
+  }
+
+  /**
+   * Remove a node.
+   * 
+   * @param prefs Preferences.
+   * @param property Node name.
+   */
+  private void removeNode(Preferences prefs, String property) {
+    if (prefs != null) {
+      try {
+        if (prefs.nodeExists(property)) {
+          Preferences node = prefs.node(property);
+          node.removeNode();
+        }
+      } catch (BackingStoreException e) {
+        //
+      }
+    }
+  }
+
+  /**
+   * Remove a value.
+   * 
+   * @param prefs Preferences.
+   * @param value Value name.
+   */
+  private void removeValue(Preferences prefs, String value) {
+    if (prefs != null) {
+      prefs.remove(value);
     }
   }
 
@@ -459,34 +494,28 @@ public class Configuration implements WindowListener {
   }
 
   /**
-   * Remove a node.
-   * 
-   * @param prefs Preferences.
-   * @param property Node name.
+   * @param wikipedia Wikipedia.
+   * @param property Property name.
+   * @param subProperty Sub property name.
+   * @return Property value.
    */
-  private void removeNode(Preferences prefs, String property) {
-    if (prefs != null) {
-      try {
-        if (prefs.nodeExists(property)) {
-          Preferences node = prefs.node(property);
-          node.removeNode();
+  public Properties getSubProperties(
+      EnumWikipedia wikipedia, String property, String subProperty) {
+    Properties values = new Properties();
+    try {
+      if ((getPreferences(wikipedia) != null) &&
+          (getPreferences(wikipedia).nodeExists(property)) &&
+          (getPreferences(wikipedia).nodeExists(property + "/" + subProperty))) {
+        Preferences node = getPreferences(wikipedia).node(property + "/" + subProperty);
+        String[] children = node.keys();
+        for (String child : children) {
+          values.setProperty(child, node.get(child, ""));
         }
-      } catch (BackingStoreException e) {
-        //
       }
+    } catch (BackingStoreException e) {
+      //
     }
-  }
-
-  /**
-   * Remove a value.
-   * 
-   * @param prefs Preferences.
-   * @param value Value name.
-   */
-  private void removeValue(Preferences prefs, String value) {
-    if (prefs != null) {
-      prefs.remove(value);
-    }
+    return values;
   }
 
   /**
@@ -507,6 +536,36 @@ public class Configuration implements WindowListener {
           node.put(p.getKey().toString(), p.getValue().toString());
         }
       }
+    }
+  }
+
+  /**
+   * @param wikipedia Wikipedia.
+   * @param property Property name.
+   * @param subProperty Sub property name.
+   * @param value Property value.
+   */
+  public void setSubProperties(
+      EnumWikipedia wikipedia,
+      String property, String subProperty,
+      Properties value) {
+    try {
+      if (getPreferences(wikipedia) != null) {
+        // First, remove the old properties
+        if (getPreferences().nodeExists(property)) {
+          removeNode(getPreferences(wikipedia), property + "/" + subProperty);
+        }
+  
+        // Create the new ones
+        if (value != null) {
+          Preferences node = getPreferences(wikipedia).node(property + "/" + subProperty);
+          for (Entry<Object, Object> p : value.entrySet()) {
+            node.put(p.getKey().toString(), p.getValue().toString());
+          }
+        }
+      }
+    } catch (BackingStoreException e) {
+      //
     }
   }
 
@@ -565,6 +624,9 @@ public class Configuration implements WindowListener {
     List<String> result = new ArrayList<String>();
     if (getPreferences(wikipedia) != null) {
       try {
+        if (!getPreferences(wikipedia).nodeExists(property)) {
+          return result;
+        }
         String nodeName = property + "/" + subProperty;
         if (!getPreferences(wikipedia).nodeExists(nodeName)) {
           return result;

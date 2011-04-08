@@ -24,7 +24,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
@@ -32,16 +31,21 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 
 
 /**
- * A popup menu listener for MediaWikiPane. 
+ * An abstract popup menu listener for Page list. 
  */
-public class PageListPopupListener extends MouseAdapter {
+public abstract class AbstractPageListPopupListener extends MouseAdapter {
 
-  private Page page;
-  private final EnumWikipedia wikipedia;
-  private final MediaWikiPane textPane;
-  private final BasicWindow window;
+  protected Page page;
+  protected final EnumWikipedia wikipedia;
+  protected final MediaWikiPane textPane;
+  protected final BasicWindow window;
 
-  public PageListPopupListener(
+  /**
+   * @param wikipedia Wikipedia
+   * @param textPane Text pane.
+   * @param window Window.
+   */
+  public AbstractPageListPopupListener(
       EnumWikipedia wikipedia,
       MediaWikiPane textPane,
       BasicWindow   window) {
@@ -113,25 +117,16 @@ public class PageListPopupListener extends MouseAdapter {
     popup.add(menuItem);
 
     // Create sub menus
-    popup.add(new JSeparator());
-    if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
-      MenuCreator.addReplaceAllLinksToMenu(popup, link, textPane);
-    }
-    MenuCreator.addRemoveAllLinksToMenu(popup, link, textPane);
-    popup.add(new JSeparator());
-    if (Boolean.FALSE.equals(link.isExisting())) {
-      MenuCreator.addRedLinksAnalysisMenu(wikipedia, popup, link, textPane);
-      popup.add(new JSeparator());
-    }
-    MenuCreator.addAnalyzeToMenu(wikipedia, popup, link);
-    MenuCreator.addViewToMenu(wikipedia, popup, link);
-    MenuCreator.addDisambiguationToMenu(wikipedia, popup, link);
-    MenuCreator.addReloadLinksToMenu(wikipedia, popup, link, window);
-    //MenuCreator.addPurgeCacheToMenu(popup, link, window);
-    popup.add(new JSeparator());
-    MenuCreator.addFindTextToMenu(popup, link, textPane);
-    MenuCreator.addAnalyzeTemplatesToMenu(wikipedia, popup, page, link);
+    createPopup(popup, link);
 
     popup.show(e.getComponent(), e.getX(), e.getY());
   }
+
+  /**
+   * Fill popup menu.
+   * 
+   * @param popup Popup menu.
+   * @param link Link.
+   */
+  abstract protected void createPopup(JPopupMenu popup, Page link);
 }

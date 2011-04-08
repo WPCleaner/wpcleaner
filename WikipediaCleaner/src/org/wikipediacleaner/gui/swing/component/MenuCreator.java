@@ -50,6 +50,7 @@ import org.wikipediacleaner.gui.swing.action.ChangePreferredDisambiguationAction
 import org.wikipediacleaner.gui.swing.action.DisambiguationAnalysisAction;
 import org.wikipediacleaner.gui.swing.action.FindTextAction;
 import org.wikipediacleaner.gui.swing.action.FullPageAnalysisAction;
+import org.wikipediacleaner.gui.swing.action.MarkBacklinkAction;
 import org.wikipediacleaner.gui.swing.action.MarkLinkAction;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.gui.swing.action.PurgeCacheAction;
@@ -1331,6 +1332,50 @@ public class MenuCreator {
       ActionListener action = new TemplatesAnalysisAction(page, link, wikipedia);
       menuItem.addActionListener(action);
       popup.add(menuItem);
+    }
+  }
+
+  /**
+   * Add submenus for marking backlinks.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param popup Popup menu.
+   * @param page Page.
+   * @param link Backlink.
+   * @param backlinks Backlinks properties.
+   */
+  public static void addMarkBacklinkToMenu(
+      EnumWikipedia wikipedia, JPopupMenu popup,
+      Page page, Page link, Properties backlinks) {
+    if ((page != null) &&
+        (link != null) &&
+        (wikipedia != null) &&
+        (backlinks != null)) {
+      String property = backlinks.getProperty(link.getTitle());
+      JMenuItem menuItem = null;
+      ActionListener action = null;
+      if (!Configuration.VALUE_PAGE_NORMAL.equals(property)) {
+        menuItem = new JMenuItem(GT._("Mark backlink as normal"));
+        action = new MarkBacklinkAction(
+            wikipedia, page, link, Configuration.VALUE_PAGE_NORMAL, backlinks);
+        menuItem.addActionListener(action);
+        popup.add(menuItem);
+      }
+      if (!Configuration.VALUE_PAGE_HELP_NEEDED.equals(property)) {
+        menuItem = new JMenuItem(GT._("Mark backlink as needing help"));
+        action = new MarkBacklinkAction(
+            wikipedia, page, link, Configuration.VALUE_PAGE_HELP_NEEDED, backlinks);
+        menuItem.addActionListener(action);
+        popup.add(menuItem);
+      }
+      if ((Configuration.VALUE_PAGE_NORMAL.equals(property)) ||
+          (Configuration.VALUE_PAGE_HELP_NEEDED.equals(property))) {
+        menuItem = new JMenuItem(GT._("Remove mark on backlink"));
+        action = new MarkBacklinkAction(
+            wikipedia, page, link, null, backlinks);
+        menuItem.addActionListener(action);
+        popup.add(menuItem);
+      }
     }
   }
 
