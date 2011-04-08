@@ -23,6 +23,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.font.TextAttribute;
 import java.util.HashMap;
+import java.util.Properties;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -30,6 +31,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.border.EmptyBorder;
 
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.utils.Configuration;
 
 
 /**
@@ -40,10 +42,14 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
   private static final long serialVersionUID = 1456336109709806845L;
 
   private boolean showCountOccurence;
+  private boolean showDisambiguation;
+  private boolean showMissing;
+  private boolean showRedirect;
+  private Properties pageProperties;
 
-  private Font missingFont;
-  private Font normalFont;
-  private Font redirectFont;
+  private final Font missingFont;
+  private final Font normalFont;
+  private final Font redirectFont;
 
   public PageListCellRenderer() {
     setOpaque(true);
@@ -59,10 +65,38 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
   }
 
   /**
-   * @param show Flag indicating the occurence count is shown.
+   * @param properties Page properties.
+   */
+  public void setPageProperties(Properties properties) {
+    pageProperties = properties;
+  }
+
+  /**
+   * @param show Flag indicating if the occurence count is shown.
    */
   public void showCountOccurence(boolean show) {
     showCountOccurence = show;
+  }
+
+  /**
+   * @param show Flag indicating if the disambiguation flag is shown.
+   */
+  public void showDisambiguation(boolean show) {
+    showDisambiguation = show;
+  }
+
+  /**
+   * @param show Flag indicating if the missing flag is shown.
+   */
+  public void showMissing(boolean show) {
+    showMissing = show;
+  }
+
+  /**
+   * @param show Flag indicating if the redirecte flag is shown.
+   */
+  public void showRedirect(boolean show) {
+    showRedirect = show;
   }
 
   /* (non-Javadoc)
@@ -98,21 +132,32 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
     // Color
     Color background = isSelected ? list.getSelectionBackground() : list.getBackground();
     Color foreground = isSelected ? list.getSelectionForeground() : list.getForeground();
-    if (disambiguation == null) {
-      if (!isSelected) {
-        foreground = Color.DARK_GRAY;
+    if (showDisambiguation) {
+      if (disambiguation == null) {
+        if (!isSelected) {
+          foreground = Color.DARK_GRAY;
+        }
+      } else if (disambiguation.booleanValue()) {
+        foreground = Color.RED;
       }
-    } else if (disambiguation.booleanValue()) {
-      foreground = Color.RED;
+    } else if (pageProperties != null) {
+      String property = pageProperties.getProperty(text);
+      if (Configuration.VALUE_PAGE_NORMAL.equals(property)) {
+        foreground = Color.GREEN;
+      } else if (Configuration.VALUE_PAGE_HELP_NEEDED.equals(property)) {
+        foreground = Color.ORANGE;
+      }
     }
     setBackground(background);
     setForeground(foreground);
 
     // Font
-    if (Boolean.FALSE.equals(exist)) {
+    if (showMissing && Boolean.FALSE.equals(exist)) {
       setFont(missingFont);
+    } else if (showRedirect && redirect) {
+      setFont(redirectFont);
     } else {
-      setFont(redirect ? redirectFont : normalFont);
+      setFont(normalFont);
     }
 
     return this;

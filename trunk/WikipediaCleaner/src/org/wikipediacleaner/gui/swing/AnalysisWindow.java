@@ -63,10 +63,11 @@ import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.component.AbstractPageListPopupListener;
+import org.wikipediacleaner.gui.swing.component.AnalysisPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
-import org.wikipediacleaner.gui.swing.component.PageListPopupListener;
 import org.wikipediacleaner.gui.swing.worker.FullAnalysisWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -93,7 +94,7 @@ public class AnalysisWindow extends PageWindow {
   JList listLinks;
   PageListModel modelLinks;
   Map<String, Integer> mapLinksCount;
-  private PageListPopupListener popupListenerLinks;
+  private AbstractPageListPopupListener popupListenerLinks;
   JCheckBoxMenuItem menuItemShowDisambiguation;
   JCheckBoxMenuItem menuItemShowMissing;
   JCheckBoxMenuItem menuItemShowOther;
@@ -485,8 +486,12 @@ public class AnalysisWindow extends PageWindow {
     listLinks = new JList(modelLinks);
     PageListCellRenderer listCellRenderer = new PageListCellRenderer();
     listCellRenderer.showCountOccurence(true);
+    listCellRenderer.showDisambiguation(true);
+    listCellRenderer.showMissing(true);
+    listCellRenderer.showRedirect(true);
     listLinks.setCellRenderer(listCellRenderer);
-    popupListenerLinks = new PageListPopupListener(getWikipedia(), getTextContents(), this);
+    popupListenerLinks = new AnalysisPageListPopupListener(
+        getWikipedia(), getTextContents(), this);
     listLinks.addMouseListener(popupListenerLinks);
     listLinks.addMouseListener(new PageListAnalyzeListener(getWikipedia(), null));
     listLinks.addListSelectionListener(new AnalysisListSelectionListener());

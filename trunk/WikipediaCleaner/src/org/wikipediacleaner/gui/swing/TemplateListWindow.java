@@ -40,10 +40,10 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.component.BasicPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
-import org.wikipediacleaner.gui.swing.component.PageListPopupListener;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -138,7 +138,7 @@ public class TemplateListWindow extends BasicWindow {
     constraints.weighty = 1;
     listLinks = new JList(modelLinks);
     listLinks.setCellRenderer(new PageListCellRenderer());
-    listLinks.addMouseListener(new PageListPopupListener(getWikipedia(), null, this));
+    listLinks.addMouseListener(new BasicPageListPopupListener(getWikipedia(), null, this));
     listLinks.addMouseListener(new PageListAnalyzeListener(getWikipedia(), null));
     JScrollPane scrollLinks = new JScrollPane(listLinks);
     scrollLinks.setMinimumSize(new Dimension(100, 100));
