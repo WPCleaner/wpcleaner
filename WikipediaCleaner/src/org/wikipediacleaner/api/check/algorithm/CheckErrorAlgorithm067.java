@@ -169,16 +169,17 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
                   tagText + allPunctuations,
                   "<ref>...</ref>" + allPunctuations);
             }
-            if (endIndex > lastTag.getEndTagEndIndex() + 1) {
+            if ((endIndex > lastTag.getEndTagEndIndex() + 1) &&
+                (endIndex - lastTag.getEndTagEndIndex() - 1 != allPunctuations.length())) {
               String afterTag = contents.substring(lastTag.getEndTagEndIndex() + 1, endIndex);
               if (tagList.size() > 1) {
                 errorResult.addReplacement(
-                    tagText + allPunctuations + afterTag,
-                    "<ref>...</ref>" + separator + "..." + separator + "<ref>...</ref>" + allPunctuations + afterTag);
+                    tagText + afterTag,
+                    "<ref>...</ref>" + separator + "..." + separator + "<ref>...</ref>" + afterTag);
               } else {
                 errorResult.addReplacement(
-                    tagText + allPunctuations + afterTag,
-                    "<ref>...</ref>" + allPunctuations + afterTag);
+                    tagText + afterTag,
+                    "<ref>...</ref>" + afterTag);
               }
             }
             errors.add(errorResult);
