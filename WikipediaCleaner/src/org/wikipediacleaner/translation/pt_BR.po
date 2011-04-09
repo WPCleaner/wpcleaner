@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-04-08 22:29+0200\n"
+"POT-Creation-Date: 2011-04-09 02:04+0200\n"
 "PO-Revision-Date: 2008-11-30 16:27+0000\n"
 "Last-Translator: Ricardo Ichizo <n1ghtcr4wler@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -132,7 +132,7 @@ msgid "Remove"
 msgstr "Remover"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:163
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:205
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:206
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
 msgstr ""
@@ -142,7 +142,7 @@ msgstr ""
 msgid "Remove <small> tag"
 msgstr "Remover todos os vínculos"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:202
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:203
 #, java-format
 msgid ""
 "A list of abbreviations that generate false positives when placed before {0}"
@@ -153,6 +153,7 @@ msgid "Check language links"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:86
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:114
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:402
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1138
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1193
@@ -188,7 +189,6 @@ msgid "Add a description and convert into <ref> tag"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:119
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:113
 #, fuzzy
 msgid "External viewer"
 msgstr "Visualizador externo"
@@ -202,7 +202,7 @@ msgid "What name would like to use for the <ref> tag ?"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:112
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:128
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:129
 msgid "Existing references"
 msgstr ""
 
