@@ -632,7 +632,7 @@ public enum EnumWikipedia {
     if (disambiguationText != null) {
       return disambiguationText;
     }
-    return null;
+    return "";
   }
 
   /**
