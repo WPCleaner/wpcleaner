@@ -1201,6 +1201,11 @@ public class MediaWikiAPI implements API {
     if (wikipedia.isDisambiguationPagesLoaded()) {
       for (Page page : pages) {
         page.setDisambiguationPage(wikipedia.isDisambiguationPage(page));
+        if (page.isRedirect()) {
+          for (Page page2 : page.getRedirects()) {
+            page2.setDisambiguationPage(wikipedia.isDisambiguationPage(page2));
+          }
+        }
       }
     } else {
       Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
