@@ -110,7 +110,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                 }
                 errorResult.addPossibleAction(
                     new CompositeAction(GT._("Existing references"), existingNames));
-                errorResult.addPossibleAction(new SimpleAction(GT._("External viewer"), new PageViewAction(url)));
+                errorResult.addPossibleAction(new SimpleAction(
+                    GT._("External Viewer"), new PageViewAction(url)));
                 errors.add(errorResult);
                 errorResults.put(previousRef, errorResult);
               }
