@@ -1459,6 +1459,12 @@ public class MainWindow
       }
       return;
     }
+
+    // New user selected: change password
+    if (e.getSource() == comboUser) {
+      resetPassword();
+      return;
+    }
   }
 
   /**
