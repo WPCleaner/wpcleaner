@@ -146,6 +146,7 @@ public class CheckWikiProjectWindow extends PageWindow {
 
   JTabbedPane contentPane;
 
+  public final static String ACTION_ANALYZE_PAGES = "ANALYZE_PAGES";
   public final static String ACTION_ERROR_DETAIL  = "ERROR_DETAIL";
   public final static String ACTION_ERROR_LIST    = "ERROR_LIST";
   public final static String ACTION_LOAD_PAGES    = "LOAD_PAGES";
@@ -724,14 +725,23 @@ public class CheckWikiProjectWindow extends PageWindow {
     constraints.weighty = 0;
 
     // Load pages
+    JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbarButtons.setFloatable(false);
     JButton buttonLoad = Utilities.createJButton(GT._("&Load pages"));
     buttonLoad.setActionCommand(ACTION_LOAD_PAGES);
     buttonLoad.addActionListener(this);
+    toolbarButtons.add(buttonLoad);
+    JButton buttonAnalysis = Utilities.createJButton(
+        "gnome-system-run.png", EnumImageSize.NORMAL,
+        GT._("Full analysis (Alt + &F)"), false);
+    buttonAnalysis.setActionCommand(ACTION_ANALYZE_PAGES);
+    buttonAnalysis.addActionListener(this);
+    toolbarButtons.add(buttonAnalysis);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
     constraints.weightx = 0;
     constraints.weighty = 0;
-    panel.add(buttonLoad, constraints);
+    panel.add(toolbarButtons, constraints);
     constraints.gridy++;
 
     // Page List
@@ -1600,6 +1610,8 @@ public class CheckWikiProjectWindow extends PageWindow {
       actionErrorList();
     } else if (ACTION_LOAD_PAGES.equals(e.getActionCommand())) {
       actionSelectPage();
+    } else if (ACTION_ANALYZE_PAGES.equals(e.getActionCommand())) {
+      actionAnalyzePage();
     } else if (ACTION_RELOAD_ERROR.equals(e.getActionCommand())) {
       actionReloadError();
     } else if (ACTION_CHOOSE_ERRORS.equals(e.getActionCommand())) {
@@ -1844,6 +1856,19 @@ public class CheckWikiProjectWindow extends PageWindow {
       contentWorker.start();
     } else {
       updateComponentState();
+    }
+  }
+
+  /**
+   * Action called when a page is analyzed.
+   */
+  void actionAnalyzePage() {
+    Object[] selection = listPages.getSelectedValues();
+    if (selection != null) {
+      for (int i = 0; i < selection.length; i++) {
+        CheckErrorPage errorPage = (CheckErrorPage) selection[i];
+        Controller.runFullAnalysis(errorPage.getPage().getTitle(), null, getWikipedia());
+      }
     }
   }
 

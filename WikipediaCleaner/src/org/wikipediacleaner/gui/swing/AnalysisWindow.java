@@ -31,10 +31,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.Map.Entry;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
@@ -48,12 +50,20 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
+import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyledDocument;
 
+import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.check.CheckErrorPage;
+import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.Page;
@@ -65,6 +75,8 @@ import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.AbstractPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.AnalysisPageListPopupListener;
+import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
+import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
 import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
@@ -107,6 +119,11 @@ public class AnalysisWindow extends PageWindow {
   private JButton buttonDisambiguationLink;
   private JButton buttonWatchLink;
   private JButton buttonDisambiguationWarning;
+
+  List<CheckErrorAlgorithm> allAlgorithms;
+  JList listErrors;
+  private DefaultListModel modelErrors;
+  private List<CheckErrorPage> initialErrors;
 
   List<Page> knownPages;
 
@@ -251,8 +268,13 @@ public class AnalysisWindow extends PageWindow {
     constraints.gridx = 0;
     constraints.weightx = 1;
     constraints.weighty = 1;
+    JSplitPane splitLinks = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+    splitLinks.setLeftComponent(createLinksComponents());
+    splitLinks.setRightComponent(createCheckWikiComponents());
+    splitLinks.setResizeWeight(1.0);
+    splitLinks.setDividerLocation(0.9);
     JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-    split.setLeftComponent(createLinksComponents());
+    split.setLeftComponent(splitLinks);
     split.setRightComponent(createContentsComponents());
     split.setPreferredSize(new Dimension(1200, 700));
     split.setMinimumSize(new Dimension(200, 200));
@@ -506,25 +528,137 @@ public class AnalysisWindow extends PageWindow {
   }
 
   /**
-   * A ListSelectionListener implementation for the links. 
+   * @return Check Wiki components.
+   */
+  private Component createCheckWikiComponents() {
+    JPanel panel = new JPanel(new GridBagLayout());
+
+    // Initialize constraints
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridheight = 1;
+    constraints.gridwidth = 1;
+    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.insets = new Insets(0, 0, 0, 0);
+    constraints.ipadx = 0;
+    constraints.ipady = 0;
+    constraints.weightx = 1;
+    constraints.weighty = 0;
+
+    // Initialize algorithms list
+    allAlgorithms = CheckErrorAlgorithms.getAlgorithms(getWikipedia());
+    if (allAlgorithms == null) {
+      allAlgorithms = Collections.emptyList();
+    }
+
+    // Title
+    JLabel labelErrors = Utilities.createJLabel(GT._("Check Wikipedia"));
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.weightx = 1;
+    constraints.weighty = 0;
+    panel.add(labelErrors, constraints);
+    constraints.gridy++;
+
+    // Errors list
+    modelErrors = new DefaultListModel();
+    listErrors = new JList(modelErrors);
+    CheckErrorPageListCellRenderer cellRenderer = new CheckErrorPageListCellRenderer(false);
+    cellRenderer.showCountOccurence(true);
+    listErrors.setCellRenderer(cellRenderer);
+    listErrors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    listErrors.addListSelectionListener(new AnalysisListSelectionListener());
+    JScrollPane scrollErrors = new JScrollPane(listErrors);
+    scrollErrors.setMinimumSize(new Dimension(200, 100));
+    scrollErrors.setPreferredSize(new Dimension(200, 200));
+    scrollErrors.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    constraints.fill = GridBagConstraints.BOTH;
+    constraints.weightx = 1;
+    constraints.weighty = 1;
+    panel.add(scrollErrors, constraints);
+    constraints.gridy++;
+
+    return panel;
+  }
+
+
+  /**
+   * Action called when an error is selected in the list. 
+   */
+  void actionSelectError(CheckErrorPage errorSelected) {
+    boolean modified = getTextContents().isModified();
+    String contents = getTextContents().getText();
+    CheckError.analyzeError(errorSelected, contents);
+    getTextContents().resetAttributes();
+    StyledDocument document = getTextContents().getStyledDocument();
+    if (document != null) {
+      if (errorSelected.getResults() != null) {
+        for (CheckErrorResult errorFound : errorSelected.getResults()) {
+          String styleName = MediaWikiConstants.STYLE_CHECK_WIKI_ERROR;
+          if (errorFound.getErrorLevel() == CheckErrorResult.ErrorLevel.CORRECT) {
+            styleName = MediaWikiConstants.STYLE_CHECK_WIKI_OK;
+          } else if (errorFound.getErrorLevel() == CheckErrorResult.ErrorLevel.WARNING) {
+            styleName = MediaWikiConstants.STYLE_CHECK_WIKI_WARNING;
+          }
+          document.setCharacterAttributes(
+              errorFound.getStartPosition(),
+              errorFound.getLength(),
+              getTextContents().getStyle(styleName),
+              true);
+          SimpleAttributeSet attributes = new SimpleAttributeSet();
+          attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_INFO, errorFound);
+          attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_UUID, UUID.randomUUID());
+          document.setCharacterAttributes(
+              errorFound.getStartPosition(),
+              errorFound.getLength(),
+              attributes, false);
+        }
+      }
+    }
+    listErrors.repaint();
+    getTextContents().setModified(modified);
+    updateComponentState();
+    actionFirstOccurence();
+  }
+
+  /**
+   * A ListSelectionListener implementation. 
    */
   class AnalysisListSelectionListener implements ListSelectionListener {
 
     public void valueChanged(ListSelectionEvent e) {
       if (e.getSource() instanceof JList) {
         JList list = (JList) e.getSource();
-        Object[] selection = list.getSelectedValues();
-        List<Page> pages = new ArrayList<Page>();
-        if (selection != null) {
-          for (int i = 0; i < selection.length; i++) {
-            if (selection[i] instanceof Page) {
-              pages.add((Page) selection[i]);
+
+        if (list == listLinks) {
+          // List of links
+          Object[] selection = list.getSelectedValues();
+          if ((selection != null) && (selection.length > 0)) {
+            listErrors.clearSelection();
+            List<Page> pages = new ArrayList<Page>();
+            for (int i = 0; i < selection.length; i++) {
+              if (selection[i] instanceof Page) {
+                pages.add((Page) selection[i]);
+              }
             }
+            List<Page> oldPages = getTextContents().getInternalLinks();
+            if (!pages.equals(oldPages)) {
+              getTextContents().setInternalLinks(pages);
+            }
+          } else {
+            getTextContents().resetAttributes();
           }
-        }
-        List<Page> oldPages = getTextContents().getInternalLinks();
-        if (!pages.equals(oldPages)) {
-          getTextContents().setInternalLinks(pages);
+        } else if (list == listErrors) {
+          // List of errors
+          Object selection = list.getSelectedValue();
+          if ((selection != null) && (selection instanceof CheckErrorPage)) {
+            listLinks.clearSelection();
+            getTextContents().setInternalLinks(null);
+            CheckErrorPage errorSelected = (CheckErrorPage) selection;
+            actionSelectError(errorSelected);
+          } else {
+            getTextContents().resetAttributes();
+          }
         }
       }
     }
@@ -597,6 +731,7 @@ public class AnalysisWindow extends PageWindow {
     super.clean();
     popupListenerLinks.setPage(getPage());
     modelLinks.clear();
+    modelErrors.clear();
     updateComponentState();
   }
 
@@ -620,6 +755,12 @@ public class AnalysisWindow extends PageWindow {
   @Override
   protected void afterFinishedReloadWorker() {
     super.afterFinishedReloadWorker();
+
+    // Clean up
+    listLinks.clearSelection();
+    listErrors.clearSelection();
+
+    // Update links informations
     Page page = getPage();
     mapLinksCount = new HashMap<String, Integer>();
     if ((page != null) && (page.getLinks() != null)) {
@@ -634,7 +775,25 @@ public class AnalysisWindow extends PageWindow {
     }
     selectLinks(0);
     modelLinks.updateLinkCount();
+
+    // Update fix redirects menu
     createFixRedirectsMenu();
+
+    // Check Wiki
+    modelErrors.clear();
+    if (page != null) {
+      List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
+          allAlgorithms, page, page.getContents());
+      initialErrors = new ArrayList<CheckErrorPage>();
+      if (errorsFound != null) {
+        for (CheckErrorPage tmpError : errorsFound) {
+          modelErrors.addElement(tmpError);
+          initialErrors.add(tmpError);
+        }
+      }
+    }
+    listErrors.clearSelection();
+
     if (firstReload) {
       firstReload = false;
       boolean isArticle = (getPage() != null) && (getPage().isArticle());
@@ -837,29 +996,32 @@ public class AnalysisWindow extends PageWindow {
     countOccurences(getTextContents().getText(), false);
     listLinks.repaint();
 
-    // If the selected links are fixed, select the next one
-    Object[] values = listLinks.getSelectedValues();
-    int count = 0;
-    int countElement = 0;
-    if (values != null) {
-      for (Object value : values) {
-        if (value instanceof Page) {
-          countElement++;
-          count += ((Page) value).getCountOccurence();
+    // Check for new errors
+    List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
+        allAlgorithms, getPage(), getTextContents().getText());
+    if (errorsFound != null) {
+      for (CheckErrorPage tmpError : errorsFound) {
+        boolean errorFound = false;
+        for (int index = 0; index < modelErrors.getSize(); index++) {
+          CheckErrorPage errorModel = (CheckErrorPage) modelErrors.get(index);
+          if ((errorModel != null) &&
+              (errorModel.getAlgorithm() != null) &&
+              (errorModel.getAlgorithm().equals(tmpError.getAlgorithm()))) {
+            errorFound = true;
+          }
+        }
+        if (!errorFound) {
+          modelErrors.addElement(tmpError);
         }
       }
     }
-    if ((countElement > 0) && (count == 0)) {
-      int selected = listLinks.getMaxSelectionIndex();
-      selected++;
-      if (selected < modelLinks.getSize()) {
-        selectLinks(selected);
-      }
-    }
+    listErrors.repaint();
 
-    // Update comment
-    List<String> fixed = new ArrayList<String>();
-    if (mapLinksCount != null) {
+    // Update comment 
+    StringBuilder comment = new StringBuilder();
+    if ((mapLinksCount != null) && (mapLinksCount.size() > 0)) {
+      // Comment for fixed links to disambiguation pages
+      List<String> fixed = new ArrayList<String>();
       for (Entry<String, Integer> p : mapLinksCount.entrySet()) {
         if ((p != null) && (p.getKey() != null) && (p.getValue() != null)) {
           Integer currentCount = null;
@@ -876,32 +1038,111 @@ public class AnalysisWindow extends PageWindow {
           }
         }
       }
-    }
-    String comment = "";
-    if (fixed.size() > 0) {
-      Collections.sort(fixed);
-      comment = getDefaultComment();
-      int linksFixed = 0;
-      for (String fix : fixed) {
-        if (linksFixed > 0) {
-          comment += ", ";
-        } else {
-          comment += " - ";
+      if (fixed.size() > 0) {
+        Collections.sort(fixed);
+        comment.append(getDefaultComment());
+        int linksFixed = 0;
+        for (String fix : fixed) {
+          if (linksFixed > 0) {
+            comment.append(", ");
+          } else {
+            comment.append(" - ");
+          }
+          linksFixed++;
+          comment.append("[[" + fix + "]]");
         }
-        linksFixed++;
-        comment += "[[" + fix + "]]";
       }
     }
-    setComment(comment);
+    if ((initialErrors != null) && (initialErrors.size() > 0)) {
+      // Comment for fixed Check Wiki errors
+      List<CheckErrorAlgorithm> errorsFixed = computeErrorsFixed();
+      if ((errorsFixed != null) && (errorsFixed.size() > 0)) {
+        if (comment.length() > 0) {
+          comment.append(" / ");
+        }
+        comment.append(GT._("Detection by [[{0}]]", getWikipedia().getCheckWikiProject()));
+        Configuration config = Configuration.getConfiguration();
+        for (CheckErrorAlgorithm errorFixed : errorsFixed) {
+          comment.append(" - ");
+          String link = errorFixed.getLink();
+          if ((link != null) &&
+              (config != null) &&
+              (config.getBoolean(
+                  null,
+                  Configuration.BOOLEAN_CHECK_LINK_ERRORS,
+                  Configuration.DEFAULT_CHECK_LINK_ERRORS))) {
+            comment.append("[[");
+            comment.append(link);
+            comment.append("|");
+            comment.append(errorFixed.getShortDescriptionReplaced());
+            comment.append("]]");
+          } else {
+            comment.append(errorFixed.getShortDescriptionReplaced());
+          }
+        }
+      }
+    }
+    setComment(comment.toString());
+
+    // If the selected links are fixed, select the next one
+    if (listErrors.getSelectedValue() != null) {
+      CheckErrorPage errorPage = (CheckErrorPage) listErrors.getSelectedValue();
+      if (!errorPage.getErrorFound()) {
+        int selected = listErrors.getSelectedIndex();
+        selected++;
+        if (selected < modelErrors.getSize()) {
+          listErrors.setSelectedIndex(selected);
+        } else {
+          listErrors.setSelectedIndex(0);
+        }
+      } else {
+        actionSelectError(errorPage);
+      }
+    } else {
+      Object[] values = listLinks.getSelectedValues();
+      if ((values != null) && (values.length > 0)) {
+        int count = 0;
+        int countElement = 0;
+        for (Object value : values) {
+          if (value instanceof Page) {
+            countElement++;
+            count += ((Page) value).getCountOccurence();
+          }
+        }
+        if ((countElement > 0) && (count == 0)) {
+          int selected = listLinks.getMaxSelectionIndex();
+          selected++;
+          if (selected < modelLinks.getSize()) {
+            selectLinks(selected);
+          }
+        }
+      }
+    }
 
     modelLinks.updateLinkCount();
     getTextContents().requestFocusInWindow();
   }
 
   /**
+   * @return Errors fixed.
+   */
+  private List<CheckErrorAlgorithm> computeErrorsFixed() {
+    final List<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
+    if (initialErrors != null) {
+      for (CheckErrorPage initialError : initialErrors) {
+        CheckError.analyzeError(initialError, getTextContents().getText());
+        if (initialError.getErrorFound() == false) {
+          errorsFixed.add(initialError.getAlgorithm());
+        }
+      }
+    }
+    return errorsFixed;
+  }
+
+  /**
    * Action called when First Occurence button is pressed. 
    */
-  private void actionFirstOccurence() {
+  void actionFirstOccurence() {
     getTextContents().selectFirstOccurence();
     getTextContents().requestFocusInWindow();
   }
