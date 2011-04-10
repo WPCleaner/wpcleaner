@@ -43,7 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
-import java.util.concurrent.Callable;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -83,7 +82,6 @@ import org.lobobrowser.html.gui.HtmlPanel;
 import org.lobobrowser.html.parser.DocumentBuilderImpl;
 import org.lobobrowser.html.test.SimpleUserAgentContext;
 import org.w3c.dom.Document;
-import org.wikipediacleaner.api.MediaWikiController;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -1302,7 +1300,8 @@ public class CheckWikiProjectWindow extends PageWindow {
               null,
               Configuration.BOOLEAN_FORCE_WATCH,
               Configuration.DEFAULT_FORCE_WATCH),
-          false, false);
+          false, false,
+          errorsFixed);
       sendWorker.setListener(new DefaultBasicWorkerListener() {
         @Override
         public void afterFinished(
@@ -1315,7 +1314,6 @@ public class CheckWikiProjectWindow extends PageWindow {
             // Remove errors fixed
             List<CheckError> errorsToBeRemoved = new ArrayList<CheckError>();
             for (CheckErrorAlgorithm algoFixed : errorsFixed) {
-              boolean marked = false;
               for (int posError = 0; posError < modelAllErrors.getSize(); posError++) {
                 Object element = modelAllErrors.getElementAt(posError);
                 if (element instanceof CheckError) {
@@ -1325,13 +1323,8 @@ public class CheckWikiProjectWindow extends PageWindow {
                     if (tmpError.getPageCount() == 0) {
                       errorsToBeRemoved.add(tmpError);
                     }
-                    markPageAsFixed(tmpError, algoFixed.getErrorNumberString(), page);
-                    marked = true;
                   }
                 }
-              }
-              if (!marked) {
-                markPageAsFixed(null, algoFixed.getErrorNumberString(), page);
               }
             }
             if (!configuration.getBoolean(
@@ -1902,28 +1895,6 @@ public class CheckWikiProjectWindow extends PageWindow {
           true, modelMaxErrors.getNumber().intValue());
       setupReloadWorker(reloadWorker);
       reloadWorker.start();
-    }
-  }
-
-  /**
-   * Mark a page as fixed for an error.
-   * 
-   * @param error Error.
-   * @param page Page.
-   */
-  void markPageAsFixed(final CheckError error, final String errorNumber, final Page page) {
-    if ((page != null) && (page.getPageId() != null)) {
-      MediaWikiController.addSimpleTask(new Callable<Page>() {
-  
-        public Page call() throws Exception
-        {
-          if (error != null) {
-            error.fix(page);
-          } else {
-            CheckError.fix(page, errorNumber);
-          }
-          return page;
-        }});
     }
   }
 }
