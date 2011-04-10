@@ -76,6 +76,7 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.AbstractPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.AnalysisPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
+import org.wikipediacleaner.gui.swing.component.CheckErrorPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
 import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
@@ -398,6 +399,8 @@ public class AnalysisWindow extends PageWindow {
     constraints.weighty = 1;
     addTextContents(panel, constraints);
     constraints.gridy++;
+    listErrors.addMouseListener(
+        new CheckErrorPageListPopupListener(getWikipedia(), getTextContents(), buttonValidate));
 
     return panel;
   }
