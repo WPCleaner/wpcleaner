@@ -124,7 +124,6 @@ public class AnalysisWindow extends PageWindow {
   List<CheckErrorAlgorithm> allAlgorithms;
   JList listErrors;
   private DefaultListModel modelErrors;
-  private List<CheckErrorPage> initialErrors;
 
   List<Page> knownPages;
 
@@ -784,15 +783,10 @@ public class AnalysisWindow extends PageWindow {
 
     // Check Wiki
     modelErrors.clear();
-    if (page != null) {
-      List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-          allAlgorithms, page, page.getContents());
-      initialErrors = new ArrayList<CheckErrorPage>();
-      if (errorsFound != null) {
-        for (CheckErrorPage tmpError : errorsFound) {
-          modelErrors.addElement(tmpError);
-          initialErrors.add(tmpError);
-        }
+    initializeInitialErrors(allAlgorithms);
+    if (getInitialErrors() != null) {
+      for (CheckErrorPage error : getInitialErrors()) {
+        modelErrors.addElement(error);
       }
     }
     listErrors.clearSelection();
@@ -1056,7 +1050,7 @@ public class AnalysisWindow extends PageWindow {
         }
       }
     }
-    if ((initialErrors != null) && (initialErrors.size() > 0)) {
+    if ((getInitialErrors() != null) && (getInitialErrors().size() > 0)) {
       // Comment for fixed Check Wiki errors
       List<CheckErrorAlgorithm> errorsFixed = computeErrorsFixed();
       if ((errorsFixed != null) && (errorsFixed.size() > 0)) {
@@ -1124,22 +1118,6 @@ public class AnalysisWindow extends PageWindow {
 
     modelLinks.updateLinkCount();
     getTextContents().requestFocusInWindow();
-  }
-
-  /**
-   * @return Errors fixed.
-   */
-  private List<CheckErrorAlgorithm> computeErrorsFixed() {
-    final List<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
-    if (initialErrors != null) {
-      for (CheckErrorPage initialError : initialErrors) {
-        CheckError.analyzeError(initialError, getTextContents().getText());
-        if (initialError.getErrorFound() == false) {
-          errorsFixed.add(initialError.getAlgorithm());
-        }
-      }
-    }
-    return errorsFixed;
   }
 
   /**

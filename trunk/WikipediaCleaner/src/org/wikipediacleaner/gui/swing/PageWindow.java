@@ -28,8 +28,11 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -45,6 +48,10 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import org.wikipediacleaner.api.MediaWikiController;
+import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.check.CheckErrorPage;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -1196,7 +1203,8 @@ public abstract class PageWindow
     SendWorker sendWorker = new SendWorker(
         getWikipedia(), this, page, getTextContents().getText(),
         (textComment != null) ? textComment.getText() : getWikipedia().getUpdatePageMessage(),
-        forceWatch, updateDabWarning, createDabWarning);
+        forceWatch, updateDabWarning, createDabWarning,
+        computeErrorsFixed());
     sendWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(
@@ -1247,15 +1255,83 @@ public abstract class PageWindow
    * Action called when Watch button is pressed. 
    */
   private void actionWatch() {
-    if (displayYesNoWarning(
-        GT._("Would you like to add this page on your local Watch list ?")) == JOptionPane.YES_OPTION) {
+    String message = GT._("Would you like to add this page on your local Watch list ?"); 
+    if (displayYesNoWarning(message) == JOptionPane.YES_OPTION) {
       Configuration config = Configuration.getConfiguration();
-      List<String> watch = config.getStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES);
+      List<String> watch = config.getStringList(
+          getWikipedia(), Configuration.ARRAY_WATCH_PAGES);
       if (!watch.contains(page.getTitle())) {
         watch.add(page.getTitle());
         Collections.sort(watch);
         config.setStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES, watch);
       }
     }
+  }
+
+  // =========================================================================
+  // Check Wiki
+  // =========================================================================
+  
+  private List<CheckErrorPage> initialErrors;
+
+  protected void initializeInitialErrors(
+      Collection<CheckErrorAlgorithm> algorithms) {
+    if (page != null) {
+      List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
+          algorithms, page, page.getContents());
+      initialErrors = new ArrayList<CheckErrorPage>();
+      if (errorsFound != null) {
+        for (CheckErrorPage tmpError : errorsFound) {
+          initialErrors.add(tmpError);
+        }
+      }
+    }
+  }
+
+  /**
+   * @return Initial errors.
+   */
+  protected Collection<CheckErrorPage> getInitialErrors() {
+    return initialErrors;
+  }
+
+  /**
+   * Mark a page as fixed for an error.
+   * 
+   * @param error Error.
+   * @param errorNumber Error number.
+   * @param pageFixed Page.
+   */
+  static public void markPageAsFixed(
+      final CheckError error, final String errorNumber, final Page pageFixed) {
+    if ((pageFixed != null) && (pageFixed.getPageId() != null)) {
+      MediaWikiController.addSimpleTask(new Callable<Page>() {
+  
+        public Page call() throws Exception
+        {
+          if (error != null) {
+            error.fix(pageFixed);
+          } else {
+            CheckError.fix(pageFixed, errorNumber);
+          }
+          return pageFixed;
+        }});
+    }
+  }
+
+  /**
+   * @return Errors fixed.
+   */
+  protected List<CheckErrorAlgorithm> computeErrorsFixed() {
+    final List<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
+    if (initialErrors != null) {
+      for (CheckErrorPage initialError : initialErrors) {
+        CheckError.analyzeError(initialError, getTextContents().getText());
+        if (initialError.getErrorFound() == false) {
+          errorsFixed.add(initialError.getAlgorithm());
+        }
+      }
+    }
+    return errorsFixed;
   }
 }

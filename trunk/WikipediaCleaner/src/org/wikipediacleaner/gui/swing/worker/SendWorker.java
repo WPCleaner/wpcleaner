@@ -18,12 +18,16 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.util.Collection;
+
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
+import org.wikipediacleaner.gui.swing.PageWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -39,6 +43,7 @@ public class SendWorker extends BasicWorker {
   private final boolean forceWatch;
   private final boolean updateWarning;
   private final boolean createWarning;
+  private final Collection<CheckErrorAlgorithm> errorsFixed;
 
   /**
    * @param wikipedia Wikipedia.
@@ -49,11 +54,14 @@ public class SendWorker extends BasicWorker {
    * @param forceWatch Force watching the page.
    * @param updateWarning Update warning on talk page.
    * @param createWarning Create warning on talk page.
+   * @param errorsFixed Errors fixed by this update.
    */
   public SendWorker(
       EnumWikipedia wikipedia, BasicWindow window,
       Page page, String text, String comment,
-      boolean forceWatch, boolean updateWarning, boolean createWarning) {
+      boolean forceWatch,
+      boolean updateWarning, boolean createWarning,
+      Collection<CheckErrorAlgorithm> errorsFixed) {
     super(wikipedia, window);
     this.page = page;
     this.text = text;
@@ -61,6 +69,7 @@ public class SendWorker extends BasicWorker {
     this.forceWatch = forceWatch;
     this.updateWarning = updateWarning;
     this.createWarning = createWarning;
+    this.errorsFixed = errorsFixed;
   }
 
   /* (non-Javadoc)
@@ -128,6 +137,14 @@ public class SendWorker extends BasicWorker {
         return e;
       }
     }
+
+    // Mark errors fixed
+    if (errorsFixed != null) {
+      for (CheckErrorAlgorithm error: errorsFixed) {
+        PageWindow.markPageAsFixed(null, error.getErrorNumberString(), page);
+      }
+    }
+
     return null;
   }
 }

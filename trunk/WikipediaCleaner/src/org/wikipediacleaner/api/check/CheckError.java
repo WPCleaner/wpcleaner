@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -52,7 +53,7 @@ public class CheckError {
    * @return Errors found in the page.
    */
   public static List<CheckErrorPage> analyzeErrors(
-      List<CheckErrorAlgorithm> algorithms, Page page, String contents) {
+      Collection<CheckErrorAlgorithm> algorithms, Page page, String contents) {
     List<CheckErrorPage> errorsFound = new ArrayList<CheckErrorPage>();
     if ((algorithms != null) && (page != null)) {
       if (contents == null) {
