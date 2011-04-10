@@ -20,7 +20,9 @@ package org.wikipediacleaner.api.check.algorithm;
 
 
 import java.util.List;
+import java.util.Map;
 
+import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.BasicActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
@@ -49,6 +51,14 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
   public boolean analyze(Page page, String contents, List<CheckErrorResult> errors) {
     if ((page == null) || (contents == null)) {
       return false;
+    }
+
+    // Retrieve possible templates to replace the link to other language
+    String templatesParam = page.getWikipedia().getCheckWikiProperty(
+        "template", 68, true, false, false);
+    String[] templatesList = null;
+    if (templatesParam != null) {
+      templatesList = page.getWikipedia().convertPropertyToStringArray(templatesParam);
     }
 
     // Analyzing the text from the beginning
@@ -82,6 +92,26 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
                       new CheckLanguageLinkActionProvider(
                           fromWikipedia, page.getWikipedia(),
                           pageTitle));
+                  if ((templatesList != null) && (templatesList.length > 0)) {
+                    for (String template : templatesList) {
+                      String[] templateArgs = template.split("\\|");
+                      if (templateArgs.length >= 5) {
+                        errorResult.addPossibleAction(
+                            GT._("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
+                            new AddTextActionProvider(
+                                "{{" + templateArgs[0] +
+                                "|" + templateArgs[1] + "=",
+                                "|" + templateArgs[2] + "=" + lg.getCode() +
+                                "|" + templateArgs[3] + "=" + pageTitle +
+                                "|" + templateArgs[4] + "=" + link.getDisplayedText() +
+                                "}}",
+                                null,
+                                GT._("What is the title of the page on this wiki ?"),
+                                (link.getText() != null) ? link.getText() : pageTitle,
+                                "[]\""));
+                      }
+                    }
+                  }
                   errorResult.addPossibleAction(
                       GT._("External Viewer"),
                       new BasicActionProvider(
@@ -102,5 +132,22 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
       }
     }
     return result;
+  }
+
+  /* (non-Javadoc)
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put("template", GT._(
+        "A template that can be used instead of the link to an other language. " +
+        "It must be specified as: " +
+          "<template name>|" +
+          "<local page name>|" +
+          "<code of other language>|" +
+          "<page name in other language>|" +
+          "<displayed text>").replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;"));
+    return parameters;
   }
 }
