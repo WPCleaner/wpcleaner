@@ -248,6 +248,17 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Page contents after fix.
+   */
+  public String automaticFix(Page page, String contents) {
+    return contents;
+  }
+
+  /**
    * @return List of possible global fixes.
    */
   public String[] getGlobalFixes() {

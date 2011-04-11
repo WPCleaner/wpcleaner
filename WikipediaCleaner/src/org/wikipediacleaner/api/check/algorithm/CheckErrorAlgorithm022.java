@@ -121,6 +121,18 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Page contents after fix.
+   */
+  @Override
+  public String automaticFix(Page page, String contents) {
+    return fix(globalFixes[0], page, contents);
+  }
+
+  /**
    * @return List of possible global fixes.
    */
   @Override

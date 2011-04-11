@@ -30,8 +30,8 @@ import org.wikipediacleaner.i18n.GT;
  */
 public final class Version {
 
-  public final static String VERSION = "1.02";
-  public final static Date   DATE = new GregorianCalendar(2011, Calendar.APRIL, 10).getTime();
+  public final static String VERSION = "1.03";
+  public final static Date   DATE = new GregorianCalendar(2011, Calendar.APRIL, 11).getTime();
 
   public final static String MESSAGE =
     GT._("I hope you'll like WikiCleaner.") +
