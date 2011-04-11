@@ -193,7 +193,7 @@ public class UpdateDabWarningTools {
       for (Page page : pages) {
         boolean toAdd = false;
         for (Page link : page.getLinks()) {
-          if (dabPages.containsKey(link.getTitle())) {
+          if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
             toAdd = true;
           }
         }
