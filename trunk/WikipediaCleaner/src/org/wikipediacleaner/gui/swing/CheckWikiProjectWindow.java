@@ -808,6 +808,7 @@ public class CheckWikiProjectWindow extends PageWindow {
     private JTextField textComment;
     private JCheckBox chkAutomaticComment;
     private JButton buttonSend;
+    private JButton buttonMarkAsFixed;
     private MediaWikiPane textPage;
 
     /**
@@ -884,7 +885,7 @@ public class CheckWikiProjectWindow extends PageWindow {
       buttonSend = createButtonSend(this, true);
       buttonSend.setEnabled(false);
       toolbarButtons.add(buttonSend);
-      JButton buttonMarkAsFixed = Utilities.createJButton(GT._("Mark as Fixed")); // Mark as fixed
+      buttonMarkAsFixed = Utilities.createJButton(GT._("Mark as Fixed")); // Mark as fixed
       buttonMarkAsFixed.setEnabled(true);
       buttonMarkAsFixed.setActionCommand(ACTION_MARK_AS_FIXED);
       buttonMarkAsFixed.addActionListener(this);
@@ -972,6 +973,9 @@ public class CheckWikiProjectWindow extends PageWindow {
       if (buttonSend != null) {
         buttonSend.setEnabled((textPage != null) && (textPage.isModified()));
       }
+      if (buttonMarkAsFixed != null) {
+        buttonMarkAsFixed.setEnabled(error != null);
+      }
     }
 
     /**
@@ -985,9 +989,13 @@ public class CheckWikiProjectWindow extends PageWindow {
       }
       if (Boolean.FALSE.equals(page.isExisting())) {
         displayWarning(GT._("The page {0} doesn't exist on Wikipedia", page.getTitle()));
-        error.remove(page);
+        if (error != null) {
+          error.remove(page);
+        }
         pane.remove(this);
-        markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
+        if (error != null) {
+          markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
+        }
         actionSelectErrorType();
         return;
       }
@@ -1051,6 +1059,19 @@ public class CheckWikiProjectWindow extends PageWindow {
         listErrors.setSelectedIndex(index);
       } else if (modelErrors.getSize() > 0) {
         listErrors.setSelectedIndex(0);
+      }
+
+      // Automatic fix of some errors
+      if ((initialErrors != null) && (textPage != null)) {
+        String initialContents = textPage.getText();
+        String contents = initialContents;
+        for (CheckErrorPage initialError : initialErrors) {
+          contents = initialError.getAlgorithm().automaticFix(page, contents);
+        }
+        if (!contents.equals(initialContents)) {
+          textPage.setText(contents);
+          actionValidate();
+        }
       }
     }
 

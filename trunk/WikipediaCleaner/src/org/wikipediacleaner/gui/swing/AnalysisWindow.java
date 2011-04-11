@@ -828,6 +828,19 @@ public class AnalysisWindow extends PageWindow {
       }
     }
     updateComponentState();
+
+    // Automatic fix of some errors
+    if ((getInitialErrors() != null) && (getTextContents() != null)) {
+      String initialContents = getTextContents().getText();
+      String contents = initialContents;
+      for (CheckErrorPage error : getInitialErrors()) {
+        contents = error.getAlgorithm().automaticFix(getPage(), contents);
+      }
+      if (!contents.equals(initialContents)) {
+        getTextContents().setText(contents);
+        actionValidate();
+      }
+    }
   }
 
   /**
