@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-04-10 23:41+0200\n"
-"PO-Revision-Date: 2011-04-09 11:20+0000\n"
+"PO-Revision-Date: 2011-04-11 16:05+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-09 16:16+0000\n"
-"X-Generator: Launchpad (build 12757)\n"
+"X-Launchpad-Export-Date: 2011-04-11 17:20+0000\n"
+"X-Generator: Launchpad (build 12792)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -153,9 +153,9 @@ msgid "Check language links"
 msgstr "Zkontroluj jazykové odkazy"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:100
-#, fuzzy, java-format
+#, java-format
 msgid "Replace using template {0}"
-msgstr "Hledat v šablonách"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:109
 msgid "What is the title of the page on this wiki ?"
@@ -345,7 +345,8 @@ msgid "Link count"
 msgstr "Počet odkazů"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:371
-msgid "Add a warning on the talk page about the links to disambiguation pages"
+msgid ""
+"Add a warning on the talk page about the links to disambiguation pages"
 msgstr "Přidat varování na diskuzní stránku ohledně odkazů na rozcestníky"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:411
@@ -439,7 +440,7 @@ msgstr "Chcete aktualizovat rozcestníkové varování na diskuzní stránce?"
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1431
 #, java-format
 msgid "Detection by [[{0}]]"
-msgstr "Detekce nástrojem [[{0}]]"
+msgstr "dle [[{0}]]"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
 #: org/wikipediacleaner/gui/swing/MainWindow.java:717
@@ -461,7 +462,8 @@ msgstr "Můžou změnit nožství stránek v krátkém čase."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:106
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:634
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Na některých projektech Wikimedia potřebuješ pro tyto funkce příznak Bot."
 
@@ -481,8 +483,10 @@ msgid "Update existing disambiguation warning messages"
 msgstr "Aktualizovat existující rozcestníkové varování"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:205
-msgid "At what page do you wish to start updating the disambiguation warning ?"
-msgstr "Na které stránce chcete zahájit aktualizaci rozcestníkového varování?"
+msgid ""
+"At what page do you wish to start updating the disambiguation warning ?"
+msgstr ""
+"Na které stránce chcete zahájit aktualizaci rozcestníkového varování?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:246
 msgid "No errors available"
@@ -498,7 +502,7 @@ msgstr "Nahrát všechny chyby"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:307
 msgid "Load all high priority errors"
-msgstr "Nahrát všechny velmi důkležité chyby"
+msgstr "Nahrát všechny velmi důležité chyby"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:312
 msgid "Load all high and middle priority errors"
@@ -947,7 +951,8 @@ msgstr "Než se přihlásíte, musíte zadat heslo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:936
 msgid "You can learn how to configure WikiCleaner at the following URL:"
-msgstr "Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
+msgstr ""
+"Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:953
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
@@ -991,7 +996,8 @@ msgid "Internal links in {0}"
 msgstr "Interní odkazy v {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1087
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr "Musíte zadat jméno stránky pro získání seznamu členů kategorie"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1098
@@ -1186,7 +1192,8 @@ msgstr ""
 "prostoru)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:489
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 "Vytvořit rozcestníkové varování na diskuzní stránce (v encyklopedických "
 "jmenných prostorech)"
@@ -1204,7 +1211,8 @@ msgstr ""
 "prostoru)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:519
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 "Aktualizovat rozcestníkové varování na diskuzní stránce (v encyklopedických "
 "jmenných prostorech)"
@@ -1999,6 +2007,7 @@ msgstr ""
 #~ msgid "Article with false <br/>"
 #~ msgstr "Článek se špatným <br/>"
 
+#, java-format
 #~ msgid "Error n°{0} ({1}) - {2}"
 #~ msgstr "Chyba n°{0} ({1}) - {2}"
 
@@ -2059,6 +2068,7 @@ msgstr ""
 #~ msgid "&Update page information"
 #~ msgstr "Aktualizovat informace o stránce"
 
+#, java-format
 #~ msgid "Replace parameter {0} with"
 #~ msgstr "Nahradit parametr {0} za"
 
@@ -2085,16 +2095,16 @@ msgstr ""
 
 #~ msgid "Many new features added for the Check Wiki project : try them !"
 #~ msgstr ""
-#~ "Mnoho nových vlastnosti bylo přidáno pro projekt CheckWikipedia, zkuste "
-#~ "je!"
+#~ "Mnoho nových vlastnosti bylo přidáno pro projekt CheckWikipedia, zkuste je!"
 
 #~ msgid ""
-#~ "!NEW! - WikiCleaner configuration is now available online, check the "
-#~ "System configuration."
+#~ "!NEW! - WikiCleaner configuration is now available online, check the System "
+#~ "configuration."
 #~ msgstr ""
-#~ "!NOVINKA! Konfigurace WikiCleaneru je nyní dostupná on-line, nahlédněte "
-#~ "do Systémových možností."
+#~ "!NOVINKA! Konfigurace WikiCleaneru je nyní dostupná on-line, nahlédněte do "
+#~ "Systémových možností."
 
+#, java-format
 #~ msgid "Retrieving first section contents - {0}"
 #~ msgstr "Získávám obsahy první sekce - {0}"
 
