@@ -29,6 +29,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -59,12 +60,15 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.InternalLinkNotification;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
@@ -940,8 +944,7 @@ public class MediaWikiPane
   // =========================================================================
 
   private JSplitPane splitPane;
-  private JTree treeToc;
-  private TitleTreeNode rootToc;
+  private DefaultTreeModel modelToc;
   private boolean tocIsDisplayed;
 
   /**
@@ -969,14 +972,6 @@ public class MediaWikiPane
         return title.getFirstLevel();
       }
       return 0;
-    }
-
-    /* (non-Javadoc)
-     * @see javax.swing.tree.DefaultMutableTreeNode#getAllowsChildren()
-     */
-    @Override
-    public boolean getAllowsChildren() {
-      return true;
     }
 
     /* (non-Javadoc)
@@ -1026,10 +1021,15 @@ public class MediaWikiPane
     constraints.weighty = 1;
     JPanel panelTOC = new JPanel(new GridBagLayout());
     TitleTreeNode rootToc = new TitleTreeNode(null);
-    final JTree treeToc = new JTree(rootToc);
+    DefaultTreeModel modelToc = new DefaultTreeModel(rootToc);
+    final JTree treeToc = new JTree(modelToc);
+    treeToc.setRootVisible(false);
     treeToc.setShowsRootHandles(true);
     treeToc.getSelectionModel().setSelectionMode(
         TreeSelectionModel.SINGLE_TREE_SELECTION);
+    DefaultTreeCellRenderer rendererToc = new DefaultTreeCellRenderer();
+    rendererToc.setLeafIcon(rendererToc.getClosedIcon());
+    treeToc.setCellRenderer(rendererToc);
     treeToc.addTreeSelectionListener(new TreeSelectionListener() {
       
       /* (non-Javadoc)
@@ -1065,8 +1065,7 @@ public class MediaWikiPane
     splitPane.setDividerLocation(0);
     splitPane.setResizeWeight(0.0);
     textPane.splitPane = splitPane;
-    textPane.treeToc = treeToc;
-    textPane.rootToc = rootToc;
+    textPane.modelToc = modelToc;
 
     return splitPane;
   }
@@ -1090,22 +1089,27 @@ public class MediaWikiPane
       return;
     }
     if (!tocIsDisplayed) {
-      rootToc.removeAllChildren();
-      treeToc.setRootVisible(true);
       String contents = getText();
       int currentIndex = 0;
-      TitleTreeNode lastNode = rootToc;
+      TitleTreeNode rootNode = new TitleTreeNode(null);
+      TitleTreeNode lastNode = rootNode;
+      Collection<PageElementComment> comments = PageContents.findAllComments(page, contents);
       while ((currentIndex < contents.length())) {
-        PageElementTitle title = PageContents.findNextTitle(page, contents, currentIndex);
+        PageElementTitle title = PageContents.findNextTitle(
+            page, contents, currentIndex, comments);
         if (title == null) {
           currentIndex = contents.length();
         } else {
           while ((lastNode != null) &&
                  (lastNode.getTitleLevel() >= title.getFirstLevel())) {
-            lastNode = (TitleTreeNode) lastNode.getParent();
+            if (lastNode.getParent() != null) {
+              lastNode = (TitleTreeNode) lastNode.getParent();
+            } else {
+              lastNode = null;
+            }
           }
           if (lastNode == null) {
-            lastNode = rootToc;
+            lastNode = rootNode;
           }
           TitleTreeNode tmpNode = new TitleTreeNode(title);
           lastNode.add(tmpNode);
@@ -1113,8 +1117,7 @@ public class MediaWikiPane
           currentIndex = title.getEndIndex();
         }
       }
-      treeToc.expandRow(0);
-      treeToc.setRootVisible(false);
+      modelToc.setRoot(rootNode);
       tocIsDisplayed = true;
     }
     splitPane.setDividerLocation(200);
