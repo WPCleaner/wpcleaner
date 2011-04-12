@@ -594,7 +594,7 @@ public class AnalysisWindow extends PageWindow {
   void actionSelectError(CheckErrorPage errorSelected) {
     boolean modified = getTextContents().isModified();
     String contents = getTextContents().getText();
-    CheckError.analyzeError(errorSelected, contents);
+    CheckError.analyzeError(errorSelected, contents, null);
     getTextContents().resetAttributes();
     StyledDocument document = getTextContents().getStyledDocument();
     if (document != null) {

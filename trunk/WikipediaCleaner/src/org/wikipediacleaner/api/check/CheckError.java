@@ -36,6 +36,8 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -59,12 +61,13 @@ public class CheckError {
       if (contents == null) {
         contents = page.getContents();
       }
+      Collection<PageElementComment> comments = PageContents.findAllComments(page, contents);
       for (CheckErrorAlgorithm algorithm : algorithms) {
         if ((algorithm != null) &&
             (algorithm.isAvailable()) &&
             (CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()))) {
           List<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
-          if (algorithm.analyze(page, contents, results)) {
+          if (algorithm.analyze(page, contents, comments, results)) {
             CheckErrorPage errorPage = new CheckErrorPage(page, algorithm);
             errorPage.setResults(true, results);
             errorsFound.add(errorPage);
@@ -80,17 +83,22 @@ public class CheckError {
    * 
    * @param errorPage Error page.
    * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments in page contents.
    */
   public static void analyzeError(
-      CheckErrorPage errorPage, String contents) {
+      CheckErrorPage errorPage,
+      String contents, Collection<PageElementComment> comments) {
     if (errorPage != null) {
       List<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
       boolean errorFound = false;
       if ((errorPage.getAlgorithm() != null) &&
           (errorPage.getAlgorithm().isAvailable()) &&
           (errorPage.getPage() != null)) {
+        if (comments == null) {
+          comments = PageContents.findAllComments(errorPage.getPage(), contents);
+        }
         errorFound = errorPage.getAlgorithm().analyze(
-            errorPage.getPage(), contents, errorsFound);
+            errorPage.getPage(), contents, comments, errorsFound);
       }
       errorPage.setResults(errorFound, errorsFound);
     }
