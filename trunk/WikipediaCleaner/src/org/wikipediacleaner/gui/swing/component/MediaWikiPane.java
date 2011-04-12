@@ -981,7 +981,10 @@ public class MediaWikiPane
      */
     @Override
     public String toString() {
-      return (title != null) ? title.getTitle() : super.toString();
+      if (title == null) {
+        return super.toString();
+      }
+      return "(" + (title.getFirstLevel() - 1) + ") " + title.getTitle();
     }
   }
 
