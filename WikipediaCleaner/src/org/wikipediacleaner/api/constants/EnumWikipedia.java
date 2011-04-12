@@ -675,15 +675,23 @@ public enum EnumWikipedia {
       } else {
         formattedComment.append("WPCleaner");
       }
+      formattedComment.append("(v");
+      formattedComment.append(Version.VERSION);
+      formattedComment.append(")");
     }
-    formattedComment.append("(v");
-    formattedComment.append(Version.VERSION);
-    formattedComment.append(")");
     if (comment != null) {
       if (formattedComment.length() > 0) {
         formattedComment.append(" ");
       }
       formattedComment.append(comment);
+    }
+    if (!showWikiCleaner) {
+      if (formattedComment.length() > 0) {
+        formattedComment.append(" ");
+      }
+      formattedComment.append("(v");
+      formattedComment.append(Version.VERSION);
+      formattedComment.append(")");
     }
     return formattedComment.toString();
   }
