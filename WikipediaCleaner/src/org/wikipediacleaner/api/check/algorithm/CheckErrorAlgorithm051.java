@@ -23,6 +23,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementComment;
 
 /**
  * Algorithm for analyzing error 51 of check wikipedia project.
@@ -34,10 +35,19 @@ public class CheckErrorAlgorithm051 extends CheckErrorAlgorithmBase {
     super("Interwiki before last headline");
   }
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#analyze(org.wikipediacleaner.api.data.Page, java.lang.String, java.util.List)
+  /**
+   * Analyze a page to check if errors are present.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments in the page contents.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
    */
-  public boolean analyze(Page page, String contents, Collection<CheckErrorResult> errors) {
+  public boolean analyze(
+      Page page, String contents,
+      Collection<PageElementComment> comments,
+      Collection<CheckErrorResult> errors) {
     if ((page == null) || (contents == null)) {
       return false;
     }

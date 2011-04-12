@@ -53,6 +53,8 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -1354,9 +1356,11 @@ public abstract class PageWindow
    */
   protected List<CheckErrorAlgorithm> computeErrorsFixed() {
     final List<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
-    if (initialErrors != null) {
+    if ((initialErrors != null) && (initialErrors.size() > 0)) {
+      String contents = getTextContents().getText();
+      Collection<PageElementComment> comments = PageContents.findAllComments(getPage(), contents);
       for (CheckErrorPage initialError : initialErrors) {
-        CheckError.analyzeError(initialError, getTextContents().getText());
+        CheckError.analyzeError(initialError, contents, comments);
         if (initialError.getErrorFound() == false) {
           errorsFixed.add(initialError.getAlgorithm());
         }

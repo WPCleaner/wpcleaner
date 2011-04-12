@@ -23,6 +23,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTag;
 
@@ -42,11 +43,13 @@ public class CheckErrorAlgorithm077 extends CheckErrorAlgorithmBase {
    * 
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments in the page contents.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
       Page page, String contents,
+      Collection<PageElementComment> comments,
       Collection<CheckErrorResult> errors) {
     if ((page == null) || (contents == null)) {
       return false;

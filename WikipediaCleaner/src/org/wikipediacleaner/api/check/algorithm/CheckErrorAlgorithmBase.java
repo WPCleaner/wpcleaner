@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTagData;
 import org.wikipediacleaner.i18n.GT;
 
@@ -288,8 +289,9 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   public String fixUsingFirstReplacement(String fixName, Page page, String contents) {
     String result = contents;
+    Collection<PageElementComment> comments = PageContents.findAllComments(page, contents);
     List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
-    if (analyze(page, contents, errors)) {
+    if (analyze(page, contents, comments, errors)) {
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
         String newText = errorResult.getFirstReplacement();
@@ -315,8 +317,9 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   public String fixUsingRemove(String fixName, Page page, String contents) {
     String result = contents;
+    Collection<PageElementComment> comments = PageContents.findAllComments(page, contents);
     List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
-    if (analyze(page, contents, errors)) {
+    if (analyze(page, contents, comments, errors)) {
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
         String tmp =

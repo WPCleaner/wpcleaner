@@ -23,6 +23,7 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementComment;
 
 
 /**
@@ -118,10 +119,11 @@ public interface CheckErrorAlgorithm {
    * 
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments in the page contents.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
-  public boolean analyze(Page page, String contents, Collection<CheckErrorResult> errors);
+  public boolean analyze(Page page, String contents, Collection<PageElementComment> comments, Collection<CheckErrorResult> errors);
 
   /**
    * Return the parameters used to configure the algorithm.

@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTagData;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
@@ -40,10 +41,19 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
     super("External link without description");
   }
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#analyze(org.wikipediacleaner.api.data.Page, java.lang.String, java.util.List)
+  /**
+   * Analyze a page to check if errors are present.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments in the page contents.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
    */
-  public boolean analyze(Page page, String contents, Collection<CheckErrorResult> errors) {
+  public boolean analyze(
+      Page page, String contents,
+      Collection<PageElementComment> comments,
+      Collection<CheckErrorResult> errors) {
     boolean result = false;
     result |= analyzeProtocol("[http://", page, contents, errors);
     result |= analyzeProtocol("[ftp://", page, contents, errors);

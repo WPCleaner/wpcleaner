@@ -1086,7 +1086,7 @@ public class CheckWikiProjectWindow extends PageWindow {
         CheckErrorPage errorSelected = (CheckErrorPage) selection;
         boolean modified = textPage.isModified();
         String contents = textPage.getText();
-        CheckError.analyzeError(errorSelected, contents);
+        CheckError.analyzeError(errorSelected, contents, null);
         textPage.resetAttributes();
         StyledDocument document = textPage.getStyledDocument();
         if (document != null) {
@@ -1167,7 +1167,7 @@ public class CheckWikiProjectWindow extends PageWindow {
 
       // Check if error is still present
       CheckErrorPage errorPage = new CheckErrorPage(page, error.getAlgorithm());
-      CheckError.analyzeError(errorPage, textPage.getText());
+      CheckError.analyzeError(errorPage, textPage.getText(), null);
       if ((errorPage.getResults() != null) &&
           (!errorPage.getResults().isEmpty())) {
         if (displayYesNoWarning(GT._(
@@ -1292,7 +1292,7 @@ public class CheckWikiProjectWindow extends PageWindow {
       final List<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
       if (initialErrors != null) {
         for (CheckErrorPage initialError : initialErrors) {
-          CheckError.analyzeError(initialError, textPage.getText());
+          CheckError.analyzeError(initialError, textPage.getText(), null);
           if (initialError.getErrorFound() == false) {
             errorsFixed.add(initialError.getAlgorithm());
           }
