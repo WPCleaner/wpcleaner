@@ -103,7 +103,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
                                 "|" + templateArgs[1] + "=",
                                 "|" + templateArgs[2] + "=" + lg.getCode() +
                                 "|" + templateArgs[3] + "=" + pageTitle +
-                                "|" + templateArgs[4] + "=" + link.getDisplayedText() +
+                                "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : pageTitle) +
                                 "}}",
                                 null,
                                 GT._("What is the title of the page on this wiki ?"),
