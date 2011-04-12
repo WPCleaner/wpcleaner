@@ -93,6 +93,8 @@
           todir="${WikiCleaner.jnlp.dir}" />
     <copy file="${WikiCleaner.res.dir}/WikiCleaner.jnlp"
           todir="${WikiCleaner.jnlp.dir}" />
+    <copy file="${WikiCleaner.res.dir}/commons-nuvola-web-broom.png"
+          todir="${WikiCleaner.jnlp.dir}" />
     <copy file="${WikiCleaner.libs.cobra.dir}/${WikiCleaner.libs.cobra.lic}"
           tofile="${WikiCleaner.classes.dir}/cobra.license" />
     <copy file="${WikiCleaner.libs.codec.dir}/${WikiCleaner.libs.codec.lic}"
