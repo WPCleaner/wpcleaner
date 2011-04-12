@@ -25,7 +25,9 @@ package org.wikipediacleaner.images;
 public enum EnumImageSize {
 
   SMALL(16, "small"),
-  NORMAL(22, "normal");
+  NORMAL(22, "normal"),
+  BIG(32, "big"),
+  VERY_BIG(64, "verybig");
 
   private final int size;
   private final String folder;

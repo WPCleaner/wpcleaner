@@ -51,7 +51,7 @@ public abstract class BasicWindow implements ActionListener {
   private EnumWikipedia wikipedia;
 
   static {
-    icon = Utilities.getImageIcon("commons-nuvola-web-broom.png", EnumImageSize.SMALL);
+    icon = Utilities.getImageIcon("commons-nuvola-web-broom.png", EnumImageSize.VERY_BIG);
   }
 
   /**

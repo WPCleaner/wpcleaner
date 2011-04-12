@@ -5,6 +5,7 @@
     <vendor>User:NicoV</vendor>
     <description>Wikipedia Cleaner (test)</description>
     <description kind="short">A tool for Wikipedia maintenance</description>
+    <icon href="commons-nuvola-web-bromm.png"/>
     <shortcut>
       <desktop/>
     </shortcut>
