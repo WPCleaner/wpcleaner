@@ -18,10 +18,12 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementTitle;
 
 /**
  * Algorithm for analyzing error 25 of check wikipedia project.
@@ -36,47 +38,30 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#analyze(org.wikipediacleaner.api.data.Page, java.lang.String, java.util.List)
    */
-  public boolean analyze(Page page, String contents, List<CheckErrorResult> errors) {
+  public boolean analyze(Page page, String contents, Collection<CheckErrorResult> errors) {
     if ((page == null) || (contents == null)) {
       return false;
     }
     boolean result = false;
     int startIndex = 0;
-    int previousTitleLevel = 10;
+    int previousTitleLevel = -1;
     while (startIndex < contents.length()) {
-
-      // Find next =
-      int titleIndex = contents.indexOf("=", startIndex);
-      if (titleIndex < 0) {
+      PageElementTitle title = PageContents.findNextTitle(page, contents, startIndex, null);
+      if (title == null) {
         startIndex = contents.length();
       } else {
-
-        // Check if the = is the beginning of a title
-        int endLineIndex = contents.indexOf("\n", titleIndex);
-        if ((endLineIndex >= 0) &&
-            ((titleIndex == 0) || (contents.charAt(titleIndex - 1) == '\n'))) {
-          int titleLevel = 0;
-          int currentPos = titleIndex;
-          while ((currentPos < contents.length()) && (contents.charAt(currentPos) == '=')) {
-            currentPos++;
-            titleLevel++;
+        if ((previousTitleLevel > 0) &&
+            (title.getFirstLevel() > previousTitleLevel + 1)) {
+          if (errors == null) {
+            return true;
           }
-          if (titleLevel > previousTitleLevel + 1) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(
-                page, titleIndex, endLineIndex);
-            errors.add(errorResult);
-          }
-          previousTitleLevel = titleLevel;
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              page, title.getBeginIndex(), title.getEndIndex());
+          errors.add(errorResult);
         }
-        if (endLineIndex < 0) {
-          startIndex = contents.length();
-        } else {
-          startIndex = endLineIndex;
-        }
+        previousTitleLevel = title.getFirstLevel();
+        startIndex = title.getEndIndex();
       }
     }
     return result;

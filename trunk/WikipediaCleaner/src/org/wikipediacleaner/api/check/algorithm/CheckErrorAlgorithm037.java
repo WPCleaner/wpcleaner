@@ -18,7 +18,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
@@ -51,7 +51,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
    */
   public boolean analyze(
       Page page, String contents,
-      @SuppressWarnings("unused") List<CheckErrorResult> errors) {
+      @SuppressWarnings("unused") Collection<CheckErrorResult> errors) {
     if ((page == null) || (contents == null)) {
       return false;
     }
