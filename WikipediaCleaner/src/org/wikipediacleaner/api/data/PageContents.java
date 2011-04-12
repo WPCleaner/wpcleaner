@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -72,6 +74,65 @@ public class PageContents {
   }
 
   // ==========================================================================
+  // Comments management
+  // ==========================================================================
+
+  /**
+   * Find all comments in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Comments found.
+   */
+  public static Collection<PageElementComment> findAllComments(
+      Page page, String contents) {
+    if (contents == null) {
+      return null;
+    }
+    Collection<PageElementComment> result = new ArrayList<PageElementComment>();
+    int currentIndex = 0;
+    while ((currentIndex < contents.length())) {
+      PageElementComment comment = findNextComment(page, contents, currentIndex);
+      if (comment == null) {
+        currentIndex = contents.length();
+      } else {
+        result.add(comment);
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Find the first comment after an index in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param currentIndex The last index.
+   * @return Comment found.
+   */
+  public static PageElementComment findNextComment(
+      Page page, String contents,
+      int currentIndex) {
+    if (contents == null) {
+      return null;
+    }
+    while (currentIndex < contents.length()) {
+      int tmpIndex = contents.indexOf("<!--", currentIndex);
+      if (tmpIndex < 0) {
+        currentIndex = contents.length();
+      } else {
+        PageElementComment comment = PageElementComment.analyzeBlock(
+            page.getWikipedia(), contents, tmpIndex);
+        if (comment != null) {
+          return comment;
+        }
+        currentIndex = tmpIndex + 1;
+      }
+    }
+    return null;
+  }
+
+  // ==========================================================================
   // Table of Contents management
   // ==========================================================================
 
@@ -89,7 +150,7 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
-    while ((currentIndex < contents.length())) {
+    while (currentIndex < contents.length()) {
       int tmpIndex = contents.indexOf("=", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
@@ -123,7 +184,7 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
-    while ((currentIndex < contents.length())) {
+    while (currentIndex < contents.length()) {
       int tmpIndex = contents.indexOf("[[", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
@@ -158,7 +219,7 @@ public class PageContents {
 
     // Search for simple internal links [[link]], [[link|text]], [[link#anchor|text]], ...
     int currentIndex = 0;
-    while ((currentIndex < contents.length())) {
+    while (currentIndex < contents.length()) {
       PageElementInternalLink internalLink = findNextInternalLink(page, contents, currentIndex);
       if (internalLink != null) {
         currentIndex = internalLink.getBeginIndex() + 2;
@@ -252,7 +313,7 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
-    while ((currentIndex < contents.length())) {
+    while (currentIndex < contents.length()) {
       int tmpIndex = contents.indexOf("[[", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
@@ -286,7 +347,7 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
-    while ((currentIndex < contents.length())) {
+    while (currentIndex < contents.length()) {
       int tmpIndex = contents.indexOf("[[", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
@@ -320,7 +381,7 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
-    while ((currentIndex < contents.length())) {
+    while (currentIndex < contents.length()) {
       int tmpIndex = contents.indexOf("[[", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
@@ -354,7 +415,7 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
-    while ((currentIndex < contents.length())) {
+    while (currentIndex < contents.length()) {
       int tmpIndex = contents.indexOf("[[", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
@@ -388,7 +449,7 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
-    while ((currentIndex < contents.length())) {
+    while (currentIndex < contents.length()) {
       int tmpIndex = contents.indexOf("{{", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
@@ -421,7 +482,7 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
-    while ((currentIndex < contents.length())) {
+    while (currentIndex < contents.length()) {
       int tmpIndex = contents.indexOf("{{", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
@@ -451,7 +512,7 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
-    while ((currentIndex < contents.length())) {
+    while (currentIndex < contents.length()) {
       int tmpIndex = contents.indexOf("{{", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
@@ -485,7 +546,7 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
-    while ((currentIndex < contents.length())) {
+    while (currentIndex < contents.length()) {
       int tmpIndex = contents.indexOf("<", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
@@ -515,7 +576,7 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
-    while ((currentIndex > 0)) {
+    while (currentIndex > 0) {
       int tmpIndex = contents.lastIndexOf(">", currentIndex - 1);
       if (tmpIndex < 0) {
         currentIndex = 0;
@@ -568,7 +629,7 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
-    while ((currentIndex < contents.length())) {
+    while (currentIndex < contents.length()) {
       int tmpIndex = contents.indexOf("<", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
@@ -616,7 +677,7 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
-    while ((currentIndex > 0)) {
+    while (currentIndex > 0) {
       int tmpIndex = contents.lastIndexOf(">", currentIndex - 1);
       if (tmpIndex < 0) {
         currentIndex = 0;
@@ -672,7 +733,7 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
-    while ((currentIndex < contents.length())) {
+    while (currentIndex < contents.length()) {
       int tmpIndex = contents.indexOf("<", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
