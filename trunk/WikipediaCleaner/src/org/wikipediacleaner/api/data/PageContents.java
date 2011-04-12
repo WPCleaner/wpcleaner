@@ -97,6 +97,7 @@ public class PageContents {
         currentIndex = contents.length();
       } else {
         result.add(comment);
+        currentIndex = comment.getEndIndex();
       }
     }
     return result;
@@ -132,6 +133,46 @@ public class PageContents {
     return null;
   }
 
+  /**
+   * Tell if an index is inside comments or not.
+   * 
+   * @param index Index.
+   * @param comments Comments.
+   * @return true if the index is inside comments.
+   */
+  public static boolean isInComments(
+      int index, Collection<PageElementComment> comments) {
+    if (comments == null) {
+      return false;
+    }
+    for (PageElementComment comment : comments) {
+      if ((index >= comment.getBeginIndex()) &&
+          (index < comment.getEndIndex())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * @param index Index.
+   * @param comments Comments.
+   * @return First index after comments.
+   */
+  public static int indexAfterComments(
+      int index, Collection<PageElementComment> comments) {
+    if (comments == null) {
+      return index;
+    }
+    for (PageElementComment comment : comments) {
+      if ((index >= comment.getBeginIndex()) &&
+          (index < comment.getEndIndex())) {
+        return comment.getEndIndex();
+      }
+    }
+    return index;
+  }
+
   // ==========================================================================
   // Table of Contents management
   // ==========================================================================
@@ -141,12 +182,14 @@ public class PageContents {
    * 
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
-   * @param currentIndex The last index.
+   * @param currentIndex Current index.
+   * @param comments Comments blocks in the page.
    * @return Title found.
    */
   public static PageElementTitle findNextTitle(
       Page page, String contents,
-      int currentIndex) {
+      int currentIndex,
+      Collection<PageElementComment> comments) {
     if (contents == null) {
       return null;
     }
@@ -154,6 +197,8 @@ public class PageContents {
       int tmpIndex = contents.indexOf("=", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
+      } else if (isInComments(tmpIndex, comments)) {
+        currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementTitle title = PageElementTitle.analyzeBlock(
             page.getWikipedia(), contents, tmpIndex);
