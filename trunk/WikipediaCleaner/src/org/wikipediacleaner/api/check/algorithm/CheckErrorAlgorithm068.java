@@ -144,10 +144,10 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
         "A template that can be used instead of the link to an other language. " +
         "It must be specified as: " +
           "<template name>|" +
-          "<local page name>|" +
-          "<code of other language>|" +
-          "<page name in other language>|" +
-          "<displayed text>").replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;"));
+          "<param name for local page name>|" +
+          "<param name for code of other language>|" +
+          "<param name for page name in other language>|" +
+          "<param name for displayed text>").replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;"));
     return parameters;
   }
 }
