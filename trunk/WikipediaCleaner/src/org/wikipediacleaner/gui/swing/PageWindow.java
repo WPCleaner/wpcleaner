@@ -42,9 +42,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
@@ -595,6 +593,27 @@ public abstract class PageWindow
   }
 
   /**
+   * Create a TOC button.
+   * 
+   * @param listener Action listener.
+   * @param icon Flag indicating if an icon should be used.
+   * @return Validate button.
+   */
+  public JButton createButtonToc(ActionListener listener, boolean icon) {
+    JButton button;
+    if (icon) {
+      button = Utilities.createJButton(
+          "gnome-format-indent-more.png", EnumImageSize.NORMAL,
+          GT._("Table of Contents"), false);
+    } else {
+      button = Utilities.createJButton(GT._("Table of Contents"));
+    }
+    button.setActionCommand(ACTION_TOC);
+    button.addActionListener(listener);
+    return button;
+  }
+
+  /**
    * Create a Validate button.
    * 
    * @param listener Action listener.
@@ -868,10 +887,9 @@ public abstract class PageWindow
             }
             
           });
-      JScrollPane scrollContents = new JScrollPane(textPane);
+      JComponent scrollContents = MediaWikiPane.createComplexPane(textPane);
       scrollContents.setMinimumSize(new Dimension(100, 100));
       scrollContents.setPreferredSize(new Dimension(1000, 500));
-      scrollContents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
       panel.add(scrollContents, constraints);
     }
   }
@@ -1045,6 +1063,7 @@ public abstract class PageWindow
   public final static String ACTION_PREVIOUS_OCCURENCE   = "PREVIOUS OCCURENCE";
   public final static String ACTION_RELOAD               = "RELOAD";
   public final static String ACTION_SEND                 = "SEND";
+  public final static String ACTION_TOC                  = "TOC";
   public final static String ACTION_VALIDATE             = "VALIDATE";
   public final static String ACTION_VIEW                 = "VIEW";
   public final static String ACTION_VIEW_HISTORY         = "VIEW_HISTORY";
@@ -1079,6 +1098,8 @@ public abstract class PageWindow
       actionReload();
     } else if (ACTION_SEND.equals(e.getActionCommand())) {
       actionSend();
+    } else if (ACTION_TOC.equals(e.getActionCommand())) {
+      actionToc();
     } else if (ACTION_VALIDATE.equals(e.getActionCommand())) {
       actionValidate();
     } else if (ACTION_VIEW.equals(e.getActionCommand())) {
@@ -1228,6 +1249,15 @@ public abstract class PageWindow
       }
     });
     sendWorker.start();
+  }
+
+  /**
+   * Action called when TOC button is pressed. 
+   */
+  private void actionToc() {
+    if (getTextContents() != null) {
+      getTextContents().toggleToc();
+    }
   }
 
   /**
