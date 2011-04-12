@@ -48,6 +48,8 @@ import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Element;
@@ -57,6 +59,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.InternalLinkNotification;
@@ -995,7 +998,7 @@ public class MediaWikiPane
    * @return Complex component containing a MediaWikiPane.
    */
   public static JComponent createComplexPane(
-      MediaWikiPane textPane) {
+      final MediaWikiPane textPane) {
     if (textPane == null) {
       return null;
     }
@@ -1023,8 +1026,33 @@ public class MediaWikiPane
     constraints.weighty = 1;
     JPanel panelTOC = new JPanel(new GridBagLayout());
     TitleTreeNode rootToc = new TitleTreeNode(null);
-    JTree treeToc = new JTree(rootToc);
+    final JTree treeToc = new JTree(rootToc);
     treeToc.setShowsRootHandles(true);
+    treeToc.getSelectionModel().setSelectionMode(
+        TreeSelectionModel.SINGLE_TREE_SELECTION);
+    treeToc.addTreeSelectionListener(new TreeSelectionListener() {
+      
+      /* (non-Javadoc)
+       * @see javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event.TreeSelectionEvent)
+       */
+      public void valueChanged(@SuppressWarnings("unused") TreeSelectionEvent e) {
+        TitleTreeNode treeNode = (TitleTreeNode) treeToc.getLastSelectedPathComponent();
+        if (treeNode == null) {
+          return;
+        }
+        Object nodeInfo = treeNode.getUserObject();
+        if (nodeInfo instanceof PageElementTitle) {
+          PageElementTitle title = (PageElementTitle) nodeInfo;
+          try {
+            textPane.setCaretPosition(title.getBeginIndex());
+            textPane.moveCaretPosition(title.getEndIndex());
+            textPane.requestFocusInWindow();
+          } catch (IllegalArgumentException e2) {
+            //
+          }
+        }
+      }
+    });
     constraints.fill = GridBagConstraints.BOTH;
     panelTOC.add(treeToc, constraints);
     constraints.gridx++;
