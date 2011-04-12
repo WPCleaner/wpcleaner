@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -338,7 +339,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   protected boolean simpleTextSearch(
       Page page, String contents,
-      List<CheckErrorResult> errors, String search) {
+      Collection<CheckErrorResult> errors, String search) {
     return simpleTextSearch(page, contents, errors, search, (String[]) null);
   }
 
@@ -353,7 +354,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Flag indicating if the error was found.
    */
   protected boolean simpleTextSearch(
-      Page page, String contents, List<CheckErrorResult> errors,
+      Page page, String contents, Collection<CheckErrorResult> errors,
       String search, String replacement) {
     return simpleTextSearch(
         page, contents, errors, search,
@@ -371,7 +372,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Flag indicating if the error was found.
    */
   protected boolean simpleTextSearch(
-      Page page, String contents, List<CheckErrorResult> errors,
+      Page page, String contents, Collection<CheckErrorResult> errors,
       String search, String[] replacements) {
     int startIndex = 0;
     boolean result = false;
@@ -412,7 +413,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   protected boolean addTags(
       boolean found, Page page, String contents,
-      List<CheckErrorResult> errors, String tagName) {
+      Collection<CheckErrorResult> errors, String tagName) {
     if (found && (errors == null)) {
       return found;
     }

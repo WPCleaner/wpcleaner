@@ -18,7 +18,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
@@ -37,7 +37,7 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#analyze(org.wikipediacleaner.api.data.Page, java.lang.String, java.util.List)
    */
-  public boolean analyze(Page page, String contents, List<CheckErrorResult> errors) {
+  public boolean analyze(Page page, String contents, Collection<CheckErrorResult> errors) {
     boolean result = false;
     result |= analyzeProtocol("[http://", page, contents, errors);
     result |= analyzeProtocol("[ftp://", page, contents, errors);
@@ -55,7 +55,7 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
    */
   private boolean analyzeProtocol(
       String protocol, Page page, String contents,
-      List<CheckErrorResult> errors) {
+      Collection<CheckErrorResult> errors) {
     if ((page == null) || (contents == null)) {
       return false;
     }

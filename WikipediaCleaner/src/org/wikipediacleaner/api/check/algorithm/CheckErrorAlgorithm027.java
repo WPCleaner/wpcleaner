@@ -18,7 +18,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
@@ -45,7 +45,7 @@ public class CheckErrorAlgorithm027 extends CheckErrorAlgorithmBase {
    */
   public boolean analyze(
       Page page, String contents,
-      List<CheckErrorResult> errors) {
+      Collection<CheckErrorResult> errors) {
     if ((page == null) || (contents == null)) {
       return false;
     }
