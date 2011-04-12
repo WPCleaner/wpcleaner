@@ -1053,8 +1053,10 @@ public class MediaWikiPane
         }
       }
     });
+    JScrollPane scrollTree = new JScrollPane(treeToc);
+    scrollTree.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     constraints.fill = GridBagConstraints.BOTH;
-    panelTOC.add(treeToc, constraints);
+    panelTOC.add(scrollTree, constraints);
     constraints.gridx++;
     splitPane.setTopComponent(panelTOC);
 
