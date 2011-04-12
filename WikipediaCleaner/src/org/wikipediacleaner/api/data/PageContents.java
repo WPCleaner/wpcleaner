@@ -72,6 +72,40 @@ public class PageContents {
   }
 
   // ==========================================================================
+  // Table of Contents management
+  // ==========================================================================
+
+  /**
+   * Find the first title after an index in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param currentIndex The last index.
+   * @return Title found.
+   */
+  public static PageElementTitle findNextTitle(
+      Page page, String contents,
+      int currentIndex) {
+    if (contents == null) {
+      return null;
+    }
+    while ((currentIndex < contents.length())) {
+      int tmpIndex = contents.indexOf("=", currentIndex);
+      if (tmpIndex < 0) {
+        currentIndex = contents.length();
+      } else {
+        PageElementTitle title = PageElementTitle.analyzeBlock(
+            page.getWikipedia(), contents, tmpIndex);
+        if (title != null) {
+          return title;
+        }
+        currentIndex = tmpIndex + 1;
+      }
+    }
+    return null;
+  }
+
+  // ==========================================================================
   // Internal link management
   // ==========================================================================
 

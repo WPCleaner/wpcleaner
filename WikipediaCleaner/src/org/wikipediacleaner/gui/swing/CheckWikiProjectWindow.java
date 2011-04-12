@@ -52,6 +52,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -880,6 +881,8 @@ public class CheckWikiProjectWindow extends PageWindow {
       JButton buttonLast = createButtonLastOccurence(this, true);
       toolbarButtons.add(buttonLast);
       toolbarButtons.addSeparator();
+      JButton buttonToc = createButtonToc(this, true);
+      toolbarButtons.add(buttonToc);
       JButton buttonValidate = createButtonValidate(this, true);
       toolbarButtons.add(buttonValidate);
       buttonSend = createButtonSend(this, true);
@@ -955,9 +958,8 @@ public class CheckWikiProjectWindow extends PageWindow {
             }
             
           });
-      JScrollPane scrollContents = new JScrollPane(textPage);
+      JComponent scrollContents = MediaWikiPane.createComplexPane(textPage);
       scrollContents.setMinimumSize(new Dimension(100, 100));
-      scrollContents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
       constraints.fill = GridBagConstraints.BOTH;
       constraints.weightx = 1;
       constraints.weighty = 1;
@@ -1140,6 +1142,8 @@ public class CheckWikiProjectWindow extends PageWindow {
         actionPreviousOccurence();
       } else if (ACTION_SEND.equals(e.getActionCommand())) {
         actionSend();
+      } else if (ACTION_TOC.equals(e.getActionCommand())) {
+        actionToc();
       } else if (ACTION_VALIDATE.equals(e.getActionCommand())) {
         actionValidate();
       } else if (ACTION_VIEW.equals(e.getActionCommand())) {
@@ -1361,6 +1365,13 @@ public class CheckWikiProjectWindow extends PageWindow {
         }
       });
       sendWorker.start();
+    }
+
+    /**
+     * Display table of contents.
+     */
+    private void actionToc() {
+      textPage.toggleToc();
     }
 
     /**

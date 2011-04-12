@@ -21,6 +21,9 @@ package org.wikipediacleaner.gui.swing.component;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -35,8 +38,14 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
+import javax.swing.JTree;
 import javax.swing.KeyStroke;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
@@ -47,6 +56,7 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.InternalLinkNotification;
@@ -54,6 +64,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.PageUtilities;
 import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.gui.swing.action.FindTextAction;
@@ -919,5 +930,173 @@ public class MediaWikiPane
       }
     }
     return possibleFonts;
+  }
+
+  // =========================================================================
+  // Complex Pane management
+  // =========================================================================
+
+  private JSplitPane splitPane;
+  private JTree treeToc;
+  private TitleTreeNode rootToc;
+  private boolean tocIsDisplayed;
+
+  /**
+   * A tree node for titles. 
+   */
+  private static class TitleTreeNode extends DefaultMutableTreeNode {
+
+    private static final long serialVersionUID = 1L;
+
+    private final PageElementTitle title;
+
+    /**
+     * @param title Title.
+     */
+    public TitleTreeNode(PageElementTitle title) {
+      super((title != null) ? title : "Page");
+      this.title = title;
+    }
+
+    /**
+     * @return Title level.
+     */
+    public int getTitleLevel() {
+      if (title != null) {
+        return title.getFirstLevel();
+      }
+      return 0;
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.tree.DefaultMutableTreeNode#getAllowsChildren()
+     */
+    @Override
+    public boolean getAllowsChildren() {
+      return true;
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.tree.DefaultMutableTreeNode#toString()
+     */
+    @Override
+    public String toString() {
+      return (title != null) ? title.getTitle() : super.toString();
+    }
+  }
+
+  /**
+   * Construct a complex MediaWikiPane.
+   * 
+   * @param textPane Existing MediaWikiPane.
+   * @return Complex component containing a MediaWikiPane.
+   */
+  public static JComponent createComplexPane(
+      MediaWikiPane textPane) {
+    if (textPane == null) {
+      return null;
+    }
+    if (textPane.splitPane != null) {
+      return textPane.splitPane;
+    }
+
+    // Text pane
+    JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+    JScrollPane scrollContents = new JScrollPane(textPane);
+    scrollContents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    splitPane.setBottomComponent(scrollContents);
+
+    // Table of contents
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridheight = 1;
+    constraints.gridwidth = 1;
+    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.insets = new Insets(0, 0, 0, 0);
+    constraints.ipadx = 0;
+    constraints.ipady = 0;
+    constraints.weightx = 1;
+    constraints.weighty = 1;
+    JPanel panelTOC = new JPanel(new GridBagLayout());
+    TitleTreeNode rootToc = new TitleTreeNode(null);
+    JTree treeToc = new JTree(rootToc);
+    treeToc.setShowsRootHandles(true);
+    constraints.fill = GridBagConstraints.BOTH;
+    panelTOC.add(treeToc, constraints);
+    constraints.gridx++;
+    splitPane.setTopComponent(panelTOC);
+
+    // Configure split pane
+    splitPane.setDividerSize(0);
+    splitPane.setDividerLocation(0);
+    splitPane.setResizeWeight(0.0);
+    textPane.splitPane = splitPane;
+    textPane.treeToc = treeToc;
+    textPane.rootToc = rootToc;
+
+    return splitPane;
+  }
+
+  /**
+   * Display or hide Table of Contents.
+   */
+  public void toggleToc() {
+    if (tocIsDisplayed) {
+      hideToc();
+    } else {
+      displayToc();
+    }
+  }
+
+  /**
+   * Display Table of Contents.
+   */
+  public void displayToc() {
+    if (splitPane == null) {
+      return;
+    }
+    if (!tocIsDisplayed) {
+      rootToc.removeAllChildren();
+      treeToc.setRootVisible(true);
+      String contents = getText();
+      int currentIndex = 0;
+      TitleTreeNode lastNode = rootToc;
+      while ((currentIndex < contents.length())) {
+        PageElementTitle title = PageContents.findNextTitle(page, contents, currentIndex);
+        if (title == null) {
+          currentIndex = contents.length();
+        } else {
+          while ((lastNode != null) &&
+                 (lastNode.getTitleLevel() >= title.getFirstLevel())) {
+            lastNode = (TitleTreeNode) lastNode.getParent();
+          }
+          if (lastNode == null) {
+            lastNode = rootToc;
+          }
+          TitleTreeNode tmpNode = new TitleTreeNode(title);
+          lastNode.add(tmpNode);
+          lastNode = tmpNode;
+          currentIndex = title.getEndIndex();
+        }
+      }
+      treeToc.expandRow(0);
+      treeToc.setRootVisible(false);
+      tocIsDisplayed = true;
+    }
+    splitPane.setDividerLocation(200);
+    splitPane.setDividerSize(2);
+  }
+
+  /**
+   * Hide Table of Contents.
+   */
+  public void hideToc() {
+    if (splitPane == null) {
+      return;
+    }
+    tocIsDisplayed = false;
+    splitPane.setDividerLocation(0);
+    splitPane.setDividerSize(0);
   }
 }

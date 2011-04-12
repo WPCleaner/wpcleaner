@@ -102,6 +102,7 @@ public class AnalysisWindow extends PageWindow {
   private JButton buttonPrevious;
   private JButton buttonNext;
   private JButton buttonLast;
+  private JButton buttonToc;
   private JButton buttonValidate;
 
   JList listLinks;
@@ -232,6 +233,7 @@ public class AnalysisWindow extends PageWindow {
     buttonPrevious.setEnabled(isPageLoaded());
     buttonNext.setEnabled(isPageLoaded());
     buttonLast.setEnabled(isPageLoaded());
+    buttonToc.setEnabled(isPageLoaded());
     buttonValidate.setEnabled(isPageLoaded());
     buttonDisambiguationWarning.setEnabled(article);
     super.updateComponentState();
@@ -362,6 +364,8 @@ public class AnalysisWindow extends PageWindow {
     toolbarButtons.add(buttonLast);
     toolbarButtons.addSeparator();
     addButtonUndoRedo(toolbarButtons, true);
+    buttonToc = createButtonToc(this, true);
+    toolbarButtons.add(buttonToc);
     buttonValidate = createButtonValidate(this, true);
     toolbarButtons.add(buttonValidate);
     addButtonSend(toolbarButtons, true);
