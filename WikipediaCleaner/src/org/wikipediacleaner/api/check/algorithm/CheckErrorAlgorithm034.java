@@ -21,6 +21,7 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 
 /**
@@ -38,6 +39,10 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
    */
   public boolean analyze(Page page, String contents, List<CheckErrorResult> errors) {
     if ((page == null) || (contents == null)) {
+      return false;
+    }
+    if ((page.getNamespace() != null) &&
+        (page.getNamespace().intValue() == Namespace.TEMPLATE)) {
       return false;
     }
     boolean result = false;
