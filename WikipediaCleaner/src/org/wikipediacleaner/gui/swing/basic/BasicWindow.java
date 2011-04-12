@@ -25,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -34,6 +35,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -42,10 +44,15 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public abstract class BasicWindow implements ActionListener {
 
+  static private ImageIcon icon;
   private JFrame parentComponent;
   private ProgressPanel glassPane;
   private Log log;
   private EnumWikipedia wikipedia;
+
+  static {
+    icon = Utilities.getImageIcon("commons-nuvola-web-broom.png", EnumImageSize.SMALL);
+  }
 
   /**
    * Constructor.
@@ -126,6 +133,9 @@ public abstract class BasicWindow implements ActionListener {
     frame.setDefaultCloseOperation(closeOperation);
     window.setParentComponent(frame);
     frame.setVersion(window.getVersion());
+    if (icon != null) {
+      frame.setIconImage(icon.getImage());
+    }
 
     // Menu Bar creation
     JMenuBar menuBar = window.createMenuBar();
