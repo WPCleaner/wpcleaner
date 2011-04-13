@@ -799,7 +799,8 @@ public class PageContents {
             int nextStartIndex = contents.indexOf("<", tmpIndex);
             if ((nextStartIndex < 0) || (endIndex < nextStartIndex)) {
               int infoTagEnd = endIndex + 1;
-              if (tag.equalsIgnoreCase(contents.substring(tmpIndex, tmpIndex + tag.length()))) {
+              if ((tmpIndex + tag.length() <= contents.length()) &&
+                  (tag.equalsIgnoreCase(contents.substring(tmpIndex, tmpIndex + tag.length())))) {
                 tmpIndex += tag.length();
                 if ((contents.charAt(tmpIndex) == ' ') ||
                     (contents.charAt(tmpIndex) == '>')) {
