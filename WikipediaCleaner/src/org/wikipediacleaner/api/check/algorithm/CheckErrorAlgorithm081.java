@@ -74,7 +74,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         if (ref != null) {
           startIndex = ref.getEndTagEndIndex() + 1;
           String reference = ref.getText();
-          if ((reference != null) && (!reference.isEmpty())) {
+          if ((reference != null) && (reference.length() > 0)) {
             PageElementTag previousRef = refs.get(reference);
             if (previousRef == null) {
               refs.put(reference, ref);

@@ -46,7 +46,7 @@ public class PageElementTag {
    */
   public static PageElementTag analyzeBlock(String tagName, String contents, int index) {
     // Verify arguments
-    if ((tagName == null) || (tagName.isEmpty()) || (contents == null)) {
+    if ((tagName == null) || (tagName.length() == 0) || (contents == null)) {
       return null;
     }
 
@@ -177,7 +177,7 @@ public class PageElementTag {
   private static boolean analyzeTagParameters(
       String parameters,
       List<String> parameterNames, List<String> parameterValues) {
-    if ((parameters == null) || (parameters.trim().isEmpty())) {
+    if ((parameters == null) || (parameters.trim().length() == 0)) {
       return true;
     }
     parameters = parameters.trim();
