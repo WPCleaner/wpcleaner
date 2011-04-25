@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-04-12 09:38+0200\n"
-"PO-Revision-Date: 2011-04-07 12:23+0000\n"
-"Last-Translator: Aiguanachein <Unknown>\n"
+"PO-Revision-Date: 2011-04-20 18:50+0000\n"
+"Last-Translator: Fitoschido <fitoschido@gmail.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-07 16:40+0000\n"
-"X-Generator: Launchpad (build 12757)\n"
+"X-Launchpad-Export-Date: 2011-04-24 23:56+0000\n"
+"X-Generator: Launchpad (build 12883)\n"
 "X-Poedit-Language: Spanish\n"
 
 #: org/wikipediacleaner/Version.java:37
@@ -28,8 +28,8 @@ msgid ""
 "WikiCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
-"La configuración de WikiCleaner está disponible en línea, visite la {0}"
-"Configuración de sistema{1}"
+"La configuración de WikiCleaner está disponible en línea, visite la "
+"{0}Configuración de sistema{1}"
 
 #: org/wikipediacleaner/Version.java:44
 #, java-format
@@ -155,13 +155,13 @@ msgid "Check language links"
 msgstr "Comprobar los enlaces de idiomas"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:100
-#, fuzzy, java-format
+#, java-format
 msgid "Replace using template {0}"
-msgstr "Buscar en plantillas"
+msgstr "Reemplazar usando plantilla {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:109
 msgid "What is the title of the page on this wiki ?"
-msgstr ""
+msgstr "¿Cuál es el título de la página en esta wiki?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:116
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:114
@@ -175,10 +175,15 @@ msgstr "Visor externo"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:144
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page name>|"
-"<param name for code of other language>|<param name for page name in other "
-"language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page "
+"name>|<param name for code of other language>|<param name for page name in "
+"other language>|<param name for displayed text>"
 msgstr ""
+"Se puede usar una plantilla en lugar del enlace a otro idioma. Debe "
+"especificarse así: <nombre de la plantilla>|<nombre del parámetro para el "
+"nombre local de la página>|<nombre del parámetro para el código de otro "
+"idioma>|<nombre del parámetro para el código de otro idioma>|<nombre del "
+"parámetro para el texto mostrado>"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:126
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:148
@@ -348,7 +353,8 @@ msgid "Link count"
 msgstr "Número de enlaces"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:375
-msgid "Add a warning on the talk page about the links to disambiguation pages"
+msgid ""
+"Add a warning on the talk page about the links to disambiguation pages"
 msgstr ""
 "Añadir una advertencia en la discusión acerca de los enlaces a páginas de "
 "desambiguación"
@@ -470,7 +476,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:106
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:634
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "En algunas proyectos de Wikipedia, podría requerir tener el permiso de bot "
 "para hacer esto."
@@ -492,8 +499,11 @@ msgid "Update existing disambiguation warning messages"
 msgstr "Actualizar mensajes de advertencia de desambiguación"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:205
-msgid "At what page do you wish to start updating the disambiguation warning ?"
+msgid ""
+"At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
+"¿A partir de cuál página desea comenzar a actualizar el aviso de "
+"desambiguación?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:247
 msgid "No errors available"
@@ -853,15 +863,15 @@ msgstr "¿&Ideas?... ¿Errores?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:485
 msgid "Save user name and password"
-msgstr ""
+msgstr "Guardar el nombre de usuario y contraseña"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:497
 msgid "Save user name only"
-msgstr ""
+msgstr "Guardar el nombre de usuario solamente"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:507
 msgid "Save none of them"
-msgstr ""
+msgstr "No guardar ninguno"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:541
 msgid "Page"
@@ -885,12 +895,12 @@ msgstr "Enlaces internos"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:614
 msgid "Category members"
-msgstr ""
+msgstr "Miembros de la categoría"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:623
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:212
 msgid "Update disambiguation warning"
-msgstr ""
+msgstr "Actualizar la advertencia de desambiguación"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:647
 msgid "Projects"
@@ -912,7 +922,7 @@ msgstr "Ayuda solicitada en..."
 #: org/wikipediacleaner/gui/swing/MainWindow.java:690
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1175
 msgid "All disambiguations pages"
-msgstr ""
+msgstr "Todas las páginas de desambiguación"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:699
 msgid "Local &Watch list"
@@ -997,6 +1007,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1035
 msgid "You must input a page name for updating the disambiguation warning"
 msgstr ""
+"Debe indicar un nombre de página para actualizar la advertencia de "
+"desambiguación"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1065
 msgid "You must input a page name for retrieving the list of internal links"
@@ -1010,13 +1022,16 @@ msgid "Internal links in {0}"
 msgstr "Enlaces internos en {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1087
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
+"Debe indicar un nombre de página para obtener la lista de miembros de "
+"categoría"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1098
 #, java-format
 msgid "Category members of {0}"
-msgstr ""
+msgstr "Miembros de la categoría {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1114
 msgid ""
@@ -1205,8 +1220,11 @@ msgstr ""
 "de nombres principal)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:489
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
+"Crear advertencia de desambiguación en la página de comentarios (en los "
+"espacios de nombres enciclopédicos)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:499
 msgid "Create disambiguation warning on talk page (in other namespaces)"
@@ -1221,8 +1239,11 @@ msgstr ""
 "Principal)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:519
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
+"Actualizar la advertencia de desambiguación en la página de comentarios (en "
+"espacios de nombres enciclopédicos)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:529
 msgid "Update disambiguation warning on talk page (in other namespaces)"
@@ -1346,7 +1367,7 @@ msgstr "Actualizar información de página (Alt + &U)"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:224
 msgid "Set page comments (Alt + &C)"
-msgstr ""
+msgstr "Activar comentarios en la página (Alt + &C)"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:230
 #: org/wikipediacleaner/gui/swing/PageWindow.java:662
@@ -1467,9 +1488,8 @@ msgstr "Rehacer"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:607
 #: org/wikipediacleaner/gui/swing/PageWindow.java:609
-#, fuzzy
 msgid "Table of Contents"
-msgstr "Final incorrecto de tabla"
+msgstr "Índice"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:628
 msgid "Validate (Alt + &V)"
@@ -1501,7 +1521,8 @@ msgstr "&Añadir una nota a la página de discusión"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:804
 msgid "Update disambiguation warning on talk page"
-msgstr "Actualizar la advertencia de desambiguación en la página de discusión"
+msgstr ""
+"Actualizar la advertencia de desambiguación en la página de discusión"
 
 #: org/wikipediacleaner/gui/swing/PageWindow.java:819
 msgid "Create disambiguation warning on talk page"
@@ -1874,19 +1895,16 @@ msgid "Search in templates"
 msgstr "Buscar en plantillas"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1358
-#, fuzzy
 msgid "Mark backlink as normal"
-msgstr "Número máximo de páginas enlazadas:"
+msgstr "Marcar retroenlace como normal"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1365
-#, fuzzy
 msgid "Mark backlink as needing help"
-msgstr "Marcar como ayuda necesaria"
+msgstr "Marcar retroenlace como necesitando ayuda"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1373
-#, fuzzy
 msgid "Remove mark on backlink"
-msgstr "Remover todos los enlaces"
+msgstr "Eliminar la marca del retroenlace"
 
 #: org/wikipediacleaner/gui/swing/component/PageListModel.java:343
 #, java-format
@@ -1920,6 +1938,8 @@ msgid ""
 "You have loaded the list of all disambiguation pages.\n"
 "Do you want to use it to speed up page analysis ?"
 msgstr ""
+"Ha cargado la lista de todas las páginas de desambiguación.\n"
+"¿Desea utilizarla para acelerar el ańalisis de página?"
 
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:59
 msgid "Getting random page"
@@ -1935,7 +1955,7 @@ msgstr "Error 'badtoken' detectado: Reintentando"
 
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:110
 msgid "Error 'readonly' detected: Waiting and retrying"
-msgstr ""
+msgstr "Error 'solo lectura' detectado: Esperando y reintentando"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:240
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:248
@@ -1955,7 +1975,7 @@ msgstr "Actualizando advertencia de desambiguación - {0}"
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:799
 #, java-format
 msgid "Removing disambiguation warning - {0}"
-msgstr ""
+msgstr "Quitando advertencia de desambiguación - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:117
 #, java-format
@@ -1972,6 +1992,8 @@ msgid ""
 "Analysis found {0} articles with disambiguation warning {1}.\n"
 "Do you want to update the disambiguation warnings ?"
 msgstr ""
+"El análisis encontró {0} artículos con advertencia de desambiguación {1}.\n"
+"¿Desea actualizar las advertencias de desambiguación?"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:178
 msgid "Retrieving disambiguation pages"
@@ -1985,6 +2007,10 @@ msgid ""
 "\n"
 "Error: {0}"
 msgstr ""
+"Ocurrió un error al actualizar los avisos de desambiguación. ¿Quiere "
+"continuar?\n"
+"\n"
+"Error: {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:241
 #, java-format
@@ -1993,6 +2019,9 @@ msgid ""
 "The disambiguation warning has been updated in {1} pages.\n"
 "It took {2} seconds."
 msgstr ""
+"Se han analizado los enlaces de desambiguación en {0} páginas.\n"
+"El aviso de desambiguación se ha actualizado en {1} páginas.\n"
+"Esto tomó {2} segundos."
 
 #: org/wikipediacleaner/utils/Configuration.java:376
 msgid ""
@@ -2003,6 +2032,12 @@ msgid ""
 "Wikipedia.\n"
 "What is your preferred Wikipedia ?"
 msgstr ""
+"Las opciones de Wikipedia Cleaner han cambiado para permitir preferencias "
+"distintas apra cada Wikipedia.\n"
+"Anteriormente, las opciones afectaban a todas las Wikipedias.\n"
+"Las opciones actuales se guardarán como las opciones de su Wikipedia "
+"preferida.\n"
+"¿Cuál es su Wikipedia preferida?"
 
 #~ msgid "Work"
 #~ msgstr "Trabajo"
@@ -2049,8 +2084,12 @@ msgstr ""
 #~ msgid "Reference duplication"
 #~ msgstr "Varias referencias iguales"
 
+#, java-format
 #~ msgid "Error n°{0} ({1}) - {2}"
 #~ msgstr "Error n°{0} ({1}) - {2}"
+
+#~ msgid "Table not correct end"
+#~ msgstr "Final incorrecto de tabla"
 
 #~ msgid "HTML text style element <b>"
 #~ msgstr "Elemento de estilo de texto HTML <b>"
@@ -2089,6 +2128,7 @@ msgstr ""
 #~ msgid "&Add page"
 #~ msgstr "&Agregar página"
 
+#, java-format
 #~ msgid "Replace parameter {0} with"
 #~ msgstr "Reemplazar parámetro {0} con"
 
@@ -2124,8 +2164,8 @@ msgstr ""
 #~ msgstr "Nuevas mejoras fueron agregadas al proyecto Check Wiki: pruébelas!"
 
 #~ msgid ""
-#~ "!NEW! - WikiCleaner configuration is now available online, check the "
-#~ "System configuration."
+#~ "!NEW! - WikiCleaner configuration is now available online, check the System "
+#~ "configuration."
 #~ msgstr ""
 #~ "¡Nuevo! La configuración de WikiCleaner esta disponible online, revise la "
 #~ "configuración del sistema."
@@ -2133,6 +2173,7 @@ msgstr ""
 #~ msgid "Warning for disambiguation links"
 #~ msgstr "Advertencia para los enlaces de desambiguación"
 
+#, java-format
 #~ msgid "Retrieving first section contents - {0}"
 #~ msgstr "Recuperando los contenidos de la primera sección - {0}"
 
