@@ -1133,9 +1133,12 @@ public class MenuCreator {
     List<Page> links = page.getLinksWithRedirect();
     if (Utilities.isDesktopSupported()) {
       if (((links != null) && (links.size() > 0)) || page.isRedirect()) {
-        int fixedBegin = 0;
-        int fixedEnd = 0;
+        int fixedBeginView = 0;
+        int fixedEndView = 0;
+        int fixedBeginHistory = 0;
+        int fixedEndHistory = 0;
         JMenu submenuView = new JMenu(GT._("External Viewer"));
+        JMenu submenuHistory = new JMenu(GT._("History"));
         Iterator<Page> iter = page.getRedirectIteratorWithPage();
         while (iter.hasNext()) {
           Page pageTmp = iter.next();
@@ -1144,14 +1147,22 @@ public class MenuCreator {
           action = new PageViewAction(pageTmp.getTitle(), wikipedia);
           menuItem.addActionListener(action);
           submenuView.add(menuItem);
-          fixedBegin++;
+          fixedBeginView++;
+          menuItem = new JMenuItem(pageTmp.getTitle());
+          updateFont(menuItem, pageTmp);
+          action = new PageViewAction(pageTmp.getTitle(), wikipedia, "history");
+          menuItem.addActionListener(action);
+          submenuHistory.add(menuItem);
+          fixedBeginHistory++;
         }
         if ((links != null) && (links.size() > 0)) {
-          fixedBegin += addSeparator(submenuView);
+          fixedBeginView += addSeparator(submenuView);
+          fixedBeginHistory += addSeparator(submenuHistory);
     
           for (Page p : links) {
             if (p.isRedirect()) {
-              JMenu submenuRedirect = new JMenu(p.getTitle());
+              JMenu submenuRedirectView = new JMenu(p.getTitle());
+              JMenu submenuRedirectHistory = new JMenu(p.getTitle());
               Iterator<Page> itPage = p.getRedirectIteratorWithPage();
               while (itPage.hasNext()) {
                 Page redirect = itPage.next();
@@ -1159,19 +1170,31 @@ public class MenuCreator {
                 updateFont(menuItem, redirect);
                 action = new PageViewAction(redirect.getTitle(), wikipedia);
                 menuItem.addActionListener(action);
-                submenuRedirect.add(menuItem);
+                submenuRedirectView.add(menuItem);
+                menuItem = new JMenuItem(redirect.getTitle());
+                updateFont(menuItem, redirect);
+                action = new PageViewAction(redirect.getTitle(), wikipedia, "history");
+                menuItem.addActionListener(action);
+                submenuRedirectHistory.add(menuItem);
               }
-              submenuView.add(submenuRedirect);
+              submenuView.add(submenuRedirectView);
+              submenuHistory.add(submenuRedirectHistory);
             } else {
               menuItem = new JMenuItem(p.getTitle());
               updateFont(menuItem, p);
               action = new PageViewAction(p.getTitle(), wikipedia);
               menuItem.addActionListener(action);
               submenuView.add(menuItem);
+              menuItem = new JMenuItem(p.getTitle());
+              updateFont(menuItem, p);
+              action = new PageViewAction(p.getTitle(), wikipedia, "history");
+              menuItem.addActionListener(action);
+              submenuHistory.add(menuItem);
             }
           }
 
-          fixedEnd += addSeparator(submenuView);
+          fixedEndView += addSeparator(submenuView);
+          fixedEndHistory += addSeparator(submenuHistory);
 
           iter = page.getRedirectIteratorWithPage();
           while (iter.hasNext()) {
@@ -1181,10 +1204,17 @@ public class MenuCreator {
             action = new PageViewAction(pageTmp.getTitle(), wikipedia);
             menuItem.addActionListener(action);
             submenuView.add(menuItem);
-            fixedEnd++;
+            fixedEndView++;
+            menuItem = new JMenuItem(pageTmp.getTitle());
+            updateFont(menuItem, pageTmp);
+            action = new PageViewAction(pageTmp.getTitle(), wikipedia, "history");
+            menuItem.addActionListener(action);
+            submenuHistory.add(menuItem);
+            fixedEndHistory++;
           }
         }
-        addSubmenu(popup, submenuView, fixedBegin, fixedEnd);
+        addSubmenu(popup, submenuView, fixedBeginView, fixedEndView);
+        addSubmenu(popup, submenuHistory, fixedBeginHistory, fixedEndHistory);
       } else {
         if ((page.getNamespace() != null) &&
             (page.getNamespace().intValue() == Namespace.TEMPLATE)) {
@@ -1193,6 +1223,15 @@ public class MenuCreator {
           menuItem = new JMenuItem(GT._("External Viewer"));
         }
         action = new PageViewAction(page.getTitle(), wikipedia);
+        menuItem.addActionListener(action);
+        popup.add(menuItem);
+        if ((page.getNamespace() != null) &&
+            (page.getNamespace().intValue() == Namespace.TEMPLATE)) {
+          menuItem = new JMenuItem(GT._("Template history"));
+        } else {
+          menuItem = new JMenuItem(GT._("History"));
+        }
+        action = new PageViewAction(page.getTitle(), wikipedia, "history");
         menuItem.addActionListener(action);
         popup.add(menuItem);
       }
