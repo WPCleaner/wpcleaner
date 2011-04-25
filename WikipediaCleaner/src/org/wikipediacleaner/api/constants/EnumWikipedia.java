@@ -202,7 +202,10 @@ public enum EnumWikipedia {
       WikiZh.orientation, WikiZh.configuration),
   COMMONS(WikiCommons.code, WikiCommons.name,
           WikiCommons.apiUrl, WikiCommons.indexUrl,
-          WikiCommons.orientation, WikiCommons.configuration);
+          WikiCommons.orientation, WikiCommons.configuration),
+  WIKIVERSITY_FR(WikiversityFr.code, WikiversityFr.name,
+                 WikiversityFr.apiUrl, WikiversityFr.indexUrl,
+                 WikiversityFr.orientation, WikiversityFr.configuration);
 
   private final String code;
   private final String title;
