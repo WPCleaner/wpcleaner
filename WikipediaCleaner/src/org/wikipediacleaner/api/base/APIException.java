@@ -18,7 +18,10 @@
 
 package org.wikipediacleaner.api.base;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
+import org.wikipediacleaner.api.impl.MediaWikiAPI;
 
 
 /**
@@ -100,5 +103,35 @@ public class APIException extends Exception {
    */
   public EnumQueryResult getQueryResult() {
     return EnumQueryResult.getEnumByCode(code);
+  }
+
+  /**
+   * @return Should we retry the call ?
+   */
+  public boolean shouldRetry() {
+    EnumQueryResult result = getQueryResult();
+    return (result != null) ? result.shouldRetry() : false;
+  }
+
+  /**
+   * @return Maximum number of retry attempts.
+   */
+  public int getMaxRetry() {
+    EnumQueryResult result = getQueryResult();
+    return (result != null) ? result.getMaxRetry() : 0;
+  }
+
+  /**
+   * Wait for retry.
+   */
+  public void waitForRetry() {
+    EnumQueryResult result = getQueryResult();
+    if (result != null) {
+      final Log log = LogFactory.getLog(MediaWikiAPI.class);
+      if (log != null) {
+        log.warn("Waiting after error '" + code + "'");
+      }
+      result.waitForRetry();
+    }
   }
 }

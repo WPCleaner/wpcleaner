@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
+import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.execution.BacklinksWRCallable;
@@ -205,39 +206,28 @@ public class MediaWiki extends MediaWikiController {
           if (!oldContents.equals(newContents)) {
             setText(GT._("Updating page {0}", page.getTitle()));
             count++;
-            try {
-              api.updatePage(
-                  wikipedia, page, newContents,
-                  wikipedia.createUpdatePageComment(comment, details.toString()),
-                  false);
-            } catch (APIException e) {
-              switch (e.getQueryResult()) {
-              case BAD_TOKEN:
-                // Bad Token : Retrieve contents and try again
-                api.retrieveContents(wikipedia, page, false);
+            int attemptNumber = 0;
+            boolean attemptDone = true;
+            do {
+              try {
+                attemptNumber++;
                 api.updatePage(
                     wikipedia, page, newContents,
                     wikipedia.createUpdatePageComment(comment, details.toString()),
                     false);
-                break;
-
-              case READ_ONLY:
-                // Read Only : Wait a few seconds before retrying
-                try {
-                  Thread.sleep(10000);
-                } catch (InterruptedException e1) {
-                  // Nothing to do 
+              } catch (APIException e) {
+                if ((e.getQueryResult() == EnumQueryResult.BAD_TOKEN) && (attemptNumber < 2)) {
+                  // Bad Token : Retrieve contents and try again
+                  setText(GT._(
+                      "Error {0} detected: Waiting and retrying",
+                      "'" + e.getErrorCode() + "'"));
+                  attemptDone = false;
+                  api.retrieveContents(wikipedia, page, false);
+                } else {
+                  throw e;
                 }
-                api.updatePage(
-                    wikipedia, page, newContents,
-                    wikipedia.createUpdatePageComment(comment, details.toString()),
-                    false);
-                break;
-
-              default:
-                throw e;
               }
-            }
+            } while (!attemptDone);
           }
         }
       }
