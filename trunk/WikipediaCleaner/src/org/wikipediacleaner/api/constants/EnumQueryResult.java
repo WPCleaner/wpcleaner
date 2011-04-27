@@ -136,7 +136,11 @@ public enum EnumQueryResult {
                         "Pages in the Special namespace can't be edited"),
   WRITE_API_DENIED     ("WriteApiDenied",
                         "You're not allowed to edit this wiki through the API"),
-  
+
+  INTERNAL_DBCONNECTION("Internal_API_Error_DBConnectionError",
+                        "Internal API Error: DB Connection Error",
+                        2, 60),
+
   UNKNOWN_ERROR        ("UnknownError",
                         "Unknown error");
 
