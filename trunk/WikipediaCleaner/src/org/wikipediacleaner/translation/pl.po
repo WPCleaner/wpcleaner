@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-04-25 03:46+0200\n"
+"POT-Creation-Date: 2011-04-26 22:11+0200\n"
 "PO-Revision-Date: 2011-04-21 21:01+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -37,15 +37,21 @@ msgstr ""
 msgid "Please, report any other problem you find to me."
 msgstr ""
 
-#: org/wikipediacleaner/api/MediaWiki.java:181
+#: org/wikipediacleaner/api/MediaWiki.java:182
 #, java-format
 msgid "Page {0}:"
 msgstr "Strona {0}:"
 
-#: org/wikipediacleaner/api/MediaWiki.java:206
+#: org/wikipediacleaner/api/MediaWiki.java:207
 #, java-format
 msgid "Updating page {0}"
 msgstr "Aktualizowanie strony {0}"
+
+#: org/wikipediacleaner/api/MediaWiki.java:220
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:97
+#, fuzzy, java-format
+msgid "Error {0} detected: Waiting and retrying"
+msgstr "Wykryto błąd 'badtoken': ponowna próba"
 
 #: org/wikipediacleaner/api/check/CheckError.java:224
 #, java-format
@@ -1047,7 +1053,7 @@ msgstr "Ile stron mam wybrać losowo?"
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:69
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:57
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:80
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:81
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:107
 msgid "Retrieving MediaWiki API"
 msgstr "Pobieranie API MediaWiki"
@@ -1924,14 +1930,6 @@ msgstr "Pobieranie losowej strony"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:86
 msgid "Updating page contents"
 msgstr "Odświeżanie zawartości strony"
-
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:96
-msgid "Error 'badtoken' detected: Retrying"
-msgstr "Wykryto błąd 'badtoken': ponowna próba"
-
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:110
-msgid "Error 'readonly' detected: Waiting and retrying"
-msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:240
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:248

@@ -115,9 +115,11 @@ public enum EnumQueryResult {
   PROTECTED_TITLE      ("ProtectedTitle",
                         "This title has been protected from creation"),
   RATE_LIMITED         ("RateLimited",
-                        "You've exceeded your rate limit. Please wait some time and try again"),
+                        "You've exceeded your rate limit. Please wait some time and try again",
+                        2, 30),
   READ_ONLY            ("ReadOnly",
-                        "The wiki is currently in read-only mode"),
+                        "The wiki is currently in read-only mode",
+                        2, 30),
   REV_WRONG_PAGE       ("RevWrongPage",
                         "rrevid is not a revision of pagename"),
   RV_NO_SUCH_SECTION   ("RvNoSuchSection",
@@ -140,13 +142,34 @@ public enum EnumQueryResult {
 
   private final String code;
   private final String text;
+  private final boolean shouldRetry;
+  private final int maxRetry;
+  private final long delayRetry;
 
   /**
-   * @param text Associated text
+   * @param code Code of the result.
+   * @param text Associated text.
    */
   EnumQueryResult(String code, String text) {
     this.code = code;
     this.text = text;
+    this.shouldRetry = false;
+    this.maxRetry = 0;
+    this.delayRetry = 0;
+  }
+
+  /**
+   * @param code Code of the result.
+   * @param text Associated text.
+   * @param maxRetry Maximum number of retry attempts.
+   * @param delayRetry Number of seconds to wait before next attempt.
+   */
+  EnumQueryResult(String code, String text, int maxRetry, int delayRetry) {
+    this.code = code;
+    this.text = text;
+    this.shouldRetry = true;
+    this.maxRetry = maxRetry;
+    this.delayRetry = ((long) delayRetry) * 1000;
   }
 
   /**
@@ -176,5 +199,40 @@ public enum EnumQueryResult {
    */
   public String getText() {
     return text;
+  }
+
+  /**
+   * @return Should we retry the call ?
+   */
+  public boolean shouldRetry() {
+    return shouldRetry;
+  }
+
+  /**
+   * @return Maximum number of retry attempts.
+   */
+  public int getMaxRetry() {
+    return maxRetry;
+  }
+
+  /**
+   * Wait for retry.
+   */
+  public void waitForRetry() {
+    if (delayRetry <= 0) {
+      return;
+    }
+    long endWait = System.currentTimeMillis() + delayRetry;
+    for (;;) {
+      long currentTime = System.currentTimeMillis();
+      if (currentTime >= endWait) {
+        return;
+      }
+      try {
+        Thread.sleep(endWait - currentTime);
+      } catch (InterruptedException e) {
+        // Try again
+      }
+    }
   }
 }

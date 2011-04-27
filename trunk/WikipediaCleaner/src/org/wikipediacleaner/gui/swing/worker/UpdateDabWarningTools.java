@@ -29,6 +29,7 @@ import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
+import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -852,21 +853,15 @@ public class UpdateDabWarningTools {
       Page page,
       String newContents, String comment,
       boolean forceWatch) throws APIException {
-    try {
-      return api.updatePage(wikipedia, page, newContents, comment, forceWatch);
-    } catch (APIException e) {
-      switch (e.getQueryResult()) {
-      case READ_ONLY:
-        // Read Only : Wait a few seconds before retrying
-        try {
-          Thread.sleep(10000);
-        } catch (InterruptedException e1) {
-          // Nothing to do
-        }
+    int attemptNumber = 0;
+    for (;;) {
+      try {
+        attemptNumber++;
         return api.updatePage(wikipedia, page, newContents, comment, forceWatch);
-
-      default:
-        throw e;
+      } catch (APIException e) {
+        if ((e.getQueryResult() != EnumQueryResult.BAD_TOKEN) || (attemptNumber > 1)) {
+          throw e;
+        }
       }
     }
   }
@@ -885,21 +880,15 @@ public class UpdateDabWarningTools {
   private QueryResult updateSection(
       Page page, String title, int section,
       String contents, boolean forceWatch) throws APIException {
-    try {
-      return api.updateSection(wikipedia, page, title, section, contents, forceWatch);
-    } catch (APIException e) {
-      switch (e.getQueryResult()) {
-      case READ_ONLY:
-        // Read Only : Wait a few seconds before retrying
-        try {
-          Thread.sleep(10000);
-        } catch (InterruptedException e1) {
-          // Nothing to do
-        }
+    int attemptNumber = 0;
+    for (;;) {
+      try {
+        attemptNumber++;
         return api.updateSection(wikipedia, page, title, section, contents, forceWatch);
-
-      default:
-        throw e;
+      } catch (APIException e) {
+        if ((e.getQueryResult() != EnumQueryResult.BAD_TOKEN) || (attemptNumber > 1)) {
+          throw e;
+        }
       }
     }
   }

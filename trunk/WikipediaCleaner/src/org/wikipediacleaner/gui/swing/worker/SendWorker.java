@@ -24,6 +24,7 @@ import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
@@ -82,50 +83,31 @@ public class SendWorker extends BasicWorker {
 
     // Updating page contents
     QueryResult queryResult = null;
-    try {
-      setText(GT._("Updating page contents"));
-      queryResult = api.updatePage(
-          getWikipedia(), page, text,
-          getWikipedia().createUpdatePageComment(comment, null),
-          forceWatch);
-    } catch (APIException e) {
-      switch (e.getQueryResult()) {
-      case BAD_TOKEN:
-        // Bad Token : Retrieve contents and try again
-        try {
-          setText(GT._("Error 'badtoken' detected: Retrying"));
-          api.retrieveContents(getWikipedia(), page, false);
-          queryResult = api.updatePage(
-              getWikipedia(), page, text,
-              getWikipedia().createUpdatePageComment(comment, null),
-              forceWatch);
-        } catch (APIException e2) {
-          return e2;
-        }
-        break;
-
-      case READ_ONLY:
-        // Read Only : Wait a few seconds before retrying
-        try {
-          setText(GT._("Error 'readonly' detected: Waiting and retrying"));
+    setText(GT._("Updating page contents"));
+    int attemptNumber = 0;
+    do {
+      try {
+        attemptNumber++;
+        queryResult = api.updatePage(
+            getWikipedia(), page, text,
+            getWikipedia().createUpdatePageComment(comment, null),
+            forceWatch);
+      } catch (APIException e) {
+        if ((e.getQueryResult() == EnumQueryResult.BAD_TOKEN) && (attemptNumber < 2)) {
+          // Bad Token : Retrieve contents and try again
+          setText(GT._(
+              "Error {0} detected: Waiting and retrying",
+              "'" + e.getErrorCode() + "'"));
           try {
-            Thread.sleep(10000);
-          } catch (InterruptedException e1) {
-            // Nothing to do 
+            api.retrieveContents(getWikipedia(), page, false);
+          } catch (APIException e2) {
+            return e;
           }
-          queryResult = api.updatePage(
-              getWikipedia(), page, text,
-              getWikipedia().createUpdatePageComment(comment, null),
-              forceWatch);
-        } catch (APIException e2) {
-          return e2;
+        } else {
+          return e;
         }
-        break;
-
-      default:
-        return e;
       }
-    }
+    } while (queryResult == null);
 
     // Updating disambiguation warning
     if (updateWarning) {

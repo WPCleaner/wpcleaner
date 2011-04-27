@@ -35,6 +35,7 @@ import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpConnectionManager;
 import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.NameValuePair;
@@ -1927,57 +1928,26 @@ public class MediaWikiAPI implements API {
       int                 maxTry)
       throws JDOMParseException, APIException {
     Element root = null;
-    PostMethod method = null;
+    HttpMethod method = null;
     int attempt = 0;
-    do {
-      attempt++;
+    for (;;) {
       try {
-        try {
-          String url = wikipedia.getApiURL();
-          StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder(url) : null;
-          method = new PostMethod(url);
-          method.getParams().setContentCharset("UTF-8");
-          method.setRequestHeader("Accept-Encoding", "gzip");
-          if (properties != null) {
-            boolean first = true;
-            Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();
-            while (iter.hasNext()) {
-              Map.Entry<String, String> property = iter.next();
-              String key = property.getKey();
-              String value = property.getValue();
-              method.addParameter(key, value);
-              if (DEBUG_URL) {
-                int start = 0;
-                while ((start < value.length()) && Character.isWhitespace(value.charAt(start))) {
-                  start++;
-                }
-                if (value.indexOf('\n', start) > 0) {
-                  value = value.substring(start, value.indexOf('\n', start)) + "...";
-                }
-                debugUrl.append(
-                    (first ? "?" : "&") +
-                    key + "=" +
-                    ("lgpassword".equals(key) ? "XXXXX" : value));
-                first = false;
-              }
-            }
-            if (DEBUG_URL) {
-              debugText(debugUrl.toString());
-            }
+        attempt++;
+        method = createHttpMethod(wikipedia, properties);
+        int statusCode = httpClient.executeMethod(method);
+        if (statusCode != HttpStatus.SC_OK) {
+          String message = "URL access returned " + HttpStatus.getStatusText(statusCode);
+          log.error(message);
+          if (attempt > maxTry) {
+            log.warn("Error. Maximum attempts count reached.");
+            throw new APIException(message);
           }
-          if (lgtoken != null) {
-            method.addParameter("lgtoken", lgtoken);
+          try {
+            Thread.sleep(30000);
+          } catch (InterruptedException e) {
+            // Nothing
           }
-          if (lgusername != null) {
-            method.addParameter("lgusername", lgusername);
-          }
-          if (lguserid != null) {
-            method.addParameter("lguserid", lguserid);
-          }
-          int statusCode = httpClient.executeMethod(method);
-          if (statusCode != HttpStatus.SC_OK) {
-            throw new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
-          }
+        } else {
           InputStream stream = method.getResponseBodyAsStream();
           stream = new BufferedInputStream(stream);
           Header contentEncoding = method.getResponseHeader("Content-Encoding");
@@ -1992,36 +1962,111 @@ public class MediaWikiAPI implements API {
           root = document.getRootElement();
           checkForError(root);
           return root;
-        } catch (JDOMParseException e) {
-          // NOTE: to deal with api.php login action being disabled.
-          log.error("JDOMParseException: " + e.getMessage());
-          throw e;
-        } catch (JDOMException e) {
-          log.error("JDOMException: " + e.getMessage());
-          throw new APIException("Error parsing XML result", e);
-        } catch (IOException e) {
-          log.error("IOException: " + e.getMessage());
-          throw new APIException("Error accessing MediaWiki", e);
-        } finally {
-          //if (method != null) {
-            method.releaseConnection();
-          //}
         }
       } catch (JDOMParseException e) {
-        if (attempt >= maxTry) {
-          log.warn("Error. Maximum attemps count reached.");
+        // NOTE: to deal with api.php login action being disabled.
+        String message = "JDOMParseException: " + e.getMessage();
+        log.error(message);
+        if (attempt > maxTry) {
+          log.warn("Error. Maximum attempts count reached.");
           throw e;
         }
-        log.warn("Error. Trying again");
+        try {
+          Thread.sleep(30000);
+        } catch (InterruptedException e2) {
+          // Nothing
+        }
+      } catch (JDOMException e) {
+        String message = "JDOMException: " + e.getMessage();
+        log.error(message);
+        if (attempt > maxTry) {
+          log.warn("Error. Maximum attempts count reached.");
+          throw new APIException("Error parsing XML result", e);
+        }
+        try {
+          Thread.sleep(30000);
+        } catch (InterruptedException e2) {
+          // Nothing
+        }
+      } catch (IOException e) {
+        String message = "IOException: " + e.getMessage();
+        log.error(message);
+        if (attempt > maxTry) {
+          log.warn("Error. Maximum attempts count reached.");
+          throw new APIException("Error accessing MediaWiki", e);
+        }
+        try {
+          Thread.sleep(30000);
+        } catch (InterruptedException e2) {
+          // Nothing
+        }
       } catch (APIException e) {
-        if (attempt >= maxTry) {
-          log.warn("Error. Maximum attemps count reached.");
+        if (!e.shouldRetry() || (attempt > e.getMaxRetry())) {
           throw e;
         }
-        log.warn("Error. Trying again");
+        e.waitForRetry();
+      } finally {
+        if (method != null) {
+          method.releaseConnection();
+        }
       }
-    } while (attempt < maxTry);
-    return root;
+      log.warn("Error. Trying again");
+    }
+  }
+
+  /**
+   * Create an HttpMethod.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param properties Properties to drive the API.
+   * @return HttpMethod.
+   */
+  private HttpMethod createHttpMethod(
+      EnumWikipedia       wikipedia,
+      Map<String, String> properties) {
+    PostMethod method = null;
+    String url = wikipedia.getApiURL();
+    StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder(url) : null;
+    method = new PostMethod(url);
+    method.getParams().setContentCharset("UTF-8");
+    method.setRequestHeader("Accept-Encoding", "gzip");
+    if (properties != null) {
+      boolean first = true;
+      Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();
+      while (iter.hasNext()) {
+        Map.Entry<String, String> property = iter.next();
+        String key = property.getKey();
+        String value = property.getValue();
+        method.addParameter(key, value);
+        if (DEBUG_URL) {
+          int start = 0;
+          while ((start < value.length()) && Character.isWhitespace(value.charAt(start))) {
+            start++;
+          }
+          if (value.indexOf('\n', start) > 0) {
+            value = value.substring(start, value.indexOf('\n', start)) + "...";
+          }
+          debugUrl.append(
+              (first ? "?" : "&") +
+              key + "=" +
+              ("lgpassword".equals(key) ? "XXXXX" : value));
+          first = false;
+        }
+      }
+      if (DEBUG_URL) {
+        debugText(debugUrl.toString());
+      }
+    }
+    if (lgtoken != null) {
+      method.addParameter("lgtoken", lgtoken);
+    }
+    if (lgusername != null) {
+      method.addParameter("lgusername", lgusername);
+    }
+    if (lguserid != null) {
+      method.addParameter("lguserid", lguserid);
+    }
+    return method;
   }
 
   /**
