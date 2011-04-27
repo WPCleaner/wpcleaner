@@ -64,15 +64,65 @@ public class PageElementInternalLink {
     }
 
     // Find elements of internal link
+    int endIndex = -1;
+    int anchorIndex = -1;
+    int pipeIndex = -1;
+    int levelSquareBrackets = 0;
+    int levelCurlyBrackets = 0;
+    while ((tmpIndex < contents.length()) && (endIndex < 0)) {
+      switch (contents.charAt(tmpIndex)) {
+      case ']':
+        if (contents.startsWith("]]", tmpIndex)) {
+          if (levelSquareBrackets > 0) {
+            levelSquareBrackets--;
+          } else {
+            endIndex = tmpIndex;
+          }
+          tmpIndex++;
+        }
+        break;
+      case '[':
+        if (contents.startsWith("[[", tmpIndex)) {
+          levelSquareBrackets++;
+          tmpIndex++;
+        }
+        break;
+      case '{':
+        if (contents.startsWith("{{", tmpIndex)) {
+          levelCurlyBrackets++;
+          tmpIndex++;
+        }
+        break;
+      case '}':
+        if (contents.startsWith("}}", tmpIndex)) {
+          if (levelCurlyBrackets > 0) {
+            levelCurlyBrackets--;
+          }
+          tmpIndex++;
+        }
+        break;
+      case '#':
+        if ((levelSquareBrackets == 0) &&
+            (levelCurlyBrackets == 0) &&
+            (anchorIndex < 0)) {
+          anchorIndex = tmpIndex;
+        }
+        break;
+      case '|':
+        if ((levelSquareBrackets == 0) &&
+            (levelCurlyBrackets == 0) &&
+            (pipeIndex < 0)) {
+          pipeIndex = tmpIndex;
+        }
+      }
+      tmpIndex++;
+    }
     if (tmpIndex >= contents.length()) {
       return null;
     }
-    int endIndex = contents.indexOf("]]", tmpIndex);
     if (endIndex < 0) {
       return null;
     }
-    int anchorIndex = contents.indexOf('#', tmpIndex);
-    int pipeIndex = contents.indexOf('|', tmpIndex);
 
     // Create internal link
     if ((pipeIndex >= 0) && (pipeIndex < endIndex)) {
