@@ -23,7 +23,9 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageElementTitle;
 
 
 /**
@@ -52,70 +54,29 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
     if ((page == null) || (contents == null)) {
       return false;
     }
-    boolean result = false;
-    int startIndex = 0;
+    PageElementTitle firstTitle = PageContents.findNextTitle(page, contents, 0, comments);
+    if (firstTitle == null) {
+      return false;
+    }
+    if (firstTitle.getFirstLevel() < 3) {
+      return false;
+    }
+    int startIndex = firstTitle.getEndIndex();
     while (startIndex < contents.length()) {
-
-      // Find next =
-      int titleIndex = contents.indexOf("=", startIndex);
-      if (titleIndex < 0) {
+      PageElementTitle title = PageContents.findNextTitle(page, contents, startIndex, comments);
+      if (title == null) {
         startIndex = contents.length();
       } else {
-
-        // Check if the = is the beginning of a title
-        int endLineIndex = contents.indexOf("\n", titleIndex);
-        if ((titleIndex == 0) || (contents.charAt(titleIndex - 1) == '\n')) {
-          int titleLevel = 0;
-          int currentPos = titleIndex;
-          while ((currentPos < contents.length()) && (contents.charAt(currentPos) == '=')) {
-            currentPos++;
-            titleLevel++;
+        if (title.getFirstLevel() < 3) {
+          if (errors == null) {
+            return true;
           }
-          if (endLineIndex < 0) {
-            endLineIndex = contents.length();
-          }
-          if (titleLevel != 3) {
-            return false;
-          }
-
-          // The first title is at level 3, check if there's a lower title later
-          startIndex = endLineIndex + 1;
-          while (startIndex < contents.length()) {
-            int nextTitleIndex = contents.indexOf("=", startIndex);
-            if (nextTitleIndex < 0) {
-              startIndex = contents.length();
-            } else {
-              int nextEndLineIndex = contents.indexOf("\n", nextTitleIndex);
-              if (contents.charAt(nextTitleIndex - 1) == '\n') {
-                titleLevel = 0;
-                currentPos = nextTitleIndex;
-                while ((currentPos < contents.length()) && (contents.charAt(currentPos) == '=')) {
-                  currentPos++;
-                  titleLevel++;
-                }
-                if (nextEndLineIndex < 0) {
-                  nextEndLineIndex = contents.length();
-                }
-                if (titleLevel < 3) {
-                  if (errors == null) {
-                    return true;
-                  }
-                  result = true;
-                  errors.add(createCheckErrorResult(page, titleIndex, endLineIndex));
-                  return true;
-                }
-              }
-              startIndex = nextEndLineIndex + 1;
-            }
-          }
+          errors.add(createCheckErrorResult(page, firstTitle.getBeginIndex(), firstTitle.getEndIndex()));
+          return true;
         }
-        if (endLineIndex < 0) {
-          startIndex = contents.length();
-        } else {
-          startIndex = endLineIndex;
-        }
+        startIndex = title.getEndIndex();
       }
     }
-    return result;
+    return false;
   }
 }
