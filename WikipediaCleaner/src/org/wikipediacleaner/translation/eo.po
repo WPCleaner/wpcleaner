@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-01 11:11+0200\n"
+"POT-Creation-Date: 2011-05-01 12:42+0200\n"
 "PO-Revision-Date: 2010-06-02 20:44+0000\n"
 "Last-Translator: Michael MORONI <haikara90@gmail.com>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
@@ -112,7 +112,12 @@ msgstr ""
 msgid "Check category"
 msgstr "Kontrolu kategoriojn"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:125
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:112
+#, fuzzy
+msgid "Comment category out"
+msgstr "Kontrolu kategoriojn"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:128
 #, java-format
 msgid "The preferred name to use for replacing {0}"
 msgstr ""

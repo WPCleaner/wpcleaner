@@ -107,6 +107,9 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
                   ((category.getSort() != null) ? "|" + category.getSort() : "") + "]]");
             }
           }
+          errorResult.addReplacement(
+              "<!-- " + contents.substring(category.getBeginIndex(), category.getEndIndex()) + " -->",
+              GT._("Comment category out"));
           errors.add(errorResult);
         }
         startIndex = category.getEndIndex();
