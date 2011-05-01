@@ -51,7 +51,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Element;
 import javax.swing.text.MutableAttributeSet;
@@ -858,56 +857,34 @@ public class MediaWikiPane
    * @param position Position in the text.
    * @return Chapters.
    */
-  List<String> getChapterPosition(int position) {
-    List<String> chapters = null;
-    try {
-      int currentLevel = Integer.MAX_VALUE;
-      while ((position >= 0) && (currentLevel > 1)) {
+  List<PageElementTitle> getChapterPosition(int position) {
 
-        // Retrieving paragraph
-        Element paragraph = getStyledDocument().getParagraphElement(position);
-        int start = paragraph.getStartOffset();
-        int end = paragraph.getEndOffset();
-        position = start - 1;
+    // Retrieve current text
+    String contents = getText();
+    if (contents == null) {
+      return null;
+    }
 
-        // Analyzing text
-        String value = getText(start, end - start);
-        boolean falseComment = false;
-        while (((start = value.indexOf("<!--")) > 0) && !falseComment) {
-          //start = value.indexOf("<!--");
-          end = value.indexOf("-->", start + 4);
-          if ((start != -1) && (end != -1)) {
-            end += 3;
-            if (end < value.length() - 1) {
-              value = value.substring(0, start) + value.substring(end);
-            } else {
-              value = value.substring(0, start);
-            }
-          } else {
-            falseComment = true;
+    // Analyze text for comments
+    Collection<PageElementComment> comments = PageContents.findAllComments(page, contents);
+
+    // Analyze text for titles
+    List<PageElementTitle> chapters = new ArrayList<PageElementTitle>();
+    int startIndex = 0;
+    while ((startIndex < position) && (startIndex < contents.length())) {
+      PageElementTitle title = PageContents.findNextTitle(page, contents, startIndex, comments);
+      if (title == null) {
+        startIndex = contents.length();
+      } else {
+        if (title.getBeginIndex() < position) {
+          while (!chapters.isEmpty() &&
+                 (chapters.get(chapters.size() - 1).getFirstLevel() >= title.getFirstLevel())) {
+            chapters.remove(chapters.size() - 1);
           }
+          chapters.add(title);
         }
-        start = 0;
-        end = value.length() - 1;
-        while ((end > 0) && Character.isWhitespace(value.charAt(end))) {
-          end--;
-        }
-        int level = 0;
-        while ((start < end - 2) && (value.charAt(start) == '=') && (value.charAt(end) == '=')) {
-          level++;
-          start++;
-          end--;
-        }
-        if ((level > 0) && (level < currentLevel)) {
-          currentLevel = level;
-          if (chapters == null) {
-            chapters = new ArrayList<String>();
-          }
-          chapters.add(0, "" + (currentLevel - 1) + " - " + value.substring(start, end + 1).trim());
-        }
+        startIndex = title.getEndIndex();
       }
-    } catch (BadLocationException e) {
-      //
     }
     return chapters;
   }

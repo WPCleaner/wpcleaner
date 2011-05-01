@@ -45,6 +45,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.gui.swing.action.ChangePreferredDisambiguationAction;
 import org.wikipediacleaner.gui.swing.action.DisambiguationAnalysisAction;
@@ -214,11 +215,11 @@ public class MenuCreator {
       return;
     }
     MediaWikiPane pane = (MediaWikiPane) textPane;
-    List<String> chapters = pane.getChapterPosition(position);
+    List<PageElementTitle> chapters = pane.getChapterPosition(position);
     if ((chapters != null) && !chapters.isEmpty()) {
       JMenu submenu = new JMenu(GT._("Current chapter"));
-      for (String chapter : chapters) {
-        JMenuItem menuItem = new JMenuItem(chapter);
+      for (PageElementTitle chapter : chapters) {
+        JMenuItem menuItem = new JMenuItem(chapter.toString());
         menuItem.setEnabled(false);
         submenu.add(menuItem);
       }
