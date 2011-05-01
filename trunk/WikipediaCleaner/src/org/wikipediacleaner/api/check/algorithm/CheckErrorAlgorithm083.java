@@ -54,7 +54,8 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
     if ((page == null) || (contents == null)) {
       return false;
     }
-    PageElementTitle firstTitle = PageContents.findNextTitle(page, contents, 0, comments);
+    PageElementTitle firstTitle = PageContents.findNextTitle(
+        page.getWikipedia(), contents, 0, comments);
     if (firstTitle == null) {
       return false;
     }
@@ -63,7 +64,8 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
     }
     int startIndex = firstTitle.getEndIndex();
     while (startIndex < contents.length()) {
-      PageElementTitle title = PageContents.findNextTitle(page, contents, startIndex, comments);
+      PageElementTitle title = PageContents.findNextTitle(
+          page.getWikipedia(), contents, startIndex, comments);
       if (title == null) {
         startIndex = contents.length();
       } else {

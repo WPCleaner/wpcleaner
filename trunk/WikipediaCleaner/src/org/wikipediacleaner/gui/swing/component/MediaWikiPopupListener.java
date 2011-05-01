@@ -177,7 +177,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
         menuItem.setEnabled(false);
         popup.add(menuItem);
       }
-      MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
+      MenuCreator.addCurrentChapterToMenu(wikipedia, popup, position, textPane);
 
       popup.addSeparator();
       Page templatePage = DataManager.getPage(wikipedia, templateTitle, null, null);
@@ -253,7 +253,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
                 }
                 if (foundText.length() > 0) {
                   JPopupMenu popup = new JPopupMenu();
-                  MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
+                  MenuCreator.addCurrentChapterToMenu(wikipedia, popup, position, textPane);
                   MenuCreator.addViewToMenu(wikipedia, popup, foundText);
                   popup.show(textPane, x, y);
                   return;
@@ -265,7 +265,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
               }
               if (foundText.length() > 0) {
                 JPopupMenu popup = new JPopupMenu();
-                MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
+                MenuCreator.addCurrentChapterToMenu(wikipedia, popup, position, textPane);
                 MenuCreator.addViewToMenu(null, popup, foundText);
                 popup.show(textPane, x, y);
                 return;
@@ -303,7 +303,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
                 JMenuItem menuItem = new JMenuItem(templatePage.getTitle());
                 menuItem.setEnabled(false);
                 popup.add(menuItem);
-                MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
+                MenuCreator.addCurrentChapterToMenu(wikipedia, popup, position, textPane);
                 if (page != null) {
                   popup.add(new JSeparator());
                   MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
@@ -348,7 +348,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
     JMenuItem menuItem = new JMenuItem(page.getTitle());
     menuItem.setEnabled(false);
     popup.add(menuItem);
-    MenuCreator.addCurrentChapterToMenu(popup, textPane, position);
+    MenuCreator.addCurrentChapterToMenu(wikipedia, popup, position, textPane);
     popup.add(new JSeparator());
     MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
     MenuCreator.addViewToMenu(wikipedia, popup, page);

@@ -1358,7 +1358,7 @@ public abstract class PageWindow
     final List<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
     if ((initialErrors != null) && (initialErrors.size() > 0)) {
       String contents = getTextContents().getText();
-      Collection<PageElementComment> comments = PageContents.findAllComments(getPage(), contents);
+      Collection<PageElementComment> comments = PageContents.findAllComments(getWikipedia(), contents);
       for (CheckErrorPage initialError : initialErrors) {
         CheckError.analyzeError(initialError, contents, comments);
         if (initialError.getErrorFound() == false) {

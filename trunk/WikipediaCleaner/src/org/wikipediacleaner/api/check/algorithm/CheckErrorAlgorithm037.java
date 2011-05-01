@@ -146,7 +146,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
   public String fix(String fixName, Page page, String contents) {
     int index = contents.length();
     PageElementCategory category = PageContents.findNextCategory(
-        page, contents, 0, PageContents.findAllComments(page, contents));
+        page, contents, 0, PageContents.findAllComments(page.getWikipedia(), contents));
     if (category != null) {
       index = category.getBeginIndex();
     } else {

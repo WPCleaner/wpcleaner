@@ -61,7 +61,7 @@ public class CheckError {
       if (contents == null) {
         contents = page.getContents();
       }
-      Collection<PageElementComment> comments = PageContents.findAllComments(page, contents);
+      Collection<PageElementComment> comments = PageContents.findAllComments(page.getWikipedia(), contents);
       for (CheckErrorAlgorithm algorithm : algorithms) {
         if ((algorithm != null) &&
             (algorithm.isAvailable()) &&
@@ -95,7 +95,7 @@ public class CheckError {
           (errorPage.getAlgorithm().isAvailable()) &&
           (errorPage.getPage() != null)) {
         if (comments == null) {
-          comments = PageContents.findAllComments(errorPage.getPage(), contents);
+          comments = PageContents.findAllComments(errorPage.getPage().getWikipedia(), contents);
         }
         errorFound = errorPage.getAlgorithm().analyze(
             errorPage.getPage(), contents, comments, errorsFound);

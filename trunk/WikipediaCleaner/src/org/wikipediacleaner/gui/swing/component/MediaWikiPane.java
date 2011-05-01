@@ -466,6 +466,7 @@ public class MediaWikiPane
    * 
    * @param t New text.
    * @param resetModified Flag indicating if the modified flag should be reseted.
+   * @param validate Flag indicating if the text should be validated.
    */
   private void setTextModified(
       String t,
@@ -852,44 +853,6 @@ public class MediaWikiPane
   }
 
   /**
-   * Retrieve current chapter hierarchy.
-   * 
-   * @param position Position in the text.
-   * @return Chapters.
-   */
-  List<PageElementTitle> getChapterPosition(int position) {
-
-    // Retrieve current text
-    String contents = getText();
-    if (contents == null) {
-      return null;
-    }
-
-    // Analyze text for comments
-    Collection<PageElementComment> comments = PageContents.findAllComments(page, contents);
-
-    // Analyze text for titles
-    List<PageElementTitle> chapters = new ArrayList<PageElementTitle>();
-    int startIndex = 0;
-    while ((startIndex < position) && (startIndex < contents.length())) {
-      PageElementTitle title = PageContents.findNextTitle(page, contents, startIndex, comments);
-      if (title == null) {
-        startIndex = contents.length();
-      } else {
-        if (title.getBeginIndex() < position) {
-          while (!chapters.isEmpty() &&
-                 (chapters.get(chapters.size() - 1).getFirstLevel() >= title.getFirstLevel())) {
-            chapters.remove(chapters.size() - 1);
-          }
-          chapters.add(title);
-        }
-        startIndex = title.getEndIndex();
-      }
-    }
-    return chapters;
-  }
-
-  /**
    * @return Flag indicating if all the text can be displayed.
    */
   public boolean canDisplayAllText() {
@@ -1070,10 +1033,10 @@ public class MediaWikiPane
       int currentIndex = 0;
       TitleTreeNode rootNode = new TitleTreeNode(null);
       TitleTreeNode lastNode = rootNode;
-      Collection<PageElementComment> comments = PageContents.findAllComments(page, contents);
+      Collection<PageElementComment> comments = PageContents.findAllComments(wikipedia, contents);
       while ((currentIndex < contents.length())) {
         PageElementTitle title = PageContents.findNextTitle(
-            page, contents, currentIndex, comments);
+            wikipedia, contents, currentIndex, comments);
         if (title == null) {
           currentIndex = contents.length();
         } else {

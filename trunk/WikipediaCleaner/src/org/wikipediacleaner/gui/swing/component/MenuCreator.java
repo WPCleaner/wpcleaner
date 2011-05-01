@@ -44,6 +44,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.TemplateMatcher;
@@ -205,17 +206,21 @@ public class MenuCreator {
   /**
    * Add submenus for showing current chapter organization.
    * 
+   * @param wikipedia Wikipedia.
    * @param popup Popup menu.
-   * @param textPane Text pane (must be a {@link MediaWikiPane})
+   * @param page Page containing the text.
    * @param position Current position in text
+   * @param textPane Text pane
    */
   public static void addCurrentChapterToMenu(
-      JPopupMenu popup, JTextPane textPane, int position) {
-    if ((popup == null) || !(textPane instanceof MediaWikiPane)) {
+      EnumWikipedia wikipedia, JPopupMenu popup,
+      int position, JTextPane textPane) {
+    if ((popup == null) || (textPane == null)) {
       return;
     }
-    MediaWikiPane pane = (MediaWikiPane) textPane;
-    List<PageElementTitle> chapters = pane.getChapterPosition(position);
+    String contents = textPane.getText();
+    List<PageElementTitle> chapters = PageContents.getChapterPosition(
+        wikipedia, contents, position, PageContents.findAllComments(wikipedia, contents));
     if ((chapters != null) && !chapters.isEmpty()) {
       JMenu submenu = new JMenu(GT._("Current chapter"));
       for (PageElementTitle chapter : chapters) {
