@@ -80,19 +80,19 @@ public class PageContents {
   /**
    * Find all comments in the page contents.
    * 
-   * @param page Page.
+   * @param wikipedia Wikipedia.
    * @param contents Page contents (may be different from page.getContents()).
    * @return Comments found.
    */
   public static Collection<PageElementComment> findAllComments(
-      Page page, String contents) {
+      EnumWikipedia wikipedia, String contents) {
     if (contents == null) {
       return null;
     }
     Collection<PageElementComment> result = new ArrayList<PageElementComment>();
     int currentIndex = 0;
     while ((currentIndex < contents.length())) {
-      PageElementComment comment = findNextComment(page, contents, currentIndex);
+      PageElementComment comment = findNextComment(wikipedia, contents, currentIndex);
       if (comment == null) {
         currentIndex = contents.length();
       } else {
@@ -106,13 +106,13 @@ public class PageContents {
   /**
    * Find the first comment after an index in the page contents.
    * 
-   * @param page Page.
+   * @param wikipedia Wikipedia.
    * @param contents Page contents (may be different from page.getContents()).
    * @param currentIndex The last index.
    * @return Comment found.
    */
   public static PageElementComment findNextComment(
-      Page page, String contents,
+      EnumWikipedia wikipedia, String contents,
       int currentIndex) {
     if (contents == null) {
       return null;
@@ -123,7 +123,7 @@ public class PageContents {
         currentIndex = contents.length();
       } else {
         PageElementComment comment = PageElementComment.analyzeBlock(
-            page.getWikipedia(), contents, tmpIndex);
+            wikipedia, contents, tmpIndex);
         if (comment != null) {
           return comment;
         }
@@ -180,14 +180,14 @@ public class PageContents {
   /**
    * Find the first title after an index in the page contents.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param wikipedia Wikipedia.
+   * @param contents Page contents.
    * @param currentIndex Current index.
    * @param comments Comments blocks in the page.
    * @return Title found.
    */
   public static PageElementTitle findNextTitle(
-      Page page, String contents,
+      EnumWikipedia wikipedia, String contents,
       int currentIndex,
       Collection<PageElementComment> comments) {
     if (contents == null) {
@@ -201,7 +201,7 @@ public class PageContents {
         currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementTitle title = PageElementTitle.analyzeBlock(
-            page.getWikipedia(), contents, tmpIndex);
+            wikipedia, contents, tmpIndex);
         if (title != null) {
           return title;
         }
@@ -209,6 +209,45 @@ public class PageContents {
       }
     }
     return null;
+  }
+
+  /**
+   * Retrieve current chapter hierarchy.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param position Position in the text.
+   * @param comments Comments blocks in the page.
+   * @return Chapters.
+   */
+  public static List<PageElementTitle> getChapterPosition(
+      EnumWikipedia wikipedia, String contents,
+      int position,
+      Collection<PageElementComment> comments) {
+
+    if (contents == null) {
+      return null;
+    }
+
+    // Analyze text for titles
+    List<PageElementTitle> chapters = new ArrayList<PageElementTitle>();
+    int startIndex = 0;
+    while ((startIndex < position) && (startIndex < contents.length())) {
+      PageElementTitle title = findNextTitle(wikipedia, contents, startIndex, comments);
+      if (title == null) {
+        startIndex = contents.length();
+      } else {
+        if (title.getBeginIndex() < position) {
+          while (!chapters.isEmpty() &&
+                 (chapters.get(chapters.size() - 1).getFirstLevel() >= title.getFirstLevel())) {
+            chapters.remove(chapters.size() - 1);
+          }
+          chapters.add(title);
+        }
+        startIndex = title.getEndIndex();
+      }
+    }
+    return chapters;
   }
 
   // ==========================================================================

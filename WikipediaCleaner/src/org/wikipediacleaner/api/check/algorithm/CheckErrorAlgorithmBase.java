@@ -289,7 +289,8 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   public String fixUsingFirstReplacement(String fixName, Page page, String contents) {
     String result = contents;
-    Collection<PageElementComment> comments = PageContents.findAllComments(page, contents);
+    Collection<PageElementComment> comments = PageContents.findAllComments(
+        page.getWikipedia(), contents);
     List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
     if (analyze(page, contents, comments, errors)) {
       for (int i = errors.size(); i > 0; i--) {
@@ -317,7 +318,8 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   public String fixUsingRemove(String fixName, Page page, String contents) {
     String result = contents;
-    Collection<PageElementComment> comments = PageContents.findAllComments(page, contents);
+    Collection<PageElementComment> comments = PageContents.findAllComments(
+        page.getWikipedia(), contents);
     List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
     if (analyze(page, contents, comments, errors)) {
       for (int i = errors.size(); i > 0; i--) {

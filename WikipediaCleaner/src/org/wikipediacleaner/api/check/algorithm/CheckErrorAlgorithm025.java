@@ -57,7 +57,7 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
     int previousTitleLevel = -1;
     while (startIndex < contents.length()) {
       PageElementTitle title = PageContents.findNextTitle(
-          page, contents, startIndex, comments);
+          page.getWikipedia(), contents, startIndex, comments);
       if (title == null) {
         startIndex = contents.length();
       } else {
