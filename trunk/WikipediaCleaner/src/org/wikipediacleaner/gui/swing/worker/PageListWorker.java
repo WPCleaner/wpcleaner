@@ -86,17 +86,18 @@ public class PageListWorker extends BasicWorker {
     Object result = get();
     if (!(result instanceof Throwable)) {
       if (mode == Mode.ALL_DAB_PAGES) {
+        Set<String> set = new HashSet<String>(pageList.size());
+        for (Page page : pageList) {
+          set.add(page.getTitle());
+        }
+        getWikipedia().setDisambiguationPages(set);
         int answer = Utilities.displayYesNoWarning(
             (getWindow() != null) ? getWindow().getParentComponent() : null,
             GT._(
-                "You have loaded the list of all disambiguation pages.\n" +
-                "Do you want to use it to speed up page analysis ?"));
-        if (answer == JOptionPane.YES_OPTION) {
-          Set<String> set = new HashSet<String>(pageList.size());
-          for (Page page : pageList) {
-            set.add(page.getTitle());
-          }
-          getWikipedia().setDisambiguationPages(set);
+                "You have loaded the list of all disambiguation pages to speed up page analysis.\n" +
+                "Do you want to display the list of all disambiguation pages ?"));
+        if (answer != JOptionPane.YES_OPTION) {
+          return;
         }
       }
       PageListWindow.createPageListWindow(

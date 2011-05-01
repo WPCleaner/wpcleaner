@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-01 09:16+0200\n"
+"POT-Creation-Date: 2011-05-01 11:11+0200\n"
 "PO-Revision-Date: 2010-05-01 06:49+0000\n"
 "Last-Translator: Bundo <bundo@bundo.biz>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -888,23 +888,22 @@ msgid "Projects"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:665
+#, fuzzy
+msgid "Preload disambiguations pages"
+msgstr "페이지 사용량을 가져오는 중"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:674
 msgid "&Current Disambiguation List"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:674
+#: org/wikipediacleaner/gui/swing/MainWindow.java:683
 msgid "Project check wikipedia"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:681
+#: org/wikipediacleaner/gui/swing/MainWindow.java:690
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1155
 msgid "Help requested on..."
 msgstr ""
-
-#: org/wikipediacleaner/gui/swing/MainWindow.java:690
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1175
-#, fuzzy
-msgid "All disambiguations pages"
-msgstr "페이지 사용량을 가져오는 중"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:699
 msgid "Local &Watch list"
@@ -1011,6 +1010,11 @@ msgid ""
 "There's no known template for requesting help for the Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1175
+#, fuzzy
+msgid "All disambiguations pages"
+msgstr "페이지 사용량을 가져오는 중"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1191
 msgid ""
@@ -1875,10 +1879,11 @@ msgstr ""
 msgid "Adding comment"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:92
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:97
 msgid ""
-"You have loaded the list of all disambiguation pages.\n"
-"Do you want to use it to speed up page analysis ?"
+"You have loaded the list of all disambiguation pages to speed up page "
+"analysis.\n"
+"Do you want to display the list of all disambiguation pages ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:59

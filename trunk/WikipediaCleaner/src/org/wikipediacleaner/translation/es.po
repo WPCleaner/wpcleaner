@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-01 09:16+0200\n"
+"POT-Creation-Date: 2011-05-01 11:11+0200\n"
 "PO-Revision-Date: 2011-04-26 18:14+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -915,22 +915,22 @@ msgid "Projects"
 msgstr "Proyectos"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:665
+#, fuzzy
+msgid "Preload disambiguations pages"
+msgstr "Todas las páginas de desambiguación"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:674
 msgid "&Current Disambiguation List"
 msgstr "Lista a&ctual de desambiguación"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:674
+#: org/wikipediacleaner/gui/swing/MainWindow.java:683
 msgid "Project check wikipedia"
 msgstr "Proyecto Check Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:681
+#: org/wikipediacleaner/gui/swing/MainWindow.java:690
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1155
 msgid "Help requested on..."
 msgstr "Ayuda solicitada en..."
-
-#: org/wikipediacleaner/gui/swing/MainWindow.java:690
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1175
-msgid "All disambiguations pages"
-msgstr "Todas las páginas de desambiguación"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:699
 msgid "Local &Watch list"
@@ -1059,6 +1059,10 @@ msgid ""
 msgstr ""
 "No hay ninguna plantilla para solicitar ayuda para la Wikipedia.\n"
 "Puedes aprender cómo configurar WikiCleaner en la siguiente URL:"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1175
+msgid "All disambiguations pages"
+msgstr "Todas las páginas de desambiguación"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1191
 msgid ""
@@ -1946,10 +1950,12 @@ msgstr "Ayuda requerida en las páginas"
 msgid "Adding comment"
 msgstr "Agregar comentario"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:92
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:97
+#, fuzzy
 msgid ""
-"You have loaded the list of all disambiguation pages.\n"
-"Do you want to use it to speed up page analysis ?"
+"You have loaded the list of all disambiguation pages to speed up page "
+"analysis.\n"
+"Do you want to display the list of all disambiguation pages ?"
 msgstr ""
 "Ha cargado la lista de todas las páginas de desambiguación.\n"
 "¿Desea utilizarla para acelerar el ańalisis de página?"

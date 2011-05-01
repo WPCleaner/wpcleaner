@@ -659,6 +659,15 @@ public class MainWindow
     constraints.weightx = 1;
     constraints.weighty = 0;
 
+    // All disambiguation pages button
+    buttonAllDab = Utilities.createJButton(
+        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        GT._("Preload disambiguations pages"), true);
+    buttonAllDab.setActionCommand(ACTION_ALL_DAB);
+    buttonAllDab.addActionListener(this);
+    panel.add(buttonAllDab, constraints);
+    constraints.gridy++;
+
     // Current list button
     buttonCurrentList = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
@@ -682,15 +691,6 @@ public class MainWindow
     buttonHelpRequested.setActionCommand(ACTION_HELP_REQUESTED);
     buttonHelpRequested.addActionListener(this);
     panel.add(buttonHelpRequested, constraints);
-    constraints.gridy++;
-
-    // All disambiguation pages button
-    buttonAllDab = Utilities.createJButton(
-        "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("All disambiguations pages"), true);
-    buttonAllDab.setActionCommand(ACTION_ALL_DAB);
-    buttonAllDab.addActionListener(this);
-    panel.add(buttonAllDab, constraints);
     constraints.gridy++;
 
     // Watched pages button
