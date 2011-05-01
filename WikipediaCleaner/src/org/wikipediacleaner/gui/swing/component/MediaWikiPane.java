@@ -44,9 +44,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
+import javax.swing.JToolBar;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.TreeSelectionEvent;
@@ -61,6 +63,7 @@ import javax.swing.text.StyledDocument;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -76,6 +79,9 @@ import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.gui.swing.action.FindTextAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceLinkAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 
 
 /**
@@ -111,6 +117,7 @@ public class MediaWikiPane
   private static final KeyStroke lastReplaceKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK);
 
   private boolean isModified = false;
+  private boolean isEditable = true;
   boolean isInInternalModification = false;
 
   private transient MediaWikiPopupListener popupListener;
@@ -205,7 +212,7 @@ public class MediaWikiPane
     }
     undoTexts.removeLast();
     redoTexts.addLast(oldText);
-    setTextModified(newText, false, false);
+    setTextInternal(newText, false, false);
     updateUndoButtons();
   }
 
@@ -246,7 +253,7 @@ public class MediaWikiPane
     }
     redoTexts.removeLast();
     undoTexts.addLast(oldText);
-    setTextModified(newText, false, false);
+    setTextInternal(newText, false, false);
     updateUndoButtons();
   }
 
@@ -458,7 +465,7 @@ public class MediaWikiPane
    */
   @Override
   public void setText(String t) {
-    setTextModified(t, true, true);
+    setTextInternal(t, true, true);
   }
 
   /**
@@ -468,7 +475,7 @@ public class MediaWikiPane
    * @param resetModified Flag indicating if the modified flag should be reseted.
    * @param validate Flag indicating if the text should be validated.
    */
-  private void setTextModified(
+  private void setTextInternal(
       String t,
       boolean resetModified,
       boolean validate) {
@@ -488,6 +495,22 @@ public class MediaWikiPane
       validateCurrentText();
     }
   }
+
+  @Override
+  public void setEditable(boolean editable) {
+    setEditableInternal(editable);
+    this.isEditable = editable; 
+  }
+
+  /**
+   * Enabling to render this component editable or not temporarily.
+   * 
+   * @param editable
+   */
+  private void setEditableInternal(boolean editable) {
+    super.setEditable(editable);
+  }
+
 
   /**
    * Replace all links.
@@ -536,7 +559,7 @@ public class MediaWikiPane
       if (!text.equals(getText())) {
         setModified(true);
       }
-      setTextModified(text, false, false);
+      setTextInternal(text, false, false);
     }
   }
 
@@ -578,7 +601,7 @@ public class MediaWikiPane
       if (!text.equals(getText())) {
         setModified(true);
       }
-      setTextModified(text, false, false);
+      setTextInternal(text, false, false);
     }
   }
 
@@ -895,6 +918,7 @@ public class MediaWikiPane
     private static final long serialVersionUID = 1L;
 
     private final PageElementTitle title;
+    private int level;
 
     /**
      * @param title Title.
@@ -902,16 +926,38 @@ public class MediaWikiPane
     public TitleTreeNode(PageElementTitle title) {
       super((title != null) ? title : "Page");
       this.title = title;
+      this.level = (title != null) ? title.getFirstLevel() : 0;
     }
 
     /**
      * @return Title level.
      */
-    public int getTitleLevel() {
+    public int getInitialTitleLevel() {
       if (title != null) {
         return title.getFirstLevel();
       }
       return 0;
+    }
+
+    /**
+     * @return Title level.
+     */
+    public int getCurrentTitleLevel() {
+      return level;
+    }
+
+    /**
+     * @param level Title level.
+     */
+    public void setCurrentTitleLevel(int level) {
+      this.level = level;
+    }
+
+    /**
+     * @return Title.
+     */
+    public PageElementTitle getTitle() {
+      return title;
     }
 
     /* (non-Javadoc)
@@ -922,7 +968,149 @@ public class MediaWikiPane
       if (title == null) {
         return super.toString();
       }
-      return "(" + (title.getFirstLevel() - 1) + ") " + title.getTitle();
+      StringBuilder buffer = new StringBuilder();
+      buffer.append("(");
+      buffer.append(title.getFirstLevel() - 1);
+      if (title.getFirstLevel() != level) {
+        buffer.append(" -> ");
+        buffer.append(level - 1);
+      }
+      buffer.append(") ");
+      buffer.append(title.getTitle());
+      return buffer.toString();
+    }
+  }
+
+  /**
+   * A selection listener for the titles tree.
+   */
+  private static class TitleTreeSelectionListener implements TreeSelectionListener {
+
+    private final JTree treeToc;
+    private final MediaWikiPane textPane;
+
+    public TitleTreeSelectionListener(JTree treeToc, MediaWikiPane textPane) {
+      this.treeToc = treeToc;
+      this.textPane = textPane;
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event.TreeSelectionEvent)
+     */
+    public void valueChanged(@SuppressWarnings("unused") TreeSelectionEvent e) {
+      TitleTreeNode treeNode = (TitleTreeNode) treeToc.getLastSelectedPathComponent();
+      if (treeNode == null) {
+        return;
+      }
+      Object nodeInfo = treeNode.getUserObject();
+      if (nodeInfo instanceof PageElementTitle) {
+        PageElementTitle title = (PageElementTitle) nodeInfo;
+        try {
+          textPane.setCaretPosition(title.getBeginIndex());
+          textPane.moveCaretPosition(title.getEndIndex());
+        } catch (IllegalArgumentException e2) {
+          //
+        }
+        textPane.requestFocusInWindow();
+      }
+    }
+  }
+
+  /**
+   * An action listener for the titles tree.
+   */
+  private static class TitleTreeActionListener implements ActionListener {
+
+    private final JTree treeToc;
+    private final MediaWikiPane textPane;
+
+    /**
+     * @param treeToc Tree for the table of contents.
+     * @param textPane Text pane.
+     */
+    public TitleTreeActionListener(JTree treeToc, MediaWikiPane textPane) {
+      this.treeToc = treeToc;
+      this.textPane = textPane;
+    }
+
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e) {
+      if (treeToc == null) {
+        return;
+      }
+      TitleTreeNode treeNode = (TitleTreeNode) treeToc.getLastSelectedPathComponent();
+      if (treeNode == null) {
+        return;
+      }
+      if ("+".equals(e.getActionCommand())) {
+        changeTitleLevel(treeNode, 1);
+      } else if ("-".equals(e.getActionCommand())) {
+        changeTitleLevel(treeNode, -1);
+      } else if ("OK".equals(e.getActionCommand())) {
+        StringBuilder contents = new StringBuilder(textPane.getText());
+        applyChanges(contents, treeToc.getModel().getRoot());
+        textPane.setText(contents.toString());
+      }
+      treeToc.repaint();
+      textPane.requestFocusInWindow();
+    }
+
+    /**
+     * Change title level (including children).
+     * 
+     * @param treeNode Node.
+     * @param increment Increment.
+     */
+    private void changeTitleLevel(TitleTreeNode treeNode, int increment) {
+      if (treeNode.getCurrentTitleLevel() + increment > 0) {
+        treeNode.setCurrentTitleLevel(treeNode.getCurrentTitleLevel() + increment);
+        for (int i = 0; i < treeNode.getChildCount(); i++) {
+          TreeNode child = treeNode.getChildAt(i);
+          if (child instanceof TitleTreeNode) {
+            changeTitleLevel((TitleTreeNode) treeNode.getChildAt(i), increment);
+          }
+        }
+      }
+    }
+
+    /**
+     * Save changes to table of contents.
+     * 
+     * @param contents Contents.
+     * @param node Node.
+     */
+    private void applyChanges(StringBuilder contents, Object node) {
+      if ((contents == null) || (node == null)) {
+        return;
+      }
+      if (!(node instanceof TitleTreeNode)) {
+        return;
+      }
+      TitleTreeNode treeNode = (TitleTreeNode) node;
+      for (int i = treeNode.getChildCount(); i > 0; i--) {
+        applyChanges(contents, treeNode.getChildAt(i - 1));
+      }
+      if (treeNode.getCurrentTitleLevel() != treeNode.getInitialTitleLevel()) {
+        StringBuilder newTitle = new StringBuilder();
+        for (int i = 0; i < treeNode.getCurrentTitleLevel(); i++) {
+          newTitle.append("=");
+        }
+        newTitle.append(" ");
+        newTitle.append(treeNode.getTitle().getTitle());
+        newTitle.append(" ");
+        for (int i = 0; i <= treeNode.getCurrentTitleLevel(); i++) {
+          newTitle.append("=");
+        }
+        contents.replace(
+            treeNode.getTitle().getBeginIndex(),
+            treeNode.getTitle().getEndIndex(),
+            newTitle.toString());
+        textPane.hideToc();
+        textPane.resetAttributes();
+        textPane.requestFocusInWindow();
+      }
     }
   }
 
@@ -948,8 +1136,9 @@ public class MediaWikiPane
     splitPane.setBottomComponent(scrollContents);
 
     // Table of contents
+    JPanel panelTOC = new JPanel(new GridBagLayout());
     GridBagConstraints constraints = new GridBagConstraints();
-    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.fill = GridBagConstraints.BOTH;
     constraints.gridheight = 1;
     constraints.gridwidth = 1;
     constraints.gridx = 0;
@@ -959,10 +1148,39 @@ public class MediaWikiPane
     constraints.ipady = 0;
     constraints.weightx = 1;
     constraints.weighty = 1;
-    JPanel panelTOC = new JPanel(new GridBagLayout());
+
+    // Creations
     TitleTreeNode rootToc = new TitleTreeNode(null);
     DefaultTreeModel modelToc = new DefaultTreeModel(rootToc);
     final JTree treeToc = new JTree(modelToc);
+
+    // Toolbar
+    TitleTreeActionListener actionListener = new TitleTreeActionListener(treeToc, textPane);
+    JToolBar toolbarButtons = new JToolBar(SwingConstants.VERTICAL);
+    toolbarButtons.setFloatable(false);
+    JButton buttonLess = Utilities.createJButton(
+        "gnome-go-previous.png", EnumImageSize.NORMAL,
+        GT._("Decrement title level"), false);
+    buttonLess.setActionCommand("-");
+    buttonLess.addActionListener(actionListener);
+    toolbarButtons.add(buttonLess);
+    JButton buttonMore = Utilities.createJButton(
+        "gnome-go-next.png", EnumImageSize.NORMAL,
+        GT._("Increment title level"), false);
+    buttonMore.setActionCommand("+");
+    buttonMore.addActionListener(actionListener);
+    toolbarButtons.add(buttonMore);
+    JButton buttonDone = Utilities.createJButton(
+        "commons-approve-icon.png", EnumImageSize.NORMAL,
+        GT._("Validate the new table of contents"), false);
+    buttonDone.setActionCommand("OK");
+    buttonDone.addActionListener(actionListener);
+    toolbarButtons.add(buttonDone);
+    constraints.weightx = 0;
+    panelTOC.add(toolbarButtons, constraints);
+    constraints.gridx++;
+
+    // Tree
     treeToc.setRootVisible(false);
     treeToc.setShowsRootHandles(true);
     treeToc.getSelectionModel().setSelectionMode(
@@ -970,32 +1188,10 @@ public class MediaWikiPane
     DefaultTreeCellRenderer rendererToc = new DefaultTreeCellRenderer();
     rendererToc.setLeafIcon(rendererToc.getClosedIcon());
     treeToc.setCellRenderer(rendererToc);
-    treeToc.addTreeSelectionListener(new TreeSelectionListener() {
-      
-      /* (non-Javadoc)
-       * @see javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event.TreeSelectionEvent)
-       */
-      public void valueChanged(@SuppressWarnings("unused") TreeSelectionEvent e) {
-        TitleTreeNode treeNode = (TitleTreeNode) treeToc.getLastSelectedPathComponent();
-        if (treeNode == null) {
-          return;
-        }
-        Object nodeInfo = treeNode.getUserObject();
-        if (nodeInfo instanceof PageElementTitle) {
-          PageElementTitle title = (PageElementTitle) nodeInfo;
-          try {
-            textPane.setCaretPosition(title.getBeginIndex());
-            textPane.moveCaretPosition(title.getEndIndex());
-            textPane.requestFocusInWindow();
-          } catch (IllegalArgumentException e2) {
-            //
-          }
-        }
-      }
-    });
+    treeToc.addTreeSelectionListener(new TitleTreeSelectionListener(treeToc, textPane));
     JScrollPane scrollTree = new JScrollPane(treeToc);
     scrollTree.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-    constraints.fill = GridBagConstraints.BOTH;
+    constraints.weightx = 1;
     panelTOC.add(scrollTree, constraints);
     constraints.gridx++;
     splitPane.setTopComponent(panelTOC);
@@ -1041,7 +1237,7 @@ public class MediaWikiPane
           currentIndex = contents.length();
         } else {
           while ((lastNode != null) &&
-                 (lastNode.getTitleLevel() >= title.getFirstLevel())) {
+                 (lastNode.getInitialTitleLevel() >= title.getFirstLevel())) {
             if (lastNode.getParent() != null) {
               lastNode = (TitleTreeNode) lastNode.getParent();
             } else {
@@ -1062,6 +1258,7 @@ public class MediaWikiPane
     }
     splitPane.setDividerLocation(200);
     splitPane.setDividerSize(2);
+    setEditableInternal(false);
   }
 
   /**
@@ -1074,5 +1271,6 @@ public class MediaWikiPane
     tocIsDisplayed = false;
     splitPane.setDividerLocation(0);
     splitPane.setDividerSize(0);
+    setEditableInternal(isEditable);
   }
 }
