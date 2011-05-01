@@ -384,11 +384,13 @@ public class PageContents {
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
    * @param currentIndex The last index.
+   * @param comments Comments blocks in the page.
    * @return Category found.
    */
   public static PageElementCategory findNextCategory(
       Page page, String contents,
-      int currentIndex) {
+      int currentIndex,
+      Collection<PageElementComment> comments) {
     if (contents == null) {
       return null;
     }
@@ -396,6 +398,8 @@ public class PageContents {
       int tmpIndex = contents.indexOf("[[", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
+      } else if (isInComments(tmpIndex, comments)) {
+        currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementCategory category = PageElementCategory.analyzeBlock(
             page.getWikipedia(), contents, tmpIndex);

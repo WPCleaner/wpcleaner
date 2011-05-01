@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-04-26 22:11+0200\n"
+"POT-Creation-Date: 2011-05-01 09:16+0200\n"
 "PO-Revision-Date: 2010-05-01 07:19+0000\n"
 "Last-Translator: Iwan Novirion <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -47,8 +47,8 @@ msgstr "Halaman {0}:"
 msgid "Updating page {0}"
 msgstr "Perbarui isi halaman"
 
-#: org/wikipediacleaner/api/MediaWiki.java:220
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:97
+#: org/wikipediacleaner/api/MediaWiki.java:222
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:99
 #, fuzzy, java-format
 msgid "Error {0} detected: Waiting and retrying"
 msgstr "Galat 'badtoken' terdeteksi: Coba lagi"
@@ -110,8 +110,13 @@ msgstr ""
 msgid "Fix categories"
 msgstr "Perbaiki halaman yang dipilih"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:87
 msgid "Check category"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:125
+#, java-format
+msgid "The preferred name to use for replacing {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:127
@@ -1976,22 +1981,22 @@ msgstr "Halaman sembarang"
 msgid "Updating page contents"
 msgstr "Perbarui isi halaman"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:240
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:248
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:241
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:249
 #, fuzzy, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Kembalikan isi"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:364
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:471
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:664
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:365
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:472
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:665
 #, fuzzy, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Kembalikan templat disambiguasi"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:566
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:698
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:799
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:567
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:699
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:800
 #, fuzzy, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Kembalikan templat disambiguasi"

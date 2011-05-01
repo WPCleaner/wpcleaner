@@ -18,13 +18,18 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckCategoryLinkActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.i18n.GT;
 
@@ -55,99 +60,69 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Retrieve preferred category name
+    String preferredCategory = page.getWikipedia().getCheckWikiProperty("category", 21, true, false, false);
+
+    // Analyze the text from the begining
     int startIndex = 0;
     boolean result = false;
     Namespace categoryNamespace = Namespace.getNamespace(Namespace.CATEGORY, page.getWikipedia().getNamespaces());
     if (categoryNamespace == null) {
-      return result;
+      return false;
     }
     while (startIndex < contents.length()) {
-      if (contents.startsWith("[[", startIndex)) {
-        int beginIndex = startIndex;
-        int currentIndex = beginIndex + 2;
-
-        // Namespace
-        int linkIndex = currentIndex;
-        while ((currentIndex < contents.length()) &&
-               (contents.charAt(currentIndex) != ':') &&
-               (contents.charAt(currentIndex) != '|') &&
-               (contents.charAt(currentIndex) != ']') &&
-               (contents.charAt(currentIndex) != '[')) {
-          currentIndex++;
-        }
-
-        // Check if namespace is Category
-        if ((currentIndex < contents.length()) &&
-            (contents.charAt(currentIndex) == ':') &&
-            (categoryNamespace.isPossibleName(contents.substring(linkIndex, currentIndex).trim()))) {
-          String category = contents.substring(linkIndex, currentIndex);
-
-          // Link itself
-          currentIndex++;
-          linkIndex = currentIndex;
-          while ((currentIndex < contents.length()) &&
-                 (contents.charAt(currentIndex) != '|') &&
-                 (contents.charAt(currentIndex) != ']')) {
-            currentIndex++;
-          }
-
-          // Retrieve category name
-          String categoryName = Page.getStringUcFirst(contents.substring(linkIndex, currentIndex).trim());
-
-          // Sort order
-          String order = null;
-          if ((currentIndex < contents.length()) &&
-              (contents.charAt(currentIndex) == '|')) {
-            currentIndex++;
-            linkIndex = currentIndex;
-            while ((currentIndex < contents.length()) &&
-                   (contents.charAt(currentIndex) != ']')) {
-              currentIndex++;
-            }
-            order = contents.substring(linkIndex, currentIndex);
-          }
-
-          // Go to the end
-          while ((currentIndex < contents.length()) &&
-                 (!contents.startsWith("]]", currentIndex))) {
-            currentIndex++;
-          }
-          if ((currentIndex < contents.length()) &&
-              (contents.startsWith("]]", currentIndex))) {
-            currentIndex += 2;
-            if ("Category".equals(category)) {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  page, beginIndex, currentIndex);
-              errorResult.addPossibleAction(
-                  GT._("Check category"),
-                  new CheckCategoryLinkActionProvider(
-                      EnumWikipedia.EN, page.getWikipedia(),
-                      categoryName, order));
-              if (!"Category".equals(categoryNamespace.getCanonicalTitle())) {
-                errorResult.addReplacement(
-                    "[[" + categoryNamespace.getCanonicalTitle() + ":" + categoryName +
-                    ((order != null) ? "|" + order : "") + "]]");
-              }
-              for (String alias : categoryNamespace.getAliases()) {
-                if (!"Category".equals(alias)) {
-                  errorResult.addReplacement(
-                      "[[" + alias + ":" + categoryName +
-                      ((order != null) ? "|" + order : "") + "]]");
-                }
-              }
-              errors.add(errorResult);
-            }
-          }
-        }
-        startIndex = currentIndex;
+      PageElementCategory category = PageContents.findNextCategory(
+          page, contents, startIndex, comments);
+      if (category == null) {
+        startIndex = contents.length();
       } else {
-        startIndex++;
+        if ("Category".equalsIgnoreCase(category.getCategory())) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              page, category.getBeginIndex(), category.getEndIndex());
+          errorResult.addPossibleAction(
+              GT._("Check category"),
+              new CheckCategoryLinkActionProvider(
+                  EnumWikipedia.EN, page.getWikipedia(),
+                  category.getName(), category.getSort()));
+          List<String> replacements = new ArrayList<String>();
+          if ((preferredCategory != null) && (categoryNamespace.isPossibleName(preferredCategory))) {
+            replacements.add(preferredCategory);
+          }
+          if (!replacements.contains(categoryNamespace.getCanonicalTitle())) {
+            replacements.add(categoryNamespace.getCanonicalTitle());
+          }
+          for (String alias : categoryNamespace.getAliases()) {
+            if (!replacements.contains(alias)) {
+              replacements.add(alias);
+            }
+          }
+          for (String replacement : replacements) {
+            if (!"Category".equalsIgnoreCase(replacement)) {
+              errorResult.addReplacement(
+                  "[[" + replacement + ":" + category.getName() +
+                  ((category.getSort() != null) ? "|" + category.getSort() : "") + "]]");
+            }
+          }
+          errors.add(errorResult);
+        }
+        startIndex = category.getEndIndex();
       }
     }
     return result;
+  }
+
+  /* (non-Javadoc)
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put("category", GT._(
+        "The preferred name to use for replacing {0}", "[[Category:<i>xxxx</i>]]"));
+    return parameters;
   }
 }

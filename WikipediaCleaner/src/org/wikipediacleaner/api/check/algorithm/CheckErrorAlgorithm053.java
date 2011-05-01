@@ -62,7 +62,8 @@ public class CheckErrorAlgorithm053 extends CheckErrorAlgorithmBase {
       PageElementLanguageLink link = PageContents.findNextLanguageLink(page, contents, startIndex);
       if (link != null) {
         startIndex = link.getEndIndex();
-        PageElementCategory category = PageContents.findNextCategory(page, contents, startIndex);
+        PageElementCategory category = PageContents.findNextCategory(
+            page, contents, startIndex, comments);
         if (category != null) {
           if (errors == null) {
             return true;

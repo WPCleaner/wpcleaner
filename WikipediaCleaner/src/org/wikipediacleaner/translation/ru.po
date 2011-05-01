@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-04-26 22:11+0200\n"
+"POT-Creation-Date: 2011-05-01 09:16+0200\n"
 "PO-Revision-Date: 2010-10-16 10:58+0000\n"
 "Last-Translator: Sergey Basalaev <SBasalaev@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -50,8 +50,8 @@ msgstr "Страница {0}:"
 msgid "Updating page {0}"
 msgstr "Обновление страницы {0}"
 
-#: org/wikipediacleaner/api/MediaWiki.java:220
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:97
+#: org/wikipediacleaner/api/MediaWiki.java:222
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:99
 #, fuzzy, java-format
 msgid "Error {0} detected: Waiting and retrying"
 msgstr "Ошибка, обнаружен 'badtoken': Ещё одна попытка"
@@ -111,9 +111,14 @@ msgstr "Удалить все управляющие символы"
 msgid "Fix categories"
 msgstr "Исправить категории"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:87
 msgid "Check category"
 msgstr "Проверить категорию"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:125
+#, java-format
+msgid "The preferred name to use for replacing {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:127
 msgid "View image"
@@ -1956,22 +1961,22 @@ msgstr "Получение случайной страницы"
 msgid "Updating page contents"
 msgstr "Обновление содержимого страницы"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:240
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:248
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:241
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:249
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Получение содержания страницы - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:364
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:471
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:664
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:365
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:472
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:665
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Обновление предупреждения о значениях - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:566
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:698
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:799
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:567
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:699
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:800
 #, fuzzy, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Обновление предупреждения о значениях - {0}"
