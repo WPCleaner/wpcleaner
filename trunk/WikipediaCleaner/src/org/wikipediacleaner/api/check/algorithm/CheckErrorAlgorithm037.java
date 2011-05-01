@@ -106,7 +106,8 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     boolean categoriesWithoutSort = false;
     int currentIndex = 0;
     while (currentIndex < contents.length()) {
-      PageElementCategory category = PageContents.findNextCategory(page, contents, currentIndex);
+      PageElementCategory category = PageContents.findNextCategory(
+          page, contents, currentIndex, comments);
       if (category != null) {
         currentIndex = category.getEndIndex();
         if ((category.getSort() == null) ||
@@ -144,7 +145,8 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
   @Override
   public String fix(String fixName, Page page, String contents) {
     int index = contents.length();
-    PageElementCategory category = PageContents.findNextCategory(page, contents, 0);
+    PageElementCategory category = PageContents.findNextCategory(
+        page, contents, 0, PageContents.findAllComments(page, contents));
     if (category != null) {
       index = category.getBeginIndex();
     } else {

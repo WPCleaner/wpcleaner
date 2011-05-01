@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-04-26 22:11+0200\n"
+"POT-Creation-Date: 2011-05-01 09:16+0200\n"
 "PO-Revision-Date: 2010-10-06 05:32+0000\n"
 "Last-Translator: was a bee <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -51,8 +51,8 @@ msgstr "ページ {0}:"
 msgid "Updating page {0}"
 msgstr "ページ {0} を更新"
 
-#: org/wikipediacleaner/api/MediaWiki.java:220
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:97
+#: org/wikipediacleaner/api/MediaWiki.java:222
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:99
 #, java-format
 msgid "Error {0} detected: Waiting and retrying"
 msgstr ""
@@ -112,9 +112,14 @@ msgstr "すべてのコントロール文字を除去する"
 msgid "Fix categories"
 msgstr "カテゴリを修正"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:87
 msgid "Check category"
 msgstr "カテゴリをチェック"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:125
+#, java-format
+msgid "The preferred name to use for replacing {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:127
 msgid "View image"
@@ -1883,22 +1888,22 @@ msgstr ""
 msgid "Updating page contents"
 msgstr "ページの内容を更新"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:240
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:248
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:241
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:249
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:364
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:471
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:664
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:365
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:472
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:665
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:566
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:698
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:799
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:567
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:699
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:800
 #, fuzzy, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "曖昧さ回避の情報を取得"
