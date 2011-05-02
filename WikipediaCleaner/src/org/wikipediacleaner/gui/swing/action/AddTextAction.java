@@ -47,6 +47,8 @@ public class AddTextAction extends TextAction {
   private final String suffix;
   private final String url;
   private final String question;
+  private final String[] possibleValues;
+  private final boolean onlyList;
   private final String defaultValue;
   private final String unauthorizedCharacters;
   private final Element element;
@@ -64,11 +66,30 @@ public class AddTextAction extends TextAction {
       String unauthorizedCharacters,
       Element element,
       JTextPane textPane) {
+    this(
+        prefix, suffix, url, question,
+        null, false, defaultValue,
+        unauthorizedCharacters, element, textPane);
+  }
+
+  public AddTextAction(
+      String prefix,
+      String suffix,
+      String url,
+      String question,
+      String[] possibleValues,
+      boolean onlyList,
+      String defaultValue,
+      String unauthorizedCharacters,
+      Element element,
+      JTextPane textPane) {
     super("ReplaceLink");
     this.prefix = prefix;
     this.suffix = suffix;
     this.url = url;
     this.question = question;
+    this.possibleValues = possibleValues;
+    this.onlyList = onlyList;
     this.defaultValue = defaultValue;
     this.unauthorizedCharacters = unauthorizedCharacters;
     this.element = element;
@@ -140,9 +161,16 @@ public class AddTextAction extends TextAction {
     if (value == null) {
       value = defaultValue;
     }
-    value = Utilities.askForValue(
-        (localTextPane != null) ? localTextPane.getParent() : null,
-        question, value, unauthorizedCharacters);
+    if (possibleValues != null) {
+      value = Utilities.askForValue(
+          (localTextPane != null) ? localTextPane.getParent() : null,
+          question,
+          possibleValues, onlyList, value, unauthorizedCharacters);
+    } else {
+      value = Utilities.askForValue(
+          (localTextPane != null) ? localTextPane.getParent() : null,
+          question, value, unauthorizedCharacters);
+    }
     if ((value != null) && (!value.isEmpty())) {
       StringBuilder newText = new StringBuilder();
       if (prefix != null) {

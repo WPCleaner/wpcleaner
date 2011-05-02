@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-01 19:14+0200\n"
+"POT-Creation-Date: 2011-05-02 22:52+0200\n"
 "PO-Revision-Date: 2011-01-22 08:55+0000\n"
 "Last-Translator: Jurgen <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -165,16 +165,16 @@ msgstr ""
 msgid "Check language links"
 msgstr "Controleer taal-links"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:110
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:116
+msgid "What is the title of the page on this wiki ?"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:130
 #, fuzzy, java-format
 msgid "Replace using template {0}"
 msgstr "Vervang met {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:119
-msgid "What is the title of the page on this wiki ?"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:136
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:124
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:402
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1146
@@ -183,7 +183,7 @@ msgstr ""
 msgid "External Viewer"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:154
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:164
 msgid ""
 "A template that can be used instead of the link to an other language. It "
 "must be specified as: <template name>|<param name for local page name>|"
@@ -1683,29 +1683,33 @@ msgstr ""
 msgid "Wikipedia Cleaner is working..."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:76
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:81
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:77
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:82
 #, java-format
 msgid "An error occured: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:86
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:87
 msgid "An unknown error occured"
 msgstr "Er is een onbekende fout opgetreden"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:227
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:224
+msgid "Other..."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:281
 msgid "Yes"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:228
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:282
 msgid "Yes to all"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:229
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:283
 msgid "No"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:230
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:284
 msgid "No to all"
 msgstr ""
 
