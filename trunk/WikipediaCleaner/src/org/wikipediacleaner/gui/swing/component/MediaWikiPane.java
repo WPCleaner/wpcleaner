@@ -1100,7 +1100,7 @@ public class MediaWikiPane
         newTitle.append(" ");
         newTitle.append(treeNode.getTitle().getTitle());
         newTitle.append(" ");
-        for (int i = 0; i <= treeNode.getCurrentTitleLevel(); i++) {
+        for (int i = 0; i < treeNode.getCurrentTitleLevel(); i++) {
           newTitle.append("=");
         }
         contents.replace(
