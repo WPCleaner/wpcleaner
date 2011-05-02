@@ -208,7 +208,6 @@ public class MenuCreator {
    * 
    * @param wikipedia Wikipedia.
    * @param popup Popup menu.
-   * @param page Page containing the text.
    * @param position Current position in text
    * @param textPane Text pane
    */
