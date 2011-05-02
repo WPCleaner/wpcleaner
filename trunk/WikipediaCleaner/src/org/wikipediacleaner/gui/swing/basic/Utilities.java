@@ -25,6 +25,7 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -183,6 +184,59 @@ public class Utilities {
           defaultValue);
       if (result == null) {
         return null;
+      }
+      defaultValue = result.toString();
+      boolean modified = false;
+      if (unauthorizedCharacters != null) {
+        for (int i = 0; i < unauthorizedCharacters.length(); i++) {
+          int index;
+          while ((index = defaultValue.indexOf(unauthorizedCharacters.charAt(i))) > 0) {
+            defaultValue = defaultValue.substring(0, index) + defaultValue.substring(index + 1);
+            modified = true;
+          }
+        }
+      }
+      if (!modified) {
+        return defaultValue;
+      }
+    }
+  }
+
+  /**
+   * Display a message to request a value.
+   * 
+   * @param parent Parent component.
+   * @param message Message.
+   * @param possibleValues Possible values.
+   * @param onlyList Restrict selection to the possible values.
+   * @param value Default value.
+   * @param unauthorizedCharacters Unauthorized characters
+   * @return Value provided by the user.
+   */
+  public static String askForValue(
+      Component parent, String message,
+      Object[] possibleValues, boolean onlyList, String value,
+      String unauthorizedCharacters) {
+    if ((possibleValues == null) || (possibleValues.length == 0)) {
+      return askForValue(parent, message, value, unauthorizedCharacters);
+    }
+    String defaultValue = value;
+    String other = GT._("Other...");
+    Object[] possibles = possibleValues;
+    if (!onlyList) {
+      possibles = Arrays.copyOf(possibleValues, possibleValues.length + 1);
+      possibles[possibles.length - 1] = other;
+    }
+    while (true) {
+      Object result = JOptionPane.showInputDialog(
+          parent, message, "Wikipedia Cleaner",
+          JOptionPane.QUESTION_MESSAGE, null,
+          possibles, defaultValue);
+      if (result == null) {
+        return null;
+      }
+      if (result == other) {
+        return askForValue(parent, message, defaultValue, unauthorizedCharacters);
       }
       defaultValue = result.toString();
       boolean modified = false;

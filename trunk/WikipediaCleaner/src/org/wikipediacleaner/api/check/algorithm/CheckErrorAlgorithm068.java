@@ -106,19 +106,29 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
                     for (String template : templatesList) {
                       String[] templateArgs = template.split("\\|");
                       if (templateArgs.length >= 5) {
+                        String prefix =
+                          "{{" + templateArgs[0] + "|" + templateArgs[1] + "=";
+                        String suffix =
+                          "|" + templateArgs[2] + "=" + lg.getCode() +
+                          "|" + templateArgs[3] + "=" + pageTitle +
+                          "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : pageTitle) +
+                          "}}";
+                        String question = GT._("What is the title of the page on this wiki ?");
+                        String unauthorizedCharacters = "[]\"";
+                        AddTextActionProvider action = null;
+                        if ((link.getText() != null) && (!link.getText().equals(pageTitle))) {
+                          String[] possibleValues = { null, pageTitle, link.getText() };
+                          action = new AddTextActionProvider(
+                              prefix, suffix, null, question,
+                              possibleValues, false, null, unauthorizedCharacters);
+                        } else {
+                          action = new AddTextActionProvider(
+                              prefix, suffix, null, question,
+                              pageTitle, unauthorizedCharacters); 
+                        }
                         errorResult.addPossibleAction(
                             GT._("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
-                            new AddTextActionProvider(
-                                "{{" + templateArgs[0] +
-                                "|" + templateArgs[1] + "=",
-                                "|" + templateArgs[2] + "=" + lg.getCode() +
-                                "|" + templateArgs[3] + "=" + pageTitle +
-                                "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : pageTitle) +
-                                "}}",
-                                null,
-                                GT._("What is the title of the page on this wiki ?"),
-                                (link.getText() != null) ? link.getText() : pageTitle,
-                                "[]\""));
+                            action);
                       }
                     }
                   }

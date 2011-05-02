@@ -34,6 +34,8 @@ public class AddTextActionProvider implements ActionProvider {
   private final String suffix;
   private final String url;
   private final String question;
+  private final String[] possibleValues;
+  private final boolean onlyList;
   private final String defaultValue;
   private final String unauthorizedCharacters;
 
@@ -63,10 +65,30 @@ public class AddTextActionProvider implements ActionProvider {
       String prefix, String suffix, String url,
       String question, String defaultValue,
       String unauthorizedCharacters) {
+    this(
+        prefix, suffix, url, question,
+        null, false, defaultValue, unauthorizedCharacters);
+  }
+
+  /**
+   * @param prefix Prefix.
+   * @param suffix Suffix.
+   * @param url Optional URL to retrieve title.
+   * @param question Question asked to the user.
+   * @param defaultValue Value used by default.
+   * @param unauthorizedCharacters Unauthorized characters.
+   */
+  public AddTextActionProvider(
+      String prefix, String suffix, String url,
+      String question,
+      String[] possibleValues, boolean onlyList, String defaultValue,
+      String unauthorizedCharacters) {
     this.prefix = prefix;
     this.suffix = suffix;
     this.url = url;
     this.question = question;
+    this.possibleValues = possibleValues;
+    this.onlyList = onlyList;
     this.defaultValue = defaultValue;
     this.unauthorizedCharacters = unauthorizedCharacters;
   }
@@ -76,8 +98,9 @@ public class AddTextActionProvider implements ActionProvider {
    */
   public Action getAction(Element element, JTextPane textPane) {
     return new AddTextAction(
-        prefix, suffix, url,
-        question, defaultValue, unauthorizedCharacters,
+        prefix, suffix, url, question,
+        possibleValues, onlyList, defaultValue,
+        unauthorizedCharacters,
         element, textPane);
   }
 
