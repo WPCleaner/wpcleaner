@@ -64,6 +64,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -117,7 +118,7 @@ public class MediaWikiPane
   private static final KeyStroke lastReplaceKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK);
 
   private boolean isModified = false;
-  private boolean isEditable = true;
+  boolean isEditable = true;
   boolean isInInternalModification = false;
 
   private transient MediaWikiPopupListener popupListener;
@@ -292,6 +293,13 @@ public class MediaWikiPane
    */
   public Page getWikiPage() {
     return page;
+  }
+
+  /**
+   * @return Wikipedia
+   */
+  public EnumWikipedia getWikipedia() {
+    return wikipedia;
   }
 
   /**
@@ -507,7 +515,7 @@ public class MediaWikiPane
    * 
    * @param editable
    */
-  private void setEditableInternal(boolean editable) {
+  void setEditableInternal(boolean editable) {
     super.setEditable(editable);
   }
 
@@ -906,9 +914,7 @@ public class MediaWikiPane
   // Complex Pane management
   // =========================================================================
 
-  private JSplitPane splitPane;
-  private DefaultTreeModel modelToc;
-  private boolean tocIsDisplayed;
+  private TitleTreeManager treeManager;
 
   /**
    * A tree node for titles. 
@@ -982,16 +988,154 @@ public class MediaWikiPane
   }
 
   /**
-   * A selection listener for the titles tree.
+   * A manager for the tree of titles.
    */
-  private static class TitleTreeSelectionListener implements TreeSelectionListener {
+  private static class TitleTreeManager implements TreeSelectionListener, ActionListener {
 
-    private final JTree treeToc;
     private final MediaWikiPane textPane;
+    private final JSplitPane splitPane;
+    private final JTree treeToc;
+    private final DefaultTreeModel modelToc;
+    private final JTree treeToc2;
+    private final DefaultTreeModel modelToc2;
 
-    public TitleTreeSelectionListener(JTree treeToc, MediaWikiPane textPane) {
-      this.treeToc = treeToc;
+    private boolean tocIsDisplayed;
+
+    /**
+     * Create the title tree manager.
+     * 
+     * @param textPane Text pane.
+     */
+    public TitleTreeManager(MediaWikiPane textPane) {
+
+      // Text pane
       this.textPane = textPane;
+      splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+      JScrollPane scrollContents = new JScrollPane(textPane);
+      scrollContents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+      splitPane.setBottomComponent(scrollContents);
+
+      // Table of contents
+      JPanel panelTOC = new JPanel(new GridBagLayout());
+      GridBagConstraints constraints = new GridBagConstraints();
+      constraints.fill = GridBagConstraints.BOTH;
+      constraints.gridheight = 1;
+      constraints.gridwidth = 1;
+      constraints.gridx = 0;
+      constraints.gridy = 0;
+      constraints.insets = new Insets(0, 0, 0, 0);
+      constraints.ipadx = 0;
+      constraints.ipady = 0;
+      constraints.weightx = 1;
+      constraints.weighty = 1;
+
+      // Toolbar
+      JToolBar toolbarButtons = new JToolBar(SwingConstants.VERTICAL);
+      toolbarButtons.setFloatable(false);
+      JButton buttonLess = Utilities.createJButton(
+          "gnome-go-previous.png", EnumImageSize.NORMAL,
+          GT._("Decrement title level"), false);
+      buttonLess.setActionCommand("-");
+      buttonLess.addActionListener(this);
+      toolbarButtons.add(buttonLess);
+      JButton buttonMore = Utilities.createJButton(
+          "gnome-go-next.png", EnumImageSize.NORMAL,
+          GT._("Increment title level"), false);
+      buttonMore.setActionCommand("+");
+      buttonMore.addActionListener(this);
+      toolbarButtons.add(buttonMore);
+      JButton buttonDone = Utilities.createJButton(
+          "commons-approve-icon.png", EnumImageSize.NORMAL,
+          GT._("Validate the new table of contents"), false);
+      buttonDone.setActionCommand("OK");
+      buttonDone.addActionListener(this);
+      toolbarButtons.add(buttonDone);
+      constraints.weightx = 0;
+      panelTOC.add(toolbarButtons, constraints);
+      constraints.gridx++;
+
+      // Tree node renderer
+      DefaultTreeCellRenderer rendererToc = new DefaultTreeCellRenderer();
+      rendererToc.setLeafIcon(rendererToc.getClosedIcon());
+
+      // Table of contents Tree
+      TitleTreeNode rootToc = new TitleTreeNode(null);
+      modelToc = new DefaultTreeModel(rootToc);
+      treeToc = new JTree(modelToc);
+      treeToc.setRootVisible(false);
+      treeToc.setShowsRootHandles(true);
+      treeToc.getSelectionModel().setSelectionMode(
+          TreeSelectionModel.SINGLE_TREE_SELECTION);
+      treeToc.setCellRenderer(rendererToc);
+      treeToc.addTreeSelectionListener(this);
+      JScrollPane scrollTree = new JScrollPane(treeToc);
+      scrollTree.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+      constraints.weightx = 1;
+      panelTOC.add(scrollTree, constraints);
+      constraints.gridx++;
+
+      // Second tree
+      TitleTreeNode rootToc2 = new TitleTreeNode(null);
+      modelToc2 = new DefaultTreeModel(rootToc2);
+      treeToc2 = new JTree(modelToc2);
+      treeToc2.setRootVisible(false);
+      treeToc2.setShowsRootHandles(true);
+      treeToc2.setCellRenderer(rendererToc);
+      JScrollPane scrollTree2 = new JScrollPane(treeToc2);
+      scrollTree2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+      constraints.weightx = 1;
+      panelTOC.add(scrollTree2, constraints);
+      constraints.gridx++;
+      
+      splitPane.setTopComponent(panelTOC);
+
+      // Hide table of contents
+      hideToc();
+    }
+
+    /**
+     * @return Component containing the trees.
+     */
+    public JComponent getComponent() {
+      return splitPane;
+    }
+
+    /**
+     * Toggle display of table of contents.
+     */
+    public void toggleToc() {
+      if (tocIsDisplayed) {
+        hideToc();
+      } else {
+        displayToc();
+      }
+    }
+
+    /**
+     * Dispay table of contents.
+     */
+    public void displayToc() {
+      if (!tocIsDisplayed) {
+        updateTreeToc();
+        updateTreeToc2();
+        selectTreeToc2();
+        tocIsDisplayed = true;
+      }
+      splitPane.setDividerLocation(200);
+      splitPane.setDividerSize(2);
+      splitPane.setResizeWeight(0.0);
+      textPane.setEditableInternal(false);
+    }
+
+    /**
+     * Hide table of contents.
+     */
+    public void hideToc() {
+      tocIsDisplayed = false;
+      splitPane.setDividerLocation(0);
+      splitPane.setDividerSize(0);
+      splitPane.setResizeWeight(0.0);
+      textPane.setEditableInternal(textPane.isEditable);
     }
 
     /* (non-Javadoc)
@@ -1013,24 +1157,7 @@ public class MediaWikiPane
         }
         textPane.requestFocusInWindow();
       }
-    }
-  }
-
-  /**
-   * An action listener for the titles tree.
-   */
-  private static class TitleTreeActionListener implements ActionListener {
-
-    private final JTree treeToc;
-    private final MediaWikiPane textPane;
-
-    /**
-     * @param treeToc Tree for the table of contents.
-     * @param textPane Text pane.
-     */
-    public TitleTreeActionListener(JTree treeToc, MediaWikiPane textPane) {
-      this.treeToc = treeToc;
-      this.textPane = textPane;
+      selectTreeToc2();
     }
 
     /* (non-Javadoc)
@@ -1046,8 +1173,12 @@ public class MediaWikiPane
       }
       if ("+".equals(e.getActionCommand())) {
         changeTitleLevel(treeNode, 1);
+        updateTreeToc2();
+        selectTreeToc2();
       } else if ("-".equals(e.getActionCommand())) {
         changeTitleLevel(treeNode, -1);
+        updateTreeToc2();
+        selectTreeToc2();
       } else if ("OK".equals(e.getActionCommand())) {
         StringBuilder contents = new StringBuilder(textPane.getText());
         applyChanges(contents, treeToc.getModel().getRoot());
@@ -1055,6 +1186,118 @@ public class MediaWikiPane
       }
       treeToc.repaint();
       textPane.requestFocusInWindow();
+    }
+
+    /**
+     * Update table of contents tree.
+     */
+    private void updateTreeToc() {
+      String contents = textPane.getText();
+      int currentIndex = 0;
+      TitleTreeNode rootNode = new TitleTreeNode(null);
+      TitleTreeNode lastNode = rootNode;
+      Collection<PageElementComment> comments = PageContents.findAllComments(
+          textPane.getWikipedia(), contents);
+      while ((currentIndex < contents.length())) {
+        PageElementTitle title = PageContents.findNextTitle(
+            textPane.getWikipedia(), contents, currentIndex, comments);
+        if (title == null) {
+          currentIndex = contents.length();
+        } else {
+          while ((lastNode != null) &&
+                 (lastNode.getInitialTitleLevel() >= title.getFirstLevel())) {
+            if (lastNode.getParent() != null) {
+              lastNode = (TitleTreeNode) lastNode.getParent();
+            } else {
+              lastNode = null;
+            }
+          }
+          if (lastNode == null) {
+            lastNode = rootNode;
+          }
+          TitleTreeNode tmpNode = new TitleTreeNode(title);
+          lastNode.add(tmpNode);
+          lastNode = tmpNode;
+          currentIndex = title.getEndIndex();
+        }
+      }
+      modelToc.setRoot(rootNode);
+    }
+
+    /**
+     * Update table of contents second tree. 
+     */
+    private void updateTreeToc2() {
+      TitleTreeNode rootNode2 = new TitleTreeNode(null);
+      TitleTreeNode rootNode = (TitleTreeNode) modelToc.getRoot();
+      updateTreeToc2Node(rootNode2, rootNode);
+      modelToc2.setRoot(rootNode2);
+    }
+
+    /**
+     * Select node in the second tree depending on the selection in the first tree.
+     */
+    private void selectTreeToc2() {
+      TitleTreeNode treeNode = (TitleTreeNode) treeToc.getLastSelectedPathComponent();
+      if (treeNode == null) {
+        treeToc2.setSelectionRows(null);
+      } else {
+        TitleTreeNode otherNode = findTreeNode(
+            (TitleTreeNode) modelToc2.getRoot(),
+            treeNode.getTitle());
+        if (otherNode != null) {
+          TreePath treePath = new TreePath(otherNode.getPath());
+          treeToc2.scrollPathToVisible(treePath);
+          treeToc2.setSelectionPath(treePath);
+        }
+      }
+    }
+
+    /**
+     * Find a tree node matching a title.
+     * 
+     * @param node Current node.
+     * @param title Title.
+     * @return Node matching the title if found.
+     */
+    private TitleTreeNode findTreeNode(TitleTreeNode node, PageElementTitle title) {
+      if (node == null) {
+        return null;
+      }
+      if (title == node.getTitle()) {
+        return node;
+      }
+      for (int i = 0; i < node.getChildCount(); i++) {
+        TitleTreeNode found = findTreeNode((TitleTreeNode) node.getChildAt(i), title);
+        if (found != null) {
+          return found;
+        }
+      }
+      return null;
+    }
+
+    /**
+     * Update table of contents second tree for a node and its children.
+     * 
+     * @param rootNode2 Root of second tree.
+     * @param node Current node to add.
+     */
+    private void updateTreeToc2Node(TitleTreeNode rootNode2, TitleTreeNode node) {
+      if (node == null) {
+        return;
+      }
+      for (int i = 0; i < node.getChildCount(); i++) {
+        TitleTreeNode currentNode = (TitleTreeNode) node.getChildAt(i);
+        TitleTreeNode newNode = new TitleTreeNode(currentNode.getTitle());
+        newNode.setCurrentTitleLevel(currentNode.getCurrentTitleLevel());
+        TitleTreeNode parentNode = (TitleTreeNode) rootNode2.getLastLeaf();
+        while ((parentNode.isRoot() == false) &&
+               (parentNode.getCurrentTitleLevel() >= newNode.getCurrentTitleLevel())) {
+          parentNode = (TitleTreeNode) parentNode.getParent();
+        }
+        parentNode.add(newNode);
+        updateTreeToc2Node(rootNode2, currentNode);
+      }
     }
 
     /**
@@ -1125,95 +1368,18 @@ public class MediaWikiPane
     if (textPane == null) {
       return null;
     }
-    if (textPane.splitPane != null) {
-      return textPane.splitPane;
+    if (textPane.treeManager == null) {
+      textPane.treeManager = new TitleTreeManager(textPane);
     }
-
-    // Text pane
-    JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-    JScrollPane scrollContents = new JScrollPane(textPane);
-    scrollContents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-    splitPane.setBottomComponent(scrollContents);
-
-    // Table of contents
-    JPanel panelTOC = new JPanel(new GridBagLayout());
-    GridBagConstraints constraints = new GridBagConstraints();
-    constraints.fill = GridBagConstraints.BOTH;
-    constraints.gridheight = 1;
-    constraints.gridwidth = 1;
-    constraints.gridx = 0;
-    constraints.gridy = 0;
-    constraints.insets = new Insets(0, 0, 0, 0);
-    constraints.ipadx = 0;
-    constraints.ipady = 0;
-    constraints.weightx = 1;
-    constraints.weighty = 1;
-
-    // Creations
-    TitleTreeNode rootToc = new TitleTreeNode(null);
-    DefaultTreeModel modelToc = new DefaultTreeModel(rootToc);
-    final JTree treeToc = new JTree(modelToc);
-
-    // Toolbar
-    TitleTreeActionListener actionListener = new TitleTreeActionListener(treeToc, textPane);
-    JToolBar toolbarButtons = new JToolBar(SwingConstants.VERTICAL);
-    toolbarButtons.setFloatable(false);
-    JButton buttonLess = Utilities.createJButton(
-        "gnome-go-previous.png", EnumImageSize.NORMAL,
-        GT._("Decrement title level"), false);
-    buttonLess.setActionCommand("-");
-    buttonLess.addActionListener(actionListener);
-    toolbarButtons.add(buttonLess);
-    JButton buttonMore = Utilities.createJButton(
-        "gnome-go-next.png", EnumImageSize.NORMAL,
-        GT._("Increment title level"), false);
-    buttonMore.setActionCommand("+");
-    buttonMore.addActionListener(actionListener);
-    toolbarButtons.add(buttonMore);
-    JButton buttonDone = Utilities.createJButton(
-        "commons-approve-icon.png", EnumImageSize.NORMAL,
-        GT._("Validate the new table of contents"), false);
-    buttonDone.setActionCommand("OK");
-    buttonDone.addActionListener(actionListener);
-    toolbarButtons.add(buttonDone);
-    constraints.weightx = 0;
-    panelTOC.add(toolbarButtons, constraints);
-    constraints.gridx++;
-
-    // Tree
-    treeToc.setRootVisible(false);
-    treeToc.setShowsRootHandles(true);
-    treeToc.getSelectionModel().setSelectionMode(
-        TreeSelectionModel.SINGLE_TREE_SELECTION);
-    DefaultTreeCellRenderer rendererToc = new DefaultTreeCellRenderer();
-    rendererToc.setLeafIcon(rendererToc.getClosedIcon());
-    treeToc.setCellRenderer(rendererToc);
-    treeToc.addTreeSelectionListener(new TitleTreeSelectionListener(treeToc, textPane));
-    JScrollPane scrollTree = new JScrollPane(treeToc);
-    scrollTree.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-    constraints.weightx = 1;
-    panelTOC.add(scrollTree, constraints);
-    constraints.gridx++;
-    splitPane.setTopComponent(panelTOC);
-
-    // Configure split pane
-    splitPane.setDividerSize(0);
-    splitPane.setDividerLocation(0);
-    splitPane.setResizeWeight(0.0);
-    textPane.splitPane = splitPane;
-    textPane.modelToc = modelToc;
-
-    return splitPane;
+    return textPane.treeManager.getComponent();
   }
 
   /**
    * Display or hide Table of Contents.
    */
   public void toggleToc() {
-    if (tocIsDisplayed) {
-      hideToc();
-    } else {
-      displayToc();
+    if (treeManager != null) {
+      treeManager.toggleToc();
     }
   }
 
@@ -1221,56 +1387,17 @@ public class MediaWikiPane
    * Display Table of Contents.
    */
   public void displayToc() {
-    if (splitPane == null) {
-      return;
+    if (treeManager != null) {
+      treeManager.displayToc();
     }
-    if (!tocIsDisplayed) {
-      String contents = getText();
-      int currentIndex = 0;
-      TitleTreeNode rootNode = new TitleTreeNode(null);
-      TitleTreeNode lastNode = rootNode;
-      Collection<PageElementComment> comments = PageContents.findAllComments(wikipedia, contents);
-      while ((currentIndex < contents.length())) {
-        PageElementTitle title = PageContents.findNextTitle(
-            wikipedia, contents, currentIndex, comments);
-        if (title == null) {
-          currentIndex = contents.length();
-        } else {
-          while ((lastNode != null) &&
-                 (lastNode.getInitialTitleLevel() >= title.getFirstLevel())) {
-            if (lastNode.getParent() != null) {
-              lastNode = (TitleTreeNode) lastNode.getParent();
-            } else {
-              lastNode = null;
-            }
-          }
-          if (lastNode == null) {
-            lastNode = rootNode;
-          }
-          TitleTreeNode tmpNode = new TitleTreeNode(title);
-          lastNode.add(tmpNode);
-          lastNode = tmpNode;
-          currentIndex = title.getEndIndex();
-        }
-      }
-      modelToc.setRoot(rootNode);
-      tocIsDisplayed = true;
-    }
-    splitPane.setDividerLocation(200);
-    splitPane.setDividerSize(2);
-    setEditableInternal(false);
   }
 
   /**
    * Hide Table of Contents.
    */
   public void hideToc() {
-    if (splitPane == null) {
-      return;
+    if (treeManager != null) {
+      treeManager.hideToc();
     }
-    tocIsDisplayed = false;
-    splitPane.setDividerLocation(0);
-    splitPane.setDividerSize(0);
-    setEditableInternal(isEditable);
   }
 }
