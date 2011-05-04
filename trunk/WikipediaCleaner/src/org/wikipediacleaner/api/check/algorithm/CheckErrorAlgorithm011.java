@@ -88,6 +88,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
     { "&raquo;" , "»" },
     { "&rarr;"  , "→" },
     { "&reg;"   , "®" },
+    { "&rsquo;" , "’" },
 
     { "&sect;"  , "§" },
     { "&sigma;" , "σ" },
