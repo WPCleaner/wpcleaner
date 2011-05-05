@@ -1341,11 +1341,11 @@ public class MainWindow
         getWikipedia().initDisambiguationTemplates(api);
 
         // Retrieving Check Wiki configuration
-        String code = getWikipedia().getCode().replace("-", "_");
+        String code = getWikipedia().getCheckWikiCode().replace("-", "_");
         try {
           setText(GT._("Retrieving Check Wiki configuration"));
           InputStream stream = APIFactory.getAPI().askToolServerGet(
-              "~sk/checkwiki/" + code + "wiki/" + code + "wiki_translation.txt",
+              "~sk/checkwiki/" + code + "/" + code + "_translation.txt",
               true);
           Properties properties = null;
           if (stream != null) {

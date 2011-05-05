@@ -76,7 +76,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
     // Retrieving errors
     boolean errorLoaded = false;
     APIException exception = null;
-    String code = getWikipedia().getCode().replace("-", "_");
+    String code = getWikipedia().getCheckWikiCode().replace("-", "_");
     if (selectedAlgorithms != null) {
       for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
         try {
@@ -87,7 +87,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
                 new NameValuePair("id", algorithm.getErrorNumberString()),
                 new NameValuePair("limit", Integer.toString(errorLimit)),
                 new NameValuePair("offset", Integer.toString(0)),
-                new NameValuePair("project", code + "wiki"),
+                new NameValuePair("project", code),
                 new NameValuePair("view", "bots")
             };
             InputStream stream = null;

@@ -86,8 +86,8 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param desc Short description.
    */
   public void setShortDescription(String desc) {
-    this.shortDescription = desc;
-    shortDescriptionReplaced = desc;
+    this.shortDescription = (desc != null) ? desc : "";
+    shortDescriptionReplaced = this.shortDescription;
     shortDescriptionReplaced = shortDescriptionReplaced.replaceAll("&lt;", "<");
     shortDescriptionReplaced = shortDescriptionReplaced.replaceAll("&gt;", ">");
   }

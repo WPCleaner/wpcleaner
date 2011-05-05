@@ -128,7 +128,7 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
     String toolserverUrl =
       "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi" +
       "?id=" + algorithm.getErrorNumberString() +
-      "&project=" + wikipedia.getCode() + "wiki" +
+      "&project=" + wikipedia.getCheckWikiCode() +
       "&view=only";
     MenuCreator.addViewToMenu(null, popup, toolserverUrl, GT._("List on toolserver"));
 

@@ -29,6 +29,7 @@ class WikiversityFr {
   private final static String baseUrl = "http://fr.wikiversity.org/w/";
 
   final static String code     = "v:fr";
+  final static String codeCW   = "frwikiversity";
   final static String name     = "Wikiversité";
 
   final static String apiUrl   = baseUrl + "api.php";
