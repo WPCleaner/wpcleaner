@@ -203,11 +203,12 @@ public enum EnumWikipedia {
   COMMONS(WikiCommons.code, WikiCommons.name,
           WikiCommons.apiUrl, WikiCommons.indexUrl,
           WikiCommons.orientation, WikiCommons.configuration),
-  WIKIVERSITY_FR(WikiversityFr.code, WikiversityFr.name,
+  WIKIVERSITY_FR(WikiversityFr.code, WikiversityFr.codeCW, WikiversityFr.name,
                  WikiversityFr.apiUrl, WikiversityFr.indexUrl,
                  WikiversityFr.orientation, WikiversityFr.configuration);
 
   private final String code;
+  private final String codeCW;
   private final String title;
   private final String apiUrl;
   private final String wikiUrl;
@@ -267,7 +268,27 @@ public enum EnumWikipedia {
       String wikiUrl,
       ComponentOrientation componentOrientation,
       String configPage) {
+    this(code, code + "wiki", title, apiUrl, wikiUrl, componentOrientation, configPage);
+  }
+
+  /**
+   * @param code Code.
+   * @param codeCW Check Wiki code.
+   * @param title Title.
+   * @param apiUrl URL of api.php.
+   * @param wikiUrl URL of the wiki.
+   * @param configPage Configuration page.
+   */
+  EnumWikipedia(
+      String code,
+      String codeCW,
+      String title,
+      String apiUrl,
+      String wikiUrl,
+      ComponentOrientation componentOrientation,
+      String configPage) {
     this.code = code;
+    this.codeCW = codeCW;
     this.title = title;
     this.apiUrl = apiUrl;
     this.wikiUrl = wikiUrl;
@@ -286,65 +307,6 @@ public enum EnumWikipedia {
     this.disambiguationList = null;
     this.checkWikiProject = null;
     this.checkWikiTranslation = null;
-  }
-
-  /**
-   * @param code Code.
-   * @param title Title.
-   * @param apiUrl URL of api.php.
-   * @param wikiUrl URL of the wiki.
-   * @param helpUrl URL of the help page.
-   * @param helpPage Help page.
-   * @param disambiguationText Text indicating disambiguation repairing.
-   * @param wiktionaryInterwiki Interwiki link to wiktionary.
-   * @param wiktionaryMatches List of templates for wiktionary.
-   * @param templatesForDisambiguationLink Template used to indicate a normal link to disambiguation page.
-   * @param templatesForNeedingHelp Templates used to indicate a link needed help to fix.
-   * @param templatesForHelpRequested Templates used to find pages where help is requested.
-   * @param disambiguationList Page(s) containing the list of disambiguation pages to work on.
-   * @param checkWikiProject Project Check Wikipedia page.
-   * @param checkWikiTraduction Project Check Wikipedia traduction.
-   */
-  EnumWikipedia(
-      String code,
-      String title,
-      String apiUrl,
-      String wikiUrl,
-      String helpUrl,
-      String helpPage,
-      ComponentOrientation componentOrientation,
-      String disambiguationText,
-      String wiktionaryInterwiki,
-      TemplateMatch[] wiktionaryMatches,
-      String[] templatesForDisambiguationLink,
-      String[] templatesForNeedingHelp,
-      String[] templatesForHelpRequested,
-      String[] disambiguationList,
-      String checkWikiProject,
-      String checkWikiTraduction) {
-    this.code = code;
-    this.title = title;
-    this.apiUrl = apiUrl;
-    this.wikiUrl = wikiUrl;
-    this.helpUrl = helpUrl;
-    this.helpPage = helpPage;
-    this.componentOrientation = componentOrientation;
-    this.configPage = null;
-    this.configuration = null;
-    this.disambiguationText = disambiguationText;
-    this.wiktionaryInterwiki = wiktionaryInterwiki;
-    this.wiktionaryMatches = wiktionaryMatches;
-    this.templatesForDisambiguationLink = templatesForDisambiguationLink;
-    this.templatesForNeedingHelp = templatesForNeedingHelp;
-    this.templatesForHelpRequested = templatesForHelpRequested;
-    if (disambiguationList != null) {
-      this.disambiguationList = new ArrayList<String>();
-      for (int i = 0; i < disambiguationList.length; i++) {
-        this.disambiguationList.add(disambiguationList[i]);
-      }
-    }
-    this.checkWikiProject = checkWikiProject;
-    this.checkWikiTranslation = checkWikiTraduction;
   }
 
   /**
@@ -407,6 +369,13 @@ public enum EnumWikipedia {
    */
   public String getCode() {
     return code;
+  }
+
+  /**
+   * @return Code for Check Wiki.
+   */
+  public String getCheckWikiCode() {
+    return codeCW;
   }
 
   /**
@@ -1229,7 +1198,7 @@ public enum EnumWikipedia {
     }
     String result = null;
     if ((useWiki) && (checkWikiConfig != null)) {
-      result = checkWikiConfig.getProperty(errorPrefix + code + "wiki", null);
+      result = checkWikiConfig.getProperty(errorPrefix + codeCW, null);
     }
     if ((result != null) && ((acceptEmpty) || (result.trim().length() > 0))) {
       return result.trim();

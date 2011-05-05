@@ -1800,7 +1800,7 @@ public class CheckWikiProjectWindow extends PageWindow {
             "  {0} = <page name> END\n" +
             "to the translation page ({1}) on {2} Wikipedia",
             new Object[] {
-                "error_" + format.format(error.getErrorNumber()) + "_link_" + getWikipedia().getCode() + "wiki",
+                "error_" + format.format(error.getErrorNumber()) + "_link_" + getWikipedia().getCheckWikiCode(),
                 getWikipedia().getCheckWikiTraduction(),
                 getWikipedia().getCode()
             }));
@@ -1819,7 +1819,7 @@ public class CheckWikiProjectWindow extends PageWindow {
       String url =
         "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi" +
         "?id=" + error.getErrorNumber() +
-        "&project=" + getWikipedia().getCode() + "wiki" +
+        "&project=" + getWikipedia().getCheckWikiCode()+
         "&view=only" +
         "&limit=" + modelMaxErrors.getNumber();
       Utilities.browseURL(url);
