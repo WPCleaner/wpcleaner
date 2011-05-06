@@ -71,7 +71,7 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public abstract class PageWindow
   extends BasicWindow
-  implements ActionListener, ItemListener {
+  implements ActionListener, ItemListener, PropertyChangeListener {
 
   private Page page;
   private String pageName;
@@ -904,6 +904,7 @@ public abstract class PageWindow
   protected void createTextContents(BasicWindow window) {
     if (textContents == null) {
       textContents = new MediaWikiPane(getWikipedia(), page, window);
+      textContents.addPropertyChangeListener(MediaWikiPane.PROPERTY_MODIFIED, this);
     }
   }
 
@@ -1049,10 +1050,27 @@ public abstract class PageWindow
   }
 
   /* ====================================================================== */
+  /* PropertyChange                                                         */
+  /* ====================================================================== */
+
+  /* (non-Javadoc)
+   * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+   */
+  public void propertyChange(PropertyChangeEvent evt) {
+    if (evt == null) {
+      return;
+    }
+    if (MediaWikiPane.PROPERTY_MODIFIED.equals(evt.getPropertyName())) {
+      updateComponentState();
+    }
+  }
+
+  /* ====================================================================== */
   /* ActionListener                                                         */
   /* ====================================================================== */
 
   public final static String ACTION_DISAMBIGUATION_PAGE  = "DISAMBIGUATION PAGE";
+
   public final static String ACTION_DISAMBIGUATION_REDIR = "DISAMBIGUATION REDIR";
   public final static String ACTION_EXPAND_TEMPLATES     = "EXPAND TEMPLATES";
   public final static String ACTION_EXPAND_PREVIEW       = "EXPAND PREVIEW";
@@ -1306,6 +1324,11 @@ public abstract class PageWindow
   
   private List<CheckErrorPage> initialErrors;
 
+  /**
+   * Initialize list of initial errors.
+   * 
+   * @param algorithms Algorithms.
+   */
   protected void initializeInitialErrors(
       Collection<CheckErrorAlgorithm> algorithms) {
     if (page != null) {

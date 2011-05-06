@@ -1071,7 +1071,7 @@ public class CheckWikiProjectWindow extends PageWindow {
           contents = initialError.getAlgorithm().automaticFix(page, contents);
         }
         if (!contents.equals(initialContents)) {
-          textPage.setText(contents);
+          textPage.changeText(contents);
           actionValidate();
         }
       }

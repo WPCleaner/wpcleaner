@@ -841,7 +841,7 @@ public class AnalysisWindow extends PageWindow {
         contents = error.getAlgorithm().automaticFix(getPage(), contents);
       }
       if (!contents.equals(initialContents)) {
-        getTextContents().setText(contents);
+        getTextContents().changeText(contents);
         actionValidate();
       }
     }

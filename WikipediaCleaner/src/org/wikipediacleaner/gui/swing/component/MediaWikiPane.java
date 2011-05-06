@@ -477,6 +477,21 @@ public class MediaWikiPane
   }
 
   /**
+   * Change text.
+   * 
+   * @param t New text.
+   */
+  public void changeText(String t) {
+    if (t == null) {
+      return;
+    }
+    String oldText = getText();
+    if (!oldText.equals(t)) {
+      setTextInternal(t, false, false);
+      setModified(true);
+    }
+  }
+  /**
    * Enabling changing text without resetting the modified flag.
    * 
    * @param t New text.
@@ -1182,7 +1197,7 @@ public class MediaWikiPane
       } else if ("OK".equals(e.getActionCommand())) {
         StringBuilder contents = new StringBuilder(textPane.getText());
         applyChanges(contents, treeToc.getModel().getRoot());
-        textPane.setText(contents.toString());
+        textPane.changeText(contents.toString());
       }
       treeToc.repaint();
       textPane.requestFocusInWindow();
