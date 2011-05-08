@@ -97,6 +97,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
     { "&thinsp;", " " },
     { "&times;" , "×" },
 
+    { "&ucirc;" , "û" },
     { "&Uuml;"  , "Ü" },
     { "&uuml;"  , "ü" },
   };
