@@ -30,8 +30,8 @@ import org.wikipediacleaner.i18n.GT;
  */
 public final class Version {
 
-  public final static String VERSION = "1.05";
-  public final static Date   DATE = new GregorianCalendar(2011, Calendar.APRIL, 27).getTime();
+  public final static String VERSION = "1.06";
+  public final static Date   DATE = new GregorianCalendar(2011, Calendar.MAY, 7).getTime();
 
   public final static String MESSAGE =
     GT._("I hope you'll like WikiCleaner.") +
@@ -40,10 +40,13 @@ public final class Version {
         "WikiCleaner configuration is available online, check the {0}System configuration{1}.",
         new Object[] { "<a href=\"http://fr.wikipedia.org/wiki/Utilisateur:NicoV/WikiCleanerConfigurationDocumentation\">", "</a>" }) +
     "<br>" +
-    GT._(
-        "Many new features added for the {0}Check Wiki project{1} : try them !",
-        new Object[] { "<a href=\"http://de.wikipedia.org/wiki/Benutzer:Stefan_K%C3%BChn/Check_Wikipedia\">", "</a>" }) +
-    "<br><br>" +
+    GT._("Many new features were added recently : try them !") +
+    "<ul>" +
+    "<li>" + GT._("Leaving a note on talk pages with the list of links to disambiguation pages.") + "</li>" +
+    "<li>" + GT._("Fixing errors detected by the Check Wiki project, in the full analysis window.") + "</li>" +
+    "<li>" + GT._("Fixing orthograph or typography based on a list of suggestions.") + "</li>" +
+    "</ul>" +
+    "<br>" +
     GT._("Please, report any other problem you find to me.");
   public final static boolean HIGHLIGHT = false;
 }

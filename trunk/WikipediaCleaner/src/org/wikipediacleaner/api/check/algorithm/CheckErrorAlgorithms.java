@@ -40,7 +40,7 @@ public final class CheckErrorAlgorithms {
   public final static int PRIORITY_LOWEST = 3;
   public final static int PRIORITY_BOT_ONLY = 4;
 
-  public static final int MAX_ALGORITHMS = 100;
+  public static final int MAX_ALGORITHMS = 999;
 
   private static Map<EnumWikipedia, List<CheckErrorAlgorithm>> algorithmsMap =
     new HashMap<EnumWikipedia, List<CheckErrorAlgorithm>>();

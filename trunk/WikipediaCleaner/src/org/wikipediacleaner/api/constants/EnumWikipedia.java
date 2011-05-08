@@ -43,6 +43,9 @@ import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.Suggestion;
 import org.wikipediacleaner.api.data.TemplateMatch;
 import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.api.data.TemplateMatcher1L2T;
@@ -208,6 +211,7 @@ public enum EnumWikipedia {
                  WikiversityFr.orientation, WikiversityFr.configuration);
 
   private final String code;
+
   private final String codeCW;
   private final String title;
   private final String apiUrl;
@@ -226,6 +230,8 @@ public enum EnumWikipedia {
   private String todoSubpage;
   private boolean todoSubpageForce;
   private boolean todoSubpageForceOther;
+  private List<String> suggestionPages;
+  private Map<String, Suggestion> suggestions;
   private String disambiguationWarningTemplate;
   private String disambiguationWarningTemplateComment;
   private String disambiguationWarningComment;
@@ -693,6 +699,7 @@ public enum EnumWikipedia {
     }
     return false;
   }
+
   /**
    * @return Count of wiktionary templates.
    */
@@ -889,6 +896,12 @@ public enum EnumWikipedia {
       tmp = configuration.getProperty("general_todo_subpage_force_other", "false");
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         todoSubpageForceOther = Boolean.parseBoolean(tmp.trim());
+      }
+
+      // Suggestions
+      tmp = configuration.getProperty("general_suggestions", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        suggestionPages = convertPropertyToStringList(tmp);
       }
 
       templateMatchers = new HashMap<String, List<TemplateMatcher>>();
@@ -1270,6 +1283,61 @@ public enum EnumWikipedia {
       }
     }
     return result;
+  }
+
+  /**
+   * Initialize suggestions for text replacements.
+   * 
+   * @param api
+   */
+  public void initSuggestions(API api) {
+    if (suggestions == null) {
+      synchronized (api) {
+        Map<String, Suggestion> tmpMap = new HashMap<String, Suggestion>();
+        for (String suggestionPage : suggestionPages) {
+          String[] elements = suggestionPage.split("\\|");
+          if (elements.length >= 4) {
+            Page page = DataManager.getPage(this, elements[0], null, null);
+            try {
+              api.retrieveContents(this, page, false);
+              String contents = page.getContents();
+              if (contents != null) {
+                int currentIndex = 0;
+                while (currentIndex < contents.length()) {
+                  PageElementTemplate template = PageContents.findNextTemplate(page, contents, elements[1], currentIndex);
+                  if (template == null) {
+                    currentIndex = contents.length();
+                  } else {
+                    String patternText = template.getParameterValue(elements[2]);
+                    Suggestion suggestion = tmpMap.get(patternText);
+                    if (suggestion == null) {
+                      suggestion = Suggestion.createSuggestion(patternText);
+                      tmpMap.put(patternText, suggestion);
+                    }
+                    if (suggestion != null) {
+                      String replacementText = template.getParameterValue(elements[3]);
+                      String comment = (elements.length > 4) ? template.getParameterValue(elements[4]) : null;
+                      suggestion.addReplacement(replacementText, comment);
+                    }
+                    currentIndex = template.getEndIndex();
+                  }
+                }
+              }
+            } catch (APIException e) {
+              // Error retrieving suggestion page.
+            }
+          }
+        }
+        suggestions = tmpMap;
+      }
+    }
+  }
+
+  /**
+   * @return Suggestions.
+   */
+  public Map<String, Suggestion> getSuggestions() {
+    return suggestions;
   }
 
   /**
