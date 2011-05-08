@@ -1340,6 +1340,10 @@ public class MainWindow
         setText(GT._("Retrieving disambiguation templates"));
         getWikipedia().initDisambiguationTemplates(api);
 
+        // Retrieving suggestions for text replacements
+        setText(GT._("Retrieving suggestions for text replacements"));
+        getWikipedia().initSuggestions(api);
+
         // Retrieving Check Wiki configuration
         String code = getWikipedia().getCheckWikiCode().replace("-", "_");
         try {
