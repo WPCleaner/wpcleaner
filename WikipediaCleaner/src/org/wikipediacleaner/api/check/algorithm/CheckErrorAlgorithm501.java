@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.Suggestion;
@@ -89,22 +90,29 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             page, startIndex, startIndex + maxLength);
         String text = contents.substring(startIndex, startIndex + maxLength);
         List<String> replacements = new ArrayList<String>();
+        List<String> commentList = new ArrayList<String>();
         for (Suggestion suggestion : possibles) {
           replacements.addAll(suggestion.getReplacements(text));
+          if (suggestion.getComment() != null) {
+            commentList.add(suggestion.getComment());
+          }
         }
         Collections.sort(replacements);
         for (String replacement : replacements) {
           error.addReplacement(replacement);
         }
+        for (String comment : commentList) {
+          error.addPossibleAction(comment, new NullActionProvider());
+        }
         errors.add(error);
       }
 
       // Go to the next non letter/digit character
-      startIndex++;
       while ((startIndex < contents.length()) &&
              (Character.isLetterOrDigit(contents.charAt(startIndex)))) {
         startIndex++;
       }
+      startIndex++;
     }
     return result;
   }

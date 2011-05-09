@@ -19,10 +19,7 @@
 package org.wikipediacleaner.api.data;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -42,7 +39,8 @@ public class Suggestion {
   private final static String TAG_NOWIKI_2 = "</nowiki>";
 
   private final Pattern pattern;
-  private final Map<String, String> replacements;
+  private final List<String> replacements;
+  private String comment;
 
   /**
    * Create a Suggestion.
@@ -65,16 +63,16 @@ public class Suggestion {
    */
   private Suggestion(Pattern pattern) {
     this.pattern = pattern;
-    this.replacements = new HashMap<String, String>();
+    this.replacements = new ArrayList<String>();
+    this.comment = null;
   }
 
   /**
    * Add a possible replacement.
    * 
    * @param replacement Replacement.
-   * @param comment Comment.
    */
-  public void addReplacement(String replacement, String comment) {
+  public void addReplacement(String replacement) {
     if (replacement != null) {
       if ((replacement.startsWith(TAG_NOWIKI_1)) &&
           (replacement.endsWith(TAG_NOWIKI_2))) {
@@ -82,8 +80,22 @@ public class Suggestion {
             TAG_NOWIKI_1.length(),
             replacement.length() - TAG_NOWIKI_2.length());
       }
-      replacements.put(replacement, comment);
+      replacements.add(replacement);
     }
+  }
+
+  /**
+   * @param comment Comment.
+   */
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
+
+  /**
+   * @return Comment.
+   */
+  public String getComment() {
+    return comment;
   }
 
   /**
@@ -105,8 +117,8 @@ public class Suggestion {
    */
   public List<String> getReplacements(String initialText) {
     List<String> list = new ArrayList<String>();
-    for (Entry<String, String> replacement : replacements.entrySet()) {
-      list.add(pattern.matcher(initialText).replaceFirst(replacement.getKey()));
+    for (String replacement : replacements) {
+      list.add(pattern.matcher(initialText).replaceFirst(replacement));
     }
     return list;
   }
