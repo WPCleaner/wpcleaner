@@ -1294,37 +1294,46 @@ public enum EnumWikipedia {
     if (suggestions == null) {
       synchronized (api) {
         Map<String, Suggestion> tmpMap = new HashMap<String, Suggestion>();
-        for (String suggestionPage : suggestionPages) {
-          String[] elements = suggestionPage.split("\\|");
-          if (elements.length >= 4) {
-            Page page = DataManager.getPage(this, elements[0], null, null);
-            try {
-              api.retrieveContents(this, page, false);
-              String contents = page.getContents();
-              if (contents != null) {
-                int currentIndex = 0;
-                while (currentIndex < contents.length()) {
-                  PageElementTemplate template = PageContents.findNextTemplate(page, contents, elements[1], currentIndex);
-                  if (template == null) {
-                    currentIndex = contents.length();
-                  } else {
-                    String patternText = template.getParameterValue(elements[2]);
-                    Suggestion suggestion = tmpMap.get(patternText);
-                    if (suggestion == null) {
-                      suggestion = Suggestion.createSuggestion(patternText);
-                      tmpMap.put(patternText, suggestion);
+        if (suggestionPages != null) {
+          for (String suggestionPage : suggestionPages) {
+            String[] elements = suggestionPage.split("\\|");
+            if (elements.length >= 4) {
+              String[] elementsReplacement = elements[3].split(",");
+              Page page = DataManager.getPage(this, elements[0], null, null);
+              try {
+                api.retrieveContents(this, page, false);
+                String contents = page.getContents();
+                if (contents != null) {
+                  int currentIndex = 0;
+                  while (currentIndex < contents.length()) {
+                    PageElementTemplate template = PageContents.findNextTemplate(page, contents, elements[1], currentIndex);
+                    if (template == null) {
+                      currentIndex = contents.length();
+                    } else {
+                      String patternText = template.getParameterValue(elements[2]);
+                      Suggestion suggestion = tmpMap.get(patternText);
+                      if (suggestion == null) {
+                        suggestion = Suggestion.createSuggestion(patternText);
+                        tmpMap.put(patternText, suggestion);
+                      }
+                      if (suggestion != null) {
+                        if (elements.length > 4) {
+                          suggestion.setComment(template.getParameterValue(elements[4]));
+                        }
+                        for (String elementReplacement : elementsReplacement) {
+                          String replacementText = template.getParameterValue(elementReplacement);
+                          if ((replacementText != null) && (replacementText.length() > 0)) {
+                            suggestion.addReplacement(replacementText);
+                          }
+                        }
+                      }
+                      currentIndex = template.getEndIndex();
                     }
-                    if (suggestion != null) {
-                      String replacementText = template.getParameterValue(elements[3]);
-                      String comment = (elements.length > 4) ? template.getParameterValue(elements[4]) : null;
-                      suggestion.addReplacement(replacementText, comment);
-                    }
-                    currentIndex = template.getEndIndex();
                   }
                 }
+              } catch (APIException e) {
+                // Error retrieving suggestion page.
               }
-            } catch (APIException e) {
-              // Error retrieving suggestion page.
             }
           }
         }
