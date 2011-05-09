@@ -76,7 +76,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
             while (currentIndex < parameterValue.length()) {
               PageElementTag tag = PageContents.findNextTag(page, parameterValue, "br", currentIndex);
               if (tag != null) {
-                currentIndex = tag.getEndTagEndIndex();
+                currentIndex = tag.getEndTagEndIndex() - 1;
                 lastTag = tag;
               } else {
                 currentIndex = parameterValue.length();
@@ -121,9 +121,9 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                 endTagIndex = lastTag.getEndTagEndIndex();
               } else if (lastTagData != null) {
                 startTagIndex = lastTagData.getStartIndex();
-                endTagIndex = lastTagData.getEndIndex() - 1;
+                endTagIndex = lastTagData.getEndIndex();
               }
-              currentIndex = endTagIndex + 1;
+              currentIndex = endTagIndex;
               boolean ok = true;
               while (currentIndex < parameterValue.length()) {
                 if (Character.isWhitespace(parameterValue.charAt(currentIndex))) {
@@ -149,7 +149,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                 CheckErrorResult errorResult = createCheckErrorResult(
                     page,
                     template.getParameterValueOffset(i) + startTagIndex,
-                    template.getParameterValueOffset(i) + endTagIndex + 1);
+                    template.getParameterValueOffset(i) + endTagIndex);
                 errorResult.addReplacement("", GT._("Delete"));
                 errors.add(errorResult);
               }

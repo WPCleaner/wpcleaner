@@ -72,7 +72,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       if (contents.charAt(startIndex) == '<') {
         PageElementTag ref = PageElementTag.analyzeBlock("ref", contents, startIndex);
         if (ref != null) {
-          startIndex = ref.getEndTagEndIndex() + 1;
+          startIndex = ref.getEndTagEndIndex();
           String reference = ref.getText();
           if ((reference != null) && (reference.length() > 0)) {
             PageElementTag previousRef = refs.get(reference);
@@ -88,7 +88,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
               if (errorResults.get(previousRef) == null) {
                 CheckErrorResult errorResult = createCheckErrorResult(
                     page,
-                    previousRef.getStartTagBeginIndex(), previousRef.getEndTagEndIndex() + 1,
+                    previousRef.getStartTagBeginIndex(), previousRef.getEndTagEndIndex(),
                     (previousName == null) ?
                         CheckErrorResult.ErrorLevel.WARNING :
                         CheckErrorResult.ErrorLevel.CORRECT);
@@ -127,7 +127,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
               }
               CheckErrorResult errorResult = createCheckErrorResult(
                   page,
-                  ref.getStartTagBeginIndex(), ref.getEndTagEndIndex() + 1);
+                  ref.getStartTagBeginIndex(), ref.getEndTagEndIndex());
               if (previousName != null) {
                 if (previousGroup != null) {
                   errorResult.addReplacement("<ref group=" + previousGroup + " name=" + previousName + "/>");

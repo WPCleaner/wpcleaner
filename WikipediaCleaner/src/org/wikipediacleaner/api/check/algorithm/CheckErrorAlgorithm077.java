@@ -74,7 +74,7 @@ public class CheckErrorAlgorithm077 extends CheckErrorAlgorithmBase {
               }
               tmpIndex++;
             }
-            tmpIndex = tag.getEndTagEndIndex() + 1;
+            tmpIndex = tag.getEndTagEndIndex();
             while (tmpIndex < text.length()) {
               if (!Character.isWhitespace(text.charAt(tmpIndex))) {
                 onlySpaces = false;

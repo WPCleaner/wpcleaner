@@ -44,7 +44,9 @@ public class PageElementTag {
    * @param index Block start index.
    * @return Block details it there's a block.
    */
-  public static PageElementTag analyzeBlock(String tagName, String contents, int index) {
+  public static PageElementTag analyzeBlock(
+      String tagName,
+      String contents, int index) {
     // Verify arguments
     if ((tagName == null) || (tagName.length() == 0) || (contents == null)) {
       return null;
@@ -133,7 +135,8 @@ public class PageElementTag {
     }
 
     // Check Tag Name
-    if ((tmpIndex >= contents.length()) || (!contents.startsWith(tagName, tmpIndex))) {
+    if ((tmpIndex >= contents.length()) ||
+        (!tagName.equalsIgnoreCase(contents.substring(tmpIndex, tmpIndex + tagName.length())))) {
       return null;
     }
     tmpIndex += tagName.length();
@@ -150,7 +153,7 @@ public class PageElementTag {
     if ((tmpIndex >= contents.length()) || (contents.charAt(tmpIndex) != '>')) {
       return null;
     }
-    int endTagEndIndex = tmpIndex;
+    int endTagEndIndex = tmpIndex + 1;
 
     List<String> parameterNames = new ArrayList<String>();
     List<String> parameterValues = new ArrayList<String>();
