@@ -106,7 +106,10 @@ public class Suggestion {
   public Matcher lookingAt(String text, int index) {
     Matcher matcher = pattern.matcher(text.substring(index));
     if (matcher.lookingAt()) {
-      return matcher;
+      int pos = index + matcher.end();
+      if ((pos >= text.length()) || (!Character.isLetterOrDigit(text.charAt(pos)))) {
+        return matcher;
+      }
     }
     return null;
   }
