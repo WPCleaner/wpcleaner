@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.swing.Action;
 import javax.swing.JCheckBox;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -189,14 +190,24 @@ public class MenuCreator {
             JMenu subMenu = new JMenu(possibleAction.getName());
             for (Actionnable subAction : possibleAction.getActions()) {
               menuItem = new JMenuItem(subAction.getName());
-              menuItem.addActionListener(subAction.getAction(element, textPane));
+              Action action = subAction.getAction(element, textPane);
+              if (action != null) {
+                menuItem.addActionListener(action);
+              } else {
+                menuItem.setEnabled(false);
+              }
               subMenu.add(menuItem);
             }
             addSubmenu(popup, subMenu, 0, 0);
           }
         } else {
           menuItem = new JMenuItem(possibleAction.getName());
-          menuItem.addActionListener(possibleAction.getAction(element, textPane));
+          Action action = possibleAction.getAction(element, textPane);
+          if (action != null) {
+            menuItem.addActionListener(action);
+          } else {
+            menuItem.setEnabled(false);
+          }
           popup.add(menuItem);
         }
       }
