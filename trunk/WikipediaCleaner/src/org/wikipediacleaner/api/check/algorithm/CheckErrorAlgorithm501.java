@@ -20,7 +20,6 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -89,20 +88,17 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         CheckErrorResult error = createCheckErrorResult(
             page, startIndex, startIndex + maxLength);
         String text = contents.substring(startIndex, startIndex + maxLength);
-        List<String> replacements = new ArrayList<String>();
-        List<String> commentList = new ArrayList<String>();
         for (Suggestion suggestion : possibles) {
-          replacements.addAll(suggestion.getReplacements(text));
-          if (suggestion.getComment() != null) {
-            commentList.add(suggestion.getComment());
+          String comment = suggestion.getComment();
+          if (comment != null) {
+            error.addPossibleAction(comment, new NullActionProvider());
           }
-        }
-        Collections.sort(replacements);
-        for (String replacement : replacements) {
-          error.addReplacement(replacement);
-        }
-        for (String comment : commentList) {
-          error.addPossibleAction(comment, new NullActionProvider());
+          List<String> replacements = suggestion.getReplacements(text);
+          if (replacements != null) {
+            for (String replacement : replacements) {
+              error.addReplacement(replacement);
+            }
+          }
         }
         errors.add(error);
       }

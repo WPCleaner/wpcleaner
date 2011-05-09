@@ -36,5 +36,4 @@ public class NullActionProvider implements ActionProvider {
   public Action getAction(Element element, JTextPane textPane) {
     return null;
   }
-
 }
