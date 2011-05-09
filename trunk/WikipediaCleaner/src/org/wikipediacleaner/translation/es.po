@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-08 14:38+0200\n"
+"POT-Creation-Date: 2011-05-09 22:11+0200\n"
 "PO-Revision-Date: 2011-04-26 18:14+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -84,7 +84,11 @@ msgid "Error unkown from WikiCleaner"
 msgstr "Error desconocido en WikiCleaner"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:74
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:77
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm027.java:90
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:74
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:77
 #, java-format
 msgid "Replace with {0}"
 msgstr "Reemplazar con {0}"
@@ -198,9 +202,9 @@ msgstr "Reemplazar usando plantilla {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:136
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:124
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:402
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1145
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1228
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1255
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1156
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1239
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1266
 msgid "External Viewer"
 msgstr "Visor externo"
 
@@ -1829,139 +1833,139 @@ msgstr ""
 msgid "Validate the new table of contents"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:224
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:235
 msgid "Current chapter"
 msgstr "Capítulo actual"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:459
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:819
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:470
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:830
 msgid "Link to"
 msgstr "Enlaces a"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:460
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:471
 msgid "Replace with"
 msgstr "Reemplazar con"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:461
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:472
 msgid "Add to preferred disambiguations"
 msgstr "Añadir a desambiguaciones preferidas."
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:744
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:755
 msgid "Add other preferred disambiguation..."
 msgstr "Añadir otra desambiguación preferida"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:748
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:759
 msgid "What link do you want to add to the preferred disambiguations?"
 msgstr "¿Qué enlace desea añadir a las desambiguaciones preferidas?"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:755
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:766
 msgid "Remove from preferred disambiguations"
 msgstr "Eliminar de desambiguaciones preferidas"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:767
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:778
 #, java-format
 msgid "Reverse to [[{0}|{1}]]"
 msgstr "Revertir a [[{0}|{1}]]"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:777
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:788
 #, java-format
 msgid "&Link to {0}"
 msgstr "En&lace a {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:782
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:793
 #, java-format
 msgid "&Replace with {0}"
 msgstr "&Reemplazar con {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:799
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:810
 msgid "Red links analysis"
 msgstr "Análisis de enlaces rojos"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:911
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:922
 msgid "Remove link"
 msgstr "Remover enlaces"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:927
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:938
 msgid "Remove all links"
 msgstr "Remover todos los enlaces"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:953
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:964
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:975
 msgid "Mark as normal link"
 msgstr "Marcar como un enlace normal"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:955
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:997
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1038
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:966
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1008
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1049
 #, java-format
 msgid "Using '{{'{0}'}}'"
 msgstr "Usando '{{'{0}'}}'"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:995
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1006
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1017
 msgid "Mark as needing help"
 msgstr "Marcar como ayuda necesaria"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1036
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1047
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1058
 msgid "Link text"
 msgstr "Enlazar texto"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1075
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1086
 msgid "Analyze"
 msgstr "Analizar"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1114
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1125
 msgid "Analyze template"
 msgstr "Analizar plantilla"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1116
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1127
 msgid "Analyze page"
 msgstr "Analizar página"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1146
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1237
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1157
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1248
 msgid "History"
 msgstr "Historial"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1226
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1237
 msgid "Template External Viewer"
 msgstr "Visor externo de plantilla"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1235
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1246
 msgid "Template history"
 msgstr "Historial de plantilla"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1290
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1295
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1301
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1306
 msgid "Disambiguation analysis"
 msgstr "Análisis de desambiguación"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1323
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1334
 msgid "Reload links"
 msgstr "Recargar enlaces"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1340
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1351
 msgid "Purge cache"
 msgstr "Prugar caché"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1357
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1368
 msgid "Find text"
 msgstr "Encontrar texto"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1375
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1386
 msgid "Search in templates"
 msgstr "Buscar en plantillas"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1402
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1413
 msgid "Mark backlink as normal"
 msgstr "Marcar retroenlace como normal"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1409
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1420
 msgid "Mark backlink as needing help"
 msgstr "Marcar retroenlace como necesitando ayuda"
 
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1417
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1428
 msgid "Remove mark on backlink"
 msgstr "Eliminar la marca del retroenlace"
 

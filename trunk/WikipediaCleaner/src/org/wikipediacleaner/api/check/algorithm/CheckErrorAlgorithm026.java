@@ -22,7 +22,10 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.i18n.GT;
 
 /**
  * Algorithm for analyzing error 26 of check wikipedia project.
@@ -51,7 +54,32 @@ public class CheckErrorAlgorithm026 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
-    result = addTags(result, page, contents, errors, "b");
+    int startIndex = 0;
+    while (startIndex < contents.length()) {
+      PageElementTag tag = PageContents.findNextTag(page, contents, "b", startIndex);
+      if (tag == null) {
+        startIndex = contents.length();
+      } else {
+        if (errors == null) {
+          return true;
+        }
+        CheckErrorResult error = createCheckErrorResult(
+            page, tag.getStartTagBeginIndex(), tag.getEndTagEndIndex());
+        String text = tag.getText();
+        if (text.length() > 30) {
+          text = text.substring(0, 10) + "…" + text.substring(text.length() - 10); 
+        }
+        error.addReplacement(
+            "'''" + tag.getText() + "'''",
+            GT._("Replace with {0}", "'''" + text + "'''"));
+        error.addReplacement(
+            tag.getText(),
+            GT._("Replace with {0}", text));
+        errors.add(error);
+        result = true;
+        startIndex += tag.getEndTagEndIndex();
+      }
+    }
     return result;
   }
 }

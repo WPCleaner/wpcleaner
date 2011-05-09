@@ -639,7 +639,8 @@ public class PageContents {
       if (tmpIndex < 0) {
         currentIndex = contents.length();
       } else {
-        PageElementTag tag = PageElementTag.analyzeBlock(tagName, contents, tmpIndex);
+        PageElementTag tag = PageElementTag.analyzeBlock(
+            tagName, contents, tmpIndex);
         if (tag != null) {
           return tag;
         }

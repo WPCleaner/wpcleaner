@@ -71,14 +71,14 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     while (startIndex < contents.length()) {
       PageElementTag tag = PageContents.findNextTag(page, contents, "ref", startIndex);
       if (tag != null) {
-        startIndex = tag.getEndTagEndIndex() + 1;
+        startIndex = tag.getEndTagEndIndex();
 
         // Check for consecutive <ref> tags
         ArrayList<PageElementTag> tagList = new ArrayList<PageElementTag>();
         tagList.add(tag);
         boolean tryNext = true;
         while (tryNext) {
-          int endIndex = tagList.get(tagList.size() - 1).getEndTagEndIndex() + 1;
+          int endIndex = tagList.get(tagList.size() - 1).getEndTagEndIndex();
           PageElementTag nextTag = PageContents.findNextTag(page, contents, "ref", endIndex);
           if (nextTag == null) {
             tryNext = false;
@@ -99,14 +99,14 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
             }
             if (tryNext) {
               tagList.add(nextTag);
-              startIndex = nextTag.getEndTagEndIndex() + 1;
+              startIndex = nextTag.getEndTagEndIndex();
             }
           }
         }
         PageElementTag lastTag = tagList.get(tagList.size() - 1);
 
         // Remove possible whitespaces
-        int endIndex = lastTag.getEndTagEndIndex() + 1;
+        int endIndex = lastTag.getEndTagEndIndex();
         while ((endIndex < contents.length()) && (Character.isWhitespace(contents.charAt(endIndex)))) {
           endIndex++;
         }
@@ -142,7 +142,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
             }
             tagText += contents.substring(
                 tagList.get(i).getStartTagBeginIndex(),
-                tagList.get(i).getEndTagEndIndex() + 1);
+                tagList.get(i).getEndTagEndIndex());
           }
           if (tagList.size() > 1) {
             errorResult.addReplacement(
