@@ -50,6 +50,12 @@ public class Suggestion {
    */
   public static Suggestion createSuggestion(String patternText) {
     try {
+      if ((patternText.startsWith(TAG_NOWIKI_1)) &&
+          (patternText.endsWith(TAG_NOWIKI_2))) {
+        patternText = patternText.substring(
+            TAG_NOWIKI_1.length(),
+            patternText.length() - TAG_NOWIKI_2.length());
+      }
       Pattern pattern = Pattern.compile(patternText);
       return new Suggestion(pattern);
     } catch (PatternSyntaxException e) {
