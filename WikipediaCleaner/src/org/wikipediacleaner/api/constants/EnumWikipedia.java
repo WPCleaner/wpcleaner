@@ -1314,7 +1314,9 @@ public enum EnumWikipedia {
                       Suggestion suggestion = tmpMap.get(patternText);
                       if (suggestion == null) {
                         suggestion = Suggestion.createSuggestion(patternText);
-                        tmpMap.put(patternText, suggestion);
+                        if (suggestion != null) {
+                          tmpMap.put(patternText, suggestion);
+                        }
                       }
                       if (suggestion != null) {
                         if (elements.length > 4) {
