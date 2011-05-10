@@ -195,6 +195,7 @@ public class PageElementTemplate {
     int tmpIndex = 0;
     int depthCurlyBrackets = 0;
     int depthSquareBrackets = 0;
+    boolean inNoWikiTag = false;
     int equalIndex = -1;
     while (tmpIndex < strParameters.length()) {
       if (strParameters.startsWith("{{", tmpIndex)) {
@@ -209,15 +210,23 @@ public class PageElementTemplate {
       } else if (strParameters.startsWith("]]", tmpIndex)) {
         tmpIndex += 2;
         depthSquareBrackets--;
+      } else if (strParameters.startsWith("<nowiki>", tmpIndex)) {
+        tmpIndex += 7;
+        inNoWikiTag = true;
+      } else if (strParameters.startsWith("</nowiki>", tmpIndex)) {
+        tmpIndex += 8;
+        inNoWikiTag = false;
       } else {
         if ((depthCurlyBrackets <= 0) &&
             (depthSquareBrackets <= 0) &&
+            (inNoWikiTag == false) &&
             (equalIndex < 0) &&
             (strParameters.charAt(tmpIndex) == '=')) {
           equalIndex = tmpIndex;
           tmpIndex++;
         } else if ((depthCurlyBrackets <= 0) &&
             (depthSquareBrackets <= 0) &&
+            (inNoWikiTag == false) &&
             (strParameters.charAt(tmpIndex) == '|')) {
           depthCurlyBrackets = 0;
           depthSquareBrackets = 0;
