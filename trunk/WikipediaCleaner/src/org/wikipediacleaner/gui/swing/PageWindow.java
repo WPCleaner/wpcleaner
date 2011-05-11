@@ -1383,8 +1383,11 @@ public abstract class PageWindow
       String contents = getTextContents().getText();
       Collection<PageElementComment> comments = PageContents.findAllComments(getWikipedia(), contents);
       for (CheckErrorPage initialError : initialErrors) {
-        CheckError.analyzeError(initialError, contents, comments);
-        if (initialError.getErrorFound() == false) {
+        CheckErrorPage errorPage = CheckError.analyzeError(
+            initialError.getAlgorithm(), initialError.getPage(),
+            contents, comments);
+        if ((errorPage.getErrorFound() == false) ||
+            (errorPage.getActiveResultsCount() < initialError.getActiveResultsCount())) {
           errorsFixed.add(initialError.getAlgorithm());
         }
       }

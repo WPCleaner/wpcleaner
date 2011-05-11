@@ -172,16 +172,9 @@ public class MenuCreator {
     if ((popup == null) || (element == null) || (textPane == null) || (info == null)) {
       return;
     }
-    
-    // Current chapter
-    JMenuItem menuItem = null;
-    /*menuItem = new JMenuItem(info.getErrorType());
-    menuItem.setEnabled(false);
-    popup.add(menuItem);
-    addCurrentChapterToMenu(popup, textPane, position);
-    popup.add(new JSeparator());*/
 
     // Actions
+    JMenuItem menuItem = null;
     List<Actionnable> possibleActions = info.getPossibleActions();
     if (possibleActions != null) {
       for (Actionnable possibleAction : possibleActions) {
@@ -212,6 +205,15 @@ public class MenuCreator {
         }
       }
     }
+
+    // Error description
+    if (popup.getComponentCount() > 0) {
+      popup.add(new JSeparator());
+    }
+    menuItem = new JMenuItem(info.getErrorType());
+    menuItem.setEnabled(false);
+    popup.add(menuItem);
+    //addCurrentChapterToMenu(popup, textPane, position);
   }
 
   /**

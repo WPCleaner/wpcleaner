@@ -594,12 +594,14 @@ public class AnalysisWindow extends PageWindow {
   void actionSelectError(CheckErrorPage errorSelected) {
     boolean modified = getTextContents().isModified();
     String contents = getTextContents().getText();
-    CheckError.analyzeError(errorSelected, contents, null);
+    CheckErrorPage errorPage = CheckError.analyzeError(
+        errorSelected.getAlgorithm(), errorSelected.getPage(),
+        contents, null);
     getTextContents().resetAttributes();
     StyledDocument document = getTextContents().getStyledDocument();
     if (document != null) {
-      if (errorSelected.getResults() != null) {
-        for (CheckErrorResult errorFound : errorSelected.getResults()) {
+      if (errorPage.getResults() != null) {
+        for (CheckErrorResult errorFound : errorPage.getResults()) {
           String styleName = MediaWikiConstants.STYLE_CHECK_WIKI_ERROR;
           if (errorFound.getErrorLevel() == CheckErrorResult.ErrorLevel.CORRECT) {
             styleName = MediaWikiConstants.STYLE_CHECK_WIKI_OK;
@@ -1022,11 +1024,19 @@ public class AnalysisWindow extends PageWindow {
               (errorModel.getAlgorithm() != null) &&
               (errorModel.getAlgorithm().equals(tmpError.getAlgorithm()))) {
             errorFound = true;
+            modelErrors.set(index, tmpError);
           }
         }
         if (!errorFound) {
           modelErrors.addElement(tmpError);
         }
+      }
+    }
+    for (int index = 0; index < modelErrors.getSize(); index++) {
+      CheckErrorPage errorModel = (CheckErrorPage) modelErrors.get(index);
+      if ((errorsFound == null) || (!errorsFound.contains(errorModel))) {
+        CheckErrorPage newError = new CheckErrorPage(getPage(), errorModel.getAlgorithm());
+        modelErrors.set(index, newError);
       }
     }
     listErrors.repaint();
