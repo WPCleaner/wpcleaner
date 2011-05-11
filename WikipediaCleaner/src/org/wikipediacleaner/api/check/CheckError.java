@@ -81,27 +81,28 @@ public class CheckError {
   /**
    * Analyze a page to find errors of a given type.
    * 
-   * @param errorPage Error page.
+   * @param algorithm Algorithm.
+   * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
    * @param comments Comments in page contents.
+   * @return Error page.
    */
-  public static void analyzeError(
-      CheckErrorPage errorPage,
+  public static CheckErrorPage analyzeError(
+      CheckErrorAlgorithm algorithm, Page page,
       String contents, Collection<PageElementComment> comments) {
-    if (errorPage != null) {
-      List<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
-      boolean errorFound = false;
-      if ((errorPage.getAlgorithm() != null) &&
-          (errorPage.getAlgorithm().isAvailable()) &&
-          (errorPage.getPage() != null)) {
-        if (comments == null) {
-          comments = PageContents.findAllComments(errorPage.getPage().getWikipedia(), contents);
-        }
-        errorFound = errorPage.getAlgorithm().analyze(
-            errorPage.getPage(), contents, comments, errorsFound);
-      }
-      errorPage.setResults(errorFound, errorsFound);
+    if ((algorithm == null) || (page == null)) {
+      return null;
     }
+    CheckErrorPage errorPage = new CheckErrorPage(page, algorithm);
+    boolean errorFound = false;
+    if (comments == null) {
+      comments = PageContents.findAllComments(page.getWikipedia(), contents);
+    }
+    List<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
+    errorFound = algorithm.analyze(
+        page, contents, comments, errorsFound);
+    errorPage.setResults(errorFound, errorsFound);
+    return errorPage;
   }
 
   /**

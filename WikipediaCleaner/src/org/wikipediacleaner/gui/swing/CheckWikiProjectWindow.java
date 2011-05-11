@@ -1091,12 +1091,14 @@ public class CheckWikiProjectWindow extends PageWindow {
         CheckErrorPage errorSelected = (CheckErrorPage) selection;
         boolean modified = textPage.isModified();
         String contents = textPage.getText();
-        CheckError.analyzeError(errorSelected, contents, null);
+        CheckErrorPage errorPage = CheckError.analyzeError(
+            errorSelected.getAlgorithm(), errorSelected.getPage(),
+            contents, null);
         textPage.resetAttributes();
         StyledDocument document = textPage.getStyledDocument();
         if (document != null) {
-          if (errorSelected.getResults() != null) {
-            for (CheckErrorResult errorFound : errorSelected.getResults()) {
+          if (errorPage.getResults() != null) {
+            for (CheckErrorResult errorFound : errorPage.getResults()) {
               String styleName = MediaWikiConstants.STYLE_CHECK_WIKI_ERROR;
               if (errorFound.getErrorLevel() == CheckErrorResult.ErrorLevel.CORRECT) {
                 styleName = MediaWikiConstants.STYLE_CHECK_WIKI_OK;
@@ -1171,8 +1173,8 @@ public class CheckWikiProjectWindow extends PageWindow {
       }
 
       // Check if error is still present
-      CheckErrorPage errorPage = new CheckErrorPage(page, error.getAlgorithm());
-      CheckError.analyzeError(errorPage, textPage.getText(), null);
+      CheckErrorPage errorPage = CheckError.analyzeError(
+          error.getAlgorithm(), page, textPage.getText(), null);
       if ((errorPage.getResults() != null) &&
           (!errorPage.getResults().isEmpty())) {
         if (displayYesNoWarning(GT._(
@@ -1297,8 +1299,11 @@ public class CheckWikiProjectWindow extends PageWindow {
       final List<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
       if (initialErrors != null) {
         for (CheckErrorPage initialError : initialErrors) {
-          CheckError.analyzeError(initialError, textPage.getText(), null);
-          if (initialError.getErrorFound() == false) {
+          CheckErrorPage errorPage = CheckError.analyzeError(
+              initialError.getAlgorithm(), initialError.getPage(),
+              textPage.getText(), null);
+          if ((errorPage.getErrorFound() == false) ||
+              (errorPage.getActiveResultsCount() < initialError.getActiveResultsCount())) {
             errorsFixed.add(initialError.getAlgorithm());
           }
         }
@@ -1395,11 +1400,19 @@ public class CheckWikiProjectWindow extends PageWindow {
                 (errorModel.getAlgorithm() != null) &&
                 (errorModel.getAlgorithm().equals(tmpError.getAlgorithm()))) {
               errorFound = true;
+              modelErrors.set(index, tmpError);
             }
           }
           if (!errorFound) {
             modelErrors.addElement(tmpError);
           }
+        }
+      }
+      for (int index = 0; index < modelErrors.getSize(); index++) {
+        CheckErrorPage errorModel = (CheckErrorPage) modelErrors.get(index);
+        if ((errorsFound == null) || (!errorsFound.contains(errorModel))) {
+          CheckErrorPage newError = new CheckErrorPage(page, errorModel.getAlgorithm());
+          modelErrors.set(index, newError);
         }
       }
 
