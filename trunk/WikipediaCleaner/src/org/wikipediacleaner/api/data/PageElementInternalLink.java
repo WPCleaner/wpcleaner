@@ -22,7 +22,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
 /**
- * Class containing informations about a complete internal link ([[link#anchor|text]]). 
+ * Class containing information about a complete internal link ([[link#anchor|text]]). 
  */
 public class PageElementInternalLink {
   private final int beginIndex;

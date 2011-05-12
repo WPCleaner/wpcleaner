@@ -22,7 +22,7 @@ import org.wikipediacleaner.api.constants.EnumLoginResult;
 
 
 /**
- * Class containing the informations about the login result.
+ * Class containing the information about the login result.
  */
 public class LoginResult {
 

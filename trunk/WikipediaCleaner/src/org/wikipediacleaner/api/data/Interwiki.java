@@ -20,7 +20,7 @@ package org.wikipediacleaner.api.data;
 
 
 /**
- * Informations about inter-wiki.
+ * Information about inter-wiki.
  */
 public class Interwiki implements Comparable<Interwiki> {
 

@@ -20,7 +20,7 @@ package org.wikipediacleaner.api.data;
 
 
 /**
- * Class containing informations about a tag (&lt;<i>tag</i>&gt;). 
+ * Class containing information about a tag (&lt;<i>tag</i>&gt;). 
  */
 public class PageElementTagData {
   private final int startIndex;

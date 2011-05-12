@@ -22,7 +22,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
 /**
- * Class containing informations about a comment (<!-- Comment -->). 
+ * Class containing information about a comment (<!-- Comment -->). 
  */
 public class PageElementComment {
   private final int beginIndex;

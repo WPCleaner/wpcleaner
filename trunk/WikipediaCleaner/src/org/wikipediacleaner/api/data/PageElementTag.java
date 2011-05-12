@@ -23,7 +23,7 @@ import java.util.List;
 
 
 /**
- * Class containing informations about a complete tag (&lt;<i>tag</i>&gt;Text&lt;/<i>tag</i>&gt;). 
+ * Class containing information about a complete tag (&lt;<i>tag</i>&gt;Text&lt;/<i>tag</i>&gt;). 
  */
 public class PageElementTag {
   private final String tagName;

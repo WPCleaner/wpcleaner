@@ -22,7 +22,7 @@ import java.util.List;
 
 
 /**
- * Informations about magic words.
+ * Information about magic words.
  */
 public class MagicWord implements Comparable<MagicWord> {
 

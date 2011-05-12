@@ -22,7 +22,7 @@ import java.util.List;
 
 
 /**
- * Informations about languages.
+ * Information about languages.
  */
 public class Language implements Comparable<Language> {
 

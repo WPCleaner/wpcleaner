@@ -24,7 +24,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
 /**
- * Class containing informations about a complete interwiki link ([[iw:link#anchor|text]]). 
+ * Class containing information about a complete interwiki link ([[iw:link#anchor|text]]). 
  */
 public class PageElementInterwikiLink {
   private final int beginIndex;

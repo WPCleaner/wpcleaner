@@ -285,7 +285,7 @@ public interface API {
   public void retrieveTemplates(EnumWikipedia wikipedia, Page page) throws APIException;
 
   /**
-   * Initialize the informations concerning redirects.
+   * Initialize the information concerning redirects.
    * 
    * @param wikipedia Wikipedia.
    * @param pages List of pages.

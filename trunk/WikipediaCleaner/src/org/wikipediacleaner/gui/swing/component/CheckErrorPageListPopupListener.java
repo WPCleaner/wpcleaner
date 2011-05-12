@@ -84,7 +84,7 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
    */
   private void maybeShowPopup(MouseEvent e) {
 
-    // Retrieve informations
+    // Retrieve information
     if (!e.isPopupTrigger()) {
       return;
     }

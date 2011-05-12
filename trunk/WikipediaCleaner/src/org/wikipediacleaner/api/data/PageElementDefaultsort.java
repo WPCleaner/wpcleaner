@@ -24,7 +24,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
 /**
- * Class containing informations about a complete DEFAULTSORT ({{<i>DEFAULTSORT</i>:...}}). 
+ * Class containing information about a complete DEFAULTSORT ({{<i>DEFAULTSORT</i>:...}}). 
  */
 public class PageElementDefaultsort {
   private final int beginIndex;

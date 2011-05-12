@@ -284,7 +284,7 @@ public class MenuCreator {
         Configuration.SUB_ARRAY_PREFERRED_DAB,
         disambigPage.getTitle());
 
-    // Retrieve various informations
+    // Retrieve various information
     List<String> wiktionary = disambigPage.getWiktionaryLinks();
     Map<Page, List<String>> anchorsMap = new HashMap<Page, List<String>>();
     List<Page> links = disambigPage.getLinksWithRedirect(anchorsMap);

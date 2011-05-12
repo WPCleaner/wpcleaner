@@ -23,7 +23,7 @@ import java.util.List;
 
 
 /**
- * Informations about namespaces.
+ * Information about namespaces.
  */
 public class Namespace implements Comparable<Namespace> {
 

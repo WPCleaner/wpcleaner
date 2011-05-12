@@ -1151,7 +1151,7 @@ public class MediaWikiAPI implements API {
   }
 
   /**
-   * Initialize the informations concerning redirects.
+   * Initialize the information concerning redirects.
    * 
    * @param wikipedia Wikipedia.
    * @param pages List of pages.
@@ -1268,7 +1268,7 @@ public class MediaWikiAPI implements API {
   }
 
   /**
-   * Load site informations.
+   * Load site information.
    * 
    * @param wikipedia Wikipedia.
    * @throws APIException

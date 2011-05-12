@@ -62,7 +62,7 @@ public enum EnumWikipedia {
   /*
    * List of Wikipedia this tool is able to deal with.
    * 
-   * For each Wikipedia, the following informations are needed :
+   * For each Wikipedia, the following information are needed :
    * - 2 letters code for the Wikipedia language.
    * - full Wikipedia name.
    * - full URL of MediaWiki API (api.php).

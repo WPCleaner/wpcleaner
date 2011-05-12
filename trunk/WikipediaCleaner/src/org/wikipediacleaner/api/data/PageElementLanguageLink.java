@@ -24,7 +24,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
 /**
- * Class containing informations about a language link ([[lang:link|text]]). 
+ * Class containing information about a language link ([[lang:link|text]]). 
  */
 public class PageElementLanguageLink {
   private final int beginIndex;

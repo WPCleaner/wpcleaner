@@ -22,7 +22,7 @@ import org.wikipediacleaner.api.constants.EnumQueryResult;
 
 
 /**
- * Class containing the informations about the query result.
+ * Class containing the information about the query result.
  */
 public class QueryResult {
 
