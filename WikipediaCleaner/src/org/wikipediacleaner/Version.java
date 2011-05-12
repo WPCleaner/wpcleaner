@@ -26,7 +26,7 @@ import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * A simple class keeping version informations. 
+ * A simple class keeping version information. 
  */
 public final class Version {
 

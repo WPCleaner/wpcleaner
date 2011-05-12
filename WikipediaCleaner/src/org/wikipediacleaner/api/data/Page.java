@@ -33,7 +33,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
 /**
- * Informations about pages
+ * Information about pages
  */
 public class Page implements Comparable<Page> {
 

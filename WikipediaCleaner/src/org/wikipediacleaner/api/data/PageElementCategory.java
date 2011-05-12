@@ -22,7 +22,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
 /**
- * Class containing informations about a category link ([[category:name|sort]]). 
+ * Class containing information about a category link ([[category:name|sort]]). 
  */
 public class PageElementCategory {
   private final int beginIndex;

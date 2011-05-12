@@ -25,7 +25,7 @@ import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * A class for memorizing informations about errors detected.
+ * A class for memorizing information about errors detected.
  */
 public class CheckErrorResult {
 

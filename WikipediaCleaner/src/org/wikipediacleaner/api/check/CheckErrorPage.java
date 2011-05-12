@@ -25,7 +25,7 @@ import org.wikipediacleaner.api.data.Page;
 
 
 /**
- * Informations about an error type for a page.
+ * Information about an error type for a page.
  */
 public class CheckErrorPage {
 

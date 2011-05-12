@@ -768,7 +768,7 @@ public class AnalysisWindow extends PageWindow {
     listLinks.clearSelection();
     listErrors.clearSelection();
 
-    // Update links informations
+    // Update links information
     Page page = getPage();
     mapLinksCount = new HashMap<String, Integer>();
     if ((page != null) && (page.getLinks() != null)) {

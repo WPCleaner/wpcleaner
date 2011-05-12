@@ -1333,6 +1333,7 @@ public class MainWindow
               username,
               (saveUser == Configuration.VALUE_SAVE_USER_BOTH) ? new String(password) : "");
           configuration.setProperties(getWikipedia(), Configuration.PROPERTIES_USERS, props);
+          configuration.setInt(null, Configuration.INTEGER_SAVE_USER, saveUser);
         }
         Configuration.getConfiguration().save();
 

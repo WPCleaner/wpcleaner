@@ -25,7 +25,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
 /**
- * Class containing informations about a complete image ([[namespace:image|...|text]]). 
+ * Class containing information about a complete image ([[namespace:image|...|text]]). 
  */
 public class PageElementImage {
   private final int beginIndex;

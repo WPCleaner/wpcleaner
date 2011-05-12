@@ -87,7 +87,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
    */
   private void maybeShowPopup(MouseEvent e) {
 
-    // Retrieve informations
+    // Retrieve information
     if (!e.isPopupTrigger()) {
       return;
     }
@@ -105,7 +105,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
    */
   private void maybeShowPopup(KeyEvent e) {
 
-    // Retrieve informations
+    // Retrieve information
     if (e.getKeyCode() != KeyEvent.VK_CONTEXT_MENU) {
       return;
     }
@@ -151,7 +151,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
     TemplateMatcher matcher = (attrTemplateMatcher instanceof TemplateMatcher) ?
         (TemplateMatcher) attrTemplateMatcher : null;
 
-    // Manage Informations
+    // Manage Information
     if (attrInfo instanceof CheckErrorResult) { // TODO: more generic
       CheckErrorResult info = (CheckErrorResult) attrInfo;
       JPopupMenu popup = new JPopupMenu();

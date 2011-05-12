@@ -24,7 +24,7 @@ import java.util.List;
 
 
 /**
- * Class containing informations about a complete template ({{<i>template</i>|...}}). 
+ * Class containing information about a complete template ({{<i>template</i>|...}}). 
  */
 public class PageElementTemplate {
   private final String templateName;

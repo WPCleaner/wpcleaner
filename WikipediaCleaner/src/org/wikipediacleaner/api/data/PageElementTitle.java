@@ -22,7 +22,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
 /**
- * Class containing informations about a title (== Title ==). 
+ * Class containing information about a title (== Title ==). 
  */
 public class PageElementTitle {
   private final int beginIndex;

@@ -52,7 +52,7 @@ public class DisambiguationStatusCallable extends MediaWikiCallable<List<Page>> 
    * @see java.util.concurrent.Callable#call()
    */
   public List<Page> call() throws APIException {
-    setText(GT._("Retrieving disambiguation informations"));
+    setText(GT._("Retrieving disambiguation information"));
     api.initializeDisambiguationStatus(getWikipedia(), pages);
     return pages;
   }

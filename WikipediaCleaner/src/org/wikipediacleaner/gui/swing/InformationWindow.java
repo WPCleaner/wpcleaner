@@ -126,7 +126,7 @@ public class InformationWindow
    */
   @Override
   public String getTitle() {
-    return GT._("Informations");
+    return GT._("Information");
   }
 
   /**
@@ -157,7 +157,7 @@ public class InformationWindow
     panel.add(lblTitle, constraints);
     constraints.gridy++;
 
-    // Informations
+    // Information
     textInformation = new HtmlPanel();
     ucontextInformation = new SimpleUserAgentContext();
     rcontextInformation = new MediaWikiHtmlRendererContext(textInformation, ucontextInformation);
