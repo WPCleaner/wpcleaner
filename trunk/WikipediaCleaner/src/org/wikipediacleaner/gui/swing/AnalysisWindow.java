@@ -367,6 +367,7 @@ public class AnalysisWindow extends PageWindow {
     addButtonUndoRedo(toolbarButtons, true);
     buttonToc = createButtonToc(this, true);
     toolbarButtons.add(buttonToc);
+    addChkOrthograph(toolbarButtons, true);
     buttonValidate = createButtonValidate(this, true);
     toolbarButtons.add(buttonValidate);
     addButtonSend(toolbarButtons, true);
@@ -1015,6 +1016,7 @@ public class AnalysisWindow extends PageWindow {
 
     // Check for new errors
     PageAnalysis pageAnalysis = new PageAnalysis(getPage(), getTextContents().getText());
+    pageAnalysis.shouldCheckOrthograph(shouldCheckOrthograph());
     List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
         allAlgorithms, pageAnalysis);
     if (errorsFound != null) {

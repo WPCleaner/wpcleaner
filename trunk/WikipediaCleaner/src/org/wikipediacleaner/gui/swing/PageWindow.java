@@ -43,6 +43,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
@@ -255,6 +256,7 @@ public abstract class PageWindow
   private JCheckBox chkEditTalkPage;
   JCheckBox chkUpdateDabWarning;
   JCheckBox chkCreateDabWarning;
+  private JToggleButton chkOrthograph;
   private JLabel lblLastModified;
   private JLabel lblEditProtectionLevel;
 
@@ -314,6 +316,9 @@ public abstract class PageWindow
           pageLoaded && dabWarning &&
           (chkUpdateDabWarning != null) &&
           (chkUpdateDabWarning.isSelected()));
+    }
+    if (chkOrthograph != null) {
+      chkOrthograph.setEnabled(pageLoaded);
     }
     if ((textComment != null) && (chkAutomaticComment != null)) {
       textComment.setEnabled(!chkAutomaticComment.isSelected());
@@ -598,7 +603,7 @@ public abstract class PageWindow
    * 
    * @param listener Action listener.
    * @param icon Flag indicating if an icon should be used.
-   * @return Validate button.
+   * @return TOC button.
    */
   public JButton createButtonToc(ActionListener listener, boolean icon) {
     JButton button;
@@ -822,6 +827,38 @@ public abstract class PageWindow
       getTextContents().setCheckBoxUpdateDabWarning(chkCreateDabWarning);
       panel.add(chkCreateDabWarning);
     }
+  }
+
+  /**
+   * Add a button for checking orthograph.
+   * 
+   * @param panel Contail.
+   * @param icon Flag indicating if an icon should be used.
+   * @return Check ortograph button.
+   */
+  public void addChkOrthograph(JComponent panel, boolean icon) {
+    boolean checked = shouldCheckOrthograph();
+    if (icon) {
+      chkOrthograph = Utilities.createJToggleButton(
+          "gnome-tools-check-spelling.png", EnumImageSize.NORMAL,
+          GT._("Check orthograph and typography"), false);
+    } else {
+      chkOrthograph = Utilities.createJToggleButton(GT._("Orthograph"));
+    }
+    chkOrthograph.setSelected(checked);
+    panel.add(chkOrthograph);
+  }
+
+  /**
+   * @return True if orthograph should be checked.
+   */
+  public boolean shouldCheckOrthograph() {
+    if (chkOrthograph != null) {
+      return chkOrthograph.isSelected();
+    }
+    Configuration config = Configuration.getConfiguration();
+    return config.getBoolean(
+        null, Configuration.BOOLEAN_ORTHOGRAPH, Configuration.DEFAULT_ORTHOGRAPH);
   }
 
   /**
@@ -1332,6 +1369,7 @@ public abstract class PageWindow
       Collection<CheckErrorAlgorithm> algorithms) {
     if (page != null) {
       PageAnalysis pageAnalysis = new PageAnalysis(page, page.getContents());
+      pageAnalysis.shouldCheckOrthograph(shouldCheckOrthograph());
       List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
           algorithms, pageAnalysis);
       initialErrors = new ArrayList<CheckErrorPage>();
@@ -1385,6 +1423,7 @@ public abstract class PageWindow
       for (CheckErrorPage initialError : initialErrors) {
         if (pageAnalysis == null) {
           pageAnalysis = new PageAnalysis(initialError.getPage(), contents);
+          pageAnalysis.shouldCheckOrthograph(shouldCheckOrthograph());
         }
         CheckErrorPage errorPage = CheckError.analyzeError(
             initialError.getAlgorithm(), pageAnalysis);

@@ -88,6 +88,7 @@ public class OptionsWindow
   private JCheckBox chkWikiInComments;
   private JCheckBox chkShow0ErrorsCheckWiki;
   private JCheckBox chkLinkErrorsCheckWiki;
+  private JCheckBox chkOrthograph;
   private SpinnerNumberModel modelMenuSize;
   private JSpinner spinMenuSize;
   private SpinnerNumberModel modelMaxPages;
@@ -319,6 +320,18 @@ public class OptionsWindow
     constraints.gridx = 0;
     constraints.weightx = 0;
     panel.add(chkForceWatch, constraints);
+    constraints.gridy++;
+
+    // Check orthograph
+    chkOrthograph = Utilities.createJCheckBox(
+        GT._("Check orthograph and typography"),
+        configuration.getBoolean(
+            null,
+            Configuration.BOOLEAN_ORTHOGRAPH,
+            Configuration.DEFAULT_ORTHOGRAPH));
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    panel.add(chkOrthograph, constraints);
     constraints.gridy++;
 
     // Menu size
@@ -1078,6 +1091,10 @@ public class OptionsWindow
         chkForceWatch.isSelected());
     config.setBoolean(
         null,
+        Configuration.BOOLEAN_ORTHOGRAPH,
+        chkOrthograph.isSelected());
+    config.setBoolean(
+        null,
         Configuration.BOOLEAN_REMEMBER_LAST_PAGE,
         chkRememberLastPage.isSelected());
     config.setBoolean(
@@ -1245,6 +1262,10 @@ public class OptionsWindow
         null,
         Configuration.BOOLEAN_FORCE_WATCH,
         Configuration.DEFAULT_FORCE_WATCH));
+    chkOrthograph.setSelected(config.getBoolean(
+        null,
+        Configuration.BOOLEAN_ORTHOGRAPH,
+        Configuration.DEFAULT_ORTHOGRAPH));
     chkRememberLastPage.setSelected(config.getBoolean(
         null,
         Configuration.BOOLEAN_REMEMBER_LAST_PAGE,

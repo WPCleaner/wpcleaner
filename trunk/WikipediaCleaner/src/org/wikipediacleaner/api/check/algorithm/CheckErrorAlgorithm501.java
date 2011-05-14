@@ -53,6 +53,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
+    if (!pageAnalysis.shouldCheckOrthograph()) {
+      return false;
+    }
     Map<String, Suggestion> suggestions = pageAnalysis.getWikipedia().getSuggestions();
     if ((suggestions == null) || (suggestions.isEmpty())) {
       return false;
