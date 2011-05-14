@@ -24,9 +24,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 /**
  * Class containing information about a complete internal link ([[link#anchor|text]]). 
  */
-public class PageElementInternalLink {
-  private final int beginIndex;
-  private final int endIndex;
+public class PageElementInternalLink extends PageElement {
+
   private final String linkNotTrimmed;
   private final String link;
   private final String anchorNotTrimmed;
@@ -155,14 +154,6 @@ public class PageElementInternalLink {
         null, null);
   }
 
-  public int getBeginIndex() {
-    return beginIndex;
-  }
-
-  public int getEndIndex() {
-    return endIndex;
-  }
-
   public String getLink() {
     return link;
   }
@@ -195,8 +186,7 @@ public class PageElementInternalLink {
       EnumWikipedia wikipedia,
       int beginIndex, int endIndex,
       String link, String anchor, String text) {
-    this.beginIndex = beginIndex;
-    this.endIndex = endIndex;
+    super(beginIndex, endIndex);
     this.linkNotTrimmed = link;
     this.link = (link != null) ? wikipedia.normalizeTitle(link.trim()) : null;
     this.anchorNotTrimmed = anchor;

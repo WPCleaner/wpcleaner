@@ -26,9 +26,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 /**
  * Class containing information about a complete DEFAULTSORT ({{<i>DEFAULTSORT</i>:...}}). 
  */
-public class PageElementDefaultsort {
-  private final int beginIndex;
-  private final int endIndex;
+public class PageElementDefaultsort extends PageElement {
+
   private final String tag;
   private final String value;
 
@@ -96,14 +95,6 @@ public class PageElementDefaultsort {
         defaultSort, contents.substring(tmpIndex, endIndex).trim());
   }
 
-  public int getBeginIndex() {
-    return beginIndex;
-  }
-
-  public int getEndIndex() {
-    return endIndex;
-  }
-
   public String getTag() {
     return tag;
   }
@@ -115,8 +106,7 @@ public class PageElementDefaultsort {
   private PageElementDefaultsort(
       int beginIndex, int endIndex,
       String tag, String value) {
-    this.beginIndex = beginIndex;
-    this.endIndex = endIndex;
+    super(beginIndex, endIndex);
     this.tag = tag;
     this.value = value;
   }

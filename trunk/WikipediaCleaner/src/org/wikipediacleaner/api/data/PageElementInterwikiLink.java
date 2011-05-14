@@ -26,9 +26,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 /**
  * Class containing information about a complete interwiki link ([[iw:link#anchor|text]]). 
  */
-public class PageElementInterwikiLink {
-  private final int beginIndex;
-  private final int endIndex;
+public class PageElementInterwikiLink extends PageElement {
+
   private final String interwikiNotTrimmed;
   private final String interwiki;
   private final String linkNotTrimmed;
@@ -130,14 +129,6 @@ public class PageElementInterwikiLink {
         null, null);
   }
 
-  public int getBeginIndex() {
-    return beginIndex;
-  }
-
-  public int getEndIndex() {
-    return endIndex;
-  }
-
   public String getInterwiki() {
     return interwiki;
   }
@@ -165,8 +156,7 @@ public class PageElementInterwikiLink {
       int beginIndex, int endIndex,
       String interwiki,
       String link, String anchor, String text) {
-    this.beginIndex = beginIndex;
-    this.endIndex = endIndex;
+    super(beginIndex, endIndex);
     this.interwikiNotTrimmed = interwiki;
     this.interwiki = (interwiki != null) ? interwiki.trim() : null;
     this.linkNotTrimmed = link;

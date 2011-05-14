@@ -24,9 +24,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 /**
  * Class containing information about a title (== Title ==). 
  */
-public class PageElementTitle {
-  private final int beginIndex;
-  private final int endIndex;
+public class PageElementTitle extends PageElement {
+
   private final int firstLevel;
   private final int secondLevel;
   private final String titleNotTrimmed;
@@ -97,14 +96,6 @@ public class PageElementTitle {
         contents.substring(afterTitleIndex, endIndex));
   }
 
-  public int getBeginIndex() {
-    return beginIndex;
-  }
-
-  public int getEndIndex() {
-    return endIndex;
-  }
-
   public int getFirstLevel() {
     return firstLevel;
   }
@@ -125,8 +116,7 @@ public class PageElementTitle {
       int beginIndex, int endIndex,
       int firstLevel, int secondLevel,
       String title, String afterTitle) {
-    this.beginIndex = beginIndex;
-    this.endIndex = endIndex;
+    super(beginIndex, endIndex);
     this.firstLevel = firstLevel;
     this.secondLevel = secondLevel;
     this.titleNotTrimmed = title;

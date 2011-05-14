@@ -26,12 +26,11 @@ import java.util.List;
 /**
  * Class containing information about a complete template ({{<i>template</i>|...}}). 
  */
-public class PageElementTemplate {
+public class PageElementTemplate extends PageElement {
+
   private final String templateName;
   private final String templateNameNotTrimmed;
-  private final int beginIndex;
   private final List<Parameter> parameters;
-  private final int endIndex;
 
   private static class Parameter {
     final String name;
@@ -358,22 +357,13 @@ public class PageElementTemplate {
     return null;
   }
 
-  public int getBeginIndex() {
-    return beginIndex;
-  }
-
-  public int getEndIndex() {
-    return endIndex;
-  }
-
   private PageElementTemplate(
       String templateName,
       int beginIndex, int endIndex,
       List<Parameter> parameters) {
+    super(beginIndex, endIndex);
     this.templateNameNotTrimmed = templateName;
     this.templateName = (templateName != null) ? Page.getStringUcFirst(templateName.trim()) : null;
-    this.beginIndex = beginIndex;
-    this.endIndex = endIndex;
     this.parameters = parameters;
   }
 

@@ -25,16 +25,15 @@ import java.util.List;
 /**
  * Class containing information about a complete tag (&lt;<i>tag</i>&gt;Text&lt;/<i>tag</i>&gt;). 
  */
-public class PageElementTag {
+public class PageElementTag extends PageElement {
+
   private final String tagName;
-  private final int startTagBeginIndex;
   private final int startTagEndIndex;
   private final List<String> parameterNames;
   private final List<String> parameterValues;
   private final boolean simpleTag;
   private final String text;
   private final int endTagBeginIndex;
-  private final int endTagEndIndex;
 
   /**
    * Analyze contents to check if it matches a block for the given tag name.
@@ -237,7 +236,7 @@ public class PageElementTag {
   }
 
   public int getStartTagBeginIndex() {
-    return startTagBeginIndex;
+    return getBeginIndex();
   }
 
   public int getStartTagEndIndex() {
@@ -257,22 +256,21 @@ public class PageElementTag {
   }
 
   public int getEndTagEndIndex() {
-    return endTagEndIndex;
+    return getEndIndex();
   }
 
   private PageElementTag(
       String tagName,
       int startTagBeginIndex, int startTagEndIndex,
       List<String> parameterNames, List<String> parameterValues) {
+    super(startTagBeginIndex, startTagEndIndex);
     this.tagName = tagName;
-    this.startTagBeginIndex = startTagBeginIndex;
     this.startTagEndIndex = startTagEndIndex;
     this.parameterNames = parameterNames;
     this.parameterValues = parameterValues;
     this.simpleTag = true;
     this.text = null;
     this.endTagBeginIndex = startTagEndIndex;
-    this.endTagEndIndex = startTagEndIndex;
   }
 
   private PageElementTag(
@@ -281,15 +279,14 @@ public class PageElementTag {
       List<String> parameterNames, List<String> parameterValues,
       String text,
       int endTagBeginIndex, int endTagEndIndex) {
+    super(startTagBeginIndex, endTagEndIndex);
     this.tagName = tagName;
-    this.startTagBeginIndex = startTagBeginIndex;
     this.startTagEndIndex = startTagEndIndex;
     this.parameterNames = parameterNames;
     this.parameterValues = parameterValues;
     this.simpleTag = false;
     this.text = text;
     this.endTagBeginIndex = endTagBeginIndex;
-    this.endTagEndIndex = endTagEndIndex;
   }
 
   public String getPartBeforeParameters() {

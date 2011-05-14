@@ -430,7 +430,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
         result = true;
         if (errors != null) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              page, tag.getStartIndex(), tag.getEndIndex());
+              page, tag.getBeginIndex(), tag.getEndIndex());
           errors.add(errorResult);
         }
         startIndex = tag.getEndIndex();
@@ -445,7 +445,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
         result = true;
         if (errors != null) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              page, tag.getStartIndex(), tag.getEndIndex());
+              page, tag.getBeginIndex(), tag.getEndIndex());
           errors.add(errorResult);
         }
         startIndex = tag.getEndIndex();

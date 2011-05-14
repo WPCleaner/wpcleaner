@@ -24,9 +24,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 /**
  * Class containing information about a comment (<!-- Comment -->). 
  */
-public class PageElementComment {
-  private final int beginIndex;
-  private final int endIndex;
+public class PageElementComment extends PageElement {
+
   private final String commentNotTrimmed;
   private final String comment;
 
@@ -65,14 +64,6 @@ public class PageElementComment {
         contents.substring(beginComment, endIndex));
   }
 
-  public int getBeginIndex() {
-    return beginIndex;
-  }
-
-  public int getEndIndex() {
-    return endIndex;
-  }
-
   public String getComment() {
     return comment;
   }
@@ -80,8 +71,7 @@ public class PageElementComment {
   private PageElementComment(
       int beginIndex, int endIndex,
       String comment) {
-    this.beginIndex = beginIndex;
-    this.endIndex = endIndex;
+    super(beginIndex, endIndex);
     this.commentNotTrimmed = comment;
     this.comment = (comment != null) ? comment.trim() : null;
   }
