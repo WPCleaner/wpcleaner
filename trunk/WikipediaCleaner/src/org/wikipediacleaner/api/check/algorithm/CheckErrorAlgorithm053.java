@@ -22,7 +22,6 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 
@@ -56,8 +55,7 @@ public class CheckErrorAlgorithm053 extends CheckErrorAlgorithmBase {
     int startIndex = 0;
     String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementLanguageLink link = PageContents.findNextLanguageLink(
-          pageAnalysis.getPage(), contents, startIndex);
+      PageElementLanguageLink link = pageAnalysis.getNextLanguageLink(startIndex);
       if (link != null) {
         startIndex = link.getEndIndex();
         PageElementCategory category = pageAnalysis.getNextCategory(startIndex);

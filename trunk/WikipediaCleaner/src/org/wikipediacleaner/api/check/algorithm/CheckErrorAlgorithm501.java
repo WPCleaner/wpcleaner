@@ -65,43 +65,56 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     List<Suggestion> possibles = new ArrayList<Suggestion>();
     String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      possibles.clear();
 
-      // Test every suggestion
-      int maxLength = 0;
-      String currentContents = contents.substring(startIndex);
-      for (Suggestion suggestion : suggestions.values()) {
-        Matcher matcher = suggestion.lookingAt(currentContents);
-        if (matcher != null) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          possibles.add(suggestion);
-          if (matcher.end() > maxLength) {
-            maxLength = matcher.end();
-          }
-        }
+      // Test if the position is correct to check orthograph
+      boolean checkOrthograph = true;
+      if (checkOrthograph && pageAnalysis.isInInterwikiLink(startIndex)) {
+        checkOrthograph = false;
+      }
+      if (checkOrthograph && pageAnalysis.isInLanguageLink(startIndex)) {
+        checkOrthograph = false;
       }
 
-      // Analyze matching suggestions
-      if (!possibles.isEmpty()) {
-        CheckErrorResult error = createCheckErrorResult(
-            pageAnalysis.getPage(), startIndex, startIndex + maxLength);
-        String text = currentContents.substring(0, maxLength);
-        for (Suggestion suggestion : possibles) {
-          String comment = suggestion.getComment();
-          if (comment != null) {
-            error.addPossibleAction(comment, new NullActionProvider());
-          }
-          List<String> replacements = suggestion.getReplacements(text);
-          if (replacements != null) {
-            for (String replacement : replacements) {
-              error.addReplacement(replacement);
+      // Check orthograph
+      if (checkOrthograph) {
+        possibles.clear();
+  
+        // Test every suggestion
+        int maxLength = 0;
+        String currentContents = contents.substring(startIndex);
+        for (Suggestion suggestion : suggestions.values()) {
+          Matcher matcher = suggestion.lookingAt(currentContents);
+          if (matcher != null) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            possibles.add(suggestion);
+            if (matcher.end() > maxLength) {
+              maxLength = matcher.end();
             }
           }
         }
-        errors.add(error);
+  
+        // Analyze matching suggestions
+        if (!possibles.isEmpty()) {
+          CheckErrorResult error = createCheckErrorResult(
+              pageAnalysis.getPage(), startIndex, startIndex + maxLength);
+          String text = currentContents.substring(0, maxLength);
+          for (Suggestion suggestion : possibles) {
+            String comment = suggestion.getComment();
+            if (comment != null) {
+              error.addPossibleAction(comment, new NullActionProvider());
+            }
+            List<String> replacements = suggestion.getReplacements(text);
+            if (replacements != null) {
+              for (String replacement : replacements) {
+                error.addReplacement(replacement);
+              }
+            }
+          }
+          errors.add(error);
+        }
       }
 
       // Go to the next non letter/digit character
