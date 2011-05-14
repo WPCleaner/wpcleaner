@@ -22,13 +22,14 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementDefaultsort;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.i18n.GT;
+
 
 /**
  * Algorithm for analyzing error 37 of check wikipedia project.
@@ -50,22 +51,19 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Analyzing title to find special characters
-    String title = page.getTitle();
+    String title = pageAnalysis.getPage().getTitle();
     boolean characterFound = false;
     String unknownCharacters = "";
     String text = "";
@@ -73,7 +71,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     while (currentPos < title.length()) {
       boolean error = false;
       char character = title.charAt(currentPos);
-      if (!SpecialCharacters.isAuthorized(character, page.getWikipedia())) {
+      if (!SpecialCharacters.isAuthorized(character, pageAnalysis.getWikipedia())) {
         if (currentPos < 3) { // TODO : Parameter
           characterFound = true;
         }
@@ -97,7 +95,9 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     }
 
     // Searching a DEFAULTSORT tag
-    PageElementDefaultsort tag = PageContents.findNextDefaultsort(page, contents, 0);
+    String contents = pageAnalysis.getContents();
+    PageElementDefaultsort tag = PageContents.findNextDefaultsort(
+        pageAnalysis.getPage(), contents, 0);
     if (tag != null) {
       return false;
     }
@@ -107,7 +107,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     int currentIndex = 0;
     while (currentIndex < contents.length()) {
       PageElementCategory category = PageContents.findNextCategory(
-          page, contents, currentIndex, comments);
+          pageAnalysis.getPage(), contents, currentIndex, pageAnalysis.getComments());
       if (category != null) {
         currentIndex = category.getEndIndex();
         if ((category.getSort() == null) ||

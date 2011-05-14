@@ -18,14 +18,12 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 
 
 /**
@@ -43,26 +41,25 @@ public class CheckErrorAlgorithm065 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     int startIndex = 0;
     boolean result = false;
-    Namespace imageNamespace = Namespace.getNamespace(Namespace.IMAGE, page.getWikipedia().getNamespaces());
+    Namespace imageNamespace = Namespace.getNamespace(
+        Namespace.IMAGE, pageAnalysis.getWikipedia().getNamespaces());
     if (imageNamespace == null) {
       return result;
     }
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       if (contents.startsWith("[[", startIndex)) {
         int beginIndex = startIndex;
@@ -103,7 +100,7 @@ public class CheckErrorAlgorithm065 extends CheckErrorAlgorithmBase {
           }
           if ((currentIndex < contents.length()) &&
               (contents.startsWith("]]", currentIndex))) {
-            EnumWikipedia wikipedia = page.getWikipedia();
+            EnumWikipedia wikipedia = pageAnalysis.getWikipedia();
             for (int tmpIndex = linkIndex; tmpIndex <= currentIndex; tmpIndex++) {
               if ((contents.charAt(tmpIndex) == '|') ||
                   (contents.charAt(tmpIndex) == ']')) {
@@ -121,7 +118,7 @@ public class CheckErrorAlgorithm065 extends CheckErrorAlgorithmBase {
                     }
                     result = true;
                     CheckErrorResult errorResult = createCheckErrorResult(
-                        page, tmpIndex - breakFound.length(), tmpIndex);
+                        pageAnalysis.getPage(), tmpIndex - breakFound.length(), tmpIndex);
                     errorResult.addReplacement("");
                     errors.add(errorResult);
                   }

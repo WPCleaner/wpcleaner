@@ -21,8 +21,8 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
+
 
 /**
  * Algorithm for analyzing error 46 of check wikipedia project.
@@ -37,23 +37,21 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Analyze contents from the beginning by counting [[ and ]]
     int startIndex = 0;
     boolean result = false;
+    String contents = pageAnalysis.getContents();
     int beginIndex = contents.indexOf("[[", startIndex);
     int endIndex = contents.indexOf("]]", startIndex);
     int count = 0;
@@ -85,7 +83,7 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
             if (((previousCR < 0) || (previousCR < previousBegin)) &&
                 ((previousEnd < 0) || (previousEnd < previousBegin))) {
               CheckErrorResult errorResult = createCheckErrorResult(
-                  page, previousBegin, endIndex + 2);
+                  pageAnalysis.getPage(), previousBegin, endIndex + 2);
               errorResult.addReplacement("[" + contents.substring(previousBegin, endIndex + 2));
 
               // Check if the situation is something like [http://....]] (replacement: [http://....]) 
@@ -100,7 +98,8 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
 
           // Default
           if (!errorReported) {
-            errors.add(createCheckErrorResult(page, endIndex, endIndex + 2));
+            errors.add(createCheckErrorResult(
+                pageAnalysis.getPage(), endIndex, endIndex + 2));
           }
           count = 0;
         }

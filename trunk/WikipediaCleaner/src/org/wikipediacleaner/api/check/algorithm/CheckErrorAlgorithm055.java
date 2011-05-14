@@ -18,12 +18,10 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 
 
 /**
@@ -39,23 +37,21 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
     boolean result = false;
     int startIndex = 0;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
 
       // Searching for next <small>
@@ -82,7 +78,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
                 }
                 result = true;
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    page, smallPos, currentPos + 8);
+                    pageAnalysis.getPage(), smallPos, currentPos + 8);
                 errors.add(errorResult);
               }
               currentPos += 7;

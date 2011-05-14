@@ -23,8 +23,8 @@ import java.util.HashMap;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Language;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
+
 
 /**
  * Algorithm for analyzing error 45 of check wikipedia project.
@@ -39,23 +39,21 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     int startIndex = 0;
     boolean result = false;
     HashMap<String, InterwikiElement> interwikis = new HashMap<String, InterwikiElement>();
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       if (contents.startsWith("[[", startIndex)) {
         int beginIndex = startIndex;
@@ -78,7 +76,7 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
           // Link itself
           String namespace = contents.substring(linkIndex, currentIndex);
           currentIndex++;
-          for (Language lg : page.getWikipedia().getLanguages()) {
+          for (Language lg : pageAnalysis.getWikipedia().getLanguages()) {
             if (namespace.equals(lg.getCode())) {
               while ((currentIndex < contents.length()) &&
                      (contents.charAt(currentIndex) != ']')) {
@@ -99,13 +97,13 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
                   result = true;
                   if (interwikiElement.errorResult == null) {
                     interwikiElement.errorResult = createCheckErrorResult(
-                        page,
+                        pageAnalysis.getPage(),
                         interwikiElement.begin, interwikiElement.end,
                         CheckErrorResult.ErrorLevel.CORRECT);
                     errors.add(interwikiElement.errorResult);
                   }
                   CheckErrorResult errorResult = createCheckErrorResult(
-                      page, beginIndex, currentIndex);
+                      pageAnalysis.getPage(), beginIndex, currentIndex);
                   errorResult.addReplacement("");
                   errors.add(errorResult);
                 }

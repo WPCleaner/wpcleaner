@@ -23,9 +23,8 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTagData;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
@@ -44,20 +43,17 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
     boolean result = false;
-    result |= analyzeProtocol("[http://", page, contents, errors);
-    result |= analyzeProtocol("[ftp://", page, contents, errors);
-    result |= analyzeProtocol("[https://", page, contents, errors);
+    result |= analyzeProtocol("[http://", pageAnalysis, errors);
+    result |= analyzeProtocol("[ftp://", pageAnalysis, errors);
+    result |= analyzeProtocol("[https://", pageAnalysis, errors);
     return result;
   }
 
@@ -65,18 +61,18 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
    * Check for errors for on protocol.
    * 
    * @param protocol Protocol.
-   * @param page Page.
-   * @param contents Page contents.
+   * @param pageAnalysis Page analysis.
    * @return
    */
   private boolean analyzeProtocol(
-      String protocol, Page page, String contents,
+      String protocol, PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
     int startIndex = 0;
     boolean result = false;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       startIndex = contents.indexOf(protocol, startIndex);
       if (startIndex >= 0) {
@@ -91,20 +87,20 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
             }
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                page, startIndex, endIndex + 1); 
+                pageAnalysis.getPage(), startIndex, endIndex + 1); 
             boolean isInRef = false;
             PageElementTagData previousStartRef = PageContents.findPreviousStartTag(
-                page, contents, "ref", startIndex);
+                pageAnalysis.getPage(), contents, "ref", startIndex);
             if (previousStartRef != null) {
               PageElementTagData previousEndRef = PageContents.findPreviousEndTag(
-                  page, contents, "ref", startIndex);
+                  pageAnalysis.getPage(), contents, "ref", startIndex);
               if ((previousEndRef == null) ||
                   (previousEndRef.getEndIndex() < previousStartRef.getEndIndex())) {
                 PageElementTagData nextEndRef = PageContents.findNextEndTag(
-                    page, contents, "ref", endIndex);
+                    pageAnalysis.getPage(), contents, "ref", endIndex);
                 if (nextEndRef != null) {
                   PageElementTagData nextStartRef = PageContents.findNextStartTag(
-                      page, contents, "ref", startIndex);
+                      pageAnalysis.getPage(), contents, "ref", startIndex);
                   if ((nextStartRef == null) ||
                       (nextEndRef.getBeginIndex() < nextStartRef.getBeginIndex())) {
                     isInRef = true;

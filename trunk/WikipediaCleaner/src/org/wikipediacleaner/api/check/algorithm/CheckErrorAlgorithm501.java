@@ -26,8 +26,7 @@ import java.util.regex.Matcher;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.Suggestion;
 
 
@@ -44,26 +43,24 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
-    Map<String, Suggestion> suggestions = page.getWikipedia().getSuggestions();
+    Map<String, Suggestion> suggestions = pageAnalysis.getWikipedia().getSuggestions();
     if ((suggestions == null) || (suggestions.isEmpty())) {
       return false;
     }
     boolean result = false;
     int startIndex = 0;
     List<Suggestion> possibles = new ArrayList<Suggestion>();
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       possibles.clear();
 
@@ -87,7 +84,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       // Analyze matching suggestions
       if (!possibles.isEmpty()) {
         CheckErrorResult error = createCheckErrorResult(
-            page, startIndex, startIndex + maxLength);
+            pageAnalysis.getPage(), startIndex, startIndex + maxLength);
         String text = currentContents.substring(0, maxLength);
         for (Suggestion suggestion : possibles) {
           String comment = suggestion.getComment();

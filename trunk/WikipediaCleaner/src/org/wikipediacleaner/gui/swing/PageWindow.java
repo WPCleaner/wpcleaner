@@ -53,8 +53,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -1332,8 +1331,9 @@ public abstract class PageWindow
   protected void initializeInitialErrors(
       Collection<CheckErrorAlgorithm> algorithms) {
     if (page != null) {
+      PageAnalysis pageAnalysis = new PageAnalysis(page, page.getContents());
       List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-          algorithms, page, page.getContents());
+          algorithms, pageAnalysis);
       initialErrors = new ArrayList<CheckErrorPage>();
       if (errorsFound != null) {
         for (CheckErrorPage tmpError : errorsFound) {
@@ -1379,13 +1379,15 @@ public abstract class PageWindow
    */
   protected List<CheckErrorAlgorithm> computeErrorsFixed() {
     final List<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
+    PageAnalysis pageAnalysis = null;
     if ((initialErrors != null) && (initialErrors.size() > 0)) {
       String contents = getTextContents().getText();
-      Collection<PageElementComment> comments = PageContents.findAllComments(getWikipedia(), contents);
       for (CheckErrorPage initialError : initialErrors) {
+        if (pageAnalysis == null) {
+          pageAnalysis = new PageAnalysis(initialError.getPage(), contents);
+        }
         CheckErrorPage errorPage = CheckError.analyzeError(
-            initialError.getAlgorithm(), initialError.getPage(),
-            contents, comments);
+            initialError.getAlgorithm(), pageAnalysis);
         if ((errorPage.getErrorFound() == false) ||
             (errorPage.getActiveResultsCount() < initialError.getActiveResultsCount())) {
           errorsFixed.add(initialError.getAlgorithm());

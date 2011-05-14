@@ -18,12 +18,10 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 
 
 /**
@@ -39,22 +37,20 @@ public class CheckErrorAlgorithm086 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     int startIndex = 0;
     boolean result = false;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       // Looking for [[
       startIndex = contents.indexOf("[[", startIndex);
@@ -76,7 +72,8 @@ public class CheckErrorAlgorithm086 extends CheckErrorAlgorithmBase {
                 return true;
               }
               result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(page, startIndex, endIndex + 2);
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(), startIndex, endIndex + 2);
               errorResult.addReplacement(contents.substring(startIndex + 1, endIndex + 1));
               errors.add(errorResult);
               startIndex = endIndex + 2;

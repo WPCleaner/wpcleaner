@@ -21,8 +21,8 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
+
 
 /**
  * Algorithm for analyzing error 05 of check wikipedia project.
@@ -37,17 +37,14 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
@@ -56,6 +53,7 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
     boolean inComment = false;
     int commentIndex = -1;
     int possibleEndIndex = -1;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       if (inComment) {
         if (contents.startsWith("-->", startIndex)) {
@@ -85,10 +83,10 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = null;
     if (possibleEndIndex < 0) {
       errorResult = createCheckErrorResult(
-          page, commentIndex, commentIndex + 4);
+          pageAnalysis.getPage(), commentIndex, commentIndex + 4);
     } else {
       errorResult = createCheckErrorResult(
-          page, commentIndex, possibleEndIndex + 2);
+          pageAnalysis.getPage(), commentIndex, possibleEndIndex + 2);
       errorResult.addReplacement(
           contents.substring(commentIndex, possibleEndIndex) + "-->");
     }

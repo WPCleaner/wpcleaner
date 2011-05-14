@@ -28,8 +28,7 @@ import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CompositeAction;
 import org.wikipediacleaner.api.check.SimpleAction;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.action.NoOpAction;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
@@ -49,17 +48,14 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
     int startIndex = 0;
@@ -68,6 +64,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     HashMap<PageElementTag, CheckErrorResult> errorResults = new HashMap<PageElementTag, CheckErrorResult>();
     ArrayList<String> names = new ArrayList<String>();
     ArrayList<Actionnable> existingNames = new ArrayList<Actionnable>();
+    String contents = pageAnalysis.getContents();
     while ((startIndex < contents.length()) && (startIndex >= 0)) {
       if (contents.charAt(startIndex) == '<') {
         PageElementTag ref = PageElementTag.analyzeBlock("ref", contents, startIndex);
@@ -87,7 +84,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
               String previousGroup = previousRef.getParameter("group");
               if (errorResults.get(previousRef) == null) {
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    page,
+                    pageAnalysis.getPage(),
                     previousRef.getStartTagBeginIndex(), previousRef.getEndTagEndIndex(),
                     (previousName == null) ?
                         CheckErrorResult.ErrorLevel.WARNING :
@@ -126,7 +123,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                 errorResults.put(previousRef, errorResult);
               }
               CheckErrorResult errorResult = createCheckErrorResult(
-                  page,
+                  pageAnalysis.getPage(),
                   ref.getStartTagBeginIndex(), ref.getEndTagEndIndex());
               if (previousName != null) {
                 if (previousGroup != null) {

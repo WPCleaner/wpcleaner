@@ -18,7 +18,6 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-
 import java.util.Collection;
 import java.util.Map;
 
@@ -28,9 +27,8 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Language;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
@@ -49,33 +47,32 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Retrieve possible templates to replace the link to other language
-    String templatesParam = page.getWikipedia().getCheckWikiProperty(
+    String templatesParam = pageAnalysis.getWikipedia().getCheckWikiProperty(
         "template", 68, true, false, false);
     String[] templatesList = null;
     if (templatesParam != null) {
-      templatesList = page.getWikipedia().convertPropertyToStringArray(templatesParam);
+      templatesList = pageAnalysis.getWikipedia().convertPropertyToStringArray(templatesParam);
     }
 
     // Analyzing the text from the beginning
     boolean result = false;
     int startIndex = 0;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementInternalLink link = PageContents.findNextInternalLink(page, contents, startIndex);
+      PageElementInternalLink link = PageContents.findNextInternalLink(
+          pageAnalysis.getPage(), contents, startIndex);
       if (link != null) {
         boolean found = false;
 
@@ -86,21 +83,21 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
           int currentPos = linkUrl.indexOf(":", 1);
           if (currentPos > 1) {
             String namespace = linkUrl.substring(1, currentPos);
-            for (Language lg : page.getWikipedia().getLanguages()) {
+            for (Language lg : pageAnalysis.getWikipedia().getLanguages()) {
               if (namespace.equals(lg.getCode())) {
                 if (errors == null) {
                   return true;
                 }
                 result = true;
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    page, link.getBeginIndex(), link.getEndIndex());
+                    pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
                 EnumWikipedia fromWikipedia = EnumWikipedia.getWikipedia(lg.getCode());
                 if (fromWikipedia != null) {
                   String pageTitle = linkUrl.substring(currentPos + 1);
                   errorResult.addPossibleAction(
                       GT._("Check language links"),
                       new CheckLanguageLinkActionProvider(
-                          fromWikipedia, page.getWikipedia(),
+                          fromWikipedia, pageAnalysis.getWikipedia(),
                           pageTitle));
                   if ((templatesList != null) && (templatesList.length > 0)) {
                     for (String template : templatesList) {

@@ -18,6 +18,10 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.Collection;
+
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+
 
 /**
  * An analysis of a page.
@@ -27,13 +31,16 @@ public class PageAnalysis {
   private final Page page;
   private final String contents;
 
+  private final Object commentsLock = new Object();
+  private Collection<PageElementComment> comments;
+
   /**
    * @param page Page.
    * @param contents Page contents (may differ from page.getContents()).
    */
   public PageAnalysis(Page page, String contents) {
     this.page = page;
-    this.contents = contents;
+    this.contents = (contents != null) ? contents : page.getContents();
   }
 
   /**
@@ -44,9 +51,43 @@ public class PageAnalysis {
   }
 
   /**
+   * @return Wikipedia.
+   */
+  public EnumWikipedia getWikipedia() {
+    if (page != null) {
+      return page.getWikipedia();
+    }
+    return null;
+  }
+
+  /**
+   * @param namespace Namespace.
+   * @return true if the page is in the namespace.
+   */
+  public boolean isInNamespace(int namespace) {
+    if ((page != null) &&
+        (page.getNamespace() != null)) {
+      return (page.getNamespace().intValue() == namespace);
+    }
+    return false;
+  }
+
+  /**
    * @return Page contents.
    */
   public String getContents() {
     return contents;
+  }
+
+  /**
+   * @return All comments in the page analysis.
+   */
+  public Collection<PageElementComment> getComments() {
+    synchronized (commentsLock) {
+      if (comments == null) {
+        comments = PageContents.findAllComments(getWikipedia(), getContents());
+      }
+      return comments;
+    }
   }
 }

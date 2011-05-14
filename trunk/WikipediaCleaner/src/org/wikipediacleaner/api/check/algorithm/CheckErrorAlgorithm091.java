@@ -23,8 +23,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.MagicWord;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 
 
 /**
@@ -40,30 +39,28 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Checking if title contains lowercase letters
     boolean lowFound = false;
     boolean firstLetter = true;
-    for (int currentPos = 0; currentPos < page.getTitle().length(); currentPos++) {
-      if (Character.isLowerCase(page.getTitle().charAt(currentPos))) {
+    String title = pageAnalysis.getPage().getTitle();
+    for (int currentPos = 0; currentPos < title.length(); currentPos++) {
+      if (Character.isLowerCase(title.charAt(currentPos))) {
         if (firstLetter) {
           lowFound = true;
         }
         firstLetter = false;
-      } else if (Character.isWhitespace(page.getTitle().charAt(currentPos))) {
+      } else if (Character.isWhitespace(title.charAt(currentPos))) {
         firstLetter = true;
       } else {
         firstLetter = false;
@@ -75,6 +72,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
 
     // Analyzing the text from the beginning
     int startIndex = 0;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       // Update position of next {{
       int beginIndex = contents.indexOf("{{", startIndex);
@@ -99,7 +97,8 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
           // Check that link is DEFAULTSORT
           String defaultSort = null;
           if (currentPos < endIndex) {
-            MagicWord magicDefaultsort = page.getWikipedia().getMagicWord(MagicWord.DEFAULT_SORT);
+            MagicWord magicDefaultsort = pageAnalysis.getWikipedia().getMagicWord(
+                MagicWord.DEFAULT_SORT);
             List<String> aliases = magicDefaultsort.getAliases();
             for (int i = 0; (i < aliases.size()) && (defaultSort == null); i++) {
               if (contents.startsWith(aliases.get(i), currentPos)) {

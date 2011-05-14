@@ -21,10 +21,10 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTitle;
+
 
 /**
  * Algorithm for analyzing error 25 of check wikipedia project.
@@ -39,25 +39,23 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
     boolean result = false;
     int startIndex = 0;
     int previousTitleLevel = -1;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       PageElementTitle title = PageContents.findNextTitle(
-          page.getWikipedia(), contents, startIndex, comments);
+          pageAnalysis.getWikipedia(), contents, startIndex, pageAnalysis.getComments());
       if (title == null) {
         startIndex = contents.length();
       } else {
@@ -68,7 +66,7 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              page, title.getBeginIndex(), title.getEndIndex());
+              pageAnalysis.getPage(), title.getBeginIndex(), title.getEndIndex());
           errors.add(errorResult);
         }
         previousTitleLevel = title.getFirstLevel();

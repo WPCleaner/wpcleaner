@@ -21,10 +21,9 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementCategory;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 
 
@@ -41,36 +40,35 @@ public class CheckErrorAlgorithm053 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
     boolean result = false;
     int startIndex = 0;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementLanguageLink link = PageContents.findNextLanguageLink(page, contents, startIndex);
+      PageElementLanguageLink link = PageContents.findNextLanguageLink(
+          pageAnalysis.getPage(), contents, startIndex);
       if (link != null) {
         startIndex = link.getEndIndex();
         PageElementCategory category = PageContents.findNextCategory(
-            page, contents, startIndex, comments);
+            pageAnalysis.getPage(), contents, startIndex, pageAnalysis.getComments());
         if (category != null) {
           if (errors == null) {
             return true;
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              page, link.getBeginIndex(), link.getEndIndex());
+              pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
           errors.add(errorResult);
         } else {
           return result;

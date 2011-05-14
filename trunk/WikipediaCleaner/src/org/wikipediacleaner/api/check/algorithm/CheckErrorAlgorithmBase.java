@@ -27,8 +27,8 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTagData;
 import org.wikipediacleaner.i18n.GT;
 
@@ -289,10 +289,9 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   public String fixUsingFirstReplacement(String fixName, Page page, String contents) {
     String result = contents;
-    Collection<PageElementComment> comments = PageContents.findAllComments(
-        page.getWikipedia(), contents);
+    PageAnalysis pageAnalysis = new PageAnalysis(page, contents);
     List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
-    if (analyze(page, contents, comments, errors)) {
+    if (analyze(pageAnalysis, errors)) {
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
         String newText = errorResult.getFirstReplacement();
@@ -318,10 +317,9 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   public String fixUsingRemove(String fixName, Page page, String contents) {
     String result = contents;
-    Collection<PageElementComment> comments = PageContents.findAllComments(
-        page.getWikipedia(), contents);
+    PageAnalysis pageAnalysis = new PageAnalysis(page, contents);
     List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
-    if (analyze(page, contents, comments, errors)) {
+    if (analyze(pageAnalysis, errors)) {
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
         String tmp =
@@ -336,51 +334,49 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * Search for simple text in page.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @param search Text to be searched.
    * @return Flag indicating if the error was found.
    */
   protected boolean simpleTextSearch(
-      Page page, String contents,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors, String search) {
-    return simpleTextSearch(page, contents, errors, search, (String[]) null);
+    return simpleTextSearch(pageAnalysis, errors, search, (String[]) null);
   }
 
   /**
    * Search for simple text in page.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @param search Text to be searched.
    * @param replacement Text proposed as a replacement.
    * @return Flag indicating if the error was found.
    */
   protected boolean simpleTextSearch(
-      Page page, String contents, Collection<CheckErrorResult> errors,
+      PageAnalysis pageAnalysis, Collection<CheckErrorResult> errors,
       String search, String replacement) {
     return simpleTextSearch(
-        page, contents, errors, search,
+        pageAnalysis, errors, search,
         (replacement != null) ? new String[] { replacement } : null);
   }
 
   /**
    * Search for simple text in page.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @param search Text to be searched.
    * @param replacements Texts proposed as a replacement.
    * @return Flag indicating if the error was found.
    */
   protected boolean simpleTextSearch(
-      Page page, String contents, Collection<CheckErrorResult> errors,
+      PageAnalysis pageAnalysis, Collection<CheckErrorResult> errors,
       String search, String[] replacements) {
     int startIndex = 0;
     boolean result = false;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       startIndex = contents.indexOf(search, startIndex);
       if (startIndex >= 0) {
@@ -389,7 +385,8 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
         }
         result = true;
         int endIndex = startIndex + search.length();
-        CheckErrorResult errorResult = createCheckErrorResult(page, startIndex, endIndex);
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(), startIndex, endIndex);
         if (replacements != null) {
           for (int i = 0; i < replacements.length; i++) {
             if (replacements[i] != null) {
@@ -410,27 +407,28 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * Find tags.
    * 
    * @param found Flag indicating if a tag has already been found.
-   * @param page Page.
-   * @param contents Page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors.
    * @param tagName Tag name.
    * @return Flag indicating if a tag has been found.
    */
   protected boolean addTags(
-      boolean found, Page page, String contents,
+      boolean found, PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors, String tagName) {
     if (found && (errors == null)) {
       return found;
     }
     boolean result = found;
     int startIndex = 0;
+    String contents = pageAnalysis.getContents();
     while ((startIndex < contents.length())) {
-      PageElementTagData tag = PageContents.findNextStartTag(page, contents, tagName, startIndex);
+      PageElementTagData tag = PageContents.findNextStartTag(
+          pageAnalysis.getPage(), contents, tagName, startIndex);
       if (tag != null) {
         result = true;
         if (errors != null) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              page, tag.getBeginIndex(), tag.getEndIndex());
+              pageAnalysis.getPage(), tag.getBeginIndex(), tag.getEndIndex());
           errors.add(errorResult);
         }
         startIndex = tag.getEndIndex();
@@ -440,12 +438,13 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     }
     startIndex = 0;
     while ((startIndex < contents.length())) {
-      PageElementTagData tag = PageContents.findNextEndTag(page, contents, tagName, startIndex);
+      PageElementTagData tag = PageContents.findNextEndTag(
+          pageAnalysis.getPage(), contents, tagName, startIndex);
       if (tag != null) {
         result = true;
         if (errors != null) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              page, tag.getBeginIndex(), tag.getEndIndex());
+              pageAnalysis.getPage(), tag.getBeginIndex(), tag.getEndIndex());
           errors.add(errorResult);
         }
         startIndex = tag.getEndIndex();

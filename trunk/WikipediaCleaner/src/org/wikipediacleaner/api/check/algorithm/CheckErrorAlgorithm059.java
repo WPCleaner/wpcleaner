@@ -18,13 +18,11 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTagData;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -44,25 +42,24 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Analyzing from the begining
     boolean errorFound = false;
     int startIndex = 0;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementTemplate template = PageContents.findNextTemplate(page, contents, startIndex);
+      PageElementTemplate template = PageContents.findNextTemplate(
+          pageAnalysis.getPage(), contents, startIndex);
       if (template == null) {
         startIndex = contents.length();
       } else {
@@ -74,7 +71,8 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
             PageElementTag lastTag = null;
             int currentIndex = 0;
             while (currentIndex < parameterValue.length()) {
-              PageElementTag tag = PageContents.findNextTag(page, parameterValue, "br", currentIndex);
+              PageElementTag tag = PageContents.findNextTag(
+                  pageAnalysis.getPage(), parameterValue, "br", currentIndex);
               if (tag != null) {
                 currentIndex = tag.getEndTagEndIndex() - 1;
                 lastTag = tag;
@@ -85,7 +83,8 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
             PageElementTagData lastTagData = null;
             currentIndex = 0;
             while (currentIndex < parameterValue.length()) {
-              PageElementTagData tag = PageContents.findNextStartTag(page, parameterValue, "br", currentIndex);
+              PageElementTagData tag = PageContents.findNextStartTag(
+                  pageAnalysis.getPage(), parameterValue, "br", currentIndex);
               if (tag != null) {
                 currentIndex = tag.getEndIndex();
                 lastTagData = tag;
@@ -95,7 +94,8 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
             }
             currentIndex = 0;
             while (currentIndex < parameterValue.length()) {
-              PageElementTagData tag = PageContents.findNextEndTag(page, parameterValue, "br", currentIndex);
+              PageElementTagData tag = PageContents.findNextEndTag(
+                  pageAnalysis.getPage(), parameterValue, "br", currentIndex);
               if (tag != null) {
                 currentIndex = tag.getEndIndex();
                 if ((lastTagData == null) || (lastTagData.getEndIndex() < tag.getEndIndex())) {
@@ -147,7 +147,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                 }
                 errorFound = true;
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    page,
+                    pageAnalysis.getPage(),
                     template.getParameterValueOffset(i) + startTagIndex,
                     template.getParameterValueOffset(i) + endTagIndex);
                 errorResult.addReplacement("", GT._("Delete"));
