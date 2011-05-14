@@ -60,8 +60,7 @@ public class CheckErrorAlgorithm053 extends CheckErrorAlgorithmBase {
           pageAnalysis.getPage(), contents, startIndex);
       if (link != null) {
         startIndex = link.getEndIndex();
-        PageElementCategory category = PageContents.findNextCategory(
-            pageAnalysis.getPage(), contents, startIndex, pageAnalysis.getComments());
+        PageElementCategory category = pageAnalysis.getNextCategory(startIndex);
         if (category != null) {
           if (errors == null) {
             return true;

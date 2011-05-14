@@ -36,6 +36,10 @@ public class PageAnalysis {
 
   private final Object commentsLock = new Object();
   private Collection<PageElementComment> comments;
+  private final Object titlesLock = new Object();
+  private Collection<PageElementTitle> titles;
+  private final Object categoriesLock = new Object();
+  private Collection<PageElementCategory> categories;
 
   /**
    * @param page Page.
@@ -111,5 +115,61 @@ public class PageAnalysis {
       }
       return comments;
     }
+  }
+
+  /**
+   * @return All titles in the page analysis.
+   */
+  public Collection<PageElementTitle> getTitles() {
+    Collection<PageElementComment> tmpComments = getComments();
+
+    synchronized (titlesLock) {
+      if (titles == null) {
+        titles = PageContents.findAllTitles(getWikipedia(), getContents(), tmpComments);
+      }
+      return titles;
+    }
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Next title.
+   */
+  public PageElementTitle getNextTitle(int currentIndex) {
+    Collection<PageElementTitle> tmpTitles = getTitles();
+    for (PageElementTitle title : tmpTitles) {
+      if (title.getBeginIndex() >= currentIndex) {
+        return title;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @return All categories in the page analysis.
+   */
+  public Collection<PageElementCategory> getCategories() {
+    Collection<PageElementComment> tmpComments = getComments();
+
+    synchronized (categoriesLock) {
+      if (categories == null) {
+        categories = PageContents.findAllCategories(getPage(), getContents(), tmpComments);
+      }
+      return categories;
+    }
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Next category.
+   */
+  public PageElementCategory getNextCategory(int currentIndex) {
+    Collection<PageElementCategory> tmpCategories = getCategories();
+    for (PageElementCategory category : tmpCategories) {
+      if (category.getBeginIndex() >= currentIndex) {
+        return category;
+      }
+    }
+    return null;
   }
 }

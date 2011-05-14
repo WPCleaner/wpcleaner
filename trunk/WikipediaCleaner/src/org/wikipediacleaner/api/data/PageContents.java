@@ -178,6 +178,34 @@ public class PageContents {
   // ==========================================================================
 
   /**
+   * Find all titles in the page contents.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments blocks in the page.
+   * @return Titles found.
+   */
+  public static Collection<PageElementTitle> findAllTitles(
+      EnumWikipedia wikipedia, String contents,
+      Collection<PageElementComment> comments) {
+    if (contents == null) {
+      return null;
+    }
+    Collection<PageElementTitle> result = new ArrayList<PageElementTitle>();
+    int currentIndex = 0;
+    while ((currentIndex < contents.length())) {
+      PageElementTitle title = findNextTitle(wikipedia, contents, currentIndex, comments);
+      if (title == null) {
+        currentIndex = contents.length();
+      } else {
+        result.add(title);
+        currentIndex = title.getEndIndex();
+      }
+    }
+    return result;
+  }
+
+  /**
    * Find the first title after an index in the page contents.
    * 
    * @param wikipedia Wikipedia.
@@ -416,6 +444,34 @@ public class PageContents {
   // ==========================================================================
   // Category management
   // ==========================================================================
+
+  /**
+   * Find all categories in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments blocks in the page.
+   * @return Categories found.
+   */
+  public static Collection<PageElementCategory> findAllCategories(
+      Page page, String contents,
+      Collection<PageElementComment> comments) {
+    if (contents == null) {
+      return null;
+    }
+    Collection<PageElementCategory> result = new ArrayList<PageElementCategory>();
+    int currentIndex = 0;
+    while ((currentIndex < contents.length())) {
+      PageElementCategory category = findNextCategory(page, contents, currentIndex, comments);
+      if (category == null) {
+        currentIndex = contents.length();
+      } else {
+        result.add(category);
+        currentIndex = category.getEndIndex();
+      }
+    }
+    return result;
+  }
 
   /**
    * Find the first category after an index in the page contents.

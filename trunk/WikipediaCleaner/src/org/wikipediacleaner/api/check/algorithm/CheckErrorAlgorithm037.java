@@ -106,8 +106,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     boolean categoriesWithoutSort = false;
     int currentIndex = 0;
     while (currentIndex < contents.length()) {
-      PageElementCategory category = PageContents.findNextCategory(
-          pageAnalysis.getPage(), contents, currentIndex, pageAnalysis.getComments());
+      PageElementCategory category = pageAnalysis.getNextCategory(currentIndex);
       if (category != null) {
         currentIndex = category.getEndIndex();
         if ((category.getSort() == null) ||

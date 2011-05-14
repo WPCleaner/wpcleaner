@@ -22,7 +22,6 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementTitle;
 
 
@@ -50,8 +49,7 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
       return false;
     }
     String contents = pageAnalysis.getContents();
-    PageElementTitle firstTitle = PageContents.findNextTitle(
-        pageAnalysis.getWikipedia(), contents, 0, pageAnalysis.getComments());
+    PageElementTitle firstTitle = pageAnalysis.getNextTitle(0);
     if (firstTitle == null) {
       return false;
     }
@@ -60,8 +58,7 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
     }
     int startIndex = firstTitle.getEndIndex();
     while (startIndex < contents.length()) {
-      PageElementTitle title = PageContents.findNextTitle(
-          pageAnalysis.getWikipedia(), contents, startIndex, pageAnalysis.getComments());
+      PageElementTitle title = pageAnalysis.getNextTitle(startIndex);
       if (title == null) {
         startIndex = contents.length();
       } else {
