@@ -21,11 +21,11 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
+
 
 /**
  * Algorithm for analyzing error 26 of check wikipedia project.
@@ -40,23 +40,22 @@ public class CheckErrorAlgorithm026 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
     boolean result = false;
     int startIndex = 0;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementTag tag = PageContents.findNextTag(page, contents, "b", startIndex);
+      PageElementTag tag = PageContents.findNextTag(
+          pageAnalysis.getPage(), contents, "b", startIndex);
       if (tag == null) {
         startIndex = contents.length();
       } else {
@@ -64,7 +63,7 @@ public class CheckErrorAlgorithm026 extends CheckErrorAlgorithmBase {
           return true;
         }
         CheckErrorResult error = createCheckErrorResult(
-            page, tag.getStartTagBeginIndex(), tag.getEndTagEndIndex());
+            pageAnalysis.getPage(), tag.getStartTagBeginIndex(), tag.getEndTagEndIndex());
         String text = tag.getText();
         if (text.length() > 30) {
           text = text.substring(0, 10) + "…" + text.substring(text.length() - 10); 

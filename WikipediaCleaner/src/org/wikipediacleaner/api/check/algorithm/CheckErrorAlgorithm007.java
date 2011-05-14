@@ -21,10 +21,10 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTitle;
+
 
 /**
  * Algorithm for analyzing error 7 of check wikipedia project.
@@ -39,20 +39,19 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
-    PageElementTitle firstTitle = PageContents.findNextTitle(page.getWikipedia(), contents, 0, comments);
+    String contents = pageAnalysis.getContents();
+    PageElementTitle firstTitle = PageContents.findNextTitle(
+        pageAnalysis.getWikipedia(), contents, 0, pageAnalysis.getComments());
     if (firstTitle == null) {
       return false;
     }
@@ -61,7 +60,8 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
     }
     int startIndex = firstTitle.getEndIndex();
     while (startIndex < contents.length()) {
-      PageElementTitle title = PageContents.findNextTitle(page.getWikipedia(), contents, startIndex, comments);
+      PageElementTitle title = PageContents.findNextTitle(
+          pageAnalysis.getWikipedia(), contents, startIndex, pageAnalysis.getComments());
       if (title == null) {
         startIndex = contents.length();
       } else {
@@ -74,7 +74,8 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
     if (errors == null) {
       return true;
     }
-    errors.add(createCheckErrorResult(page, firstTitle.getBeginIndex(), firstTitle.getEndIndex()));
+    errors.add(createCheckErrorResult(
+        pageAnalysis.getPage(), firstTitle.getBeginIndex(), firstTitle.getEndIndex()));
     return true;
   }
 }

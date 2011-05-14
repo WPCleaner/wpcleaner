@@ -22,8 +22,9 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
+
 
 /**
  * Algorithm for analyzing error 48 of check wikipedia project.
@@ -45,22 +46,21 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     int startIndex = 0;
     boolean result = false;
+    String contents = pageAnalysis.getContents();
+    String title = pageAnalysis.getPage().getTitle();
     while (startIndex < contents.length()) {
       // Looking for [[
       startIndex = contents.indexOf("[[", startIndex);
@@ -70,9 +70,9 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
         while ((linkIndex < contents.length()) && (contents.charAt(linkIndex) == ' ')) {
           linkIndex++;
         }
-        if (contents.startsWith(page.getTitle(), linkIndex)) {
-          String text = contents.substring(linkIndex, linkIndex + page.getTitle().length());
-          linkIndex += page.getTitle().length();
+        if (contents.startsWith(title, linkIndex)) {
+          String text = contents.substring(linkIndex, linkIndex + title.length());
+          linkIndex += title.length();
           // Removing possible whitespaces after link
           while ((linkIndex < contents.length()) && (contents.charAt(linkIndex) == ' ')) {
             linkIndex++;
@@ -91,7 +91,8 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
                 return true;
               }
               result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(page, startIndex, endIndex + 2);
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(), startIndex, endIndex + 2);
               errorResult.addReplacement(text);
               errorResult.addReplacement("'''" + text + "'''");
               errors.add(errorResult);

@@ -23,8 +23,9 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
+
 
 /**
  * Algorithm for analyzing error 18 of check wikipedia project.
@@ -46,25 +47,24 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
     boolean result = false;
-    Namespace categoryNamespace = Namespace.getNamespace(Namespace.CATEGORY, page.getWikipedia().getNamespaces());
+    Namespace categoryNamespace = Namespace.getNamespace(
+        Namespace.CATEGORY, pageAnalysis.getWikipedia().getNamespaces());
     if (categoryNamespace == null) {
       return result;
     }
     int startIndex = 0;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       int beginIndex = contents.indexOf("[[", startIndex);
       if (beginIndex < 0) {
@@ -111,7 +111,7 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
               }
               result = true;
               CheckErrorResult errorResult = createCheckErrorResult(
-                  page, beginIndex, endIndex + 2);
+                  pageAnalysis.getPage(), beginIndex, endIndex + 2);
               errorResult.addReplacement(
                   "[[" + categoryNamespace.getTitle() + ":" +
                   Character.toUpperCase(contents.charAt(nameBegin)) +

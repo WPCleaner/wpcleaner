@@ -23,10 +23,10 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+
 
 /**
  * Algorithm for analyzing error 32 of check wikipedia project.
@@ -41,24 +41,24 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
     int startIndex = 0;
     boolean result = false;
-    Namespace fileNamespace = Namespace.getNamespace(Namespace.IMAGE, page.getWikipedia().getNamespaces());
+    Namespace fileNamespace = Namespace.getNamespace(
+        Namespace.IMAGE, pageAnalysis.getWikipedia().getNamespaces());
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementInternalLink link = PageContents.findNextInternalLink(page, contents, startIndex);
+      PageElementInternalLink link = PageContents.findNextInternalLink(
+          pageAnalysis.getPage(), contents, startIndex);
       if (link == null) {
         startIndex = contents.length();
       } else {
@@ -130,7 +130,8 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
               return true;
             }
             result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(page, link.getBeginIndex(), link.getEndIndex());
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
             for (int i = 0; i <= pipeIndex.size(); i++) {
               int beginText = (i > 0) ? (pipeIndex.get(i - 1).intValue() + 1) : 0;
               int endText = (i < pipeIndex.size()) ? pipeIndex.get(i).intValue() : text.length();

@@ -22,9 +22,8 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
@@ -42,17 +41,14 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
@@ -60,7 +56,8 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     boolean refFound = false;
     if (!refFound) {
       // Search for <ref>
-      PageElementTag tag = PageContents.findNextTag(page, contents, "ref", 0);
+      PageElementTag tag = PageContents.findNextTag(
+          pageAnalysis.getPage(), pageAnalysis.getContents(), "ref", 0);
       if (tag != null) {
         refFound = true;
       }
@@ -71,23 +68,25 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     if (refFound) {
       // Search for <references>
       if (!referencesFound) {
-        PageElementTag tag = PageContents.findNextTag(page, contents, "references", 0);
+        PageElementTag tag = PageContents.findNextTag(
+            pageAnalysis.getPage(), pageAnalysis.getContents(), "references", 0);
         if (tag != null) {
           referencesFound = true;
         }
       }
 
       // Search for templates like {{Références}}
-      String templates = page.getWikipedia().getCheckWikiProperty(
+      String templates = pageAnalysis.getWikipedia().getCheckWikiProperty(
           "references_templates", 3, true, true, false);
       String[] referencesTemplates = null;
       if (templates != null) {
-        referencesTemplates = page.getWikipedia().convertPropertyToStringArray(templates);
+        referencesTemplates = pageAnalysis.getWikipedia().convertPropertyToStringArray(templates);
       }
       if (referencesTemplates != null) {
         for (String referencesTemplate : referencesTemplates) {
           if (!referencesFound) {
-            PageElementTemplate template = PageContents.findNextTemplate(page, contents, referencesTemplate, 0);
+            PageElementTemplate template = PageContents.findNextTemplate(
+                pageAnalysis.getPage(), pageAnalysis.getContents(), referencesTemplate, 0);
             if (template != null) {
               referencesFound = true;
             }

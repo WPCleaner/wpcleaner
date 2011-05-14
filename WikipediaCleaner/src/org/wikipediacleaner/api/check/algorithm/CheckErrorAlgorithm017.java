@@ -24,7 +24,8 @@ import java.util.HashMap;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
+
 
 /**
  * Algorithm for analyzing error 17 of check wikipedia project.
@@ -39,27 +40,26 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     int startIndex = 0;
     boolean result = false;
-    Namespace categoryNamespace = Namespace.getNamespace(Namespace.CATEGORY, page.getWikipedia().getNamespaces());
+    Namespace categoryNamespace = Namespace.getNamespace(
+        Namespace.CATEGORY, pageAnalysis.getWikipedia().getNamespaces());
     if (categoryNamespace == null) {
       return result;
     }
     HashMap<String, CategoryElement> categories = new HashMap<String, CategoryElement>();
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       if (contents.startsWith("[[", startIndex)) {
         int beginIndex = startIndex;
@@ -111,13 +111,13 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
               result = true;
               if (categoryElement.errorResult == null) {
                 categoryElement.errorResult = createCheckErrorResult(
-                    page,
+                    pageAnalysis.getPage(),
                     categoryElement.begin, categoryElement.end,
                     CheckErrorResult.ErrorLevel.CORRECT);
                 errors.add(categoryElement.errorResult);
               }
               CheckErrorResult errorResult = createCheckErrorResult(
-                  page, beginIndex, currentIndex);
+                  pageAnalysis.getPage(), beginIndex, currentIndex);
               errorResult.addReplacement("");
               errors.add(errorResult);
             }

@@ -21,9 +21,8 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
@@ -42,30 +41,30 @@ public class CheckErrorAlgorithm066 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
     boolean result = false;
     int startIndex = 0;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementImage image = PageContents.findNextImage(page, contents, startIndex);
+      PageElementImage image = PageContents.findNextImage(
+          pageAnalysis.getPage(), contents, startIndex);
       if (image != null) {
         startIndex = image.getEndIndex();
         String text = image.getDescription();
         if (text != null) {
-          PageElementTag tag = PageContents.findNextTag(page, text, "small", 0);
+          PageElementTag tag = PageContents.findNextTag(
+              pageAnalysis.getPage(), text, "small", 0);
           if (tag != null) {
             boolean onlySpaces = true;
             int tmpIndex = 0;
@@ -88,7 +87,7 @@ public class CheckErrorAlgorithm066 extends CheckErrorAlgorithmBase {
               }
               result = true;
               CheckErrorResult errorResult = createCheckErrorResult(
-                  page, image.getBeginIndex(), image.getEndIndex());
+                  pageAnalysis.getPage(), image.getBeginIndex(), image.getEndIndex());
               errorResult.addReplacement(
                   image.getDescriptionReplacement(tag.getText()),
                   GT._("Remove <small> tag"));

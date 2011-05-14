@@ -22,8 +22,9 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
+
 
 /**
  * Algorithm for analyzing error 54 of check wikipedia project.
@@ -45,23 +46,21 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
     boolean result = false;
     int endLineIndex = -1;
+    String contents = pageAnalysis.getContents();
     while (endLineIndex + 1 < contents.length()) {
 
       // Check if the next line is a list
@@ -115,7 +114,7 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              page, currentPos + 1, endLineIndex);
+              pageAnalysis.getPage(), currentPos + 1, endLineIndex);
           errorResult.addReplacement("");
           errors.add(errorResult);
         }

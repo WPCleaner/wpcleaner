@@ -21,9 +21,8 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.i18n.GT;
 
@@ -41,25 +40,24 @@ public class CheckErrorAlgorithm076 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
     boolean result = false;
     int startIndex = 0;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementInternalLink link = PageContents.findNextInternalLink(page, contents, startIndex);
+      PageElementInternalLink link = PageContents.findNextInternalLink(
+          pageAnalysis.getPage(), contents, startIndex);
       if (link != null) {
         startIndex = link.getEndIndex();
         int spaceIndex = link.getFullLink().indexOf("%20");
@@ -77,7 +75,7 @@ public class CheckErrorAlgorithm076 extends CheckErrorAlgorithmBase {
           }
           sb.append("]]");
           CheckErrorResult errorResult = createCheckErrorResult(
-              page, link.getBeginIndex(), link.getEndIndex());
+              pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
           errorResult.addReplacement(
               sb.toString(),
               GT._("Replace %20 by space character"));

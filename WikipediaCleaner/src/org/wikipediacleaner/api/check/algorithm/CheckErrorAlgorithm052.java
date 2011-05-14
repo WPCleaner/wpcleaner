@@ -22,8 +22,8 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
+
 
 /**
  * Algorithm for analyzing error 52 of check wikipedia project.
@@ -38,21 +38,19 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Searching for last headline
+    String contents = pageAnalysis.getContents();
     int startIndex = contents.length();
     int lastHeadline = -1;
     while ((startIndex >= 0) && (lastHeadline < 0)) {
@@ -64,7 +62,8 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
       }
       startIndex = lineIndex - 1;
     }
-    Namespace categoryNamespace = Namespace.getNamespace(Namespace.CATEGORY, page.getWikipedia().getNamespaces());
+    Namespace categoryNamespace = Namespace.getNamespace(
+        Namespace.CATEGORY, pageAnalysis.getWikipedia().getNamespaces());
     if ((lastHeadline < 0) || (categoryNamespace == null)) {
       return false;
     }
@@ -88,7 +87,7 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
               }
               result = true;
               CheckErrorResult errorResult = createCheckErrorResult(
-                  page, beginIndex, endIndex + 2);
+                  pageAnalysis.getPage(), beginIndex, endIndex + 2);
               errors.add(errorResult);
             }
           }

@@ -24,10 +24,10 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
+
 
 /**
  * Algorithm for analyzing error 30 of check wikipedia project.
@@ -42,26 +42,25 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     int startIndex = 0;
     boolean result = false;
-    Namespace imageNamespace = Namespace.getNamespace(Namespace.IMAGE, page.getWikipedia().getNamespaces());
+    Namespace imageNamespace = Namespace.getNamespace(
+        Namespace.IMAGE, pageAnalysis.getWikipedia().getNamespaces());
     if (imageNamespace == null) {
       return result;
     }
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       if (contents.startsWith("[[", startIndex)) {
         int beginIndex = startIndex;
@@ -105,7 +104,7 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
               (contents.startsWith("]]", currentIndex))) {
             String[] args = contents.substring(linkIndex, currentIndex).split("\\|");
             currentIndex += 2;
-            EnumWikipedia wikipedia = page.getWikipedia();
+            EnumWikipedia wikipedia = pageAnalysis.getWikipedia();
             boolean descriptionFound = false;
             for (int i = args.length; (i > 0) && !descriptionFound; i--) {
               String arg = args[i - 1];
@@ -122,7 +121,7 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
               }
               result = true;
               CheckErrorResult errorResult = createCheckErrorResult(
-                  page, beginIndex, currentIndex);
+                  pageAnalysis.getPage(), beginIndex, currentIndex);
               errorResult.addPossibleAction(new SimpleAction(
                   GT._("View image"),
                   new PageViewAction(imageName, wikipedia, true)));

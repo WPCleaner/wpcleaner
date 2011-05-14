@@ -27,11 +27,11 @@ import org.wikipediacleaner.api.check.CheckCategoryLinkActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementCategory;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.i18n.GT;
+
 
 /**
  * Algorithm for analyzing error 21 of check wikipedia project.
@@ -46,33 +46,33 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Retrieve preferred category name
-    String preferredCategory = page.getWikipedia().getCheckWikiProperty("category", 21, true, false, false);
+    String preferredCategory = pageAnalysis.getWikipedia().getCheckWikiProperty(
+        "category", 21, true, false, false);
 
     // Analyze the text from the begining
     int startIndex = 0;
     boolean result = false;
-    Namespace categoryNamespace = Namespace.getNamespace(Namespace.CATEGORY, page.getWikipedia().getNamespaces());
+    Namespace categoryNamespace = Namespace.getNamespace(
+        Namespace.CATEGORY, pageAnalysis.getWikipedia().getNamespaces());
     if (categoryNamespace == null) {
       return false;
     }
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       PageElementCategory category = PageContents.findNextCategory(
-          page, contents, startIndex, comments);
+          pageAnalysis.getPage(), contents, startIndex, pageAnalysis.getComments());
       if (category == null) {
         startIndex = contents.length();
       } else {
@@ -82,11 +82,11 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              page, category.getBeginIndex(), category.getEndIndex());
+              pageAnalysis.getPage(), category.getBeginIndex(), category.getEndIndex());
           errorResult.addPossibleAction(
               GT._("Check category"),
               new CheckCategoryLinkActionProvider(
-                  EnumWikipedia.EN, page.getWikipedia(),
+                  EnumWikipedia.EN, pageAnalysis.getWikipedia(),
                   category.getName(), category.getSort()));
           List<String> replacements = new ArrayList<String>();
           if ((preferredCategory != null) && (categoryNamespace.isPossibleName(preferredCategory))) {

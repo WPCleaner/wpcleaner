@@ -38,8 +38,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -56,27 +55,22 @@ public class CheckError {
    * Analyze a page to find error types.
    * 
    * @param algorithms Possible algorithms.
-   * @param page Page to be analyzed.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param pageAnalysis Page analysis.
    * @return Errors found in the page.
    */
   public static List<CheckErrorPage> analyzeErrors(
-      Collection<CheckErrorAlgorithm> algorithms, Page page, String contents) {
+      Collection<CheckErrorAlgorithm> algorithms, PageAnalysis pageAnalysis) {
     long beginAll = traceTime ? System.currentTimeMillis() : 0;
     List<CheckErrorPage> errorsFound = new ArrayList<CheckErrorPage>();
-    if ((algorithms != null) && (page != null)) {
-      if (contents == null) {
-        contents = page.getContents();
-      }
-      Collection<PageElementComment> comments = PageContents.findAllComments(page.getWikipedia(), contents);
+    if ((algorithms != null) && (pageAnalysis != null)) {
       for (CheckErrorAlgorithm algorithm : algorithms) {
         if ((algorithm != null) &&
             (algorithm.isAvailable()) &&
             (CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()))) {
           long beginOne = traceTime ? System.currentTimeMillis() : 0;
           List<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
-          if (algorithm.analyze(page, contents, comments, results)) {
-            CheckErrorPage errorPage = new CheckErrorPage(page, algorithm);
+          if (algorithm.analyze(pageAnalysis, results)) {
+            CheckErrorPage errorPage = new CheckErrorPage(pageAnalysis.getPage(), algorithm);
             errorPage.setResults(true, results);
             errorsFound.add(errorPage);
           }
@@ -98,25 +92,18 @@ public class CheckError {
    * Analyze a page to find errors of a given type.
    * 
    * @param algorithm Algorithm.
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in page contents.
+   * @param pageAnalysis Page analysis.
    * @return Error page.
    */
   public static CheckErrorPage analyzeError(
-      CheckErrorAlgorithm algorithm, Page page,
-      String contents, Collection<PageElementComment> comments) {
-    if ((algorithm == null) || (page == null)) {
+      CheckErrorAlgorithm algorithm, PageAnalysis pageAnalysis) {
+    if ((algorithm == null) || (pageAnalysis == null)) {
       return null;
     }
-    CheckErrorPage errorPage = new CheckErrorPage(page, algorithm);
+    CheckErrorPage errorPage = new CheckErrorPage(pageAnalysis.getPage(), algorithm);
     boolean errorFound = false;
-    if (comments == null) {
-      comments = PageContents.findAllComments(page.getWikipedia(), contents);
-    }
     List<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
-    errorFound = algorithm.analyze(
-        page, contents, comments, errorsFound);
+    errorFound = algorithm.analyze(pageAnalysis, errorsFound);
     errorPage.setResults(errorFound, errorsFound);
     return errorPage;
   }

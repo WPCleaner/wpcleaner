@@ -67,6 +67,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
@@ -594,9 +595,9 @@ public class AnalysisWindow extends PageWindow {
   void actionSelectError(CheckErrorPage errorSelected) {
     boolean modified = getTextContents().isModified();
     String contents = getTextContents().getText();
+    PageAnalysis pageAnalysis = new PageAnalysis(errorSelected.getPage(), contents);
     CheckErrorPage errorPage = CheckError.analyzeError(
-        errorSelected.getAlgorithm(), errorSelected.getPage(),
-        contents, null);
+        errorSelected.getAlgorithm(), pageAnalysis);
     getTextContents().resetAttributes();
     StyledDocument document = getTextContents().getStyledDocument();
     if (document != null) {
@@ -1013,8 +1014,9 @@ public class AnalysisWindow extends PageWindow {
     listLinks.repaint();
 
     // Check for new errors
+    PageAnalysis pageAnalysis = new PageAnalysis(getPage(), getTextContents().getText());
     List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-        allAlgorithms, getPage(), getTextContents().getText());
+        allAlgorithms, pageAnalysis);
     if (errorsFound != null) {
       for (CheckErrorPage tmpError : errorsFound) {
         boolean errorFound = false;

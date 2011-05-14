@@ -24,7 +24,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -48,23 +48,21 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
     boolean result = false;
     int startIndex = 0;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       // Update position of next {{
       int beginIndex = contents.indexOf("{{", startIndex);
@@ -89,7 +87,8 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
           // Check that link is DEFAULTSORT
           String defaultSort = null;
           if (currentPos < endIndex) {
-            MagicWord magicDefaultsort = page.getWikipedia().getMagicWord(MagicWord.DEFAULT_SORT);
+            MagicWord magicDefaultsort = pageAnalysis.getWikipedia().getMagicWord(
+                MagicWord.DEFAULT_SORT);
             List<String> aliases = magicDefaultsort.getAliases();
             for (int i = 0; (i < aliases.size()) && (defaultSort == null); i++) {
               if (contents.startsWith(aliases.get(i), currentPos)) {
@@ -135,7 +134,8 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
                 return true;
               }
               result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(page, beginIndex, endIndex + 2);
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(), beginIndex, endIndex + 2);
               errorResult.addReplacement("{{" + defaultSort + text + "}}");
               errors.add(errorResult);
             }

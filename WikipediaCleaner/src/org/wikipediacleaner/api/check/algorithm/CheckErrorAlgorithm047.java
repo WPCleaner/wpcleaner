@@ -21,8 +21,8 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
+
 
 /**
  * Algorithm for analyzing error 47 of check wikipedia project.
@@ -37,17 +37,14 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
@@ -57,6 +54,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
     int levelCurlyBrackets = 0;
     int levelMath = 0;
     int previousCurlyBracket = -1;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       switch (contents.charAt(startIndex)) {
       case '<':
@@ -91,9 +89,11 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
               result = true;
               CheckErrorResult errorResult = null;
               if (previousCurlyBracket < 0) {
-                errorResult = createCheckErrorResult(page, startIndex, startIndex + 2);
+                errorResult = createCheckErrorResult(
+                    pageAnalysis.getPage(), startIndex, startIndex + 2);
               } else {
-                errorResult = createCheckErrorResult(page, previousCurlyBracket, startIndex + 2);
+                errorResult = createCheckErrorResult(
+                    pageAnalysis.getPage(), previousCurlyBracket, startIndex + 2);
                 errorResult.addReplacement(
                     "{" + contents.substring(previousCurlyBracket, startIndex + 2));
               }

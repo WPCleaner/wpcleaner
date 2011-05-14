@@ -18,13 +18,11 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -49,23 +47,21 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Analyze contents from the beginning
     int startIndex = -1;
     boolean result = false;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       startIndex = contents.indexOf("ISBN ", startIndex + 1);
       if (startIndex < 0) {
@@ -152,7 +148,7 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmBase {
             return true;
           }
           CheckErrorResult errorResult = createCheckErrorResult(
-              page, startIndex, tmpIndex);
+              pageAnalysis.getPage(), startIndex, tmpIndex);
           errorResult.addPossibleAction(
               GT._(
                   "The checksum is {0} instead of {1}",

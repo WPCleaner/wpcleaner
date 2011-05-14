@@ -26,9 +26,8 @@ import java.util.TreeSet;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
 
@@ -46,17 +45,14 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
@@ -64,8 +60,10 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
     int startIndex = 0;
     Map<String, PageElementTag> firstTags = new HashMap<String, PageElementTag>();
     Set<String> tagUsed = new TreeSet<String>();
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementTag tag = PageContents.findNextTag(page, contents, "references", startIndex);
+      PageElementTag tag = PageContents.findNextTag(
+          pageAnalysis.getPage(), contents, "references", startIndex);
       if (tag != null) {
         startIndex = tag.getEndTagEndIndex();
         String group = tag.getParameter("group");
@@ -83,14 +81,15 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
           if (!tagUsed.contains(group)) {
             tagUsed.add(group);
             CheckErrorResult errorResult = createCheckErrorResult(
-                page,
+                pageAnalysis.getPage(),
                 firstTag.getStartTagBeginIndex(), firstTag.getEndTagEndIndex(),
                 ErrorLevel.CORRECT);
             errorResult.addReplacement("", GT._("Delete"));
             errors.add(errorResult);
           }
           CheckErrorResult errorResult = createCheckErrorResult(
-              page, tag.getStartTagBeginIndex(), tag.getEndTagEndIndex());
+              pageAnalysis.getPage(),
+              tag.getStartTagBeginIndex(), tag.getEndTagEndIndex());
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
         }

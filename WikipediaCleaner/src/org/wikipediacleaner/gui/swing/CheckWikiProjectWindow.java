@@ -92,6 +92,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -1008,8 +1009,9 @@ public class CheckWikiProjectWindow extends PageWindow {
       }
       textPage.setText(page.getContents());
       textPage.setModified(false);
+      PageAnalysis pageAnalysis = new PageAnalysis(page, textPage.getText());
       List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-          allAlgorithms, page, textPage.getText());
+          allAlgorithms, pageAnalysis);
       modelErrors.clear();
       initialErrors = new ArrayList<CheckErrorPage>();
       boolean errorFound = false;
@@ -1091,9 +1093,9 @@ public class CheckWikiProjectWindow extends PageWindow {
         CheckErrorPage errorSelected = (CheckErrorPage) selection;
         boolean modified = textPage.isModified();
         String contents = textPage.getText();
+        PageAnalysis pageAnalysis = new PageAnalysis(errorSelected.getPage(), contents);
         CheckErrorPage errorPage = CheckError.analyzeError(
-            errorSelected.getAlgorithm(), errorSelected.getPage(),
-            contents, null);
+            errorSelected.getAlgorithm(), pageAnalysis);
         textPage.resetAttributes();
         StyledDocument document = textPage.getStyledDocument();
         if (document != null) {
@@ -1173,8 +1175,9 @@ public class CheckWikiProjectWindow extends PageWindow {
       }
 
       // Check if error is still present
+      PageAnalysis pageAnalysis = new PageAnalysis(page, textPage.getText());
       CheckErrorPage errorPage = CheckError.analyzeError(
-          error.getAlgorithm(), page, textPage.getText(), null);
+          error.getAlgorithm(), pageAnalysis);
       if ((errorPage.getResults() != null) &&
           (!errorPage.getResults().isEmpty())) {
         if (displayYesNoWarning(GT._(
@@ -1297,11 +1300,14 @@ public class CheckWikiProjectWindow extends PageWindow {
      */
     private List<CheckErrorAlgorithm> computeErrorsFixed() {
       final List<CheckErrorAlgorithm> errorsFixed = new ArrayList<CheckErrorAlgorithm>();
+      PageAnalysis pageAnalysis = null;
       if (initialErrors != null) {
         for (CheckErrorPage initialError : initialErrors) {
+          if (pageAnalysis == null) {
+            pageAnalysis = new PageAnalysis(initialError.getPage(), textPage.getText());
+          }
           CheckErrorPage errorPage = CheckError.analyzeError(
-              initialError.getAlgorithm(), initialError.getPage(),
-              textPage.getText(), null);
+              initialError.getAlgorithm(), pageAnalysis);
           if ((errorPage.getErrorFound() == false) ||
               (errorPage.getActiveResultsCount() < initialError.getActiveResultsCount())) {
             errorsFixed.add(initialError.getAlgorithm());
@@ -1389,8 +1395,9 @@ public class CheckWikiProjectWindow extends PageWindow {
      */
     private void actionValidate() {
       // Check for new errors
+      PageAnalysis pageAnalysis = new PageAnalysis(page, textPage.getText());
       List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-          allAlgorithms, page, textPage.getText());
+          allAlgorithms, pageAnalysis);
       if (errorsFound != null) {
         for (CheckErrorPage tmpError : errorsFound) {
           boolean errorFound = false;

@@ -24,9 +24,8 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
 
@@ -44,22 +43,19 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Retrieve separator between several <ref> tags
-    String separator = page.getWikipedia().getCheckWikiProperty(
+    String separator = pageAnalysis.getWikipedia().getCheckWikiProperty(
         "separator", 67, true, false, false);
     if (separator == null) {
       separator = "";
@@ -68,8 +64,10 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     // Analyze from the begining
     int startIndex = 0;
     boolean result = false;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementTag tag = PageContents.findNextTag(page, contents, "ref", startIndex);
+      PageElementTag tag = PageContents.findNextTag(
+          pageAnalysis.getPage(), contents, "ref", startIndex);
       if (tag != null) {
         startIndex = tag.getEndTagEndIndex();
 
@@ -79,7 +77,8 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
         boolean tryNext = true;
         while (tryNext) {
           int endIndex = tagList.get(tagList.size() - 1).getEndTagEndIndex();
-          PageElementTag nextTag = PageContents.findNextTag(page, contents, "ref", endIndex);
+          PageElementTag nextTag = PageContents.findNextTag(
+              pageAnalysis.getPage(), contents, "ref", endIndex);
           if (nextTag == null) {
             tryNext = false;
           } else {
@@ -133,7 +132,8 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
             endIndex++;
           }
           CheckErrorResult errorResult = createCheckErrorResult(
-              page, tag.getStartTagBeginIndex(), endIndex,
+              pageAnalysis.getPage(),
+              tag.getStartTagBeginIndex(), endIndex,
               CheckErrorResult.ErrorLevel.ERROR);
           String tagText = "";
           for (int i = 0; i < tagList.size(); i++) {

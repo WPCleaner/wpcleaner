@@ -21,8 +21,8 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
+
 
 /**
  * Algorithm for analyzing error 14 of check wikipedia project.
@@ -37,23 +37,21 @@ public class CheckErrorAlgorithm014 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Analyze contents from the beginning
     int startIndex = 0;
     boolean result = false;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       startIndex = contents.indexOf("<source>", startIndex);
       if (startIndex < 0) {
@@ -67,7 +65,7 @@ public class CheckErrorAlgorithm014 extends CheckErrorAlgorithmBase {
           result = true;
           endIndex = startIndex + "<source>".length();
           CheckErrorResult errorResult = createCheckErrorResult(
-              page, startIndex, endIndex);
+              pageAnalysis.getPage(), startIndex, endIndex);
           errors.add(errorResult);
           startIndex = endIndex;
         } else {

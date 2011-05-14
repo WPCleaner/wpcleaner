@@ -21,8 +21,8 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
+
 
 /**
  * Algorithm for analyzing error 43 of check wikipedia project.
@@ -37,21 +37,19 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Analyze contents from the end by counting }} and {{
+    String contents = pageAnalysis.getContents();
     int startIndex = contents.length();
     boolean result = false;
     int beginIndex = contents.lastIndexOf("{{", startIndex);
@@ -85,7 +83,7 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
             if (((nextCR < 0) || (nextCR > nextEnd)) &&
                 ((nextBegin < 0) || (nextBegin > nextEnd))) {
               CheckErrorResult errorResult = createCheckErrorResult(
-                  page, beginIndex, nextEnd + 1);
+                  pageAnalysis.getPage(), beginIndex, nextEnd + 1);
               errorResult.addReplacement(contents.substring(beginIndex, nextEnd + 1) + "}");
               errors.add(errorResult);
               errorReported = true;
@@ -94,7 +92,8 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
 
           // Default
           if (!errorReported) {
-            errors.add(createCheckErrorResult(page, beginIndex, beginIndex + 2));
+            errors.add(createCheckErrorResult(
+                pageAnalysis.getPage(), beginIndex, beginIndex + 2));
           }
           count = 0;
         }

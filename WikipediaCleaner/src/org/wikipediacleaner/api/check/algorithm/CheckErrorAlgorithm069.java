@@ -21,8 +21,7 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 
 
 /**
@@ -38,23 +37,21 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param comments Comments in the page contents.
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      Page page, String contents,
-      Collection<PageElementComment> comments,
+      PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if ((page == null) || (contents == null)) {
+    if (pageAnalysis == null) {
       return false;
     }
 
     // Analyze contents from the beginning
     int startIndex = 0;
     boolean result = false;
+    String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       startIndex = contents.indexOf("ISBN", startIndex);
       if (startIndex < 0) {
@@ -75,7 +72,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmBase {
                 return true;
               }
               CheckErrorResult errorResult = createCheckErrorResult(
-                  page, startIndex, tmpIndex + 3);
+                  pageAnalysis.getPage(), startIndex, tmpIndex + 3);
               errors.add(errorResult);
               result = true;
             }
