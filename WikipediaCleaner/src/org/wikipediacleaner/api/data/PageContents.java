@@ -512,16 +512,46 @@ public class PageContents {
   // ==========================================================================
 
   /**
+   * Find all interwikis in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments blocks in the page.
+   * @return Interwikis found.
+   */
+  public static Collection<PageElementInterwikiLink> findAllInterwikiLinks(
+      Page page, String contents,
+      Collection<PageElementComment> comments) {
+    if (contents == null) {
+      return null;
+    }
+    Collection<PageElementInterwikiLink> result = new ArrayList<PageElementInterwikiLink>();
+    int currentIndex = 0;
+    while ((currentIndex < contents.length())) {
+      PageElementInterwikiLink link = findNextInterwikiLink(page, contents, currentIndex, comments);
+      if (link == null) {
+        currentIndex = contents.length();
+      } else {
+        result.add(link);
+        currentIndex = link.getEndIndex();
+      }
+    }
+    return result;
+  }
+
+  /**
    * Find the first interwiki link after an index in the page contents.
    * 
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
    * @param currentIndex The last index.
+   * @param comments Comments blocks in the page.
    * @return Interwiki link found.
    */
   public static PageElementInterwikiLink findNextInterwikiLink(
       Page page, String contents,
-      int currentIndex) {
+      int currentIndex,
+      Collection<PageElementComment> comments) {
     if (contents == null) {
       return null;
     }
@@ -529,6 +559,8 @@ public class PageContents {
       int tmpIndex = contents.indexOf("[[", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
+      } else if (isInComments(tmpIndex, comments)) {
+        currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementInterwikiLink link = PageElementInterwikiLink.analyzeBlock(
             page.getWikipedia(), contents, tmpIndex);
@@ -546,16 +578,46 @@ public class PageContents {
   // ==========================================================================
 
   /**
+   * Find all language links in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments blocks in the page.
+   * @return Language links found.
+   */
+  public static Collection<PageElementLanguageLink> findAllLanguageLinks(
+      Page page, String contents,
+      Collection<PageElementComment> comments) {
+    if (contents == null) {
+      return null;
+    }
+    Collection<PageElementLanguageLink> result = new ArrayList<PageElementLanguageLink>();
+    int currentIndex = 0;
+    while ((currentIndex < contents.length())) {
+      PageElementLanguageLink link = findNextLanguageLink(page, contents, currentIndex, comments);
+      if (link == null) {
+        currentIndex = contents.length();
+      } else {
+        result.add(link);
+        currentIndex = link.getEndIndex();
+      }
+    }
+    return result;
+  }
+
+  /**
    * Find the first language link after an index in the page contents.
    * 
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
    * @param currentIndex The last index.
+   * @param comments Comments blocks in the page.
    * @return Language link found.
    */
   public static PageElementLanguageLink findNextLanguageLink(
       Page page, String contents,
-      int currentIndex) {
+      int currentIndex,
+      Collection<PageElementComment> comments) {
     if (contents == null) {
       return null;
     }
@@ -563,6 +625,8 @@ public class PageContents {
       int tmpIndex = contents.indexOf("[[", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
+      } else if (isInComments(tmpIndex, comments)) {
+        currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementLanguageLink link = PageElementLanguageLink.analyzeBlock(
             page.getWikipedia(), contents, tmpIndex);

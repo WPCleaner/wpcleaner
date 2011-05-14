@@ -22,7 +22,6 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 
 
@@ -55,8 +54,7 @@ public class CheckErrorAlgorithm082 extends CheckErrorAlgorithmBase {
     int startIndex = -1;
     String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementInterwikiLink link = PageContents.findNextInterwikiLink(
-          pageAnalysis.getPage(), contents, startIndex);
+      PageElementInterwikiLink link = pageAnalysis.getNextInterwikiLink(startIndex);
       if (link != null) {
         startIndex = link.getEndIndex();
         if (errors == null) {

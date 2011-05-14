@@ -40,6 +40,10 @@ public class PageAnalysis {
   private Collection<PageElementTitle> titles;
   private final Object categoriesLock = new Object();
   private Collection<PageElementCategory> categories;
+  private final Object interwikiLinksLock = new Object();
+  private Collection<PageElementInterwikiLink> interwikiLinks;
+  private final Object languageLinksLock = new Object();
+  private Collection<PageElementLanguageLink> languageLinks;
 
   /**
    * @param page Page.
@@ -171,5 +175,91 @@ public class PageAnalysis {
       }
     }
     return null;
+  }
+
+  /**
+   * @return All interwiki links in the page analysis.
+   */
+  public Collection<PageElementInterwikiLink> getInterwikiLinks() {
+    Collection<PageElementComment> tmpComments = getComments();
+
+    synchronized (interwikiLinksLock) {
+      if (interwikiLinks == null) {
+        interwikiLinks = PageContents.findAllInterwikiLinks(getPage(), getContents(), tmpComments);
+      }
+      return interwikiLinks;
+    }
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Next interwiki link.
+   */
+  public PageElementInterwikiLink getNextInterwikiLink(int currentIndex) {
+    Collection<PageElementInterwikiLink> tmpLinks = getInterwikiLinks();
+    for (PageElementInterwikiLink link : tmpLinks) {
+      if (link.getBeginIndex() >= currentIndex) {
+        return link;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return True if the current index is inside an interwiki link.
+   */
+  public boolean isInInterwikiLink(int currentIndex) {
+    Collection<PageElementInterwikiLink> tmpLinks = getInterwikiLinks();
+    for (PageElementInterwikiLink link : tmpLinks) {
+      if ((link.getBeginIndex() <= currentIndex) &&
+          (link.getEndIndex() > currentIndex)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * @return All language links in the page analysis.
+   */
+  public Collection<PageElementLanguageLink> getLanguageLinks() {
+    Collection<PageElementComment> tmpComments = getComments();
+
+    synchronized (languageLinksLock) {
+      if (languageLinks == null) {
+        languageLinks = PageContents.findAllLanguageLinks(getPage(), getContents(), tmpComments);
+      }
+      return languageLinks;
+    }
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Next language link.
+   */
+  public PageElementLanguageLink getNextLanguageLink(int currentIndex) {
+    Collection<PageElementLanguageLink> tmpLinks = getLanguageLinks();
+    for (PageElementLanguageLink link : tmpLinks) {
+      if (link.getBeginIndex() >= currentIndex) {
+        return link;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return True if the current index is inside a language link.
+   */
+  public boolean isInLanguageLink(int currentIndex) {
+    Collection<PageElementLanguageLink> tmpLinks = getLanguageLinks();
+    for (PageElementLanguageLink link : tmpLinks) {
+      if ((link.getBeginIndex() <= currentIndex) &&
+          (link.getEndIndex() > currentIndex)) {
+        return true;
+      }
+    }
+    return false;
   }
 }

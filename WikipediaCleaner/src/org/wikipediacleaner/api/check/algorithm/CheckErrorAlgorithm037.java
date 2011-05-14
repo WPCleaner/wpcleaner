@@ -144,12 +144,12 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
   @Override
   public String fix(String fixName, Page page, String contents) {
     int index = contents.length();
-    PageElementCategory category = PageContents.findNextCategory(
-        page, contents, 0, PageContents.findAllComments(page.getWikipedia(), contents));
+    PageAnalysis pageAnalysis = new PageAnalysis(page, contents);
+    PageElementCategory category = pageAnalysis.getNextCategory(0);
     if (category != null) {
       index = category.getBeginIndex();
     } else {
-      PageElementLanguageLink language = PageContents.findNextLanguageLink(page, contents, 0);
+      PageElementLanguageLink language = pageAnalysis.getNextLanguageLink(0);
       if (language != null) {
         index = language.getBeginIndex();
       }
