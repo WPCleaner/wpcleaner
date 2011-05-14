@@ -24,9 +24,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 /**
  * Class containing information about a category link ([[category:name|sort]]). 
  */
-public class PageElementCategory {
-  private final int beginIndex;
-  private final int endIndex;
+public class PageElementCategory extends PageElement {
+
   private final String categoryNotTrimmed;
   private final String category;
   private final String nameNotTrimmed;
@@ -116,14 +115,6 @@ public class PageElementCategory {
         contents.substring(tmpIndex + 1, endIndex));
   }
 
-  public int getBeginIndex() {
-    return beginIndex;
-  }
-
-  public int getEndIndex() {
-    return endIndex;
-  }
-
   public String getCategory() {
     return category;
   }
@@ -140,8 +131,7 @@ public class PageElementCategory {
       int beginIndex, int endIndex,
       String category, String name,
       String sort) {
-    this.beginIndex = beginIndex;
-    this.endIndex = endIndex;
+    super(beginIndex, endIndex);
     this.categoryNotTrimmed = category;
     this.category = (category != null) ? category.trim() : null;
     this.nameNotTrimmed = name;

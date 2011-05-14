@@ -26,9 +26,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 /**
  * Class containing information about a language link ([[lang:link|text]]). 
  */
-public class PageElementLanguageLink {
-  private final int beginIndex;
-  private final int endIndex;
+public class PageElementLanguageLink extends PageElement {
+
   private final String languageNotTrimmed;
   private final String language;
   private final String linkNotTrimmed;
@@ -118,14 +117,6 @@ public class PageElementLanguageLink {
         contents.substring(tmpIndex + 1, endIndex));
   }
 
-  public int getBeginIndex() {
-    return beginIndex;
-  }
-
-  public int getEndIndex() {
-    return endIndex;
-  }
-
   public String getLanguage() {
     return language;
   }
@@ -142,8 +133,7 @@ public class PageElementLanguageLink {
       int beginIndex, int endIndex,
       String language, String link,
       String text) {
-    this.beginIndex = beginIndex;
-    this.endIndex = endIndex;
+    super(beginIndex, endIndex);
     this.languageNotTrimmed = language;
     this.language = (language != null) ? language.trim() : null;
     this.linkNotTrimmed = link;

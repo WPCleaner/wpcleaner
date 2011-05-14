@@ -93,14 +93,20 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
             CheckErrorResult errorResult = createCheckErrorResult(
                 page, startIndex, endIndex + 1); 
             boolean isInRef = false;
-            PageElementTagData previousStartRef = PageContents.findPreviousStartTag(page, contents, "ref", startIndex);
+            PageElementTagData previousStartRef = PageContents.findPreviousStartTag(
+                page, contents, "ref", startIndex);
             if (previousStartRef != null) {
-              PageElementTagData previousEndRef = PageContents.findPreviousEndTag(page, contents, "ref", startIndex);
-              if ((previousEndRef == null) || (previousEndRef.getEndIndex() < previousStartRef.getEndIndex())) {
-                PageElementTagData nextEndRef = PageContents.findNextEndTag(page, contents, "ref", endIndex);
+              PageElementTagData previousEndRef = PageContents.findPreviousEndTag(
+                  page, contents, "ref", startIndex);
+              if ((previousEndRef == null) ||
+                  (previousEndRef.getEndIndex() < previousStartRef.getEndIndex())) {
+                PageElementTagData nextEndRef = PageContents.findNextEndTag(
+                    page, contents, "ref", endIndex);
                 if (nextEndRef != null) {
-                  PageElementTagData nextStartRef = PageContents.findNextStartTag(page, contents, "ref", startIndex);
-                  if ((nextStartRef == null) || (nextEndRef.getStartIndex() < nextStartRef.getStartIndex())) {
+                  PageElementTagData nextStartRef = PageContents.findNextStartTag(
+                      page, contents, "ref", startIndex);
+                  if ((nextStartRef == null) ||
+                      (nextEndRef.getBeginIndex() < nextStartRef.getBeginIndex())) {
                     isInRef = true;
                   }
                 }

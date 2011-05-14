@@ -27,9 +27,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 /**
  * Class containing information about a complete image ([[namespace:image|...|text]]). 
  */
-public class PageElementImage {
-  private final int beginIndex;
-  private final int endIndex;
+public class PageElementImage extends PageElement {
+
   private final String namespaceNotTrimmed;
   private final String namespace;
   private final String imageNotTrimmed;
@@ -153,14 +152,6 @@ public class PageElementImage {
     return null;
   }
 
-  public int getBeginIndex() {
-    return beginIndex;
-  }
-
-  public int getEndIndex() {
-    return endIndex;
-  }
-
   public String getNamespace() {
     return namespace;
   }
@@ -177,8 +168,7 @@ public class PageElementImage {
       int beginIndex, int endIndex,
       String namespace, String image,
       List<String> magicWords, String description) {
-    this.beginIndex = beginIndex;
-    this.endIndex = endIndex;
+    super(beginIndex, endIndex);
     this.namespaceNotTrimmed = namespace;
     this.namespace = (namespace != null) ? namespace.trim() : null;
     this.imageNotTrimmed = image;

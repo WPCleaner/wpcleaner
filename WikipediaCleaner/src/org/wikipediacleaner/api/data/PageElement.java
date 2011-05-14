@@ -20,12 +20,33 @@ package org.wikipediacleaner.api.data;
 
 
 /**
- * Class containing information about a tag (&lt;<i>tag</i>&gt;). 
+ * Class containing information about an element of the page.
  */
-public class PageElementTagData extends PageElement {
+public abstract class PageElement {
 
-  public PageElementTagData(int beginIndex, int endIndex) {
-    super(beginIndex, endIndex);
+  private final int beginIndex;
+  private final int endIndex;
+
+  /**
+   * @param beginIndex Beginning of the page element.
+   * @param endIndex End of the page element.
+   */
+  public PageElement(int beginIndex, int endIndex) {
+    this.beginIndex = beginIndex;
+    this.endIndex = endIndex;
   }
 
+  /**
+   * @return Beginning of the page element.
+   */
+  public int getBeginIndex() {
+    return beginIndex;
+  }
+
+  /**
+   * @return End of the page element.
+   */
+  public int getEndIndex() {
+    return endIndex;
+  }
 }

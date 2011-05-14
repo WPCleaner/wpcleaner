@@ -120,7 +120,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                 startTagIndex = lastTag.getStartTagBeginIndex();
                 endTagIndex = lastTag.getEndTagEndIndex();
               } else if (lastTagData != null) {
-                startTagIndex = lastTagData.getStartIndex();
+                startTagIndex = lastTagData.getBeginIndex();
                 endTagIndex = lastTagData.getEndIndex();
               }
               currentIndex = endTagIndex;
