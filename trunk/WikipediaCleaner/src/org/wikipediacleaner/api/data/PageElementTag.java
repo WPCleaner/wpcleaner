@@ -92,18 +92,22 @@ public class PageElementTag extends PageElement {
     if (startTagEndIndex < 0) {
       return null;
     }
+    startTagEndIndex++;
     int startParametersIndex = tmpIndex;
-    if (contents.charAt(startTagEndIndex - 1) == '/') {
+    if (contents.charAt(startTagEndIndex - 2) == '/') {
       List<String> parameterNames = new ArrayList<String>();
       List<String> parameterValues = new ArrayList<String>();
       if (!analyzeTagParameters(
-          contents.substring(startParametersIndex, startTagEndIndex - 1),
+          contents.substring(startParametersIndex, startTagEndIndex - 2),
           parameterNames, parameterValues)) {
         return null;
       }
-      return new PageElementTag(tagName, startTagBeginIndex, startTagEndIndex, parameterNames, parameterValues);
+      return new PageElementTag(
+          tagName,
+          startTagBeginIndex, startTagEndIndex,
+          parameterNames, parameterValues);
     }
-    tmpIndex = startTagEndIndex + 1;
+    tmpIndex = startTagEndIndex;
 
     // Find Tag end
     if (tmpIndex >= contents.length()) {
@@ -157,14 +161,14 @@ public class PageElementTag extends PageElement {
     List<String> parameterNames = new ArrayList<String>();
     List<String> parameterValues = new ArrayList<String>();
     if (!analyzeTagParameters(
-        contents.substring(startParametersIndex, startTagEndIndex),
+        contents.substring(startParametersIndex, startTagEndIndex - 1),
         parameterNames, parameterValues)) {
       return null;
     }
     return new PageElementTag(
         tagName, startTagBeginIndex, startTagEndIndex,
         parameterNames, parameterValues,
-        contents.substring(startTagEndIndex + 1, endTagBeginIndex),
+        contents.substring(startTagEndIndex, endTagBeginIndex),
         endTagBeginIndex, endTagEndIndex);
   }
 
