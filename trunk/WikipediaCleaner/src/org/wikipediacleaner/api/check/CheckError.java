@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -46,6 +48,10 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckError {
 
+  private final static Log log = LogFactory.getLog(CheckError.class);
+
+  private static boolean traceTime = false;
+
   /**
    * Analyze a page to find error types.
    * 
@@ -56,6 +62,7 @@ public class CheckError {
    */
   public static List<CheckErrorPage> analyzeErrors(
       Collection<CheckErrorAlgorithm> algorithms, Page page, String contents) {
+    long beginAll = traceTime ? System.currentTimeMillis() : 0;
     List<CheckErrorPage> errorsFound = new ArrayList<CheckErrorPage>();
     if ((algorithms != null) && (page != null)) {
       if (contents == null) {
@@ -66,14 +73,23 @@ public class CheckError {
         if ((algorithm != null) &&
             (algorithm.isAvailable()) &&
             (CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()))) {
+          long beginOne = traceTime ? System.currentTimeMillis() : 0;
           List<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
           if (algorithm.analyze(page, contents, comments, results)) {
             CheckErrorPage errorPage = new CheckErrorPage(page, algorithm);
             errorPage.setResults(true, results);
             errorsFound.add(errorPage);
           }
+          if (traceTime) {
+            long endOne = System.currentTimeMillis();
+            log.info("Error n°" + algorithm.getErrorNumber() + ": " + (endOne - beginOne));
+          }
         }
       }
+    }
+    if (traceTime) {
+      long endAll = System.currentTimeMillis();
+      log.info("All: " + (endAll - beginAll));
     }
     return errorsFound;
   }

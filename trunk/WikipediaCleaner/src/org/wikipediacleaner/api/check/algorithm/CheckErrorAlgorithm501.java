@@ -69,8 +69,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
       // Test every suggestion
       int maxLength = 0;
+      String currentContents = contents.substring(startIndex);
       for (Suggestion suggestion : suggestions.values()) {
-        Matcher matcher = suggestion.lookingAt(contents, startIndex);
+        Matcher matcher = suggestion.lookingAt(currentContents);
         if (matcher != null) {
           if (errors == null) {
             return true;
@@ -87,7 +88,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       if (!possibles.isEmpty()) {
         CheckErrorResult error = createCheckErrorResult(
             page, startIndex, startIndex + maxLength);
-        String text = contents.substring(startIndex, startIndex + maxLength);
+        String text = currentContents.substring(0, maxLength);
         for (Suggestion suggestion : possibles) {
           String comment = suggestion.getComment();
           if (comment != null) {
