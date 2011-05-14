@@ -38,6 +38,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
+import javax.swing.JToggleButton;
 import javax.swing.table.TableModel;
 
 import org.apache.commons.logging.Log;
@@ -323,6 +324,21 @@ public class Utilities {
   }
 
   /**
+   * Create a JToggleButton.
+   * 
+   * @param message Label text with optional mnemonic inside.
+   * @return Button initialized with text and mnemonic.
+   */
+  public static JToggleButton createJToggleButton(String message) {
+    JToggleButton button = new JToggleButton(getLabelWithoutMnemonic(message));
+    char mnemonic = getMnemonic(message);
+    if (mnemonic != ' ') {
+      button.setMnemonic(mnemonic);
+    }
+    return button;
+  }
+
+  /**
    * Retrieve a icon.
    * 
    * @param iconName Icon name.
@@ -364,6 +380,37 @@ public class Utilities {
       }
     } else {
       button = new JButton(getLabelWithoutMnemonic(message));
+    }
+    char mnemonic = getMnemonic(message);
+    if (mnemonic != ' ') {
+      button.setMnemonic(mnemonic);
+    }
+    return button;
+  }
+
+  /**
+   * Create a JToggleButton.
+   * 
+   * @param iconName Icon name.
+   * @param size Icon size.
+   * @param message Label text with optional mnemonic inside.
+   * @param showMessage Use message for the button text or for tooltip.
+   * @return Button initialized with text and mnemonic.
+   */
+  public static JToggleButton createJToggleButton(
+      String iconName, EnumImageSize size,
+      String message, boolean showMessage) {
+    ImageIcon icon = getImageIcon(iconName, size);
+    JToggleButton button = null;
+    if (icon != null) {
+      if (showMessage) {
+        button = new JToggleButton(getLabelWithoutMnemonic(message), icon);
+      } else {
+        button = new JToggleButton(icon);
+        button.setToolTipText(getLabelWithoutMnemonic(message));
+      }
+    } else {
+      button = new JToggleButton(getLabelWithoutMnemonic(message));
     }
     char mnemonic = getMnemonic(message);
     if (mnemonic != ' ') {

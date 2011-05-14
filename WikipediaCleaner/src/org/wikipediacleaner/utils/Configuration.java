@@ -122,6 +122,7 @@ public class Configuration implements WindowListener {
   public  final static String  BOOLEAN_DEBUG_URL               = "DebugURL";
   public  final static String  BOOLEAN_DEBUG_XML               = "DebugXML";
   public  final static String  BOOLEAN_FORCE_WATCH             = "ForceWatch";
+  public  final static String  BOOLEAN_ORTHOGRAPH              = "Orthograph";
   public  final static String  BOOLEAN_REMEMBER_LAST_PAGE      = "RememberLastPage";
   public  final static String  BOOLEAN_RESTORE_WINDOW          = "RestoreWindow";
   public  final static String  BOOLEAN_SAVE_LAST_REPLACEMENT   = "SaveLastReplacement";
@@ -154,6 +155,7 @@ public class Configuration implements WindowListener {
   public  final static boolean DEFAULT_DEBUG_URL               = true;
   public  final static boolean DEFAULT_DEBUG_XML               = false;
   public  final static boolean DEFAULT_FORCE_WATCH             = false;
+  public  final static boolean DEFAULT_ORTHOGRAPH              = true;
   public  final static boolean DEFAULT_REMEMBER_LAST_PAGE      = true;
   public  final static boolean DEFAULT_RESTORE_WINDOW          = true;
   public  final static boolean DEFAULT_SAVE_LAST_REPLACEMENT   = false;

@@ -21,6 +21,7 @@ package org.wikipediacleaner.api.data;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.utils.Configuration;
 
 
 /**
@@ -30,6 +31,8 @@ public class PageAnalysis {
 
   private final Page page;
   private final String contents;
+
+  private boolean checkOrthograph;
 
   private final Object commentsLock = new Object();
   private Collection<PageElementComment> comments;
@@ -41,6 +44,11 @@ public class PageAnalysis {
   public PageAnalysis(Page page, String contents) {
     this.page = page;
     this.contents = (contents != null) ? contents : page.getContents();
+
+    // Default configuration
+    Configuration config = Configuration.getConfiguration();
+    checkOrthograph = config.getBoolean(
+        null, Configuration.BOOLEAN_ORTHOGRAPH, Configuration.DEFAULT_ORTHOGRAPH);
   }
 
   /**
@@ -77,6 +85,20 @@ public class PageAnalysis {
    */
   public String getContents() {
     return contents;
+  }
+
+  /**
+   * @param check True if orthograph should be checked.
+   */
+  public void shouldCheckOrthograph(boolean check) {
+    this.checkOrthograph = check;
+  }
+
+  /**
+   * @return True if orthograph should be checked.
+   */
+  public boolean shouldCheckOrthograph() {
+    return checkOrthograph;
   }
 
   /**
