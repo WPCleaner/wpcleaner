@@ -28,7 +28,6 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.i18n.GT;
 
@@ -71,8 +70,7 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
     }
     String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementCategory category = PageContents.findNextCategory(
-          pageAnalysis.getPage(), contents, startIndex, pageAnalysis.getComments());
+      PageElementCategory category = pageAnalysis.getNextCategory(startIndex);
       if (category == null) {
         startIndex = contents.length();
       } else {

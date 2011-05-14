@@ -22,7 +22,6 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementTitle;
 
 
@@ -54,8 +53,7 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
     int previousTitleLevel = -1;
     String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementTitle title = PageContents.findNextTitle(
-          pageAnalysis.getWikipedia(), contents, startIndex, pageAnalysis.getComments());
+      PageElementTitle title = pageAnalysis.getNextTitle(startIndex);
       if (title == null) {
         startIndex = contents.length();
       } else {

@@ -834,7 +834,6 @@ public abstract class PageWindow
    * 
    * @param panel Contail.
    * @param icon Flag indicating if an icon should be used.
-   * @return Check ortograph button.
    */
   public void addChkOrthograph(JComponent panel, boolean icon) {
     boolean checked = shouldCheckOrthograph();
