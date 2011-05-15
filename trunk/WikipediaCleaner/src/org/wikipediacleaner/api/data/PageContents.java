@@ -283,16 +283,46 @@ public class PageContents {
   // ==========================================================================
 
   /**
+   * Find all internal links in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments blocks in the page.
+   * @return Categories found.
+   */
+  public static Collection<PageElementInternalLink> findAllInternalLinks(
+      Page page, String contents,
+      Collection<PageElementComment> comments) {
+    if (contents == null) {
+      return null;
+    }
+    Collection<PageElementInternalLink> result = new ArrayList<PageElementInternalLink>();
+    int currentIndex = 0;
+    while ((currentIndex < contents.length())) {
+      PageElementInternalLink link = findNextInternalLink(page, contents, currentIndex, comments);
+      if (link == null) {
+        currentIndex = contents.length();
+      } else {
+        result.add(link);
+        currentIndex = link.getEndIndex();
+      }
+    }
+    return result;
+  }
+
+  /**
    * Find the first internal link after an index in the page contents.
    * 
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
    * @param currentIndex The last index.
+   * @param comments Comments blocks in the page.
    * @return Internal link found.
    */
   public static PageElementInternalLink findNextInternalLink(
       Page page, String contents,
-      int currentIndex) {
+      int currentIndex,
+      Collection<PageElementComment> comments) {
     if (contents == null) {
       return null;
     }
@@ -300,6 +330,8 @@ public class PageContents {
       int tmpIndex = contents.indexOf("[[", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
+      } else if (isInComments(tmpIndex, comments)) {
+        currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementInternalLink link = PageElementInternalLink.analyzeBlock(
             page.getWikipedia(), contents, tmpIndex);
@@ -318,12 +350,14 @@ public class PageContents {
    * @param wikipedia Wikipedia.
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments blocks in the page.
    * @param links Links that are requested.
    * @param notification For notifying when a link is found.
    */
   public static void findInternalLinks(
       EnumWikipedia wikipedia,
       Page page, String contents,
+      Collection<PageElementComment> comments,
       List<Page> links, InternalLinkNotification notification) {
     if ((contents == null) || (links == null) || (notification == null)) {
       return;
@@ -332,7 +366,8 @@ public class PageContents {
     // Search for simple internal links [[link]], [[link|text]], [[link#anchor|text]], ...
     int currentIndex = 0;
     while (currentIndex < contents.length()) {
-      PageElementInternalLink internalLink = findNextInternalLink(page, contents, currentIndex);
+      PageElementInternalLink internalLink = findNextInternalLink(
+          page, contents, currentIndex, comments);
       if (internalLink != null) {
         currentIndex = internalLink.getBeginIndex() + 2;
         for (Page link : links) {
@@ -379,14 +414,16 @@ public class PageContents {
    * @param wikipedia Wikipedia.
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments blocks in the page.
    * @param links Links that are requested.
    */
   public static void countInternalLinks(
       EnumWikipedia wikipedia,
       Page page, String contents,
+      Collection<PageElementComment> comments,
       List<Page> links) {
     InternalLinkNotification counter = new InternalLinkCounter(links);
-    findInternalLinks(wikipedia, page, contents, links, counter);
+    findInternalLinks(wikipedia, page, contents, comments, links, counter);
   }
 
   /**
@@ -395,15 +432,17 @@ public class PageContents {
    * @param wikipedia Wikipedia.
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments blocks in the page.
    * @param links Links that are requested.
    * @return Link count.
    */
   public static Map<String, Integer> countInternalDisambiguationLinks(
       EnumWikipedia wikipedia,
       Page page, String contents,
+      Collection<PageElementComment> comments,
       List<Page> links) {
     InternalDisambiguationLinkCounter counter = new InternalDisambiguationLinkCounter();
-    findInternalLinks(wikipedia, page, contents, links, counter);
+    findInternalLinks(wikipedia, page, contents, comments, links, counter);
     return counter.getLinkCount();
   }
 

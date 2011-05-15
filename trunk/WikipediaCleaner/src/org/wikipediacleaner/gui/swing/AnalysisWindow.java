@@ -27,6 +27,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -70,6 +71,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
@@ -1001,7 +1003,9 @@ public class AnalysisWindow extends PageWindow {
           }
         }
       }
-      PageContents.countInternalLinks(getWikipedia(), page, text, links);
+      Collection<PageElementComment> comments = PageContents.findAllComments(
+          getWikipedia(), text);
+      PageContents.countInternalLinks(getWikipedia(), page, text, comments, links);
     }
   }
 

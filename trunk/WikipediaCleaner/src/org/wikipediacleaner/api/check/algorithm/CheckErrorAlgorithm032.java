@@ -24,7 +24,6 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 
 
@@ -51,99 +50,90 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
-    int startIndex = 0;
     boolean result = false;
     Namespace fileNamespace = Namespace.getNamespace(
         Namespace.IMAGE, pageAnalysis.getWikipedia().getNamespaces());
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      PageElementInternalLink link = PageContents.findNextInternalLink(
-          pageAnalysis.getPage(), contents, startIndex);
-      if (link == null) {
-        startIndex = contents.length();
-      } else {
-        // Finding possible namespace
-        String namespace = null;
-        if (link.getLink() != null) {
-          int colonPos = link.getLink().indexOf(':');
-          if (colonPos > 0) {
-            namespace = link.getLink().substring(0, colonPos).trim();
+    for (PageElementInternalLink link : pageAnalysis.getInternalLinks()) {
+      // Finding possible namespace
+      String namespace = null;
+      if (link.getLink() != null) {
+        int colonPos = link.getLink().indexOf(':');
+        if (colonPos > 0) {
+          namespace = link.getLink().substring(0, colonPos).trim();
+        }
+      }
+
+      // Analyze link text
+      String text = link.getText();
+      if ((text != null) &&
+          ((namespace == null) || (!fileNamespace.isPossibleName(namespace)))) {
+        int levelSquareBrackets = 0;
+        int levelCurlyBrackets = 0;
+        ArrayList<Integer> pipeIndex = new ArrayList<Integer>();
+        int currentPos = 0;
+        while (currentPos < text.length()) {
+          switch (text.charAt(currentPos)) {
+          case '[':
+            // Checking if we have a [[
+            if ((currentPos + 1 < text.length()) &&
+                (text.charAt(currentPos + 1) == '[')) {
+              levelSquareBrackets++;
+              currentPos++;
+            }
+            break;
+          case ']':
+            // Checking if we have a ]]
+            if ((currentPos + 1 < text.length()) &&
+                (text.charAt(currentPos + 1) == ']')) {
+              levelSquareBrackets--;
+              currentPos++;
+            }
+            break;
+          case '{':
+            // Checking if we have a {{
+            if ((currentPos + 1 < text.length()) &&
+                (text.charAt(currentPos + 1) == '{')) {
+              levelCurlyBrackets++;
+              currentPos++;
+            }
+            break;
+          case '}':
+            // Checking if we have a }}
+            if ((currentPos + 1 < text.length()) &&
+                (text.charAt(currentPos + 1) == '}')) {
+              levelCurlyBrackets--;
+              currentPos++;
+            }
+            break;
+          case '|':
+            // Checking if the | is counting for
+            if ((levelSquareBrackets == 0) &&
+                (levelCurlyBrackets == 0)) {
+              pipeIndex.add(Integer.valueOf(currentPos));
+            }
+            break;
           }
+          currentPos++;
         }
 
-        // Analyze link text
-        String text = link.getText();
-        if ((text != null) &&
-            ((namespace == null) || (!fileNamespace.isPossibleName(namespace)))) {
-          int levelSquareBrackets = 0;
-          int levelCurlyBrackets = 0;
-          ArrayList<Integer> pipeIndex = new ArrayList<Integer>();
-          int currentPos = 0;
-          while (currentPos < text.length()) {
-            switch (text.charAt(currentPos)) {
-            case '[':
-              // Checking if we have a [[
-              if ((currentPos + 1 < text.length()) &&
-                  (text.charAt(currentPos + 1) == '[')) {
-                levelSquareBrackets++;
-                currentPos++;
-              }
-              break;
-            case ']':
-              // Checking if we have a ]]
-              if ((currentPos + 1 < text.length()) &&
-                  (text.charAt(currentPos + 1) == ']')) {
-                levelSquareBrackets--;
-                currentPos++;
-              }
-              break;
-            case '{':
-              // Checking if we have a {{
-              if ((currentPos + 1 < text.length()) &&
-                  (text.charAt(currentPos + 1) == '{')) {
-                levelCurlyBrackets++;
-                currentPos++;
-              }
-              break;
-            case '}':
-              // Checking if we have a }}
-              if ((currentPos + 1 < text.length()) &&
-                  (text.charAt(currentPos + 1) == '}')) {
-                levelCurlyBrackets--;
-                currentPos++;
-              }
-              break;
-            case '|':
-              // Checking if the | is counting for
-              if ((levelSquareBrackets == 0) &&
-                  (levelCurlyBrackets == 0)) {
-                pipeIndex.add(Integer.valueOf(currentPos));
-              }
-              break;
-            }
-            currentPos++;
+        // Testing if the error has been found
+        if ((levelSquareBrackets == 0) && (pipeIndex.size() > 0)) {
+          if (errors == null) {
+            return true;
           }
-
-          // Testing if the error has been found
-          if ((levelSquareBrackets == 0) && (pipeIndex.size() > 0)) {
-            if (errors == null) {
-              return true;
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+          for (int i = 0; i <= pipeIndex.size(); i++) {
+            int beginText = (i > 0) ? (pipeIndex.get(i - 1).intValue() + 1) : 0;
+            int endText = (i < pipeIndex.size()) ? pipeIndex.get(i).intValue() : text.length();
+            if (text.substring(beginText + 1, endText).trim().length() > 0) {
+              errorResult.addReplacement(
+                  "[[" + link.getLink() + "|" + text.substring(beginText, endText) + "]]");
             }
-            result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
-            for (int i = 0; i <= pipeIndex.size(); i++) {
-              int beginText = (i > 0) ? (pipeIndex.get(i - 1).intValue() + 1) : 0;
-              int endText = (i < pipeIndex.size()) ? pipeIndex.get(i).intValue() : text.length();
-              if (text.substring(beginText + 1, endText).trim().length() > 0) {
-                errorResult.addReplacement(
-                    "[[" + link.getLink() + "|" + text.substring(beginText, endText) + "]]");
-              }
-            }
-            errors.add(errorResult);
           }
+          errors.add(errorResult);
         }
-        startIndex = link.getBeginIndex() + 2;
       }
     }
     return result;

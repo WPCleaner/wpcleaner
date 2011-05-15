@@ -38,6 +38,8 @@ public class PageAnalysis {
   private Collection<PageElementComment> comments;
   private final Object titlesLock = new Object();
   private Collection<PageElementTitle> titles;
+  private final Object internalLinksLock = new Object();
+  private Collection<PageElementInternalLink> internalLinks;
   private final Object categoriesLock = new Object();
   private Collection<PageElementCategory> categories;
   private final Object interwikiLinksLock = new Object();
@@ -147,6 +149,49 @@ public class PageAnalysis {
       }
     }
     return null;
+  }
+
+  /**
+   * @return All internal links in the page analysis.
+   */
+  public Collection<PageElementInternalLink> getInternalLinks() {
+    Collection<PageElementComment> tmpComments = getComments();
+
+    synchronized (internalLinksLock) {
+      if (internalLinks == null) {
+        internalLinks = PageContents.findAllInternalLinks(getPage(), getContents(), tmpComments);
+      }
+      return internalLinks;
+    }
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Next internal link.
+   */
+  public PageElementInternalLink getNextInternalLink(int currentIndex) {
+    Collection<PageElementInternalLink> tmpInternalLinks = getInternalLinks();
+    for (PageElementInternalLink link : tmpInternalLinks) {
+      if (link.getBeginIndex() >= currentIndex) {
+        return link;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return True if the current index is inside an internal link.
+   */
+  public boolean isInInternalLink(int currentIndex) {
+    Collection<PageElementInternalLink> tmpLinks = getInternalLinks();
+    for (PageElementInternalLink link : tmpLinks) {
+      if ((link.getBeginIndex() <= currentIndex) &&
+          (link.getEndIndex() > currentIndex)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**

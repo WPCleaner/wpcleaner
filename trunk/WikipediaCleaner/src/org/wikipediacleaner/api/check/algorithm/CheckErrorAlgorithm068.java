@@ -28,7 +28,6 @@ import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
@@ -68,84 +67,70 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
 
     // Analyzing the text from the beginning
     boolean result = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      PageElementInternalLink link = PageContents.findNextInternalLink(
-          pageAnalysis.getPage(), contents, startIndex);
-      if (link != null) {
-        boolean found = false;
+    for (PageElementInternalLink link : pageAnalysis.getInternalLinks()) {
 
-        // Check that link starts with :
-        String linkUrl = link.getLink();
-        if ((linkUrl != null) && (linkUrl.startsWith(":"))) {
+      // Check that link starts with :
+      String linkUrl = link.getLink();
+      if ((linkUrl != null) && (linkUrl.startsWith(":"))) {
 
-          int currentPos = linkUrl.indexOf(":", 1);
-          if (currentPos > 1) {
-            String namespace = linkUrl.substring(1, currentPos);
-            for (Language lg : pageAnalysis.getWikipedia().getLanguages()) {
-              if (namespace.equals(lg.getCode())) {
-                if (errors == null) {
-                  return true;
-                }
-                result = true;
-                CheckErrorResult errorResult = createCheckErrorResult(
-                    pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
-                EnumWikipedia fromWikipedia = EnumWikipedia.getWikipedia(lg.getCode());
-                if (fromWikipedia != null) {
-                  String pageTitle = linkUrl.substring(currentPos + 1);
-                  errorResult.addPossibleAction(
-                      GT._("Check language links"),
-                      new CheckLanguageLinkActionProvider(
-                          fromWikipedia, pageAnalysis.getWikipedia(),
-                          pageTitle));
-                  if ((templatesList != null) && (templatesList.length > 0)) {
-                    for (String template : templatesList) {
-                      String[] templateArgs = template.split("\\|");
-                      if (templateArgs.length >= 5) {
-                        String prefix =
-                          "{{" + templateArgs[0] + "|" + templateArgs[1] + "=";
-                        String suffix =
-                          "|" + templateArgs[2] + "=" + lg.getCode() +
-                          "|" + templateArgs[3] + "=" + pageTitle +
-                          "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : pageTitle) +
-                          "}}";
-                        String question = GT._("What is the title of the page on this wiki ?");
-                        String unauthorizedCharacters = "[]\"";
-                        AddTextActionProvider action = null;
-                        if ((link.getText() != null) && (!link.getText().equals(pageTitle))) {
-                          String[] possibleValues = { null, pageTitle, link.getText() };
-                          action = new AddTextActionProvider(
-                              prefix, suffix, null, question,
-                              possibleValues, false, null, unauthorizedCharacters);
-                        } else {
-                          action = new AddTextActionProvider(
-                              prefix, suffix, null, question,
-                              pageTitle, unauthorizedCharacters); 
-                        }
-                        errorResult.addPossibleAction(
-                            GT._("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
-                            action);
+        int currentPos = linkUrl.indexOf(":", 1);
+        if (currentPos > 1) {
+          String namespace = linkUrl.substring(1, currentPos);
+          for (Language lg : pageAnalysis.getWikipedia().getLanguages()) {
+            if (namespace.equals(lg.getCode())) {
+              if (errors == null) {
+                return true;
+              }
+              result = true;
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+              EnumWikipedia fromWikipedia = EnumWikipedia.getWikipedia(lg.getCode());
+              if (fromWikipedia != null) {
+                String pageTitle = linkUrl.substring(currentPos + 1);
+                errorResult.addPossibleAction(
+                    GT._("Check language links"),
+                    new CheckLanguageLinkActionProvider(
+                        fromWikipedia, pageAnalysis.getWikipedia(),
+                        pageTitle));
+                if ((templatesList != null) && (templatesList.length > 0)) {
+                  for (String template : templatesList) {
+                    String[] templateArgs = template.split("\\|");
+                    if (templateArgs.length >= 5) {
+                      String prefix =
+                        "{{" + templateArgs[0] + "|" + templateArgs[1] + "=";
+                      String suffix =
+                        "|" + templateArgs[2] + "=" + lg.getCode() +
+                        "|" + templateArgs[3] + "=" + pageTitle +
+                        "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : pageTitle) +
+                        "}}";
+                      String question = GT._("What is the title of the page on this wiki ?");
+                      String unauthorizedCharacters = "[]\"";
+                      AddTextActionProvider action = null;
+                      if ((link.getText() != null) && (!link.getText().equals(pageTitle))) {
+                        String[] possibleValues = { null, pageTitle, link.getText() };
+                        action = new AddTextActionProvider(
+                            prefix, suffix, null, question,
+                            possibleValues, false, null, unauthorizedCharacters);
+                      } else {
+                        action = new AddTextActionProvider(
+                            prefix, suffix, null, question,
+                            pageTitle, unauthorizedCharacters); 
                       }
+                      errorResult.addPossibleAction(
+                          GT._("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
+                          action);
                     }
                   }
-                  errorResult.addPossibleAction(
-                      GT._("External Viewer"),
-                      new BasicActionProvider(
-                          new PageViewAction(pageTitle, fromWikipedia)));
                 }
-                errors.add(errorResult);
+                errorResult.addPossibleAction(
+                    GT._("External Viewer"),
+                    new BasicActionProvider(
+                        new PageViewAction(pageTitle, fromWikipedia)));
               }
+              errors.add(errorResult);
             }
           }
         }
-        if (found) {
-          startIndex = link.getEndIndex();
-        } else {
-          startIndex = link.getBeginIndex() + 2;
-        }
-      } else {
-        startIndex = contents.length();
       }
     }
     return result;

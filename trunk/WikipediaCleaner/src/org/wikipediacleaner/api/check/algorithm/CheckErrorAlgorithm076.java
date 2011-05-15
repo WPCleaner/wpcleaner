@@ -22,7 +22,6 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.i18n.GT;
 
@@ -53,36 +52,27 @@ public class CheckErrorAlgorithm076 extends CheckErrorAlgorithmBase {
 
     // Analyzing the text from the beginning
     boolean result = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      PageElementInternalLink link = PageContents.findNextInternalLink(
-          pageAnalysis.getPage(), contents, startIndex);
-      if (link != null) {
-        startIndex = link.getEndIndex();
-        int spaceIndex = link.getFullLink().indexOf("%20");
-        if (spaceIndex >= 0) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          StringBuilder sb = new StringBuilder();
-          sb.append("[[");
-          sb.append(link.getFullLink().replaceAll("\\%20", " "));
-          if (link.getText() != null) {
-            sb.append("|");
-            sb.append(link.getText());
-          }
-          sb.append("]]");
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
-          errorResult.addReplacement(
-              sb.toString(),
-              GT._("Replace %20 by space character"));
-          errors.add(errorResult);
+    for (PageElementInternalLink link : pageAnalysis.getInternalLinks()) {
+      int spaceIndex = link.getFullLink().indexOf("%20");
+      if (spaceIndex >= 0) {
+        if (errors == null) {
+          return true;
         }
-      } else {
-        startIndex = contents.length();
+        result = true;
+        StringBuilder sb = new StringBuilder();
+        sb.append("[[");
+        sb.append(link.getFullLink().replaceAll("\\%20", " "));
+        if (link.getText() != null) {
+          sb.append("|");
+          sb.append(link.getText());
+        }
+        sb.append("]]");
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+        errorResult.addReplacement(
+            sb.toString(),
+            GT._("Replace %20 by space character"));
+        errors.add(errorResult);
       }
     }
 

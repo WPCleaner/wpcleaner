@@ -22,7 +22,6 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 
 
@@ -52,24 +51,15 @@ public class CheckErrorAlgorithm074 extends CheckErrorAlgorithmBase {
 
     // Analyzing the text from the beginning
     boolean result = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      PageElementInternalLink link = PageContents.findNextInternalLink(
-          pageAnalysis.getPage(), contents, startIndex);
-      if (link != null) {
-        startIndex = link.getEndIndex();
-        if (link.getFullLink().trim().length() == 0) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
-          errors.add(errorResult);
+    for (PageElementInternalLink link : pageAnalysis.getInternalLinks()) {
+      if (link.getFullLink().trim().length() == 0) {
+        if (errors == null) {
+          return true;
         }
-      } else {
-        startIndex = contents.length();
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+        errors.add(errorResult);
       }
     }
 

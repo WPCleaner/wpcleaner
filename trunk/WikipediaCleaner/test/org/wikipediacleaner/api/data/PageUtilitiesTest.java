@@ -26,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -92,7 +93,8 @@ public class PageUtilitiesTest {
   public void testCountLinkOccurencesInText() {
     Page page = DataManager.getPage(EnumWikipedia.FR, "Utilisateur:Salebot/Journal/2008-11-05", null, null);
     Page link = DataManager.getPage(EnumWikipedia.FR, "AFP", null, null);
-    PageContents.countInternalLinks(EnumWikipedia.FR, page, pageText, Collections.singletonList(link));
+    Collection<PageElementComment> comments = PageContents.findAllComments(EnumWikipedia.FR, pageText);
+    PageContents.countInternalLinks(EnumWikipedia.FR, page, pageText, comments, Collections.singletonList(link));
     assertEquals(1, link.getCountOccurence());
   }
 }

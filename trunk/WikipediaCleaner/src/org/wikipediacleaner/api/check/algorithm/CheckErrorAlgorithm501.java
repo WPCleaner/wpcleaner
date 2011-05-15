@@ -68,6 +68,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
       // Test if the position is correct to check orthograph
       boolean checkOrthograph = true;
+      if (checkOrthograph && pageAnalysis.isInInternalLink(startIndex)) {
+        checkOrthograph = false;
+      }
       if (checkOrthograph && pageAnalysis.isInInterwikiLink(startIndex)) {
         checkOrthograph = false;
       }
