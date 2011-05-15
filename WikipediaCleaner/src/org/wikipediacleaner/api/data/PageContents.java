@@ -288,7 +288,7 @@ public class PageContents {
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
    * @param comments Comments blocks in the page.
-   * @return Categories found.
+   * @return Internal links found.
    */
   public static Collection<PageElementInternalLink> findAllInternalLinks(
       Page page, String contents,
@@ -384,7 +384,8 @@ public class PageContents {
     if (wikipedia.hasTemplateMatchers()) {
       currentIndex = 0;
       while (currentIndex < contents.length()) {
-        PageElementTemplate template = PageContents.findNextTemplate(page, contents, currentIndex);
+        PageElementTemplate template = PageContents.findNextTemplate(
+            page, contents, currentIndex, comments);
         if (template != null) {
           currentIndex = template.getBeginIndex() + 2;
           List<? extends TemplateMatcher> matchers =
@@ -716,16 +717,46 @@ public class PageContents {
   // ==========================================================================
 
   /**
+   * Find all templates in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments blocks in the page.
+   * @return Templates found.
+   */
+  public static Collection<PageElementTemplate> findAllTemplates(
+      Page page, String contents,
+      Collection<PageElementComment> comments) {
+    if (contents == null) {
+      return null;
+    }
+    Collection<PageElementTemplate> result = new ArrayList<PageElementTemplate>();
+    int currentIndex = 0;
+    while ((currentIndex < contents.length())) {
+      PageElementTemplate template = findNextTemplate(page, contents, currentIndex, comments);
+      if (template == null) {
+        currentIndex = contents.length();
+      } else {
+        result.add(template);
+        currentIndex = template.getEndIndex();
+      }
+    }
+    return result;
+  }
+
+  /**
    * Find the first template after an index in the page contents.
    * 
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
    * @param currentIndex The last index.
-   * @return Tag found.
+   * @param comments Comments blocks in the page.
+   * @return Template found.
    */
   public static PageElementTemplate findNextTemplate(
       Page page, String contents,
-      int currentIndex) {
+      int currentIndex,
+      Collection<PageElementComment> comments) {
     if (contents == null) {
       return null;
     }
@@ -733,6 +764,8 @@ public class PageContents {
       int tmpIndex = contents.indexOf("{{", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
+      } else if (isInComments(tmpIndex, comments)) {
+        currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementTemplate template = PageElementTemplate.analyzeBlock(null, contents, tmpIndex);
         if (template != null) {

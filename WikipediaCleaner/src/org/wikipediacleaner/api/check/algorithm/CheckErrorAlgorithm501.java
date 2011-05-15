@@ -27,6 +27,10 @@ import java.util.regex.Matcher;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementInterwikiLink;
+import org.wikipediacleaner.api.data.PageElementLanguageLink;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
 
 
@@ -67,15 +71,35 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     while (startIndex < contents.length()) {
 
       // Test if the position is correct to check orthograph
+      int nextIndex = startIndex + 1;
       boolean checkOrthograph = true;
-      if (checkOrthograph && pageAnalysis.isInInternalLink(startIndex)) {
-        checkOrthograph = false;
+      if (checkOrthograph) {
+        PageElementInternalLink link = pageAnalysis.isInInternalLink(startIndex);
+        if (link != null) {
+          checkOrthograph = false;
+          nextIndex = Math.max(nextIndex, link.getEndIndex());
+        }
       }
-      if (checkOrthograph && pageAnalysis.isInInterwikiLink(startIndex)) {
-        checkOrthograph = false;
+      if (checkOrthograph) {
+        PageElementTemplate template = pageAnalysis.isInTemplate(startIndex);
+        if (template != null) {
+          checkOrthograph = false;
+          nextIndex = Math.max(nextIndex, template.getEndIndex());
+        }
       }
-      if (checkOrthograph && pageAnalysis.isInLanguageLink(startIndex)) {
-        checkOrthograph = false;
+      if (checkOrthograph) {
+        PageElementInterwikiLink link = pageAnalysis.isInInterwikiLink(startIndex);
+        if (link != null) {
+          checkOrthograph = false;
+          nextIndex = Math.max(nextIndex, link.getEndIndex());
+        }
+      }
+      if (checkOrthograph) {
+        PageElementLanguageLink link = pageAnalysis.isInLanguageLink(startIndex);
+        if (link != null) {
+          checkOrthograph = false;
+          nextIndex = Math.max(nextIndex, link.getEndIndex());
+        }
       }
 
       // Check orthograph
@@ -121,6 +145,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       }
 
       // Go to the next non letter/digit character
+      startIndex = Math.max(startIndex, nextIndex - 1);
       while ((startIndex < contents.length()) &&
              (Character.isLetterOrDigit(contents.charAt(startIndex)))) {
         startIndex++;

@@ -40,6 +40,8 @@ public class PageAnalysis {
   private Collection<PageElementTitle> titles;
   private final Object internalLinksLock = new Object();
   private Collection<PageElementInternalLink> internalLinks;
+  private final Object templatesLock = new Object();
+  private Collection<PageElementTemplate> templates;
   private final Object categoriesLock = new Object();
   private Collection<PageElementCategory> categories;
   private final Object interwikiLinksLock = new Object();
@@ -181,17 +183,60 @@ public class PageAnalysis {
 
   /**
    * @param currentIndex Current index.
-   * @return True if the current index is inside an internal link.
+   * @return Internal link if the current index is inside an internal link.
    */
-  public boolean isInInternalLink(int currentIndex) {
+  public PageElementInternalLink isInInternalLink(int currentIndex) {
     Collection<PageElementInternalLink> tmpLinks = getInternalLinks();
     for (PageElementInternalLink link : tmpLinks) {
       if ((link.getBeginIndex() <= currentIndex) &&
           (link.getEndIndex() > currentIndex)) {
-        return true;
+        return link;
       }
     }
-    return false;
+    return null;
+  }
+
+  /**
+   * @return All templates in the page analysis.
+   */
+  public Collection<PageElementTemplate> getTemplates() {
+    Collection<PageElementComment> tmpComments = getComments();
+
+    synchronized (templatesLock) {
+      if (templates == null) {
+        templates = PageContents.findAllTemplates(getPage(), getContents(), tmpComments);
+      }
+      return templates;
+    }
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Next template.
+   */
+  public PageElementTemplate getNextTemplate(int currentIndex) {
+    Collection<PageElementTemplate> tmpTemplates = getTemplates();
+    for (PageElementTemplate template : tmpTemplates) {
+      if (template.getBeginIndex() >= currentIndex) {
+        return template;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Template if the current index is inside a template.
+   */
+  public PageElementTemplate isInTemplate(int currentIndex) {
+    Collection<PageElementTemplate> tmpTemplates = getTemplates();
+    for (PageElementTemplate template : tmpTemplates) {
+      if ((template.getBeginIndex() <= currentIndex) &&
+          (template.getEndIndex() > currentIndex)) {
+        return template;
+      }
+    }
+    return null;
   }
 
   /**
@@ -252,17 +297,17 @@ public class PageAnalysis {
 
   /**
    * @param currentIndex Current index.
-   * @return True if the current index is inside an interwiki link.
+   * @return Interwiki link if the current index is inside an interwiki link.
    */
-  public boolean isInInterwikiLink(int currentIndex) {
+  public PageElementInterwikiLink isInInterwikiLink(int currentIndex) {
     Collection<PageElementInterwikiLink> tmpLinks = getInterwikiLinks();
     for (PageElementInterwikiLink link : tmpLinks) {
       if ((link.getBeginIndex() <= currentIndex) &&
           (link.getEndIndex() > currentIndex)) {
-        return true;
+        return link;
       }
     }
-    return false;
+    return null;
   }
 
   /**
@@ -295,16 +340,16 @@ public class PageAnalysis {
 
   /**
    * @param currentIndex Current index.
-   * @return True if the current index is inside a language link.
+   * @return Language link if the current index is inside a language link.
    */
-  public boolean isInLanguageLink(int currentIndex) {
+  public PageElementLanguageLink isInLanguageLink(int currentIndex) {
     Collection<PageElementLanguageLink> tmpLinks = getLanguageLinks();
     for (PageElementLanguageLink link : tmpLinks) {
       if ((link.getBeginIndex() <= currentIndex) &&
           (link.getEndIndex() > currentIndex)) {
-        return true;
+        return link;
       }
     }
-    return false;
+    return null;
   }
 }
