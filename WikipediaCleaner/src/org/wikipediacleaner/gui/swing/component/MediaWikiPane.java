@@ -876,8 +876,10 @@ public class MediaWikiPane
     // Look for links
     String contents = getText();
     InternalLinkFound notification = new InternalLinkFound();
+    Collection<PageElementComment> comments = PageContents.findAllComments(
+        wikipedia, contents);
     PageContents.findInternalLinks(
-        wikipedia, page, contents, internalLinks, notification);
+        wikipedia, page, contents, comments, internalLinks, notification);
 
     // Move caret to force first element to be visible
     if (notification.startPosition < Integer.MAX_VALUE) {

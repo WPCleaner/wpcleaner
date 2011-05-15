@@ -34,6 +34,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -904,8 +905,9 @@ public class UpdateDabWarningTools {
     if ((page == null) || (page.getContents() == null)) {
       return null;
     }
+    Collection<PageElementComment> comments = PageContents.findAllComments(wikipedia, text);
     Map<String, Integer> linkCount = PageContents.countInternalDisambiguationLinks(
-        wikipedia, page, text, page.getLinks());
+        wikipedia, page, text, comments, page.getLinks());
     List<String> dabLinks = new ArrayList<String>(linkCount.keySet());
     Collections.sort(dabLinks);
     return dabLinks;

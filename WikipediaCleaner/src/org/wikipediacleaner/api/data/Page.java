@@ -21,6 +21,7 @@ package org.wikipediacleaner.api.data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -632,9 +633,11 @@ public class Page implements Comparable<Page> {
 
     // Check each internal link
     int currentPos = 0;
+    Collection<PageElementComment> comments = PageContents.findAllComments(
+        getWikipedia(), pageContents);
     while (currentPos < pageContents.length()) {
       PageElementInternalLink internalLink =
-        PageContents.findNextInternalLink(this, pageContents, currentPos);
+        PageContents.findNextInternalLink(this, pageContents, currentPos, comments);
       if (internalLink == null) {
         currentPos = pageContents.length();
       } else {
