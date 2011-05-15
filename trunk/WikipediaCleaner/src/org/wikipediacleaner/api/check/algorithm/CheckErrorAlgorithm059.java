@@ -55,108 +55,99 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
 
     // Analyzing from the begining
     boolean errorFound = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      PageElementTemplate template = PageContents.findNextTemplate(
-          pageAnalysis.getPage(), contents, startIndex);
-      if (template == null) {
-        startIndex = contents.length();
-      } else {
-        for (int i = 0; i < template.getParameterCount(); i++) {
-          String parameterValue = template.getParameterValue(i);
-          if (parameterValue != null) {
+    for (PageElementTemplate template : pageAnalysis.getTemplates()) {
+      for (int i = 0; i < template.getParameterCount(); i++) {
+        String parameterValue = template.getParameterValue(i);
+        if (parameterValue != null) {
 
-            // Find last <br> tag
-            PageElementTag lastTag = null;
-            int currentIndex = 0;
-            while (currentIndex < parameterValue.length()) {
-              PageElementTag tag = PageContents.findNextTag(
-                  pageAnalysis.getPage(), parameterValue, "br", currentIndex);
-              if (tag != null) {
-                currentIndex = tag.getEndTagEndIndex() - 1;
-                lastTag = tag;
-              } else {
-                currentIndex = parameterValue.length();
-              }
+          // Find last <br> tag
+          PageElementTag lastTag = null;
+          int currentIndex = 0;
+          while (currentIndex < parameterValue.length()) {
+            PageElementTag tag = PageContents.findNextTag(
+                pageAnalysis.getPage(), parameterValue, "br", currentIndex);
+            if (tag != null) {
+              currentIndex = tag.getEndTagEndIndex() - 1;
+              lastTag = tag;
+            } else {
+              currentIndex = parameterValue.length();
             }
-            PageElementTagData lastTagData = null;
-            currentIndex = 0;
-            while (currentIndex < parameterValue.length()) {
-              PageElementTagData tag = PageContents.findNextStartTag(
-                  pageAnalysis.getPage(), parameterValue, "br", currentIndex);
-              if (tag != null) {
-                currentIndex = tag.getEndIndex();
+          }
+          PageElementTagData lastTagData = null;
+          currentIndex = 0;
+          while (currentIndex < parameterValue.length()) {
+            PageElementTagData tag = PageContents.findNextStartTag(
+                pageAnalysis.getPage(), parameterValue, "br", currentIndex);
+            if (tag != null) {
+              currentIndex = tag.getEndIndex();
+              lastTagData = tag;
+            } else {
+              currentIndex = parameterValue.length();
+            }
+          }
+          currentIndex = 0;
+          while (currentIndex < parameterValue.length()) {
+            PageElementTagData tag = PageContents.findNextEndTag(
+                pageAnalysis.getPage(), parameterValue, "br", currentIndex);
+            if (tag != null) {
+              currentIndex = tag.getEndIndex();
+              if ((lastTagData == null) || (lastTagData.getEndIndex() < tag.getEndIndex())) {
                 lastTagData = tag;
-              } else {
-                currentIndex = parameterValue.length();
               }
+            } else {
+              currentIndex = parameterValue.length();
             }
-            currentIndex = 0;
-            while (currentIndex < parameterValue.length()) {
-              PageElementTagData tag = PageContents.findNextEndTag(
-                  pageAnalysis.getPage(), parameterValue, "br", currentIndex);
-              if (tag != null) {
-                currentIndex = tag.getEndIndex();
-                if ((lastTagData == null) || (lastTagData.getEndIndex() < tag.getEndIndex())) {
-                  lastTagData = tag;
-                }
-              } else {
-                currentIndex = parameterValue.length();
-              }
-            }
+          }
 
-            if ((lastTag != null) && (lastTagData != null)) {
-              if (lastTag.getEndTagEndIndex() < lastTagData.getEndIndex()) {
-                lastTag = null;
-              } else {
-                lastTagData = null;
-              }
+          if ((lastTag != null) && (lastTagData != null)) {
+            if (lastTag.getEndTagEndIndex() < lastTagData.getEndIndex()) {
+              lastTag = null;
+            } else {
+              lastTagData = null;
             }
-            if ((lastTag != null) || (lastTagData != null)) {
-              int startTagIndex = 0;
-              int endTagIndex = 0;
-              if (lastTag != null) {
-                startTagIndex = lastTag.getStartTagBeginIndex();
-                endTagIndex = lastTag.getEndTagEndIndex();
-              } else if (lastTagData != null) {
-                startTagIndex = lastTagData.getBeginIndex();
-                endTagIndex = lastTagData.getEndIndex();
-              }
-              currentIndex = endTagIndex;
-              boolean ok = true;
-              while (currentIndex < parameterValue.length()) {
-                if (Character.isWhitespace(parameterValue.charAt(currentIndex))) {
-                  currentIndex++;
-                } else if (parameterValue.startsWith("<!--", currentIndex)) {
-                  int endIndex = parameterValue.indexOf("-->", currentIndex + 4);
-                  if (endIndex < 0) {
-                    currentIndex = parameterValue.length();
-                    ok = false;
-                  } else {
-                    currentIndex = endIndex + 3;
-                  }
-                } else {
+          }
+          if ((lastTag != null) || (lastTagData != null)) {
+            int startTagIndex = 0;
+            int endTagIndex = 0;
+            if (lastTag != null) {
+              startTagIndex = lastTag.getStartTagBeginIndex();
+              endTagIndex = lastTag.getEndTagEndIndex();
+            } else if (lastTagData != null) {
+              startTagIndex = lastTagData.getBeginIndex();
+              endTagIndex = lastTagData.getEndIndex();
+            }
+            currentIndex = endTagIndex;
+            boolean ok = true;
+            while (currentIndex < parameterValue.length()) {
+              if (Character.isWhitespace(parameterValue.charAt(currentIndex))) {
+                currentIndex++;
+              } else if (parameterValue.startsWith("<!--", currentIndex)) {
+                int endIndex = parameterValue.indexOf("-->", currentIndex + 4);
+                if (endIndex < 0) {
                   currentIndex = parameterValue.length();
                   ok = false;
+                } else {
+                  currentIndex = endIndex + 3;
                 }
+              } else {
+                currentIndex = parameterValue.length();
+                ok = false;
               }
-              if (ok) {
-                if (errors == null) {
-                  return true;
-                }
-                errorFound = true;
-                CheckErrorResult errorResult = createCheckErrorResult(
-                    pageAnalysis.getPage(),
-                    template.getParameterValueOffset(i) + startTagIndex,
-                    template.getParameterValueOffset(i) + endTagIndex);
-                errorResult.addReplacement("", GT._("Delete"));
-                errors.add(errorResult);
+            }
+            if (ok) {
+              if (errors == null) {
+                return true;
               }
+              errorFound = true;
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(),
+                  template.getParameterValueOffset(i) + startTagIndex,
+                  template.getParameterValueOffset(i) + endTagIndex);
+              errorResult.addReplacement("", GT._("Delete"));
+              errors.add(errorResult);
             }
           }
         }
-        startIndex = template.getBeginIndex() + 2;
       }
     }
 
