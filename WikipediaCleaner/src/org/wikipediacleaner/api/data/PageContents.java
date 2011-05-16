@@ -448,6 +448,72 @@ public class PageContents {
   }
 
   // ==========================================================================
+  // External link management
+  // ==========================================================================
+
+  /**
+   * Find all external links in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments blocks in the page.
+   * @return External links found.
+   */
+  public static Collection<PageElementExternalLink> findAllExternalLinks(
+      Page page, String contents,
+      Collection<PageElementComment> comments) {
+    if (contents == null) {
+      return null;
+    }
+    Collection<PageElementExternalLink> result = new ArrayList<PageElementExternalLink>();
+    int currentIndex = 0;
+    while ((currentIndex < contents.length())) {
+      PageElementExternalLink link = findNextExternalLink(page, contents, currentIndex, comments);
+      if (link == null) {
+        currentIndex = contents.length();
+      } else {
+        result.add(link);
+        currentIndex = link.getEndIndex();
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Find the first external link after an index in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param currentIndex The last index.
+   * @param comments Comments blocks in the page.
+   * @return External link found.
+   */
+  public static PageElementExternalLink findNextExternalLink(
+      Page page, String contents,
+      int currentIndex,
+      Collection<PageElementComment> comments) {
+    if (contents == null) {
+      return null;
+    }
+    while (currentIndex < contents.length()) {
+      int tmpIndex = contents.indexOf("[", currentIndex);
+      if (tmpIndex < 0) {
+        currentIndex = contents.length();
+      } else if (isInComments(tmpIndex, comments)) {
+        currentIndex = indexAfterComments(tmpIndex, comments);
+      } else {
+        PageElementExternalLink link = PageElementExternalLink.analyzeBlock(
+            page.getWikipedia(), contents, tmpIndex);
+        if (link != null) {
+          return link;
+        }
+        currentIndex = tmpIndex + 1;
+      }
+    }
+    return null;
+  }
+
+  // ==========================================================================
   // Image management
   // ==========================================================================
 

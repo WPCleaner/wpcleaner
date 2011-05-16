@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -27,6 +28,9 @@ import java.util.regex.Matcher;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementCategory;
+import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
@@ -68,39 +72,118 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     int startIndex = 0;
     List<Suggestion> possibles = new ArrayList<Suggestion>();
     String contents = pageAnalysis.getContents();
+    Iterator<PageElementComment> itComments = pageAnalysis.getComments().iterator();
+    PageElementComment currentComment = itComments.hasNext() ? itComments.next() : null;
+    Iterator<PageElementInternalLink> itInternalLink = pageAnalysis.getInternalLinks().iterator();
+    PageElementInternalLink currentInternalLink = itInternalLink.hasNext() ? itInternalLink.next() : null;
+    Iterator<PageElementExternalLink> itExternalLink = pageAnalysis.getExternalLinks().iterator();
+    PageElementExternalLink currentExternalLink = itExternalLink.hasNext() ? itExternalLink.next() : null;
+    Iterator<PageElementTemplate> itTemplate = pageAnalysis.getTemplates().iterator();
+    PageElementTemplate currentTemplate = itTemplate.hasNext() ? itTemplate.next() : null;
+    Iterator<PageElementInterwikiLink> itInterwikiLink = pageAnalysis.getInterwikiLinks().iterator();
+    PageElementInterwikiLink currentInterwikiLink = itInterwikiLink.hasNext() ? itInterwikiLink.next() : null;
+    Iterator<PageElementLanguageLink> itLanguageLink = pageAnalysis.getLanguageLinks().iterator();
+    PageElementLanguageLink currentLanguageLink = itLanguageLink.hasNext() ? itLanguageLink.next() : null;
+    Iterator<PageElementCategory> itCategory = pageAnalysis.getCategories().iterator();
+    PageElementCategory currentCategory = itCategory.hasNext() ? itCategory.next() : null;
     while (startIndex < contents.length()) {
 
       // Test if the position is correct to check orthograph
       int nextIndex = startIndex + 1;
       boolean checkOrthograph = true;
-      if (checkOrthograph) {
-        PageElementInternalLink link = pageAnalysis.isInInternalLink(startIndex);
-        if (link != null) {
+
+      // If the position is inside a comment, go after
+      if (checkOrthograph && (currentComment != null)) {
+        while ((currentComment != null) &&
+               (startIndex >= currentComment.getEndIndex())) {
+          currentComment = itComments.hasNext() ? itComments.next() : null;
+        }
+        if ((currentComment != null) &&
+            (startIndex >= currentComment.getBeginIndex())) {
           checkOrthograph = false;
-          nextIndex = Math.max(nextIndex, link.getEndIndex());
+          nextIndex = Math.max(nextIndex, currentComment.getEndIndex());
         }
       }
-      if (checkOrthograph) {
-        PageElementTemplate template = pageAnalysis.isInTemplate(startIndex);
-        if (template != null) {
+
+      // If the position is inside an internal link, go after
+      if (checkOrthograph && (currentInternalLink != null)) {
+        while ((currentInternalLink != null) &&
+               (startIndex >= currentInternalLink.getEndIndex())) {
+          currentInternalLink = itInternalLink.hasNext() ? itInternalLink.next() : null;
+        }
+        if ((currentInternalLink != null) &&
+            (startIndex > currentInternalLink.getBeginIndex())) {
           checkOrthograph = false;
-          nextIndex = Math.max(nextIndex, template.getEndIndex());
+          nextIndex = Math.max(nextIndex, currentInternalLink.getEndIndex());
         }
       }
-      if (checkOrthograph) {
-        PageElementInterwikiLink link = pageAnalysis.isInInterwikiLink(startIndex);
-        if (link != null) {
+
+      // If the position is inside an external link, go after
+      if (checkOrthograph && (currentExternalLink != null)) {
+        while ((currentExternalLink != null) &&
+               (startIndex >= currentExternalLink.getEndIndex())) {
+          currentExternalLink = itExternalLink.hasNext() ? itExternalLink.next() : null;
+        }
+        if ((currentExternalLink != null) &&
+            (startIndex >= currentExternalLink.getBeginIndex())) {
           checkOrthograph = false;
-          nextIndex = Math.max(nextIndex, link.getEndIndex());
+          nextIndex = Math.max(nextIndex, currentExternalLink.getEndIndex());
         }
       }
-      if (checkOrthograph) {
-        PageElementLanguageLink link = pageAnalysis.isInLanguageLink(startIndex);
-        if (link != null) {
+
+      // If the position is inside a template, go after
+      if (checkOrthograph && (currentTemplate != null)) {
+        while ((currentTemplate != null) &&
+               (startIndex >= currentTemplate.getEndIndex())) {
+          currentTemplate = itTemplate.hasNext() ? itTemplate.next() : null;
+        }
+        if ((currentTemplate != null) &&
+            (startIndex >= currentTemplate.getBeginIndex())) {
           checkOrthograph = false;
-          nextIndex = Math.max(nextIndex, link.getEndIndex());
+          nextIndex = Math.max(nextIndex, currentTemplate.getEndIndex());
         }
       }
+
+      // If the position is inside an interwiki link, go after
+      if (checkOrthograph && (currentInterwikiLink != null)) {
+        while ((currentInterwikiLink != null) &&
+               (startIndex >= currentInterwikiLink.getEndIndex())) {
+          currentInterwikiLink = itInterwikiLink.hasNext() ? itInterwikiLink.next() : null;
+        }
+        if ((currentInterwikiLink != null) &&
+            (startIndex >= currentInterwikiLink.getBeginIndex())) {
+          checkOrthograph = false;
+          nextIndex = Math.max(nextIndex, currentInterwikiLink.getEndIndex());
+        }
+      }
+
+      // If the position is inside a language link, go after
+      if (checkOrthograph && (currentLanguageLink != null)) {
+        while ((currentLanguageLink != null) &&
+               (startIndex >= currentLanguageLink.getEndIndex())) {
+          currentLanguageLink = itLanguageLink.hasNext() ? itLanguageLink.next() : null;
+        }
+        if ((currentLanguageLink != null) &&
+            (startIndex >= currentLanguageLink.getBeginIndex())) {
+          checkOrthograph = false;
+          nextIndex = Math.max(nextIndex, currentLanguageLink.getEndIndex());
+        }
+      }
+
+      // If the position is inside a category, go after
+      if (checkOrthograph && (currentCategory != null)) {
+        while ((currentCategory != null) &&
+               (startIndex >= currentCategory.getEndIndex())) {
+          currentCategory = itCategory.hasNext() ? itCategory.next() : null;
+        }
+        if ((currentCategory != null) &&
+            (startIndex >= currentCategory.getBeginIndex())) {
+          checkOrthograph = false;
+          nextIndex = Math.max(nextIndex, currentCategory.getEndIndex());
+        }
+      }
+      // TODO: check if inside a tag <tag> or </tag> or <tag />
+      // TODO: check if inside a table definition
 
       // Check orthograph
       if (checkOrthograph) {
@@ -122,6 +205,21 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             }
           }
         }
+        /*System.out.print("Result " + !possibles.isEmpty() + ":");
+        int tmp = currentContents.indexOf("\n");
+        if (tmp < 0) {
+          if (currentContents.length() < 40) {
+            System.out.println(currentContents);
+          } else {
+            System.out.println(currentContents.substring(0, 40));
+          }
+        } else {
+          if (tmp < 40) {
+            System.out.println(currentContents.substring(0, tmp));
+          } else {
+            System.out.println(currentContents.substring(0, 40));
+          }
+        }*/
   
         // Analyze matching suggestions
         if (!possibles.isEmpty()) {
@@ -141,16 +239,20 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             }
           }
           errors.add(error);
+          nextIndex = Math.max(nextIndex, startIndex + maxLength);
         }
       }
 
       // Go to the next non letter/digit character
-      startIndex = Math.max(startIndex, nextIndex - 1);
+      startIndex = Math.max(startIndex + 1, nextIndex);
       while ((startIndex < contents.length()) &&
-             (Character.isLetterOrDigit(contents.charAt(startIndex)))) {
+             (((Character.isLetterOrDigit(contents.charAt(startIndex - 1))) &&
+               (Character.isLetterOrDigit(contents.charAt(startIndex)))) ||
+              (Character.isSpaceChar(contents.charAt(startIndex))) ||
+              (Character.isWhitespace(contents.charAt(startIndex))) ||
+              ("'.=|\"-)$*:;".indexOf(contents.charAt(startIndex)) >= 0))) {
         startIndex++;
       }
-      startIndex++;
     }
     return result;
   }

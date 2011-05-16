@@ -29,8 +29,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.commons.httpclient.NameValuePair;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -46,8 +44,6 @@ import org.wikipediacleaner.i18n.GT;
  * An abstract class for managing errors defind in the check wikipedia project.
  */
 public class CheckError {
-
-  private final static Log log = LogFactory.getLog(CheckError.class);
 
   private static boolean traceTime = false;
 
@@ -76,14 +72,14 @@ public class CheckError {
           }
           if (traceTime) {
             long endOne = System.currentTimeMillis();
-            log.info("Error n°" + algorithm.getErrorNumber() + ": " + (endOne - beginOne));
+            log("Error n°" + algorithm.getErrorNumber() + ": " + (endOne - beginOne));
           }
         }
       }
     }
     if (traceTime) {
       long endAll = System.currentTimeMillis();
-      log.info("All: " + (endAll - beginAll));
+      log("All: " + (endAll - beginAll));
     }
     return errorsFound;
   }
@@ -100,11 +96,16 @@ public class CheckError {
     if ((algorithm == null) || (pageAnalysis == null)) {
       return null;
     }
+    long beginOne = (traceTime) ? System.currentTimeMillis() : 0;
     CheckErrorPage errorPage = new CheckErrorPage(pageAnalysis.getPage(), algorithm);
     boolean errorFound = false;
     List<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
     errorFound = algorithm.analyze(pageAnalysis, errorsFound);
     errorPage.setResults(errorFound, errorsFound);
+    if (traceTime) {
+      long endOne = System.currentTimeMillis();
+      log("Error n°" + algorithm.getErrorNumber() + ": " + (endOne - beginOne));
+    }
     return errorPage;
   }
 
@@ -154,6 +155,15 @@ public class CheckError {
       }
     }
     errors.add(error);
+  }
+
+  /**
+   * Log.
+   * 
+   * @param text String to log.
+   */
+  private static void log(String text) {
+    System.out.println(text);
   }
 
   private final EnumWikipedia wikipedia;

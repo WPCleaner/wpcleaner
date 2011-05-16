@@ -40,6 +40,8 @@ public class PageAnalysis {
   private Collection<PageElementTitle> titles;
   private final Object internalLinksLock = new Object();
   private Collection<PageElementInternalLink> internalLinks;
+  private final Object externalLinksLock = new Object();
+  private Collection<PageElementExternalLink> externalLinks;
   private final Object templatesLock = new Object();
   private Collection<PageElementTemplate> templates;
   private final Object categoriesLock = new Object();
@@ -126,6 +128,21 @@ public class PageAnalysis {
   }
 
   /**
+   * @param currentIndex Current index.
+   * @return Comment if the current index is inside a comment.
+   */
+  public PageElementComment isInComment(int currentIndex) {
+    Collection<PageElementComment> tmpComments = getComments();
+    for (PageElementComment comment : tmpComments) {
+      if ((comment.getBeginIndex() <= currentIndex) &&
+          (comment.getEndIndex() > currentIndex)) {
+        return comment;
+      }
+    }
+    return null;
+  }
+
+  /**
    * @return All titles in the page analysis.
    */
   public Collection<PageElementTitle> getTitles() {
@@ -188,6 +205,49 @@ public class PageAnalysis {
   public PageElementInternalLink isInInternalLink(int currentIndex) {
     Collection<PageElementInternalLink> tmpLinks = getInternalLinks();
     for (PageElementInternalLink link : tmpLinks) {
+      if ((link.getBeginIndex() <= currentIndex) &&
+          (link.getEndIndex() > currentIndex)) {
+        return link;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @return All external links in the page analysis.
+   */
+  public Collection<PageElementExternalLink> getExternalLinks() {
+    Collection<PageElementComment> tmpComments = getComments();
+
+    synchronized (externalLinksLock) {
+      if (externalLinks == null) {
+        externalLinks = PageContents.findAllExternalLinks(getPage(), getContents(), tmpComments);
+      }
+      return externalLinks;
+    }
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Next external link.
+   */
+  public PageElementExternalLink getNextExternalLink(int currentIndex) {
+    Collection<PageElementExternalLink> tmpExternalLinks = getExternalLinks();
+    for (PageElementExternalLink link : tmpExternalLinks) {
+      if (link.getBeginIndex() >= currentIndex) {
+        return link;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return External link if the current index is inside an external link.
+   */
+  public PageElementExternalLink isInExternalLink(int currentIndex) {
+    Collection<PageElementExternalLink> tmpLinks = getExternalLinks();
+    for (PageElementExternalLink link : tmpLinks) {
       if ((link.getBeginIndex() <= currentIndex) &&
           (link.getEndIndex() > currentIndex)) {
         return link;
@@ -261,6 +321,21 @@ public class PageAnalysis {
     Collection<PageElementCategory> tmpCategories = getCategories();
     for (PageElementCategory category : tmpCategories) {
       if (category.getBeginIndex() >= currentIndex) {
+        return category;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Category if the current index is inside a category.
+   */
+  public PageElementCategory isInCategory(int currentIndex) {
+    Collection<PageElementCategory> tmpCategories = getCategories();
+    for (PageElementCategory category : tmpCategories) {
+      if ((category.getBeginIndex() <= currentIndex) &&
+          (category.getEndIndex() > currentIndex)) {
         return category;
       }
     }

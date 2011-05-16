@@ -116,9 +116,6 @@ public class PageElementInternalLink extends PageElement {
       }
       tmpIndex++;
     }
-    if (tmpIndex >= contents.length()) {
-      return null;
-    }
     if (endIndex < 0) {
       return null;
     }
