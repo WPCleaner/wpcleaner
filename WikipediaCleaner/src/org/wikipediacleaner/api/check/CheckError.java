@@ -58,7 +58,9 @@ public class CheckError {
       Collection<CheckErrorAlgorithm> algorithms, PageAnalysis pageAnalysis) {
     long beginAll = traceTime ? System.currentTimeMillis() : 0;
     List<CheckErrorPage> errorsFound = new ArrayList<CheckErrorPage>();
-    if ((algorithms != null) && (pageAnalysis != null)) {
+    if ((algorithms != null) &&
+        (pageAnalysis != null) &&
+        (pageAnalysis.getContents() != null)) {
       for (CheckErrorAlgorithm algorithm : algorithms) {
         if ((algorithm != null) &&
             (algorithm.isAvailable()) &&
