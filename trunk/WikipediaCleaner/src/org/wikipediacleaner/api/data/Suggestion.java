@@ -106,17 +106,13 @@ public class Suggestion {
 
   /**
    * @param text Text to look at.
-   * @return A matcher if the pattern matches the text to look at.
+   * @return A matcher for the pattern
    */
-  public Matcher lookingAt(String text) {
+  public Matcher initMatcher(String text) {
     Matcher matcher = pattern.matcher(text);
-    if (matcher.lookingAt()) {
-      int pos = matcher.end();
-      if ((pos >= text.length()) || (!Character.isLetterOrDigit(text.charAt(pos)))) {
-        return matcher;
-      }
-    }
-    return null;
+    matcher.useAnchoringBounds(false);
+    matcher.useTransparentBounds(true);
+    return matcher;
   }
 
   /**

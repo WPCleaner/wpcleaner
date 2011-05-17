@@ -20,9 +20,11 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -68,8 +70,15 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     if ((suggestions == null) || (suggestions.isEmpty())) {
       return false;
     }
-    boolean result = false;
-    int startIndex = 0;
+
+    // Initialize matchers
+    Map<Suggestion, Matcher> matchers = new HashMap<Suggestion, Matcher>(suggestions.size());
+    for (Suggestion suggestion : suggestions.values()) {
+      Matcher matcher = suggestion.initMatcher(pageAnalysis.getContents());
+      matchers.put(suggestion, matcher);
+    }
+
+    // Initialize iterators to the various page elements
     List<Suggestion> possibles = new ArrayList<Suggestion>();
     String contents = pageAnalysis.getContents();
     Iterator<PageElementComment> itComments = pageAnalysis.getComments().iterator();
@@ -86,6 +95,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     PageElementLanguageLink currentLanguageLink = itLanguageLink.hasNext() ? itLanguageLink.next() : null;
     Iterator<PageElementCategory> itCategory = pageAnalysis.getCategories().iterator();
     PageElementCategory currentCategory = itCategory.hasNext() ? itCategory.next() : null;
+
+    boolean result = false;
+    int startIndex = 0;
     while (startIndex < contents.length()) {
 
       // Test if the position is correct to check orthograph
@@ -182,8 +194,12 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
           nextIndex = Math.max(nextIndex, currentCategory.getEndIndex());
         }
       }
-      // TODO: check if inside a tag <tag> or </tag> or <tag />
-      // TODO: check if inside a table definition
+
+      // If the position is inside a tag (<tag>, </tag> or <tag/>), go after
+      // TODO
+
+      // If the position is inside a table definition, go after
+      // TODO
 
       // Check orthograph
       if (checkOrthograph) {
@@ -191,41 +207,29 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
   
         // Test every suggestion
         int maxLength = 0;
-        String currentContents = contents.substring(startIndex);
-        for (Suggestion suggestion : suggestions.values()) {
-          Matcher matcher = suggestion.lookingAt(currentContents);
-          if (matcher != null) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            possibles.add(suggestion);
-            if (matcher.end() > maxLength) {
-              maxLength = matcher.end();
+        int contentsLength = contents.length();
+        for (Entry<Suggestion, Matcher> entry : matchers.entrySet()) {
+          Matcher matcher = entry.getValue();
+          if (matcher.region(startIndex, contentsLength).lookingAt()) {
+            int pos = matcher.end();
+            if ((pos >= contents.length()) ||
+                (!Character.isLetterOrDigit(contents.charAt(pos)))) {
+              if (errors == null) {
+                return true;
+              }
+              result = true;
+              possibles.add(entry.getKey());
+              maxLength = Math.max(maxLength, pos - startIndex);
             }
           }
         }
-        /*System.out.print("Result " + !possibles.isEmpty() + ":");
-        int tmp = currentContents.indexOf("\n");
-        if (tmp < 0) {
-          if (currentContents.length() < 40) {
-            System.out.println(currentContents);
-          } else {
-            System.out.println(currentContents.substring(0, 40));
-          }
-        } else {
-          if (tmp < 40) {
-            System.out.println(currentContents.substring(0, tmp));
-          } else {
-            System.out.println(currentContents.substring(0, 40));
-          }
-        }*/
   
         // Analyze matching suggestions
         if (!possibles.isEmpty()) {
           CheckErrorResult error = createCheckErrorResult(
               pageAnalysis.getPage(), startIndex, startIndex + maxLength);
-          String text = currentContents.substring(0, maxLength);
+          String text = contents.substring(
+              startIndex, startIndex + maxLength);
           for (Suggestion suggestion : possibles) {
             String comment = suggestion.getComment();
             if (comment != null) {
