@@ -1395,7 +1395,7 @@ public class MainWindow
 
         // Retrieving suggestions for text replacements
         setText(GT._("Retrieving suggestions for text replacements"));
-        getWikipedia().initSuggestions(api);
+        getWikipedia().initSuggestions(api, reloadOnly);
 
         // Retrieving Check Wiki configuration
         String code = getWikipedia().getCheckWikiCode().replace("-", "_");

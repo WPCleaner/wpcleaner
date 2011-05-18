@@ -1299,8 +1299,8 @@ public enum EnumWikipedia {
    * 
    * @param api
    */
-  public void initSuggestions(API api) {
-    if (suggestions == null) {
+  public void initSuggestions(API api, boolean forceInit) {
+    if ((suggestions == null) || forceInit) {
       synchronized (api) {
         Map<String, Suggestion> tmpMap = new HashMap<String, Suggestion>();
         if (suggestionPages != null) {
