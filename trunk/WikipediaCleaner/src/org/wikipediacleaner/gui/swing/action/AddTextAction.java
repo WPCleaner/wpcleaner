@@ -140,6 +140,7 @@ public class AddTextAction extends TextAction {
               value = m.group(1).trim();
               value = value.replaceAll("&#232;", "è");
               value = value.replaceAll("&#233;", "é");
+              value = value.replaceAll("&eacute;", "é");
             }
           }
         }
