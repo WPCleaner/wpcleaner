@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-18 20:04+0200\n"
+"POT-Creation-Date: 2011-05-18 20:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -281,6 +281,11 @@ msgstr ""
 msgid "Priority unknown"
 msgstr ""
 
+#: org/wikipediacleaner/api/constants/EnumWikipedia.java:1515
+#, java-format
+msgid "Fixed using [[{0}]]"
+msgstr ""
+
 #: org/wikipediacleaner/api/data/PageComparator.java:229
 msgid "Namespace"
 msgstr ""
@@ -460,12 +465,6 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1047
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:334
 msgid "Do you want to update the disambiguation warning in talk page ?"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:1095
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1488
-#, java-format
-msgid "Detection by [[{0}]]"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78

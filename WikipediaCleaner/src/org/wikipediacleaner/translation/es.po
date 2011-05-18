@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-18 20:04+0200\n"
+"POT-Creation-Date: 2011-05-18 20:28+0200\n"
 "PO-Revision-Date: 2011-04-26 18:14+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -297,6 +297,11 @@ msgstr "Para Bot"
 msgid "Priority unknown"
 msgstr "Prioridad desconocida"
 
+#: org/wikipediacleaner/api/constants/EnumWikipedia.java:1515
+#, fuzzy, java-format
+msgid "Fixed using [[{0}]]"
+msgstr "Enviando {0}"
+
 #: org/wikipediacleaner/api/data/PageComparator.java:229
 msgid "Namespace"
 msgstr "Espacio de nombres"
@@ -483,12 +488,6 @@ msgstr ""
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr ""
 "¿Quiere actualizar el aviso de desambiguación en la página de conversaciones?"
-
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:1095
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1488
-#, java-format
-msgid "Detection by [[{0}]]"
-msgstr "Detección por [[{0}]]"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
 #: org/wikipediacleaner/gui/swing/MainWindow.java:717
@@ -2111,6 +2110,9 @@ msgstr ""
 "Las opciones actuales se guardarán como las opciones de su Wikipedia "
 "preferida.\n"
 "¿Cuál es su Wikipedia preferida?"
+
+#~ msgid "Detection by [[{0}]]"
+#~ msgstr "Detección por [[{0}]]"
 
 #~ msgid ""
 #~ "Many new features added for the {0}Check Wiki project{1} : try them !"

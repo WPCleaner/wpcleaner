@@ -51,6 +51,7 @@ import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.api.data.TemplateMatcher1L2T;
 import org.wikipediacleaner.api.data.TemplateMatcher1LT;
 import org.wikipediacleaner.api.data.TemplateMatcher1L;
+import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -251,6 +252,7 @@ public enum EnumWikipedia {
   private Set<String> disambiguationPages;
   private List<Page> disambiguationTemplates;
   private String checkWikiProject;
+  private String checkWikiComment;
   private String checkWikiTranslation;
 
   private List<Namespace> namespaces;
@@ -312,6 +314,7 @@ public enum EnumWikipedia {
     this.templatesForLinkingText = null;
     this.disambiguationList = null;
     this.checkWikiProject = null;
+    this.checkWikiComment = null;
     this.checkWikiTranslation = null;
   }
 
@@ -1185,6 +1188,12 @@ public enum EnumWikipedia {
         checkWikiProject = tmp.trim();
       }
 
+      // Check Wiki comment
+      tmp = configuration.getProperty("check_wiki_comment", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        checkWikiComment = tmp.trim();
+      }
+
       // Check Wiki translation page
       tmp = configuration.getProperty("check_wiki_translation_page", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
@@ -1494,6 +1503,16 @@ public enum EnumWikipedia {
       return checkWikiProject;
     }
     return null;
+  }
+
+  /**
+   * @return Check Wikipedia comment.
+   */
+  public String getCheckWikiComment() {
+    if (checkWikiComment != null) {
+      return checkWikiComment;
+    }
+    return GT._("Fixed using [[{0}]]", getCheckWikiProject());
   }
 
   /**

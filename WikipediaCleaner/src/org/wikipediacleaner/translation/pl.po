@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-18 20:04+0200\n"
+"POT-Creation-Date: 2011-05-18 20:28+0200\n"
 "PO-Revision-Date: 2011-04-21 21:01+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -286,6 +286,11 @@ msgstr "Dla botów"
 msgid "Priority unknown"
 msgstr "Nieznany priorytet"
 
+#: org/wikipediacleaner/api/constants/EnumWikipedia.java:1515
+#, fuzzy, java-format
+msgid "Fixed using [[{0}]]"
+msgstr "Wysyłanie {0}"
+
 #: org/wikipediacleaner/api/data/PageComparator.java:229
 msgid "Namespace"
 msgstr "Przestrzeń nazw"
@@ -470,12 +475,6 @@ msgstr ""
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr ""
 "Czy chcesz aktualizować komunikat o ujednoznacznianiach na stronie dyskusji?"
-
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:1095
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1488
-#, java-format
-msgid "Detection by [[{0}]]"
-msgstr "[[{0}]]"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
 #: org/wikipediacleaner/gui/swing/MainWindow.java:717
@@ -2079,6 +2078,9 @@ msgstr ""
 "Twoje obecnie ustawienia zostaną zachowane jako opcje dla twojej ulubionej "
 "Wikipedii\n"
 "Wskaż twoją ulubioną Wikipedię."
+
+#~ msgid "Detection by [[{0}]]"
+#~ msgstr "[[{0}]]"
 
 #~ msgid "&Save password"
 #~ msgstr "&Zapisz hasło"
