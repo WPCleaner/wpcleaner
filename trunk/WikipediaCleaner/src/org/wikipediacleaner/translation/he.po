@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-18 20:04+0200\n"
+"POT-Creation-Date: 2011-05-18 20:28+0200\n"
 "PO-Revision-Date: 2010-06-23 15:43+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -289,6 +289,11 @@ msgstr ""
 msgid "Priority unknown"
 msgstr ""
 
+#: org/wikipediacleaner/api/constants/EnumWikipedia.java:1515
+#, fuzzy, java-format
+msgid "Fixed using [[{0}]]"
+msgstr "שולח את {0}"
+
 #: org/wikipediacleaner/api/data/PageComparator.java:229
 msgid "Namespace"
 msgstr "מרחב שם"
@@ -476,12 +481,6 @@ msgstr ""
 #, fuzzy
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr "ספור את עמודים הפירושונים"
-
-#: org/wikipediacleaner/gui/swing/AnalysisWindow.java:1095
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1488
-#, java-format
-msgid "Detection by [[{0}]]"
-msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
 #: org/wikipediacleaner/gui/swing/MainWindow.java:717

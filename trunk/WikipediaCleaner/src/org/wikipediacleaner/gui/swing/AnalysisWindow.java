@@ -1092,7 +1092,7 @@ public class AnalysisWindow extends PageWindow {
         if (comment.length() > 0) {
           comment.append(" / ");
         }
-        comment.append(GT._("Detection by [[{0}]]", getWikipedia().getCheckWikiProject()));
+        comment.append(getWikipedia().getCheckWikiComment());
         Configuration config = Configuration.getConfiguration();
         for (CheckErrorAlgorithm errorFixed : errorsFixed) {
           comment.append(" - ");
