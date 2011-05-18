@@ -24,6 +24,7 @@ import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
@@ -123,7 +124,9 @@ public class SendWorker extends BasicWorker {
     // Mark errors fixed
     if (errorsFixed != null) {
       for (CheckErrorAlgorithm error: errorsFixed) {
-        PageWindow.markPageAsFixed(null, error.getErrorNumberString(), page);
+        if (error.getPriority() != CheckErrorAlgorithms.PRIORITY_BOT_ONLY) {
+          PageWindow.markPageAsFixed(null, error.getErrorNumberString(), page);
+        }
       }
     }
 
