@@ -80,14 +80,12 @@ public class PageElementExternalLink extends PageElement {
     int spaceIndex = contents.indexOf(' ', tmpIndex);
     if ((spaceIndex < 0) || (spaceIndex >= endIndex)) {
       return new PageElementExternalLink(
-          wikipedia,
           index, endIndex + 1,
           contents.substring(beginIndex, endIndex),
           null);
     }
 
     return new PageElementExternalLink(
-        wikipedia,
         index, endIndex + 1,
         contents.substring(beginIndex, spaceIndex),
         contents.substring(spaceIndex + 1, endIndex));
@@ -109,12 +107,11 @@ public class PageElementExternalLink extends PageElement {
   }
 
   private PageElementExternalLink(
-      EnumWikipedia wikipedia,
       int beginIndex, int endIndex,
       String link, String text) {
     super(beginIndex, endIndex);
     this.linkNotTrimmed = link;
-    this.link = (link != null) ? wikipedia.normalizeTitle(link.trim()) : null;
+    this.link = (link != null) ? link.trim() : null;
     this.textNotTrimmed = text;
     this.text = (text != null) ? text.trim() : null;
   }

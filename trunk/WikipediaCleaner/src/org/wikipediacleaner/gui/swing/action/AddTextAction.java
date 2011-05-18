@@ -138,6 +138,8 @@ public class AddTextAction extends TextAction {
             Matcher m = pTitle.matcher(html);
             if (m.find() == true) {
               value = m.group(1).trim();
+              value = value.replaceAll("&#232;", "è");
+              value = value.replaceAll("&#233;", "é");
             }
           }
         }
