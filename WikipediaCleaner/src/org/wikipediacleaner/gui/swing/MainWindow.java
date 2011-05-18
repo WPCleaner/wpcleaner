@@ -1325,13 +1325,15 @@ public class MainWindow
         Configuration configuration = Configuration.getConfiguration();
         configuration.setWikipedia(getWikipedia());
         configuration.setLanguage(language);
-        if (login &&
-            ((saveUser == Configuration.VALUE_SAVE_USER_NAME) ||
-             (saveUser == Configuration.VALUE_SAVE_USER_BOTH))) {
+        if (login) {
           Properties props = configuration.getProperties(getWikipedia(), Configuration.PROPERTIES_USERS);
-          props.setProperty(
-              username,
-              (saveUser == Configuration.VALUE_SAVE_USER_BOTH) ? new String(password) : "");
+          if (saveUser == Configuration.VALUE_SAVE_USER_NONE) {
+            props.remove(username);
+          } else {
+            props.setProperty(
+                username,
+                (saveUser == Configuration.VALUE_SAVE_USER_BOTH) ? new String(password) : "");
+          }
           configuration.setProperties(getWikipedia(), Configuration.PROPERTIES_USERS, props);
           configuration.setInt(null, Configuration.INTEGER_SAVE_USER, saveUser);
         }
