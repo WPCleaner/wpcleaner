@@ -112,6 +112,7 @@ public class MainWindow
   private final static String ACTION_OTHER_WIKIPEDIA = "OTHER WIKIPEDIA";
   private final static String ACTION_RANDOM_PAGE     = "RANDOM PAGE";
   private final static String ACTION_RANDOM_PAGES    = "RANDOM PAGES";
+  private final static String ACTION_RELOAD_CONFIG   = "RELOAD CONFIG";
   private final static String ACTION_SAVE_PASSWORD   = "SAVE PASSWORD";
   private final static String ACTION_UPDATE_DAB      = "UPDATE DAB WARNING";
   private final static String ACTION_WATCHED_PAGES   = "WATCHED PAGES";
@@ -154,6 +155,7 @@ public class MainWindow
 
   private JButton buttonOptions;
   private JButton buttonOptionsSystem;
+  private JButton buttonReloadOptions;
   private JButton buttonIdea;
   private JButton buttonAbout;
 
@@ -263,6 +265,7 @@ public class MainWindow
     buttonDemo.setEnabled(!logged);
     buttonLogout.setEnabled(logged);
     buttonOptionsSystem.setEnabled(logged);
+    buttonReloadOptions.setEnabled(logged);
 
     buttonCurrentList.setEnabled(logged);
     buttonCheckWiki.setEnabled(logged);
@@ -461,6 +464,12 @@ public class MainWindow
     buttonOptionsSystem.setActionCommand(ACTION_OPTIONS_SYSTEM);
     buttonOptionsSystem.addActionListener(this);
     buttonToolbar.add(buttonOptionsSystem);
+    buttonReloadOptions = Utilities.createJButton(
+        "gnome-view-refresh.png", EnumImageSize.NORMAL,
+        GT._("Reload system options"), false);
+    buttonReloadOptions.setActionCommand(ACTION_RELOAD_CONFIG);
+    buttonReloadOptions.addActionListener(this);
+    buttonToolbar.add(buttonReloadOptions);
     buttonToolbar.addSeparator();
     buttonIdea = Utilities.createJButton(GT._("&Idea ? Bug ?"));
     buttonIdea.setActionCommand(ACTION_IDEA);
@@ -775,6 +784,8 @@ public class MainWindow
       Controller.runOptions();
     } else if (ACTION_OPTIONS_SYSTEM.equals(e.getActionCommand())) {
       actionOptionsSystem();
+    } else if (ACTION_RELOAD_CONFIG.equals(e.getActionCommand())) {
+      actionReloadOptions();
     } else if (ACTION_OTHER_LANGUAGE.equals(e.getActionCommand())) {
       actionOtherLanguage();
     } else if (ACTION_OTHER_WIKIPEDIA.equals(e.getActionCommand())) {
@@ -909,7 +920,7 @@ public class MainWindow
             radSaveUsername.isSelected() ?
                 Configuration.VALUE_SAVE_USER_NAME :
                 Configuration.VALUE_SAVE_USER_NONE,
-        login).start();
+        login, false).start();
   }
 
   /**
@@ -923,11 +934,10 @@ public class MainWindow
     updateComponentState();
   }
 
-
   /**
    * Action called when System Options button is pressed.
    */
-  public void actionOptionsSystem() {
+  private void actionOptionsSystem() {
     if (Utilities.isDesktopSupported()) {
       EnumWikipedia wikipedia = getWikipedia();
       Utilities.browseURL(wikipedia, wikipedia.getConfiguationPage(), true);
@@ -937,6 +947,24 @@ public class MainWindow
           URL_OTHER_WIKIPEDIA);
     }
   }
+
+  /**
+   * Action called when Reload System Options button is pressed.
+   */
+  private void actionReloadOptions() {
+    new LoginWorker(
+        getWikipedia(), this,
+        (EnumLanguage) comboLanguage.getSelectedItem(),
+        comboUser.getSelectedItem().toString(),
+        textPassword.getPassword(),
+        radSavePassword.isSelected() ?
+            Configuration.VALUE_SAVE_USER_BOTH :
+            radSaveUsername.isSelected() ?
+                Configuration.VALUE_SAVE_USER_NAME :
+                Configuration.VALUE_SAVE_USER_NONE,
+        false, true).start();
+  }
+
   /**
    * Action called when Help button is pressed.
    */
@@ -1283,6 +1311,7 @@ public class MainWindow
     private final char[] password;
     private final int saveUser;
     private final boolean login;
+    private final boolean reloadOnly;
 
     public LoginWorker(
         EnumWikipedia wikipedia,
@@ -1291,13 +1320,15 @@ public class MainWindow
         String username,
         char[] password,
         int saveUser,
-        boolean login) {
+        boolean login,
+        boolean reloadOnly) {
       super(wikipedia, window);
       this.language = language;
       this.username = username.trim();
       this.password = password;
       this.saveUser = saveUser;
       this.login = login;
+      this.reloadOnly = reloadOnly;
     }
 
     /* (non-Javadoc)
@@ -1322,21 +1353,29 @@ public class MainWindow
       try {
         setText(GT._("Retrieving MediaWiki API"));
         API api = APIFactory.getAPI();
-        setText(GT._("Login"));
-        LoginResult result = api.login(getWikipedia(), username, new String(password), login);
-        if (login) {
-          if ((result == null) || (!result.isLoginSuccessful())) {
-            throw new APIException("Login unsuccessful: " + ((result != null) ? result.toString() : ""));
+
+        // Login
+        if (!reloadOnly) {
+          setText(GT._("Login"));
+          LoginResult result = api.login(getWikipedia(), username, new String(password), login);
+          if (login) {
+            if ((result == null) || (!result.isLoginSuccessful())) {
+              throw new APIException("Login unsuccessful: " + ((result != null) ? result.toString() : ""));
+            }
           }
+          logged = true;
+          userLogged = login;
         }
-        logged = true;
-        userLogged = login;
+
+        // Load configuration
+        setText(GT._("Loading configuration"));
+        api.loadConfiguration(getWikipedia());
 
         // Saving settings
         Configuration configuration = Configuration.getConfiguration();
         configuration.setWikipedia(getWikipedia());
         configuration.setLanguage(language);
-        if (login) {
+        if (login && !reloadOnly) {
           Properties props = configuration.getProperties(getWikipedia(), Configuration.PROPERTIES_USERS);
           if (saveUser == Configuration.VALUE_SAVE_USER_NONE) {
             props.remove(username);

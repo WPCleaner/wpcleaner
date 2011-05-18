@@ -170,6 +170,18 @@ public class MediaWikiAPI implements API {
       }
     }
 
+    return result;
+  }
+
+  /**
+   * Load Wikipedia configuration.
+   * 
+   * @param wikipedia Wikipedia.
+   * @return Login status.
+   */
+  public void loadConfiguration(
+      EnumWikipedia wikipedia) throws APIException {
+
     // Retrieve configuration
     if (wikipedia.getConfiguationPage() != null) {
       Page page = DataManager.getPage(
@@ -180,8 +192,6 @@ public class MediaWikiAPI implements API {
 
     // Retrieve data
     loadSiteInfo(wikipedia);
-
-    return result;
   }
 
   /**

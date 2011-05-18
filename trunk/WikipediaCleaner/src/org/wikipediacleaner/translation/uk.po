@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-18 20:28+0200\n"
+"POT-Creation-Date: 2011-05-18 22:04+0200\n"
 "PO-Revision-Date: 2010-09-16 07:39+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -68,7 +68,7 @@ msgid "Updating page {0}"
 msgstr "Поновлення сторінки {0}"
 
 #: org/wikipediacleaner/api/MediaWiki.java:222
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:99
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:100
 #, fuzzy, java-format
 msgid "Error {0} detected: Waiting and retrying"
 msgstr "Виявлена помилка «неправильна лексема»: Повторна спроба"
@@ -224,25 +224,25 @@ msgstr "Контрольна сума — {0} замість {1}"
 msgid "Replace %20 by space character"
 msgstr "Замінити %20 символом пробілу"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:113
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:94
 msgid "Add a description..."
 msgstr "Додати опис..."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:116
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:97
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:107
 msgid "What description would like to use for the external link ?"
 msgstr ""
 "Який опис ви хотіли б використовувати для цього зовнішнього посилання ?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:121
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:102
 msgid "Convert into <ref> tag"
 msgstr "Перетворити в <ref>позначку"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:123
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:104
 msgid "Add a description and convert into <ref> tag"
 msgstr "Додати опис та перетворити його в <ref> позначку"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:131
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:113
 msgid "External viewer"
 msgstr "Зовнішній переглядач"
 
@@ -366,7 +366,7 @@ msgid "Parsing text"
 msgstr "Аналіз тексту"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:66
-#: org/wikipediacleaner/gui/swing/MainWindow.java:470
+#: org/wikipediacleaner/gui/swing/MainWindow.java:479
 msgid "About"
 msgstr "Про програму"
 
@@ -468,7 +468,7 @@ msgid "Would you like to add these pages on your local Watch list ?"
 msgstr "Хочете додати ці сторінки до вашого локального списку спостереження ?"
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:945
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1043
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1071
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:330
 msgid ""
 "You need to define the 'dab_warning_template' property in WikiCleaner "
@@ -478,14 +478,14 @@ msgstr ""
 "WikiCleaner."
 
 #: org/wikipediacleaner/gui/swing/AnalysisWindow.java:949
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1047
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1075
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:334
 #, fuzzy
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr "Оновити повідомлення сторінок значень на сторінці обговорення"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
-#: org/wikipediacleaner/gui/swing/MainWindow.java:717
+#: org/wikipediacleaner/gui/swing/MainWindow.java:726
 msgid "Bot tools"
 msgstr "Інструменти ботів"
 
@@ -821,150 +821,155 @@ msgstr "Хочете продовжити ?"
 msgid "Information"
 msgstr "Інформація"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:204
+#: org/wikipediacleaner/gui/swing/MainWindow.java:206
 #, java-format
 msgid "Wikipedia Cleaner - Version {0} ({1})"
 msgstr "Wikipedia Cleaner - Версія {0} ({1})"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:290
+#: org/wikipediacleaner/gui/swing/MainWindow.java:293
 msgid "Message"
 msgstr "Повідомлення"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:318
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1325
+#: org/wikipediacleaner/gui/swing/MainWindow.java:321
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1359
 msgid "Login"
 msgstr "Увійти"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:340
+#: org/wikipediacleaner/gui/swing/MainWindow.java:343
 msgid "&Wikipedia"
 msgstr "В&ікіпедія"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:347
+#: org/wikipediacleaner/gui/swing/MainWindow.java:350
 msgid "Other Wikipedia"
 msgstr "Інша Вікіпедія"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:367
+#: org/wikipediacleaner/gui/swing/MainWindow.java:370
 msgid "Lan&guage"
 msgstr "М&ова"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:374
+#: org/wikipediacleaner/gui/swing/MainWindow.java:377
 msgid "Other Language"
 msgstr "Інша мова"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:393
+#: org/wikipediacleaner/gui/swing/MainWindow.java:396
 msgid "&User name :"
 msgstr "&Ім’я користувача :"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:408
+#: org/wikipediacleaner/gui/swing/MainWindow.java:411
 msgid "&Password :"
 msgstr "&Пароль :"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:422
+#: org/wikipediacleaner/gui/swing/MainWindow.java:425
 msgid "&Login"
 msgstr "&Увійти"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:427
+#: org/wikipediacleaner/gui/swing/MainWindow.java:430
 msgid "&Demo"
 msgstr "&Демонстрація"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:432
+#: org/wikipediacleaner/gui/swing/MainWindow.java:435
 msgid "L&ogout"
 msgstr "В&ийти"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:448
+#: org/wikipediacleaner/gui/swing/MainWindow.java:451
 #, fuzzy
 msgid "Help (Alt + &H)"
 msgstr "Оновити (Alt + &R)"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:454
+#: org/wikipediacleaner/gui/swing/MainWindow.java:457
 msgid "Options (Alt + &O)"
 msgstr "Функції (Alt + &O)"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:460
+#: org/wikipediacleaner/gui/swing/MainWindow.java:463
 msgid "System Options (Alt + &Y)"
 msgstr "Функції системи (Alt + &Y)"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:465
+#: org/wikipediacleaner/gui/swing/MainWindow.java:469
+#, fuzzy
+msgid "Reload system options"
+msgstr "Оновити посилання"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:474
 msgid "&Idea ? Bug ?"
 msgstr "&Ідея ? Помилка ?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:485
+#: org/wikipediacleaner/gui/swing/MainWindow.java:494
 #, fuzzy
 msgid "Save user name and password"
 msgstr "&Зберегти пароль"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:497
+#: org/wikipediacleaner/gui/swing/MainWindow.java:506
 msgid "Save user name only"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:507
+#: org/wikipediacleaner/gui/swing/MainWindow.java:516
 msgid "Save none of them"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:541
+#: org/wikipediacleaner/gui/swing/MainWindow.java:550
 msgid "Page"
 msgstr "Сторінка"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:574
+#: org/wikipediacleaner/gui/swing/MainWindow.java:583
 #, fuzzy
 msgid "Random page (Alt + &R)"
 msgstr "Оновити (Alt + &R)"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:589
+#: org/wikipediacleaner/gui/swing/MainWindow.java:598
 msgid "&Full analysis"
 msgstr "&Повний аналіз"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:598
+#: org/wikipediacleaner/gui/swing/MainWindow.java:607
 msgid "&Disambiguation"
 msgstr "&Сторінки значень"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:605
+#: org/wikipediacleaner/gui/swing/MainWindow.java:614
 msgid "Internal links"
 msgstr "Внутрішні посилання"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:614
+#: org/wikipediacleaner/gui/swing/MainWindow.java:623
 msgid "Category members"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:623
+#: org/wikipediacleaner/gui/swing/MainWindow.java:632
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:212
 #, fuzzy
 msgid "Update disambiguation warning"
 msgstr "Оновлення повідомлень сторінки значень - {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:647
+#: org/wikipediacleaner/gui/swing/MainWindow.java:656
 msgid "Projects"
 msgstr "Проекти"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:665
+#: org/wikipediacleaner/gui/swing/MainWindow.java:674
 #, fuzzy
 msgid "Preload disambiguations pages"
 msgstr "Кількість сторінок значень"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:674
+#: org/wikipediacleaner/gui/swing/MainWindow.java:683
 msgid "&Current Disambiguation List"
 msgstr "&Чинний список значень"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:683
+#: org/wikipediacleaner/gui/swing/MainWindow.java:692
 msgid "Project check wikipedia"
 msgstr "Проект перевірки Вікіпедії"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:690
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1155
+#: org/wikipediacleaner/gui/swing/MainWindow.java:699
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1183
 msgid "Help requested on..."
 msgstr "Запит допомоги..."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:699
+#: org/wikipediacleaner/gui/swing/MainWindow.java:708
 msgid "Local &Watch list"
 msgstr "Локальний список &спостереження"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:708
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1269
+#: org/wikipediacleaner/gui/swing/MainWindow.java:717
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1297
 #, fuzzy
 msgid "Random pages"
 msgstr "Ви&падкова сторінка"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:809
+#: org/wikipediacleaner/gui/swing/MainWindow.java:820
 msgid ""
 "Demo mode is only available for testing WikiCleaner.\n"
 "You won't be able to modify pages on Wikipedia in Demo mode.\n"
@@ -974,45 +979,45 @@ msgstr ""
 "У цьому режимі ви не зможете змінювати сторінки Вікіпедії.\n"
 "Хочете продовжити ?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:826
+#: org/wikipediacleaner/gui/swing/MainWindow.java:837
 msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr "Як додавати інші Вікіпедії, можна взнати за цією адресою:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:840
+#: org/wikipediacleaner/gui/swing/MainWindow.java:851
 msgid "You can learn how to add other languages at the following URL:"
 msgstr "Як додавати інші мови, можна взнати за цією адресою:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:855
+#: org/wikipediacleaner/gui/swing/MainWindow.java:866
 msgid "You must select which Wikipedia you want to work on before login"
 msgstr ""
 "Перш ніж увійти, потрібно вибрати Вікіпедію, з якою ви хочете працювати."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:864
+#: org/wikipediacleaner/gui/swing/MainWindow.java:875
 msgid "You must select a language before login"
 msgstr "Перш ніж увійти, потрібно вибрати мову"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:877
+#: org/wikipediacleaner/gui/swing/MainWindow.java:888
 msgid "You must input your user name before login"
 msgstr "Перш ніж увійти, потрібно ввести ім’я користувача"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:889
+#: org/wikipediacleaner/gui/swing/MainWindow.java:900
 msgid "You must input your password before login"
 msgstr "Перш ніж увійти, потрібно ввести пароль"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:936
+#: org/wikipediacleaner/gui/swing/MainWindow.java:946
 msgid "You can learn how to configure WikiCleaner at the following URL:"
 msgstr "Як налаштувати WikiCleaner, можна взнати за цією адресою:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:953
+#: org/wikipediacleaner/gui/swing/MainWindow.java:981
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
 msgstr "Прочитати довідку з Wikipedia Cleaner можна за цією адресою:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:967
+#: org/wikipediacleaner/gui/swing/MainWindow.java:995
 msgid "You can submit bug reports or feature requests at the following URL:"
 msgstr ""
 "Надсилати звіти про помилки або запити про можливості можна за цією адресою:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:978
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1006
 msgid ""
 "The password will be saved on your disk, so anyone having access to your "
 "computer may be able to get it.\n"
@@ -1022,41 +1027,41 @@ msgstr ""
 "комп’ютера, зможе отримати його.\n"
 "Ви впевнені? Зберегти його ?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:995
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1023
 msgid "You must input a page name for running a full analysis"
 msgstr "Потрібно ввести назву сторінки, щоб виконати повний аналіз"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1015
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1043
 msgid "You must input a page name for running a disambiguation analysis"
 msgstr "Потрібно ввести назву сторінки, щоб виконати аналіз значень"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1035
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1063
 #, fuzzy
 msgid "You must input a page name for updating the disambiguation warning"
 msgstr "Потрібно ввести назву сторінки, щоб виконати аналіз значень"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1065
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1093
 msgid "You must input a page name for retrieving the list of internal links"
 msgstr ""
 "Потрібно ввести назву сторінки, щоб відновити список внутрішніх посилань"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1076
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1104
 #, java-format
 msgid "Internal links in {0}"
 msgstr "Внутрішні посилання в {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1087
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1115
 #, fuzzy
 msgid "You must input a page name for retrieving the list of category members"
 msgstr ""
 "Потрібно ввести назву сторінки, щоб відновити список внутрішніх посилань"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1098
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1126
 #, java-format
 msgid "Category members of {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1114
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1142
 msgid ""
 "There's no known list of disambiguation pages for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -1064,11 +1069,11 @@ msgstr ""
 "Для цієї Вікіпедії немає відомого списку сторінок значень.\n"
 "Дізнатися, як налаштувати WikiCleaner можна за адресою:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1126
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1154
 msgid "Current disambiguation list"
 msgstr "Чинний список значень"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1141
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1169
 msgid ""
 "There's no known template for requesting help for the Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -1076,12 +1081,12 @@ msgstr ""
 "Для цієї Вікіпедії немає відомого шаблону для запитів допомоги.\n"
 "Дізнатися, як налаштувати WikiCleaner можна за адресою:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1175
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1203
 #, fuzzy
 msgid "All disambiguations pages"
 msgstr "Кількість сторінок значень"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1191
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1219
 msgid ""
 "There's no known Check Wikipedia Project for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -1089,41 +1094,46 @@ msgstr ""
 "Для цієї Вікіпедії немає відомого проекту Check Wikipedia.\n"
 "Дізнатися, як налаштувати WikiCleaner можна за адресою:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1229
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1257
 msgid "Watched pages"
 msgstr "Сторінки спостереження"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1240
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1268
 msgid "How many pages do you want?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1252
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1280
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1323
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1354
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:67
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:69
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:57
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:81
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:82
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:107
 msgid "Retrieving MediaWiki API"
 msgstr "Отримання MediaWiki API"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1354
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1371
+#, fuzzy
+msgid "Loading configuration"
+msgstr "Відновлення налаштування Check Wiki"
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1393
 msgid "Retrieving disambiguation templates"
 msgstr "Отримання шаблонів значень"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1358
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1397
 #, fuzzy
 msgid "Retrieving suggestions for text replacements"
 msgstr "Отримання шаблонів значень"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1364
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1388
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1403
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1427
 msgid "Retrieving Check Wiki configuration"
 msgstr "Відновлення налаштування Check Wiki"
 
@@ -2027,7 +2037,7 @@ msgstr ""
 msgid "Getting random page"
 msgstr "Отримання випадкової сторінки"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:86
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:87
 msgid "Updating page contents"
 msgstr "Оновлення вмісту сторінок"
 
