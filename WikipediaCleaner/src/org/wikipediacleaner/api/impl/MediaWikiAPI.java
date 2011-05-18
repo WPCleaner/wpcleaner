@@ -177,7 +177,6 @@ public class MediaWikiAPI implements API {
    * Load Wikipedia configuration.
    * 
    * @param wikipedia Wikipedia.
-   * @return Login status.
    */
   public void loadConfiguration(
       EnumWikipedia wikipedia) throws APIException {
