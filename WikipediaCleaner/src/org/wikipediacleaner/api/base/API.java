@@ -58,6 +58,15 @@ public interface API {
       boolean login) throws APIException;
 
   /**
+   * Load Wikipedia configuration.
+   * 
+   * @param wikipedia Wikipedia.
+   * @return Login status.
+   */
+  public void loadConfiguration(
+      EnumWikipedia wikipedia) throws APIException;
+
+  /**
    * Logout.
    */
   public void logout();
