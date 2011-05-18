@@ -1233,25 +1233,36 @@ public class MainWindow
    * Action called when Random Pages is pressed.
    */
   private void actionRandomPages() {
-    String answer = askForValue(
-        GT._("How many pages do you want?"),
-        "20", null);
-    if (answer == null) {
-      return;
-    }
-    int count = 1;
-    try {
-      count = Integer.parseInt(answer);
-    } catch (NumberFormatException e) {
-      return;
+    final int maxPages = 50;
+    int count = 0;
+    while ((count < 1) || (count > maxPages)) {
+      String answer = askForValue(
+          GT._("How many pages do you want?"),
+          "20", null);
+      if (answer == null) {
+        return;
+      }
+      try {
+        count = Integer.parseInt(answer);
+      } catch (NumberFormatException e) {
+        return;
+      }
+      if ((count < 1) || (count > maxPages)) {
+        displayWarning(GT._(
+            "The number of pages must be between {0} and {1}",
+            new Object[] { Integer.valueOf(0), Integer.valueOf(maxPages) } ));
+      }
     }
     API api = APIFactory.getAPI();
     try {
-      List<Page> pages = api.getRandomPages(getWikipedia(), count);
-      List<String> pageNames = new ArrayList<String>(pages.size());
-      for (int i = 0; i < pages.size(); i++) {
-        pageNames.add(pages.get(i).getTitle());
+      List<String> pageNames = new ArrayList<String>(count);
+      while (pageNames.size() < count) {
+        List<Page> pages = api.getRandomPages(getWikipedia(), count - pageNames.size());
+        for (int i = 0; i < pages.size(); i++) {
+          pageNames.add(pages.get(i).getTitle());
+        }
       }
+      Collections.sort(pageNames);
       new PageListWorker(
           getWikipedia(), this, pageNames,
           PageListWorker.Mode.DIRECT, false,
