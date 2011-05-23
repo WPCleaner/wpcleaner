@@ -1156,7 +1156,7 @@ public abstract class PageWindow
     } else if (ACTION_TOC.equals(e.getActionCommand())) {
       actionToc();
     } else if (ACTION_VALIDATE.equals(e.getActionCommand())) {
-      actionValidate();
+      actionValidate(true);
     } else if (ACTION_VIEW.equals(e.getActionCommand())) {
       actionView();
     } else if (ACTION_VIEW_HISTORY.equals(e.getActionCommand())) {
@@ -1243,7 +1243,7 @@ public abstract class PageWindow
    * Action called when Send button is pressed.
    */
   private void actionSend() {
-    actionValidate();
+    actionValidate(false);
 
     // Check that a comment is available
     if ((textComment != null) &&
@@ -1316,9 +1316,11 @@ public abstract class PageWindow
   }
 
   /**
-   * Action called when Validate button is pressed. 
+   * Action called when Validate button is pressed.
+   * 
+   * @param fullValidate Full validation ?
    */
-  protected void actionValidate() {
+  protected void actionValidate(boolean fullValidate) {
     // Implement in sub-classes
   }
 
