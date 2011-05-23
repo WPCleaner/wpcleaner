@@ -848,7 +848,7 @@ public class AnalysisWindow extends PageWindow {
       }
       if (!contents.equals(initialContents)) {
         getTextContents().changeText(contents);
-        actionValidate();
+        actionValidate(true);
       }
     }
   }
@@ -1013,7 +1013,7 @@ public class AnalysisWindow extends PageWindow {
    * Action called when Validate button is pressed.
    */
   @Override
-  protected void actionValidate() {
+  protected void actionValidate(boolean fullValidate) {
     getTextContents().resetAttributes();
     countOccurences(getTextContents().getText(), false);
     listLinks.repaint();
@@ -1116,29 +1116,33 @@ public class AnalysisWindow extends PageWindow {
     }
     setComment(comment.toString());
 
-    // If the selected links are fixed, select the next one
-    if (listErrors.getSelectedValue() != null) {
-      CheckErrorPage errorPage = (CheckErrorPage) listErrors.getSelectedValue();
-      if (!errorPage.getErrorFound()) {
-        int selected = listErrors.getSelectedIndex();
-        selected++;
-        if (selected < modelErrors.getSize()) {
-          listErrors.setSelectedIndex(selected);
+    // Update selection
+    if (fullValidate) {
+
+      // If the selected links are fixed, select the next one
+      if (listErrors.getSelectedValue() != null) {
+        CheckErrorPage errorPage = (CheckErrorPage) listErrors.getSelectedValue();
+        if (!errorPage.getErrorFound()) {
+          int selected = listErrors.getSelectedIndex();
+          selected++;
+          if (selected < modelErrors.getSize()) {
+            listErrors.setSelectedIndex(selected);
+          } else {
+            listErrors.setSelectedIndex(0);
+          }
         } else {
-          listErrors.setSelectedIndex(0);
+          actionSelectError(errorPage);
         }
       } else {
-        actionSelectError(errorPage);
-      }
-    } else {
-      Object[] values = listLinks.getSelectedValues();
-      if ((values != null) && (values.length > 0)) {
+        Object[] values = listLinks.getSelectedValues();
         int count = 0;
         int countElement = 0;
-        for (Object value : values) {
-          if (value instanceof Page) {
-            countElement++;
-            count += ((Page) value).getCountOccurence();
+        if (values != null) {
+          for (Object value : values) {
+            if (value instanceof Page) {
+              countElement++;
+              count += ((Page) value).getCountOccurence();
+            }
           }
         }
         if ((countElement > 0) && (count == 0)) {
@@ -1146,13 +1150,15 @@ public class AnalysisWindow extends PageWindow {
           selected++;
           if (selected < modelLinks.getSize()) {
             selectLinks(selected);
+          } else if (modelErrors.getSize() > 0) {
+            listErrors.setSelectedIndex(0);
           }
         }
       }
+  
+      modelLinks.updateLinkCount();
+      getTextContents().requestFocusInWindow();
     }
-
-    modelLinks.updateLinkCount();
-    getTextContents().requestFocusInWindow();
   }
 
   /**
