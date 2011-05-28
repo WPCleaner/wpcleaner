@@ -27,7 +27,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 
 /**
  * Algorithm for analyzing error 34 of check wikipedia project.
- * Error 34: Template programming element <br/>
+ * Error 34: Template programming element
  */
 public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
 
@@ -48,7 +48,7 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
-    if (!pageAnalysis.isInNamespace(Namespace.TEMPLATE)) {
+    if (pageAnalysis.isInNamespace(Namespace.TEMPLATE)) {
       return false;
     }
     boolean result = false;
