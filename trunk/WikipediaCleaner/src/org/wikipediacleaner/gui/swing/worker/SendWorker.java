@@ -100,7 +100,9 @@ public class SendWorker extends BasicWorker {
               "Error {0} detected: Waiting and retrying",
               "'" + e.getErrorCode() + "'"));
           try {
-            api.retrieveContents(getWikipedia(), page, false);
+            Page tmpPage = page.replicatePage();
+            api.retrieveContents(getWikipedia(), tmpPage, false);
+            page.setEditToken(tmpPage.getEditToken());
           } catch (APIException e2) {
             return e;
           }

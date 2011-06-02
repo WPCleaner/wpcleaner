@@ -222,7 +222,9 @@ public class MediaWiki extends MediaWikiController {
                       "Error {0} detected: Waiting and retrying",
                       "'" + e.getErrorCode() + "'"));
                   attemptDone = false;
-                  api.retrieveContents(wikipedia, page, false);
+                  Page tmpPage = page.replicatePage();
+                  api.retrieveContents(wikipedia, tmpPage, false);
+                  page.setEditToken(tmpPage.getEditToken());
                 } else {
                   throw e;
                 }
