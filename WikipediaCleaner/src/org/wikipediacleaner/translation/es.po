@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-18 22:04+0200\n"
+"POT-Creation-Date: 2011-06-02 21:04+0200\n"
 "PO-Revision-Date: 2011-04-26 18:14+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -754,10 +754,10 @@ msgstr ""
 "en la página de traducción ({1}) en {2} Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:241
-#, java-format
+#, fuzzy, java-format
 msgid ""
 "You have selected {0} pages.\n"
-"Would you like to analyze the {0} pages ?"
+"Would you like to analyze more than {1} pages ?"
 msgstr ""
 "Usted ha seleccionado {0} páginas.\n"
 "¿Quiere analizar las {0} páginas?"
@@ -1636,7 +1636,7 @@ msgstr "Expandir plantillas y &Previsualizar"
 msgid "Sending {0}"
 msgstr "Enviando {0}"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:1343
+#: org/wikipediacleaner/gui/swing/PageWindow.java:1345
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr "¿Desea agregar esta página a su lista de seguimiento local?"
 
@@ -1821,19 +1821,19 @@ msgstr "Ha ocurrido un error desconocido"
 msgid "Other..."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:282
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:296
 msgid "Yes"
 msgstr "Sí"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:283
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:297
 msgid "Yes to all"
 msgstr "Si a todo"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:284
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:298
 msgid "No"
 msgstr "No"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:285
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:299
 msgid "No to all"
 msgstr "No a todo"
 

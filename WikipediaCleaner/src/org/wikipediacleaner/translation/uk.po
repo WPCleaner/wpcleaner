@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-18 22:04+0200\n"
+"POT-Creation-Date: 2011-06-02 21:04+0200\n"
 "PO-Revision-Date: 2010-09-16 07:39+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -748,10 +748,10 @@ msgstr ""
 "для перенесеної сторінки ({1}) у {2} Вікіпедії"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:241
-#, java-format
+#, fuzzy, java-format
 msgid ""
 "You have selected {0} pages.\n"
-"Would you like to analyze the {0} pages ?"
+"Would you like to analyze more than {1} pages ?"
 msgstr ""
 "Ви вибрали {0} сторінок.\n"
 "Хочете проаналізувати {0} сторінок ?"
@@ -1638,7 +1638,7 @@ msgstr "Розгорнути шаблони &та переглянути"
 msgid "Sending {0}"
 msgstr "Відсилання {0}"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:1343
+#: org/wikipediacleaner/gui/swing/PageWindow.java:1345
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr "Хочете додати цю сторінку до локального списку спостереження ?"
 
@@ -1821,19 +1821,19 @@ msgstr "Виникла невідома помилка"
 msgid "Other..."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:282
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:296
 msgid "Yes"
 msgstr "Так"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:283
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:297
 msgid "Yes to all"
 msgstr "Так для всіх"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:284
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:298
 msgid "No"
 msgstr "Ні"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:285
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:299
 msgid "No to all"
 msgstr "Ні для всіх"
 

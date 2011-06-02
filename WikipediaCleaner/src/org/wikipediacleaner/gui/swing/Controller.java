@@ -236,13 +236,15 @@ public class Controller {
         Configuration.INTEGER_MAXIMUM_PAGES,
         Configuration.DEFAULT_MAXIMUM_PAGES);
     if (pagesCount > maxPagesCount) {
-      int answer = Utilities.displayYesNoWarning(
+      int answer = Utilities.displayYesNoCancelWarning(
           parentComponent, GT._(
               "You have selected {0} pages.\n" +
-              "Would you like to analyze the {0} pages ?",
-              new Object[]{ pagesCount }));
-      if (answer != JOptionPane.YES_OPTION) {
+              "Would you like to analyze more than {1} pages ?",
+              new Object[]{ pagesCount, maxPagesCount }));
+      if (answer == JOptionPane.NO_OPTION) {
         pagesCount = maxPagesCount;
+      } else if (answer == JOptionPane.CANCEL_OPTION) {
+        pagesCount = 0;
       }
     }
     return pagesCount;

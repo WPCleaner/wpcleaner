@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-18 22:04+0200\n"
+"POT-Creation-Date: 2011-06-02 21:04+0200\n"
 "PO-Revision-Date: 2010-05-16 07:25+0000\n"
 "Last-Translator: Krasznecz Zoltán <zoltan.krasznecz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -734,10 +734,10 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/Controller.java:241
-#, java-format
+#, fuzzy, java-format
 msgid ""
 "You have selected {0} pages.\n"
-"Would you like to analyze the {0} pages ?"
+"Would you like to analyze more than {1} pages ?"
 msgstr ""
 "{0} lapot jelöltél ki.\n"
 "Ellenőrizni akarod ezt a {0} lapot?"
@@ -1617,7 +1617,7 @@ msgstr "Sablonok kibontása és előnézet"
 msgid "Sending {0}"
 msgstr "Küldés {0}"
 
-#: org/wikipediacleaner/gui/swing/PageWindow.java:1343
+#: org/wikipediacleaner/gui/swing/PageWindow.java:1345
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr "Hozzá akarod adni ezt az oldalt a Figyelőlistádhoz ?"
 
@@ -1790,19 +1790,19 @@ msgstr "Ismeretlen hiba történt"
 msgid "Other..."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:282
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:296
 msgid "Yes"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:283
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:297
 msgid "Yes to all"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:284
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:298
 msgid "No"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:285
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:299
 msgid "No to all"
 msgstr ""
 
