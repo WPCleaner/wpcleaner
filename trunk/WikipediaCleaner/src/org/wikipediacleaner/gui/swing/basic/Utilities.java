@@ -271,6 +271,20 @@ public class Utilities {
   }
 
   /**
+   * Display a question with Yes/No/Cancel answers.
+   * 
+   * @param parent Parent component.
+   * @param message Message.
+   * @return Answer {@link JOptionPane#YES_OPTION}, {@link JOptionPane#NO_OPTION} or {@link JOptionPane#CANCEL_OPTION}.
+   */
+  public static int displayYesNoCancelWarning(Component parent, String message) {
+    return JOptionPane.showConfirmDialog(
+        parent, message,
+        "Wikipedia Cleaner",
+        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+  }
+
+  /**
    * Display a question with Yes/Yes all/No/No all answers.
    * 
    * @param parent Parent component.
