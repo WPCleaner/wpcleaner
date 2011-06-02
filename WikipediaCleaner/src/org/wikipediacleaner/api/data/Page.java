@@ -74,6 +74,17 @@ public class Page implements Comparable<Page> {
   }
 
   /**
+   * @return Page replicated.
+   */
+  public Page replicatePage() {
+    Page page = new Page(wikipedia, title);
+    page.pageId = pageId;
+    page.namespace = namespace;
+    page.revisionId = revisionId;
+    return page;
+  }
+
+  /**
    * @param title1 Title 1.
    * @param title2 Title 2.
    * @return Indicates if <code>title1</code> and <code>title2</code> are the same title.
