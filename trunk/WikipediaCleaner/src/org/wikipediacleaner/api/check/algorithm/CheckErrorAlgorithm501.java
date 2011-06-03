@@ -218,8 +218,13 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
                 return true;
               }
               result = true;
-              possibles.add(entry.getKey());
-              maxLength = Math.max(maxLength, pos - startIndex);
+              if (pos - startIndex >= maxLength) {
+                if (pos - startIndex > maxLength) {
+                  possibles.clear();
+                  maxLength = pos - startIndex;
+                }
+                possibles.add(entry.getKey());
+              }
             }
           }
         }
