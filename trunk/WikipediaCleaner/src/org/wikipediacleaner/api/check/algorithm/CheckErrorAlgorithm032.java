@@ -127,7 +127,8 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
           for (int i = 0; i <= pipeIndex.size(); i++) {
             int beginText = (i > 0) ? (pipeIndex.get(i - 1).intValue() + 1) : 0;
             int endText = (i < pipeIndex.size()) ? pipeIndex.get(i).intValue() : text.length();
-            if (text.substring(beginText + 1, endText).trim().length() > 0) {
+            if ((beginText + 1 < endText) &&
+                (text.substring(beginText + 1, endText).trim().length() > 0)) {
               errorResult.addReplacement(
                   "[[" + link.getLink() + "|" + text.substring(beginText, endText) + "]]");
             }
