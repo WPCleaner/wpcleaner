@@ -56,7 +56,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
 
     // Retrieve separator between several <ref> tags
     String separator = pageAnalysis.getWikipedia().getCheckWikiProperty(
-        "separator", 67, true, false, false);
+        "separator", 61, true, false, false);
     if (separator == null) {
       separator = "";
     }
@@ -131,9 +131,15 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
             allPunctuations = allPunctuations + contents.charAt(endIndex);
             endIndex++;
           }
+          int beginIndex = tag.getStartTagBeginIndex();
+          while ((beginIndex > 0) &&
+                 ((contents.charAt(beginIndex - 1) == ' ') ||
+                  (contents.charAt(beginIndex - 1) == punctuation))) {
+            beginIndex--;
+          }
           CheckErrorResult errorResult = createCheckErrorResult(
               pageAnalysis.getPage(),
-              tag.getStartTagBeginIndex(), endIndex,
+              beginIndex, endIndex,
               CheckErrorResult.ErrorLevel.ERROR);
           String tagText = "";
           for (int i = 0; i < tagList.size(); i++) {
