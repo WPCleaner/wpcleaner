@@ -76,7 +76,7 @@ public class CheckErrorAlgorithm038 extends CheckErrorAlgorithmBase {
             GT._("Replace with {0}", text));
         errors.add(error);
         result = true;
-        startIndex += tag.getEndTagEndIndex();
+        startIndex = tag.getEndTagEndIndex();
       }
     }
     return result;

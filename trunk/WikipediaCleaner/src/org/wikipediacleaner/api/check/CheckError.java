@@ -67,14 +67,18 @@ public class CheckError {
             (CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()))) {
           long beginOne = traceTime ? System.currentTimeMillis() : 0;
           List<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
-          if (algorithm.analyze(pageAnalysis, results)) {
+          boolean errorFound = algorithm.analyze(pageAnalysis, results);
+          if (errorFound) {
             CheckErrorPage errorPage = new CheckErrorPage(pageAnalysis.getPage(), algorithm);
             errorPage.setResults(true, results);
             errorsFound.add(errorPage);
           }
           if (traceTime) {
             long endOne = System.currentTimeMillis();
-            log("Error n°" + algorithm.getErrorNumber() + ": " + (endOne - beginOne));
+            log("Error n°" + algorithm.getErrorNumber() + ": " +
+                (endOne - beginOne) + "ms" +
+                ", " + errorFound +
+                ", " + results.size() + " occurrences");
           }
         }
       }
