@@ -77,7 +77,7 @@ import org.wikipediacleaner.utils.Configuration;
 /**
  * Disambiguation window.
  */
-public class DisambiguationWindow extends PageWindow {
+public class DisambiguationWindow extends OnePageWindow {
 
   private final static String ACTION_ADD_AUTOMATIC_FIXING  = "ADD AUTOMATIC FIXING";
   private final static String ACTION_CLR_AUTOMATIC_FIXING  = "CLR AUTOMATIC FIXING";

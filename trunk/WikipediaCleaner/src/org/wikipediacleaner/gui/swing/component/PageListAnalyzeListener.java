@@ -27,7 +27,7 @@ import javax.swing.JList;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.AnalysisWindow;
-import org.wikipediacleaner.gui.swing.PageWindow;
+import org.wikipediacleaner.gui.swing.OnePageWindow;
 
 
 /**
@@ -36,9 +36,9 @@ import org.wikipediacleaner.gui.swing.PageWindow;
 public class PageListAnalyzeListener extends MouseAdapter {
 
   private final EnumWikipedia wikipedia;
-  private final PageWindow pageWindow;
+  private final OnePageWindow pageWindow;
 
-  public PageListAnalyzeListener(EnumWikipedia wikipedia, PageWindow pageWindow) {
+  public PageListAnalyzeListener(EnumWikipedia wikipedia, OnePageWindow pageWindow) {
     this.wikipedia = wikipedia;
     this.pageWindow = pageWindow;
   }
