@@ -114,7 +114,7 @@ import org.xml.sax.SAXException;
 /**
  * Check Wiki Project window.
  */
-public class CheckWikiProjectWindow extends PageWindow {
+public class CheckWikiProjectWindow extends OnePageWindow {
 
   List<CheckErrorAlgorithm> allAlgorithms;
   private List<CheckErrorAlgorithm> selectedAlgorithms;

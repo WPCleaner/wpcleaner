@@ -29,7 +29,7 @@ import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
-import org.wikipediacleaner.gui.swing.PageWindow;
+import org.wikipediacleaner.gui.swing.OnePageWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -127,7 +127,7 @@ public class SendWorker extends BasicWorker {
     if (errorsFixed != null) {
       for (CheckErrorAlgorithm error: errorsFixed) {
         if (error.getPriority() != CheckErrorAlgorithms.PRIORITY_BOT_ONLY) {
-          PageWindow.markPageAsFixed(null, error.getErrorNumberString(), page);
+          OnePageWindow.markPageAsFixed(null, error.getErrorNumberString(), page);
         }
       }
     }

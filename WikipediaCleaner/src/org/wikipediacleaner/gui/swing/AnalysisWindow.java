@@ -94,7 +94,7 @@ import org.wikipediacleaner.utils.Configuration;
 /**
  * Analysis window.
  */
-public class AnalysisWindow extends PageWindow {
+public class AnalysisWindow extends OnePageWindow {
 
   private final static String ACTION_DISAMBIGUATION_LINK    = "DISAMBIGUATION LINK";
   private final static String ACTION_FULL_ANALYSIS_LINK     = "FULL ANALYSIS LINK";
