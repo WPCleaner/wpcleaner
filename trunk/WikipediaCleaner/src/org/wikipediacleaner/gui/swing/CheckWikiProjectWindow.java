@@ -1514,7 +1514,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
           null,
           Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
           Configuration.DEFAULT_CHECK_SHOW_0_ERRORS);
-      int selectedIndex = 0;
+      int selectedIndex = -1;
       if (errors != null) {
         for (CheckError error : errors) {
           if ((error.getPageCount() > 0) || (showAllErrors)) {
@@ -1526,8 +1526,12 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         }
         if (modelAllErrors.getSize() > 1) {
           modelAllErrors.insertElementAt(GT._("Pages with several errors"), 0);
+          if (selectedIndex > 0) {
+            selectedIndex++;
+          }
         }
       }
+      selectedIndex = Math.max(selectedIndex, 0);
       if (listAllErrors.getItemCount() > selectedIndex) {
         listAllErrors.setSelectedIndex(selectedIndex);
       }
