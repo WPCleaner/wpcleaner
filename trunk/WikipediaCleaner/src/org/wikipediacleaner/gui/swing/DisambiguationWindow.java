@@ -538,6 +538,9 @@ public class DisambiguationWindow extends OnePageWindow {
         modelAutomaticFixing.addElement(automaticFixing[i]);
       }
     }
+
+    // Select next links
+    actionSelectNextLinks();
   }
 
   /**
@@ -750,36 +753,97 @@ public class DisambiguationWindow extends OnePageWindow {
    * Action called when Select next links button is pressed. 
    */
   private void actionSelectNextLinks() {
-    int last = listLinks.getMaxSelectionIndex() + 1;
-    Configuration config = Configuration.getConfiguration();
-    int count = Math.min(
-        listLinks.getModel().getSize() - last,
-        config.getInt(
-            null,
-            Configuration.INTEGER_MAXIMUM_PAGES,
-            Configuration.DEFAULT_MAXIMUM_PAGES));
-    int indices[] = new int[count];
-    int currentIndice = 0;
-    int currentLine = last;
-    while ((currentIndice < count) &&
+
+    // Test
+    if (listLinks.getModel().getSize() == 0) {
+      return;
+    }
+
+    // Check if something can be selected after current selection
+    int lastSelected = listLinks.getMaxSelectionIndex();
+    int currentLine = lastSelected + 1;
+    boolean lineAvailable = false;
+    while ((!lineAvailable) &&
            (currentLine < listLinks.getModel().getSize())) {
       Object value = listLinks.getModel().getElementAt(currentLine);
       String property = backlinksProperties.getProperty(value.toString());
       if ((!Configuration.VALUE_PAGE_NORMAL.equals(property)) &&
           (!Configuration.VALUE_PAGE_HELP_NEEDED.equals(property))) {
-        indices[currentIndice] = currentLine;
-        currentIndice++;
+        lineAvailable = true;
       }
       currentLine++;
     }
-    if (currentIndice < count) {
+    if (!lineAvailable) {
+      lastSelected = -1;
+    }
+
+    // Find first item to be selected
+    currentLine = lastSelected + 1;
+    int firstSelection = -1;
+    Integer firstNamespace = null;
+    while ((firstSelection < 0) &&
+           (currentLine < listLinks.getModel().getSize())) {
+      Object value = listLinks.getModel().getElementAt(currentLine);
+      String property = backlinksProperties.getProperty(value.toString());
+      if ((!Configuration.VALUE_PAGE_NORMAL.equals(property)) &&
+          (!Configuration.VALUE_PAGE_HELP_NEEDED.equals(property))) {
+        firstSelection = currentLine;
+        if (value instanceof Page) {
+          Page firstPage = (Page) value;
+          firstNamespace = firstPage.getNamespace();
+        }
+      }
+      currentLine++;
+    }
+    if (firstSelection < 0) {
+      listLinks.clearSelection();
+      listLinks.ensureIndexIsVisible(0);
+      return;
+    }
+
+    // Initialize array for items to be selected
+    Configuration config = Configuration.getConfiguration();
+    int maxCount = config.getInt(
+        null,
+        Configuration.INTEGER_MAXIMUM_PAGES,
+        Configuration.DEFAULT_MAXIMUM_PAGES);
+    maxCount = Math.min(maxCount, listLinks.getModel().getSize() - firstSelection);
+    if (maxCount <= 0) {
+      listLinks.clearSelection();
+      listLinks.ensureIndexIsVisible(0);
+      return;
+    }
+    int indices[] = new int[maxCount];
+
+    // Find items to be selected
+    currentLine = firstSelection;
+    int currentIndice = 0;
+    while ((currentIndice < maxCount) &&
+           (currentLine < listLinks.getModel().getSize())) {
+      Object value = listLinks.getModel().getElementAt(currentLine);
+      String property = backlinksProperties.getProperty(value.toString());
+      if ((firstNamespace == null) ||
+          ((value instanceof Page) &&
+           (firstNamespace.equals(((Page) value).getNamespace())))) {
+        if ((!Configuration.VALUE_PAGE_NORMAL.equals(property)) &&
+            (!Configuration.VALUE_PAGE_HELP_NEEDED.equals(property))) {
+          indices[currentIndice] = currentLine;
+          currentIndice++;
+        }
+        currentLine++;
+      } else {
+        currentLine = Integer.MAX_VALUE;
+      }
+    }
+
+    // Select items found
+    if (currentIndice < indices.length) {
       indices = Arrays.copyOf(indices, currentIndice);
     }
     listLinks.setSelectedIndices(indices);
-    if (count > 0) {
-      listLinks.ensureIndexIsVisible(indices[count - 1]);
-    } else {
-      listLinks.ensureIndexIsVisible(0);
+    if (indices.length > 0) {
+      listLinks.ensureIndexIsVisible(indices[0]);
+      listLinks.ensureIndexIsVisible(indices[indices.length - 1]);
     }
   }
 }
