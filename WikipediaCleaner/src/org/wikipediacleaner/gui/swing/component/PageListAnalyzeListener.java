@@ -26,7 +26,7 @@ import javax.swing.JList;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.gui.swing.AnalysisWindow;
+import org.wikipediacleaner.gui.swing.OnePageAnalysisWindow;
 import org.wikipediacleaner.gui.swing.OnePageWindow;
 
 
@@ -80,6 +80,6 @@ public class PageListAnalyzeListener extends MouseAdapter {
         }
       }
     }
-    AnalysisWindow.createAnalysisWindow(page.getTitle(), knownPages, wikipedia);
+    OnePageAnalysisWindow.createAnalysisWindow(page.getTitle(), knownPages, wikipedia);
   }
 }

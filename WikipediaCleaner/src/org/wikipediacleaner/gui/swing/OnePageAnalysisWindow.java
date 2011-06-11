@@ -94,7 +94,7 @@ import org.wikipediacleaner.utils.Configuration;
 /**
  * Analysis window.
  */
-public class AnalysisWindow extends OnePageWindow {
+public class OnePageAnalysisWindow extends OnePageWindow {
 
   private final static String ACTION_DISAMBIGUATION_LINK    = "DISAMBIGUATION LINK";
   private final static String ACTION_FULL_ANALYSIS_LINK     = "FULL ANALYSIS LINK";
@@ -146,13 +146,13 @@ public class AnalysisWindow extends OnePageWindow {
         "AnalysisWindow",
         wikipedia,
         WindowConstants.DISPOSE_ON_CLOSE,
-        AnalysisWindow.class,
+        OnePageAnalysisWindow.class,
         new DefaultBasicWindowListener() {
           @Override
           public void initializeWindow(BasicWindow window) {
-            if (window instanceof AnalysisWindow) {
+            if (window instanceof OnePageAnalysisWindow) {
               Configuration config = Configuration.getConfiguration();
-              AnalysisWindow analysis = (AnalysisWindow) window;
+              OnePageAnalysisWindow analysis = (OnePageAnalysisWindow) window;
               analysis.setPageName(page);
               analysis.knownPages = knownPages;
               analysis.modelLinks = new PageListModel();
@@ -194,8 +194,8 @@ public class AnalysisWindow extends OnePageWindow {
           }
           @Override
           public void displayWindow(BasicWindow window) {
-            if (window instanceof AnalysisWindow) {
-              AnalysisWindow analysis = (AnalysisWindow) window;
+            if (window instanceof OnePageAnalysisWindow) {
+              OnePageAnalysisWindow analysis = (OnePageAnalysisWindow) window;
               analysis.actionReload();
             }
           }
