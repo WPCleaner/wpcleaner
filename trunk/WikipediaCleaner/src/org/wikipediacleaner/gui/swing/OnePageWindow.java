@@ -70,8 +70,7 @@ import org.wikipediacleaner.utils.Configuration;
  * A base class for Wikipedia Cleaner windows with one page contents.
  */
 public abstract class OnePageWindow
-  extends BasicWindow
-  implements ActionListener, ItemListener, PropertyChangeListener {
+  extends PageWindow {
 
   private Page page;
   private String pageName;
