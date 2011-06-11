@@ -46,7 +46,7 @@ public class Controller {
   public static void runFullAnalysis(
       String page, List<Page> knownPages, EnumWikipedia wikipedia) {
     if (page != null) {
-      AnalysisWindow.createAnalysisWindow(page, knownPages, wikipedia);
+      OnePageAnalysisWindow.createAnalysisWindow(page, knownPages, wikipedia);
     }
   }
 
