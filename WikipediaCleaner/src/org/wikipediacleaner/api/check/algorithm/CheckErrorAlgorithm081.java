@@ -20,17 +20,15 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
-import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.CompositeAction;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.gui.swing.action.NoOpAction;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
 
@@ -60,94 +58,192 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }
     int startIndex = 0;
     boolean result = false;
-    HashMap<String, PageElementTag> refs = new HashMap<String, PageElementTag>();
-    HashMap<PageElementTag, CheckErrorResult> errorResults = new HashMap<PageElementTag, CheckErrorResult>();
-    ArrayList<String> names = new ArrayList<String>();
-    ArrayList<Actionnable> existingNames = new ArrayList<Actionnable>();
+    HashMap<String, HashMap<String, ArrayList<PageElementTag>>> refs = new HashMap<String, HashMap<String, ArrayList<PageElementTag>>>();
     String contents = pageAnalysis.getContents();
-    while ((startIndex < contents.length()) && (startIndex >= 0)) {
-      if (contents.charAt(startIndex) == '<') {
-        PageElementTag ref = PageElementTag.analyzeBlock("ref", contents, startIndex);
-        if (ref != null) {
-          startIndex = ref.getEndTagEndIndex();
-          String reference = ref.getText();
-          if ((reference != null) && (reference.length() > 0)) {
-            PageElementTag previousRef = refs.get(reference);
-            if (previousRef == null) {
-              refs.put(reference, ref);
-            } else {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              String previousName = previousRef.getParameter("name");
-              String previousGroup = previousRef.getParameter("group");
-              if (errorResults.get(previousRef) == null) {
-                CheckErrorResult errorResult = createCheckErrorResult(
-                    pageAnalysis.getPage(),
-                    previousRef.getStartTagBeginIndex(), previousRef.getEndTagEndIndex(),
-                    (previousName == null) ?
-                        CheckErrorResult.ErrorLevel.WARNING :
-                        CheckErrorResult.ErrorLevel.CORRECT);
-                String url = null;
-                String text = previousRef.getText();
-                if (text != null) {
-                  int httpIndex = text.indexOf("http://");
-                  if (httpIndex < 0) {
-                    httpIndex = text.indexOf("https://");
-                  }
-                  if (httpIndex >= 0) {
-                    int spaceIndex = text.indexOf(' ', httpIndex);
-                    if (spaceIndex < 0) {
-                      url = text.substring(httpIndex);
-                    } else {
-                      url = text.substring(httpIndex, spaceIndex);
-                    }
-                  }
-                }
-                if (previousName == null) {
-                  errorResult.addPossibleAction(
-                      GT._("Give a name to the <ref> tag"),
-                      new AddTextActionProvider(
-                          previousRef.getPartBeforeParameters() + " name=\"",
-                          "\"" + previousRef.getPartFromParameters(),
-                          url,
-                          GT._("What name would like to use for the <ref> tag ?"),
-                          "[]\""));
-                }
-                errorResult.addPossibleAction(
-                    new CompositeAction(GT._("Existing references"), existingNames));
-                errorResult.addPossibleAction(new SimpleAction(
-                    GT._("External Viewer"), new PageViewAction(url)));
-                errors.add(errorResult);
-                errorResults.put(previousRef, errorResult);
-              }
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(),
-                  ref.getStartTagBeginIndex(), ref.getEndTagEndIndex());
-              if (previousName != null) {
-                if (previousGroup != null) {
-                  errorResult.addReplacement("<ref group=" + previousGroup + " name=" + previousName + "/>");
-                } else {
-                  errorResult.addReplacement("<ref name=" + previousName + "/>");
-                }
-              }
-              errorResult.addPossibleAction(
-                  new CompositeAction(GT._("Existing references"), existingNames));
-              errors.add(errorResult);
-            }
-          }
-        } else {
-          startIndex = contents.indexOf('<', startIndex + 1);
-        }
+
+    // Find all ref tags and organize them by group / value
+    while (startIndex < contents.length()) {
+      PageElementTag ref = PageContents.findNextTag(
+          pageAnalysis.getPage(), contents, "ref", startIndex);
+      if (ref == null) {
+        startIndex = contents.length();
       } else {
-        startIndex = contents.indexOf('<', startIndex + 1);
+        startIndex = ref.getEndTagEndIndex();
+
+        // Analyze group
+        String parameterGroup = ref.getParameter("group");
+        if (parameterGroup == null) {
+          parameterGroup = "";
+        }
+        HashMap<String, ArrayList<PageElementTag>> groupRefs = refs.get(parameterGroup);
+        if (groupRefs == null) {
+          groupRefs = new HashMap<String, ArrayList<PageElementTag>>();
+          refs.put(parameterGroup, groupRefs);
+        }
+
+        // Analyze text reference
+        String reference = ref.getText();
+        if (reference != null) {
+          reference = reference.trim();
+        } else {
+          reference = "";
+        }
+        if (reference.length() > 0) {
+          ArrayList<PageElementTag> valueRefs = groupRefs.get(reference);
+          if (valueRefs == null) {
+            valueRefs = new ArrayList<PageElementTag>();
+            groupRefs.put(reference, valueRefs);
+          } else {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+          }
+          valueRefs.add(ref);
+        }
       }
     }
-    Collections.sort(names);
-    for (String name : names) {
-      existingNames.add(new SimpleAction(name, new NoOpAction()));
+    if (result == false) {
+      return false;
     }
-    return result;
+
+    // List of existing names
+    /*ArrayList<Actionnable> existingNamesActions = new ArrayList<Actionnable>();
+    for (Entry<String, HashMap<String, ArrayList<PageElementTag>>> groupRefsEntry : refs.entrySet()) {
+      ArrayList<String> groupNames = new ArrayList<String>();
+      HashMap<String, ArrayList<PageElementTag>> groupRefs = groupRefsEntry.getValue();
+      for (Entry<String, ArrayList<PageElementTag>> valueRefsEntry : groupRefs.entrySet()) {
+        ArrayList<PageElementTag> valueRefs = valueRefsEntry.getValue();
+        for (PageElementTag ref : valueRefs) {
+          String parameterName = ref.getParameter("name");
+          if ((parameterName != null) && (parameterName.trim().length() > 0)) {
+            if (!groupNames.contains(parameterName.trim())) {
+              groupNames.add(parameterName.trim());
+            }
+          }
+        }
+      }
+      if (groupNames.size() > 0) {
+        Collections.sort(groupNames);
+        ArrayList<Actionnable> groupActions = new ArrayList<Actionnable>(groupNames.size());
+        for (String name : groupNames) {
+          groupActions.add(new SimpleAction(name, new NoOpAction()));
+        }
+        existingNamesActions.add(new CompositeAction(groupRefsEntry.getKey(), groupActions));
+      }
+    }*/
+
+    // Analyze ref tags
+    for (Entry<String, HashMap<String, ArrayList<PageElementTag>>> groupRefsEntry : refs.entrySet()) {
+      String groupName = groupRefsEntry.getKey();
+      HashMap<String, ArrayList<PageElementTag>> groupRefs = groupRefsEntry.getValue();
+
+      // Analyze duplicate ref tags
+      for (Entry<String, ArrayList<PageElementTag>> valueRefsEntry : groupRefs.entrySet()) {
+        String text = valueRefsEntry.getKey();
+        ArrayList<PageElementTag> valueRefs = valueRefsEntry.getValue();
+        if ((valueRefs != null) && (valueRefs.size() > 1)) {
+
+          // Find possible names
+          ArrayList<String> possibleNames = new ArrayList<String>();
+          for (PageElementTag valueRef : valueRefs) {
+            String parameterName = valueRef.getParameter("name");
+            if ((parameterName != null) && (parameterName.trim().length() > 0)) {
+              if (!possibleNames.contains(parameterName.trim())) {
+                possibleNames.add(parameterName.trim());
+              }
+            }
+          }
+
+          if (possibleNames.size() > 0) {
+
+            // Create an error for each tag, except for the first with the name
+            boolean first = true;
+            String correctName = possibleNames.get(0);
+            for (PageElementTag valueRef : valueRefs) {
+              String parameterName = valueRef.getParameter("name");
+              if (parameterName != null) {
+                parameterName = parameterName.trim();
+              }
+              boolean ok = first && correctName.equals(parameterName);
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(),
+                  valueRef.getStartTagBeginIndex(), valueRef.getEndTagEndIndex(),
+                  ok ?
+                      CheckErrorResult.ErrorLevel.CORRECT :
+                      CheckErrorResult.ErrorLevel.ERROR);
+              if (!ok) {
+                if (groupName.length() > 0) {
+                  errorResult.addReplacement("<ref group=" + groupName + " name=" + correctName + "/>");
+                } else {
+                  errorResult.addReplacement("<ref name=" + correctName + "/>");
+                }
+              }
+              /*if (existingNamesActions.size() > 0) {
+                errorResult.addPossibleAction(
+                    new CompositeAction(GT._("Existing references"), existingNamesActions));
+              }*/
+              errors.add(errorResult);
+              if (ok) {
+                first = false;
+              }
+            }
+          } else {
+
+            // Find if an URL is in the ref tag
+            String url = null;
+            if (text != null) {
+              int httpIndex = text.indexOf("http://");
+              if (httpIndex < 0) {
+                httpIndex = text.indexOf("https://");
+              }
+              if (httpIndex >= 0) {
+                int spaceIndex = text.indexOf(' ', httpIndex);
+                if (spaceIndex < 0) {
+                  url = text.substring(httpIndex);
+                } else {
+                  url = text.substring(httpIndex, spaceIndex);
+                }
+              }
+            }
+
+            // Create an error for each tag
+            boolean first = true;
+            for (PageElementTag valueRef : valueRefs) {
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(),
+                  valueRef.getStartTagBeginIndex(), valueRef.getEndTagEndIndex(),
+                  first ?
+                      CheckErrorResult.ErrorLevel.WARNING :
+                      CheckErrorResult.ErrorLevel.ERROR);
+
+              // First ref tag : propose to give a name to it
+              if (first) {
+                errorResult.addPossibleAction(
+                    GT._("Give a name to the <ref> tag"),
+                    new AddTextActionProvider(
+                        valueRef.getPartBeforeParameters() + " name=\"",
+                        "\"" + valueRef.getPartFromParameters(),
+                        url,
+                        GT._("What name would like to use for the <ref> tag ?"),
+                        "[]\""));
+              }
+
+              /*if (existingNamesActions.size() > 0) {
+                errorResult.addPossibleAction(
+                    new CompositeAction(GT._("Existing references"), existingNamesActions));
+              }*/
+              if (url != null) {
+                errorResult.addPossibleAction(new SimpleAction(
+                    GT._("External Viewer"), new PageViewAction(url)));
+              }
+              errors.add(errorResult);
+              first = false;
+            }
+          }
+        }
+      }
+    }
+    return true;
   }
 }
