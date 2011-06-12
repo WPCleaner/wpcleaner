@@ -73,6 +73,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.SimpleAttributeSet;
@@ -136,6 +138,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
   private UserAgentContext ucontext;
   private HtmlRendererContext rcontextDescription;
   private HtmlRendererContext rcontextParameters;
+  private int lastErrorDisplayed = -1;
   private JButton buttonReloadError;
   private JButton buttonErrorDetail;
   private JButton buttonErrorList;
@@ -234,6 +237,12 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     constraints.weighty = 1;
     contentPane = new JCloseableTabbedPane();
     contentPane.setPreferredSize(new Dimension(900, 600));
+    contentPane.addChangeListener(new ChangeListener() {
+      
+      public void stateChanged(@SuppressWarnings("unused") ChangeEvent e) {
+        displayErrorDescription();
+      }
+    });
     panel.add(contentPane, constraints);
     constraints.gridy++;
 
@@ -1085,48 +1094,57 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     }
 
     /**
+     * @return Current selected error.
+     */
+    public CheckErrorPage getSelectedError() {
+      Object selection = listErrors.getSelectedValue();
+      if (selection instanceof CheckErrorPage) {
+        return (CheckErrorPage) selection;
+      }
+      return null;
+    }
+
+    /**
      * Action called when an error is selected. 
      */
     void actionSelectError() {
-      Object selection = listErrors.getSelectedValue();
-      if (selection instanceof CheckErrorPage) {
-        CheckErrorPage errorSelected = (CheckErrorPage) selection;
-        boolean modified = textPage.isModified();
-        String contents = textPage.getText();
-        PageAnalysis pageAnalysis = new PageAnalysis(errorSelected.getPage(), contents);
-        CheckErrorPage errorPage = CheckError.analyzeError(
-            errorSelected.getAlgorithm(), pageAnalysis);
-        textPage.resetAttributes();
-        StyledDocument document = textPage.getStyledDocument();
-        if (document != null) {
-          if (errorPage.getResults() != null) {
-            for (CheckErrorResult errorFound : errorPage.getResults()) {
-              String styleName = MediaWikiConstants.STYLE_CHECK_WIKI_ERROR;
-              if (errorFound.getErrorLevel() == CheckErrorResult.ErrorLevel.CORRECT) {
-                styleName = MediaWikiConstants.STYLE_CHECK_WIKI_OK;
-              } else if (errorFound.getErrorLevel() == CheckErrorResult.ErrorLevel.WARNING) {
-                styleName = MediaWikiConstants.STYLE_CHECK_WIKI_WARNING;
-              }
-              document.setCharacterAttributes(
-                  errorFound.getStartPosition(),
-                  errorFound.getLength(),
-                  textPage.getStyle(styleName),
-                  true);
-              SimpleAttributeSet attributes = new SimpleAttributeSet();
-              attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_INFO, errorFound);
-              attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_UUID, UUID.randomUUID());
-              document.setCharacterAttributes(
-                  errorFound.getStartPosition(),
-                  errorFound.getLength(),
-                  attributes, false);
+      CheckErrorPage errorSelected = getSelectedError();
+      boolean modified = textPage.isModified();
+      String contents = textPage.getText();
+      PageAnalysis pageAnalysis = new PageAnalysis(errorSelected.getPage(), contents);
+      CheckErrorPage errorPage = CheckError.analyzeError(
+          errorSelected.getAlgorithm(), pageAnalysis);
+      textPage.resetAttributes();
+      StyledDocument document = textPage.getStyledDocument();
+      if (document != null) {
+        if (errorPage.getResults() != null) {
+          for (CheckErrorResult errorFound : errorPage.getResults()) {
+            String styleName = MediaWikiConstants.STYLE_CHECK_WIKI_ERROR;
+            if (errorFound.getErrorLevel() == CheckErrorResult.ErrorLevel.CORRECT) {
+              styleName = MediaWikiConstants.STYLE_CHECK_WIKI_OK;
+            } else if (errorFound.getErrorLevel() == CheckErrorResult.ErrorLevel.WARNING) {
+              styleName = MediaWikiConstants.STYLE_CHECK_WIKI_WARNING;
             }
+            document.setCharacterAttributes(
+                errorFound.getStartPosition(),
+                errorFound.getLength(),
+                textPage.getStyle(styleName),
+                true);
+            SimpleAttributeSet attributes = new SimpleAttributeSet();
+            attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_INFO, errorFound);
+            attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_UUID, UUID.randomUUID());
+            document.setCharacterAttributes(
+                errorFound.getStartPosition(),
+                errorFound.getLength(),
+                attributes, false);
           }
         }
-        listErrors.repaint();
-        textPage.setModified(modified);
-        updateComponentState();
-        actionFirstOccurence();
       }
+      listErrors.repaint();
+      textPage.setModified(modified);
+      updateComponentState();
+      actionFirstOccurence();
+      displayErrorDescription();
     }
 
     /* (non-Javadoc)
@@ -1551,52 +1569,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       buttonReloadError.setEnabled(true);
       buttonErrorDetail.setEnabled(true);
       buttonErrorList.setEnabled(true);
-
-      // Error type description
-      try {
-        DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontextDescription);
-        InputSource is = new InputSource(new StringReader(error.getAlgorithm().getLongDescription()));
-        is.setSystemId(
-            "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi?" +
-            "project=frwiki&view=only&id=" + error.getErrorNumber());
-        Document document = dbi.parse(is);
-        textDescription.setDocument(document, rcontextDescription);
-      } catch (SAXException e) {
-        textDescription.clearDocument();
-      } catch (IOException e) {
-        textDescription.clearDocument();
-      }
-
-      // Parameters description
-      try {
-        String url =
-          getWikipedia().getWikiURL() +
-          "?title=" +
-          URLEncoder.encode(getWikipedia().getCheckWikiTraduction(), "UTF-8");
-        StringBuilder parametersDescription = new StringBuilder();
-        parametersDescription.append(GT._(
-            "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :",
-            new Object[] { Integer.toString(error.getErrorNumber()), url }));
-        parametersDescription.append("\n<ul>");
-        Map<String, String> parameters = error.getAlgorithm().getParameters();
-        for (Map.Entry<String, String> entry : parameters.entrySet()) {
-          parametersDescription.append("<li><b>");
-          parametersDescription.append(entry.getKey());
-          parametersDescription.append("</b>: ");
-          parametersDescription.append(entry.getValue());
-          parametersDescription.append("</li>\n");
-        }
-        parametersDescription.append("</ul>");
-        DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontextParameters);
-        InputSource is = new InputSource(new StringReader(parametersDescription.toString()));
-        is.setSystemId(url);
-        Document document = dbi.parse(is);
-        textParameters.setDocument(document, rcontextParameters);
-      } catch (SAXException e) {
-        textParameters.clearDocument();
-      } catch (IOException e) {
-        textParameters.clearDocument();
-      }
+      displayErrorDescription();
 
       // Pages
       int nbPages = error.getPageCount();
@@ -1616,8 +1589,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       buttonReloadError.setEnabled(false);
       buttonErrorDetail.setEnabled(false);
       buttonErrorList.setEnabled(false);
-      textDescription.clearDocument();
-      textParameters.clearDocument();
+      displayErrorDescription();
 
       if (selection instanceof String) {
         List<String> listTmp = new ArrayList<String>();
@@ -1645,6 +1617,106 @@ public class CheckWikiProjectWindow extends OnePageWindow {
 
       setPageLoaded(false);
       actionSelectPage();
+    }
+  }
+
+  /**
+   * Display description of an error.
+   */
+  public void displayErrorDescription() {
+    CheckErrorAlgorithm algorithm = null;
+
+    // Look in the current page
+    if ((contentPane != null) &&
+        (contentPane.getSelectedComponent() != null) &&
+        (contentPane.getSelectedComponent() instanceof CheckWikiContentPanel)) {
+      CheckWikiContentPanel panel = (CheckWikiContentPanel) contentPane.getSelectedComponent();
+      CheckErrorPage error = panel.getSelectedError();
+      if (error != null) {
+        algorithm = error.getAlgorithm();
+      }
+    }
+
+    // Look in the global list of errors
+    if (algorithm == null) {
+      Object selection = listAllErrors.getSelectedItem();
+      if (selection instanceof CheckError) {
+        CheckError error = (CheckError) selection;
+        algorithm = error.getAlgorithm();
+      }
+    }
+
+    // Display description
+    displayErrorDescription(algorithm);
+  }
+
+  /**
+   * Display description of an error.
+   * 
+   * @param algorithm Algorithm.
+   */
+  private void displayErrorDescription(CheckErrorAlgorithm algorithm) {
+
+    // Check error number
+    int errorNumber = -1;
+    if (algorithm != null) {
+      errorNumber = algorithm.getErrorNumber();
+    }
+    if (errorNumber == lastErrorDisplayed) {
+      return;
+    }
+    lastErrorDisplayed = errorNumber;
+
+    // Display description
+    if (algorithm != null) {
+      // Error type description
+      try {
+        DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontextDescription);
+        InputSource is = new InputSource(new StringReader(algorithm.getLongDescription()));
+        is.setSystemId(
+            "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi?" +
+            "project=frwiki&view=only&id=" + algorithm.getErrorNumber());
+        Document document = dbi.parse(is);
+        textDescription.setDocument(document, rcontextDescription);
+      } catch (SAXException e) {
+        textDescription.clearDocument();
+      } catch (IOException e) {
+        textDescription.clearDocument();
+      }
+
+      // Parameters description
+      try {
+        String url =
+          getWikipedia().getWikiURL() +
+          "?title=" +
+          URLEncoder.encode(getWikipedia().getCheckWikiTraduction(), "UTF-8");
+        StringBuilder parametersDescription = new StringBuilder();
+        parametersDescription.append(GT._(
+            "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :",
+            new Object[] { Integer.toString(algorithm.getErrorNumber()), url }));
+        parametersDescription.append("\n<ul>");
+        Map<String, String> parameters = algorithm.getParameters();
+        for (Map.Entry<String, String> entry : parameters.entrySet()) {
+          parametersDescription.append("<li><b>");
+          parametersDescription.append(entry.getKey());
+          parametersDescription.append("</b>: ");
+          parametersDescription.append(entry.getValue());
+          parametersDescription.append("</li>\n");
+        }
+        parametersDescription.append("</ul>");
+        DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontextParameters);
+        InputSource is = new InputSource(new StringReader(parametersDescription.toString()));
+        is.setSystemId(url);
+        Document document = dbi.parse(is);
+        textParameters.setDocument(document, rcontextParameters);
+      } catch (SAXException e) {
+        textParameters.clearDocument();
+      } catch (IOException e) {
+        textParameters.clearDocument();
+      }
+    } else {
+      textDescription.clearDocument();
+      textParameters.clearDocument();
     }
   }
 
@@ -1677,7 +1749,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
   }
 
   /**
-   * Action callad when the Select Errors button is pressed. 
+   * Action called when the Select Errors button is pressed. 
    */
   public void actionChooseErrors() {
     popupSelectErrors.show(
