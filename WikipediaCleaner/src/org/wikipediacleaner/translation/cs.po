@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-06-12 17:59+0200\n"
-"PO-Revision-Date: 2011-04-11 16:05+0000\n"
+"PO-Revision-Date: 2011-06-20 18:41+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-11 17:20+0000\n"
-"X-Generator: Launchpad (build 12792)\n"
+"X-Launchpad-Export-Date: 2011-06-21 08:36+0000\n"
+"X-Generator: Launchpad (build 13242)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -30,16 +30,13 @@ msgstr ""
 "Konfigurace WikiCleaneru je dostupná on-line v {0}Systémové konfiguraci{1}."
 
 #: org/wikipediacleaner/Version.java:43
-#, fuzzy
 msgid "Many new features were added recently : try them !"
 msgstr ""
-"Mnoho nových vlastnosti bylo přidáno pro projekt CheckWikipedia, zkuste je!"
 
 #: org/wikipediacleaner/Version.java:45
-#, fuzzy
 msgid ""
 "Leaving a note on talk pages with the list of links to disambiguation pages."
-msgstr "Přidat varování na diskuzní stránku ohledně odkazů na rozcestníky"
+msgstr ""
 
 #: org/wikipediacleaner/Version.java:46
 msgid ""
@@ -67,9 +64,9 @@ msgstr "Aktualizuji stránku {0}"
 
 #: org/wikipediacleaner/api/MediaWiki.java:222
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:100
-#, fuzzy, java-format
+#, java-format
 msgid "Error {0} detected: Waiting and retrying"
-msgstr "Chyba 'readonly' detekována: čekám a opakuji"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckError.java:244
 #, java-format
@@ -135,9 +132,8 @@ msgid "Check category"
 msgstr "Ověřit kategorii"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:110
-#, fuzzy
 msgid "Comment category out"
-msgstr "Ověřit kategorii"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:126
 #, java-format
@@ -208,9 +204,9 @@ msgstr "Externí prohlížeč"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:146
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page name>|"
-"<param name for code of other language>|<param name for page name in other "
-"language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page "
+"name>|<param name for code of other language>|<param name for page name in "
+"other language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:132
@@ -285,9 +281,9 @@ msgid "Priority unknown"
 msgstr "Neznámá priorita"
 
 #: org/wikipediacleaner/api/constants/EnumWikipedia.java:1515
-#, fuzzy, java-format
+#, java-format
 msgid "Fixed using [[{0}]]"
-msgstr "Posílám {0}"
+msgstr "Opraveno pomocí [[{0}]]"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:229
 msgid "Namespace"
@@ -338,9 +334,8 @@ msgid "Retrieving contents"
 msgstr "Stahuji obsah"
 
 #: org/wikipediacleaner/api/execution/DisambiguationStatusCallable.java:55
-#, fuzzy
 msgid "Retrieving disambiguation information"
-msgstr "Zjišťuji rozcestníky"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:55
 msgid "Retrieving page usage"
@@ -391,7 +386,8 @@ msgstr "Můžou změnit nožství stránek v krátkém čase."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:106
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:637
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Na některých projektech Wikimedia potřebuješ pro tyto funkce příznak Bot."
 
@@ -411,8 +407,10 @@ msgid "Update existing disambiguation warning messages"
 msgstr "Aktualizovat existující rozcestníkové varování"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:205
-msgid "At what page do you wish to start updating the disambiguation warning ?"
-msgstr "Na které stránce chcete zahájit aktualizaci rozcestníkového varování?"
+msgid ""
+"At what page do you wish to start updating the disambiguation warning ?"
+msgstr ""
+"Na které stránce chcete zahájit aktualizaci rozcestníkového varování?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:178
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:566
@@ -642,13 +640,11 @@ msgstr ""
 "do překladu ({1}) na {2} Wikipedii"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:241
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "You have selected {0} pages.\n"
 "Would you like to analyze more than {1} pages ?"
 msgstr ""
-"Vybral jsi {0} stránek.\n"
-"Chceš analyzovat všech {0} stránek?"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:157
 #, java-format
@@ -728,7 +724,6 @@ msgid "Do you want to continue ?"
 msgstr "Chceš pokračovat?"
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:129
-#, fuzzy
 msgid "Information"
 msgstr "Informace"
 
@@ -795,9 +790,8 @@ msgid "System Options (Alt + &Y)"
 msgstr "Systémové možnosti"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:469
-#, fuzzy
 msgid "Reload system options"
-msgstr "S&ystémové volby"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:474
 msgid "&Idea ? Bug ?"
@@ -849,9 +843,8 @@ msgid "Projects"
 msgstr "Projekty"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:674
-#, fuzzy
 msgid "Preload disambiguations pages"
-msgstr "Všechny rozcestníkové stránky"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:683
 msgid "&Current Disambiguation List"
@@ -911,7 +904,8 @@ msgstr "Než se přihlásíte, musíte zadat heslo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:946
 msgid "You can learn how to configure WikiCleaner at the following URL:"
-msgstr "Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
+msgstr ""
+"Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:981
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
@@ -970,7 +964,8 @@ msgid "Internal links in {0}"
 msgstr "Interní odkazy v {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1115
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr "Musíte zadat jméno stránky pro získání seznamu členů kategorie"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1126
@@ -1035,18 +1030,16 @@ msgid "Retrieving MediaWiki API"
 msgstr "Získávám MediaWiki API"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1371
-#, fuzzy
 msgid "Loading configuration"
-msgstr "Přijímám konfiguraci Check Wikipedia"
+msgstr "Nahrávám konfiguraci"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1393
 msgid "Retrieving disambiguation templates"
 msgstr "Získávám rozcestníkové šablony"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1397
-#, fuzzy
 msgid "Retrieving suggestions for text replacements"
-msgstr "Získávám rozcestníkové šablony"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1403
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1427
@@ -1097,7 +1090,8 @@ msgid "Analysis - {0}"
 msgstr "Analýza - {0}"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:379
-msgid "Add a warning on the talk page about the links to disambiguation pages"
+msgid ""
+"Add a warning on the talk page about the links to disambiguation pages"
 msgstr "Přidat varování na diskuzní stránku ohledně odkazů na rozcestníky"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:433
@@ -1232,9 +1226,8 @@ msgstr "Znovu"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:612
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:614
-#, fuzzy
 msgid "Table of Contents"
-msgstr "Tabulka nemá korektní konec"
+msgstr "Obsah"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:633
 msgid "Validate (Alt + &V)"
@@ -1285,7 +1278,7 @@ msgstr "Vytvořit rozcestníkové varování na diskuzní stránce"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:842
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:327
 msgid "Check orthograph and typography"
-msgstr ""
+msgstr "Ověřit pravopis a typografii"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:844
 msgid "Orthograph"
@@ -1428,7 +1421,8 @@ msgstr ""
 "prostoru)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:502
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 "Vytvořit rozcestníkové varování na diskuzní stránce (v encyklopedických "
 "jmenných prostorech)"
@@ -1446,7 +1440,8 @@ msgstr ""
 "prostoru)"
 
 #: org/wikipediacleaner/gui/swing/OptionsWindow.java:532
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 "Aktualizovat rozcestníkové varování na diskuzní stránce (v encyklopedických "
 "jmenných prostorech)"
@@ -1784,7 +1779,7 @@ msgstr "Došlo k neznámé chybě"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:225
 msgid "Other..."
-msgstr ""
+msgstr "Ostatní…"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:296
 msgid "Yes"
@@ -1813,15 +1808,15 @@ msgstr "Zavřít tuto kartu"
 
 #: org/wikipediacleaner/gui/swing/component/MediaWikiPane.java:1054
 msgid "Decrement title level"
-msgstr ""
+msgstr "Snížit úroveň titulku"
 
 #: org/wikipediacleaner/gui/swing/component/MediaWikiPane.java:1060
 msgid "Increment title level"
-msgstr ""
+msgstr "Zvýšit úroveň titulku"
 
 #: org/wikipediacleaner/gui/swing/component/MediaWikiPane.java:1066
 msgid "Validate the new table of contents"
-msgstr ""
+msgstr "Ověřit nový obsah"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:237
 msgid "Current chapter"
@@ -1915,18 +1910,16 @@ msgstr "Analyzovat stránku"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1159
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1250
-#, fuzzy
 msgid "History"
-msgstr "&Historie"
+msgstr "Historie"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1239
 msgid "Template External Viewer"
 msgstr "Externí zobrazení šablony"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1248
-#, fuzzy
 msgid "Template history"
-msgstr "Šablona"
+msgstr "Historie šablony"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1303
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:1308
@@ -1989,14 +1982,11 @@ msgid "Adding comment"
 msgstr "Přidávám komentář"
 
 #: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:97
-#, fuzzy
 msgid ""
 "You have loaded the list of all disambiguation pages to speed up page "
 "analysis.\n"
 "Do you want to display the list of all disambiguation pages ?"
 msgstr ""
-"Nahráli jste stránku se všemi rozcestníky.\n"
-"Chcete ji použít pro urychlení analýzy stránky?"
 
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:59
 msgid "Getting random page"
@@ -2085,32 +2075,21 @@ msgstr ""
 "Současná nastavení budou uložena pro vaši preferovanou Wikipedii.\n"
 "Jaká je vaše preferovaná Wikipedie?"
 
-#~ msgid "Existing references"
-#~ msgstr "Existující reference"
-
-#~ msgid "Detection by [[{0}]]"
-#~ msgstr "dle [[{0}]]"
-
-#~ msgid ""
-#~ "Many new features added for the {0}Check Wiki project{1} : try them !"
-#~ msgstr ""
-#~ "Mnoho nových funkcí bylo přidáno pro projekt {0}Check Wikipedia{1}, "
-#~ "vyzkoušejte je!"
-
-#~ msgid "Error 'badtoken' detected: Retrying"
-#~ msgstr "Chyba 'badtoken' detekována: Opakuji"
-
 #~ msgid "Square brackets not correct end"
 #~ msgstr "Čtvercové závorky nemají korektní konec"
 
 #~ msgid "Article with false <br/>"
 #~ msgstr "Článek se špatným <br/>"
 
+#, java-format
 #~ msgid "Error n°{0} ({1}) - {2}"
 #~ msgstr "Chyba n°{0} ({1}) - {2}"
 
 #~ msgid "HTML text style element <b>"
 #~ msgstr "HTML element <b>"
+
+#~ msgid "Table not correct end"
+#~ msgstr "Tabulka nemá korektní konec"
 
 #~ msgid "Template not correct begin"
 #~ msgstr "Šablona nemá korektní konec"
@@ -2139,6 +2118,20 @@ msgstr ""
 #~ msgid "HTML text style element <p>"
 #~ msgstr "HTML element <p>"
 
+#~ msgid "Retrieving disambiguation informations"
+#~ msgstr "Zjišťuji rozcestníky"
+
+#, java-format
+#~ msgid ""
+#~ "You have selected {0} pages.\n"
+#~ "Would you like to analyze the {0} pages ?"
+#~ msgstr ""
+#~ "Vybral jsi {0} stránek.\n"
+#~ "Chceš analyzovat všech {0} stránek?"
+
+#~ msgid "Informations"
+#~ msgstr "Informace"
+
 #~ msgid "&Save password"
 #~ msgstr "Uložit heslo"
 
@@ -2147,6 +2140,9 @@ msgstr ""
 
 #~ msgid "&Help"
 #~ msgstr "Nápověda"
+
+#~ msgid "Existing references"
+#~ msgstr "Existující reference"
 
 #~ msgid "Comma separated list of errors to work on."
 #~ msgstr "Čárkou oddělený seznam chyb k opravě."
@@ -2163,11 +2159,18 @@ msgstr ""
 #~ msgid "&Update page information"
 #~ msgstr "Aktualizovat informace o stránce"
 
+#~ msgid "Error 'badtoken' detected: Retrying"
+#~ msgstr "Chyba 'badtoken' detekována: Opakuji"
+
+#, java-format
 #~ msgid "Replace parameter {0} with"
 #~ msgstr "Nahradit parametr {0} za"
 
 #~ msgid "&Random page"
 #~ msgstr "&Náhodná stránka"
+
+#~ msgid "S&ystem Options"
+#~ msgstr "S&ystémové volby"
 
 #~ msgid "all errors"
 #~ msgstr "všechny chyby"
@@ -2184,18 +2187,43 @@ msgstr ""
 #~ msgid "Comma separated list of errors to ignore."
 #~ msgstr "Seznam ignorovaných chyb oddělených čárkou."
 
-#~ msgid ""
-#~ "!NEW! - WikiCleaner configuration is now available online, check the "
-#~ "System configuration."
+#~ msgid "Many new features added for the Check Wiki project : try them !"
 #~ msgstr ""
-#~ "!NOVINKA! Konfigurace WikiCleaneru je nyní dostupná on-line, nahlédněte "
-#~ "do Systémových možností."
+#~ "Mnoho nových vlastnosti bylo přidáno pro projekt CheckWikipedia, zkuste je!"
 
+#~ msgid ""
+#~ "!NEW! - WikiCleaner configuration is now available online, check the System "
+#~ "configuration."
+#~ msgstr ""
+#~ "!NOVINKA! Konfigurace WikiCleaneru je nyní dostupná on-line, nahlédněte do "
+#~ "Systémových možností."
+
+#, java-format
 #~ msgid "Retrieving first section contents - {0}"
 #~ msgstr "Získávám obsahy první sekce - {0}"
 
 #~ msgid "Updating disambiguation warning on talk page"
 #~ msgstr "Aktualizuji rozcestníkové varování na diskuzní stránce"
 
+#, java-format
+#~ msgid "Many new features added for the {0}Check Wiki project{1} : try them !"
+#~ msgstr ""
+#~ "Mnoho nových funkcí bylo přidáno pro projekt {0}Check Wikipedia{1}, "
+#~ "vyzkoušejte je!"
+
 #~ msgid "Warning for disambiguation links"
 #~ msgstr "Varování pro rozcestníkové odkazy"
+
+#~ msgid ""
+#~ "You have loaded the list of all disambiguation pages.\n"
+#~ "Do you want to use it to speed up page analysis ?"
+#~ msgstr ""
+#~ "Nahráli jste stránku se všemi rozcestníky.\n"
+#~ "Chcete ji použít pro urychlení analýzy stránky?"
+
+#~ msgid "Error 'readonly' detected: Waiting and retrying"
+#~ msgstr "Chyba 'readonly' detekována: čekám a opakuji"
+
+#, java-format
+#~ msgid "Detection by [[{0}]]"
+#~ msgstr "dle [[{0}]]"
