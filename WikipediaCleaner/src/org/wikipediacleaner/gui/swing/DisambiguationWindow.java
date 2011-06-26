@@ -838,7 +838,11 @@ public class DisambiguationWindow extends OnePageWindow {
 
     // Select items found
     if (currentIndice < indices.length) {
-      indices = Arrays.copyOf(indices, currentIndice);
+      int newIndices[] = new int[currentIndice];
+      for (int i = 0; i < currentIndice; i++) {
+        newIndices[i] = indices[i];
+      }
+      indices = newIndices;
     }
     listLinks.setSelectedIndices(indices);
     if (indices.length > 0) {
