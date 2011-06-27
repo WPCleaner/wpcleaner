@@ -1307,7 +1307,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       }
       if (comment.length() > 0) {
         comment.append(" (");
-        comment.append(getDefaultComment());
+        comment.append(getAutomaticComment());
         comment.append(")");
       }
       return comment.toString();
@@ -1502,7 +1502,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
    * @return Default comment.
    */
   @Override
-  protected String getDefaultComment() {
+  protected String getAutomaticComment() {
     return getWikipedia().getCheckWikiComment();
   }
 

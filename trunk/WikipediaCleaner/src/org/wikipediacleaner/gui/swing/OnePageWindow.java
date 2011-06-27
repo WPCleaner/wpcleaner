@@ -149,7 +149,7 @@ public abstract class OnePageWindow
   /**
    * @return Default comment.
    */
-  protected String getDefaultComment() {
+  protected String getAutomaticComment() {
     return getWikipedia().getUpdatePageMessage();
   }
 
@@ -751,7 +751,7 @@ public abstract class OnePageWindow
     chkAutomaticComment = createChkAutomaticComment(true, this);
     panel.add(chkAutomaticComment, constraints);
     constraints.gridx++;
-    textComment = new JTextField(getDefaultComment());
+    textComment = new JTextField(getAutomaticComment());
     constraints.weightx = 1;
     panel.add(textComment, constraints);
   }
@@ -1078,7 +1078,7 @@ public abstract class OnePageWindow
         (source == chkAutomaticComment)) {
       textComment.setEnabled(!chkAutomaticComment.isSelected());
       if (chkAutomaticComment.isSelected()) {
-        textComment.setText(getDefaultComment());
+        textComment.setText(getAutomaticComment());
       }
     }
   }
