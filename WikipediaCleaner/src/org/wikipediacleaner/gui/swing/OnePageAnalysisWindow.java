@@ -1010,46 +1010,10 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   }
 
   /**
-   * Action called when Validate button is pressed.
+   * @return Default comment.
    */
   @Override
-  protected void actionValidate(boolean fullValidate) {
-    getTextContents().resetAttributes();
-    countOccurences(getTextContents().getText(), false);
-    listLinks.repaint();
-
-    // Check for new errors
-    PageAnalysis pageAnalysis = new PageAnalysis(getPage(), getTextContents().getText());
-    pageAnalysis.shouldCheckOrthograph(shouldCheckOrthograph());
-    List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-        allAlgorithms, pageAnalysis);
-    if (errorsFound != null) {
-      for (CheckErrorPage tmpError : errorsFound) {
-        boolean errorFound = false;
-        for (int index = 0; index < modelErrors.getSize(); index++) {
-          CheckErrorPage errorModel = (CheckErrorPage) modelErrors.get(index);
-          if ((errorModel != null) &&
-              (errorModel.getAlgorithm() != null) &&
-              (errorModel.getAlgorithm().equals(tmpError.getAlgorithm()))) {
-            errorFound = true;
-            modelErrors.set(index, tmpError);
-          }
-        }
-        if (!errorFound) {
-          modelErrors.addElement(tmpError);
-        }
-      }
-    }
-    for (int index = 0; index < modelErrors.getSize(); index++) {
-      CheckErrorPage errorModel = (CheckErrorPage) modelErrors.get(index);
-      if ((errorsFound == null) || (!errorsFound.contains(errorModel))) {
-        CheckErrorPage newError = new CheckErrorPage(getPage(), errorModel.getAlgorithm());
-        modelErrors.set(index, newError);
-      }
-    }
-    listErrors.repaint();
-
-    // Update comment 
+  protected String getAutomaticComment() {
     StringBuilder comment = new StringBuilder();
     if ((mapLinksCount != null) && (mapLinksCount.size() > 0)) {
       // Comment for fixed links to disambiguation pages
@@ -1072,7 +1036,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       }
       if (fixed.size() > 0) {
         Collections.sort(fixed);
-        comment.append(getDefaultComment());
+        comment.append(getWikipedia().getUpdatePageMessage());
         int linksFixed = 0;
         for (String fix : fixed) {
           if (linksFixed > 0) {
@@ -1114,7 +1078,51 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         }
       }
     }
-    setComment(comment.toString());
+    return comment.toString();
+  }
+
+  /**
+   * Action called when Validate button is pressed.
+   */
+  @Override
+  protected void actionValidate(boolean fullValidate) {
+    getTextContents().resetAttributes();
+    countOccurences(getTextContents().getText(), false);
+    listLinks.repaint();
+
+    // Check for new errors
+    PageAnalysis pageAnalysis = new PageAnalysis(getPage(), getTextContents().getText());
+    pageAnalysis.shouldCheckOrthograph(shouldCheckOrthograph());
+    List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
+        allAlgorithms, pageAnalysis);
+    if (errorsFound != null) {
+      for (CheckErrorPage tmpError : errorsFound) {
+        boolean errorFound = false;
+        for (int index = 0; index < modelErrors.getSize(); index++) {
+          CheckErrorPage errorModel = (CheckErrorPage) modelErrors.get(index);
+          if ((errorModel != null) &&
+              (errorModel.getAlgorithm() != null) &&
+              (errorModel.getAlgorithm().equals(tmpError.getAlgorithm()))) {
+            errorFound = true;
+            modelErrors.set(index, tmpError);
+          }
+        }
+        if (!errorFound) {
+          modelErrors.addElement(tmpError);
+        }
+      }
+    }
+    for (int index = 0; index < modelErrors.getSize(); index++) {
+      CheckErrorPage errorModel = (CheckErrorPage) modelErrors.get(index);
+      if ((errorsFound == null) || (!errorsFound.contains(errorModel))) {
+        CheckErrorPage newError = new CheckErrorPage(getPage(), errorModel.getAlgorithm());
+        modelErrors.set(index, newError);
+      }
+    }
+    listErrors.repaint();
+
+    // Update comment 
+    setComment(getAutomaticComment());
 
     // Update selection
     if (fullValidate) {
