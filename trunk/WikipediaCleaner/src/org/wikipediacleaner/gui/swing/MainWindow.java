@@ -91,31 +91,32 @@ public class MainWindow
   extends BasicWindow
   implements ActionListener, ItemListener {
 
-  private final static String ACTION_ABOUT           = "ABOUT";
-  private final static String ACTION_ALL_DAB         = "ALL DAB";
-  private final static String ACTION_BOT_TOOLS       = "BOT TOOLS";
-  private final static String ACTION_CAT_MEMBERS     = "CAT_MEMBERS";
-  private final static String ACTION_CHECK_WIKI      = "CHECK WIKI";
-  private final static String ACTION_CURRENT_LIST    = "CURRENT LIST";
-  private final static String ACTION_DEMO            = "DEMO";
-  private final static String ACTION_DISAMBIGUATION  = "DISAMBIGUATION";
-  private final static String ACTION_FULL_ANALYSIS   = "FULL ANALYSIS";
-  private final static String ACTION_HELP            = "HELP";
-  private final static String ACTION_HELP_REQUESTED  = "HELP_REQUESTED";
-  private final static String ACTION_IDEA            = "IDEA";
-  private final static String ACTION_INTERNAL_LINKS  = "INTERNAL LINKS";
-  private final static String ACTION_LOGIN           = "LOGIN";
-  private final static String ACTION_LOGOUT          = "LOGOUT";
-  private final static String ACTION_OPTIONS         = "OPTIONS";
-  private final static String ACTION_OPTIONS_SYSTEM  = "OPTIONS SYSTEM";
-  private final static String ACTION_OTHER_LANGUAGE  = "OTHER LANGUAGE";
-  private final static String ACTION_OTHER_WIKIPEDIA = "OTHER WIKIPEDIA";
-  private final static String ACTION_RANDOM_PAGE     = "RANDOM PAGE";
-  private final static String ACTION_RANDOM_PAGES    = "RANDOM PAGES";
-  private final static String ACTION_RELOAD_CONFIG   = "RELOAD CONFIG";
-  private final static String ACTION_SAVE_PASSWORD   = "SAVE PASSWORD";
-  private final static String ACTION_UPDATE_DAB      = "UPDATE DAB WARNING";
-  private final static String ACTION_WATCHED_PAGES   = "WATCHED PAGES";
+  private final static String ACTION_ABOUT            = "ABOUT";
+  private final static String ACTION_ALL_DAB          = "ALL DAB";
+  private final static String ACTION_BOT_TOOLS        = "BOT TOOLS";
+  private final static String ACTION_CAT_MEMBERS      = "CAT_MEMBERS";
+  private final static String ACTION_CHECK_WIKI       = "CHECK WIKI";
+  private final static String ACTION_CURRENT_DAB_LIST = "CURRENT DAB LIST";
+  private final static String ACTION_DEMO             = "DEMO";
+  private final static String ACTION_DISAMBIGUATION   = "DISAMBIGUATION";
+  private final static String ACTION_FULL_ANALYSIS    = "FULL ANALYSIS";
+  private final static String ACTION_HELP             = "HELP";
+  private final static String ACTION_HELP_REQUESTED   = "HELP_REQUESTED";
+  private final static String ACTION_IDEA             = "IDEA";
+  private final static String ACTION_INTERNAL_LINKS   = "INTERNAL LINKS";
+  private final static String ACTION_LOGIN            = "LOGIN";
+  private final static String ACTION_LOGOUT           = "LOGOUT";
+  private final static String ACTION_MOST_DAB_LINKS   = "MOST DAB LINKS";
+  private final static String ACTION_OPTIONS          = "OPTIONS";
+  private final static String ACTION_OPTIONS_SYSTEM   = "OPTIONS SYSTEM";
+  private final static String ACTION_OTHER_LANGUAGE   = "OTHER LANGUAGE";
+  private final static String ACTION_OTHER_WIKIPEDIA  = "OTHER WIKIPEDIA";
+  private final static String ACTION_RANDOM_PAGE      = "RANDOM PAGE";
+  private final static String ACTION_RANDOM_PAGES     = "RANDOM PAGES";
+  private final static String ACTION_RELOAD_CONFIG    = "RELOAD CONFIG";
+  private final static String ACTION_SAVE_PASSWORD    = "SAVE PASSWORD";
+  private final static String ACTION_UPDATE_DAB       = "UPDATE DAB WARNING";
+  private final static String ACTION_WATCHED_PAGES    = "WATCHED PAGES";
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(3);
 
@@ -137,7 +138,8 @@ public class MainWindow
   private JButton buttonLogout;
   private JButton buttonHelp;
 
-  private JButton buttonCurrentList;
+  private JButton buttonCurrentDabList;
+  private JButton buttonMostDabLinks;
   private JButton buttonCheckWiki;
   private JButton buttonHelpRequested;
   private JButton buttonAllDab;
@@ -267,7 +269,8 @@ public class MainWindow
     buttonOptionsSystem.setEnabled(logged);
     buttonReloadOptions.setEnabled(logged);
 
-    buttonCurrentList.setEnabled(logged);
+    buttonCurrentDabList.setEnabled(logged);
+    buttonMostDabLinks.setEnabled(logged);
     buttonCheckWiki.setEnabled(logged);
     buttonHelpRequested.setEnabled(logged);
     buttonAllDab.setEnabled(logged);
@@ -677,13 +680,22 @@ public class MainWindow
     panel.add(buttonAllDab, constraints);
     constraints.gridy++;
 
-    // Current list button
-    buttonCurrentList = Utilities.createJButton(
+    // Current disambiguation list button
+    buttonCurrentDabList = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("&Current Disambiguation List"), true);
-    buttonCurrentList.setActionCommand(ACTION_CURRENT_LIST);
-    buttonCurrentList.addActionListener(this);
-    panel.add(buttonCurrentList, constraints);
+    buttonCurrentDabList.setActionCommand(ACTION_CURRENT_DAB_LIST);
+    buttonCurrentDabList.addActionListener(this);
+    panel.add(buttonCurrentDabList, constraints);
+    constraints.gridy++;
+
+    // Pages with most disambiguation links button
+    buttonMostDabLinks = Utilities.createJButton(
+        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        GT._("With many disambiguation links"), true);
+    buttonMostDabLinks.setActionCommand(ACTION_MOST_DAB_LINKS);
+    buttonMostDabLinks.addActionListener(this);
+    panel.add(buttonMostDabLinks, constraints);
     constraints.gridy++;
 
     // Check Wiki Project button
@@ -774,8 +786,10 @@ public class MainWindow
       actionInternalLinks();
     } else if (ACTION_CAT_MEMBERS.equals(e.getActionCommand())) {
       actionCategoryMembers();
-    } else if (ACTION_CURRENT_LIST.equals(e.getActionCommand())) {
-      actionCurrentList();
+    } else if (ACTION_CURRENT_DAB_LIST.equals(e.getActionCommand())) {
+      actionCurrentDabList();
+    } else if (ACTION_MOST_DAB_LINKS.equals(e.getActionCommand())) {
+      actionMostDabLinks();
     } else if (ACTION_RANDOM_PAGE.equals(e.getActionCommand())) {
       actionRandomPage();
     } else if (ACTION_WATCHED_PAGES.equals(e.getActionCommand())) {
@@ -1129,13 +1143,13 @@ public class MainWindow
   /**
    * Action called when Current Disambiguation List is pressed.
    */
-  private void actionCurrentList() {
+  private void actionCurrentDabList() {
     EnumWikipedia wikipedia = getWikipedia();
     if (wikipedia == null) {
       return;
     }
-    if ((wikipedia.getDisambiguationList() == null) ||
-        (wikipedia.getDisambiguationList().isEmpty())) {
+    if ((wikipedia.getCurrentDisambiguationList() == null) ||
+        (wikipedia.getCurrentDisambiguationList().isEmpty())) {
       String url = URL_OTHER_WIKIPEDIA;
       displayUrlMessage(
           GT._(
@@ -1149,9 +1163,38 @@ public class MainWindow
     }
     new PageListWorker(
         wikipedia, this,
-        wikipedia.getDisambiguationList(),
+        wikipedia.getCurrentDisambiguationList(),
         PageListWorker.Mode.INTERNAL_LINKS, false,
         GT._("Current disambiguation list")).start();
+  }
+
+  /**
+   * Action called when "Pages with most disambiguation links" is pressed.
+   */
+  private void actionMostDabLinks() {
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia == null) {
+      return;
+    }
+    if ((wikipedia.getMostDisambiguationLinks() == null) ||
+        (wikipedia.getMostDisambiguationLinks().isEmpty())) {
+      String url = URL_OTHER_WIKIPEDIA;
+      displayUrlMessage(
+          GT._(
+              "There's no known list of pages containing many disambiguation links for this Wikipedia.\n" +
+              "You can learn how to configure WikiCleaner at the following URL:"),
+          url);
+      if (Utilities.isDesktopSupported()) {
+        Utilities.browseURL(url);
+      }
+      return;
+    }
+    new PageListWorker(
+        wikipedia, this,
+        wikipedia.getMostDisambiguationLinks(),
+        PageListWorker.Mode.CATEGORY_MEMBERS_ARTICLES,
+        false,
+        GT._("Pages with many disambiguation links")).start();
   }
 
   /**

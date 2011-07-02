@@ -536,6 +536,51 @@ public class Page implements Comparable<Page> {
 
   /**
    * @param namespaces List of namespaces.
+   * @return Article page.
+   */
+  public Page getArticlePage(List<Namespace> namespaces) {
+    if (isArticle()) {
+      return this;
+    }
+    String articlePageName = getArticlePageName(namespaces);
+    if (articlePageName == null) {
+      return null;
+    }
+    Page articlePage = DataManager.getPage(getWikipedia(), articlePageName, null, null);
+    if (articlePage != null) {
+      articlePage.setEditToken(getEditToken());
+    }
+    return articlePage;
+  }
+
+  /**
+   * @param namespaces List of namespaces.
+   * @return Article page title.
+   */
+  public String getArticlePageName(List<Namespace> namespaces) {
+    if (isArticle()) {
+      return title;
+    }
+    if ((namespace == null) || (namespaces == null)) {
+      return null;
+    }
+    if (Namespace.MAIN_TALK == namespace.intValue()) {
+      int colonIndex = title.indexOf(':');
+      if ((colonIndex >= 0) && (colonIndex + 1 < title.length())) {
+        return title.substring(colonIndex + 1);
+      }
+      return title;
+    }
+    Namespace n = Namespace.getNamespace(namespace.intValue() - 1, namespaces);
+    int firstColon = title.indexOf(':');
+    if ((firstColon >= 0) && (n != null)) {
+      return n.getTitle() + ":" + title.substring(firstColon + 1);
+    }
+    return null;
+  }
+
+  /**
+   * @param namespaces List of namespaces.
    * @return Talk page.
    */
   public Page getTalkPage(List<Namespace> namespaces) {

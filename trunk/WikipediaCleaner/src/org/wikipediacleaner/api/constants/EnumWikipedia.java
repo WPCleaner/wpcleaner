@@ -248,7 +248,8 @@ public enum EnumWikipedia {
   private String[] templatesForNeedingHelp;
   private String[] templatesForHelpRequested;
   private String[] templatesForLinkingText;
-  private List<String> disambiguationList;
+  private List<String> currentDisambiguationList;
+  private List<String> mostDisambiguationLinks;
   private Set<String> disambiguationPages;
   private List<Page> disambiguationTemplates;
   private String checkWikiProject;
@@ -312,7 +313,8 @@ public enum EnumWikipedia {
     this.templatesForNeedingHelp = null;
     this.templatesForHelpRequested = null;
     this.templatesForLinkingText = null;
-    this.disambiguationList = null;
+    this.currentDisambiguationList = null;
+    this.mostDisambiguationLinks = null;
     this.checkWikiProject = null;
     this.checkWikiComment = null;
     this.checkWikiTranslation = null;
@@ -765,10 +767,17 @@ public enum EnumWikipedia {
   }
 
   /**
-   * @return Pages containing the list of disambiguation pages.
+   * @return Pages containing the current list of disambiguation pages.
    */
-  public List<String> getDisambiguationList() {
-    return disambiguationList;
+  public List<String> getCurrentDisambiguationList() {
+    return currentDisambiguationList;
+  }
+
+  /**
+   * @return Pages containing the list of pages with many disambiguation links.
+   */
+  public List<String> getMostDisambiguationLinks() {
+    return mostDisambiguationLinks;
   }
 
   /**
@@ -1129,10 +1138,16 @@ public enum EnumWikipedia {
         disambiguationWarningAfterTemplates = convertPropertyToStringList(tmp);
       }
 
-      // Disambiguation list
+      // Current disambiguation list
       tmp = configuration.getProperty("dab_list", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
-        disambiguationList = convertPropertyToStringList(tmp);
+        currentDisambiguationList = convertPropertyToStringList(tmp);
+      }
+
+      // Pages with many disambiguation links
+      tmp = configuration.getProperty("most_dab_links", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        mostDisambiguationLinks = convertPropertyToStringList(tmp);
       }
 
       // Templates for normal links to disambiguation pages

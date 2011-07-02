@@ -44,9 +44,28 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class PageListWorker extends BasicWorker {
 
+  /**
+   * The <code>Mode</code> allows to specify how the PageListWorker
+   * will use the list of pages provided to it:
+   * <li>
+   * <ul>ALL_DAB_PAGES: List of disambiguation templates.
+   *     Retrieve list of pages embedding the templates.</ul>
+   * <ul>CATEGORY_MEMBERS: List of categories.
+   *     Retrieve list of articles in the categories.</ul>
+   * <ul>CATEGORY_MEMBERS_ARTICLES: List of categories.
+   *     Retrieve list of articles in the categories.
+   *     If talk pages are found, the related article is used instead.</ul> 
+   * <ul>DIRECT: Direct list</ul>
+   * <ul>EMBEDDED_IN: List of templates.
+   *     Retrieve list of pages embedding the templates.</ul>
+   * <ul>INTERNAL_LINKS: List of pages.
+   *     Retrieve list of internal links in the pages.</ul>
+   * </li> 
+   */
   public static enum Mode {
     ALL_DAB_PAGES,
     CATEGORY_MEMBERS,
+    CATEGORY_MEMBERS_ARTICLES,
     DIRECT,
     EMBEDDED_IN,
     INTERNAL_LINKS,
@@ -143,6 +162,29 @@ public class PageListWorker extends BasicWorker {
           List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0);
           if (tmpPages != null) {
             for (Page tmpPage : tmpPages) {
+              if (!pages.contains(tmpPage)) {
+                pages.add(tmpPage);
+              }
+            }
+          }
+        }
+        break;
+
+        // List article members of a category
+      case CATEGORY_MEMBERS_ARTICLES:
+        for (String pageName : pageNames) {
+          List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0);
+          if (tmpPages != null) {
+            for (Page tmpPage : tmpPages) {
+              if (!tmpPage.isArticle()) {
+                String title = tmpPage.getArticlePageName(getWikipedia().getNamespaces());
+                if ((getWikipedia().getTodoSubpage() != null) &&
+                    (getWikipedia().getTodoSubpage().trim().length() > 0) &&
+                    (title.endsWith("/" + getWikipedia().getTodoSubpage()))) {
+                  title = title.substring(0, title.length() - 1 - getWikipedia().getTodoSubpage().length());
+                }
+                tmpPage = DataManager.getPage(getWikipedia(), title, null, null);
+              }
               if (!pages.contains(tmpPage)) {
                 pages.add(tmpPage);
               }
