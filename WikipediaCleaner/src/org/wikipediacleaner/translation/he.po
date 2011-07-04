@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-02 17:50+0200\n"
+"POT-Creation-Date: 2011-07-04 21:23+0200\n"
 "PO-Revision-Date: 2010-06-23 15:43+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -1164,6 +1164,7 @@ msgid "Disambiguation"
 msgstr "פירושון"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:379
+#: org/wikipediacleaner/gui/swing/PagePanel.java:336
 msgid "First occurrence (Alt + &F)"
 msgstr ""
 
@@ -1178,6 +1179,7 @@ msgid "Full analysis"
 msgstr "ניתוח מלא"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:434
+#: org/wikipediacleaner/gui/swing/PagePanel.java:381
 msgid "Last occurrence (Alt + &L)"
 msgstr ""
 
@@ -1186,6 +1188,7 @@ msgid "&Last occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:455
+#: org/wikipediacleaner/gui/swing/PagePanel.java:366
 msgid "Next occurrence (Alt + &N)"
 msgstr ""
 
@@ -1194,6 +1197,7 @@ msgid "&Next occurrence"
 msgstr "המו&פע הבא"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:476
+#: org/wikipediacleaner/gui/swing/PagePanel.java:351
 msgid "Previous occurrence (Alt + &P)"
 msgstr ""
 
@@ -1227,11 +1231,13 @@ msgstr "&שלח"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:581
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:583
+#: org/wikipediacleaner/gui/swing/PagePanel.java:450
 msgid "Undo"
 msgstr "בטל"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:589
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:591
+#: org/wikipediacleaner/gui/swing/PagePanel.java:463
 msgid "Redo"
 msgstr "בצע שוב"
 
@@ -1247,6 +1253,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:667
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:230
+#: org/wikipediacleaner/gui/swing/PagePanel.java:483
 msgid "External Viewer (Alt + &E)"
 msgstr ""
 
@@ -1256,6 +1263,7 @@ msgstr "תוכנת &צפייה חיצונית"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:701
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:236
+#: org/wikipediacleaner/gui/swing/PagePanel.java:498
 msgid "History (Alt + &H)"
 msgstr ""
 
