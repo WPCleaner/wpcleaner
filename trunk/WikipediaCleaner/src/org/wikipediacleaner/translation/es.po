@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-02 17:50+0200\n"
+"POT-Creation-Date: 2011-07-04 21:23+0200\n"
 "PO-Revision-Date: 2011-06-10 00:39+0000\n"
 "Last-Translator: Fitoschido <fitoschido@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -1196,6 +1196,7 @@ msgid "Disambiguation"
 msgstr "Desambiguación:"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:379
+#: org/wikipediacleaner/gui/swing/PagePanel.java:336
 msgid "First occurrence (Alt + &F)"
 msgstr "Primera ocurrencia (Alt + &F)"
 
@@ -1210,6 +1211,7 @@ msgid "Full analysis"
 msgstr "Análisis completo"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:434
+#: org/wikipediacleaner/gui/swing/PagePanel.java:381
 msgid "Last occurrence (Alt + &L)"
 msgstr "Última ocurrencia (Alt + &L)"
 
@@ -1218,6 +1220,7 @@ msgid "&Last occurrence"
 msgstr "Última coincidencia"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:455
+#: org/wikipediacleaner/gui/swing/PagePanel.java:366
 msgid "Next occurrence (Alt + &N)"
 msgstr "Siguiente ocurrencia (Alt + &N)"
 
@@ -1226,6 +1229,7 @@ msgid "&Next occurrence"
 msgstr "&Siguiente ocurrencia"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:476
+#: org/wikipediacleaner/gui/swing/PagePanel.java:351
 msgid "Previous occurrence (Alt + &P)"
 msgstr "Ocurrencia anterior (Alt + &P)"
 
@@ -1259,11 +1263,13 @@ msgstr "&Enviar"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:581
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:583
+#: org/wikipediacleaner/gui/swing/PagePanel.java:450
 msgid "Undo"
 msgstr "Deshacer"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:589
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:591
+#: org/wikipediacleaner/gui/swing/PagePanel.java:463
 msgid "Redo"
 msgstr "Rehacer"
 
@@ -1278,6 +1284,7 @@ msgstr "Validar (Alt + &V)"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:667
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:230
+#: org/wikipediacleaner/gui/swing/PagePanel.java:483
 msgid "External Viewer (Alt + &E)"
 msgstr "Visor externo (Alt + &E)"
 
@@ -1287,6 +1294,7 @@ msgstr "&Visor Externo"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:701
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:236
+#: org/wikipediacleaner/gui/swing/PagePanel.java:498
 msgid "History (Alt + &H)"
 msgstr "Historial (Alt + &H)"
 
