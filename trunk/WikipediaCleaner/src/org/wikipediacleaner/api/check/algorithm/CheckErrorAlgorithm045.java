@@ -55,7 +55,7 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
     HashMap<String, PageElementInterwikiLink> links = new HashMap<String, PageElementInterwikiLink>();
     ArrayList<String> linksTwice = new ArrayList<String>();
     for (PageElementInterwikiLink link : pageAnalysis.getInterwikiLinks()) {
-      String index = link.getFullLink();
+      String index = link.getInterwiki() + ":" + link.getLink();
       PageElementInterwikiLink existingLink = links.get(index);
       if (existingLink == null) {
         links.put(index, link);
