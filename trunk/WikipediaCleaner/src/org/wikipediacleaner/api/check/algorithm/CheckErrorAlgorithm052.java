@@ -21,8 +21,9 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementCategory;
+import org.wikipediacleaner.api.data.PageElementTitle;
 
 
 /**
@@ -50,51 +51,36 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
     }
 
     // Searching for last headline
-    String contents = pageAnalysis.getContents();
-    int startIndex = contents.length();
-    int lastHeadline = -1;
-    while ((startIndex >= 0) && (lastHeadline < 0)) {
-      int lineIndex = contents.lastIndexOf("=", startIndex);
-      if (lineIndex > 0) {
-        if ((lineIndex == 0) || (contents.charAt(lineIndex - 1) == '\n')) {
-          lastHeadline = lineIndex;
-        }
-      }
-      startIndex = lineIndex - 1;
+    Collection<PageElementTitle> titles = pageAnalysis.getTitles();
+    if ((titles == null) || (titles.isEmpty())) {
+      return false;
     }
-    Namespace categoryNamespace = Namespace.getNamespace(
-        Namespace.CATEGORY, pageAnalysis.getWikipedia().getNamespaces());
-    if ((lastHeadline < 0) || (categoryNamespace == null)) {
+    PageElementTitle title = null;
+    for (PageElementTitle tmpTitle : titles) {
+      if ((title == null) || (title.getBeginIndex() < tmpTitle.getBeginIndex())) {
+        title = tmpTitle;
+      }
+    }
+    if (title == null) {
       return false;
     }
 
-    startIndex = 0;
+    // Checking every category
     boolean result = false;
-    while (startIndex < lastHeadline) {
-
-      // Searching for next [[
-      int beginIndex = contents.indexOf("[[", startIndex);
-      if ((beginIndex < 0) || (beginIndex > lastHeadline)) {
-        startIndex = contents.length();
-      } else {
-        int colonIndex = contents.indexOf(":", beginIndex);
-        if (colonIndex >= 0) {
-          int endIndex = contents.indexOf("]]", beginIndex);
-          if (endIndex > colonIndex) {
-            if (categoryNamespace.isPossibleName(contents.substring(beginIndex + 2, colonIndex).trim())) {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), beginIndex, endIndex + 2);
-              errors.add(errorResult);
-            }
-          }
+    for (PageElementCategory category : pageAnalysis.getCategories()) {
+      if (category.getBeginIndex() < title.getBeginIndex()) {
+        if (errors == null) {
+          return true;
         }
-        startIndex = beginIndex + 2;
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            category.getBeginIndex(),
+            category.getEndIndex());
+        errors.add(errorResult);
       }
     }
+
     return result;
   }
 }

@@ -24,6 +24,7 @@ import java.util.HashMap;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTitle;
 
 
 /**
@@ -49,73 +50,43 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
+
     boolean result = false;
-    int startIndex = 0;
     int previousTitleLevel = 0;
     HashMap<Integer, ArrayList<String>> titles = new HashMap<Integer, ArrayList<String>>();
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      int titleIndex = contents.indexOf("=", startIndex);
-      if (titleIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        int endLineIndex = contents.indexOf("\n", titleIndex);
-        if (endLineIndex < 0) {
-          endLineIndex = contents.length();
-        }
-        if ((titleIndex == 0) || (contents.charAt(titleIndex - 1) == '\n')) {
-          // Title found
-          int titleLevel = 0;
-          int currentBegin = titleIndex;
-          // Count number of '=' at the beginning to get title level
-          while ((currentBegin < contents.length()) && (contents.charAt(currentBegin) == '=')) {
-            currentBegin++;
-            titleLevel++;
-          }
-          // Possible whitespaces
-          while ((currentBegin < contents.length()) && (contents.charAt(currentBegin) == ' ')) {
-            currentBegin++;
-          }
-          // Remove '=' at the end of the title
-          int currentEnd = endLineIndex - 1;
-          while ((currentEnd > currentBegin) && (contents.charAt(currentEnd) == '=')) {
-            currentEnd--;
-          }
-          // Possible whitespaces
-          while ((currentEnd > currentBegin) && (contents.charAt(currentEnd) == ' ')) {
-            currentEnd--;
-          }
+    for (PageElementTitle title : pageAnalysis.getTitles()) {
 
-          // Check title level
-          if (titleLevel < previousTitleLevel) {
-            for (int i = previousTitleLevel; i > titleLevel; i--) {
-              titles.remove(Integer.valueOf(i));
-            }
-          } else {
-            ArrayList<String> knownTitles = titles.get(Integer.valueOf(titleLevel));
-            String title = contents.substring(currentBegin, currentEnd + 1);
-            if (knownTitles == null) {
-              knownTitles = new ArrayList<String>();
-              knownTitles.add(title);
-              titles.put(Integer.valueOf(titleLevel), knownTitles);
-            } else if (!knownTitles.contains(title)) {
-              knownTitles.add(title);
-            } else {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              errors.add(createCheckErrorResult(
-                  pageAnalysis.getPage(), titleIndex, endLineIndex));
-            }
-          }
-          previousTitleLevel = titleLevel;
-          startIndex = endLineIndex + 1;
-        } else {
-          startIndex = endLineIndex + 1;
+      // Clean up titles with a lower level
+      int titleLevel = title.getFirstLevel();
+      if (titleLevel < previousTitleLevel) {
+        for (int i = previousTitleLevel; i > titleLevel; i--) {
+          titles.remove(Integer.valueOf(i));
         }
       }
+
+      // Analyze current level
+      ArrayList<String> knownTitles = titles.get(Integer.valueOf(titleLevel));
+      String titleValue = title.getTitle();
+      if (knownTitles == null) {
+        knownTitles = new ArrayList<String>();
+        knownTitles.add(titleValue);
+        titles.put(Integer.valueOf(titleLevel), knownTitles);
+      } else if (!knownTitles.contains(titleValue)) {
+        knownTitles.add(titleValue);
+      } else {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        errors.add(createCheckErrorResult(
+            pageAnalysis.getPage(),
+            title.getBeginIndex(),
+            title.getEndIndex()));
+      }
+
+      previousTitleLevel = titleLevel;
     }
+
     return result;
   }
 }

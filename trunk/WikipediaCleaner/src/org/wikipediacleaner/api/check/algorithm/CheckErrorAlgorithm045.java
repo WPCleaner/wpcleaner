@@ -18,12 +18,13 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 
 
 /**
@@ -50,93 +51,37 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    int startIndex = 0;
     boolean result = false;
-    HashMap<String, InterwikiElement> interwikis = new HashMap<String, InterwikiElement>();
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      if (contents.startsWith("[[", startIndex)) {
-        int beginIndex = startIndex;
-        int currentIndex = beginIndex + 2;
-
-        // Namespace
-        int linkIndex = currentIndex;
-        while ((currentIndex < contents.length()) &&
-               (contents.charAt(currentIndex) != ':') &&
-               (contents.charAt(currentIndex) != '|') &&
-               (contents.charAt(currentIndex) != ']') &&
-               (contents.charAt(currentIndex) != '[')) {
-          currentIndex++;
-        }
-
-        // Retrieve namespace
-        if ((currentIndex < contents.length()) &&
-            (contents.charAt(currentIndex) == ':')) {
-
-          // Link itself
-          String namespace = contents.substring(linkIndex, currentIndex);
-          currentIndex++;
-          for (Language lg : pageAnalysis.getWikipedia().getLanguages()) {
-            if (namespace.equals(lg.getCode())) {
-              while ((currentIndex < contents.length()) &&
-                     (contents.charAt(currentIndex) != ']')) {
-                currentIndex++;
-              }
-
-              if ((currentIndex < contents.length()) &&
-                  (contents.startsWith("]]", currentIndex))) {
-                currentIndex += 2;
-                InterwikiElement interwikiElement = interwikis.get(namespace);
-                if (interwikiElement == null) {
-                  interwikiElement = new InterwikiElement(namespace, beginIndex, currentIndex);
-                  interwikis.put(namespace, interwikiElement);
-                } else {
-                  if (errors == null) {
-                    return true;
-                  }
-                  result = true;
-                  if (interwikiElement.errorResult == null) {
-                    interwikiElement.errorResult = createCheckErrorResult(
-                        pageAnalysis.getPage(),
-                        interwikiElement.begin, interwikiElement.end,
-                        CheckErrorResult.ErrorLevel.CORRECT);
-                    errors.add(interwikiElement.errorResult);
-                  }
-                  CheckErrorResult errorResult = createCheckErrorResult(
-                      pageAnalysis.getPage(), beginIndex, currentIndex);
-                  errorResult.addReplacement("");
-                  errors.add(errorResult);
-                }
-              }
-            }
-          }
-        }
-        startIndex = currentIndex;
+    HashMap<String, PageElementInterwikiLink> links = new HashMap<String, PageElementInterwikiLink>();
+    ArrayList<String> linksTwice = new ArrayList<String>();
+    for (PageElementInterwikiLink link : pageAnalysis.getInterwikiLinks()) {
+      String index = link.getFullLink();
+      PageElementInterwikiLink existingLink = links.get(index);
+      if (existingLink == null) {
+        links.put(index, link);
       } else {
-        startIndex++;
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        if (!linksTwice.contains(index)) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              existingLink.getBeginIndex(),
+              existingLink.getEndIndex(),
+              CheckErrorResult.ErrorLevel.CORRECT);
+          errors.add(errorResult);
+          linksTwice.add(index);
+        }
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            link.getBeginIndex(),
+            link.getEndIndex());
+        errorResult.addReplacement("");
+        errors.add(errorResult);
       }
     }
+
     return result;
-  }
-
-  /**
-   * Class to hold information about an interwiki element.
-   */
-  static class InterwikiElement {
-    String name;
-    int begin;
-    int end;
-    CheckErrorResult errorResult;
-
-    /**
-     * @param name Interwiki name.
-     * @param begin Begin position.
-     * @param end End position.
-     */
-    public InterwikiElement(String name, int begin, int end) {
-      this.name = name;
-      this.begin = begin;
-      this.end = end;
-    }
   }
 }
