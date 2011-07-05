@@ -30,8 +30,9 @@ import javax.swing.text.TextAction;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TemplateParameter;
 import org.wikipediacleaner.api.data.TemplateReplacement;
-import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
 import org.wikipediacleaner.gui.swing.component.MenuCreator;
+import org.wikipediacleaner.gui.swing.component.MediaWikiPaneFormatter;
+
 
 /**
  * An action listener for replacing templates.
@@ -86,7 +87,7 @@ public class ReplaceTemplateAction extends TextAction {
     }
     String localOldTitle = oldTitle;
     if ((localElement != null) && (localOldTitle == null)) {
-      Object attrPage = localElement.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_PAGE);
+      Object attrPage = localElement.getAttributes().getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_PAGE);
       if (attrPage instanceof Page) {
         localOldTitle = ((Page) attrPage).getTitle();
       }

@@ -43,7 +43,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.UUID;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -77,8 +76,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyledDocument;
 
 import org.lobobrowser.html.HtmlRendererContext;
 import org.lobobrowser.html.UserAgentContext;
@@ -88,7 +85,6 @@ import org.lobobrowser.html.test.SimpleUserAgentContext;
 import org.w3c.dom.Document;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
-import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -101,9 +97,11 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.JCloseableTabbedPane;
-import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
 import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
+import org.wikipediacleaner.gui.swing.component.MediaWikiPaneBasicFormatter;
+import org.wikipediacleaner.gui.swing.component.MediaWikiPaneCheckWikiFormatter;
+import org.wikipediacleaner.gui.swing.component.MediaWikiPaneFormatter;
 import org.wikipediacleaner.gui.swing.worker.CheckWikiProjectWorker;
 import org.wikipediacleaner.gui.swing.worker.RetrieveContentWorker;
 import org.wikipediacleaner.gui.swing.worker.SendWorker;
@@ -1109,41 +1107,27 @@ public class CheckWikiProjectWindow extends OnePageWindow {
      */
     void actionSelectError() {
       CheckErrorPage errorSelected = getSelectedError();
-      boolean modified = textPage.isModified();
-      String contents = textPage.getText();
-      PageAnalysis pageAnalysis = new PageAnalysis(errorSelected.getPage(), contents);
-      CheckErrorPage errorPage = CheckError.analyzeError(
-          errorSelected.getAlgorithm(), pageAnalysis);
-      textPage.resetAttributes();
-      StyledDocument document = textPage.getStyledDocument();
-      if (document != null) {
-        if (errorPage.getResults() != null) {
-          for (CheckErrorResult errorFound : errorPage.getResults()) {
-            String styleName = MediaWikiConstants.STYLE_CHECK_WIKI_ERROR;
-            if (errorFound.getErrorLevel() == CheckErrorResult.ErrorLevel.CORRECT) {
-              styleName = MediaWikiConstants.STYLE_CHECK_WIKI_OK;
-            } else if (errorFound.getErrorLevel() == CheckErrorResult.ErrorLevel.WARNING) {
-              styleName = MediaWikiConstants.STYLE_CHECK_WIKI_WARNING;
-            }
-            document.setCharacterAttributes(
-                errorFound.getStartPosition(),
-                errorFound.getLength(),
-                textPage.getStyle(styleName),
-                true);
-            SimpleAttributeSet attributes = new SimpleAttributeSet();
-            attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_INFO, errorFound);
-            attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_UUID, UUID.randomUUID());
-            document.setCharacterAttributes(
-                errorFound.getStartPosition(),
-                errorFound.getLength(),
-                attributes, false);
+      if (errorSelected == null) {
+        textPage.setFormatter(new MediaWikiPaneBasicFormatter());
+      } else {
+        CheckErrorAlgorithm algorithm = errorSelected.getAlgorithm();
+        MediaWikiPaneFormatter formatter = textPage.getFormatter();
+        if (formatter instanceof MediaWikiPaneCheckWikiFormatter) {
+          MediaWikiPaneCheckWikiFormatter cwFormatter =
+            (MediaWikiPaneCheckWikiFormatter) formatter;
+          if (!cwFormatter.isSameAlgorithm(algorithm)) {
+            formatter = new MediaWikiPaneCheckWikiFormatter(algorithm);
+            textPage.setFormatter(formatter);
+          } else {
+            textPage.resetAttributes();
           }
+        } else {
+          formatter = new MediaWikiPaneCheckWikiFormatter(algorithm);
+          textPage.setFormatter(formatter);
         }
       }
       listErrors.repaint();
-      textPage.setModified(modified);
       updateComponentState();
-      actionFirstOccurence();
       displayErrorDescription();
     }
 

@@ -1,6 +1,6 @@
 /*
  *  WikipediaCleaner: A tool to help on Wikipedia maintenance tasks.
- *  Copyright (C) 2007  Nicolas Vervelle
+ *  Copyright (C) 2011  Nicolas Vervelle
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,10 +18,26 @@
 
 package org.wikipediacleaner.gui.swing.component;
 
+import org.wikipediacleaner.api.data.PageAnalysis;
+
 
 /**
- * Constants for MediaWiki components. 
+ * A basic formatter for MediaWikiPane.
  */
-public class MediaWikiConstants {
-  //
+public class MediaWikiPaneBasicFormatter extends MediaWikiPaneFormatter {
+
+  /**
+   * Format text in a MediaWikiPane.
+   * 
+   * @param pane MediaWikiPane to be formatted.
+   * @param pageAnalysis Page analysis.
+   */
+  @Override
+  public void format(MediaWikiPane pane, PageAnalysis pageAnalysis) {
+    // Clean formatting
+    cleanFormat(pane);
+
+    // Format comments
+    formatComments(pane, pageAnalysis);
+  }
 }

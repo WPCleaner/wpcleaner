@@ -32,7 +32,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.Map.Entry;
 
 import javax.swing.Box;
@@ -57,12 +56,9 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyledDocument;
 
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
-import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -80,10 +76,12 @@ import org.wikipediacleaner.gui.swing.component.AbstractPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.AnalysisPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListPopupListener;
-import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
+import org.wikipediacleaner.gui.swing.component.MediaWikiPaneCheckWikiFormatter;
+import org.wikipediacleaner.gui.swing.component.MediaWikiPaneDisambiguationFormatter;
 import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
+import org.wikipediacleaner.gui.swing.component.MediaWikiPaneFormatter;
 import org.wikipediacleaner.gui.swing.worker.FullAnalysisWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -591,48 +589,6 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     return panel;
   }
 
-
-  /**
-   * Action called when an error is selected in the list. 
-   */
-  void actionSelectError(CheckErrorPage errorSelected) {
-    boolean modified = getTextContents().isModified();
-    String contents = getTextContents().getText();
-    PageAnalysis pageAnalysis = new PageAnalysis(errorSelected.getPage(), contents);
-    CheckErrorPage errorPage = CheckError.analyzeError(
-        errorSelected.getAlgorithm(), pageAnalysis);
-    getTextContents().resetAttributes();
-    StyledDocument document = getTextContents().getStyledDocument();
-    if (document != null) {
-      if (errorPage.getResults() != null) {
-        for (CheckErrorResult errorFound : errorPage.getResults()) {
-          String styleName = MediaWikiConstants.STYLE_CHECK_WIKI_ERROR;
-          if (errorFound.getErrorLevel() == CheckErrorResult.ErrorLevel.CORRECT) {
-            styleName = MediaWikiConstants.STYLE_CHECK_WIKI_OK;
-          } else if (errorFound.getErrorLevel() == CheckErrorResult.ErrorLevel.WARNING) {
-            styleName = MediaWikiConstants.STYLE_CHECK_WIKI_WARNING;
-          }
-          document.setCharacterAttributes(
-              errorFound.getStartPosition(),
-              errorFound.getLength(),
-              getTextContents().getStyle(styleName),
-              true);
-          SimpleAttributeSet attributes = new SimpleAttributeSet();
-          attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_INFO, errorFound);
-          attributes.addAttribute(MediaWikiConstants.ATTRIBUTE_UUID, UUID.randomUUID());
-          document.setCharacterAttributes(
-              errorFound.getStartPosition(),
-              errorFound.getLength(),
-              attributes, false);
-        }
-      }
-    }
-    listErrors.repaint();
-    getTextContents().setModified(modified);
-    updateComponentState();
-    actionFirstOccurence();
-  }
-
   /**
    * A ListSelectionListener implementation. 
    */
@@ -653,25 +609,41 @@ public class OnePageAnalysisWindow extends OnePageWindow {
                 pages.add((Page) selection[i]);
               }
             }
-            List<Page> oldPages = getTextContents().getInternalLinks();
-            if (!pages.equals(oldPages)) {
-              getTextContents().setInternalLinks(pages);
+            MediaWikiPaneFormatter formatter = getTextContents().getFormatter();
+            if (formatter instanceof MediaWikiPaneDisambiguationFormatter) {
+              MediaWikiPaneDisambiguationFormatter dabFormatter =
+                (MediaWikiPaneDisambiguationFormatter) formatter;
+              if (!dabFormatter.isSameList(pages)) {
+                formatter = new MediaWikiPaneDisambiguationFormatter(getWikipedia(), pages);
+                getTextContents().setFormatter(formatter);
+              }
+            } else {
+              formatter = new MediaWikiPaneDisambiguationFormatter(getWikipedia(), pages);
+              getTextContents().setFormatter(formatter);
             }
-          } else {
-            getTextContents().resetAttributes();
           }
         } else if (list == listErrors) {
           // List of errors
           Object selection = list.getSelectedValue();
           if ((selection != null) && (selection instanceof CheckErrorPage)) {
             listLinks.clearSelection();
-            getTextContents().setInternalLinks(null);
             CheckErrorPage errorSelected = (CheckErrorPage) selection;
-            actionSelectError(errorSelected);
-          } else {
-            getTextContents().resetAttributes();
+            MediaWikiPaneFormatter formatter = getTextContents().getFormatter();
+            if (formatter instanceof MediaWikiPaneCheckWikiFormatter) {
+              MediaWikiPaneCheckWikiFormatter cwFormatter =
+                (MediaWikiPaneCheckWikiFormatter) formatter;
+              if (!cwFormatter.isSameAlgorithm(errorSelected.getAlgorithm())) {
+                formatter = new MediaWikiPaneCheckWikiFormatter(errorSelected.getAlgorithm());
+                getTextContents().setFormatter(formatter);
+              }
+            } else {
+              formatter = new MediaWikiPaneCheckWikiFormatter(errorSelected.getAlgorithm());
+              getTextContents().setFormatter(formatter);
+            }
           }
         }
+        list.repaint();
+        updateComponentState();
       }
     }
   }
@@ -1139,7 +1111,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
             listErrors.setSelectedIndex(0);
           }
         } else {
-          actionSelectError(errorPage);
+          getTextContents().resetAttributes();
         }
       } else {
         Object[] values = listLinks.getSelectedValues();
