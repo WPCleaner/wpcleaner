@@ -86,7 +86,7 @@ public class PageElementInterwikiLink extends PageElement {
     boolean interwikiFound = false;
     for (Interwiki interwiki : interwikis) {
       if ((interwiki != null) &&
-          ((interwiki.getLanguage() == null) || (interwiki.getLanguage().length() != 0)) &&
+          ((interwiki.getLanguage() == null) || (interwiki.getLanguage().length() == 0)) &&
           (interwikiText.equals(interwiki.getPrefix()))) {
         interwikiFound = true;
       }

@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementInterwikiLink;
+import org.wikipediacleaner.api.data.PageElementLanguageLink;
 
 
 /**
@@ -52,11 +52,11 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
     }
 
     boolean result = false;
-    HashMap<String, PageElementInterwikiLink> links = new HashMap<String, PageElementInterwikiLink>();
+    HashMap<String, PageElementLanguageLink> links = new HashMap<String, PageElementLanguageLink>();
     ArrayList<String> linksTwice = new ArrayList<String>();
-    for (PageElementInterwikiLink link : pageAnalysis.getInterwikiLinks()) {
-      String index = link.getInterwiki() + ":" + link.getLink();
-      PageElementInterwikiLink existingLink = links.get(index);
+    for (PageElementLanguageLink link : pageAnalysis.getLanguageLinks()) {
+      String index = link.getLanguage() + ":" + link.getLink();
+      PageElementLanguageLink existingLink = links.get(index);
       if (existingLink == null) {
         links.put(index, link);
       } else {
