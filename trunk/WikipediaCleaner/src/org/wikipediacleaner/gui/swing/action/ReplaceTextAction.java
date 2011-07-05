@@ -26,7 +26,7 @@ import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.TextAction;
 
-import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
+import org.wikipediacleaner.gui.swing.component.MediaWikiPaneFormatter;
 
 
 /**
@@ -84,7 +84,7 @@ public class ReplaceTextAction extends TextAction {
     // Initialize
     int startOffset = localElement.getStartOffset();
     int endOffset = localElement.getEndOffset();
-    Object uuid = localElement.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_UUID);
+    Object uuid = localElement.getAttributes().getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_UUID);
     if (uuid != null) {
       boolean finished;
       do {
@@ -93,7 +93,7 @@ public class ReplaceTextAction extends TextAction {
           Element tmpElement = localTextPane.getStyledDocument().getCharacterElement(startOffset - 1); 
           if ((tmpElement != null) && (tmpElement.getAttributes() != null)) {
             if ((localElement != tmpElement) &&
-                (uuid.equals(tmpElement.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_UUID)))) {
+                (uuid.equals(tmpElement.getAttributes().getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_UUID)))) {
               startOffset = tmpElement.getStartOffset();
               finished = false;
             }
@@ -106,7 +106,7 @@ public class ReplaceTextAction extends TextAction {
           Element tmpElement = localTextPane.getStyledDocument().getCharacterElement(endOffset);
           if ((tmpElement != null) && (tmpElement.getAttributes() != null)) {
             if ((localElement != tmpElement) &&
-                (uuid.equals(tmpElement.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_UUID)))) {
+                (uuid.equals(tmpElement.getAttributes().getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_UUID)))) {
               endOffset = tmpElement.getEndOffset();
               finished = false;
             }

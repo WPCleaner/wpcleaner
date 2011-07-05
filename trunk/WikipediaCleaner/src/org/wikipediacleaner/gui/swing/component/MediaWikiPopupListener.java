@@ -141,11 +141,11 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
 
     // Retrieve main attributes
     AttributeSet attributes = element.getAttributes();
-    Object attrInfo = element.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_INFO);
-    Object attrPage = attributes.getAttribute(MediaWikiConstants.ATTRIBUTE_PAGE);
-    Object attrPageElement = attributes.getAttribute(MediaWikiConstants.ATTRIBUTE_PAGE_ELEMENT);
-    Object attrTemplateMatcher = attributes.getAttribute(MediaWikiConstants.ATTRIBUTE_TEMPLATE_MATCHER);
-    Object attrText = attributes.getAttribute(MediaWikiConstants.ATTRIBUTE_TEXT);
+    Object attrInfo = element.getAttributes().getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_INFO);
+    Object attrPage = attributes.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_PAGE);
+    Object attrPageElement = attributes.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_PAGE_ELEMENT);
+    Object attrTemplateMatcher = attributes.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_TEMPLATE_MATCHER);
+    Object attrText = attributes.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_TEXT);
 
     Page page = (attrPage instanceof Page) ? (Page) attrPage : null;
     TemplateMatcher matcher = (attrTemplateMatcher instanceof TemplateMatcher) ?

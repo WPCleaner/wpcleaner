@@ -34,7 +34,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MediaWikiConstants;
+import org.wikipediacleaner.gui.swing.component.MediaWikiPaneFormatter;
 
 
 /**
@@ -203,7 +203,7 @@ public class AddTextAction extends TextAction {
     // Initialize
     int startOffset = localElement.getStartOffset();
     int endOffset = localElement.getEndOffset();
-    Object uuid = localElement.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_UUID);
+    Object uuid = localElement.getAttributes().getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_UUID);
     if (uuid != null) {
       boolean finished;
       do {
@@ -211,7 +211,7 @@ public class AddTextAction extends TextAction {
         Element tmpElement = localTextPane.getStyledDocument().getCharacterElement(startOffset - 1); 
         if ((tmpElement != null) && (tmpElement.getAttributes() != null)) {
           if ((localElement != tmpElement) &&
-              (uuid.equals(tmpElement.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_UUID)))) {
+              (uuid.equals(tmpElement.getAttributes().getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_UUID)))) {
             startOffset = tmpElement.getStartOffset();
             finished = false;
           }
@@ -222,7 +222,7 @@ public class AddTextAction extends TextAction {
         Element tmpElement = localTextPane.getStyledDocument().getCharacterElement(endOffset);
         if ((tmpElement != null) && (tmpElement.getAttributes() != null)) {
           if ((localElement != tmpElement) &&
-              (uuid.equals(tmpElement.getAttributes().getAttribute(MediaWikiConstants.ATTRIBUTE_UUID)))) {
+              (uuid.equals(tmpElement.getAttributes().getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_UUID)))) {
             endOffset = tmpElement.getEndOffset();
             finished = false;
           }
