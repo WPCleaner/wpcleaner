@@ -74,7 +74,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
+import org.wikipediacleaner.gui.swing.component.MWHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.worker.PageListWorker;
 import org.wikipediacleaner.gui.swing.worker.RandomPageWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
@@ -296,7 +296,7 @@ public class MainWindow
         BorderFactory.createEtchedBorder(), GT._("Message")));
     HtmlPanel textMessage = new HtmlPanel();
     UserAgentContext ucontextMessage = new SimpleUserAgentContext();
-    HtmlRendererContext rcontextMessage = new MediaWikiHtmlRendererContext(
+    HtmlRendererContext rcontextMessage = new MWHtmlRendererContext(
         textMessage, ucontextMessage);
     textMessage.setPreferredSize(new Dimension(500, 150));
     textMessage.setMinimumSize(new Dimension(100, 100));

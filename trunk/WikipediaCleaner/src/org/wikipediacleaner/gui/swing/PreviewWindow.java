@@ -50,7 +50,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
+import org.wikipediacleaner.gui.swing.component.MWHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.worker.ExpandTemplatesWorker;
 import org.wikipediacleaner.gui.swing.worker.HtmlPreview;
 import org.wikipediacleaner.i18n.GT;
@@ -207,7 +207,7 @@ public class PreviewWindow
     if (showPreview) {
       htmlPreview = new HtmlPanel();
       ucontext = new SimpleUserAgentContext();
-      rcontext = new MediaWikiHtmlRendererContext(htmlPreview, ucontext);
+      rcontext = new MWHtmlRendererContext(htmlPreview, ucontext);
       constraints.fill = GridBagConstraints.BOTH;
       constraints.gridwidth = 2;
       constraints.gridx = 0;

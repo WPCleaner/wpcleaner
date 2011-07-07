@@ -46,7 +46,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 /**
  * A popup menu listener for MediaWikiPane. 
  */
-public class MediaWikiPopupListener implements MouseListener, KeyListener {
+public class MWPopupListener implements MouseListener, KeyListener {
 
   private final EnumWikipedia wikipedia;
   private JCheckBox chkAddNote;
@@ -54,7 +54,7 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
   private JCheckBox chkCreateDabWarning;
   private BasicWindow window;
 
-  public MediaWikiPopupListener(EnumWikipedia wikipedia, BasicWindow window) {
+  public MWPopupListener(EnumWikipedia wikipedia, BasicWindow window) {
     this.wikipedia = wikipedia;
     this.window = window;
   }
@@ -135,17 +135,17 @@ public class MediaWikiPopupListener implements MouseListener, KeyListener {
       return;
     }
     Page originalPage = null;
-    if (textPane instanceof MediaWikiPane) {
-      originalPage = ((MediaWikiPane) textPane).getWikiPage();
+    if (textPane instanceof MWPane) {
+      originalPage = ((MWPane) textPane).getWikiPage();
     }
 
     // Retrieve main attributes
     AttributeSet attributes = element.getAttributes();
-    Object attrInfo = element.getAttributes().getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_INFO);
-    Object attrPage = attributes.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_PAGE);
-    Object attrPageElement = attributes.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_PAGE_ELEMENT);
-    Object attrTemplateMatcher = attributes.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_TEMPLATE_MATCHER);
-    Object attrText = attributes.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_TEXT);
+    Object attrInfo = element.getAttributes().getAttribute(MWPaneFormatter.ATTRIBUTE_INFO);
+    Object attrPage = attributes.getAttribute(MWPaneFormatter.ATTRIBUTE_PAGE);
+    Object attrPageElement = attributes.getAttribute(MWPaneFormatter.ATTRIBUTE_PAGE_ELEMENT);
+    Object attrTemplateMatcher = attributes.getAttribute(MWPaneFormatter.ATTRIBUTE_TEMPLATE_MATCHER);
+    Object attrText = attributes.getAttribute(MWPaneFormatter.ATTRIBUTE_TEXT);
 
     Page page = (attrPage instanceof Page) ? (Page) attrPage : null;
     TemplateMatcher matcher = (attrTemplateMatcher instanceof TemplateMatcher) ?

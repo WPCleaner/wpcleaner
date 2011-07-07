@@ -31,7 +31,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TemplateParameter;
 import org.wikipediacleaner.api.data.TemplateReplacement;
 import org.wikipediacleaner.gui.swing.component.MenuCreator;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPaneFormatter;
+import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 
 
 /**
@@ -87,7 +87,7 @@ public class ReplaceTemplateAction extends TextAction {
     }
     String localOldTitle = oldTitle;
     if ((localElement != null) && (localOldTitle == null)) {
-      Object attrPage = localElement.getAttributes().getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_PAGE);
+      Object attrPage = localElement.getAttributes().getAttribute(MWPaneFormatter.ATTRIBUTE_PAGE);
       if (attrPage instanceof Page) {
         localOldTitle = ((Page) attrPage).getTitle();
       }

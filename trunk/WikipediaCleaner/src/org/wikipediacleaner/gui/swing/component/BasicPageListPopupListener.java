@@ -39,7 +39,7 @@ public class BasicPageListPopupListener extends
    */
   public BasicPageListPopupListener(
       EnumWikipedia wikipedia,
-      MediaWikiPane textPane,
+      MWPane textPane,
       BasicWindow window) {
     super(wikipedia, textPane, window);
   }

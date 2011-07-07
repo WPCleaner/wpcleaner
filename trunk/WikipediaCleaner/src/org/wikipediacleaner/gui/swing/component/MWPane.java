@@ -79,7 +79,7 @@ import org.wikipediacleaner.images.EnumImageSize;
 /**
  * A text component to colorize / edit MediaWiki text.
  */
-public class MediaWikiPane
+public class MWPane
     extends JTextPane {
 
   /* Test for patterns
@@ -104,7 +104,7 @@ public class MediaWikiPane
   private Page page;
   private final BasicWindow window;
 
-  private MediaWikiPaneFormatter formatter;
+  private MWPaneFormatter formatter;
 
   private static final KeyStroke lastLinkKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK);
   private static final KeyStroke lastReplaceKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK);
@@ -113,7 +113,7 @@ public class MediaWikiPane
   boolean isEditable = true;
   boolean isInInternalModification = false;
 
-  private transient MediaWikiPopupListener popupListener;
+  private transient MWPopupListener popupListener;
 
   private int undoLevels;
   private LinkedList<String> undoTexts;
@@ -138,7 +138,7 @@ public class MediaWikiPane
    * @param page Page.
    * @param window Window containing the pane.
    */
-  public MediaWikiPane(EnumWikipedia wikipedia, Page page, BasicWindow window) {
+  public MWPane(EnumWikipedia wikipedia, Page page, BasicWindow window) {
     super();
     this.wikipedia = wikipedia;
     this.page = page;
@@ -146,7 +146,7 @@ public class MediaWikiPane
     this.undoLevels = 0;
     this.undoTexts = new LinkedList<String>();
     this.redoTexts = new LinkedList<String>();
-    this.formatter = new MediaWikiPaneBasicFormatter();
+    this.formatter = new MWPaneBasicFormatter();
     initialize();
   }
 
@@ -348,7 +348,7 @@ public class MediaWikiPane
     boolean oldState = isInInternalModification;
     isInInternalModification = true;
     this.setComponentOrientation(wikipedia.getComponentOrientation());
-    StyledDocument doc = MediaWikiPaneFormatter.createDocument();
+    StyledDocument doc = MWPaneFormatter.createDocument();
     setStyledDocument(doc);
     doc.addDocumentListener(new DocumentListener() {
 
@@ -385,7 +385,7 @@ public class MediaWikiPane
     InputMap inputMapInFocused = getInputMap(WHEN_IN_FOCUSED_WINDOW);
     KeyStroke keyStroke = null;
 
-    popupListener = new MediaWikiPopupListener(wikipedia, window);
+    popupListener = new MWPopupListener(wikipedia, window);
     addKeyListener(popupListener);
     addMouseListener(popupListener);
     keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK);
@@ -565,7 +565,7 @@ public class MediaWikiPane
   /**
    * @param formatter Formatter.
    */
-  public void setFormatter(MediaWikiPaneFormatter formatter) {
+  public void setFormatter(MWPaneFormatter formatter) {
     this.formatter = formatter;
     resetAttributes();
   }
@@ -573,7 +573,7 @@ public class MediaWikiPane
   /**
    * @return Formatter.
    */
-  public MediaWikiPaneFormatter getFormatter() {
+  public MWPaneFormatter getFormatter() {
     return formatter;
   }
 
@@ -593,8 +593,8 @@ public class MediaWikiPane
       }
       MutableAttributeSet attr = (MutableAttributeSet) run.getAttributes();
       if ((attr != null) &&
-          (attr.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_TYPE) != null) &&
-          (attr.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_OCCURRENCE) != Boolean.FALSE)) {
+          (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_TYPE) != null) &&
+          (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_OCCURRENCE) != Boolean.FALSE)) {
         select(run.getStartOffset(), run.getEndOffset());
         return;
       }
@@ -608,8 +608,8 @@ public class MediaWikiPane
       }
       MutableAttributeSet attr = (MutableAttributeSet) run.getAttributes();
       if ((attr != null) &&
-          (attr.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_TYPE) != null) &&
-          (attr.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_OCCURRENCE) != null)) {
+          (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_TYPE) != null) &&
+          (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_OCCURRENCE) != null)) {
         select(run.getStartOffset(), run.getEndOffset());
         return;
       }
@@ -627,8 +627,8 @@ public class MediaWikiPane
       lastStart = run.getStartOffset();
       MutableAttributeSet attr = (MutableAttributeSet) run.getAttributes();
       if ((attr != null) &&
-          (attr.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_TYPE) != null) &&
-          (attr.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_OCCURRENCE) != Boolean.FALSE)) {
+          (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_TYPE) != null) &&
+          (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_OCCURRENCE) != Boolean.FALSE)) {
         select(run.getStartOffset(), run.getEndOffset());
         return;
       }
@@ -652,8 +652,8 @@ public class MediaWikiPane
       }
       MutableAttributeSet attr = (MutableAttributeSet) run.getAttributes();
       if ((attr != null) &&
-          (attr.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_TYPE) != null) &&
-          (attr.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_OCCURRENCE) != Boolean.FALSE)) {
+          (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_TYPE) != null) &&
+          (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_OCCURRENCE) != Boolean.FALSE)) {
         select(run.getStartOffset(), run.getEndOffset());
         return;
       }
@@ -672,8 +672,8 @@ public class MediaWikiPane
       lastStart = run.getStartOffset();
       MutableAttributeSet attr = (MutableAttributeSet) run.getAttributes();
       if ((attr != null) &&
-          (attr.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_TYPE) != null) &&
-          (attr.getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_OCCURRENCE) != Boolean.FALSE)) {
+          (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_TYPE) != null) &&
+          (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_OCCURRENCE) != Boolean.FALSE)) {
         select(run.getStartOffset(), run.getEndOffset());
         return;
       }
@@ -815,7 +815,7 @@ public class MediaWikiPane
    */
   private static class TitleTreeManager implements TreeSelectionListener, ActionListener {
 
-    private final MediaWikiPane textPane;
+    private final MWPane textPane;
     private final JSplitPane splitPane;
     private final JTree treeToc;
     private final DefaultTreeModel modelToc;
@@ -829,7 +829,7 @@ public class MediaWikiPane
      * 
      * @param textPane Text pane.
      */
-    public TitleTreeManager(MediaWikiPane textPane) {
+    public TitleTreeManager(MWPane textPane) {
 
       // Text pane
       this.textPane = textPane;
@@ -1187,7 +1187,7 @@ public class MediaWikiPane
    * @return Complex component containing a MediaWikiPane.
    */
   public static JComponent createComplexPane(
-      final MediaWikiPane textPane) {
+      final MWPane textPane) {
     if (textPane == null) {
       return null;
     }

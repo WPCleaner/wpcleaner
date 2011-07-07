@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
+import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.gui.swing.options.OptionsWindow;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -84,7 +84,7 @@ public class Controller {
    */
   public static void runRedLinksAnalysis(
       Page page,
-      MediaWikiPane textPane,
+      MWPane textPane,
       EnumWikipedia wikipedia) {
     if (page != null) {
       RedLinksWindow.createRedLinksWindow(page, textPane, wikipedia);

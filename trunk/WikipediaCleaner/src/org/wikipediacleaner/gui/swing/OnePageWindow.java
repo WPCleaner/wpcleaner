@@ -60,7 +60,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
+import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.gui.swing.worker.SendWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
@@ -259,7 +259,7 @@ public abstract class OnePageWindow
   private JLabel lblLastModified;
   private JLabel lblEditProtectionLevel;
 
-  private MediaWikiPane textContents;
+  private MWPane textContents;
 
   /**
    * Update component state.
@@ -900,7 +900,7 @@ public abstract class OnePageWindow
    */
   protected void addTextContents(
       JPanel panel, GridBagConstraints constraints,
-      MediaWikiPane textPane, JButton undo) {
+      MWPane textPane, JButton undo) {
     if (textPane != null) {
       Configuration config = Configuration.getConfiguration();
       textPane.setBackground(Color.WHITE);
@@ -912,7 +912,7 @@ public abstract class OnePageWindow
             Configuration.DEFAULT_ANALYSIS_UNDO_LVL));
       }
       textPane.addPropertyChangeListener(
-          MediaWikiPane.PROPERTY_MODIFIED,
+          MWPane.PROPERTY_MODIFIED,
           new PropertyChangeListener() {
   
             /* (non-Javadoc)
@@ -923,7 +923,7 @@ public abstract class OnePageWindow
             }
             
           });
-      JComponent scrollContents = MediaWikiPane.createComplexPane(textPane);
+      JComponent scrollContents = MWPane.createComplexPane(textPane);
       scrollContents.setMinimumSize(new Dimension(100, 100));
       scrollContents.setPreferredSize(new Dimension(1000, 500));
       panel.add(scrollContents, constraints);
@@ -937,15 +937,15 @@ public abstract class OnePageWindow
    */
   protected void createTextContents(BasicWindow window) {
     if (textContents == null) {
-      textContents = new MediaWikiPane(getWikipedia(), page, window);
-      textContents.addPropertyChangeListener(MediaWikiPane.PROPERTY_MODIFIED, this);
+      textContents = new MWPane(getWikipedia(), page, window);
+      textContents.addPropertyChangeListener(MWPane.PROPERTY_MODIFIED, this);
     }
   }
 
   /**
    * @return Text contents component.
    */
-  protected MediaWikiPane getTextContents() {
+  protected MWPane getTextContents() {
     return textContents;
   }
 
@@ -1094,7 +1094,7 @@ public abstract class OnePageWindow
     if (evt == null) {
       return;
     }
-    if (MediaWikiPane.PROPERTY_MODIFIED.equals(evt.getPropertyName())) {
+    if (MWPane.PROPERTY_MODIFIED.equals(evt.getPropertyName())) {
       updateComponentState();
     }
   }

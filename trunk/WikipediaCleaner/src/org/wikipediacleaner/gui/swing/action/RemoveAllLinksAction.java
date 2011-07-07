@@ -22,7 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
+import org.wikipediacleaner.gui.swing.component.MWPane;
 
 
 /**
@@ -30,10 +30,10 @@ import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
  */
 public class RemoveAllLinksAction implements ActionListener {
 
-  private MediaWikiPane textPane;
+  private MWPane textPane;
   private Page from;
 
-  public RemoveAllLinksAction(MediaWikiPane textPane, Page from) {
+  public RemoveAllLinksAction(MWPane textPane, Page from) {
     this.textPane = textPane;
     this.from = from;
   }

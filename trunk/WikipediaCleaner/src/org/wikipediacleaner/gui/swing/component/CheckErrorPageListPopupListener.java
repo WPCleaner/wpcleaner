@@ -41,12 +41,12 @@ import org.wikipediacleaner.i18n.GT;
 public class CheckErrorPageListPopupListener extends MouseAdapter {
 
   private final EnumWikipedia wikipedia;
-  private final MediaWikiPane textComponent;
+  private final MWPane textComponent;
   private final AbstractButton button;
 
   public CheckErrorPageListPopupListener(
       EnumWikipedia wikipedia,
-      MediaWikiPane textComponent,
+      MWPane textComponent,
       AbstractButton button) {
     this.wikipedia = wikipedia;
     this.textComponent = textComponent;
