@@ -33,14 +33,14 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 /**
  * A Check Wiki formatter for MediaWikiPane.
  */
-public class MediaWikiPaneCheckWikiFormatter extends MediaWikiPaneFormatter {
+public class MWPaneCheckWikiFormatter extends MWPaneFormatter {
 
   /**
    * Construct a Check Wiki formatter.
    * 
    * @param algorithm Algorithm.
    */
-  public MediaWikiPaneCheckWikiFormatter(
+  public MWPaneCheckWikiFormatter(
       CheckErrorAlgorithm algorithm) {
     this.algorithm = algorithm;
   }
@@ -52,7 +52,7 @@ public class MediaWikiPaneCheckWikiFormatter extends MediaWikiPaneFormatter {
    * @param pageAnalysis Page analysis.
    */
   @Override
-  public void format(MediaWikiPane pane, PageAnalysis pageAnalysis) {
+  public void format(MWPane pane, PageAnalysis pageAnalysis) {
     // Clean formatting
     cleanFormat(pane);
 
@@ -76,7 +76,7 @@ public class MediaWikiPaneCheckWikiFormatter extends MediaWikiPaneFormatter {
    * @param pageAnalysis Page analysis.
    */
   private void formatCheckWikiErrors(
-      MediaWikiPane pane, PageAnalysis pageAnalysis) {
+      MWPane pane, PageAnalysis pageAnalysis) {
     if ((pane == null) || (pageAnalysis == null) || (algorithm == null)) {
       return;
     }
@@ -95,7 +95,7 @@ public class MediaWikiPaneCheckWikiFormatter extends MediaWikiPaneFormatter {
    * @param error Check Wiki error to be formatted.
    */
   private void formatCheckWikiError(
-      MediaWikiPane pane, CheckErrorResult error) {
+      MWPane pane, CheckErrorResult error) {
 
     // Basic verifications
     if ((pane == null) || (error == null)) {
@@ -119,8 +119,8 @@ public class MediaWikiPaneCheckWikiFormatter extends MediaWikiPaneFormatter {
         pane.getStyle(styleName),
         true);
     SimpleAttributeSet attributes = new SimpleAttributeSet();
-    attributes.addAttribute(MediaWikiPaneFormatter.ATTRIBUTE_INFO, error);
-    attributes.addAttribute(MediaWikiPaneFormatter.ATTRIBUTE_UUID, UUID.randomUUID());
+    attributes.addAttribute(MWPaneFormatter.ATTRIBUTE_INFO, error);
+    attributes.addAttribute(MWPaneFormatter.ATTRIBUTE_UUID, UUID.randomUUID());
     doc.setCharacterAttributes(
         error.getStartPosition(),
         error.getLength(),
@@ -173,7 +173,7 @@ public class MediaWikiPaneCheckWikiFormatter extends MediaWikiPaneFormatter {
    * 
    * @param pane MediaWikiPane.
    */
-  private void moveCaret(MediaWikiPane pane) {
+  private void moveCaret(MWPane pane) {
     if (pane == null) {
       return;
     }

@@ -29,7 +29,7 @@ import javax.swing.text.TextAction;
 
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.component.MenuCreator;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPaneFormatter;
+import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -84,14 +84,14 @@ public class ReplaceLinkAction extends TextAction {
     }
     String localText = text;
     if ((localElement != null) && (localText == null)) {
-      Object attrText = localElement.getAttributes().getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_TEXT);
+      Object attrText = localElement.getAttributes().getAttribute(MWPaneFormatter.ATTRIBUTE_TEXT);
       if (attrText instanceof String) {
         localText = (String) attrText;
       }
     }
     String localOldTitle = oldTitle;
     if ((localElement != null) && (localOldTitle == null)) {
-      Object attrPage = localElement.getAttributes().getAttribute(MediaWikiPaneFormatter.ATTRIBUTE_PAGE);
+      Object attrPage = localElement.getAttributes().getAttribute(MWPaneFormatter.ATTRIBUTE_PAGE);
       if (attrPage instanceof Page) {
         localOldTitle = ((Page) attrPage).getTitle();
       }
@@ -242,7 +242,7 @@ public class ReplaceLinkAction extends TextAction {
       localTextPane.getDocument().insertString(startOffset - offsetBefore, newText, localElement.getAttributes());
       if ((offsetBefore != 0) || (offsetAfter != 0)) {
         SimpleAttributeSet attr = new SimpleAttributeSet();
-        attr.addAttribute(MediaWikiPaneFormatter.ATTRIBUTE_TEXT, textAttr);
+        attr.addAttribute(MWPaneFormatter.ATTRIBUTE_TEXT, textAttr);
         localTextPane.getStyledDocument().setCharacterAttributes(
             startOffset - offsetBefore, newText.length(), attr, false);
       }

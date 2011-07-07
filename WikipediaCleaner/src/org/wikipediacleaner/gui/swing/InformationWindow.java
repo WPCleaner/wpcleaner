@@ -44,7 +44,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
+import org.wikipediacleaner.gui.swing.component.MWHtmlRendererContext;
 import org.wikipediacleaner.i18n.GT;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -160,7 +160,7 @@ public class InformationWindow
     // Information
     textInformation = new HtmlPanel();
     ucontextInformation = new SimpleUserAgentContext();
-    rcontextInformation = new MediaWikiHtmlRendererContext(textInformation, ucontextInformation);
+    rcontextInformation = new MWHtmlRendererContext(textInformation, ucontextInformation);
     textInformation.setPreferredSize(new Dimension(500, 500));
     textInformation.setMinimumSize(new Dimension(100, 100));
     lblTitle.setLabelFor(textInformation);

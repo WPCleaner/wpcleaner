@@ -501,7 +501,7 @@ public class MenuCreator {
           action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
           menuItem.addActionListener(action);
           if (preferredDabs.size() == 1) {
-            menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+            menuItem.setAccelerator(MWPane.getLastLinkKeyStroke());
           }
           submenuLink.add(menuItem);
           fixedBeginLink++;
@@ -509,7 +509,7 @@ public class MenuCreator {
           action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
           menuItem.addActionListener(action);
           if (preferredDabs.size() == 1) {
-            menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+            menuItem.setAccelerator(MWPane.getLastReplaceKeyStroke());
           }
           submenuReplace.add(menuItem);
           fixedBeginReplace++;
@@ -523,13 +523,13 @@ public class MenuCreator {
           menuItem = new JMenuItem(title);
           action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
           menuItem.addActionListener(action);
-          menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+          menuItem.setAccelerator(MWPane.getLastLinkKeyStroke());
           submenuLink.add(menuItem);
           fixedBeginLink++;
           menuItem = new JMenuItem(title);
           action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
           menuItem.addActionListener(action);
-          menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+          menuItem.setAccelerator(MWPane.getLastReplaceKeyStroke());
           submenuReplace.add(menuItem);
           fixedBeginReplace++;
         }
@@ -538,14 +538,14 @@ public class MenuCreator {
         menuItem = new JMenuItem(withLastSuffix);
         action = new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, false);
         menuItem.addActionListener(action);
-        menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+        menuItem.setAccelerator(MWPane.getLastLinkKeyStroke());
         submenuLink.add(menuItem);
         fixedBeginLink++;
 
         menuItem = new JMenuItem(withLastSuffix);
         action = new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, true);
         menuItem.addActionListener(action);
-        menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+        menuItem.setAccelerator(MWPane.getLastReplaceKeyStroke());
         submenuReplace.add(menuItem);
         fixedBeginReplace++;
       }
@@ -695,7 +695,7 @@ public class MenuCreator {
             action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
             menuItem.addActionListener(action);
             if (preferredDabs.size() == 1) {
-              menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+              menuItem.setAccelerator(MWPane.getLastLinkKeyStroke());
             }
             submenuLink.add(menuItem);
             fixedEndLink++;
@@ -703,7 +703,7 @@ public class MenuCreator {
             action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
             menuItem.addActionListener(action);
             if (preferredDabs.size() == 1) {
-              menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+              menuItem.setAccelerator(MWPane.getLastReplaceKeyStroke());
             }
             submenuReplace.add(menuItem);
             fixedEndReplace++;
@@ -718,7 +718,7 @@ public class MenuCreator {
             menuItem = new JMenuItem(title);
             action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
             menuItem.addActionListener(action);
-            menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+            menuItem.setAccelerator(MWPane.getLastLinkKeyStroke());
             submenuLink.add(menuItem);
             fixedEndLink++;
     
@@ -726,7 +726,7 @@ public class MenuCreator {
             menuItem = new JMenuItem(title);
             action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
             menuItem.addActionListener(action);
-            menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+            menuItem.setAccelerator(MWPane.getLastReplaceKeyStroke());
             submenuReplace.add(menuItem);
             fixedEndReplace++;
           }
@@ -736,7 +736,7 @@ public class MenuCreator {
           menuItem = new JMenuItem(withLastSuffix);
           action = new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, false);
           menuItem.addActionListener(action);
-          menuItem.setAccelerator(MediaWikiPane.getLastLinkKeyStroke());
+          menuItem.setAccelerator(MWPane.getLastLinkKeyStroke());
           submenuLink.add(menuItem);
           fixedEndLink++;
   
@@ -744,7 +744,7 @@ public class MenuCreator {
           menuItem = new JMenuItem(withLastSuffix);
           action = new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, true);
           menuItem.addActionListener(action);
-          menuItem.setAccelerator(MediaWikiPane.getLastReplaceKeyStroke());
+          menuItem.setAccelerator(MWPane.getLastReplaceKeyStroke());
           submenuReplace.add(menuItem);
           fixedEndReplace++;
         }
@@ -808,7 +808,7 @@ public class MenuCreator {
    * @param textPane Text pane.
    */
   public static void addRedLinksAnalysisMenu(
-      EnumWikipedia wikipedia, JPopupMenu popup, Page page, MediaWikiPane textPane) {
+      EnumWikipedia wikipedia, JPopupMenu popup, Page page, MWPane textPane) {
     JMenuItem menuItem = new JMenuItem(GT._("Red links analysis"));
     ActionListener action = new RedLinksAnalysisAction(page, textPane, wikipedia);
     menuItem.addActionListener(action);
@@ -824,7 +824,7 @@ public class MenuCreator {
    * @param textPane Text pane.
    */
   public static void addReplaceAllLinksToMenu(
-      JPopupMenu popup, Page page, MediaWikiPane textPane) {
+      JPopupMenu popup, Page page, MWPane textPane) {
     JMenuItem menuItem = null;
     ActionListener action = null;
     List<Page> links = page.getLinksWithRedirect();
@@ -936,7 +936,7 @@ public class MenuCreator {
    * @param textPane Text pane.
    */
   public static void addRemoveAllLinksToMenu(
-      JPopupMenu popup, Page page, MediaWikiPane textPane) {
+      JPopupMenu popup, Page page, MWPane textPane) {
     JMenuItem menuItem = new JMenuItem(GT._("Remove all links"));
     ActionListener action = new RemoveAllLinksAction(textPane, page);
     menuItem.addActionListener(action);

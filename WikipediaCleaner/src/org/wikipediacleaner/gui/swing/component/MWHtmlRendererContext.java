@@ -32,13 +32,13 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 /**
  * A simple HTML renderer context for MediaWiki.
  */
-public class MediaWikiHtmlRendererContext extends SimpleHtmlRendererContext {
+public class MWHtmlRendererContext extends SimpleHtmlRendererContext {
 
   /**
    * @param contextComponent
    * @param ucontext
    */
-  public MediaWikiHtmlRendererContext(HtmlPanel contextComponent,
+  public MWHtmlRendererContext(HtmlPanel contextComponent,
       UserAgentContext ucontext) {
     super(contextComponent, ucontext);
 
@@ -48,7 +48,7 @@ public class MediaWikiHtmlRendererContext extends SimpleHtmlRendererContext {
    * @param contextComponent
    * @param parentRcontext
    */
-  public MediaWikiHtmlRendererContext(HtmlPanel contextComponent,
+  public MWHtmlRendererContext(HtmlPanel contextComponent,
       HtmlRendererContext parentRcontext) {
     super(contextComponent, parentRcontext);
 

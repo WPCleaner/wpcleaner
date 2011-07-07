@@ -24,7 +24,7 @@ import java.awt.event.ActionListener;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.Controller;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
+import org.wikipediacleaner.gui.swing.component.MWPane;
 
 
 /**
@@ -33,11 +33,11 @@ import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
 public class RedLinksAnalysisAction implements ActionListener {
 
   private final Page page;
-  private final MediaWikiPane textPane;
+  private final MWPane textPane;
   private final EnumWikipedia wiki;
 
   public RedLinksAnalysisAction(
-      Page page, MediaWikiPane textPane, EnumWikipedia wiki) {
+      Page page, MWPane textPane, EnumWikipedia wiki) {
     this.page = page;
     this.textPane = textPane;
     this.wiki = wiki;

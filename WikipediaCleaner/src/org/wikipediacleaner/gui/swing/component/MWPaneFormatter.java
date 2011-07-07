@@ -34,7 +34,7 @@ import org.wikipediacleaner.api.data.PageElementComment;
 /**
  * An abstract class for formatting text in a Pane.
  */
-public abstract class MediaWikiPaneFormatter {
+public abstract class MWPaneFormatter {
 
   // Style constants
   public final static String STYLE_CHECK_WIKI_ERROR        = "CheckWikiError";
@@ -76,7 +76,7 @@ public abstract class MediaWikiPaneFormatter {
   /**
    * Constructor of MediaWikiPane formatter.
    */
-  public MediaWikiPaneFormatter() {
+  public MWPaneFormatter() {
     initializeStyles();
   }
 
@@ -89,7 +89,7 @@ public abstract class MediaWikiPaneFormatter {
    * 
    * @param pane MediaWikiPane to be formatted.
    */
-  public void cleanFormat(MediaWikiPane pane) {
+  public void cleanFormat(MWPane pane) {
 
     // Basic verifications
     if (pane == null) {
@@ -124,7 +124,7 @@ public abstract class MediaWikiPaneFormatter {
    * @param pane MediaWikiPane to be formatted.
    * @param pageAnalysis Page analysis.
    */
-  public void formatComments(MediaWikiPane pane, PageAnalysis pageAnalysis) {
+  public void formatComments(MWPane pane, PageAnalysis pageAnalysis) {
     if ((pane == null) || (pageAnalysis == null)) {
       return;
     }
@@ -147,7 +147,7 @@ public abstract class MediaWikiPaneFormatter {
    * @param pane MediaWikiPane to be formatted.
    * @param pageAnalysis Page analysis.
    */
-  public abstract void format(MediaWikiPane pane, PageAnalysis pageAnalysis);
+  public abstract void format(MWPane pane, PageAnalysis pageAnalysis);
 
   /* ======================================================================== */
   /* Document management                                                      */

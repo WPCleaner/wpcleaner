@@ -51,7 +51,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
+import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
 import org.wikipediacleaner.gui.swing.worker.RedLinksAnalysisWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -69,7 +69,7 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
   private final static String ACTION_TYPE     = "SEARCH TYPE";
 
   Page           page;
-  MediaWikiPane  textPane;
+  MWPane  textPane;
 
   private JButton buttonClose;
   private JButton buttonReload;
@@ -100,7 +100,7 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
    */
   public static void createRedLinksWindow(
       final Page page,
-      final MediaWikiPane textPane,
+      final MWPane textPane,
       final EnumWikipedia wikipedia) {
     if ((page == null) || (wikipedia == null)) {
       return;

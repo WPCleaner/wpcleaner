@@ -25,7 +25,7 @@ import javax.swing.AbstractButton;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
+import org.wikipediacleaner.gui.swing.component.MWPane;
 
 
 /**
@@ -37,7 +37,7 @@ public class CheckErrorGlobalFixAction extends AbstractAction {
   private final CheckErrorAlgorithm algorithm;
   private final String fixName;
   private final Page page;
-  private final MediaWikiPane textComponent;
+  private final MWPane textComponent;
   private final AbstractButton button;
 
   /**
@@ -51,7 +51,7 @@ public class CheckErrorGlobalFixAction extends AbstractAction {
       CheckErrorAlgorithm algorithm,
       String fixName,
       Page page,
-      MediaWikiPane textComponent,
+      MWPane textComponent,
       AbstractButton button) {
     this.algorithm = algorithm;
     this.fixName = fixName;

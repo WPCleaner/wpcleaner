@@ -35,8 +35,8 @@ import org.wikipediacleaner.api.data.TemplateMatcher;
 /**
  * A disambiguation formatter for MediaWikiPane.
  */
-public class MediaWikiPaneDisambiguationFormatter extends
-    MediaWikiPaneFormatter {
+public class MWPaneDisambiguationFormatter extends
+    MWPaneFormatter {
 
   private final EnumWikipedia wikipedia;
 
@@ -46,7 +46,7 @@ public class MediaWikiPaneDisambiguationFormatter extends
    * @param wikipedia Wikipedia.
    * @param links Links of interest.
    */
-  public MediaWikiPaneDisambiguationFormatter(
+  public MWPaneDisambiguationFormatter(
       EnumWikipedia wikipedia, List<Page> links) {
     this.wikipedia = wikipedia;
     this.links = links;
@@ -59,7 +59,7 @@ public class MediaWikiPaneDisambiguationFormatter extends
    * @param pageAnalysis Page analysis.
    */
   @Override
-  public void format(MediaWikiPane pane, PageAnalysis pageAnalysis) {
+  public void format(MWPane pane, PageAnalysis pageAnalysis) {
     // Clean formatting
     cleanFormat(pane);
 
@@ -86,7 +86,7 @@ public class MediaWikiPaneDisambiguationFormatter extends
    * @param pageAnalysis Page analysis.
    */
   private void formatInternalLinks(
-      MediaWikiPane pane, PageAnalysis pageAnalysis) {
+      MWPane pane, PageAnalysis pageAnalysis) {
     if ((pane == null) || (pageAnalysis == null)) {
       return;
     }
@@ -102,7 +102,7 @@ public class MediaWikiPaneDisambiguationFormatter extends
    * @param internalLink Internal link to be formatted.
    */
   private void formatInternalLink(
-      MediaWikiPane pane, PageElementInternalLink internalLink) {
+      MWPane pane, PageElementInternalLink internalLink) {
 
     // Basic verifications
     if ((pane == null) || (internalLink == null)) {
@@ -149,7 +149,7 @@ public class MediaWikiPaneDisambiguationFormatter extends
    * @param pageAnalysis Page analysis.
    */
   private void formatTemplates(
-      MediaWikiPane pane, PageAnalysis pageAnalysis) {
+      MWPane pane, PageAnalysis pageAnalysis) {
     if (pageAnalysis == null) {
       return;
     }
@@ -166,7 +166,7 @@ public class MediaWikiPaneDisambiguationFormatter extends
    * @param template Template to be formatted.
    */
   private void formatTemplate(
-      MediaWikiPane pane, PageAnalysis pageAnalysis,
+      MWPane pane, PageAnalysis pageAnalysis,
       PageElementTemplate template) {
 
     // Basic verifications
@@ -201,7 +201,7 @@ public class MediaWikiPaneDisambiguationFormatter extends
    * @param matcher Template matcher.
    */
   private void formatTemplate(
-      MediaWikiPane pane,
+      MWPane pane,
       Page link,
       PageElementTemplate template,
       TemplateMatcher matcher) {
@@ -284,7 +284,7 @@ public class MediaWikiPaneDisambiguationFormatter extends
    * 
    * @param pane MediaWikiPane.
    */
-  private void moveCaret(MediaWikiPane pane) {
+  private void moveCaret(MWPane pane) {
     if (pane == null) {
       return;
     }

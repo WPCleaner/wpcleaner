@@ -76,12 +76,12 @@ import org.wikipediacleaner.gui.swing.component.AbstractPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.AnalysisPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListPopupListener;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPaneCheckWikiFormatter;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPaneDisambiguationFormatter;
+import org.wikipediacleaner.gui.swing.component.MWPaneCheckWikiFormatter;
+import org.wikipediacleaner.gui.swing.component.MWPaneDisambiguationFormatter;
 import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPaneFormatter;
+import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 import org.wikipediacleaner.gui.swing.worker.FullAnalysisWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -609,16 +609,16 @@ public class OnePageAnalysisWindow extends OnePageWindow {
                 pages.add((Page) selection[i]);
               }
             }
-            MediaWikiPaneFormatter formatter = getTextContents().getFormatter();
-            if (formatter instanceof MediaWikiPaneDisambiguationFormatter) {
-              MediaWikiPaneDisambiguationFormatter dabFormatter =
-                (MediaWikiPaneDisambiguationFormatter) formatter;
+            MWPaneFormatter formatter = getTextContents().getFormatter();
+            if (formatter instanceof MWPaneDisambiguationFormatter) {
+              MWPaneDisambiguationFormatter dabFormatter =
+                (MWPaneDisambiguationFormatter) formatter;
               if (!dabFormatter.isSameList(pages)) {
-                formatter = new MediaWikiPaneDisambiguationFormatter(getWikipedia(), pages);
+                formatter = new MWPaneDisambiguationFormatter(getWikipedia(), pages);
                 getTextContents().setFormatter(formatter);
               }
             } else {
-              formatter = new MediaWikiPaneDisambiguationFormatter(getWikipedia(), pages);
+              formatter = new MWPaneDisambiguationFormatter(getWikipedia(), pages);
               getTextContents().setFormatter(formatter);
             }
           }
@@ -628,16 +628,16 @@ public class OnePageAnalysisWindow extends OnePageWindow {
           if ((selection != null) && (selection instanceof CheckErrorPage)) {
             listLinks.clearSelection();
             CheckErrorPage errorSelected = (CheckErrorPage) selection;
-            MediaWikiPaneFormatter formatter = getTextContents().getFormatter();
-            if (formatter instanceof MediaWikiPaneCheckWikiFormatter) {
-              MediaWikiPaneCheckWikiFormatter cwFormatter =
-                (MediaWikiPaneCheckWikiFormatter) formatter;
+            MWPaneFormatter formatter = getTextContents().getFormatter();
+            if (formatter instanceof MWPaneCheckWikiFormatter) {
+              MWPaneCheckWikiFormatter cwFormatter =
+                (MWPaneCheckWikiFormatter) formatter;
               if (!cwFormatter.isSameAlgorithm(errorSelected.getAlgorithm())) {
-                formatter = new MediaWikiPaneCheckWikiFormatter(errorSelected.getAlgorithm());
+                formatter = new MWPaneCheckWikiFormatter(errorSelected.getAlgorithm());
                 getTextContents().setFormatter(formatter);
               }
             } else {
-              formatter = new MediaWikiPaneCheckWikiFormatter(errorSelected.getAlgorithm());
+              formatter = new MWPaneCheckWikiFormatter(errorSelected.getAlgorithm());
               getTextContents().setFormatter(formatter);
             }
           }

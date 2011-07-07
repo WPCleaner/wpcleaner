@@ -43,7 +43,7 @@ public class DisambiguationPageListPopupListener extends
    */
   public DisambiguationPageListPopupListener(
       EnumWikipedia wikipedia,
-      MediaWikiPane textPane,
+      MWPane textPane,
       BasicWindow window) {
     super(wikipedia, textPane, window);
   }

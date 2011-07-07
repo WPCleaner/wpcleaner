@@ -24,7 +24,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 /**
  * A basic formatter for MediaWikiPane.
  */
-public class MediaWikiPaneBasicFormatter extends MediaWikiPaneFormatter {
+public class MWPaneBasicFormatter extends MWPaneFormatter {
 
   /**
    * Format text in a MediaWikiPane.
@@ -33,7 +33,7 @@ public class MediaWikiPaneBasicFormatter extends MediaWikiPaneFormatter {
    * @param pageAnalysis Page analysis.
    */
   @Override
-  public void format(MediaWikiPane pane, PageAnalysis pageAnalysis) {
+  public void format(MWPane pane, PageAnalysis pageAnalysis) {
     // Clean formatting
     cleanFormat(pane);
 

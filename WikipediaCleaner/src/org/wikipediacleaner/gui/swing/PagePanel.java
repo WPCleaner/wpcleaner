@@ -37,7 +37,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
+import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -280,12 +280,12 @@ public class PagePanel
   /**
    * TextPane.
    */
-  private MediaWikiPane textContents;
+  private MWPane textContents;
 
   /**
    * @return TextPane.
    */
-  public MediaWikiPane getTextContents() {
+  public MWPane getTextContents() {
     return textContents;
   }
 
@@ -294,7 +294,7 @@ public class PagePanel
    */
   protected void createTextContents() {
     if (textContents == null) {
-      textContents = new MediaWikiPane(wikipedia, page, window);
+      textContents = new MWPane(wikipedia, page, window);
       textContents.setBackground(Color.WHITE);
       textContents.setEditable(true);
       if (isUndoAvailable()) {
@@ -306,7 +306,7 @@ public class PagePanel
             Configuration.INTEGER_ANALYSIS_UNDO_LVL,
             Configuration.DEFAULT_ANALYSIS_UNDO_LVL));
       }
-      textContents.addPropertyChangeListener(MediaWikiPane.PROPERTY_MODIFIED, this);
+      textContents.addPropertyChangeListener(MWPane.PROPERTY_MODIFIED, this);
     }
   }
 
@@ -578,7 +578,7 @@ public class PagePanel
     if (evt == null) {
       return;
     }
-    if (MediaWikiPane.PROPERTY_MODIFIED.equals(evt.getPropertyName())) {
+    if (MWPane.PROPERTY_MODIFIED.equals(evt.getPropertyName())) {
       updateComponentState();
     }
   }

@@ -97,11 +97,11 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.JCloseableTabbedPane;
-import org.wikipediacleaner.gui.swing.component.MediaWikiHtmlRendererContext;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPane;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPaneBasicFormatter;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPaneCheckWikiFormatter;
-import org.wikipediacleaner.gui.swing.component.MediaWikiPaneFormatter;
+import org.wikipediacleaner.gui.swing.component.MWHtmlRendererContext;
+import org.wikipediacleaner.gui.swing.component.MWPane;
+import org.wikipediacleaner.gui.swing.component.MWPaneBasicFormatter;
+import org.wikipediacleaner.gui.swing.component.MWPaneCheckWikiFormatter;
+import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 import org.wikipediacleaner.gui.swing.worker.CheckWikiProjectWorker;
 import org.wikipediacleaner.gui.swing.worker.RetrieveContentWorker;
 import org.wikipediacleaner.gui.swing.worker.SendWorker;
@@ -687,13 +687,13 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     // Error description
     textDescription = new HtmlPanel();
     ucontext = new SimpleUserAgentContext();
-    rcontextDescription = new MediaWikiHtmlRendererContext(textDescription, ucontext);
+    rcontextDescription = new MWHtmlRendererContext(textDescription, ucontext);
     textDescription.setPreferredSize(new Dimension(500, 100));
     textDescription.setMinimumSize(new Dimension(200, 100));
 
     // Parameters description
     textParameters = new HtmlPanel();
-    rcontextParameters = new MediaWikiHtmlRendererContext(textParameters, ucontext);
+    rcontextParameters = new MWHtmlRendererContext(textParameters, ucontext);
     textParameters.setPreferredSize(new Dimension(500, 100));
     textParameters.setMinimumSize(new Dimension(200, 100));
 
@@ -823,7 +823,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     private JCheckBox chkAutomaticComment;
     private JButton buttonSend;
     private JButton buttonMarkAsFixed;
-    private MediaWikiPane textPage;
+    private MWPane textPage;
 
     /**
      * @param page Page.
@@ -955,12 +955,12 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       constraints.gridx++;
 
       // Page contents
-      textPage = new MediaWikiPane(getWikipedia(), page, CheckWikiProjectWindow.this);
+      textPage = new MWPane(getWikipedia(), page, CheckWikiProjectWindow.this);
       listErrors.addMouseListener(
           new CheckErrorPageListPopupListener(getWikipedia(), textPage, buttonValidate));
       textPage.setEditable(true);
       textPage.addPropertyChangeListener(
-          MediaWikiPane.PROPERTY_MODIFIED,
+          MWPane.PROPERTY_MODIFIED,
           new PropertyChangeListener() {
   
             /* (non-Javadoc)
@@ -971,7 +971,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
             }
             
           });
-      JComponent scrollContents = MediaWikiPane.createComplexPane(textPage);
+      JComponent scrollContents = MWPane.createComplexPane(textPage);
       scrollContents.setMinimumSize(new Dimension(100, 100));
       constraints.fill = GridBagConstraints.BOTH;
       constraints.weightx = 1;
@@ -1108,21 +1108,21 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     void actionSelectError() {
       CheckErrorPage errorSelected = getSelectedError();
       if (errorSelected == null) {
-        textPage.setFormatter(new MediaWikiPaneBasicFormatter());
+        textPage.setFormatter(new MWPaneBasicFormatter());
       } else {
         CheckErrorAlgorithm algorithm = errorSelected.getAlgorithm();
-        MediaWikiPaneFormatter formatter = textPage.getFormatter();
-        if (formatter instanceof MediaWikiPaneCheckWikiFormatter) {
-          MediaWikiPaneCheckWikiFormatter cwFormatter =
-            (MediaWikiPaneCheckWikiFormatter) formatter;
+        MWPaneFormatter formatter = textPage.getFormatter();
+        if (formatter instanceof MWPaneCheckWikiFormatter) {
+          MWPaneCheckWikiFormatter cwFormatter =
+            (MWPaneCheckWikiFormatter) formatter;
           if (!cwFormatter.isSameAlgorithm(algorithm)) {
-            formatter = new MediaWikiPaneCheckWikiFormatter(algorithm);
+            formatter = new MWPaneCheckWikiFormatter(algorithm);
             textPage.setFormatter(formatter);
           } else {
             textPage.resetAttributes();
           }
         } else {
-          formatter = new MediaWikiPaneCheckWikiFormatter(algorithm);
+          formatter = new MWPaneCheckWikiFormatter(algorithm);
           textPage.setFormatter(formatter);
         }
       }

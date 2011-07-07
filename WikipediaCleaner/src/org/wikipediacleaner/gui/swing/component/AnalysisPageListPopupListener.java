@@ -39,7 +39,7 @@ public class AnalysisPageListPopupListener extends
    */
   public AnalysisPageListPopupListener(
       EnumWikipedia wikipedia,
-      MediaWikiPane textPane,
+      MWPane textPane,
       BasicWindow window) {
     super(wikipedia, textPane, window);
   }

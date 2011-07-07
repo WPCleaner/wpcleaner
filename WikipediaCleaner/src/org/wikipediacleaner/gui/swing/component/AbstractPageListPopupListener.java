@@ -37,7 +37,7 @@ public abstract class AbstractPageListPopupListener extends MouseAdapter {
 
   protected Page page;
   protected final EnumWikipedia wikipedia;
-  protected final MediaWikiPane textPane;
+  protected final MWPane textPane;
   protected final BasicWindow window;
 
   /**
@@ -47,7 +47,7 @@ public abstract class AbstractPageListPopupListener extends MouseAdapter {
    */
   public AbstractPageListPopupListener(
       EnumWikipedia wikipedia,
-      MediaWikiPane textPane,
+      MWPane textPane,
       BasicWindow   window) {
     this.wikipedia = wikipedia;
     this.textPane = textPane;
