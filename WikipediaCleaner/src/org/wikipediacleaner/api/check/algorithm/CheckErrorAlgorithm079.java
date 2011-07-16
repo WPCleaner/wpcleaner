@@ -29,6 +29,8 @@ import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTagData;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.StringChecker;
+import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
 
 
 /**
@@ -37,8 +39,14 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
 
+  /**
+   * StringChecker for the description.
+   */
+  private final StringChecker descriptionChecker;
+
   public CheckErrorAlgorithm079() {
     super("External link without description");
+    descriptionChecker = new StringCheckerUnauthorizedCharacters("[]");
   }
 
   /**
@@ -95,7 +103,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
             new AddTextActionProvider(
                 "[" + url + " ", "]", url,
                 GT._("What description would like to use for the external link ?"),
-                "[]"));
+                descriptionChecker));
         if (!isInRef) {
           errorResult.addReplacement(
               "<ref>" + url + "</ref>",
@@ -105,7 +113,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
               new AddTextActionProvider(
                   "<ref>[" + url + " ", "]</ref>", url,
                   GT._("What description would like to use for the external link ?"),
-                  "[]"));
+                  descriptionChecker));
         } else {
           errorResult.addReplacement(url);
         }

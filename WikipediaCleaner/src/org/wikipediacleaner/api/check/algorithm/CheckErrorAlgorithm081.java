@@ -31,6 +31,8 @@ import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.StringChecker;
+import org.wikipediacleaner.utils.StringCheckerReferenceName;
 
 
 /**
@@ -39,8 +41,14 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
 
+  /**
+   * String checker for the reference name.
+   */
+  private final StringChecker nameChecker;
+
   public CheckErrorAlgorithm081() {
     super("Reference duplication");
+    nameChecker = new StringCheckerReferenceName();
   }
 
   /**
@@ -226,7 +234,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                         "\"" + valueRef.getPartFromParameters(),
                         url,
                         GT._("What name would like to use for the <ref> tag ?"),
-                        "[]\""));
+                        nameChecker));
               }
 
               /*if (existingNamesActions.size() > 0) {

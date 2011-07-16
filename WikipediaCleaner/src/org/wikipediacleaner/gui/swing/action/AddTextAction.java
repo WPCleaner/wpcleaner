@@ -35,6 +35,7 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
+import org.wikipediacleaner.utils.StringChecker;
 
 
 /**
@@ -50,7 +51,7 @@ public class AddTextAction extends TextAction {
   private final String[] possibleValues;
   private final boolean onlyList;
   private final String defaultValue;
-  private final String unauthorizedCharacters;
+  private final StringChecker checker;
   private final Element element;
   private final JTextPane textPane;
 
@@ -63,13 +64,13 @@ public class AddTextAction extends TextAction {
       String url,
       String question,
       String defaultValue,
-      String unauthorizedCharacters,
+      StringChecker checker,
       Element element,
       JTextPane textPane) {
     this(
         prefix, suffix, url, question,
         null, false, defaultValue,
-        unauthorizedCharacters, element, textPane);
+        checker, element, textPane);
   }
 
   public AddTextAction(
@@ -80,7 +81,7 @@ public class AddTextAction extends TextAction {
       String[] possibleValues,
       boolean onlyList,
       String defaultValue,
-      String unauthorizedCharacters,
+      StringChecker checker,
       Element element,
       JTextPane textPane) {
     super("ReplaceLink");
@@ -91,7 +92,7 @@ public class AddTextAction extends TextAction {
     this.possibleValues = possibleValues;
     this.onlyList = onlyList;
     this.defaultValue = defaultValue;
-    this.unauthorizedCharacters = unauthorizedCharacters;
+    this.checker = checker;
     this.element = element;
     this.textPane = textPane;
   }
@@ -168,11 +169,11 @@ public class AddTextAction extends TextAction {
       value = Utilities.askForValue(
           (localTextPane != null) ? localTextPane.getParent() : null,
           question,
-          possibleValues, onlyList, value, unauthorizedCharacters);
+          possibleValues, onlyList, value, checker);
     } else {
       value = Utilities.askForValue(
           (localTextPane != null) ? localTextPane.getParent() : null,
-          question, value, unauthorizedCharacters);
+          question, value, checker);
     }
     if ((value != null) && (!value.isEmpty())) {
       StringBuilder newText = new StringBuilder();

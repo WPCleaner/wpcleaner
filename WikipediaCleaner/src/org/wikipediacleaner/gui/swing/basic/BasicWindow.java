@@ -37,6 +37,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.StringChecker;
 
 
 /**
@@ -352,11 +353,11 @@ public abstract class BasicWindow implements ActionListener {
    * 
    * @param message Message.
    * @param value Default value.
-   * @param unauthorizedCharacters Unauthorized characters.
+   * @param checker String checker to verify the value.
    * @return Value provided by the user.
    */
-  protected String askForValue(String message, String value, String unauthorizedCharacters) {
-    return Utilities.askForValue(parentComponent, message, value, unauthorizedCharacters);
+  protected String askForValue(String message, String value, StringChecker checker) {
+    return Utilities.askForValue(parentComponent, message, value, checker);
   }
 
   /**

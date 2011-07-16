@@ -31,6 +31,8 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.StringChecker;
+import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
 
 
 /**
@@ -39,8 +41,14 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
 
+  /**
+   * String checker for text inputed by user.
+   */
+  private final StringChecker checker;
+
   public CheckErrorAlgorithm068() {
     super("Link to other language");
+    checker = new StringCheckerUnauthorizedCharacters("[]\"");
   }
 
   /**
@@ -104,17 +112,16 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
                         "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : pageTitle) +
                         "}}";
                       String question = GT._("What is the title of the page on this wiki ?");
-                      String unauthorizedCharacters = "[]\"";
                       AddTextActionProvider action = null;
                       if ((link.getText() != null) && (!link.getText().equals(pageTitle))) {
                         String[] possibleValues = { null, pageTitle, link.getText() };
                         action = new AddTextActionProvider(
                             prefix, suffix, null, question,
-                            possibleValues, false, null, unauthorizedCharacters);
+                            possibleValues, false, null, checker);
                       } else {
                         action = new AddTextActionProvider(
                             prefix, suffix, null, question,
-                            pageTitle, unauthorizedCharacters); 
+                            pageTitle, checker);
                       }
                       errorResult.addPossibleAction(
                           GT._("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
