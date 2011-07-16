@@ -347,7 +347,7 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
    * @param textPane Text pane.
    * @param position Position in the text.
    * @param pageAnalysis Page analysis.
-   * @param link Internal link.
+   * @param category Category.
    * @return Popup menu.
    */
   protected JPopupMenu createDefaultPopupCategory(
