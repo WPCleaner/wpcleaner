@@ -47,6 +47,7 @@ import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
+import org.wikipediacleaner.utils.StringChecker;
 
 
 /**
@@ -171,12 +172,12 @@ public class Utilities {
    * @param parent Parent component.
    * @param message Message.
    * @param value Default value.
-   * @param unauthorizedCharacters Unauthorized characters
+   * @param checker String checker to verify the value.
    * @return Value provided by the user.
    */
   public static String askForValue(
       Component parent, String message, String value,
-      String unauthorizedCharacters) {
+      StringChecker checker) {
     String defaultValue = value;
     while (true) {
       Object result = JOptionPane.showInputDialog(
@@ -187,18 +188,20 @@ public class Utilities {
         return null;
       }
       defaultValue = result.toString();
-      boolean modified = false;
-      if (unauthorizedCharacters != null) {
-        for (int i = 0; i < unauthorizedCharacters.length(); i++) {
-          int index;
-          while ((index = defaultValue.indexOf(unauthorizedCharacters.charAt(i))) > 0) {
-            defaultValue = defaultValue.substring(0, index) + defaultValue.substring(index + 1);
-            modified = true;
-          }
-        }
-      }
-      if (!modified) {
+      if (checker == null) {
         return defaultValue;
+      }
+      StringChecker.Result ok = checker.checkString(defaultValue);
+      if (ok == null) {
+        return defaultValue;
+      }
+      if (ok.isOk()) {
+        return ok.getText();
+      }
+      defaultValue = ok.getText();
+      String errorMessage = ok.getMessage();
+      if (message != null) {
+        displayError(parent, errorMessage);
       }
     }
   }
@@ -211,15 +214,15 @@ public class Utilities {
    * @param possibleValues Possible values.
    * @param onlyList Restrict selection to the possible values.
    * @param value Default value.
-   * @param unauthorizedCharacters Unauthorized characters
+   * @param checker String checker to verify the value.
    * @return Value provided by the user.
    */
   public static String askForValue(
       Component parent, String message,
       Object[] possibleValues, boolean onlyList, String value,
-      String unauthorizedCharacters) {
+      StringChecker checker) {
     if ((possibleValues == null) || (possibleValues.length == 0)) {
-      return askForValue(parent, message, value, unauthorizedCharacters);
+      return askForValue(parent, message, value, checker);
     }
     String defaultValue = value;
     String other = GT._("Other...");
@@ -237,21 +240,23 @@ public class Utilities {
         return null;
       }
       if (result == other) {
-        return askForValue(parent, message, defaultValue, unauthorizedCharacters);
+        return askForValue(parent, message, defaultValue, checker);
       }
       defaultValue = result.toString();
-      boolean modified = false;
-      if (unauthorizedCharacters != null) {
-        for (int i = 0; i < unauthorizedCharacters.length(); i++) {
-          int index;
-          while ((index = defaultValue.indexOf(unauthorizedCharacters.charAt(i))) > 0) {
-            defaultValue = defaultValue.substring(0, index) + defaultValue.substring(index + 1);
-            modified = true;
-          }
-        }
-      }
-      if (!modified) {
+      if (checker == null) {
         return defaultValue;
+      }
+      StringChecker.Result ok = checker.checkString(defaultValue);
+      if (ok == null) {
+        return defaultValue;
+      }
+      if (ok.isOk()) {
+        return ok.getText();
+      }
+      defaultValue = ok.getText();
+      String errorMessage = ok.getMessage();
+      if (message != null) {
+        displayError(parent, errorMessage);
       }
     }
   }

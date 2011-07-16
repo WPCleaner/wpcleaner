@@ -23,6 +23,7 @@ import javax.swing.JTextPane;
 import javax.swing.text.Element;
 
 import org.wikipediacleaner.gui.swing.action.AddTextAction;
+import org.wikipediacleaner.utils.StringChecker;
 
 
 /**
@@ -37,20 +38,20 @@ public class AddTextActionProvider implements ActionProvider {
   private final String[] possibleValues;
   private final boolean onlyList;
   private final String defaultValue;
-  private final String unauthorizedCharacters;
+  private final StringChecker checker;
 
   /**
    * @param prefix Prefix.
    * @param suffix Suffix.
    * @param url Optional URL to retrieve title.
    * @param question Question asked to the user.
-   * @param unauthorizedCharacters Unauthorized characters.
+   * @param checker String checker to verify the value.
    */
   public AddTextActionProvider(
       String prefix, String suffix,
       String url, String question,
-      String unauthorizedCharacters) {
-    this(prefix, suffix, url, question, "", unauthorizedCharacters);
+      StringChecker checker) {
+    this(prefix, suffix, url, question, "", checker);
   }
 
   /**
@@ -59,15 +60,15 @@ public class AddTextActionProvider implements ActionProvider {
    * @param url Optional URL to retrieve title.
    * @param question Question asked to the user.
    * @param defaultValue Value used by default.
-   * @param unauthorizedCharacters Unauthorized characters.
+   * @param checker String checker to verify the value.
    */
   public AddTextActionProvider(
       String prefix, String suffix, String url,
       String question, String defaultValue,
-      String unauthorizedCharacters) {
+      StringChecker checker) {
     this(
         prefix, suffix, url, question,
-        null, false, defaultValue, unauthorizedCharacters);
+        null, false, defaultValue, checker);
   }
 
   /**
@@ -76,13 +77,13 @@ public class AddTextActionProvider implements ActionProvider {
    * @param url Optional URL to retrieve title.
    * @param question Question asked to the user.
    * @param defaultValue Value used by default.
-   * @param unauthorizedCharacters Unauthorized characters.
+   * @param checker String checker to verify the value.
    */
   public AddTextActionProvider(
       String prefix, String suffix, String url,
       String question,
       String[] possibleValues, boolean onlyList, String defaultValue,
-      String unauthorizedCharacters) {
+      StringChecker checker) {
     this.prefix = prefix;
     this.suffix = suffix;
     this.url = url;
@@ -90,7 +91,7 @@ public class AddTextActionProvider implements ActionProvider {
     this.possibleValues = possibleValues;
     this.onlyList = onlyList;
     this.defaultValue = defaultValue;
-    this.unauthorizedCharacters = unauthorizedCharacters;
+    this.checker = checker;
   }
 
   /* (non-Javadoc)
@@ -100,7 +101,7 @@ public class AddTextActionProvider implements ActionProvider {
     return new AddTextAction(
         prefix, suffix, url, question,
         possibleValues, onlyList, defaultValue,
-        unauthorizedCharacters,
+        checker,
         element, textPane);
   }
 

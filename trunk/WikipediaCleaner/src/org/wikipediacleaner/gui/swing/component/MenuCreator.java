@@ -70,6 +70,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
 
 
 /**
@@ -754,7 +755,8 @@ public class MenuCreator {
           page.getWikipedia(),
           page.getTitle(), textPane,
           GT._("What link do you want to add to the preferred disambiguations?"),
-          null, "[|]");
+          null,
+          new StringCheckerUnauthorizedCharacters("[|]"));
       menuItem.addActionListener(action);
       submenuAddPreferred.add(menuItem);
       addSubmenu(popup, submenuAddPreferred, 0, 2);

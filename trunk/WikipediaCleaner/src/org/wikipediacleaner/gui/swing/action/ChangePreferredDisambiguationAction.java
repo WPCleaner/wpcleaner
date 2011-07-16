@@ -28,6 +28,7 @@ import javax.swing.text.TextAction;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.StringChecker;
 
 
 /**
@@ -43,7 +44,7 @@ public class ChangePreferredDisambiguationAction extends TextAction {
   private final Component parent;
   private final String message;
   private final String defaultValue;
-  private final String unauthorizedCharacters;
+  private final StringChecker checker;
 
   public ChangePreferredDisambiguationAction(
       EnumWikipedia wikipedia,
@@ -58,7 +59,7 @@ public class ChangePreferredDisambiguationAction extends TextAction {
     this.parent = null;
     this.message = null;
     this.defaultValue = null;
-    this.unauthorizedCharacters = null;
+    this.checker = null;
   }
 
   public ChangePreferredDisambiguationAction(
@@ -67,7 +68,7 @@ public class ChangePreferredDisambiguationAction extends TextAction {
       Component parent,
       String message,
       String defaultValue,
-      String unauthorizedCharacters) {
+      StringChecker checker) {
     super("AddPreferredDisambiguation");
     this.wikipedia = wikipedia;
     this.page = page;
@@ -76,7 +77,7 @@ public class ChangePreferredDisambiguationAction extends TextAction {
     this.parent = parent;
     this.message = message;
     this.defaultValue = defaultValue;
-    this.unauthorizedCharacters = unauthorizedCharacters;
+    this.checker = checker;
   }
 
   /* (non-Javadoc)
@@ -89,7 +90,7 @@ public class ChangePreferredDisambiguationAction extends TextAction {
     if (add) {
       String value = preferred;
       if (value == null) {
-        value = Utilities.askForValue(parent, message, defaultValue, unauthorizedCharacters);
+        value = Utilities.askForValue(parent, message, defaultValue, checker);
       }
       if ((value != null) && !preferredDabs.contains(value)) {
         preferredDabs.add(value);
