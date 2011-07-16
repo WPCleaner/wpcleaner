@@ -31,6 +31,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementCategory;
+import org.wikipediacleaner.api.data.PageElementDefaultsort;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTagData;
 import org.wikipediacleaner.i18n.GT;
@@ -477,7 +478,10 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     }
 
     // Check that DEFAULTSORT is missing
-    // TODO
+    PageElementDefaultsort defaultSort = pageAnalysis.getNextDefaultSort(0);
+    if (defaultSort != null) {
+      return contents;
+    }
 
     // Find position to insert DEFAULTSORT
     int index = contents.length();

@@ -26,7 +26,6 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementDefaultsort;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -95,8 +94,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
 
     // Searching a DEFAULTSORT tag
     String contents = pageAnalysis.getContents();
-    PageElementDefaultsort tag = PageContents.findNextDefaultsort(
-        pageAnalysis.getPage(), contents, 0);
+    PageElementDefaultsort tag = pageAnalysis.getNextDefaultSort(0);
     if (tag != null) {
       return false;
     }

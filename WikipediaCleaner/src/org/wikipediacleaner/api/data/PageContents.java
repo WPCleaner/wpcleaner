@@ -750,16 +750,46 @@ public class PageContents {
   // ==========================================================================
 
   /**
+   * Find all DEFAULTSORT in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments blocks in the page.
+   * @return DefaultSorts found.
+   */
+  public static Collection<PageElementDefaultsort> findAllDefaultSorts(
+      Page page, String contents,
+      Collection<PageElementComment> comments) {
+    if (contents == null) {
+      return null;
+    }
+    Collection<PageElementDefaultsort> result = new ArrayList<PageElementDefaultsort>();
+    int currentIndex = 0;
+    while ((currentIndex < contents.length())) {
+      PageElementDefaultsort defaultSort = findNextDefaultsort(page, contents, currentIndex, comments);
+      if (defaultSort == null) {
+        currentIndex = contents.length();
+      } else {
+        result.add(defaultSort);
+        currentIndex = defaultSort.getEndIndex();
+      }
+    }
+    return result;
+  }
+
+  /**
    * Find the first DEFAULTSORT after an index in the page contents.
    * 
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
    * @param currentIndex The last index.
+   * @param comments Comments blocks in the page.
    * @return DEFAULTSORT found.
    */
   public static PageElementDefaultsort findNextDefaultsort(
       Page page, String contents,
-      int currentIndex) {
+      int currentIndex,
+      Collection<PageElementComment> comments) {
     if (contents == null) {
       return null;
     }
@@ -767,6 +797,8 @@ public class PageContents {
       int tmpIndex = contents.indexOf("{{", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
+      } else if (isInComments(tmpIndex, comments)) {
+        currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementDefaultsort template = PageElementDefaultsort.analyzeBlock(page.getWikipedia(), contents, tmpIndex);
         if (template != null) {
