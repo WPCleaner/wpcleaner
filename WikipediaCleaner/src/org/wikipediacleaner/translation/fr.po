@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-16 19:56+0200\n"
+"POT-Creation-Date: 2011-07-16 20:16+0200\n"
 "PO-Revision-Date: 2011-07-16 11:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -179,6 +179,11 @@ msgstr "Supprimer"
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
 msgstr "Utiliser comme un séparateur entre les balises {0} consécutives"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm064.java:40
+#, fuzzy
+msgid "Modify all internal links"
+msgstr "Liens internes"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
 msgid "Remove <small> tag"
