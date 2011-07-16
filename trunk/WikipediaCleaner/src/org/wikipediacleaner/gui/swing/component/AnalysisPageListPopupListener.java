@@ -60,7 +60,7 @@ public class AnalysisPageListPopupListener extends
       popup.add(new JSeparator());
     }
     MenuCreator.addAnalyzeToMenu(wikipedia, popup, link);
-    MenuCreator.addViewToMenu(wikipedia, popup, link);
+    MenuCreator.addViewToMenu(wikipedia, popup, link, true);
     MenuCreator.addDisambiguationToMenu(wikipedia, popup, link);
     MenuCreator.addReloadLinksToMenu(wikipedia, popup, link, window);
     //MenuCreator.addPurgeCacheToMenu(popup, link, window);

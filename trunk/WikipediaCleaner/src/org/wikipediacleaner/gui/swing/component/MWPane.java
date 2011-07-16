@@ -113,7 +113,7 @@ public class MWPane
   boolean isEditable = true;
   boolean isInInternalModification = false;
 
-  private transient MWPopupListener popupListener;
+  private transient MWPanePopupListener popupListener;
 
   private int undoLevels;
   private LinkedList<String> undoTexts;
@@ -315,33 +315,6 @@ public class MWPane
   }
 
   /**
-   * @param chk JCheckBox used to forcing adding a note in the Talk page.
-   */
-  public void setCheckBoxAddNote(JCheckBox chk) {
-    if (popupListener != null) {
-      popupListener.setCheckBoxAddNote(chk);
-    }
-  }
-
-  /**
-   * @param chk JCheckBox used for updating disambiguation warning in the Talk page.
-   */
-  public void setCheckBoxUpdateDabWarning(JCheckBox chk) {
-    if (popupListener != null) {
-      popupListener.setCheckBoxUpdateDabWarning(chk);
-    }
-  }
-
-  /**
-   * @param chk JCheckBox used for creating disambiguation warning in the Talk page.
-   */
-  public void setCheckBoxCreateDabWarning(JCheckBox chk) {
-    if (popupListener != null) {
-      popupListener.setCheckBoxCreateDabWarning(chk);
-    }
-  }
-
-  /**
    * Initialize styles. 
    */
   private void initialize() {
@@ -385,9 +358,8 @@ public class MWPane
     InputMap inputMapInFocused = getInputMap(WHEN_IN_FOCUSED_WINDOW);
     KeyStroke keyStroke = null;
 
-    popupListener = new MWPopupListener(wikipedia, window);
-    addKeyListener(popupListener);
-    addMouseListener(popupListener);
+    setPopupListener(new MWPaneBasicPopupListener(wikipedia, window));
+
     keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK);
     inputMapFocused.put(keyStroke, "find-text");
     actionMap.put("find-text", new FindTextAction());
@@ -400,6 +372,25 @@ public class MWPane
 
     isInInternalModification = oldState;
     setModified(false);
+  }
+
+  /**
+   * @param listener Popup listener.
+   */
+  public void setPopupListener(MWPanePopupListener listener) {
+
+    // Remove old listener
+    if (popupListener != null) {
+      removeKeyListener(popupListener);
+      removeMouseListener(popupListener);
+    }
+
+    // Add new listener
+    popupListener = listener;
+    if (popupListener != null) {
+      addKeyListener(popupListener);
+      addMouseListener(popupListener);
+    }
   }
 
   /* (non-Javadoc)
@@ -731,6 +722,56 @@ public class MWPane
       }
     }
     return possibleFonts;
+  }
+
+  // =========================================================================
+  // Check Box management
+  // =========================================================================
+
+  private JCheckBox chkAddNote;
+  private JCheckBox chkCreateDabWarning;
+  private JCheckBox chkUpdateDabWarning;
+
+  /**
+   * @return JCheckBox used for adding a note in the Talk page.
+   */
+  public JCheckBox getCheckBoxAddNote() {
+    return chkAddNote;
+  }
+
+  /**
+   * @param chk JCheckBox used for adding a note in the Talk page.
+   */
+  public void setCheckBoxAddNote(JCheckBox chk) {
+    chkAddNote = chk;
+  }
+
+  /**
+   * @return JCheckBox used for creating disambiguation warning in the Talk page.
+   */
+  public JCheckBox getCheckBoxCreateDabWarning() {
+    return chkCreateDabWarning;
+  }
+
+  /**
+   * @param chk JCheckBox used for creating disambiguation warning in the Talk page.
+   */
+  public void setCheckBoxCreateDabWarning(JCheckBox chk) {
+    chkCreateDabWarning = chk;
+  }
+
+  /**
+   * @return JCheckBox used for updating disambiguation warning in the Talk page.
+   */
+  public JCheckBox getCheckBoxUpdateDabWarning() {
+    return chkUpdateDabWarning;
+  }
+
+  /**
+   * @param chk JCheckBox used for updating disambiguation warning in the Talk page.
+   */
+  public void setCheckBoxUpdateDabWarning(JCheckBox chk) {
+    chkUpdateDabWarning = chk;
   }
 
   // =========================================================================

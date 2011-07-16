@@ -18,7 +18,9 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.utils.Configuration;
@@ -143,6 +145,60 @@ public class PageAnalysis {
   }
 
   /**
+   * @param currentIndex Index.
+   * @return Element at the specified index.
+   */
+  public PageElement isInElement(int currentIndex) {
+
+    // Check if in comment
+    PageElement element = isInComment(currentIndex);
+    if (element != null) {
+      return element;
+    }
+
+    // Check if in internal link
+    PageElementInternalLink internalLink = isInInternalLink(currentIndex);
+    element = internalLink;
+
+    // Check if in template
+    PageElementTemplate template = isInTemplate(currentIndex);
+    if ((template != null) &&
+        ((element == null) || (element.getBeginIndex() < template.getBeginIndex()))) {
+      element = template;
+    }
+
+    // Check if in category
+    PageElementCategory category = isInCategory(currentIndex);
+    if ((category != null) &&
+        ((element == null) || (element.getBeginIndex() < category.getBeginIndex()))) {
+      element = category;
+    }
+
+    // Check if in interwiki
+    PageElementInterwikiLink interwiki = isInInterwikiLink(currentIndex);
+    if ((interwiki != null) &&
+        ((element == null) || (element.getBeginIndex() < interwiki.getBeginIndex()))) {
+      element = interwiki;
+    }
+
+    // Check if in language link
+    PageElementLanguageLink language = isInLanguageLink(currentIndex);
+    if ((language != null) &&
+        ((element == null) || (element.getBeginIndex() < language.getBeginIndex()))) {
+      element = language;
+    }
+
+    // Check if in external link
+    PageElementExternalLink externalLink = isInExternalLink(currentIndex);
+    if ((externalLink != null) &&
+        ((element == null) || (element.getBeginIndex() < externalLink.getBeginIndex()))) {
+      element = externalLink;
+    }
+
+    return element;
+  }
+
+  /**
    * @return All titles in the page analysis.
    */
   public Collection<PageElementTitle> getTitles() {
@@ -154,6 +210,26 @@ public class PageAnalysis {
       }
       return titles;
     }
+  }
+
+  /**
+   * @param position Position in the text.
+   * @return All titles leading to the given positio.
+   */
+  public Collection<PageElementTitle> getCurrentTitles(int position) {
+    Collection<PageElementTitle> tmpTitles = getTitles();
+
+    List<PageElementTitle> currentTitles = new ArrayList<PageElementTitle>();
+    for (PageElementTitle title : tmpTitles) {
+      if (title.getBeginIndex() < position) {
+        while ((!currentTitles.isEmpty()) &&
+               (currentTitles.get(currentTitles.size() - 1).getFirstLevel() >= title.getFirstLevel())) {
+          currentTitles.remove(currentTitles.size() - 1);
+        }
+        currentTitles.add(title);
+      }
+    }
+    return currentTitles;
   }
 
   /**

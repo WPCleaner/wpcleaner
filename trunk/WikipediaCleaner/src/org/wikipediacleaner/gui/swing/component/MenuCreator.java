@@ -45,7 +45,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.TemplateMatcher;
@@ -163,12 +163,11 @@ public class MenuCreator {
    * @param popup Popup menu.
    * @param element Text element.
    * @param textPane Text pane.
-   * @param position Position in text.
    * @param info Information.
    */
   public static void addInfoToMenu(
       JPopupMenu popup, Element element, JTextPane textPane,
-      int position, CheckErrorResult info) {
+      CheckErrorResult info) {
     if ((popup == null) || (element == null) || (textPane == null) || (info == null)) {
       return;
     }
@@ -213,26 +212,22 @@ public class MenuCreator {
     menuItem = new JMenuItem(info.getErrorType());
     menuItem.setEnabled(false);
     popup.add(menuItem);
-    //addCurrentChapterToMenu(popup, textPane, position);
   }
 
   /**
    * Add submenus for showing current chapter organization.
    * 
-   * @param wikipedia Wikipedia.
    * @param popup Popup menu.
-   * @param position Current position in text
-   * @param textPane Text pane
+   * @param position Current position in text.
+   * @param pageAnalysis Page analyis.
    */
   public static void addCurrentChapterToMenu(
-      EnumWikipedia wikipedia, JPopupMenu popup,
-      int position, JTextPane textPane) {
-    if ((popup == null) || (textPane == null)) {
+      JPopupMenu popup,
+      int position, PageAnalysis pageAnalysis) {
+    if ((popup == null) || (pageAnalysis == null)) {
       return;
     }
-    String contents = textPane.getText();
-    List<PageElementTitle> chapters = PageContents.getChapterPosition(
-        wikipedia, contents, position, PageContents.findAllComments(wikipedia, contents));
+    Collection<PageElementTitle> chapters = pageAnalysis.getCurrentTitles(position);
     if ((chapters != null) && !chapters.isEmpty()) {
       JMenu submenu = new JMenu(GT._("Current chapter"));
       for (PageElementTitle chapter : chapters) {
@@ -915,14 +910,16 @@ public class MenuCreator {
    * 
    * @param popup Popup menu.
    * @param text Text.
-   * @param element Element.
    * @param textPane Text pane.
+   * @param startOffset Start offset.
+   * @param endOffset End offset.
    */
   public static void addRemoveLinkToMenu(
-      JPopupMenu popup, String text, Element element, JTextPane textPane) {
+      JPopupMenu popup, String text,
+      MWPane textPane, int startOffset, int endOffset) {
     if (text != null) {
       JMenuItem menuItem = new JMenuItem(GT._("Remove link"));
-      ActionListener action = new RemoveLinkAction(text, element, textPane);
+      ActionListener action = new RemoveLinkAction(text, textPane, startOffset, endOffset);
       menuItem.addActionListener(action);
       popup.add(menuItem);
     }
@@ -1140,9 +1137,11 @@ public class MenuCreator {
    * @param wikipedia Wikipedia.
    * @param popup Popup menu.
    * @param page Page.
+   * @param showLinks True if internal links should be displayed.
    */
   public static void addViewToMenu(
-      EnumWikipedia wikipedia, JPopupMenu popup, Page page) {
+      EnumWikipedia wikipedia, JPopupMenu popup,
+      Page page, boolean showLinks) {
     if ((wikipedia == null) || (popup == null) || (page == null)) {
       return;
     }
@@ -1150,7 +1149,8 @@ public class MenuCreator {
     ActionListener action = null;
     List<Page> links = page.getLinksWithRedirect();
     if (Utilities.isDesktopSupported()) {
-      if (((links != null) && (links.size() > 0)) || page.isRedirect()) {
+      if (((links != null) && (links.size() > 0) && showLinks) ||
+          page.isRedirect()) {
         int fixedBeginView = 0;
         int fixedEndView = 0;
         int fixedBeginHistory = 0;
@@ -1173,7 +1173,7 @@ public class MenuCreator {
           submenuHistory.add(menuItem);
           fixedBeginHistory++;
         }
-        if ((links != null) && (links.size() > 0)) {
+        if ((links != null) && (links.size() > 0) && showLinks) {
           fixedBeginView += addSeparator(submenuView);
           fixedBeginHistory += addSeparator(submenuHistory);
     
