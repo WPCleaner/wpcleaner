@@ -27,7 +27,6 @@ import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementDefaultsort;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -143,34 +142,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String fix(String fixName, Page page, String contents) {
-    int index = contents.length();
     PageAnalysis pageAnalysis = new PageAnalysis(page, contents);
-    PageElementCategory category = pageAnalysis.getNextCategory(0);
-    if (category != null) {
-      index = category.getBeginIndex();
-    } else {
-      PageElementLanguageLink language = pageAnalysis.getNextLanguageLink(0);
-      if (language != null) {
-        index = language.getBeginIndex();
-      }
-    }
-    StringBuilder tmp = new StringBuilder();
-    if (index > 0) {
-      tmp.append(contents.substring(0, index));
-    }
-    tmp.append("{{DEFAULTSORT:");
-    for (int i = 0; i < page.getTitle().length(); i++) {
-      char character = page.getTitle().charAt(i);
-      if (SpecialCharacters.isAuthorized(character, page.getWikipedia())) {
-        tmp.append(character);
-      } else {
-        tmp.append(SpecialCharacters.proposeReplacement(character));
-      }
-    }
-    tmp.append("}}\n");
-    if (index < contents.length()) {
-      tmp.append(contents.substring(index));
-    }
-    return tmp.toString();
+    return addDefaultSort(pageAnalysis);
   }
 }

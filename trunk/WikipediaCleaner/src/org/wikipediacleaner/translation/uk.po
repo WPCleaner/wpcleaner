@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-16 12:09+0200\n"
+"POT-Creation-Date: 2011-07-16 14:24+0200\n"
 "PO-Revision-Date: 2010-09-16 07:39+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -150,7 +150,8 @@ msgstr ""
 msgid "View image"
 msgstr "Переглянути зображення"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:44
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:43
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:41
 msgid "Add DEFAULTSORT"
 msgstr "Додати ТИПОВЕ_СОРТУВАННЯ"
 
@@ -254,11 +255,11 @@ msgstr "Дати назву <ref> позначці"
 msgid "What name would like to use for the <ref> tag ?"
 msgstr "Яку назву ви хотіли б використовувати для цієї <ref> позначки ?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:247
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:250
 msgid "Title of the article describing this type of error"
 msgstr "Назва статті, що описує цей тип помилки"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:248
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:251
 msgid "List of false positives for this type of error"
 msgstr "Список помилкових спрацьовувань для такого типу помилки"
 

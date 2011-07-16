@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-16 12:09+0200\n"
+"POT-Creation-Date: 2011-07-16 14:24+0200\n"
 "PO-Revision-Date: 2011-06-20 18:41+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -144,7 +144,8 @@ msgstr ""
 msgid "View image"
 msgstr "Zobrazit obrázek"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:44
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:43
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:41
 msgid "Add DEFAULTSORT"
 msgstr "Přidat DEFAULTSORT"
 
@@ -248,11 +249,11 @@ msgstr "Přidat jméno ke značce <ref>"
 msgid "What name would like to use for the <ref> tag ?"
 msgstr "Jaké jméno chcete použít pro značku <ref>?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:247
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:250
 msgid "Title of the article describing this type of error"
 msgstr "Titulek článku popisující tento typ chyby"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:248
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:251
 msgid "List of false positives for this type of error"
 msgstr "Seznam falešně pozitivních výsledků pro tento typ chyby"
 
