@@ -41,8 +41,8 @@ import org.wikipediacleaner.api.data.Suggestion;
 
 
 /**
- * Algorithm for analyzing error 500 of check wikipedia project.
- * Error 92: Orthograph and typography
+ * Algorithm for analyzing error 501 of check wikipedia project.
+ * Error 501: Orthograph and typography
  */
 public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
