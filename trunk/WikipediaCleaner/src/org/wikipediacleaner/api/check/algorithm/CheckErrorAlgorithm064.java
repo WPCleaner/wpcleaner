@@ -21,14 +21,24 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
  * Algorithm for analyzing error 64 of check wikipedia project.
- * Error 64: Link equal to linktext <br/>
+ * Error 64: Link equal to linktext
  */
 public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
+
+  /**
+   * Possible global fixes.
+   */
+  private final static String[] globalFixes = new String[] {
+    GT._("Modify all internal links"),
+  };
 
   public CheckErrorAlgorithm064() {
     super("Link equal to linktext");
@@ -47,49 +57,52 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
+
+    // Check every internal link
+    Collection<PageElementInternalLink> links = pageAnalysis.getInternalLinks();
+    if ((links == null) || (links.isEmpty())) {
+      return false;
+    }
     boolean result = false;
-    int startIndex = 0;
-    int beginIndex = -1;
-    int endIndex = 0;
-    int pipeIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      if (beginIndex < startIndex) {
-        beginIndex = contents.indexOf("[[", startIndex);
-      }
-      if (beginIndex < 0) {
-        return result;
-      }
-      if (endIndex <= beginIndex) {
-        endIndex = contents.indexOf("]]", beginIndex);
-      }
-      if (endIndex < 0) {
-        return result;
-      }
-      if (pipeIndex <= beginIndex) {
-        pipeIndex = contents.indexOf("|", beginIndex);
-      }
-      if (pipeIndex < 0) {
-        return result;
-      }
-      if (endIndex < pipeIndex) {
-        startIndex = endIndex + 1;
-      } else {
-        String link = contents.substring(beginIndex + 2, pipeIndex);
-        String text = contents.substring(pipeIndex + 1, endIndex);
-        if (link.equals(text)) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), beginIndex, endIndex + 2);
-          errorResult.addReplacement("[[" + text + "]]");
-          errors.add(errorResult);
+    for (PageElementInternalLink link : links) {
+      String anchor = link.getAnchor();
+      String linkName = link.getLink();
+      String text = link.getText();
+      if (((anchor == null) || (anchor.trim().length() == 0)) &&
+          (Page.areSameTitle(linkName, text))) {
+        if (errors == null) {
+          return true;
         }
-        startIndex = beginIndex + 1;
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            link.getBeginIndex(),
+            link.getEndIndex());
+        errorResult.addReplacement("[[" + text + "]]");
+        errors.add(errorResult);
       }
     }
     return result;
+  }
+
+  /**
+   * @return List of possible global fixes.
+   */
+  @Override
+  public String[] getGlobalFixes() {
+    return globalFixes;
+  }
+
+  /**
+   * Fix all the errors in the page.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Page contents after fix.
+   */
+  @Override
+  public String fix(String fixName, Page page, String contents) {
+    return fixUsingFirstReplacement(fixName, page, contents);
   }
 }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-16 19:56+0200\n"
+"POT-Creation-Date: 2011-07-16 20:16+0200\n"
 "PO-Revision-Date: 2011-01-22 08:55+0000\n"
 "Last-Translator: Jurgen <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -170,6 +170,10 @@ msgstr "Verwijder"
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
 msgstr "Afscheiding gebruikt tussen opeenvolgende {0} tags."
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm064.java:40
+msgid "Modify all internal links"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
 msgid "Remove <small> tag"

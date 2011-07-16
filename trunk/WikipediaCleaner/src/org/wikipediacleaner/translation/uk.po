@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-16 19:56+0200\n"
+"POT-Creation-Date: 2011-07-16 20:16+0200\n"
 "PO-Revision-Date: 2010-09-16 07:39+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -173,6 +173,11 @@ msgstr "Вилучити"
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
 msgstr "Використовується як роздільник між послідовними {0} позначками"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm064.java:40
+#, fuzzy
+msgid "Modify all internal links"
+msgstr "Внутрішні посилання"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
 msgid "Remove <small> tag"
