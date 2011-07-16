@@ -19,12 +19,12 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementCategory;
+import org.wikipediacleaner.api.data.PageElementDefaultsort;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -79,52 +79,32 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyzing the text from the beginning
-    int startIndex = 0;
+    // Searching a DEFAULTSORT tag
     String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      // Update position of next {{
-      int beginIndex = contents.indexOf("{{", startIndex);
+    PageElementDefaultsort tag = pageAnalysis.getNextDefaultSort(0);
+    if (tag != null) {
+      return false;
+    }
 
-      if (beginIndex < 0) {
-        // No more {{
-        startIndex = contents.length();
-      } else {
-        int currentPos = beginIndex + 2;
-
-        // Update position of next }}
-        int endIndex = contents.indexOf("}}", currentPos);
-
-        if (endIndex < 0) {
-          startIndex = contents.length();
-        } else {
-          // Possible whitespaces
-          while ((currentPos < endIndex) && Character.isWhitespace(contents.charAt(currentPos))) {
-            currentPos++;
-          }
-
-          // Check that link is DEFAULTSORT
-          String defaultSort = null;
-          if (currentPos < endIndex) {
-            MagicWord magicDefaultsort = pageAnalysis.getWikipedia().getMagicWord(
-                MagicWord.DEFAULT_SORT);
-            List<String> aliases = magicDefaultsort.getAliases();
-            for (int i = 0; (i < aliases.size()) && (defaultSort == null); i++) {
-              if (contents.startsWith(aliases.get(i), currentPos)) {
-                currentPos += aliases.get(i).length();
-                defaultSort = aliases.get(i);
-              }
-            }
-          }
-
-          // DEFAULTSORT found
-          if ((currentPos < endIndex) && (defaultSort != null)) {
-            return false;
-          }
-          startIndex = endIndex + 2;
+    // Searching for Categories without a sort key
+    boolean categoriesWithoutSort = false;
+    int currentIndex = 0;
+    while (currentIndex < contents.length()) {
+      PageElementCategory category = pageAnalysis.getNextCategory(currentIndex);
+      if (category != null) {
+        currentIndex = category.getEndIndex();
+        if ((category.getSort() == null) ||
+            (category.getSort().trim().length() == 0)) {
+          categoriesWithoutSort = true;
         }
+      } else {
+        currentIndex = contents.length();
       }
     }
+    if (!categoriesWithoutSort) {
+      return false;
+    }
+
     return true;
   }
 

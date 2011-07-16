@@ -26,7 +26,6 @@ import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementDefaultsort;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.i18n.GT;
 
 /**
@@ -61,14 +60,13 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
     }
 
     // Analyzing the text from the beginning
+    Collection<PageElementDefaultsort> tags = pageAnalysis.getDefaultSorts();
+    if ((tags == null) || (tags.isEmpty())) {
+      return false;
+    }
     boolean result = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      PageElementDefaultsort tag = PageContents.findNextDefaultsort(
-          pageAnalysis.getPage(), contents, startIndex);
+    for (PageElementDefaultsort tag : tags) {
       if (tag != null) {
-        startIndex = tag.getEndIndex() + 1;
         boolean characterFound = false;
         boolean characterReplaced = false;
         String unknownCharacters = "";
@@ -111,8 +109,6 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
           }
           errors.add(errorResult);
         }
-      } else {
-        startIndex = contents.length();
       }
     }
     return result;

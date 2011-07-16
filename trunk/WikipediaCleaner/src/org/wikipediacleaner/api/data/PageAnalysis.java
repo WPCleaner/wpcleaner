@@ -46,6 +46,8 @@ public class PageAnalysis {
   private Collection<PageElementExternalLink> externalLinks;
   private final Object templatesLock = new Object();
   private Collection<PageElementTemplate> templates;
+  private final Object defaultSortLock = new Object();
+  private Collection<PageElementDefaultsort> defaultSorts;
   private final Object categoriesLock = new Object();
   private Collection<PageElementCategory> categories;
   private final Object interwikiLinksLock = new Object();
@@ -370,6 +372,49 @@ public class PageAnalysis {
       if ((template.getBeginIndex() <= currentIndex) &&
           (template.getEndIndex() > currentIndex)) {
         return template;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @return All DEFAULTSORT in the page analysis.
+   */
+  public Collection<PageElementDefaultsort> getDefaultSorts() {
+    Collection<PageElementComment> tmpComments = getComments();
+
+    synchronized (defaultSortLock) {
+      if (defaultSorts == null) {
+        defaultSorts = PageContents.findAllDefaultSorts(getPage(), getContents(), tmpComments);
+      }
+      return defaultSorts;
+    }
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Next DEFAULTSORT.
+   */
+  public PageElementDefaultsort getNextDefaultSort(int currentIndex) {
+    Collection<PageElementDefaultsort> tmpDefaultSorts = getDefaultSorts();
+    for (PageElementDefaultsort defaultSort : tmpDefaultSorts) {
+      if (defaultSort.getBeginIndex() >= currentIndex) {
+        return defaultSort;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return DefaultSort if the current index is inside a DEFAULTSORT.
+   */
+  public PageElementDefaultsort isInDefaultSort(int currentIndex) {
+    Collection<PageElementDefaultsort> tmpDefaultSorts = getDefaultSorts();
+    for (PageElementDefaultsort defaultSort : tmpDefaultSorts) {
+      if ((defaultSort.getBeginIndex() <= currentIndex) &&
+          (defaultSort.getEndIndex() > currentIndex)) {
+        return defaultSort;
       }
     }
     return null;
