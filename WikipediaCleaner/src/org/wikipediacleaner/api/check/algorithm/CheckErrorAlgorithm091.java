@@ -23,14 +23,23 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.MagicWord;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
  * Algorithm for analyzing error 91 of check wikipedia project.
- * Error 91: DEFAULTSORT is missing and title with lowercase_letters
+ * Error 91: DEFAULTSORT is missing and title with lowercase letters
  */
 public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
+
+  /**
+   * Possible global fixes.
+   */
+  private final static String[] globalFixes = new String[] {
+    GT._("Add DEFAULTSORT"),
+  };
 
   public CheckErrorAlgorithm091() {
     super("DEFAULTSORT is missing and title with lowercase_letters");
@@ -117,5 +126,27 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
       }
     }
     return true;
+  }
+
+  /**
+   * @return List of possible global fixes.
+   */
+  @Override
+  public String[] getGlobalFixes() {
+    return globalFixes;
+  }
+
+  /**
+   * Fix all the errors in the page.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @return Page contents after fix.
+   */
+  @Override
+  public String fix(String fixName, Page page, String contents) {
+    PageAnalysis pageAnalysis = new PageAnalysis(page, contents);
+    return addDefaultSort(pageAnalysis);
   }
 }

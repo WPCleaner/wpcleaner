@@ -26,9 +26,12 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementCategory;
+import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTagData;
 import org.wikipediacleaner.i18n.GT;
 
@@ -453,5 +456,97 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       }
     }
     return result;
+  }
+
+  /**
+   * Add DEFAULTSORT if it's missing.
+   * 
+   * @param pageAnalysis Page analysis.
+   * @return Page contents with the DEFAULTSORT added.
+   */
+  protected String addDefaultSort(PageAnalysis pageAnalysis) {
+    // Basic check
+    if ((pageAnalysis == null) ||
+        (pageAnalysis.getContents() == null)) {
+      return null;
+    }
+    String contents = pageAnalysis.getContents();
+    if ((pageAnalysis.getPage() == null) ||
+        (pageAnalysis.getPage().getTitle() == null)) {
+      return contents;
+    }
+
+    // Check that DEFAULTSORT is missing
+    // TODO
+
+    // Find position to insert DEFAULTSORT
+    int index = contents.length();
+    PageElementCategory firstCategory = pageAnalysis.getNextCategory(0);
+    if (firstCategory != null) {
+      index = firstCategory.getBeginIndex();
+    } else {
+      PageElementLanguageLink firstLanguage = pageAnalysis.getNextLanguageLink(0);
+      if (firstLanguage != null) {
+        index = firstLanguage.getBeginIndex();
+      }
+    }
+
+    // Add DEFAULTSORT
+    StringBuilder buffer = new StringBuilder();
+    if (index > 0) {
+      buffer.append(contents.substring(0, index));
+      if (contents.charAt(index - 1) != '\n') {
+        buffer.append('\n');
+      }
+    }
+    buffer.append("{{DEFAULTSORT:");
+
+    // Remove special characters from title
+    String title = pageAnalysis.getPage().getTitle();
+    StringBuilder currentTitle = new StringBuilder();
+    for (int i = 0; i < title.length(); i++) {
+      char character = title.charAt(i);
+      if (SpecialCharacters.isAuthorized(character, pageAnalysis.getWikipedia())) {
+        currentTitle.append(character);
+      } else {
+        currentTitle.append(SpecialCharacters.proposeReplacement(character));
+      }
+    }
+
+    // Manage capitals and small letters
+    title = currentTitle.toString();
+    currentTitle.setLength(0);
+    boolean previousLetter = false;
+    boolean previousSpace = true;
+    for (int i = 0; i < title.length(); i++) {
+      char character = title.charAt(i);
+      if (previousSpace) {
+        if (Character.isLowerCase(character)) {
+          currentTitle.append(Character.toUpperCase(character));
+        } else {
+          currentTitle.append(character);
+        }
+      } else if (previousLetter) {
+        if (Character.isUpperCase(character)) {
+          currentTitle.append(Character.toLowerCase(character));
+        } else {
+          currentTitle.append(character);
+        }
+      } else {
+        currentTitle.append(character);
+      }
+
+      previousLetter = Character.isLetter(character);
+      previousSpace = (character == ' ');
+    }
+
+    // Finish
+    buffer.append(currentTitle);
+    buffer.append("}}\n");
+    if (index < contents.length()) {
+      buffer.append(contents.substring(index));
+    }
+
+    return buffer.toString();
   }
 }

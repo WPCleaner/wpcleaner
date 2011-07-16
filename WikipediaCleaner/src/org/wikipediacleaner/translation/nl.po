@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-16 12:09+0200\n"
+"POT-Creation-Date: 2011-07-16 14:24+0200\n"
 "PO-Revision-Date: 2011-01-22 08:55+0000\n"
 "Last-Translator: Jurgen <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -147,7 +147,8 @@ msgstr ""
 msgid "View image"
 msgstr "Afbeelding bekijken"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:44
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:43
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:41
 msgid "Add DEFAULTSORT"
 msgstr ""
 
@@ -251,11 +252,11 @@ msgstr "Geen de <ref> tag een naam"
 msgid "What name would like to use for the <ref> tag ?"
 msgstr "Welke naam wil u de <ref> tag geven?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:247
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:250
 msgid "Title of the article describing this type of error"
 msgstr "Titel van het artikel dat dit soort fouten bespreekt"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:248
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:251
 msgid "List of false positives for this type of error"
 msgstr "Lijst van valse positieven voor dit soort fouten"
 
