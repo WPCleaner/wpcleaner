@@ -120,35 +120,51 @@ public class PageElementInternalLink extends PageElement {
       return null;
     }
 
-    // Create internal link
+    // Extract link elements
+    String link = null;
+    String anchor = null;
+    String text = null;
     if ((pipeIndex >= 0) && (pipeIndex < endIndex)) {
       if ((anchorIndex >= 0) && (anchorIndex < pipeIndex)) {
-        return new PageElementInternalLink(
-            wikipedia,
-            index, endIndex + 2,
-            contents.substring(beginIndex, anchorIndex),
-            contents.substring(anchorIndex + 1, pipeIndex),
-            contents.substring(pipeIndex + 1, endIndex));
+        link = contents.substring(beginIndex, anchorIndex);
+        anchor = contents.substring(anchorIndex + 1, pipeIndex);
+        text = contents.substring(pipeIndex + 1, endIndex);
+      } else {
+        link = contents.substring(beginIndex, pipeIndex);
+        text = contents.substring(pipeIndex + 1, endIndex);
       }
-      return new PageElementInternalLink(
-          wikipedia,
-          index, endIndex + 2,
-          contents.substring(beginIndex, pipeIndex),
-          null,
-          contents.substring(pipeIndex + 1, endIndex));
+    } else if ((anchorIndex >= 0) && (anchorIndex < endIndex)) {
+      link = contents.substring(beginIndex, anchorIndex);
+      anchor = contents.substring(anchorIndex + 1, endIndex);
+    } else {
+      link = contents.substring(beginIndex, endIndex);
     }
-    if ((anchorIndex >= 0) && (anchorIndex < endIndex)) {
-      return new PageElementInternalLink(
-          wikipedia,
-          index, endIndex + 2,
-          contents.substring(beginIndex, anchorIndex),
-          contents.substring(anchorIndex + 1, endIndex), null);
+
+    // Check that it is really an internal link
+    String linkTrimmed = link.trim();
+    int colonIndex = linkTrimmed.indexOf(':');
+    if (colonIndex > 0) {
+      String namespaceName = linkTrimmed.substring(0, colonIndex);
+
+      // Is it a category ?
+      Namespace category = Namespace.getNamespace(Namespace.CATEGORY, wikipedia.getNamespaces());
+      if ((category != null) && (category.isPossibleName(namespaceName))) {
+        return null;
+      }
+
+      // Is it an interwiki ?
+      for (Interwiki iw : wikipedia.getInterwikis()) {
+        if (iw.getPrefix().equals(namespaceName)) {
+          return null;
+        }
+      }
     }
+
+    // Create internal link
     return new PageElementInternalLink(
         wikipedia,
         index, endIndex + 2,
-        contents.substring(beginIndex, endIndex),
-        null, null);
+        link, anchor, text);
   }
 
   public String getLink() {

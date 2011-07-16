@@ -22,7 +22,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JTextPane;
-import javax.swing.text.Element;
 
 
 /**
@@ -31,15 +30,17 @@ import javax.swing.text.Element;
 public class RemoveLinkAction implements ActionListener {
 
   private final String text;
-  private final Element element;
+  private final int startOffset;
+  private final int endOffset;
   private final JTextPane textPane;
 
   public RemoveLinkAction(
       String text,
-      Element element,
-      JTextPane textPane) {
+      JTextPane textPane,
+      int startOffset, int endOffset) {
     this.text = text;
-    this.element = element;
+    this.startOffset = startOffset;
+    this.endOffset = endOffset;
     this.textPane = textPane;
   }
 
@@ -47,13 +48,16 @@ public class RemoveLinkAction implements ActionListener {
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
-    if ((element != null) &&
-        (textPane != null) &&
+    if ((textPane != null) &&
         (text != null) &&
         (text.length() > 0)) {
-      textPane.setCaretPosition(element.getStartOffset());
-      textPane.moveCaretPosition(element.getEndOffset());
-      textPane.replaceSelection(text);
+      try {
+        textPane.setCaretPosition(startOffset);
+        textPane.moveCaretPosition(endOffset);
+        textPane.replaceSelection(text);
+      } catch (IllegalArgumentException ex) {
+        //
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 /*
  *  WikipediaCleaner: A tool to help on Wikipedia maintenance tasks.
- *  Copyright (C) 2008  Nicolas Vervelle
+ *  Copyright (C) 2011  Nicolas Vervelle
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,40 +19,34 @@
 package org.wikipediacleaner.gui.swing.component;
 
 import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 
 
 /**
- * A popup menu listener for Page lists. 
+ * A basic popup menu listener for MediaWikiPane. 
  */
-public class BasicPageListPopupListener extends
-    AbstractPageListPopupListener {
+public class MWPaneBasicPopupListener extends MWPanePopupListener {
 
-  /**
-   * @param wikipedia Wikipedia
-   * @param textPane Text pane.
-   * @param window Window.
-   */
-  public BasicPageListPopupListener(
-      EnumWikipedia wikipedia,
-      MWPane textPane,
-      BasicWindow window) {
-    super(wikipedia, textPane, window);
+  public MWPaneBasicPopupListener(
+      EnumWikipedia wikipedia, BasicWindow window) {
+    super(wikipedia, window);
   }
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.gui.swing.component.AbstractPageListPopupListener#createPopup(javax.swing.JPopupMenu, org.wikipediacleaner.api.data.Page)
+  /**
+   * Construct popup menu.
+   * 
+   * @param textPane Text pane.
+   * @param position Position in text.
+   * @param pageAnalysis Page analysis.
    */
   @Override
-  protected void createPopup(JPopupMenu popup, Page link) {
-    popup.add(new JSeparator());
-    MenuCreator.addAnalyzeToMenu(wikipedia, popup, link);
-    MenuCreator.addViewToMenu(wikipedia, popup, link, true);
-    MenuCreator.addDisambiguationToMenu(wikipedia, popup, link);
+  protected JPopupMenu createPopup(
+      MWPane textPane, int position,
+      PageAnalysis pageAnalysis) {
+    return null;
   }
 
 }

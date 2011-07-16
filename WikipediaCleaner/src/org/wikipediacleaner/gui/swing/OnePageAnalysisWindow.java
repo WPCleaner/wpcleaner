@@ -77,7 +77,10 @@ import org.wikipediacleaner.gui.swing.component.AnalysisPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.CheckErrorPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.MWPaneCheckWikiFormatter;
+import org.wikipediacleaner.gui.swing.component.MWPaneCheckWikiPopupListener;
 import org.wikipediacleaner.gui.swing.component.MWPaneDisambiguationFormatter;
+import org.wikipediacleaner.gui.swing.component.MWPaneDisambiguationPopupListener;
+import org.wikipediacleaner.gui.swing.component.MWPanePopupListener;
 import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
@@ -621,6 +624,9 @@ public class OnePageAnalysisWindow extends OnePageWindow {
               formatter = new MWPaneDisambiguationFormatter(getWikipedia(), pages);
               getTextContents().setFormatter(formatter);
             }
+            MWPanePopupListener listener = new MWPaneDisambiguationPopupListener(
+                getWikipedia(), OnePageAnalysisWindow.this);
+            getTextContents().setPopupListener(listener);
           }
         } else if (list == listErrors) {
           // List of errors
@@ -640,6 +646,9 @@ public class OnePageAnalysisWindow extends OnePageWindow {
               formatter = new MWPaneCheckWikiFormatter(errorSelected.getAlgorithm());
               getTextContents().setFormatter(formatter);
             }
+            MWPanePopupListener listener = new MWPaneCheckWikiPopupListener(
+                getWikipedia(), OnePageAnalysisWindow.this);
+            getTextContents().setPopupListener(listener);
           }
         }
         list.repaint();

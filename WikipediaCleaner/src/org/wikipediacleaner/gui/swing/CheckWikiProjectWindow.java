@@ -101,6 +101,7 @@ import org.wikipediacleaner.gui.swing.component.MWHtmlRendererContext;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.gui.swing.component.MWPaneBasicFormatter;
 import org.wikipediacleaner.gui.swing.component.MWPaneCheckWikiFormatter;
+import org.wikipediacleaner.gui.swing.component.MWPaneCheckWikiPopupListener;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 import org.wikipediacleaner.gui.swing.worker.CheckWikiProjectWorker;
 import org.wikipediacleaner.gui.swing.worker.RetrieveContentWorker;
@@ -971,6 +972,8 @@ public class CheckWikiProjectWindow extends OnePageWindow {
             }
             
           });
+      textPage.setPopupListener(new MWPaneCheckWikiPopupListener(
+          getWikipedia(), CheckWikiProjectWindow.this));
       JComponent scrollContents = MWPane.createComplexPane(textPage);
       scrollContents.setMinimumSize(new Dimension(100, 100));
       constraints.fill = GridBagConstraints.BOTH;
