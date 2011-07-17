@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-17 19:36+0200\n"
+"POT-Creation-Date: 2011-07-17 22:16+0200\n"
 "PO-Revision-Date: 2011-06-20 18:41+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1374,7 +1374,7 @@ msgstr "Komentáře stránky - {0}"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:125
 #: org/wikipediacleaner/gui/swing/PageListTableModel.java:150
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:83
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:87
 msgid "Comments"
 msgstr "Komentáře"
 
@@ -1921,29 +1921,35 @@ msgstr "Zaznamenávat všechny odpovědi pro volání MediaWiki API"
 msgid "Add a timestamp to logs"
 msgstr "Přidávat časovou značku do záznamů"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:65
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:68
 #, fuzzy
 msgid "Formatting options"
 msgstr "Obecné možnosti"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:211
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:196
 msgid "Italic"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:224
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:212
 msgid "Bold"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:237
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:228
 msgid "Underline"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:250
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:244
 msgid "Strike through"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:262
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:259
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:266
 msgid "Foreground color"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:278
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:285
+msgid "Background color"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:85
@@ -2149,7 +2155,7 @@ msgstr ""
 "Rozcestníkové varování bylo aktualizováno v {1} stránkách.\n"
 "Zabralo to {2} sekund."
 
-#: org/wikipediacleaner/utils/Configuration.java:400
+#: org/wikipediacleaner/utils/Configuration.java:406
 msgid ""
 "Wikipedia Cleaner options have changed to allow different settings for each "
 "Wikipedia.\n"

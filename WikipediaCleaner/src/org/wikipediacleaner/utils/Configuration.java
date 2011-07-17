@@ -71,6 +71,33 @@ public class Configuration implements WindowListener {
   // Pojo properties
   public  final static String  POJO_AUTOMATIC_FIXING     = "AutomaticFixing";
   public  final static String  POJO_PAGE_COMMENTS        = "PageComments";
+  public  final static String  POJO_STYLES               = "Styles";
+
+  // Styles propeties
+  public  final static ConfigurationStyle STYLE_COMMENTS     = new ConfigurationStyle();
+  public  final static String  STYLE_COMMENTS_NAME           = "Comments";
+  public  final static Color   STYLE_COMMENTS_COLOR_BG       = Color.WHITE;
+  public  final static Color   STYLE_COMMENTS_COLOR_FG       = Color.GRAY;
+  public  final static boolean STYLE_COMMENTS_FMT            = true;
+  public  final static boolean STYLE_COMMENTS_FMT_BG         = false;
+  public  final static boolean STYLE_COMMENTS_FMT_BOLD       = false;
+  public  final static boolean STYLE_COMMENTS_FMT_FG         = true;
+  public  final static boolean STYLE_COMMENTS_FMT_ITALIC     = true;
+  public  final static boolean STYLE_COMMENTS_FMT_STRIKE     = false;
+  public  final static boolean STYLE_COMMENTS_FMT_UNDERLINE  = false;
+
+  static {
+    // Style for comments
+    STYLE_COMMENTS.setEnabled(STYLE_COMMENTS_FMT);
+    STYLE_COMMENTS.setForeground(STYLE_COMMENTS_FMT_FG);
+    STYLE_COMMENTS.setForegroundValue(STYLE_COMMENTS_COLOR_FG);
+    STYLE_COMMENTS.setBackground(STYLE_COMMENTS_FMT_BG);
+    STYLE_COMMENTS.setBackgroundValue(STYLE_COMMENTS_COLOR_BG);
+    STYLE_COMMENTS.setBold(STYLE_COMMENTS_FMT_BOLD);
+    STYLE_COMMENTS.setItalic(STYLE_COMMENTS_FMT_ITALIC);
+    STYLE_COMMENTS.setStrikeThrough(STYLE_COMMENTS_FMT_STRIKE);
+    STYLE_COMMENTS.setUnderline(STYLE_COMMENTS_FMT_UNDERLINE);
+  }
 
   // Integer properties
   public  final static String  INTEGER_ANALYSIS_NB_PAGES = "AnalysisNbPages";
@@ -116,13 +143,6 @@ public class Configuration implements WindowListener {
   public  final static String  BOOLEAN_CHECK_MARK_AS_FIXED     = "CheckMarkAsFixed";
   public  final static String  BOOLEAN_CLOSE_DISAMBIG          = "CloseDisambiguation";
   public  final static String  BOOLEAN_CLOSE_FULL              = "CloseFullAnalysis";
-  public  final static String  BOOLEAN_COMMENTS_FMT            = "CommentsFmt";
-  public  final static String  BOOLEAN_COMMENTS_FMT_BG         = "CommentsFmtBG";
-  public  final static String  BOOLEAN_COMMENTS_FMT_BOLD       = "CommentsFmtBold";
-  public  final static String  BOOLEAN_COMMENTS_FMT_FG         = "CommentsFmtFG";
-  public  final static String  BOOLEAN_COMMENTS_FMT_ITALIC     = "CommentsFmtItalic";
-  public  final static String  BOOLEAN_COMMENTS_FMT_STRIKE     = "CommentsFmtStrike";
-  public  final static String  BOOLEAN_COMMENTS_FMT_UNDERLINE  = "CommentsFmtUnderline";
   public  final static String  BOOLEAN_CREATE_DAB_WARNING      = "CreateDabWarning";
   public  final static String  BOOLEAN_CREATE_DAB_WARNING_ALL  = "CreateDabWarningAll";
   public  final static String  BOOLEAN_CREATE_DAB_WARNING_ENCY = "CreateDabWarningEncyclo";
@@ -156,13 +176,6 @@ public class Configuration implements WindowListener {
   public  final static boolean DEFAULT_CHECK_MARK_AS_FIXED     = false;
   public  final static boolean DEFAULT_CLOSE_DISAMBIG          = false;
   public  final static boolean DEFAULT_CLOSE_FULL              = true;
-  public  final static boolean DEFAULT_COMMENTS_FMT            = true;
-  public  final static boolean DEFAULT_COMMENTS_FMT_BG         = false;
-  public  final static boolean DEFAULT_COMMENTS_FMT_BOLD       = false;
-  public  final static boolean DEFAULT_COMMENTS_FMT_FG         = true;
-  public  final static boolean DEFAULT_COMMENTS_FMT_ITALIC     = true;
-  public  final static boolean DEFAULT_COMMENTS_FMT_STRIKE     = false;
-  public  final static boolean DEFAULT_COMMENTS_FMT_UNDERLINE  = false;
   public  final static boolean DEFAULT_CREATE_DAB_WARNING      = true;
   public  final static boolean DEFAULT_CREATE_DAB_WARNING_ALL  = false;
   public  final static boolean DEFAULT_CREATE_DAB_WARNING_ENCY = true;
@@ -180,13 +193,6 @@ public class Configuration implements WindowListener {
   public  final static boolean DEFAULT_UPDATE_DAB_WARNING_ALL  = true;
   public  final static boolean DEFAULT_UPDATE_DAB_WARNING_ENCY = true;
   public  final static boolean DEFAULT_WIKICLEANER_COMMENT     = true;
-
-  // Colors
-  public  final static String  COLOR_COMMENTS_BG         = "ColorCommentsBG";
-  public  final static String  COLOR_COMMENTS_FG         = "ColorCommentsFG";
-
-  public  final static Color   DEFAULT_COLOR_COMMENTS_BG = Color.WHITE;
-  public  final static Color   DEFAULT_COLOR_COMMENTS_FG = Color.GRAY;
 
   // Properties
   public  final static String  PROPERTIES_BACKLINKS      = "Backlinks";
@@ -787,6 +793,8 @@ public class Configuration implements WindowListener {
                 m.invoke(result, node.getLong(parameterName, 0));
               } else if (Float.class.isAssignableFrom(parameterType)) {
                 m.invoke(result, node.getFloat(parameterName, 0));
+              } else if (Color.class.isAssignableFrom(parameterType)) {
+                m.invoke(result, new Color(node.getInt(parameterName, 0)));
               }
             }
           }
@@ -868,6 +876,8 @@ public class Configuration implements WindowListener {
               node.putLong(attributeName, (Long) attrib);
             } else if (Float.class.isAssignableFrom(returnType)) {
               node.putFloat(attributeName, (Float) attrib);
+            } else if (Color.class.isAssignableFrom(returnType)) {
+              node.putInt(attributeName, ((Color) attrib).getRGB());
             }
           }
         }
@@ -934,6 +944,8 @@ public class Configuration implements WindowListener {
                   m.invoke(result, node.getLong(parameterName, 0));
                 } else if (Float.class.isAssignableFrom(parameterType)) {
                   m.invoke(result, node.getFloat(parameterName, 0));
+                } else if (Color.class.isAssignableFrom(parameterType)) {
+                  m.invoke(result, new Color(node.getInt(parameterName, 0)));
                 }
               }
             }
@@ -1001,6 +1013,8 @@ public class Configuration implements WindowListener {
                 node.putLong(attributeName, (Long) attrib);
               } else if (Float.class.isAssignableFrom(returnType)) {
                 node.putFloat(attributeName, (Float) attrib);
+              } else if (Color.class.isAssignableFrom(returnType)) {
+                node.putInt(attributeName, ((Color) attrib).getRGB());
               }
             }
           }
@@ -1012,6 +1026,40 @@ public class Configuration implements WindowListener {
       } catch (ClassCastException e) {
         //
       }
+    }
+  }
+
+  // ==========================================================================
+  // Styles management
+  // ==========================================================================
+
+  /**
+   * @param name Style name.
+   * @return Style.
+   */
+  public ConfigurationStyle getStyle(String name, ConfigurationStyle defaultStyle) {
+    if (name == null) {
+      return defaultStyle;
+    }
+    Object result = getPojo(null, POJO_STYLES, name, ConfigurationStyle.class);
+    if (result instanceof ConfigurationStyle) {
+      return (ConfigurationStyle) result;
+    }
+    return defaultStyle;
+  }
+
+  /**
+   * @param name Style name.
+   * @param style Style.
+   */
+  public void setStyle(String name, ConfigurationStyle style) {
+    if (name == null) {
+      return;
+    }
+    if (style == null) {
+      removePojo(null, POJO_STYLES, name);
+    } else {
+      addPojo(null, POJO_STYLES, style, name);
     }
   }
 
