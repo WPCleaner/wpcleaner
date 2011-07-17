@@ -93,7 +93,7 @@ public class AnalysisOptionsPanel extends OptionsPanel {
     constraints.gridwidth = 1;
     constraints.gridx = 0;
     constraints.gridy = 0;
-    constraints.insets = new Insets(2, 2, 2, 2);
+    constraints.insets = new Insets(0, 0, 0, 0);
     constraints.ipadx = 0;
     constraints.ipady = 0;
     constraints.weightx = 1;

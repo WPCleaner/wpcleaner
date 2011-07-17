@@ -29,6 +29,7 @@ import javax.swing.text.StyledDocument;
 
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.utils.Configuration;
 
 
 /**
@@ -132,6 +133,13 @@ public abstract class MWPaneFormatter {
     if (doc == null) {
       return;
     }
+    Configuration config = Configuration.getConfiguration();
+    if (!config.getBoolean(
+        null,
+        Configuration.BOOLEAN_COMMENTS_FMT,
+        Configuration.DEFAULT_COMMENTS_FMT)) {
+      return;
+    }
     for (PageElementComment comment : pageAnalysis.getComments()) {
       doc.setCharacterAttributes(
           comment.getBeginIndex(),
@@ -154,7 +162,7 @@ public abstract class MWPaneFormatter {
   /* ======================================================================== */
 
   /**
-   * @return A styled document that can be used to format a MediaWikiPane.
+   * @return A styled document that can be used to format a MWPane.
    */
   public static StyledDocument createDocument() {
     initializeStyles();
@@ -171,17 +179,44 @@ public abstract class MWPaneFormatter {
   private static boolean stylesInitialized = false;
 
   /**
-   * Initialize styles shared by all MediaWikiPane instances 
+   * Initialize styles shared by all MWPane instances 
    */
   private static void initializeStyles() {
     synchronized (lockStyles) {
       if (!stylesInitialized) {
         Style rootStyle = styleContext.getStyle(StyleContext.DEFAULT_STYLE);
+        Configuration config = Configuration.getConfiguration();
 
         // Style for comment
         Style commentStyle = styleContext.addStyle(STYLE_COMMENT, rootStyle);
-        StyleConstants.setForeground(commentStyle, Color.GRAY);
-        StyleConstants.setItalic(commentStyle, true);
+        formatStyleForeground(
+            commentStyle, config,
+            Configuration.BOOLEAN_COMMENTS_FMT_FG,
+            Configuration.DEFAULT_COMMENTS_FMT_FG,
+            Configuration.COLOR_COMMENTS_FG,
+            Configuration.DEFAULT_COLOR_COMMENTS_FG);
+        formatStyleBackground(
+            commentStyle, config,
+            Configuration.BOOLEAN_COMMENTS_FMT_BG,
+            Configuration.DEFAULT_COMMENTS_FMT_BG,
+            Configuration.COLOR_COMMENTS_BG,
+            Configuration.DEFAULT_COLOR_COMMENTS_BG);
+        formatStyleItalic(
+            commentStyle, config,
+            Configuration.BOOLEAN_COMMENTS_FMT_ITALIC,
+            Configuration.DEFAULT_COMMENTS_FMT_ITALIC);
+        formatStyleBold(
+            commentStyle, config,
+            Configuration.BOOLEAN_COMMENTS_FMT_BOLD,
+            Configuration.DEFAULT_COMMENTS_FMT_BOLD);
+        formatStyleStrikeThrough(
+            commentStyle, config,
+            Configuration.BOOLEAN_COMMENTS_FMT_STRIKE,
+            Configuration.DEFAULT_COMMENTS_FMT_STRIKE);
+        formatStyleUnderline(
+            commentStyle, config,
+            Configuration.BOOLEAN_COMMENTS_FMT_UNDERLINE,
+            Configuration.DEFAULT_COMMENTS_FMT_UNDERLINE);
         commentStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for normal link
@@ -255,5 +290,111 @@ public abstract class MWPaneFormatter {
         stylesInitialized = true;
       }
     }
+  }
+
+  /**
+   * Modify the foreground color of a style.
+   * 
+   * @param style Style to be modified.
+   * @param config Configuration.
+   * @param paramBoolean Parameter telling if the foreground shoud be set.
+   * @param defaultBoolean Default value.
+   * @param paramColor Parameter telling the color to be used.
+   * @param defaultColor Default color.
+   */
+  private static void formatStyleForeground(
+      Style style, Configuration config,
+      String paramBoolean, boolean defaultBoolean,
+      String paramColor, Color defaultColor) {
+    if (config.getBoolean(null, paramBoolean, defaultBoolean)) {
+      StyleConstants.setForeground(
+          style,
+          config.getColor(paramColor, defaultColor));
+    }
+  }
+
+  /**
+   * Modify the background color of a style.
+   * 
+   * @param style Style to be modified.
+   * @param config Configuration.
+   * @param paramBoolean Parameter telling if the background shoud be set.
+   * @param defaultBoolean Default value.
+   * @param paramColor Parameter telling the color to be used.
+   * @param defaultColor Default color.
+   */
+  private static void formatStyleBackground(
+      Style style, Configuration config,
+      String paramBoolean, boolean defaultBoolean,
+      String paramColor, Color defaultColor) {
+    if (config.getBoolean(null, paramBoolean, defaultBoolean)) {
+      StyleConstants.setBackground(
+          style,
+          config.getColor(paramColor, defaultColor));
+    }
+  }
+
+  /**
+   * Modify the bold attribute of a style.
+   * 
+   * @param style Style to be modified.
+   * @param config Configuration.
+   * @param param Parameter telling if bold should be used.
+   * @param defaultValue Default value.
+   */
+  private static void formatStyleBold(
+      Style style, Configuration config,
+      String param, boolean defaultValue) {
+    StyleConstants.setBold(
+        style,
+        config.getBoolean(null, param, defaultValue));
+  }
+
+  /**
+   * Modify the italic attribute of a style.
+   * 
+   * @param style Style to be modified.
+   * @param config Configuration.
+   * @param param Parameter telling if italic should be used.
+   * @param defaultValue Default value.
+   */
+  private static void formatStyleItalic(
+      Style style, Configuration config,
+      String param, boolean defaultValue) {
+    StyleConstants.setItalic(
+        style,
+        config.getBoolean(null, param, defaultValue));
+  }
+
+  /**
+   * Modify the underline attribute of a style.
+   * 
+   * @param style Style to be modified.
+   * @param config Configuration.
+   * @param param Parameter telling if underline should be used.
+   * @param defaultValue Default value.
+   */
+  private static void formatStyleUnderline(
+      Style style, Configuration config,
+      String param, boolean defaultValue) {
+    StyleConstants.setUnderline(
+        style,
+        config.getBoolean(null, param, defaultValue));
+  }
+
+  /**
+   * Modify the strike through attribute of a style.
+   * 
+   * @param style Style to be modified.
+   * @param config Configuration.
+   * @param param Parameter telling if strike through should be used.
+   * @param defaultValue Default value.
+   */
+  private static void formatStyleStrikeThrough(
+      Style style, Configuration config,
+      String param, boolean defaultValue) {
+    StyleConstants.setStrikeThrough(
+        style,
+        config.getBoolean(null, param, defaultValue));
   }
 }

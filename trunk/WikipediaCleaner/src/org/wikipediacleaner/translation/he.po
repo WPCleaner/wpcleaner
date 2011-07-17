@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-16 21:15+0200\n"
+"POT-Creation-Date: 2011-07-17 19:36+0200\n"
 "PO-Revision-Date: 2010-06-23 15:43+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -1095,13 +1095,13 @@ msgstr "תכני הכתבה"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:207
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:635
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:132
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:135
 msgid "&Validate"
 msgstr "&אימות"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:211
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:258
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:138
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:141
 msgid "&Cancel"
 msgstr "&ביטול"
 
@@ -1373,6 +1373,7 @@ msgstr "הערות עמוד - {0}"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:125
 #: org/wikipediacleaner/gui/swing/PageListTableModel.java:150
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:83
 msgid "Comments"
 msgstr "הערות"
 
@@ -1916,6 +1917,31 @@ msgstr ""
 msgid "Add a timestamp to logs"
 msgstr ""
 
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:65
+#, fuzzy
+msgid "Formatting options"
+msgstr "אפשרויות כלליות"
+
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:211
+msgid "Italic"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:224
+msgid "Bold"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:237
+msgid "Underline"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:250
+msgid "Strike through"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:262
+msgid "Foreground color"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:85
 msgid "General options"
 msgstr "אפשרויות כלליות"
@@ -1986,14 +2012,19 @@ msgid "Sorting"
 msgstr "סידור"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:112
+#, fuzzy
+msgid "Formatting"
+msgstr "סידור"
+
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:115
 msgid "Debug"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:126
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:129
 msgid "&Apply"
 msgstr "ה&חל"
 
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:144
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:147
 msgid "&Restore defaults"
 msgstr "&שחזר את ברירות המחדל"
 
@@ -2108,7 +2139,7 @@ msgid ""
 "It took {2} seconds."
 msgstr ""
 
-#: org/wikipediacleaner/utils/Configuration.java:378
+#: org/wikipediacleaner/utils/Configuration.java:400
 msgid ""
 "Wikipedia Cleaner options have changed to allow different settings for each "
 "Wikipedia.\n"

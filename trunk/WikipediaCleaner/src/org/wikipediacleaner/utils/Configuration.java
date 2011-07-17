@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.utils;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.WindowEvent;
@@ -115,6 +116,13 @@ public class Configuration implements WindowListener {
   public  final static String  BOOLEAN_CHECK_MARK_AS_FIXED     = "CheckMarkAsFixed";
   public  final static String  BOOLEAN_CLOSE_DISAMBIG          = "CloseDisambiguation";
   public  final static String  BOOLEAN_CLOSE_FULL              = "CloseFullAnalysis";
+  public  final static String  BOOLEAN_COMMENTS_FMT            = "CommentsFmt";
+  public  final static String  BOOLEAN_COMMENTS_FMT_BG         = "CommentsFmtBG";
+  public  final static String  BOOLEAN_COMMENTS_FMT_BOLD       = "CommentsFmtBold";
+  public  final static String  BOOLEAN_COMMENTS_FMT_FG         = "CommentsFmtFG";
+  public  final static String  BOOLEAN_COMMENTS_FMT_ITALIC     = "CommentsFmtItalic";
+  public  final static String  BOOLEAN_COMMENTS_FMT_STRIKE     = "CommentsFmtStrike";
+  public  final static String  BOOLEAN_COMMENTS_FMT_UNDERLINE  = "CommentsFmtUnderline";
   public  final static String  BOOLEAN_CREATE_DAB_WARNING      = "CreateDabWarning";
   public  final static String  BOOLEAN_CREATE_DAB_WARNING_ALL  = "CreateDabWarningAll";
   public  final static String  BOOLEAN_CREATE_DAB_WARNING_ENCY = "CreateDabWarningEncyclo";
@@ -148,6 +156,13 @@ public class Configuration implements WindowListener {
   public  final static boolean DEFAULT_CHECK_MARK_AS_FIXED     = false;
   public  final static boolean DEFAULT_CLOSE_DISAMBIG          = false;
   public  final static boolean DEFAULT_CLOSE_FULL              = true;
+  public  final static boolean DEFAULT_COMMENTS_FMT            = true;
+  public  final static boolean DEFAULT_COMMENTS_FMT_BG         = false;
+  public  final static boolean DEFAULT_COMMENTS_FMT_BOLD       = false;
+  public  final static boolean DEFAULT_COMMENTS_FMT_FG         = true;
+  public  final static boolean DEFAULT_COMMENTS_FMT_ITALIC     = true;
+  public  final static boolean DEFAULT_COMMENTS_FMT_STRIKE     = false;
+  public  final static boolean DEFAULT_COMMENTS_FMT_UNDERLINE  = false;
   public  final static boolean DEFAULT_CREATE_DAB_WARNING      = true;
   public  final static boolean DEFAULT_CREATE_DAB_WARNING_ALL  = false;
   public  final static boolean DEFAULT_CREATE_DAB_WARNING_ENCY = true;
@@ -165,6 +180,13 @@ public class Configuration implements WindowListener {
   public  final static boolean DEFAULT_UPDATE_DAB_WARNING_ALL  = true;
   public  final static boolean DEFAULT_UPDATE_DAB_WARNING_ENCY = true;
   public  final static boolean DEFAULT_WIKICLEANER_COMMENT     = true;
+
+  // Colors
+  public  final static String  COLOR_COMMENTS_BG         = "ColorCommentsBG";
+  public  final static String  COLOR_COMMENTS_FG         = "ColorCommentsFG";
+
+  public  final static Color   DEFAULT_COLOR_COMMENTS_BG = Color.WHITE;
+  public  final static Color   DEFAULT_COLOR_COMMENTS_FG = Color.GRAY;
 
   // Properties
   public  final static String  PROPERTIES_BACKLINKS      = "Backlinks";
@@ -401,6 +423,17 @@ public class Configuration implements WindowListener {
   }
 
   /**
+   * Method to be called when the configuration has been updated. 
+   */
+  public void updateConfiguration() {
+    MediaWikiAPI.updateConfiguration();
+  }
+
+  // ==========================================================================
+  // String management
+  // ==========================================================================
+
+  /**
    * @param wikipedia Wikipedia.
    * @param property Property name.
    * @return Property value.
@@ -471,6 +504,10 @@ public class Configuration implements WindowListener {
       }
     }
   }
+
+  // ==========================================================================
+  // Properties management
+  // ==========================================================================
 
   /**
    * @param wikipedia Wikipedia.
@@ -571,6 +608,10 @@ public class Configuration implements WindowListener {
     }
   }
 
+  // ==========================================================================
+  // String list management
+  // ==========================================================================
+
   /**
    * @param wikipedia Wikipedia.
    * @param property Property name.
@@ -670,6 +711,10 @@ public class Configuration implements WindowListener {
       }
     }
   }
+
+  // ==========================================================================
+  // POJO management (Plain Old Java Object)
+  // ==========================================================================
 
   /**
    * @param wikipedia Wikipedia.
@@ -836,7 +881,6 @@ public class Configuration implements WindowListener {
     }
   }
 
-
   /**
    * @param wikipedia Wikipedia.
    * @param property Property name.
@@ -971,6 +1015,10 @@ public class Configuration implements WindowListener {
     }
   }
 
+  // ==========================================================================
+  // Integer management
+  // ==========================================================================
+
   /**
    * @param wikipedia Wikipedia.
    * @param property Property name.
@@ -995,6 +1043,40 @@ public class Configuration implements WindowListener {
     }
   }
 
+  // ==========================================================================
+  // Color management
+  // ==========================================================================
+
+  /**
+   * @param property Property name.
+   * @param defaultValue Default value.
+   * @return Property value.
+   */
+  public Color getColor(String property, Color defaultValue) {
+    if (getPreferences() != null) {
+      return new Color(getPreferences().getInt(property, defaultValue.getRGB()));
+    }
+    return defaultValue;
+  }
+
+  /**
+   * @param property Property name.
+   * @param value Property value.
+   */
+  public void setColor(String property, Color value) {
+    if (getPreferences() != null) {
+      if (value != null) {
+        getPreferences().putInt(property, value.getRGB());
+      } else {
+        getPreferences().remove(property);
+      }
+    }
+  }
+
+  // ==========================================================================
+  // Boolean management
+  // ==========================================================================
+
   /**
    * @param wikipedia Wikipedia.
    * @param property Property name.
@@ -1018,6 +1100,10 @@ public class Configuration implements WindowListener {
       getPreferences(wikipedia).putBoolean(property, value);
     }
   }
+
+  // ==========================================================================
+  // Wikipedia and Language management
+  // ==========================================================================
 
   /**
    * @return Wikipedia.
@@ -1063,12 +1149,9 @@ public class Configuration implements WindowListener {
     }
   }
 
-  /**
-   * Method to be called when the configuration has been updated. 
-   */
-  public void updateConfiguration() {
-    MediaWikiAPI.updateConfiguration();
-  }
+  // ==========================================================================
+  // Window management
+  // ==========================================================================
 
   /**
    * Move/Resize a window at the preferred position and size.
