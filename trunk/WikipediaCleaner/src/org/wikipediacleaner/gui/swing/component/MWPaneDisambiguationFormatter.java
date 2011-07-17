@@ -212,47 +212,127 @@ public class MWPaneDisambiguationFormatter extends
     }
 
     // Format template
+    if (matcher.isGood() || Boolean.FALSE.equals(link.isDisambiguationPage())) {
+      formatTemplateGood(pane, link, template, matcher);
+    } else if (matcher.isHelpNeeded()) {
+      formatTemplateHelpRequested(pane, link, template, matcher);
+    } else {
+      formatTemplateDisambiguation(pane, link, template, matcher);
+    }
+  }
+
+  /**
+   * Format a template in a MediaWikiPane.
+   * 
+   * @param pane MediaWikiPane to be formatted.
+   * @param link Page linked.
+   * @param template Template to be formatted.
+   * @param matcher Template matcher.
+   */
+  private void formatTemplateGood(
+      MWPane pane,
+      Page link,
+      PageElementTemplate template,
+      TemplateMatcher matcher) {
+
+    // Basic verifications
+    if ((pane == null) || (template == null) || (matcher == null)) {
+      return;
+    }
+
+    // Format template
     int start = template.getBeginIndex();
     int end = template.getEndIndex();
-    String styleName = null;
-    if (matcher.isGood() || Boolean.FALSE.equals(link.isDisambiguationPage())) {
-      styleName = STYLE_NORMAL_TEMPLATE;
-    } else {
-      if (matcher.isHelpNeeded()) {
-        styleName = STYLE_HELP_REQUESTED_LINK;
-      } else {
-        styleName = STYLE_DISAMBIGUATION_TEMPLATE;
-      }
-    }
-    Style attr = pane.getStyle(styleName);
+    Style attr = pane.getStyle(STYLE_NORMAL_TEMPLATE);
     attr = (Style) attr.copyAttributes();
     attr.addAttribute(ATTRIBUTE_PAGE, link);
     attr.addAttribute(ATTRIBUTE_PAGE_ELEMENT, template);
     attr.addAttribute(ATTRIBUTE_TEMPLATE_MATCHER, matcher);
     attr.addAttribute(ATTRIBUTE_UUID, UUID.randomUUID());
-    if ((matcher.isHelpNeeded()) && (template.getParameterCount() > 0)) {
+    StyledDocument doc = pane.getStyledDocument();
+    doc.setCharacterAttributes(start, end - start, attr, true);
+    if (start < thirdStartPosition) {
+      thirdStartPosition = start;
+      thirdEndPosition = end;
+    }
+  }
+
+  /**
+   * Format a template in a MediaWikiPane.
+   * 
+   * @param pane MediaWikiPane to be formatted.
+   * @param link Page linked.
+   * @param template Template to be formatted.
+   * @param matcher Template matcher.
+   */
+  private void formatTemplateHelpRequested(
+      MWPane pane,
+      Page link,
+      PageElementTemplate template,
+      TemplateMatcher matcher) {
+
+    // Basic verifications
+    if ((pane == null) || (template == null) || (matcher == null)) {
+      return;
+    }
+
+    // Format template
+    int start = template.getBeginIndex();
+    int end = template.getEndIndex();
+    Style attr = pane.getStyle(STYLE_HELP_REQUESTED_LINK);
+    attr = (Style) attr.copyAttributes();
+    attr.addAttribute(ATTRIBUTE_PAGE, link);
+    attr.addAttribute(ATTRIBUTE_UUID, UUID.randomUUID());
+    if (template.getParameterCount() > 0) {
       attr.addAttribute(
           ATTRIBUTE_TEXT,
           (template.getParameterCount() > 1) ?
               template.getParameterValue(1) : template.getParameterValue(0));
+    } else {
+      attr.addAttribute(ATTRIBUTE_PAGE_ELEMENT, template);
+      attr.addAttribute(ATTRIBUTE_TEMPLATE_MATCHER, matcher);
     }
     StyledDocument doc = pane.getStyledDocument();
     doc.setCharacterAttributes(start, end - start, attr, true);
-    if (matcher.isGood() || !Boolean.FALSE.equals(link.isDisambiguationPage())) {
-      if (start < thirdStartPosition) {
-        thirdStartPosition = start;
-        thirdEndPosition = end;
-      }
-    } else if (matcher.isHelpNeeded()) {
-      if (start < secondStartPosition) {
-        secondStartPosition = start;
-        secondEndPosition = end;
-      }
-    } else {
-      if (start < startPosition) {
-        startPosition = start;
-        endPosition = end;
-      }
+    if (start < secondStartPosition) {
+      secondStartPosition = start;
+      secondEndPosition = end;
+    }
+  }
+
+  /**
+   * Format a template in a MediaWikiPane.
+   * 
+   * @param pane MediaWikiPane to be formatted.
+   * @param link Page linked.
+   * @param template Template to be formatted.
+   * @param matcher Template matcher.
+   */
+  private void formatTemplateDisambiguation(
+      MWPane pane,
+      Page link,
+      PageElementTemplate template,
+      TemplateMatcher matcher) {
+
+    // Basic verifications
+    if ((pane == null) || (template == null) || (matcher == null)) {
+      return;
+    }
+
+    // Format template
+    int start = template.getBeginIndex();
+    int end = template.getEndIndex();
+    Style attr = pane.getStyle(STYLE_DISAMBIGUATION_TEMPLATE);
+    attr = (Style) attr.copyAttributes();
+    attr.addAttribute(ATTRIBUTE_PAGE, link);
+    attr.addAttribute(ATTRIBUTE_PAGE_ELEMENT, template);
+    attr.addAttribute(ATTRIBUTE_TEMPLATE_MATCHER, matcher);
+    attr.addAttribute(ATTRIBUTE_UUID, UUID.randomUUID());
+    StyledDocument doc = pane.getStyledDocument();
+    doc.setCharacterAttributes(start, end - start, attr, true);
+    if (start < startPosition) {
+      startPosition = start;
+      endPosition = end;
     }
   }
 
