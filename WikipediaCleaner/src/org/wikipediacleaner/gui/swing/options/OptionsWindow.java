@@ -108,6 +108,9 @@ public class OptionsWindow
     SortingOptionsPanel sortingOptions = new SortingOptionsPanel();
     pane.addTab(GT._("Sorting"), sortingOptions);
     panels.add(sortingOptions);
+    FormattingOptionsPanel formattingOptions = new FormattingOptionsPanel();
+    pane.addTab(GT._("Formatting"), formattingOptions);
+    panels.add(formattingOptions);
     DebugOptionsPanel debugOptions = new DebugOptionsPanel();
     pane.addTab(GT._("Debug"), debugOptions);
     panels.add(debugOptions);
