@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-17 19:36+0200\n"
-"PO-Revision-Date: 2011-07-16 20:09+0000\n"
+"POT-Creation-Date: 2011-07-17 22:16+0200\n"
+"PO-Revision-Date: 2011-07-17 18:39+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-07-16 20:12+0000\n"
+"X-Launchpad-Export-Date: 2011-07-17 18:40+0000\n"
 "X-Generator: Launchpad (build 13405)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -1412,7 +1412,7 @@ msgstr "Commentaires – {0}"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:125
 #: org/wikipediacleaner/gui/swing/PageListTableModel.java:150
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:83
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:87
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -1960,30 +1960,36 @@ msgstr "Enregistrer toutes les réponses aux appels de l’API MediaWiki"
 msgid "Add a timestamp to logs"
 msgstr "Ajouter un horodatage aux enregistrements"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:65
-#, fuzzy
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:68
 msgid "Formatting options"
-msgstr "Options générales"
+msgstr "Options de mise en forme"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:211
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:196
 msgid "Italic"
-msgstr ""
+msgstr "Italique"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:224
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:212
 msgid "Bold"
-msgstr ""
+msgstr "Gras"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:237
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:228
 msgid "Underline"
-msgstr ""
+msgstr "Souligné"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:250
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:244
 msgid "Strike through"
-msgstr ""
+msgstr "Barré"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:262
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:259
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:266
 msgid "Foreground color"
-msgstr ""
+msgstr "Couleur de premier plan"
+
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:278
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:285
+#, fuzzy
+msgid "Background color"
+msgstr "Couleur de premier plan"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:85
 msgid "General options"
@@ -2054,9 +2060,8 @@ msgid "Sorting"
 msgstr "Tri"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:112
-#, fuzzy
 msgid "Formatting"
-msgstr "Tri"
+msgstr "Mise en forme"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:115
 msgid "Debug"
@@ -2193,7 +2198,7 @@ msgstr ""
 "L’avertissement d’homonymie a été mis à jour dans {1} articles.\n"
 "Ceci a pris {2} secondes."
 
-#: org/wikipediacleaner/utils/Configuration.java:400
+#: org/wikipediacleaner/utils/Configuration.java:406
 msgid ""
 "Wikipedia Cleaner options have changed to allow different settings for each "
 "Wikipedia.\n"
