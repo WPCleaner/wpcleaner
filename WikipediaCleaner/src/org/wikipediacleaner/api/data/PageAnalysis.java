@@ -54,6 +54,8 @@ public class PageAnalysis {
   private Collection<PageElementInterwikiLink> interwikiLinks;
   private final Object languageLinksLock = new Object();
   private Collection<PageElementLanguageLink> languageLinks;
+  private final Object imagesLock = new Object();
+  private Collection<PageElementImage> images;
 
   /**
    * @param page Page.
@@ -169,6 +171,13 @@ public class PageAnalysis {
       element = template;
     }
 
+    // Check if in image
+    PageElementImage image = isInImage(currentIndex);
+    if ((image != null) &&
+        ((element == null) || (element.getBeginIndex() < image.getBeginIndex()))) {
+      element = image;
+    }
+
     // Check if in category
     PageElementCategory category = isInCategory(currentIndex);
     if ((category != null) &&
@@ -199,6 +208,10 @@ public class PageAnalysis {
 
     return element;
   }
+
+  // ==========================================================================
+  // Titles management
+  // ==========================================================================
 
   /**
    * @return All titles in the page analysis.
@@ -248,6 +261,10 @@ public class PageAnalysis {
     return null;
   }
 
+  // ==========================================================================
+  // Internal links management
+  // ==========================================================================
+
   /**
    * @return All internal links in the page analysis.
    */
@@ -290,6 +307,57 @@ public class PageAnalysis {
     }
     return null;
   }
+
+  // ==========================================================================
+  // Images management
+  // ==========================================================================
+
+  /**
+   * @return All images in the page analysis.
+   */
+  public Collection<PageElementImage> getImages() {
+    Collection<PageElementComment> tmpComments = getComments();
+
+    synchronized (imagesLock) {
+      if (images == null) {
+        images = PageContents.findAllImages(getPage(), getContents(), tmpComments);
+      }
+      return images;
+    }
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Next image.
+   */
+  public PageElementImage getNextImage(int currentIndex) {
+    Collection<PageElementImage> tmpImages = getImages();
+    for (PageElementImage image : tmpImages) {
+      if (image.getBeginIndex() >= currentIndex) {
+        return image;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Image if the current index is inside an image.
+   */
+  public PageElementImage isInImage(int currentIndex) {
+    Collection<PageElementImage> tmpImages = getImages();
+    for (PageElementImage image : tmpImages) {
+      if ((image.getBeginIndex() <= currentIndex) &&
+          (image.getEndIndex() > currentIndex)) {
+        return image;
+      }
+    }
+    return null;
+  }
+
+  // ==========================================================================
+  // External links management
+  // ==========================================================================
 
   /**
    * @return All external links in the page analysis.
@@ -334,6 +402,10 @@ public class PageAnalysis {
     return null;
   }
 
+  // ==========================================================================
+  // Templates management
+  // ==========================================================================
+
   /**
    * @return All templates in the page analysis.
    */
@@ -376,6 +448,10 @@ public class PageAnalysis {
     }
     return null;
   }
+
+  // ==========================================================================
+  // DEFAULTSORT management
+  // ==========================================================================
 
   /**
    * @return All DEFAULTSORT in the page analysis.
@@ -420,6 +496,10 @@ public class PageAnalysis {
     return null;
   }
 
+  // ==========================================================================
+  // Categories management
+  // ==========================================================================
+
   /**
    * @return All categories in the page analysis.
    */
@@ -463,6 +543,10 @@ public class PageAnalysis {
     return null;
   }
 
+  // ==========================================================================
+  // Interwiki links management
+  // ==========================================================================
+
   /**
    * @return All interwiki links in the page analysis.
    */
@@ -505,6 +589,10 @@ public class PageAnalysis {
     }
     return null;
   }
+
+  // ==========================================================================
+  // Language links management
+  // ==========================================================================
 
   /**
    * @return All language links in the page analysis.

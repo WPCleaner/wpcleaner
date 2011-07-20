@@ -152,6 +152,12 @@ public class PageElementInternalLink extends PageElement {
         return null;
       }
 
+      // Is it a file / image ?
+      Namespace image = Namespace.getNamespace(Namespace.IMAGE, wikipedia.getNamespaces());
+      if ((image != null) && (image.isPossibleName(namespaceName))) {
+        return null;
+      }
+
       // Is it an interwiki ?
       for (Interwiki iw : wikipedia.getInterwikis()) {
         if (iw.getPrefix().equals(namespaceName)) {
