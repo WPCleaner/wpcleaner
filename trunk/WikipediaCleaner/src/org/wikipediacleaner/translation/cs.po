@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-17 22:16+0200\n"
+"POT-Creation-Date: 2011-07-20 20:56+0200\n"
 "PO-Revision-Date: 2011-06-20 18:41+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -173,7 +173,7 @@ msgstr "Použito jako oddělovač mezi po sobě jdoucích značkách {0}"
 msgid "Modify all internal links"
 msgstr "Interní odkazy"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:93
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm066.java:88
 msgid "Remove <small> tag"
 msgstr "Odstranit značku <small>"
 
@@ -1658,28 +1658,33 @@ msgstr "Zvýšit úroveň titulku"
 msgid "Validate the new table of contents"
 msgstr "Ověřit nový obsah"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:225
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:258
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:232
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:265
 #, fuzzy, java-format
 msgid "Page: {0}"
 msgstr "Stránka {0}:"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:295
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:302
 #, fuzzy, java-format
 msgid "Interwiki: {0}"
 msgstr "Interní odkazy v {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:372
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:378
+#, fuzzy, java-format
+msgid "Image: {0}"
+msgstr "Stránka {0}:"
+
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:418
 #, fuzzy, java-format
 msgid "Category: {0}"
 msgstr "Členové kategorie {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:403
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:449
 #, fuzzy, java-format
 msgid "External link: {0}"
 msgstr "Interní odkazy v {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:440
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:486
 #, fuzzy, java-format
 msgid "Template: {0}"
 msgstr "Šablony v {0}"

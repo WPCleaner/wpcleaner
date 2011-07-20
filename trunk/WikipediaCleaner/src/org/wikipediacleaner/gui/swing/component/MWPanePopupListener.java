@@ -38,6 +38,7 @@ import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
@@ -187,6 +188,12 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
     if (element instanceof PageElementInternalLink) {
       PageElementInternalLink internalLink = (PageElementInternalLink) element;
       return createDefaultPopupInternalLink(textPane, position, pageAnalysis, internalLink);
+    }
+
+    // Menu for image
+    if (element instanceof PageElementImage) {
+      PageElementImage image = (PageElementImage) element;
+      return createDefaultPopupImage(textPane, position, pageAnalysis, image);
     }
 
     // Menu for external link
@@ -342,6 +349,46 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
   }
 
   /**
+   * Create a default popup menu for an image.
+   * 
+   * @param textPane Text pane.
+   * @param position Position in the text.
+   * @param pageAnalysis Page analysis.
+   * @param image Image.
+   * @return Popup menu.
+   */
+  protected JPopupMenu createDefaultPopupImage(
+      MWPane textPane, int position,
+      PageAnalysis pageAnalysis,
+      PageElementImage image) {
+    if (image == null) {
+      return null;
+    }
+
+    // Initialization
+    String fullName = Namespace.getTitle(
+        Namespace.IMAGE,
+        wikipedia.getNamespaces(),
+        image.getImage());
+    Page page = DataManager.getPage(wikipedia, fullName, null, null);
+
+    // Menu creation
+    JPopupMenu popup = new JPopupMenu();
+    JMenuItem menuItem = new JMenuItem(GT._(
+        "Image: {0}",
+        limitTextLength(image.getImage(), 50)));
+    menuItem.setEnabled(false);
+    popup.add(menuItem);
+    MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
+    popup.add(new JSeparator());
+    MenuCreator.addViewToMenu(wikipedia, popup, page, false);
+    MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
+    popup.add(new JSeparator());
+
+    return popup;
+  }
+
+  /**
    * Create a default popup menu for a category.
    * 
    * @param textPane Text pane.
@@ -358,7 +405,6 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
       return null;
     }
 
-    // Initialization
     // Initialization
     String fullName = Namespace.getTitle(
         Namespace.CATEGORY,

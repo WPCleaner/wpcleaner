@@ -53,13 +53,8 @@ public class CheckErrorAlgorithm077 extends CheckErrorAlgorithmBase {
 
     // Analyzing the text from the beginning
     boolean result = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      PageElementImage image = PageContents.findNextImage(
-          pageAnalysis.getPage(), contents, startIndex);
+    for (PageElementImage image : pageAnalysis.getImages()) {
       if (image != null) {
-        startIndex = image.getEndIndex();
         String text = image.getDescription();
         if (text != null) {
           PageElementTag tag = PageContents.findNextTag(
@@ -91,8 +86,6 @@ public class CheckErrorAlgorithm077 extends CheckErrorAlgorithmBase {
             }
           }
         }
-      } else {
-        startIndex = contents.length();
       }
     }
 
