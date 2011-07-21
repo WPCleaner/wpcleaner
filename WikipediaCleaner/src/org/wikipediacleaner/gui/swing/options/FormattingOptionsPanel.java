@@ -31,13 +31,16 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
-import org.wikipediacleaner.utils.ConfigurationStyle;
+import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
 
 /**
@@ -66,8 +69,6 @@ public class FormattingOptionsPanel extends OptionsPanel {
   private void initialize() {
     setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), GT._("Formatting options")));
-    Configuration config = Configuration.getConfiguration();
-    ConfigurationStyle configStyle = null;
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -86,10 +87,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
     lineComments = addLine(
         constraints, true, GT._("Comments"),
         true, true, true, true, true, true);
-    configStyle = config.getStyle(
-        Configuration.STYLE_COMMENTS_NAME,
-        Configuration.STYLE_COMMENTS);
-    setStyle(lineComments, configStyle);
+    setStyle(lineComments, ConfigurationValueStyle.COMMENTS);
 
     // Empty panel
     JPanel emptyPanel = new JPanel();
@@ -107,7 +105,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
    */
   @Override
   public void defaultValues() {
-    setStyle(lineComments, Configuration.STYLE_COMMENTS);
+    setStyle(lineComments, ConfigurationValueStyle.COMMENTS);
   }
 
   /**
@@ -116,10 +114,10 @@ public class FormattingOptionsPanel extends OptionsPanel {
   @Override
   public void apply() {
     Configuration config = Configuration.getConfiguration();
-    ConfigurationStyle configStyle = null;
+    ConfigurationValueStyle.StyleProperties configStyle = null;
 
     configStyle = getStyle(lineComments);
-    config.setStyle(Configuration.STYLE_COMMENTS_NAME, configStyle);
+    config.setStyle(ConfigurationValueStyle.COMMENTS, configStyle);
   }
 
   // ==========================================================================
@@ -140,15 +138,8 @@ public class FormattingOptionsPanel extends OptionsPanel {
   // Count columns
   private final static int columnGeneral = 0;
   private final static int columnName = columnGeneral + 1;
-  private final static int columnItalic = columnName + 1;
-  private final static int columnBold = columnItalic + 1;
-  private final static int columnUnderline = columnBold + 1;
-  private final static int columnStrikeThrough = columnUnderline + 1;
-  private final static int columnForeground = columnStrikeThrough + 1;
-  private final static int columnForegroundColor = columnForeground + 1;
-  private final static int columnBackground = columnForegroundColor + 1;
-  private final static int columnBackgroundColor = columnBackground + 1;
-  private final static int columnCount = columnBackgroundColor + 1;
+  private final static int columnFormat = columnName + 1;
+  private final static int columnCount = columnFormat + 1;
 
   /**
    * Add a line for a style.
@@ -189,107 +180,75 @@ public class FormattingOptionsPanel extends OptionsPanel {
       add(label, constraints);
     }
 
+    // Toolbar
+    JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbar.setFloatable(false);
+    JToggleButton toggle = null;
+    JCheckBox chk = null;
+    JButton button = null;
+
     // Italic check box
-    if (italic) {
-      JToggleButton toggle = Utilities.createJToggleButton(
-          "gnome-format-text-italic.png", EnumImageSize.SMALL,
-          GT._("Italic"), false);
-      toggle.setBorderPainted(false);
-      toggle.setFocusPainted(false);
-      toggle.setMargin(new Insets(2, 2, 2, 2));
-      chkItalic.add(toggle);
-      constraints.gridx = columnItalic;
-      constraints.weightx = 0;
-      add(toggle, constraints);
-    } else {
-      chkItalic.add(null);
-    }
+    toggle = Utilities.createJToggleButton(
+        "gnome-format-text-italic.png", EnumImageSize.SMALL,
+        GT._("Italic"), false);
+    toggle.setEnabled(italic);
+    chkItalic.add(toggle);
+    toolbar.add(toggle);
 
     // Bold check box
-    if (bold) {
-      JToggleButton toggle = Utilities.createJToggleButton(
-          "gnome-format-text-bold.png", EnumImageSize.SMALL,
-          GT._("Bold"), false);
-      toggle.setBorderPainted(false);
-      toggle.setFocusPainted(false);
-      toggle.setMargin(new Insets(2, 2, 2, 2));
-      chkBold.add(toggle);
-      constraints.gridx = columnBold;
-      constraints.weightx = 0;
-      add(toggle, constraints);
-    } else {
-      chkBold.add(null);
-    }
+    toggle = Utilities.createJToggleButton(
+        "gnome-format-text-bold.png", EnumImageSize.SMALL,
+        GT._("Bold"), false);
+    toggle.setEnabled(bold);
+    chkBold.add(toggle);
+    toolbar.add(toggle);
 
     // Underline check box
-    if (underline) {
-      JToggleButton toggle = Utilities.createJToggleButton(
-          "gnome-format-text-underline.png", EnumImageSize.SMALL,
-          GT._("Underline"), false);
-      toggle.setBorderPainted(false);
-      toggle.setFocusPainted(false);
-      toggle.setMargin(new Insets(2, 2, 2, 2));
-      chkUnderline.add(toggle);
-      constraints.gridx = columnUnderline;
-      constraints.weightx = 0;
-      add(toggle, constraints);
-    } else {
-      chkUnderline.add(null);
-    }
+    toggle = Utilities.createJToggleButton(
+        "gnome-format-text-underline.png", EnumImageSize.SMALL,
+        GT._("Underline"), false);
+    toggle.setEnabled(underline);
+    chkUnderline.add(toggle);
+    toolbar.add(toggle);
 
     // Strike through check box
-    if (strike) {
-      JToggleButton toggle = Utilities.createJToggleButton(
-          "gnome-format-text-strikethrough.png", EnumImageSize.SMALL,
-          GT._("Strike through"), false);
-      toggle.setBorderPainted(false);
-      toggle.setFocusPainted(false);
-      toggle.setMargin(new Insets(2, 2, 2, 2));
-      chkStrike.add(toggle);
-      constraints.gridx = columnStrikeThrough;
-      constraints.weightx = 0;
-      add(toggle, constraints);
-    } else {
-      chkStrike.add(null);
-    }
+    toggle = Utilities.createJToggleButton(
+        "gnome-format-text-strikethrough.png", EnumImageSize.SMALL,
+        GT._("Strike through"), false);
+    toggle.setEnabled(strike);
+    chkStrike.add(toggle);
+    toolbar.add(toggle);
 
     // Foreground color check box and button
-    if (foreground) {
-      JCheckBox chk = Utilities.createJCheckBox("", true);
-      chk.setToolTipText(GT._("Foreground color"));
-      chkForeground.add(chk);
-      constraints.gridx = columnForeground;
-      constraints.weightx = 0;
-      add(chk, constraints);
-
-      JButton button = Utilities.createJButton(" ");
-      button.setToolTipText(GT._("Foreground color"));
-      btnForeground.add(button);
-      constraints.gridx = columnForegroundColor;
-      add(button, constraints);
-    } else {
-      chkForeground.add(null);
-      btnForeground.add(null);
-    }
+    toolbar.add(new JSeparator());
+    chk = Utilities.createJCheckBox("", true);
+    chk.setToolTipText(GT._("Foreground color"));
+    chk.setEnabled(foreground);
+    chkForeground.add(chk);
+    toolbar.add(chk);
+    button = Utilities.createJButton("    ");
+    button.setToolTipText(GT._("Foreground color"));
+    button.setEnabled(foreground && chk.isSelected());
+    btnForeground.add(button);
+    toolbar.add(button);
 
     // Background color check box and button
-    if (background) {
-      JCheckBox chk = Utilities.createJCheckBox("", true);
-      chk.setToolTipText(GT._("Background color"));
-      chkBackground.add(chk);
-      constraints.gridx = columnBackground;
-      constraints.weightx = 0;
-      add(chk, constraints);
+    toolbar.add(new JSeparator());
+    chk = Utilities.createJCheckBox("", true);
+    chk.setToolTipText(GT._("Background color"));
+    chk.setEnabled(background);
+    chkBackground.add(chk);
+    toolbar.add(chk);
+    button = Utilities.createJButton("    ");
+    button.setToolTipText(GT._("Background color"));
+    button.setEnabled(background && chk.isEnabled());
+    btnBackground.add(button);
+    toolbar.add(button);
 
-      JButton button = Utilities.createJButton(" ");
-      button.setToolTipText(GT._("Background color"));
-      btnBackground.add(button);
-      constraints.gridx = columnBackgroundColor;
-      add(button, constraints);
-    } else {
-      chkBackground.add(null);
-      btnBackground.add(null);
-    }
+    // End line
+    constraints.gridx = columnFormat;
+    constraints.weightx = 0;
+    add(toolbar, constraints);
 
     // Next line
     constraints.gridy++;
@@ -304,56 +263,70 @@ public class FormattingOptionsPanel extends OptionsPanel {
    * @param line Line number.
    * @param style Style.
    */
-  private void setStyle(int line, ConfigurationStyle style) {
+  private void setStyle(int line, ConfigurationValueStyle style) {
+    Configuration config = Configuration.getConfiguration();
     if (style == null) {
       return;
     }
-    setGeneral(line, style.getEnabled());
-    setItalic(line, style.getItalic());
-    setBold(line, style.getBold());
-    setUnderline(line, style.getUnderline());
-    setStrikeThrough(line, style.getStrikeThrough());
-    setForeground(line, style.getForeground(), style.getForegroundValue());
-    setBackground(line, style.getBackground(), style.getBackgroundValue());
+    ConfigurationValueStyle.StyleProperties properties = config.getStyle(style);
+    setGeneral(line, properties.getEnabled());
+    setItalic(line, properties.getItalic());
+    setBold(line, properties.getBold());
+    setUnderline(line, properties.getUnderline());
+    setStrikeThrough(line, properties.getStrikeThrough());
+    setForeground(line, properties.getForeground(), properties.getForegroundColor());
+    setBackground(line, properties.getBackground(), properties.getBackgroundColor());
   }
 
   /**
    * @param line Line number.
    * @return Style.
    */
-  private ConfigurationStyle getStyle(int line) {
+  private ConfigurationValueStyle.StyleProperties getStyle(int line) {
     if ((line < 0) || (line >= linesCount)) {
       return null;
     }
-    ConfigurationStyle result = new ConfigurationStyle();
+    boolean general = true;
     if (chkGeneral.get(line) != null) {
-      result.setEnabled(chkGeneral.get(line).isSelected());
+      general = chkGeneral.get(line).isSelected();
     }
+    boolean italic = false;
     if (chkItalic.get(line) != null) {
-      result.setItalic(chkItalic.get(line).isSelected());
+      italic = chkItalic.get(line).isSelected();
     }
+    boolean bold = false;
     if (chkBold.get(line) != null) {
-      result.setBold(chkBold.get(line).isSelected());
+      bold = chkBold.get(line).isSelected();
     }
+    boolean underline = false;
     if (chkUnderline.get(line) != null) {
-      result.setUnderline(chkUnderline.get(line).isSelected());
+      underline = chkUnderline.get(line).isSelected();
     }
+    boolean strike = false;
     if (chkStrike.get(line) != null) {
-      result.setStrikeThrough(chkStrike.get(line).isSelected());
+      strike = chkStrike.get(line).isSelected();
     }
+    boolean foreground = false;
     if (chkForeground.get(line) != null) {
-      result.setForeground(chkForeground.get(line).isSelected());
+      foreground = chkForeground.get(line).isSelected();
     }
+    Color foregroundColor = Color.BLACK;
     if (btnForeground.get(line) != null) {
-      result.setForegroundValue(btnForeground.get(line).getBackground());
+      foregroundColor = btnForeground.get(line).getBackground();
     }
+    boolean background = false;
     if (chkBackground.get(line) != null) {
-      result.setBackground(chkBackground.get(line).isSelected());
+      background = chkBackground.get(line).isSelected();
     }
+    Color backgroundColor = Color.WHITE;
     if (btnBackground.get(line) != null) {
-      result.setBackgroundValue(btnBackground.get(line).getBackground());
+      backgroundColor = btnBackground.get(line).getBackground();
     }
-    return result;
+    return new ConfigurationValueStyle.StyleProperties(
+        general,
+        foreground, foregroundColor,
+        background, backgroundColor,
+        italic, bold, underline, strike);
   }
 
   /**
