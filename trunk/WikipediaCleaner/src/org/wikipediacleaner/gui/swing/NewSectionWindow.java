@@ -50,6 +50,7 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.NewSectionWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
@@ -275,8 +276,7 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
           textNewSection.getCaretPosition(),
           config.getString(
               null,
-              Configuration.STRING_SIGNATURE,
-              Configuration.DEFAULT_SIGNATURE),
+              ConfigurationValueString.SIGNATURE),
           null);
     } catch (BadLocationException e) {
       //

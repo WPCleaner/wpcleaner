@@ -70,6 +70,8 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
 
 
@@ -116,8 +118,7 @@ public class MenuCreator {
       lastReplacement.put(from, to);
       if (configuration.getBoolean(
           null,
-          Configuration.BOOLEAN_SAVE_LAST_REPLACEMENT,
-          Configuration.DEFAULT_SAVE_LAST_REPLACEMENT)) {
+          ConfigurationValueBoolean.SAVE_LAST_REPLACEMENT)) {
         configuration.setSubString(
             null,
             Configuration.PROPERTIES_LAST_REPLACEMENT,
@@ -1450,7 +1451,7 @@ public class MenuCreator {
   public static void addSubmenu(JPopupMenu menu, JMenu submenu, int begin, int end) {
     Configuration config = Configuration.getConfiguration();
     final int maxElements = Math.max(
-        config.getInt(null, Configuration.INTEGER_MENU_SIZE, Configuration.DEFAULT_MENU_SIZE),
+        config.getInt(null, ConfigurationValueInteger.MENU_SIZE),
         begin + end + 2);
     if (submenu.getMenuComponentCount() > maxElements) {
       List<JMenu> menuList = new ArrayList<JMenu>();

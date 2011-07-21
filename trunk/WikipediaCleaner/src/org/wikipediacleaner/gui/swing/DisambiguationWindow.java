@@ -72,6 +72,7 @@ import org.wikipediacleaner.gui.swing.worker.DisambiguationAnalysisWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
@@ -805,8 +806,7 @@ public class DisambiguationWindow extends OnePageWindow {
     Configuration config = Configuration.getConfiguration();
     int maxCount = config.getInt(
         null,
-        Configuration.INTEGER_MAXIMUM_PAGES,
-        Configuration.DEFAULT_MAXIMUM_PAGES);
+        ConfigurationValueInteger.MAXIMUM_PAGES);
     maxCount = Math.min(maxCount, listLinks.getModel().getSize() - firstSelection);
     if (maxCount <= 0) {
       listLinks.clearSelection();

@@ -90,6 +90,8 @@ import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
@@ -159,36 +161,28 @@ public class OnePageAnalysisWindow extends OnePageWindow {
               analysis.modelLinks = new PageListModel();
               analysis.modelLinks.setShowDisambiguation(config.getBoolean(
                   null,
-                  Configuration.BOOLEAN_ANALYSIS_DISAMBIG_PAGES,
-                  Configuration.DEFAULT_ANALYSIS_DISAMBIG_PAGES));
+                  ConfigurationValueBoolean.ANALYSIS_DISAMBIG_PAGES));
               analysis.modelLinks.setShowMissing(config.getBoolean(
                   null,
-                  Configuration.BOOLEAN_ANALYSIS_MISSING_PAGES,
-                  Configuration.DEFAULT_ANALYSIS_MISSING_PAGES));
+                  ConfigurationValueBoolean.ANALYSIS_MISSING_PAGES));
               analysis.modelLinks.setShowOther(config.getBoolean(
                   null,
-                  Configuration.BOOLEAN_ANALYSIS_OTHER_PAGES,
-                  Configuration.DEFAULT_ANALYSIS_OTHER_PAGES));
+                  ConfigurationValueBoolean.ANALYSIS_OTHER_PAGES));
               analysis.modelLinks.setShowRedirect(config.getBoolean(
                   null,
-                  Configuration.BOOLEAN_ANALYSIS_REDIRECT_PAGES,
-                  Configuration.DEFAULT_ANALYSIS_REDIRECT_PAGES));
+                  ConfigurationValueBoolean.ANALYSIS_REDIRECT_PAGES));
               analysis.modelLinks.setCountDisambiguation(config.getBoolean(
                   null,
-                  Configuration.BOOLEAN_ANALYSIS_COUNT_DISAMBIG,
-                  Configuration.DEFAULT_ANALYSIS_COUNT_DISAMBIG));
+                  ConfigurationValueBoolean.ANALYSIS_COUNT_DISAMBIG));
               analysis.modelLinks.setCountMissing(config.getBoolean(
                   null,
-                  Configuration.BOOLEAN_ANALYSIS_COUNT_MISSING,
-                  Configuration.DEFAULT_ANALYSIS_COUNT_MISSING));
+                  ConfigurationValueBoolean.ANALYSIS_COUNT_MISSING));
               analysis.modelLinks.setCountOther(config.getBoolean(
                   null,
-                  Configuration.BOOLEAN_ANALYSIS_COUNT_OTHER,
-                  Configuration.DEFAULT_ANALYSIS_COUNT_OTHER));
+                  ConfigurationValueBoolean.ANALYSIS_COUNT_OTHER));
               analysis.modelLinks.setCountRedirect(config.getBoolean(
                   null,
-                  Configuration.BOOLEAN_ANALYSIS_COUNT_REDIRECT,
-                  Configuration.DEFAULT_ANALYSIS_COUNT_REDIRECT));
+                  ConfigurationValueBoolean.ANALYSIS_COUNT_REDIRECT));
               analysis.modelLinks.setComparator(PageComparator.getNamespaceFirstComparator());
               analysis.createTextContents(window);
             }
@@ -790,31 +784,25 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         if (getPage().isInMainNamespace()) {
           chkUpdateDabWarning.setSelected(config.getBoolean(
               null,
-              Configuration.BOOLEAN_UPDATE_DAB_WARNING,
-              Configuration.DEFAULT_UPDATE_DAB_WARNING));
+              ConfigurationValueBoolean.UPDATE_DAB_WARNING));
           chkCreateDabWarning.setSelected(config.getBoolean(
               null,
-              Configuration.BOOLEAN_CREATE_DAB_WARNING,
-              Configuration.DEFAULT_CREATE_DAB_WARNING));
+              ConfigurationValueBoolean.CREATE_DAB_WARNING));
         } else if ((getPage().getNamespace() != null) &&
                    (getWikipedia().isEncyclopedicNamespace(getPage().getNamespace()))) {
           chkUpdateDabWarning.setSelected(config.getBoolean(
               null,
-              Configuration.BOOLEAN_UPDATE_DAB_WARNING_ENCY,
-              Configuration.DEFAULT_UPDATE_DAB_WARNING_ENCY));
+              ConfigurationValueBoolean.UPDATE_DAB_WARNING_ENCY));
           chkCreateDabWarning.setSelected(config.getBoolean(
               null,
-              Configuration.BOOLEAN_CREATE_DAB_WARNING_ENCY,
-              Configuration.DEFAULT_CREATE_DAB_WARNING_ENCY));
+              ConfigurationValueBoolean.CREATE_DAB_WARNING_ENCY));
         } else {
           chkUpdateDabWarning.setSelected(config.getBoolean(
               null,
-              Configuration.BOOLEAN_UPDATE_DAB_WARNING_ALL,
-              Configuration.DEFAULT_UPDATE_DAB_WARNING_ALL));
+              ConfigurationValueBoolean.UPDATE_DAB_WARNING_ALL));
           chkCreateDabWarning.setSelected(config.getBoolean(
               null,
-              Configuration.BOOLEAN_CREATE_DAB_WARNING_ALL,
-              Configuration.DEFAULT_CREATE_DAB_WARNING_ALL));
+              ConfigurationValueBoolean.CREATE_DAB_WARNING_ALL));
         }
       }
     }
@@ -870,8 +858,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     Configuration config = Configuration.getConfiguration();
     int maxSelections = config.getInt(
         null,
-        Configuration.INTEGER_ANALYSIS_NB_PAGES,
-        Configuration.DEFAULT_ANALYSIS_NB_PAGES);
+        ConfigurationValueInteger.ANALYSIS_NB_PAGES);
     int nbSelections = Math.max(Math.min(maxSelections, modelLinks.getSize() - startIndex), 1);
     startIndex = Math.min(startIndex, modelLinks.getSize() - nbSelections);
     listLinks.getSelectionModel().setSelectionInterval(startIndex, startIndex + nbSelections - 1);
@@ -1046,8 +1033,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
               (config != null) &&
               (config.getBoolean(
                   null,
-                  Configuration.BOOLEAN_CHECK_LINK_ERRORS,
-                  Configuration.DEFAULT_CHECK_LINK_ERRORS))) {
+                  ConfigurationValueBoolean.CHECK_LINK_ERRORS))) {
             comment.append("[[");
             comment.append(link);
             comment.append("|");

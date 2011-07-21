@@ -81,6 +81,10 @@ import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationConstants;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -491,11 +495,11 @@ public class MainWindow
 
     // Save password
     int saveUser = configuration.getInt(
-        null, Configuration.INTEGER_SAVE_USER, Configuration.DEFAULT_SAVE_USER);
+        null, ConfigurationValueInteger.SAVE_USER);
     groupSaveUsernamePassword = new ButtonGroup();
     radSavePassword = Utilities.createJRadioButton(
         GT._("Save user name and password"),
-        (saveUser == Configuration.VALUE_SAVE_USER_BOTH));
+        (saveUser == ConfigurationConstants.VALUE_SAVE_USER_BOTH));
     radSavePassword.setActionCommand(ACTION_SAVE_PASSWORD);
     radSavePassword.addActionListener(this);
     groupSaveUsernamePassword.add(radSavePassword);
@@ -507,7 +511,7 @@ public class MainWindow
     constraints.gridy++;
     radSaveUsername = Utilities.createJRadioButton(
         GT._("Save user name only"),
-        (saveUser == Configuration.VALUE_SAVE_USER_NAME));
+        (saveUser == ConfigurationConstants.VALUE_SAVE_USER_NAME));
     groupSaveUsernamePassword.add(radSaveUsername);
     constraints.fill = GridBagConstraints.NONE;
     constraints.gridx = 0;
@@ -517,7 +521,8 @@ public class MainWindow
     constraints.gridy++;
     radSaveNothing = Utilities.createJRadioButton(
         GT._("Save none of them"),
-        (saveUser != Configuration.VALUE_SAVE_USER_BOTH) && (saveUser != Configuration.VALUE_SAVE_USER_NAME));
+        (saveUser != ConfigurationConstants.VALUE_SAVE_USER_BOTH) &&
+        (saveUser != ConfigurationConstants.VALUE_SAVE_USER_NAME));
     groupSaveUsernamePassword.add(radSaveNothing);
     constraints.fill = GridBagConstraints.NONE;
     constraints.gridx = 0;
@@ -570,9 +575,8 @@ public class MainWindow
     String lastPage = "";
     if (configuration.getBoolean(
         null,
-        Configuration.BOOLEAN_REMEMBER_LAST_PAGE,
-        Configuration.DEFAULT_REMEMBER_LAST_PAGE)) {
-      lastPage = configuration.getString(null, Configuration.STRING_PAGE_NAME);
+        ConfigurationValueBoolean.REMEMBER_LAST_PAGE)) {
+      lastPage = configuration.getString(null, ConfigurationValueString.PAGE_NAME);
     }
     textPagename = new JTextField(lastPage, 20);
     panel.add(textPagename, constraints);
@@ -930,10 +934,10 @@ public class MainWindow
         comboUser.getSelectedItem().toString(),
         textPassword.getPassword(),
         radSavePassword.isSelected() ?
-            Configuration.VALUE_SAVE_USER_BOTH :
+            ConfigurationConstants.VALUE_SAVE_USER_BOTH :
             radSaveUsername.isSelected() ?
-                Configuration.VALUE_SAVE_USER_NAME :
-                Configuration.VALUE_SAVE_USER_NONE,
+                ConfigurationConstants.VALUE_SAVE_USER_NAME :
+                ConfigurationConstants.VALUE_SAVE_USER_NONE,
         login, false).start();
   }
 
@@ -972,10 +976,10 @@ public class MainWindow
         comboUser.getSelectedItem().toString(),
         textPassword.getPassword(),
         radSavePassword.isSelected() ?
-            Configuration.VALUE_SAVE_USER_BOTH :
+            ConfigurationConstants.VALUE_SAVE_USER_BOTH :
             radSaveUsername.isSelected() ?
-                Configuration.VALUE_SAVE_USER_NAME :
-                Configuration.VALUE_SAVE_USER_NONE,
+                ConfigurationConstants.VALUE_SAVE_USER_NAME :
+                ConfigurationConstants.VALUE_SAVE_USER_NONE,
         false, true).start();
   }
 
@@ -1039,7 +1043,10 @@ public class MainWindow
       return;
     }
     Configuration config = Configuration.getConfiguration();
-    config.setString(null, Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
+    config.setString(
+        null,
+        ConfigurationValueString.PAGE_NAME,
+        textPagename.getText().trim());
     config.save();
     Controller.runFullAnalysis(
         textPagename.getText().trim(), null,
@@ -1059,7 +1066,10 @@ public class MainWindow
       return;
     }
     Configuration config = Configuration.getConfiguration();
-    config.setString(null, Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
+    config.setString(
+        null,
+        ConfigurationValueString.PAGE_NAME,
+        textPagename.getText().trim());
     config.save();
     Controller.runDisambiguationAnalysis(
         textPagename.getText().trim(),
@@ -1109,7 +1119,10 @@ public class MainWindow
       return;
     }
     Configuration config = Configuration.getConfiguration();
-    config.setString(null, Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
+    config.setString(
+        null,
+        ConfigurationValueString.PAGE_NAME,
+        textPagename.getText().trim());
     config.save();
     new PageListWorker(
         getWikipedia(), this,
@@ -1131,7 +1144,10 @@ public class MainWindow
       return;
     }
     Configuration config = Configuration.getConfiguration();
-    config.setString(null, Configuration.STRING_PAGE_NAME, textPagename.getText().trim());
+    config.setString(
+        null,
+        ConfigurationValueString.PAGE_NAME,
+        textPagename.getText().trim());
     config.save();
     new PageListWorker(
         getWikipedia(), this,
@@ -1420,15 +1436,18 @@ public class MainWindow
         configuration.setLanguage(language);
         if (login && !reloadOnly) {
           Properties props = configuration.getProperties(getWikipedia(), Configuration.PROPERTIES_USERS);
-          if (saveUser == Configuration.VALUE_SAVE_USER_NONE) {
+          if (saveUser == ConfigurationConstants.VALUE_SAVE_USER_NONE) {
             props.remove(username);
           } else {
             props.setProperty(
                 username,
-                (saveUser == Configuration.VALUE_SAVE_USER_BOTH) ? new String(password) : "");
+                (saveUser == ConfigurationConstants.VALUE_SAVE_USER_BOTH) ? new String(password) : "");
           }
           configuration.setProperties(getWikipedia(), Configuration.PROPERTIES_USERS, props);
-          configuration.setInt(null, Configuration.INTEGER_SAVE_USER, saveUser);
+          configuration.setInt(
+              null,
+              ConfigurationValueInteger.SAVE_USER,
+              saveUser);
         }
         Configuration.getConfiguration().save();
 

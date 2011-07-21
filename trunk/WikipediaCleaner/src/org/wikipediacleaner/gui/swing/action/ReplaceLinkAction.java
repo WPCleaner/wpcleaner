@@ -31,6 +31,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.component.MenuCreator;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
@@ -216,8 +217,7 @@ public class ReplaceLinkAction extends TextAction {
     Configuration config = Configuration.getConfiguration();
     if (config.getBoolean(
         null,
-        Configuration.BOOLEAN_SHORT_NOTATION,
-        Configuration.DEFAULT_SHORT_NOTATION)) {
+        ConfigurationValueBoolean.SHORT_NOTATION)) {
       String titleRTrimmed = localNewTitle.replaceAll("\\s*\\(.*\\)\\s*$", "");
       if ((newText == null) && firstCharEqual && titleRTrimmed.substring(1).equals(text2)) {
         newText = "[[" + localText.charAt(0) + title2 + "|]]";

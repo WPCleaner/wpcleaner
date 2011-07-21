@@ -53,6 +53,7 @@ import org.wikipediacleaner.api.data.TemplateMatcher1LT;
 import org.wikipediacleaner.api.data.TemplateMatcher1L;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
@@ -646,8 +647,7 @@ public enum EnumWikipedia {
     Configuration config = Configuration.getConfiguration();
     boolean showWikiCleaner = config.getBoolean(
         null,
-        Configuration.BOOLEAN_WIKICLEANER_COMMENT,
-        Configuration.DEFAULT_WIKICLEANER_COMMENT);
+        ConfigurationValueBoolean.WIKICLEANER_COMMENT);
     StringBuilder formattedComment = new StringBuilder();
     if (showWikiCleaner) {
       String link = getHelpPage();

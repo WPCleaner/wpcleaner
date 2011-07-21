@@ -109,6 +109,8 @@ import org.wikipediacleaner.gui.swing.worker.SendWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -599,8 +601,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     modelMaxErrors = new SpinnerNumberModel(
         configuration.getInt(
             null,
-            Configuration.INTEGER_CHECK_NB_ERRORS,
-            Configuration.DEFAULT_CHECK_NB_ERRORS),
+            ConfigurationValueInteger.CHECK_NB_ERRORS),
         10, 1000, 5);
     JSpinner spinMaxErrors = new JSpinner(modelMaxErrors);
     spinMaxErrors.setPreferredSize(new Dimension(80, 20));
@@ -1048,8 +1049,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         } else {
           if (!config.getBoolean(
               null,
-              Configuration.BOOLEAN_CHECK_MARK_AS_FIXED,
-              Configuration.DEFAULT_CHECK_MARK_AS_FIXED)) {
+              ConfigurationValueBoolean.CHECK_MARK_AS_FIXED)) {
             answer = displayYesNoAllWarning(GT._(
                 "The error n°{0} hasn''t been found in the page {1}.\n" +
                 "Do you want to mark it as fixed ?",
@@ -1220,8 +1220,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         Configuration configuration = Configuration.getConfiguration();
         if (!configuration.getBoolean(
             null,
-            Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
-            Configuration.DEFAULT_CHECK_SHOW_0_ERRORS)) {
+            ConfigurationValueBoolean.CHECK_SHOW_0_ERRORS)) {
           listAllErrors.removeItem(error);
         }
       }
@@ -1280,8 +1279,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
               (config != null) &&
               (config.getBoolean(
                   null,
-                  Configuration.BOOLEAN_CHECK_LINK_ERRORS,
-                  Configuration.DEFAULT_CHECK_LINK_ERRORS))) {
+                  ConfigurationValueBoolean.CHECK_LINK_ERRORS))) {
             comment.append("[[");
             comment.append(link);
             comment.append("|");
@@ -1344,8 +1342,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
           page, textPage.getText(), textComment.getText(),
           configuration.getBoolean(
               null,
-              Configuration.BOOLEAN_FORCE_WATCH,
-              Configuration.DEFAULT_FORCE_WATCH),
+              ConfigurationValueBoolean.FORCE_WATCH),
           false, false,
           errorsFixed);
       sendWorker.setListener(new DefaultBasicWorkerListener() {
@@ -1375,8 +1372,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
             }
             if (!configuration.getBoolean(
                 null,
-                Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
-                Configuration.DEFAULT_CHECK_SHOW_0_ERRORS)) {
+                ConfigurationValueBoolean.CHECK_SHOW_0_ERRORS)) {
               for (CheckError tmpError : errorsToBeRemoved) {
                 listAllErrors.removeItem(tmpError);
               }
@@ -1517,8 +1513,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       Configuration config = Configuration.getConfiguration();
       boolean showAllErrors = config.getBoolean(
           null,
-          Configuration.BOOLEAN_CHECK_SHOW_0_ERRORS,
-          Configuration.DEFAULT_CHECK_SHOW_0_ERRORS);
+          ConfigurationValueBoolean.CHECK_SHOW_0_ERRORS);
       int selectedIndex = -1;
       if (errors != null) {
         for (CheckError error : errors) {
