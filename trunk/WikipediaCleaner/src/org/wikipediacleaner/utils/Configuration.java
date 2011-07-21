@@ -65,32 +65,6 @@ public class Configuration implements WindowListener {
   public  final static String  POJO_PAGE_COMMENTS        = "PageComments";
   public  final static String  POJO_STYLES               = "Styles";
 
-  // Styles propeties
-  public  final static ConfigurationStyle STYLE_COMMENTS     = new ConfigurationStyle();
-  public  final static String  STYLE_COMMENTS_NAME           = "Comments";
-  public  final static Color   STYLE_COMMENTS_COLOR_BG       = Color.WHITE;
-  public  final static Color   STYLE_COMMENTS_COLOR_FG       = Color.GRAY;
-  public  final static boolean STYLE_COMMENTS_FMT            = true;
-  public  final static boolean STYLE_COMMENTS_FMT_BG         = false;
-  public  final static boolean STYLE_COMMENTS_FMT_BOLD       = false;
-  public  final static boolean STYLE_COMMENTS_FMT_FG         = true;
-  public  final static boolean STYLE_COMMENTS_FMT_ITALIC     = true;
-  public  final static boolean STYLE_COMMENTS_FMT_STRIKE     = false;
-  public  final static boolean STYLE_COMMENTS_FMT_UNDERLINE  = false;
-
-  static {
-    // Style for comments
-    STYLE_COMMENTS.setEnabled(STYLE_COMMENTS_FMT);
-    STYLE_COMMENTS.setForeground(STYLE_COMMENTS_FMT_FG);
-    STYLE_COMMENTS.setForegroundValue(STYLE_COMMENTS_COLOR_FG);
-    STYLE_COMMENTS.setBackground(STYLE_COMMENTS_FMT_BG);
-    STYLE_COMMENTS.setBackgroundValue(STYLE_COMMENTS_COLOR_BG);
-    STYLE_COMMENTS.setBold(STYLE_COMMENTS_FMT_BOLD);
-    STYLE_COMMENTS.setItalic(STYLE_COMMENTS_FMT_ITALIC);
-    STYLE_COMMENTS.setStrikeThrough(STYLE_COMMENTS_FMT_STRIKE);
-    STYLE_COMMENTS.setUnderline(STYLE_COMMENTS_FMT_UNDERLINE);
-  }
-
   // Configuration version :
   //   1 : Initial version
   //   2 : Configuration for each wikipedia
@@ -920,33 +894,22 @@ public class Configuration implements WindowListener {
   // ==========================================================================
 
   /**
-   * @param name Style name.
-   * @return Style.
+   * @param style Style.
+   * @return Style value.
    */
-  public ConfigurationStyle getStyle(String name, ConfigurationStyle defaultStyle) {
-    if (name == null) {
-      return defaultStyle;
-    }
-    Object result = getPojo(null, POJO_STYLES, name, ConfigurationStyle.class);
-    if (result instanceof ConfigurationStyle) {
-      return (ConfigurationStyle) result;
-    }
-    return defaultStyle;
+  public ConfigurationValueStyle.StyleProperties getStyle(
+      ConfigurationValueStyle style) {
+    return ConfigurationValueStyle.getValue(getPreferences(), style);
   }
 
   /**
-   * @param name Style name.
    * @param style Style.
+   * @param value Style value.
    */
-  public void setStyle(String name, ConfigurationStyle style) {
-    if (name == null) {
-      return;
-    }
-    if (style == null) {
-      removePojo(null, POJO_STYLES, name);
-    } else {
-      addPojo(null, POJO_STYLES, style, name);
-    }
+  public void setStyle(
+      ConfigurationValueStyle style,
+      ConfigurationValueStyle.StyleProperties value) {
+    ConfigurationValueStyle.setValue(getPreferences(), style, value);
   }
 
   // ==========================================================================
@@ -968,7 +931,7 @@ public class Configuration implements WindowListener {
    * @param value Property value.
    */
   public void setInt(EnumWikipedia wikipedia, ConfigurationValueInteger property, int value) {
-    ConfigurationValueInteger.setValue(preferences, property, value);
+    ConfigurationValueInteger.setValue(getPreferences(wikipedia), property, value);
   }
 
   // ==========================================================================

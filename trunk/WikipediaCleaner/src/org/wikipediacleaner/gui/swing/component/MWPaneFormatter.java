@@ -30,7 +30,7 @@ import javax.swing.text.StyledDocument;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.utils.Configuration;
-import org.wikipediacleaner.utils.ConfigurationStyle;
+import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
 
 /**
@@ -135,9 +135,8 @@ public abstract class MWPaneFormatter {
       return;
     }
     Configuration config = Configuration.getConfiguration();
-    ConfigurationStyle style = config.getStyle(
-        Configuration.STYLE_COMMENTS_NAME,
-        Configuration.STYLE_COMMENTS);
+    ConfigurationValueStyle.StyleProperties style = config.getStyle(
+        ConfigurationValueStyle.COMMENTS);
     if (!style.getEnabled()) {
       return;
     }
@@ -192,8 +191,7 @@ public abstract class MWPaneFormatter {
         Style commentStyle = styleContext.addStyle(STYLE_COMMENT, rootStyle);
         formatStyle(
             commentStyle, config,
-            Configuration.STYLE_COMMENTS_NAME,
-            Configuration.STYLE_COMMENTS);
+            ConfigurationValueStyle.COMMENTS);
         commentStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for normal link
@@ -274,16 +272,15 @@ public abstract class MWPaneFormatter {
    * 
    * @param style Style to be modified.
    * @param config Configuration.
-   * @param name Style name.
    * @param defaultStyle Default value for style.
    */
   private static void formatStyle(
       Style style, Configuration config,
-      String name, ConfigurationStyle defaultStyle) {
-    if ((style == null) || (config == null) || (name == null)) {
+      ConfigurationValueStyle defaultStyle) {
+    if ((style == null) || (config == null) || (defaultStyle == null)) {
       return;
     }
-    ConfigurationStyle configStyle = config.getStyle(name, defaultStyle);
+    ConfigurationValueStyle.StyleProperties configStyle = config.getStyle(defaultStyle);
     if (configStyle == null) {
       return;
     }
@@ -304,14 +301,14 @@ public abstract class MWPaneFormatter {
    */
   private static void formatStyleForeground(
       Style style, Configuration config,
-      ConfigurationStyle configStyle) {
+      ConfigurationValueStyle.StyleProperties configStyle) {
     if ((style == null) || (config == null) || (configStyle == null)) {
       return;
     }
     if (!configStyle.getForeground()) {
       return;
     }
-    StyleConstants.setForeground(style, configStyle.getForegroundValue());
+    StyleConstants.setForeground(style, configStyle.getForegroundColor());
   }
 
   /**
@@ -323,14 +320,14 @@ public abstract class MWPaneFormatter {
    */
   private static void formatStyleBackground(
       Style style, Configuration config,
-      ConfigurationStyle configStyle) {
+      ConfigurationValueStyle.StyleProperties configStyle) {
     if ((style == null) || (config == null) || (configStyle == null)) {
       return;
     }
     if (!configStyle.getBackground()) {
       return;
     }
-    StyleConstants.setBackground(style, configStyle.getBackgroundValue());
+    StyleConstants.setBackground(style, configStyle.getBackgroundColor());
   }
 
   /**
@@ -342,7 +339,7 @@ public abstract class MWPaneFormatter {
    */
   private static void formatStyleBold(
       Style style, Configuration config,
-      ConfigurationStyle configStyle) {
+      ConfigurationValueStyle.StyleProperties configStyle) {
     StyleConstants.setBold(
         style,
         configStyle.getBold());
@@ -357,7 +354,7 @@ public abstract class MWPaneFormatter {
    */
   private static void formatStyleItalic(
       Style style, Configuration config,
-      ConfigurationStyle configStyle) {
+      ConfigurationValueStyle.StyleProperties configStyle) {
     StyleConstants.setItalic(
         style,
         configStyle.getItalic());
@@ -372,7 +369,7 @@ public abstract class MWPaneFormatter {
    */
   private static void formatStyleUnderline(
       Style style, Configuration config,
-      ConfigurationStyle configStyle) {
+      ConfigurationValueStyle.StyleProperties configStyle) {
     StyleConstants.setUnderline(
         style,
         configStyle.getUnderline());
@@ -387,7 +384,7 @@ public abstract class MWPaneFormatter {
    */
   private static void formatStyleStrikeThrough(
       Style style, Configuration config,
-      ConfigurationStyle configStyle) {
+      ConfigurationValueStyle.StyleProperties configStyle) {
     StyleConstants.setStrikeThrough(
         style,
         configStyle.getStrikeThrough());
