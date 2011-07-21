@@ -31,6 +31,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
@@ -63,8 +64,7 @@ public abstract class MediaWikiController implements MediaWikiListener {
       Configuration config = Configuration.getConfiguration();
       int nThreads = config.getInt(
           null,
-          Configuration.INTEGER_INTERROG_THREAD,
-          Configuration.DEFAULT_INTERROG_THREAD);
+          ConfigurationValueInteger.INTERROG_THREAD);
       staticExecutor = Executors.newFixedThreadPool(nThreads);
     }
     return staticExecutor;

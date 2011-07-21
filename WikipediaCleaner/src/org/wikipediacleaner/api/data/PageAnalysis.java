@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
@@ -68,7 +69,7 @@ public class PageAnalysis {
     // Default configuration
     Configuration config = Configuration.getConfiguration();
     checkOrthograph = config.getBoolean(
-        null, Configuration.BOOLEAN_ORTHOGRAPH, Configuration.DEFAULT_ORTHOGRAPH);
+        null, ConfigurationValueBoolean.ORTHOGRAPH);
   }
 
   /**

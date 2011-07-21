@@ -65,6 +65,8 @@ import org.wikipediacleaner.gui.swing.worker.SendWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 /**
  * A base class for Wikipedia Cleaner windows with one page contents.
@@ -779,8 +781,7 @@ public abstract class OnePageWindow
         GT._("&Close after sending"),
         config.getBoolean(
             null,
-            Configuration.BOOLEAN_CLOSE_FULL,
-            Configuration.DEFAULT_CLOSE_FULL));
+            ConfigurationValueBoolean.CLOSE_FULL));
     panel.add(chkCloseAfterSend);
   }
 
@@ -856,7 +857,7 @@ public abstract class OnePageWindow
     }
     Configuration config = Configuration.getConfiguration();
     return config.getBoolean(
-        null, Configuration.BOOLEAN_ORTHOGRAPH, Configuration.DEFAULT_ORTHOGRAPH);
+        null, ConfigurationValueBoolean.ORTHOGRAPH);
   }
 
   /**
@@ -908,8 +909,7 @@ public abstract class OnePageWindow
       if (undo != null) {
         textPane.setUndoLevels(config.getInt(
             null,
-            Configuration.INTEGER_ANALYSIS_UNDO_LVL,
-            Configuration.DEFAULT_ANALYSIS_UNDO_LVL));
+            ConfigurationValueInteger.ANALYSIS_UNDO_LVL));
       }
       textPane.addPropertyChangeListener(
           MWPane.PROPERTY_MODIFIED,
@@ -1262,12 +1262,10 @@ public abstract class OnePageWindow
     Configuration config = Configuration.getConfiguration();
     final boolean hideWindow = config.getBoolean(
         null,
-        Configuration.BOOLEAN_ANALYSIS_HIDE_SENDING,
-        Configuration.DEFAULT_ANALYSIS_HIDE_SENDING);
+        ConfigurationValueBoolean.ANALYSIS_HIDE_SENDING);
     final boolean forceWatch = config.getBoolean(
         null,
-        Configuration.BOOLEAN_FORCE_WATCH,
-        Configuration.DEFAULT_FORCE_WATCH);
+        ConfigurationValueBoolean.FORCE_WATCH);
     final int oldState = getParentComponent().getExtendedState();
     final boolean updateDabWarning = (chkUpdateDabWarning != null) && (chkUpdateDabWarning.isSelected());
     final boolean createDabWarning = (chkCreateDabWarning != null) && (chkCreateDabWarning.isSelected());

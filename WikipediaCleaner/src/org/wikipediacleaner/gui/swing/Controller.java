@@ -30,6 +30,7 @@ import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.gui.swing.options.OptionsWindow;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
@@ -234,8 +235,7 @@ public class Controller {
     Configuration config = Configuration.getConfiguration();
     int maxPagesCount = config.getInt(
         null,
-        Configuration.INTEGER_MAXIMUM_PAGES,
-        Configuration.DEFAULT_MAXIMUM_PAGES);
+        ConfigurationValueInteger.MAXIMUM_PAGES);
     if (pagesCount > maxPagesCount) {
       int answer = Utilities.displayYesNoCancelWarning(
           parentComponent, GT._(

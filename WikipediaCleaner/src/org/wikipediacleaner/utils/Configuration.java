@@ -53,14 +53,6 @@ public class Configuration implements WindowListener {
   // Properties
   public  final static String  PROPERTIES_LAST_REPLACEMENT = "LastReplacement";
 
-  // String properties
-  public  final static String  STRING_PAGE_NAME          = "PageName";
-  private final static String  STRING_PASSWORD           = "Password";
-  public  final static String  STRING_SIGNATURE          = "Signature";
-  private final static String  STRING_USER_NAME          = "UserName";
-
-  public  final static String  DEFAULT_SIGNATURE         = "--~~~~";
-
   // Array properties
   public  final static String  ARRAY_CHECK_SELECTION     = "CheckWikiSelection";
   public  final static String  ARRAY_SORT_ORDERS         = "SortOrders";
@@ -99,100 +91,11 @@ public class Configuration implements WindowListener {
     STYLE_COMMENTS.setUnderline(STYLE_COMMENTS_FMT_UNDERLINE);
   }
 
-  // Integer properties
-  public  final static String  INTEGER_ANALYSIS_NB_PAGES = "AnalysisNbPages";
-  public  final static String  INTEGER_ANALYSIS_UNDO_LVL = "AnalysisUndoLevels";
-  public  final static String  INTEGER_CHECK_NB_ERRORS   = "CheckNbErrors";
-  public  final static String  INTEGER_INTERROG_THREAD   = "InterrogationThreads";
-  public  final static String  INTEGER_MAXIMUM_PAGES     = "MaximumPages";
-  public  final static String  INTEGER_MENU_SIZE         = "MenuSize";
-  public  final static String  INTEGER_SAVE_USER         = "SaveUser";
-
-  public  final static int     VALUE_SAVE_USER_BOTH      = 2;
-  public  final static int     VALUE_SAVE_USER_NAME      = 1;
-  public  final static int     VALUE_SAVE_USER_NONE      = 0;
-
-  public  final static int     DEFAULT_ANALYSIS_NB_PAGES = 10;
-  public  final static int     DEFAULT_ANALYSIS_UNDO_LVL = 10;
-  public  final static int     DEFAULT_CHECK_NB_ERRORS   = 100;
-  public  final static int     DEFAULT_INTERROG_THREAD   = 30;
-  public  final static int     DEFAULT_MAXIMUM_PAGES     = 20;
-  public  final static int     DEFAULT_MENU_SIZE         = 30;
-  public  final static int     DEFAULT_SAVE_USER         = VALUE_SAVE_USER_NAME;
-
   // Configuration version :
   //   1 : Initial version
   //   2 : Configuration for each wikipedia
   //   3 : Multiple users
-  public  final static String  INTEGER_CONFIG_VERSION    = "ConfigurationVersion";
-  public  final static int     DEFAULT_CONFIG_VERSION    = 3;
-
-  // Boolean properties
-  public  final static String  BOOLEAN_ADVANCED_FEATURES       = "AdvancedFeatures";
-  public  final static String  BOOLEAN_ANALYSIS_COUNT_DISAMBIG = "AnalysisCountDisambiguation";
-  public  final static String  BOOLEAN_ANALYSIS_COUNT_MISSING  = "AnalysisCountMissing";
-  public  final static String  BOOLEAN_ANALYSIS_COUNT_OTHER    = "AnalysisCountOther";
-  public  final static String  BOOLEAN_ANALYSIS_COUNT_REDIRECT = "AnalysisCountRedirect";
-  public  final static String  BOOLEAN_ANALYSIS_DISAMBIG_PAGES = "AnalysisDisambiguationPages";
-  public  final static String  BOOLEAN_ANALYSIS_HIDE_SENDING   = "AnalysisHideSending";
-  public  final static String  BOOLEAN_ANALYSIS_MISSING_PAGES  = "AnalysisMissingPages";
-  public  final static String  BOOLEAN_ANALYSIS_OTHER_PAGES    = "AnalysisOtherPages";
-  public  final static String  BOOLEAN_ANALYSIS_REDIRECT_PAGES = "AnalysisRedirectPages";
-  public  final static String  BOOLEAN_CHECK_SHOW_0_ERRORS     = "CheckShow0Errors";
-  public  final static String  BOOLEAN_CHECK_LINK_ERRORS       = "CheckLinkErrors";
-  public  final static String  BOOLEAN_CHECK_MARK_AS_FIXED     = "CheckMarkAsFixed";
-  public  final static String  BOOLEAN_CLOSE_DISAMBIG          = "CloseDisambiguation";
-  public  final static String  BOOLEAN_CLOSE_FULL              = "CloseFullAnalysis";
-  public  final static String  BOOLEAN_CREATE_DAB_WARNING      = "CreateDabWarning";
-  public  final static String  BOOLEAN_CREATE_DAB_WARNING_ALL  = "CreateDabWarningAll";
-  public  final static String  BOOLEAN_CREATE_DAB_WARNING_ENCY = "CreateDabWarningEncyclo";
-  public  final static String  BOOLEAN_DEBUG_TIME              = "DebugTime";
-  public  final static String  BOOLEAN_DEBUG_URL               = "DebugURL";
-  public  final static String  BOOLEAN_DEBUG_XML               = "DebugXML";
-  public  final static String  BOOLEAN_FORCE_WATCH             = "ForceWatch";
-  public  final static String  BOOLEAN_ORTHOGRAPH              = "Orthograph";
-  public  final static String  BOOLEAN_REMEMBER_LAST_PAGE      = "RememberLastPage";
-  public  final static String  BOOLEAN_RESTORE_WINDOW          = "RestoreWindow";
-  public  final static String  BOOLEAN_SAVE_LAST_REPLACEMENT   = "SaveLastReplacement";
-  public  final static String  BOOLEAN_SAVE_WINDOW             = "SaveWindow";
-  public  final static String  BOOLEAN_SHORT_NOTATION          = "ShortNotation";
-  public  final static String  BOOLEAN_UPDATE_DAB_WARNING      = "UpdateDabWarning";
-  public  final static String  BOOLEAN_UPDATE_DAB_WARNING_ALL  = "UpdateDabWarningAll";
-  public  final static String  BOOLEAN_UPDATE_DAB_WARNING_ENCY = "UpdateDabWarningEncyclo";
-  public  final static String  BOOLEAN_WIKICLEANER_COMMENT     = "WikiCleanerComment";
-
-  public  final static boolean DEFAULT_ADVANCED_FEATURES       = false;
-  public  final static boolean DEFAULT_ANALYSIS_COUNT_DISAMBIG = true;
-  public  final static boolean DEFAULT_ANALYSIS_COUNT_MISSING  = false;
-  public  final static boolean DEFAULT_ANALYSIS_COUNT_OTHER    = false;
-  public  final static boolean DEFAULT_ANALYSIS_COUNT_REDIRECT = false;
-  public  final static boolean DEFAULT_ANALYSIS_DISAMBIG_PAGES = true;
-  public  final static boolean DEFAULT_ANALYSIS_HIDE_SENDING   = true;
-  public  final static boolean DEFAULT_ANALYSIS_MISSING_PAGES  = false;
-  public  final static boolean DEFAULT_ANALYSIS_OTHER_PAGES    = false;
-  public  final static boolean DEFAULT_ANALYSIS_REDIRECT_PAGES = false;
-  public  final static boolean DEFAULT_CHECK_SHOW_0_ERRORS     = false;
-  public  final static boolean DEFAULT_CHECK_LINK_ERRORS       = false;
-  public  final static boolean DEFAULT_CHECK_MARK_AS_FIXED     = false;
-  public  final static boolean DEFAULT_CLOSE_DISAMBIG          = false;
-  public  final static boolean DEFAULT_CLOSE_FULL              = true;
-  public  final static boolean DEFAULT_CREATE_DAB_WARNING      = true;
-  public  final static boolean DEFAULT_CREATE_DAB_WARNING_ALL  = false;
-  public  final static boolean DEFAULT_CREATE_DAB_WARNING_ENCY = true;
-  public  final static boolean DEFAULT_DEBUG_TIME              = false;
-  public  final static boolean DEFAULT_DEBUG_URL               = true;
-  public  final static boolean DEFAULT_DEBUG_XML               = false;
-  public  final static boolean DEFAULT_FORCE_WATCH             = false;
-  public  final static boolean DEFAULT_ORTHOGRAPH              = true;
-  public  final static boolean DEFAULT_REMEMBER_LAST_PAGE      = true;
-  public  final static boolean DEFAULT_RESTORE_WINDOW          = true;
-  public  final static boolean DEFAULT_SAVE_LAST_REPLACEMENT   = false;
-  public  final static boolean DEFAULT_SAVE_WINDOW             = true;
-  public  final static boolean DEFAULT_SHORT_NOTATION          = false;
-  public  final static boolean DEFAULT_UPDATE_DAB_WARNING      = true;
-  public  final static boolean DEFAULT_UPDATE_DAB_WARNING_ALL  = true;
-  public  final static boolean DEFAULT_UPDATE_DAB_WARNING_ENCY = true;
-  public  final static boolean DEFAULT_WIKICLEANER_COMMENT     = true;
+  public  final static int     CURRENT_CONFIG_VERSION    = 3;
 
   // Properties
   public  final static String  PROPERTIES_BACKLINKS      = "Backlinks";
@@ -262,17 +165,23 @@ public class Configuration implements WindowListener {
         // Check if first time
         if (((children == null) || (children.length == 0)) &&
             ((keys == null) || (keys.length == 0))) {
-          setInt(null, INTEGER_CONFIG_VERSION, DEFAULT_CONFIG_VERSION);
+          setInt(
+              null,
+              ConfigurationValueInteger.CONFIG_VERSION,
+              CURRENT_CONFIG_VERSION);
           return;
         }
 
         // Check if version is already up to date
-        int version = getInt(null, INTEGER_CONFIG_VERSION, 1);
-        if (version == DEFAULT_CONFIG_VERSION) {
+        int version = getInt(null, ConfigurationValueInteger.CONFIG_VERSION);
+        if (version == CURRENT_CONFIG_VERSION) {
           return;
         }
-        if (version > DEFAULT_CONFIG_VERSION) {
-          setInt(null, INTEGER_CONFIG_VERSION, DEFAULT_CONFIG_VERSION);
+        if (version > CURRENT_CONFIG_VERSION) {
+          setInt(
+              null,
+              ConfigurationValueInteger.CONFIG_VERSION,
+              CURRENT_CONFIG_VERSION);
           return;
         }
 
@@ -292,11 +201,20 @@ public class Configuration implements WindowListener {
 
         // Update from version 2 to 3 : Several users
         if (ok && (version < 3)) {
-          removeValue(getPreferences(), STRING_USER_NAME);
-          removeValue(getPreferences(), STRING_PASSWORD);
+          ConfigurationValueString.setValue(
+              getPreferences(),
+              ConfigurationValueString.USER_NAME,
+              null);
+          ConfigurationValueString.setValue(
+              getPreferences(),
+              ConfigurationValueString.PASSWORD,
+              null);
         }
         if (ok) {
-          setInt(null, INTEGER_CONFIG_VERSION, DEFAULT_CONFIG_VERSION);
+          setInt(
+              null,
+              ConfigurationValueInteger.CONFIG_VERSION,
+              CURRENT_CONFIG_VERSION);
         }
       }
     } catch (BackingStoreException e) {
@@ -320,18 +238,6 @@ public class Configuration implements WindowListener {
       } catch (BackingStoreException e) {
         //
       }
-    }
-  }
-
-  /**
-   * Remove a value.
-   * 
-   * @param prefs Preferences.
-   * @param value Value name.
-   */
-  private void removeValue(Preferences prefs, String value) {
-    if (prefs != null) {
-      prefs.remove(value);
     }
   }
 
@@ -445,22 +351,8 @@ public class Configuration implements WindowListener {
    * @return Property value.
    */
   public String getString(
-      EnumWikipedia wikipedia, String property) {
-    return getString(wikipedia, property, "");
-  }
-
-  /**
-   * @param wikipedia Wikipedia.
-   * @param property Property name.
-   * @param defaultValue Default value.
-   * @return Property value.
-   */
-  public String getString(
-      EnumWikipedia wikipedia, String property, String defaultValue) {
-    if (getPreferences(wikipedia) != null) {
-      return getPreferences(wikipedia).get(property, defaultValue);
-    }
-    return defaultValue;
+      EnumWikipedia wikipedia, ConfigurationValueString property) {
+    return ConfigurationValueString.getValue(getPreferences(wikipedia), property);
   }
 
   /**
@@ -469,14 +361,8 @@ public class Configuration implements WindowListener {
    * @param value Property value.
    */
   public void setString(
-      EnumWikipedia wikipedia, String property, String value) {
-    if (getPreferences(wikipedia) != null) {
-      if (value != null) {
-        getPreferences(wikipedia).put(property, value);
-      } else {
-        getPreferences(wikipedia).remove(property);
-      }
-    }
+      EnumWikipedia wikipedia, ConfigurationValueString property, String value) {
+    ConfigurationValueString.setValue(getPreferences(wikipedia), property, value);
   }
 
   /**
@@ -485,11 +371,11 @@ public class Configuration implements WindowListener {
    * @param value Property value.
    */
   public void setString(
-      EnumWikipedia wikipedia, String property, char[] value) {
+      EnumWikipedia wikipedia, ConfigurationValueString property, char[] value) {
     if (value != null) {
       setString(wikipedia, property, new String(value));
     } else {
-      getPreferences(wikipedia).remove(property);
+      setString(wikipedia, property, (String) null);
     }
   }
 
@@ -1069,26 +955,20 @@ public class Configuration implements WindowListener {
 
   /**
    * @param wikipedia Wikipedia.
-   * @param property Property name.
-   * @param defaultValue Default value.
+   * @param property Property.
    * @return Property value.
    */
-  public int getInt(EnumWikipedia wikipedia, String property, int defaultValue) {
-    if (getPreferences(wikipedia) != null) {
-      return getPreferences(wikipedia).getInt(property, defaultValue);
-    }
-    return defaultValue;
+  public int getInt(EnumWikipedia wikipedia, ConfigurationValueInteger property) {
+    return ConfigurationValueInteger.getValue(getPreferences(wikipedia), property);
   }
 
   /**
    * @param wikipedia Wikipedia.
-   * @param property Property name.
+   * @param property Property.
    * @param value Property value.
    */
-  public void setInt(EnumWikipedia wikipedia, String property, int value) {
-    if (getPreferences(wikipedia) != null) {
-      getPreferences(wikipedia).putInt(property, value);
-    }
+  public void setInt(EnumWikipedia wikipedia, ConfigurationValueInteger property, int value) {
+    ConfigurationValueInteger.setValue(preferences, property, value);
   }
 
   // ==========================================================================
@@ -1127,26 +1007,20 @@ public class Configuration implements WindowListener {
 
   /**
    * @param wikipedia Wikipedia.
-   * @param property Property name.
-   * @param defaultValue Default value.
+   * @param property Property.
    * @return Property value.
    */
-  public boolean getBoolean(EnumWikipedia wikipedia, String property, boolean defaultValue) {
-    if (getPreferences(wikipedia) != null) {
-      return getPreferences(wikipedia).getBoolean(property, defaultValue);
-    }
-    return defaultValue;
+  public boolean getBoolean(EnumWikipedia wikipedia, ConfigurationValueBoolean property) {
+    return ConfigurationValueBoolean.getValue(getPreferences(wikipedia), property);
   }
 
   /**
    * @param wikipedia Wikipedia.
-   * @param property Property name.
+   * @param property Property.
    * @param value Property value.
    */
-  public void setBoolean(EnumWikipedia wikipedia, String property, boolean value) {
-    if (getPreferences(wikipedia) != null) {
-      getPreferences(wikipedia).putBoolean(property, value);
-    }
+  public void setBoolean(EnumWikipedia wikipedia, ConfigurationValueBoolean property, boolean value) {
+    ConfigurationValueBoolean.setValue(getPreferences(wikipedia), property, value);
   }
 
   // ==========================================================================
@@ -1211,7 +1085,7 @@ public class Configuration implements WindowListener {
       return;
     }
     window.addWindowListener(this);
-    if (getBoolean(null, BOOLEAN_RESTORE_WINDOW, DEFAULT_RESTORE_WINDOW) &&
+    if (getBoolean(null, ConfigurationValueBoolean.RESTORE_WINDOW) &&
         (getPreferences() != null)) {
       try {
         if (!getPreferences().nodeExists(PROPERTY_WINDOW)) {
@@ -1252,7 +1126,7 @@ public class Configuration implements WindowListener {
    * @param window The window.
    */
   public void saveWindowPosition(Window window) {
-    if (getBoolean(null, BOOLEAN_SAVE_WINDOW, DEFAULT_SAVE_WINDOW) &&
+    if (getBoolean(null, ConfigurationValueBoolean.SAVE_WINDOW) &&
         (window != null) &&
         (getPreferences() != null)) {
       Preferences node = getPreferences().node(PROPERTY_WINDOW);

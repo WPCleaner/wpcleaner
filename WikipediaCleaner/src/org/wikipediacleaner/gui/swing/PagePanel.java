@@ -41,6 +41,7 @@ import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
@@ -303,8 +304,7 @@ public class PagePanel
         textContents.setRedoButton(buttonRedo);
         textContents.setUndoLevels(config.getInt(
             null,
-            Configuration.INTEGER_ANALYSIS_UNDO_LVL,
-            Configuration.DEFAULT_ANALYSIS_UNDO_LVL));
+            ConfigurationValueInteger.ANALYSIS_UNDO_LVL));
       }
       textContents.addPropertyChangeListener(MWPane.PROPERTY_MODIFIED, this);
     }

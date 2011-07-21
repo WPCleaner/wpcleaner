@@ -27,9 +27,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
-import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
-import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
@@ -41,10 +40,6 @@ public class DebugOptionsPanel extends OptionsPanel {
    * Serialisation.
    */
   private static final long serialVersionUID = 3614825228324362078L;
-
-  private JCheckBox chkDebugTime;
-  private JCheckBox chkDebugURL;
-  private JCheckBox chkDebugXML;
 
   /**
    * Construct a Debug Options panel. 
@@ -60,7 +55,7 @@ public class DebugOptionsPanel extends OptionsPanel {
   private void initialize() {
     setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), GT._("Debug options")));
-    Configuration configuration = Configuration.getConfiguration();
+    JCheckBox chk = null;
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -78,33 +73,24 @@ public class DebugOptionsPanel extends OptionsPanel {
     constraints.gridwidth = 3;
 
     // Debug URL
-    chkDebugURL = Utilities.createJCheckBox(
+    chk = createJCheckBox(
         GT._("Log all URL called by WikiCleaner"),
-        configuration.getBoolean(
-            null,
-            Configuration.BOOLEAN_DEBUG_URL,
-            Configuration.DEFAULT_DEBUG_URL));
-    add(chkDebugURL, constraints);
+        ConfigurationValueBoolean.DEBUG_URL);
+    add(chk, constraints);
     constraints.gridy++;
 
     // Debug XML
-    chkDebugXML = Utilities.createJCheckBox(
+    chk = createJCheckBox(
         GT._("Log all answers to MediaWiki API calls"),
-        configuration.getBoolean(
-            null,
-            Configuration.BOOLEAN_DEBUG_XML,
-            Configuration.DEFAULT_DEBUG_XML));
-    add(chkDebugXML, constraints);
+        ConfigurationValueBoolean.DEBUG_XML);
+    add(chk, constraints);
     constraints.gridy++;
 
     // Debug time
-    chkDebugTime = Utilities.createJCheckBox(
+    chk = createJCheckBox(
         GT._("Add a timestamp to logs"),
-        configuration.getBoolean(
-            null,
-            Configuration.BOOLEAN_DEBUG_TIME,
-            Configuration.DEFAULT_DEBUG_TIME));
-    add(chkDebugTime, constraints);
+        ConfigurationValueBoolean.DEBUG_TIME);
+    add(chk, constraints);
     constraints.gridy++;
 
     // Empty panel
@@ -115,35 +101,5 @@ public class DebugOptionsPanel extends OptionsPanel {
     constraints.insets = new Insets(0, 0, 0, 0);
     constraints.weighty = 1;
     add(emptyPanel, constraints);
-  }
-
-  /**
-   * Restore all options to their default values.
-   */
-  @Override
-  public void defaultValues() {
-    //
-  }
-
-  /**
-   * Apply new values to the options.
-   */
-  @Override
-  public void apply() {
-    Configuration config = Configuration.getConfiguration();
-
-    // Boolean values
-    config.setBoolean(
-        null,
-        Configuration.BOOLEAN_DEBUG_TIME,
-        chkDebugTime.isSelected());
-    config.setBoolean(
-        null,
-        Configuration.BOOLEAN_DEBUG_URL,
-        chkDebugURL.isSelected());
-    config.setBoolean(
-        null,
-        Configuration.BOOLEAN_DEBUG_XML,
-        chkDebugXML.isSelected());
   }
 }

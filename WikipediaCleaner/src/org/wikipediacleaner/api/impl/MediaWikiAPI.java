@@ -64,6 +64,7 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
@@ -113,11 +114,11 @@ public class MediaWikiAPI implements API {
   public static void updateConfiguration() {
     Configuration config = Configuration.getConfiguration();
     DEBUG_TIME = config.getBoolean(
-        null, Configuration.BOOLEAN_DEBUG_TIME, Configuration.DEFAULT_DEBUG_TIME);
+        null, ConfigurationValueBoolean.DEBUG_TIME);
     DEBUG_URL = config.getBoolean(
-        null, Configuration.BOOLEAN_DEBUG_URL, Configuration.DEFAULT_DEBUG_URL);
+        null, ConfigurationValueBoolean.DEBUG_URL);
     DEBUG_XML = config.getBoolean(
-        null, Configuration.BOOLEAN_DEBUG_XML, Configuration.DEFAULT_DEBUG_XML);
+        null, ConfigurationValueBoolean.DEBUG_XML);
   }
 
   /**
