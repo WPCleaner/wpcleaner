@@ -62,13 +62,23 @@ public class FormattingOptionsPanel extends OptionsPanel {
   }
 
   private int lineCategory;
+  private int lineCheckWikiError;
+  private int lineCheckWikiOk;
+  private int lineCheckWikiWarning;
   private int lineComments;
   private int lineDefaultSort;
   private int lineExternalLink;
+  private int lineHelpRequested;
   private int lineImage;
   private int lineInternalLink;
+  private int lineInternalLinkDab;
+  private int lineInternalLinkMissing;
+  private int lineInternalLinkNormal;
+  private int lineInternalLinkRedirect;
   private int lineLanguageLink;
   private int lineTemplate;
+  private int lineTemplateDab;
+  private int lineTemplateNormal;
   private int lineTitle;
 
   /**
@@ -127,7 +137,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
         true, true, true, true, true, true);
     setStyle(lineCategory, ConfigurationValueStyle.CATEGORY);
 
-    // Add line for category style
+    // Add line for DEFAULTSORT style
     lineDefaultSort = addLine(
         constraints, true, GT._("Default sort"),
         true, true, true, true, true, true);
@@ -144,6 +154,66 @@ public class FormattingOptionsPanel extends OptionsPanel {
         constraints, true, GT._("External link"),
         true, true, true, true, true, true);
     setStyle(lineExternalLink, ConfigurationValueStyle.EXTERNAL_LINK);
+
+    // Add line for dab link style
+    lineInternalLinkDab = addLine(
+        constraints, true, GT._("Disambiguation link"),
+        true, true, true, true, true, true);
+    setStyle(lineInternalLinkDab, ConfigurationValueStyle.INTERNAL_LINK_DAB);
+
+    // Add line for normal internal link style
+    lineInternalLinkNormal = addLine(
+        constraints, true, GT._("Normal internal link"),
+        true, true, true, true, true, true);
+    setStyle(lineInternalLinkNormal, ConfigurationValueStyle.INTERNAL_LINK_NORMAL);
+
+    // Add line for redirect link style
+    lineInternalLinkRedirect = addLine(
+        constraints, true, GT._("Redirect link"),
+        true, true, true, true, true, true);
+    setStyle(lineInternalLinkRedirect, ConfigurationValueStyle.INTERNAL_LINK_REDIRECT);
+
+    // Add line for missing link style
+    lineInternalLinkMissing = addLine(
+        constraints, true, GT._("Missing link"),
+        true, true, true, true, true, true);
+    setStyle(lineInternalLinkMissing, ConfigurationValueStyle.INTERNAL_LINK_MISSING);
+
+    // Add line for dab template style
+    lineTemplateDab = addLine(
+        constraints, true, GT._("Disambiguation template"),
+        true, true, true, true, true, true);
+    setStyle(lineTemplateDab, ConfigurationValueStyle.TEMPLATE_DAB);
+
+    // Add line for normal template style
+    lineTemplateNormal = addLine(
+        constraints, true, GT._("Normal template"),
+        true, true, true, true, true, true);
+    setStyle(lineTemplateNormal, ConfigurationValueStyle.TEMPLATE_NORMAL);
+
+    // Add line for help requested style
+    lineHelpRequested = addLine(
+        constraints, true, GT._("Help requested"),
+        true, true, true, true, true, true);
+    setStyle(lineHelpRequested, ConfigurationValueStyle.HELP_REQUESTED);
+
+    // Add line for check wiki error style
+    lineCheckWikiError = addLine(
+        constraints, true, GT._("Check wiki error"),
+        true, true, true, true, true, true);
+    setStyle(lineCheckWikiError, ConfigurationValueStyle.CHECK_WIKI_ERROR);
+
+    // Add line for check wiki warning style
+    lineCheckWikiWarning = addLine(
+        constraints, true, GT._("Check wiki warning"),
+        true, true, true, true, true, true);
+    setStyle(lineCheckWikiWarning, ConfigurationValueStyle.CHECK_WIKI_WARNING);
+
+    // Add line for check wiki ok style
+    lineCheckWikiOk = addLine(
+        constraints, true, GT._("Check wiki OK"),
+        true, true, true, true, true, true);
+    setStyle(lineCheckWikiOk, ConfigurationValueStyle.CHECK_WIKI_OK);
 
     // Empty panel
     JPanel emptyPanel = new JPanel();
@@ -162,13 +232,23 @@ public class FormattingOptionsPanel extends OptionsPanel {
   @Override
   public void defaultValues() {
     setStyle(lineCategory, ConfigurationValueStyle.CATEGORY);
+    setStyle(lineCheckWikiError, ConfigurationValueStyle.CHECK_WIKI_ERROR);
+    setStyle(lineCheckWikiOk, ConfigurationValueStyle.CHECK_WIKI_OK);
+    setStyle(lineCheckWikiWarning, ConfigurationValueStyle.CHECK_WIKI_WARNING);
     setStyle(lineComments, ConfigurationValueStyle.COMMENTS);
     setStyle(lineDefaultSort, ConfigurationValueStyle.DEFAULTSORT);
     setStyle(lineExternalLink, ConfigurationValueStyle.EXTERNAL_LINK);
+    setStyle(lineHelpRequested, ConfigurationValueStyle.HELP_REQUESTED);
     setStyle(lineImage, ConfigurationValueStyle.IMAGE);
     setStyle(lineInternalLink, ConfigurationValueStyle.INTERNAL_LINK);
+    setStyle(lineInternalLinkDab, ConfigurationValueStyle.INTERNAL_LINK_DAB);
+    setStyle(lineInternalLinkMissing, ConfigurationValueStyle.INTERNAL_LINK_MISSING);
+    setStyle(lineInternalLinkNormal, ConfigurationValueStyle.INTERNAL_LINK_NORMAL);
+    setStyle(lineInternalLinkRedirect, ConfigurationValueStyle.INTERNAL_LINK_REDIRECT);
     setStyle(lineLanguageLink, ConfigurationValueStyle.LANGUAGE_LINK);
     setStyle(lineTemplate, ConfigurationValueStyle.TEMPLATE);
+    setStyle(lineTemplateDab, ConfigurationValueStyle.TEMPLATE_DAB);
+    setStyle(lineTemplateNormal, ConfigurationValueStyle.TEMPLATE_NORMAL);
     setStyle(lineTitle, ConfigurationValueStyle.TITLE);
   }
 
@@ -182,20 +262,40 @@ public class FormattingOptionsPanel extends OptionsPanel {
 
     configStyle = getStyle(lineCategory);
     config.setStyle(ConfigurationValueStyle.CATEGORY, configStyle);
+    configStyle = getStyle(lineCheckWikiError);
+    config.setStyle(ConfigurationValueStyle.CHECK_WIKI_ERROR, configStyle);
+    configStyle = getStyle(lineCheckWikiOk);
+    config.setStyle(ConfigurationValueStyle.CHECK_WIKI_OK, configStyle);
+    configStyle = getStyle(lineCheckWikiWarning);
+    config.setStyle(ConfigurationValueStyle.CHECK_WIKI_WARNING, configStyle);
     configStyle = getStyle(lineComments);
     config.setStyle(ConfigurationValueStyle.COMMENTS, configStyle);
     configStyle = getStyle(lineDefaultSort);
     config.setStyle(ConfigurationValueStyle.DEFAULTSORT, configStyle);
     configStyle = getStyle(lineExternalLink);
     config.setStyle(ConfigurationValueStyle.EXTERNAL_LINK, configStyle);
+    configStyle = getStyle(lineHelpRequested);
+    config.setStyle(ConfigurationValueStyle.HELP_REQUESTED, configStyle);
     configStyle = getStyle(lineImage);
     config.setStyle(ConfigurationValueStyle.IMAGE, configStyle);
     configStyle = getStyle(lineInternalLink);
     config.setStyle(ConfigurationValueStyle.INTERNAL_LINK, configStyle);
+    configStyle = getStyle(lineInternalLinkDab);
+    config.setStyle(ConfigurationValueStyle.INTERNAL_LINK_DAB, configStyle);
+    configStyle = getStyle(lineInternalLinkMissing);
+    config.setStyle(ConfigurationValueStyle.INTERNAL_LINK_MISSING, configStyle);
+    configStyle = getStyle(lineInternalLinkNormal);
+    config.setStyle(ConfigurationValueStyle.INTERNAL_LINK_NORMAL, configStyle);
+    configStyle = getStyle(lineInternalLinkRedirect);
+    config.setStyle(ConfigurationValueStyle.INTERNAL_LINK_REDIRECT, configStyle);
     configStyle = getStyle(lineLanguageLink);
     config.setStyle(ConfigurationValueStyle.LANGUAGE_LINK, configStyle);
     configStyle = getStyle(lineTemplate);
     config.setStyle(ConfigurationValueStyle.TEMPLATE, configStyle);
+    configStyle = getStyle(lineTemplateDab);
+    config.setStyle(ConfigurationValueStyle.TEMPLATE_DAB, configStyle);
+    configStyle = getStyle(lineTemplateNormal);
+    config.setStyle(ConfigurationValueStyle.TEMPLATE_NORMAL, configStyle);
     configStyle = getStyle(lineTitle);
     config.setStyle(ConfigurationValueStyle.TITLE, configStyle);
   }

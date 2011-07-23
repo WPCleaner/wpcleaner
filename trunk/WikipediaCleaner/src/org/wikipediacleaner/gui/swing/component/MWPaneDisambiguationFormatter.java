@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.TemplateMatcher;
+import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
 
 /**
@@ -117,14 +118,14 @@ public class MWPaneDisambiguationFormatter extends
 
     // Format the link
     boolean disambiguation = Boolean.TRUE.equals(link.isDisambiguationPage());
-    String styleName = disambiguation ?
-        STYLE_DISAMBIGUATION_LINK :
+    ConfigurationValueStyle styleType = disambiguation ?
+        ConfigurationValueStyle.INTERNAL_LINK_DAB :
         link.isRedirect() ?
-            STYLE_REDIRECT_LINK :
+            ConfigurationValueStyle.INTERNAL_LINK_REDIRECT :
             link.isExisting() ?
-                STYLE_NORMAL_LINK :
-                STYLE_MISSING_LINK;
-    Style attr = pane.getStyle(styleName);
+                ConfigurationValueStyle.INTERNAL_LINK_NORMAL :
+                ConfigurationValueStyle.INTERNAL_LINK_MISSING;
+    Style attr = pane.getStyle(styleType.getName());
     StyledDocument doc = pane.getStyledDocument();
     if ((doc == null) || (attr == null)) {
       return;
@@ -243,7 +244,7 @@ public class MWPaneDisambiguationFormatter extends
     // Format template
     int start = template.getBeginIndex();
     int end = template.getEndIndex();
-    Style attr = pane.getStyle(STYLE_NORMAL_TEMPLATE);
+    Style attr = pane.getStyle(ConfigurationValueStyle.TEMPLATE_NORMAL.getName());
     attr = (Style) attr.copyAttributes();
     attr.addAttribute(ATTRIBUTE_PAGE, link);
     attr.addAttribute(ATTRIBUTE_PAGE_ELEMENT, template);
@@ -279,7 +280,7 @@ public class MWPaneDisambiguationFormatter extends
     // Format template
     int start = template.getBeginIndex();
     int end = template.getEndIndex();
-    Style attr = pane.getStyle(STYLE_HELP_REQUESTED_LINK);
+    Style attr = pane.getStyle(ConfigurationValueStyle.HELP_REQUESTED.getName());
     attr = (Style) attr.copyAttributes();
     attr.addAttribute(ATTRIBUTE_PAGE, link);
     attr.addAttribute(ATTRIBUTE_UUID, UUID.randomUUID());
@@ -322,7 +323,7 @@ public class MWPaneDisambiguationFormatter extends
     // Format template
     int start = template.getBeginIndex();
     int end = template.getEndIndex();
-    Style attr = pane.getStyle(STYLE_DISAMBIGUATION_TEMPLATE);
+    Style attr = pane.getStyle(ConfigurationValueStyle.TEMPLATE_DAB.getName());
     attr = (Style) attr.copyAttributes();
     attr.addAttribute(ATTRIBUTE_PAGE, link);
     attr.addAttribute(ATTRIBUTE_PAGE_ELEMENT, template);
