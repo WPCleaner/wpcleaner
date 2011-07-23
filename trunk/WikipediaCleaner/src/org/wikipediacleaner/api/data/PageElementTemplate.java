@@ -22,6 +22,8 @@ package org.wikipediacleaner.api.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+
 
 /**
  * Class containing information about a complete template ({{<i>template</i>|...}}). 
@@ -64,12 +66,15 @@ public class PageElementTemplate extends PageElement {
   /**
    * Analyze contents to check if it matches a block for the given template name.
    * 
+   * @param wikipedia Wikipedia.
    * @param templateName Template name.
    * @param contents Contents.
    * @param index Block start index.
    * @return Block details it there's a block.
    */
-  public static PageElementTemplate analyzeBlock(String templateName, String contents, int index) {
+  public static PageElementTemplate analyzeBlock(
+      EnumWikipedia wikipedia, String templateName,
+      String contents, int index) {
     // Verify arguments
     if (contents == null) {
       return null;
@@ -139,6 +144,17 @@ public class PageElementTemplate extends PageElement {
       return null;
     }
     int endTemplateName = tmpIndex;
+    templateName = contents.substring(startTemplateName, endTemplateName);
+
+    // Check that it's not a DEFAULTSORT
+    int colonIndex = templateName.indexOf(':');
+    if (colonIndex > 0) {
+      MagicWord magicDefaultsort = wikipedia.getMagicWord(MagicWord.DEFAULT_SORT);
+      if ((magicDefaultsort != null) &&
+          (magicDefaultsort.isPossibleAlias(templateName.substring(0, colonIndex + 1)))) {
+        return null;
+      }
+    }
 
     // Check if parameters are present
     if (contents.charAt(tmpIndex) == '|') {
@@ -166,11 +182,11 @@ public class PageElementTemplate extends PageElement {
         return null;
       }
       return new PageElementTemplate(
-          contents.substring(startTemplateName, endTemplateName),
+          templateName,
           beginIndex, endIndex, parameters);
     } else if (contents.startsWith("}}", tmpIndex)) {
       return new PageElementTemplate(
-          contents.substring(startTemplateName, endTemplateName),
+          templateName,
           beginIndex, tmpIndex + 2, null);
     }
     return null;

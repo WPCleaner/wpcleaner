@@ -61,7 +61,15 @@ public class FormattingOptionsPanel extends OptionsPanel {
     initialize();
   }
 
+  private int lineCategory;
   private int lineComments;
+  private int lineDefaultSort;
+  private int lineExternalLink;
+  private int lineImage;
+  private int lineInternalLink;
+  private int lineLanguageLink;
+  private int lineTemplate;
+  private int lineTitle;
 
   /**
    * Initialize the panel.
@@ -89,6 +97,54 @@ public class FormattingOptionsPanel extends OptionsPanel {
         true, true, true, true, true, true);
     setStyle(lineComments, ConfigurationValueStyle.COMMENTS);
 
+    // Add line for internal link style
+    lineInternalLink = addLine(
+        constraints, true, GT._("Internal link"),
+        true, true, true, true, true, true);
+    setStyle(lineInternalLink, ConfigurationValueStyle.INTERNAL_LINK);
+
+    // Add line for template style
+    lineTemplate = addLine(
+        constraints, true, GT._("Template"),
+        true, true, true, true, true, true);
+    setStyle(lineTemplate, ConfigurationValueStyle.TEMPLATE);
+
+    // Add line for title style
+    lineTitle = addLine(
+        constraints, true, GT._("Title"),
+        true, true, true, true, true, true);
+    setStyle(lineTitle, ConfigurationValueStyle.TITLE);
+
+    // Add line for image style
+    lineImage = addLine(
+        constraints, true, GT._("Image"),
+        true, true, true, true, true, true);
+    setStyle(lineImage, ConfigurationValueStyle.IMAGE);
+
+    // Add line for category style
+    lineCategory = addLine(
+        constraints, true, GT._("Category"),
+        true, true, true, true, true, true);
+    setStyle(lineCategory, ConfigurationValueStyle.CATEGORY);
+
+    // Add line for category style
+    lineDefaultSort = addLine(
+        constraints, true, GT._("Default sort"),
+        true, true, true, true, true, true);
+    setStyle(lineDefaultSort, ConfigurationValueStyle.DEFAULTSORT);
+
+    // Add line for language link style
+    lineLanguageLink = addLine(
+        constraints, true, GT._("Language link"),
+        true, true, true, true, true, true);
+    setStyle(lineLanguageLink, ConfigurationValueStyle.LANGUAGE_LINK);
+
+    // Add line for external link style
+    lineExternalLink = addLine(
+        constraints, true, GT._("External link"),
+        true, true, true, true, true, true);
+    setStyle(lineExternalLink, ConfigurationValueStyle.EXTERNAL_LINK);
+
     // Empty panel
     JPanel emptyPanel = new JPanel();
     emptyPanel.setMinimumSize(new Dimension(0, 0));
@@ -105,7 +161,15 @@ public class FormattingOptionsPanel extends OptionsPanel {
    */
   @Override
   public void defaultValues() {
+    setStyle(lineCategory, ConfigurationValueStyle.CATEGORY);
     setStyle(lineComments, ConfigurationValueStyle.COMMENTS);
+    setStyle(lineDefaultSort, ConfigurationValueStyle.DEFAULTSORT);
+    setStyle(lineExternalLink, ConfigurationValueStyle.EXTERNAL_LINK);
+    setStyle(lineImage, ConfigurationValueStyle.IMAGE);
+    setStyle(lineInternalLink, ConfigurationValueStyle.INTERNAL_LINK);
+    setStyle(lineLanguageLink, ConfigurationValueStyle.LANGUAGE_LINK);
+    setStyle(lineTemplate, ConfigurationValueStyle.TEMPLATE);
+    setStyle(lineTitle, ConfigurationValueStyle.TITLE);
   }
 
   /**
@@ -116,8 +180,24 @@ public class FormattingOptionsPanel extends OptionsPanel {
     Configuration config = Configuration.getConfiguration();
     ConfigurationValueStyle.StyleProperties configStyle = null;
 
+    configStyle = getStyle(lineCategory);
+    config.setStyle(ConfigurationValueStyle.CATEGORY, configStyle);
     configStyle = getStyle(lineComments);
     config.setStyle(ConfigurationValueStyle.COMMENTS, configStyle);
+    configStyle = getStyle(lineDefaultSort);
+    config.setStyle(ConfigurationValueStyle.DEFAULTSORT, configStyle);
+    configStyle = getStyle(lineExternalLink);
+    config.setStyle(ConfigurationValueStyle.EXTERNAL_LINK, configStyle);
+    configStyle = getStyle(lineImage);
+    config.setStyle(ConfigurationValueStyle.IMAGE, configStyle);
+    configStyle = getStyle(lineInternalLink);
+    config.setStyle(ConfigurationValueStyle.INTERNAL_LINK, configStyle);
+    configStyle = getStyle(lineLanguageLink);
+    config.setStyle(ConfigurationValueStyle.LANGUAGE_LINK, configStyle);
+    configStyle = getStyle(lineTemplate);
+    config.setStyle(ConfigurationValueStyle.TEMPLATE, configStyle);
+    configStyle = getStyle(lineTitle);
+    config.setStyle(ConfigurationValueStyle.TITLE, configStyle);
   }
 
   // ==========================================================================

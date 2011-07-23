@@ -897,7 +897,8 @@ public class PageContents {
       } else if (isInComments(tmpIndex, comments)) {
         currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
-        PageElementTemplate template = PageElementTemplate.analyzeBlock(null, contents, tmpIndex);
+        PageElementTemplate template = PageElementTemplate.analyzeBlock(
+            page.getWikipedia(), null, contents, tmpIndex);
         if (template != null) {
           return template;
         }
@@ -927,7 +928,8 @@ public class PageContents {
       if (tmpIndex < 0) {
         currentIndex = contents.length();
       } else {
-        PageElementTemplate template = PageElementTemplate.analyzeBlock(templateName, contents, tmpIndex);
+        PageElementTemplate template = PageElementTemplate.analyzeBlock(
+            page.getWikipedia(), templateName, contents, tmpIndex);
         if (template != null) {
           return template;
         }
