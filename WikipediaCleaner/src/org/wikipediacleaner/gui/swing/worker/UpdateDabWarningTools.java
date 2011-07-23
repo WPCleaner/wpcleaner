@@ -511,7 +511,7 @@ public class UpdateDabWarningTools {
           tmp.append("\n");
         }
       }
-      StringBuilder tmpParameter = new StringBuilder(parameter);
+      StringBuilder tmpParameter = new StringBuilder((parameter != null) ? parameter : "");
       if ((tmpParameter.length() == 0) ||
           (tmpParameter.charAt(tmpParameter.length() - 1) != '\n')) {
         tmpParameter.append("\n");
