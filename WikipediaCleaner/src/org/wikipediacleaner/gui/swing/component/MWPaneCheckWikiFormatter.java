@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
 
 /**
@@ -103,11 +104,11 @@ public class MWPaneCheckWikiFormatter extends MWPaneFormatter {
     }
 
     // Format error
-    String styleName = STYLE_CHECK_WIKI_ERROR;
+    ConfigurationValueStyle styleConfig = ConfigurationValueStyle.CHECK_WIKI_ERROR;
     if (error.getErrorLevel() == CheckErrorResult.ErrorLevel.CORRECT) {
-      styleName = STYLE_CHECK_WIKI_OK;
+      styleConfig = ConfigurationValueStyle.CHECK_WIKI_OK;
     } else if (error.getErrorLevel() == CheckErrorResult.ErrorLevel.WARNING) {
-      styleName = STYLE_CHECK_WIKI_WARNING;
+      styleConfig = ConfigurationValueStyle.CHECK_WIKI_WARNING;
     }
     StyledDocument doc = pane.getStyledDocument();
     if (doc == null) {
@@ -116,7 +117,7 @@ public class MWPaneCheckWikiFormatter extends MWPaneFormatter {
     doc.setCharacterAttributes(
         error.getStartPosition(),
         error.getLength(),
-        pane.getStyle(styleName),
+        pane.getStyle(styleConfig.getName()),
         true);
     SimpleAttributeSet attributes = new SimpleAttributeSet();
     attributes.addAttribute(MWPaneFormatter.ATTRIBUTE_INFO, error);

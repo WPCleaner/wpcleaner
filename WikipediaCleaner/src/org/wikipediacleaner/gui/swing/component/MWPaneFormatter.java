@@ -18,7 +18,6 @@
 
 package org.wikipediacleaner.gui.swing.component;
 
-import java.awt.Color;
 import java.util.Collection;
 
 import javax.swing.text.DefaultStyledDocument;
@@ -47,18 +46,6 @@ import org.wikipediacleaner.utils.ConfigurationValueStyle;
  * An abstract class for formatting text in a Pane.
  */
 public abstract class MWPaneFormatter {
-
-  // Style constants
-  public final static String STYLE_CHECK_WIKI_ERROR        = "CheckWikiError";
-  public final static String STYLE_CHECK_WIKI_OK           = "CheckWikiOk";
-  public final static String STYLE_CHECK_WIKI_WARNING      = "CheckWikiWarning";
-  public final static String STYLE_DISAMBIGUATION_LINK     = "DisambiguationLink";
-  public final static String STYLE_DISAMBIGUATION_TEMPLATE = "DisambiguationTemplate";
-  public final static String STYLE_HELP_REQUESTED_LINK     = "HelpRequestedLink";
-  public final static String STYLE_MISSING_LINK            = "MissingLink";
-  public final static String STYLE_NORMAL_LINK             = "NormalLink";
-  public final static String STYLE_NORMAL_TEMPLATE         = "NormalTemplate";
-  public final static String STYLE_REDIRECT_LINK           = "RedirectLink";
 
   // Attributes
   public final static String ATTRIBUTE_INFO                = "MediaWikiInfo";
@@ -245,104 +232,101 @@ public abstract class MWPaneFormatter {
       if (!stylesInitialized) {
         Style rootStyle = styleContext.getStyle(StyleContext.DEFAULT_STYLE);
 
-        // Style for comment
-        Style categoryStyle = addStyle(ConfigurationValueStyle.CATEGORY, rootStyle);
+        // Style for category
+        Style categoryStyle = addStyle(
+            ConfigurationValueStyle.CATEGORY, rootStyle);
         categoryStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for comment
-        Style commentStyle = addStyle(ConfigurationValueStyle.COMMENTS, rootStyle);
+        Style commentStyle = addStyle(
+            ConfigurationValueStyle.COMMENTS, rootStyle);
         commentStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
-        // Style for comment
-        Style defaultsortStyle = addStyle(ConfigurationValueStyle.DEFAULTSORT, rootStyle);
+        // Style for DEFAULTSORT
+        Style defaultsortStyle = addStyle(
+            ConfigurationValueStyle.DEFAULTSORT, rootStyle);
         defaultsortStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for external link
-        Style externalLinkStyle = addStyle(ConfigurationValueStyle.EXTERNAL_LINK, rootStyle);
+        Style externalLinkStyle = addStyle(
+            ConfigurationValueStyle.EXTERNAL_LINK, rootStyle);
         externalLinkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for image
-        Style imageStyle = addStyle(ConfigurationValueStyle.IMAGE, rootStyle);
+        Style imageStyle = addStyle(
+            ConfigurationValueStyle.IMAGE, rootStyle);
         imageStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for internal link
-        Style internalLinkStyle = addStyle(ConfigurationValueStyle.INTERNAL_LINK, rootStyle);
+        Style internalLinkStyle = addStyle(
+            ConfigurationValueStyle.INTERNAL_LINK, rootStyle);
         internalLinkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for language link
-        Style languageLinkStyle = addStyle(ConfigurationValueStyle.LANGUAGE_LINK, rootStyle);
+        Style languageLinkStyle = addStyle(
+            ConfigurationValueStyle.LANGUAGE_LINK, rootStyle);
         languageLinkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for template
-        Style templateStyle = addStyle(ConfigurationValueStyle.TEMPLATE, rootStyle);
+        Style templateStyle = addStyle(
+            ConfigurationValueStyle.TEMPLATE, rootStyle);
         templateStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for title
-        Style titleStyle = addStyle(ConfigurationValueStyle.TITLE, rootStyle);
+        Style titleStyle = addStyle(
+            ConfigurationValueStyle.TITLE, rootStyle);
         titleStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
-        // Style for normal link
-        Style normalLinkStyle = styleContext.addStyle(STYLE_NORMAL_LINK, rootStyle);
-        StyleConstants.setBold(normalLinkStyle, true);
-        StyleConstants.setForeground(normalLinkStyle, Color.BLUE);
-        normalLinkStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_NORMAL_LINK);
-
-        // Style for normal template
-        Style normalTemplateStyle = styleContext.addStyle(STYLE_NORMAL_TEMPLATE, rootStyle);
-        StyleConstants.setBold(normalTemplateStyle, true);
-        StyleConstants.setForeground(normalTemplateStyle, Color.BLUE);
-        normalTemplateStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_NORMAL_TEMPLATE);
-
-        // Style for CheckWiki error
-        Style checkWikiErrorStyle = styleContext.addStyle(STYLE_CHECK_WIKI_ERROR, rootStyle);
-        StyleConstants.setBold(checkWikiErrorStyle, true);
-        StyleConstants.setForeground(checkWikiErrorStyle, Color.RED);
-        checkWikiErrorStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_CHECK_WIKI_ERROR);
-
-        // Style for CheckWiki OK
-        Style checkWikiOkStyle = styleContext.addStyle(STYLE_CHECK_WIKI_OK, rootStyle);
-        StyleConstants.setBold(checkWikiOkStyle, true);
-        StyleConstants.setForeground(checkWikiOkStyle, Color.GREEN);
-        checkWikiOkStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_CHECK_WIKI_OK);
-        checkWikiOkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
-
-        // Style for CheckWiki warning
-        Style checkWikiWarningStyle = styleContext.addStyle(STYLE_CHECK_WIKI_WARNING, rootStyle);
-        StyleConstants.setBold(checkWikiWarningStyle, true);
-        StyleConstants.setForeground(checkWikiWarningStyle, Color.ORANGE);
-        checkWikiWarningStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_CHECK_WIKI_WARNING);
-
         // Style for disambiguation link 
-        Style disambiguationLinkStyle = styleContext.addStyle(STYLE_DISAMBIGUATION_LINK, rootStyle);
-        StyleConstants.setBold(disambiguationLinkStyle, true);
-        StyleConstants.setForeground(disambiguationLinkStyle, Color.RED);
-        disambiguationLinkStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_DISAMBIGUATION_LINK);
+        Style internalLinkDabStyle = addStyle(
+            ConfigurationValueStyle.INTERNAL_LINK_DAB, rootStyle);
+        internalLinkDabStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_DISAMBIGUATION_LINK);
 
-        // Style for disambiguation template
-        Style disambiguationTemplateStyle = styleContext.addStyle(STYLE_DISAMBIGUATION_TEMPLATE, rootStyle);
-        StyleConstants.setBold(disambiguationTemplateStyle, true);
-        StyleConstants.setForeground(disambiguationTemplateStyle, Color.RED);
-        disambiguationTemplateStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_DISAMBIGUATION_TEMPLATE);
-
-        // Style for help requested link
-        Style helpRequestedLinkStyle = styleContext.addStyle(STYLE_HELP_REQUESTED_LINK, rootStyle);
-        StyleConstants.setBold(helpRequestedLinkStyle, true);
-        StyleConstants.setForeground(helpRequestedLinkStyle, Color.ORANGE);
-        helpRequestedLinkStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_HELP_REQUESTED_LINK);
+        // Style for normal internal link
+        Style internalLinkNormalStyle = addStyle(
+            ConfigurationValueStyle.INTERNAL_LINK_NORMAL, rootStyle);
+        internalLinkNormalStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_NORMAL_LINK);
 
         // Style for redirect link
-        Style redirectLinkStyle = styleContext.addStyle(STYLE_REDIRECT_LINK, rootStyle);
-        StyleConstants.setBold(redirectLinkStyle, true);
-        StyleConstants.setItalic(redirectLinkStyle, true);
-        StyleConstants.setForeground(redirectLinkStyle, Color.CYAN);
-        redirectLinkStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_REDIRECT_LINK);
+        Style internalLinkRedirectStyle = addStyle(
+            ConfigurationValueStyle.INTERNAL_LINK_REDIRECT, rootStyle);
+        internalLinkRedirectStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_REDIRECT_LINK);
 
         // Style for missing link
-        Style missingLinkStyle = styleContext.addStyle(STYLE_MISSING_LINK, rootStyle);
-        StyleConstants.setBold(missingLinkStyle, true);
-        StyleConstants.setForeground(missingLinkStyle, Color.ORANGE);
-        StyleConstants.setStrikeThrough(missingLinkStyle, true);
-        missingLinkStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_MISSING_LINK);
+        Style internalLinkMissingStyle = addStyle(
+            ConfigurationValueStyle.INTERNAL_LINK_MISSING, rootStyle);
+        internalLinkMissingStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_MISSING_LINK);
+
+        // Style for disambiguation template
+        Style templateDabStyle = addStyle(
+            ConfigurationValueStyle.TEMPLATE_DAB, rootStyle);
+        templateDabStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_DISAMBIGUATION_TEMPLATE);
+
+        // Style for normal template
+        Style templateNormalStyle = addStyle(
+            ConfigurationValueStyle.TEMPLATE_NORMAL, rootStyle);
+        templateNormalStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_NORMAL_TEMPLATE);
+
+        // Style for help requested
+        Style helpRequestedStyle = addStyle(
+            ConfigurationValueStyle.HELP_REQUESTED, rootStyle);
+        helpRequestedStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_HELP_REQUESTED_LINK);
+
+        // Style for CheckWiki error
+        Style checkWikiErrorStyle = addStyle(
+            ConfigurationValueStyle.CHECK_WIKI_ERROR, rootStyle);
+        checkWikiErrorStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_CHECK_WIKI_ERROR);
+
+        // Style for CheckWiki warning
+        Style checkWikiWarningStyle = addStyle(
+            ConfigurationValueStyle.CHECK_WIKI_WARNING, rootStyle);
+        checkWikiWarningStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_CHECK_WIKI_WARNING);
+
+        // Style for CheckWiki OK
+        Style checkWikiOkStyle = addStyle(
+            ConfigurationValueStyle.CHECK_WIKI_OK, rootStyle);
+        checkWikiOkStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_CHECK_WIKI_OK);
+        checkWikiOkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         stylesInitialized = true;
       }

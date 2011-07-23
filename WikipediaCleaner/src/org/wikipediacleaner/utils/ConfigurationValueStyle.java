@@ -33,6 +33,21 @@ public enum ConfigurationValueStyle {
       false, Color.BLACK,
       true, new Color(153, 255, 153),
       false, false, false, false)),
+  CHECK_WIKI_ERROR("CheckWikiError", new StyleProperties(
+      true,
+      true, Color.RED,
+      false, Color.WHITE,
+      false, true, false, false)),
+  CHECK_WIKI_OK("CheckWikiOk", new StyleProperties(
+      true,
+      true, Color.GREEN,
+      false, Color.WHITE,
+      false, true, false, false)),
+  CHECK_WIKI_WARNING("CheckWikiWarning", new StyleProperties(
+      true,
+      true, Color.ORANGE,
+      false, Color.WHITE,
+      false, true, false, false)),
   COMMENTS("Comments", new StyleProperties(
       true,
       true, Color.GRAY,
@@ -48,6 +63,11 @@ public enum ConfigurationValueStyle {
       false, Color.BLACK,
       true, new Color(214, 255, 255),
       true, false, false, false)),
+  HELP_REQUESTED("HelpRequested", new StyleProperties(
+      true,
+      true, Color.ORANGE,
+      false, Color.WHITE,
+      false, true, false, false)),
   IMAGE("Image", new StyleProperties(
       true,
       false, Color.BLACK,
@@ -58,6 +78,26 @@ public enum ConfigurationValueStyle {
       false, Color.BLACK,
       true, new Color(204, 255, 255),
       false, false, false, false)),
+  INTERNAL_LINK_DAB("InternalLinkDab", new StyleProperties(
+      true,
+      true, Color.RED,
+      false, Color.WHITE,
+      false, true, false, false)),
+  INTERNAL_LINK_MISSING("InternalLinkMissing", new StyleProperties(
+      true,
+      true, Color.ORANGE,
+      false, Color.WHITE,
+      false, true, false, true)),
+  INTERNAL_LINK_NORMAL("InternalLinkNormal", new StyleProperties(
+      true,
+      true, Color.BLUE,
+      false, Color.WHITE,
+      false, true, false, false)),
+  INTERNAL_LINK_REDIRECT("InternalLinkRedirect", new StyleProperties(
+      true,
+      true, Color.CYAN,
+      false, Color.WHITE,
+      true, true, false, false)),
   LANGUAGE_LINK("LanguageLink", new StyleProperties(
       true,
       false, Color.BLACK,
@@ -68,6 +108,16 @@ public enum ConfigurationValueStyle {
       false, Color.BLACK,
       true, new Color(255, 255, 171),
       false, false, false, false)),
+  TEMPLATE_DAB("TemplateLinkDab", new StyleProperties(
+      true,
+      true, Color.RED,
+      false, Color.WHITE,
+      false, true, false, false)),
+  TEMPLATE_NORMAL("TemplateNormal", new StyleProperties(
+      true,
+      true, Color.BLUE,
+      false, Color.WHITE,
+      false, true, false, false)),
   TITLE("Title", new StyleProperties(
       true,
       false, Color.BLACK,
