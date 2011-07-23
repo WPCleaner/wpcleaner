@@ -67,7 +67,7 @@ public class MWPaneDisambiguationFormatter extends
     resetCaretPosition();
 
     // Format comments
-    formatComments(pane, pageAnalysis);
+    defaultFormatElements(pane, pageAnalysis);
 
     // Format internal links
     formatInternalLinks(pane, pageAnalysis);

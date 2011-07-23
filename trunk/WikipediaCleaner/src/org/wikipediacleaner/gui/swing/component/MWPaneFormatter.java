@@ -19,6 +19,7 @@
 package org.wikipediacleaner.gui.swing.component;
 
 import java.awt.Color;
+import java.util.Collection;
 
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Element;
@@ -28,6 +29,7 @@ import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
@@ -121,12 +123,14 @@ public abstract class MWPaneFormatter {
   }
 
   /**
-   * Format comments in a MediaWikiPane.
+   * Format elements in a MediaWikiPane.
    * 
    * @param pane MediaWikiPane to be formatted.
    * @param pageAnalysis Page analysis.
    */
-  public void formatComments(MWPane pane, PageAnalysis pageAnalysis) {
+  public void defaultFormatElements(MWPane pane, PageAnalysis pageAnalysis) {
+
+    // Basic checks
     if ((pane == null) || (pageAnalysis == null)) {
       return;
     }
@@ -134,18 +138,29 @@ public abstract class MWPaneFormatter {
     if (doc == null) {
       return;
     }
+
+    // Retrieve configuration
     Configuration config = Configuration.getConfiguration();
-    ConfigurationValueStyle.StyleProperties style = config.getStyle(
+    ConfigurationValueStyle.StyleProperties styleComments = config.getStyle(
         ConfigurationValueStyle.COMMENTS);
-    if (!style.getEnabled()) {
+    if (!styleComments.getEnabled()) {
       return;
     }
-    for (PageElementComment comment : pageAnalysis.getComments()) {
-      doc.setCharacterAttributes(
-          comment.getBeginIndex(),
-          comment.getEndIndex() - comment.getBeginIndex(),
-          doc.getStyle(STYLE_COMMENT),
-          true);
+
+    // Format
+    Collection<PageElement> elements = pageAnalysis.getElements(
+        false, true, false, false, false, false, false, false, false, false);
+    for (PageElement element : elements) {
+      Style style = null;
+      if (element instanceof PageElementComment) {
+        style = doc.getStyle(STYLE_COMMENT);
+      }
+      if (style != null) {
+        doc.setCharacterAttributes(
+            element.getBeginIndex(),
+            element.getEndIndex() - element.getBeginIndex(),
+            style, true);
+      }
     }
   }
 
