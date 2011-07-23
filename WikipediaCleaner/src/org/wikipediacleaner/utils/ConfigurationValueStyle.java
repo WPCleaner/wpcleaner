@@ -28,11 +28,51 @@ import java.util.prefs.Preferences;
  */
 public enum ConfigurationValueStyle {
 
+  CATEGORY("Category", new StyleProperties(
+      true,
+      false, Color.BLACK,
+      true, new Color(153, 255, 153),
+      false, false, false, false)),
   COMMENTS("Comments", new StyleProperties(
       true,
       true, Color.GRAY,
       false, Color.WHITE,
-      true, false, false, false));
+      true, false, false, false)),
+  DEFAULTSORT("Defaultsort", new StyleProperties(
+      true,
+      false, Color.BLACK,
+      true, new Color(153, 255, 153),
+      false, false, false, false)),
+  EXTERNAL_LINK("ExternalLink", new StyleProperties(
+      true,
+      false, Color.BLACK,
+      true, new Color(214, 255, 255),
+      true, false, false, false)),
+  IMAGE("Image", new StyleProperties(
+      true,
+      false, Color.BLACK,
+      true, new Color(204, 255, 255),
+      false, false, false, false)),
+  INTERNAL_LINK("InternalLink", new StyleProperties(
+      true,
+      false, Color.BLACK,
+      true, new Color(204, 255, 255),
+      false, false, false, false)),
+  LANGUAGE_LINK("LanguageLink", new StyleProperties(
+      true,
+      false, Color.BLACK,
+      true, new Color(214, 214, 214),
+      false, false, false, false)),
+  TEMPLATE("Template", new StyleProperties(
+      true,
+      false, Color.BLACK,
+      true, new Color(255, 255, 171),
+      false, false, false, false)),
+  TITLE("Title", new StyleProperties(
+      true,
+      false, Color.BLACK,
+      true, new Color(255, 204, 204),
+      false, false, false, false));
 
   private final static String PROPERTY_ENABLED = "Enabled";
   private final static String PROPERTY_FOREGROUND = "Foreground";

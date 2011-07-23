@@ -30,7 +30,15 @@ import javax.swing.text.StyledDocument;
 
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
+import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageElementDefaultsort;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementImage;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementLanguageLink;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
@@ -44,10 +52,8 @@ public abstract class MWPaneFormatter {
   public final static String STYLE_CHECK_WIKI_ERROR        = "CheckWikiError";
   public final static String STYLE_CHECK_WIKI_OK           = "CheckWikiOk";
   public final static String STYLE_CHECK_WIKI_WARNING      = "CheckWikiWarning";
-  public final static String STYLE_COMMENT                 = "Comment";
   public final static String STYLE_DISAMBIGUATION_LINK     = "DisambiguationLink";
   public final static String STYLE_DISAMBIGUATION_TEMPLATE = "DisambiguationTemplate";
-  public final static String STYLE_EXTERNAL_LINK           = "ExternalLink";
   public final static String STYLE_HELP_REQUESTED_LINK     = "HelpRequestedLink";
   public final static String STYLE_MISSING_LINK            = "MissingLink";
   public final static String STYLE_NORMAL_LINK             = "NormalLink";
@@ -141,19 +147,57 @@ public abstract class MWPaneFormatter {
 
     // Retrieve configuration
     Configuration config = Configuration.getConfiguration();
+    ConfigurationValueStyle.StyleProperties styleCategory = config.getStyle(
+        ConfigurationValueStyle.CATEGORY);
     ConfigurationValueStyle.StyleProperties styleComments = config.getStyle(
         ConfigurationValueStyle.COMMENTS);
-    if (!styleComments.getEnabled()) {
-      return;
-    }
+    ConfigurationValueStyle.StyleProperties styleDefaultsort = config.getStyle(
+        ConfigurationValueStyle.DEFAULTSORT);
+    ConfigurationValueStyle.StyleProperties styleExternalLink = config.getStyle(
+        ConfigurationValueStyle.EXTERNAL_LINK);
+    ConfigurationValueStyle.StyleProperties styleImage = config.getStyle(
+        ConfigurationValueStyle.IMAGE);
+    ConfigurationValueStyle.StyleProperties styleInternalLink = config.getStyle(
+        ConfigurationValueStyle.INTERNAL_LINK);
+    ConfigurationValueStyle.StyleProperties styleLanguageLink = config.getStyle(
+        ConfigurationValueStyle.LANGUAGE_LINK);
+    ConfigurationValueStyle.StyleProperties styleTemplate = config.getStyle(
+        ConfigurationValueStyle.TEMPLATE);
+    ConfigurationValueStyle.StyleProperties styleTitle = config.getStyle(
+        ConfigurationValueStyle.TITLE);
 
     // Format
     Collection<PageElement> elements = pageAnalysis.getElements(
-        false, true, false, false, false, false, false, false, false, false);
+        styleCategory.getEnabled(),
+        styleComments.getEnabled(),
+        styleDefaultsort.getEnabled(),
+        styleExternalLink.getEnabled(),
+        styleImage.getEnabled(),
+        styleInternalLink.getEnabled(),
+        false,
+        styleLanguageLink.getEnabled(),
+        styleTemplate.getEnabled(),
+        styleTitle.getEnabled());
     for (PageElement element : elements) {
       Style style = null;
-      if (element instanceof PageElementComment) {
-        style = doc.getStyle(STYLE_COMMENT);
+      if (element instanceof PageElementCategory) {
+        style = doc.getStyle(ConfigurationValueStyle.CATEGORY.getName());
+      } else if (element instanceof PageElementComment) {
+        style = doc.getStyle(ConfigurationValueStyle.COMMENTS.getName());
+      } else if (element instanceof PageElementDefaultsort) {
+        style = doc.getStyle(ConfigurationValueStyle.DEFAULTSORT.getName());
+      } else if (element instanceof PageElementExternalLink) {
+        style = doc.getStyle(ConfigurationValueStyle.EXTERNAL_LINK.getName());
+      } else if (element instanceof PageElementImage) {
+        style = doc.getStyle(ConfigurationValueStyle.IMAGE.getName());
+      } else if (element instanceof PageElementInternalLink) {
+        style = doc.getStyle(ConfigurationValueStyle.INTERNAL_LINK.getName());
+      } else if (element instanceof PageElementLanguageLink) {
+        style = doc.getStyle(ConfigurationValueStyle.LANGUAGE_LINK.getName());
+      } else if (element instanceof PageElementTemplate) {
+        style = doc.getStyle(ConfigurationValueStyle.TEMPLATE.getName());
+      } else if (element instanceof PageElementTitle) {
+        style = doc.getStyle(ConfigurationValueStyle.TITLE.getName());
       }
       if (style != null) {
         doc.setCharacterAttributes(
@@ -200,14 +244,42 @@ public abstract class MWPaneFormatter {
     synchronized (lockStyles) {
       if (!stylesInitialized) {
         Style rootStyle = styleContext.getStyle(StyleContext.DEFAULT_STYLE);
-        Configuration config = Configuration.getConfiguration();
 
         // Style for comment
-        Style commentStyle = styleContext.addStyle(STYLE_COMMENT, rootStyle);
-        formatStyle(
-            commentStyle, config,
-            ConfigurationValueStyle.COMMENTS);
+        Style categoryStyle = addStyle(ConfigurationValueStyle.CATEGORY, rootStyle);
+        categoryStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+
+        // Style for comment
+        Style commentStyle = addStyle(ConfigurationValueStyle.COMMENTS, rootStyle);
         commentStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+
+        // Style for comment
+        Style defaultsortStyle = addStyle(ConfigurationValueStyle.DEFAULTSORT, rootStyle);
+        defaultsortStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+
+        // Style for external link
+        Style externalLinkStyle = addStyle(ConfigurationValueStyle.EXTERNAL_LINK, rootStyle);
+        externalLinkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+
+        // Style for image
+        Style imageStyle = addStyle(ConfigurationValueStyle.IMAGE, rootStyle);
+        imageStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+
+        // Style for internal link
+        Style internalLinkStyle = addStyle(ConfigurationValueStyle.INTERNAL_LINK, rootStyle);
+        internalLinkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+
+        // Style for language link
+        Style languageLinkStyle = addStyle(ConfigurationValueStyle.LANGUAGE_LINK, rootStyle);
+        languageLinkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+
+        // Style for template
+        Style templateStyle = addStyle(ConfigurationValueStyle.TEMPLATE, rootStyle);
+        templateStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+
+        // Style for title
+        Style titleStyle = addStyle(ConfigurationValueStyle.TITLE, rootStyle);
+        titleStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for normal link
         Style normalLinkStyle = styleContext.addStyle(STYLE_NORMAL_LINK, rootStyle);
@@ -272,39 +344,32 @@ public abstract class MWPaneFormatter {
         StyleConstants.setStrikeThrough(missingLinkStyle, true);
         missingLinkStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_MISSING_LINK);
 
-        // Style for external link
-        Style externalLinkStyle = styleContext.addStyle(STYLE_EXTERNAL_LINK, rootStyle);
-        StyleConstants.setForeground(externalLinkStyle, new Color(128, 128, 255));
-        externalLinkStyle.addAttribute(ATTRIBUTE_TYPE, VALUE_EXTERNAL_LINK);
-
         stylesInitialized = true;
       }
     }
   }
 
   /**
-   * Modify a style.
-   * 
-   * @param style Style to be modified.
-   * @param config Configuration.
-   * @param defaultStyle Default value for style.
+   * @param defaultStyle Default style.
+   * @param rootStyle Root style.
+   * @return New style.
    */
-  private static void formatStyle(
-      Style style, Configuration config,
-      ConfigurationValueStyle defaultStyle) {
-    if ((style == null) || (config == null) || (defaultStyle == null)) {
-      return;
+  private static Style addStyle(ConfigurationValueStyle defaultStyle, Style rootStyle) {
+    if (defaultStyle == null) {
+      return null;
     }
+    Style newStyle = styleContext.addStyle(defaultStyle.getName(), rootStyle);
+    Configuration config = Configuration.getConfiguration();
     ConfigurationValueStyle.StyleProperties configStyle = config.getStyle(defaultStyle);
-    if (configStyle == null) {
-      return;
+    if (configStyle != null) {
+      formatStyleForeground(newStyle, config, configStyle);
+      formatStyleBackground(newStyle, config, configStyle);
+      formatStyleBold(newStyle, config, configStyle);
+      formatStyleItalic(newStyle, config, configStyle);
+      formatStyleUnderline(newStyle, config, configStyle);
+      formatStyleStrikeThrough(newStyle, config, configStyle);
     }
-    formatStyleForeground(style, config, configStyle);
-    formatStyleBackground(style, config, configStyle);
-    formatStyleBold(style, config, configStyle);
-    formatStyleItalic(style, config, configStyle);
-    formatStyleUnderline(style, config, configStyle);
-    formatStyleStrikeThrough(style, config, configStyle);
+    return newStyle;
   }
 
   /**
