@@ -33,6 +33,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
@@ -95,6 +96,8 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     PageElementLanguageLink currentLanguageLink = itLanguageLink.hasNext() ? itLanguageLink.next() : null;
     Iterator<PageElementCategory> itCategory = pageAnalysis.getCategories().iterator();
     PageElementCategory currentCategory = itCategory.hasNext() ? itCategory.next() : null;
+    Iterator<PageElementImage> itImage = pageAnalysis.getImages().iterator();
+    PageElementImage currentImage = itImage.hasNext() ? itImage.next() : null;
 
     boolean result = false;
     int startIndex = 0;
@@ -192,6 +195,19 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             (startIndex >= currentCategory.getBeginIndex())) {
           checkOrthograph = false;
           nextIndex = Math.max(nextIndex, currentCategory.getEndIndex());
+        }
+      }
+
+      // If the position is inside an image, go after
+      if (checkOrthograph && (currentImage != null)) {
+        while ((currentImage != null) &&
+               (startIndex >= currentImage.getEndIndex())) {
+          currentImage = itImage.hasNext() ? itImage.next() : null;
+        }
+        if ((currentImage != null) &&
+            (startIndex >= currentImage.getBeginIndex())) {
+          checkOrthograph = false;
+          nextIndex = Math.max(nextIndex, currentImage.getEndIndex());
         }
       }
 
