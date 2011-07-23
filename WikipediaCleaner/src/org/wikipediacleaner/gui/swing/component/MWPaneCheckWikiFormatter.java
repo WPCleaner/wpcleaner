@@ -60,7 +60,7 @@ public class MWPaneCheckWikiFormatter extends MWPaneFormatter {
     resetCaretPosition();
 
     // Format comments
-    formatComments(pane, pageAnalysis);
+    defaultFormatElements(pane, pageAnalysis);
 
     // Format Check Wiki errors
     formatCheckWikiErrors(pane, pageAnalysis);

@@ -16,28 +16,33 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.wikipediacleaner.gui.swing.component;
+package org.wikipediacleaner.api.data;
 
-import org.wikipediacleaner.api.data.PageAnalysis;
+import java.util.Comparator;
 
 
 /**
- * A basic formatter for MediaWikiPane.
+ * Comparator for PageElement.
  */
-public class MWPaneBasicFormatter extends MWPaneFormatter {
+public class PageElementComparator implements Comparator<PageElement> {
 
-  /**
-   * Format text in a MediaWikiPane.
-   * 
-   * @param pane MediaWikiPane to be formatted.
-   * @param pageAnalysis Page analysis.
-   */
-  @Override
-  public void format(MWPane pane, PageAnalysis pageAnalysis) {
-    // Clean formatting
-    cleanFormat(pane);
-
-    // Format comments
-    defaultFormatElements(pane, pageAnalysis);
+  public int compare(PageElement o1, PageElement o2) {
+    if (o1 == null) {
+      if (o2 == null) {
+        return 0;
+      }
+      return -1;
+    }
+    if (o2 == null) {
+      return 1;
+    }
+    if (o1.getBeginIndex() != o2.getBeginIndex()) {
+      return (o1.getBeginIndex() < o2.getBeginIndex()) ? -1 : 1;
+    }
+    if (o1.getEndIndex() != o2.getEndIndex()) {
+      return (o1.getEndIndex() < o2.getEndIndex()) ? -1 : 1;
+    }
+    return 0;
   }
+
 }

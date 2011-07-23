@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.data;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -32,31 +33,38 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
  */
 public class PageAnalysis {
 
+  /**
+   * Page currently analyzed.
+   */
   private final Page page;
+
+  /**
+   * Current version of the text.
+   */
   private final String contents;
 
   private boolean checkOrthograph;
 
-  private final Object commentsLock = new Object();
-  private Collection<PageElementComment> comments;
-  private final Object titlesLock = new Object();
-  private Collection<PageElementTitle> titles;
-  private final Object internalLinksLock = new Object();
-  private Collection<PageElementInternalLink> internalLinks;
-  private final Object externalLinksLock = new Object();
-  private Collection<PageElementExternalLink> externalLinks;
-  private final Object templatesLock = new Object();
-  private Collection<PageElementTemplate> templates;
-  private final Object defaultSortLock = new Object();
-  private Collection<PageElementDefaultsort> defaultSorts;
   private final Object categoriesLock = new Object();
   private Collection<PageElementCategory> categories;
+  private final Object commentsLock = new Object();
+  private Collection<PageElementComment> comments;
+  private final Object defaultSortLock = new Object();
+  private Collection<PageElementDefaultsort> defaultSorts;
+  private final Object externalLinksLock = new Object();
+  private Collection<PageElementExternalLink> externalLinks;
+  private final Object imagesLock = new Object();
+  private Collection<PageElementImage> images;
+  private final Object internalLinksLock = new Object();
+  private Collection<PageElementInternalLink> internalLinks;
   private final Object interwikiLinksLock = new Object();
   private Collection<PageElementInterwikiLink> interwikiLinks;
   private final Object languageLinksLock = new Object();
   private Collection<PageElementLanguageLink> languageLinks;
-  private final Object imagesLock = new Object();
-  private Collection<PageElementImage> images;
+  private final Object templatesLock = new Object();
+  private Collection<PageElementTemplate> templates;
+  private final Object titlesLock = new Object();
+  private Collection<PageElementTitle> titles;
 
   /**
    * @param page Page.
@@ -122,31 +130,49 @@ public class PageAnalysis {
     return checkOrthograph;
   }
 
-  /**
-   * @return All comments in the page analysis.
-   */
-  public Collection<PageElementComment> getComments() {
-    synchronized (commentsLock) {
-      if (comments == null) {
-        comments = PageContents.findAllComments(getWikipedia(), getContents());
-      }
-      return comments;
-    }
-  }
+  // ==========================================================================
+  // Elements management
+  // ==========================================================================
 
-  /**
-   * @param currentIndex Current index.
-   * @return Comment if the current index is inside a comment.
-   */
-  public PageElementComment isInComment(int currentIndex) {
-    Collection<PageElementComment> tmpComments = getComments();
-    for (PageElementComment comment : tmpComments) {
-      if ((comment.getBeginIndex() <= currentIndex) &&
-          (comment.getEndIndex() > currentIndex)) {
-        return comment;
-      }
+  public Collection<PageElement> getElements(
+      boolean withCategories, boolean withComments,
+      boolean withDefaultsorts, boolean withExternalLinks,
+      boolean withImages, boolean withInternalLinks,
+      boolean withInterwikiLinks, boolean withLanguageLinks,
+      boolean withTemplates, boolean withTitles) {
+    List<PageElement> elements = new ArrayList<PageElement>();
+    if (withCategories) {
+      elements.addAll(getCategories());
     }
-    return null;
+    if (withComments) {
+      elements.addAll(getComments());
+    }
+    if (withDefaultsorts) {
+      elements.addAll(getDefaultSorts());
+    }
+    if (withExternalLinks) {
+      elements.addAll(getExternalLinks());
+    }
+    if (withImages) {
+      elements.addAll(getImages());
+    }
+    if (withInternalLinks) {
+      elements.addAll(getInternalLinks());
+    }
+    if (withInterwikiLinks) {
+      elements.addAll(getInterwikiLinks());
+    }
+    if (withLanguageLinks) {
+      elements.addAll(getLanguageLinks());
+    }
+    if (withTemplates) {
+      elements.addAll(getTemplates());
+    }
+    if (withTitles) {
+      elements.addAll(getTitles());
+    }
+    Collections.sort(elements, new PageElementComparator());
+    return elements;
   }
 
   /**
@@ -208,6 +234,37 @@ public class PageAnalysis {
     }
 
     return element;
+  }
+
+  // ==========================================================================
+  // Comments management
+  // ==========================================================================
+
+  /**
+   * @return All comments in the page analysis.
+   */
+  public Collection<PageElementComment> getComments() {
+    synchronized (commentsLock) {
+      if (comments == null) {
+        comments = PageContents.findAllComments(getWikipedia(), getContents());
+      }
+      return comments;
+    }
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Comment if the current index is inside a comment.
+   */
+  public PageElementComment isInComment(int currentIndex) {
+    Collection<PageElementComment> tmpComments = getComments();
+    for (PageElementComment comment : tmpComments) {
+      if ((comment.getBeginIndex() <= currentIndex) &&
+          (comment.getEndIndex() > currentIndex)) {
+        return comment;
+      }
+    }
+    return null;
   }
 
   // ==========================================================================
