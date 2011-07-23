@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -37,6 +36,7 @@ import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.component.ColorButton;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -131,9 +131,9 @@ public class FormattingOptionsPanel extends OptionsPanel {
   private final List<JToggleButton> chkUnderline = new ArrayList<JToggleButton>();
   private final List<JToggleButton> chkStrike = new ArrayList<JToggleButton>();
   private final List<JCheckBox> chkForeground = new ArrayList<JCheckBox>();
-  private final List<JButton> btnForeground = new ArrayList<JButton>();
+  private final List<ColorButton> btnForeground = new ArrayList<ColorButton>();
   private final List<JCheckBox> chkBackground = new ArrayList<JCheckBox>();
-  private final List<JButton> btnBackground = new ArrayList<JButton>();
+  private final List<ColorButton> btnBackground = new ArrayList<ColorButton>();
 
   // Count columns
   private final static int columnGeneral = 0;
@@ -185,7 +185,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
     toolbar.setFloatable(false);
     JToggleButton toggle = null;
     JCheckBox chk = null;
-    JButton button = null;
+    ColorButton button = null;
 
     // Italic check box
     toggle = Utilities.createJToggleButton(
@@ -226,7 +226,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
     chk.setEnabled(foreground);
     chkForeground.add(chk);
     toolbar.add(chk);
-    button = Utilities.createJButton("    ");
+    button = new ColorButton(Color.BLACK, GT._("Choose foreground color"));
     button.setToolTipText(GT._("Foreground color"));
     button.setEnabled(foreground && chk.isSelected());
     btnForeground.add(button);
@@ -239,7 +239,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
     chk.setEnabled(background);
     chkBackground.add(chk);
     toolbar.add(chk);
-    button = Utilities.createJButton("    ");
+    button = new ColorButton(Color.WHITE, GT._("Choose background color"));
     button.setToolTipText(GT._("Background color"));
     button.setEnabled(background && chk.isEnabled());
     btnBackground.add(button);
@@ -431,17 +431,17 @@ public class FormattingOptionsPanel extends OptionsPanel {
    * @param line Line number.
    * @param color Color value.
    */
-  private void setColor(List<JButton> list, int line, Color color) {
+  private void setColor(List<ColorButton> list, int line, Color color) {
     if (list == null) {
       return;
     }
     if ((line < 0) || (line >= list.size())) {
       return;
     }
-    JButton button = list.get(line);
+    ColorButton button = list.get(line);
     if (button == null) {
       return;
     }
-    button.setBackground(color);
+    button.setColor(color);
   }
 }
