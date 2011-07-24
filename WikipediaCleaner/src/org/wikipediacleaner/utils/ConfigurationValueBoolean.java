@@ -54,7 +54,7 @@ public enum ConfigurationValueBoolean {
   SAVE_LAST_REPLACEMENT("SaveLastReplacement", false),
   SAVE_WINDOW("SaveWindow", true),
   SHORT_NOTATION("ShortNotation", false),
-  SYNTAX_HIGHLIGHTING("SyntaxHighlighting", true),
+  SYNTAX_HIGHLIGHTING("SyntaxHighlighting", false),
   UPDATE_DAB_WARNING("UpdateDabWarning", true),
   UPDATE_DAB_WARNING_ALL("UpdateDabWarningAll", true),
   UPDATE_DAB_WARNING_ENCY("UpdateDabWarningEncyclo", true),
