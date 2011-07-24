@@ -462,6 +462,7 @@ public class UpdateDabWarningTools {
               if ((templatePrevious == null) || (templateTmp.getEndIndex() > templatePrevious.getEndIndex())) {
                 templatePrevious = templateTmp;
               }
+              index = templateTmp.getEndIndex();
             } else {
               index = contents.length();
             }
