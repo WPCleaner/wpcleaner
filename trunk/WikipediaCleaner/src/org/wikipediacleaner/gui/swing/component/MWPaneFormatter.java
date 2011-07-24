@@ -38,6 +38,7 @@ import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
 
@@ -122,6 +123,9 @@ public abstract class MWPaneFormatter {
 
     // Retrieve configuration
     Configuration config = Configuration.getConfiguration();
+    if (!config.getBoolean(null, ConfigurationValueBoolean.SYNTAX_HIGHLIGHTING)) {
+      return;
+    }
     ConfigurationValueStyle.StyleProperties styleCategory = config.getStyle(
         ConfigurationValueStyle.CATEGORY);
     ConfigurationValueStyle.StyleProperties styleComments = config.getStyle(
