@@ -165,6 +165,7 @@ public class ProgressPanel extends JComponent implements MouseListener, KeyListe
     started = false;
     removeMouseListener(this);
     removeKeyListener(this);
+    setText("");
     setVisible(false);
   }
 
