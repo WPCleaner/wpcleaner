@@ -31,14 +31,6 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
-import org.wikipediacleaner.api.data.PageElementCategory;
-import org.wikipediacleaner.api.data.PageElementComment;
-import org.wikipediacleaner.api.data.PageElementExternalLink;
-import org.wikipediacleaner.api.data.PageElementImage;
-import org.wikipediacleaner.api.data.PageElementInternalLink;
-import org.wikipediacleaner.api.data.PageElementInterwikiLink;
-import org.wikipediacleaner.api.data.PageElementLanguageLink;
-import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
 
 
