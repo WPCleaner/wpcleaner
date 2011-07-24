@@ -30,6 +30,7 @@ import java.util.regex.Matcher;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
@@ -82,22 +83,10 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     // Initialize iterators to the various page elements
     List<Suggestion> possibles = new ArrayList<Suggestion>();
     String contents = pageAnalysis.getContents();
-    Iterator<PageElementComment> itComments = pageAnalysis.getComments().iterator();
-    PageElementComment currentComment = itComments.hasNext() ? itComments.next() : null;
-    Iterator<PageElementInternalLink> itInternalLink = pageAnalysis.getInternalLinks().iterator();
-    PageElementInternalLink currentInternalLink = itInternalLink.hasNext() ? itInternalLink.next() : null;
-    Iterator<PageElementExternalLink> itExternalLink = pageAnalysis.getExternalLinks().iterator();
-    PageElementExternalLink currentExternalLink = itExternalLink.hasNext() ? itExternalLink.next() : null;
-    Iterator<PageElementTemplate> itTemplate = pageAnalysis.getTemplates().iterator();
-    PageElementTemplate currentTemplate = itTemplate.hasNext() ? itTemplate.next() : null;
-    Iterator<PageElementInterwikiLink> itInterwikiLink = pageAnalysis.getInterwikiLinks().iterator();
-    PageElementInterwikiLink currentInterwikiLink = itInterwikiLink.hasNext() ? itInterwikiLink.next() : null;
-    Iterator<PageElementLanguageLink> itLanguageLink = pageAnalysis.getLanguageLinks().iterator();
-    PageElementLanguageLink currentLanguageLink = itLanguageLink.hasNext() ? itLanguageLink.next() : null;
-    Iterator<PageElementCategory> itCategory = pageAnalysis.getCategories().iterator();
-    PageElementCategory currentCategory = itCategory.hasNext() ? itCategory.next() : null;
-    Iterator<PageElementImage> itImage = pageAnalysis.getImages().iterator();
-    PageElementImage currentImage = itImage.hasNext() ? itImage.next() : null;
+    Collection<PageElement> elements = pageAnalysis.getElements(
+        true, true, true, true, true, true, true, true, true, false);
+    Iterator<PageElement> itElement = elements.iterator();
+    PageElement currentElement = itElement.hasNext() ? itElement.next() : null;
 
     boolean result = false;
     int startIndex = 0;
@@ -107,107 +96,17 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       int nextIndex = startIndex + 1;
       boolean checkOrthograph = true;
 
-      // If the position is inside a comment, go after
-      if (checkOrthograph && (currentComment != null)) {
-        while ((currentComment != null) &&
-               (startIndex >= currentComment.getEndIndex())) {
-          currentComment = itComments.hasNext() ? itComments.next() : null;
+      // If the position is inside an element, go after
+      // TODO : be more specific ? for example, checking in an image description
+      if (checkOrthograph && (currentElement != null)) {
+        while ((currentElement != null) &&
+               (startIndex >= currentElement.getEndIndex())) {
+          currentElement = itElement.hasNext() ? itElement.next() : null;
         }
-        if ((currentComment != null) &&
-            (startIndex >= currentComment.getBeginIndex())) {
+        if ((currentElement != null) &&
+            (startIndex >= currentElement.getBeginIndex())) {
           checkOrthograph = false;
-          nextIndex = Math.max(nextIndex, currentComment.getEndIndex());
-        }
-      }
-
-      // If the position is inside an internal link, go after
-      if (checkOrthograph && (currentInternalLink != null)) {
-        while ((currentInternalLink != null) &&
-               (startIndex >= currentInternalLink.getEndIndex())) {
-          currentInternalLink = itInternalLink.hasNext() ? itInternalLink.next() : null;
-        }
-        if ((currentInternalLink != null) &&
-            (startIndex > currentInternalLink.getBeginIndex())) {
-          checkOrthograph = false;
-          nextIndex = Math.max(nextIndex, currentInternalLink.getEndIndex());
-        }
-      }
-
-      // If the position is inside an external link, go after
-      if (checkOrthograph && (currentExternalLink != null)) {
-        while ((currentExternalLink != null) &&
-               (startIndex >= currentExternalLink.getEndIndex())) {
-          currentExternalLink = itExternalLink.hasNext() ? itExternalLink.next() : null;
-        }
-        if ((currentExternalLink != null) &&
-            (startIndex >= currentExternalLink.getBeginIndex())) {
-          checkOrthograph = false;
-          nextIndex = Math.max(nextIndex, currentExternalLink.getEndIndex());
-        }
-      }
-
-      // If the position is inside a template, go after
-      if (checkOrthograph && (currentTemplate != null)) {
-        while ((currentTemplate != null) &&
-               (startIndex >= currentTemplate.getEndIndex())) {
-          currentTemplate = itTemplate.hasNext() ? itTemplate.next() : null;
-        }
-        if ((currentTemplate != null) &&
-            (startIndex >= currentTemplate.getBeginIndex())) {
-          checkOrthograph = false;
-          nextIndex = Math.max(nextIndex, currentTemplate.getEndIndex());
-        }
-      }
-
-      // If the position is inside an interwiki link, go after
-      if (checkOrthograph && (currentInterwikiLink != null)) {
-        while ((currentInterwikiLink != null) &&
-               (startIndex >= currentInterwikiLink.getEndIndex())) {
-          currentInterwikiLink = itInterwikiLink.hasNext() ? itInterwikiLink.next() : null;
-        }
-        if ((currentInterwikiLink != null) &&
-            (startIndex >= currentInterwikiLink.getBeginIndex())) {
-          checkOrthograph = false;
-          nextIndex = Math.max(nextIndex, currentInterwikiLink.getEndIndex());
-        }
-      }
-
-      // If the position is inside a language link, go after
-      if (checkOrthograph && (currentLanguageLink != null)) {
-        while ((currentLanguageLink != null) &&
-               (startIndex >= currentLanguageLink.getEndIndex())) {
-          currentLanguageLink = itLanguageLink.hasNext() ? itLanguageLink.next() : null;
-        }
-        if ((currentLanguageLink != null) &&
-            (startIndex >= currentLanguageLink.getBeginIndex())) {
-          checkOrthograph = false;
-          nextIndex = Math.max(nextIndex, currentLanguageLink.getEndIndex());
-        }
-      }
-
-      // If the position is inside a category, go after
-      if (checkOrthograph && (currentCategory != null)) {
-        while ((currentCategory != null) &&
-               (startIndex >= currentCategory.getEndIndex())) {
-          currentCategory = itCategory.hasNext() ? itCategory.next() : null;
-        }
-        if ((currentCategory != null) &&
-            (startIndex >= currentCategory.getBeginIndex())) {
-          checkOrthograph = false;
-          nextIndex = Math.max(nextIndex, currentCategory.getEndIndex());
-        }
-      }
-
-      // If the position is inside an image, go after
-      if (checkOrthograph && (currentImage != null)) {
-        while ((currentImage != null) &&
-               (startIndex >= currentImage.getEndIndex())) {
-          currentImage = itImage.hasNext() ? itImage.next() : null;
-        }
-        if ((currentImage != null) &&
-            (startIndex >= currentImage.getBeginIndex())) {
-          checkOrthograph = false;
-          nextIndex = Math.max(nextIndex, currentImage.getEndIndex());
+          nextIndex = Math.max(nextIndex, currentElement.getEndIndex());
         }
       }
 
