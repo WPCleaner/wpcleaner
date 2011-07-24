@@ -157,61 +157,61 @@ public class FormattingOptionsPanel extends OptionsPanel {
 
     // Add line for dab link style
     lineInternalLinkDab = addLine(
-        constraints, true, GT._("Disambiguation link"),
+        constraints, false, GT._("Disambiguation link"),
         true, true, true, true, true, true);
     setStyle(lineInternalLinkDab, ConfigurationValueStyle.INTERNAL_LINK_DAB);
 
     // Add line for normal internal link style
     lineInternalLinkNormal = addLine(
-        constraints, true, GT._("Normal internal link"),
+        constraints, false, GT._("Normal internal link"),
         true, true, true, true, true, true);
     setStyle(lineInternalLinkNormal, ConfigurationValueStyle.INTERNAL_LINK_NORMAL);
 
     // Add line for redirect link style
     lineInternalLinkRedirect = addLine(
-        constraints, true, GT._("Redirect link"),
+        constraints, false, GT._("Redirect link"),
         true, true, true, true, true, true);
     setStyle(lineInternalLinkRedirect, ConfigurationValueStyle.INTERNAL_LINK_REDIRECT);
 
     // Add line for missing link style
     lineInternalLinkMissing = addLine(
-        constraints, true, GT._("Missing link"),
+        constraints, false, GT._("Missing link"),
         true, true, true, true, true, true);
     setStyle(lineInternalLinkMissing, ConfigurationValueStyle.INTERNAL_LINK_MISSING);
 
     // Add line for dab template style
     lineTemplateDab = addLine(
-        constraints, true, GT._("Disambiguation template"),
+        constraints, false, GT._("Disambiguation template"),
         true, true, true, true, true, true);
     setStyle(lineTemplateDab, ConfigurationValueStyle.TEMPLATE_DAB);
 
     // Add line for normal template style
     lineTemplateNormal = addLine(
-        constraints, true, GT._("Normal template"),
+        constraints, false, GT._("Normal template"),
         true, true, true, true, true, true);
     setStyle(lineTemplateNormal, ConfigurationValueStyle.TEMPLATE_NORMAL);
 
     // Add line for help requested style
     lineHelpRequested = addLine(
-        constraints, true, GT._("Help requested"),
+        constraints, false, GT._("Help requested"),
         true, true, true, true, true, true);
     setStyle(lineHelpRequested, ConfigurationValueStyle.HELP_REQUESTED);
 
     // Add line for check wiki error style
     lineCheckWikiError = addLine(
-        constraints, true, GT._("Check wiki error"),
+        constraints, false, GT._("Check wiki error"),
         true, true, true, true, true, true);
     setStyle(lineCheckWikiError, ConfigurationValueStyle.CHECK_WIKI_ERROR);
 
     // Add line for check wiki warning style
     lineCheckWikiWarning = addLine(
-        constraints, true, GT._("Check wiki warning"),
+        constraints, false, GT._("Check wiki warning"),
         true, true, true, true, true, true);
     setStyle(lineCheckWikiWarning, ConfigurationValueStyle.CHECK_WIKI_WARNING);
 
     // Add line for check wiki ok style
     lineCheckWikiOk = addLine(
-        constraints, true, GT._("Check wiki OK"),
+        constraints, false, GT._("Check wiki OK"),
         true, true, true, true, true, true);
     setStyle(lineCheckWikiOk, ConfigurationValueStyle.CHECK_WIKI_OK);
 
