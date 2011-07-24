@@ -40,6 +40,7 @@ import org.wikipediacleaner.gui.swing.component.ColorButton;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
 
@@ -100,6 +101,15 @@ public class FormattingOptionsPanel extends OptionsPanel {
     constraints.ipady = 0;
     constraints.weightx = 1;
     constraints.weighty = 0;
+
+    // Add global checkbox for syntax highlighting
+    JCheckBox chk = createJCheckBox(
+        GT._("Syntax highlighting"),
+        ConfigurationValueBoolean.SYNTAX_HIGHLIGHTING);
+    constraints.gridwidth = columnCount;
+    add(chk, constraints);
+    constraints.gridwidth = 1;
+    constraints.gridy++;
 
     // Add line for comments style
     lineComments = addLine(
@@ -231,6 +241,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
    */
   @Override
   public void defaultValues() {
+    super.defaultValues();
     setStyle(lineCategory, ConfigurationValueStyle.CATEGORY);
     setStyle(lineCheckWikiError, ConfigurationValueStyle.CHECK_WIKI_ERROR);
     setStyle(lineCheckWikiOk, ConfigurationValueStyle.CHECK_WIKI_OK);
@@ -257,6 +268,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
    */
   @Override
   public void apply() {
+    super.apply();
     Configuration config = Configuration.getConfiguration();
     ConfigurationValueStyle.StyleProperties configStyle = null;
 
