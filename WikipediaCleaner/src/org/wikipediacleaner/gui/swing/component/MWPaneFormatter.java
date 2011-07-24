@@ -21,7 +21,6 @@ package org.wikipediacleaner.gui.swing.component;
 import java.util.Collection;
 
 import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.Element;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
@@ -98,21 +97,10 @@ public abstract class MWPaneFormatter {
     }
 
     // Clean formation element by element
-    int length = doc.getLength();
-    int lastEnd = Integer.MAX_VALUE;
-    for (int pos = 0; pos < length; pos = lastEnd) {
-      Element run = doc.getCharacterElement(pos);
-      lastEnd = run.getEndOffset();
-      if (pos == lastEnd) {
-        // offset + length beyond length of document, bail.
-        break;
-      }
-      doc.setCharacterAttributes(
-          run.getStartOffset(),
-          run.getEndOffset() - run.getStartOffset(),
-          doc.getStyle(StyleContext.DEFAULT_STYLE),
-          true);
-    }
+    doc.setCharacterAttributes(
+        0, doc.getLength(),
+        doc.getStyle(StyleContext.DEFAULT_STYLE),
+        true);
   }
 
   /**
