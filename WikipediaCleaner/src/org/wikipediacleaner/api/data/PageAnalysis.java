@@ -130,6 +130,22 @@ public class PageAnalysis {
     return checkOrthograph;
   }
 
+  /**
+   * Perform page analysis.
+   */
+  public void performPageAnalysis() {
+    getCategories();
+    getComments();
+    getDefaultSorts();
+    getExternalLinks();
+    getImages();
+    getInternalLinks();
+    getInterwikiLinks();
+    getLanguageLinks();
+    getTemplates();
+    getTitles();
+  }
+
   // ==========================================================================
   // Elements management
   // ==========================================================================
