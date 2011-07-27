@@ -20,7 +20,9 @@ package org.wikipediacleaner.gui.swing.component;
 
 import java.util.Collection;
 
+import javax.swing.JTextPane;
 import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.Element;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
@@ -77,9 +79,9 @@ public abstract class MWPaneFormatter {
     initializeStyles();
   }
 
-  /* ======================================================================== */
-  /* Document formatting                                                      */
-  /* ======================================================================== */
+  // ==========================================================================
+  // Document formatting
+  // ==========================================================================
 
   /**
    * Clean format of a MediaWikiPane.
@@ -195,9 +197,73 @@ public abstract class MWPaneFormatter {
    */
   public abstract void format(MWPane pane, PageAnalysis pageAnalysis);
 
-  /* ======================================================================== */
-  /* Document management                                                      */
-  /* ======================================================================== */
+  // ==========================================================================
+  // Element management
+  // ==========================================================================
+
+  /**
+   * @param pane Text pane.
+   * @param element Element.
+   * @return Start of the first element having the same UUID as element.
+   */
+  public static int getUUIDStartOffset(JTextPane pane, Element element) {
+    if (element == null) {
+      return Integer.MIN_VALUE;
+    }
+    if (pane == null) {
+      return element.getStartOffset();
+    }
+    Object uuid = element.getAttributes().getAttribute(ATTRIBUTE_UUID);
+    if (uuid == null) {
+      return element.getStartOffset();
+    }
+    int startOffset = element.getStartOffset();
+    while (startOffset > 0) {
+      Element tmpElement = pane.getStyledDocument().getCharacterElement(startOffset - 1);
+      if ((tmpElement == null) || (tmpElement.getAttributes() == null)) {
+        return startOffset;
+      }
+      if (!uuid.equals(tmpElement.getAttributes().getAttribute(ATTRIBUTE_UUID))) {
+        return startOffset;
+      }
+      startOffset = tmpElement.getStartOffset();
+    }
+    return 0;
+  }
+
+  /**
+   * @param pane Text pane.
+   * @param element Element.
+   * @return End of the last element having the same UUID as element.
+   */
+  public static int getUUIDEndOffet(JTextPane pane, Element element) {
+    if (element == null) {
+      return Integer.MAX_VALUE;
+    }
+    if (pane == null) {
+      return element.getEndOffset();
+    }
+    Object uuid = element.getAttributes().getAttribute(ATTRIBUTE_UUID);
+    if (uuid == null) {
+      return element.getEndOffset();
+    }
+    int endOffset = element.getEndOffset();
+    int length = pane.getText().length();
+    while (endOffset < length) {
+      Element tmpElement = pane.getStyledDocument().getCharacterElement(endOffset);
+      if ((tmpElement == null) || (tmpElement.getAttributes() == null)) {
+        return endOffset;
+      }
+      if (!uuid.equals(tmpElement.getAttributes().getAttribute(ATTRIBUTE_UUID))) {
+        return endOffset;
+      }
+      endOffset = tmpElement.getEndOffset();
+    }
+    return length;
+  }
+  // ==========================================================================
+  // Document management
+  // ==========================================================================
 
   /**
    * @return A styled document that can be used to format a MWPane.
@@ -208,9 +274,9 @@ public abstract class MWPaneFormatter {
     return document;
   }
 
-  /* ======================================================================== */
-  /* Style management                                                         */
-  /* ======================================================================== */
+  // ==========================================================================
+  // Style management
+  // ==========================================================================
 
   private final static Object lockStyles = new Object();
   private final static StyleContext styleContext = new StyleContext();
