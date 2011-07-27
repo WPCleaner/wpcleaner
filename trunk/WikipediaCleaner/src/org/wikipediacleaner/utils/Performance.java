@@ -80,6 +80,6 @@ public class Performance {
    * @return Current time.
    */
   private static long currentTime() {
-    return System.currentTimeMillis() / 1000;
+    return System.currentTimeMillis() / 1;
   }
 }
