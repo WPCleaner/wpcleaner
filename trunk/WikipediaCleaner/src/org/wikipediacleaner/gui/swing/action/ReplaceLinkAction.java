@@ -121,8 +121,8 @@ public class ReplaceLinkAction extends TextAction {
         (localTextPane != null) &&
         (localNewTitle != null) &&
         (localNewTitle.length() > 0)) {
-      localTextPane.setCaretPosition(localElement.getStartOffset());
-      localTextPane.moveCaretPosition(localElement.getEndOffset());
+      localTextPane.setCaretPosition(MWPaneFormatter.getUUIDStartOffset(localTextPane, localElement));
+      localTextPane.moveCaretPosition(MWPaneFormatter.getUUIDEndOffet(localTextPane, localElement));
       String newText = null;
       if ((localText != null) &&
           (localText.length() > 0) &&
@@ -155,8 +155,8 @@ public class ReplaceLinkAction extends TextAction {
     }
 
     // Initialize
-    int startOffset = localElement.getStartOffset();
-    int endOffset = localElement.getEndOffset();
+    int startOffset = MWPaneFormatter.getUUIDStartOffset(localTextPane, localElement);
+    int endOffset = MWPaneFormatter.getUUIDEndOffet(localTextPane, localElement);
     String newText = null;
     int offsetBefore = 0;
     int offsetAfter = 0;
@@ -191,13 +191,13 @@ public class ReplaceLinkAction extends TextAction {
     if ((newText == null) && ((position = localNewTitle.indexOf(localText)) > 0)) {
       try {
         String textBefore = localNewTitle.substring(0, position);
-        String currentText = localTextPane.getText(localElement.getStartOffset() - position, position);
+        String currentText = localTextPane.getText(startOffset - position, position);
         if ((Character.toUpperCase(textBefore.charAt(0)) == Character.toUpperCase(currentText.charAt(0))) &&
             textBefore.substring(1).equals(currentText.substring(1))) {
           if (position + localText.length() < localNewTitle.length()) {
             // Check right
             String textAfter = localNewTitle.substring(position + localText.length());
-            String currentText2 = localTextPane.getText(localElement.getEndOffset(), localNewTitle.length() - position - localText.length());
+            String currentText2 = localTextPane.getText(endOffset, localNewTitle.length() - position - localText.length());
             if (textAfter.equals(currentText2)) {
               newText = "[[" + currentText.charAt(0) + localNewTitle.substring(1) + "]]";
               offsetBefore = position;
