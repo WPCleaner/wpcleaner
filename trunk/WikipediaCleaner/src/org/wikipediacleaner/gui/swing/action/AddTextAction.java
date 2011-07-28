@@ -202,34 +202,8 @@ public class AddTextAction extends TextAction {
     }
 
     // Initialize
-    int startOffset = localElement.getStartOffset();
-    int endOffset = localElement.getEndOffset();
-    Object uuid = localElement.getAttributes().getAttribute(MWPaneFormatter.ATTRIBUTE_UUID);
-    if (uuid != null) {
-      boolean finished;
-      do {
-        finished = true;
-        Element tmpElement = localTextPane.getStyledDocument().getCharacterElement(startOffset - 1); 
-        if ((tmpElement != null) && (tmpElement.getAttributes() != null)) {
-          if ((localElement != tmpElement) &&
-              (uuid.equals(tmpElement.getAttributes().getAttribute(MWPaneFormatter.ATTRIBUTE_UUID)))) {
-            startOffset = tmpElement.getStartOffset();
-            finished = false;
-          }
-        }
-      } while (!finished);
-      do {
-        finished = true;
-        Element tmpElement = localTextPane.getStyledDocument().getCharacterElement(endOffset);
-        if ((tmpElement != null) && (tmpElement.getAttributes() != null)) {
-          if ((localElement != tmpElement) &&
-              (uuid.equals(tmpElement.getAttributes().getAttribute(MWPaneFormatter.ATTRIBUTE_UUID)))) {
-            endOffset = tmpElement.getEndOffset();
-            finished = false;
-          }
-        }
-      } while (!finished);
-    }
+    int startOffset = MWPaneFormatter.getUUIDStartOffset(localTextPane, localElement);
+    int endOffset = MWPaneFormatter.getUUIDEndOffet(localTextPane, localElement);
 
     // Replace
     try {
