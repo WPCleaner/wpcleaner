@@ -586,7 +586,9 @@ public class MWPane
       if ((attr != null) &&
           (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_TYPE) != null) &&
           (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_OCCURRENCE) != Boolean.FALSE)) {
-        select(run.getStartOffset(), run.getEndOffset());
+        select(
+            MWPaneFormatter.getUUIDStartOffset(this, run),
+            MWPaneFormatter.getUUIDEndOffet(this, run));
         return;
       }
     }
@@ -601,7 +603,9 @@ public class MWPane
       if ((attr != null) &&
           (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_TYPE) != null) &&
           (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_OCCURRENCE) != null)) {
-        select(run.getStartOffset(), run.getEndOffset());
+        select(
+            MWPaneFormatter.getUUIDStartOffset(this, run),
+            MWPaneFormatter.getUUIDEndOffet(this, run));
         return;
       }
     }
@@ -620,7 +624,9 @@ public class MWPane
       if ((attr != null) &&
           (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_TYPE) != null) &&
           (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_OCCURRENCE) != Boolean.FALSE)) {
-        select(run.getStartOffset(), run.getEndOffset());
+        select(
+            MWPaneFormatter.getUUIDStartOffset(this, run),
+            MWPaneFormatter.getUUIDEndOffet(this, run));
         return;
       }
     }
@@ -645,7 +651,9 @@ public class MWPane
       if ((attr != null) &&
           (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_TYPE) != null) &&
           (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_OCCURRENCE) != Boolean.FALSE)) {
-        select(run.getStartOffset(), run.getEndOffset());
+        select(
+            MWPaneFormatter.getUUIDStartOffset(this, run),
+            MWPaneFormatter.getUUIDEndOffet(this, run));
         return;
       }
     }
@@ -665,7 +673,9 @@ public class MWPane
       if ((attr != null) &&
           (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_TYPE) != null) &&
           (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_OCCURRENCE) != Boolean.FALSE)) {
-        select(run.getStartOffset(), run.getEndOffset());
+        select(
+            MWPaneFormatter.getUUIDStartOffset(this, run),
+            MWPaneFormatter.getUUIDEndOffet(this, run));
         return;
       }
     }
