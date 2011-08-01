@@ -22,9 +22,8 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
-import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
 
@@ -53,85 +52,26 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    int startIndex = 0;
     boolean result = false;
-    Namespace imageNamespace = Namespace.getNamespace(
-        Namespace.IMAGE, pageAnalysis.getWikipedia().getNamespaces());
-    if (imageNamespace == null) {
-      return result;
-    }
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      if (contents.startsWith("[[", startIndex)) {
-        int beginIndex = startIndex;
-        int currentIndex = beginIndex + 2;
-
-        // Namespace
-        int linkIndex = currentIndex;
-        while ((currentIndex < contents.length()) &&
-               (contents.charAt(currentIndex) != ':') &&
-               (contents.charAt(currentIndex) != '|') &&
-               (contents.charAt(currentIndex) != ']') &&
-               (contents.charAt(currentIndex) != '[')) {
-          currentIndex++;
+    for (PageElementImage image : pageAnalysis.getImages()) {
+      String description = image.getDescription();
+      if ((description == null) || (description.trim().length() == 0)) {
+        String alt = image.getAlternateDescription();
+        if ((alt == null) || (alt.trim().length() == 0)) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(), image.getBeginIndex(), image.getEndIndex());
+          errorResult.addPossibleAction(new SimpleAction(
+              GT._("View image"),
+              new PageViewAction(
+                  image.getNamespace() + ":" + image.getImage(),
+                  pageAnalysis.getWikipedia(),
+                  true)));
+          errors.add(errorResult);
         }
-
-        // Check if namespace is Image
-        if ((currentIndex < contents.length()) &&
-            (contents.charAt(currentIndex) == ':') &&
-            (imageNamespace.isPossibleName(contents.substring(linkIndex, currentIndex).trim()))) {
-
-          // Link itself
-          currentIndex++;
-          while ((currentIndex < contents.length()) &&
-                 (contents.charAt(currentIndex) != '|') &&
-                 (contents.charAt(currentIndex) != ']')) {
-            currentIndex++;
-          }
-          String imageName = contents.substring(linkIndex, currentIndex);
-
-          // Go to the end
-          if ((currentIndex < contents.length()) &&
-              (contents.charAt(currentIndex) == '|')) {
-            currentIndex++;
-          }
-          linkIndex = currentIndex;
-          while ((currentIndex < contents.length()) &&
-                 (!contents.startsWith("]]", currentIndex))) {
-            currentIndex++;
-          }
-          if ((currentIndex < contents.length()) &&
-              (contents.startsWith("]]", currentIndex))) {
-            String[] args = contents.substring(linkIndex, currentIndex).split("\\|");
-            currentIndex += 2;
-            EnumWikipedia wikipedia = pageAnalysis.getWikipedia();
-            boolean descriptionFound = false;
-            for (int i = args.length; (i > 0) && !descriptionFound; i--) {
-              String arg = args[i - 1];
-              if (arg.length() > 0) {
-                boolean magicWordFound = wikipedia.isPossibleAliasForImgMagicWord(arg);
-                if (!magicWordFound) {
-                  descriptionFound = true;
-                }
-              }
-            }
-            if (!descriptionFound) {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), beginIndex, currentIndex);
-              errorResult.addPossibleAction(new SimpleAction(
-                  GT._("View image"),
-                  new PageViewAction(imageName, wikipedia, true)));
-              errors.add(errorResult);
-            }
-          }
-        }
-        startIndex = currentIndex;
-      } else {
-        startIndex++;
       }
     }
     return result;

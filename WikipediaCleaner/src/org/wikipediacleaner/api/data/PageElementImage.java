@@ -164,6 +164,17 @@ public class PageElementImage extends PageElement {
     return description;
   }
 
+  public String getAlternateDescription() {
+    if (magicWords != null) {
+      for (String magicWord : magicWords) {
+        if (magicWord.trim().startsWith("alt=")) {
+          return magicWord.trim().substring(4);
+        }
+      }
+    }
+    return null;
+  }
+
   private PageElementImage(
       int beginIndex, int endIndex,
       String namespace, String image,
