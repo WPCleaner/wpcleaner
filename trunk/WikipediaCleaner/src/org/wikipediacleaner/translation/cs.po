@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-24 21:30+0200\n"
+"POT-Creation-Date: 2011-08-02 21:05+0200\n"
 "PO-Revision-Date: 2011-06-20 18:41+0000\n"
 "Last-Translator: Ragimiri <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -140,7 +140,27 @@ msgstr ""
 msgid "The preferred name to use for replacing {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:99
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:102
+msgid "Add a description..."
+msgstr "Přidat popis…"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:102
+#, fuzzy
+msgid "What description would like to use for the image ?"
+msgstr "Jaký popis chcete použít pro externí odkaz?"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:105
+#, fuzzy
+msgid "Add an alternate description..."
+msgstr "Přidat popis…"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:108
+#, fuzzy
+msgid "What alternate description would like to use for the image ?"
+msgstr "Jaký popis chcete použít pro externí odkaz?"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:113
 msgid "View image"
 msgstr "Zobrazit obrázek"
 
@@ -224,10 +244,6 @@ msgstr "Kontrolní součet je {0} místo {1}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:74
 msgid "Replace %20 by space character"
 msgstr "Nahradit %20 mezerou"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:102
-msgid "Add a description..."
-msgstr "Přidat popis…"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:105
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:115
@@ -1648,15 +1664,15 @@ msgstr "Chyba číslo {0}"
 msgid "Close this tab"
 msgstr "Zavřít tuto kartu"
 
-#: org/wikipediacleaner/gui/swing/component/MWPane.java:901
+#: org/wikipediacleaner/gui/swing/component/MWPane.java:911
 msgid "Decrement title level"
 msgstr "Snížit úroveň titulku"
 
-#: org/wikipediacleaner/gui/swing/component/MWPane.java:907
+#: org/wikipediacleaner/gui/swing/component/MWPane.java:917
 msgid "Increment title level"
 msgstr "Zvýšit úroveň titulku"
 
-#: org/wikipediacleaner/gui/swing/component/MWPane.java:913
+#: org/wikipediacleaner/gui/swing/component/MWPane.java:923
 msgid "Validate the new table of contents"
 msgstr "Ověřit nový obsah"
 

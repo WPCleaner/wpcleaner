@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-24 21:30+0200\n"
+"POT-Creation-Date: 2011-08-02 21:05+0200\n"
 "PO-Revision-Date: 2010-09-16 07:39+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -146,7 +146,29 @@ msgstr "Перевірити категорію"
 msgid "The preferred name to use for replacing {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:99
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:102
+msgid "Add a description..."
+msgstr "Додати опис..."
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:102
+#, fuzzy
+msgid "What description would like to use for the image ?"
+msgstr ""
+"Який опис ви хотіли б використовувати для цього зовнішнього посилання ?"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:105
+#, fuzzy
+msgid "Add an alternate description..."
+msgstr "Додати опис..."
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:108
+#, fuzzy
+msgid "What alternate description would like to use for the image ?"
+msgstr ""
+"Який опис ви хотіли б використовувати для цього зовнішнього посилання ?"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:113
 msgid "View image"
 msgstr "Переглянути зображення"
 
@@ -229,10 +251,6 @@ msgstr "Контрольна сума — {0} замість {1}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:74
 msgid "Replace %20 by space character"
 msgstr "Замінити %20 символом пробілу"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:102
-msgid "Add a description..."
-msgstr "Додати опис..."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:105
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:115
@@ -1688,15 +1706,15 @@ msgstr "Помилка n°{0}"
 msgid "Close this tab"
 msgstr "Закрити цю вкладку"
 
-#: org/wikipediacleaner/gui/swing/component/MWPane.java:901
+#: org/wikipediacleaner/gui/swing/component/MWPane.java:911
 msgid "Decrement title level"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPane.java:907
+#: org/wikipediacleaner/gui/swing/component/MWPane.java:917
 msgid "Increment title level"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPane.java:913
+#: org/wikipediacleaner/gui/swing/component/MWPane.java:923
 msgid "Validate the new table of contents"
 msgstr ""
 

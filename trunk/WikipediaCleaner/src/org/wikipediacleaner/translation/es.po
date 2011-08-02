@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-24 21:30+0200\n"
+"POT-Creation-Date: 2011-08-02 21:05+0200\n"
 "PO-Revision-Date: 2011-06-10 00:39+0000\n"
 "Last-Translator: Fitoschido <fitoschido@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -142,7 +142,27 @@ msgstr ""
 msgid "The preferred name to use for replacing {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:99
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:102
+msgid "Add a description..."
+msgstr "Añadir una descripción.."
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:102
+#, fuzzy
+msgid "What description would like to use for the image ?"
+msgstr "¿Qué descripción le gustaría usar para el enlace externo?"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:105
+#, fuzzy
+msgid "Add an alternate description..."
+msgstr "Añadir una descripción.."
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:108
+#, fuzzy
+msgid "What alternate description would like to use for the image ?"
+msgstr "¿Qué descripción le gustaría usar para el enlace externo?"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:113
 msgid "View image"
 msgstr "Ver imagen"
 
@@ -231,10 +251,6 @@ msgstr "La suma de comprobación (checksum) es {0} en lugar de {1}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:74
 msgid "Replace %20 by space character"
 msgstr "Reemplazar %20 por espacio"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:102
-msgid "Add a description..."
-msgstr "Añadir una descripción.."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:105
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:115
@@ -1678,15 +1694,15 @@ msgstr "Error nº{0}"
 msgid "Close this tab"
 msgstr "Cerrar esta solapa"
 
-#: org/wikipediacleaner/gui/swing/component/MWPane.java:901
+#: org/wikipediacleaner/gui/swing/component/MWPane.java:911
 msgid "Decrement title level"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPane.java:907
+#: org/wikipediacleaner/gui/swing/component/MWPane.java:917
 msgid "Increment title level"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPane.java:913
+#: org/wikipediacleaner/gui/swing/component/MWPane.java:923
 msgid "Validate the new table of contents"
 msgstr ""
 
