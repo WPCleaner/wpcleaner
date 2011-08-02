@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.data;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -29,6 +30,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
  */
 public class PageElementImage extends PageElement {
 
+  private final EnumWikipedia wikipedia;
   private final String namespaceNotTrimmed;
   private final String namespace;
   private final String imageNotTrimmed;
@@ -101,7 +103,7 @@ public class PageElementImage extends PageElement {
         return null;
       }
       return new PageElementImage(
-          index, tmpIndex + 2,
+          wikipedia, index, tmpIndex + 2,
           contents.substring(beginIndex, colonIndex),
           contents.substring(colonIndex + 1, tmpIndex),
           null, null);
@@ -122,7 +124,7 @@ public class PageElementImage extends PageElement {
           pipeIndex = tmpIndex;
         }
         return new PageElementImage(
-            index, tmpIndex + 2,
+            wikipedia, index, tmpIndex + 2,
             contents.substring(beginIndex, colonIndex),
             contents.substring(colonIndex + 1, firstPipeIndex),
             magicWords,
@@ -152,34 +154,57 @@ public class PageElementImage extends PageElement {
     return null;
   }
 
+  /**
+   * @return Image namespace name.
+   */
   public String getNamespace() {
     return namespace;
   }
 
+  /**
+   * @return Image name.
+   */
   public String getImage() {
     return image;
   }
 
+  /**
+   * @return Image description.
+   */
   public String getDescription() {
     return description;
   }
 
+  /**
+   * @return Image alternate description.
+   */
   public String getAlternateDescription() {
     if (magicWords != null) {
       for (String magicWord : magicWords) {
-        if (magicWord.trim().startsWith("alt=")) {
-          return magicWord.trim().substring(4);
+        if (wikipedia.getMagicWord(MagicWord.IMG_ALT).isPossibleAlias(magicWord)) {
+          int equalIndex = magicWord.indexOf("=");
+          if (equalIndex >= 0) {
+            return magicWord.substring(equalIndex + 1).trim();
+          }
         }
       }
     }
     return null;
   }
 
+  /**
+   * @return Magic words.
+   */
+  public Collection<String> getMagicWords() {
+    return magicWords;
+  }
+
   private PageElementImage(
-      int beginIndex, int endIndex,
+      EnumWikipedia wikipedia, int beginIndex, int endIndex,
       String namespace, String image,
       List<String> magicWords, String description) {
     super(beginIndex, endIndex);
+    this.wikipedia = wikipedia;
     this.namespaceNotTrimmed = namespace;
     this.namespace = (namespace != null) ? namespace.trim() : null;
     this.imageNotTrimmed = image;

@@ -20,12 +20,16 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 
+import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
+import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.StringChecker;
+import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
 
 
 /**
@@ -34,8 +38,14 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
 
+  /**
+   * StringChecker for the description.
+   */
+  private final StringChecker descriptionChecker;
+
   public CheckErrorAlgorithm030() {
     super("Image without description");
+    descriptionChecker = new StringCheckerUnauthorizedCharacters("[]|=");
   }
 
   /**
@@ -53,6 +63,7 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
     }
 
     boolean result = false;
+    MagicWord magicWordImgAlt = pageAnalysis.getWikipedia().getMagicWord(MagicWord.IMG_ALT);
     for (PageElementImage image : pageAnalysis.getImages()) {
       String description = image.getDescription();
       if ((description == null) || (description.trim().length() == 0)) {
@@ -64,6 +75,40 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
               pageAnalysis.getPage(), image.getBeginIndex(), image.getEndIndex());
+
+          // Action: add a description
+          StringBuilder prefixFull = new StringBuilder();
+          prefixFull.append("[[");
+          prefixFull.append(image.getNamespace());
+          prefixFull.append(":");
+          prefixFull.append(image.getImage());
+          StringBuilder prefixShort = new StringBuilder(prefixFull);
+          if (image.getMagicWords() != null) {
+            for (String magicWord : image.getMagicWords()) {
+              prefixFull.append("|");
+              prefixFull.append(magicWord);
+              if (!magicWordImgAlt.isPossibleAlias(magicWord)) {
+                prefixShort.append("|");
+                prefixShort.append(magicWord);
+              }
+            }
+          }
+          prefixFull.append("|");
+          prefixShort.append("|alt=");
+          errorResult.addPossibleAction(
+              GT._("Add a description..."),
+              new AddTextActionProvider(
+                  prefixFull.toString(), "]]", null,
+                  GT._("What description would like to use for the image ?"),
+                  descriptionChecker));
+          errorResult.addPossibleAction(
+              GT._("Add an alternate description..."),
+              new AddTextActionProvider(
+                  prefixShort.toString(), "]]", null,
+                  GT._("What alternate description would like to use for the image ?"),
+                  descriptionChecker));
+
+          // Action: view image
           errorResult.addPossibleAction(new SimpleAction(
               GT._("View image"),
               new PageViewAction(
