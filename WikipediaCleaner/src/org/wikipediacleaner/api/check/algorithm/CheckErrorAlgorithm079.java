@@ -31,6 +31,7 @@ import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
 import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
+import org.wikipediacleaner.utils.TextProviderUrlTitle;
 
 
 /**
@@ -101,7 +102,8 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
         errorResult.addPossibleAction(
             GT._("Add a description..."),
             new AddTextActionProvider(
-                "[" + url + " ", "]", url,
+                "[" + url + " ", "]",
+                new TextProviderUrlTitle(url),
                 GT._("What description would like to use for the external link ?"),
                 descriptionChecker));
         if (!isInRef) {
@@ -111,7 +113,8 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
           errorResult.addPossibleAction(
               GT._("Add a description and convert into <ref> tag"),
               new AddTextActionProvider(
-                  "<ref>[" + url + " ", "]</ref>", url,
+                  "<ref>[" + url + " ", "]</ref>",
+                  new TextProviderUrlTitle(url),
                   GT._("What description would like to use for the external link ?"),
                   descriptionChecker));
         } else {

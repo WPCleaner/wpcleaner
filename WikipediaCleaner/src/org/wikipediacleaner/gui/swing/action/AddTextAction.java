@@ -19,10 +19,7 @@
 package org.wikipediacleaner.gui.swing.action;
 
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Collection;
 
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -30,12 +27,10 @@ import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.TextAction;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 import org.wikipediacleaner.utils.StringChecker;
+import org.wikipediacleaner.utils.TextProvider;
 
 
 /**
@@ -46,7 +41,7 @@ public class AddTextAction extends TextAction {
 
   private final String prefix;
   private final String suffix;
-  private final String url;
+  private final TextProvider textProvider;
   private final String question;
   private final String[] possibleValues;
   private final boolean onlyList;
@@ -55,20 +50,17 @@ public class AddTextAction extends TextAction {
   private final Element element;
   private final JTextPane textPane;
 
-  private final static int BUFFER_SIZE = 1024;
-  private final static int MAXIMUM_SIZE = 10000;
-
   public AddTextAction(
       String prefix,
       String suffix,
-      String url,
+      TextProvider textProvider,
       String question,
       String defaultValue,
       StringChecker checker,
       Element element,
       JTextPane textPane) {
     this(
-        prefix, suffix, url, question,
+        prefix, suffix, textProvider, question,
         null, false, defaultValue,
         checker, element, textPane);
   }
@@ -76,7 +68,7 @@ public class AddTextAction extends TextAction {
   public AddTextAction(
       String prefix,
       String suffix,
-      String url,
+      TextProvider textProvider,
       String question,
       String[] possibleValues,
       boolean onlyList,
@@ -87,7 +79,7 @@ public class AddTextAction extends TextAction {
     super("ReplaceLink");
     this.prefix = prefix;
     this.suffix = suffix;
-    this.url = url;
+    this.textProvider = textProvider;
     this.question = question;
     this.possibleValues = possibleValues;
     this.onlyList = onlyList;
@@ -114,62 +106,28 @@ public class AddTextAction extends TextAction {
           localTextPane.getSelectionStart());
     }
     String value = null;
-    if (url != null) {
-      GetMethod method = null;
-      InputStream is = null;
-      try {
-        HttpClient httpClient = new HttpClient();
-        method = new GetMethod(url);
-        System.out.println(url);
-        int statusCode = httpClient.executeMethod(method);
-        if (statusCode == HttpStatus.SC_OK) {
-          is = method.getResponseBodyAsStream();
-          StringBuilder html = new StringBuilder();
-          byte[] tmpBytes = new byte[BUFFER_SIZE];
-          int size;
-          int totalSize = 0;
-          Pattern pTitle = Pattern.compile("<title>(.*?)</title>", Pattern.CASE_INSENSITIVE);
-          while ((value == null) &&
-                 ((size = is.read(tmpBytes)) > 0) &&
-                 (totalSize < MAXIMUM_SIZE)) {
-            totalSize += size;
-            String tmp = " " + new String(tmpBytes, 0, size);
-            tmp = tmp.replaceAll("\\s", " ");
-            html.append(tmp);
-            Matcher m = pTitle.matcher(html);
-            if (m.find() == true) {
-              value = m.group(1).trim();
-              value = value.replaceAll("&#232;", "è");
-              value = value.replaceAll("&#233;", "é");
-              value = value.replaceAll("&eacute;", "é");
-            }
-          }
-        }
-      } catch (IOException ex) {
-        // Nothing to do
-      } catch (Exception ex) {
-        // Nothing to do
-      } finally {
-        if (is != null) {
-          try {
-            is.close();
-          } catch (IOException ex) {
-            // Nothing to do 
-          }
-        }
-        if (method != null) {
-          method.releaseConnection();
+    String[] tmpPossibleValues = null;
+    if ((possibleValues != null) && (possibleValues.length > 0)) {
+      tmpPossibleValues = possibleValues;
+    }
+    if (textProvider != null) {
+      Collection<String> texts = textProvider.getTexts();
+      if ((texts != null) && (texts.size() > 0)) {
+        value = texts.iterator().next();
+        if (tmpPossibleValues == null) {
+          tmpPossibleValues = new String[texts.size()];
+          tmpPossibleValues = texts.toArray(tmpPossibleValues);
         }
       }
     }
     if (value == null) {
       value = defaultValue;
     }
-    if (possibleValues != null) {
+    if (tmpPossibleValues != null) {
       value = Utilities.askForValue(
           (localTextPane != null) ? localTextPane.getParent() : null,
           question,
-          possibleValues, onlyList, value, checker);
+          tmpPossibleValues, onlyList, value, checker);
     } else {
       value = Utilities.askForValue(
           (localTextPane != null) ? localTextPane.getParent() : null,

@@ -24,6 +24,7 @@ import javax.swing.text.Element;
 
 import org.wikipediacleaner.gui.swing.action.AddTextAction;
 import org.wikipediacleaner.utils.StringChecker;
+import org.wikipediacleaner.utils.TextProvider;
 
 
 /**
@@ -33,7 +34,7 @@ public class AddTextActionProvider implements ActionProvider {
 
   private final String prefix;
   private final String suffix;
-  private final String url;
+  private final TextProvider textProvider;
   private final String question;
   private final String[] possibleValues;
   private final boolean onlyList;
@@ -43,50 +44,50 @@ public class AddTextActionProvider implements ActionProvider {
   /**
    * @param prefix Prefix.
    * @param suffix Suffix.
-   * @param url Optional URL to retrieve title.
+   * @param textProvider Optional text provider.
    * @param question Question asked to the user.
    * @param checker String checker to verify the value.
    */
   public AddTextActionProvider(
       String prefix, String suffix,
-      String url, String question,
+      TextProvider textProvider, String question,
       StringChecker checker) {
-    this(prefix, suffix, url, question, "", checker);
+    this(prefix, suffix, textProvider, question, "", checker);
   }
 
   /**
    * @param prefix Prefix.
    * @param suffix Suffix.
-   * @param url Optional URL to retrieve title.
+   * @param textProvider Optional text provider.
    * @param question Question asked to the user.
    * @param defaultValue Value used by default.
    * @param checker String checker to verify the value.
    */
   public AddTextActionProvider(
-      String prefix, String suffix, String url,
+      String prefix, String suffix, TextProvider textProvider,
       String question, String defaultValue,
       StringChecker checker) {
     this(
-        prefix, suffix, url, question,
+        prefix, suffix, textProvider, question,
         null, false, defaultValue, checker);
   }
 
   /**
    * @param prefix Prefix.
    * @param suffix Suffix.
-   * @param url Optional URL to retrieve title.
+   * @param textProvider Optional text provider.
    * @param question Question asked to the user.
    * @param defaultValue Value used by default.
    * @param checker String checker to verify the value.
    */
   public AddTextActionProvider(
-      String prefix, String suffix, String url,
+      String prefix, String suffix, TextProvider textProvider,
       String question,
       String[] possibleValues, boolean onlyList, String defaultValue,
       StringChecker checker) {
     this.prefix = prefix;
     this.suffix = suffix;
-    this.url = url;
+    this.textProvider = textProvider;
     this.question = question;
     this.possibleValues = possibleValues;
     this.onlyList = onlyList;
@@ -99,7 +100,7 @@ public class AddTextActionProvider implements ActionProvider {
    */
   public Action getAction(Element element, JTextPane textPane) {
     return new AddTextAction(
-        prefix, suffix, url, question,
+        prefix, suffix, textProvider, question,
         possibleValues, onlyList, defaultValue,
         checker,
         element, textPane);
