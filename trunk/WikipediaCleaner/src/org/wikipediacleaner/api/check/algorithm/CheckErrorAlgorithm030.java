@@ -30,6 +30,7 @@ import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
 import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
+import org.wikipediacleaner.utils.TextProviderImageDescription;
 
 
 /**
@@ -98,13 +99,15 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
           errorResult.addPossibleAction(
               GT._("Add a description..."),
               new AddTextActionProvider(
-                  prefixFull.toString(), "]]", null,
+                  prefixFull.toString(), "]]",
+                  new TextProviderImageDescription(image),
                   GT._("What description would like to use for the image ?"),
                   descriptionChecker));
           errorResult.addPossibleAction(
               GT._("Add an alternate description..."),
               new AddTextActionProvider(
-                  prefixShort.toString(), "]]", null,
+                  prefixShort.toString(), "]]",
+                  new TextProviderImageDescription(image),
                   GT._("What alternate description would like to use for the image ?"),
                   descriptionChecker));
 

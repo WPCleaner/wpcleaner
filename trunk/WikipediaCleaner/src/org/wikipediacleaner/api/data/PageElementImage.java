@@ -155,6 +155,13 @@ public class PageElementImage extends PageElement {
   }
 
   /**
+   * @return Wikipedia.
+   */
+  public EnumWikipedia getWikipedia() {
+    return wikipedia;
+  }
+
+  /**
    * @return Image namespace name.
    */
   public String getNamespace() {

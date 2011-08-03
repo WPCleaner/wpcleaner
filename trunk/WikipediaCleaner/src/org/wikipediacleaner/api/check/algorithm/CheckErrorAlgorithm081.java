@@ -33,6 +33,7 @@ import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
 import org.wikipediacleaner.utils.StringCheckerReferenceName;
+import org.wikipediacleaner.utils.TextProviderUrlTitle;
 
 
 /**
@@ -232,7 +233,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                     new AddTextActionProvider(
                         valueRef.getPartBeforeParameters() + " name=\"",
                         "\"" + valueRef.getPartFromParameters(),
-                        url,
+                        new TextProviderUrlTitle(url),
                         GT._("What name would like to use for the <ref> tag ?"),
                         nameChecker));
               }
