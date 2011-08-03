@@ -1493,16 +1493,18 @@ public class MainWindow
             Page page = DataManager.getPage(
                 getWikipedia(), getWikipedia().getCheckWikiTraduction(), null, null);
             mw.retrieveContents(getWikipedia(), page, true, false, false);
-            BufferedReader reader = new BufferedReader(new StringReader(page.getContents()));
-            properties = new Properties();
-            while (getNextCheckWikiParameter(properties, reader)) {
-              //
-            }
-            getWikipedia().setCheckWikiConfiguration(properties);
-            try {
-              reader.close();
-            } catch (IOException e) {
-              // Nothing
+            if (Boolean.TRUE.equals(page.isExisting())) {
+              BufferedReader reader = new BufferedReader(new StringReader(page.getContents()));
+              properties = new Properties();
+              while (getNextCheckWikiParameter(properties, reader)) {
+                //
+              }
+              getWikipedia().setCheckWikiConfiguration(properties);
+              try {
+                reader.close();
+              } catch (IOException e) {
+                // Nothing
+              }
             }
             CheckErrorAlgorithms.initializeAlgorithms(getWikipedia());
           }

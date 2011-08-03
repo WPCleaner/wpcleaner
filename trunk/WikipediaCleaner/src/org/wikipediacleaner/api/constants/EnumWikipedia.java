@@ -70,22 +70,7 @@ public enum EnumWikipedia {
    * - full URL of MediaWiki API (api.php).
    * - full URL of the wiki (index.php).
    * - Component orientation.
-   * 
    * - Internal link to the configuration page.
-   * OR
-   * - full URL of the help page.
-   * - Internal link to the help page.
-   * - "Disambiguation correction" text.
-   * - Wiktionary interwiki.
-   * - Wiktionary templates.
-   * - Templates for indicating that a link to a disambiguation page is normal.
-   * - Templates for requiring help on a disambiguation (used for marking links).
-   * - Templates for requiring help on a disambiguation (used for getting list of pages requiring help).
-   * - Disambiguation project page giving the list of pages to work on.
-   * - Array of disambiguation templates.
-   * - Array of special templates.
-   * - Project Check Wikipedia page.
-   * - Project Check Wikipedia traduction.
    */
 
   AF( WikiAf.code, WikiAf.name,
@@ -208,6 +193,9 @@ public enum EnumWikipedia {
   COMMONS(WikiCommons.code, WikiCommons.name,
           WikiCommons.apiUrl, WikiCommons.indexUrl,
           WikiCommons.orientation, WikiCommons.configuration),
+  WIKISOURCE_FR(WikisourceFr.code, WikisourceFr.codeCW, WikisourceFr.name,
+                WikisourceFr.apiUrl, WikisourceFr.indexUrl,
+                WikisourceFr.orientation, WikisourceFr.configuration),
   WIKIVERSITY_FR(WikiversityFr.code, WikiversityFr.codeCW, WikiversityFr.name,
                  WikiversityFr.apiUrl, WikiversityFr.indexUrl,
                  WikiversityFr.orientation, WikiversityFr.configuration);
