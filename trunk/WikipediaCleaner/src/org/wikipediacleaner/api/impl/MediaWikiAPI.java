@@ -178,20 +178,36 @@ public class MediaWikiAPI implements API {
    * Load Wikipedia configuration.
    * 
    * @param wikipedia Wikipedia.
+   * @param userName User name.
    */
   public void loadConfiguration(
-      EnumWikipedia wikipedia) throws APIException {
+      EnumWikipedia wikipedia,
+      String userName) throws APIException {
+
+    // Retrieve site data
+    loadSiteInfo(wikipedia);
 
     // Retrieve configuration
-    if (wikipedia.getConfiguationPage() != null) {
+    if (wikipedia.getConfigurationPage() != null) {
+      String configPageName = wikipedia.getConfigurationPage();
       Page page = DataManager.getPage(
-          wikipedia, wikipedia.getConfiguationPage(), null, null);
+          wikipedia, configPageName, null, null);
       retrieveContents(wikipedia, page, false);
       wikipedia.initConfiguration(page.getContents());
-    }
 
-    // Retrieve data
-    loadSiteInfo(wikipedia);
+      if ((userName != null) && (userName.trim().length() > 0) &&
+          (wikipedia.getUserConfigurationPage(userName) != null) &&
+          (!Page.areSameTitle(wikipedia.getUserConfigurationPage(userName), configPageName))) {
+        Page userConfigPage = DataManager.getPage(
+            wikipedia,
+            wikipedia.getUserConfigurationPage(userName),
+            null, null);
+        retrieveContents(wikipedia, userConfigPage, false);
+        if (Boolean.TRUE.equals(userConfigPage.isExisting())) {
+          wikipedia.initUserConfiguration(userConfigPage.getContents());
+        }
+      }
+    }
   }
 
   /**

@@ -37,5 +37,5 @@ class WikiHe {
 
   final static ComponentOrientation orientation = ComponentOrientation.RIGHT_TO_LEFT;
 
-  final static String configuration = "User:NicoV/WikiCleanerConfiguration";
+  final static String configuration = "WikiCleanerConfiguration";
 }
