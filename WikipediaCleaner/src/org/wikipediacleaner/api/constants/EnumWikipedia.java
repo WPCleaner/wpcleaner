@@ -207,7 +207,7 @@ public enum EnumWikipedia {
   private final String apiUrl;
   private final String wikiUrl;
   private final ComponentOrientation componentOrientation;
-  private final Properties configuration;
+  private final Properties configuration; // TODO : variables locales à la fonction initConfiguration
 
   private String helpUrl;
   private String helpPage;
@@ -440,8 +440,18 @@ public enum EnumWikipedia {
   /**
    * @return Configuration page.
    */
-  public String getConfiguationPage() {
-    return configPage;
+  public String getConfigurationPage() {
+    return getUserConfigurationPage("NicoV");
+  }
+
+  /**
+   * @param userName User name.
+   * @return Configuration page.
+   */
+  public String getUserConfigurationPage(String userName) {
+    Namespace userNamespace = Namespace.getNamespace(Namespace.USER, namespaces);
+    String userPrefix = (userNamespace != null) ? userNamespace.getTitle() : "User";
+    return userPrefix + ":" + userName + "/" + configPage;
   }
 
   /**
@@ -1201,6 +1211,48 @@ public enum EnumWikipedia {
       tmp = configuration.getProperty("check_wiki_translation_page", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         checkWikiTranslation = tmp.trim();
+      }
+    }
+  }
+
+  /**
+   * @param config User configuration (page contents)
+   */
+  public void initUserConfiguration(String config) {
+    // Load configuration
+    Properties userConfiguration = new Properties();
+    if (config != null) {
+      BufferedReader reader = null;
+      try {
+        reader = new BufferedReader(new StringReader(config));
+        while (getNextParameter(userConfiguration, reader)) {
+          //
+        }
+      } catch (IOException e) {
+        //
+      }
+    }
+
+    // Analyze configuration
+    if (userConfiguration != null) {
+      String tmp;
+
+      // Disambiguation comment
+      tmp = configuration.getProperty("dab_comment", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        disambiguationText = tmp.trim();
+      }
+
+      // Disambiguation warning comment
+      tmp = configuration.getProperty("dab_warning_comment", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        disambiguationWarningComment = tmp.trim();
+      }
+
+      // Disambiguation warning comment done
+      tmp = configuration.getProperty("dab_warning_comment_done", null);
+      if ((tmp != null) && (tmp.trim().length() > 0)) {
+        disambiguationWarningCommentDone = tmp.trim();
       }
     }
   }

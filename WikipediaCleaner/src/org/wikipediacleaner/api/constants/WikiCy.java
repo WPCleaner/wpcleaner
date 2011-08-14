@@ -37,5 +37,5 @@ class WikiCy {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String configuration = "Defnyddiwr:NicoV/WikiCleanerConfiguration";
+  final static String configuration = "WikiCleanerConfiguration";
 }

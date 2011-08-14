@@ -61,9 +61,11 @@ public interface API {
    * Load Wikipedia configuration.
    * 
    * @param wikipedia Wikipedia.
+   * @param userName User name.
    */
   public void loadConfiguration(
-      EnumWikipedia wikipedia) throws APIException;
+      EnumWikipedia wikipedia,
+      String userName) throws APIException;
 
   /**
    * Logout.

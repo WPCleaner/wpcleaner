@@ -37,5 +37,5 @@ class WikiFy {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String configuration = "Meidogger:NicoV/WikiCleanerConfiguration";
+  final static String configuration = "WikiCleanerConfiguration";
 }

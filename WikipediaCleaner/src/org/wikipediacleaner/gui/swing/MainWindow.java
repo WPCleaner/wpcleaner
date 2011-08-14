@@ -958,7 +958,7 @@ public class MainWindow
   private void actionOptionsSystem() {
     if (Utilities.isDesktopSupported()) {
       EnumWikipedia wikipedia = getWikipedia();
-      Utilities.browseURL(wikipedia, wikipedia.getConfiguationPage(), true);
+      Utilities.browseURL(wikipedia, wikipedia.getConfigurationPage(), true);
     } else {
       displayUrlMessage(
           GT._("You can learn how to configure WikiCleaner at the following URL:"),
@@ -1428,7 +1428,7 @@ public class MainWindow
 
         // Load configuration
         setText(GT._("Loading configuration"));
-        api.loadConfiguration(getWikipedia());
+        api.loadConfiguration(getWikipedia(), username);
 
         // Saving settings
         Configuration configuration = Configuration.getConfiguration();

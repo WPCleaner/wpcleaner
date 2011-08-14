@@ -37,5 +37,5 @@ class WikiRu {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String configuration = "Участник:NicoV/WikiCleanerConfiguration";
+  final static String configuration = "WikiCleanerConfiguration";
 }

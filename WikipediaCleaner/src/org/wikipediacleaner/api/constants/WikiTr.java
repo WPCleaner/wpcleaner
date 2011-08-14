@@ -37,5 +37,5 @@ class WikiTr {
 
   final static ComponentOrientation orientation = ComponentOrientation.LEFT_TO_RIGHT;
 
-  final static String configuration = "Kullanıcı:NicoV/WikiCleanerConfiguration";
+  final static String configuration = "WikiCleanerConfiguration";
 }
