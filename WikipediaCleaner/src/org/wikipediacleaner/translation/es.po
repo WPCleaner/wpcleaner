@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-08-02 21:05+0200\n"
-"PO-Revision-Date: 2011-08-26 01:22+0000\n"
-"Last-Translator: Fitoschido <fitoschido@gmail.com>\n"
+"PO-Revision-Date: 2011-08-29 19:00+0000\n"
+"Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-08-26 04:00+0000\n"
-"X-Generator: Launchpad (build 13779)\n"
+"X-Launchpad-Export-Date: 2011-09-01 03:44+0000\n"
+"X-Generator: Launchpad (build 13827)\n"
 "X-Poedit-Language: Spanish\n"
 
 #: org/wikipediacleaner/Version.java:37
@@ -47,10 +47,13 @@ msgid ""
 "Fixing errors detected by the Check Wiki project, in the full analysis "
 "window."
 msgstr ""
+"Reparando errores detectados por el proyecto CheckWikipedia, en la ventana "
+"de análisis completo."
 
 #: org/wikipediacleaner/Version.java:47
 msgid "Fixing orthograph or typography based on a list of suggestions."
 msgstr ""
+"Reparando ortografía o tipografía basado en una lista de sugerencias."
 
 #: org/wikipediacleaner/Version.java:50
 msgid "Please, report any other problem you find to me."
@@ -70,7 +73,7 @@ msgstr "Actualizando página {0}"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:100
 #, java-format
 msgid "Error {0} detected: Waiting and retrying"
-msgstr ""
+msgstr "Error {0} detectado: Esperando y reintentando"
 
 #: org/wikipediacleaner/api/check/CheckError.java:244
 #, java-format
@@ -151,7 +154,7 @@ msgstr "Añadir una descripción.."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:102
 msgid "What description would like to use for the image ?"
-msgstr ""
+msgstr "¿Qué descripción le gustaría usar para la imagen?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:105
 msgid "Add an alternate description..."
@@ -278,7 +281,7 @@ msgstr "¿Qué nombre le gustaría usar para la etiqueta <ref>?"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm502.java:85
 #, java-format
 msgid "Remove {0} namespace from template name"
-msgstr ""
+msgstr "Quitar el espacio de nombres {0} del nombre de la plantilla"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:251
 msgid "Title of the article describing this type of error"
@@ -1049,6 +1052,9 @@ msgid ""
 "Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
+"No existe un listado de páginas que contienen los enlaces de desambiguación "
+"para esta Wikipedia.\n"
+"Puede aprender a configurar Wikicleaner en el siguiente enlace:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1213
 msgid "Pages with many disambiguation links"
@@ -1108,7 +1114,7 @@ msgstr "Recuperando plantillas de desambiguación"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1459
 msgid "Retrieving suggestions for text replacements"
-msgstr ""
+msgstr "Obteniendo sugerencias para el reemplazo de texto"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1465
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1489
@@ -1696,15 +1702,15 @@ msgstr "Cerrar esta solapa"
 
 #: org/wikipediacleaner/gui/swing/component/MWPane.java:911
 msgid "Decrement title level"
-msgstr ""
+msgstr "Rebajar nivel de título"
 
 #: org/wikipediacleaner/gui/swing/component/MWPane.java:917
 msgid "Increment title level"
-msgstr ""
+msgstr "Aumentar nivel de título"
 
 #: org/wikipediacleaner/gui/swing/component/MWPane.java:923
 msgid "Validate the new table of contents"
-msgstr ""
+msgstr "Validar la nueva tabla de contenidos"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:232
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:265
@@ -2062,7 +2068,7 @@ msgstr "Subrayado"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:409
 msgid "Strike through"
-msgstr ""
+msgstr "Tachar"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:417
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:422
@@ -2210,6 +2216,9 @@ msgid ""
 "analysis.\n"
 "Do you want to display the list of all disambiguation pages ?"
 msgstr ""
+"Se ha cargado el listado de páginas de desambiguación para acelerar su "
+"análisis.\n"
+"¿Desea ver la lista completa de todas las páginas de desambiguación?"
 
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:59
 msgid "Getting random page"
@@ -2303,12 +2312,13 @@ msgstr ""
 
 #: org/wikipediacleaner/utils/StringCheckerReferenceName.java:70
 msgid "A reference name cannot be a numeric key"
-msgstr ""
+msgstr "El nombre de referencia no puede ser numérica"
 
 #: org/wikipediacleaner/utils/StringCheckerReferenceName.java:73
 #, java-format
 msgid "A reference name cannot contain any of these characters: {0}"
 msgstr ""
+"El nombre de referencia no puede tener cualquiera de estos caracteres {0}"
 
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
