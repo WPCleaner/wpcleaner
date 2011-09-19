@@ -61,6 +61,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
     { "&eacute;", "é" },
     { "&ecirc;" , "ê" },
     { "&egrave;", "è" },
+    { "&euro;"  , "€" },
 
     { "&hellip;", "…" },
 
@@ -83,6 +84,8 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
     { "&Omega;" , "Ω" },
     { "&omega;" , "ω" },
     { "&ouml;"  , "ö" },
+
+    { "&pound;" , "£" },
 
     { "&quot;"  , "\"" },
 
