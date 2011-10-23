@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-08-02 21:05+0200\n"
-"PO-Revision-Date: 2011-08-29 19:00+0000\n"
-"Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
+"PO-Revision-Date: 2011-10-19 02:32+0000\n"
+"Last-Translator: Rogelio Meza Torres <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-09-01 03:44+0000\n"
-"X-Generator: Launchpad (build 13827)\n"
+"X-Launchpad-Export-Date: 2011-10-23 06:08+0000\n"
+"X-Generator: Launchpad (build 14170)\n"
 "X-Poedit-Language: Spanish\n"
 
 #: org/wikipediacleaner/Version.java:37
@@ -145,7 +145,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:126
 #, java-format
 msgid "The preferred name to use for replacing {0}"
-msgstr ""
+msgstr "El nombre preferido para reemplazar {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:99
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:102
@@ -162,7 +162,7 @@ msgstr "Añadir una descripción alternativa..."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:108
 msgid "What alternate description would like to use for the image ?"
-msgstr ""
+msgstr "¿Qué descripción alternativa le gustaría usar para la imagen?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:113
 msgid "View image"
@@ -2322,4 +2322,4 @@ msgstr ""
 
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
-msgstr ""
+msgstr "El valor no contiene ninguno de estos caractéres: {0}"
