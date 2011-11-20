@@ -23,6 +23,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -57,10 +58,18 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    Collection<PageElementTemplate> templates = pageAnalysis.getTemplates();
+    if (templates == null) {
+      return false;
+    }
     boolean result = false;
-    result |= simpleTextSearch(pageAnalysis, errors, Character.toString((char) 0xFEFF), " ");
-    result |= simpleTextSearch(pageAnalysis, errors, Character.toString((char) 0x200E), " ");
-    result |= simpleTextSearch(pageAnalysis, errors, Character.toString((char) 0x200B), " ");
+    for (PageElementTemplate template : templates) {
+      int begin = template.getBeginIndex();
+      int end = template.getEndIndex();
+      result |= simpleTextSearch(pageAnalysis, begin, end, errors, Character.toString((char) 0xFEFF), " ");
+      result |= simpleTextSearch(pageAnalysis, begin, end, errors, Character.toString((char) 0x200E), " ");
+      result |= simpleTextSearch(pageAnalysis, begin, end, errors, Character.toString((char) 0x200B), " ");
+    }
     return result;
   }
 

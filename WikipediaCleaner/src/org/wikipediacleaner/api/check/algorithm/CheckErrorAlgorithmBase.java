@@ -370,6 +370,26 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * Search for simple text in page.
    * 
    * @param pageAnalysis Page analysis.
+   * @param begin Index in text to begin search.
+   * @param end Index in text to end search.
+   * @param errors Errors found in the page.
+   * @param search Text to be searched.
+   * @param replacement Text proposed as a replacement.
+   * @return Flag indicating if the error was found.
+   */
+  protected boolean simpleTextSearch(
+      PageAnalysis pageAnalysis, int begin, int end,
+      Collection<CheckErrorResult> errors,
+      String search, String replacement) {
+    return simpleTextSearch(
+        pageAnalysis, begin, end, errors, search,
+        (replacement != null) ? new String[] { replacement } : null);
+  }
+
+  /**
+   * Search for simple text in page.
+   * 
+   * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
    * @param search Text to be searched.
    * @param replacements Texts proposed as a replacement.
@@ -378,12 +398,33 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   protected boolean simpleTextSearch(
       PageAnalysis pageAnalysis, Collection<CheckErrorResult> errors,
       String search, String[] replacements) {
-    int startIndex = 0;
+    String contents = pageAnalysis.getContents();
+    return simpleTextSearch(
+        pageAnalysis, 0, contents.length(),
+        errors, search, replacements);
+  }
+
+  /**
+   * Search for simple text in page.
+   * 
+   * @param pageAnalysis Page analysis.
+   * @param begin Index in text to begin search.
+   * @param end Index in text to end search.
+   * @param errors Errors found in the page.
+   * @param search Text to be searched.
+   * @param replacements Texts proposed as a replacement.
+   * @return Flag indicating if the error was found.
+   */
+  protected boolean simpleTextSearch(
+      PageAnalysis pageAnalysis, int begin, int end,
+      Collection<CheckErrorResult> errors,
+      String search, String[] replacements) {
+    int startIndex = begin;
     boolean result = false;
     String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
+    while ((startIndex < contents.length()) && (startIndex < end)) {
       startIndex = contents.indexOf(search, startIndex);
-      if (startIndex >= 0) {
+      if ((startIndex >= 0) && (startIndex < end)) {
         if (errors == null) {
           return true;
         }
