@@ -55,6 +55,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
     { "&copy;"  , "©" },
     { "&cup;"   , "∪" },
 
+    { "&darr;"  , "↓" },
     { "&deg;"   , "°" },
 
     { "&Eacute;", "É" },
@@ -101,6 +102,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
     { "&thinsp;", " " },
     { "&times;" , "×" },
 
+    { "&uarr;"  , "↑" },
     { "&ucirc;" , "û" },
     { "&Uuml;"  , "Ü" },
     { "&uuml;"  , "ü" },
