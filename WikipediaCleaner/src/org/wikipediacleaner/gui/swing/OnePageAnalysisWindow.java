@@ -778,6 +778,23 @@ public class OnePageAnalysisWindow extends OnePageWindow {
 
     if (firstReload) {
       firstReload = false;
+
+      // Check page contents
+      Page pageLoaded = getPage();
+      if ((pageLoaded != null) &&
+          (Boolean.FALSE.equals(pageLoaded.isExisting()))) {
+        int answer = Utilities.displayYesNoWarning(
+            getParentComponent(),
+            GT._(
+                "Page {0} doesn''t exist, do you still want to analyze it ?",
+                pageLoaded.getTitle()));
+        if (answer != JOptionPane.YES_OPTION) {
+          dispose();
+          return;
+        }
+      }
+
+      // Configuration depending on the type of page
       boolean isArticle = (getPage() != null) && (getPage().isArticle());
       if (isArticle) {
         Configuration config = Configuration.getConfiguration();
