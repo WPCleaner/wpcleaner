@@ -1238,19 +1238,19 @@ public enum EnumWikipedia {
       String tmp;
 
       // Disambiguation comment
-      tmp = configuration.getProperty("dab_comment", null);
+      tmp = userConfiguration.getProperty("dab_comment", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         disambiguationText = tmp.trim();
       }
 
       // Disambiguation warning comment
-      tmp = configuration.getProperty("dab_warning_comment", null);
+      tmp = userConfiguration.getProperty("dab_warning_comment", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         disambiguationWarningComment = tmp.trim();
       }
 
       // Disambiguation warning comment done
-      tmp = configuration.getProperty("dab_warning_comment_done", null);
+      tmp = userConfiguration.getProperty("dab_warning_comment_done", null);
       if ((tmp != null) && (tmp.trim().length() > 0)) {
         disambiguationWarningCommentDone = tmp.trim();
       }
