@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-12-06 18:41+0100\n"
-"PO-Revision-Date: 2011-12-06 23:36+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"PO-Revision-Date: 2011-12-18 21:03+0000\n"
+"Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-12-07 10:56+0000\n"
-"X-Generator: Launchpad (build 14443)\n"
+"X-Launchpad-Export-Date: 2011-12-20 10:20+0000\n"
+"X-Generator: Launchpad (build 14538)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -1083,7 +1083,7 @@ msgstr "Pobieranie API MediaWiki"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1430
 msgid "Loading configuration"
-msgstr ""
+msgstr "Ładowanie konfiguracji"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1455
 msgid "Retrieving disambiguation templates"
@@ -1194,7 +1194,7 @@ msgstr "Dodaj do listy obserowanych (Alt + &W)"
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:789
 #, java-format
 msgid "Page {0} doesn''t exist, do you still want to analyze it ?"
-msgstr ""
+msgstr "Strona {0} nie istnieje, nadal masz zamiar ją analizować"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:895
 msgid "Would you like to add these pages on your local Watch list ?"
@@ -2296,46 +2296,3 @@ msgstr "Nazwa przypisu nie może zawierać żadnego z tych znaków: {0}"
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr "Wartość nie może zawierać żadnego z tych znaków: {0}"
-
-#~ msgid "Retrieving disambiguation informations"
-#~ msgstr "Pobieranie informacji o przekierowaniu"
-
-#~ msgid ""
-#~ "You have selected {0} pages.\n"
-#~ "Would you like to analyze the {0} pages ?"
-#~ msgstr ""
-#~ "Wybrano {0} stron.\n"
-#~ "Czy chcesz analizować te {0} stron?"
-
-#~ msgid "&Save password"
-#~ msgstr "&Zapisz hasło"
-
-#~ msgid "&Help"
-#~ msgstr "Pomo&c"
-
-#~ msgid "Work"
-#~ msgstr "Praca"
-
-#~ msgid "&Random page"
-#~ msgstr "&Losowa strona"
-
-#~ msgid "Retrieving namespaces"
-#~ msgstr "Pobieranie przestrzeni nazw"
-
-#~ msgid "There's no known list of disambiguation pages for this Wikipedia."
-#~ msgstr "Brak znanej listy stron ujednoznaczniających dla tej Wikipedii."
-
-#~ msgid "&Add page"
-#~ msgstr "&Dodaj stronę"
-
-#~ msgid "&Update page information"
-#~ msgstr "&Zaktualizuj informacje o stronie"
-
-#~ msgid "&Remove page"
-#~ msgstr "&Usuń stronę"
-
-#~ msgid "Set page &comments"
-#~ msgstr "Ustaw &komentarze strony"
-
-#~ msgid "Informations"
-#~ msgstr "Informacje"
