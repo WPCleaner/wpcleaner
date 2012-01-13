@@ -138,9 +138,11 @@ public class MWPaneDisambiguationPopupListener extends MWPanePopupListener {
     MenuCreator.addMarkAsNeedingHelpToMenu(getWikipedia(), popup, page, text, element, textPane, chk);
     MenuCreator.addLinkTextToMenu(getWikipedia(), popup, page, text, element, textPane);
     popup.add(new JSeparator());
-    JMenuItem menuItem = new JMenuItem(page.getTitle());
-    menuItem.setEnabled(false);
-    popup.add(menuItem);
+    if (page != null) {
+      JMenuItem menuItem = new JMenuItem(page.getTitle());
+      menuItem.setEnabled(false);
+      popup.add(menuItem);
+    }
     MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
     popup.add(new JSeparator());
     MenuCreator.addAnalyzeToMenu(getWikipedia(), popup, page);

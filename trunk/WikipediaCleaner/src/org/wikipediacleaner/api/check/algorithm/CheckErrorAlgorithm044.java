@@ -61,12 +61,10 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
         // Check if the = is the beginning of a title
         int endLineIndex = contents.indexOf("\n", titleIndex);
         if ((titleIndex == 0) || (contents.charAt(titleIndex - 1) == '\n')) {
-          int titleLevel = 0;
           int currentBegin = titleIndex;
           // Reading the = at the beginning of the title
           while ((currentBegin < contents.length()) && (contents.charAt(currentBegin) == '=')) {
             currentBegin++;
-            titleLevel++;
           }
           if (endLineIndex < 0) {
             endLineIndex = contents.length();

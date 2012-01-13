@@ -57,12 +57,10 @@ public class CheckErrorAlgorithm057 extends CheckErrorAlgorithmBase {
       } else {
         int endLineIndex = contents.indexOf("\n", titleIndex);
         if ((titleIndex == 0) || (contents.charAt(titleIndex - 1) == '\n')) {
-          int titleLevel = 0;
           int currentBegin = titleIndex;
           // Reading the = at the beginning of the title
           while ((currentBegin < contents.length()) && (contents.charAt(currentBegin) == '=')) {
             currentBegin++;
-            titleLevel++;
           }
           if (endLineIndex < 0) {
             endLineIndex = contents.length();
