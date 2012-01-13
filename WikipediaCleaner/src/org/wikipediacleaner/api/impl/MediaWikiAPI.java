@@ -241,7 +241,7 @@ public class MediaWikiAPI implements API {
       if (parameters != null) {
         method.addParameters(parameters);
       }
-      if (DEBUG_URL) {
+      if (DEBUG_URL && (debugUrl != null)) {
         if (parameters != null) {
           for (int i = 0; i < parameters.length; i++) {
             debugUrl.append(
@@ -292,7 +292,7 @@ public class MediaWikiAPI implements API {
       GetMethod method = new GetMethod(url);
       method.getParams().setContentCharset("UTF-8");
       method.setRequestHeader("Accept-Encoding", "gzip");
-      if (DEBUG_URL) {
+      if (DEBUG_URL && (debugUrl != null)) {
         debugText(debugUrl.toString());
       }
       HttpClient toolClient = new HttpClient(new MultiThreadedHttpConnectionManager());
@@ -2064,7 +2064,7 @@ public class MediaWikiAPI implements API {
         String key = property.getKey();
         String value = property.getValue();
         method.addParameter(key, value);
-        if (DEBUG_URL) {
+        if (DEBUG_URL && (debugUrl != null)) {
           int start = 0;
           while ((start < value.length()) && Character.isWhitespace(value.charAt(start))) {
             start++;
@@ -2079,7 +2079,7 @@ public class MediaWikiAPI implements API {
           first = false;
         }
       }
-      if (DEBUG_URL) {
+      if (DEBUG_URL && (debugUrl != null)) {
         debugText(debugUrl.toString());
       }
     }

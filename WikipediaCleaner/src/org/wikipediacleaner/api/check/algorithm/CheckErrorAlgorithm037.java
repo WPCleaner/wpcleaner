@@ -63,28 +63,13 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     // Analyzing title to find special characters
     String title = pageAnalysis.getPage().getTitle();
     boolean characterFound = false;
-    String unknownCharacters = "";
-    String text = "";
     int currentPos = 0;
     while (currentPos < title.length()) {
-      boolean error = false;
       char character = title.charAt(currentPos);
       if (!SpecialCharacters.isAuthorized(character, pageAnalysis.getWikipedia())) {
         if (currentPos < 3) { // TODO : Parameter
           characterFound = true;
         }
-        error = true;
-      }
-      if (error) {
-        String newCharacter = SpecialCharacters.proposeReplacement(character);
-        if (!Character.toString(character).equals(newCharacter)) {
-          //
-        } else {
-          unknownCharacters += character;
-        }
-        text += newCharacter;
-      } else {
-        text += character;
       }
       currentPos++;
     }
