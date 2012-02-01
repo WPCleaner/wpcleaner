@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-12-06 18:41+0100\n"
-"PO-Revision-Date: 2011-12-07 10:52+0000\n"
+"PO-Revision-Date: 2012-02-01 08:19+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-12-07 10:56+0000\n"
-"X-Generator: Launchpad (build 14443)\n"
+"X-Launchpad-Export-Date: 2012-02-01 08:20+0000\n"
+"X-Generator: Launchpad (build 14738)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -820,7 +820,7 @@ msgstr "&Mot de passe :"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:432
 msgid "&Login"
-msgstr "Connection"
+msgstr "Connexion"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:437
 msgid "&Demo"
@@ -828,7 +828,7 @@ msgstr "&Démo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:442
 msgid "L&ogout"
-msgstr "Déconnection"
+msgstr "Déconnexion"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:458
 msgid "Help (Alt + &H)"
@@ -2336,198 +2336,3 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr "Une valeur ne peut pas contenir les caractères suivants : {0}"
-
-#~ msgid ""
-#~ "You have selected {0} pages.\n"
-#~ "Would you like to analyze the {0} pages ?"
-#~ msgstr ""
-#~ "Vous avez sélectionné {0} pages.\n"
-#~ "Voulez-vous analyser les {0} pages ?"
-
-#~ msgid "&Help"
-#~ msgstr "&Aide"
-
-#~ msgid "&Random page"
-#~ msgstr "Page &aléatoire"
-
-#~ msgid "&Add page"
-#~ msgstr "Ajouter une page"
-
-#~ msgid "&Remove page"
-#~ msgstr "Supprimer la page"
-
-#~ msgid "Retrieving namespaces"
-#~ msgstr "Récupération des espaces de nom"
-
-#~ msgid "&Update page information"
-#~ msgstr "&Mise à jour des informations"
-
-#~ msgid "Informations"
-#~ msgstr "Informations"
-
-#~ msgid "Error n°{0} ({1}) - {2}"
-#~ msgstr "Erreur n°{0} ({1}) - {2}"
-
-#~ msgid "Square brackets not correct end"
-#~ msgstr "Lien interne mal fermé"
-
-#~ msgid "Headlines start with one \"=\""
-#~ msgstr "Titre de niveau 1 commençant par un seul « = »"
-
-#~ msgid "Article with false <br/>"
-#~ msgstr "Syntaxe erronée de saut de ligne"
-
-#~ msgid "Double pipe in one link"
-#~ msgstr "Lien interne avec deux barres verticales"
-
-#~ msgid "Template programming element"
-#~ msgstr "Éléments de programmation de modèles"
-
-#~ msgid "Template not correct end"
-#~ msgstr "Modèle mal fermé"
-
-#~ msgid "Square brackets not correct begin"
-#~ msgstr "Lien interne mal ouvert"
-
-#~ msgid "Template not correct begin"
-#~ msgstr "Modèle mal ouvert"
-
-#~ msgid "Title linked in text"
-#~ msgstr "Lien interne vers le titre de l'article"
-
-#~ msgid "Headline should end with \"=\""
-#~ msgstr "Titre de section ne finissant pas par « = »"
-
-#~ msgid "External link with line break"
-#~ msgstr "Lien externe comprenant un saut de ligne"
-
-#~ msgid "Reference duplication"
-#~ msgstr "Référence en double"
-
-#~ msgid "Load full list"
-#~ msgstr "Charger la liste complète"
-
-#~ msgid "Show full list"
-#~ msgstr "Montrer la liste complète"
-
-#~ msgid "Selected page"
-#~ msgstr "Page sélectionnée"
-
-#~ msgid "HTML text style element <b>"
-#~ msgstr "Style HTML <b>"
-
-#~ msgid "HTML text style element <i>"
-#~ msgstr "Style HTML <i>"
-
-#~ msgid "HTML text style element <p>"
-#~ msgstr "Style HTML <p>"
-
-#~ msgid "This screen is not functional yet !"
-#~ msgstr "Cet écran n'est pas encore fonctionnel !"
-
-#~ msgid "Detection by [["
-#~ msgstr "Détecter par [["
-
-#~ msgid "]]"
-#~ msgstr "]]"
-
-#~ msgid "There's no known list of disambiguation pages for this Wikipedia."
-#~ msgstr "Il n'ya pas de liste de pages d'homonymie sur cette Wikipédia."
-
-#~ msgid "There's no known Check Wikipedia Project for this Wikipedia."
-#~ msgstr ""
-#~ "Il n’y a pas de projet de correction syntaxique connu sur cette Wikipédia"
-
-#~ msgid "Replace parameter {0} with"
-#~ msgstr "Remplacer le paramètre {0} par"
-
-#~ msgid "Last modified: "
-#~ msgstr "Dernière modification : "
-
-#~ msgid "Error 'badtoken' detected: Retrying"
-#~ msgstr "Erreur « badtoken » détectée : nouvelle tentative"
-
-#~ msgid "Work"
-#~ msgstr "Travail"
-
-#~ msgid "Set page &comments"
-#~ msgstr "Régler les &commentaires de la page"
-
-#~ msgid ""
-#~ "The error n°{0} is still found {1} times in the page.\n"
-#~ "You must fix them and save the page before marking it as fixed."
-#~ msgstr ""
-#~ "L’erreur n° {0} est encore {1} fois dans l’article.\n"
-#~ "La modification doit être sauvegardée avant d’être marquée comme corrigée."
-
-#~ msgid "Existing references"
-#~ msgstr "Références existantes"
-
-#~ msgid "all errors"
-#~ msgstr "toutes les erreurs"
-
-#~ msgid "only"
-#~ msgstr "seulement"
-
-#~ msgid "Load"
-#~ msgstr "Charger"
-
-#~ msgid "S&ystem Options"
-#~ msgstr "&Options système"
-
-#~ msgid "except"
-#~ msgstr "excepté"
-
-#~ msgid "Comma separated list of errors to ignore."
-#~ msgstr ""
-#~ "Liste des numéros d'erreurs à ignorer séparés d'une virgule (par ex. 17, 46, "
-#~ "53)."
-
-#~ msgid "Comma separated list of errors to work on."
-#~ msgstr ""
-#~ "Liste des numéros d'erreurs à analyser séparés d'une virgule (par ex. 17, "
-#~ "46, 53)."
-
-#~ msgid "Many new features added for the Check Wiki project : try them !"
-#~ msgstr ""
-#~ "Essayez les nouvelles fonctionnalités pour le projet Correction syntaxique !"
-
-#~ msgid ""
-#~ "!NEW! - WikiCleaner configuration is now available online, check the System "
-#~ "configuration."
-#~ msgstr ""
-#~ "NOUVEAU — La configuration de WikiCleaner est disponible en ligne, regardez "
-#~ "les Options systèmes."
-
-#~ msgid "Detection by [[{0}]]"
-#~ msgstr "projet [[{0}|correction syntaxique]]"
-
-#~ msgid "&Save password"
-#~ msgstr "&Sauvegarder le mot de passe"
-
-#~ msgid "Warning for disambiguation links"
-#~ msgstr "Avertissement pour les liens d'homonymie"
-
-#~ msgid "Updating disambiguation warning on talk page"
-#~ msgstr "Mise à jour l'avertissement homonymie en page de discussion"
-
-#~ msgid "Retrieving first section contents - {0}"
-#~ msgstr "Récupération du contenu de la première section - {0}"
-
-#~ msgid "Many new features added for the {0}Check Wiki project{1} : try them !"
-#~ msgstr ""
-#~ "Beaucoup de nouvelles fonctions ont été ajoutées pour le {0}projet "
-#~ "Correction Syntaxique{1} : essayez-les !"
-
-#~ msgid "Error 'readonly' detected: Waiting and retrying"
-#~ msgstr "Erreur « readonly » détectée : attente puis nouvelle tentative"
-
-#~ msgid ""
-#~ "You have loaded the list of all disambiguation pages.\n"
-#~ "Do you want to use it to speed up page analysis ?"
-#~ msgstr ""
-#~ "Vous avez chargé la liste de toutes les pages d’homonymie.\n"
-#~ "Voulez-vous l’utiliser pour accélérer l’analyse de pages ?"
-
-#~ msgid "Retrieving disambiguation informations"
-#~ msgstr "Récupération des informations d’homonymie"
