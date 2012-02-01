@@ -258,7 +258,7 @@
     <if>
       <istrue value="${do.create.pot}" />
       <then>
-        <echo message="Generating WikiCleaner.pot (gettext PO-template) file in ${WikiCleaner.po.dir} ..."/>
+        <echo message="Generating WikiCleaner.pot (gettext PO-template) file in ${WikiCleaner.po.dir} ..." level="info"/>
         <delete file="${WikiCleaner.po.dir}/tstamp.WikiCleaner.pot_"/>
         <!-- generate new WikiCleaner.pot -->
         <mkdir dir="${WikiCleaner.po.dir}/tmp"/>
@@ -353,7 +353,7 @@
   <target name="update-po-lang"
           depends="check-uptodate-po"
           if="exist_msgmerge" unless="uptodate-po-${WikiCleaner_lang_value}">
-    <echo message="Updating wikicleaner-${WikiCleaner_lang_value}.po gettext file for WikiCleaner ..."/>
+    <echo message="Updating wikicleaner-${WikiCleaner_lang_value}.po gettext file for WikiCleaner ..." level="info"/>
     <delete file="${WikiCleaner.po.dir}/tstamp.${WikiCleaner_lang_value}.po_"/>
     <exec executable="${gettext.msgmerge}" dir="${basedir}/${WikiCleaner.po.dir}">
       <arg line="-U ${WikiCleaner_lang_value}.po WikiCleaner.pot"/>
@@ -389,7 +389,7 @@
   <target name="update-catalog-lang"
           depends="check-uptodate-catalog"
           if="exist_msgfmt" unless="uptodate-catalog-${WikiCleaner_lang_value}">
-    <echo message="Updating messages_${WikiCleaner_lang_value}.class file for Wiki Cleaner ..."/>
+    <echo message="Updating messages_${WikiCleaner_lang_value}.class file for Wiki Cleaner ..." level="info"/>
     <exec executable="${gettext.msgfmt}" dir="${basedir}/${WikiCleaner.po.dir}">
       <arg value="--statistics"/>
       <arg value="--java2"/>

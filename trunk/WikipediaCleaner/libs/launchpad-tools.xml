@@ -9,7 +9,7 @@
 
     <!-- Extract launchpad export -->
     <input message="What is the path to launchpad export files ?"
-           defaultvalue="D:/Temp"
+           defaultvalue="C:/Users/Nicolas/Downloads"
            addproperty="launchpad.export.files" />
     <mkdir dir="${build.dir}" />
     <move todir="${build.dir}" includeemptydirs="false">
