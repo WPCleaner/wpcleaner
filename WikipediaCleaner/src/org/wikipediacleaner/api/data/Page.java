@@ -535,6 +535,14 @@ public class Page implements Comparable<Page> {
   }
 
   /**
+   * @return Flag indicating if the page is in the user namespace.
+   */
+  public boolean isInUserNamespace() {
+    return (namespace != null) &&
+        ((namespace.intValue() == Namespace.USER) || (namespace.intValue() == Namespace.USER_TALK));
+  }
+
+  /**
    * @param namespaces List of namespaces.
    * @return Article page.
    */

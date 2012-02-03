@@ -47,6 +47,7 @@ public enum ConfigurationValueBoolean {
   DEBUG_TIME("DebugTime", false),
   DEBUG_URL("DebugURL", true),
   DEBUG_XML("DebugXML", false),
+  IGNORE_DAB_USER_NS("IgnoreDabUserNS", false),
   FORCE_WATCH("ForceWatch", false),
   ORTHOGRAPH("Orthograph", true),
   REMEMBER_LAST_PAGE("RememberLastPage", true),
