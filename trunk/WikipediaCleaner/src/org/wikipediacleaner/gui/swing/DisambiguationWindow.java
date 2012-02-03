@@ -72,6 +72,7 @@ import org.wikipediacleaner.gui.swing.worker.DisambiguationAnalysisWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
@@ -521,6 +522,14 @@ public class DisambiguationWindow extends OnePageWindow {
     popupListenerLinks.setPage(page);
     popupListenerLinks.setBackLinksProperties(backlinksProperties);
     List<Page> links = page.getBackLinksWithRedirects();
+    if (config.getBoolean(null, ConfigurationValueBoolean.IGNORE_DAB_USER_NS)) {
+      links = new ArrayList<Page>(links);
+      for (int i = links.size(); i > 0; i--) {
+        if (links.get(i - 1).isInUserNamespace()) {
+          links.remove(i - 1);
+        }
+      }
+    }
     modelLinks.setElements(links);
     Integer countMain = page.getBacklinksCountInMainNamespace();
     Integer countTotal = page.getBacklinksCount();

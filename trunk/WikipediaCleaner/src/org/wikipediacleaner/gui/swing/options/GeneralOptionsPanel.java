@@ -96,6 +96,15 @@ public class GeneralOptionsPanel extends OptionsPanel {
     add(chk, constraints);
     constraints.gridy++;
 
+    // Ignore disambiguation links from User NS
+    chk = createJCheckBox(
+        GT._("Ignore disambiguation links from User namespace"),
+        ConfigurationValueBoolean.IGNORE_DAB_USER_NS);
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(chk, constraints);
+    constraints.gridy++;
+
     // Restore window position
     chk = createJCheckBox(
         GT._("Restore window position"),
