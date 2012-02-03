@@ -24,6 +24,11 @@ package org.wikipediacleaner.utils;
  */
 public final class ConfigurationConstants {
 
+  // Constants for value PLAF_TYPE
+  public  final static int VALUE_PLAF_TYPE_SYSTEM    = 1;
+  public  final static int VALUE_PLAF_TYPE_USER      = 2;
+  public  final static int VALUE_PLAF_TYPE_WPCLEANER = 0;
+
   // Constants for value SAVE_USER
   public  final static int VALUE_SAVE_USER_BOTH      = 2;
   public  final static int VALUE_SAVE_USER_NAME      = 1;

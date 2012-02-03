@@ -28,6 +28,7 @@ public enum ConfigurationValueString {
 
   PAGE_NAME("PageName", null),
   PASSWORD("Password", null),
+  PLAF_NAME("LookAndFeelName", "Metal"),
   SIGNATURE("Signature", "--~~~~"),
   USER_NAME("UserName", null);
 
