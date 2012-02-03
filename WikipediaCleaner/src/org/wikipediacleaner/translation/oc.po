@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-12-06 18:41+0100\n"
+"POT-Creation-Date: 2012-02-03 19:18+0100\n"
 "PO-Revision-Date: 2011-12-08 06:38+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
@@ -223,9 +223,9 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:153
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page "
-"name>|<param name for code of other language>|<param name for page name in "
-"other language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page name>|"
+"<param name for code of other language>|<param name for page name in other "
+"language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:132
@@ -408,8 +408,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:106
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:638
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:107
@@ -427,8 +426,7 @@ msgid "Update existing disambiguation warning messages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:205
-msgid ""
-"At what page do you wish to start updating the disambiguation warning ?"
+msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:182
@@ -537,7 +535,7 @@ msgid "Delete selection"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:610
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:213
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:219
 msgid "Maximum number of errors for Check Wiki :"
 msgstr ""
 
@@ -940,8 +938,7 @@ msgstr "Vos cal picar lo nom d'una pagina per aviar una analisi complèta"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1064
 msgid "You must input a page name for running a disambiguation analysis"
-msgstr ""
-"Vos cal picar un nom de pagina abans d'efectuar una analisi d'omonimia"
+msgstr "Vos cal picar un nom de pagina abans d'efectuar una analisi d'omonimia"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1087
 msgid "You must input a page name for updating the disambiguation warning"
@@ -971,8 +968,7 @@ msgid "Internal links in {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1142
-msgid ""
-"You must input a page name for retrieving the list of category members"
+msgid "You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1156
@@ -1102,8 +1098,7 @@ msgid "Analysis - {0}"
 msgstr "Analisi - {0}"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:374
-msgid ""
-"Add a warning on the talk page about the links to disambiguation pages"
+msgid "Add a warning on the talk page about the links to disambiguation pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:428
@@ -1301,7 +1296,7 @@ msgid "Create disambiguation warning on talk page"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:843
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:167
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:173
 msgid "Check orthograph and typography"
 msgstr ""
 
@@ -1820,8 +1815,7 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:97
-msgid ""
-"Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:104
@@ -1833,8 +1827,7 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:118
-msgid ""
-"Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:125
@@ -1999,61 +1992,77 @@ msgstr ""
 msgid "Choose background color"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:64
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:70
 msgid "General options"
 msgstr "Opcions generalas"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:86
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:92
 msgid "Close disambiguation window after sending"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:95
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:101
 msgid "Restore window position"
 msgstr "Restablir la posicion de las fenèstras"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:104
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:110
 msgid "Save window position"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:113
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:119
 msgid "Use short notation [[Xxxxx (yyy)|]]"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:122
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:128
 msgid "Use advanced features (experimental)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:131
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:137
 msgid "Display WikiCleaner link in update comments"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:140
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:146
 msgid "Show errors with no detection found"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:149
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:155
 msgid "Add link to error description in comments"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:158
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:164
 msgid "Watch all edited pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:178
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:184
 msgid "Maximum number of items in a menu :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:195
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:201
 msgid "Maximum number of simultaneous analysis :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:230
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:236
 msgid "Maximum number of interrogation threads :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:245
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:251
 msgid "Signature :"
 msgstr "Signatura :"
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:267
+msgid "Look & Feel"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:271
+msgid "Let WPCleaner choose the Look && Feel"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:276
+msgid "Use System Look && Feel"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:281
+msgid "Choose Look && Feel"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:79
 msgid "Options"
@@ -2230,18 +2239,20 @@ msgstr ""
 #~ "This function will do all the replacements in all selected pages.\n"
 #~ "It may modify a lot of pages in a short period of time.\n"
 #~ "On some Wikipedia projects, you may need the bot status for doing this.\n"
-#~ "Please, check if you need the bot status by reading the rules of Wikipedia.\n"
-#~ "Also, verify again the texts you have inputed before running this function.\n"
+#~ "Please, check if you need the bot status by reading the rules of "
+#~ "Wikipedia.\n"
+#~ "Also, verify again the texts you have inputed before running this "
+#~ "function.\n"
 #~ "Do you want to continue ?"
 #~ msgstr ""
 #~ "!!! ATENCION !!!\n"
 #~ "Aquesta foncion efectuarà los remplaçaments dins totas las paginas "
 #~ "seleccionadas.\n"
 #~ "Pòt modificar fòrça paginas en pauc de temps.\n"
-#~ "Sus d'unes projèctes Wikipèdia, pòt èsser necessari d'aver l'estatut de Bòt "
-#~ "per far aquò.\n"
-#~ "Mercés de verificar s'avètz besonh de l'estatut de Bòt en legir las règlas "
-#~ "de Wikipèdia.\n"
+#~ "Sus d'unes projèctes Wikipèdia, pòt èsser necessari d'aver l'estatut de "
+#~ "Bòt per far aquò.\n"
+#~ "Mercés de verificar s'avètz besonh de l'estatut de Bòt en legir las "
+#~ "règlas de Wikipèdia.\n"
 #~ "Mercés tanben de verificar tornamai los tèxtes qu'avètz picats abans "
 #~ "d'executar aquesta foncion.\n"
 #~ "Volètz contunhar ?"

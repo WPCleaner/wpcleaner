@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-12-06 18:41+0100\n"
+"POT-Creation-Date: 2012-02-03 19:18+0100\n"
 "PO-Revision-Date: 2011-10-19 02:32+0000\n"
 "Last-Translator: Rogelio Meza Torres <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -557,7 +557,7 @@ msgid "Delete selection"
 msgstr "Borrar selección"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:610
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:213
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:219
 msgid "Maximum number of errors for Check Wiki :"
 msgstr "Número máximo de errores para Check Wikipedia:"
 
@@ -1361,7 +1361,7 @@ msgid "Create disambiguation warning on talk page"
 msgstr "Crear advertencia de desambiguación en la página de discusión"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:843
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:167
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:173
 msgid "Check orthograph and typography"
 msgstr "Comprobar ortografía y tipografía"
 
@@ -2085,61 +2085,77 @@ msgstr "Color de fondo"
 msgid "Choose background color"
 msgstr "Elija el color de fondo"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:64
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:70
 msgid "General options"
 msgstr "Opciones generales"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:86
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:92
 msgid "Close disambiguation window after sending"
 msgstr "Cerrar ventana de desambiguación tras el envío"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:95
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:101
 msgid "Restore window position"
 msgstr "Restaurar la posición de la ventana"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:104
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:110
 msgid "Save window position"
 msgstr "Guardar posición de la ventana"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:113
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:119
 msgid "Use short notation [[Xxxxx (yyy)|]]"
 msgstr "Usar la notación corta [[Xxxxx (yyy)|]]"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:122
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:128
 msgid "Use advanced features (experimental)"
 msgstr "Usar características avanzadas (experimental)"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:131
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:137
 msgid "Display WikiCleaner link in update comments"
 msgstr "Mostrar enlace de WikiCleaner en los resúmenes de edición"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:140
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:146
 msgid "Show errors with no detection found"
 msgstr "Mostrar errores no encontrados"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:149
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:155
 msgid "Add link to error description in comments"
 msgstr "Añadir un enlace de descripción del error en el resumen de edición"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:158
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:164
 msgid "Watch all edited pages"
 msgstr "Vigilar todas las páginas editadas"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:178
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:184
 msgid "Maximum number of items in a menu :"
 msgstr "Número máximo de items en un menu :"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:195
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:201
 msgid "Maximum number of simultaneous analysis :"
 msgstr "Número máximo de análisis simultáneos:"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:230
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:236
 msgid "Maximum number of interrogation threads :"
 msgstr "Número máximo de hilos de conexión:"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:245
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:251
 msgid "Signature :"
 msgstr "Firma :"
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:267
+msgid "Look & Feel"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:271
+msgid "Let WPCleaner choose the Look && Feel"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:276
+msgid "Use System Look && Feel"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:281
+msgid "Choose Look && Feel"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:79
 msgid "Options"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2011-12-06 18:41+0100\n"
+"POT-Creation-Date: 2012-02-03 19:18+0100\n"
 "PO-Revision-Date: 2011-12-08 06:38+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -226,9 +226,9 @@ msgstr "Externí prohlížeč"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:153
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page "
-"name>|<param name for code of other language>|<param name for page name in "
-"other language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page name>|"
+"<param name for code of other language>|<param name for page name in other "
+"language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:132
@@ -411,8 +411,7 @@ msgstr "Můžou změnit nožství stránek v krátkém čase."
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:106
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:638
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Na některých projektech Wikimedia potřebuješ pro tyto funkce příznak Bot."
 
@@ -432,10 +431,8 @@ msgid "Update existing disambiguation warning messages"
 msgstr "Aktualizovat existující rozcestníkové varování"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:205
-msgid ""
-"At what page do you wish to start updating the disambiguation warning ?"
-msgstr ""
-"Na které stránce chcete zahájit aktualizaci rozcestníkového varování?"
+msgid "At what page do you wish to start updating the disambiguation warning ?"
+msgstr "Na které stránce chcete zahájit aktualizaci rozcestníkového varování?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:182
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:561
@@ -543,7 +540,7 @@ msgid "Delete selection"
 msgstr "Odstranit výběr"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:610
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:213
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:219
 msgid "Maximum number of errors for Check Wiki :"
 msgstr "Maximální počet chyb pro Check Wikipedia:"
 
@@ -933,8 +930,7 @@ msgstr "Než se přihlásíte, musíte zadat heslo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:964
 msgid "You can learn how to configure WikiCleaner at the following URL:"
-msgstr ""
-"Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
+msgstr "Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:999
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
@@ -993,8 +989,7 @@ msgid "Internal links in {0}"
 msgstr "Interní odkazy v {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1142
-msgid ""
-"You must input a page name for retrieving the list of category members"
+msgid "You must input a page name for retrieving the list of category members"
 msgstr "Musíte zadat jméno stránky pro získání seznamu členů kategorie"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1156
@@ -1130,8 +1125,7 @@ msgid "Analysis - {0}"
 msgstr "Analýza - {0}"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:374
-msgid ""
-"Add a warning on the talk page about the links to disambiguation pages"
+msgid "Add a warning on the talk page about the links to disambiguation pages"
 msgstr "Přidat varování na diskuzní stránku ohledně odkazů na rozcestníky"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:428
@@ -1329,7 +1323,7 @@ msgid "Create disambiguation warning on talk page"
 msgstr "Vytvořit rozcestníkové varování na diskuzní stránce"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:843
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:167
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:173
 msgid "Check orthograph and typography"
 msgstr "Ověřit pravopis a typografii"
 
@@ -1865,8 +1859,7 @@ msgstr ""
 "prostoru)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:97
-msgid ""
-"Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 "Vytvořit rozcestníkové varování na diskuzní stránce (v encyklopedických "
 "jmenných prostorech)"
@@ -1884,8 +1877,7 @@ msgstr ""
 "prostoru)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:118
-msgid ""
-"Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 "Aktualizovat rozcestníkové varování na diskuzní stránce (v encyklopedických "
 "jmenných prostorech)"
@@ -2054,61 +2046,77 @@ msgstr ""
 msgid "Choose background color"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:64
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:70
 msgid "General options"
 msgstr "Obecné možnosti"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:86
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:92
 msgid "Close disambiguation window after sending"
 msgstr "Zavřít okno s rozcestníky po odeslání"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:95
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:101
 msgid "Restore window position"
 msgstr "Obnovit pozici okna"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:104
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:110
 msgid "Save window position"
 msgstr "Zapamatovat si pozici okna"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:113
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:119
 msgid "Use short notation [[Xxxxx (yyy)|]]"
 msgstr "Použít zkrácený zápis [[Xxxxx (yyy)|]]"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:122
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:128
 msgid "Use advanced features (experimental)"
 msgstr "Použít pokročilé možnosti (experimentální)"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:131
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:137
 msgid "Display WikiCleaner link in update comments"
 msgstr "Zobrazit v komentáři odkaz na WikiCleaner"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:140
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:146
 msgid "Show errors with no detection found"
 msgstr "Zobrazit nedetekované chyby"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:149
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:155
 msgid "Add link to error description in comments"
 msgstr "Přidat do shrnutí popis chyby"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:158
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:164
 msgid "Watch all edited pages"
 msgstr "Sledovat všechny editované stránky"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:178
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:184
 msgid "Maximum number of items in a menu :"
 msgstr "Maximální počet položek v menu:"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:195
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:201
 msgid "Maximum number of simultaneous analysis :"
 msgstr "Maximální počet současných analýz:"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:230
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:236
 msgid "Maximum number of interrogation threads :"
 msgstr "Maximální počet vláken:"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:245
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:251
 msgid "Signature :"
 msgstr "Podpis:"
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:267
+msgid "Look & Feel"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:271
+msgid "Let WPCleaner choose the Look && Feel"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:276
+msgid "Use System Look && Feel"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:281
+msgid "Choose Look && Feel"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:79
 msgid "Options"
@@ -2394,14 +2402,15 @@ msgstr ""
 
 #~ msgid "Many new features added for the Check Wiki project : try them !"
 #~ msgstr ""
-#~ "Mnoho nových vlastnosti bylo přidáno pro projekt CheckWikipedia, zkuste je!"
+#~ "Mnoho nových vlastnosti bylo přidáno pro projekt CheckWikipedia, zkuste "
+#~ "je!"
 
 #~ msgid ""
-#~ "!NEW! - WikiCleaner configuration is now available online, check the System "
-#~ "configuration."
+#~ "!NEW! - WikiCleaner configuration is now available online, check the "
+#~ "System configuration."
 #~ msgstr ""
-#~ "!NOVINKA! Konfigurace WikiCleaneru je nyní dostupná on-line, nahlédněte do "
-#~ "Systémových možností."
+#~ "!NOVINKA! Konfigurace WikiCleaneru je nyní dostupná on-line, nahlédněte "
+#~ "do Systémových možností."
 
 #~ msgid "Retrieving first section contents - {0}"
 #~ msgstr "Získávám obsahy první sekce - {0}"
@@ -2409,7 +2418,8 @@ msgstr ""
 #~ msgid "Updating disambiguation warning on talk page"
 #~ msgstr "Aktualizuji rozcestníkové varování na diskuzní stránce"
 
-#~ msgid "Many new features added for the {0}Check Wiki project{1} : try them !"
+#~ msgid ""
+#~ "Many new features added for the {0}Check Wiki project{1} : try them !"
 #~ msgstr ""
 #~ "Mnoho nových funkcí bylo přidáno pro projekt {0}Check Wikipedia{1}, "
 #~ "vyzkoušejte je!"

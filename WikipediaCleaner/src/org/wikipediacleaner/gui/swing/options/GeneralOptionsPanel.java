@@ -22,14 +22,20 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
@@ -253,6 +259,39 @@ public class GeneralOptionsPanel extends OptionsPanel {
     constraints.gridx++;
     constraints.weightx = 1;
     add(txt, constraints);
+    constraints.gridy++;
+
+    // Look and Feel
+    JPanel plafPanel = new JPanel();
+    plafPanel.setBorder(BorderFactory.createTitledBorder(
+        BorderFactory.createEtchedBorder(), GT._("Look & Feel")));
+    plafPanel.setLayout(new BoxLayout(plafPanel, BoxLayout.PAGE_AXIS));
+    ButtonGroup plafGroup = new ButtonGroup();
+    JRadioButton radPlafWPCleaner = Utilities.createJRadioButton(
+        GT._("Let WPCleaner choose the Look && Feel"),
+        false);
+    plafPanel.add(radPlafWPCleaner);
+    plafGroup.add(radPlafWPCleaner);
+    JRadioButton radPlafSystem = Utilities.createJRadioButton(
+        GT._("Use System Look && Feel"),
+        false);
+    plafPanel.add(radPlafSystem);
+    plafGroup.add(radPlafSystem);
+    JRadioButton radPlafUser = Utilities.createJRadioButton(
+        GT._("Choose Look && Feel"),
+        false);
+    plafPanel.add(radPlafUser);
+    plafGroup.add(radPlafUser);
+    setButtonGroup(ConfigurationValueInteger.PLAF_TYPE, plafGroup);
+    Vector<String> plaf = new Vector<String>();
+    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+      plaf.add(info.getName());
+    }
+    plafPanel.add(createJComboBox(ConfigurationValueString.PLAF_NAME, plaf));
+    constraints.gridwidth = 3;
+    constraints.gridx = 0;
+    constraints.weightx = 1;
+    add(plafPanel, constraints);
     constraints.gridy++;
 
     // Empty panel

@@ -33,6 +33,7 @@ public enum ConfigurationValueInteger {
   INTERROG_THREAD("InterrogationThreads", 30),
   MAXIMUM_PAGES("MaximumPages", 20),
   MENU_SIZE("MenuSize", 30),
+  PLAF_TYPE("LookAndFeelType", ConfigurationConstants.VALUE_PLAF_TYPE_WPCLEANER),
   SAVE_USER("SaveUser", ConfigurationConstants.VALUE_SAVE_USER_NAME);
 
   /**

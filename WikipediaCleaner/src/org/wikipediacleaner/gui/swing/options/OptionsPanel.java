@@ -19,10 +19,16 @@
 package org.wikipediacleaner.gui.swing.options;
 
 import java.awt.LayoutManager;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Vector;
 import java.util.Map.Entry;
 
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -54,8 +60,8 @@ abstract class OptionsPanel extends JPanel {
   public OptionsPanel(LayoutManager layout) {
     super(layout);
     booleanValues = new HashMap<ConfigurationValueBoolean, JCheckBox>();
-    integerValues = new HashMap<ConfigurationValueInteger, JSpinner>();
-    stringValues = new HashMap<ConfigurationValueString, JTextField>();
+    integerValues = new HashMap<ConfigurationValueInteger, Object>();
+    stringValues = new HashMap<ConfigurationValueString, JComponent>();
   }
 
   // ==========================================================================
@@ -138,7 +144,7 @@ abstract class OptionsPanel extends JPanel {
   /**
    * Map of spinner for each integer property.
    */
-  private final HashMap<ConfigurationValueInteger, JSpinner> integerValues;
+  private final HashMap<ConfigurationValueInteger, Object> integerValues;
 
   /**
    * @param property Integer property.
@@ -162,14 +168,53 @@ abstract class OptionsPanel extends JPanel {
   }
 
   /**
+   * @param property Integer property.
+   */
+  protected void setButtonGroup(
+      ConfigurationValueInteger property,
+      ButtonGroup group) {
+    if ((property == null) || (group == null)) {
+      return;
+    }
+    Configuration config = Configuration.getConfiguration();
+    int value = config.getInt(null, property);
+    integerValues.put(property, group);
+    setButtonGroupSelection(group, value);
+  }
+
+  /**
    * Restore all integer options to their default values.
    */
   private void defaultValuesInteger() {
-    for (Entry<ConfigurationValueInteger, JSpinner> entry : integerValues.entrySet()) {
+    for (Entry<ConfigurationValueInteger, Object> entry : integerValues.entrySet()) {
       if ((entry.getValue() != null) && (entry.getKey() != null)) {
-        SpinnerModel model = entry.getValue().getModel();
-        model.setValue(Integer.valueOf(entry.getKey().getDefaultValue()));
+        if (entry.getValue() instanceof JSpinner) {
+          JSpinner spinner = (JSpinner) entry.getValue();
+          SpinnerModel model = spinner.getModel();
+          model.setValue(Integer.valueOf(entry.getKey().getDefaultValue()));
+        }
+        if (entry.getValue() instanceof ButtonGroup) {
+          ButtonGroup group = (ButtonGroup) entry.getValue();
+          setButtonGroupSelection(group, entry.getKey().getDefaultValue());
+        }
       }
+    }
+  }
+
+  /**
+   * @param group Button group.
+   * @param value Value.
+   */
+  private void setButtonGroupSelection(ButtonGroup group, int value) {
+    if (group == null) {
+      return;
+    }
+    Enumeration<AbstractButton> buttons = group.getElements();
+    int count = 0;
+    while (buttons.hasMoreElements()) {
+      AbstractButton button = buttons.nextElement();
+      group.setSelected(button.getModel(), (count == value));
+      count++;
     }
   }
 
@@ -179,12 +224,27 @@ abstract class OptionsPanel extends JPanel {
   private void applyInteger() {
     Configuration config = Configuration.getConfiguration();
 
-    for (Entry<ConfigurationValueInteger, JSpinner> entry : integerValues.entrySet()) {
+    for (Entry<ConfigurationValueInteger, Object> entry : integerValues.entrySet()) {
       if ((entry.getValue() != null) && (entry.getKey() != null)) {
-        Object value = entry.getValue().getValue();
-        if (value instanceof Integer) {
-          Integer intValue = (Integer) value;
-          config.setInt(null, entry.getKey(), intValue.intValue());
+        if (entry.getValue() instanceof JSpinner) {
+          JSpinner spinner = (JSpinner) entry.getValue();
+          Object value = spinner.getValue();
+          if (value instanceof Integer) {
+            Integer intValue = (Integer) value;
+            config.setInt(null, entry.getKey(), intValue.intValue());
+          }
+        }
+        if (entry.getValue() instanceof ButtonGroup) {
+          ButtonGroup group = (ButtonGroup) entry.getValue();
+          int count = 0;
+          Enumeration<AbstractButton> buttons = group.getElements();
+          while (buttons.hasMoreElements()) {
+            AbstractButton button = buttons.nextElement();
+            if (group.isSelected(button.getModel())) {
+              config.setInt(null, entry.getKey(), count);
+            }
+            count++;
+          }
         }
       }
     }
@@ -197,7 +257,7 @@ abstract class OptionsPanel extends JPanel {
   /**
    * Map of text field for each string property.
    */
-  private final HashMap<ConfigurationValueString, JTextField> stringValues;
+  private final HashMap<ConfigurationValueString, JComponent> stringValues;
 
   /**
    * @param property String property.
@@ -218,13 +278,35 @@ abstract class OptionsPanel extends JPanel {
     return txt;
   }
 
+  protected JComboBox createJComboBox(
+      ConfigurationValueString property,
+      Vector<?> items) {
+    if (property == null) {
+      return null;
+    }
+    JComboBox combo = new JComboBox(items);
+    combo.setEditable(false);
+    Configuration config = Configuration.getConfiguration();
+    String value = config.getString(null, property);
+    combo.setSelectedItem(value);
+    stringValues.put(property, combo);
+    return combo;
+  }
+
   /**
    * Restore all string options to their default values.
    */
   private void defaultValuesString() {
-    for (Entry<ConfigurationValueString, JTextField> entry : stringValues.entrySet()) {
+    for (Entry<ConfigurationValueString, JComponent> entry : stringValues.entrySet()) {
       if ((entry.getValue() != null) && (entry.getKey() != null)) {
-        entry.getValue().setText(entry.getKey().getDefaultValue());
+        if (entry.getValue() instanceof JTextField) {
+          JTextField text = (JTextField) entry.getValue();
+          text.setText(entry.getKey().getDefaultValue());
+        }
+        if (entry.getValue() instanceof JComboBox) {
+          JComboBox combo = (JComboBox) entry.getValue();
+          combo.setSelectedItem(entry.getKey().getDefaultValue());
+        }
       }
     }
   }
@@ -235,9 +317,19 @@ abstract class OptionsPanel extends JPanel {
   private void applyString() {
     Configuration config = Configuration.getConfiguration();
 
-    for (Entry<ConfigurationValueString, JTextField> entry : stringValues.entrySet()) {
+    for (Entry<ConfigurationValueString, JComponent> entry : stringValues.entrySet()) {
       if ((entry.getValue() != null) && (entry.getKey() != null)) {
-        config.setString(null, entry.getKey(), entry.getValue().getText());
+        if (entry.getValue() instanceof JTextField) {
+          JTextField text = (JTextField) entry.getValue();
+          config.setString(null, entry.getKey(), text.getText());
+        }
+        if (entry.getValue() instanceof JComboBox) {
+          JComboBox combo = (JComboBox) entry.getValue();
+          Object selection = combo.getSelectedItem();
+          if (selection != null) {
+            config.setString(null, entry.getKey(), selection.toString());
+          }
+        }
       }
     }
   }
