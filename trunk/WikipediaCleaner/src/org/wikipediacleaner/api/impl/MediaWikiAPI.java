@@ -54,6 +54,7 @@ import org.jdom.output.XMLOutputter;
 import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.base.CaptchaException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Interwiki;
@@ -86,7 +87,7 @@ public class MediaWikiAPI implements API {
 
   private static boolean DEBUG_TIME = false;
   private static boolean DEBUG_URL = true;
-  private static boolean DEBUG_XML = false;
+  private static boolean DEBUG_XML = true;
   private static XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
 
   private HttpClient httpClient;
@@ -560,6 +561,9 @@ public class MediaWikiAPI implements API {
       result = constructEdit(
           getRoot(wikipedia, properties, 1),
           "/api/edit");
+    } catch (CaptchaException e) {
+      log.error("Captcha");
+      throw new APIException("Captcha", e);
     } catch (JDOMParseException e) {
       log.error("Error updating page: " + e.getMessage());
       throw new APIException("Error parsing XML", e);
@@ -652,6 +656,9 @@ public class MediaWikiAPI implements API {
       result = constructEdit(
           getRoot(wikipedia, properties, 1),
           "/api/edit");
+    } catch (CaptchaException e) {
+      log.error("Captcha");
+      throw new APIException("Captcha", e);
     } catch (JDOMParseException e) {
       log.error("Error updating page: " + e.getMessage());
       throw new APIException("Error parsing XML", e);
@@ -1357,9 +1364,10 @@ public class MediaWikiAPI implements API {
    * @param query Path to the answer.
    * @return Result of the query.
    * @throws APIException
+   * @throws CaptchaException Captcha.
    */
   private QueryResult constructEdit(Element root, String query)
-      throws APIException {
+      throws APIException, CaptchaException {
     try {
       XPath xpa = XPath.newInstance(query);
       Element node = (Element) xpa.selectSingleNode(root);
@@ -1392,6 +1400,20 @@ public class MediaWikiAPI implements API {
           return QueryResult.createCorrectQuery(
               pageId, xpaPageTitle.valueOf(node),
               pageOldRevId, pageNewRevId);
+        } else if ("Failure".equalsIgnoreCase(result)) {
+          XPath xpaCaptcha = XPath.newInstance("./captcha");
+          Element captcha = (Element) xpaCaptcha.selectSingleNode(node);
+          if (captcha != null) {
+            XPath xpaType = XPath.newInstance("./@type");
+            CaptchaException exception = new CaptchaException("Captcha", xpaType.valueOf(captcha));
+            XPath xpaMime = XPath.newInstance("./@mime");
+            exception.setMime(xpaMime.valueOf(captcha));
+            XPath xpaId = XPath.newInstance("./@id");
+            exception.setId(xpaId.valueOf(captcha));
+            XPath xpaUrl = XPath.newInstance("./@url");
+            exception.setURL(xpaUrl.valueOf(captcha));
+            throw exception;
+          }
         }
         XPath xpaWait = XPath.newInstance("./@wait");
         XPath xpaDetails = XPath.newInstance("./@details");
