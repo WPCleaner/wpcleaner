@@ -89,7 +89,7 @@ public class MediaWikiAPI implements API {
 
   private static boolean DEBUG_TIME = false;
   private static boolean DEBUG_URL = true;
-  private static boolean DEBUG_XML = true;
+  private static boolean DEBUG_XML = false;
   private static XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
 
   private HttpClient httpClient;
@@ -679,6 +679,7 @@ public class MediaWikiAPI implements API {
           if (captchaAnswer != null) {
             properties.put("captchaid", e.getId());
             properties.put("captchaword", captchaAnswer);
+            hasCaptcha = true;
           } else {
             throw new APIException("CAPTCHA", e);
           }
