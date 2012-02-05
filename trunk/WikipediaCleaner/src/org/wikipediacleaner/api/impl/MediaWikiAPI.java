@@ -64,6 +64,8 @@ import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
+import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
@@ -558,12 +560,24 @@ public class MediaWikiAPI implements API {
     properties.put("token", page.getEditToken());
     properties.put("watchlist", forceWatch ? "watch" : "nochange");
     try {
-      result = constructEdit(
-          getRoot(wikipedia, properties, 1),
-          "/api/edit");
-    } catch (CaptchaException e) {
-      log.error("Captcha");
-      throw new APIException("Captcha", e);
+      boolean hasCaptcha = false;
+      do {
+        hasCaptcha = false;
+        try {
+          result = constructEdit(
+              getRoot(wikipedia, properties, 1),
+              "/api/edit");
+        } catch (CaptchaException e) {
+          String captchaAnswer = getCaptchaAnswer(wikipedia, e);
+          if (captchaAnswer != null) {
+            properties.put("captchaid", e.getId());
+            properties.put("captchaword", captchaAnswer);
+            hasCaptcha = true;
+          } else {
+            throw new APIException("CAPTCHA", e);
+          }
+        }
+      } while (hasCaptcha);
     } catch (JDOMParseException e) {
       log.error("Error updating page: " + e.getMessage());
       throw new APIException("Error parsing XML", e);
@@ -653,12 +667,23 @@ public class MediaWikiAPI implements API {
     properties.put("token", page.getEditToken());
     properties.put("watchlist", forceWatch ? "watch" : "nochange");
     try {
-      result = constructEdit(
-          getRoot(wikipedia, properties, 1),
-          "/api/edit");
-    } catch (CaptchaException e) {
-      log.error("Captcha");
-      throw new APIException("Captcha", e);
+      boolean hasCaptcha = false;
+      do {
+        hasCaptcha = false;
+        try {
+          result = constructEdit(
+              getRoot(wikipedia, properties, 1),
+              "/api/edit");
+        } catch (CaptchaException e) {
+          String captchaAnswer = getCaptchaAnswer(wikipedia, e);
+          if (captchaAnswer != null) {
+            properties.put("captchaid", e.getId());
+            properties.put("captchaword", captchaAnswer);
+          } else {
+            throw new APIException("CAPTCHA", e);
+          }
+        }
+      } while (hasCaptcha);
     } catch (JDOMParseException e) {
       log.error("Error updating page: " + e.getMessage());
       throw new APIException("Error parsing XML", e);
@@ -2172,6 +2197,36 @@ public class MediaWikiAPI implements API {
     } catch( JDOMException e) {
       log.error("JDOMException: " + e.getMessage());
     }
+  }
+
+  /**
+   * Ask for captcha answer.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param captcha Captcha.
+   * @return Answer.
+   */
+  private String getCaptchaAnswer(
+      EnumWikipedia wikipedia,
+      CaptchaException captcha) {
+    // TODO: Move Swing parts out of API
+    if (captcha == null) {
+      return null;
+    }
+    if ((captcha.getQuestion() != null) && (captcha.getQuestion().trim().length() > 0)) {
+      return Utilities.askForValue(
+          null,
+          GT._("This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?") + "\n" + captcha.getQuestion(),
+          "", null);
+    }
+    if ((captcha.getURL() != null) && (captcha.getURL().trim().length() > 0)) {
+      Utilities.browseURL(wikipedia.getServerURL() + captcha.getURL());
+      return Utilities.askForValue(
+          null,
+          GT._("This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"),
+          "", null);
+    }
+    return null;
   }
 
   /**

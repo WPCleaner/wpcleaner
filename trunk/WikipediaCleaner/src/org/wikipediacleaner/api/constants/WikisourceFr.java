@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikisourceFr {
 
-  private final static String baseUrl = "http://fr.wikisource.org/w/";
+  final static String serverUrl = "http://fr.wikisource.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "s:fr";
   final static String codeCW   = "frwikisource";

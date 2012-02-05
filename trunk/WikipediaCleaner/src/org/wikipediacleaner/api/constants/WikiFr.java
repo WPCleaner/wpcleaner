@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikiFr {
 
-  private final static String baseUrl = "http://fr.wikipedia.org/w/";
+  final static String serverUrl = "http://fr.wikipedia.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "fr";
   final static String name     = "Wikipédia Français";

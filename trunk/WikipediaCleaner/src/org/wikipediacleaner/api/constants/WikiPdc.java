@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikiPdc {
 
-  private final static String baseUrl = "http://pdc.wikipedia.org/w/";
+  final static String serverUrl = "http://pdc.wikipedia.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "pdc";
   final static String name     = "Pennsylvania German Wikipedia";

@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikiTest {
 
-  private final static String baseUrl = "http://test.wikipedia.org/w/";
+  final static String serverUrl = "http://test.wikipedia.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "test";
   final static String name     = "Test Wikipedia";

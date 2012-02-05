@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikiId {
 
-  private final static String baseUrl = "http://id.wikipedia.org/w/";
+  final static String serverUrl = "http://id.wikipedia.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "id";
   final static String name     = "Indonesian Wikipedia";

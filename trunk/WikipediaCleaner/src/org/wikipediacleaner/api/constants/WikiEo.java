@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikiEo {
 
-  private final static String baseUrl = "http://eo.wikipedia.org/w/";
+  final static String serverUrl = "http://eo.wikipedia.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "eo";
   final static String name     = "Esperanto Wikipedia";

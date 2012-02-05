@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikiYi {
 
-  private final static String baseUrl = "http://yi.wikipedia.org/w/";
+  final static String serverUrl = "http://yi.wikipedia.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "yi";
   final static String name     = "Yiddish Wikipedia";
