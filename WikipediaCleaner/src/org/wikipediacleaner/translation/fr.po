@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-02-05 12:32+0100\n"
-"PO-Revision-Date: 2012-02-05 12:52+0000\n"
+"PO-Revision-Date: 2012-02-05 22:50+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-05 12:56+0000\n"
+"X-Launchpad-Export-Date: 2012-02-05 22:52+0000\n"
 "X-Generator: Launchpad (build 14738)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -497,7 +497,7 @@ msgstr "Charger toutes les erreurs de priorité maximale"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:325
 msgid "Load all high and middle priority errors"
-msgstr "Chager toutes les erreurs de priorité maximale et moyenne"
+msgstr "Charger toutes les erreurs de priorité maximale et moyenne"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:330
 msgid "Load all middle priority errors"
@@ -623,7 +623,7 @@ msgstr "Analyse complète (Alt + &F)"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:906
 msgid "Mark as Fixed"
-msgstr "Marqué comme corrigé"
+msgstr "Marquer comme corrigé"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1010
 #, java-format
