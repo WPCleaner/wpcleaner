@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikiZh {
 
-  private final static String baseUrl = "http://zh.wikipedia.org/w/";
+  final static String serverUrl = "http://zh.wikipedia.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "zh";
   final static String name     = "维基百科";

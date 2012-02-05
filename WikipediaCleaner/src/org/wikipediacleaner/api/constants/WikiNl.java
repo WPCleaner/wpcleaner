@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikiNl {
 
-  private final static String baseUrl = "http://nl.wikipedia.org/w/";
+  final static String serverUrl = "http://nl.wikipedia.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "nl";
   final static String name     = "Nederlandstalige Wikipedia";

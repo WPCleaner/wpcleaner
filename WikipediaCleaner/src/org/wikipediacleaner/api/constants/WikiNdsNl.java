@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikiNdsNl {
 
-  private final static String baseUrl = "http://nds-nl.wikipedia.org/w/";
+  final static String serverUrl = "http://nds-nl.wikipedia.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "nds-nl";
   final static String name     = "Dutch Low Saxon Wikipedia";

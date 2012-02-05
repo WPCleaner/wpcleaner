@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikiGd {
 
-  private final static String baseUrl = "http://gd.wikipedia.org/w/";
+  final static String serverUrl = "http://gd.wikipedia.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "gd";
   final static String name     = "Scottish Gaelic Wikipedia";

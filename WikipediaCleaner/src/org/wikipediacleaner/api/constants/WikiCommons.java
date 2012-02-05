@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikiCommons {
 
-  private final static String baseUrl = "http://commons.wikimedia.org/w/";
+  final static String serverUrl = "http://commons.wikipedia.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "commons";
   final static String name     = "Commons";

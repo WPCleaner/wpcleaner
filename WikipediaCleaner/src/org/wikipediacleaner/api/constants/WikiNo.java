@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikiNo {
 
-  private final static String baseUrl = "http://no.wikipedia.org/w/";
+  final static String serverUrl = "http://no.wikipedia.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "no";
   final static String name     = "Norsk Wikipedia på bokmål og riksmål";

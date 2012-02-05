@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-02-03 19:50+0100\n"
+"POT-Creation-Date: 2012-02-05 12:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -299,7 +299,7 @@ msgstr ""
 msgid "Priority unknown"
 msgstr ""
 
-#: org/wikipediacleaner/api/constants/EnumWikipedia.java:1570
+#: org/wikipediacleaner/api/constants/EnumWikipedia.java:1583
 #, java-format
 msgid "Fixed using [[{0}]]"
 msgstr ""
@@ -372,6 +372,18 @@ msgstr ""
 
 #: org/wikipediacleaner/api/execution/ParseTextCallable.java:55
 msgid "Parsing text"
+msgstr ""
+
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2219
+msgid ""
+"This action is protected by a CAPTCHA.\n"
+"What is the answer to the following question ?"
+msgstr ""
+
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2226
+msgid ""
+"This action is protected by a CAPTCHA.\n"
+"What is the answer to the question displayed in your browser ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:66

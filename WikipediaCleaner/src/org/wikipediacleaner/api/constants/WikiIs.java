@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikiIs {
 
-  private final static String baseUrl = "http://is.wikipedia.org/w/";
+  final static String serverUrl = "http://is.wikipedia.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "is";
   final static String name     = "Wikipedia á íslensku";

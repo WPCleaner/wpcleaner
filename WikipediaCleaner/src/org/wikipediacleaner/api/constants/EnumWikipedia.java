@@ -74,136 +74,137 @@ public enum EnumWikipedia {
    */
 
   AF( WikiAf.code, WikiAf.name,
-      WikiAf.apiUrl, WikiAf.indexUrl,
+      WikiAf.serverUrl, WikiAf.apiUrl, WikiAf.indexUrl,
       WikiAf.orientation, WikiAf.configuration),
   AR( WikiAr.code, WikiAr.name,
-      WikiAr.apiUrl, WikiAr.indexUrl,
+      WikiAr.serverUrl, WikiAr.apiUrl, WikiAr.indexUrl,
       WikiAr.orientation, WikiAr.configuration),
   BAR(WikiBar.code, WikiBar.name,
-      WikiBar.apiUrl, WikiBar.indexUrl,
+      WikiBar.serverUrl, WikiBar.apiUrl, WikiBar.indexUrl,
       WikiBar.orientation, WikiBar.configuration),
   CA( WikiCa.code, WikiCa.name,
-      WikiCa.apiUrl, WikiCa.indexUrl,
+      WikiCa.serverUrl, WikiCa.apiUrl, WikiCa.indexUrl,
       WikiCa.orientation, WikiCa.configuration),
   CS( WikiCs.code, WikiCs.name,
-      WikiCs.apiUrl, WikiCs.indexUrl,
+      WikiCs.serverUrl, WikiCs.apiUrl, WikiCs.indexUrl,
       WikiCs.orientation, WikiCs.configuration),
   CY( WikiCy.code, WikiCy.name,
-      WikiCy.apiUrl, WikiCy.indexUrl,
+      WikiCy.serverUrl, WikiCy.apiUrl, WikiCy.indexUrl,
       WikiCy.orientation, WikiCy.configuration),
   DA( WikiDa.code, WikiDa.name,
-      WikiDa.apiUrl, WikiDa.indexUrl,
+      WikiDa.serverUrl, WikiDa.apiUrl, WikiDa.indexUrl,
       WikiDa.orientation, WikiDa.configuration),
   DE( WikiDe.code, WikiDe.name,
-      WikiDe.apiUrl, WikiDe.indexUrl,
+      WikiDe.serverUrl, WikiDe.apiUrl, WikiDe.indexUrl,
       WikiDe.orientation, WikiDe.configuration),
   EN( WikiEn.code, WikiEn.name,
-      WikiEn.apiUrl, WikiEn.indexUrl,
+      WikiEn.serverUrl, WikiEn.apiUrl, WikiEn.indexUrl,
       WikiEn.orientation, WikiEn.configuration),
   EO( WikiEo.code, WikiEo.name,
-      WikiEo.apiUrl, WikiEo.indexUrl,
+      WikiEo.serverUrl, WikiEo.apiUrl, WikiEo.indexUrl,
       WikiEo.orientation, WikiEo.configuration),
   ES( WikiEs.code, WikiEs.name,
-      WikiEs.apiUrl, WikiEs.indexUrl,
+      WikiEs.serverUrl, WikiEs.apiUrl, WikiEs.indexUrl,
       WikiEs.orientation, WikiEs.configuration),
   FI( WikiFi.code, WikiFi.name,
-      WikiFi.apiUrl, WikiFi.indexUrl,
+      WikiFi.serverUrl, WikiFi.apiUrl, WikiFi.indexUrl,
       WikiFi.orientation, WikiFi.configuration),
   FR( WikiFr.code, WikiFr.name,
-      WikiFr.apiUrl, WikiFr.indexUrl,
+      WikiFr.serverUrl, WikiFr.apiUrl, WikiFr.indexUrl,
       WikiFr.orientation, WikiFr.configuration),
   FY( WikiFy.code, WikiFy.name,
-      WikiFy.apiUrl, WikiFy.indexUrl,
+      WikiFy.serverUrl, WikiFy.apiUrl, WikiFy.indexUrl,
       WikiFy.orientation, WikiFy.configuration),
   GD( WikiGd.code, WikiGd.name,
-      WikiGd.apiUrl, WikiGd.indexUrl,
+      WikiGd.serverUrl, WikiGd.apiUrl, WikiGd.indexUrl,
       WikiGd.orientation, WikiGd.configuration),
   HE( WikiHe.code, WikiHe.name,
-      WikiHe.apiUrl, WikiHe.indexUrl,
+      WikiHe.serverUrl, WikiHe.apiUrl, WikiHe.indexUrl,
       WikiHe.orientation, WikiHe.configuration),
   HIF(WikiHif.code, WikiHif.name,
-      WikiHif.apiUrl, WikiHif.indexUrl,
+      WikiHif.serverUrl, WikiHif.apiUrl, WikiHif.indexUrl,
       WikiHif.orientation, WikiHif.configuration),
   HU( WikiHu.code, WikiHu.name,
-      WikiHu.apiUrl, WikiHu.indexUrl,
+      WikiHu.serverUrl, WikiHu.apiUrl, WikiHu.indexUrl,
       WikiHu.orientation, WikiHu.configuration),
   ID( WikiId.code, WikiId.name,
-      WikiId.apiUrl, WikiId.indexUrl,
+      WikiId.serverUrl, WikiId.apiUrl, WikiId.indexUrl,
       WikiId.orientation, WikiId.configuration),
   IS( WikiIs.code, WikiIs.name,
-      WikiIs.apiUrl, WikiIs.indexUrl,
+      WikiIs.serverUrl, WikiIs.apiUrl, WikiIs.indexUrl,
       WikiIs.orientation, WikiIs.configuration),
   IT( WikiIt.code, WikiIt.name,
-      WikiIt.apiUrl, WikiIt.indexUrl,
+      WikiIt.serverUrl, WikiIt.apiUrl, WikiIt.indexUrl,
       WikiIt.orientation, WikiIt.configuration),
   JA( WikiJa.code, WikiJa.name,
-      WikiJa.apiUrl, WikiJa.indexUrl,
+      WikiJa.serverUrl, WikiJa.apiUrl, WikiJa.indexUrl,
       WikiJa.orientation, WikiJa.configuration),
   LA( WikiLa.code, WikiLa.name,
-      WikiLa.apiUrl, WikiLa.indexUrl,
+      WikiLa.serverUrl, WikiLa.apiUrl, WikiLa.indexUrl,
       WikiLa.orientation, WikiLa.configuration),
   NDS(WikiNds.code, WikiNds.name,
-      WikiNds.apiUrl, WikiNds.indexUrl,
+      WikiNds.serverUrl, WikiNds.apiUrl, WikiNds.indexUrl,
       WikiNds.orientation, WikiNds.configuration),
   NDS_NL(WikiNdsNl.code, WikiNdsNl.name,
-      WikiNdsNl.apiUrl, WikiNdsNl.indexUrl,
+      WikiNdsNl.serverUrl, WikiNdsNl.apiUrl, WikiNdsNl.indexUrl,
       WikiNdsNl.orientation, WikiNdsNl.configuration),
   NL( WikiNl.code, WikiNl.name,
-      WikiNl.apiUrl, WikiNl.indexUrl,
+      WikiNl.serverUrl, WikiNl.apiUrl, WikiNl.indexUrl,
       WikiNl.orientation, WikiNl.configuration),
   NO( WikiNo.code, WikiNo.name,
-      WikiNo.apiUrl, WikiNo.indexUrl,
+      WikiNo.serverUrl, WikiNo.apiUrl, WikiNo.indexUrl,
       WikiNo.orientation, WikiNo.configuration),
   PDC(WikiPdc.code, WikiPdc.name,
-      WikiPdc.apiUrl, WikiPdc.indexUrl,
+      WikiPdc.serverUrl, WikiPdc.apiUrl, WikiPdc.indexUrl,
       WikiPdc.orientation, WikiPdc.configuration),
   PL( WikiPl.code, WikiPl.name,
-      WikiPl.apiUrl, WikiPl.indexUrl,
+      WikiPl.serverUrl, WikiPl.apiUrl, WikiPl.indexUrl,
       WikiPl.orientation, WikiPl.configuration),
   PT( WikiPt.code, WikiPt.name,
-      WikiPt.apiUrl, WikiPt.indexUrl,
+      WikiPt.serverUrl, WikiPt.apiUrl, WikiPt.indexUrl,
       WikiPt.orientation, WikiPt.configuration),
   RO( WikiRo.code, WikiRo.name,
-      WikiRo.apiUrl, WikiRo.indexUrl,
+      WikiRo.serverUrl, WikiRo.apiUrl, WikiRo.indexUrl,
       WikiRo.orientation, WikiRo.configuration),
   RU( WikiRu.code, WikiRu.name,
-      WikiRu.apiUrl, WikiRu.indexUrl,
+      WikiRu.serverUrl, WikiRu.apiUrl, WikiRu.indexUrl,
       WikiRu.orientation, WikiRu.configuration),
   SK( WikiSk.code, WikiSk.name,
-      WikiSk.apiUrl, WikiSk.indexUrl,
+      WikiSk.serverUrl, WikiSk.apiUrl, WikiSk.indexUrl,
       WikiSk.orientation, WikiSk.configuration),
   SL( WikiSl.code, WikiSl.name,
-      WikiSl.apiUrl, WikiSl.indexUrl,
+      WikiSl.serverUrl, WikiSl.apiUrl, WikiSl.indexUrl,
       WikiSl.orientation, WikiSl.configuration),
   SV( WikiSv.code, WikiSv.name,
-      WikiSv.apiUrl, WikiSv.indexUrl,
+      WikiSv.serverUrl, WikiSv.apiUrl, WikiSv.indexUrl,
       WikiSv.orientation, WikiSv.configuration),
   TR( WikiTr.code, WikiTr.name,
-      WikiTr.apiUrl, WikiTr.indexUrl,
+      WikiTr.serverUrl, WikiTr.apiUrl, WikiTr.indexUrl,
       WikiTr.orientation, WikiTr.configuration),
   UK( WikiUk.code, WikiUk.name,
-      WikiUk.apiUrl, WikiUk.indexUrl,
+      WikiUk.serverUrl, WikiUk.apiUrl, WikiUk.indexUrl,
       WikiUk.orientation, WikiUk.configuration),
   YI( WikiYi.code, WikiYi.name,
-      WikiYi.apiUrl, WikiYi.indexUrl,
+      WikiYi.serverUrl, WikiYi.apiUrl, WikiYi.indexUrl,
       WikiYi.orientation, WikiYi.configuration),
   ZH( WikiZh.code, WikiZh.name,
-      WikiZh.apiUrl, WikiZh.indexUrl,
+      WikiZh.serverUrl, WikiZh.apiUrl, WikiZh.indexUrl,
       WikiZh.orientation, WikiZh.configuration),
   COMMONS(WikiCommons.code, WikiCommons.name,
-          WikiCommons.apiUrl, WikiCommons.indexUrl,
+          WikiCommons.serverUrl, WikiCommons.apiUrl, WikiCommons.indexUrl,
           WikiCommons.orientation, WikiCommons.configuration),
   WIKISOURCE_FR(WikisourceFr.code, WikisourceFr.codeCW, WikisourceFr.name,
-                WikisourceFr.apiUrl, WikisourceFr.indexUrl,
+                WikisourceFr.serverUrl, WikisourceFr.apiUrl, WikisourceFr.indexUrl,
                 WikisourceFr.orientation, WikisourceFr.configuration),
   WIKIVERSITY_FR(WikiversityFr.code, WikiversityFr.codeCW, WikiversityFr.name,
-                 WikiversityFr.apiUrl, WikiversityFr.indexUrl,
+                 WikiversityFr.serverUrl, WikiversityFr.apiUrl, WikiversityFr.indexUrl,
                  WikiversityFr.orientation, WikiversityFr.configuration);
 
   private final String code;
 
   private final String codeCW;
   private final String title;
+  private final String serverUrl;
   private final String apiUrl;
   private final String wikiUrl;
   private final ComponentOrientation componentOrientation;
@@ -255,6 +256,7 @@ public enum EnumWikipedia {
   /**
    * @param code Code.
    * @param title Title.
+   * @param serverUrl URL of server.
    * @param apiUrl URL of api.php.
    * @param wikiUrl URL of the wiki.
    * @param configPage Configuration page.
@@ -262,17 +264,19 @@ public enum EnumWikipedia {
   EnumWikipedia(
       String code,
       String title,
+      String serverUrl,
       String apiUrl,
       String wikiUrl,
       ComponentOrientation componentOrientation,
       String configPage) {
-    this(code, code + "wiki", title, apiUrl, wikiUrl, componentOrientation, configPage);
+    this(code, code + "wiki", title, serverUrl, apiUrl, wikiUrl, componentOrientation, configPage);
   }
 
   /**
    * @param code Code.
    * @param codeCW Check Wiki code.
    * @param title Title.
+   * @param serverUrl URL of server.
    * @param apiUrl URL of api.php.
    * @param wikiUrl URL of the wiki.
    * @param configPage Configuration page.
@@ -281,6 +285,7 @@ public enum EnumWikipedia {
       String code,
       String codeCW,
       String title,
+      String serverUrl,
       String apiUrl,
       String wikiUrl,
       ComponentOrientation componentOrientation,
@@ -288,6 +293,7 @@ public enum EnumWikipedia {
     this.code = code;
     this.codeCW = codeCW;
     this.title = title;
+    this.serverUrl = serverUrl;
     this.apiUrl = apiUrl;
     this.wikiUrl = wikiUrl;
     this.helpUrl = null;
@@ -383,6 +389,13 @@ public enum EnumWikipedia {
    */
   public String getTitle() {
     return title;
+  }
+
+  /**
+   * @return URL of server.
+   */
+  public String getServerURL() {
+    return serverUrl;
   }
 
   /**

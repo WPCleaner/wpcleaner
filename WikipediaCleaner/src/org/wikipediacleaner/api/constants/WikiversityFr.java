@@ -26,7 +26,8 @@ import java.awt.ComponentOrientation;
  */
 class WikiversityFr {
 
-  private final static String baseUrl = "http://fr.wikiversity.org/w/";
+  final static String serverUrl = "http://fr.wikiversity.org";
+  final static String baseUrl   = serverUrl + "/w/";
 
   final static String code     = "v:fr";
   final static String codeCW   = "frwikiversity";
