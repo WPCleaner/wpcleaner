@@ -93,8 +93,8 @@ public class CheckCategoryLinkAction extends TextAction {
         Utilities.displayWarning(
             textPane.getParent(),
             GT._(
-                "Unable to find if category {0} exists in the {1} Wikipedia.",
-                new Object[] { title, toWikipedia.getCode() }));
+                "Unable to find if category {0} exists in \"{1}\".",
+                new Object[] { title, toWikipedia.toString() }));
         return;
       }
       if (Boolean.TRUE.equals(category.isExisting())) {
@@ -102,9 +102,9 @@ public class CheckCategoryLinkAction extends TextAction {
         int answer = Utilities.displayYesNoWarning(
             textPane.getParent(),
             GT._(
-                "The category {0} exists in the {1} Wikipedia.\n" +
+                "The category {0} exists in \"{1}\".\n" +
                 "Do you want to replace the category by [[{2}]] ?",
-                new Object[] { title, toWikipedia.getCode(), replace }));
+                new Object[] { title, toWikipedia.toString(), replace }));
         if (answer == JOptionPane.YES_OPTION) {
           int startOffset = element.getStartOffset();
           int endOffset = element.getEndOffset();
@@ -126,7 +126,7 @@ public class CheckCategoryLinkAction extends TextAction {
             GT._(
                 "The category {0} in the {1} Wikipedia doesn''t have a language link to the {2} Wikipedia.\n" +
                 "It doesn''t exist either in the {2} Wikipedia.",
-                new Object[] { title, fromWikipedia.getCode(), toWikipedia.getCode() } ));
+                new Object[] { title, fromWikipedia.getSettings().getCode(), toWikipedia.getSettings().getCode() } ));
         return;
       }
       String replace = languageLink + ((order != null) ? "|" + order : "");
@@ -136,7 +136,7 @@ public class CheckCategoryLinkAction extends TextAction {
               "The category {0} doesn''t exist in the {2} Wikipedia.\n" +
               "In the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\n" +
               "Do you want to replace the category by [[{3}]] ?",
-              new Object[] { title, fromWikipedia.getCode(), toWikipedia.getCode(), replace } ));
+              new Object[] { title, fromWikipedia.getSettings().getCode(), toWikipedia.getSettings().getCode(), replace } ));
       if (answer == JOptionPane.YES_OPTION) {
         int startOffset = element.getStartOffset();
         int endOffset = element.getEndOffset();

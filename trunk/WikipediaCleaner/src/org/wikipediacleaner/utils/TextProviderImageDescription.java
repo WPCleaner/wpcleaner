@@ -94,7 +94,7 @@ public class TextProviderImageDescription implements TextProvider {
               if ((global != null) && (global.trim().length() > 0)) {
                 PageAnalysis descAnalysis = new PageAnalysis(commonsPage, global);
                 for (PageElementTemplate template2 : descAnalysis.getTemplates()) {
-                  if (Page.areSameTitle(image.getWikipedia().getCode(), template2.getTemplateName())) {
+                  if (Page.areSameTitle(image.getWikipedia().getSettings().getCode(), template2.getTemplateName())) {
                     String description = template2.getParameterValue("1");
                     if ((description != null) && (description.trim().length() > 0)) {
                       result.add(description.trim());

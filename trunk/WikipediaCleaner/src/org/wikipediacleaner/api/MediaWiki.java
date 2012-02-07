@@ -177,7 +177,7 @@ public class MediaWiki extends MediaWikiController {
                 if (description != null) {
                   if (!changed) {
                     String title =
-                      "<a href=\"" + wikipedia.getWikiURL(page.getTitle(), false) + "\">" +
+                      "<a href=\"" + wikipedia.getSettings().getURL(page.getTitle(), false) + "\">" +
                       page.getTitle() + "</a>";
                     description.append(GT._("Page {0}:", title));
                     description.append("\n");

@@ -28,8 +28,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.junit.After;
 import org.junit.Before;
@@ -75,18 +73,6 @@ public class PageUtilitiesTest {
   @After
   public void afterTest() {
     pageText = null;
-  }
-  
-  @Test
-  public void testCreatePatternForInternalLink() {
-    int count = 0;
-    Page link = DataManager.getPage(EnumWikipedia.FR, "AFP", null, null);
-    Pattern pattern = PageUtilities.createPatternForInternalLink(link);
-    Matcher matcher = pattern.matcher(pageText);
-    while (matcher.find()) {
-      count++;
-    }
-    assertEquals(1, count);
   }
   
   @Test

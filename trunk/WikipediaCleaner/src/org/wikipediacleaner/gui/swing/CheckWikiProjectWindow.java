@@ -35,7 +35,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1669,9 +1668,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       // Parameters description
       try {
         String url =
-          getWikipedia().getWikiURL() +
-          "?title=" +
-          URLEncoder.encode(getWikipedia().getCheckWikiTraduction(), "UTF-8");
+          getWikipedia().getSettings().getURL(getWikipedia().getCheckWikiTraduction(), true);
         StringBuilder parametersDescription = new StringBuilder();
         parametersDescription.append(GT._(
             "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :",
@@ -1881,11 +1878,11 @@ public class CheckWikiProjectWindow extends OnePageWindow {
             "There''s no page defined for this error type.\n" +
             "If you want to define a page you need to add :\n" +
             "  {0} = <page name> END\n" +
-            "to the translation page ({1}) on {2} Wikipedia",
+            "to the translation page ({1}) on \"{2}\"",
             new Object[] {
-                "error_" + format.format(error.getErrorNumber()) + "_link_" + getWikipedia().getCheckWikiCode(),
+                "error_" + format.format(error.getErrorNumber()) + "_link_" + getWikipedia().getSettings().getCodeCheckWiki(),
                 getWikipedia().getCheckWikiTraduction(),
-                getWikipedia().getCode()
+                getWikipedia().toString()
             }));
       }
     }
@@ -1902,7 +1899,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       String url =
         "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi" +
         "?id=" + error.getErrorNumber() +
-        "&project=" + getWikipedia().getCheckWikiCode()+
+        "&project=" + getWikipedia().getSettings().getCodeCheckWiki() +
         "&view=only" +
         "&limit=" + modelMaxErrors.getNumber();
       Utilities.browseURL(url);

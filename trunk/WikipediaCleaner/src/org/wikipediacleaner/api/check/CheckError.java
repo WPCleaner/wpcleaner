@@ -279,7 +279,7 @@ public class CheckError {
       NameValuePair[] parameters = new NameValuePair[] {
           new NameValuePair("id", Integer.toString(Integer.parseInt(errorNumber))),
           new NameValuePair("pageid", Integer.toString(page.getPageId())),
-          new NameValuePair("project", page.getWikipedia().getCheckWikiCode()),
+          new NameValuePair("project", page.getWikipedia().getSettings().getCodeCheckWiki()),
           new NameValuePair("view", "only")
       };
       APIFactory.getAPI().askToolServerPost(

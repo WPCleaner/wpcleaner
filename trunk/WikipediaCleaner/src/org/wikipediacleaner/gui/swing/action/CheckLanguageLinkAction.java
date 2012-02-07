@@ -70,15 +70,15 @@ public class CheckLanguageLinkAction extends TextAction {
       if (languageLink == null) {
         Utilities.displayInformationMessage(
             textPane.getParent(),
-            GT._("The page {0} in the {1} Wikipedia doesn''t have a language link to the {2} Wikipedia.",
-                new Object[] { title, fromWikipedia.getCode(), toWikipedia.getCode() } ));
+            GT._("The page {0} in \"{1}\" doesn''t have a language link to \"{2}\".",
+                new Object[] { title, fromWikipedia.toString(), toWikipedia.toString() } ));
       } else {
         int answer = Utilities.displayYesNoWarning(
             textPane.getParent(),
             GT._(
-                "The page {0} in the {1} Wikipedia has a language link to the {2} Wikipedia: {3}.\n" +
+                "The page {0} in \"{1}\" has a language link to \"{2}\": {3}.\n" +
                 "Do you want to replace the link by [[{3}]] ?",
-                new Object[] { title, fromWikipedia.getCode(), toWikipedia.getCode(), languageLink } ));
+                new Object[] { title, fromWikipedia.toString(), toWikipedia.toString(), languageLink } ));
         if (answer == JOptionPane.YES_OPTION) {
           int startOffset = element.getStartOffset();
           int endOffset = element.getEndOffset();
