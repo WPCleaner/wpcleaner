@@ -729,7 +729,8 @@ public class MediaWikiAPI implements API {
         Element root = getRoot(from, properties, MAX_ATTEMPTS);
 
         // Analyzing result
-        XPath xpaLangLink = XPath.newInstance("/api/query/pages/page/langlinks/ll[@lang=\"" + to.getCode() + "\"]");
+        XPath xpaLangLink = XPath.newInstance(
+            "/api/query/pages/page/langlinks/ll[@lang=\"" + to.getSettings().getCode() + "\"]");
         List results = xpaLangLink.selectNodes(root);
         Iterator iter = results.iterator();
         while (iter.hasNext()) {
@@ -2099,7 +2100,7 @@ public class MediaWikiAPI implements API {
       EnumWikipedia       wikipedia,
       Map<String, String> properties) {
     PostMethod method = null;
-    String url = wikipedia.getApiURL();
+    String url = wikipedia.getSettings().getApiURL();
     StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder(url) : null;
     method = new PostMethod(url);
     method.getParams().setContentCharset("UTF-8");
@@ -2221,7 +2222,7 @@ public class MediaWikiAPI implements API {
           "", null);
     }
     if ((captcha.getURL() != null) && (captcha.getURL().trim().length() > 0)) {
-      Utilities.browseURL(wikipedia.getServerURL() + captcha.getURL());
+      Utilities.browseURL(wikipedia.getSettings().getHostURL() + captcha.getURL());
       return Utilities.askForValue(
           null,
           GT._("This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"),

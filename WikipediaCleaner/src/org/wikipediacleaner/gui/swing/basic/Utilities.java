@@ -630,7 +630,7 @@ public class Utilities {
    * @param action Page action.
    */
   public static void browseURL(EnumWikipedia wiki, String title, String action) {
-    browseURL(wiki.getWikiURL(title, action));
+    browseURL(wiki.getSettings().getURL(title, action));
   }
 
   /**
@@ -641,7 +641,7 @@ public class Utilities {
    * @param redirect Flag indicating if redirects should be followed.
    */
   public static void browseURL(EnumWikipedia wiki, String title, boolean redirect) {
-    browseURL(wiki.getWikiURL(title, redirect));
+    browseURL(wiki.getSettings().getURL(title, redirect));
   }
 
   /**

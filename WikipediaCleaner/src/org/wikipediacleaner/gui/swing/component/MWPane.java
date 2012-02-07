@@ -320,7 +320,7 @@ public class MWPane
   private void initialize() {
     boolean oldState = isInInternalModification;
     isInInternalModification = true;
-    this.setComponentOrientation(wikipedia.getComponentOrientation());
+    this.setComponentOrientation(wikipedia.getSettings().getComponentOrientation());
     StyledDocument doc = MWPaneFormatter.createDocument();
     setStyledDocument(doc);
     doc.addDocumentListener(new DocumentListener() {

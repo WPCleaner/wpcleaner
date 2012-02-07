@@ -274,7 +274,7 @@ public class PreviewWindow
     try {
       DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontext);
       InputSource is = new InputSource(new StringReader(text));
-      is.setSystemId(getWikipedia().getWikiURL() + "?title=" + textTitle.getText());
+      is.setSystemId(getWikipedia().getSettings().getURL(textTitle.getText(), true));
       Document document = dbi.parse(is);
       htmlPreview.setDocument(document, rcontext);
     } catch (SAXException e) {

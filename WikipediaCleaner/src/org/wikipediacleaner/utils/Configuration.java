@@ -122,7 +122,7 @@ public class Configuration implements WindowListener {
     if (wikipedia == null) {
       return preferences;
     }
-    return preferences.node("Wikipedia/" + wikipedia.getCode());
+    return preferences.node("Wikipedia/" + wikipedia.getSettings().getCode());
   }
 
   /**
@@ -1008,7 +1008,7 @@ public class Configuration implements WindowListener {
    */
   public void setWikipedia(EnumWikipedia wikipedia) {
     if ((getPreferences() != null) && (wikipedia != null)) {
-      getPreferences().put(PROPERTY_WIKIPEDIA, wikipedia.getCode());
+      getPreferences().put(PROPERTY_WIKIPEDIA, wikipedia.getSettings().getCode());
     }
   }
 

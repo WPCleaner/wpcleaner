@@ -1460,7 +1460,7 @@ public class MainWindow
         getWikipedia().initSuggestions(api, reloadOnly);
 
         // Retrieving Check Wiki configuration
-        String code = getWikipedia().getCheckWikiCode().replace("-", "_");
+        String code = getWikipedia().getSettings().getCodeCheckWiki().replace("-", "_");
         try {
           setText(GT._("Retrieving Check Wiki configuration"));
           InputStream stream = APIFactory.getAPI().askToolServerGet(

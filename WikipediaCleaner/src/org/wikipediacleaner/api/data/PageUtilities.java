@@ -30,35 +30,6 @@ import java.util.regex.Pattern;
 public class PageUtilities {
 
   /**
-   * Creates a Pattern for matching internal links to give <code>page</code>.
-   * 
-   * @param link The interesting page.
-   * @return Pattern.
-   */
-  public static Pattern createPatternForInternalLink(Page link) {
-    if (link == null) {
-      return null;
-    }
-    String title = link.getTitle();
-
-    // Create the regular expression
-    StringBuilder expression = new StringBuilder();
-    expression.append("\\[\\["); // [[
-    expression.append("\\:?"); // Possible :
-    expression.append("(?:" + link.getWikipedia().getCode() + "\\:)?"); // Possible <lang>:
-    expression.append("(");
-    addPatternForWhiteSpaces(expression);
-    addPatternForTitle(expression, title);
-    addPatternForWhiteSpaces(expression);
-    expression.append("(\\|([^\\|\\]]*))?"); // Possible text
-    // TODO: Check if possessive quantifier could speed up pattern matching.
-    expression.append(")\\]\\]"); // ]]
-    //System.err.println("Regular expression: " + expression.toString());
-    Pattern pattern = Pattern.compile(expression.toString());
-    return pattern;
-  }
-
-  /**
    * Creates a Pattern for matching templates.
    * 
    * @param template The interesting template.

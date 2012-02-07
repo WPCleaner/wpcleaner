@@ -18,12 +18,9 @@
 
 package org.wikipediacleaner.api.constants;
 
-import java.awt.ComponentOrientation;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +34,49 @@ import java.util.Set;
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
+import org.wikipediacleaner.api.constants.wiki.WikipediaAf;
+import org.wikipediacleaner.api.constants.wiki.WikipediaAr;
+import org.wikipediacleaner.api.constants.wiki.WikipediaBar;
+import org.wikipediacleaner.api.constants.wiki.WikipediaCa;
+import org.wikipediacleaner.api.constants.wiki.WikipediaCommons;
+import org.wikipediacleaner.api.constants.wiki.WikipediaCs;
+import org.wikipediacleaner.api.constants.wiki.WikipediaCy;
+import org.wikipediacleaner.api.constants.wiki.WikipediaDa;
+import org.wikipediacleaner.api.constants.wiki.WikipediaDe;
+import org.wikipediacleaner.api.constants.wiki.WikipediaEn;
+import org.wikipediacleaner.api.constants.wiki.WikipediaEo;
+import org.wikipediacleaner.api.constants.wiki.WikipediaEs;
+import org.wikipediacleaner.api.constants.wiki.WikipediaFi;
+import org.wikipediacleaner.api.constants.wiki.WikipediaFr;
+import org.wikipediacleaner.api.constants.wiki.WikipediaFy;
+import org.wikipediacleaner.api.constants.wiki.WikipediaGd;
+import org.wikipediacleaner.api.constants.wiki.WikipediaHe;
+import org.wikipediacleaner.api.constants.wiki.WikipediaHif;
+import org.wikipediacleaner.api.constants.wiki.WikipediaHu;
+import org.wikipediacleaner.api.constants.wiki.WikipediaId;
+import org.wikipediacleaner.api.constants.wiki.WikipediaIs;
+import org.wikipediacleaner.api.constants.wiki.WikipediaIt;
+import org.wikipediacleaner.api.constants.wiki.WikipediaJa;
+import org.wikipediacleaner.api.constants.wiki.WikipediaLa;
+import org.wikipediacleaner.api.constants.wiki.WikipediaNds;
+import org.wikipediacleaner.api.constants.wiki.WikipediaNdsNl;
+import org.wikipediacleaner.api.constants.wiki.WikipediaNl;
+import org.wikipediacleaner.api.constants.wiki.WikipediaNo;
+import org.wikipediacleaner.api.constants.wiki.WikipediaPdc;
+import org.wikipediacleaner.api.constants.wiki.WikipediaPl;
+import org.wikipediacleaner.api.constants.wiki.WikipediaPt;
+import org.wikipediacleaner.api.constants.wiki.WikipediaRo;
+import org.wikipediacleaner.api.constants.wiki.WikipediaRu;
+import org.wikipediacleaner.api.constants.wiki.WikipediaSk;
+import org.wikipediacleaner.api.constants.wiki.WikipediaSl;
+import org.wikipediacleaner.api.constants.wiki.WikipediaSv;
+import org.wikipediacleaner.api.constants.wiki.WikipediaTr;
+import org.wikipediacleaner.api.constants.wiki.WikipediaUk;
+import org.wikipediacleaner.api.constants.wiki.WikipediaYi;
+import org.wikipediacleaner.api.constants.wiki.WikipediaZh;
+import org.wikipediacleaner.api.constants.wiki.WikisourceFr;
+import org.wikipediacleaner.api.constants.wiki.WikiversityFr;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
@@ -62,152 +102,58 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 public enum EnumWikipedia {
 
   /*
-   * List of Wikipedia this tool is able to deal with.
+   * List of Wikipedia WPCleaner is able to deal with.
    * 
-   * For each Wikipedia, the following information are needed :
-   * - 2 letters code for the Wikipedia language.
-   * - full Wikipedia name.
-   * - full URL of MediaWiki API (api.php).
-   * - full URL of the wiki (index.php).
-   * - Component orientation.
-   * - Internal link to the configuration page.
+   * For each Wikipedia, a configuration object is required.
    */
 
-  AF( WikiAf.code, WikiAf.name,
-      WikiAf.serverUrl, WikiAf.apiUrl, WikiAf.indexUrl,
-      WikiAf.orientation, WikiAf.configuration),
-  AR( WikiAr.code, WikiAr.name,
-      WikiAr.serverUrl, WikiAr.apiUrl, WikiAr.indexUrl,
-      WikiAr.orientation, WikiAr.configuration),
-  BAR(WikiBar.code, WikiBar.name,
-      WikiBar.serverUrl, WikiBar.apiUrl, WikiBar.indexUrl,
-      WikiBar.orientation, WikiBar.configuration),
-  CA( WikiCa.code, WikiCa.name,
-      WikiCa.serverUrl, WikiCa.apiUrl, WikiCa.indexUrl,
-      WikiCa.orientation, WikiCa.configuration),
-  CS( WikiCs.code, WikiCs.name,
-      WikiCs.serverUrl, WikiCs.apiUrl, WikiCs.indexUrl,
-      WikiCs.orientation, WikiCs.configuration),
-  CY( WikiCy.code, WikiCy.name,
-      WikiCy.serverUrl, WikiCy.apiUrl, WikiCy.indexUrl,
-      WikiCy.orientation, WikiCy.configuration),
-  DA( WikiDa.code, WikiDa.name,
-      WikiDa.serverUrl, WikiDa.apiUrl, WikiDa.indexUrl,
-      WikiDa.orientation, WikiDa.configuration),
-  DE( WikiDe.code, WikiDe.name,
-      WikiDe.serverUrl, WikiDe.apiUrl, WikiDe.indexUrl,
-      WikiDe.orientation, WikiDe.configuration),
-  EN( WikiEn.code, WikiEn.name,
-      WikiEn.serverUrl, WikiEn.apiUrl, WikiEn.indexUrl,
-      WikiEn.orientation, WikiEn.configuration),
-  EO( WikiEo.code, WikiEo.name,
-      WikiEo.serverUrl, WikiEo.apiUrl, WikiEo.indexUrl,
-      WikiEo.orientation, WikiEo.configuration),
-  ES( WikiEs.code, WikiEs.name,
-      WikiEs.serverUrl, WikiEs.apiUrl, WikiEs.indexUrl,
-      WikiEs.orientation, WikiEs.configuration),
-  FI( WikiFi.code, WikiFi.name,
-      WikiFi.serverUrl, WikiFi.apiUrl, WikiFi.indexUrl,
-      WikiFi.orientation, WikiFi.configuration),
-  FR( WikiFr.code, WikiFr.name,
-      WikiFr.serverUrl, WikiFr.apiUrl, WikiFr.indexUrl,
-      WikiFr.orientation, WikiFr.configuration),
-  FY( WikiFy.code, WikiFy.name,
-      WikiFy.serverUrl, WikiFy.apiUrl, WikiFy.indexUrl,
-      WikiFy.orientation, WikiFy.configuration),
-  GD( WikiGd.code, WikiGd.name,
-      WikiGd.serverUrl, WikiGd.apiUrl, WikiGd.indexUrl,
-      WikiGd.orientation, WikiGd.configuration),
-  HE( WikiHe.code, WikiHe.name,
-      WikiHe.serverUrl, WikiHe.apiUrl, WikiHe.indexUrl,
-      WikiHe.orientation, WikiHe.configuration),
-  HIF(WikiHif.code, WikiHif.name,
-      WikiHif.serverUrl, WikiHif.apiUrl, WikiHif.indexUrl,
-      WikiHif.orientation, WikiHif.configuration),
-  HU( WikiHu.code, WikiHu.name,
-      WikiHu.serverUrl, WikiHu.apiUrl, WikiHu.indexUrl,
-      WikiHu.orientation, WikiHu.configuration),
-  ID( WikiId.code, WikiId.name,
-      WikiId.serverUrl, WikiId.apiUrl, WikiId.indexUrl,
-      WikiId.orientation, WikiId.configuration),
-  IS( WikiIs.code, WikiIs.name,
-      WikiIs.serverUrl, WikiIs.apiUrl, WikiIs.indexUrl,
-      WikiIs.orientation, WikiIs.configuration),
-  IT( WikiIt.code, WikiIt.name,
-      WikiIt.serverUrl, WikiIt.apiUrl, WikiIt.indexUrl,
-      WikiIt.orientation, WikiIt.configuration),
-  JA( WikiJa.code, WikiJa.name,
-      WikiJa.serverUrl, WikiJa.apiUrl, WikiJa.indexUrl,
-      WikiJa.orientation, WikiJa.configuration),
-  LA( WikiLa.code, WikiLa.name,
-      WikiLa.serverUrl, WikiLa.apiUrl, WikiLa.indexUrl,
-      WikiLa.orientation, WikiLa.configuration),
-  NDS(WikiNds.code, WikiNds.name,
-      WikiNds.serverUrl, WikiNds.apiUrl, WikiNds.indexUrl,
-      WikiNds.orientation, WikiNds.configuration),
-  NDS_NL(WikiNdsNl.code, WikiNdsNl.name,
-      WikiNdsNl.serverUrl, WikiNdsNl.apiUrl, WikiNdsNl.indexUrl,
-      WikiNdsNl.orientation, WikiNdsNl.configuration),
-  NL( WikiNl.code, WikiNl.name,
-      WikiNl.serverUrl, WikiNl.apiUrl, WikiNl.indexUrl,
-      WikiNl.orientation, WikiNl.configuration),
-  NO( WikiNo.code, WikiNo.name,
-      WikiNo.serverUrl, WikiNo.apiUrl, WikiNo.indexUrl,
-      WikiNo.orientation, WikiNo.configuration),
-  PDC(WikiPdc.code, WikiPdc.name,
-      WikiPdc.serverUrl, WikiPdc.apiUrl, WikiPdc.indexUrl,
-      WikiPdc.orientation, WikiPdc.configuration),
-  PL( WikiPl.code, WikiPl.name,
-      WikiPl.serverUrl, WikiPl.apiUrl, WikiPl.indexUrl,
-      WikiPl.orientation, WikiPl.configuration),
-  PT( WikiPt.code, WikiPt.name,
-      WikiPt.serverUrl, WikiPt.apiUrl, WikiPt.indexUrl,
-      WikiPt.orientation, WikiPt.configuration),
-  RO( WikiRo.code, WikiRo.name,
-      WikiRo.serverUrl, WikiRo.apiUrl, WikiRo.indexUrl,
-      WikiRo.orientation, WikiRo.configuration),
-  RU( WikiRu.code, WikiRu.name,
-      WikiRu.serverUrl, WikiRu.apiUrl, WikiRu.indexUrl,
-      WikiRu.orientation, WikiRu.configuration),
-  SK( WikiSk.code, WikiSk.name,
-      WikiSk.serverUrl, WikiSk.apiUrl, WikiSk.indexUrl,
-      WikiSk.orientation, WikiSk.configuration),
-  SL( WikiSl.code, WikiSl.name,
-      WikiSl.serverUrl, WikiSl.apiUrl, WikiSl.indexUrl,
-      WikiSl.orientation, WikiSl.configuration),
-  SV( WikiSv.code, WikiSv.name,
-      WikiSv.serverUrl, WikiSv.apiUrl, WikiSv.indexUrl,
-      WikiSv.orientation, WikiSv.configuration),
-  TR( WikiTr.code, WikiTr.name,
-      WikiTr.serverUrl, WikiTr.apiUrl, WikiTr.indexUrl,
-      WikiTr.orientation, WikiTr.configuration),
-  UK( WikiUk.code, WikiUk.name,
-      WikiUk.serverUrl, WikiUk.apiUrl, WikiUk.indexUrl,
-      WikiUk.orientation, WikiUk.configuration),
-  YI( WikiYi.code, WikiYi.name,
-      WikiYi.serverUrl, WikiYi.apiUrl, WikiYi.indexUrl,
-      WikiYi.orientation, WikiYi.configuration),
-  ZH( WikiZh.code, WikiZh.name,
-      WikiZh.serverUrl, WikiZh.apiUrl, WikiZh.indexUrl,
-      WikiZh.orientation, WikiZh.configuration),
-  COMMONS(WikiCommons.code, WikiCommons.name,
-          WikiCommons.serverUrl, WikiCommons.apiUrl, WikiCommons.indexUrl,
-          WikiCommons.orientation, WikiCommons.configuration),
-  WIKISOURCE_FR(WikisourceFr.code, WikisourceFr.codeCW, WikisourceFr.name,
-                WikisourceFr.serverUrl, WikisourceFr.apiUrl, WikisourceFr.indexUrl,
-                WikisourceFr.orientation, WikisourceFr.configuration),
-  WIKIVERSITY_FR(WikiversityFr.code, WikiversityFr.codeCW, WikiversityFr.name,
-                 WikiversityFr.serverUrl, WikiversityFr.apiUrl, WikiversityFr.indexUrl,
-                 WikiversityFr.orientation, WikiversityFr.configuration);
+  AF(new WikipediaAf()),
+  AR(new WikipediaAr()),
+  BAR(new WikipediaBar()),
+  CA(new WikipediaCa()),
+  CS(new WikipediaCs()),
+  CY(new WikipediaCy()),
+  DA(new WikipediaDa()),
+  DE(new WikipediaDe()),
+  EN(new WikipediaEn()),
+  EO(new WikipediaEo()),
+  ES(new WikipediaEs()),
+  FI(new WikipediaFi()),
+  FR(new WikipediaFr()),
+  FY(new WikipediaFy()),
+  GD(new WikipediaGd()),
+  HE(new WikipediaHe()),
+  HIF(new WikipediaHif()),
+  HU(new WikipediaHu()),
+  ID(new WikipediaId()),
+  IS(new WikipediaIs()),
+  IT(new WikipediaIt()),
+  JA(new WikipediaJa()),
+  LA(new WikipediaLa()),
+  NDS(new WikipediaNds()),
+  NDS_NL(new WikipediaNdsNl()),
+  NL(new WikipediaNl()),
+  NO(new WikipediaNo()),
+  PDC(new WikipediaPdc()),
+  PL(new WikipediaPl()),
+  PT(new WikipediaPt()),
+  RO(new WikipediaRo()),
+  RU(new WikipediaRu()),
+  SK(new WikipediaSk()),
+  SL(new WikipediaSl()),
+  SV(new WikipediaSv()),
+  TR(new WikipediaTr()),
+  UK(new WikipediaUk()),
+  YI(new WikipediaYi()),
+  ZH(new WikipediaZh()),
+  COMMONS(new WikipediaCommons()),
 
-  private final String code;
+  WIKISOURCE_FR(new WikisourceFr()),
 
-  private final String codeCW;
-  private final String title;
-  private final String serverUrl;
-  private final String apiUrl;
-  private final String wikiUrl;
-  private final ComponentOrientation componentOrientation;
+  WIKIVERSITY_FR(new WikiversityFr());
+
+  private final AbstractWikiSettings settings;
+
   private final Properties configuration; // TODO : variables locales à la fonction initConfiguration
 
   private String helpUrl;
@@ -254,53 +200,14 @@ public enum EnumWikipedia {
   private Properties      checkWikiConfig;
 
   /**
-   * @param code Code.
-   * @param title Title.
-   * @param serverUrl URL of server.
-   * @param apiUrl URL of api.php.
-   * @param wikiUrl URL of the wiki.
-   * @param configPage Configuration page.
+   * @param settigs Wiki settings.
    */
-  EnumWikipedia(
-      String code,
-      String title,
-      String serverUrl,
-      String apiUrl,
-      String wikiUrl,
-      ComponentOrientation componentOrientation,
-      String configPage) {
-    this(code, code + "wiki", title, serverUrl, apiUrl, wikiUrl, componentOrientation, configPage);
-  }
-
-  /**
-   * @param code Code.
-   * @param codeCW Check Wiki code.
-   * @param title Title.
-   * @param serverUrl URL of server.
-   * @param apiUrl URL of api.php.
-   * @param wikiUrl URL of the wiki.
-   * @param configPage Configuration page.
-   */
-  EnumWikipedia(
-      String code,
-      String codeCW,
-      String title,
-      String serverUrl,
-      String apiUrl,
-      String wikiUrl,
-      ComponentOrientation componentOrientation,
-      String configPage) {
-    this.code = code;
-    this.codeCW = codeCW;
-    this.title = title;
-    this.serverUrl = serverUrl;
-    this.apiUrl = apiUrl;
-    this.wikiUrl = wikiUrl;
+  EnumWikipedia(AbstractWikiSettings settings) {
+    this.settings = settings;
     this.helpUrl = null;
     this.helpPage = null;
-    this.configPage = configPage;
+    this.configPage = settings.getConfigurationPage();
     this.configuration = new Properties();
-    this.componentOrientation = componentOrientation;
     this.disambiguationText = null;
     this.wiktionaryInterwiki = null;
     this.wiktionaryMatches = null;
@@ -332,7 +239,7 @@ public enum EnumWikipedia {
    */
   public static EnumWikipedia getWikipedia(String code) {
     for (EnumWikipedia e : EnumWikipedia.values()) {
-      if (e.getCode().equals(code)) {
+      if (e.getSettings().getCode().equals(code)) {
         return e;
       }
     }
@@ -346,7 +253,7 @@ public enum EnumWikipedia {
     Locale locale = Locale.getDefault();
     if ((locale != null) && (locale.getLanguage() != null)) {
       for (EnumWikipedia e : EnumWikipedia.values()) {
-        if (e.getCode().equals(locale.getLanguage())) {
+        if (e.getSettings().getCode().equals(locale.getLanguage())) {
           return e;
         }
       }
@@ -371,83 +278,10 @@ public enum EnumWikipedia {
   }
 
   /**
-   * @return Code.
+   * @return Wiki settings.
    */
-  public String getCode() {
-    return code;
-  }
-
-  /**
-   * @return Code for Check Wiki.
-   */
-  public String getCheckWikiCode() {
-    return codeCW;
-  }
-
-  /**
-   * @return Title.
-   */
-  public String getTitle() {
-    return title;
-  }
-
-  /**
-   * @return URL of server.
-   */
-  public String getServerURL() {
-    return serverUrl;
-  }
-
-  /**
-   * @return URL of api.php.
-   */
-  public String getApiURL() {
-    return apiUrl;
-  }
-
-  /**
-   * @return URL of the wiki.
-   */
-  public String getWikiURL() {
-    return wikiUrl;
-  }
-
-  /**
-   * @param pageTitle Title.
-   * @param redirect Follow redirect ?
-   * @return URL of the wiki.
-   */
-  public String getWikiURL(String pageTitle, boolean redirect) {
-    try {
-      return getWikiURL() +
-             "?title=" + URLEncoder.encode(pageTitle, "UTF-8") +
-             (redirect ? "" : "&redirect=no");
-    } catch (UnsupportedEncodingException e) {
-      return getWikiURL();
-    }
-  }
-
-  /**
-   * @param pageTitle Title.
-   * @param action Action.
-   * @return URL of the wiki.
-   */
-  public String getWikiURL(String pageTitle, String action) {
-    try {
-      return getWikiURL() +
-             "?title=" + URLEncoder.encode(pageTitle, "UTF-8") +
-             "&redirect=no" +
-             "&action=" + action;
-    } catch (UnsupportedEncodingException e) {
-      return getWikiURL();
-    }
-  }
-
-  /**
-   * @return Component orientation.
-   */
-  public ComponentOrientation getComponentOrientation() {
-    return componentOrientation;
+  public AbstractWikiSettings getSettings() {
+    return settings;
   }
 
   /**
@@ -1288,7 +1122,7 @@ public enum EnumWikipedia {
     }
     String result = null;
     if ((useWiki) && (checkWikiConfig != null)) {
-      result = checkWikiConfig.getProperty(errorPrefix + codeCW, null);
+      result = checkWikiConfig.getProperty(errorPrefix + settings.getCodeCheckWiki(), null);
     }
     if ((result != null) && ((acceptEmpty) || (result.trim().length() > 0))) {
       return result.trim();
@@ -1690,6 +1524,6 @@ public enum EnumWikipedia {
    */
   @Override
   public String toString() {
-    return getCode() + " - " + getTitle();
+    return settings.toString();
   }
 }

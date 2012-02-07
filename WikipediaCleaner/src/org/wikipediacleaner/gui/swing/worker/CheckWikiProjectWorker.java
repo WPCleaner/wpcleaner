@@ -77,7 +77,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
     // Retrieving errors
     boolean errorLoaded = false;
     APIException exception = null;
-    String code = getWikipedia().getCheckWikiCode().replace("-", "_");
+    String code = getWikipedia().getSettings().getCodeCheckWiki().replace("-", "_");
     if (selectedAlgorithms != null) {
       for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
         try {
