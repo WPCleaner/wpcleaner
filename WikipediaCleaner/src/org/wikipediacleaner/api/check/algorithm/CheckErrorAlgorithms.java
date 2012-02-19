@@ -61,7 +61,6 @@ public final class CheckErrorAlgorithms {
         Class algorithmClass = Class.forName(className);
         algorithm = (CheckErrorAlgorithm) algorithmClass.newInstance();
         algorithm.setPriority(getPriority(wikipedia, errorNumber));
-        System.err.println("Priority: " + algorithm.getPriority());
         algorithm.setShortDescription(getShortDescription(wikipedia, errorNumber));
         algorithm.setLongDescription(getLongDescription(wikipedia, errorNumber));
         algorithm.setLink(getLink(wikipedia, errorNumber));
