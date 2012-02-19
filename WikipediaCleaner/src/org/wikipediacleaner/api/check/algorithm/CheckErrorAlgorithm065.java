@@ -21,9 +21,8 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementImage;
 
 
 /**
@@ -52,87 +51,44 @@ public class CheckErrorAlgorithm065 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    int startIndex = 0;
-    boolean result = false;
-    Namespace imageNamespace = Namespace.getNamespace(
-        Namespace.IMAGE, pageAnalysis.getWikipedia().getNamespaces());
-    if (imageNamespace == null) {
-      return result;
+    // Check every image
+    Collection<PageElementImage> images = pageAnalysis.getImages();
+    if ((images == null) || (images.isEmpty())) {
+      return false;
     }
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      if (contents.startsWith("[[", startIndex)) {
-        int beginIndex = startIndex;
-        int currentIndex = beginIndex + 2;
-
-        // Namespace
-        int linkIndex = currentIndex;
-        while ((currentIndex < contents.length()) &&
-               (contents.charAt(currentIndex) != ':') &&
-               (contents.charAt(currentIndex) != '|') &&
-               (contents.charAt(currentIndex) != ']') &&
-               (contents.charAt(currentIndex) != '[')) {
-          currentIndex++;
-        }
-
-        // Check if namespace is Image
-        if ((currentIndex < contents.length()) &&
-            (contents.charAt(currentIndex) == ':') &&
-            (imageNamespace.isPossibleName(contents.substring(linkIndex, currentIndex).trim()))) {
-
-          // Link itself
-          currentIndex++;
-          while ((currentIndex < contents.length()) &&
-                 (contents.charAt(currentIndex) != '|') &&
-                 (contents.charAt(currentIndex) != ']')) {
-            currentIndex++;
+    boolean result = false;
+    for (PageElementImage image : images) {
+      String description = image.getDescription();
+      if (description != null) {
+        boolean breakFound = false;
+        boolean shouldStop = false;
+        while ((description.length() > 0) && (!shouldStop)) {
+          shouldStop = true;
+          while ((description.length() > 0) &&
+                 (Character.isWhitespace(description.charAt(description.length() - 1)))) {
+            description = description.substring(0, description.length() - 1);
           }
-
-          // Go to the end
-          if ((currentIndex < contents.length()) &&
-              (contents.charAt(currentIndex) == '|')) {
-            currentIndex++;
-          }
-          linkIndex = currentIndex;
-          while ((currentIndex < contents.length()) &&
-                 (!contents.startsWith("]]", currentIndex))) {
-            currentIndex++;
-          }
-          if ((currentIndex < contents.length()) &&
-              (contents.startsWith("]]", currentIndex))) {
-            EnumWikipedia wikipedia = pageAnalysis.getWikipedia();
-            for (int tmpIndex = linkIndex; tmpIndex <= currentIndex; tmpIndex++) {
-              if ((contents.charAt(tmpIndex) == '|') ||
-                  (contents.charAt(tmpIndex) == ']')) {
-                String arg = contents.substring(linkIndex, tmpIndex);
-                if (!wikipedia.isPossibleAliasForImgMagicWord(arg)) {
-                  String breakFound = null;
-                  for (String possibleBreak : possibleBreaks) {
-                    if (arg.endsWith(possibleBreak)) {
-                      breakFound = possibleBreak;
-                    }
-                  }
-                  if (breakFound != null) {
-                    if (errors == null) {
-                      return true;
-                    }
-                    result = true;
-                    CheckErrorResult errorResult = createCheckErrorResult(
-                        pageAnalysis.getPage(), tmpIndex - breakFound.length(), tmpIndex);
-                    errorResult.addReplacement("");
-                    errors.add(errorResult);
-                  }
-                }
-                tmpIndex++;
-                linkIndex = tmpIndex;
-              }
+          for (String possibleBreak : possibleBreaks) {
+            if (description.endsWith(possibleBreak)) {
+              breakFound = true;
+              shouldStop = false;
+              description = description.substring(
+                  0, description.length() - possibleBreak.length());
             }
-            currentIndex += 2;
           }
         }
-        startIndex = currentIndex;
-      } else {
-        startIndex++;
+        if (breakFound) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              image.getBeginIndex(),
+              image.getEndIndex());
+          errorResult.addReplacement(image.getDescriptionReplacement(description));
+          errors.add(errorResult);
+        }
       }
     }
     return result;
