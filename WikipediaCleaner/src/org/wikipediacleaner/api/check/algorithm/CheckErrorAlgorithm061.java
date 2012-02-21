@@ -55,7 +55,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve separator between several <ref> tags
-    String separator = pageAnalysis.getWikipedia().getCheckWikiProperty(
+    String separator = pageAnalysis.getWikipedia().getCWConfiguration().getProperty(
         "separator", 61, true, false, false);
     if (separator == null) {
       separator = "";

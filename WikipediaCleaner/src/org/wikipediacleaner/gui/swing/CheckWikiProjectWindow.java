@@ -1485,7 +1485,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
    */
   @Override
   protected String getAutomaticComment() {
-    return getWikipedia().getCheckWikiComment();
+    return getWikipedia().getCWConfiguration().getComment();
   }
 
   /* (non-Javadoc)
@@ -1668,7 +1668,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       // Parameters description
       try {
         String url =
-          getWikipedia().getSettings().getURL(getWikipedia().getCheckWikiTraduction(), true);
+          getWikipedia().getSettings().getURL(getWikipedia().getCWConfiguration().getTranslationPage(), true);
         StringBuilder parametersDescription = new StringBuilder();
         parametersDescription.append(GT._(
             "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :",
@@ -1881,7 +1881,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
             "to the translation page ({1}) on \"{2}\"",
             new Object[] {
                 "error_" + format.format(error.getErrorNumber()) + "_link_" + getWikipedia().getSettings().getCodeCheckWiki(),
-                getWikipedia().getCheckWikiTraduction(),
+                getWikipedia().getCWConfiguration().getTranslationPage(),
                 getWikipedia().toString()
             }));
       }

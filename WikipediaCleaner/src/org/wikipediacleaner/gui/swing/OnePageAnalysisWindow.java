@@ -1041,7 +1041,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         if (comment.length() > 0) {
           comment.append(" / ");
         }
-        comment.append(getWikipedia().getCheckWikiComment());
+        comment.append(getWikipedia().getCWConfiguration().getComment());
         Configuration config = Configuration.getConfiguration();
         for (CheckErrorAlgorithm errorFixed : errorsFixed) {
           comment.append(" - ");

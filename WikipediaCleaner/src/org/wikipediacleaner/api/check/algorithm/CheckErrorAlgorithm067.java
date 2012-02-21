@@ -55,7 +55,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve possible abreviations before <ref> tag
-    String abbreviations = pageAnalysis.getWikipedia().getCheckWikiProperty(
+    String abbreviations = pageAnalysis.getWikipedia().getCWConfiguration().getProperty(
         "abbreviations", 67, true, false, false);
     String[] abbreviationsList = null;
     if (abbreviations != null) {
@@ -63,7 +63,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve separator between several <ref> tags
-    String separator = pageAnalysis.getWikipedia().getCheckWikiProperty(
+    String separator = pageAnalysis.getWikipedia().getCWConfiguration().getProperty(
         "separator", 67, true, false, false);
     if (separator == null) {
       separator = "";
