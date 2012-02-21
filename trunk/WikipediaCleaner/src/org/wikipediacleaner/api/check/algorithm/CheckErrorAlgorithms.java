@@ -149,7 +149,8 @@ public final class CheckErrorAlgorithms {
   public static int getPriority(
       EnumWikipedia wikipedia, int errorNumber) {
     int errorPriority = PRIORITY_UNKOWN;
-    String prioWiki = wikipedia.getCheckWikiProperty("prio", errorNumber, true, false, false);
+    String prioWiki = wikipedia.getCWConfiguration().getProperty(
+        "prio", errorNumber, true, false, false);
     if (prioWiki != null) {
       try {
         errorPriority = Integer.parseInt(prioWiki);
@@ -158,7 +159,8 @@ public final class CheckErrorAlgorithms {
       }
     }
     if (errorPriority == PRIORITY_UNKOWN) {
-      String prioScript = wikipedia.getCheckWikiProperty("prio", errorNumber, false, true, false);
+      String prioScript = wikipedia.getCWConfiguration().getProperty(
+          "prio", errorNumber, false, true, false);
       if (prioScript != null) {
         try {
           errorPriority = Integer.parseInt(prioScript);
@@ -168,7 +170,8 @@ public final class CheckErrorAlgorithms {
       }
     }
     if (errorPriority == PRIORITY_DEACTIVATED) {
-      String botOnly = wikipedia.getCheckWikiProperty("bot", errorNumber, true, true, false);
+      String botOnly = wikipedia.getCWConfiguration().getProperty(
+          "bot", errorNumber, true, true, false);
       if ((botOnly != null) && Boolean.valueOf(botOnly.trim())) {
         errorPriority = PRIORITY_BOT_ONLY;
       }
@@ -246,7 +249,7 @@ public final class CheckErrorAlgorithms {
    */
   public static String getShortDescription(
       EnumWikipedia wikipedia, int errorNumber) {
-    return wikipedia.getCheckWikiProperty("head", errorNumber, true, true, false);
+    return wikipedia.getCWConfiguration().getProperty("head", errorNumber, true, true, false);
   }
 
   /**
@@ -258,7 +261,7 @@ public final class CheckErrorAlgorithms {
    */
   public static String getLongDescription(
       EnumWikipedia wikipedia, int errorNumber) {
-    return wikipedia.getCheckWikiProperty("desc", errorNumber, true, true, false);
+    return wikipedia.getCWConfiguration().getProperty("desc", errorNumber, true, true, false);
   }
 
   /**
@@ -270,7 +273,7 @@ public final class CheckErrorAlgorithms {
    */
   public static String getLink(
       EnumWikipedia wikipedia, int errorNumber) {
-    return wikipedia.getCheckWikiProperty("link", errorNumber, true, true, false);
+    return wikipedia.getCWConfiguration().getProperty("link", errorNumber, true, true, false);
   }
 
   /**
@@ -282,7 +285,7 @@ public final class CheckErrorAlgorithms {
    */
   public static String[] getWhiteList(
       EnumWikipedia wikipedia, int errorNumber) {
-    String whiteListString = wikipedia.getCheckWikiProperty(
+    String whiteListString = wikipedia.getCWConfiguration().getProperty(
         "whitelist", errorNumber, true, false, false);
     if (whiteListString == null) {
       return null;

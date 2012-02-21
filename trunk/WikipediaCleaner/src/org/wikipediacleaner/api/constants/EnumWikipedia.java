@@ -21,7 +21,6 @@ package org.wikipediacleaner.api.constants;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -91,7 +90,6 @@ import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.api.data.TemplateMatcher1L2T;
 import org.wikipediacleaner.api.data.TemplateMatcher1LT;
 import org.wikipediacleaner.api.data.TemplateMatcher1L;
-import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
@@ -188,16 +186,13 @@ public enum EnumWikipedia {
   private List<String> mostDisambiguationLinks;
   private Set<String> disambiguationPages;
   private List<Page> disambiguationTemplates;
-  private String checkWikiProject;
-  private String checkWikiComment;
-  private String checkWikiTranslation;
 
   private List<Namespace> namespaces;
   private List<Language>  languages;
   private List<Interwiki> interwikis;
   private Map<String, MagicWord> magicWords;
-  private Properties      checkWikiGeneralConfig;
-  private Properties      checkWikiConfig;
+
+  private final CWConfiguration CWConfiguration;
 
   /**
    * @param settigs Wiki settings.
@@ -217,9 +212,7 @@ public enum EnumWikipedia {
     this.templatesForLinkingText = null;
     this.currentDisambiguationList = null;
     this.mostDisambiguationLinks = null;
-    this.checkWikiProject = null;
-    this.checkWikiComment = null;
-    this.checkWikiTranslation = null;
+    this.CWConfiguration = new CWConfiguration(settings.getCodeCheckWiki());
   }
 
   /**
@@ -1044,21 +1037,15 @@ public enum EnumWikipedia {
 
       // Check Wiki project page
       tmp = configuration.getProperty("check_wiki_project_page", null);
-      if ((tmp != null) && (tmp.trim().length() > 0)) {
-        checkWikiProject = tmp.trim();
-      }
+      CWConfiguration.setProjectPage(tmp);
 
       // Check Wiki comment
       tmp = configuration.getProperty("check_wiki_comment", null);
-      if ((tmp != null) && (tmp.trim().length() > 0)) {
-        checkWikiComment = tmp.trim();
-      }
+      CWConfiguration.setComment(tmp);
 
       // Check Wiki translation page
       tmp = configuration.getProperty("check_wiki_translation_page", null);
-      if ((tmp != null) && (tmp.trim().length() > 0)) {
-        checkWikiTranslation = tmp.trim();
-      }
+      CWConfiguration.setTranslationPage(tmp);
     }
   }
 
@@ -1102,45 +1089,6 @@ public enum EnumWikipedia {
         disambiguationWarningCommentDone = tmp.trim();
       }
     }
-  }
-
-  /**
-   * @param configuration Check Wiki configuration (general).
-   */
-  public void setCheckWikiGeneralConfiguration(Properties configuration) {
-    this.checkWikiGeneralConfig = configuration;
-  }
-
-  private final DecimalFormat errorNumberFormat = new DecimalFormat("000");
-
-  public String getCheckWikiProperty(
-      String propertyName, int errorNumber,
-      boolean useWiki, boolean useGeneral, boolean acceptEmpty) {
-    String errorPrefix;
-    synchronized (errorNumberFormat) {
-      errorPrefix = "error_" + errorNumberFormat.format(errorNumber) + "_" + propertyName + "_";
-    }
-    String result = null;
-    if ((useWiki) && (checkWikiConfig != null)) {
-      result = checkWikiConfig.getProperty(errorPrefix + settings.getCodeCheckWiki(), null);
-    }
-    if ((result != null) && ((acceptEmpty) || (result.trim().length() > 0))) {
-      return result.trim();
-    }
-    if ((useGeneral) && (checkWikiGeneralConfig != null)) {
-      result = checkWikiGeneralConfig.getProperty(errorPrefix + "script", null);
-    }
-    if (result != null) {
-      return result.trim();
-    }
-    return null;
-  }
-
-  /**
-   * @param configuration Check Wiki configuration for this Wiki.
-   */
-  public void setCheckWikiConfiguration(Properties configuration) {
-    this.checkWikiConfig = configuration;
   }
 
   /**
@@ -1381,10 +1329,17 @@ public enum EnumWikipedia {
   }
 
   /**
+   * @return Check Wiki project configuration.
+   */
+  public CWConfiguration getCWConfiguration() {
+    return CWConfiguration;
+  }
+
+  /**
    * @return Flag indicating if the Check Wiki project is available.
    */
   public boolean isCheckWikiProjectAvailable() {
-    String project = getCheckWikiProject();
+    String project = CWConfiguration.getProjectPage();
     if (project != null) {
       return true;
     }
@@ -1395,36 +1350,6 @@ public enum EnumWikipedia {
       }
     }
     return false;
-  }
-
-  /**
-   * @return Check Wikipedia Project page.
-   */
-  public String getCheckWikiProject() {
-    if (checkWikiProject != null) {
-      return checkWikiProject;
-    }
-    return null;
-  }
-
-  /**
-   * @return Check Wikipedia comment.
-   */
-  public String getCheckWikiComment() {
-    if (checkWikiComment != null) {
-      return checkWikiComment;
-    }
-    return GT._("Fixed using [[{0}]]", getCheckWikiProject());
-  }
-
-  /**
-   * @return Check Wikipedia Project traduction.
-   */
-  public String getCheckWikiTraduction() {
-    if (checkWikiTranslation != null) {
-      return checkWikiTranslation;
-    }
-    return null;
   }
 
   /**

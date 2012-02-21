@@ -1473,7 +1473,7 @@ public class MainWindow
             while (getNextCheckWikiParameter(properties, reader)) {
               //
             }
-            getWikipedia().setCheckWikiGeneralConfiguration(properties);
+            getWikipedia().getCWConfiguration().setGeneralConfiguration(properties);
             try {
               reader.close();
             } catch (IOException e) {
@@ -1488,10 +1488,12 @@ public class MainWindow
         try {
           setText(GT._("Retrieving Check Wiki configuration"));
           Properties properties = null;
-          if (getWikipedia().getCheckWikiTraduction() != null) {
+          if (getWikipedia().getCWConfiguration().getTranslationPage() != null) {
             MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
             Page page = DataManager.getPage(
-                getWikipedia(), getWikipedia().getCheckWikiTraduction(), null, null);
+                getWikipedia(),
+                getWikipedia().getCWConfiguration().getTranslationPage(),
+                null, null);
             mw.retrieveContents(getWikipedia(), page, true, false, false);
             if (Boolean.TRUE.equals(page.isExisting())) {
               BufferedReader reader = new BufferedReader(new StringReader(page.getContents()));
@@ -1499,7 +1501,7 @@ public class MainWindow
               while (getNextCheckWikiParameter(properties, reader)) {
                 //
               }
-              getWikipedia().setCheckWikiConfiguration(properties);
+              getWikipedia().getCWConfiguration().setWikiConfiguration(properties);
               try {
                 reader.close();
               } catch (IOException e) {

@@ -66,7 +66,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve possible templates to replace the link to other language
-    String templatesParam = pageAnalysis.getWikipedia().getCheckWikiProperty(
+    String templatesParam = pageAnalysis.getWikipedia().getCWConfiguration().getProperty(
         "template", 68, true, false, false);
     String[] templatesList = null;
     if (templatesParam != null) {

@@ -57,7 +57,7 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve preferred category name
-    String preferredCategory = pageAnalysis.getWikipedia().getCheckWikiProperty(
+    String preferredCategory = pageAnalysis.getWikipedia().getCWConfiguration().getProperty(
         "category", 21, true, false, false);
 
     // Analyze the text from the begining
