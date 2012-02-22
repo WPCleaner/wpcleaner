@@ -132,16 +132,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Page among the white list ?
    */
   public boolean isInWhiteList(String title) {
-    String[] whiteList = configuration.getWhiteList();
-    if ((whiteList == null) || (title == null)) {
-      return false;
-    }
-    for (int i = 0; i < whiteList.length; i++) {
-      if (title.equals(whiteList[i])) {
-        return true;
-      }
-    }
-    return false;
+    return configuration.isInWhiteList(title);
   }
 
   /**
