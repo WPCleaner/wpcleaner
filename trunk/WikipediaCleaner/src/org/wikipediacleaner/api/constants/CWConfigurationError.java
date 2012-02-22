@@ -18,8 +18,12 @@
 
 package org.wikipediacleaner.api.constants;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -93,6 +97,8 @@ public class CWConfigurationError {
       setLink(value, general);
     } else if (name.equals("whitelist")) {
       setWhiteList(value, general);
+    } else if (name.equals("whitelistpage")) {
+      setWhiteListPageName(value, general);
     } else {
       if (general) {
         if (value == null) {
@@ -396,9 +402,51 @@ public class CWConfigurationError {
   /* ================================================================================= */
 
   /**
+   * Page containing the white list.
+   */
+  private String whiteListPageName = null;
+
+  /**
+   * @param value Page containing the white list.
+   * @param general Flag indicating if general configuration is concerned.
+   */
+  private void setWhiteListPageName(String value, boolean general) {
+    if (general) {
+      return;
+    }
+    whiteListPageName = value;
+  }
+
+  /**
+   * @return Page containing the white list.
+   */
+  public String getWhiteListPageName() {
+    return whiteListPageName;
+  }
+
+  /**
    * White list.
    */
-  private String[] whiteListWiki = null;
+  private Set<String> whiteListPages = null;
+
+  /**
+   * @param whiteListPage Page containing the white list.
+   */
+  public void setWhiteList(Page whiteListPage) {
+    List<Page> pages = whiteListPage.getLinks();
+    whiteListPages = null;
+    if ((pages != null) && (pages.size() > 0)) {
+      whiteListPages = new HashSet<String>();
+      for (Page page : pages) {
+        whiteListPages.add(page.getTitle());
+      }
+    }
+  }
+
+  /**
+   * White list.
+   */
+  private Set<String> whiteListWiki = null;
 
   /**
    * @param value White list value.
@@ -408,17 +456,39 @@ public class CWConfigurationError {
     if (general) {
       return;
     }
+    whiteListWiki = null;
     if (value != null) {
-      whiteListWiki = EnumWikipedia.convertPropertyToStringArray(value);
-    } else {
-      whiteListWiki = null;
+      String[] tmp = EnumWikipedia.convertPropertyToStringArray(value);
+      if (tmp != null) {
+        whiteListWiki = new HashSet<String>();
+        for (int i = 0; i < tmp.length; i++) {
+          whiteListWiki.add(tmp[i]);
+        }
+      }
     }
   }
 
   /**
    * @return White list.
    */
-  public String[] getWhiteList() {
+  private Set<String> getWhiteList() {
+    if (whiteListPages != null) {
+      return whiteListPages;
+    }
     return whiteListWiki;
+  }
+
+  /**
+   * Tell if a page is among the white list.
+   * 
+   * @param title Page title.
+   * @return Page among the white list ?
+   */
+  public boolean isInWhiteList(String title) {
+    Set<String> whiteList = getWhiteList();
+    if ((whiteList == null) || (title == null)) {
+      return false;
+    }
+    return whiteList.contains(title);
   }
 }

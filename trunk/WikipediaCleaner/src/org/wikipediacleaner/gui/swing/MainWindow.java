@@ -28,7 +28,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,6 +36,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -65,6 +65,8 @@ import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
+import org.wikipediacleaner.api.constants.CWConfiguration;
+import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
@@ -1459,104 +1461,70 @@ public class MainWindow
         setText(GT._("Retrieving suggestions for text replacements"));
         getWikipedia().initSuggestions(api, reloadOnly);
 
-        // Retrieving Check Wiki configuration
+        // Retrieving general Check Wiki configuration
+        CWConfiguration cwConfiguration = getWikipedia().getCWConfiguration();
         String code = getWikipedia().getSettings().getCodeCheckWiki().replace("-", "_");
         try {
           setText(GT._("Retrieving Check Wiki configuration"));
           InputStream stream = APIFactory.getAPI().askToolServerGet(
               "~sk/checkwiki/" + code + "/" + code + "_translation.txt",
               true);
-          Properties properties = null;
           if (stream != null) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-            properties = new Properties();
-            while (getNextCheckWikiParameter(properties, reader)) {
-              //
-            }
-            getWikipedia().getCWConfiguration().setGeneralConfiguration(properties);
-            try {
-              reader.close();
-            } catch (IOException e) {
-              // Nothing
-            }
+            cwConfiguration.setGeneralConfiguration(
+                new InputStreamReader(stream, "UTF-8"));
           }
         } catch (APIException e) {
           System.err.println("Error retrieving Check Wiki configuration: " + e.getMessage());
         } catch (UnsupportedEncodingException e) {
           System.err.println("Error retrieving Check Wiki configuration: " + e.getMessage());
         }
+
+        // Retrieving specific Check Wiki configuration
         try {
           setText(GT._("Retrieving Check Wiki configuration"));
-          Properties properties = null;
           if (getWikipedia().getCWConfiguration().getTranslationPage() != null) {
             MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
             Page page = DataManager.getPage(
                 getWikipedia(),
-                getWikipedia().getCWConfiguration().getTranslationPage(),
+                cwConfiguration.getTranslationPage(),
                 null, null);
             mw.retrieveContents(getWikipedia(), page, true, false, false);
             if (Boolean.TRUE.equals(page.isExisting())) {
-              BufferedReader reader = new BufferedReader(new StringReader(page.getContents()));
-              properties = new Properties();
-              while (getNextCheckWikiParameter(properties, reader)) {
-                //
-              }
-              getWikipedia().getCWConfiguration().setWikiConfiguration(properties);
-              try {
-                reader.close();
-              } catch (IOException e) {
-                // Nothing
-              }
+              cwConfiguration.setWikiConfiguration(new StringReader(page.getContents()));
             }
-            CheckErrorAlgorithms.initializeAlgorithms(getWikipedia());
           }
         } catch (APIException e) {
           System.err.println("Error retrieving Check Wiki configuration: " + e.getMessage());
         }
+
+        // Retrieving white lists
+        HashMap<String, Page> whiteListPages = new HashMap<String, Page>();
+        for (int i = 0; i < CWConfiguration.MAX_ERROR_NUMBER; i++) {
+          CWConfigurationError error = cwConfiguration.getErrorConfiguration(i);
+          if ((error != null) && (error.getWhiteListPageName() != null)) {
+            Page page = DataManager.getPage(getWikipedia(), error.getWhiteListPageName(), null, null);
+            whiteListPages.put(error.getWhiteListPageName(), page);
+          }
+        }
+        if (whiteListPages.size() > 0) {
+          MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
+          for (Page page : whiteListPages.values()) {
+            mw.retrieveAllLinks(getWikipedia(), page, null, null, false);
+          }
+          mw.block(true);
+          for (int i = 0; i < CWConfiguration.MAX_ERROR_NUMBER; i++) {
+            CWConfigurationError error = cwConfiguration.getErrorConfiguration(i);
+            if ((error != null) && (error.getWhiteListPageName() != null)) {
+              Page page = whiteListPages.get(error.getWhiteListPageName());
+              error.setWhiteList(page);
+            }
+          }
+        }
+        CheckErrorAlgorithms.initializeAlgorithms(getWikipedia());
       } catch (APIException e) {
         return e;
       }
       return null;
-    }
-
-    /**
-     * Extract next parameter from Check Wiki configuration.
-     *
-     * @param properties Properties to store the next parameter.
-     * @param reader Reader for the configuration.
-     * @return Next parameter found.
-     * @throw APIException.
-     */
-    private boolean getNextCheckWikiParameter(
-        Properties properties, BufferedReader reader) throws APIException {
-      String line;
-      try {
-        while ((line = reader.readLine()) != null) {
-          int posEqual = line.indexOf('=');
-          if (posEqual > 0) {
-            String name = line.substring(0, posEqual);
-            line = line.substring(posEqual + 1);
-            int posEnd = line.indexOf(" END");
-            while (posEnd == -1) {
-              String nextLine = reader.readLine();
-              if (nextLine != null) {
-                line += "\n" + nextLine;
-                posEnd = line.indexOf(" END");
-              } else {
-                posEnd = line.length();
-              }
-            }
-            line = line.substring(0, posEnd);
-            if ((name != null) && (line != null)) {
-              properties.setProperty(name.trim(), line);
-            }
-            return true;
-          }
-        }
-      } catch (IOException e) {
-        throw new APIException("Error reading Check Wiki configuration: " + e.getMessage());
-      }
-      return false;
     }
   }
 

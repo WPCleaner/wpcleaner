@@ -18,10 +18,14 @@
 
 package org.wikipediacleaner.api.constants;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -155,61 +159,141 @@ public class CWConfiguration {
     for (Entry<Object, Object> property : properties.entrySet()) {
       String name = property.getKey().toString();
       String value = property.getValue().toString();
-      boolean matches = true;
+      setProperty(name, value, suffix, otherSuffix, general);
+    }
+  }
 
-      // Check that property prefix is OK
-      if (matches && name.startsWith(PREFIX)) {
-        name = name.substring(PREFIX.length());
-      } else {
-        matches = false;
+  /**
+   * Set property.
+   * 
+   * @param name Property name.
+   * @param value Property value.
+   * @param suffix Suffix for properties to consider.
+   * @param otherSuffix Suffix for properties not to consider.
+   * @param general Flag indicating if dealing with general properties or wiki properties.
+   */
+  private void setProperty(
+      String name, String value,
+      String suffix, String otherSuffix,
+      boolean general) {
+    boolean matches = true;
+
+    // Check that property prefix is OK
+    if (matches && name.startsWith(PREFIX)) {
+      name = name.substring(PREFIX.length());
+    } else {
+      matches = false;
+    }
+
+    // Check that property suffix is OK
+    boolean goodSuffix = false;
+    if (matches && name.endsWith(suffix)) {
+      name = name.substring(0, name.length() - suffix.length());
+      goodSuffix = true;
+    } else if (matches && name.endsWith(otherSuffix)) {
+      name = name.substring(0, name.length() - otherSuffix.length());
+    } else {
+      matches = false;
+    }
+    if (matches && name.endsWith("_")) {
+      name = name.substring(0, name.length() - 1);
+    } else {
+      matches = false;
+    }
+
+    // Retrieve error number
+    int errorNumber = -1;
+    if (matches && (name.length() > 4) &&
+        Character.isDigit(name.charAt(0)) &&
+        Character.isDigit(name.charAt(1)) &&
+        Character.isDigit(name.charAt(2)) &&
+        (name.charAt(3) == '_')) {
+      try {
+        errorNumber = Integer.parseInt(name.substring(0, 3));
+      } catch (NumberFormatException e) {
+        // Not supposed to happen
       }
+      name = name.substring(4);
+    } else {
+      matches = false;
+    }
 
-      // Check that property suffix is OK
-      boolean goodSuffix = false;
-      if (matches && name.endsWith(suffix)) {
-        name = name.substring(0, name.length() - suffix.length());
-        goodSuffix = true;
-      } else if (matches && name.endsWith(otherSuffix)) {
-        name = name.substring(0, name.length() - otherSuffix.length());
-      } else {
-        matches = false;
-      }
-
-      // Retrieve error number
-      int errorNumber = -1;
-      if (matches && (name.length() > 4) &&
-          Character.isDigit(name.charAt(0)) &&
-          Character.isDigit(name.charAt(1)) &&
-          Character.isDigit(name.charAt(2)) &&
-          (name.charAt(3) == '_')) {
-        try {
-          errorNumber = Integer.parseInt(name.substring(0, 3));
-        } catch (NumberFormatException e) {
-          // Not supposed to happen
+    // Save property
+    if (matches && (errorNumber > 0) && (errorNumber <= MAX_ERROR_NUMBER)) {
+      if (goodSuffix) {
+        CWConfigurationError error = null;
+        if (configuration.size() > errorNumber) {
+          error = configuration.get(errorNumber);
         }
-        name = name.substring(4);
-      } else {
-        matches = false;
-      }
-
-      // Save property
-      if (matches && (errorNumber > 0) && (errorNumber <= MAX_ERROR_NUMBER)) {
-        if (goodSuffix) {
-          CWConfigurationError error = null;
-          if (configuration.size() > errorNumber) {
-            error = configuration.get(errorNumber);
+        if (error == null) {
+          error = new CWConfigurationError(errorNumber);
+          configuration.ensureCapacity(errorNumber + 1);
+          while (configuration.size() < errorNumber + 1) {
+            configuration.add(configuration.size(), null);
           }
-          if (error == null) {
-            error = new CWConfigurationError(errorNumber);
-            configuration.ensureCapacity(errorNumber + 1);
-            while (configuration.size() < errorNumber + 1) {
-              configuration.add(configuration.size(), null);
+          configuration.set(errorNumber, error);
+        }
+        error.addProperty(name, value, general);
+      }
+    }
+  }
+
+  /**
+   * Extract next parameter from Check Wiki configuration.
+   *
+   * @param reader Reader for the configuration.
+   * @param suffix Suffix for properties to consider.
+   * @param otherSuffix Suffix for properties not to consider.
+   * @param general Flag indicating if dealing with general properties or wiki properties.
+   * @return Next parameter found.
+   * @throw APIException.
+   */
+  private boolean setNextParameter(
+      BufferedReader reader,
+      String suffix, String otherSuffix,
+      boolean general) throws APIException {
+    String line;
+    try {
+      while ((line = reader.readLine()) != null) {
+        int posEqual = line.indexOf('=');
+        if (posEqual > 0) {
+          String name = line.substring(0, posEqual);
+          line = line.substring(posEqual + 1);
+          int posEnd = line.indexOf(" END");
+          while (posEnd == -1) {
+            String nextLine = reader.readLine();
+            if (nextLine != null) {
+              line += "\n" + nextLine;
+              posEnd = line.indexOf(" END");
+            } else {
+              posEnd = line.length();
             }
-            configuration.set(errorNumber, error);
           }
-          error.addProperty(name, value, general);
+          line = line.substring(0, posEnd);
+          if ((name != null) && (line != null)) {
+            setProperty(name.trim(), line, suffix, otherSuffix, general);
+          }
+          return true;
         }
       }
+    } catch (IOException e) {
+      throw new APIException("Error reading Check Wiki configuration: " + e.getMessage());
+    }
+    return false;
+  }
+
+  /**
+   * @param input Reader for general project configuration.
+   */
+  public void setGeneralConfiguration(Reader input) throws APIException {
+    BufferedReader reader = new BufferedReader(input);
+    while (setNextParameter(reader, "script", code, true)) {
+      //
+    }
+    try {
+      reader.close();
+    } catch (IOException e) {
+      // Nothing
     }
   }
 
@@ -217,14 +301,29 @@ public class CWConfiguration {
    * @param configuration General Check Wiki project configuration.
    */
   public void setGeneralConfiguration(Properties configuration) {
-    setConfiguration(configuration, "_script", "_" + code, true);
+    setConfiguration(configuration, "script", code, true);
+  }
+
+  /**
+   * @param input Reader for project configuration specific for this wiki.
+   */
+  public void setWikiConfiguration(Reader input) throws APIException {
+    BufferedReader reader = new BufferedReader(input);
+    while (setNextParameter(reader, code, "script", false)) {
+      //
+    }
+    try {
+      reader.close();
+    } catch (IOException e) {
+      // Nothing
+    }
   }
 
   /**
    * @param configuration Check Wiki project configuration specific for this wiki.
    */
   public void setWikiConfiguration(Properties configuration) {
-    setConfiguration(configuration, "_" + code, "_script", false);
+    setConfiguration(configuration, code, "script", false);
   }
 
   /**
@@ -237,28 +336,4 @@ public class CWConfiguration {
     }
     return configuration.get(errorNumber);
   }
-
-  /**
-   * @param propertyName Property name.
-   * @param errorNumber Error number.
-   * @param useWiki Flag indicating if wiki configuration can be used.
-   * @param useGeneral Flag indicating if general configuration can be used.
-   * @param acceptEmpty Flag indicating if empty strings are accepted.
-   * @return
-   */
-  /*public String getProperty(
-      String propertyName, int errorNumber,
-      boolean useWiki, boolean useGeneral, boolean acceptEmpty) {
-    if (propertyName == null) {
-      return null;
-    }
-    if ((errorNumber < 0) || (errorNumber >= configuration.size())) {
-      return null;
-    }
-    CWConfigurationError error = configuration.get(errorNumber);
-    if (error == null) {
-      return null;
-    }
-    return error.getProperty(propertyName, useWiki, useGeneral, acceptEmpty);
-  }*/
 }
