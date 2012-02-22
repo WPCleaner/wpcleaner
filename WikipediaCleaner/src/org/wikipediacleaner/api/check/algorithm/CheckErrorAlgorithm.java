@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 
@@ -37,6 +38,11 @@ public interface CheckErrorAlgorithm {
   public boolean isAvailable();
 
   /**
+   * @param configuration Configuration of the error.
+   */
+  public void setConfiguration(CWConfigurationError configuration);
+
+  /**
    * @return Short description of the error.
    * (See Check Wikipedia project for the description of errors)
    */
@@ -49,20 +55,10 @@ public interface CheckErrorAlgorithm {
   public String getShortDescriptionReplaced();
 
   /**
-   * @param desc Short description.
-   */
-  public void setShortDescription(String desc);
-
-  /**
    * @return Long description of the error.
    * (See Check Wikipedia project for the description of errors)
    */
   public String getLongDescription();
-
-  /**
-   * @param desc Long description.
-   */
-  public void setLongDescription(String desc);
 
   /**
    * @return Flag indicating if the detection is fully done.
@@ -75,11 +71,6 @@ public interface CheckErrorAlgorithm {
   public String getLink();
 
   /**
-   * @param link Link to error description.
-   */
-  public void setLink(String link);
-
-  /**
    * Tell if a page is among the white list.
    * 
    * @param title Page title.
@@ -88,19 +79,9 @@ public interface CheckErrorAlgorithm {
   public boolean isInWhiteList(String title);
 
   /**
-   * @param whiteList White list.
-   */
-  public void setWhiteList(String[] whiteList);
-
-  /**
    * @return Priority.
    */
   public int getPriority();
-
-  /**
-   * @param priority Priority.
-   */
-  public void setPriority(int priority);
 
   /**
    * @return Error number.
@@ -113,6 +94,18 @@ public interface CheckErrorAlgorithm {
    * (See Check Wikipedia project for the description of errors)
    */
   public int getErrorNumber();
+
+
+  /**
+   * @param name Property name.
+   * @param useWiki Flag indicating if wiki configuration can be used.
+   * @param useGeneral Flag indicating if general configuration can be used.
+   * @param acceptEmpty Flag indicating if empty strings are accepted.
+   * @return Property value.
+   */
+  public String getSpecificProperty(
+      String name,
+      boolean useWiki, boolean useGeneral, boolean acceptEmpty);
 
   /**
    * Analyze a page to check if errors are present.

@@ -66,11 +66,11 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve possible templates to replace the link to other language
-    String templatesParam = pageAnalysis.getWikipedia().getCWConfiguration().getProperty(
-        "template", 68, true, false, false);
+    String templatesParam = getSpecificProperty(
+        "template", true, false, false);
     String[] templatesList = null;
     if (templatesParam != null) {
-      templatesList = pageAnalysis.getWikipedia().convertPropertyToStringArray(templatesParam);
+      templatesList = EnumWikipedia.convertPropertyToStringArray(templatesParam);
     }
 
     // Analyzing the text from the beginning

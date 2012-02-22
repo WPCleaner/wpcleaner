@@ -86,6 +86,7 @@ import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
+import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -273,35 +274,35 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     boolean noBotOnlyPrioritySelected = true;
     for (CheckErrorAlgorithm algorithm : allAlgorithms) {
       if (algorithm.isAvailable() &&
-          CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
+          CWConfigurationError.isPriorityActive(algorithm.getPriority())) {
         if (!selectedAlgorithms.contains(algorithm)) {
           allErrorsSelected = false;
           switch (algorithm.getPriority()) {
-          case CheckErrorAlgorithms.PRIORITY_TOP:
+          case CWConfigurationError.PRIORITY_TOP:
             allTopPrioritySelected = false;
             break;
-          case CheckErrorAlgorithms.PRIORITY_MIDDLE:
+          case CWConfigurationError.PRIORITY_MIDDLE:
             allMiddlePrioritySelected = false;
             break;
-          case CheckErrorAlgorithms.PRIORITY_LOWEST:
+          case CWConfigurationError.PRIORITY_LOWEST:
             allLowestPrioritySelected = false;
             break;
-          case CheckErrorAlgorithms.PRIORITY_BOT_ONLY:
+          case CWConfigurationError.PRIORITY_BOT_ONLY:
             allBotOnlyPrioritySelected = false;
             break;
           }
         } else {
           switch (algorithm.getPriority()) {
-          case CheckErrorAlgorithms.PRIORITY_TOP:
+          case CWConfigurationError.PRIORITY_TOP:
             noTopPrioritySelected = false;
             break;
-          case CheckErrorAlgorithms.PRIORITY_MIDDLE:
+          case CWConfigurationError.PRIORITY_MIDDLE:
             noMiddlePrioritySelected = false;
             break;
-          case CheckErrorAlgorithms.PRIORITY_LOWEST:
+          case CWConfigurationError.PRIORITY_LOWEST:
             noLowestPrioritySelected = false;
             break;
-          case CheckErrorAlgorithms.PRIORITY_BOT_ONLY:
+          case CWConfigurationError.PRIORITY_BOT_ONLY:
             noBotOnlyPrioritySelected = false;
             break;
           }
@@ -443,12 +444,12 @@ public class CheckWikiProjectWindow extends OnePageWindow {
             algorithm.getShortDescriptionReplaced();
 
           menuItem = new JCheckBoxMenuItem(label, selectedAlgorithms.contains(algorithm));
-          if (!CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
+          if (!CWConfigurationError.isPriorityActive(algorithm.getPriority())) {
             menuItem.setEnabled(false);
             menuItem.setFont(menuItem.getFont().deriveFont(inactiveAttributes));
           } else if (!algorithm.isAvailable()) {
             menuItem.setEnabled(false);
-          } else if (CheckErrorAlgorithms.PRIORITY_BOT_ONLY == algorithm.getPriority()) {
+          } else if (CWConfigurationError.PRIORITY_BOT_ONLY == algorithm.getPriority()) {
             menuItem.setEnabled(false);
             menuItem.setFont(menuItem.getFont().deriveFont(Font.ITALIC));
             menuItem.setSelected(false);
@@ -496,7 +497,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
           menuItemAlgorithms.set(errorNumber, menuItem);
 
           menuItem = new JMenuItem(label);
-          if (!CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
+          if (!CWConfigurationError.isPriorityActive(algorithm.getPriority())) {
             menuItem.setEnabled(false);
             menuItem.setFont(menuItem.getFont().deriveFont(inactiveAttributes));
           } else if (!algorithm.isAvailable()) {
@@ -587,7 +588,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     selectedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
     for (CheckErrorAlgorithm algorithm : allAlgorithms) {
       if (algorithm.isAvailable() &&
-          CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
+          CWConfigurationError.isPriorityActive(algorithm.getPriority())) {
         selectedAlgorithms.add(algorithm);
       }
     }
@@ -1752,7 +1753,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       selectedAlgorithms.clear();
       for (CheckErrorAlgorithm algorithm : allAlgorithms) {
         if (algorithm.isAvailable() &&
-            CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority())) {
+            CWConfigurationError.isPriorityActive(algorithm.getPriority())) {
           selectedAlgorithms.add(algorithm);
         }
       }
@@ -1807,7 +1808,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
             int priority = Integer.parseInt(unit.substring(1));
             for (CheckErrorAlgorithm algorithm : allAlgorithms) {
               if (algorithm.isAvailable() &&
-                  CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()) &&
+                  CWConfigurationError.isPriorityActive(algorithm.getPriority()) &&
                   (priority == algorithm.getPriority())) {
                 selectedAlgorithms.add(algorithm);
               }
@@ -1822,7 +1823,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
             int errorNumber = Integer.parseInt(unit.substring(1));
             for (CheckErrorAlgorithm algorithm : allAlgorithms) {
               if (algorithm.isAvailable() &&
-                  CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()) &&
+                  CWConfigurationError.isPriorityActive(algorithm.getPriority()) &&
                   (errorNumber == algorithm.getErrorNumber())) {
                 if (selectedAlgorithms.contains(algorithm)) {
                   selectedAlgorithms.remove(algorithm);
@@ -1845,7 +1846,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
             int errorNumber = Integer.parseInt(unit);
             for (CheckErrorAlgorithm algorithm : allAlgorithms) {
               if (algorithm.isAvailable() &&
-                  CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()) &&
+                  CWConfigurationError.isPriorityActive(algorithm.getPriority()) &&
                   (errorNumber == algorithm.getErrorNumber())) {
                 if (!selectedAlgorithms.contains(algorithm)) {
                   selectedAlgorithms.add(algorithm);

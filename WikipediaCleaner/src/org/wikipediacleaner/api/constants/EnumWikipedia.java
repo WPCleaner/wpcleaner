@@ -1097,7 +1097,7 @@ public enum EnumWikipedia {
    * @param property Property.
    * @return String array.
    */
-  public String[] convertPropertyToStringArray(String property) {
+  public static String[] convertPropertyToStringArray(String property) {
     String[] result = null;
     if ((property != null) && (property.trim().length() > 0)) {
       String[] results = property.trim().split("\n");

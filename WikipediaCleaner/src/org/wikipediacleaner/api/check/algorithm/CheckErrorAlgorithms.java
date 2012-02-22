@@ -24,23 +24,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.wikipediacleaner.api.constants.CWConfiguration;
+import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
  * Helper class for the algorithms.
  */
 public final class CheckErrorAlgorithms {
-
-  public final static int PRIORITY_UNKOWN = -1;
-  public final static int PRIORITY_DEACTIVATED = 0;
-  public final static int PRIORITY_TOP = 1;
-  public final static int PRIORITY_MIDDLE = 2;
-  public final static int PRIORITY_LOWEST = 3;
-  public final static int PRIORITY_BOT_ONLY = 4;
-
-  public static final int MAX_ALGORITHMS = 999;
 
   private static Map<EnumWikipedia, List<CheckErrorAlgorithm>> algorithmsMap =
     new HashMap<EnumWikipedia, List<CheckErrorAlgorithm>>();
@@ -51,32 +43,33 @@ public final class CheckErrorAlgorithms {
    * @param wikipedia Wikipedia.
    */
   public static synchronized void initializeAlgorithms(EnumWikipedia wikipedia) {
-    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>(MAX_ALGORITHMS);
+    List<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>(CWConfiguration.MAX_ERROR_NUMBER);
     DecimalFormat errorNumberFormat = new DecimalFormat("000");
-    for (int i = 0; i < MAX_ALGORITHMS; i++) {
+    for (int i = 0; i < CWConfiguration.MAX_ERROR_NUMBER; i++) {
       int errorNumber = i + 1;
-      String className = CheckErrorAlgorithm.class.getName() + errorNumberFormat.format(errorNumber);
-      CheckErrorAlgorithm algorithm = null;
-      try {
-        Class algorithmClass = Class.forName(className);
-        algorithm = (CheckErrorAlgorithm) algorithmClass.newInstance();
-        algorithm.setPriority(getPriority(wikipedia, errorNumber));
-        algorithm.setShortDescription(getShortDescription(wikipedia, errorNumber));
-        algorithm.setLongDescription(getLongDescription(wikipedia, errorNumber));
-        algorithm.setLink(getLink(wikipedia, errorNumber));
-        algorithm.setWhiteList(getWhiteList(wikipedia, errorNumber));
-      } catch (ClassNotFoundException e) {
-        // Not found: error not yet available in WikiCleaner.
-      } catch (InstantiationException e) {
-        System.err.println("InstantiationException for " + className);
-      } catch (IllegalAccessException e) {
-        System.err.println("IllegalAccessException for " + className);
-      } catch (ClassCastException e) {
-        System.err.println(
-            "Class " + className +
-            " doesn't implement " + CheckErrorAlgorithm.class.getName());
+      CWConfigurationError error = wikipedia.getCWConfiguration().getErrorConfiguration(errorNumber);
+      if (error != null) {
+        String className = CheckErrorAlgorithm.class.getName() + errorNumberFormat.format(errorNumber);
+        CheckErrorAlgorithm algorithm = null;
+        try {
+          Class algorithmClass = Class.forName(className);
+          algorithm = (CheckErrorAlgorithm) algorithmClass.newInstance();
+          algorithm.setConfiguration(error);
+        } catch (ClassNotFoundException e) {
+          // Not found: error not yet available in WikiCleaner.
+        } catch (InstantiationException e) {
+          System.err.println("InstantiationException for " + className);
+        } catch (IllegalAccessException e) {
+          System.err.println("IllegalAccessException for " + className);
+        } catch (ClassCastException e) {
+          System.err.println(
+              "Class " + className +
+              " doesn't implement " + CheckErrorAlgorithm.class.getName());
+        }
+        if (algorithm != null) {
+          algorithms.add(algorithm);
+        }
       }
-      algorithms.add(algorithm);
     }
     algorithmsMap.put(wikipedia, algorithms);
   }
@@ -118,7 +111,7 @@ public final class CheckErrorAlgorithms {
     if (algorithms == null) {
       return null;
     }
-    if ((errorNumber < 1) || (errorNumber >= MAX_ALGORITHMS)) {
+    if ((errorNumber < 1) || (errorNumber > CWConfiguration.MAX_ERROR_NUMBER)) {
       return null;
     }
     return algorithms.get(errorNumber - 1);
@@ -136,7 +129,7 @@ public final class CheckErrorAlgorithms {
       return false;
     }
     int priority = algorithm.getPriority();
-    return isPriorityActive(priority);
+    return CWConfigurationError.isPriorityActive(priority);
   }
 
   /**
@@ -148,96 +141,11 @@ public final class CheckErrorAlgorithms {
    */
   public static int getPriority(
       EnumWikipedia wikipedia, int errorNumber) {
-    int errorPriority = PRIORITY_UNKOWN;
-    String prioWiki = wikipedia.getCWConfiguration().getProperty(
-        "prio", errorNumber, true, false, false);
-    if (prioWiki != null) {
-      try {
-        errorPriority = Integer.parseInt(prioWiki);
-      } catch (NumberFormatException e) {
-        //
-      }
+    CWConfigurationError error = wikipedia.getCWConfiguration().getErrorConfiguration(errorNumber);
+    if (error == null) {
+      return CWConfigurationError.PRIORITY_UNKOWN;
     }
-    if (errorPriority == PRIORITY_UNKOWN) {
-      String prioScript = wikipedia.getCWConfiguration().getProperty(
-          "prio", errorNumber, false, true, false);
-      if (prioScript != null) {
-        try {
-          errorPriority = Integer.parseInt(prioScript);
-        } catch (NumberFormatException e) {
-          //
-        }
-      }
-    }
-    if (errorPriority == PRIORITY_DEACTIVATED) {
-      String botOnly = wikipedia.getCWConfiguration().getProperty(
-          "bot", errorNumber, true, true, false);
-      if ((botOnly != null) && Boolean.valueOf(botOnly.trim())) {
-        errorPriority = PRIORITY_BOT_ONLY;
-      }
-    }
-    return errorPriority;
-  }
-
-  /**
-   * @param priority Priority.
-   * @return Flag indicating if the priority is active.
-   */
-  public static boolean isPriorityActive(int priority) {
-    if ((priority == PRIORITY_TOP) ||
-        (priority == PRIORITY_MIDDLE) ||
-        (priority == PRIORITY_LOWEST) ||
-        (priority == PRIORITY_BOT_ONLY)) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Compare 2 priorities.
-   * 
-   * @param p1 Priority 1.
-   * @param p2 Priority 2.
-   * @return 0 if priorities are equal, -1 if p1 < p2, 1 if p1 > p2.
-   */
-  public static int comparePriority(int p1, int p2) {
-    if (p1 == p2) {
-      return 0;
-    }
-    if (p1 == PRIORITY_UNKOWN) {
-      return -1;
-    }
-    if (p2 == PRIORITY_UNKOWN) {
-      return 1;
-    }
-    if (p1 == PRIORITY_DEACTIVATED) {
-      return -1;
-    }
-    if (p2 == PRIORITY_DEACTIVATED) {
-      return 1;
-    }
-    return (p1 < p2) ? -1 : 1;
-  }
-
-  /**
-   * @param priority Priority.
-   * @return Textual description of the priority.
-   */
-  public static String getPriorityString(int priority) {
-    switch (priority) {
-    case PRIORITY_DEACTIVATED:
-      return GT._("Deactivated");
-    case PRIORITY_LOWEST:
-      return GT._("Low priority");
-    case PRIORITY_MIDDLE:
-      return GT._("Middle priority");
-    case PRIORITY_TOP:
-      return GT._("Top priority");
-    case PRIORITY_BOT_ONLY:
-      return GT._("For Bot");
-    default:
-      return GT._("Priority unknown");
-    }
+    return error.getPriority();
   }
 
   /**
@@ -249,7 +157,11 @@ public final class CheckErrorAlgorithms {
    */
   public static String getShortDescription(
       EnumWikipedia wikipedia, int errorNumber) {
-    return wikipedia.getCWConfiguration().getProperty("head", errorNumber, true, true, false);
+    CWConfigurationError error = wikipedia.getCWConfiguration().getErrorConfiguration(errorNumber);
+    if (error == null) {
+      return null;
+    }
+    return error.getShortDescription();
   }
 
   /**
@@ -261,7 +173,11 @@ public final class CheckErrorAlgorithms {
    */
   public static String getLongDescription(
       EnumWikipedia wikipedia, int errorNumber) {
-    return wikipedia.getCWConfiguration().getProperty("desc", errorNumber, true, true, false);
+    CWConfigurationError error = wikipedia.getCWConfiguration().getErrorConfiguration(errorNumber);
+    if (error == null) {
+      return null;
+    }
+    return error.getLongDescription();
   }
 
   /**
@@ -273,7 +189,11 @@ public final class CheckErrorAlgorithms {
    */
   public static String getLink(
       EnumWikipedia wikipedia, int errorNumber) {
-    return wikipedia.getCWConfiguration().getProperty("link", errorNumber, true, true, false);
+    CWConfigurationError error = wikipedia.getCWConfiguration().getErrorConfiguration(errorNumber);
+    if (error == null) {
+      return null;
+    }
+    return error.getLink();
   }
 
   /**
@@ -285,11 +205,10 @@ public final class CheckErrorAlgorithms {
    */
   public static String[] getWhiteList(
       EnumWikipedia wikipedia, int errorNumber) {
-    String whiteListString = wikipedia.getCWConfiguration().getProperty(
-        "whitelist", errorNumber, true, false, false);
-    if (whiteListString == null) {
+    CWConfigurationError error = wikipedia.getCWConfiguration().getErrorConfiguration(errorNumber);
+    if (error == null) {
       return null;
     }
-    return wikipedia.convertPropertyToStringArray(whiteListString);
+    return error.getWhiteList();
   }
 }
