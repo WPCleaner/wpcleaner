@@ -28,7 +28,7 @@ import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorComparator;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
+import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -84,7 +84,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
           
           if ((algorithm != null) &&
               (algorithm.isAvailable()) &&
-              (algorithm.getPriority() != CheckErrorAlgorithms.PRIORITY_BOT_ONLY)) {
+              (algorithm.getPriority() != CWConfigurationError.PRIORITY_BOT_ONLY)) {
             // Retrieving list of pages for the error number
             NameValuePair[] parameters = new NameValuePair[] {
                 new NameValuePair("id", algorithm.getErrorNumberString()),

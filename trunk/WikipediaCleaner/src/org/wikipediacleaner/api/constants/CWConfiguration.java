@@ -18,7 +18,8 @@
 
 package org.wikipediacleaner.api.constants;
 
-import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.wikipediacleaner.i18n.GT;
@@ -30,12 +31,18 @@ import org.wikipediacleaner.i18n.GT;
 public class CWConfiguration {
 
   /**
+   * Maximum number for error numbers.
+   */
+  public static final int MAX_ERROR_NUMBER = 999;
+
+  /**
    * Check Wiki project code.
    */
   private final String code;
 
   public CWConfiguration(String code) {
     this.code = code;
+    this.configuration = new ArrayList<CWConfigurationError>();
   }
 
   /**
@@ -107,57 +114,151 @@ public class CWConfiguration {
     }
   }
 
-  // TODO: Group configuration by error number (analyze each property name when setting properties)
+  /**
+   * Configuration for each error.
+   */
+  private final ArrayList<CWConfigurationError> configuration;
 
   /**
-   * General Check Wiki project configuration.
+   * Prefix for property names.
    */
-  private Properties generalConfiguration;
+  private final static String PREFIX = "error_";
+
+  /**
+   * Set configuration.
+   * 
+   * @param properties Properties read from configuration file.
+   * @param suffix Suffix for properties to consider.
+   * @param otherSuffix Suffix for properties not to consider.
+   * @param general Flag indicating if dealing with general properties or wiki properties.
+   */
+  private void setConfiguration(
+      Properties properties,
+      String suffix, String otherSuffix,
+      boolean general) {
+
+    // Clean previous configuration
+    for (CWConfigurationError error : configuration) {
+      if (error != null) {
+        if (general) {
+          error.clearGeneralConfiguration();
+        } else {
+          error.clearWikiConfiguration();
+        }
+      }
+    }
+    if ((properties == null) || (suffix == null) || (otherSuffix == null)) {
+      return;
+    }
+
+    // Check every property
+    for (Entry<Object, Object> property : properties.entrySet()) {
+      String name = property.getKey().toString();
+      String value = property.getValue().toString();
+      boolean matches = true;
+
+      // Check that property prefix is OK
+      if (matches && name.startsWith(PREFIX)) {
+        name = name.substring(PREFIX.length());
+      } else {
+        matches = false;
+      }
+
+      // Check that property suffix is OK
+      boolean goodSuffix = false;
+      if (matches && name.endsWith(suffix)) {
+        name = name.substring(0, name.length() - suffix.length());
+        goodSuffix = true;
+      } else if (matches && name.endsWith(otherSuffix)) {
+        name = name.substring(0, name.length() - otherSuffix.length());
+      } else {
+        matches = false;
+      }
+
+      // Retrieve error number
+      int errorNumber = -1;
+      if (matches && (name.length() > 4) &&
+          Character.isDigit(name.charAt(0)) &&
+          Character.isDigit(name.charAt(1)) &&
+          Character.isDigit(name.charAt(2)) &&
+          (name.charAt(3) == '_')) {
+        try {
+          errorNumber = Integer.parseInt(name.substring(0, 3));
+        } catch (NumberFormatException e) {
+          // Not supposed to happen
+        }
+        name = name.substring(4);
+      } else {
+        matches = false;
+      }
+
+      // Save property
+      if (matches && (errorNumber > 0) && (errorNumber <= MAX_ERROR_NUMBER)) {
+        if (goodSuffix) {
+          CWConfigurationError error = null;
+          if (configuration.size() > errorNumber) {
+            error = configuration.get(errorNumber);
+          }
+          if (error == null) {
+            error = new CWConfigurationError(errorNumber);
+            configuration.ensureCapacity(errorNumber + 1);
+            while (configuration.size() < errorNumber + 1) {
+              configuration.add(configuration.size(), null);
+            }
+            configuration.set(errorNumber, error);
+          }
+          error.addProperty(name, value, general);
+        }
+      }
+    }
+  }
 
   /**
    * @param configuration General Check Wiki project configuration.
    */
   public void setGeneralConfiguration(Properties configuration) {
-    generalConfiguration = configuration;
+    setConfiguration(configuration, "_script", "_" + code, true);
   }
-
-  /**
-   * Check Wiki project configuration specific for this wiki.
-   */
-  private Properties wikiConfiguration;
 
   /**
    * @param configuration Check Wiki project configuration specific for this wiki.
    */
   public void setWikiConfiguration(Properties configuration) {
-    wikiConfiguration = configuration;
+    setConfiguration(configuration, "_" + code, "_script", false);
   }
 
   /**
-   * Format for error numbers.
+   * @param errorNumber Error number.
+   * @return Configuration for error.
    */
-  private final DecimalFormat errorNumberFormat = new DecimalFormat("000");
+  public CWConfigurationError getErrorConfiguration(int errorNumber) {
+    if ((errorNumber < 0) || (errorNumber >= configuration.size())) {
+      return null;
+    }
+    return configuration.get(errorNumber);
+  }
 
-  public String getProperty(
+  /**
+   * @param propertyName Property name.
+   * @param errorNumber Error number.
+   * @param useWiki Flag indicating if wiki configuration can be used.
+   * @param useGeneral Flag indicating if general configuration can be used.
+   * @param acceptEmpty Flag indicating if empty strings are accepted.
+   * @return
+   */
+  /*public String getProperty(
       String propertyName, int errorNumber,
       boolean useWiki, boolean useGeneral, boolean acceptEmpty) {
-    String errorPrefix;
-    synchronized (errorNumberFormat) {
-      errorPrefix = "error_" + errorNumberFormat.format(errorNumber) + "_" + propertyName + "_";
+    if (propertyName == null) {
+      return null;
     }
-    String result = null;
-    if ((useWiki) && (wikiConfiguration != null)) {
-      result = wikiConfiguration.getProperty(errorPrefix + code, null);
+    if ((errorNumber < 0) || (errorNumber >= configuration.size())) {
+      return null;
     }
-    if ((result != null) && ((acceptEmpty) || (result.trim().length() > 0))) {
-      return result.trim();
+    CWConfigurationError error = configuration.get(errorNumber);
+    if (error == null) {
+      return null;
     }
-    if ((useGeneral) && (generalConfiguration != null)) {
-      result = generalConfiguration.getProperty(errorPrefix + "script", null);
-    }
-    if (result != null) {
-      return result.trim();
-    }
-    return null;
-  }
+    return error.getProperty(propertyName, useWiki, useGeneral, acceptEmpty);
+  }*/
 }

@@ -21,7 +21,7 @@ package org.wikipediacleaner.api.check;
 import java.util.Comparator;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
+import org.wikipediacleaner.api.constants.CWConfigurationError;
 
 
 /**
@@ -48,10 +48,10 @@ public class CheckErrorComparator implements Comparator<CheckError> {
     // Check on priority
     CheckErrorAlgorithm a1 = o1.getAlgorithm();
     CheckErrorAlgorithm a2 = o2.getAlgorithm();
-    int p1 = (a1 != null) ? a1.getPriority() : CheckErrorAlgorithms.PRIORITY_UNKOWN;
-    int p2 = (a2 != null) ? a2.getPriority() : CheckErrorAlgorithms.PRIORITY_UNKOWN;
+    int p1 = (a1 != null) ? a1.getPriority() : CWConfigurationError.PRIORITY_UNKOWN;
+    int p2 = (a2 != null) ? a2.getPriority() : CWConfigurationError.PRIORITY_UNKOWN;
     if (p1 != p2) {
-      return CheckErrorAlgorithms.comparePriority(p1, p2);
+      return CWConfigurationError.comparePriority(p1, p2);
     }
 
     // Check on error number

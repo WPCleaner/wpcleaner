@@ -27,6 +27,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.SpecialCharacters;
+import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
@@ -42,21 +43,29 @@ import org.wikipediacleaner.i18n.GT;
  */
 public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
 
-  private int priority = CheckErrorAlgorithms.PRIORITY_UNKOWN;
-  private String shortDescription;
-  private String shortDescriptionReplaced;
-  private String longDescription;
-  private String link;
-  private String[] whiteList;
+  /**
+   * Configuration of the error.
+   */
+  private CWConfigurationError configuration;
+
+  private final String name;
 
   /**
-   * @param shortDescription Short description.
+   * @param name Name of the error.
    */
-  public CheckErrorAlgorithmBase(String shortDescription) {
-    this.shortDescription = shortDescription;
+  public CheckErrorAlgorithmBase(String name) {
+    this.name = name;
   }
 
-  /* (non-Javadoc)
+  /**
+   * @return Name of the error.
+   */
+  public String getName() {
+    return name;
+  }
+
+  /**
+   * @return Textual representation of the object.
    * @see java.lang.Object#toString()
    */
   @Override
@@ -72,28 +81,26 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * @param configuration Configuration of the error.
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#setConfiguration(org.wikipediacleaner.api.constants.CWConfigurationError)
+   */
+  public void setConfiguration(CWConfigurationError configuration) {
+    this.configuration = configuration;
+  }
+
+  /**
    * @return Short description of the error.
    * (See Check Wikipedia project for the description of errors)
    */
   public String getShortDescription() {
-    return shortDescription;
+    return configuration.getShortDescription();
   }
 
   /**
    * @return Short description of the error.
    */
   public String getShortDescriptionReplaced() {
-    return shortDescriptionReplaced;
-  }
-
-  /**
-   * @param desc Short description.
-   */
-  public void setShortDescription(String desc) {
-    this.shortDescription = (desc != null) ? desc : "";
-    shortDescriptionReplaced = this.shortDescription;
-    shortDescriptionReplaced = shortDescriptionReplaced.replaceAll("&lt;", "<");
-    shortDescriptionReplaced = shortDescriptionReplaced.replaceAll("&gt;", ">");
+    return configuration.getShortDescriptionReplaced();
   }
 
   /**
@@ -101,18 +108,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * (See Check Wikipedia project for the description of errors)
    */
   public String getLongDescription() {
-    return longDescription;
-  }
-
-  /**
-   * @param desc Long description.
-   */
-  public void setLongDescription(String desc) {
-    /*if (desc != null) {
-      desc = desc.replaceAll("<nowiki>", "");
-      desc = desc.replaceAll("</nowiki>", "");
-    }*/
-    this.longDescription = desc;
+    return configuration.getLongDescription();
   }
 
   /**
@@ -126,14 +122,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Link to error description.
    */
   public String getLink() {
-    return link;
-  }
-
-  /**
-   * @param link Link to error description.
-   */
-  public void setLink(String link) {
-    this.link = link;
+    return configuration.getLink();
   }
 
   /**
@@ -143,6 +132,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Page among the white list ?
    */
   public boolean isInWhiteList(String title) {
+    String[] whiteList = configuration.getWhiteList();
     if ((whiteList == null) || (title == null)) {
       return false;
     }
@@ -152,13 +142,6 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       }
     }
     return false;
-  }
-
-  /**
-   * @param whiteList White list.
-   */
-  public void setWhiteList(String[] whiteList) {
-    this.whiteList = whiteList;
   }
 
   /**
@@ -205,14 +188,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Priority.
    */
   public int getPriority() {
-    return priority;
-  }
-
-  /**
-   * @param priority Priority.
-   */
-  public void setPriority(int priority) {
-    this.priority = priority;
+    return configuration.getPriority();
   }
 
   /**
@@ -221,9 +197,9 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    */
   public String getErrorNumberString() {
     String baseName = CheckErrorAlgorithm.class.getName();
-    String name = getClass().getName();
-    if (name.startsWith(baseName)) {
-      return name.substring(baseName.length());
+    String className = getClass().getName();
+    if (className.startsWith(baseName)) {
+      return className.substring(baseName.length());
     }
     return "unknown";
   }
@@ -241,6 +217,20 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       //
     }
     return errorNumber;
+  }
+
+
+  /**
+   * @param property Property name.
+   * @param useWiki Flag indicating if wiki configuration can be used.
+   * @param useGeneral Flag indicating if general configuration can be used.
+   * @param acceptEmpty Flag indicating if empty strings are accepted.
+   * @return Property value.
+   */
+  public String getSpecificProperty(
+      String property,
+      boolean useWiki, boolean useGeneral, boolean acceptEmpty) {
+    return configuration.getSpecificProperty(property, useWiki, useGeneral, acceptEmpty);
   }
 
   /* (non-Javadoc)

@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -55,16 +56,16 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve possible abreviations before <ref> tag
-    String abbreviations = pageAnalysis.getWikipedia().getCWConfiguration().getProperty(
-        "abbreviations", 67, true, false, false);
+    String abbreviations = getSpecificProperty(
+        "abbreviations", true, false, false);
     String[] abbreviationsList = null;
     if (abbreviations != null) {
-      abbreviationsList = pageAnalysis.getWikipedia().convertPropertyToStringArray(abbreviations);
+      abbreviationsList = EnumWikipedia.convertPropertyToStringArray(abbreviations);
     }
 
     // Retrieve separator between several <ref> tags
-    String separator = pageAnalysis.getWikipedia().getCWConfiguration().getProperty(
-        "separator", 67, true, false, false);
+    String separator = getSpecificProperty(
+        "separator", true, false, false);
     if (separator == null) {
       separator = "";
     }

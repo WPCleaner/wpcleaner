@@ -33,6 +33,7 @@ import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
+import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -64,7 +65,7 @@ public class CheckError {
       for (CheckErrorAlgorithm algorithm : algorithms) {
         if ((algorithm != null) &&
             (algorithm.isAvailable()) &&
-            (CheckErrorAlgorithms.isPriorityActive(algorithm.getPriority()))) {
+            (CWConfigurationError.isPriorityActive(algorithm.getPriority()))) {
           long beginOne = traceTime ? System.currentTimeMillis() : 0;
           List<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
           boolean errorFound = algorithm.analyze(pageAnalysis, results);
@@ -244,8 +245,8 @@ public class CheckError {
     return GT._("Error n°{0} ({1} - {2}) - {3}", new Object[] {
         Integer.valueOf(errorNumber),
         count,
-        CheckErrorAlgorithms.getPriorityString(
-            (algorithm != null) ? algorithm.getPriority() : CheckErrorAlgorithms.PRIORITY_UNKOWN),
+        CWConfigurationError.getPriorityString(
+            (algorithm != null) ? algorithm.getPriority() : CWConfigurationError.PRIORITY_UNKOWN),
         (algorithm != null) ?
             algorithm.getShortDescriptionReplaced() :
             GT._("Error unkown from WikiCleaner") });
