@@ -131,6 +131,7 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
       "&project=" + wikipedia.getSettings().getCodeCheckWiki() +
       "&view=only";
     MenuCreator.addViewToMenu(null, popup, toolserverUrl, GT._("List on toolserver"));
+    MenuCreator.addViewToMenu(wikipedia, popup, algorithm.getWhiteListPageName(), GT._("View or edit white list"));
 
     popup.show(e.getComponent(), e.getX(), e.getY());
   }

@@ -136,6 +136,13 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * @return White list page name.
+   */
+  public String getWhiteListPageName() {
+    return configuration.getWhiteListPageName();
+  }
+
+  /**
    * Create a CheckErrorResult object.
    * 
    * @param startPosition Start of the error.
@@ -231,6 +238,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     Map<String, String> parameters = new Hashtable<String, String>();
     parameters.put("link", GT._("Title of the article describing this type of error"));
     parameters.put("whitelist", GT._("List of false positives for this type of error"));
+    parameters.put("whitelistpage", GT._("Page containing the list of false positives for this type of error"));
     return parameters;
   }
 

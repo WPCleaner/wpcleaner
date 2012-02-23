@@ -79,6 +79,11 @@ public interface CheckErrorAlgorithm {
   public boolean isInWhiteList(String title);
 
   /**
+   * @return White list page name.
+   */
+  public String getWhiteListPageName();
+
+  /**
    * @return Priority.
    */
   public int getPriority();
