@@ -143,6 +143,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
   private JButton buttonReloadError;
   private JButton buttonErrorDetail;
   private JButton buttonErrorList;
+  private JButton buttonWhiteList;
 
   private JList listPages;
   private DefaultListModel modelPages;
@@ -158,6 +159,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
   public final static String ACTION_RELOAD_ERROR  = "RELOAD_ERROR";
   public final static String ACTION_CHOOSE_ERRORS = "CHOOSE_ERRORS";
   public final static String ACTION_SELECT_ERRORS = "SELECT_ERRORS:";
+  public final static String ACTION_WHITE_LIST    = "WHITE_LIST";
 
   /**
    * Create and display a CheckWikiProjectWindow.
@@ -680,6 +682,13 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     buttonErrorList.addActionListener(this);
     buttonErrorList.setEnabled(false);
     toolbar.add(buttonErrorList);
+    buttonWhiteList = Utilities.createJButton(
+        "gnome-accessories-text-editor.png", EnumImageSize.NORMAL,
+        GT._("View or edit white list"), false);
+    buttonWhiteList.setActionCommand(ACTION_WHITE_LIST);
+    buttonWhiteList.addActionListener(this);
+    buttonWhiteList.setEnabled(false);
+    toolbar.add(buttonWhiteList);
     constraints.gridx++;
     constraints.weightx = 0;
     panel.add(toolbar, constraints);
@@ -1551,6 +1560,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       buttonReloadError.setEnabled(true);
       buttonErrorDetail.setEnabled(true);
       buttonErrorList.setEnabled(true);
+      buttonWhiteList.setEnabled(true);
       displayErrorDescription();
 
       // Pages
@@ -1571,6 +1581,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       buttonReloadError.setEnabled(false);
       buttonErrorDetail.setEnabled(false);
       buttonErrorList.setEnabled(false);
+      buttonWhiteList.setEnabled(false);
       displayErrorDescription();
 
       if (selection instanceof String) {
@@ -1718,6 +1729,8 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       actionSelectPage();
     } else if (ACTION_ANALYZE_PAGES.equals(e.getActionCommand())) {
       actionAnalyzePage();
+    } else if (ACTION_WHITE_LIST.equals(e.getActionCommand())) {
+      actionErrorWhiteList();
     } else if (ACTION_RELOAD_ERROR.equals(e.getActionCommand())) {
       actionReloadError();
     } else if (ACTION_CHOOSE_ERRORS.equals(e.getActionCommand())) {
@@ -1904,6 +1917,32 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         "&view=only" +
         "&limit=" + modelMaxErrors.getNumber();
       Utilities.browseURL(url);
+    }
+  }
+
+  /**
+   * Action called to display error white list. 
+   */
+  private void actionErrorWhiteList() {
+    Object selected = listAllErrors.getSelectedItem();
+    if ((selected instanceof CheckError) &&
+        (Utilities.isDesktopSupported())) {
+      CheckError error = (CheckError) selected;
+      if (error.getAlgorithm().getWhiteListPageName() != null) {
+        Utilities.browseURL(getWikipedia(), error.getAlgorithm().getWhiteListPageName(), true);
+      } else {
+        DecimalFormat format = new DecimalFormat("000");
+        Utilities.displayInformationMessage(getParentComponent(), GT._(
+            "There''s no white list defined for this error type.\n" +
+            "If you want to define a white list you need to add :\n" +
+            "  {0} = <page name> END\n" +
+            "to the translation page ({1}) on \"{2}\"",
+            new Object[] {
+                "error_" + format.format(error.getErrorNumber()) + "_whitelistpage_" + getWikipedia().getSettings().getCodeCheckWiki(),
+                getWikipedia().getCWConfiguration().getTranslationPage(),
+                getWikipedia().toString()
+            }));
+      }
     }
   }
 

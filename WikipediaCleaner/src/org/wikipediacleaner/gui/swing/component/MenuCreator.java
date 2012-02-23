@@ -1281,7 +1281,7 @@ public class MenuCreator {
    */
   public static void addViewToMenu(
       EnumWikipedia wikipedia, JPopupMenu popup, String url, String label) {
-    if (Utilities.isDesktopSupported()) {
+    if ((url != null) && (Utilities.isDesktopSupported())) {
       JMenuItem menuItem = new JMenuItem(label);
       ActionListener action = new PageViewAction(url, wikipedia);
       menuItem.addActionListener(action);
