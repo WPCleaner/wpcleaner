@@ -237,7 +237,7 @@ public class MediaWikiAPI implements API {
       boolean         stream) throws APIException {
     try {
       String url = "http://toolserver.org/" + path;
-      StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder(url) : null;
+      StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("POST " + url) : null;
       PostMethod method = new PostMethod(url);
       method.getParams().setContentCharset("UTF-8");
       method.setRequestHeader("Accept-Encoding", "gzip");
@@ -291,7 +291,7 @@ public class MediaWikiAPI implements API {
       boolean         stream) throws APIException {
     try {
       String url = "http://toolserver.org/" + path;
-      StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder(url) : null;
+      StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("GET  " + url) : null;
       GetMethod method = new GetMethod(url);
       method.getParams().setContentCharset("UTF-8");
       method.setRequestHeader("Accept-Encoding", "gzip");
@@ -2099,10 +2099,43 @@ public class MediaWikiAPI implements API {
   private HttpMethod createHttpMethod(
       EnumWikipedia       wikipedia,
       Map<String, String> properties) {
-    PostMethod method = null;
+    if (canUseGetMethod(properties)) {
+      return createHttpGetMethod(wikipedia, properties);
+    }
+    return createHttpPostMethod(wikipedia, properties);
+  }
+
+  /**
+   * @param properties Properties to drive the API.
+   * @return True if GET method can be used.
+   */
+  private boolean canUseGetMethod(Map<String, String> properties) {
+    if (properties == null) {
+      return false;
+    }
+    String action = properties.get("action");
+    if (action == null) {
+      return false;
+    }
+    if (ACTION_API_QUERY.equals(action)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Create an HTTP POST Method.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param properties Properties to drive the API.
+   * @return POST Method
+   */
+  private PostMethod createHttpPostMethod(
+      EnumWikipedia       wikipedia,
+      Map<String, String> properties) {
     String url = wikipedia.getSettings().getApiURL();
-    StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder(url) : null;
-    method = new PostMethod(url);
+    StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("POST " + url) : null;
+    PostMethod method = new PostMethod(url);
     method.getParams().setContentCharset("UTF-8");
     method.setRequestHeader("Accept-Encoding", "gzip");
     if (properties != null) {
@@ -2141,6 +2174,68 @@ public class MediaWikiAPI implements API {
     if (lguserid != null) {
       method.addParameter("lguserid", lguserid);
     }
+    return method;
+  }
+
+  /**
+   * Create an HTTP GET Method.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param properties Properties to drive the API.
+   * @return GET Method
+   */
+  private GetMethod createHttpGetMethod(
+      EnumWikipedia       wikipedia,
+      Map<String, String> properties) {
+
+    // Initialize GET Method
+    String url = wikipedia.getSettings().getApiURL();
+    GetMethod method = new GetMethod(url);
+    method.getParams().setContentCharset("UTF-8");
+    method.setRequestHeader("Accept-Encoding", "gzip");
+
+    // Manager query string
+    StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("GET  " + url) : null;
+    List<NameValuePair> params = new ArrayList<NameValuePair>();
+    if (properties != null) {
+      boolean first = true;
+      Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();
+      while (iter.hasNext()) {
+        Map.Entry<String, String> property = iter.next();
+        String key = property.getKey();
+        String value = property.getValue();
+        params.add(new NameValuePair(key, value));
+        if (DEBUG_URL && (debugUrl != null)) {
+          int start = 0;
+          while ((start < value.length()) && Character.isWhitespace(value.charAt(start))) {
+            start++;
+          }
+          if (value.indexOf('\n', start) > 0) {
+            value = value.substring(start, value.indexOf('\n', start)) + "...";
+          }
+          debugUrl.append(
+              (first ? "?" : "&") +
+              key + "=" +
+              ("lgpassword".equals(key) ? "XXXXX" : value));
+        }
+        first = false;
+      }
+      if (DEBUG_URL && (debugUrl != null)) {
+        debugText(debugUrl.toString());
+      }
+    }
+    if (lgtoken != null) {
+      params.add(new NameValuePair("lgtoken", lgtoken));
+    }
+    if (lgusername != null) {
+      params.add(new NameValuePair("lgusername", lgusername));
+    }
+    if (lguserid != null) {
+      params.add(new NameValuePair("lguserid", lguserid));
+    }
+    NameValuePair[] tmpParams = new NameValuePair[params.size()];
+    method.setQueryString(params.toArray(tmpParams));
+
     return method;
   }
 
