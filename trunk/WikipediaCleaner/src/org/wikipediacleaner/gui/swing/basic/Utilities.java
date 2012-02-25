@@ -262,6 +262,27 @@ public class Utilities {
   }
 
   /**
+   * Display a message to request a value.
+   * 
+   * @param parent Parent component.
+   * @param message Message.
+   * @param possibleValues Possible values.
+   * @param value Default value.
+   * @return Value provided by the user.
+   */
+  public static Object askForValue(
+      Component parent, String message,
+      Object[] possibleValues, Object value) {
+    if ((possibleValues == null) || (possibleValues.length == 0)) {
+      return null;
+    }
+    return JOptionPane.showInputDialog(
+        parent, message, "Wikipedia Cleaner",
+        JOptionPane.QUESTION_MESSAGE, null,
+        possibleValues, value);
+  }
+
+  /**
    * Display a question with Yes/No answers.
    * 
    * @param parent Parent component.

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-02-23 22:03+0100\n"
+"POT-Creation-Date: 2012-02-25 16:01+0100\n"
 "PO-Revision-Date: 2012-02-05 15:16+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -455,7 +455,7 @@ msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:184
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:561
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:573
 msgid "Check Wikipedia"
 msgstr "Перевірка Вікіпедії"
 
@@ -601,7 +601,7 @@ msgstr "&Завантажити сторінки"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:759
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:392
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:489
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:501
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:200
 msgid "Full analysis (Alt + &F)"
 msgstr ""
@@ -741,18 +741,18 @@ msgid "Select &next links"
 msgstr "Вибрати &наступні посилання"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:398
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:495
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:507
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:206
 msgid "Disambiguation (Alt + &D)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:409
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:218
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:223
 msgid "Link count"
 msgstr "Кількість посилань"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:446
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:414
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:426
 msgid "Sort"
 msgstr "Сортування"
 
@@ -1002,7 +1002,7 @@ msgid "You must input a page name for updating the disambiguation warning"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1097
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:930
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:944
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:330
 msgid ""
 "You need to define the 'dab_warning_template' property in WikiCleaner "
@@ -1012,7 +1012,7 @@ msgstr ""
 "WikiCleaner."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1101
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:934
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:948
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:334
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr ""
@@ -1099,6 +1099,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:57
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:82
+#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:69
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:107
 msgid "Retrieving MediaWiki API"
 msgstr "Отримання MediaWiki API"
@@ -1158,69 +1159,73 @@ msgstr "&Перевірити"
 msgid "&Cancel"
 msgstr "&Скасувати"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:205
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:210
 #, java-format
 msgid "Analysis - {0}"
 msgstr "Аналіз - {0}"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:374
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:380
 msgid "Add a warning on the talk page about the links to disambiguation pages"
 msgstr ""
 "Додати попередження на сторінці обговорення про посилання на сторінки значень"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:428
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:440
 msgid "&Options"
 msgstr "&Параметри"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:430
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:442
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:132
 msgid "Show &disambiguation pages"
 msgstr "Показати сторінки &значень"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:434
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:446
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:139
 msgid "Show &missing pages"
 msgstr "Показати &відсутні сторінки"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:438
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:450
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:146
 msgid "Show &redirect pages"
 msgstr "Показати &перенаправлені сторінки"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:442
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:454
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:153
 msgid "Show &other pages"
 msgstr "Показати &інші сторінки"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:447
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:459
 msgid "Count disambiguation pages"
 msgstr "Кількість сторінок значень"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:451
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:463
 msgid "Count missing pages"
 msgstr "Кількість відсутніх сторінок"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:455
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:467
 msgid "Count redirect pages"
 msgstr "Кількість перенаправлених сторінок"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:459
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:471
 msgid "Count other pages"
 msgstr "Кількість інших сторінок"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:501
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:513
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:737
 msgid "Add to Watch list (Alt + &W)"
 msgstr "Додати до списку спостереження (Alt + &W)"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:789
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:803
 #, java-format
 msgid "Page {0} doesn''t exist, do you still want to analyze it ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:895
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:909
 msgid "Would you like to add these pages on your local Watch list ?"
 msgstr "Хочете додати ці сторінки до вашого локального списку спостереження ?"
+
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:965
+msgid "From which Wikipedia is this text coming ?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:340
 msgid "&Page :"
@@ -1673,19 +1678,19 @@ msgstr "Виникла невідома помилка"
 msgid "Other..."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:301
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:322
 msgid "Yes"
 msgstr "Так"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:302
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:323
 msgid "Yes to all"
 msgstr "Так для всіх"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:303
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:324
 msgid "No"
 msgstr "Ні"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:304
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:325
 msgid "No to all"
 msgstr "Ні для всіх"
 
@@ -2236,6 +2241,11 @@ msgstr "Отримання випадкової сторінки"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:87
 msgid "Updating page contents"
 msgstr "Оновлення вмісту сторінок"
+
+#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:81
+#, fuzzy, java-format
+msgid "Retrieving interwiki for {0}"
+msgstr "Отримання вмісту сторінки - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:242
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:250
