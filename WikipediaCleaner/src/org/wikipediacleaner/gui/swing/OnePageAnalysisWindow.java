@@ -70,7 +70,9 @@ import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
+import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.AbstractPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.AnalysisPageListPopupListener;
@@ -86,6 +88,7 @@ import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 import org.wikipediacleaner.gui.swing.worker.FullAnalysisWorker;
+import org.wikipediacleaner.gui.swing.worker.TranslateWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
@@ -103,6 +106,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   private final static String ACTION_FULL_ANALYSIS_LINK     = "FULL ANALYSIS LINK";
   private final static String ACTION_WATCH_LINK             = "WATCH LINK";
   private final static String ACTION_DISAMBIGUATION_WARNING = "DISAMBIGUATION WARNING";
+  private final static String ACTION_TRANSLATE              = "TRANSLATE";
 
   private JButton buttonFirst;
   private JButton buttonPrevious;
@@ -127,6 +131,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   private JButton buttonDisambiguationLink;
   private JButton buttonWatchLink;
   private JButton buttonDisambiguationWarning;
+  private JButton buttonTranslation;
 
   List<CheckErrorAlgorithm> allAlgorithms;
   JList listErrors;
@@ -234,6 +239,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     buttonToc.setEnabled(isPageLoaded());
     buttonValidate.setEnabled(isPageLoaded());
     buttonDisambiguationWarning.setEnabled(article);
+    buttonTranslation.setEnabled(isPageLoaded());
     super.updateComponentState();
   }
 
@@ -383,6 +389,12 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     toolbarButtons.addSeparator();
     addButtonWatch(toolbarButtons, true);
     addButtonDisambiguation(toolbarButtons, true);
+    toolbarButtons.addSeparator();
+    buttonTranslation = Utilities.createJButton(
+        "(??) => (" + getWikipedia().getSettings().getLanguage() + ")");
+    buttonTranslation.setActionCommand(ACTION_TRANSLATE);
+    buttonTranslation.addActionListener(this);
+    toolbarButtons.add(buttonTranslation);
     toolbarButtons.addSeparator();
     addLblLastModified(toolbarButtons);
     toolbarButtons.addSeparator();
@@ -707,6 +719,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       actionLastOccurence();
     } else if (ACTION_DISAMBIGUATION_WARNING.equals(e.getActionCommand())) {
       actionDisambiguationWarning();
+    } else if (ACTION_TRANSLATE.equals(e.getActionCommand())) {
+      actionTranslate();
     }
   }
 
@@ -939,6 +953,42 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         getWikipedia(), this,
         Collections.singletonList(getPage()),
         true, true, true);
+    worker.start();
+  }
+
+  /**
+   * Action called when Translate button is pressed.
+   */
+  private void actionTranslate() {
+    Object from = Utilities.askForValue(
+        getParentComponent(),
+        GT._("From which Wikipedia is this text coming ?"),
+        EnumWikipedia.values(), getWikipedia());
+    if ((from == null) || (from == getWikipedia())) {
+      return;
+    }
+    if (!(from instanceof EnumWikipedia)) {
+      return;
+    }
+    TranslateWorker worker = new TranslateWorker(
+        getWikipedia(), this, (EnumWikipedia) from,
+        getPage(), getTextContents().getText());
+    worker.setListener(new DefaultBasicWorkerListener() {
+
+      @Override
+      public void afterFinished(BasicWorker localWorker, boolean ok) {
+        if (!ok) {
+          return;
+        }
+        Object result = localWorker.get();
+        if ((result == null) || !(result instanceof String)) {
+          return;
+        }
+        getTextContents().changeText((String) result);
+        actionValidate(true);
+      }
+      
+    });
     worker.start();
   }
 
