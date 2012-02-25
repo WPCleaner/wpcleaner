@@ -23,6 +23,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -57,55 +58,21 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    int startIndex = 0;
     boolean result = false;
-    String contents = pageAnalysis.getContents();
-    String title = pageAnalysis.getPage().getTitle();
-    while (startIndex < contents.length()) {
-      // Looking for [[
-      startIndex = contents.indexOf("[[", startIndex);
-      if (startIndex >= 0) {
-        int linkIndex = startIndex + 2;
-        // Removing possible whitespaces before link
-        while ((linkIndex < contents.length()) && (contents.charAt(linkIndex) == ' ')) {
-          linkIndex++;
+    Collection<PageElementInternalLink> links = pageAnalysis.getInternalLinks();
+    for (PageElementInternalLink link : links) {
+      if (Page.areSameTitle(pageAnalysis.getPage().getTitle(), link.getLink())) {
+        if (errors == null) {
+          return true;
         }
-        if (contents.startsWith(title, linkIndex)) {
-          String text = contents.substring(linkIndex, linkIndex + title.length());
-          linkIndex += title.length();
-          // Removing possible whitespaces after link
-          while ((linkIndex < contents.length()) && (contents.charAt(linkIndex) == ' ')) {
-            linkIndex++;
-          }
-          int endIndex = contents.indexOf("]]", linkIndex);
-          if (endIndex < 0) {
-            startIndex = contents.length();
-          } else {
-            if (contents.charAt(linkIndex) == '|') {
-              linkIndex++;
-              text = contents.substring(linkIndex, endIndex).trim();
-              linkIndex = endIndex;
-            }
-            if (linkIndex == endIndex) {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), startIndex, endIndex + 2);
-              errorResult.addReplacement(text);
-              errorResult.addReplacement("'''" + text + "'''");
-              errors.add(errorResult);
-              startIndex = endIndex + 2;
-            } else {
-              startIndex = linkIndex;
-            }
-          }
-        } else {
-          startIndex = linkIndex;
-        }
-      } else {
-        startIndex = contents.length();
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            link.getBeginIndex(),
+            link.getEndIndex());
+        errorResult.addReplacement(link.getDisplayedText());
+        errorResult.addReplacement("'''" + link.getDisplayedText() + "'''");
+        errors.add(errorResult);
       }
     }
     return result;
