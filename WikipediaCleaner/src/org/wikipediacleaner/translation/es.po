@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-02-25 16:01+0100\n"
+"POT-Creation-Date: 2012-02-27 19:02+0100\n"
 "PO-Revision-Date: 2012-02-21 13:22+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -133,18 +133,13 @@ msgstr "Eliminar todos los caracteres de control"
 msgid "Fix categories"
 msgstr "Reparar categorías"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:85
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:81
 msgid "Check category"
 msgstr "Comprobar categoría"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:110
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:106
 msgid "Comment category out"
 msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:126
-#, java-format
-msgid "The preferred name to use for replacing {0}"
-msgstr "El nombre preferido para reemplazar {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:100
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:103
@@ -172,7 +167,7 @@ msgstr "Ver imagen"
 msgid "Add DEFAULTSORT"
 msgstr "Agregar DEFAULTSORT"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:39
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:40
 msgid "Remove all links to title"
 msgstr "Eliminar todos los enlaces al artículo"
 
@@ -394,7 +389,7 @@ msgstr "Recuperando los enlaces de la página"
 msgid "Parsing text"
 msgstr "Analizando sintácticamente el texto"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2221
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2316
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -402,7 +397,7 @@ msgstr ""
 "Esta acción está protegida por un CAPTCHA\n"
 "¿Cuál es la respuesta a la siguiente pregunta?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2228
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2323
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -2374,3 +2369,6 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr "El valor no contiene ninguno de estos caractéres: {0}"
+
+#~ msgid "The preferred name to use for replacing {0}"
+#~ msgstr "El nombre preferido para reemplazar {0}"

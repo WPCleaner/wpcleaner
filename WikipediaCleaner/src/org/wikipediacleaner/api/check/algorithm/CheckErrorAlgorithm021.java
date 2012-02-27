@@ -21,7 +21,6 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckCategoryLinkActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -56,10 +55,6 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve preferred category name
-    String preferredCategory = getSpecificProperty(
-        "category", true, false, false);
-
     // Analyze the text from the begining
     int startIndex = 0;
     boolean result = false;
@@ -68,6 +63,7 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
     if (categoryNamespace == null) {
       return false;
     }
+    String preferredCategory = categoryNamespace.getTitle();
     String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       PageElementCategory category = pageAnalysis.getNextCategory(startIndex);
@@ -114,16 +110,5 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
       }
     }
     return result;
-  }
-
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
-   */
-  @Override
-  public Map<String, String> getParameters() {
-    Map<String, String> parameters = super.getParameters();
-    parameters.put("category", GT._(
-        "The preferred name to use for replacing {0}", "[[Category:<i>xxxx</i>]]"));
-    return parameters;
   }
 }
