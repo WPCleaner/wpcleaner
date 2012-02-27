@@ -186,6 +186,11 @@ public class TranslateWorker extends BasicWorker {
    * @throws APIException
    */
   private String translateTemplates(String text) throws APIException {
+    Namespace templateNamespace = Namespace.getNamespace(
+        Namespace.TEMPLATE, getWikipedia().getNamespaces());
+    if (templateNamespace == null) {
+      return text;
+    }
     API api = APIFactory.getAPI();
     PageAnalysis analysis = new PageAnalysis(page, text);
     Collection<PageElementTemplate> templates = analysis.getTemplates();
@@ -194,8 +199,7 @@ public class TranslateWorker extends BasicWorker {
     int lastPosition = 0;
     for (PageElementTemplate template : templates) {
       String templateName = template.getTemplateName();
-      String fullTemplateName = Namespace.getTitle(
-          Namespace.TEMPLATE, getWikipedia().getNamespaces(), templateName);
+      String fullTemplateName = templateNamespace.getCanonicalTitle() + ":" + templateName;
       setText(GT._("Retrieving interwiki for {0}", fullTemplateName));
       String translated = null;
       if (!interwikis.containsKey(templateName)) {
