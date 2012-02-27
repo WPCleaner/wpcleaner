@@ -26,9 +26,12 @@ import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -66,49 +69,158 @@ public class TranslateWorker extends BasicWorker {
    */
   @Override
   public Object construct() {
-    setText(GT._("Retrieving MediaWiki API"));
-    API api = APIFactory.getAPI();
     String text = initialText;
-    PageAnalysis analysis = new PageAnalysis(page, text);
 
-    // Replacing all links
     try {
-      Collection<PageElementInternalLink> links = analysis.getInternalLinks();
-      Map<String, String> interwikis = new HashMap<String, String>();
-      StringBuilder newText = new StringBuilder();
-      int lastPosition = 0;
-      for (PageElementInternalLink link : links) {
-        setText(GT._("Retrieving interwiki for {0}", link.getLink()));
-        String linkPage = link.getLink();
-        String translated = null;
-        if (!interwikis.containsKey(linkPage)) {
-          translated = api.getLanguageLink(from, getWikipedia(), linkPage);
-          interwikis.put(linkPage, translated);
-        } else {
-          translated = interwikis.get(linkPage);
-        }
-        if ((translated != null) && !Page.areSameTitle(linkPage, translated)) {
-          if (link.getBeginIndex() > lastPosition) {
-            newText.append(text.substring(lastPosition, link.getBeginIndex()));
-            lastPosition = link.getBeginIndex();
-          }
-          newText.append("[[");
-          newText.append(translated);
-          newText.append("|");
-          newText.append(link.getDisplayedText());
-          newText.append("]]");
-          lastPosition = link.getEndIndex();
-        }
-      }
-      if (lastPosition < text.length()) {
-        newText.append(text.substring(lastPosition));
-        lastPosition = text.length();
-      }
-      text = newText.toString();
+      text = translateInternalLinks(text);
+      text = translateCategories(text);
+      text = translateTemplates(text);
     } catch (APIException e) {
       return null;
     }
 
     return text;
+  }
+
+  /**
+   * @param text Text to translate.
+   * @return Text with internal links translated.
+   * @throws APIException
+   */
+  private String translateInternalLinks(String text) throws APIException {
+    API api = APIFactory.getAPI();
+    PageAnalysis analysis = new PageAnalysis(page, text);
+    Collection<PageElementInternalLink> links = analysis.getInternalLinks();
+    Map<String, String> interwikis = new HashMap<String, String>();
+    StringBuilder newText = new StringBuilder();
+    int lastPosition = 0;
+    for (PageElementInternalLink link : links) {
+      String linkPage = link.getLink();
+      setText(GT._("Retrieving interwiki for {0}", linkPage));
+      String translated = null;
+      if (!interwikis.containsKey(linkPage)) {
+        translated = api.getLanguageLink(from, getWikipedia(), linkPage);
+        interwikis.put(linkPage, translated);
+      } else {
+        translated = interwikis.get(linkPage);
+      }
+      if ((translated != null) && !Page.areSameTitle(linkPage, translated)) {
+        if (link.getBeginIndex() > lastPosition) {
+          newText.append(text.substring(lastPosition, link.getBeginIndex()));
+          lastPosition = link.getBeginIndex();
+        }
+        newText.append("[[");
+        newText.append(translated);
+        newText.append("|");
+        newText.append(link.getDisplayedText());
+        newText.append("]]");
+        lastPosition = link.getEndIndex();
+      }
+    }
+    if (newText.length() == 0) {
+      return text;
+    }
+    if (lastPosition < text.length()) {
+      newText.append(text.substring(lastPosition));
+      lastPosition = text.length();
+    }
+    return newText.toString();
+  }
+
+  /**
+   * @param text Text to translate.
+   * @return Text with categories translated.
+   * @throws APIException
+   */
+  private String translateCategories(String text) throws APIException {
+    Namespace categoryNamespace = Namespace.getNamespace(
+        Namespace.CATEGORY, getWikipedia().getNamespaces());
+    if (categoryNamespace == null) {
+      return text;
+    }
+    API api = APIFactory.getAPI();
+    PageAnalysis analysis = new PageAnalysis(page, text);
+    Collection<PageElementCategory> categories = analysis.getCategories();
+    Map<String, String> interwikis = new HashMap<String, String>();
+    StringBuilder newText = new StringBuilder();
+    int lastPosition = 0;
+    for (PageElementCategory category : categories) {
+      String categoryName = category.getName();
+      String fullCategoryName = categoryNamespace.getCanonicalTitle() + ":" + categoryName;
+      setText(GT._("Retrieving interwiki for {0}", fullCategoryName));
+      String translated = null;
+      if (!interwikis.containsKey(categoryName)) {
+        translated = api.getLanguageLink(from, getWikipedia(), fullCategoryName);
+        interwikis.put(categoryName, translated);
+      } else {
+        translated = interwikis.get(categoryName);
+      }
+      if ((translated != null) && !Page.areSameTitle(categoryName, translated)) {
+        if (category.getBeginIndex() > lastPosition) {
+          newText.append(text.substring(lastPosition, category.getBeginIndex()));
+          lastPosition = category.getBeginIndex();
+        }
+        newText.append("[[");
+        newText.append(translated);
+        if (category.getSort() != null) {
+          newText.append("|");
+          newText.append(category.getSort());
+        }
+        newText.append("]]");
+        lastPosition = category.getEndIndex();
+      }
+    }
+    if (newText.length() == 0) {
+      return text;
+    }
+    if (lastPosition < text.length()) {
+      newText.append(text.substring(lastPosition));
+      lastPosition = text.length();
+    }
+    return newText.toString();
+  }
+
+  /**
+   * @param text Text to translate.
+   * @return Text with templates translated.
+   * @throws APIException
+   */
+  private String translateTemplates(String text) throws APIException {
+    API api = APIFactory.getAPI();
+    PageAnalysis analysis = new PageAnalysis(page, text);
+    Collection<PageElementTemplate> templates = analysis.getTemplates();
+    Map<String, String> interwikis = new HashMap<String, String>();
+    StringBuilder newText = new StringBuilder();
+    int lastPosition = 0;
+    for (PageElementTemplate template : templates) {
+      String templateName = template.getTemplateName();
+      String fullTemplateName = Namespace.getTitle(
+          Namespace.TEMPLATE, getWikipedia().getNamespaces(), templateName);
+      setText(GT._("Retrieving interwiki for {0}", fullTemplateName));
+      String translated = null;
+      if (!interwikis.containsKey(templateName)) {
+        translated = api.getLanguageLink(from, getWikipedia(), fullTemplateName);
+        interwikis.put(templateName, translated);
+      } else {
+        translated = interwikis.get(templateName);
+      }
+      if ((translated != null) && !Page.areSameTitle(templateName, translated)) {
+        if (template.getBeginIndex() > lastPosition) {
+          newText.append(text.substring(lastPosition, template.getBeginIndex()));
+          lastPosition = template.getBeginIndex();
+        }
+        newText.append("<!-- ");
+        newText.append(translated);
+        newText.append(" -->");
+      }
+    }
+    if (newText.length() == 0) {
+      return text;
+    }
+    if (lastPosition < text.length()) {
+      newText.append(text.substring(lastPosition));
+      lastPosition = text.length();
+    }
+    return newText.toString();
   }
 }

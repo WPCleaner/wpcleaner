@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-02-27 19:02+0100\n"
+"POT-Creation-Date: 2012-02-27 21:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1048,7 +1048,6 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:57
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:82
-#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:69
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:107
 msgid "Retrieving MediaWiki API"
 msgstr ""
@@ -2166,7 +2165,9 @@ msgstr ""
 msgid "Updating page contents"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:81
+#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:99
+#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:150
+#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:199
 #, java-format
 msgid "Retrieving interwiki for {0}"
 msgstr ""
