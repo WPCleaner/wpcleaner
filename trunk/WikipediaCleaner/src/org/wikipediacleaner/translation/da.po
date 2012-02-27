@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-02-25 16:01+0100\n"
+"POT-Creation-Date: 2012-02-27 19:02+0100\n"
 "PO-Revision-Date: 2012-02-05 15:17+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -126,17 +126,12 @@ msgstr ""
 msgid "Fix categories"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:85
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:81
 msgid "Check category"
 msgstr "Tjek kategori"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:110
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:106
 msgid "Comment category out"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:126
-#, java-format
-msgid "The preferred name to use for replacing {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:100
@@ -165,7 +160,7 @@ msgstr "Se billede"
 msgid "Add DEFAULTSORT"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:39
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:40
 msgid "Remove all links to title"
 msgstr ""
 
@@ -379,13 +374,13 @@ msgstr ""
 msgid "Parsing text"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2221
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2316
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2228
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2323
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
