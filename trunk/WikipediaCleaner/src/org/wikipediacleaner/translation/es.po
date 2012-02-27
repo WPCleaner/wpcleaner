@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-02-27 19:02+0100\n"
+"POT-Creation-Date: 2012-02-27 21:04+0100\n"
 "PO-Revision-Date: 2012-02-21 13:22+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -1122,7 +1122,6 @@ msgstr "El número de páginas debe estar entre {0} y {1}"
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:57
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:82
-#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:69
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:107
 msgid "Retrieving MediaWiki API"
 msgstr "Recuperando API de MediaWiki"
@@ -2269,7 +2268,9 @@ msgstr "Obteniendo página aleatoria"
 msgid "Updating page contents"
 msgstr "Actualizando contenidos de la página"
 
-#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:81
+#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:99
+#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:150
+#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:199
 #, fuzzy, java-format
 msgid "Retrieving interwiki for {0}"
 msgstr "Obteniendo página - {0}"

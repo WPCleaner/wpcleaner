@@ -391,7 +391,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     addButtonDisambiguation(toolbarButtons, true);
     toolbarButtons.addSeparator();
     buttonTranslation = Utilities.createJButton(
-        "(??) => (" + getWikipedia().getSettings().getLanguage() + ")");
+        "(??) \u21d2 (" + getWikipedia().getSettings().getLanguage() + ")");
     buttonTranslation.setActionCommand(ACTION_TRANSLATE);
     buttonTranslation.addActionListener(this);
     toolbarButtons.add(buttonTranslation);

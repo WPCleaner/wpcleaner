@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-02-27 19:02+0100\n"
+"POT-Creation-Date: 2012-02-27 21:04+0100\n"
 "PO-Revision-Date: 2012-02-25 16:54+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -1135,7 +1135,6 @@ msgstr "Le nombre de pages doit être compris entre {0} et {1}"
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:57
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:82
-#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:69
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:107
 msgid "Retrieving MediaWiki API"
 msgstr "Récupération de l’API MediaWiki"
@@ -2283,7 +2282,9 @@ msgstr "Récupération d’une page aléatoire"
 msgid "Updating page contents"
 msgstr "Mise à jour du contenu de la page"
 
-#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:81
+#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:99
+#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:150
+#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:199
 #, java-format
 msgid "Retrieving interwiki for {0}"
 msgstr "Récupération des interwikis pour {0}"
