@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-02-27 21:04+0100\n"
+"POT-Creation-Date: 2012-02-29 20:19+0100\n"
 "PO-Revision-Date: 2012-02-15 00:11+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -1143,13 +1143,13 @@ msgstr "Zawartość artykułu"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:208
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:637
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:135
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:138
 msgid "&Validate"
 msgstr "Sprawdź"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:212
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:258
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:141
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:144
 msgid "&Cancel"
 msgstr "&Anuluj"
 
@@ -2168,11 +2168,15 @@ msgstr "Formatowanie"
 msgid "Debug"
 msgstr "Debugowanie"
 
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:129
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:118
+msgid "Translation"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:132
 msgid "&Apply"
 msgstr "Zastosuj"
 
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:147
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:150
 msgid "&Restore defaults"
 msgstr "&Przywróć domyślne"
 
@@ -2191,6 +2195,30 @@ msgstr "W górę"
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:165
 msgid "Down"
 msgstr "W dół"
+
+#: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:57
+#, fuzzy
+msgid "Translation options"
+msgstr "Opcje formatowania"
+
+#: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:77
+#, fuzzy
+msgid "Translate internal links text"
+msgstr "Zwykły link wewnętrzny"
+
+#: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:84
+msgid "Convert internal links without interwiki to inter language links"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:91
+#, fuzzy
+msgid "Translate categories"
+msgstr "Napraw kategorie"
+
+#: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:98
+#, fuzzy
+msgid "Translate templates names"
+msgstr "Zwykły szablon"
 
 #: org/wikipediacleaner/gui/swing/worker/AutomaticDisambiguationWorker.java:67
 #, java-format
@@ -2232,9 +2260,9 @@ msgstr "Pobieranie losowej strony"
 msgid "Updating page contents"
 msgstr "Odświeżanie zawartości strony"
 
-#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:99
-#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:150
-#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:199
+#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:114
+#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:187
+#: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:245
 #, fuzzy, java-format
 msgid "Retrieving interwiki for {0}"
 msgstr "Pobieranie zawartości strony - {0}"

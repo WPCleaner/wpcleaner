@@ -114,6 +114,9 @@ public class OptionsWindow
     DebugOptionsPanel debugOptions = new DebugOptionsPanel();
     pane.addTab(GT._("Debug"), debugOptions);
     panels.add(debugOptions);
+    TranslationOptionsPanel translationOptions = new TranslationOptionsPanel();
+    pane.addTab(GT._("Translation"), translationOptions);
+    panels.add(translationOptions);
     panel.add(pane);
 
     return panel;
