@@ -201,6 +201,7 @@ public class PageElementInternalLink extends PageElement {
     }
     return linkNotTrimmed + "#" + anchorNotTrimmed;
   }
+
   private PageElementInternalLink(
       EnumWikipedia wikipedia,
       int beginIndex, int endIndex,

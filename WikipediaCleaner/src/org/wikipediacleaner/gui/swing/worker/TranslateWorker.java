@@ -35,6 +35,8 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
@@ -72,9 +74,17 @@ public class TranslateWorker extends BasicWorker {
     String text = initialText;
 
     try {
-      text = translateInternalLinks(text);
-      text = translateCategories(text);
-      text = translateTemplates(text);
+      Configuration config = Configuration.getConfiguration();
+      text = translateInternalLinks(
+          text,
+          config.getBoolean(null, ConfigurationValueBoolean.TRANSLATION_INTERNAL_LINK_TEXT),
+          config.getBoolean(null, ConfigurationValueBoolean.TRANSLATION_INTERLANGUAGE));
+      text = translateCategories(
+          text,
+          config.getBoolean(null, ConfigurationValueBoolean.TRANSLATION_CATEGORY));
+      text = translateTemplates(
+          text,
+          config.getBoolean(null, ConfigurationValueBoolean.TRANSLATION_TEMPLATE_NAME));
     } catch (APIException e) {
       return null;
     }
@@ -84,10 +94,15 @@ public class TranslateWorker extends BasicWorker {
 
   /**
    * @param text Text to translate.
+   * @param translateText Flag indicating if internal link text should be translated.
+   * @param useInterLanguage Flag indicating if interlanguage links can be used.
    * @return Text with internal links translated.
    * @throws APIException
    */
-  private String translateInternalLinks(String text) throws APIException {
+  private String translateInternalLinks(
+      String text,
+      boolean translateText,
+      boolean useInterLanguage) throws APIException {
     API api = APIFactory.getAPI();
     PageAnalysis analysis = new PageAnalysis(page, text);
     Collection<PageElementInternalLink> links = analysis.getInternalLinks();
@@ -104,17 +119,34 @@ public class TranslateWorker extends BasicWorker {
       } else {
         translated = interwikis.get(linkPage);
       }
-      if ((translated != null) && !Page.areSameTitle(linkPage, translated)) {
-        if (link.getBeginIndex() > lastPosition) {
-          newText.append(text.substring(lastPosition, link.getBeginIndex()));
-          lastPosition = link.getBeginIndex();
+      if (translated != null) {
+        if (!Page.areSameTitle(linkPage, translated)) {
+          if (link.getBeginIndex() > lastPosition) {
+            newText.append(text.substring(lastPosition, link.getBeginIndex()));
+            lastPosition = link.getBeginIndex();
+          }
+          newText.append("[[");
+          newText.append(translated);
+          newText.append("|");
+          newText.append(link.getDisplayedText());
+          newText.append("]]");
+          lastPosition = link.getEndIndex();
         }
-        newText.append("[[");
-        newText.append(translated);
-        newText.append("|");
-        newText.append(link.getDisplayedText());
-        newText.append("]]");
-        lastPosition = link.getEndIndex();
+      } else {
+        if (useInterLanguage) {
+          if (link.getBeginIndex() > lastPosition) {
+            newText.append(text.substring(lastPosition, link.getBeginIndex()));
+            lastPosition = link.getEndIndex();
+          }
+          newText.append("[[:");
+          newText.append(from.getSettings().getLanguage());
+          newText.append(":");
+          newText.append(link.getFullLink());
+          newText.append("|");
+          newText.append(link.getDisplayedText());
+          newText.append("]]");
+          lastPosition = link.getEndIndex();
+        }
       }
     }
     if (newText.length() == 0) {
@@ -129,10 +161,15 @@ public class TranslateWorker extends BasicWorker {
 
   /**
    * @param text Text to translate.
+   * @param translate Flag indicating if categories should be translated.
    * @return Text with categories translated.
    * @throws APIException
    */
-  private String translateCategories(String text) throws APIException {
+  private String translateCategories(
+      String text, boolean translate) throws APIException {
+    if (!translate) {
+      return text;
+    }
     Namespace categoryNamespace = Namespace.getNamespace(
         Namespace.CATEGORY, getWikipedia().getNamespaces());
     if (categoryNamespace == null) {
@@ -182,10 +219,15 @@ public class TranslateWorker extends BasicWorker {
 
   /**
    * @param text Text to translate.
+   * @param translateName Flag indicating if templates names should be translated.
    * @return Text with templates translated.
    * @throws APIException
    */
-  private String translateTemplates(String text) throws APIException {
+  private String translateTemplates(
+      String text, boolean translateName) throws APIException {
+    if (!translateName) {
+      return text;
+    }
     Namespace templateNamespace = Namespace.getNamespace(
         Namespace.TEMPLATE, getWikipedia().getNamespaces());
     if (templateNamespace == null) {
