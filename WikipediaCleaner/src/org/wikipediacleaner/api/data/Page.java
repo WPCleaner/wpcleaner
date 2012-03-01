@@ -31,6 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 
 
 /**
@@ -358,12 +359,13 @@ public class Page implements Comparable<Page> {
     }
     if ((templates == null) ||
         (wikipedia == null) ||
-        (wikipedia.getWiktionaryMatchesCount() == 0)){
+        (wikipedia.getConfiguration().getWiktionaryMatchesCount() == 0)){
       return false;
     }
+    WPCConfiguration configuration = wikipedia.getConfiguration();
     for (Page template : templates) {
-      for (int i = 0; i < wikipedia.getWiktionaryMatchesCount(); i++) {
-        TemplateMatch match = wikipedia.getWiktionaryMatch(i);
+      for (int i = 0; i < configuration.getWiktionaryMatchesCount(); i++) {
+        TemplateMatch match = configuration.getWiktionaryMatch(i);
         if (areSameTitle(match.getName(), template.getTitle())) {
           return true;
         }
@@ -911,8 +913,9 @@ public class Page implements Comparable<Page> {
   public List<String> getWiktionaryLinks() {
     List<String> wiktionary = null;
     if ((contents != null) && (wikipedia != null)) {
-      for (int i = 0; i < wikipedia.getWiktionaryMatchesCount(); i++) {
-        TemplateMatch template = wikipedia.getWiktionaryMatch(i);
+      WPCConfiguration configuration = wikipedia.getConfiguration();
+      for (int i = 0; i < configuration.getWiktionaryMatchesCount(); i++) {
+        TemplateMatch template = configuration.getWiktionaryMatch(i);
         Pattern pattern = PageUtilities.createPatternForTemplate(template);
         Matcher matcher = pattern.matcher(contents);
         while (matcher.find()) {

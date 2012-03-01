@@ -91,11 +91,12 @@ public class TemplateMatcher1LT extends TemplateMatcher {
               "???" } ));
       String value = getParameterValue(page, template);
       if ((value != null) && (value.trim().length() > 0)) {
+        String pipeTemplate = getWikipedia().getConfiguration().getPipeTemplate();
         replacements.add(GT._(
             "Replace parameter {0} with {1}",
             new Object[] {
                 parameterName,
-                "???{{" + getWikipedia().getPipeTemplate() + "}}" + value} ));
+                "???{{" + pipeTemplate + "}}" + value} ));
       }
     }
     return replacements;
@@ -119,7 +120,7 @@ public class TemplateMatcher1LT extends TemplateMatcher {
     case 1:
       parameterValue =
         text +
-        "{{" + getWikipedia().getPipeTemplate() + "}}" +
+        "{{" + getWikipedia().getConfiguration().getPipeTemplate() + "}}" +
         getParameterValue(page, template);
       break;
     }

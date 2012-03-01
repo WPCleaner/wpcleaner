@@ -31,6 +31,7 @@ import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.PageListWindow;
@@ -175,13 +176,14 @@ public class PageListWorker extends BasicWorker {
         for (String pageName : pageNames) {
           List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0);
           if (tmpPages != null) {
+            WPCConfiguration configuration = getWikipedia().getConfiguration();
             for (Page tmpPage : tmpPages) {
               if (!tmpPage.isArticle()) {
                 String title = tmpPage.getArticlePageName(getWikipedia().getNamespaces());
-                if ((getWikipedia().getTodoSubpage() != null) &&
-                    (getWikipedia().getTodoSubpage().trim().length() > 0) &&
-                    (title.endsWith("/" + getWikipedia().getTodoSubpage()))) {
-                  title = title.substring(0, title.length() - 1 - getWikipedia().getTodoSubpage().length());
+                if ((configuration.getTodoSubpage() != null) &&
+                    (configuration.getTodoSubpage().trim().length() > 0) &&
+                    (title.endsWith("/" + configuration.getTodoSubpage()))) {
+                  title = title.substring(0, title.length() - 1 - configuration.getTodoSubpage().length());
                 }
                 tmpPage = DataManager.getPage(getWikipedia(), title, null, null);
               }

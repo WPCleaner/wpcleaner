@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
@@ -93,6 +94,17 @@ public class PageAnalysis {
   public EnumWikipedia getWikipedia() {
     if (page != null) {
       return page.getWikipedia();
+    }
+    return null;
+  }
+
+  /**
+   * @return WPCleaner configuration.
+   */
+  public WPCConfiguration getWPCConfiguration() {
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia != null) {
+      return wikipedia.getConfiguration();
     }
     return null;
   }

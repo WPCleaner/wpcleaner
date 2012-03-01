@@ -22,8 +22,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Map.Entry;
-import java.util.Properties;
 
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.i18n.GT;
@@ -49,6 +47,10 @@ public class CWConfiguration {
     this.configuration = new ArrayList<CWConfigurationError>();
   }
 
+  /* ================================================================================= */
+  /* Project page                                                                      */
+  /* ================================================================================= */
+
   /**
    * Page of the Check Wiki projet.
    */
@@ -64,12 +66,47 @@ public class CWConfiguration {
   /**
    * @param projectPage Page of the Check Wiki project.
    */
-  public void setProjectPage(String projectPage) {
+  void setProjectPage(String projectPage) {
     this.projectPage = null;
     if ((projectPage != null) && (projectPage.trim().length() > 0)) {
       this.projectPage = projectPage.trim();
     }
   }
+
+  /**
+   * @return Flag indicating if the Check Wiki project is available.
+   */
+  public boolean isProjectAvailable() {
+    String project = getProjectPage();
+    if (project != null) {
+      return true;
+    }
+    return force;
+  }
+
+  /* ================================================================================= */
+  /* Force                                                                             */
+  /* ================================================================================= */
+
+  /**
+   * Flag indicating if project is forced even without project page.
+   */
+  private boolean force;
+
+  /**
+   * @param value Flag indicating if project is forced even without project page.
+   */
+  void setForce(String value) {
+    if ((value == null) || (value.trim().length() == 0)) {
+      force = false;
+    } else {
+      force = Boolean.valueOf(value);
+    }
+  }
+
+  /* ================================================================================= */
+  /* Comment                                                                           */
+  /* ================================================================================= */
 
   /**
    * Comment for Check Wiki project.
@@ -89,12 +126,16 @@ public class CWConfiguration {
   /**
    * @param comment Comment for Check Wiki project.
    */
-  public void setComment(String comment) {
+  void setComment(String comment) {
     this.comment = null;
     if ((comment != null) && (comment.trim().length() > 0)) {
       this.comment = comment.trim();
     }
   }
+
+  /* ================================================================================= */
+  /* Translation page                                                                  */
+  /* ================================================================================= */
 
   /**
    * Translation page for Check Wiki project.
@@ -111,12 +152,16 @@ public class CWConfiguration {
   /**
    * @param page Translation page for Check Wiki project.
    */
-  public void setTranslationPage(String page) {
+  void setTranslationPage(String page) {
     translationPage = null;
     if ((page != null) && (page.trim().length() > 0)) {
       this.translationPage = page;
     }
   }
+
+  /* ================================================================================= */
+  /* Error configuration                                                               */
+  /* ================================================================================= */
 
   /**
    * Configuration for each error.
@@ -124,44 +169,24 @@ public class CWConfiguration {
   private final ArrayList<CWConfigurationError> configuration;
 
   /**
+   * @param errorNumber Error number.
+   * @return Configuration for error.
+   */
+  public CWConfigurationError getErrorConfiguration(int errorNumber) {
+    if ((errorNumber < 0) || (errorNumber >= configuration.size())) {
+      return null;
+    }
+    return configuration.get(errorNumber);
+  }
+
+  /* ================================================================================= */
+  /* Property management                                                               */
+  /* ================================================================================= */
+
+  /**
    * Prefix for property names.
    */
   private final static String PREFIX = "error_";
-
-  /**
-   * Set configuration.
-   * 
-   * @param properties Properties read from configuration file.
-   * @param suffix Suffix for properties to consider.
-   * @param otherSuffix Suffix for properties not to consider.
-   * @param general Flag indicating if dealing with general properties or wiki properties.
-   */
-  private void setConfiguration(
-      Properties properties,
-      String suffix, String otherSuffix,
-      boolean general) {
-
-    // Clean previous configuration
-    for (CWConfigurationError error : configuration) {
-      if (error != null) {
-        if (general) {
-          error.clearGeneralConfiguration();
-        } else {
-          error.clearWikiConfiguration();
-        }
-      }
-    }
-    if ((properties == null) || (suffix == null) || (otherSuffix == null)) {
-      return;
-    }
-
-    // Check every property
-    for (Entry<Object, Object> property : properties.entrySet()) {
-      String name = property.getKey().toString();
-      String value = property.getValue().toString();
-      setProperty(name, value, suffix, otherSuffix, general);
-    }
-  }
 
   /**
    * Set property.
@@ -298,13 +323,6 @@ public class CWConfiguration {
   }
 
   /**
-   * @param configuration General Check Wiki project configuration.
-   */
-  public void setGeneralConfiguration(Properties configuration) {
-    setConfiguration(configuration, "script", code, true);
-  }
-
-  /**
    * @param input Reader for project configuration specific for this wiki.
    */
   public void setWikiConfiguration(Reader input) throws APIException {
@@ -317,23 +335,5 @@ public class CWConfiguration {
     } catch (IOException e) {
       // Nothing
     }
-  }
-
-  /**
-   * @param configuration Check Wiki project configuration specific for this wiki.
-   */
-  public void setWikiConfiguration(Properties configuration) {
-    setConfiguration(configuration, code, "script", false);
-  }
-
-  /**
-   * @param errorNumber Error number.
-   * @return Configuration for error.
-   */
-  public CWConfigurationError getErrorConfiguration(int errorNumber) {
-    if ((errorNumber < 0) || (errorNumber >= configuration.size())) {
-      return null;
-    }
-    return configuration.get(errorNumber);
   }
 }

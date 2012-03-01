@@ -669,7 +669,7 @@ public class DisambiguationWindow extends OnePageWindow {
     replacements.put("[[" + getPage().getTitle() + "]]", replacement);
     AutomaticDisambiguationWorker dabWorker = new AutomaticDisambiguationWorker(
         getWikipedia(), this, pages, replacements,
-        getWikipedia().getUpdatePageMessage(),
+        getWikipedia().getConfiguration().getUpdatePageMessage(),
         true);
     dabWorker.setListener(new DefaultBasicWorkerListener() {
       @Override

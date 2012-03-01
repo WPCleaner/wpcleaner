@@ -956,13 +956,16 @@ public class MenuCreator {
   public static void addMarkAsNormalToMenu(
       EnumWikipedia wikipedia, JPopupMenu popup, Page page, String text,
       Element element, JTextPane textPane) {
-    String[] templates = (wikipedia != null) ? wikipedia.getTemplatesForDisambiguationLink() : null;
+    List<String> templates = null;
+    if (wikipedia != null) {
+      templates = wikipedia.getConfiguration().getTemplatesForDisambiguationLink();
+    }
     if ((text != null) &&
         (page != null) &&
         Boolean.TRUE.equals(page.isDisambiguationPage()) &&
         (templates != null) &&
-        (templates.length > 0)) {
-      if (templates.length > 1) {
+        (templates.size() > 0)) {
+      if (templates.size() > 1) {
         JMenu submenu = new JMenu(GT._("Mark as normal link"));
         for (String template : templates) {
           JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
@@ -976,7 +979,7 @@ public class MenuCreator {
       } else {
         JMenuItem menuItem = new JMenuItem(GT._("Mark as normal link"));
         ActionListener action = new MarkLinkAction(
-            page.getTitle(), text, templates[0],
+            page.getTitle(), text, templates.get(0),
             element, textPane, null);
         menuItem.addActionListener(action);
         popup.add(menuItem);
@@ -998,13 +1001,16 @@ public class MenuCreator {
   public static void addMarkAsNeedingHelpToMenu(
       EnumWikipedia wikipedia, JPopupMenu popup, Page page, String text,
       Element element, JTextPane textPane, JCheckBox checkBox) {
-    String[] templates = (wikipedia != null) ? wikipedia.getTemplatesForNeedingHelp() : null;
+    List<String> templates = null;
+    if (wikipedia != null) {
+      templates = wikipedia.getConfiguration().getTemplatesForNeedingHelp();
+    }
     if ((text != null) &&
         (page != null) &&
         Boolean.TRUE.equals(page.isDisambiguationPage()) &&
         (templates != null) &&
-        (templates.length > 0)) {
-      if (templates.length > 1) {
+        (templates.size() > 0)) {
+      if (templates.size() > 1) {
         JMenu submenu = new JMenu(GT._("Mark as needing help"));
         for (String template : templates) {
           JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
@@ -1018,7 +1024,7 @@ public class MenuCreator {
       } else {
         JMenuItem menuItem = new JMenuItem(GT._("Mark as needing help"));
         ActionListener action = new MarkLinkAction(
-            page.getTitle(), text, templates[0],
+            page.getTitle(), text, templates.get(0),
             element, textPane, checkBox);
         menuItem.addActionListener(action);
         popup.add(menuItem);
@@ -1039,13 +1045,16 @@ public class MenuCreator {
   public static void addLinkTextToMenu(
       EnumWikipedia wikipedia, JPopupMenu popup, Page page, String text,
       Element element, JTextPane textPane) {
-    String[] templates = (wikipedia != null) ? wikipedia.getTemplatesForLinkingText() : null;
+    List<String> templates = null;
+    if (wikipedia != null) {
+      templates = wikipedia.getConfiguration().getTemplatesForLinkingText();
+    }
     if ((text != null) &&
         (page != null) &&
         Boolean.TRUE.equals(page.isDisambiguationPage()) &&
         (templates != null) &&
-        (templates.length > 0)) {
-      if (templates.length > 1) {
+        (templates.size() > 0)) {
+      if (templates.size() > 1) {
         JMenu submenu = new JMenu(GT._("Link text"));
         for (String template : templates) {
           JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
@@ -1059,7 +1068,7 @@ public class MenuCreator {
       } else {
         JMenuItem menuItem = new JMenuItem(GT._("Link text"));
         ActionListener action = new MarkLinkAction(
-            page.getTitle(), text, templates[0],
+            page.getTitle(), text, templates.get(0),
             element, textPane, null);
         menuItem.addActionListener(action);
         popup.add(menuItem);
