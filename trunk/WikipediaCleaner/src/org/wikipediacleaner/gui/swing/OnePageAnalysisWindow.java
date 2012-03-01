@@ -139,6 +139,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
 
   List<Page> knownPages;
 
+  boolean translated;
+
   /**
    * Create and display a AnalysisWindow.
    * 
@@ -986,6 +988,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
           return;
         }
         getTextContents().changeText((String) result);
+        translated = true;
         actionValidate(true);
       }
       
@@ -1050,6 +1053,13 @@ public class OnePageAnalysisWindow extends OnePageWindow {
    */
   @Override
   protected String getAutomaticComment() {
+    if (translated) {
+      String text = getConfiguration().getTranslationComment();
+      if ((text != null) && (text.trim().length() > 0)) {
+        return text;
+      }
+      return GT._("Translation");
+    }
     StringBuilder comment = new StringBuilder();
     if ((mapLinksCount != null) && (mapLinksCount.size() > 0)) {
       // Comment for fixed links to disambiguation pages

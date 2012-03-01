@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-03-01 18:11+0100\n"
+"POT-Creation-Date: 2012-03-01 21:15+0100\n"
 "PO-Revision-Date: 2012-02-05 15:16+0000\n"
 "Last-Translator: Krasznecz Zoltán <zoltan.krasznecz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -441,7 +441,7 @@ msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:184
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:573
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:575
 msgid "Check Wikipedia"
 msgstr "Wiképédia ellenőrzése"
 
@@ -587,7 +587,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:759
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:392
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:501
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:503
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:200
 msgid "Full analysis (Alt + &F)"
 msgstr ""
@@ -709,18 +709,18 @@ msgid "Select &next links"
 msgstr "Következő hivatkozások kijelölése"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:398
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:507
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:509
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:206
 msgid "Disambiguation (Alt + &D)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:409
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:223
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:225
 msgid "Link count"
 msgstr "Hivatkozások mutatása"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:446
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:426
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:428
 msgid "Sort"
 msgstr "Rendezés"
 
@@ -973,7 +973,7 @@ msgid "You must input a page name for updating the disambiguation warning"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1098
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:945
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:947
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:330
 msgid ""
 "You need to define the 'dab_warning_template' property in WikiCleaner "
@@ -981,7 +981,7 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1102
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:949
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:951
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:334
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr ""
@@ -1120,71 +1120,76 @@ msgstr "&Ellenőrzés"
 msgid "&Cancel"
 msgstr "&Mégse"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:210
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:212
 #, java-format
 msgid "Analysis - {0}"
 msgstr "Elemzés - {0}"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:380
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:382
 msgid "Add a warning on the talk page about the links to disambiguation pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:440
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:442
 msgid "&Options"
 msgstr "&Beállítások"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:442
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:444
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:132
 msgid "Show &disambiguation pages"
 msgstr "Egyértelműsítő lapok mutatása"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:446
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:448
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:139
 msgid "Show &missing pages"
 msgstr "Hiányzó oldalak mutatása"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:450
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:452
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:146
 msgid "Show &redirect pages"
 msgstr "Átírányítások mutatása"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:454
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:456
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:153
 msgid "Show &other pages"
 msgstr "Egyéb oldalak mutatása"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:459
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:461
 msgid "Count disambiguation pages"
 msgstr "Egyértelműsítő lapok számlálása"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:463
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:465
 msgid "Count missing pages"
 msgstr "Hiányzó oldalak megszámlálása"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:467
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:469
 msgid "Count redirect pages"
 msgstr "Átirányítások megszámlálása"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:471
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:473
 msgid "Count other pages"
 msgstr "Egyéb oldalak megszámlálása"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:513
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:515
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:737
 msgid "Add to Watch list (Alt + &W)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:803
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:805
 #, java-format
 msgid "Page {0} doesn''t exist, do you still want to analyze it ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:910
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:912
 msgid "Would you like to add these pages on your local Watch list ?"
 msgstr "Hozzá akarod adni ezeket az oldalakat a helyi Figyelsőlistádhoz?"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:966
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:968
 msgid "From which Wikipedia is this text coming ?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1061
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:118
+msgid "Translation"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:340
@@ -2117,10 +2122,6 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:115
 msgid "Debug"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:118
-msgid "Translation"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:132
