@@ -164,6 +164,11 @@ public class PageElementInternalLink extends PageElement {
           return null;
         }
       }
+
+      // Is it a language link ?
+      if (Language.isLanguageCode(wikipedia.getLanguages(), namespaceName)) {
+        return null;
+      }
     }
 
     // Create internal link
