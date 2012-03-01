@@ -261,7 +261,12 @@ public class TranslateWorker extends BasicWorker {
         }
         if (translateWithoutParams && (template.getParameterCount() == 0)) {
           newText.append("{{");
-          newText.append(translated);
+          int columnPos = translated.indexOf(':');
+          if (columnPos < 0) {
+            newText.append(translated);
+          } else {
+            newText.append(translated.substring(columnPos + 1));
+          }
           newText.append("}}");
           lastPosition = template.getEndIndex();
         } else {
