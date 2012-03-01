@@ -19,6 +19,7 @@
 package org.wikipediacleaner.gui.swing.worker;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -104,7 +106,6 @@ public class TranslateWorker extends BasicWorker {
       String text,
       boolean translateText,
       boolean useInterLanguage) throws APIException {
-    API api = APIFactory.getAPI();
     PageAnalysis analysis = new PageAnalysis(page, text);
     Collection<PageElementInternalLink> links = analysis.getInternalLinks();
     Map<String, String> interwikis = new HashMap<String, String>();
@@ -115,7 +116,7 @@ public class TranslateWorker extends BasicWorker {
       setText(GT._("Retrieving interwiki for {0}", linkPage));
       String translated = null;
       if (!interwikis.containsKey(linkPage)) {
-        translated = api.getLanguageLink(from, getWikipedia(), linkPage);
+        translated = getLanguageLink(linkPage);
         interwikis.put(linkPage, translated);
       } else {
         translated = interwikis.get(linkPage);
@@ -176,7 +177,6 @@ public class TranslateWorker extends BasicWorker {
     if (categoryNamespace == null) {
       return text;
     }
-    API api = APIFactory.getAPI();
     PageAnalysis analysis = new PageAnalysis(page, text);
     Collection<PageElementCategory> categories = analysis.getCategories();
     Map<String, String> interwikis = new HashMap<String, String>();
@@ -188,7 +188,7 @@ public class TranslateWorker extends BasicWorker {
       setText(GT._("Retrieving interwiki for {0}", fullCategoryName));
       String translated = null;
       if (!interwikis.containsKey(categoryName)) {
-        translated = api.getLanguageLink(from, getWikipedia(), fullCategoryName);
+        translated = getLanguageLink(fullCategoryName);
         interwikis.put(categoryName, translated);
       } else {
         translated = interwikis.get(categoryName);
@@ -237,7 +237,6 @@ public class TranslateWorker extends BasicWorker {
     if (templateNamespace == null) {
       return text;
     }
-    API api = APIFactory.getAPI();
     PageAnalysis analysis = new PageAnalysis(page, text);
     Collection<PageElementTemplate> templates = analysis.getTemplates();
     Map<String, String> interwikis = new HashMap<String, String>();
@@ -249,7 +248,7 @@ public class TranslateWorker extends BasicWorker {
       setText(GT._("Retrieving interwiki for {0}", fullTemplateName));
       String translated = null;
       if (!interwikis.containsKey(templateName)) {
-        translated = api.getLanguageLink(from, getWikipedia(), fullTemplateName);
+        translated = getLanguageLink(fullTemplateName);
         interwikis.put(templateName, translated);
       } else {
         translated = interwikis.get(templateName);
@@ -284,5 +283,26 @@ public class TranslateWorker extends BasicWorker {
       lastPosition = text.length();
     }
     return newText.toString();
+  }
+
+  /**
+   * @param pageName Page name.
+   * @return Language link.
+   * @throws APIException
+   */
+  private String getLanguageLink(String pageName) throws APIException {
+    API api = APIFactory.getAPI();
+    String link = api.getLanguageLink(from, getWikipedia(), pageName);
+    if (link != null) {
+      return link;
+    }
+    Page original = DataManager.getPage(from, pageName, null, null);
+    //api.retrieveLinksWithRedirects(from, original, null, null);
+    api.initializeRedirect(from, Collections.singletonList(original));
+    if (!original.isRedirect()) {
+      return link;
+    }
+    link = api.getLanguageLink(from, getWikipedia(), original.getRedirectTitle());
+    return link;
   }
 }
