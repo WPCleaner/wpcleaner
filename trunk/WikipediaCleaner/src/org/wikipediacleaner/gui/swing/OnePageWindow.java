@@ -152,7 +152,7 @@ public abstract class OnePageWindow
    * @return Default comment.
    */
   protected String getAutomaticComment() {
-    return getWikipedia().getUpdatePageMessage();
+    return getWikipedia().getConfiguration().getUpdatePageMessage();
   }
 
   /**
@@ -307,8 +307,8 @@ public abstract class OnePageWindow
     }
     boolean dabWarning =
       article &&
-      (getWikipedia().getDisambiguationWarningTemplate() != null) &&
-      (getWikipedia().getTodoTemplates() != null);
+      (getConfiguration().getDisambiguationWarningTemplate() != null) &&
+      (getConfiguration().getTodoTemplates() != null);
     if (chkUpdateDabWarning != null) {
       chkUpdateDabWarning.setEnabled(pageLoaded && dabWarning);
     }
@@ -1275,7 +1275,9 @@ public abstract class OnePageWindow
     getParentComponent().setTitle(GT._("Sending {0}", page.getTitle()));
     SendWorker sendWorker = new SendWorker(
         getWikipedia(), this, page, getTextContents().getText(),
-        (textComment != null) ? textComment.getText() : getWikipedia().getUpdatePageMessage(),
+        (textComment != null) ?
+            textComment.getText() :
+            getWikipedia().getConfiguration().getUpdatePageMessage(),
         forceWatch, updateDabWarning, createDabWarning,
         computeErrorsFixed());
     sendWorker.setListener(new DefaultBasicWorkerListener() {

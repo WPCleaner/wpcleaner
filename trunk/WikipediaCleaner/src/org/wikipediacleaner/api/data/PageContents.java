@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 
 
 /**
@@ -381,7 +382,8 @@ public class PageContents {
     }
 
     // Search for internal links created by templates
-    if (wikipedia.hasTemplateMatchers()) {
+    WPCConfiguration configuration = wikipedia.getConfiguration();
+    if (configuration.hasTemplateMatchers()) {
       currentIndex = 0;
       while (currentIndex < contents.length()) {
         PageElementTemplate template = PageContents.findNextTemplate(
@@ -389,7 +391,7 @@ public class PageContents {
         if (template != null) {
           currentIndex = template.getBeginIndex() + 2;
           List<? extends TemplateMatcher> matchers =
-            wikipedia.getTemplateMatchers(template.getTemplateName());
+            configuration.getTemplateMatchers(template.getTemplateName());
           if (matchers != null) {
             for (TemplateMatcher matcher : matchers) {
               String linkTo = matcher.linksTo(page, template);

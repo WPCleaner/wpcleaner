@@ -60,6 +60,7 @@ public enum ConfigurationValueBoolean {
   TRANSLATION_INTERLANGUAGE("TranslationInterLanguage", true),
   TRANSLATION_INTERNAL_LINK_TEXT("TranslationInternalLinkText", false),
   TRANSLATION_TEMPLATE_NAME("TranslationTemplateName", true),
+  TRANSLATION_TEMPLATE_NO_PARAM("TranslationTemplateNoParam", true),
   UPDATE_DAB_WARNING("UpdateDabWarning", true),
   UPDATE_DAB_WARNING_ALL("UpdateDabWarningAll", true),
   UPDATE_DAB_WARNING_ENCY("UpdateDabWarningEncyclo", true),

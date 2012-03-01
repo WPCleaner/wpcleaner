@@ -177,7 +177,8 @@ public class MWPaneDisambiguationFormatter extends
 
     // Check if the link should be formatted
     String templateName = template.getTemplateName();
-    List<? extends TemplateMatcher> matchers = wikipedia.getTemplateMatchers(templateName);
+    List<? extends TemplateMatcher> matchers =
+        wikipedia.getConfiguration().getTemplateMatchers(templateName);
     if (matchers == null) {
       return;
     }

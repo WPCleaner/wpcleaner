@@ -31,6 +31,7 @@ import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageContents;
@@ -48,6 +49,7 @@ import org.wikipediacleaner.i18n.GT;
 public class UpdateDabWarningTools {
 
   private final EnumWikipedia wikipedia;
+  private final WPCConfiguration configuration;
   private final BasicWorker worker;
   private final BasicWindow window;
   private final boolean createWarning;
@@ -91,6 +93,7 @@ public class UpdateDabWarningTools {
       BasicWorker worker, BasicWindow window,
       boolean createWarning) {
     this.wikipedia = wikipedia;
+    this.configuration = wikipedia.getConfiguration();
     this.worker = worker;
     this.window = window;
     this.createWarning = createWarning;
@@ -232,8 +235,8 @@ public class UpdateDabWarningTools {
     if (page == null) {
       return false;
     }
-    if ((wikipedia.getTodoTemplates() == null) ||
-        (wikipedia.getTodoTemplates().isEmpty())) {
+    if ((configuration.getTodoTemplates() == null) ||
+        (configuration.getTodoTemplates().isEmpty())) {
       return false;
     }
 
@@ -243,20 +246,20 @@ public class UpdateDabWarningTools {
     api.retrieveSectionContents(wikipedia, talkPage, 0);
 
     // Todo subpage
-    if (wikipedia.getTodoSubpage() != null) {
+    if (configuration.getTodoSubpage() != null) {
 
       // Retrieving todo subpage contents
-      Page todoSubpage = talkPage.getSubPage(wikipedia.getTodoSubpage());
+      Page todoSubpage = talkPage.getSubPage(configuration.getTodoSubpage());
       setText(GT._("Retrieving page contents - {0}", todoSubpage.getTitle()));
       api.retrieveContents(wikipedia, todoSubpage, false);
 
       // If we force the use of todo subpage, the disambiguation warning must be on it
       if ((page.getNamespace() != null) &&
           (page.getNamespace().intValue() == Namespace.MAIN)) {
-        if (wikipedia.getTodoSubpageForce()) {
+        if (configuration.getTodoSubpageForce()) {
           return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
         }
-      } else if (wikipedia.getTodoSubpageForceOther()) {
+      } else if (configuration.getTodoSubpageForceOther()) {
         return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
       }
 
@@ -356,7 +359,7 @@ public class UpdateDabWarningTools {
       contents = "";
     }
     PageElementTemplate templateWarning = PageContents.findNextTemplate(
-        todoSubpage, contents, wikipedia.getDisambiguationWarningTemplate(), 0);
+        todoSubpage, contents, configuration.getDisambiguationWarningTemplate(), 0);
 
     // If disambiguation warning is missing, add it
     if (templateWarning == null) {
@@ -430,11 +433,11 @@ public class UpdateDabWarningTools {
       contents = "";
     }
     PageElementTemplate templateTodo = null;
-    if ((wikipedia.getTodoTemplates() == null) ||
-        (wikipedia.getTodoTemplates().isEmpty())) {
+    if ((configuration.getTodoTemplates() == null) ||
+        (configuration.getTodoTemplates().isEmpty())) {
       return false;
     }
-    for (String todoTemplate : wikipedia.getTodoTemplates()) {
+    for (String todoTemplate : configuration.getTodoTemplates()) {
       PageElementTemplate templateTmp = PageContents.findNextTemplate(
           talkPage, contents, todoTemplate, 0);
       if (templateTmp != null) {
@@ -452,8 +455,8 @@ public class UpdateDabWarningTools {
 
       // Search where to add todo template
       PageElementTemplate templatePrevious = null;
-      if (wikipedia.getDisambiguationWarningAfterTemplates() != null) {
-        for (String previousTemplate : wikipedia.getDisambiguationWarningAfterTemplates()) {
+      if (configuration.getDisambiguationWarningAfterTemplates() != null) {
+        for (String previousTemplate : configuration.getDisambiguationWarningAfterTemplates()) {
           int index = 0;
           while (index < contents.length()) {
             PageElementTemplate templateTmp = PageContents.findNextTemplate(
@@ -481,7 +484,7 @@ public class UpdateDabWarningTools {
         }
       }
       tmp.append("{{");
-      tmp.append(wikipedia.getTodoTemplates().get(0));
+      tmp.append(configuration.getTodoTemplates().get(0));
       tmp.append("|* ");
       addWarning(tmp, pageRevId, dabLinks);
       tmp.append("}}");
@@ -502,7 +505,7 @@ public class UpdateDabWarningTools {
     String parameter = templateTodo.getParameterValue("1");
     PageElementTemplate templateWarning = PageContents.findNextTemplate(
         talkPage, parameter,
-        wikipedia.getDisambiguationWarningTemplate(), 0);
+        configuration.getDisambiguationWarningTemplate(), 0);
     if (templateWarning == null) {
       StringBuilder tmp = new StringBuilder();
       int indexStart = templateTodo.getBeginIndex();
@@ -560,7 +563,7 @@ public class UpdateDabWarningTools {
 
     // Search disambiguation warning in the todo subpage
     PageElementTemplate template = PageContents.findNextTemplate(
-        todoSubpage, contents, wikipedia.getDisambiguationWarningTemplate(), 0);
+        todoSubpage, contents, configuration.getDisambiguationWarningTemplate(), 0);
     if (template == null) {
       return false;
     }
@@ -589,7 +592,7 @@ public class UpdateDabWarningTools {
     // Remove the disambiguation warning
     updatePage(
         todoSubpage, tmp.toString(),
-        wikipedia.formatComment(wikipedia.getDisambiguationWarningCommentDone()),
+        wikipedia.formatComment(configuration.getDisambiguationWarningCommentDone()),
         false);
 
     return true;
@@ -613,7 +616,7 @@ public class UpdateDabWarningTools {
       updateSection(
           talkPage,
           wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
-          0, "{{" + wikipedia.getTodoTemplates().get(0) + "}}", false);
+          0, "{{" + configuration.getTodoTemplates().get(0) + "}}", false);
       return true;
     }
 
@@ -624,8 +627,8 @@ public class UpdateDabWarningTools {
 
     // Search todo in the talk page
     PageElementTemplate templateTodo = null;
-    if (wikipedia.getTodoTemplates() != null) {
-      for (String templateName : wikipedia.getTodoTemplates()) {
+    if (configuration.getTodoTemplates() != null) {
+      for (String templateName : configuration.getTodoTemplates()) {
         PageElementTemplate templateTmp = PageContents.findNextTemplate(
             talkPage, contents, templateName, 0);
         if (templateTmp != null) {
@@ -645,8 +648,8 @@ public class UpdateDabWarningTools {
 
       // Search where to add todo template
       PageElementTemplate templatePrevious = null;
-      if (wikipedia.getDisambiguationWarningAfterTemplates() != null) {
-        for (String previousTemplate : wikipedia.getDisambiguationWarningAfterTemplates()) {
+      if (configuration.getDisambiguationWarningAfterTemplates() != null) {
+        for (String previousTemplate : configuration.getDisambiguationWarningAfterTemplates()) {
           int index = 0;
           while (index < contents.length()) {
             PageElementTemplate templateTmp = PageContents.findNextTemplate(
@@ -674,7 +677,7 @@ public class UpdateDabWarningTools {
         }
       }
       tmp.append("{{");
-      tmp.append(wikipedia.getTodoTemplates().get(0));
+      tmp.append(configuration.getTodoTemplates().get(0));
       tmp.append("}}");
       if (indexStart < contents.length()) {
         if (contents.charAt(indexStart) != '\n') {
@@ -696,7 +699,7 @@ public class UpdateDabWarningTools {
     String parameter = templateTodo.getParameterValue("1");
     PageElementTemplate templateWarning = PageContents.findNextTemplate(
         talkPage, parameter,
-        wikipedia.getDisambiguationWarningTemplate(), 0);
+        configuration.getDisambiguationWarningTemplate(), 0);
     if (templateWarning != null) {
       setText(GT._("Removing disambiguation warning - {0}", talkPage.getTitle()));
       StringBuilder tmp = new StringBuilder();
@@ -729,8 +732,8 @@ public class UpdateDabWarningTools {
       } else {
         // Search todo link
         PageElementTemplate templateTodoLink = null;
-        if (wikipedia.getTodoLinkTemplates() != null) {
-          for (String templateName : wikipedia.getTodoLinkTemplates()) {
+        if (configuration.getTodoLinkTemplates() != null) {
+          for (String templateName : configuration.getTodoLinkTemplates()) {
             PageElementTemplate templateTmp = PageContents.findNextTemplate(
                 talkPage, contents, templateName, 0);
             if (templateTmp != null) {
@@ -783,8 +786,8 @@ public class UpdateDabWarningTools {
 
     // Search todo in the talk page
     PageElementTemplate templateTodo = null;
-    if (wikipedia.getTodoTemplates() != null) {
-      for (String templateName : wikipedia.getTodoTemplates()) {
+    if (configuration.getTodoTemplates() != null) {
+      for (String templateName : configuration.getTodoTemplates()) {
         PageElementTemplate templateTmp = PageContents.findNextTemplate(
             talkPage, contents, templateName, 0);
         if (templateTmp != null) {
@@ -797,7 +800,7 @@ public class UpdateDabWarningTools {
       String parameter = templateTodo.getParameterValue("1");
       PageElementTemplate templateWarning = PageContents.findNextTemplate(
           talkPage, parameter,
-          wikipedia.getDisambiguationWarningTemplate(), 0);
+          configuration.getDisambiguationWarningTemplate(), 0);
       if (templateWarning != null) {
         setText(GT._("Removing disambiguation warning - {0}", talkPage.getTitle()));
         StringBuilder tmp = new StringBuilder();
@@ -832,7 +835,7 @@ public class UpdateDabWarningTools {
         }
         updateSection(
             talkPage,
-            wikipedia.formatComment(wikipedia.getDisambiguationWarningCommentDone()),
+            wikipedia.formatComment(configuration.getDisambiguationWarningCommentDone()),
             0, tmp.toString(), false);
         return true;
       }
@@ -921,8 +924,8 @@ public class UpdateDabWarningTools {
    */
   private PageElementTemplate getExistingTemplateTodoLink(Page talkPage, String contents) {
     PageElementTemplate templateTodoLink = null;
-    if (wikipedia.getTodoLinkTemplates() != null) {
-      for (String todoLink : wikipedia.getTodoLinkTemplates()) {
+    if (configuration.getTodoLinkTemplates() != null) {
+      for (String todoLink : configuration.getTodoLinkTemplates()) {
         PageElementTemplate templateTmp = PageContents.findNextTemplate(
             talkPage, contents, todoLink, 0);
         if (templateTmp != null) {
@@ -938,9 +941,9 @@ public class UpdateDabWarningTools {
    */
   private String getDisambiguationWarningComment(Collection<String> dabLinks) {
     if ((dabLinks == null) || (dabLinks.isEmpty())) {
-      return wikipedia.getDisambiguationWarningComment();
+      return configuration.getDisambiguationWarningComment();
     }
-    StringBuilder result = new StringBuilder(wikipedia.getDisambiguationWarningComment());
+    StringBuilder result = new StringBuilder(configuration.getDisambiguationWarningComment());
     boolean first = true;
     for (String dabLink : dabLinks) {
       if (first) {
@@ -1003,7 +1006,7 @@ public class UpdateDabWarningTools {
       StringBuilder talkText,
       Integer pageRevId, Collection<String> dabLinks) {
     talkText.append("{{ ");
-    talkText.append(wikipedia.getDisambiguationWarningTemplate());
+    talkText.append(configuration.getDisambiguationWarningTemplate());
     if (pageRevId != null) {
       talkText.append(" | revisionid=");
       talkText.append(pageRevId);
@@ -1013,9 +1016,9 @@ public class UpdateDabWarningTools {
       talkText.append(dabLink);
     }
     talkText.append(" }} -- ~~~~~");
-    if (wikipedia.getDisambiguationWarningTemplateComment() != null) {
+    if (configuration.getDisambiguationWarningTemplateComment() != null) {
       talkText.append(" <!-- ");
-      talkText.append(wikipedia.getDisambiguationWarningTemplateComment());
+      talkText.append(configuration.getDisambiguationWarningTemplateComment());
       talkText.append(" -->");
     }
   }

@@ -21,6 +21,7 @@ package org.wikipediacleaner.api.impl;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -196,7 +197,8 @@ public class MediaWikiAPI implements API {
       Page page = DataManager.getPage(
           wikipedia, configPageName, null, null);
       retrieveContents(wikipedia, page, false);
-      wikipedia.initConfiguration(page.getContents());
+      wikipedia.getConfiguration().setGeneralConfiguration(
+          new StringReader(page.getContents()));
 
       if ((userName != null) && (userName.trim().length() > 0) &&
           (wikipedia.getUserConfigurationPage(userName) != null) &&
@@ -207,7 +209,8 @@ public class MediaWikiAPI implements API {
             null, null);
         retrieveContents(wikipedia, userConfigPage, false);
         if (Boolean.TRUE.equals(userConfigPage.isExisting())) {
-          wikipedia.initUserConfiguration(userConfigPage.getContents());
+          wikipedia.getConfiguration().setUserConfiguration(
+              new StringReader(userConfigPage.getContents()));
         }
       }
     }
@@ -1950,7 +1953,7 @@ public class MediaWikiAPI implements API {
                 if (wikipedia.isDisambiguationTemplate(templateName, this)) {
                   disambiguation = Boolean.TRUE;
                 }
-                if (wikipedia.isWiktionaryTemplate(templateName)) {
+                if (wikipedia.getConfiguration().isWiktionaryTemplate(templateName)) {
                   wiktionaryLink = Boolean.TRUE;
                 }
               }

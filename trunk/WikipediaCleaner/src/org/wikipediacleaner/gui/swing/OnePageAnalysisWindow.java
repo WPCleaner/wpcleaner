@@ -820,7 +820,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
               null,
               ConfigurationValueBoolean.CREATE_DAB_WARNING));
         } else if ((getPage().getNamespace() != null) &&
-                   (getWikipedia().isEncyclopedicNamespace(getPage().getNamespace()))) {
+                   (getWikipedia().getConfiguration().isEncyclopedicNamespace(
+                       getPage().getNamespace()))) {
           chkUpdateDabWarning.setSelected(config.getBoolean(
               null,
               ConfigurationValueBoolean.UPDATE_DAB_WARNING_ENCY));
@@ -937,7 +938,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
    * Action called when Disambiguation warning button is pressed.  
    */
   private void actionDisambiguationWarning() {
-    String template = getWikipedia().getDisambiguationWarningTemplate();
+    String template = getConfiguration().getDisambiguationWarningTemplate();
     if ((template == null) || (template.trim().length() == 0)) {
       Utilities.displayWarning(
           getParentComponent(),
@@ -1071,7 +1072,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       }
       if (fixed.size() > 0) {
         Collections.sort(fixed);
-        comment.append(getWikipedia().getUpdatePageMessage());
+        comment.append(getWikipedia().getConfiguration().getDisambiguationComment());
         int linksFixed = 0;
         for (String fix : fixed) {
           if (linksFixed > 0) {

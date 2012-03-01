@@ -69,6 +69,7 @@ import org.wikipediacleaner.api.constants.CWConfiguration;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Page;
@@ -309,7 +310,7 @@ public class MainWindow
     DocumentBuilderImpl dbi = new DocumentBuilderImpl(
         ucontextMessage, rcontextMessage);
     InputSource is = new InputSource(new StringReader(Version.MESSAGE));
-    is.setSystemId(EnumWikipedia.EN.getHelpURL());
+    is.setSystemId(EnumWikipedia.EN.getConfiguration().getHelpURL());
     try {
       textMessage.setDocument(dbi.parse(is), rcontextMessage);
     } catch (SAXException e) {
@@ -990,9 +991,9 @@ public class MainWindow
    */
   private void actionHelp() {
     EnumWikipedia wikipedia = getWikipedia();
-    String url = EnumWikipedia.EN.getHelpURL();
-    if ((wikipedia != null) && (wikipedia.getHelpURL() != null)) {
-      url = wikipedia.getHelpURL();
+    String url = EnumWikipedia.EN.getConfiguration().getHelpURL();
+    if ((wikipedia != null) && (wikipedia.getConfiguration().getHelpURL() != null)) {
+      url = wikipedia.getConfiguration().getHelpURL();
     }
     if (Utilities.isDesktopSupported()) {
       Utilities.browseURL(url);
@@ -1090,7 +1091,7 @@ public class MainWindow
           textPagename);
       return;
     }
-    String template = getWikipedia().getDisambiguationWarningTemplate();
+    String template = getConfiguration().getDisambiguationWarningTemplate();
     if ((template == null) || (template.trim().length() == 0)) {
       Utilities.displayWarning(
           getParentComponent(),
@@ -1166,8 +1167,9 @@ public class MainWindow
     if (wikipedia == null) {
       return;
     }
-    if ((wikipedia.getCurrentDisambiguationList() == null) ||
-        (wikipedia.getCurrentDisambiguationList().isEmpty())) {
+    WPCConfiguration configuration = wikipedia.getConfiguration();
+    if ((configuration.getCurrentDisambiguationList() == null) ||
+        (configuration.getCurrentDisambiguationList().isEmpty())) {
       String url = URL_OTHER_WIKIPEDIA;
       displayUrlMessage(
           GT._(
@@ -1181,7 +1183,7 @@ public class MainWindow
     }
     new PageListWorker(
         wikipedia, this,
-        wikipedia.getCurrentDisambiguationList(),
+        configuration.getCurrentDisambiguationList(),
         PageListWorker.Mode.INTERNAL_LINKS, false,
         GT._("Current disambiguation list")).start();
   }
@@ -1194,8 +1196,9 @@ public class MainWindow
     if (wikipedia == null) {
       return;
     }
-    if ((wikipedia.getMostDisambiguationLinks() == null) ||
-        (wikipedia.getMostDisambiguationLinks().isEmpty())) {
+    WPCConfiguration configuration = wikipedia.getConfiguration();
+    if ((configuration.getMostDisambiguationLinks() == null) ||
+        (configuration.getMostDisambiguationLinks().isEmpty())) {
       String url = URL_OTHER_WIKIPEDIA;
       displayUrlMessage(
           GT._(
@@ -1209,7 +1212,7 @@ public class MainWindow
     }
     new PageListWorker(
         wikipedia, this,
-        wikipedia.getMostDisambiguationLinks(),
+        configuration.getMostDisambiguationLinks(),
         PageListWorker.Mode.CATEGORY_MEMBERS_ARTICLES,
         false,
         GT._("Pages with many disambiguation links")).start();
@@ -1223,7 +1226,8 @@ public class MainWindow
     if (wikipedia == null) {
       return;
     }
-    if (wikipedia.getTemplatesForHelpRequested() == null) {
+    WPCConfiguration configuration = wikipedia.getConfiguration();
+    if (configuration.getTemplatesForHelpRequested() == null) {
       String url = URL_OTHER_WIKIPEDIA;
       displayUrlMessage(
           GT._(
@@ -1235,7 +1239,7 @@ public class MainWindow
       }
     } else {
       List<String> pageNames = new ArrayList<String>();
-      for (Page template : wikipedia.getTemplatesForHelpRequested()) {
+      for (Page template : configuration.getTemplatesForHelpRequested()) {
         pageNames.add(template.getTitle());
       }
       new PageListWorker(
@@ -1273,7 +1277,7 @@ public class MainWindow
     if (wikipedia == null) {
       return;
     }
-    if (!wikipedia.isCheckWikiProjectAvailable()) {
+    if (!wikipedia.getCWConfiguration().isProjectAvailable()) {
       String url = URL_OTHER_WIKIPEDIA;
       displayUrlMessage(
           GT._(
@@ -1459,7 +1463,7 @@ public class MainWindow
 
         // Retrieving suggestions for text replacements
         setText(GT._("Retrieving suggestions for text replacements"));
-        getWikipedia().initSuggestions(api, reloadOnly);
+        getConfiguration().initSuggestions(api, reloadOnly);
 
         // Retrieving general Check Wiki configuration
         CWConfiguration cwConfiguration = getWikipedia().getCWConfiguration();

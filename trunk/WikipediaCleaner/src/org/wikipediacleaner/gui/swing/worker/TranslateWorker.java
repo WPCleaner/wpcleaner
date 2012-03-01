@@ -84,7 +84,8 @@ public class TranslateWorker extends BasicWorker {
           config.getBoolean(null, ConfigurationValueBoolean.TRANSLATION_CATEGORY));
       text = translateTemplates(
           text,
-          config.getBoolean(null, ConfigurationValueBoolean.TRANSLATION_TEMPLATE_NAME));
+          config.getBoolean(null, ConfigurationValueBoolean.TRANSLATION_TEMPLATE_NAME),
+          config.getBoolean(null, ConfigurationValueBoolean.TRANSLATION_TEMPLATE_NO_PARAM));
     } catch (APIException e) {
       return null;
     }
@@ -220,11 +221,14 @@ public class TranslateWorker extends BasicWorker {
   /**
    * @param text Text to translate.
    * @param translateName Flag indicating if templates names should be translated.
+   * @param translateWithoutParams Flag indicating if templates without parameters should be translated.
    * @return Text with templates translated.
    * @throws APIException
    */
   private String translateTemplates(
-      String text, boolean translateName) throws APIException {
+      String text,
+      boolean translateName,
+      boolean translateWithoutParams) throws APIException {
     if (!translateName) {
       return text;
     }
@@ -255,9 +259,16 @@ public class TranslateWorker extends BasicWorker {
           newText.append(text.substring(lastPosition, template.getBeginIndex()));
           lastPosition = template.getBeginIndex();
         }
-        newText.append("<!-- ");
-        newText.append(translated);
-        newText.append(" -->");
+        if (translateWithoutParams && (template.getParameterCount() == 0)) {
+          newText.append("{{");
+          newText.append(translated);
+          newText.append("}}");
+          lastPosition = template.getEndIndex();
+        } else {
+          newText.append("<!-- ");
+          newText.append(translated);
+          newText.append(" -->");
+        }
       }
     }
     if (newText.length() == 0) {

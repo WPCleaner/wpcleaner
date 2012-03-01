@@ -323,7 +323,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     if (tmpPages.isEmpty()) {
       return;
     }
-    String template = getWikipedia().getDisambiguationWarningTemplate();
+    String template = getConfiguration().getDisambiguationWarningTemplate();
     if ((template == null) || (template.trim().length() == 0)) {
       Utilities.displayWarning(
           getParentComponent(),

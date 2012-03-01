@@ -29,6 +29,7 @@ import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -103,6 +104,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
   public Object construct() {
     long startTime = System.currentTimeMillis();
     EnumWikipedia wikipedia = getWikipedia();
+    WPCConfiguration configuration = wikipedia.getConfiguration();
 
     setText(GT._("Retrieving MediaWiki API"));
     API api = APIFactory.getAPI();
@@ -113,26 +115,27 @@ public class UpdateDabWarningWorker extends BasicWorker {
     try {
       if (!useList) {
         // Retrieve talk pages including a disambiguation warning
-        String dabWarningTemplateName = wikipedia.getDisambiguationWarningTemplate();
+        String dabWarningTemplateName = configuration.getDisambiguationWarningTemplate();
         setText(GT._("Retrieving talk pages including {0}", "{{" + dabWarningTemplateName + "}}"));
         Page dabWarningTemplate = DataManager.getPage(
             wikipedia,
             Namespace.getTitle(Namespace.TEMPLATE, wikipedia.getNamespaces(), dabWarningTemplateName),
             null, null);
         List<Page> dabWarningTalkPages = api.retrieveEmbeddedIn(
-            wikipedia, dabWarningTemplate, wikipedia.getEncyclopedicTalkNamespaces());
+            wikipedia, dabWarningTemplate,
+            configuration.getEncyclopedicTalkNamespaces());
   
         // Construct list of articles with disambiguation warning
         setText(GT._("Constructing list of articles with disambiguation warning"));
         HashSet<Page> tmpWarningPages = new HashSet<Page>();
         for (Page dabWarningPage : dabWarningTalkPages) {
           String title = dabWarningPage.getTitle();
-          if (title.endsWith("/" + wikipedia.getTodoSubpage())) {
-            title = title.substring(0, title.length() - 1 - wikipedia.getTodoSubpage().length());
+          if (title.endsWith("/" + configuration.getTodoSubpage())) {
+            title = title.substring(0, title.length() - 1 - configuration.getTodoSubpage().length());
           }
           int colonIndex = title.indexOf(':');
           if (colonIndex >= 0) {
-            for (Integer namespace : wikipedia.getEncyclopedicTalkNamespaces()) {
+            for (Integer namespace : configuration.getEncyclopedicTalkNamespaces()) {
               Namespace namespaceTalk = Namespace.getNamespace(namespace, wikipedia.getNamespaces());
               if ((namespaceTalk != null) &&
                   (namespaceTalk.isPossibleName(title.substring(0, colonIndex)))) {

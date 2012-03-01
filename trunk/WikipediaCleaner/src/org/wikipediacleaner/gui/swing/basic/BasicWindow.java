@@ -34,6 +34,7 @@ import javax.swing.SwingUtilities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -186,6 +187,16 @@ public abstract class BasicWindow implements ActionListener {
    */
   protected void setWikipedia(EnumWikipedia wikipedia) {
     this.wikipedia = wikipedia;
+  }
+
+  /**
+   * @return WPCleaner configuration.
+   */
+  public WPCConfiguration getConfiguration() {
+    if (wikipedia != null) {
+      return wikipedia.getConfiguration();
+    }
+    return null;
   }
 
   /**
