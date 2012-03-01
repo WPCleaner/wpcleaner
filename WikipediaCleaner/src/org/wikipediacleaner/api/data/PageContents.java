@@ -870,7 +870,7 @@ public class PageContents {
         currentIndex = contents.length();
       } else {
         result.add(template);
-        currentIndex = template.getEndIndex();
+        currentIndex = template.getBeginIndex() + 2;
       }
     }
     return result;
