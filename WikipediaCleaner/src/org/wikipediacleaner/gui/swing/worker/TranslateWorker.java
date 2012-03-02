@@ -320,7 +320,16 @@ public class TranslateWorker extends BasicWorker {
     if (!original.isRedirect()) {
       return link;
     }
+    api.retrieveContents(from, original, true);
     link = api.getLanguageLink(from, getWikipedia(), original.getRedirectTitle());
-    return link;
+    if (link == null) {
+      return null;
+    }
+    String destination = original.getRedirectDestination();
+    int anchorPos = destination.indexOf('#');
+    if (anchorPos < 0) {
+      return link;
+    }
+    return link + destination.substring(anchorPos);
   }
 }
