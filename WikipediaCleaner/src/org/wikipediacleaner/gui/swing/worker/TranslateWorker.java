@@ -129,8 +129,10 @@ public class TranslateWorker extends BasicWorker {
           }
           newText.append("[[");
           newText.append(translated);
-          newText.append("|");
-          newText.append(link.getDisplayedText());
+          if (!translateText || (link.getText() != null)) {
+            newText.append("|");
+            newText.append(link.getDisplayedText());
+          }
           newText.append("]]");
           lastPosition = link.getEndIndex();
         }
