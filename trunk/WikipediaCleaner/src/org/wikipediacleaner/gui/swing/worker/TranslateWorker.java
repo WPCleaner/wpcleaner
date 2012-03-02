@@ -128,7 +128,23 @@ public class TranslateWorker extends BasicWorker {
             lastPosition = link.getBeginIndex();
           }
           newText.append("[[");
+          if (translateText && (link.getText() == null)) {
+            String displayed = link.getDisplayedText();
+            if ((displayed != null) &&
+                (displayed.length() > 0) &&
+                (Character.isLowerCase(displayed.charAt(0)))) {
+              if (translated.length() > 1) {
+                translated = translated.substring(0, 1).toLowerCase() + translated.substring(1);
+              } else {
+                translated = translated.toLowerCase();
+              }
+            }
+          }
           newText.append(translated);
+          if ((translated.indexOf('#') < 0) && (link.getAnchor() != null)) {
+            newText.append("#");
+            newText.append(link.getAnchor());
+          }
           if (!translateText || (link.getText() != null)) {
             newText.append("|");
             newText.append(link.getDisplayedText());
