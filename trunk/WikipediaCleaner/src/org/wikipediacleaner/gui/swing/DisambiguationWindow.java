@@ -26,48 +26,37 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
-import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.AutomaticFixing;
 import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
-import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
-import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.DisambiguationPageListPopupListener;
 import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
-import org.wikipediacleaner.gui.swing.worker.AutomaticDisambiguationWorker;
 import org.wikipediacleaner.gui.swing.worker.DisambiguationAnalysisWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
@@ -81,27 +70,13 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
  */
 public class DisambiguationWindow extends OnePageWindow {
 
-  private final static String ACTION_ADD_AUTOMATIC_FIXING  = "ADD AUTOMATIC FIXING";
-  private final static String ACTION_CLR_AUTOMATIC_FIXING  = "CLR AUTOMATIC FIXING";
+  private final static String ACTION_AUTOMATIC_FIXING      = "AUTOMATIC FIXING";
   private final static String ACTION_DISAMBIGUATION_LINK   = "DISAMBIGUATION LINK";
   private final static String ACTION_EXTERNAL_VIEWER_LINK  = "EXTERNAL VIEWER LINK";
   private final static String ACTION_FULL_ANALYSIS_LINK    = "FULL ANALYSIS LINK";
-  private final static String ACTION_MDF_AUTOMATIC_FIXING  = "MDF AUTOMATIC FIXING";
   private final static String ACTION_NEXT_LINKS            = "NEXT LINKS";
-  private final static String ACTION_RMV_AUTOMATIC_FIXING  = "RMV AUTOMATIC FIXING";
-  private final static String ACTION_RUN_AUTOMATIC_FIXING  = "RUN AUTOMATIC FIXING";
-  private final static String ACTION_SAVE_AUTOMATIC_FIXING = "SAVE AUTOMATIC FIXING";
 
   //public final static Integer WINDOW_VERSION = Integer.valueOf(2);
-
-  private JList listAutomaticFixing;
-  private DefaultListModel modelAutomaticFixing;
-  private JButton buttonAddAutomaticFixing;
-  private JButton buttonMdfAutomaticFixing;
-  private JButton buttonRmvAutomaticFixing;
-  private JButton buttonClrAutomaticFixing;
-  private JButton buttonRunAutomaticFixing;
-  private JButton buttonSaveAutomaticFixing;
 
   private Properties backlinksProperties;
 
@@ -114,6 +89,7 @@ public class DisambiguationWindow extends OnePageWindow {
   private JButton buttonDisambiguationLink;
   private JButton buttonExternalViewerLink;
   private JButton buttonSelectNextLinks;
+  private JButton buttonAutomaticFixing;
 
   /**
    * Create and display a DisambiguationWindow.
@@ -266,92 +242,6 @@ public class DisambiguationWindow extends OnePageWindow {
     addTextContents(panel, constraints);
     constraints.gridy++;
 
-    // Semi-Automatic changes
-    constraints.weighty = 0;
-    panel.add(createAutomaticFixingComponents(), constraints);
-    constraints.gridy++;
-
-    return panel;
-  }
-
-  /**
-   * @return Automatic fixing components.
-   */
-  private Component createAutomaticFixingComponents() {
-    JPanel panel = new JPanel(new GridBagLayout());
-    panel.setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(),
-        GT._("Automatic disambiguation fixing")));
-
-    // Initialize constraints
-    GridBagConstraints constraints = new GridBagConstraints();
-    constraints.fill = GridBagConstraints.VERTICAL;
-    constraints.gridheight = 1;
-    constraints.gridwidth = 1;
-    constraints.gridx = 0;
-    constraints.gridy = 0;
-    constraints.insets = new Insets(1, 1, 1, 1);
-    constraints.ipadx = 0;
-    constraints.ipady = 0;
-    constraints.weightx = 0;
-    constraints.weighty = 1;
-
-    // Commands
-    JToolBar toolBarButtons = new JToolBar(SwingConstants.VERTICAL);
-    toolBarButtons.setFloatable(false);
-    buttonAddAutomaticFixing = Utilities.createJButton(
-        "gnome-list-add.png", EnumImageSize.NORMAL,
-        GT._("Add"), false);
-    buttonAddAutomaticFixing.setActionCommand(ACTION_ADD_AUTOMATIC_FIXING);
-    buttonAddAutomaticFixing.addActionListener(this);
-    toolBarButtons.add(buttonAddAutomaticFixing);
-    buttonRmvAutomaticFixing = Utilities.createJButton(
-        "gnome-list-remove.png", EnumImageSize.NORMAL,
-        GT._("Remove"), false);
-    buttonRmvAutomaticFixing.setActionCommand(ACTION_RMV_AUTOMATIC_FIXING);
-    buttonRmvAutomaticFixing.addActionListener(this);
-    toolBarButtons.add(buttonRmvAutomaticFixing);
-    buttonMdfAutomaticFixing = Utilities.createJButton(GT._("Modify"));
-    buttonMdfAutomaticFixing.setActionCommand(ACTION_MDF_AUTOMATIC_FIXING);
-    buttonMdfAutomaticFixing.addActionListener(this);
-    toolBarButtons.add(buttonMdfAutomaticFixing);
-    buttonClrAutomaticFixing = Utilities.createJButton(
-        "gnome-edit-clear.png", EnumImageSize.NORMAL,
-        GT._("Clear"), false);
-    buttonClrAutomaticFixing.setActionCommand(ACTION_CLR_AUTOMATIC_FIXING);
-    buttonClrAutomaticFixing.addActionListener(this);
-    toolBarButtons.add(buttonClrAutomaticFixing);
-    buttonSaveAutomaticFixing = Utilities.createJButton(
-        "gnome-media-floppy.png", EnumImageSize.NORMAL,
-        GT._("Save"), false);
-    buttonSaveAutomaticFixing.setActionCommand(ACTION_SAVE_AUTOMATIC_FIXING);
-    buttonSaveAutomaticFixing.addActionListener(this);
-    toolBarButtons.add(buttonSaveAutomaticFixing);
-    buttonRunAutomaticFixing = Utilities.createJButton(
-        "gnome-system-run.png", EnumImageSize.NORMAL,
-        GT._("Fix selected pages"), false);
-    buttonRunAutomaticFixing.setActionCommand(ACTION_RUN_AUTOMATIC_FIXING);
-    buttonRunAutomaticFixing.addActionListener(this);
-    toolBarButtons.add(buttonRunAutomaticFixing);
-    constraints.fill = GridBagConstraints.VERTICAL;
-    constraints.gridy = 0;
-    panel.add(toolBarButtons, constraints);
-    constraints.gridx++;
-
-    // Automatic fixing list
-    modelAutomaticFixing = new DefaultListModel();
-    listAutomaticFixing = new JList(modelAutomaticFixing);
-    listAutomaticFixing.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    JScrollPane scrollAutomaticFixing = new JScrollPane(listAutomaticFixing);
-    scrollAutomaticFixing.setMinimumSize(new Dimension(100, 100));
-    scrollAutomaticFixing.setPreferredSize(new Dimension(200, 150));
-    scrollAutomaticFixing.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-    constraints.fill = GridBagConstraints.BOTH;
-    constraints.gridy = 0;
-    constraints.weightx = 1;
-    panel.add(scrollAutomaticFixing, constraints);
-    constraints.gridx++;
-
     return panel;
   }
 
@@ -382,6 +272,13 @@ public class DisambiguationWindow extends OnePageWindow {
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weightx = 1;
     panel.add(buttonSelectNextLinks, constraints);
+    constraints.gridy++;
+
+    // Automatic fixing
+    buttonAutomaticFixing = Utilities.createJButton(GT._("Automatic fixing"));
+    buttonAutomaticFixing.setActionCommand(ACTION_AUTOMATIC_FIXING);
+    buttonAutomaticFixing.addActionListener(this);
+    panel.add(buttonAutomaticFixing, constraints);
     constraints.gridy++;
 
     // Button toolbar
@@ -471,18 +368,8 @@ public class DisambiguationWindow extends OnePageWindow {
       actionExternalViewerLink();
     } else if (ACTION_NEXT_LINKS.equals(e.getActionCommand())) {
       actionSelectNextLinks();
-    } else if (ACTION_ADD_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
-      actionAddAutomaticFixing();
-    } else if (ACTION_MDF_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
-      actionMdfAutomaticFixing();
-    } else if (ACTION_RMV_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
-      ActionRmvAutomaticFixing();
-    } else if (ACTION_CLR_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
-      actionClrAutomaticFixing();
-    } else if (ACTION_RUN_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
+    } else if (ACTION_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
       actionRunAutomaticFixing();
-    } else if (ACTION_SAVE_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
-      actionSaveAutomaticFixing();
     }
   }
 
@@ -538,17 +425,6 @@ public class DisambiguationWindow extends OnePageWindow {
         " / " +
         ((countTotal != null) ? countTotal.toString() : "?"));
 
-    // Update automatic fixing
-    Object[] automaticFixing = config.getPojoArray(
-        page.getWikipedia(), Configuration.POJO_AUTOMATIC_FIXING,
-        page.getTitle(), AutomaticFixing.class);
-    if (automaticFixing != null) {
-      modelAutomaticFixing.clear();
-      for (int i = 0; i < automaticFixing.length; i++) {
-        modelAutomaticFixing.addElement(automaticFixing[i]);
-      }
-    }
-
     // Select next links
     actionSelectNextLinks();
   }
@@ -564,65 +440,6 @@ public class DisambiguationWindow extends OnePageWindow {
   }
 
   /**
-   * Action called when Add Automatic Fixing button is pressed.
-   */
-  private void actionAddAutomaticFixing() {
-    String initialText = Utilities.askForValue(
-        getParentComponent(), "Input the text that should be replaced", "", null);
-    if ((initialText == null) || (initialText.length() == 0)) {
-      return;
-    }
-    String replaceText = Utilities.askForValue(
-        getParentComponent(), "Input the text that should be used as replacement", "", null);
-    if ((replaceText == null) || (replaceText.length() == 0)) {
-      return;
-    }
-    modelAutomaticFixing.addElement(new AutomaticFixing(initialText, replaceText));
-  }
-
-  /**
-   * Action called when Modify Automatic Fixing button is pressed. 
-   */
-  private void actionMdfAutomaticFixing() {
-    Object selected = listAutomaticFixing.getSelectedValue();
-    if (selected instanceof AutomaticFixing) {
-      AutomaticFixing fixing = (AutomaticFixing) selected;
-      String initialText = Utilities.askForValue(
-          getParentComponent(), "Input the text that should be replaced",
-          fixing.getOriginalText(), null);
-      if ((initialText == null) || (initialText.length() == 0)) {
-        return;
-      }
-      fixing.setOriginalText(initialText);
-      String replaceText = Utilities.askForValue(
-          getParentComponent(), "Input the text that should be used as replacement",
-          fixing.getReplacementText(), null);
-      if ((replaceText == null) || (replaceText.length() == 0)) {
-        return;
-      }
-      fixing.setReplacementText(replaceText);
-      listAutomaticFixing.repaint();
-    }
-  }
-
-  /**
-   * Action called when Remove Automatic Fixing button is pressed.
-   */
-  private void ActionRmvAutomaticFixing() {
-    int selected = listAutomaticFixing.getSelectedIndex();
-    if (selected != - 1) {
-      modelAutomaticFixing.remove(selected);
-    }
-  }
-
-  /**
-   * Action called when Clear Automatic Fixing button is pressed. 
-   */
-  private void actionClrAutomaticFixing() {
-    modelAutomaticFixing.clear();
-  }
-
-  /**
    * Action called when Run Automatic Fixing button is pressed. 
    */
   private void actionRunAutomaticFixing() {
@@ -630,94 +447,14 @@ public class DisambiguationWindow extends OnePageWindow {
     if ((values == null) || (values.length == 0)) {
       Utilities.displayWarning(
           getParentComponent(),
-          GT._("You must select the pages on which running automatic disambiguation."));
+          GT._("You must select pages on which running automatic fixing."));
       return;
     }
-    if (modelAutomaticFixing.isEmpty()) {
-      Utilities.displayWarning(
-          getParentComponent(),
-          GT._("You must input the initial and destination texts."));
-      return;
-    }
-    int answer = Utilities.displayYesNoWarning(
-        getParentComponent(),
-        GT._("!!! WARNING !!!") + "\n" +
-        GT._("This function will do all the replacements in all selected pages.") + "\n" +
-        GT._("It may modify a lot of pages in a short period of time.") + "\n" +
-        GT._("On some Wikipedia projects, you may need the bot status for doing this.") + "\n" +
-        GT._("Please, check if you need the bot status by reading the rules of Wikipedia.") + "\n" +
-        GT._("Also, verify again the texts you have inputed before running this function.") + "\n" +
-        GT._("Do you want to continue ?"));
-    if (answer != JOptionPane.YES_OPTION) {
-      return;
-    }
-    Page[] pages = new Page[values.length];
+    Collection<Page> pages = new ArrayList<Page>(values.length);
     for (int i = 0; i < values.length; i++) {
-      pages[i] = (Page) values[i];
+      pages.add((Page) values[i]);
     }
-    Properties replacement = new Properties();
-    for (int i = 0; i < modelAutomaticFixing.getSize(); i++) {
-      Object value = modelAutomaticFixing.get(i);
-      if (value instanceof AutomaticFixing) {
-        AutomaticFixing replacementValue = (AutomaticFixing) value;
-        replacement.setProperty(
-            replacementValue.getOriginalText(),
-            replacementValue.getReplacementText());
-      }
-    }
-    Map<String, Properties> replacements = new HashMap<String, Properties>();
-    replacements.put("[[" + getPage().getTitle() + "]]", replacement);
-    AutomaticDisambiguationWorker dabWorker = new AutomaticDisambiguationWorker(
-        getWikipedia(), this, pages, replacements,
-        getWikipedia().getConfiguration().getUpdatePageMessage(),
-        true);
-    dabWorker.setListener(new DefaultBasicWorkerListener() {
-      @Override
-      public void afterFinished(
-          BasicWorker worker,
-          @SuppressWarnings("unused") boolean ok) {
-        if (!worker.shouldContinue()) {
-          return;
-        }
-        if (worker.get() instanceof Integer) {
-          Integer count = (Integer) worker.get();
-          if (count.intValue() == 0) {
-            return;
-          }
-        }
-        actionReload();
-      }
-    });
-    dabWorker.start();
-  }
-
-  /**
-   * Action called when Save Automatic Fixing button is pressed. 
-   */
-  private void actionSaveAutomaticFixing() {
-    Configuration config = Configuration.getConfiguration();
-    Object[] replacements = modelAutomaticFixing.toArray();
-    Arrays.sort(replacements, new Comparator<Object>() {
-
-      public int compare(Object o1, Object o2) {
-        AutomaticFixing a1 = (o1 instanceof AutomaticFixing) ? (AutomaticFixing) o1 : null;
-        AutomaticFixing a2 = (o2 instanceof AutomaticFixing) ? (AutomaticFixing) o2 : null;
-        if (a2 == null) {
-          if (a1 == null) {
-            return 0;
-          }
-          return -1;
-        }
-        if (a1 == null) {
-          return 1;
-        }
-        return a1.getOriginalText().compareTo(a2.getOriginalText());
-      }
-      
-    });
-    config.addPojoArray(
-        getPage().getWikipedia(), Configuration.POJO_AUTOMATIC_FIXING,
-        replacements, getPage().getTitle());
+    Controller.runAutomatixFixing(pages, getPage(), getWikipedia());
   }
 
   /**

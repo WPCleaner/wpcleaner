@@ -26,6 +26,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -64,19 +65,21 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public class PageListWindow extends BasicWindow implements ActionListener {
 
-  private final static String ACTION_ADD            = "ADD";
-  private final static String ACTION_DISAMBIGUATION = "DISAMBIGUATION";
-  private final static String ACTION_FULL_ANALYSIS  = "FULL ANALYSIS";
-  private final static String ACTION_REMOVE         = "REMOVE";
-  private final static String ACTION_SET_COMMENTS   = "SET COMMENTS";
-  private final static String ACTION_UPDATE         = "UPDATE INFO";
-  private final static String ACTION_UPDATE_DAB     = "UPDATE DAB WARNING";
-  private final static String ACTION_VIEW           = "VIEW";
-  private final static String ACTION_VIEW_HISTORY   = "VIEW_HISTORY";
+  private final static String ACTION_ADD              = "ADD";
+  private final static String ACTION_AUTOMATIC_FIXING = "AUTOMATIC FIXING";
+  private final static String ACTION_DISAMBIGUATION   = "DISAMBIGUATION";
+  private final static String ACTION_FULL_ANALYSIS    = "FULL ANALYSIS";
+  private final static String ACTION_REMOVE           = "REMOVE";
+  private final static String ACTION_SET_COMMENTS     = "SET COMMENTS";
+  private final static String ACTION_UPDATE           = "UPDATE INFO";
+  private final static String ACTION_UPDATE_DAB       = "UPDATE DAB WARNING";
+  private final static String ACTION_VIEW             = "VIEW";
+  private final static String ACTION_VIEW_HISTORY     = "VIEW_HISTORY";
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(2);
 
   String title;
+  Page referencePage;
   List<Page> pages;
   boolean watchList;
 
@@ -94,6 +97,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   private JButton buttonViewHistory;
   private JButton buttonRemove;
   private JButton buttonAdd;
+  private JButton buttonAutomaticFixing;
 
   /**
    * Create and display a PageListWindow.
@@ -105,6 +109,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
    */
   public static void createPageListWindow(
       final String title,
+      final Page referencePage,
       final List<Page> pages,
       final EnumWikipedia wikipedia,
       final boolean watchList) {
@@ -118,6 +123,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
             if (window instanceof PageListWindow) {
               PageListWindow pageList = (PageListWindow) window;
               pageList.title = title;
+              pageList.referencePage = referencePage;
               pageList.pages = pages;
               pageList.watchList = watchList;
             }
@@ -250,6 +256,10 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     buttonViewHistory.setActionCommand(ACTION_VIEW_HISTORY);
     buttonViewHistory.addActionListener(this);
     toolbar.add(buttonViewHistory);
+    buttonAutomaticFixing = Utilities.createJButton(GT._("Automatic fixing"));
+    buttonAutomaticFixing.setActionCommand(ACTION_AUTOMATIC_FIXING);
+    buttonAutomaticFixing.addActionListener(this);
+    toolbar.add(buttonAutomaticFixing);
     if (watchList) {
       buttonRemove = Utilities.createJButton(
           "gnome-list-remove.png", EnumImageSize.NORMAL,
@@ -286,6 +296,8 @@ public class PageListWindow extends BasicWindow implements ActionListener {
 
     if (ACTION_FULL_ANALYSIS.equals(e.getActionCommand())) {
       actionFullAnalysis();
+    } else if (ACTION_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
+      actionRunAutomaticFixing();
     } else if (ACTION_DISAMBIGUATION.equals(e.getActionCommand())) {
       actionDisambiguation();
     } else if (ACTION_UPDATE_DAB.equals(e.getActionCommand())) {
@@ -445,6 +457,24 @@ public class PageListWindow extends BasicWindow implements ActionListener {
         Utilities.browseURL(getWikipedia(), page.getTitle(), "history");
       }
     }
+  }
+
+  /**
+   * Action called when Run Automatic Fixing button is pressed. 
+   */
+  private void actionRunAutomaticFixing() {
+    Page[] values = getSelectedPages();
+    if ((values == null) || (values.length == 0)) {
+      Utilities.displayWarning(
+          getParentComponent(),
+          GT._("You must select pages on which running automatic fixing."));
+      return;
+    }
+    Collection<Page> tmpPages = new ArrayList<Page>(values.length);
+    for (int i = 0; i < values.length; i++) {
+      tmpPages.add(values[i]);
+    }
+    Controller.runAutomatixFixing(pages, referencePage, getWikipedia());
   }
 
   /**

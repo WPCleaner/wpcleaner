@@ -43,7 +43,9 @@ public class EmbeddedInWorker extends BasicWorker {
    * @param window Window.
    * @param pages Pages.
    */
-  public EmbeddedInWorker(EnumWikipedia wikipedia, BasicWindow window, List<Page> pages) {
+  public EmbeddedInWorker(
+      EnumWikipedia wikipedia, BasicWindow window,
+      List<Page> pages) {
     super(wikipedia, window);
     this.pages = pages;
     embeddedInList = new ArrayList<Page>();
@@ -58,7 +60,7 @@ public class EmbeddedInWorker extends BasicWorker {
     Object result = get();
     if (!(result instanceof Throwable)) {
       PageListWindow.createPageListWindow(
-          GT._("Help requested on pages"),
+          GT._("Help requested on pages"), null,
           embeddedInList, getWikipedia(), false);
     }
   }
