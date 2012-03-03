@@ -130,7 +130,7 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
     setText(text);
 
     // Color
-    Color background = isSelected ? list.getSelectionBackground() : list.getBackground();
+    Color background = isSelected ? list.getSelectionBackground() : Color.WHITE;
     Color foreground = isSelected ? list.getSelectionForeground() : list.getForeground();
     if (showDisambiguation) {
       if (disambiguation == null) {
