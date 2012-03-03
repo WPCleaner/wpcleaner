@@ -74,6 +74,8 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   private final static String ACTION_VIEW           = "VIEW";
   private final static String ACTION_VIEW_HISTORY   = "VIEW_HISTORY";
 
+  public final static Integer WINDOW_VERSION = Integer.valueOf(2);
+
   String title;
   List<Page> pages;
   boolean watchList;
@@ -168,17 +170,28 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     tablePages = new JTable(modelPages);
     tablePages.setDefaultRenderer(ProgressionValue.class, new ProgressionValueCellRenderer());
     TableColumnModel columnModel = tablePages.getColumnModel();
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS).setMaxWidth(70);
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_MAIN).setMaxWidth(70);
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_TEMPLATE).setMaxWidth(70);
-    columnModel.getColumn(PageListTableModel.COLUMN_COMMENTS_TEXT).setPreferredWidth(200);
-    columnModel.getColumn(PageListTableModel.COLUMN_DISAMBIGUATION).setMaxWidth(40);
-    columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setMaxWidth(40);
-    columnModel.getColumn(PageListTableModel.COLUMN_PAGE).setPreferredWidth(300);
+    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS).setMinWidth(50);
+    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS).setPreferredWidth(50);
+    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS).setMaxWidth(100);
+    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_MAIN).setMinWidth(50);
+    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_MAIN).setPreferredWidth(50);
+    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_MAIN).setMaxWidth(100);
+    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_TEMPLATE).setMinWidth(40);
+    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_TEMPLATE).setPreferredWidth(40);
+    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_TEMPLATE).setMaxWidth(100);
+    columnModel.getColumn(PageListTableModel.COLUMN_COMMENTS_TEXT).setMinWidth(60);
+    columnModel.getColumn(PageListTableModel.COLUMN_DISAMBIGUATION).setMinWidth(20);
+    columnModel.getColumn(PageListTableModel.COLUMN_DISAMBIGUATION).setPreferredWidth(20);
+    columnModel.getColumn(PageListTableModel.COLUMN_DISAMBIGUATION).setMaxWidth(20);
+    columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setMinWidth(20);
+    columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setPreferredWidth(20);
+    columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setMaxWidth(20);
+    columnModel.getColumn(PageListTableModel.COLUMN_PAGE).setMinWidth(100);
+    columnModel.getColumn(PageListTableModel.COLUMN_PAGE).setPreferredWidth(200);
     Utilities.addRowSorter(tablePages, modelPages);
     JScrollPane scrollPages = new JScrollPane(tablePages);
-    scrollPages.setMinimumSize(new Dimension(100, 100));
-    scrollPages.setPreferredSize(new Dimension(200, 500));
+    scrollPages.setMinimumSize(new Dimension(300, 200));
+    scrollPages.setPreferredSize(new Dimension(450, 500));
     scrollPages.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     panel.add(scrollPages, constraints);
     constraints.gridy++;
