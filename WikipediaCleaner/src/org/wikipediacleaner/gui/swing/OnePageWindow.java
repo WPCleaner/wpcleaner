@@ -169,6 +169,16 @@ public abstract class OnePageWindow
   }
 
   /**
+   * @return Comment
+   */
+  protected String getComment() {
+    if (textComment == null) {
+      return null;
+    }
+    return textComment.getText();
+  }
+
+  /**
    * Clean page. 
    */
   protected void clean() {
@@ -754,6 +764,24 @@ public abstract class OnePageWindow
     panel.add(chkAutomaticComment, constraints);
     constraints.gridx++;
     textComment = new JTextField(getAutomaticComment());
+    constraints.weightx = 1;
+    panel.add(textComment, constraints);
+  }
+
+  /**
+   * Add a component for the Manual Comment.
+   * 
+   * @param panel Container.
+   * @param constraints constraints.
+   */
+  protected void addComment(JPanel panel, GridBagConstraints constraints) {
+    JLabel label = Utilities.createJLabel(GT._("Comment"));
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridwidth = 1;
+    constraints.weightx = 0;
+    panel.add(label, constraints);
+    constraints.gridx++;
+    textComment = new JTextField("");
     constraints.weightx = 1;
     panel.add(textComment, constraints);
   }

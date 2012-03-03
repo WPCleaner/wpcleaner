@@ -72,6 +72,7 @@ public class PageListWorker extends BasicWorker {
     INTERNAL_LINKS,
   }
 
+  private final Page referencePage;
   private final List<String> pageNames;
   private final Mode mode;
   private final boolean watchList;
@@ -87,9 +88,11 @@ public class PageListWorker extends BasicWorker {
    */
   public PageListWorker(
       EnumWikipedia wikipedia, BasicWindow window,
+      Page referencePage,
       List<String> pageNames, Mode mode,
       boolean watchList, String message) {
     super(wikipedia, window);
+    this.referencePage = referencePage;
     this.pageList = new ArrayList<Page>();
     this.pageNames = pageNames;
     this.mode = mode;
@@ -121,7 +124,7 @@ public class PageListWorker extends BasicWorker {
         }
       }
       PageListWindow.createPageListWindow(
-          message, pageList, getWikipedia(), watchList);
+          message, referencePage, pageList, getWikipedia(), watchList);
     }
   }
 

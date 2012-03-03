@@ -192,10 +192,12 @@ public class MediaWiki extends MediaWikiController {
                 }
                 if (!replacementUsed) {
                   replacementUsed = true;
-                  if (details.length() > 0) {
-                    details.append(", ");
+                  if ((replacement.getKey() != null) && (replacement.getKey().length() > 0)) {
+                    if (details.length() > 0) {
+                      details.append(", ");
+                    }
+                    details.append(replacement.getKey());
                   }
-                  details.append(replacement.getKey());
                 }
               }
             }

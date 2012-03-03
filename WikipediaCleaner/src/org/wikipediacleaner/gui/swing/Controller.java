@@ -19,6 +19,7 @@
 package org.wikipediacleaner.gui.swing;
 
 import java.awt.Component;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -122,6 +123,21 @@ public class Controller {
       if (page != null) {
         runDisambiguationAnalysis(page.toString(), wikipedia);
       }
+    }
+  }
+
+  /**
+   * Run automatic fixing.
+   * 
+   * @param pages List of pages.
+   * @param referencePage Page.
+   * @param wikipedia Wikipedia
+   */
+  public static void runAutomatixFixing(
+      Collection<Page> pages,
+      Page referencePage, EnumWikipedia wikipedia) {
+    if (pages != null) {
+      AutomaticFixingWindow.createAutomaticFixingWindow(pages, referencePage, wikipedia);
     }
   }
 

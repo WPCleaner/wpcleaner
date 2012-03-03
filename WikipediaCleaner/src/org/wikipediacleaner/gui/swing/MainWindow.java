@@ -72,6 +72,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindowListener;
@@ -1128,7 +1129,7 @@ public class MainWindow
         textPagename.getText().trim());
     config.save();
     new PageListWorker(
-        getWikipedia(), this,
+        getWikipedia(), this, null,
         Collections.singletonList(textPagename.getText().trim()),
         PageListWorker.Mode.INTERNAL_LINKS, false,
         GT._("Internal links in {0}", textPagename.getText().trim())).start();
@@ -1146,17 +1147,22 @@ public class MainWindow
           textPagename);
       return;
     }
+    String pageName = textPagename.getText().trim();
     Configuration config = Configuration.getConfiguration();
     config.setString(
         null,
         ConfigurationValueString.PAGE_NAME,
-        textPagename.getText().trim());
+        pageName);
     config.save();
+    Page page = DataManager.getPage(
+        getWikipedia(),
+        Namespace.getTitle(Namespace.CATEGORY, getWikipedia().getNamespaces(), pageName),
+        null, null);
     new PageListWorker(
-        getWikipedia(), this,
-        Collections.singletonList(textPagename.getText().trim()),
+        getWikipedia(), this, page,
+        Collections.singletonList(pageName),
         PageListWorker.Mode.CATEGORY_MEMBERS, false,
-        GT._("Category members of {0}", textPagename.getText().trim())).start();
+        GT._("Category members of {0}", pageName)).start();
   }
 
   /**
@@ -1182,7 +1188,7 @@ public class MainWindow
       return;
     }
     new PageListWorker(
-        wikipedia, this,
+        wikipedia, this, null,
         configuration.getCurrentDisambiguationList(),
         PageListWorker.Mode.INTERNAL_LINKS, false,
         GT._("Current disambiguation list")).start();
@@ -1211,7 +1217,7 @@ public class MainWindow
       return;
     }
     new PageListWorker(
-        wikipedia, this,
+        wikipedia, this, null,
         configuration.getMostDisambiguationLinks(),
         PageListWorker.Mode.CATEGORY_MEMBERS_ARTICLES,
         false,
@@ -1243,7 +1249,7 @@ public class MainWindow
         pageNames.add(template.getTitle());
       }
       new PageListWorker(
-          wikipedia, this,
+          wikipedia, this, null,
           pageNames, PageListWorker.Mode.EMBEDDED_IN, false,
           GT._("Help requested on...")).start();
     }
@@ -1263,7 +1269,7 @@ public class MainWindow
         pageNames.add(template.getTitle());
       }
       new PageListWorker(
-          wikipedia, this,
+          wikipedia, this, null,
           pageNames, PageListWorker.Mode.ALL_DAB_PAGES, false,
           GT._("All disambiguations pages")).start();
     }
@@ -1317,7 +1323,7 @@ public class MainWindow
       return;
     }
     new PageListWorker(
-        wikipedia, this,
+        wikipedia, this, null,
         pageNames, PageListWorker.Mode.DIRECT, true,
         GT._("Watched pages")).start();
   }
@@ -1357,7 +1363,7 @@ public class MainWindow
       }
       Collections.sort(pageNames);
       new PageListWorker(
-          getWikipedia(), this, pageNames,
+          getWikipedia(), this, null, pageNames,
           PageListWorker.Mode.DIRECT, false,
           GT._("Random pages")).start();
     } catch (APIException e) {
