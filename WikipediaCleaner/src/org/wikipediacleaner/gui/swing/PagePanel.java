@@ -38,6 +38,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
+import org.wikipediacleaner.gui.swing.component.MWPaneUndoManager;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -300,9 +301,10 @@ public class PagePanel
       textContents.setEditable(true);
       if (isUndoAvailable()) {
         Configuration config = Configuration.getConfiguration();
-        textContents.setUndoButton(buttonUndo);
-        textContents.setRedoButton(buttonRedo);
-        textContents.setUndoLevels(config.getInt(
+        MWPaneUndoManager undoManager = textContents.getUndoManager();
+        undoManager.setUndoButton(buttonUndo);
+        undoManager.setRedoButton(buttonRedo);
+        undoManager.setUndoLevels(config.getInt(
             null,
             ConfigurationValueInteger.ANALYSIS_UNDO_LVL));
       }

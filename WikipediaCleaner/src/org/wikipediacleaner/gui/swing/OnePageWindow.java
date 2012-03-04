@@ -604,8 +604,8 @@ public abstract class OnePageWindow
     }
     panel.add(buttonRedo);
     if (textContents != null) {
-      textContents.setUndoButton(buttonUndo);
-      textContents.setRedoButton(buttonRedo);
+      textContents.getUndoManager().setUndoButton(buttonUndo);
+      textContents.getUndoManager().setRedoButton(buttonRedo);
     }
   }
 
@@ -935,7 +935,7 @@ public abstract class OnePageWindow
       textPane.setBackground(Color.WHITE);
       textPane.setEditable(true);
       if (undo != null) {
-        textPane.setUndoLevels(config.getInt(
+        textPane.getUndoManager().setUndoLevels(config.getInt(
             null,
             ConfigurationValueInteger.ANALYSIS_UNDO_LVL));
       }
