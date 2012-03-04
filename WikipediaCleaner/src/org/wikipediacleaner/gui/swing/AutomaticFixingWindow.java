@@ -228,7 +228,9 @@ public class AutomaticFixingWindow extends OnePageWindow {
     buttonRmvAutomaticFixing.setActionCommand(ACTION_RMV_AUTOMATIC_FIXING);
     buttonRmvAutomaticFixing.addActionListener(this);
     toolBarButtons.add(buttonRmvAutomaticFixing);
-    buttonMdfAutomaticFixing = Utilities.createJButton(GT._("Modify"));
+    buttonMdfAutomaticFixing = Utilities.createJButton(
+        "gnome-accessories-text-editor.png", EnumImageSize.NORMAL,
+        GT._("Modify"), false);
     buttonMdfAutomaticFixing.setActionCommand(ACTION_MDF_AUTOMATIC_FIXING);
     buttonMdfAutomaticFixing.addActionListener(this);
     toolBarButtons.add(buttonMdfAutomaticFixing);
