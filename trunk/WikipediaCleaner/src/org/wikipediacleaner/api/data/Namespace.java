@@ -154,7 +154,7 @@ public class Namespace implements Comparable<Namespace> {
     if (name == null) {
       return false;
     }
-    name = Page.getStringUcFirst(name);
+    name = Page.getStringUcFirst(name.trim());
     for (String alias : aliases) {
       if (name.equals(alias)) {
         return true;
