@@ -31,6 +31,8 @@ public class PageElementExternalLink extends PageElement {
   private final String textNotTrimmed;
   private final String text;
 
+  private final static String END_CHARACTERS = " \n\t<>";
+
   /**
    * Analyze contents to check if it matches an external link.
    * 
@@ -45,23 +47,30 @@ public class PageElementExternalLink extends PageElement {
     if (contents == null) {
       return null;
     }
+    int maxLength = contents.length();
 
     // Look for '['
     int tmpIndex = index;
-    if ((tmpIndex >= contents.length()) ||
-        (!contents.startsWith("[", tmpIndex))) {
+    if (tmpIndex >= maxLength) {
       return null;
     }
-    tmpIndex++;
+    boolean hasSquare = false;
+    if (contents.startsWith("[", tmpIndex)) {
+      hasSquare = true;
+      tmpIndex++;
+    }
     int beginIndex = tmpIndex;
 
     // Possible whitespaces characters
-    while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
-      tmpIndex++;
+    if (hasSquare) {
+      while ((tmpIndex < maxLength) &&
+             (contents.charAt(tmpIndex) == ' ')) {
+        tmpIndex++;
+      }
     }
 
     // Check for protocol
-    if (tmpIndex >= contents.length()) {
+    if (tmpIndex >= maxLength) {
       return null;
     }
     if ((!contents.startsWith("http://", tmpIndex)) &&
@@ -71,7 +80,20 @@ public class PageElementExternalLink extends PageElement {
     }
 
     // Find end of external link
-    int endIndex = contents.indexOf(']', tmpIndex);
+    int endIndex = -1;
+    if (hasSquare) {
+      endIndex = contents.indexOf(']', tmpIndex);
+    } else {
+      endIndex = tmpIndex;
+      while ((endIndex < maxLength) &&
+             (END_CHARACTERS.indexOf(contents.charAt(endIndex)) < 0)) {
+        endIndex++;
+      }
+      return new PageElementExternalLink(
+          index, endIndex,
+          contents.substring(beginIndex, endIndex),
+          null);
+    }
     if (endIndex < 0) {
       return null;
     }
