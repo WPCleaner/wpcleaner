@@ -497,12 +497,22 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
+    List<String> protocols = PageElementExternalLink.getProtocols();
+    Integer[] tmpIndexes = new Integer[protocols.size() + 1];
     while (currentIndex < contents.length()) {
-      int tmpIndex1 = contents.indexOf("[", currentIndex);
-      int tmpIndex2 = contents.indexOf("http://", currentIndex);
-      int tmpIndex = (tmpIndex1 < 0) ?
-          tmpIndex2 :
-          ((tmpIndex2 < 0) ? tmpIndex1 : Math.min(tmpIndex1, tmpIndex2));
+      int tmpIndex = -1;
+      for (int i = 0; i < tmpIndexes.length; i++) {
+        if ((tmpIndexes[i] == null) || (tmpIndexes[i].intValue() < currentIndex)) {
+          tmpIndexes[i] = Integer.valueOf((i == 0) ?
+              contents.indexOf('[', currentIndex) :
+              contents.indexOf(protocols.get(i + 1)));
+        }
+        if (tmpIndex < 0) {
+          tmpIndex = tmpIndexes[i].intValue();
+        } else if (tmpIndexes[i].intValue() < tmpIndex) {
+          tmpIndex = tmpIndexes[i];
+        }
+      }
       if (tmpIndex < 0) {
         currentIndex = contents.length();
       } else if (isInComments(tmpIndex, comments)) {

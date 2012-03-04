@@ -21,6 +21,7 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.wikipediacleaner.api.check.AddTextActionProvider;
@@ -28,6 +29,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
@@ -202,9 +204,12 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
             // Find if an URL is in the ref tag
             String url = null;
             if (text != null) {
-              int httpIndex = text.indexOf("http://");
-              if (httpIndex < 0) {
-                httpIndex = text.indexOf("https://");
+              int httpIndex = -1;
+              List<String> protocols = PageElementExternalLink.getProtocols();
+              for (String protocol : protocols) {
+                if (httpIndex < 0) {
+                  httpIndex = text.indexOf(protocol);
+                }
               }
               if (httpIndex >= 0) {
                 int spaceIndex = text.indexOf(' ', httpIndex);
