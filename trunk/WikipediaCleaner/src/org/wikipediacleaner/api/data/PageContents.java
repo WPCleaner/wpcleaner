@@ -505,11 +505,12 @@ public class PageContents {
         if ((tmpIndexes[i] == null) || (tmpIndexes[i].intValue() < currentIndex)) {
           tmpIndexes[i] = Integer.valueOf((i == 0) ?
               contents.indexOf('[', currentIndex) :
-              contents.indexOf(protocols.get(i + 1)));
+              contents.indexOf(protocols.get(i - 1), currentIndex));
         }
         if (tmpIndex < 0) {
           tmpIndex = tmpIndexes[i].intValue();
-        } else if (tmpIndexes[i].intValue() < tmpIndex) {
+        } else if ((tmpIndexes[i].intValue() < tmpIndex) && 
+                   (tmpIndexes[i].intValue() >= 0)) {
           tmpIndex = tmpIndexes[i];
         }
       }
