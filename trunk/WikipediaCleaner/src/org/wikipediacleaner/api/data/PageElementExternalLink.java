@@ -18,6 +18,10 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
@@ -32,6 +36,15 @@ public class PageElementExternalLink extends PageElement {
   private final String text;
 
   private final static String END_CHARACTERS = " \n\t<>";
+
+  private final static List<String> privateProtocols = new ArrayList<String>();
+  private final static List<String> publicProtocols = Collections.unmodifiableList(privateProtocols);
+
+  static {
+    privateProtocols.add("http://");
+    privateProtocols.add("https://");
+    privateProtocols.add("ftp://");
+  }
 
   /**
    * Analyze contents to check if it matches an external link.
@@ -73,9 +86,13 @@ public class PageElementExternalLink extends PageElement {
     if (tmpIndex >= maxLength) {
       return null;
     }
-    if ((!contents.startsWith("http://", tmpIndex)) &&
-        (!contents.startsWith("https://", tmpIndex)) &&
-        (!contents.startsWith("ftp://", tmpIndex))) {
+    boolean protocolOk = false;
+    for (String protocol : privateProtocols) {
+      if ((!protocolOk) && (contents.startsWith(protocol, tmpIndex))) {
+        protocolOk = true;
+      }
+    }
+    if (!protocolOk) {
       return null;
     }
 
@@ -113,10 +130,23 @@ public class PageElementExternalLink extends PageElement {
         contents.substring(spaceIndex + 1, endIndex));
   }
 
+  /**
+   * @return List of protocols.
+   */
+  public static List<String> getProtocols() {
+    return publicProtocols;
+  }
+
+  /**
+   * @return External link.
+   */
   public String getLink() {
     return link;
   }
 
+  /**
+   * @return Text.
+   */
   public String getText() {
     return text;
   }
