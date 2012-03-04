@@ -29,7 +29,6 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -82,20 +81,6 @@ import org.wikipediacleaner.images.EnumImageSize;
 public class MWPane
     extends JTextPane {
 
-  /* Test for patterns
-  public static void main(String[] args) {
-    //Pattern pattern = Pattern.compile("\\{\\{(loupe(?:\\|((?:(?:[^\\{\\}]*)|(?:\\{\\{\\!\\}\\}))*))?)\\}\\}");
-    Pattern pattern = Pattern.compile("\\{\\{(loupe(?:\\|((?:(?:[^\\{\\}])|(?:\\{\\{\\!\\}\\}))*))?)\\}\\}");
-    Matcher matcher = pattern.matcher("{{loupe|c=U [[ABCDEFgénéral]] fut {{rom|II|2}}de .}} [[Lozère]]");
-    System.out.println("Searching");
-    long begin = System.currentTimeMillis();
-    while (matcher.find()) {
-      System.out.println("Found: " + matcher.start() + "," + matcher.end());
-    }
-    long end = System.currentTimeMillis();
-    System.out.println("Done in " + (end - begin) + "ms");
-  }*/
-
   private static final long serialVersionUID = 3225120886653438117L;
 
   public static final String PROPERTY_MODIFIED = "ModifiedProperty";
@@ -114,14 +99,6 @@ public class MWPane
   boolean isInInternalModification = false;
 
   private transient MWPanePopupListener popupListener;
-
-  private int undoLevels;
-  private LinkedList<String> undoTexts;
-  private LinkedList<String> redoTexts;
-  private JButton undoButton;
-  private transient ActionListener undoAction;
-  private JButton redoButton;
-  private transient ActionListener redoAction;
 
   public static KeyStroke getLastLinkKeyStroke() {
     return lastLinkKeyStroke;
@@ -143,135 +120,9 @@ public class MWPane
     this.wikipedia = wikipedia;
     this.page = page;
     this.window = window;
-    this.undoLevels = 0;
-    this.undoTexts = new LinkedList<String>();
-    this.redoTexts = new LinkedList<String>();
+    this.undoManager = new MWPaneUndoManager(this);
     this.formatter = new MWPaneBasicFormatter();
     initialize();
-  }
-
-  /**
-   * @param levels Number of undo levels.
-   */
-  public void setUndoLevels(int levels) {
-    this.undoLevels = levels;
-  }
-
-  /**
-   * Update status of Undo / Redo buttons 
-   */
-  private void updateUndoButtons() {
-    if (undoButton != null) {
-      undoButton.setEnabled(!undoTexts.isEmpty() && isModified);
-    }
-    if (redoButton != null) {
-      redoButton.setEnabled(!redoTexts.isEmpty());
-    }
-  }
-
-  /**
-   * @param undo Undo button.
-   */
-  public void setUndoButton(JButton undo) {
-    if ((undoButton != null) && (undoAction != null)) {
-      undoButton.removeActionListener(undoAction);
-    }
-    undoButton = undo;
-    if (undoButton != null) {
-      undoAction = new ActionListener() {
-        public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
-          undo();
-        }
-      };
-      undoButton.addActionListener(undoAction);
-    }
-    updateUndoButtons();
-  }
-
-  /**
-   * Undo last change.
-   */
-  void undo() {
-    if (undoTexts.isEmpty()) {
-      return;
-    }
-    String newText = undoTexts.getLast();
-    String oldText = getText();
-    if (oldText.equals(newText)) {
-      if (undoTexts.size() < 1) {
-        return;
-      }
-      undoTexts.removeLast();
-      newText = undoTexts.getLast();
-    }
-    undoTexts.removeLast();
-    redoTexts.addLast(oldText);
-    setTextInternal(newText, false, false);
-    updateUndoButtons();
-  }
-
-  /**
-   * @param redo Redo button.
-   */
-  public void setRedoButton(JButton redo) {
-    if ((redoButton != null) && (redoAction != null)) {
-      redoButton.removeActionListener(redoAction);
-    }
-    redoButton = redo;
-    if (redoButton != null) {
-      redoAction = new ActionListener() {
-        public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
-          redo();
-        }
-      };
-      redoButton.addActionListener(redoAction);
-    }
-    updateUndoButtons();
-  }
-
-  /**
-   * Redo last change.
-   */
-  void redo() {
-    if (redoTexts.isEmpty()) {
-      return;
-    }
-    String newText = redoTexts.getLast();
-    String oldText = getText();
-    if (oldText.equals(newText)) {
-      if (redoTexts.size() < 1) {
-        return;
-      }
-      redoTexts.removeLast();
-      newText = redoTexts.getLast();
-    }
-    redoTexts.removeLast();
-    undoTexts.addLast(oldText);
-    setTextInternal(newText, false, false);
-    updateUndoButtons();
-  }
-
-  /**
-   * Memorize current text for undo / redo
-   */
-  private void validateCurrentText() {
-    if (undoLevels <= 0) {
-      return;
-    }
-
-    // Check if memorizing text is useful
-    String currentText = getText();
-    if (!undoTexts.isEmpty() && currentText.equals(undoTexts.getLast())) {
-      return;
-    }
-
-    // Adding text
-    undoTexts.addLast(currentText);
-    while (undoTexts.size() > undoLevels) {
-      undoTexts.removeFirst();
-    }
-    redoTexts.clear();
-    updateUndoButtons();
   }
 
   /**
@@ -309,7 +160,7 @@ public class MWPane
     if (isModified != modified) {
       boolean oldValue = isModified;
       isModified = modified;
-      updateUndoButtons();
+      undoManager.updateUndoButtons();
       firePropertyChange(PROPERTY_MODIFIED, oldValue, isModified);
     }
   }
@@ -437,11 +288,10 @@ public class MWPane
     isInInternalModification = oldState;
     if (resetModified) {
       setModified(false);
-      undoTexts.clear();
-      redoTexts.clear();
+      undoManager.clear();
     }
     if (validate) {
-      validateCurrentText();
+      undoManager.validateCurrentText();
     }
   }
 
@@ -703,7 +553,7 @@ public class MWPane
     isInInternalModification = oldState;
 
     if (!isInInternalModification) {
-      validateCurrentText();
+      undoManager.validateCurrentText();
     }
   }
 
@@ -732,6 +582,22 @@ public class MWPane
       }
     }
     return possibleFonts;
+  }
+
+  /* ========================================================================= */
+  /* Undo / Redo management                                                    */
+  /* ========================================================================= */
+
+  /**
+   * Undo / Redo management.
+   */
+  private final MWPaneUndoManager undoManager;
+
+  /**
+   * @return Undo / Redo management.
+   */
+  public MWPaneUndoManager getUndoManager() {
+    return undoManager;
   }
 
   // =========================================================================
