@@ -498,7 +498,11 @@ public class PageContents {
       return null;
     }
     while (currentIndex < contents.length()) {
-      int tmpIndex = contents.indexOf("[", currentIndex);
+      int tmpIndex1 = contents.indexOf("[", currentIndex);
+      int tmpIndex2 = contents.indexOf("http://", currentIndex);
+      int tmpIndex = (tmpIndex1 < 0) ?
+          tmpIndex2 :
+          ((tmpIndex2 < 0) ? tmpIndex1 : Math.min(tmpIndex1, tmpIndex2));
       if (tmpIndex < 0) {
         currentIndex = contents.length();
       } else if (isInComments(tmpIndex, comments)) {
