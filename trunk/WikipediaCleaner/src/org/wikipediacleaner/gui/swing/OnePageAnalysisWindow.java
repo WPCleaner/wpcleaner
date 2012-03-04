@@ -1218,7 +1218,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
    * Action called when First Occurence button is pressed. 
    */
   void actionFirstOccurence() {
-    getTextContents().selectFirstOccurence();
+    getTextContents().getSelectionManager().selectFirstOccurence();
     getTextContents().requestFocusInWindow();
   }
 
@@ -1226,7 +1226,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
    * Action called when Previous Occurence button is pressed. 
    */
   private void actionPreviousOccurence() {
-    getTextContents().selectPreviousOccurence();
+    getTextContents().getSelectionManager().selectPreviousOccurence();
     getTextContents().requestFocusInWindow();
   }
 
@@ -1234,7 +1234,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
    * Action called when Next Occurence button is pressed. 
    */
   private void actionNextOccurence() {
-    getTextContents().selectNextOccurence();
+    getTextContents().getSelectionManager().selectNextOccurence();
     getTextContents().requestFocusInWindow();
   }
 
@@ -1242,7 +1242,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
    * Action called when Last Occurence button is pressed. 
    */
   private void actionLastOccurence() {
-    getTextContents().selectLastOccurence();
+    getTextContents().getSelectionManager().selectLastOccurence();
     getTextContents().requestFocusInWindow();
   }
 }

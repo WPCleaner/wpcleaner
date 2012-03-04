@@ -1241,7 +1241,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
      * Select first occurence. 
      */
     private void actionFirstOccurence() {
-      textPage.selectFirstOccurence();
+      textPage.getSelectionManager().selectFirstOccurence();
       textPage.requestFocusInWindow();
     }
 
@@ -1249,7 +1249,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
      * Select previous occurence. 
      */
     private void actionPreviousOccurence() {
-      textPage.selectPreviousOccurence();
+      textPage.getSelectionManager().selectPreviousOccurence();
       textPage.requestFocusInWindow();
     }
 
@@ -1257,7 +1257,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
      * Select next occurence. 
      */
     private void actionNextOccurence() {
-      textPage.selectNextOccurence();
+      textPage.getSelectionManager().selectNextOccurence();
       textPage.requestFocusInWindow();
     }
 
@@ -1265,7 +1265,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
      * Select last occurence. 
      */
     private void actionLastOccurence() {
-      textPage.selectLastOccurence();
+      textPage.getSelectionManager().selectLastOccurence();
       textPage.requestFocusInWindow();
     }
 

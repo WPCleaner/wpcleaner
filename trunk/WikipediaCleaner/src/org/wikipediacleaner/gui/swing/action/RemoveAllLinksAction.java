@@ -20,8 +20,11 @@ package org.wikipediacleaner.gui.swing.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 
 
@@ -42,6 +45,22 @@ public class RemoveAllLinksAction implements ActionListener {
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
-    textPane.removeAllLinks(from);
+    String originalText = textPane.getText();
+    PageAnalysis analysis = new PageAnalysis(textPane.getWikiPage(), originalText);
+    StringBuilder buffer = new StringBuilder();
+    int lastPosition = 0;
+    Collection<PageElementInternalLink> links = analysis.getInternalLinks();
+    for (PageElementInternalLink link : links) {
+      if (Page.areSameTitle(from.getTitle(), link.getLink())) {
+        buffer.append(originalText.substring(lastPosition, link.getBeginIndex()));
+        lastPosition = link.getBeginIndex();
+        buffer.append(link.getDisplayedText());
+        lastPosition = link.getEndIndex();
+      }
+    }
+    if (lastPosition > 0) {
+      buffer.append(originalText.substring(lastPosition));
+      textPane.changeText(buffer.toString());
+    }
   }
 }

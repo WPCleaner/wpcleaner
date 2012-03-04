@@ -393,7 +393,7 @@ public class PagePanel
    */
   private void actionFirstOccurence() {
     if (textContents != null) {
-      textContents.selectFirstOccurence();
+      textContents.getSelectionManager().selectFirstOccurence();
       textContents.requestFocusInWindow();
     }
   }
@@ -403,7 +403,7 @@ public class PagePanel
    */
   private void actionPreviousOccurence() {
     if (textContents != null) {
-      textContents.selectPreviousOccurence();
+      textContents.getSelectionManager().selectPreviousOccurence();
       textContents.requestFocusInWindow();
     }
   }
@@ -413,7 +413,7 @@ public class PagePanel
    */
   private void actionNextOccurence() {
     if (textContents != null) {
-      textContents.selectNextOccurence();
+      textContents.getSelectionManager().selectNextOccurence();
       textContents.requestFocusInWindow();
     }
   }
@@ -423,7 +423,7 @@ public class PagePanel
    */
   private void actionLastOccurence() {
     if (textContents != null) {
-      getTextContents().selectLastOccurence();
+      getTextContents().getSelectionManager().selectLastOccurence();
       getTextContents().requestFocusInWindow();
     }
   }
