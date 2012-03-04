@@ -450,10 +450,13 @@ public class PageAnalysis {
    */
   public Collection<PageElementExternalLink> getExternalLinks() {
     Collection<PageElementComment> tmpComments = getComments();
+    Collection<PageElementTemplate> tmpTemplates = getTemplates();
 
     synchronized (externalLinksLock) {
       if (externalLinks == null) {
-        externalLinks = PageContents.findAllExternalLinks(getPage(), getContents(), tmpComments);
+        externalLinks = PageContents.findAllExternalLinks(
+            getPage(), getContents(),
+            tmpComments, tmpTemplates);
       }
       return externalLinks;
     }

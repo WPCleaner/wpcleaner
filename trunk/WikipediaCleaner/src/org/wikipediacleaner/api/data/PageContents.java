@@ -135,20 +135,20 @@ public class PageContents {
   }
 
   /**
-   * Tell if an index is inside comments or not.
+   * Tell if an index is inside elements or not.
    * 
    * @param index Index.
-   * @param comments Comments.
-   * @return true if the index is inside comments.
+   * @param elements Elements.
+   * @return true if the index is inside elements.
    */
-  public static boolean isInComments(
-      int index, Collection<PageElementComment> comments) {
-    if (comments == null) {
+  public static boolean isInElements(
+      int index, Collection<? extends PageElement> elements) {
+    if (elements == null) {
       return false;
     }
-    for (PageElementComment comment : comments) {
-      if ((index >= comment.getBeginIndex()) &&
-          (index < comment.getEndIndex())) {
+    for (PageElement element : elements) {
+      if ((index >= element.getBeginIndex()) &&
+          (index < element.getEndIndex())) {
         return true;
       }
     }
@@ -226,7 +226,7 @@ public class PageContents {
       int tmpIndex = contents.indexOf("=", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
-      } else if (isInComments(tmpIndex, comments)) {
+      } else if (isInElements(tmpIndex, comments)) {
         currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementTitle title = PageElementTitle.analyzeBlock(
@@ -331,7 +331,7 @@ public class PageContents {
       int tmpIndex = contents.indexOf("[[", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
-      } else if (isInComments(tmpIndex, comments)) {
+      } else if (isInElements(tmpIndex, comments)) {
         currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementInternalLink link = PageElementInternalLink.analyzeBlock(
@@ -459,18 +459,22 @@ public class PageContents {
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
    * @param comments Comments blocks in the page.
+   * @param templates Templates in the page.
    * @return External links found.
    */
   public static Collection<PageElementExternalLink> findAllExternalLinks(
       Page page, String contents,
-      Collection<PageElementComment> comments) {
+      Collection<PageElementComment> comments,
+      Collection<PageElementTemplate> templates) {
     if (contents == null) {
       return null;
     }
     Collection<PageElementExternalLink> result = new ArrayList<PageElementExternalLink>();
     int currentIndex = 0;
     while ((currentIndex < contents.length())) {
-      PageElementExternalLink link = findNextExternalLink(page, contents, currentIndex, comments);
+      PageElementExternalLink link = findNextExternalLink(
+          page, contents, currentIndex,
+          comments, templates);
       if (link == null) {
         currentIndex = contents.length();
       } else {
@@ -488,12 +492,14 @@ public class PageContents {
    * @param contents Page contents (may be different from page.getContents()).
    * @param currentIndex The last index.
    * @param comments Comments blocks in the page.
+   * @param templates Templates in the page.
    * @return External link found.
    */
   public static PageElementExternalLink findNextExternalLink(
       Page page, String contents,
       int currentIndex,
-      Collection<PageElementComment> comments) {
+      Collection<PageElementComment> comments,
+      Collection<PageElementTemplate> templates) {
     if (contents == null) {
       return null;
     }
@@ -516,8 +522,11 @@ public class PageContents {
       }
       if (tmpIndex < 0) {
         currentIndex = contents.length();
-      } else if (isInComments(tmpIndex, comments)) {
+      } else if (isInElements(tmpIndex, comments)) {
         currentIndex = indexAfterComments(tmpIndex, comments);
+      } else if ((contents.charAt(tmpIndex) != '[') &&
+                 (isInElements(tmpIndex, templates))) {
+        currentIndex++;
       } else {
         PageElementExternalLink link = PageElementExternalLink.analyzeBlock(
             page.getWikipedia(), contents, tmpIndex);
@@ -582,7 +591,7 @@ public class PageContents {
       int tmpIndex = contents.indexOf("[[", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
-      } else if (isInComments(tmpIndex, comments)) {
+      } else if (isInElements(tmpIndex, comments)) {
         currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementImage image = PageElementImage.analyzeBlock(
@@ -648,7 +657,7 @@ public class PageContents {
       int tmpIndex = contents.indexOf("[[", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
-      } else if (isInComments(tmpIndex, comments)) {
+      } else if (isInElements(tmpIndex, comments)) {
         currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementCategory category = PageElementCategory.analyzeBlock(
@@ -714,7 +723,7 @@ public class PageContents {
       int tmpIndex = contents.indexOf("[[", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
-      } else if (isInComments(tmpIndex, comments)) {
+      } else if (isInElements(tmpIndex, comments)) {
         currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementInterwikiLink link = PageElementInterwikiLink.analyzeBlock(
@@ -780,7 +789,7 @@ public class PageContents {
       int tmpIndex = contents.indexOf("[[", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
-      } else if (isInComments(tmpIndex, comments)) {
+      } else if (isInElements(tmpIndex, comments)) {
         currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementLanguageLink link = PageElementLanguageLink.analyzeBlock(
@@ -846,7 +855,7 @@ public class PageContents {
       int tmpIndex = contents.indexOf("{{", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
-      } else if (isInComments(tmpIndex, comments)) {
+      } else if (isInElements(tmpIndex, comments)) {
         currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementDefaultsort template = PageElementDefaultsort.analyzeBlock(page.getWikipedia(), contents, tmpIndex);
@@ -911,7 +920,7 @@ public class PageContents {
       int tmpIndex = contents.indexOf("{{", currentIndex);
       if (tmpIndex < 0) {
         currentIndex = contents.length();
-      } else if (isInComments(tmpIndex, comments)) {
+      } else if (isInElements(tmpIndex, comments)) {
         currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementTemplate template = PageElementTemplate.analyzeBlock(
