@@ -23,7 +23,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTagFull;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -54,7 +54,7 @@ public class CheckErrorAlgorithm026 extends CheckErrorAlgorithmBase {
     int startIndex = 0;
     String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementTag tag = PageContents.findNextTag(
+      PageElementTagFull tag = PageContents.findNextTag(
           pageAnalysis.getPage(), contents, "b", startIndex);
       if (tag == null) {
         startIndex = contents.length();

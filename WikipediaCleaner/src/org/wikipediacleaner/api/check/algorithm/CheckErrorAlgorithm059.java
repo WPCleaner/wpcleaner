@@ -23,7 +23,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTagFull;
 import org.wikipediacleaner.api.data.PageElementTagData;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
@@ -61,10 +61,10 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
         if (parameterValue != null) {
 
           // Find last <br> tag
-          PageElementTag lastTag = null;
+          PageElementTagFull lastTag = null;
           int currentIndex = 0;
           while (currentIndex < parameterValue.length()) {
-            PageElementTag tag = PageContents.findNextTag(
+            PageElementTagFull tag = PageContents.findNextTag(
                 pageAnalysis.getPage(), parameterValue, "br", currentIndex);
             if (tag != null) {
               currentIndex = tag.getEndTagEndIndex() - 1;

@@ -30,7 +30,7 @@ import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
-import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTagFull;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
@@ -69,12 +69,12 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }
     int startIndex = 0;
     boolean result = false;
-    HashMap<String, HashMap<String, ArrayList<PageElementTag>>> refs = new HashMap<String, HashMap<String, ArrayList<PageElementTag>>>();
+    HashMap<String, HashMap<String, ArrayList<PageElementTagFull>>> refs = new HashMap<String, HashMap<String, ArrayList<PageElementTagFull>>>();
     String contents = pageAnalysis.getContents();
 
     // Find all ref tags and organize them by group / value
     while (startIndex < contents.length()) {
-      PageElementTag ref = PageContents.findNextTag(
+      PageElementTagFull ref = PageContents.findNextTag(
           pageAnalysis.getPage(), contents, "ref", startIndex);
       if (ref == null) {
         startIndex = contents.length();
@@ -86,9 +86,9 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         if (parameterGroup == null) {
           parameterGroup = "";
         }
-        HashMap<String, ArrayList<PageElementTag>> groupRefs = refs.get(parameterGroup);
+        HashMap<String, ArrayList<PageElementTagFull>> groupRefs = refs.get(parameterGroup);
         if (groupRefs == null) {
-          groupRefs = new HashMap<String, ArrayList<PageElementTag>>();
+          groupRefs = new HashMap<String, ArrayList<PageElementTagFull>>();
           refs.put(parameterGroup, groupRefs);
         }
 
@@ -100,9 +100,9 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
           reference = "";
         }
         if (reference.length() > 0) {
-          ArrayList<PageElementTag> valueRefs = groupRefs.get(reference);
+          ArrayList<PageElementTagFull> valueRefs = groupRefs.get(reference);
           if (valueRefs == null) {
-            valueRefs = new ArrayList<PageElementTag>();
+            valueRefs = new ArrayList<PageElementTagFull>();
             groupRefs.put(reference, valueRefs);
           } else {
             if (errors == null) {
@@ -145,19 +145,19 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }*/
 
     // Analyze ref tags
-    for (Entry<String, HashMap<String, ArrayList<PageElementTag>>> groupRefsEntry : refs.entrySet()) {
+    for (Entry<String, HashMap<String, ArrayList<PageElementTagFull>>> groupRefsEntry : refs.entrySet()) {
       String groupName = groupRefsEntry.getKey();
-      HashMap<String, ArrayList<PageElementTag>> groupRefs = groupRefsEntry.getValue();
+      HashMap<String, ArrayList<PageElementTagFull>> groupRefs = groupRefsEntry.getValue();
 
       // Analyze duplicate ref tags
-      for (Entry<String, ArrayList<PageElementTag>> valueRefsEntry : groupRefs.entrySet()) {
+      for (Entry<String, ArrayList<PageElementTagFull>> valueRefsEntry : groupRefs.entrySet()) {
         String text = valueRefsEntry.getKey();
-        ArrayList<PageElementTag> valueRefs = valueRefsEntry.getValue();
+        ArrayList<PageElementTagFull> valueRefs = valueRefsEntry.getValue();
         if ((valueRefs != null) && (valueRefs.size() > 1)) {
 
           // Find possible names
           ArrayList<String> possibleNames = new ArrayList<String>();
-          for (PageElementTag valueRef : valueRefs) {
+          for (PageElementTagFull valueRef : valueRefs) {
             String parameterName = valueRef.getParameter("name");
             if ((parameterName != null) && (parameterName.trim().length() > 0)) {
               if (!possibleNames.contains(parameterName.trim())) {
@@ -171,7 +171,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
             // Create an error for each tag, except for the first with the name
             boolean first = true;
             String correctName = possibleNames.get(0);
-            for (PageElementTag valueRef : valueRefs) {
+            for (PageElementTagFull valueRef : valueRefs) {
               String parameterName = valueRef.getParameter("name");
               if (parameterName != null) {
                 parameterName = parameterName.trim();
@@ -223,7 +223,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
 
             // Create an error for each tag
             boolean first = true;
-            for (PageElementTag valueRef : valueRefs) {
+            for (PageElementTagFull valueRef : valueRefs) {
               CheckErrorResult errorResult = createCheckErrorResult(
                   pageAnalysis.getPage(),
                   valueRef.getStartTagBeginIndex(), valueRef.getEndTagEndIndex(),

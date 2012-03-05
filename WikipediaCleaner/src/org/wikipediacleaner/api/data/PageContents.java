@@ -978,7 +978,7 @@ public class PageContents {
    * @param currentIndex The last index.
    * @return Tag found.
    */
-  public static PageElementTag findNextTag(
+  public static PageElementTagFull findNextTag(
       Page page, String contents,
       String tagName, int currentIndex) {
     if (contents == null) {
@@ -989,7 +989,7 @@ public class PageContents {
       if (tmpIndex < 0) {
         currentIndex = contents.length();
       } else {
-        PageElementTag tag = PageElementTag.analyzeBlock(
+        PageElementTagFull tag = PageElementTagFull.analyzeBlock(
             tagName, contents, tmpIndex);
         if (tag != null) {
           return tag;
