@@ -24,7 +24,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementImage;
-import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTagFull;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -58,7 +58,7 @@ public class CheckErrorAlgorithm066 extends CheckErrorAlgorithmBase {
       if (image != null) {
         String text = image.getDescription();
         if (text != null) {
-          PageElementTag tag = PageContents.findNextTag(
+          PageElementTagFull tag = PageContents.findNextTag(
               pageAnalysis.getPage(), text, "small", 0);
           if (tag != null) {
             boolean onlySpaces = true;

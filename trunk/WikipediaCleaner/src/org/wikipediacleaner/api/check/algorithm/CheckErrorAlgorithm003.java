@@ -25,7 +25,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTagFull;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
@@ -57,7 +57,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     boolean refFound = false;
     if (!refFound) {
       // Search for <ref>
-      PageElementTag tag = PageContents.findNextTag(
+      PageElementTagFull tag = PageContents.findNextTag(
           pageAnalysis.getPage(), pageAnalysis.getContents(), "ref", 0);
       if (tag != null) {
         refFound = true;
@@ -69,7 +69,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     if (refFound) {
       // Search for <references>
       if (!referencesFound) {
-        PageElementTag tag = PageContents.findNextTag(
+        PageElementTagFull tag = PageContents.findNextTag(
             pageAnalysis.getPage(), pageAnalysis.getContents(), "references", 0);
         if (tag != null) {
           referencesFound = true;

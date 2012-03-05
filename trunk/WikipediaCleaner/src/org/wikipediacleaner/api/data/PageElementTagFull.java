@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Class containing information about a complete tag (&lt;<i>tag</i>&gt;Text&lt;/<i>tag</i>&gt;). 
  */
-public class PageElementTag extends PageElement {
+public class PageElementTagFull extends PageElement {
 
   private final String tagName;
   private final int startTagEndIndex;
@@ -43,7 +43,7 @@ public class PageElementTag extends PageElement {
    * @param index Block start index.
    * @return Block details it there's a block.
    */
-  public static PageElementTag analyzeBlock(
+  public static PageElementTagFull analyzeBlock(
       String tagName,
       String contents, int index) {
     // Verify arguments
@@ -102,7 +102,7 @@ public class PageElementTag extends PageElement {
           parameterNames, parameterValues)) {
         return null;
       }
-      return new PageElementTag(
+      return new PageElementTagFull(
           tagName,
           startTagBeginIndex, startTagEndIndex,
           parameterNames, parameterValues);
@@ -165,7 +165,7 @@ public class PageElementTag extends PageElement {
         parameterNames, parameterValues)) {
       return null;
     }
-    return new PageElementTag(
+    return new PageElementTagFull(
         tagName, startTagBeginIndex, startTagEndIndex,
         parameterNames, parameterValues,
         contents.substring(startTagEndIndex, endTagBeginIndex),
@@ -263,7 +263,7 @@ public class PageElementTag extends PageElement {
     return getEndIndex();
   }
 
-  private PageElementTag(
+  private PageElementTagFull(
       String tagName,
       int startTagBeginIndex, int startTagEndIndex,
       List<String> parameterNames, List<String> parameterValues) {
@@ -277,7 +277,7 @@ public class PageElementTag extends PageElement {
     this.endTagBeginIndex = startTagEndIndex;
   }
 
-  private PageElementTag(
+  private PageElementTagFull(
       String tagName,
       int startTagBeginIndex, int startTagEndIndex,
       List<String> parameterNames, List<String> parameterValues,
