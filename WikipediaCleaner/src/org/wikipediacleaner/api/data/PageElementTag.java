@@ -27,8 +27,10 @@ import java.util.List;
  */
 public class PageElementTag extends PageElement {
 
-  public final static String TAG_SMALL = "small";
-  public final static String TAG_U     = "u";
+  public final static String TAG_NOWIKI = "nowiki";
+  public final static String TAG_REF    = "ref";
+  public final static String TAG_SMALL  = "small";
+  public final static String TAG_U      = "u";
 
 
   /**
