@@ -523,6 +523,24 @@ public class PageAnalysis {
   }
 
   /**
+   * @param name Template name.
+   * @return All templates with this name in the page analysis.
+   */
+  public List<PageElementTemplate> getTemplates(String name) {
+    if (name == null) {
+      return null;
+    }
+    Collection<PageElementTemplate> tmpTemplates = getTemplates();
+    List<PageElementTemplate> result = new ArrayList<PageElementTemplate>();
+    for (PageElementTemplate template : tmpTemplates) {
+      if (Page.areSameTitle(name, template.getTemplateName())) {
+        result.add(template);
+      }
+    }
+    return result;
+  }
+
+  /**
    * @param currentIndex Current index.
    * @return Next template.
    */
@@ -571,7 +589,7 @@ public class PageAnalysis {
 
   /**
    * @param name Tag name.
-   * @return All tags with this in the page analysis.
+   * @return All tags with this name in the page analysis.
    */
   public Collection<PageElementTag> getTags(String name) {
     if (name == null) {

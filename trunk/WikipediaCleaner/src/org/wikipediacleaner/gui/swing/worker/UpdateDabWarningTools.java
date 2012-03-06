@@ -34,6 +34,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -358,8 +359,11 @@ public class UpdateDabWarningTools {
     if (contents == null) {
       contents = "";
     }
-    PageElementTemplate templateWarning = PageContents.findNextTemplate(
-        todoSubpage, contents, configuration.getDisambiguationWarningTemplate(), 0);
+    PageAnalysis analysis = new PageAnalysis(todoSubpage, contents);
+    List<PageElementTemplate> templates = analysis.getTemplates(
+        configuration.getDisambiguationWarningTemplate());
+    PageElementTemplate templateWarning = ((templates != null) && (templates.size() > 0)) ?
+        templates.get(0) : null;
 
     // If disambiguation warning is missing, add it
     if (templateWarning == null) {
@@ -432,14 +436,16 @@ public class UpdateDabWarningTools {
     if (contents == null) {
       contents = "";
     }
+    PageAnalysis analysis = new PageAnalysis(talkPage, contents);
     PageElementTemplate templateTodo = null;
     if ((configuration.getTodoTemplates() == null) ||
         (configuration.getTodoTemplates().isEmpty())) {
       return false;
     }
     for (String todoTemplate : configuration.getTodoTemplates()) {
-      PageElementTemplate templateTmp = PageContents.findNextTemplate(
-          talkPage, contents, todoTemplate, 0);
+      List<PageElementTemplate> templates = analysis.getTemplates(todoTemplate);
+      PageElementTemplate templateTmp = (templates != null) && (templates.size() > 0) ?
+          templates.get(0) : null;
       if (templateTmp != null) {
         if ((templateTodo == null) || (templateTmp.getBeginIndex() < templateTodo.getBeginIndex())) {
           templateTodo = templateTmp;
@@ -457,17 +463,11 @@ public class UpdateDabWarningTools {
       PageElementTemplate templatePrevious = null;
       if (configuration.getDisambiguationWarningAfterTemplates() != null) {
         for (String previousTemplate : configuration.getDisambiguationWarningAfterTemplates()) {
-          int index = 0;
-          while (index < contents.length()) {
-            PageElementTemplate templateTmp = PageContents.findNextTemplate(
-                talkPage, contents, previousTemplate, index);
-            if (templateTmp != null) {
-              if ((templatePrevious == null) || (templateTmp.getEndIndex() > templatePrevious.getEndIndex())) {
-                templatePrevious = templateTmp;
-              }
-              index = templateTmp.getEndIndex();
-            } else {
-              index = contents.length();
+          Collection<PageElementTemplate> templates = analysis.getTemplates(previousTemplate);
+          for (PageElementTemplate templateTmp : templates) {
+            if ((templatePrevious == null) ||
+                (templateTmp.getEndIndex() > templatePrevious.getEndIndex())) {
+              templatePrevious = templateTmp;
             }
           }
         }
@@ -503,9 +503,10 @@ public class UpdateDabWarningTools {
 
     // Search disambiguation warning in the todo parameter
     String parameter = templateTodo.getParameterValue("1");
-    PageElementTemplate templateWarning = PageContents.findNextTemplate(
-        talkPage, parameter,
-        configuration.getDisambiguationWarningTemplate(), 0);
+    List<PageElementTemplate> templates = analysis.getTemplates(
+        configuration.getDisambiguationWarningTemplate());
+    PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
+        templates.get(0) : null;
     if (templateWarning == null) {
       StringBuilder tmp = new StringBuilder();
       int indexStart = templateTodo.getBeginIndex();
@@ -560,10 +561,13 @@ public class UpdateDabWarningTools {
     if ((contents == null) || (contents.equals(""))) {
       return false;
     }
+    PageAnalysis analysis = new PageAnalysis(todoSubpage, contents);
 
     // Search disambiguation warning in the todo subpage
-    PageElementTemplate template = PageContents.findNextTemplate(
-        todoSubpage, contents, configuration.getDisambiguationWarningTemplate(), 0);
+    List<PageElementTemplate> templates = analysis.getTemplates(
+        configuration.getDisambiguationWarningTemplate());
+    PageElementTemplate template = (templates != null) && (templates.size() > 0) ?
+        templates.get(0) : null;
     if (template == null) {
       return false;
     }
@@ -624,15 +628,15 @@ public class UpdateDabWarningTools {
     if (contents == null) {
       return false;
     }
+    PageAnalysis analysis = new PageAnalysis(talkPage, contents);
 
     // Search todo in the talk page
     PageElementTemplate templateTodo = null;
     if (configuration.getTodoTemplates() != null) {
       for (String templateName : configuration.getTodoTemplates()) {
-        PageElementTemplate templateTmp = PageContents.findNextTemplate(
-            talkPage, contents, templateName, 0);
-        if (templateTmp != null) {
-          templateTodo = templateTmp;
+        List<PageElementTemplate> templates = analysis.getTemplates(templateName);
+        if ((templates != null) && (templates.size() > 0)) {
+          templateTodo = templates.get(0);
         }
       }
     }
@@ -650,17 +654,11 @@ public class UpdateDabWarningTools {
       PageElementTemplate templatePrevious = null;
       if (configuration.getDisambiguationWarningAfterTemplates() != null) {
         for (String previousTemplate : configuration.getDisambiguationWarningAfterTemplates()) {
-          int index = 0;
-          while (index < contents.length()) {
-            PageElementTemplate templateTmp = PageContents.findNextTemplate(
-                talkPage, contents, previousTemplate, index);
-            if (templateTmp != null) {
-              if ((templatePrevious == null) || (templateTmp.getEndIndex() > templatePrevious.getEndIndex())) {
-                templatePrevious = templateTmp;
-              }
-              index = templateTmp.getEndIndex();
-            } else {
-              index = contents.length();
+          Collection<PageElementTemplate> templates = analysis.getTemplates(previousTemplate);
+          for (PageElementTemplate templateTmp : templates) {
+            if ((templatePrevious == null) ||
+                (templateTmp.getEndIndex() > templatePrevious.getEndIndex())) {
+              templatePrevious = templateTmp;
             }
           }
         }
@@ -697,9 +695,10 @@ public class UpdateDabWarningTools {
 
     // Search disambiguation warning in the todo parameter
     String parameter = templateTodo.getParameterValue("1");
-    PageElementTemplate templateWarning = PageContents.findNextTemplate(
-        talkPage, parameter,
-        configuration.getDisambiguationWarningTemplate(), 0);
+    List<PageElementTemplate> templates = analysis.getTemplates(
+        configuration.getDisambiguationWarningTemplate());
+    PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
+        templates.get(0) : null;
     if (templateWarning != null) {
       setText(GT._("Removing disambiguation warning - {0}", talkPage.getTitle()));
       StringBuilder tmp = new StringBuilder();
@@ -734,10 +733,9 @@ public class UpdateDabWarningTools {
         PageElementTemplate templateTodoLink = null;
         if (configuration.getTodoLinkTemplates() != null) {
           for (String templateName : configuration.getTodoLinkTemplates()) {
-            PageElementTemplate templateTmp = PageContents.findNextTemplate(
-                talkPage, contents, templateName, 0);
-            if (templateTmp != null) {
-              templateTodoLink = templateTmp;
+            List<PageElementTemplate> tmpTemplates = analysis.getTemplates(templateName);
+            if ((tmpTemplates != null) && (tmpTemplates.size() > 0)) {
+              templateTodoLink = tmpTemplates.get(0);
             }
           }
         }
@@ -783,24 +781,25 @@ public class UpdateDabWarningTools {
     if (contents == null) {
       return false;
     }
+    PageAnalysis analysis = new PageAnalysis(talkPage, contents);
 
     // Search todo in the talk page
     PageElementTemplate templateTodo = null;
     if (configuration.getTodoTemplates() != null) {
       for (String templateName : configuration.getTodoTemplates()) {
-        PageElementTemplate templateTmp = PageContents.findNextTemplate(
-            talkPage, contents, templateName, 0);
-        if (templateTmp != null) {
-          templateTodo = templateTmp;
+        List<PageElementTemplate> templates = analysis.getTemplates(templateName);
+        if ((templates != null) && (templates.size() > 0)) {
+          templateTodo = templates.get(0);
         }
       }
     }
     if ((templateTodo != null) && (templateTodo.getParameterValue("1") != null)) {
       // Search disambiguation warning in the todo parameter
       String parameter = templateTodo.getParameterValue("1");
-      PageElementTemplate templateWarning = PageContents.findNextTemplate(
-          talkPage, parameter,
-          configuration.getDisambiguationWarningTemplate(), 0);
+      List<PageElementTemplate> templates = analysis.getTemplates(
+          configuration.getDisambiguationWarningTemplate());
+      PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
+          templates.get(0) : null;
       if (templateWarning != null) {
         setText(GT._("Removing disambiguation warning - {0}", talkPage.getTitle()));
         StringBuilder tmp = new StringBuilder();
@@ -925,11 +924,11 @@ public class UpdateDabWarningTools {
   private PageElementTemplate getExistingTemplateTodoLink(Page talkPage, String contents) {
     PageElementTemplate templateTodoLink = null;
     if (configuration.getTodoLinkTemplates() != null) {
+      PageAnalysis analysis = new PageAnalysis(talkPage, contents);
       for (String todoLink : configuration.getTodoLinkTemplates()) {
-        PageElementTemplate templateTmp = PageContents.findNextTemplate(
-            talkPage, contents, todoLink, 0);
-        if (templateTmp != null) {
-          templateTodoLink = templateTmp;
+        List<PageElementTemplate> templates = analysis.getTemplates(todoLink);
+        if ((templates != null) && (templates.size() > 0)) {
+          templateTodoLink = templates.get(0);
         }
       }
     }

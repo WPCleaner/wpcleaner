@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageContents;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
 import org.wikipediacleaner.api.data.TemplateMatch;
@@ -519,32 +520,27 @@ public class WPCConfiguration {
                 api.retrieveContents(wikipedia, page, false);
                 String contents = page.getContents();
                 if (contents != null) {
-                  int currentIndex = 0;
-                  while (currentIndex < contents.length()) {
-                    PageElementTemplate template = PageContents.findNextTemplate(page, contents, elements[1], currentIndex);
-                    if (template == null) {
-                      currentIndex = contents.length();
-                    } else {
-                      String patternText = template.getParameterValue(elements[2]);
-                      Suggestion suggestion = tmpMap.get(patternText);
-                      if (suggestion == null) {
-                        suggestion = Suggestion.createSuggestion(patternText);
-                        if (suggestion != null) {
-                          tmpMap.put(patternText, suggestion);
-                        }
-                      }
+                  PageAnalysis analysis = new PageAnalysis(page, contents);
+                  Collection<PageElementTemplate> templates = analysis.getTemplates(elements[1]);
+                  for (PageElementTemplate template : templates) {
+                    String patternText = template.getParameterValue(elements[2]);
+                    Suggestion suggestion = tmpMap.get(patternText);
+                    if (suggestion == null) {
+                      suggestion = Suggestion.createSuggestion(patternText);
                       if (suggestion != null) {
-                        if (elements.length > 4) {
-                          suggestion.setComment(template.getParameterValue(elements[4]));
-                        }
-                        for (String elementReplacement : elementsReplacement) {
-                          String replacementText = template.getParameterValue(elementReplacement);
-                          if ((replacementText != null) && (replacementText.length() > 0)) {
-                            suggestion.addReplacement(replacementText);
-                          }
+                        tmpMap.put(patternText, suggestion);
+                      }
+                    }
+                    if (suggestion != null) {
+                      if (elements.length > 4) {
+                        suggestion.setComment(template.getParameterValue(elements[4]));
+                      }
+                      for (String elementReplacement : elementsReplacement) {
+                        String replacementText = template.getParameterValue(elementReplacement);
+                        if ((replacementText != null) && (replacementText.length() > 0)) {
+                          suggestion.addReplacement(replacementText);
                         }
                       }
-                      currentIndex = template.getEndIndex();
                     }
                   }
                 }

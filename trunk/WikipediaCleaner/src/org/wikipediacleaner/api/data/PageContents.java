@@ -37,13 +37,13 @@ public class PageContents {
   // ==========================================================================
 
   /**
-   * Find the first occurence of a character in a substring.
+   * Find the first occurrence of a character in a substring.
    * 
    * @param text String.
    * @param character Character.
    * @param begin Beginning of the substring.
    * @param end End of the substring.
-   * @return First occurence of character.
+   * @return First occurrence of character.
    */
   public static int findCharacter(
       String text, char character, int begin, int end) {
@@ -72,6 +72,27 @@ public class PageContents {
     String result = text;
     result = result.replaceAll("\\{\\{PAGENAME\\}\\}", page.getValuePAGENAME());
     return result;
+  }
+
+  /**
+   * Tell if an index is inside elements or not.
+   * 
+   * @param index Index.
+   * @param elements Elements.
+   * @return true if the index is inside elements.
+   */
+  public static boolean isInElements(
+      int index, Collection<? extends PageElement> elements) {
+    if (elements == null) {
+      return false;
+    }
+    for (PageElement element : elements) {
+      if ((index >= element.getBeginIndex()) &&
+          (index < element.getEndIndex())) {
+        return true;
+      }
+    }
+    return false;
   }
 
   // ==========================================================================
@@ -132,27 +153,6 @@ public class PageContents {
       }
     }
     return null;
-  }
-
-  /**
-   * Tell if an index is inside elements or not.
-   * 
-   * @param index Index.
-   * @param elements Elements.
-   * @return true if the index is inside elements.
-   */
-  public static boolean isInElements(
-      int index, Collection<? extends PageElement> elements) {
-    if (elements == null) {
-      return false;
-    }
-    for (PageElement element : elements) {
-      if ((index >= element.getBeginIndex()) &&
-          (index < element.getEndIndex())) {
-        return true;
-      }
-    }
-    return false;
   }
 
   /**
@@ -929,37 +929,6 @@ public class PageContents {
           return template;
         }
         currentIndex = tmpIndex + 2;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Find the first template after an index in the page contents.
-   * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param templateName Template to be found.
-   * @param currentIndex The last index.
-   * @return Tag found.
-   */
-  public static PageElementTemplate findNextTemplate(
-      Page page, String contents,
-      String templateName, int currentIndex) {
-    if (contents == null) {
-      return null;
-    }
-    while (currentIndex < contents.length()) {
-      int tmpIndex = contents.indexOf("{{", currentIndex);
-      if (tmpIndex < 0) {
-        currentIndex = contents.length();
-      } else {
-        PageElementTemplate template = PageElementTemplate.analyzeBlock(
-            page.getWikipedia(), templateName, contents, tmpIndex);
-        if (template != null) {
-          return template;
-        }
-        currentIndex = tmpIndex + 1;
       }
     }
     return null;

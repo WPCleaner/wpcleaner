@@ -86,9 +86,8 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       if (referencesTemplates != null) {
         for (String referencesTemplate : referencesTemplates) {
           if (!referencesFound) {
-            PageElementTemplate template = PageContents.findNextTemplate(
-                pageAnalysis.getPage(), pageAnalysis.getContents(), referencesTemplate, 0);
-            if (template != null) {
+            Collection<PageElementTemplate> foundTemplates = pageAnalysis.getTemplates(referencesTemplate);
+            if ((foundTemplates != null) && (foundTemplates.size() > 0)) {
               referencesFound = true;
             }
           }
