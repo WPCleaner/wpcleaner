@@ -76,7 +76,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     List<Suggestion> possibles = new ArrayList<Suggestion>();
     String contents = pageAnalysis.getContents();
     Collection<PageElement> elements = pageAnalysis.getElements(
-        true, true, true, true, true, true, true, true, true, false);
+        true, true, true, true, true, true, true, true, true, true, false);
     Iterator<PageElement> itElement = elements.iterator();
     PageElement currentElement = itElement.hasNext() ? itElement.next() : null;
 

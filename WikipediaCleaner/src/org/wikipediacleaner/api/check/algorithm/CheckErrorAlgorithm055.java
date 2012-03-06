@@ -21,7 +21,10 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -49,46 +52,72 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     }
 
     // Analyzing the text from the beginning
+    Collection<PageElementTag> tags = pageAnalysis.getTags(PageElementTag.TAG_SMALL);
+    if (tags == null) {
+      return false;
+    }
+    int level = 0;
     boolean result = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-
-      // Searching for next <small>
-      int beginIndex = contents.indexOf("<small>", startIndex);
-      if (beginIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        int currentPos = beginIndex + 7;
-        int levelSmall = 1;
-        int smallPos = currentPos;
-        while ((currentPos < contents.length()) && (levelSmall > 0)) {
-          if (contents.charAt(currentPos) == '<') {
-            if (contents.startsWith("<small>", currentPos)) {
-              if (levelSmall == 1) {
-                smallPos = currentPos;
-              }
-              levelSmall++;
-              currentPos += 6;
-            } else if (contents.startsWith("</small>", currentPos)) {
-              levelSmall--;
-              if (levelSmall == 1) {
-                if (errors == null) {
-                  return true;
-                }
-                result = true;
-                CheckErrorResult errorResult = createCheckErrorResult(
-                    pageAnalysis.getPage(), smallPos, currentPos + 8);
-                errors.add(errorResult);
-              }
-              currentPos += 7;
-            }
+    PageElementTag level0Tag = null;
+    for (PageElementTag tag : tags) {
+      if (tag.isFullTag()) {
+        // Full tag
+        if (level == 1) {
+          if (errors == null) {
+            return true;
           }
-          currentPos++;
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              tag.getBeginIndex(), tag.getEndIndex());
+          errorResult.addReplacement("", GT._("Delete"));
+          errors.add(errorResult);
         }
-        startIndex = currentPos;
+      } else if (tag.isEndTag()) {
+        // Closing tag
+        level--;
+        if (level == 1) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          if (level0Tag != null) {
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(),
+                level0Tag.getBeginIndex(),
+                level0Tag.getEndIndex(),
+                ErrorLevel.CORRECT);
+            errors.add(errorResult);
+            if (level0Tag.getMatchingTag() != null) {
+              errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(),
+                  level0Tag.getMatchingTag().getBeginIndex(),
+                  level0Tag.getMatchingTag().getEndIndex(),
+                  ErrorLevel.CORRECT);
+              errors.add(errorResult);
+            }
+            level0Tag = null;
+          }
+          int beginIndex = tag.getBeginIndex();
+          if (tag.getMatchingTag() != null) {
+            beginIndex = tag.getMatchingTag().getBeginIndex();
+          }
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              beginIndex, tag.getEndIndex());
+          errors.add(errorResult);
+        }
+        if (level < 0) {
+          level = 0;
+        }
+      } else {
+        if (level == 0) {
+          level0Tag = tag;
+        }
+        level++;
       }
     }
+
     return result;
   }
 }

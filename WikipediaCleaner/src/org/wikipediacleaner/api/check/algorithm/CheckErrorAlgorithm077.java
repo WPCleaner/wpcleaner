@@ -57,7 +57,7 @@ public class CheckErrorAlgorithm077 extends CheckErrorAlgorithmBase {
       if (image != null) {
         String text = image.getDescription();
         if (text != null) {
-          PageElementTagFull tag = PageContents.findNextTag(
+          PageElementTagFull tag = PageContents.findNextTagFull(
               pageAnalysis.getPage(), text, "small", 0);
           if (tag != null) {
             boolean onlySpaces = true;

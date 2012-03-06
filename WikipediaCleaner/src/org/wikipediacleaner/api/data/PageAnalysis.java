@@ -62,6 +62,8 @@ public class PageAnalysis {
   private Collection<PageElementInterwikiLink> interwikiLinks;
   private final Object languageLinksLock = new Object();
   private Collection<PageElementLanguageLink> languageLinks;
+  private final Object tagsLock = new Object();
+  private Collection<PageElementTag> tags;
   private final Object templatesLock = new Object();
   private Collection<PageElementTemplate> templates;
   private final Object titlesLock = new Object();
@@ -154,6 +156,7 @@ public class PageAnalysis {
     getInternalLinks();
     getInterwikiLinks();
     getLanguageLinks();
+    getTags();
     getTemplates();
     getTitles();
   }
@@ -167,7 +170,7 @@ public class PageAnalysis {
       boolean withDefaultsorts, boolean withExternalLinks,
       boolean withImages, boolean withInternalLinks,
       boolean withInterwikiLinks, boolean withLanguageLinks,
-      boolean withTemplates, boolean withTitles) {
+      boolean withTags, boolean withTemplates, boolean withTitles) {
     List<PageElement> elements = new ArrayList<PageElement>();
     if (withCategories) {
       elements.addAll(getCategories());
@@ -192,6 +195,9 @@ public class PageAnalysis {
     }
     if (withLanguageLinks) {
       elements.addAll(getLanguageLinks());
+    }
+    if (withTags) {
+      elements.addAll(getTags());
     }
     if (withTemplates) {
       elements.addAll(getTemplates());
@@ -259,6 +265,13 @@ public class PageAnalysis {
     if ((externalLink != null) &&
         ((element == null) || (element.getBeginIndex() < externalLink.getBeginIndex()))) {
       element = externalLink;
+    }
+
+    // Check if in tag
+    PageElementTag tag = isInTag(currentIndex);
+    if ((tag != null) &&
+        ((element == null) || (element.getBeginIndex() < tag.getBeginIndex()))) {
+      element = tag;
     }
 
     return element;
@@ -533,6 +546,72 @@ public class PageAnalysis {
       if ((template.getBeginIndex() <= currentIndex) &&
           (template.getEndIndex() > currentIndex)) {
         return template;
+      }
+    }
+    return null;
+  }
+
+  // ==========================================================================
+  // Templates management
+  // ==========================================================================
+
+  /**
+   * @return All tags in the page analysis.
+   */
+  public Collection<PageElementTag> getTags() {
+    Collection<PageElementComment> tmpComments = getComments();
+
+    synchronized (tagsLock) {
+      if (tags == null) {
+        tags = PageContents.findAllTags(getPage(), getContents(), tmpComments);
+      }
+      return tags;
+    }
+  }
+
+  /**
+   * @param name Tag name.
+   * @return All tags with this in the page analysis.
+   */
+  public Collection<PageElementTag> getTags(String name) {
+    if (name == null) {
+      return null;
+    }
+    Collection<PageElementTag> tmpTags = getTags();
+    Collection<PageElementTag> result = new ArrayList<PageElementTag>();
+    name = name.toLowerCase();
+    for (PageElementTag tag : tmpTags) {
+      if (name.equals(tag.getNormalizedName())) {
+        result.add(tag);
+      }
+    }
+    return result;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Next tag.
+   */
+  public PageElementTag getNextTag(int currentIndex) {
+    Collection<PageElementTag> tmpTags = getTags();
+    for (PageElementTag tag : tmpTags) {
+      if (tag.getBeginIndex() >= currentIndex) {
+        return tag;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Tag if the current index is inside a tag.
+   */
+  public PageElementTag isInTag(int currentIndex) {
+    Collection<PageElementTag> tmpTags = getTags();
+    for (PageElementTag tag : tmpTags) {
+      if ((tag.getBeginIndex() <= currentIndex) &&
+          (tag.getEndIndex() > currentIndex)) {
+        return tag;
       }
     }
     return null;

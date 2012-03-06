@@ -62,7 +62,7 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
     Set<String> tagUsed = new TreeSet<String>();
     String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementTagFull tag = PageContents.findNextTag(
+      PageElementTagFull tag = PageContents.findNextTagFull(
           pageAnalysis.getPage(), contents, "references", startIndex);
       if (tag != null) {
         startIndex = tag.getEndTagEndIndex();

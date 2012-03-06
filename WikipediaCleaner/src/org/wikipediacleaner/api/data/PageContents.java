@@ -970,6 +970,90 @@ public class PageContents {
   // ==========================================================================
 
   /**
+   * Find all tags in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param comments Comments blocks in the page.
+   * @return Tags found.
+   */
+  public static Collection<PageElementTag> findAllTags(
+      Page page, String contents,
+      Collection<PageElementComment> comments) {
+    if (contents == null) {
+      return null;
+    }
+    List<PageElementTag> result = new ArrayList<PageElementTag>();
+    int currentIndex = 0;
+    while ((currentIndex < contents.length())) {
+      PageElementTag tag = findNextTag(page, contents, currentIndex, comments);
+      if (tag == null) {
+        currentIndex = contents.length();
+      } else {
+        if (tag.isEndTag() && !tag.isFullTag()) {
+          boolean found = false;
+          int i = result.size();
+          int level = 0;
+          while ((i > 0) && !found) {
+            i--;
+            PageElementTag tmpTag = result.get(i);
+            if (tag.getNormalizedName().equals(tmpTag.getNormalizedName())) {
+              if (!tmpTag.isFullTag()) {
+                if (tmpTag.isEndTag()) {
+                  level++;
+                } else {
+                  level--;
+                  if (level < 0) {
+                    found = true;
+                    tmpTag.setMatchingTag(tag);
+                  }
+                }
+              }
+            }
+          }
+        }
+        result.add(tag);
+        currentIndex = tag.getEndIndex();
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Find the first tag after an index in the page contents.
+   * 
+   * @param page Page.
+   * @param contents Page contents (may be different from page.getContents()).
+   * @param currentIndex The last index.
+   * @param comments Comments blocks in the page.
+   * @return Tag found.
+   */
+  public static PageElementTag findNextTag(
+      Page page, String contents,
+      int currentIndex,
+      Collection<PageElementComment> comments) {
+    if (contents == null) {
+      return null;
+    }
+    while (currentIndex < contents.length()) {
+      int tmpIndex = contents.indexOf('<', currentIndex);
+      if (tmpIndex < 0) {
+        currentIndex = contents.length();
+      } else if (isInElements(tmpIndex, comments)) {
+        currentIndex = indexAfterComments(tmpIndex, comments);
+      } else {
+        PageElementTag tag = PageElementTag.analyzeBlock(
+            contents, tmpIndex);
+        if (tag != null) {
+          return tag;
+        }
+        currentIndex = tmpIndex + 2;
+      }
+    }
+    return null;
+  }
+
+  /**
    * Find the first tag after an index in the page contents.
    * 
    * @param page Page.
@@ -978,7 +1062,7 @@ public class PageContents {
    * @param currentIndex The last index.
    * @return Tag found.
    */
-  public static PageElementTagFull findNextTag(
+  public static PageElementTagFull findNextTagFull(
       Page page, String contents,
       String tagName, int currentIndex) {
     if (contents == null) {

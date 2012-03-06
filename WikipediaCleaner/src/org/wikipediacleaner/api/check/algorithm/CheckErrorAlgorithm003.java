@@ -57,7 +57,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     boolean refFound = false;
     if (!refFound) {
       // Search for <ref>
-      PageElementTagFull tag = PageContents.findNextTag(
+      PageElementTagFull tag = PageContents.findNextTagFull(
           pageAnalysis.getPage(), pageAnalysis.getContents(), "ref", 0);
       if (tag != null) {
         refFound = true;
@@ -69,7 +69,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     if (refFound) {
       // Search for <references>
       if (!referencesFound) {
-        PageElementTagFull tag = PageContents.findNextTag(
+        PageElementTagFull tag = PageContents.findNextTagFull(
             pageAnalysis.getPage(), pageAnalysis.getContents(), "references", 0);
         if (tag != null) {
           referencesFound = true;
