@@ -92,7 +92,7 @@ public class PageElementTemplate extends PageElement {
     tmpIndex += 2;
     int startTemplateName = tmpIndex;
 
-    // Possible whitespaces characters
+    // Possible whitespace characters
     while ((tmpIndex < contents.length()) &&
            ((contents.charAt(tmpIndex) == ' ') ||
             (contents.charAt(tmpIndex) == '\n'))) {
@@ -134,7 +134,7 @@ public class PageElementTemplate extends PageElement {
       return null;
     }
 
-    // Possible whitespaces characters
+    // Possible whitespace characters
     while ((tmpIndex < contents.length()) &&
            ((contents.charAt(tmpIndex) == ' ') ||
             (contents.charAt(tmpIndex) == '\n'))) {
@@ -210,7 +210,8 @@ public class PageElementTemplate extends PageElement {
     int tmpIndex = 0;
     int depthCurlyBrackets = 0;
     int depthSquareBrackets = 0;
-    boolean inNoWikiTag = false;
+    int depthNoWikiTag = 0;
+    int depthRefTag = 0;
     int equalIndex = -1;
     while (tmpIndex < strParameters.length()) {
       if (strParameters.startsWith("{{", tmpIndex)) {
@@ -225,23 +226,39 @@ public class PageElementTemplate extends PageElement {
       } else if (strParameters.startsWith("]]", tmpIndex)) {
         tmpIndex += 2;
         depthSquareBrackets--;
-      } else if (strParameters.startsWith("<nowiki>", tmpIndex)) {
-        tmpIndex += 7;
-        inNoWikiTag = true;
-      } else if (strParameters.startsWith("</nowiki>", tmpIndex)) {
-        tmpIndex += 8;
-        inNoWikiTag = false;
+      } else if (strParameters.startsWith("<", tmpIndex)) {
+        PageElementTag tag = PageElementTag.analyzeBlock(strParameters, tmpIndex);
+        if (tag != null) {
+          int count = 0;
+          if (tag.isFullTag()) {
+            count = 0;
+          } else if (tag.isEndTag()) {
+            count = -1;
+          } else {
+            count = 1;
+          }
+          if (PageElementTag.TAG_NOWIKI.equals(tag.getName())) {
+            depthNoWikiTag += count;
+          } else if (PageElementTag.TAG_REF.equals(tag.getName())) {
+            depthRefTag += count;
+          }
+          tmpIndex = tag.getEndIndex();
+        } else {
+          tmpIndex++;
+        }
       } else {
         if ((depthCurlyBrackets <= 0) &&
             (depthSquareBrackets <= 0) &&
-            (inNoWikiTag == false) &&
+            (depthNoWikiTag <= 0) &&
+            (depthRefTag <= 0) &&
             (equalIndex < 0) &&
             (strParameters.charAt(tmpIndex) == '=')) {
           equalIndex = tmpIndex;
           tmpIndex++;
         } else if ((depthCurlyBrackets <= 0) &&
             (depthSquareBrackets <= 0) &&
-            (inNoWikiTag == false) &&
+            (depthNoWikiTag <= 0) &&
+            (depthRefTag <= 0) &&
             (strParameters.charAt(tmpIndex) == '|')) {
           depthCurlyBrackets = 0;
           depthSquareBrackets = 0;
