@@ -532,9 +532,11 @@ public class PageAnalysis {
     }
     Collection<PageElementTemplate> tmpTemplates = getTemplates();
     List<PageElementTemplate> result = new ArrayList<PageElementTemplate>();
-    for (PageElementTemplate template : tmpTemplates) {
-      if (Page.areSameTitle(name, template.getTemplateName())) {
-        result.add(template);
+    if (tmpTemplates != null) {
+      for (PageElementTemplate template : tmpTemplates) {
+        if (Page.areSameTitle(name, template.getTemplateName())) {
+          result.add(template);
+        }
       }
     }
     return result;
