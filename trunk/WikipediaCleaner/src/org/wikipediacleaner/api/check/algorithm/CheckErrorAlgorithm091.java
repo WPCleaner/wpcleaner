@@ -30,7 +30,7 @@ import org.wikipediacleaner.i18n.GT;
 
 /**
  * Algorithm for analyzing error 91 of check wikipedia project.
- * Error 91: DEFAULTSORT is missing and title with lowercase letters
+ * Error 91: DEFAULTSORT is missing and title with lower case letters
  */
 public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
 
@@ -42,7 +42,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
   };
 
   public CheckErrorAlgorithm091() {
-    super("DEFAULTSORT is missing and title with lowercase_letters");
+    super("DEFAULTSORT is missing and title with lowercase letters");
   }
 
   /**
@@ -59,7 +59,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Checking if title contains lowercase letters
+    // Checking if title contains lower case letters
     boolean lowFound = false;
     boolean firstLetter = true;
     String title = pageAnalysis.getPage().getTitle();
