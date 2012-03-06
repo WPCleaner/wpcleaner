@@ -47,12 +47,13 @@ public class ColorButton extends JButton implements ActionListener {
    * @param color Color.
    */
   public ColorButton(Color color, String title) {
-    super("    ");
+    super("X");
     this.title = title;
     setColor(color);
     addActionListener(this);
     setFocusable(false);
     setFocusPainted(false);
+    setOpaque(true);
     setRolloverEnabled(false);
   }
 
@@ -61,6 +62,7 @@ public class ColorButton extends JButton implements ActionListener {
    */
   public void setColor(Color color) {
     setBackground(color);
+    setForeground(color);
   }
 
   /**

@@ -59,7 +59,7 @@ public class PageElementTagFull extends PageElement {
     }
     tmpIndex++;
 
-    // Possible whitespaces characters
+    // Possible whitespace characters
     while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
       tmpIndex++;
     }
@@ -132,7 +132,7 @@ public class PageElementTagFull extends PageElement {
     }
     tmpIndex++;
 
-    // Possible whitespaces characters
+    // Possible whitespace characters
     while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
       tmpIndex++;
     }

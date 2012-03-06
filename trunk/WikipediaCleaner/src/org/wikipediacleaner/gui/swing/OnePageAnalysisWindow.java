@@ -771,7 +771,9 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       modelLinks.setElements(links);
       countOccurences(page.getContents(), true);
       for (Page p : links) {
-        if ((p != null) && (p.isDisambiguationPage()) && (p.getCountOccurence() > 0)) {
+        if ((p != null) &&
+            (Boolean.TRUE.equals(p.isDisambiguationPage())) &&
+            (p.getCountOccurence() > 0)) {
           mapLinksCount.put(p.getTitle(), Integer.valueOf(p.getCountOccurence()));
         }
       }

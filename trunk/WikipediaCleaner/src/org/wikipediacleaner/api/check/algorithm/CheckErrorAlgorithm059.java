@@ -64,7 +64,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
           PageElementTagFull lastTag = null;
           int currentIndex = 0;
           while (currentIndex < parameterValue.length()) {
-            PageElementTagFull tag = PageContents.findNextTag(
+            PageElementTagFull tag = PageContents.findNextTagFull(
                 pageAnalysis.getPage(), parameterValue, "br", currentIndex);
             if (tag != null) {
               currentIndex = tag.getEndTagEndIndex() - 1;

@@ -74,7 +74,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
 
     // Find all ref tags and organize them by group / value
     while (startIndex < contents.length()) {
-      PageElementTagFull ref = PageContents.findNextTag(
+      PageElementTagFull ref = PageContents.findNextTagFull(
           pageAnalysis.getPage(), contents, "ref", startIndex);
       if (ref == null) {
         startIndex = contents.length();

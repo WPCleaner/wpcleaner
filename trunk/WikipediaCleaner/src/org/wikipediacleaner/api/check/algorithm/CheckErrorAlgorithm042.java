@@ -22,6 +22,8 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -49,42 +51,51 @@ public class CheckErrorAlgorithm042 extends CheckErrorAlgorithmBase {
     }
 
     // Analyzing the text from the beginning
+    Collection<PageElementTag> tags = pageAnalysis.getTags(PageElementTag.TAG_SMALL);
+    if (tags == null) {
+      return false;
+    }
+    int level = 0;
     boolean result = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-
-      // Searching for next <small>
-      int beginIndex = contents.indexOf("<small>", startIndex);
-      if (beginIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        int currentPos = beginIndex + 7;
-        int levelSmall = 1;
-        while ((currentPos < contents.length()) && (levelSmall > 0)) {
-          if (contents.charAt(currentPos) == '<') {
-            if (contents.startsWith("<small>", currentPos)) {
-              levelSmall++;
-              currentPos += 6;
-            } else if (contents.startsWith("</small>", currentPos)) {
-              levelSmall--;
-              if (levelSmall == 0) {
-                if (errors == null) {
-                  return true;
-                }
-                result = true;
-                CheckErrorResult errorResult = createCheckErrorResult(
-                    pageAnalysis.getPage(), beginIndex, currentPos + 8);
-                errors.add(errorResult);
-              }
-              currentPos += 7;
-            }
+    for (PageElementTag tag : tags) {
+      if (tag.isFullTag()) {
+        // Full tag
+        if (level == 0) {
+          if (errors == null) {
+            return true;
           }
-          currentPos++;
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              tag.getBeginIndex(), tag.getEndIndex());
+          errorResult.addReplacement("", GT._("Delete"));
+          errors.add(errorResult);
         }
-        startIndex = currentPos;
+      } else if (tag.isEndTag()) {
+        // Closing tag
+        level--;
+        if (level == 0) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          int beginIndex = tag.getBeginIndex();
+          if (tag.getMatchingTag() != null) {
+            beginIndex = tag.getMatchingTag().getBeginIndex();
+          }
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              beginIndex, tag.getEndIndex());
+          errors.add(errorResult);
+        }
+        if (level < 0) {
+          level = 0;
+        }
+      } else {
+        level++;
       }
     }
+
     return result;
   }
 }

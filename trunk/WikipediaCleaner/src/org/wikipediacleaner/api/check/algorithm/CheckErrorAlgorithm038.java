@@ -54,7 +54,7 @@ public class CheckErrorAlgorithm038 extends CheckErrorAlgorithmBase {
     int startIndex = 0;
     String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementTagFull tag = PageContents.findNextTag(
+      PageElementTagFull tag = PageContents.findNextTagFull(
           pageAnalysis.getPage(), contents, "i", startIndex);
       if (tag == null) {
         startIndex = contents.length();

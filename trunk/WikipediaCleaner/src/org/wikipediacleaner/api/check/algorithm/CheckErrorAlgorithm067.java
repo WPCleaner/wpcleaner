@@ -75,7 +75,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     boolean result = false;
     String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementTagFull tag = PageContents.findNextTag(
+      PageElementTagFull tag = PageContents.findNextTagFull(
           pageAnalysis.getPage(), contents, "ref", startIndex);
       if (tag != null) {
         startIndex = tag.getEndTagEndIndex();
@@ -128,7 +128,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
             boolean tryNext = true;
             while (tryNext) {
               int endIndex = tagList.get(tagList.size() - 1).getEndTagEndIndex();
-              PageElementTagFull nextTag = PageContents.findNextTag(
+              PageElementTagFull nextTag = PageContents.findNextTagFull(
                   pageAnalysis.getPage(), contents, "ref", endIndex);
               if (nextTag == null) {
                 tryNext = false;
