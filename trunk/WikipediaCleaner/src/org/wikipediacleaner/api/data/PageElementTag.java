@@ -28,6 +28,8 @@ import java.util.List;
 public class PageElementTag extends PageElement {
 
   public final static String TAG_SMALL = "small";
+  public final static String TAG_U     = "u";
+
 
   /**
    * Tag name.
