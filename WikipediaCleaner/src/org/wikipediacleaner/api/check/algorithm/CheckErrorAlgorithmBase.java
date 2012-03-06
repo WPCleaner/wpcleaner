@@ -30,11 +30,10 @@ import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementDefaultsort;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
-import org.wikipediacleaner.api.data.PageElementTagData;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -453,37 +452,17 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       return found;
     }
     boolean result = found;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while ((startIndex < contents.length())) {
-      PageElementTagData tag = PageContents.findNextStartTag(
-          pageAnalysis.getPage(), contents, tagName, startIndex);
-      if (tag != null) {
-        result = true;
-        if (errors != null) {
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), tag.getBeginIndex(), tag.getEndIndex());
-          errors.add(errorResult);
+    Collection<PageElementTag> tags = pageAnalysis.getTags(tagName);
+    if (tags != null) {
+      for (PageElementTag tag : tags) {
+        if (errors == null) {
+          return true;
         }
-        startIndex = tag.getEndIndex();
-      } else {
-        startIndex = contents.length();
-      }
-    }
-    startIndex = 0;
-    while ((startIndex < contents.length())) {
-      PageElementTagData tag = PageContents.findNextEndTag(
-          pageAnalysis.getPage(), contents, tagName, startIndex);
-      if (tag != null) {
         result = true;
-        if (errors != null) {
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), tag.getBeginIndex(), tag.getEndIndex());
-          errors.add(errorResult);
-        }
-        startIndex = tag.getEndIndex();
-      } else {
-        startIndex = contents.length();
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            tag.getBeginIndex(), tag.getEndIndex());
+        errors.add(errorResult);
       }
     }
     return result;
