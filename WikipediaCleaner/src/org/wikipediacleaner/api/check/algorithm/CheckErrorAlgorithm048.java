@@ -60,8 +60,9 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
 
     boolean result = false;
     Collection<PageElementInternalLink> links = pageAnalysis.getInternalLinks();
+    String pageTitle = pageAnalysis.getPage().getTitle();
     for (PageElementInternalLink link : links) {
-      if (Page.areSameTitle(pageAnalysis.getPage().getTitle(), link.getLink())) {
+      if (Page.areSameTitle(pageTitle, link.getFullLink())) {
         if (errors == null) {
           return true;
         }
