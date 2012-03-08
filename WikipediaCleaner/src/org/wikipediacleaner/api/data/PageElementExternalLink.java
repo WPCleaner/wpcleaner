@@ -34,6 +34,7 @@ public class PageElementExternalLink extends PageElement {
   private final String link;
   private final String textNotTrimmed;
   private final String text;
+  private final boolean hasSquare;
 
   private final static String END_CHARACTERS = " \n\t<>";
 
@@ -109,7 +110,7 @@ public class PageElementExternalLink extends PageElement {
       return new PageElementExternalLink(
           index, endIndex,
           contents.substring(beginIndex, endIndex),
-          null);
+          null, hasSquare);
     }
     if (endIndex < 0) {
       return null;
@@ -121,13 +122,14 @@ public class PageElementExternalLink extends PageElement {
       return new PageElementExternalLink(
           index, endIndex + 1,
           contents.substring(beginIndex, endIndex),
-          null);
+          null, hasSquare);
     }
 
     return new PageElementExternalLink(
         index, endIndex + 1,
         contents.substring(beginIndex, spaceIndex),
-        contents.substring(spaceIndex + 1, endIndex));
+        contents.substring(spaceIndex + 1, endIndex),
+        hasSquare);
   }
 
   /**
@@ -151,6 +153,9 @@ public class PageElementExternalLink extends PageElement {
     return text;
   }
 
+  /**
+   * @return Displayed text.
+   */
   public String getDisplayedText() {
     if (text != null) {
       return text;
@@ -158,14 +163,23 @@ public class PageElementExternalLink extends PageElement {
     return linkNotTrimmed;
   }
 
+  /**
+   * @return True if the link is in  [...]
+   */
+  public boolean hasSquare() {
+    return hasSquare;
+  }
+
   private PageElementExternalLink(
       int beginIndex, int endIndex,
-      String link, String text) {
+      String link, String text,
+      boolean hasSquare) {
     super(beginIndex, endIndex);
     this.linkNotTrimmed = link;
     this.link = (link != null) ? link.trim() : null;
     this.textNotTrimmed = text;
     this.text = (text != null) ? text.trim() : null;
+    this.hasSquare = hasSquare;
   }
 
   /* (non-Javadoc)
