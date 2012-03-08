@@ -78,7 +78,6 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     }
 
     // Searching a DEFAULTSORT tag
-    String contents = pageAnalysis.getContents();
     PageElementDefaultsort tag = pageAnalysis.getNextDefaultSort(0);
     if (tag != null) {
       return false;
@@ -86,17 +85,14 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
 
     // Searching for Categories without a sort key
     boolean categoriesWithoutSort = false;
-    int currentIndex = 0;
-    while (currentIndex < contents.length()) {
-      PageElementCategory category = pageAnalysis.getNextCategory(currentIndex);
-      if (category != null) {
-        currentIndex = category.getEndIndex();
-        if ((category.getSort() == null) ||
-            (category.getSort().trim().length() == 0)) {
-          categoriesWithoutSort = true;
-        }
-      } else {
-        currentIndex = contents.length();
+    Collection<PageElementCategory> categories = pageAnalysis.getCategories();
+    if (categories == null) {
+      return false;
+    }
+    for (PageElementCategory category : categories) {
+      if ((category.getSort() == null) ||
+          (category.getSort().trim().length() == 0)) {
+        categoriesWithoutSort = true;
       }
     }
     if (!categoriesWithoutSort) {
