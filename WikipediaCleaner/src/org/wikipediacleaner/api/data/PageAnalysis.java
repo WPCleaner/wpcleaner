@@ -593,12 +593,12 @@ public class PageAnalysis {
    * @param name Tag name.
    * @return All tags with this name in the page analysis.
    */
-  public Collection<PageElementTag> getTags(String name) {
+  public List<PageElementTag> getTags(String name) {
     if (name == null) {
       return null;
     }
     Collection<PageElementTag> tmpTags = getTags();
-    Collection<PageElementTag> result = new ArrayList<PageElementTag>();
+    List<PageElementTag> result = new ArrayList<PageElementTag>();
     name = name.toLowerCase();
     for (PageElementTag tag : tmpTags) {
       if (name.equals(tag.getNormalizedName())) {

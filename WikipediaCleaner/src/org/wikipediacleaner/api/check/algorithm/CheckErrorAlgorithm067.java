@@ -20,14 +20,14 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementTagFull;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -70,19 +70,22 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       separator = "";
     }
 
-    // Analyze from the begining
-    int startIndex = 0;
+    // Analyze from the beginning
+    List<PageElementTag> tags = pageAnalysis.getTags(PageElementTag.TAG_REF);
+    if (tags == null) {
+      return false;
+    }
     boolean result = false;
     String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      PageElementTagFull tag = PageContents.findNextTagFull(
-          pageAnalysis.getPage(), contents, "ref", startIndex);
-      if (tag != null) {
-        startIndex = tag.getEndTagEndIndex();
-        int tmpIndex = tag.getStartTagBeginIndex() - 1;
+    for (int i = 0; i < tags.size(); i++) {
+      PageElementTag tag = tags.get(i);
+      if ((tag != null) &&
+          (tag.isFullTag() || !tag.isEndTag())) {
 
-        // Remove possible whitespaces
-        while ((tmpIndex >= 0) && (Character.isWhitespace(contents.charAt(tmpIndex)))) {
+        // Remove possible whitespace
+        int tmpIndex = tag.getBeginIndex() - 1;
+        while ((tmpIndex >= 0) &&
+               (Character.isWhitespace(contents.charAt(tmpIndex)))) {
           tmpIndex--;
         }
 
@@ -123,18 +126,27 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
               allPunctuations = contents.charAt(tmpIndex) + allPunctuations;
               tmpIndex--;
             }
-            ArrayList<PageElementTagFull> tagList = new ArrayList<PageElementTagFull>();
+            ArrayList<PageElementTag> tagList = new ArrayList<PageElementTag>();
             tagList.add(tag);
             boolean tryNext = true;
             while (tryNext) {
-              int endIndex = tagList.get(tagList.size() - 1).getEndTagEndIndex();
-              PageElementTagFull nextTag = PageContents.findNextTagFull(
-                  pageAnalysis.getPage(), contents, "ref", endIndex);
+              PageElementTag lastTag = tagList.get(tagList.size() - 1);
+              if (lastTag.getMatchingTag() != null) {
+                lastTag = lastTag.getMatchingTag();
+              }
+              int lastTagIndex = i;
+              while ((lastTagIndex < tags.size()) &&
+                     (tags.get(lastTagIndex) != lastTag)) {
+                lastTagIndex++;
+              }
+              PageElementTag nextTag = (lastTagIndex + 1 < tags.size()) ?
+                  tags.get(lastTagIndex + 1) : null;
               if (nextTag == null) {
                 tryNext = false;
               } else {
                 boolean separatorFound = false;
-                while ((endIndex < nextTag.getStartTagBeginIndex()) && (tryNext)) {
+                int endIndex = lastTag.getEndIndex();
+                while ((endIndex < nextTag.getBeginIndex()) && (tryNext)) {
                   if (!separatorFound && (contents.startsWith(separator, endIndex))) {
                     separatorFound = true;
                     endIndex += separator.length();
@@ -149,12 +161,15 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
                 }
                 if (tryNext) {
                   tagList.add(nextTag);
-                  startIndex = nextTag.getEndTagEndIndex();
+                  i = lastTagIndex;
                 }
               }
             }
-            PageElementTagFull lastTag = tagList.get(tagList.size() - 1);
-            int endIndex = lastTag.getEndTagEndIndex();
+            PageElementTag lastTag = tagList.get(tagList.size() - 1);
+            if (lastTag.getMatchingTag() != null) {
+              lastTag = lastTag.getMatchingTag();
+            }
+            int endIndex = lastTag.getEndIndex();
             while ((endIndex < contents.length()) && (contents.charAt(endIndex) == punctuation)) {
               endIndex++;
             }
@@ -162,13 +177,18 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
                 pageAnalysis.getPage(), tmpIndex + 1, endIndex,
                 abbreviationFound ? CheckErrorResult.ErrorLevel.CORRECT : CheckErrorResult.ErrorLevel.ERROR);
             String tagText = "";
-            for (int i = 0; i < tagList.size(); i++) {
-              if (i > 0) {
+            for (int j = 0; j < tagList.size(); j++) {
+              if (j > 0) {
                 tagText += separator; 
               }
+              PageElementTag beginTag = tagList.get(j);
+              PageElementTag endTag = beginTag;
+              if (endTag.getMatchingTag() != null) {
+                endTag = endTag.getMatchingTag();
+              }
               tagText += contents.substring(
-                  tagList.get(i).getStartTagBeginIndex(),
-                  tagList.get(i).getEndTagEndIndex());
+                  beginTag.getBeginIndex(),
+                  endTag.getEndIndex());
             }
             if (tagList.size() > 1) {
               errorResult.addReplacement(
@@ -179,9 +199,9 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
                   tagText + allPunctuations,
                   "<ref>...</ref>" + allPunctuations);
             }
-            if ((endIndex > lastTag.getEndTagEndIndex()) &&
-                (endIndex - lastTag.getEndTagEndIndex() != allPunctuations.length())) {
-              String afterTag = contents.substring(lastTag.getEndTagEndIndex(), endIndex);
+            if ((endIndex > lastTag.getEndIndex()) &&
+                (endIndex - lastTag.getEndIndex() != allPunctuations.length())) {
+              String afterTag = contents.substring(lastTag.getEndIndex(), endIndex);
               if (tagList.size() > 1) {
                 errorResult.addReplacement(
                     tagText + afterTag,
@@ -195,8 +215,6 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
             errors.add(errorResult);
           }
         }
-      } else {
-        startIndex = contents.length();
       }
     }
     return result;
