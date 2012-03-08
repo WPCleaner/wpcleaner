@@ -24,6 +24,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -57,70 +58,56 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
-    boolean result = false;
     Namespace categoryNamespace = Namespace.getNamespace(
         Namespace.CATEGORY, pageAnalysis.getWikipedia().getNamespaces());
     if (categoryNamespace == null) {
-      return result;
+      return false;
     }
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      int beginIndex = contents.indexOf("[[", startIndex);
-      if (beginIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        int endIndex = contents.indexOf("]]", beginIndex);
-        if (endIndex < 0) {
-          startIndex = contents.length();
-        } else {
-          // Possible whitespaces
-          int linkBegin = beginIndex + 2;
-          while ((linkBegin < endIndex) && (contents.charAt(linkBegin) == ' ')) {
-            linkBegin++;
-          }
-          // Link itself
-          int linkEnd = linkBegin;
-          while ((linkEnd < endIndex) &&
-              (contents.charAt(linkEnd) != ':') &&
-              (contents.charAt(linkEnd) != '|')) {
-            linkEnd++;
-          }
-
-          // Check if namespace is Category
-          if ((contents.charAt(linkEnd) == ':') &&
-              (categoryNamespace.isPossibleName(contents.substring(linkBegin, linkEnd)))) {
-            // Possible whitespaces
-            int nameBegin = linkEnd + 1;
-            while ((nameBegin < endIndex) && (contents.charAt(nameBegin) == ' ')) {
-              nameBegin++;
-            }
-            // Category itself
-            int nameEnd = nameBegin;
-            while ((nameEnd < endIndex) &&
-                (contents.charAt(nameEnd) != '|')) {
-              nameEnd++;
-            }
-            // Check if category has a lower case as a first letter
-            String category = contents.substring(nameBegin, nameEnd);
-            if ((category.length() > 0) &&
-                ((Character.isLowerCase(contents.charAt(nameBegin))) ||
-                 (Character.isLowerCase(contents.charAt(linkBegin))))) {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), beginIndex, endIndex + 2);
-              errorResult.addReplacement(
-                  "[[" + categoryNamespace.getTitle() + ":" +
-                  Character.toUpperCase(contents.charAt(nameBegin)) +
-                  contents.substring(nameBegin + 1, endIndex + 2));
-              errors.add(errorResult);
-            }
-          }
-          startIndex = endIndex + 2;
+    Collection<PageElementCategory> categories = pageAnalysis.getCategories();
+    if (categories == null) {
+      return false;
+    }
+    boolean result = false;
+    for (PageElementCategory category : categories) {
+      String namespace = category.getCategory();
+      boolean lowerCaseNamespace = false;
+      if ((namespace != null) &&
+          (namespace.length() > 0) &&
+          (Character.isLowerCase(namespace.charAt(0)))) {
+        lowerCaseNamespace = true;
+        namespace = "" + Character.toUpperCase(namespace.charAt(0)) + namespace.substring(1);
+      }
+      String categoryName = category.getName();
+      boolean lowerCaseName = false;
+      if ((categoryName != null) &&
+          (categoryName.length() > 0) &&
+          (Character.isLowerCase(categoryName.charAt(0)))) {
+        lowerCaseName = true;
+        categoryName = "" + Character.toUpperCase(categoryName.charAt(0)) + categoryName.substring(1);
+      }
+      String categorySort = category.getSort();
+      /*boolean lowerCaseSort = false;
+      if ((categorySort != null) &&
+          (categorySort.length() > 0) &&
+          (Character.isLowerCase(categorySort.charAt(0)))) {
+        lowerCaseSort = true;
+        categorySort = "" + Character.toUpperCase(categorySort.charAt(0)) + categorySort.substring(1);
+      }*/
+      if (lowerCaseNamespace || lowerCaseName) {
+        if (errors == null) {
+          return true;
         }
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(), category.getBeginIndex(), category.getEndIndex());
+        if (categorySort != null) {
+          errorResult.addReplacement(
+              "[[" + categoryNamespace.getTitle() + ":" + categoryName + ":" + categorySort + "]]");
+        } else {
+          errorResult.addReplacement(
+              "[[" + categoryNamespace.getTitle() + ":" + categoryName + "]]");
+        }
+        errors.add(errorResult);
       }
     }
     return result;
