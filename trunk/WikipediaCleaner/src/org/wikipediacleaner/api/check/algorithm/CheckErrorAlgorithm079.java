@@ -24,9 +24,8 @@ import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
-import org.wikipediacleaner.api.data.PageElementTagData;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
@@ -65,65 +64,46 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
     }
 
     boolean result = false;
-    String contents = pageAnalysis.getContents();
     Collection<PageElementExternalLink> links = pageAnalysis.getExternalLinks();
     for (PageElementExternalLink link : links) {
       String text = link.getText();
       if ((text == null) || (text.trim().length() == 0)) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-        int beginIndex = link.getBeginIndex();
-        int endIndex = link.getEndIndex();
-        CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(), beginIndex, endIndex); 
-        boolean isInRef = false;
-        PageElementTagData previousStartRef = PageContents.findPreviousStartTag(
-            pageAnalysis.getPage(), contents, "ref", beginIndex);
-        if (previousStartRef != null) {
-          PageElementTagData previousEndRef = PageContents.findPreviousEndTag(
-              pageAnalysis.getPage(), contents, "ref", beginIndex);
-          if ((previousEndRef == null) ||
-              (previousEndRef.getEndIndex() < previousStartRef.getEndIndex())) {
-            PageElementTagData nextEndRef = PageContents.findNextEndTag(
-                pageAnalysis.getPage(), contents, "ref", endIndex);
-            if (nextEndRef != null) {
-              PageElementTagData nextStartRef = PageContents.findNextStartTag(
-                  pageAnalysis.getPage(), contents, "ref", beginIndex);
-              if ((nextStartRef == null) ||
-                  (nextEndRef.getBeginIndex() < nextStartRef.getBeginIndex())) {
-                isInRef = true;
-              }
-            }
+        PageElementTag refTag = pageAnalysis.getSurroundingTag(
+            PageElementTag.TAG_REF, link.getBeginIndex());
+        if ((refTag == null) || (link.hasSquare())) {
+          if (errors == null) {
+            return true;
           }
-        }
-        String url = link.getLink();
-        errorResult.addPossibleAction(
-            GT._("Add a description..."),
-            new AddTextActionProvider(
-                "[" + url + " ", "]",
-                new TextProviderUrlTitle(url),
-                GT._("What description would like to use for the external link ?"),
-                descriptionChecker));
-        if (!isInRef) {
-          errorResult.addReplacement(
-              "<ref>" + url + "</ref>",
-              GT._("Convert into <ref> tag"));
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+          String url = link.getLink();
           errorResult.addPossibleAction(
-              GT._("Add a description and convert into <ref> tag"),
+              GT._("Add a description..."),
               new AddTextActionProvider(
-                  "<ref>[" + url + " ", "]</ref>",
+                  "[" + url + " ", "]",
                   new TextProviderUrlTitle(url),
                   GT._("What description would like to use for the external link ?"),
                   descriptionChecker));
-        } else {
-          errorResult.addReplacement(url);
+          if (refTag == null) {
+            errorResult.addReplacement(
+                "<ref>" + url + "</ref>",
+                GT._("Convert into <ref> tag"));
+            errorResult.addPossibleAction(
+                GT._("Add a description and convert into <ref> tag"),
+                new AddTextActionProvider(
+                    "<ref>[" + url + " ", "]</ref>",
+                    new TextProviderUrlTitle(url),
+                    GT._("What description would like to use for the external link ?"),
+                    descriptionChecker));
+          } else if (link.hasSquare()){
+            errorResult.addReplacement(url);
+          }
+          errorResult.addPossibleAction(
+              new SimpleAction(GT._("External viewer"),
+                  new PageViewAction(url)));
+          errors.add(errorResult);
         }
-        errorResult.addPossibleAction(
-            new SimpleAction(GT._("External viewer"),
-                new PageViewAction(url)));
-        errors.add(errorResult);
       }
     }
     return result;

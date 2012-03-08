@@ -608,6 +608,29 @@ public class PageAnalysis {
     return result;
   }
 
+  public PageElementTag getSurroundingTag(String name, int currentIndex) {
+    Collection<PageElementTag> tmpTags = getTags(name);
+    if (tmpTags == null) {
+      return null;
+    }
+    PageElementTag result = null;
+    for (PageElementTag tag : tmpTags) {
+      if ((tag.getEndIndex() <= currentIndex) &&
+          (!tag.isFullTag()) &&
+          (!tag.isEndTag())) {
+        PageElementTag matchingTag = tag.getMatchingTag();
+        if ((matchingTag != null) &&
+            (matchingTag.getBeginIndex() > currentIndex)) {
+          if ((result == null) ||
+              (tag.getBeginIndex() > result.getBeginIndex())) {
+            result = tag;
+          }
+        }
+      }
+    }
+    return result;
+  }
+
   /**
    * @param currentIndex Current index.
    * @return Next tag.
