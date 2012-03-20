@@ -39,10 +39,11 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.Performance;
 
 
 /**
- * An abstract class for managing errors defind in the check wikipedia project.
+ * Managing errors defined in the check wikipedia project.
  */
 public class CheckError {
 
@@ -57,7 +58,10 @@ public class CheckError {
    */
   public static List<CheckErrorPage> analyzeErrors(
       Collection<CheckErrorAlgorithm> algorithms, PageAnalysis pageAnalysis) {
-    long beginAll = traceTime ? System.currentTimeMillis() : 0;
+    Performance perf = new Performance("CheckError.analyzeErrors");
+    if (traceTime) {
+      perf.printStart();
+    }
     List<CheckErrorPage> errorsFound = new ArrayList<CheckErrorPage>();
     if ((algorithms != null) &&
         (pageAnalysis != null) &&
@@ -66,7 +70,6 @@ public class CheckError {
         if ((algorithm != null) &&
             (algorithm.isAvailable()) &&
             (CWConfigurationError.isPriorityActive(algorithm.getPriority()))) {
-          long beginOne = traceTime ? System.currentTimeMillis() : 0;
           List<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
           boolean errorFound = algorithm.analyze(pageAnalysis, results);
           if (errorFound) {
@@ -75,18 +78,17 @@ public class CheckError {
             errorsFound.add(errorPage);
           }
           if (traceTime) {
-            long endOne = System.currentTimeMillis();
-            log("Error n°" + algorithm.getErrorNumber() + ": " +
-                (endOne - beginOne) + "ms" +
+            String message =
+                "Error n°" + algorithm.getErrorNumber() +
                 ", " + errorFound +
-                ", " + results.size() + " occurrences");
+                ", " + results.size() + " occurrences";
+            perf.printStep(message);
           }
         }
       }
     }
     if (traceTime) {
-      long endAll = System.currentTimeMillis();
-      log("All: " + (endAll - beginAll));
+      perf.printEnd();
     }
     return errorsFound;
   }
@@ -103,15 +105,14 @@ public class CheckError {
     if ((algorithm == null) || (pageAnalysis == null)) {
       return null;
     }
-    long beginOne = (traceTime) ? System.currentTimeMillis() : 0;
+    Performance perf = new Performance("CheckError.analyzeError");
     CheckErrorPage errorPage = new CheckErrorPage(pageAnalysis.getPage(), algorithm);
     boolean errorFound = false;
     List<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
     errorFound = algorithm.analyze(pageAnalysis, errorsFound);
     errorPage.setResults(errorFound, errorsFound);
     if (traceTime) {
-      long endOne = System.currentTimeMillis();
-      log("Error n°" + algorithm.getErrorNumber() + ": " + (endOne - beginOne));
+      perf.printStep("Error n°" + algorithm.getErrorNumber());
     }
     return errorPage;
   }
@@ -162,15 +163,6 @@ public class CheckError {
       }
     }
     errors.add(error);
-  }
-
-  /**
-   * Log.
-   * 
-   * @param text String to log.
-   */
-  private static void log(String text) {
-    System.out.println(text);
   }
 
   private final EnumWikipedia wikipedia;
