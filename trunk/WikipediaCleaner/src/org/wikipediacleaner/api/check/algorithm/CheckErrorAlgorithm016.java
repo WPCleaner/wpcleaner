@@ -63,26 +63,39 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
+    String contents = pageAnalysis.getContents();
     for (PageElementTemplate template : templates) {
       int begin = template.getBeginIndex();
       int end = template.getEndIndex();
-      result |= simpleTextSearch(pageAnalysis, begin, end, errors, Character.toString((char) 0xFEFF), " ");
-      result |= simpleTextSearch(pageAnalysis, begin, end, errors, Character.toString((char) 0x200E), " ");
-      result |= simpleTextSearch(pageAnalysis, begin, end, errors, Character.toString((char) 0x200B), " ");
+      boolean found = false;
+      for (int index = begin; index < end; index++) {
+        char character = contents.charAt(index);
+        if ((character == (char) 0xFEFF) ||
+            (character == (char) 0x200E) ||
+            (character == (char) 0x200B)) {
+          found = true;
+        }
+      }
+      if (found) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(pageAnalysis.getPage(), begin, end);
+        StringBuilder replacement = new StringBuilder();
+        for (int index = begin; index < end; index++) {
+          char character = contents.charAt(index);
+          if ((character != (char) 0xFEFF) &&
+              (character != (char) 0x200E) &&
+              (character != (char) 0x200B)) {
+            replacement.append(character);
+          }
+        }
+        errorResult.addReplacement(replacement.toString(), GT._("Remove all control characters"));
+        errors.add(errorResult);
+      }
     }
     return result;
-  }
-
-  /**
-   * Automatic fixing of all the errors in the page.
-   * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @return Page contents after fix.
-   */
-  @Override
-  public String automaticFix(Page page, String contents) {
-    return fix(globalFixes[0], page, contents);
   }
 
   /**
@@ -103,10 +116,6 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String fix(String fixName, Page page, String contents) {
-    String result = contents;
-    result = result.replaceAll(Character.toString((char) 0xFEFF), "");
-    result = result.replaceAll(Character.toString((char) 0x200E), "");
-    result = result.replaceAll(Character.toString((char) 0x200B), "");
-    return result;
+    return fixUsingFirstReplacement(fixName, page, contents);
   }
 }
