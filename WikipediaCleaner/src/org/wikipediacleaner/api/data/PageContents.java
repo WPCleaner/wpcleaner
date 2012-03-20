@@ -469,46 +469,16 @@ public class PageContents {
     if (contents == null) {
       return null;
     }
+    List<String> protocols = PageElementExternalLink.getProtocols();
+    Integer[] tmpIndexes = new Integer[protocols.size() + 1];
     Collection<PageElementExternalLink> result = new ArrayList<PageElementExternalLink>();
     int currentIndex = 0;
     while ((currentIndex < contents.length())) {
-      PageElementExternalLink link = findNextExternalLink(
-          page, contents, currentIndex,
-          comments, templates);
-      if (link == null) {
-        currentIndex = contents.length();
-      } else {
-        result.add(link);
-        currentIndex = link.getEndIndex();
-      }
-    }
-    return result;
-  }
-
-  /**
-   * Find the first external link after an index in the page contents.
-   * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param currentIndex The last index.
-   * @param comments Comments blocks in the page.
-   * @param templates Templates in the page.
-   * @return External link found.
-   */
-  public static PageElementExternalLink findNextExternalLink(
-      Page page, String contents,
-      int currentIndex,
-      Collection<PageElementComment> comments,
-      Collection<PageElementTemplate> templates) {
-    if (contents == null) {
-      return null;
-    }
-    List<String> protocols = PageElementExternalLink.getProtocols();
-    Integer[] tmpIndexes = new Integer[protocols.size() + 1];
-    while (currentIndex < contents.length()) {
       int tmpIndex = -1;
       for (int i = 0; i < tmpIndexes.length; i++) {
-        if ((tmpIndexes[i] == null) || (tmpIndexes[i].intValue() < currentIndex)) {
+        if ((tmpIndexes[i] == null) ||
+            ((tmpIndexes[i].intValue() < currentIndex) &&
+             (tmpIndexes[i].intValue() >= 0))) {
           tmpIndexes[i] = Integer.valueOf((i == 0) ?
               contents.indexOf('[', currentIndex) :
               contents.indexOf(protocols.get(i - 1), currentIndex));
@@ -526,17 +496,19 @@ public class PageContents {
         currentIndex = indexAfterComments(tmpIndex, comments);
       } else if ((contents.charAt(tmpIndex) != '[') &&
                  (isInElements(tmpIndex, templates))) {
-        currentIndex++;
+        currentIndex = tmpIndex + 1;
       } else {
         PageElementExternalLink link = PageElementExternalLink.analyzeBlock(
             page.getWikipedia(), contents, tmpIndex);
         if (link != null) {
-          return link;
+          result.add(link);
+          currentIndex = link.getEndIndex();
+        } else {
+          currentIndex = tmpIndex + 1;
         }
-        currentIndex = tmpIndex + 1;
       }
     }
-    return null;
+    return result;
   }
 
   // ==========================================================================
