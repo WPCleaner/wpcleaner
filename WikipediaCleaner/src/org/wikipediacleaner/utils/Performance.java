@@ -37,49 +37,113 @@ public class Performance {
   private static boolean print = true;
 
   /**
+   * Global flag for using high precision.
+   */
+  private static boolean highPrecision = false;
+
+  /**
+   * Method name.
+   */
+  private final String method;
+
+  /**
+   * Unit of time.
+   */
+  private final String unit;
+
+  /**
+   * Initial time.
+   */
+  private long initialTime;
+
+  /**
+   * Last time.
+   */
+  private long lastTime;
+
+  /**
+   * @param method Method name.
+   */
+  public Performance(String method) {
+    this.method = method;
+    this.unit = highPrecision ? "ns" : "ms";
+    initialTime = currentTime();
+    lastTime = initialTime;
+  }
+
+  /**
    * Print a message.
    * 
    * @param message Message to be printed.
    */
-  public static void printTimedMessage(String message) {
+  private void printMessage(String message) {
     if (print) {
-      output.println("" + currentTime() + ": " + message);
+      output.print(method);
+      if (message != null) {
+        output.print(": ");
+        output.print(message);
+      }
+      output.println();
+      output.flush();
     }
   }
 
   /**
    * Print a message.
    * 
-   * @param message Message to be printed. 
-   * @return Time of the message.
+   * @param time Current time.
+   * @param message Message to be printed.
    */
-  public static long printStartTimedMessage(String message) {
-    long time = currentTime();
+  @SuppressWarnings("unused")
+  private void printTimedMessage(long time, String message) {
     if (print) {
-      output.println("" + time + ": " + message);
+      output.print(time);
+      output.print(" - ");
+      output.print(method);
+      if (message != null) {
+        output.print(": ");
+        output.print(message);
+      }
+      output.println();
+      output.flush();
     }
-    return time;
   }
 
   /**
-   * Print a message.
-   * 
-   * @param start Start time.
-   * @param message Message to be printed.
-   * @return Time of the message.
+   * Print a start message.
    */
-  public static long printStopTimedMessage(long start, String message) {
+  public void printStart() {
+    initialTime = currentTime();
+    lastTime = initialTime;
+    printMessage(null);
+  }
+
+  /**
+   * Print a step message.
+   * 
+   * @param message Message to be printed.
+   */
+  public void printStep(String message) {
     long time = currentTime();
-    if (print) {
-      output.println("" + time + ": (" + (time - start) + ") " + message);
-    }
-    return time;
+    printMessage("(" + (time - lastTime) + unit + ") " + message);
+    lastTime = time;
+  }
+
+  /**
+   * Print an end message.
+   */
+  public void printEnd() {
+    long time = currentTime();
+    printMessage("(" + (time - initialTime) + unit + ")");
   }
 
   /**
    * @return Current time.
    */
   private static long currentTime() {
-    return System.currentTimeMillis() / 1;
+    if (highPrecision) {
+      return System.nanoTime();
+    }
+    return System.currentTimeMillis();
   }
 }
