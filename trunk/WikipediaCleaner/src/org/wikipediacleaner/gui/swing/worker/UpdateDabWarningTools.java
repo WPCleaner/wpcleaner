@@ -695,7 +695,8 @@ public class UpdateDabWarningTools {
 
     // Search disambiguation warning in the todo parameter
     String parameter = templateTodo.getParameterValue("1");
-    List<PageElementTemplate> templates = analysis.getTemplates(
+    PageAnalysis parameterAnalysis = new PageAnalysis(talkPage, parameter);
+    List<PageElementTemplate> templates = parameterAnalysis.getTemplates(
         configuration.getDisambiguationWarningTemplate());
     PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
         templates.get(0) : null;
