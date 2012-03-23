@@ -769,7 +769,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     if ((page != null) && (page.getLinks() != null)) {
       List<Page> links = page.getLinks();
       modelLinks.setElements(links);
-      countOccurences(page.getContents(), true);
+      countOccurrences(page.getContents(), true);
       for (Page p : links) {
         if ((p != null) &&
             (Boolean.TRUE.equals(p.isDisambiguationPage())) &&
@@ -1010,12 +1010,12 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   }
 
   /**
-   * Count pages occurences.
+   * Count pages occurrences.
    * 
    * @param text Page text.
    * @param forceDisambiguation Flag indicating if disambiguation should be counted.
    */
-  void countOccurences(String text, boolean forceDisambiguation) {
+  void countOccurrences(String text, boolean forceDisambiguation) {
     Page page = getPage();
     if ((page != null) && (page.getLinks() != null)) {
       List<Page> links = new ArrayList<Page>();
@@ -1134,7 +1134,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   @Override
   protected void actionValidate(boolean fullValidate) {
     getTextContents().resetAttributes();
-    countOccurences(getTextContents().getText(), false);
+    countOccurrences(getTextContents().getText(), false);
     listLinks.repaint();
 
     // Check for new errors
