@@ -503,7 +503,8 @@ public class UpdateDabWarningTools {
 
     // Search disambiguation warning in the todo parameter
     String parameter = templateTodo.getParameterValue("1");
-    List<PageElementTemplate> templates = analysis.getTemplates(
+    PageAnalysis parameterAnalysis = new PageAnalysis(talkPage, parameter);
+    List<PageElementTemplate> templates = parameterAnalysis.getTemplates(
         configuration.getDisambiguationWarningTemplate());
     PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
         templates.get(0) : null;
@@ -540,7 +541,26 @@ public class UpdateDabWarningTools {
       return true;
     }
 
-    // TODO
+    // Update disambiguation warning
+    StringBuilder tmp = new StringBuilder();
+    tmp.append(contents.substring(0, templateTodo.getBeginIndex()));
+    StringBuilder tmpParameter = new StringBuilder();
+    if (templateWarning.getBeginIndex() > 0) {
+      tmpParameter.append(parameter.substring(0, templateWarning.getBeginIndex()));
+    }
+    addWarning(tmpParameter, pageRevId, dabLinks);
+    int endIndex = parameter.indexOf('\n', templateWarning.getEndIndex());
+    if ((endIndex >= 0) && (endIndex < parameter.length())) {
+      tmpParameter.append(parameter.substring(endIndex));
+    }
+    tmp.append(templateTodo.getParameterReplacement("1", tmpParameter.toString(), null));
+    if (templateTodo.getEndIndex() < contents.length()) {
+      tmp.append(contents.substring(templateTodo.getEndIndex()));
+    }
+    updateSection(
+        talkPage,
+        wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
+        0, tmp.toString(), false);
 
     return false;
   }
