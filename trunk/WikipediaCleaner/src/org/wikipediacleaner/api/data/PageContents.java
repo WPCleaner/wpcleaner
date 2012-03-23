@@ -186,13 +186,13 @@ public class PageContents {
    * @param comments Comments blocks in the page.
    * @return Titles found.
    */
-  public static Collection<PageElementTitle> findAllTitles(
+  public static List<PageElementTitle> findAllTitles(
       EnumWikipedia wikipedia, String contents,
       Collection<PageElementComment> comments) {
     if (contents == null) {
       return null;
     }
-    Collection<PageElementTitle> result = new ArrayList<PageElementTitle>();
+    List<PageElementTitle> result = new ArrayList<PageElementTitle>();
     int currentIndex = 0;
     while ((currentIndex < contents.length())) {
       PageElementTitle title = findNextTitle(wikipedia, contents, currentIndex, comments);

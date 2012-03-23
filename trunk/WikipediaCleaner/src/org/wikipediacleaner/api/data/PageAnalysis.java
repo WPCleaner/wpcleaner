@@ -67,7 +67,7 @@ public class PageAnalysis {
   private final Object templatesLock = new Object();
   private Collection<PageElementTemplate> templates;
   private final Object titlesLock = new Object();
-  private Collection<PageElementTitle> titles;
+  private List<PageElementTitle> titles;
 
   /**
    * @param page Page.
@@ -315,7 +315,7 @@ public class PageAnalysis {
   /**
    * @return All titles in the page analysis.
    */
-  public Collection<PageElementTitle> getTitles() {
+  public List<PageElementTitle> getTitles() {
     Collection<PageElementComment> tmpComments = getComments();
 
     synchronized (titlesLock) {
@@ -328,7 +328,7 @@ public class PageAnalysis {
 
   /**
    * @param position Position in the text.
-   * @return All titles leading to the given positio.
+   * @return All titles leading to the given position.
    */
   public Collection<PageElementTitle> getCurrentTitles(int position) {
     Collection<PageElementTitle> tmpTitles = getTitles();
