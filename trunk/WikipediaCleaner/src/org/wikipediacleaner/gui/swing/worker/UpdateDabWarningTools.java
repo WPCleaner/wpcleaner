@@ -541,26 +541,29 @@ public class UpdateDabWarningTools {
       return true;
     }
 
-    // Update disambiguation warning
-    StringBuilder tmp = new StringBuilder();
-    tmp.append(contents.substring(0, templateTodo.getBeginIndex()));
-    StringBuilder tmpParameter = new StringBuilder();
-    if (templateWarning.getBeginIndex() > 0) {
-      tmpParameter.append(parameter.substring(0, templateWarning.getBeginIndex()));
+    // Update disambiguation warning if necessary
+    if (isModified(dabLinks, templateWarning)) {
+      StringBuilder tmp = new StringBuilder();
+      tmp.append(contents.substring(0, templateTodo.getBeginIndex()));
+      StringBuilder tmpParameter = new StringBuilder();
+      if (templateWarning.getBeginIndex() > 0) {
+        tmpParameter.append(parameter.substring(0, templateWarning.getBeginIndex()));
+      }
+      addWarning(tmpParameter, pageRevId, dabLinks);
+      int endIndex = parameter.indexOf('\n', templateWarning.getEndIndex());
+      if ((endIndex >= 0) && (endIndex < parameter.length())) {
+        tmpParameter.append(parameter.substring(endIndex));
+      }
+      tmp.append(templateTodo.getParameterReplacement("1", tmpParameter.toString(), null));
+      if (templateTodo.getEndIndex() < contents.length()) {
+        tmp.append(contents.substring(templateTodo.getEndIndex()));
+      }
+      updateSection(
+          talkPage,
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
+          0, tmp.toString(), false);
+      return true;
     }
-    addWarning(tmpParameter, pageRevId, dabLinks);
-    int endIndex = parameter.indexOf('\n', templateWarning.getEndIndex());
-    if ((endIndex >= 0) && (endIndex < parameter.length())) {
-      tmpParameter.append(parameter.substring(endIndex));
-    }
-    tmp.append(templateTodo.getParameterReplacement("1", tmpParameter.toString(), null));
-    if (templateTodo.getEndIndex() < contents.length()) {
-      tmp.append(contents.substring(templateTodo.getEndIndex()));
-    }
-    updateSection(
-        talkPage,
-        wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
-        0, tmp.toString(), false);
 
     return false;
   }
