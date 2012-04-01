@@ -19,13 +19,13 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementTagFull;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
@@ -57,9 +57,8 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     boolean refFound = false;
     if (!refFound) {
       // Search for <ref>
-      PageElementTagFull tag = PageContents.findNextTagFull(
-          pageAnalysis.getPage(), pageAnalysis.getContents(), "ref", 0);
-      if (tag != null) {
+      List<PageElementTag> refTags = pageAnalysis.getTags(PageElementTag.TAG_REF);
+      if ((refTags != null) && (refTags.size() > 0)) {
         refFound = true;
       }
     }
@@ -69,14 +68,13 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     if (refFound) {
       // Search for <references>
       if (!referencesFound) {
-        PageElementTagFull tag = PageContents.findNextTagFull(
-            pageAnalysis.getPage(), pageAnalysis.getContents(), "references", 0);
-        if (tag != null) {
+        List<PageElementTag> referencesTags = pageAnalysis.getTags(PageElementTag.TAG_REFERENCES);
+        if ((referencesTags != null) && (referencesTags.size() > 0)) {
           referencesFound = true;
         }
       }
 
-      // Search for templates like {{Références}}
+      // Search for templates like {{References}}
       String templates = getSpecificProperty(
           "references_templates", true, true, false);
       String[] referencesTemplates = null;
@@ -102,7 +100,8 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     return false;
   }
 
-  /* (non-Javadoc)
+  /**
+   * @return Map of parameters (Name -> description).
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
   @Override
