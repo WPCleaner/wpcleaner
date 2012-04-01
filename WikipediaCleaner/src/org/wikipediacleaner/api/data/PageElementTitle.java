@@ -47,7 +47,7 @@ public class PageElementTitle extends PageElement {
       return null;
     }
 
-    // Check that this the begining of a line
+    // Check that this the beginning of a line
     if ((index > 0) && (contents.charAt(index - 1) != '\n')) {
       return null;
     }
@@ -85,7 +85,7 @@ public class PageElementTitle extends PageElement {
       tmpIndex--;
       secondLevel++;
     }
-    if (tmpIndex <= index) {
+    if (tmpIndex < index) {
       return null;
     }
 
