@@ -24,6 +24,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -37,6 +38,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
+    GT._("Remove all links to title (first in bold)"),
     GT._("Remove all links to title"),
   };
 
@@ -97,6 +99,42 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String fix(String fixName, Page page, String contents) {
-    return fixUsingFirstReplacement(fixName, page, contents);
+    PageAnalysis analysis = new PageAnalysis(page, contents);
+
+    // Find first title
+    int firstTitle = 0;
+    if (fixName.equals(globalFixes[0])) {
+      Collection<PageElementTitle> titles = analysis.getTitles();
+      if ((titles != null) && (titles.size() > 0)) {
+        firstTitle = titles.iterator().next().getBeginIndex();
+      } else {
+        firstTitle = contents.length();
+      }
+    }
+
+    // Replace all texts
+    StringBuilder newContents = new StringBuilder(contents.length());
+    String pageTitle = page.getTitle();
+    Collection<PageElementInternalLink> links = analysis.getInternalLinks();
+    int currentIndex = 0;
+    for (PageElementInternalLink link : links) {
+      if (Page.areSameTitle(pageTitle, link.getFullLink())) {
+        if (link.getBeginIndex() > currentIndex) {
+          newContents.append(contents.substring(currentIndex, link.getBeginIndex()));
+        }
+        if ((currentIndex == 0) && (link.getBeginIndex() < firstTitle)) {
+          newContents.append("'''");
+          newContents.append(link.getDisplayedText());
+          newContents.append("'''");
+        } else {
+          newContents.append(link.getDisplayedText());
+        }
+        currentIndex = link.getEndIndex();
+      }
+    }
+    if (currentIndex < contents.length()) {
+      newContents.append(contents.substring(currentIndex));
+    }
+    return newContents.toString();
   }
 }
