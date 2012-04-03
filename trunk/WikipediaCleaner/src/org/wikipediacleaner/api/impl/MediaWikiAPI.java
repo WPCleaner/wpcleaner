@@ -69,6 +69,7 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
@@ -100,6 +101,12 @@ public class MediaWikiAPI implements API {
   private String lgtoken = null;
   private String lgusername = null;
   private String lguserid = null;
+
+  /**
+   * Time of last edit.
+   */
+  private long lastEditTime = 0;
+  private final Object editLock = new Object();
 
   /**
    * Constructor.
@@ -520,6 +527,29 @@ public class MediaWikiAPI implements API {
   }
 
   /**
+   * Check current time to see if edit is authorized (wait if needed).
+   */
+  private void checkTimeForEdit() {
+    Configuration config = Configuration.getConfiguration();
+    int minimumTime = config.getInt(null, ConfigurationValueInteger.TIME_BETWEEN_EDIT);
+    if (minimumTime <= 0) {
+      return;
+    }
+    synchronized (editLock) {
+      long currentTime = System.currentTimeMillis();
+      if (currentTime < lastEditTime + minimumTime * 1000) {
+        try {
+          Thread.sleep(lastEditTime + minimumTime * 1000 - currentTime);
+        } catch (InterruptedException e) {
+          // Nothing to do
+        }
+        currentTime = System.currentTimeMillis();
+      }
+      lastEditTime = currentTime;
+    }
+  }
+
+  /**
    * Update a page on Wikipedia.
    * 
    * @param wikipedia Wikipedia.
@@ -563,6 +593,7 @@ public class MediaWikiAPI implements API {
     properties.put("token", page.getEditToken());
     properties.put("watchlist", forceWatch ? "watch" : "nochange");
     try {
+      checkTimeForEdit();
       boolean hasCaptcha = false;
       do {
         hasCaptcha = false;
@@ -670,6 +701,7 @@ public class MediaWikiAPI implements API {
     properties.put("token", page.getEditToken());
     properties.put("watchlist", forceWatch ? "watch" : "nochange");
     try {
+      checkTimeForEdit();
       boolean hasCaptcha = false;
       do {
         hasCaptcha = false;
