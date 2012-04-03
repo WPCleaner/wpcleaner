@@ -177,7 +177,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
     add(chk, constraints);
     constraints.gridy++;
 
-    // Check orthograph
+    // Check spelling
     chk = createJCheckBox(
         GT._("Check orthograph and typography"),
         ConfigurationValueBoolean.ORTHOGRAPH);
@@ -232,6 +232,23 @@ public class GeneralOptionsPanel extends OptionsPanel {
     constraints.gridx = 0;
     constraints.weightx = 0;
     add(labelMaxErrorsCheckWiki, constraints);
+    constraints.gridwidth = 1;
+    constraints.gridx = 2;
+    constraints.weightx = 1;
+    add(spin, constraints);
+    constraints.gridy++;
+
+    // Time between edits
+    spin = createJSpinner(
+        ConfigurationValueInteger.TIME_BETWEEN_EDIT,
+        0, 120, 1);
+    JLabel labelTime = Utilities.createJLabel(GT._("Minimum time between consecutive edits :"));
+    labelTime.setLabelFor(spin);
+    labelTime.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridwidth = 2;
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(labelTime, constraints);
     constraints.gridwidth = 1;
     constraints.gridx = 2;
     constraints.weightx = 1;

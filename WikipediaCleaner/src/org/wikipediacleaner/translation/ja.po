@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-03-20 21:33+0100\n"
+"POT-Creation-Date: 2012-04-03 21:25+0200\n"
 "PO-Revision-Date: 2012-02-05 15:16+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -98,7 +98,7 @@ msgstr "{0} を置換"
 msgid "Delete"
 msgstr "除去"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:111
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:110
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr ""
@@ -381,13 +381,13 @@ msgstr "ページのリンクを取得"
 msgid "Parsing text"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2319
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2351
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2326
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2358
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -2096,26 +2096,30 @@ msgid "Maximum number of simultaneous analysis :"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:245
+msgid "Minimum time between consecutive edits :"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:262
 msgid "Maximum number of interrogation threads :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:260
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:277
 msgid "Signature :"
 msgstr "署名 :"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:276
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:293
 msgid "Look & Feel"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:280
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:297
 msgid "Let WPCleaner choose the Look && Feel"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:285
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:302
 msgid "Use System Look && Feel"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:290
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:307
 msgid "Choose Look && Feel"
 msgstr ""
 
@@ -2241,14 +2245,14 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:373
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:477
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:668
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:691
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:576
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:703
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:804
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:599
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:727
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:828
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr ""
