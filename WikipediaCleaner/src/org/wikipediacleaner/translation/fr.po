@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-03 21:25+0200\n"
+"POT-Creation-Date: 2012-04-03 21:51+0200\n"
 "PO-Revision-Date: 2012-03-08 07:52+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -176,7 +176,12 @@ msgstr "Ouvrir l’image"
 msgid "Add DEFAULTSORT"
 msgstr "Ajouter DEFAULTSORT"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:40
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:41
+#, fuzzy
+msgid "Remove all links to title (first in bold)"
+msgstr "Supprimer tous les liens vers le titre de l’article"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:42
 msgid "Remove all links to title"
 msgstr "Supprimer tous les liens vers le titre de l’article"
 
