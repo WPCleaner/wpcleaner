@@ -18,7 +18,7 @@
 
 package org.wikipediacleaner.gui.swing.component;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.swing.JTextPane;
 import javax.swing.text.DefaultStyledDocument;
@@ -151,7 +151,7 @@ public abstract class MWPaneFormatter {
         ConfigurationValueStyle.TITLE);
 
     // Format
-    Collection<PageElement> elements = pageAnalysis.getElements(
+    List<PageElement> elements = pageAnalysis.getElements(
         styleCategory.getEnabled(),
         styleComments.getEnabled(),
         styleDefaultsort.getEnabled(),
@@ -163,7 +163,23 @@ public abstract class MWPaneFormatter {
         styleTag.getEnabled(),
         styleTemplate.getEnabled(),
         styleTitle.getEnabled());
-    for (PageElement element : elements) {
+    formatElementsDirectly(doc, elements, 0, elements.size());
+  }
+
+  /**
+   * Format a list of elements in a document.
+   * 
+   * @param doc Document.
+   * @param elements Elements.
+   * @param begin Begin index in the elements.
+   * @param end End index in the elements.
+   */
+  private void formatElementsDirectly(
+      StyledDocument doc,
+      List<PageElement> elements,
+      int begin, int end) {
+    for (int i = begin; i < end; i++) {
+      PageElement element = elements.get(i);
       Style style = null;
       if (element instanceof PageElementCategory) {
         style = doc.getStyle(ConfigurationValueStyle.CATEGORY.getName());

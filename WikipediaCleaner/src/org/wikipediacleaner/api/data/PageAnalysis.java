@@ -165,7 +165,7 @@ public class PageAnalysis {
   // Elements management
   // ==========================================================================
 
-  public Collection<PageElement> getElements(
+  public List<PageElement> getElements(
       boolean withCategories, boolean withComments,
       boolean withDefaultsorts, boolean withExternalLinks,
       boolean withImages, boolean withInternalLinks,
