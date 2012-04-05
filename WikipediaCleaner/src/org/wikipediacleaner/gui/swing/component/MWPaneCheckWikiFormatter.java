@@ -47,44 +47,45 @@ public class MWPaneCheckWikiFormatter extends MWPaneFormatter {
   }
 
   /**
-   * Format text in a MediaWikiPane.
+   * Format text in a StyleDocument.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Document to be formatted.
    * @param pageAnalysis Page analysis.
    */
   @Override
-  public void format(MWPane pane, PageAnalysis pageAnalysis) {
+  public void format(
+      StyledDocument doc,
+      PageAnalysis pageAnalysis) {
     // Clean formatting
-    cleanFormat(pane);
+    cleanFormat(doc);
 
     // Reset caret informations
     resetCaretPosition();
 
     // Format comments
-    defaultFormatElements(pane, pageAnalysis);
+    defaultFormatElements(doc, pageAnalysis);
 
     // Format Check Wiki errors
-    formatCheckWikiErrors(pane, pageAnalysis);
-
-    // Move caret
-    moveCaret(pane);
+    formatCheckWikiErrors(doc, pageAnalysis);
   }
 
   /**
    * Format Check Wiki errors in a MediaWikiPane.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Document to be formatted.
    * @param pageAnalysis Page analysis.
    */
   private void formatCheckWikiErrors(
-      MWPane pane, PageAnalysis pageAnalysis) {
-    if ((pane == null) || (pageAnalysis == null) || (algorithm == null)) {
+      StyledDocument doc,
+      PageAnalysis pageAnalysis) {
+    if ((doc == null) ||
+        (pageAnalysis == null) || (algorithm == null)) {
       return;
     }
     CheckErrorPage errorPage = CheckError.analyzeError(algorithm, pageAnalysis);
     if ((errorPage != null) && (errorPage.getResults() != null)) {
       for (CheckErrorResult error : errorPage.getResults()) {
-        formatCheckWikiError(pane, error);
+        formatCheckWikiError(doc, error);
       }
     }
   }
@@ -92,14 +93,15 @@ public class MWPaneCheckWikiFormatter extends MWPaneFormatter {
   /**
    * Format a Check Wiki error in a MediaWikiPane.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Document to be formatted.
    * @param error Check Wiki error to be formatted.
    */
   private void formatCheckWikiError(
-      MWPane pane, CheckErrorResult error) {
+      StyledDocument doc,
+      CheckErrorResult error) {
 
     // Basic verifications
-    if ((pane == null) || (error == null)) {
+    if ((doc == null) || (error == null)) {
       return;
     }
 
@@ -110,14 +112,10 @@ public class MWPaneCheckWikiFormatter extends MWPaneFormatter {
     } else if (error.getErrorLevel() == CheckErrorResult.ErrorLevel.WARNING) {
       styleConfig = ConfigurationValueStyle.CHECK_WIKI_WARNING;
     }
-    StyledDocument doc = pane.getStyledDocument();
-    if (doc == null) {
-      return;
-    }
     doc.setCharacterAttributes(
         error.getStartPosition(),
         error.getLength(),
-        pane.getStyle(styleConfig.getName()),
+        doc.getStyle(styleConfig.getName()),
         true);
     SimpleAttributeSet attributes = new SimpleAttributeSet();
     attributes.addAttribute(MWPaneFormatter.ATTRIBUTE_INFO, error);
@@ -174,7 +172,8 @@ public class MWPaneCheckWikiFormatter extends MWPaneFormatter {
    * 
    * @param pane MediaWikiPane.
    */
-  private void moveCaret(MWPane pane) {
+  @Override
+  protected void moveCaret(MWPane pane) {
     if (pane == null) {
       return;
     }
