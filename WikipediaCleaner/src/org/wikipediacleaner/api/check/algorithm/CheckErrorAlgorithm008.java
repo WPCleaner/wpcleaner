@@ -19,9 +19,12 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageElementTitle;
 
 
 /**
@@ -47,83 +50,57 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
-    boolean result = false;
-    int startIndex = 0;
+
+    // Check every title
+    List<PageElementTitle> titles = pageAnalysis.getTitles();
     String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      int titleIndex = contents.indexOf("=", startIndex);
-      if (titleIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        int endLineIndex = contents.indexOf("\n", titleIndex);
-        if ((titleIndex == 0) || (contents.charAt(titleIndex - 1) == '\n')) {
-          // Title found
-          int titleLevel = 0;
-          int currentPos = titleIndex;
-          // Count number of '=' at the beginning of title to know title level
-          while ((currentPos < contents.length()) && (contents.charAt(currentPos) == '=')) {
-            currentPos++;
-            titleLevel++;
-          }
-          int titleLevelInitial = titleLevel;
-          if (endLineIndex < 0) {
-            endLineIndex = contents.length();
-          }
-          currentPos = endLineIndex - 1;
-          // Possible whitespaces at the end
-          while ((currentPos >= 0) && (Character.isWhitespace(contents.charAt(currentPos)))) {
-            currentPos--;
-          }
-          // Counting '=' at the end of title
-          while ((currentPos >= 0) && (contents.charAt(currentPos) == '=')) {
-            currentPos--;
-            titleLevel--;
-          }
-          if (titleLevel > 0) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
+    boolean result = false;
+    for (PageElementTitle title : titles) {
 
-            // Report detailed result
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), titleIndex, endLineIndex);
-
-            // Replacement : truncate if there's text after end title
-            for (int pos = titleIndex + titleLevelInitial; pos < endLineIndex - titleLevelInitial; pos++) {
-              if (contents.charAt(pos) == '=') {
-                boolean allTitle = true;
-                for (int i = 0; i < titleLevelInitial; i++) {
-                  if (contents.charAt(pos + i) != '=') {
-                    allTitle = false;
-                  }
-                }
-                if (allTitle) {
-                  errorResult.addReplacement(contents.substring(titleIndex, pos + titleLevelInitial));
-                }
-              }
-            }
-
-            // Replacement : complete line
-            String replacement = contents.substring(titleIndex, currentPos + 1);
-            for (int i = 0; i < titleLevel; i++) {
-              replacement += "=";
-            }
-            replacement += contents.substring(currentPos + 1, endLineIndex);
-            errorResult.addReplacement(replacement);
-
-            errors.add(errorResult);
-          }
-          startIndex = endLineIndex + 1;
-        } else {
-          if (endLineIndex < 0) {
-            startIndex = contents.length();
+      // Check if text is present after title
+      int equalIndex = title.getEndIndex() - 1;
+      boolean textFound = false;
+      while ((equalIndex > title.getBeginIndex()) &&
+             (contents.charAt(equalIndex) != '=')) {
+        if (!Character.isWhitespace(contents.charAt(equalIndex))) {
+          PageElementComment comment = pageAnalysis.isInComment(equalIndex);
+          if (comment != null) {
+            equalIndex = comment.getBeginIndex();
           } else {
-            startIndex = endLineIndex;
+            textFound = true;
           }
         }
+        equalIndex--;
+      }
+
+      // Create error
+      if (textFound) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+
+        // Report detailed result
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            title.getBeginIndex(), title.getEndIndex());
+
+        // Replacement : truncate if there's text after end title
+        if (equalIndex > title.getBeginIndex() + title.getFirstLevel()) {
+          errorResult.addReplacement(contents.substring(title.getBeginIndex(), equalIndex + 1));
+        }
+
+        // Replacement : complete line
+        String replacement = contents.substring(title.getBeginIndex(), title.getEndIndex());
+        for (int i = 0; i < title.getFirstLevel(); i++) {
+          replacement += "=";
+        }
+        errorResult.addReplacement(replacement);
+
+        errors.add(errorResult);
       }
     }
+
     return result;
   }
 }
