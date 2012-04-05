@@ -54,59 +54,59 @@ public class MWPaneDisambiguationFormatter extends
   }
 
   /**
-   * Format text in a MediaWikiPane.
+   * Format text in a StyleDocument.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Document to be formatted.
    * @param pageAnalysis Page analysis.
    */
   @Override
-  public void format(MWPane pane, PageAnalysis pageAnalysis) {
+  public void format(StyledDocument doc, PageAnalysis pageAnalysis) {
+
     // Clean formatting
-    cleanFormat(pane);
+    cleanFormat(doc);
 
     // Reset caret informations
     resetCaretPosition();
 
     // Format comments
-    defaultFormatElements(pane, pageAnalysis);
+    defaultFormatElements(doc, pageAnalysis);
 
     // Format internal links
-    formatInternalLinks(pane, pageAnalysis);
+    formatInternalLinks(doc, pageAnalysis);
 
     // Format templates
-    formatTemplates(pane, pageAnalysis);
-
-    // Move caret
-    moveCaret(pane);
+    formatTemplates(doc, pageAnalysis);
   }
 
   /**
    * Format internal links in a MediaWikiPane.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Document to be formatted.
    * @param pageAnalysis Page analysis.
    */
   private void formatInternalLinks(
-      MWPane pane, PageAnalysis pageAnalysis) {
-    if ((pane == null) || (pageAnalysis == null)) {
+      StyledDocument doc,
+      PageAnalysis pageAnalysis) {
+    if ((doc == null) || (pageAnalysis == null)) {
       return;
     }
     for (PageElementInternalLink link : pageAnalysis.getInternalLinks()) {
-      formatInternalLink(pane, link);
+      formatInternalLink(doc, link);
     }
   }
 
   /**
    * Format an internal link in a MediaWikiPane.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Document to be formatted.
    * @param internalLink Internal link to be formatted.
    */
   private void formatInternalLink(
-      MWPane pane, PageElementInternalLink internalLink) {
+      StyledDocument doc,
+      PageElementInternalLink internalLink) {
 
     // Basic verifications
-    if ((pane == null) || (internalLink == null)) {
+    if ((doc == null) || (internalLink == null)) {
       return;
     }
 
@@ -125,9 +125,8 @@ public class MWPaneDisambiguationFormatter extends
             link.isExisting() ?
                 ConfigurationValueStyle.INTERNAL_LINK_NORMAL :
                 ConfigurationValueStyle.INTERNAL_LINK_MISSING;
-    Style attr = pane.getStyle(styleType.getName());
-    StyledDocument doc = pane.getStyledDocument();
-    if ((doc == null) || (attr == null)) {
+    Style attr = doc.getStyle(styleType.getName());
+    if (attr == null) {
       return;
     }
     attr = (Style) attr.copyAttributes();
@@ -146,32 +145,35 @@ public class MWPaneDisambiguationFormatter extends
   /**
    * Format templates in a MediaWikiPane.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Document to be formatted.
    * @param pageAnalysis Page analysis.
    */
   private void formatTemplates(
-      MWPane pane, PageAnalysis pageAnalysis) {
+      StyledDocument doc,
+      PageAnalysis pageAnalysis) {
     if (pageAnalysis == null) {
       return;
     }
     for (PageElementTemplate template : pageAnalysis.getTemplates()) {
-      formatTemplate(pane, pageAnalysis, template);
+      formatTemplate(doc, pageAnalysis, template);
     }
   }
 
   /**
    * Format a template in a MediaWikiPane.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Document to be formatted.
    * @param pageAnalysis Page analysis.
    * @param template Template to be formatted.
    */
   private void formatTemplate(
-      MWPane pane, PageAnalysis pageAnalysis,
+      StyledDocument doc,
+      PageAnalysis pageAnalysis,
       PageElementTemplate template) {
 
     // Basic verifications
-    if ((pane == null) || (pageAnalysis == null) || (template == null) || (links == null)) {
+    if ((doc == null) ||
+        (pageAnalysis == null) || (template == null) || (links == null)) {
       return;
     }
 
@@ -187,7 +189,7 @@ public class MWPaneDisambiguationFormatter extends
       if (linkTo != null) {
         Page link = findPage(linkTo);
         if (link != null) {
-          formatTemplate(pane, link, template, matcher);
+          formatTemplate(doc, link, template, matcher);
           return;
         }
       }
@@ -197,61 +199,62 @@ public class MWPaneDisambiguationFormatter extends
   /**
    * Format a template in a MediaWikiPane.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Document to be formatted.
    * @param link Page linked.
    * @param template Template to be formatted.
    * @param matcher Template matcher.
    */
   private void formatTemplate(
-      MWPane pane,
+      StyledDocument doc,
       Page link,
       PageElementTemplate template,
       TemplateMatcher matcher) {
 
     // Basic verifications
-    if ((pane == null) || (template == null) || (matcher == null)) {
+    if ((doc == null) ||
+        (template == null) || (matcher == null)) {
       return;
     }
 
     // Format template
     if (matcher.isGood() || Boolean.FALSE.equals(link.isDisambiguationPage())) {
-      formatTemplateGood(pane, link, template, matcher);
+      formatTemplateGood(doc, link, template, matcher);
     } else if (matcher.isHelpNeeded()) {
-      formatTemplateHelpRequested(pane, link, template, matcher);
+      formatTemplateHelpRequested(doc, link, template, matcher);
     } else {
-      formatTemplateDisambiguation(pane, link, template, matcher);
+      formatTemplateDisambiguation(doc, link, template, matcher);
     }
   }
 
   /**
    * Format a template in a MediaWikiPane.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Document to be formatted.
    * @param link Page linked.
    * @param template Template to be formatted.
    * @param matcher Template matcher.
    */
   private void formatTemplateGood(
-      MWPane pane,
+      StyledDocument doc,
       Page link,
       PageElementTemplate template,
       TemplateMatcher matcher) {
 
     // Basic verifications
-    if ((pane == null) || (template == null) || (matcher == null)) {
+    if ((doc == null) ||
+        (template == null) || (matcher == null)) {
       return;
     }
 
     // Format template
     int start = template.getBeginIndex();
     int end = template.getEndIndex();
-    Style attr = pane.getStyle(ConfigurationValueStyle.TEMPLATE_NORMAL.getName());
+    Style attr = doc.getStyle(ConfigurationValueStyle.TEMPLATE_NORMAL.getName());
     attr = (Style) attr.copyAttributes();
     attr.addAttribute(ATTRIBUTE_PAGE, link);
     attr.addAttribute(ATTRIBUTE_PAGE_ELEMENT, template);
     attr.addAttribute(ATTRIBUTE_TEMPLATE_MATCHER, matcher);
     attr.addAttribute(ATTRIBUTE_UUID, UUID.randomUUID());
-    StyledDocument doc = pane.getStyledDocument();
     doc.setCharacterAttributes(start, end - start, attr, true);
     if (start < thirdStartPosition) {
       thirdStartPosition = start;
@@ -262,26 +265,26 @@ public class MWPaneDisambiguationFormatter extends
   /**
    * Format a template in a MediaWikiPane.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Document to be formatted.
    * @param link Page linked.
    * @param template Template to be formatted.
    * @param matcher Template matcher.
    */
   private void formatTemplateHelpRequested(
-      MWPane pane,
+      StyledDocument doc,
       Page link,
       PageElementTemplate template,
       TemplateMatcher matcher) {
 
     // Basic verifications
-    if ((pane == null) || (template == null) || (matcher == null)) {
+    if ((doc == null) || (template == null) || (matcher == null)) {
       return;
     }
 
     // Format template
     int start = template.getBeginIndex();
     int end = template.getEndIndex();
-    Style attr = pane.getStyle(ConfigurationValueStyle.HELP_REQUESTED.getName());
+    Style attr = doc.getStyle(ConfigurationValueStyle.HELP_REQUESTED.getName());
     attr = (Style) attr.copyAttributes();
     attr.addAttribute(ATTRIBUTE_PAGE, link);
     attr.addAttribute(ATTRIBUTE_UUID, UUID.randomUUID());
@@ -294,7 +297,6 @@ public class MWPaneDisambiguationFormatter extends
       attr.addAttribute(ATTRIBUTE_PAGE_ELEMENT, template);
       attr.addAttribute(ATTRIBUTE_TEMPLATE_MATCHER, matcher);
     }
-    StyledDocument doc = pane.getStyledDocument();
     doc.setCharacterAttributes(start, end - start, attr, true);
     if (start < secondStartPosition) {
       secondStartPosition = start;
@@ -305,32 +307,31 @@ public class MWPaneDisambiguationFormatter extends
   /**
    * Format a template in a MediaWikiPane.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Document to be formatted.
    * @param link Page linked.
    * @param template Template to be formatted.
    * @param matcher Template matcher.
    */
   private void formatTemplateDisambiguation(
-      MWPane pane,
+      StyledDocument doc,
       Page link,
       PageElementTemplate template,
       TemplateMatcher matcher) {
 
     // Basic verifications
-    if ((pane == null) || (template == null) || (matcher == null)) {
+    if ((doc == null) || (template == null) || (matcher == null)) {
       return;
     }
 
     // Format template
     int start = template.getBeginIndex();
     int end = template.getEndIndex();
-    Style attr = pane.getStyle(ConfigurationValueStyle.TEMPLATE_DAB.getName());
+    Style attr = doc.getStyle(ConfigurationValueStyle.TEMPLATE_DAB.getName());
     attr = (Style) attr.copyAttributes();
     attr.addAttribute(ATTRIBUTE_PAGE, link);
     attr.addAttribute(ATTRIBUTE_PAGE_ELEMENT, template);
     attr.addAttribute(ATTRIBUTE_TEMPLATE_MATCHER, matcher);
     attr.addAttribute(ATTRIBUTE_UUID, UUID.randomUUID());
-    StyledDocument doc = pane.getStyledDocument();
     doc.setCharacterAttributes(start, end - start, attr, true);
     if (start < startPosition) {
       startPosition = start;
@@ -366,7 +367,8 @@ public class MWPaneDisambiguationFormatter extends
    * 
    * @param pane MediaWikiPane.
    */
-  private void moveCaret(MWPane pane) {
+  @Override
+  protected void moveCaret(MWPane pane) {
     if (pane == null) {
       return;
     }

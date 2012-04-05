@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.gui.swing.component;
 
+import javax.swing.text.StyledDocument;
+
 import org.wikipediacleaner.api.data.PageAnalysis;
 
 
@@ -27,17 +29,27 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 public class MWPaneBasicFormatter extends MWPaneFormatter {
 
   /**
-   * Format text in a MediaWikiPane.
+   * Format text in a StyleDocument.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Document to be formatted.
    * @param pageAnalysis Page analysis.
    */
   @Override
-  public void format(MWPane pane, PageAnalysis pageAnalysis) {
+  public void format(StyledDocument doc, PageAnalysis pageAnalysis) {
     // Clean formatting
-    cleanFormat(pane);
+    cleanFormat(doc);
 
     // Format comments
-    //defaultFormatElements(pane, pageAnalysis);
+    //defaultFormatElements(doc, pageAnalysis);
+  }
+
+  /**
+   * Move caret.
+   * 
+   * @param pane MediaWikiPane.
+   */
+  @Override
+  protected void moveCaret(MWPane pane) {
+    //
   }
 }

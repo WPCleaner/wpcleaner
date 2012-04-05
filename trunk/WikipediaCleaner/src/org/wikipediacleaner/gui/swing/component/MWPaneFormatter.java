@@ -89,13 +89,9 @@ public abstract class MWPaneFormatter {
    * 
    * @param pane MediaWikiPane to be formatted.
    */
-  public void cleanFormat(MWPane pane) {
+  protected void cleanFormat(StyledDocument doc) {
 
     // Basic verifications
-    if (pane == null) {
-      return;
-    }
-    StyledDocument doc = pane.getStyledDocument();
     if (doc == null) {
       return;
     }
@@ -108,19 +104,24 @@ public abstract class MWPaneFormatter {
   }
 
   /**
+   * Move caret.
+   * 
+   * @param pane MediaWikiPane.
+   */
+  protected abstract void moveCaret(MWPane pane);
+
+  /**
    * Format elements in a MediaWikiPane.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Document to be formatted.
    * @param pageAnalysis Page analysis.
    */
-  public void defaultFormatElements(MWPane pane, PageAnalysis pageAnalysis) {
+  public void defaultFormatElements(
+      StyledDocument doc,
+      PageAnalysis pageAnalysis) {
 
     // Basic checks
-    if ((pane == null) || (pageAnalysis == null)) {
-      return;
-    }
-    StyledDocument doc = pane.getStyledDocument();
-    if (doc == null) {
+    if ((doc == null) || (pageAnalysis == null)) {
       return;
     }
 
@@ -217,7 +218,30 @@ public abstract class MWPaneFormatter {
    * @param pane MediaWikiPane to be formatted.
    * @param pageAnalysis Page analysis.
    */
-  public abstract void format(MWPane pane, PageAnalysis pageAnalysis);
+  public final void format(MWPane pane, PageAnalysis pageAnalysis) {
+    if (pane == null) {
+      return;
+    }
+    // Detach document from Pane to speed up formatting
+    StyledDocument doc = pane.getStyledDocument();
+    StyledDocument tmpDoc = new DefaultStyledDocument();
+    pane.setDocument(tmpDoc);
+
+    // Format document
+    format(doc, pageAnalysis);
+
+    // Attach document again before moving caret
+    pane.setDocument(doc);
+    moveCaret(pane);
+  }
+
+  /**
+   * Format text in a StyleDocument.
+   * 
+   * @param doc Document to be formatted.
+   * @param pageAnalysis Page analysis.
+   */
+  public abstract void format(StyledDocument doc, PageAnalysis pageAnalysis);
 
   // ==========================================================================
   // Element management
