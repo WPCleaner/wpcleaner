@@ -102,7 +102,7 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
             pageAnalysis.getPage(), category.getBeginIndex(), category.getEndIndex());
         if (categorySort != null) {
           errorResult.addReplacement(
-              "[[" + categoryNamespace.getTitle() + ":" + categoryName + ":" + categorySort + "]]");
+              "[[" + categoryNamespace.getTitle() + ":" + categoryName + "|" + categorySort + "]]");
         } else {
           errorResult.addReplacement(
               "[[" + categoryNamespace.getTitle() + ":" + categoryName + "]]");
