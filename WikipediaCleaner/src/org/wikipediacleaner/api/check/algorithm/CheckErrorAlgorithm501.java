@@ -31,17 +31,18 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.Suggestion;
 
 
 /**
  * Algorithm for analyzing error 501 of check wikipedia project.
- * Error 501: Orthograph and typography
+ * Error 501: Spelling and typography
  */
 public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm501() {
-    super("Orthograph and typography");
+    super("Spelling and typography");
   }
 
   /**
@@ -66,15 +67,20 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     }
 
     // Initialize matchers
-    Map<Suggestion, Matcher> matchers = new HashMap<Suggestion, Matcher>(suggestions.size());
+    String contents = pageAnalysis.getContents();
+    Map<Suggestion, Matcher> matchersText = new HashMap<Suggestion, Matcher>(suggestions.size());
+    Map<Suggestion, Matcher> matchersInternalLink = new HashMap<Suggestion, Matcher>();
     for (Suggestion suggestion : suggestions.values()) {
-      Matcher matcher = suggestion.initMatcher(pageAnalysis.getContents());
-      matchers.put(suggestion, matcher);
+      Matcher matcher = suggestion.initMatcher(contents);
+      if (suggestion.getPatternText().startsWith("\\[")) {
+        matchersInternalLink.put(suggestion, matcher);
+      } else {
+        matchersText.put(suggestion, matcher);
+      }
     }
 
     // Initialize iterators to the various page elements
     List<Suggestion> possibles = new ArrayList<Suggestion>();
-    String contents = pageAnalysis.getContents();
     Collection<PageElement> elements = pageAnalysis.getElements(
         true, true, true, true, true, true, true, true, true, true, false);
     Iterator<PageElement> itElement = elements.iterator();
@@ -84,9 +90,10 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     int startIndex = 0;
     while (startIndex < contents.length()) {
 
-      // Test if the position is correct to check orthograph
+      // Test if the position is correct to check spelling
       int nextIndex = startIndex + 1;
       boolean checkOrthograph = true;
+      Map<Suggestion, Matcher> matchers = matchersText;
 
       // If the position is inside an element, go after
       // TODO : be more specific ? for example, checking in an image description
@@ -97,8 +104,13 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         }
         if ((currentElement != null) &&
             (startIndex >= currentElement.getBeginIndex())) {
-          checkOrthograph = false;
-          nextIndex = Math.max(nextIndex, currentElement.getEndIndex());
+          if ((startIndex == currentElement.getBeginIndex()) &&
+              (currentElement instanceof PageElementInternalLink)) {
+            matchers = matchersInternalLink;
+          } else {
+            checkOrthograph = false;
+            nextIndex = Math.max(nextIndex, currentElement.getEndIndex());
+          }
         }
       }
 
@@ -108,7 +120,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       // If the position is inside a table definition, go after
       // TODO
 
-      // Check orthograph
+      // Check spelling
       if (checkOrthograph) {
         possibles.clear();
   

@@ -74,6 +74,13 @@ public class Suggestion {
   }
 
   /**
+   * @return Search pattern.
+   */
+  public String getPatternText() {
+    return pattern.pattern();
+  }
+
+  /**
    * Add a possible replacement.
    * 
    * @param replacement Replacement.
