@@ -42,6 +42,7 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
 
@@ -128,6 +129,9 @@ public abstract class MWPaneFormatter {
     // Retrieve configuration
     Configuration config = Configuration.getConfiguration();
     if (!config.getBoolean(null, ConfigurationValueBoolean.SYNTAX_HIGHLIGHTING)) {
+      return;
+    }
+    if (doc.getLength() > config.getInt(null, ConfigurationValueInteger.SYNTAX_HIGHLIGHTINH_LIMIT)) {
       return;
     }
     ConfigurationValueStyle.StyleProperties styleCategory = config.getStyle(
@@ -222,16 +226,16 @@ public abstract class MWPaneFormatter {
     if (pane == null) {
       return;
     }
-    // Detach document from Pane to speed up formatting
+    // TODO: Detach document from Pane to speed up formatting
     StyledDocument doc = pane.getStyledDocument();
-    StyledDocument tmpDoc = new DefaultStyledDocument();
-    pane.setDocument(tmpDoc);
+    //StyledDocument tmpDoc = new DefaultStyledDocument();
+    //pane.setDocument(tmpDoc);
 
     // Format document
     format(doc, pageAnalysis);
 
     // Attach document again before moving caret
-    pane.setDocument(doc);
+    //pane.setDocument(doc);
     moveCaret(pane);
   }
 

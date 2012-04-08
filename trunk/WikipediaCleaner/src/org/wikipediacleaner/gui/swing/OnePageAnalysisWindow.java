@@ -601,6 +601,78 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   }
 
   /**
+   * @param list List to use for formatting.
+   */
+  void updateTextFormatting(JList list) {
+    if (list == null) {
+      Object[] selection = listLinks.getSelectedValues();
+      if ((selection != null) && (selection.length > 0)) {
+        list = listLinks;
+      }
+    }
+    if (list == null) {
+      Object[] selection = listErrors.getSelectedValues();
+      if ((selection != null) && (selection.length > 0)) {
+        list = listErrors;
+      }
+    }
+    if (list == listLinks) {
+      // List of links
+      Object[] selection = listLinks.getSelectedValues();
+      if ((selection != null) && (selection.length > 0)) {
+        listErrors.clearSelection();
+        List<Page> pages = new ArrayList<Page>();
+        for (int i = 0; i < selection.length; i++) {
+          if (selection[i] instanceof Page) {
+            pages.add((Page) selection[i]);
+          }
+        }
+        MWPaneFormatter formatter = getTextContents().getFormatter();
+        if (formatter instanceof MWPaneDisambiguationFormatter) {
+          MWPaneDisambiguationFormatter dabFormatter =
+            (MWPaneDisambiguationFormatter) formatter;
+          if (!dabFormatter.isSameList(pages)) {
+            formatter = new MWPaneDisambiguationFormatter(getWikipedia(), pages);
+            getTextContents().setFormatter(formatter);
+          }
+        } else {
+          formatter = new MWPaneDisambiguationFormatter(getWikipedia(), pages);
+          getTextContents().setFormatter(formatter);
+        }
+        MWPanePopupListener listener = new MWPaneDisambiguationPopupListener(
+            getWikipedia(), OnePageAnalysisWindow.this);
+        getTextContents().setPopupListener(listener);
+      }
+    } else if (list == listErrors) {
+      // List of errors
+      Object selection = listErrors.getSelectedValue();
+      if ((selection != null) && (selection instanceof CheckErrorPage)) {
+        listLinks.clearSelection();
+        CheckErrorPage errorSelected = (CheckErrorPage) selection;
+        MWPaneFormatter formatter = getTextContents().getFormatter();
+        if (formatter instanceof MWPaneCheckWikiFormatter) {
+          MWPaneCheckWikiFormatter cwFormatter =
+            (MWPaneCheckWikiFormatter) formatter;
+          if (!cwFormatter.isSameAlgorithm(errorSelected.getAlgorithm())) {
+            formatter = new MWPaneCheckWikiFormatter(errorSelected.getAlgorithm());
+            getTextContents().setFormatter(formatter);
+          }
+        } else {
+          formatter = new MWPaneCheckWikiFormatter(errorSelected.getAlgorithm());
+          getTextContents().setFormatter(formatter);
+        }
+        MWPanePopupListener listener = new MWPaneCheckWikiPopupListener(
+            getWikipedia(), OnePageAnalysisWindow.this);
+        getTextContents().setPopupListener(listener);
+      }
+    }
+    if (list != null) {
+      list.repaint();
+    }
+    updateComponentState();
+  }
+
+  /**
    * A ListSelectionListener implementation. 
    */
   class AnalysisListSelectionListener implements ListSelectionListener {
@@ -608,59 +680,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     public void valueChanged(ListSelectionEvent e) {
       if (e.getSource() instanceof JList) {
         JList list = (JList) e.getSource();
-
-        if (list == listLinks) {
-          // List of links
-          Object[] selection = list.getSelectedValues();
-          if ((selection != null) && (selection.length > 0)) {
-            listErrors.clearSelection();
-            List<Page> pages = new ArrayList<Page>();
-            for (int i = 0; i < selection.length; i++) {
-              if (selection[i] instanceof Page) {
-                pages.add((Page) selection[i]);
-              }
-            }
-            MWPaneFormatter formatter = getTextContents().getFormatter();
-            if (formatter instanceof MWPaneDisambiguationFormatter) {
-              MWPaneDisambiguationFormatter dabFormatter =
-                (MWPaneDisambiguationFormatter) formatter;
-              if (!dabFormatter.isSameList(pages)) {
-                formatter = new MWPaneDisambiguationFormatter(getWikipedia(), pages);
-                getTextContents().setFormatter(formatter);
-              }
-            } else {
-              formatter = new MWPaneDisambiguationFormatter(getWikipedia(), pages);
-              getTextContents().setFormatter(formatter);
-            }
-            MWPanePopupListener listener = new MWPaneDisambiguationPopupListener(
-                getWikipedia(), OnePageAnalysisWindow.this);
-            getTextContents().setPopupListener(listener);
-          }
-        } else if (list == listErrors) {
-          // List of errors
-          Object selection = list.getSelectedValue();
-          if ((selection != null) && (selection instanceof CheckErrorPage)) {
-            listLinks.clearSelection();
-            CheckErrorPage errorSelected = (CheckErrorPage) selection;
-            MWPaneFormatter formatter = getTextContents().getFormatter();
-            if (formatter instanceof MWPaneCheckWikiFormatter) {
-              MWPaneCheckWikiFormatter cwFormatter =
-                (MWPaneCheckWikiFormatter) formatter;
-              if (!cwFormatter.isSameAlgorithm(errorSelected.getAlgorithm())) {
-                formatter = new MWPaneCheckWikiFormatter(errorSelected.getAlgorithm());
-                getTextContents().setFormatter(formatter);
-              }
-            } else {
-              formatter = new MWPaneCheckWikiFormatter(errorSelected.getAlgorithm());
-              getTextContents().setFormatter(formatter);
-            }
-            MWPanePopupListener listener = new MWPaneCheckWikiPopupListener(
-                getWikipedia(), OnePageAnalysisWindow.this);
-            getTextContents().setPopupListener(listener);
-          }
-        }
-        list.repaint();
-        updateComponentState();
+        updateTextFormatting(list);
       }
     }
   }
