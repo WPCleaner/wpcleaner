@@ -31,6 +31,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JSpinner;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
@@ -41,6 +42,7 @@ import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
 
@@ -50,7 +52,7 @@ import org.wikipediacleaner.utils.ConfigurationValueStyle;
 public class FormattingOptionsPanel extends OptionsPanel {
 
   /**
-   * Serialisation.
+   * Serialization.
    */
   private static final long serialVersionUID = -8809796439028282940L;
 
@@ -103,12 +105,28 @@ public class FormattingOptionsPanel extends OptionsPanel {
     constraints.weightx = 1;
     constraints.weighty = 0;
 
-    // Add global checkbox for syntax highlighting
+    // Add global check box for syntax highlighting
     JCheckBox chk = createJCheckBox(
         GT._("Syntax highlighting"),
         ConfigurationValueBoolean.SYNTAX_HIGHLIGHTING);
     constraints.gridwidth = columnCount;
     add(chk, constraints);
+    constraints.gridwidth = 1;
+    constraints.gridy++;
+
+    // Add size limit for syntax highlighting
+    JSpinner spinner = createJSpinner(
+        ConfigurationValueInteger.SYNTAX_HIGHLIGHTINH_LIMIT,
+        0, 1000000, 10000);
+    JLabel label = Utilities.createJLabel(GT._("Size limit"));
+    label.setLabelFor(spinner);
+    label.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridx = 0;
+    constraints.gridwidth = columnFormat;
+    add(label, constraints);
+    constraints.gridx = columnFormat;
+    constraints.gridwidth = columnCount - columnFormat;
+    add(spinner, constraints);
     constraints.gridwidth = 1;
     constraints.gridy++;
 

@@ -55,7 +55,7 @@ public enum ConfigurationValueBoolean {
   SAVE_LAST_REPLACEMENT("SaveLastReplacement", false),
   SAVE_WINDOW("SaveWindow", true),
   SHORT_NOTATION("ShortNotation", false),
-  SYNTAX_HIGHLIGHTING("SyntaxHighlighting", false),
+  SYNTAX_HIGHLIGHTING("SyntaxHighlighting", true),
   TRANSLATION_CATEGORY("TranslationCategory", true),
   TRANSLATION_INTERLANGUAGE("TranslationInterLanguage", true),
   TRANSLATION_INTERNAL_LINK_TEXT("TranslationInternalLinkText", false),
