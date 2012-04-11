@@ -34,6 +34,8 @@ public class PageElementTemplate extends PageElement {
   private final String templateNameNotTrimmed;
   private final List<Parameter> parameters;
 
+  private final static String templateNameUnauthorizedCharacters = "{}[]|";
+
   private static class Parameter {
     final String name;
     final String nameNotTrimmed;
@@ -67,19 +69,17 @@ public class PageElementTemplate extends PageElement {
    * Analyze contents to check if it matches a block for the given template name.
    * 
    * @param wikipedia Wikipedia.
-   * @param templateName Template name.
    * @param contents Contents.
    * @param index Block start index.
    * @return Block details it there's a block.
    */
   public static PageElementTemplate analyzeBlock(
-      EnumWikipedia wikipedia, String templateName,
+      EnumWikipedia wikipedia,
       String contents, int index) {
     // Verify arguments
     if (contents == null) {
       return null;
     }
-    templateName = ((templateName != null) && (templateName.trim().length() > 0)) ? templateName.trim() : "";
 
     // Look for '{{'
     int beginIndex = index;
@@ -90,61 +90,30 @@ public class PageElementTemplate extends PageElement {
       return null;
     }
     tmpIndex += 2;
+
+    // Possible whitespace characters
+    while ((tmpIndex < contents.length()) &&
+           ((contents.charAt(tmpIndex) == ' ') ||
+            (contents.charAt(tmpIndex) == '\n'))) {
+      tmpIndex++;
+    }
     int startTemplateName = tmpIndex;
 
-    // Possible whitespace characters
-    while ((tmpIndex < contents.length()) &&
-           ((contents.charAt(tmpIndex) == ' ') ||
-            (contents.charAt(tmpIndex) == '\n'))) {
-      tmpIndex++;
-    }
-
-    // Check Template Name
-    if (tmpIndex >= contents.length()) {
-      return null;
-    }
-    if (templateName.length() > 0) {
-      String templateName1 = templateName;
-      String templateName2 = templateName;
-      if (templateName.length() > 1) {
-        templateName1 = Character.toLowerCase(templateName.charAt(0)) + templateName.substring(1);
-        templateName2 = Character.toUpperCase(templateName.charAt(0)) + templateName.substring(1);
-      } else {
-        templateName1 = templateName.toLowerCase();
-        templateName2 = templateName.toUpperCase();
+    // Retrieve template name
+    while (tmpIndex < contents.length()) {
+      char currentChar = contents.charAt(tmpIndex);
+      if (templateNameUnauthorizedCharacters.indexOf(currentChar) >= 0) {
+        break;
       }
-      if ((!contents.startsWith(templateName1, tmpIndex)) &&
-          (!contents.startsWith(templateName2, tmpIndex))) {
-        return null;
-      }
-      tmpIndex += templateName.length();
-    } else {
-      int pipeIndex = contents.indexOf('|', tmpIndex);
-      int endIndex = contents.indexOf("}}", tmpIndex);
-      if ((pipeIndex < 0) && (endIndex < 0)) {
-        return null;
-      }
-      int endNameindex = Math.min(
-          (pipeIndex < 0) ? contents.length() : pipeIndex,
-          (endIndex < 0) ? contents.length() : endIndex);
-      templateName = contents.substring(tmpIndex, endNameindex).trim();
-      tmpIndex = endNameindex;
-    }
-    if (tmpIndex >= contents.length()) {
-      return null;
-    }
-
-    // Possible whitespace characters
-    while ((tmpIndex < contents.length()) &&
-           ((contents.charAt(tmpIndex) == ' ') ||
-            (contents.charAt(tmpIndex) == '\n'))) {
       tmpIndex++;
     }
     if (tmpIndex >= contents.length()) {
       return null;
     }
-    int endTemplateName = tmpIndex;
-    templateName = contents.substring(startTemplateName, endTemplateName);
+    String templateName = contents.substring(startTemplateName, tmpIndex).trim();
+    if (templateName.length() == 0) {
+      return null;
+    }
 
     // Check that it's not a DEFAULTSORT
     int colonIndex = templateName.indexOf(':');
@@ -156,78 +125,94 @@ public class PageElementTemplate extends PageElement {
       }
     }
 
-    // Check if parameters are present
-    if (contents.charAt(tmpIndex) == '|') {
-      tmpIndex++;
-      int depth = 1;
-      int endIndex = tmpIndex;
-      while ((depth > 0) && (endIndex < contents.length())) {
-        if (contents.startsWith("{{", endIndex)) {
-          endIndex += 2;
-          depth++;
-        } else if (contents.startsWith("}}", endIndex)) {
-          endIndex += 2;
-          depth--;
-        } else {
-          endIndex++;
-        }
-      }
-      if (depth > 0) {
-        return null;
-      }
-      List<Parameter> parameters = new ArrayList<Parameter>();
-      if (!analyzeTemplateParameters(
-          contents.substring(tmpIndex, endIndex - 2), tmpIndex,
-          parameters)) {
-        return null;
-      }
-      return new PageElementTemplate(
-          templateName,
-          beginIndex, endIndex, parameters);
-    } else if (contents.startsWith("}}", tmpIndex)) {
+    // Check if it's a template without parameters
+    if (contents.startsWith("}}", tmpIndex)) {
       return new PageElementTemplate(
           templateName,
           beginIndex, tmpIndex + 2, null);
     }
-    return null;
+
+    // Check if it's a template
+    if (contents.charAt(tmpIndex) != '|') {
+      return null;
+    }
+
+    // Analyze parameters
+    tmpIndex++;
+    List<Parameter> parameters = new ArrayList<Parameter>();
+    int endIndex = analyzeTemplateParameters(wikipedia, contents, tmpIndex, parameters);
+    if (endIndex < 0) {
+      return null;
+    }
+    return new PageElementTemplate(
+        templateName,
+        beginIndex, endIndex, parameters);
   }
 
   /**
    * Analyze the parameters of template.
    * 
-   * @param strParameters String containing the parameters.
-   * @param offset Position of the String.
+   * @param contents Contents of the page.
+   * @param beginIndex Start index of the parameters in the page.
    * @param parameters Parameters.
-   * @return Flag indicating if the analyze is correct.
+   * @return Position of the end of the template, or -1 if no template was found.
    */
-  private static boolean analyzeTemplateParameters(
-      String strParameters, int offset,
+  private static int analyzeTemplateParameters(
+      EnumWikipedia wikipedia,
+      String contents, int beginIndex,
       List<Parameter> parameters) {
-    if ((strParameters == null) || (strParameters.trim().length() == 0)) {
-      return true;
+    if (contents == null) {
+      return -1;
     }
-    int beginIndex = 0;
-    int tmpIndex = 0;
+    int tmpIndex = beginIndex;
+    int maxLength = contents.length();
     int depthCurlyBrackets = 0;
     int depthSquareBrackets = 0;
-    int depthNoWikiTag = 0;
-    int depthRefTag = 0;
+    int depthTagNoWiki = 0;
+    int depthTagRef = 0;
+    int parameterBeginIndex = beginIndex;
     int equalIndex = -1;
-    while (tmpIndex < strParameters.length()) {
-      if (strParameters.startsWith("{{", tmpIndex)) {
+    while (tmpIndex < maxLength) {
+      if (contents.startsWith("{{", tmpIndex)) {
+        // Possible start of nested template
         tmpIndex += 2;
-        depthCurlyBrackets++;
-      } else if (strParameters.startsWith("}}", tmpIndex)) {
+        if (depthTagNoWiki == 0) {
+          depthCurlyBrackets++;
+        }
+      } else if (contents.startsWith("}}", tmpIndex)) {
+        // Possible end of template
         tmpIndex += 2;
-        depthCurlyBrackets--;
-      } else if (strParameters.startsWith("[[", tmpIndex)) {
+        if (depthTagNoWiki == 0) {
+          if (depthCurlyBrackets > 0) {
+            depthCurlyBrackets--;
+          } else {
+            addParameter(
+                parameters,
+                contents.substring(parameterBeginIndex, tmpIndex - 2),
+                equalIndex - parameterBeginIndex,
+                beginIndex);
+            return tmpIndex;
+          }
+        }
+      } else if (contents.startsWith("[[", tmpIndex)) {
+        // Possible start of nested internal links
         tmpIndex += 2;
-        depthSquareBrackets++;
-      } else if (strParameters.startsWith("]]", tmpIndex)) {
+        if (depthTagNoWiki == 0) {
+          depthSquareBrackets++;
+        }
+      } else if (contents.startsWith("]]", tmpIndex)) {
+        // Possible end of nested internal link
         tmpIndex += 2;
-        depthSquareBrackets--;
-      } else if (strParameters.startsWith("<", tmpIndex)) {
-        PageElementTag tag = PageElementTag.analyzeBlock(strParameters, tmpIndex);
+        if (depthTagNoWiki == 0) {
+          if (depthSquareBrackets > 0) {
+            depthSquareBrackets--;
+          } else {
+            return -1;
+          }
+        }
+      } else if (contents.startsWith("<", tmpIndex)) {
+        // Possible start of a tag
+        PageElementTag tag = PageElementTag.analyzeBlock(contents, tmpIndex);
         if (tag != null) {
           int count = 0;
           if (tag.isFullTag()) {
@@ -238,47 +223,66 @@ public class PageElementTemplate extends PageElement {
             count = 1;
           }
           if (PageElementTag.TAG_NOWIKI.equals(tag.getName())) {
-            depthNoWikiTag += count;
+            depthTagNoWiki += count;
+            if (depthTagNoWiki < 0) {
+              depthTagNoWiki = 0;
+            }
           } else if (PageElementTag.TAG_REF.equals(tag.getName())) {
-            depthRefTag += count;
+            if (depthTagNoWiki == 0) {
+              depthTagRef += count;
+              if (depthTagRef < 0) {
+                depthTagRef = 0;
+              }
+            }
           }
           tmpIndex = tag.getEndIndex();
         } else {
-          tmpIndex++;
+          // Possible start of a comment
+          PageElementComment comment = PageElementComment.analyzeBlock(wikipedia, contents, tmpIndex);
+          if (comment != null) {
+            tmpIndex = comment.getEndIndex();
+          } else {
+            tmpIndex++;
+          }
         }
       } else {
         if ((depthCurlyBrackets <= 0) &&
             (depthSquareBrackets <= 0) &&
-            (depthNoWikiTag <= 0) &&
-            (depthRefTag <= 0) &&
-            (equalIndex < 0) &&
-            (strParameters.charAt(tmpIndex) == '=')) {
-          equalIndex = tmpIndex;
-          tmpIndex++;
-        } else if ((depthCurlyBrackets <= 0) &&
-            (depthSquareBrackets <= 0) &&
-            (depthNoWikiTag <= 0) &&
-            (depthRefTag <= 0) &&
-            (strParameters.charAt(tmpIndex) == '|')) {
-          depthCurlyBrackets = 0;
-          depthSquareBrackets = 0;
-          addParameter(
-              parameters, strParameters.substring(beginIndex, tmpIndex),
-              equalIndex - beginIndex, offset + beginIndex);
-          tmpIndex++;
-          equalIndex = -1;
-          beginIndex = tmpIndex;
+            (depthTagNoWiki <= 0) &&
+            (depthTagRef <= 0)) {
+          char currentChar = contents.charAt(tmpIndex);
+          if (currentChar == '|') {
+            // Separation with next parameter
+            depthCurlyBrackets = 0;
+            depthSquareBrackets = 0;
+            addParameter(
+                parameters,
+                contents.substring(parameterBeginIndex, tmpIndex),
+                equalIndex - parameterBeginIndex,
+                beginIndex);
+            tmpIndex++;
+            parameterBeginIndex = tmpIndex;
+            equalIndex = -1;
+          } else if ((currentChar == '=') && (equalIndex < 0)) {
+            equalIndex = tmpIndex;
+            tmpIndex++;
+          } else {
+            tmpIndex++;
+          }
         } else {
           tmpIndex++;
         }
       }
     }
-    addParameter(
-        parameters, strParameters.substring(beginIndex),
-        equalIndex - beginIndex, offset + beginIndex);
-    return true;
+    return -1;
   }
 
+  /**
+   * @param parameters List of parameters.
+   * @param parameter New parameter (name=value or value).
+   * @param equalIndex Index of "=" in the parameter or < 0 if doesn't exist.
+   * @param offset Offset of parameter start index in page contents.
+   */
   private static void addParameter(
       List<Parameter> parameters, String parameter,
       int equalIndex, int offset) {
@@ -321,6 +325,19 @@ public class PageElementTemplate extends PageElement {
       return 0;
     }
     return parameters.size();
+  }
+
+  /**
+   * Retrieve parameter name.
+   * 
+   * @param index Parameter index.
+   * @return Parameter name.
+   */
+  public String getParameterName(int index) {
+    if ((index >= 0) && (index < parameters.size())) {
+      return parameters.get(index).name;
+    }
+    return null;
   }
 
   /**
