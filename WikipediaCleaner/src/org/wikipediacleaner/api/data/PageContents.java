@@ -896,7 +896,7 @@ public class PageContents {
         currentIndex = indexAfterComments(tmpIndex, comments);
       } else {
         PageElementTemplate template = PageElementTemplate.analyzeBlock(
-            page.getWikipedia(), null, contents, tmpIndex);
+            page.getWikipedia(), contents, tmpIndex);
         if (template != null) {
           return template;
         }

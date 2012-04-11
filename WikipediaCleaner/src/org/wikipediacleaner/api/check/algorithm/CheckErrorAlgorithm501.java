@@ -32,6 +32,7 @@ import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
 
 
@@ -70,10 +71,13 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     String contents = pageAnalysis.getContents();
     Map<Suggestion, Matcher> matchersText = new HashMap<Suggestion, Matcher>(suggestions.size());
     Map<Suggestion, Matcher> matchersInternalLink = new HashMap<Suggestion, Matcher>();
+    Map<Suggestion, Matcher> matchersTemplate = new HashMap<Suggestion, Matcher>();
     for (Suggestion suggestion : suggestions.values()) {
       Matcher matcher = suggestion.initMatcher(contents);
       if (suggestion.getPatternText().startsWith("\\[")) {
         matchersInternalLink.put(suggestion, matcher);
+      } else if (suggestion.getPatternText().startsWith("\\{\\{")) {
+        matchersTemplate.put(suggestion, matcher);
       } else {
         matchersText.put(suggestion, matcher);
       }
@@ -107,6 +111,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
           if ((startIndex == currentElement.getBeginIndex()) &&
               (currentElement instanceof PageElementInternalLink)) {
             matchers = matchersInternalLink;
+          } else if ((startIndex == currentElement.getBeginIndex()) &&
+                     (currentElement instanceof PageElementTemplate)) {
+            matchers = matchersTemplate;
           } else {
             checkOrthograph = false;
             nextIndex = Math.max(nextIndex, currentElement.getEndIndex());
