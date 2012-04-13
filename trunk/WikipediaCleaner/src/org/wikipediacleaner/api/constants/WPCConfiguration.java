@@ -21,6 +21,7 @@ package org.wikipediacleaner.api.constants;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -963,10 +964,16 @@ public class WPCConfiguration {
   }
 
   /**
+   * @param count Number of disambiguation links.
    * @return Comment for warning about disambiguation links in a page.
    */
-  public String getDisambiguationWarningComment() {
+  public String getDisambiguationWarningComment(int count) {
     if (disambiguationWarningComment != null) {
+      try {
+        return MessageFormat.format(disambiguationWarningComment, Integer.valueOf(count));
+      } catch (IllegalArgumentException e) {
+        //
+      }
       return disambiguationWarningComment;
     }
     return disambiguationWarningTemplate;

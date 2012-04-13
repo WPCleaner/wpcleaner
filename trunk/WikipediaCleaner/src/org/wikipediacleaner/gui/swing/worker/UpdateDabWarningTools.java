@@ -122,7 +122,7 @@ public class UpdateDabWarningTools {
    * @param pages List of pages.
    * @param contentsAvailable True if contents is already available in pages.
    * @param linksAvailable True if links are already available in pages.
-   * @param dabInformationAvailable True if dab information is already available in pages.
+   * @param dabInformationAvailable True if disambiguation information is already available in pages.
    * @return Number of pages updated
    * @throws APIException
    */
@@ -269,13 +269,15 @@ public class UpdateDabWarningTools {
         return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
       }
 
-      // If talk page has a template linking to the todo subpage, the dab warning must be on the todo subpage
+      // If talk page has a template linking to the todo subpage,
+      // the disambiguation warning must be on the todo subpage
       PageElementTemplate templateTodoLink = getExistingTemplateTodoLink(talkPage, talkPage.getContents());
       if (templateTodoLink != null) {
         return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
       }
 
-      // If talk page has a link to the todo subpage, the disambiguation warning must be on the todo subpage
+      // If talk page has a link to the todo subpage,
+      // the disambiguation warning must be on the todo subpage
       /*api.retrieveLinks(wikipedia, talkPage, talkPage.getNamespace());
       if (talkPage.getLinks() != null) {
         for (Page link : talkPage.getLinks()) {
@@ -344,7 +346,7 @@ public class UpdateDabWarningTools {
    * 
    * @param pageRevId Page revision id.
    * @param todoSubpage Todo subpage.
-   * @param dabLinks List of existing dab links.
+   * @param dabLinks List of existing disambiguation links.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
@@ -421,7 +423,7 @@ public class UpdateDabWarningTools {
    * 
    * @param pageRevId Page revision id.
    * @param talkPage Talk page.
-   * @param dabLinks List of existing dab links.
+   * @param dabLinks List of existing disambiguation links.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
@@ -629,7 +631,7 @@ public class UpdateDabWarningTools {
    * Remove disambiguation warning on the talk page.
    * 
    * @param talkPage Talk page.
-   * @param dabLinks Links to dab pages.
+   * @param dabLinks Links to disambiguation pages.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
@@ -959,14 +961,15 @@ public class UpdateDabWarningTools {
     return templateTodoLink;
   }
   /**
-   * @param dabLinks Links to dab pages.
+   * @param dabLinks Links to disambiguation pages.
    * @return Comment.
    */
   private String getDisambiguationWarningComment(Collection<String> dabLinks) {
     if ((dabLinks == null) || (dabLinks.isEmpty())) {
-      return configuration.getDisambiguationWarningComment();
+      return configuration.getDisambiguationWarningComment(0);
     }
-    StringBuilder result = new StringBuilder(configuration.getDisambiguationWarningComment());
+    StringBuilder result = new StringBuilder(
+        configuration.getDisambiguationWarningComment(dabLinks.size()));
     boolean first = true;
     for (String dabLink : dabLinks) {
       if (first) {
@@ -983,9 +986,9 @@ public class UpdateDabWarningTools {
   }
 
   /**
-   * Tell if the template shoud be modified.
+   * Tell if the template should be modified.
    * 
-   * @param dabLinks Links to dab pages.
+   * @param dabLinks Links to disambiguation pages.
    * @param template Template.
    * @return True if the template should be modified.
    */
