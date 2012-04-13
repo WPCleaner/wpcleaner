@@ -19,12 +19,12 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementTagFull;
-import org.wikipediacleaner.api.data.PageElementTagData;
+import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
@@ -53,7 +53,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyzing from the begining
+    // Analyzing from the beginning
     boolean errorFound = false;
     for (PageElementTemplate template : pageAnalysis.getTemplates()) {
       for (int i = 0; i < template.getParameterCount(); i++) {
@@ -61,77 +61,23 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
         if (parameterValue != null) {
 
           // Find last <br> tag
-          PageElementTagFull lastTag = null;
-          int currentIndex = 0;
-          while (currentIndex < parameterValue.length()) {
-            PageElementTagFull tag = PageContents.findNextTagFull(
-                pageAnalysis.getPage(), parameterValue, "br", currentIndex);
-            if (tag != null) {
-              currentIndex = tag.getEndTagEndIndex() - 1;
-              lastTag = tag;
-            } else {
-              currentIndex = parameterValue.length();
-            }
-          }
-          PageElementTagData lastTagData = null;
-          currentIndex = 0;
-          while (currentIndex < parameterValue.length()) {
-            PageElementTagData tag = PageContents.findNextStartTag(
-                pageAnalysis.getPage(), parameterValue, "br", currentIndex);
-            if (tag != null) {
-              currentIndex = tag.getEndIndex();
-              lastTagData = tag;
-            } else {
-              currentIndex = parameterValue.length();
-            }
-          }
-          currentIndex = 0;
-          while (currentIndex < parameterValue.length()) {
-            PageElementTagData tag = PageContents.findNextEndTag(
-                pageAnalysis.getPage(), parameterValue, "br", currentIndex);
-            if (tag != null) {
-              currentIndex = tag.getEndIndex();
-              if ((lastTagData == null) || (lastTagData.getEndIndex() < tag.getEndIndex())) {
-                lastTagData = tag;
-              }
-            } else {
-              currentIndex = parameterValue.length();
-            }
-          }
-
-          if ((lastTag != null) && (lastTagData != null)) {
-            if (lastTag.getEndTagEndIndex() < lastTagData.getEndIndex()) {
-              lastTag = null;
-            } else {
-              lastTagData = null;
-            }
-          }
-          if ((lastTag != null) || (lastTagData != null)) {
-            int startTagIndex = 0;
-            int endTagIndex = 0;
-            if (lastTag != null) {
-              startTagIndex = lastTag.getStartTagBeginIndex();
-              endTagIndex = lastTag.getEndTagEndIndex();
-            } else if (lastTagData != null) {
-              startTagIndex = lastTagData.getBeginIndex();
-              endTagIndex = lastTagData.getEndIndex();
-            }
-            currentIndex = endTagIndex;
+          PageAnalysis paramAnalysis = new PageAnalysis(pageAnalysis.getPage(), parameterValue);
+          List<PageElementTag> brTags = paramAnalysis.getTags(PageElementTag.TAG_BR);
+          if ((brTags != null) && (brTags.size() > 0)) {
+            PageElementTag lastBrTag = brTags.get(brTags.size() - 1);
+            int currentIndex = lastBrTag.getEndIndex();
             boolean ok = true;
             while (currentIndex < parameterValue.length()) {
               if (Character.isWhitespace(parameterValue.charAt(currentIndex))) {
                 currentIndex++;
-              } else if (parameterValue.startsWith("<!--", currentIndex)) {
-                int endIndex = parameterValue.indexOf("-->", currentIndex + 4);
-                if (endIndex < 0) {
+              } else {
+                PageElementComment comment = paramAnalysis.isInComment(currentIndex);
+                if (comment != null) {
+                  currentIndex = comment.getEndIndex();
+                } else {
                   currentIndex = parameterValue.length();
                   ok = false;
-                } else {
-                  currentIndex = endIndex + 3;
                 }
-              } else {
-                currentIndex = parameterValue.length();
-                ok = false;
               }
             }
             if (ok) {
@@ -141,8 +87,8 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
               errorFound = true;
               CheckErrorResult errorResult = createCheckErrorResult(
                   pageAnalysis.getPage(),
-                  template.getParameterValueOffset(i) + startTagIndex,
-                  template.getParameterValueOffset(i) + endTagIndex);
+                  template.getParameterValueOffset(i) + lastBrTag.getBeginIndex(),
+                  template.getParameterValueOffset(i) + lastBrTag.getEndIndex());
               errorResult.addReplacement("", GT._("Delete"));
               errors.add(errorResult);
             }
