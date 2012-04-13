@@ -140,7 +140,8 @@ public class PageElementTemplate extends PageElement {
     // Analyze parameters
     tmpIndex++;
     List<Parameter> parameters = new ArrayList<Parameter>();
-    int endIndex = analyzeTemplateParameters(wikipedia, contents, tmpIndex, parameters);
+    int endIndex = analyzeTemplateParameters(
+        wikipedia, contents, beginIndex, tmpIndex, parameters);
     if (endIndex < 0) {
       return null;
     }
@@ -153,24 +154,26 @@ public class PageElementTemplate extends PageElement {
    * Analyze the parameters of template.
    * 
    * @param contents Contents of the page.
-   * @param beginIndex Start index of the parameters in the page.
+   * @param templateBeginIndex Start index of the template in the page.
+   * @param parametersBeginIndex Start index of the parameters in the page.
    * @param parameters Parameters.
    * @return Position of the end of the template, or -1 if no template was found.
    */
   private static int analyzeTemplateParameters(
       EnumWikipedia wikipedia,
-      String contents, int beginIndex,
+      String contents,
+      int templateBeginIndex, int parametersBeginIndex,
       List<Parameter> parameters) {
     if (contents == null) {
       return -1;
     }
-    int tmpIndex = beginIndex;
+    int tmpIndex = parametersBeginIndex;
     int maxLength = contents.length();
     int depthCurlyBrackets = 0;
     int depthSquareBrackets = 0;
     int depthTagNoWiki = 0;
     int depthTagRef = 0;
-    int parameterBeginIndex = beginIndex;
+    int parameterBeginIndex = parametersBeginIndex;
     int equalIndex = -1;
     while (tmpIndex < maxLength) {
       if (contents.startsWith("{{", tmpIndex)) {
@@ -190,7 +193,7 @@ public class PageElementTemplate extends PageElement {
                 parameters,
                 contents.substring(parameterBeginIndex, tmpIndex - 2),
                 equalIndex - parameterBeginIndex,
-                beginIndex);
+                parameterBeginIndex);
             return tmpIndex;
           }
         }
@@ -259,7 +262,7 @@ public class PageElementTemplate extends PageElement {
                 parameters,
                 contents.substring(parameterBeginIndex, tmpIndex),
                 equalIndex - parameterBeginIndex,
-                beginIndex);
+                parameterBeginIndex);
             tmpIndex++;
             parameterBeginIndex = tmpIndex;
             equalIndex = -1;
@@ -465,7 +468,7 @@ public class PageElementTemplate extends PageElement {
     if (parameters != null) {
       for (Parameter parameter : parameters) {
   
-        // Managing unname
+        // Managing unnamed
         String currentParameterName = parameter.name;
         if ((currentParameterName == null) || (currentParameterName.length() == 0)) {
           currentParameterName = Integer.toString(paramNum);
