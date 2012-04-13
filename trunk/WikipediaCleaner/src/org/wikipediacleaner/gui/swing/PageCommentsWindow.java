@@ -170,7 +170,7 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     Integer main = (page != null) ? page.getBacklinksCountInMainNamespace() : null;
     JLabel labelMain = new JLabel((main != null) ? "/ " + main.toString() : "");
     labelMain.setHorizontalAlignment(SwingConstants.LEADING);
-    buttonCopyMaxMain = Utilities.createJButton("<-");
+    buttonCopyMaxMain = Utilities.createJButton("\u21D0");
     buttonCopyMaxMain.setActionCommand(ACTION_COPY_MAX_MAIN);
     buttonCopyMaxMain.addActionListener(this);
     buttonCopyMaxMain.setEnabled(main != null);
@@ -202,7 +202,7 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     Integer all = (page != null) ? page.getBacklinksCount() : null;
     JLabel labelAll = new JLabel((all != null) ? "/ " + all.toString() : "");
     labelAll.setHorizontalAlignment(SwingConstants.LEADING);
-    buttonCopyMax = Utilities.createJButton("<-");
+    buttonCopyMax = Utilities.createJButton("\u21D0");
     buttonCopyMax.setActionCommand(ACTION_COPY_MAX);
     buttonCopyMax.addActionListener(this);
     buttonCopyMax.setEnabled(main != null);
