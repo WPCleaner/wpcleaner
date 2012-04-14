@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-14 23:06+0200\n"
+"POT-Creation-Date: 2012-04-14 23:56+0200\n"
 "PO-Revision-Date: 2012-02-05 15:16+0000\n"
 "Last-Translator: simone.sandri <lexluxsox@hotmail.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -90,8 +90,13 @@ msgstr "Sostituisci con {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm013.java:68
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm014.java:68
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm015.java:68
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm023.java:68
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm024.java:68
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:96
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:102
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm029.java:68
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:96
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:102
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:71

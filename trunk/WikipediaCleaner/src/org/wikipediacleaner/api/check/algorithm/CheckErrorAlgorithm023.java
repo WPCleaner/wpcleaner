@@ -19,9 +19,12 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -48,29 +51,22 @@ public class CheckErrorAlgorithm023 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyze contents from the beginning
-    int startIndex = 0;
+    // Check every <nowiki> tag
+    List<PageElementTag> nowikiTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_NOWIKI);
     boolean result = false;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      startIndex = contents.indexOf("<nowiki>", startIndex);
-      if (startIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        int endIndex = contents.indexOf("</nowiki>", startIndex);
-        if (endIndex < 0) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          endIndex = startIndex + "<nowiki>".length();
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), startIndex, endIndex);
-          errors.add(errorResult);
-          startIndex = endIndex;
-        } else {
-          startIndex = endIndex;
+    for (PageElementTag nowikiTag : nowikiTags) {
+      if ((!nowikiTag.isFullTag()) &&
+          (!nowikiTag.isEndTag()) &&
+          (nowikiTag.getMatchingTag() == null)) {
+        if (errors == null) {
+          return true;
         }
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            nowikiTag.getBeginIndex(), nowikiTag.getEndIndex());
+        errorResult.addReplacement("", GT._("Delete"));
+        errors.add(errorResult);
       }
     }
     return result;

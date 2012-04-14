@@ -52,12 +52,16 @@ public class PageElementTag extends PageElement {
   public final static String TAG_HTML_U           = "u";
   public final static String TAG_HTML_UL          = "ul";
 
-  public final static String TAG_WIKI_NOINCLUDE   = "noinclude";
+  public final static String TAG_WIKI_CODE        = "code";
+  public final static String TAG_WIKI_GALLERY     = "gallery";
   public final static String TAG_WIKI_INCLUDEONLY = "includeonly";
   public final static String TAG_WIKI_MATH        = "math";
+  public final static String TAG_WIKI_NOINCLUDE   = "noinclude";
   public final static String TAG_WIKI_NOWIKI      = "nowiki";
+  public final static String TAG_WIKI_PRE         = "pre";
   public final static String TAG_WIKI_REF         = "ref";
   public final static String TAG_WIKI_REFERENCES  = "references";
+  public final static String TAG_WIKI_SOURCE      = "source";
 
 
   /**

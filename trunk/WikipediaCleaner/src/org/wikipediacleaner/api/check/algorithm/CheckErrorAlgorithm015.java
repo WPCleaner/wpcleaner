@@ -19,9 +19,12 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -48,29 +51,22 @@ public class CheckErrorAlgorithm015 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyze contents from the beginning
-    int startIndex = 0;
+    // Check every <code> tag
+    List<PageElementTag> codeTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_CODE);
     boolean result = false;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      startIndex = contents.indexOf("<code>", startIndex);
-      if (startIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        int endIndex = contents.indexOf("</code>", startIndex);
-        if (endIndex < 0) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          endIndex = startIndex + "<code>".length();
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), startIndex, endIndex);
-          errors.add(errorResult);
-          startIndex = endIndex;
-        } else {
-          startIndex = endIndex;
+    for (PageElementTag codeTag : codeTags) {
+      if ((!codeTag.isFullTag()) &&
+          (!codeTag.isEndTag()) &&
+          (codeTag.getMatchingTag() == null)) {
+        if (errors == null) {
+          return true;
         }
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            codeTag.getBeginIndex(), codeTag.getEndIndex());
+        errorResult.addReplacement("", GT._("Delete"));
+        errors.add(errorResult);
       }
     }
     return result;
