@@ -22,6 +22,7 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
 
 
 /**
@@ -48,10 +49,7 @@ public class CheckErrorAlgorithm039 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
-    result |= simpleTextSearch(pageAnalysis, errors, "<p>");
-    result |= simpleTextSearch(pageAnalysis, errors, "</p>");
-    result |= simpleTextSearch(pageAnalysis, errors, "<P>");
-    result |= simpleTextSearch(pageAnalysis, errors, "</P>");
+    result = addTags(result, pageAnalysis, errors, PageElementTag.TAG_P);
     return result;
   }
 }
