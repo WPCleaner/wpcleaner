@@ -19,9 +19,12 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -30,9 +33,9 @@ import org.wikipediacleaner.api.data.PageAnalysis;
  */
 public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
 
-  private final static String[] tags = {
-    "includeonly",
-    "noinclude",
+  private final static String[] interestingTags = {
+    PageElementTag.TAG_WIKI_INCLUDEONLY,
+    PageElementTag.TAG_WIKI_NOINCLUDE,
   };
 
   public CheckErrorAlgorithm085() {
@@ -53,55 +56,42 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    int startIndex = 0;
+    // Check each tag
+    List<PageElementTag> tags = pageAnalysis.getTags();
     boolean result = false;
     String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      // Looking for <
-      startIndex = contents.indexOf("<", startIndex);
-      if (startIndex < 0) {
-        startIndex = contents.length();
-      } else {
+    for (PageElementTag tag : tags) {
+      if (!tag.isFullTag() && !tag.isEndTag() && (tag.getMatchingTag() != null)) {
 
-        // Check if a tag begins
-        String tag = null;
-        int currentPos = startIndex;
-        for (int i = 0; (i < tags.length) && (tag == null); i++) {
-          if ((contents.charAt(startIndex) == '<') &&
-              (contents.startsWith(tags[i], startIndex + 1)) &&
-              (contents.charAt(startIndex + tags[i].length() + 1) == '>')) {
-            tag = tags[i];
-            currentPos += tag.length() + 2;
+        // Check if tag can be of interest
+        boolean interesting = false;
+        for (String tagName : interestingTags) {
+          if (tagName.equals(tag.getName())) {
+            interesting = true;
           }
         }
-
-        if (tag == null) {
-          startIndex++;
-        } else {
-
-          // Possible whitespaces
-          while ((currentPos < contents.length()) &&
-                 (Character.isWhitespace(contents.charAt(currentPos)))) {
-            currentPos++;
+  
+        // Check tag
+        if (interesting) {
+          boolean textFound = false;
+          int currentIndex = tag.getEndIndex();
+          int lastIndex = tag.getMatchingTag().getBeginIndex();
+          while (!textFound && (currentIndex < lastIndex)) {
+            if (!Character.isWhitespace(contents.charAt(currentIndex))) {
+              textFound = true;
+            }
+            currentIndex++;
           }
-
-          // Check if the tag ends
-          if ((currentPos + tag.length() + 2 < contents.length()) &&
-              (contents.charAt(currentPos) == '<') &&
-              (contents.charAt(currentPos + 1) == '/') &&
-              (contents.startsWith(tag, currentPos + 2)) &&
-              (contents.charAt(currentPos + tag.length() + 2) == '>')) {
+          if (!textFound) {
             if (errors == null) {
               return true;
             }
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
                 pageAnalysis.getPage(),
-                startIndex, currentPos + tag.length() + 3);
+                tag.getBeginIndex(), tag.getMatchingTag().getEndIndex());
+            errorResult.addReplacement("", GT._("Delete"));
             errors.add(errorResult);
-            startIndex = currentPos + tag.length() + 3;
-          } else {
-            startIndex++;
           }
         }
       }

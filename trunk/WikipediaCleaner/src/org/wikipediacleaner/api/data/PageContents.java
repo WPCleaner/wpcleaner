@@ -918,7 +918,7 @@ public class PageContents {
    * @param comments Comments blocks in the page.
    * @return Tags found.
    */
-  public static Collection<PageElementTag> findAllTags(
+  public static List<PageElementTag> findAllTags(
       Page page, String contents,
       Collection<PageElementComment> comments) {
     if (contents == null) {
