@@ -29,6 +29,7 @@ public class PageElementTag extends PageElement {
 
   public final static String TAG_BR         = "br";
   public final static String TAG_NOWIKI     = "nowiki";
+  public final static String TAG_P          = "p";
   public final static String TAG_REF        = "ref";
   public final static String TAG_REFERENCES = "references";
   public final static String TAG_SMALL      = "small";
