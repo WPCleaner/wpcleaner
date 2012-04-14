@@ -22,6 +22,7 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
 
 
 /**
@@ -48,7 +49,7 @@ public class CheckErrorAlgorithm040 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
-    result = addTags(result, pageAnalysis, errors, "font");
+    result = addTags(result, pageAnalysis, errors, PageElementTag.TAG_HTML_FONT);
     return result;
   }
 }

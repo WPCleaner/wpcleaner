@@ -54,7 +54,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve list of <br> tags
-    List<PageElementTag> brTags = pageAnalysis.getTags(PageElementTag.TAG_BR);
+    List<PageElementTag> brTags = pageAnalysis.getTags(PageElementTag.TAG_HTML_BR);
     int brTagsSize = (brTags != null) ? brTags.size() : 0;
     int currentBrTag = 0;
     if ((brTags == null) || (brTagsSize == 0)) {

@@ -57,7 +57,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     boolean refFound = false;
     if (!refFound) {
       // Search for <ref>
-      List<PageElementTag> refTags = pageAnalysis.getTags(PageElementTag.TAG_REF);
+      List<PageElementTag> refTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REF);
       if ((refTags != null) && (refTags.size() > 0)) {
         refFound = true;
       }
@@ -68,7 +68,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     if (refFound) {
       // Search for <references>
       if (!referencesFound) {
-        List<PageElementTag> referencesTags = pageAnalysis.getTags(PageElementTag.TAG_REFERENCES);
+        List<PageElementTag> referencesTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REFERENCES);
         if ((referencesTags != null) && (referencesTags.size() > 0)) {
           referencesFound = true;
         }

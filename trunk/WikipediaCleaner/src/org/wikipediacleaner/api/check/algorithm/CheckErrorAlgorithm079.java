@@ -69,7 +69,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
       String text = link.getText();
       if ((text == null) || (text.trim().length() == 0)) {
         PageElementTag refTag = pageAnalysis.getSurroundingTag(
-            PageElementTag.TAG_REF, link.getBeginIndex());
+            PageElementTag.TAG_WIKI_REF, link.getBeginIndex());
         if ((refTag == null) || (link.hasSquare())) {
           if (errors == null) {
             return true;

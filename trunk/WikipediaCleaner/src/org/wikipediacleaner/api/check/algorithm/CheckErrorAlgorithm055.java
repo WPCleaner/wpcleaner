@@ -52,7 +52,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     }
 
     // Analyzing the text from the beginning
-    Collection<PageElementTag> tags = pageAnalysis.getTags(PageElementTag.TAG_SMALL);
+    Collection<PageElementTag> tags = pageAnalysis.getTags(PageElementTag.TAG_HTML_SMALL);
     if (tags == null) {
       return false;
     }

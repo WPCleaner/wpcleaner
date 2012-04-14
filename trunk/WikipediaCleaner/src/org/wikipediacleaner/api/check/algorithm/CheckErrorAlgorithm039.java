@@ -49,7 +49,7 @@ public class CheckErrorAlgorithm039 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
-    result = addTags(result, pageAnalysis, errors, PageElementTag.TAG_P);
+    result = addTags(result, pageAnalysis, errors, PageElementTag.TAG_HTML_P);
     return result;
   }
 }
