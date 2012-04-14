@@ -53,44 +53,75 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Retrieve list of <br> tags
+    List<PageElementTag> brTags = pageAnalysis.getTags(PageElementTag.TAG_BR);
+    int brTagsSize = (brTags != null) ? brTags.size() : 0;
+    int currentBrTag = 0;
+    if ((brTags == null) || (brTagsSize == 0)) {
+      return false;
+    }
+
     // Analyzing from the beginning
     boolean errorFound = false;
+    String contents = pageAnalysis.getContents();
     for (PageElementTemplate template : pageAnalysis.getTemplates()) {
-      for (int i = 0; i < template.getParameterCount(); i++) {
-        String parameterValue = template.getParameterValue(i);
-        if (parameterValue != null) {
 
-          // Find last <br> tag
-          PageAnalysis paramAnalysis = new PageAnalysis(pageAnalysis.getPage(), parameterValue);
-          List<PageElementTag> brTags = paramAnalysis.getTags(PageElementTag.TAG_BR);
-          if ((brTags != null) && (brTags.size() > 0)) {
-            PageElementTag lastBrTag = brTags.get(brTags.size() - 1);
-            int currentIndex = lastBrTag.getEndIndex();
-            boolean ok = true;
-            while (currentIndex < parameterValue.length()) {
-              if (Character.isWhitespace(parameterValue.charAt(currentIndex))) {
-                currentIndex++;
-              } else {
-                PageElementComment comment = paramAnalysis.isInComment(currentIndex);
-                if (comment != null) {
-                  currentIndex = comment.getEndIndex();
+      // Find the first <br> tag after template begin
+      while ((currentBrTag < brTagsSize) &&
+             (brTags.get(currentBrTag).getBeginIndex() < template.getBeginIndex())) {
+        currentBrTag++;
+      }
+      if (currentBrTag >= brTagsSize) {
+        return errorFound;
+      }
+ 
+      // Check if template has <br> tags in it
+      if (brTags.get(currentBrTag).getBeginIndex() < template.getEndIndex()) {
+
+        // Check every parameter
+        for (int i = 0; i < template.getParameterCount(); i++) {
+
+          String parameterValue = template.getParameterValue(i);
+          if (parameterValue != null) {
+
+            // Find the last <br> tag in parameter
+            int lastParamIndex = template.getParameterValueOffset(i) + parameterValue.length();
+            PageElementTag lastBrTag = null;
+            while ((currentBrTag < brTagsSize) &&
+                   (brTags.get(currentBrTag).getBeginIndex() < lastParamIndex)) {
+              lastBrTag = brTags.get(currentBrTag);
+              currentBrTag++;
+            }
+
+            // Check if a <br> tag is at the end of the parameter value
+            if (lastBrTag != null) {
+              int currentIndex = lastBrTag.getEndIndex();
+              boolean ok = true;
+              while (currentIndex < lastParamIndex) {
+                if (Character.isWhitespace(contents.charAt(currentIndex))) {
+                  currentIndex++;
                 } else {
-                  currentIndex = parameterValue.length();
-                  ok = false;
+                  PageElementComment comment = pageAnalysis.isInComment(currentIndex);
+                  if (comment != null) {
+                    currentIndex = comment.getEndIndex();
+                  } else {
+                    currentIndex = lastParamIndex;
+                    ok = false;
+                  }
                 }
               }
-            }
-            if (ok) {
-              if (errors == null) {
-                return true;
+              if (ok) {
+                if (errors == null) {
+                  return true;
+                }
+                errorFound = true;
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    pageAnalysis.getPage(),
+                    lastBrTag.getBeginIndex(),
+                    lastBrTag.getEndIndex());
+                errorResult.addReplacement("", GT._("Delete"));
+                errors.add(errorResult);
               }
-              errorFound = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(),
-                  template.getParameterValueOffset(i) + lastBrTag.getBeginIndex(),
-                  template.getParameterValueOffset(i) + lastBrTag.getEndIndex());
-              errorResult.addReplacement("", GT._("Delete"));
-              errors.add(errorResult);
             }
           }
         }
