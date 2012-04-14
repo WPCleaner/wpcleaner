@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-14 20:22+0200\n"
+"POT-Creation-Date: 2012-04-14 23:06+0200\n"
 "PO-Revision-Date: 2012-02-05 15:16+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -89,6 +89,7 @@ msgid "Replace with {0}"
 msgstr "Замінити на {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm013.java:68
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:96
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:102
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:96

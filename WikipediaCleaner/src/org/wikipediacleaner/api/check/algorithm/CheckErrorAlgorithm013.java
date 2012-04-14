@@ -19,9 +19,12 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -48,29 +51,22 @@ public class CheckErrorAlgorithm013 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyze contents from the beginning
-    int startIndex = 0;
+    // Check every <math> tag
+    List<PageElementTag> mathTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_MATH);
     boolean result = false;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      startIndex = contents.indexOf("<math>", startIndex);
-      if (startIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        int endIndex = contents.indexOf("</math>", startIndex);
-        if (endIndex < 0) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          endIndex = startIndex + "<math>".length();
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), startIndex, endIndex);
-          errors.add(errorResult);
-          startIndex = endIndex;
-        } else {
-          startIndex = endIndex;
+    for (PageElementTag mathTag : mathTags) {
+      if ((!mathTag.isFullTag()) &&
+          (!mathTag.isEndTag()) &&
+          (mathTag.getMatchingTag() == null)) {
+        if (errors == null) {
+          return true;
         }
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            mathTag.getBeginIndex(), mathTag.getEndIndex());
+        errorResult.addReplacement("", GT._("Delete"));
+        errors.add(errorResult);
       }
     }
     return result;

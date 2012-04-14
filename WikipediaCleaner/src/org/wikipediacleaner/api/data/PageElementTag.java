@@ -54,6 +54,7 @@ public class PageElementTag extends PageElement {
 
   public final static String TAG_WIKI_NOINCLUDE   = "noinclude";
   public final static String TAG_WIKI_INCLUDEONLY = "includeonly";
+  public final static String TAG_WIKI_MATH        = "math";
   public final static String TAG_WIKI_NOWIKI      = "nowiki";
   public final static String TAG_WIKI_REF         = "ref";
   public final static String TAG_WIKI_REFERENCES  = "references";
