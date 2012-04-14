@@ -52,7 +52,7 @@ public class CheckErrorAlgorithm026 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve all <b> tags
-    List<PageElementTag> bTags = pageAnalysis.getTags(PageElementTag.TAG_B);
+    List<PageElementTag> bTags = pageAnalysis.getTags(PageElementTag.TAG_HTML_B);
     boolean result = false;
     for (PageElementTag bTag : bTags) {
 

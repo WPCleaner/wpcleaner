@@ -225,12 +225,12 @@ public class PageElementTemplate extends PageElement {
           } else {
             count = 1;
           }
-          if (PageElementTag.TAG_NOWIKI.equals(tag.getName())) {
+          if (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getName())) {
             depthTagNoWiki += count;
             if (depthTagNoWiki < 0) {
               depthTagNoWiki = 0;
             }
-          } else if (PageElementTag.TAG_REF.equals(tag.getName())) {
+          } else if (PageElementTag.TAG_WIKI_REF.equals(tag.getName())) {
             if (depthTagNoWiki == 0) {
               depthTagRef += count;
               if (depthTagRef < 0) {

@@ -22,6 +22,7 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
 
 
 /**
@@ -30,7 +31,17 @@ import org.wikipediacleaner.api.data.PageAnalysis;
  */
 public class CheckErrorAlgorithm049 extends CheckErrorAlgorithmBase {
 
-  private static final String[] titleTags = { "h1", "h2", "h3", "h4", "h5", "h6", "h7", "h8", "h9" };
+  private static final String[] titleTags = {
+    PageElementTag.TAG_HTML_H1,
+    PageElementTag.TAG_HTML_H2,
+    PageElementTag.TAG_HTML_H3,
+    PageElementTag.TAG_HTML_H4,
+    PageElementTag.TAG_HTML_H5,
+    PageElementTag.TAG_HTML_H6,
+    PageElementTag.TAG_HTML_H7,
+    PageElementTag.TAG_HTML_H8,
+    PageElementTag.TAG_HTML_H9
+  };
 
   public CheckErrorAlgorithm049() {
     super("Headline with HTML");

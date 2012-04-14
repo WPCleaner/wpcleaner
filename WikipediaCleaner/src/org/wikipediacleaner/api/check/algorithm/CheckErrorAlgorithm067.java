@@ -71,7 +71,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze from the beginning
-    List<PageElementTag> tags = pageAnalysis.getTags(PageElementTag.TAG_REF);
+    List<PageElementTag> tags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REF);
     if (tags == null) {
       return false;
     }
