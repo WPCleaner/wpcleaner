@@ -106,12 +106,12 @@ public class PageContents {
    * @param contents Page contents (may be different from page.getContents()).
    * @return Comments found.
    */
-  public static Collection<PageElementComment> findAllComments(
+  public static List<PageElementComment> findAllComments(
       EnumWikipedia wikipedia, String contents) {
     if (contents == null) {
       return null;
     }
-    Collection<PageElementComment> result = new ArrayList<PageElementComment>();
+    List<PageElementComment> result = new ArrayList<PageElementComment>();
     int currentIndex = 0;
     while ((currentIndex < contents.length())) {
       PageElementComment comment = findNextComment(wikipedia, contents, currentIndex);

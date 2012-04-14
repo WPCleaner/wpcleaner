@@ -49,7 +49,7 @@ public class PageAnalysis {
   private final Object categoriesLock = new Object();
   private Collection<PageElementCategory> categories;
   private final Object commentsLock = new Object();
-  private Collection<PageElementComment> comments;
+  private List<PageElementComment> comments;
   private final Object defaultSortLock = new Object();
   private Collection<PageElementDefaultsort> defaultSorts;
   private final Object externalLinksLock = new Object();
@@ -284,7 +284,7 @@ public class PageAnalysis {
   /**
    * @return All comments in the page analysis.
    */
-  public Collection<PageElementComment> getComments() {
+  public List<PageElementComment> getComments() {
     synchronized (commentsLock) {
       if (comments == null) {
         comments = PageContents.findAllComments(getWikipedia(), getContents());
