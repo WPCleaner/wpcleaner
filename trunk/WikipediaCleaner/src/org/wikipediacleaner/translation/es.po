@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-08 12:48+0200\n"
+"POT-Creation-Date: 2012-04-14 15:26+0200\n"
 "PO-Revision-Date: 2012-02-21 13:22+0000\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -84,8 +84,8 @@ msgid "Error unkown from WikiCleaner"
 msgstr "Error desconocido en WikiCleaner"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:126
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:73
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:76
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:91
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:94
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm027.java:88
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:73
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:76
@@ -94,9 +94,11 @@ msgid "Replace with {0}"
 msgstr "Reemplazar con {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:96
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:102
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:71
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:73
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:146
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:122
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:87
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:93
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:131
@@ -2358,16 +2360,16 @@ msgstr "Obteniendo página - {0}"
 msgid "Retrieving page contents - {0}"
 msgstr "Obteniendo página - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:373
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:477
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:691
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:375
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:479
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:693
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Actualizando advertencia de desambiguación - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:599
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:727
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:828
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:601
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:729
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:830
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Quitando advertencia de desambiguación - {0}"
