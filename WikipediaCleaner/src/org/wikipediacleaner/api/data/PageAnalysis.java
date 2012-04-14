@@ -63,7 +63,7 @@ public class PageAnalysis {
   private final Object languageLinksLock = new Object();
   private Collection<PageElementLanguageLink> languageLinks;
   private final Object tagsLock = new Object();
-  private Collection<PageElementTag> tags;
+  private List<PageElementTag> tags;
   private final Object templatesLock = new Object();
   private Collection<PageElementTemplate> templates;
   private final Object titlesLock = new Object();
@@ -578,7 +578,7 @@ public class PageAnalysis {
   /**
    * @return All tags in the page analysis.
    */
-  public Collection<PageElementTag> getTags() {
+  public List<PageElementTag> getTags() {
     Collection<PageElementComment> tmpComments = getComments();
 
     synchronized (tagsLock) {
