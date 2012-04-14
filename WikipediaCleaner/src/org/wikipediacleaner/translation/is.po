@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-14 15:26+0200\n"
+"POT-Creation-Date: 2012-04-14 18:49+0200\n"
 "PO-Revision-Date: 2012-02-05 15:17+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Icelandic <is@li.org>\n"
@@ -80,8 +80,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:91
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:94
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm027.java:88
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:73
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:76
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:91
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:94
 #, java-format
 msgid "Replace with {0}"
 msgstr ""
@@ -89,6 +89,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:96
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:102
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:96
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:102
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:71
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:73
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:122

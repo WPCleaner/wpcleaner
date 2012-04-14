@@ -19,11 +19,11 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementTagFull;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -50,33 +50,58 @@ public class CheckErrorAlgorithm038 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
+
+    // Retrieve all <i> tags
+    List<PageElementTag> iTags = pageAnalysis.getTags(PageElementTag.TAG_I);
     boolean result = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      PageElementTagFull tag = PageContents.findNextTagFull(
-          pageAnalysis.getPage(), contents, "i", startIndex);
-      if (tag == null) {
-        startIndex = contents.length();
+    for (PageElementTag iTag : iTags) {
+
+      // Check if the tag is an error
+      PageElementTag endTag = null;
+      boolean errorFound = false;
+      if (iTag.isFullTag()) {
+        errorFound = true;
+      } else if (iTag.isEndTag()) {
+        if (iTag.getMatchingTag() == null) {
+          errorFound = true;
+        }
       } else {
+        errorFound = true;
+        endTag = iTag.getMatchingTag();
+      }
+
+      // Mark error
+      if (errorFound) {
         if (errors == null) {
           return true;
         }
-        CheckErrorResult error = createCheckErrorResult(
-            pageAnalysis.getPage(), tag.getStartTagBeginIndex(), tag.getEndTagEndIndex());
-        String text = tag.getText();
-        if (text.length() > 30) {
-          text = text.substring(0, 10) + "…" + text.substring(text.length() - 10); 
-        }
-        error.addReplacement(
-            "''" + tag.getText() + "''",
-            GT._("Replace with {0}", "''" + text + "''"));
-        error.addReplacement(
-            tag.getText(),
-            GT._("Replace with {0}", text));
-        errors.add(error);
         result = true;
-        startIndex = tag.getEndTagEndIndex();
+        if (endTag != null) {
+          CheckErrorResult error = createCheckErrorResult(
+              pageAnalysis.getPage(), iTag.getBeginIndex(), endTag.getEndIndex());
+          String text = pageAnalysis.getContents().substring(
+              iTag.getEndIndex(), endTag.getBeginIndex());
+          if ((text != null) && (text.trim().length() > 0)) {
+            String visibleText = text;
+            if (text.length() > 30) {
+              visibleText = text.substring(0, 10) + "…" + text.substring(text.length() - 10); 
+            }
+            error.addReplacement(
+                "''" + text + "''",
+                GT._("Replace with {0}", "''" + visibleText + "''"));
+            error.addReplacement(
+                text,
+                GT._("Replace with {0}", visibleText));
+          } else {
+            error.addReplacement("", GT._("Delete"));
+          }
+          errors.add(error);
+        } else {
+          CheckErrorResult error = createCheckErrorResult(
+              pageAnalysis.getPage(), iTag.getBeginIndex(), iTag.getEndIndex());
+          error.addReplacement("", GT._("Delete"));
+          errors.add(error);
+        }
       }
     }
     return result;
