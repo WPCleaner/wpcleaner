@@ -269,6 +269,10 @@ public class PageElementTag extends PageElement {
     return 0;
   }
 
+  /**
+   * @param index Index of parameter.
+   * @return Parameter.
+   */
   public PageElementTag.Parameter getParameter(int index) {
     if (parameters == null) {
       return null;
@@ -278,6 +282,23 @@ public class PageElementTag extends PageElement {
     }
     return parameters.get(index);
   }
+
+  /**
+   * @param parameterName Parameter name.
+   * @return Parameter.
+   */
+  public PageElementTag.Parameter getParameter(String parameterName) {
+    if (parameters == null) {
+      return null;
+    }
+    for (PageElementTag.Parameter param : parameters) {
+      if (param.getName().equals(parameterName)) {
+        return param;
+      }
+    }
+    return null;
+  }
+
   /**
    * @return Is it an end tag ?
    */

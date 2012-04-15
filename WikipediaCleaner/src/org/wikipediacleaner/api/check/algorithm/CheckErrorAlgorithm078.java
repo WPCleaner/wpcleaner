@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -27,8 +28,7 @@ import java.util.TreeSet;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementTagFull;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -56,45 +56,47 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Retrieve all <references> tags
+    List<PageElementTag> referencesTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REFERENCES);
+    if ((referencesTags == null) || (referencesTags.size() == 0)) {
+      return false;
+    }
+
+    // Check all <references> tags
     boolean result = false;
-    int startIndex = 0;
-    Map<String, PageElementTagFull> firstTags = new HashMap<String, PageElementTagFull>();
+    Map<String, PageElementTag> firstTags = new HashMap<String, PageElementTag>();
     Set<String> tagUsed = new TreeSet<String>();
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      PageElementTagFull tag = PageContents.findNextTagFull(
-          pageAnalysis.getPage(), contents, "references", startIndex);
-      if (tag != null) {
-        startIndex = tag.getEndTagEndIndex();
-        String group = tag.getParameter("group");
-        if (group == null) {
-          group = "";
+    for (PageElementTag referencesTag : referencesTags) {
+      // Retrieve "group"
+      PageElementTag.Parameter group = referencesTag.getParameter("group");
+      String groupName = "";
+      if ((group != null) && (group.getValue() != null)) {
+        groupName = group.getValue();
+      }
+
+      // Check if a <references> tag already exist for this group
+      PageElementTag firstTag = firstTags.get(groupName);
+      if (firstTag == null) {
+        firstTags.put(groupName, referencesTag);
+      } else {
+        if (errors == null) {
+          return true;
         }
-        PageElementTagFull firstTag = firstTags.get(group);
-        if (firstTag == null) {
-          firstTags.put(group, tag);
-        } else {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          if (!tagUsed.contains(group)) {
-            tagUsed.add(group);
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(),
-                firstTag.getStartTagBeginIndex(), firstTag.getEndTagEndIndex(),
-                ErrorLevel.CORRECT);
-            errorResult.addReplacement("", GT._("Delete"));
-            errors.add(errorResult);
-          }
+        result = true;
+        if (!tagUsed.contains(groupName)) {
+          tagUsed.add(groupName);
           CheckErrorResult errorResult = createCheckErrorResult(
               pageAnalysis.getPage(),
-              tag.getStartTagBeginIndex(), tag.getEndTagEndIndex());
+              firstTag.getBeginIndex(), firstTag.getEndIndex(),
+              ErrorLevel.CORRECT);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
         }
-      } else {
-        startIndex = contents.length();
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            referencesTag.getBeginIndex(), referencesTag.getEndIndex());
+        errorResult.addReplacement("", GT._("Delete"));
+        errors.add(errorResult);
       }
     }
     return result;
