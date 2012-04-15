@@ -154,6 +154,13 @@ public class PageElementExternalLink extends PageElement {
   }
 
   /**
+   * @return Text.
+   */
+  public String getTextNotTrimmed() {
+    return textNotTrimmed;
+  }
+
+  /**
    * @return Displayed text.
    */
   public String getDisplayedText() {
