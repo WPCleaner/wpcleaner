@@ -22,6 +22,7 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 
 
 /**
@@ -44,63 +45,29 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
   public boolean analyze(
       PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    boolean result = false;
-    result |= analyzeProtocol("[http://", pageAnalysis, errors);
-    result |= analyzeProtocol("[ftp://", pageAnalysis, errors);
-    result |= analyzeProtocol("[https://", pageAnalysis, errors);
-    return result;
-  }
-
-  /**
-   * Check for errors for on protocol.
-   * 
-   * @param protocol Protocol.
-   * @param pageAnalysis Page analysis.
-   * @param contents Page contents.
-   * @return
-   */
-  private boolean analyzeProtocol(
-      String protocol, PageAnalysis pageAnalysis,
-      Collection<CheckErrorResult> errors) {
     if (pageAnalysis == null) {
       return false;
     }
-    int startIndex = 0;
+
+    // Check every external links
+    Collection<PageElementExternalLink> links = pageAnalysis.getExternalLinks();
     boolean result = false;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      startIndex = contents.indexOf(protocol, startIndex);
-      if (startIndex >= 0) {
-        int endIndex = contents.indexOf("]", startIndex);
-        int lineIndex = contents.indexOf("\n", startIndex);
-        if (endIndex < 0) {
+    for (PageElementExternalLink link : links) {
+      String text = link.getTextNotTrimmed();
+      if (text != null) {
+        int crIndex = text.indexOf('\n');
+        if (crIndex >= 0) {
           if (errors == null) {
             return true;
           }
           result = true;
-          if (lineIndex < 0) {
-            errors.add(createCheckErrorResult(
-                pageAnalysis.getPage(), startIndex, contents.length()));
-            startIndex = contents.length();
-          } else {
-            errors.add(createCheckErrorResult(
-                pageAnalysis.getPage(), startIndex, lineIndex));
-            startIndex = lineIndex + 1;
-          }
-        } else {
-          if ((lineIndex >= 0) && (lineIndex < endIndex)) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            errors.add(new CheckErrorResult(getShortDescription(), startIndex, lineIndex));
-            startIndex = lineIndex + 1;
-          } else {
-            startIndex = endIndex;
-          }
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              link.getBeginIndex(), link.getEndIndex());
+          errorResult.addReplacement(
+              "[" + link.getLink() + " " + link.getText().replaceAll("\\n", "") + "]");
+          errors.add(errorResult);
         }
-      } else {
-        startIndex = contents.length();
       }
     }
     return result;
