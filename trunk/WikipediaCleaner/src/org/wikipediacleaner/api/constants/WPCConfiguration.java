@@ -862,10 +862,16 @@ public class WPCConfiguration {
   }
 
   /**
+   * @param count Number of disambiguation links.
    * @return Comment for disambiguation fixing.
    */
-  public String getDisambiguationComment() {
+  public String getDisambiguationComment(int count) {
     if (disambiguationComment != null) {
+      try {
+        return MessageFormat.format(disambiguationComment, Integer.valueOf(count));
+      } catch (IllegalArgumentException e) {
+        //
+      }
       return disambiguationComment;
     }
     return "";
@@ -875,7 +881,7 @@ public class WPCConfiguration {
    * @return Comment for updating a page.
    */
   public String getUpdatePageMessage() {
-    return getDisambiguationComment();
+    return ""; // TODO
   }
 
   /* ================================================================================= */
