@@ -88,7 +88,7 @@ public abstract class MWPaneFormatter {
   /**
    * Clean format of a MediaWikiPane.
    * 
-   * @param pane MediaWikiPane to be formatted.
+   * @param doc Styled document to be formatted.
    */
   protected void cleanFormat(StyledDocument doc) {
 
