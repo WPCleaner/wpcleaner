@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-14 23:56+0200\n"
+"POT-Creation-Date: 2012-04-16 19:58+0200\n"
 "PO-Revision-Date: 2012-02-05 15:16+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -102,8 +102,8 @@ msgstr "{0} を置換"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:71
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:73
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:122
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:87
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:93
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:92
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:98
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:93
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:131
 msgid "Delete"
@@ -1741,6 +1741,20 @@ msgstr "置換テキスト"
 msgid "Add to preferred disambiguations"
 msgstr ""
 
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:496
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:511
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:788
+#, java-format
+msgid "&Link to {0}"
+msgstr "{0} へリンク (&L)"
+
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:502
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:517
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:793
+#, java-format
+msgid "&Replace with {0}"
+msgstr "{0} で置換 (&R)"
+
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:754
 msgid "Add other preferred disambiguation..."
 msgstr ""
@@ -1757,16 +1771,6 @@ msgstr ""
 #, java-format
 msgid "Reverse to [[{0}|{1}]]"
 msgstr ""
-
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:788
-#, java-format
-msgid "&Link to {0}"
-msgstr "{0} へリンク (&L)"
-
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:793
-#, java-format
-msgid "&Replace with {0}"
-msgstr "{0} で置換 (&R)"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:810
 msgid "Red links analysis"
