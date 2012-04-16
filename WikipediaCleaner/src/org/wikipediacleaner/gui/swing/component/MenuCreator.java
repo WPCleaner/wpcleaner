@@ -489,62 +489,62 @@ public class MenuCreator {
       int fixedBeginReplace = 0;
       int fixedEndReplace = 0;
       String withLastSuffix = getPossibleLastSuffix(page.getTitle(), links);
+      String last = getLastReplacement(page.getTitle());
+      if (withLastSuffix != null) {
+        preferredDabs.remove(withLastSuffix);
+
+        menuItem = Utilities.createJMenuItem(GT._("&Link to {0}", withLastSuffix));
+        action = new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, false);
+        menuItem.addActionListener(action);
+        menuItem.setAccelerator(MWPane.getLastLinkKeyStroke());
+        popup.add(menuItem);
+
+        menuItem = Utilities.createJMenuItem(GT._("&Replace with {0}", withLastSuffix));
+        action = new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, true);
+        menuItem.addActionListener(action);
+        menuItem.setAccelerator(MWPane.getLastReplaceKeyStroke());
+        popup.add(menuItem);
+      } else {
+        if ((last != null) && (!last.equals(withLastSuffix))) {
+          preferredDabs.remove(last);
+
+          menuItem = Utilities.createJMenuItem(GT._("&Link to {0}", last));
+          action = new ReplaceLinkAction(page.getTitle(), last, text, element, textPane, false);
+          menuItem.addActionListener(action);
+          menuItem.setAccelerator(MWPane.getLastLinkKeyStroke());
+          popup.add(menuItem);
+
+          menuItem = Utilities.createJMenuItem(GT._("&Replace with {0}", last));
+          action = new ReplaceLinkAction(page.getTitle(), last, text, element, textPane, true);
+          menuItem.addActionListener(action);
+          menuItem.setAccelerator(MWPane.getLastReplaceKeyStroke());
+          popup.add(menuItem);
+        }
+      }
       if (!preferredDabs.isEmpty()) {
         for (String title : preferredDabs) {
-          if ((withLastSuffix != null) && (withLastSuffix.equals(title))) {
-            withLastSuffix = null;
-          }
           menuItem = new JMenuItem(title);
           action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
           menuItem.addActionListener(action);
-          if (preferredDabs.size() == 1) {
+          if ((preferredDabs.size() == 1) &&
+              (withLastSuffix == null) &&
+              (last == null)) {
             menuItem.setAccelerator(MWPane.getLastLinkKeyStroke());
           }
           submenuLink.add(menuItem);
           fixedBeginLink++;
+
           menuItem = new JMenuItem(title);
           action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
           menuItem.addActionListener(action);
-          if (preferredDabs.size() == 1) {
+          if ((preferredDabs.size() == 1) &&
+              (withLastSuffix == null) &&
+              (last == null)) {
             menuItem.setAccelerator(MWPane.getLastReplaceKeyStroke());
           }
           submenuReplace.add(menuItem);
           fixedBeginReplace++;
         }
-      } else {
-        String title = getLastReplacement(page.getTitle());
-        if (title != null) {
-          if ((withLastSuffix != null) && (withLastSuffix.equals(title))) {
-            withLastSuffix = null;
-          }
-          menuItem = new JMenuItem(title);
-          action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
-          menuItem.addActionListener(action);
-          menuItem.setAccelerator(MWPane.getLastLinkKeyStroke());
-          submenuLink.add(menuItem);
-          fixedBeginLink++;
-          menuItem = new JMenuItem(title);
-          action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
-          menuItem.addActionListener(action);
-          menuItem.setAccelerator(MWPane.getLastReplaceKeyStroke());
-          submenuReplace.add(menuItem);
-          fixedBeginReplace++;
-        }
-      }
-      if (withLastSuffix != null) {
-        menuItem = new JMenuItem(withLastSuffix);
-        action = new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, false);
-        menuItem.addActionListener(action);
-        menuItem.setAccelerator(MWPane.getLastLinkKeyStroke());
-        submenuLink.add(menuItem);
-        fixedBeginLink++;
-
-        menuItem = new JMenuItem(withLastSuffix);
-        action = new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, true);
-        menuItem.addActionListener(action);
-        menuItem.setAccelerator(MWPane.getLastReplaceKeyStroke());
-        submenuReplace.add(menuItem);
-        fixedBeginReplace++;
       }
 
       // Separators
@@ -786,7 +786,7 @@ public class MenuCreator {
       String title = page.getRedirectTitle();
 
       menuItem = Utilities.createJMenuItem(GT._("&Link to {0}", title));
-      action = new ReplaceLinkAction(page.getTitle(), title, text,element, textPane, false);
+      action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
       menuItem.addActionListener(action);
       popup.add(menuItem);
 
