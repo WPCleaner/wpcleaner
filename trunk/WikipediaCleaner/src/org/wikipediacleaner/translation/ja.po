@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-04-16 19:58+0200\n"
-"PO-Revision-Date: 2012-02-05 15:16+0000\n"
+"PO-Revision-Date: 2012-04-15 01:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-05 22:52+0000\n"
-"X-Generator: Launchpad (build 14738)\n"
+"X-Launchpad-Export-Date: 2012-04-16 19:44+0000\n"
+"X-Generator: Launchpad (build 15099)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -177,9 +177,8 @@ msgid "Add DEFAULTSORT"
 msgstr "DEFAULTSORT を追加"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:41
-#, fuzzy
 msgid "Remove all links to title (first in bold)"
-msgstr "このタイトルへのリンクをすべて除去する"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:42
 msgid "Remove all links to title"
@@ -294,9 +293,8 @@ msgid "List of false positives for this type of error"
 msgstr "このタイプのエラーの偽陽性一覧"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:240
-#, fuzzy
 msgid "Page containing the list of false positives for this type of error"
-msgstr "このタイプのエラーの偽陽性一覧"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/CWConfiguration.java:123
 #, java-format
@@ -2196,18 +2194,16 @@ msgid "Translation options"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:77
-#, fuzzy
 msgid "Translate internal links text"
-msgstr "内部リンク"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:84
 msgid "Convert internal links without interwiki to inter language links"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:91
-#, fuzzy
 msgid "Translate categories"
-msgstr "カテゴリを修正"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:98
 msgid "Translate templates names"
@@ -2340,12 +2336,3 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
-
-#~ msgid "&Help"
-#~ msgstr "ヘルプ (&H)"
-
-#~ msgid "&Remove page"
-#~ msgstr "ページをはずす(&R)"
-
-#~ msgid "&Add page"
-#~ msgstr "ページを追加 (&A)"

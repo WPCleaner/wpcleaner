@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-04-16 19:58+0200\n"
-"PO-Revision-Date: 2012-02-05 15:16+0000\n"
+"PO-Revision-Date: 2012-04-15 01:07+0000\n"
 "Last-Translator: Krasznecz Zoltán <zoltan.krasznecz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-05 22:52+0000\n"
-"X-Generator: Launchpad (build 14738)\n"
+"X-Launchpad-Export-Date: 2012-04-16 19:44+0000\n"
+"X-Generator: Launchpad (build 15099)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -423,9 +423,8 @@ msgstr "&Bezár"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:201
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:278
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:259
-#, fuzzy
 msgid "Automatic fixing"
-msgstr "Automata egyértelműsítő lap javítás"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:221
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:126
@@ -464,11 +463,8 @@ msgid "Disambiguation (Alt + &D)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:503
-#, fuzzy
 msgid "You must select the pages on which running automatic fixing."
 msgstr ""
-"Ki kell választanod azokat a lapokat amiken futtatni akarod az automatikus "
-"egyértelműsítő lap javítást."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:509
 msgid "You must input the initial and destination texts."
@@ -784,11 +780,8 @@ msgstr "Rendezés"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:450
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:470
-#, fuzzy
 msgid "You must select pages on which running automatic fixing."
 msgstr ""
-"Ki kell választanod azokat a lapokat amiken futtatni akarod az automatikus "
-"egyértelműsítő lap javítást."
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:129
 msgid "Information"
@@ -2205,14 +2198,12 @@ msgid "Down"
 msgstr "Le"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:57
-#, fuzzy
 msgid "Translation options"
-msgstr "Általános beállítások"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:77
-#, fuzzy
 msgid "Translate internal links text"
-msgstr "Cím a szövegben"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:84
 msgid "Convert internal links without interwiki to inter language links"
@@ -2270,9 +2261,9 @@ msgstr "Oldal frissítése"
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:116
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:206
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:266
-#, fuzzy, java-format
+#, java-format
 msgid "Retrieving interwiki for {0}"
-msgstr "MediaWiki API letöltése"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:246
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:254
@@ -2353,69 +2344,3 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
-
-#~ msgid "&Help"
-#~ msgstr "&Súgó"
-
-#~ msgid "&Remove page"
-#~ msgstr "&Oldal eltávolítása"
-
-#~ msgid "&Add page"
-#~ msgstr "&Oldal hozzáadása"
-
-#~ msgid "Headlines start with one \"=\""
-#~ msgstr "Egy „=”-lel kezdődő szakaszcímek"
-
-#~ msgid "Square brackets not correct end"
-#~ msgstr "Square brackets not correct end"
-
-#~ msgid "HTML text style element <b>"
-#~ msgstr "<b> HTML-kifejezés"
-
-#~ msgid "Template not correct end"
-#~ msgstr "Lezáratlan sablon"
-
-#~ msgid "Template not correct begin"
-#~ msgstr "Hibás kezdetű sablon"
-
-#~ msgid "Square brackets not correct begin"
-#~ msgstr "Hibás kezdetű szögletes zárójel"
-
-#~ msgid "Headline should end with \"=\""
-#~ msgstr "Nem „=”-lel végződő szakaszcímek"
-
-#~ msgid "HTML text style element <i>"
-#~ msgstr "<i> HTML-kifejezés"
-
-#~ msgid "HTML text style element <p>"
-#~ msgstr "<p> HTML-kifejezés"
-
-#~ msgid "Article with false <br/>"
-#~ msgstr "Cikkek hibás <br/> taggel"
-
-#~ msgid "Reference duplication"
-#~ msgstr "Azonos tartalmú <ref>"
-
-#~ msgid "Show full list"
-#~ msgstr "Teljes lista mutatása"
-
-#~ msgid "Template programming element"
-#~ msgstr "Sablonkészítő kifejezések szócikkekben"
-
-#~ msgid "Retrieving namespaces"
-#~ msgstr "Névterek letöltése"
-
-#~ msgid "Link equal to linktext"
-#~ msgstr "Wikilink azonos szöveggel és céllal"
-
-#~ msgid "Double pipe in one link"
-#~ msgstr "Két vonal egy wikilinkben"
-
-#~ msgid "This screen is not functional yet !"
-#~ msgstr "Ez még nem működik!"
-
-#~ msgid "en dash or em dash"
-#~ msgstr "&ndash vagy &mdash a  „–” vagy  a „—” helyett"
-
-#~ msgid "Work"
-#~ msgstr "Munka"

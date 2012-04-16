@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-04-16 19:58+0200\n"
-"PO-Revision-Date: 2012-02-05 15:16+0000\n"
+"PO-Revision-Date: 2012-04-15 01:06+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-05 22:52+0000\n"
-"X-Generator: Launchpad (build 14738)\n"
+"X-Launchpad-Export-Date: 2012-04-16 19:44+0000\n"
+"X-Generator: Launchpad (build 15099)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -175,9 +175,8 @@ msgid "Add DEFAULTSORT"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:41
-#, fuzzy
 msgid "Remove all links to title (first in bold)"
-msgstr "Verplaats alle links naar de titel"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:42
 msgid "Remove all links to title"
@@ -294,9 +293,8 @@ msgid "List of false positives for this type of error"
 msgstr "Lijst van valse positieven voor dit soort fouten"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:240
-#, fuzzy
 msgid "Page containing the list of false positives for this type of error"
-msgstr "Lijst van valse positieven voor dit soort fouten"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/CWConfiguration.java:123
 #, java-format
@@ -512,9 +510,8 @@ msgid "Do you want to continue ?"
 msgstr "Verdergaan?"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:549
-#, fuzzy
 msgid "A comment is required for automatix fixing."
-msgstr "Een opmerking is noodzakelijk voor het inzenden van de pagina."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
 #: org/wikipediacleaner/gui/swing/MainWindow.java:746
@@ -2207,23 +2204,20 @@ msgid "Down"
 msgstr "Omlaag"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:57
-#, fuzzy
 msgid "Translation options"
-msgstr "Algemene instellingen"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:77
-#, fuzzy
 msgid "Translate internal links text"
-msgstr "Titel in tekst"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:84
 msgid "Convert internal links without interwiki to inter language links"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:91
-#, fuzzy
 msgid "Translate categories"
-msgstr "Repareer categorieën"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:98
 msgid "Translate templates names"
@@ -2356,63 +2350,3 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
-
-#~ msgid "Existing references"
-#~ msgstr "Bestaande refenties"
-
-#~ msgid "Detection by [[{0}]]"
-#~ msgstr "Opgemerkt door [[{0}]]"
-
-#~ msgid "&Help"
-#~ msgstr "&Help"
-
-#~ msgid "Square brackets not correct end"
-#~ msgstr "Foute links"
-
-#~ msgid "Headlines start with one \"=\""
-#~ msgstr "Eerstegraads koppen"
-
-#~ msgid "Article with false <br/>"
-#~ msgstr "Verkeerde"
-
-#~ msgid "Double pipe in one link"
-#~ msgstr "Dubbele pipe-teken gevonden in een link"
-
-#~ msgid "Template not correct end"
-#~ msgstr "Template gevonden zonder correcte einde"
-
-#~ msgid "Square brackets not correct begin"
-#~ msgstr "Missende begin blokhaken"
-
-#~ msgid "Template not correct begin"
-#~ msgstr "Template heeft geen correct begin"
-
-#~ msgid "Headline should end with \"=\""
-#~ msgstr "Kop gevonden die niet eindigt op \"=\""
-
-#~ msgid ""
-#~ "!NEW! - WikiCleaner configuration is now available online, check the "
-#~ "System configuration."
-#~ msgstr ""
-#~ "!NIEUW! - WikiCleaner configuraties zijn nu online beschikbaar, zie ook "
-#~ "de Systeem-configuraties."
-
-#~ msgid "except"
-#~ msgstr "uitzonderen"
-
-#~ msgid "all errors"
-#~ msgstr "Alle foutmeldingen"
-
-#~ msgid "only"
-#~ msgstr "alleen"
-
-#~ msgid "Load"
-#~ msgstr "Laden"
-
-#~ msgid "Comma separated list of errors to work on."
-#~ msgstr ""
-#~ "Lijst van fouten waar aan gewerkt moet worden, gescheiden door komma's."
-
-#~ msgid "Comma separated list of errors to ignore."
-#~ msgstr ""
-#~ "Lijst van fouten die genegeerd moeten worden, gescheiden door komma's."

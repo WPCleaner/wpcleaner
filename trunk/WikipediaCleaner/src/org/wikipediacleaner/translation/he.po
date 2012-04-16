@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-04-16 19:58+0200\n"
-"PO-Revision-Date: 2012-02-05 15:17+0000\n"
+"PO-Revision-Date: 2012-04-15 01:08+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-05 22:52+0000\n"
-"X-Generator: Launchpad (build 14738)\n"
+"X-Launchpad-Export-Date: 2012-04-16 19:44+0000\n"
+"X-Generator: Launchpad (build 15099)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -423,9 +423,8 @@ msgstr "ס&גור"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:201
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:278
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:259
-#, fuzzy
 msgid "Automatic fixing"
-msgstr "תיקון פירושון אוטומטי"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:221
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:126
@@ -464,9 +463,8 @@ msgid "Disambiguation (Alt + &D)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:503
-#, fuzzy
 msgid "You must select the pages on which running automatic fixing."
-msgstr "עליך לבחור את העמודים עליהם יופעל פירושון אוטומטי."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:509
 msgid "You must input the initial and destination texts."
@@ -782,9 +780,8 @@ msgstr "סדר"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:450
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:470
-#, fuzzy
 msgid "You must select pages on which running automatic fixing."
-msgstr "עליך לבחור את העמודים עליהם יופעל פירושון אוטומטי."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:129
 msgid "Information"
@@ -2194,9 +2191,8 @@ msgid "Down"
 msgstr "מטה"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:57
-#, fuzzy
 msgid "Translation options"
-msgstr "אפשרויות כלליות"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:77
 msgid "Translate internal links text"
@@ -2258,9 +2254,9 @@ msgstr "מעדכן את תכני העמוד"
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:116
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:206
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:266
-#, fuzzy, java-format
+#, java-format
 msgid "Retrieving interwiki for {0}"
-msgstr "מאחזר פירושונים אפשריים עבור {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:246
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:254
@@ -2341,67 +2337,3 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
-
-#~ msgid "&Help"
-#~ msgstr "&עזרה"
-
-#~ msgid "&Remove page"
-#~ msgstr "ה&סור עמוד"
-
-#~ msgid "&Add page"
-#~ msgstr "ה&וסף עמוד"
-
-#~ msgid "Work"
-#~ msgstr "עבודה"
-
-#~ msgid "Retrieving namespaces"
-#~ msgstr "מאחזר את מרווחי השם"
-
-#~ msgid ""
-#~ "!!! WARNING !!!\n"
-#~ "This function will do all the replacements in all selected pages.\n"
-#~ "It may modify a lot of pages in a short period of time.\n"
-#~ "On some Wikipedia projects, you may need the bot status for doing this.\n"
-#~ "Please, check if you need the bot status by reading the rules of "
-#~ "Wikipedia.\n"
-#~ "Also, verify again the texts you have inputed before running this "
-#~ "function.\n"
-#~ "Do you want to continue ?"
-#~ msgstr ""
-#~ "!!! אזהרה !!!\n"
-#~ "פונקציה זו תבצע את כל ההחלפות בכל העמודים הנבחרים.\n"
-#~ "ייתכן והפונקציה תשנה מספר גדול של עמודים בפרק זמן קצר.\n"
-#~ "בכמה ממיזמי ויקיפדיה, ייתכן ותזדקק למצב בוט לצורך ביצוע פעולה זו.\n"
-#~ "אנא, בדוק אם תזדקק להרשאות בוט על ידי קריאת הכללים של ויקיפדיה.\n"
-#~ "כמו כן, וודא שוב את הטקסטים שהוזנו לפני הקצת פונקציה זו.\n"
-#~ "האם ברצונך להמשיך ?"
-
-#~ msgid ""
-#~ "The page {0} has been modified on Wikipedia since you have loaded the "
-#~ "page.\n"
-#~ "To avoid modification conflicts, you need to reload the page and make "
-#~ "your modifications again.\n"
-#~ "(Local revision: {1}, Wikipedia revision: {2})"
-#~ msgstr ""
-#~ "העמוד {0} נערך בויקיפדיה מאז שטענתם את העמוד.\n"
-#~ "כדי להמנע מהתנגשויות עריכה, יהיה עליכם לטעון את העמוד ולבצע את השינויים "
-#~ "שוב.\n"
-#~ "(גרסה מקומית: {1}, הגרסה בויקיפדיה: {2})"
-
-#~ msgid "Square brackets not correct end"
-#~ msgstr "סיומת הסוגריים המרובעים אינה נכונה"
-
-#~ msgid "Headlines start with one \"=\""
-#~ msgstr "שורות הכותרת מתחילות ב־\"=\" יחיד"
-
-#~ msgid "Double pipe in one link"
-#~ msgstr "הפרדה כפולה בקישור יחיד"
-
-#~ msgid "Article with false <br/>"
-#~ msgstr "ערך עם <br/> שקרי"
-
-#~ msgid "Template programming element"
-#~ msgstr "רכיב תכנות תבנית"
-
-#~ msgid "HTML text style element <b>"
-#~ msgstr "רכיב עיצוב ה־HTML ‏<b>"
