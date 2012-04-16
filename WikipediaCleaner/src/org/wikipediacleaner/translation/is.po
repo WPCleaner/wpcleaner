@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-04-16 19:58+0200\n"
-"PO-Revision-Date: 2012-02-05 15:17+0000\n"
+"PO-Revision-Date: 2012-04-15 01:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Icelandic <is@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-05 22:52+0000\n"
-"X-Generator: Launchpad (build 14738)\n"
+"X-Launchpad-Export-Date: 2012-04-16 19:44+0000\n"
+"X-Generator: Launchpad (build 15099)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -423,9 +423,8 @@ msgstr "&Loka"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:201
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:278
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:259
-#, fuzzy
 msgid "Automatic fixing"
-msgstr "Sjálfvirk aðgreiningarlögun"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:221
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:126
@@ -464,9 +463,8 @@ msgid "Disambiguation (Alt + &D)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:503
-#, fuzzy
 msgid "You must select the pages on which running automatic fixing."
-msgstr "Þú verður að velja aðgreiningarsíður sem á að laga sjálfvirkt."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:509
 msgid "You must input the initial and destination texts."
@@ -782,9 +780,8 @@ msgstr "Raða"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:450
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:470
-#, fuzzy
 msgid "You must select pages on which running automatic fixing."
-msgstr "Þú verður að velja aðgreiningarsíður sem á að laga sjálfvirkt."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:129
 msgid "Information"
@@ -2197,9 +2194,8 @@ msgid "Down"
 msgstr "Niður"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:57
-#, fuzzy
 msgid "Translation options"
-msgstr "Almennir valkostir"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:77
 msgid "Translate internal links text"
@@ -2261,9 +2257,9 @@ msgstr "Uppfæri síðuinnihald"
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:116
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:206
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:266
-#, fuzzy, java-format
+#, java-format
 msgid "Retrieving interwiki for {0}"
-msgstr "Næ í mögulegar aðgreiningar fyrir {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:246
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:254
@@ -2344,40 +2340,3 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
-
-#~ msgid "&Help"
-#~ msgstr "&Hjálp"
-
-#~ msgid "&Remove page"
-#~ msgstr "&Fjarlægja síðu"
-
-#~ msgid "&Add page"
-#~ msgstr "&Bæta við síðu"
-
-#~ msgid "Work"
-#~ msgstr "Vinna"
-
-#~ msgid "Retrieving namespaces"
-#~ msgstr "Sæki nafnrými"
-
-#~ msgid ""
-#~ "!!! WARNING !!!\n"
-#~ "This function will do all the replacements in all selected pages.\n"
-#~ "It may modify a lot of pages in a short period of time.\n"
-#~ "On some Wikipedia projects, you may need the bot status for doing this.\n"
-#~ "Please, check if you need the bot status by reading the rules of "
-#~ "Wikipedia.\n"
-#~ "Also, verify again the texts you have inputed before running this "
-#~ "function.\n"
-#~ "Do you want to continue ?"
-#~ msgstr ""
-#~ "!!! Viðvörun !!!\n"
-#~ "Þessi aðgerð breytir öllu í völdum síðum.\n"
-#~ "Hún gæti breytt mjög mörgum síðum á stuttum tíma.\n"
-#~ "Á sumum Wikipedium þarf vélmennamerkingu til að gera svona margar "
-#~ "breytingar.\n"
-#~ "Vinsamlegast athugaðu hvort það eigi við á þeirri Wikipediu sem þú ert að "
-#~ "vinna á.\n"
-#~ "Einnig skaltu fara yfir listann aftur til að vera örugg/ur um að breyta "
-#~ "réttum síðum.\n"
-#~ "Viltu halda áfram?"

@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-05 22:52+0000\n"
-"X-Generator: Launchpad (build 14738)\n"
+"X-Launchpad-Export-Date: 2012-04-16 19:44+0000\n"
+"X-Generator: Launchpad (build 15099)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -425,9 +425,8 @@ msgstr "&Tutup"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:201
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:278
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:259
-#, fuzzy
 msgid "Automatic fixing"
-msgstr "Perbaikan disambiguasi otomatis"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:221
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:126
@@ -466,10 +465,8 @@ msgid "Disambiguation (Alt + &D)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:503
-#, fuzzy
 msgid "You must select the pages on which running automatic fixing."
 msgstr ""
-"Anda harus memilih artikel dimana tengah berjalan disambiguasi otomatis."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:509
 msgid "You must input the initial and destination texts."
@@ -512,9 +509,8 @@ msgid "Do you want to continue ?"
 msgstr "Anda ingin lanjutkan ?"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:549
-#, fuzzy
 msgid "A comment is required for automatix fixing."
-msgstr "Perlu ringkasan untuk mengirim perubahan artikel."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
 #: org/wikipediacleaner/gui/swing/MainWindow.java:746
@@ -750,30 +746,22 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1892
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
 "If you want to define a page you need to add :\n"
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
-"Tidak ada halaman definisi untuk jenis galat ini.\n"
-"Jika anda ingin memberikan halaman definisinya, tambahkan :\n"
-"  {0} = <nama halaman> END\n"
-"pada halaman terjemahan ({1}) di {2} Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1936
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "There''s no white list defined for this error type.\n"
 "If you want to define a white list you need to add :\n"
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
-"Tidak ada halaman definisi untuk jenis galat ini.\n"
-"Jika anda ingin memberikan halaman definisinya, tambahkan :\n"
-"  {0} = <nama halaman> END\n"
-"pada halaman terjemahan ({1}) di {2} Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:258
 #, java-format
@@ -803,10 +791,8 @@ msgstr "Urutkan"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:450
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:470
-#, fuzzy
 msgid "You must select pages on which running automatic fixing."
 msgstr ""
-"Anda harus memilih artikel dimana tengah berjalan disambiguasi otomatis."
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:129
 msgid "Information"
@@ -1643,21 +1629,16 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:73
-#, fuzzy, java-format
+#, java-format
 msgid "The page {0} in \"{1}\" doesn''t have a language link to \"{2}\"."
 msgstr ""
-"Artikel {0} pada {1} Wikipedia tidak memiliki pranala bahasa pada {2} "
-"Wikipedia."
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:79
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "The page {0} in \"{1}\" has a language link to \"{2}\": {3}.\n"
 "Do you want to replace the link by [[{3}]] ?"
 msgstr ""
-"Artikel {0} pada {1} Wikipedia memiliki pranala bahasa pada {2} Wikipedia: "
-"{3}.\n"
-"Anda ingin mengganti pranala dengan [[{3}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/FindTextAction.java:66
 msgid "String to find"
@@ -2234,9 +2215,8 @@ msgid "Down"
 msgstr "Bawah"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:57
-#, fuzzy
 msgid "Translation options"
-msgstr "Pilihan umum"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:77
 msgid "Translate internal links text"
@@ -2298,9 +2278,9 @@ msgstr "Perbarui isi halaman"
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:116
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:206
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:266
-#, fuzzy, java-format
+#, java-format
 msgid "Retrieving interwiki for {0}"
-msgstr "Kembalikan kemungkinan disambiguasi untuk {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:246
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:254

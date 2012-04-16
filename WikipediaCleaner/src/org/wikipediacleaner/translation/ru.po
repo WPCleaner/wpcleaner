@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-04-16 19:58+0200\n"
-"PO-Revision-Date: 2012-02-05 15:17+0000\n"
+"PO-Revision-Date: 2012-04-15 01:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-05 22:52+0000\n"
-"X-Generator: Launchpad (build 14738)\n"
+"X-Launchpad-Export-Date: 2012-04-16 19:44+0000\n"
+"X-Generator: Launchpad (build 15099)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -176,9 +176,8 @@ msgid "Add DEFAULTSORT"
 msgstr "Добавить DEFAULTSORT"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:41
-#, fuzzy
 msgid "Remove all links to title (first in bold)"
-msgstr "Удалить все ссылки на заголовок"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:42
 msgid "Remove all links to title"
@@ -295,9 +294,8 @@ msgid "List of false positives for this type of error"
 msgstr "Список ложных срабатываний для этого типа ошибки"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:240
-#, fuzzy
 msgid "Page containing the list of false positives for this type of error"
-msgstr "Список ложных срабатываний для этого типа ошибки"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/CWConfiguration.java:123
 #, java-format
@@ -428,9 +426,8 @@ msgstr "Закр&ыть"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:201
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:278
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:259
-#, fuzzy
 msgid "Automatic fixing"
-msgstr "Автоматическое исправление страниц значений"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:221
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:126
@@ -469,11 +466,8 @@ msgid "Disambiguation (Alt + &D)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:503
-#, fuzzy
 msgid "You must select the pages on which running automatic fixing."
 msgstr ""
-"Вы должны выбрать, на каких страницах запускать автоматическую проверку "
-"значений."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:509
 msgid "You must input the initial and destination texts."
@@ -519,9 +513,8 @@ msgid "Do you want to continue ?"
 msgstr "Хотите продолжить ?"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:549
-#, fuzzy
 msgid "A comment is required for automatix fixing."
-msgstr "Для отправки страницы необходим комментарий."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
 #: org/wikipediacleaner/gui/swing/MainWindow.java:746
@@ -761,30 +754,22 @@ msgstr ""
 "\">файле переводов</a> :"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1892
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
 "If you want to define a page you need to add :\n"
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
-"Нет страницы, определённой для этого типа ошибки.\n"
-"Если вы хотите определить страницу, вам следует добавить :\n"
-"  {0} = <page name> END\n"
-"к странице переводов ({1}) на Википедии {2}"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1936
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "There''s no white list defined for this error type.\n"
 "If you want to define a white list you need to add :\n"
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
-"Нет страницы, определённой для этого типа ошибки.\n"
-"Если вы хотите определить страницу, вам следует добавить :\n"
-"  {0} = <page name> END\n"
-"к странице переводов ({1}) на Википедии {2}"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:258
 #, java-format
@@ -814,11 +799,8 @@ msgstr "Сортировать"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:450
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:470
-#, fuzzy
 msgid "You must select pages on which running automatic fixing."
 msgstr ""
-"Вы должны выбрать, на каких страницах запускать автоматическую проверку "
-"значений."
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:129
 msgid "Information"
@@ -1628,18 +1610,16 @@ msgid "Displaying templates found"
 msgstr "Отображение найденных шаблонов"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:96
-#, fuzzy, java-format
+#, java-format
 msgid "Unable to find if category {0} exists in \"{1}\"."
-msgstr "Невозможно определить, существует ли категория {0} в Википедии {1}."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:105
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "The category {0} exists in \"{1}\".\n"
 "Do you want to replace the category by [[{2}]] ?"
 msgstr ""
-"Категория {0} существует в Википедии {1}.\n"
-"Хотите заменить категорию на [[{2}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:127
 #, java-format
@@ -1663,19 +1643,16 @@ msgstr ""
 "Хотите заменить категорию на [[{3}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:73
-#, fuzzy, java-format
+#, java-format
 msgid "The page {0} in \"{1}\" doesn''t have a language link to \"{2}\"."
 msgstr ""
-"Страница {0} в Википедии {1} не имеет языковой ссылки на Википедию {2}."
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:79
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "The page {0} in \"{1}\" has a language link to \"{2}\": {3}.\n"
 "Do you want to replace the link by [[{3}]] ?"
 msgstr ""
-"Страница {0} в Википедии {1} имеет языковую ссылку в Википедии {2}: {3}.\n"
-"Хотите заменить ссылку на [[{3}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/FindTextAction.java:66
 msgid "String to find"
@@ -2260,23 +2237,20 @@ msgid "Down"
 msgstr "Вниз"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:57
-#, fuzzy
 msgid "Translation options"
-msgstr "Общие настройки"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:77
-#, fuzzy
 msgid "Translate internal links text"
-msgstr "Внутренние ссылки"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:84
 msgid "Convert internal links without interwiki to inter language links"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:91
-#, fuzzy
 msgid "Translate categories"
-msgstr "Исправить категории"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:98
 msgid "Translate templates names"
@@ -2326,9 +2300,9 @@ msgstr "Обновление содержимого страницы"
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:116
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:206
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:266
-#, fuzzy, java-format
+#, java-format
 msgid "Retrieving interwiki for {0}"
-msgstr "Получение содержания страницы - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:246
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:254
@@ -2409,48 +2383,3 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
-
-#~ msgid "Existing references"
-#~ msgstr "Существующие ссылки"
-
-#~ msgid "Detection by [[{0}]]"
-#~ msgstr "Обнаружение по [[{0}]]"
-
-#~ msgid "&Save password"
-#~ msgstr "&Сохранить пароль"
-
-#~ msgid "&Help"
-#~ msgstr "&Справка"
-
-#~ msgid "Work"
-#~ msgstr "Работа"
-
-#~ msgid "&Random page"
-#~ msgstr "С&лучайная страница"
-
-#~ msgid "There's no known list of disambiguation pages for this Wikipedia."
-#~ msgstr "Для этой Википедии нет известного списка страниц значений."
-
-#~ msgid "There's no known Check Wikipedia Project for this Wikipedia."
-#~ msgstr "На этой Википедии нет известного проекта проверки Википедии."
-
-#~ msgid "&Add page"
-#~ msgstr "&Добавить страницу"
-
-#~ msgid "&Remove page"
-#~ msgstr "&Удалить страницу"
-
-#~ msgid "Set page &comments"
-#~ msgstr "Задать &комментарии к странице"
-
-#~ msgid "&Update page information"
-#~ msgstr "&Обновить информацию о странице"
-
-#~ msgid "Replace parameter {0} with"
-#~ msgstr "Заменить параметр {0} на"
-
-#~ msgid "Error 'badtoken' detected: Retrying"
-#~ msgstr "Ошибка, обнаружен 'badtoken': Ещё одна попытка"
-
-#~ msgid "Retrieving first section contents - {0}"
-#~ msgstr "Получение содержания первой секции - {0}"

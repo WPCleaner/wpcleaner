@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-04-16 19:58+0200\n"
-"PO-Revision-Date: 2012-02-05 15:17+0000\n"
+"PO-Revision-Date: 2012-04-15 01:06+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-05 22:52+0000\n"
-"X-Generator: Launchpad (build 14738)\n"
+"X-Launchpad-Export-Date: 2012-04-16 19:44+0000\n"
+"X-Generator: Launchpad (build 15099)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -423,9 +423,8 @@ msgstr "&Luk"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:201
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:278
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:259
-#, fuzzy
 msgid "Automatic fixing"
-msgstr "Automastisk flertydig rettelse"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:221
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:126
@@ -506,9 +505,8 @@ msgid "Do you want to continue ?"
 msgstr "Vil du forsætte?"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:549
-#, fuzzy
 msgid "A comment is required for automatix fixing."
-msgstr "En kommentar er nødvendig for at sende siden."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
 #: org/wikipediacleaner/gui/swing/MainWindow.java:746
@@ -744,30 +742,22 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1892
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
 "If you want to define a page you need to add :\n"
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
-"Der er ingen sider defineret for denne fejltype.\n"
-"Hvis du vil definere en side, skal du tilføje :\n"
-"  {0} = <page name> END\n"
-"til oversættelsessiden ({1}) på {2} Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1936
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "There''s no white list defined for this error type.\n"
 "If you want to define a white list you need to add :\n"
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
-"Der er ingen sider defineret for denne fejltype.\n"
-"Hvis du vil definere en side, skal du tilføje :\n"
-"  {0} = <page name> END\n"
-"til oversættelsessiden ({1}) på {2} Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:258
 #, java-format
@@ -2203,14 +2193,12 @@ msgid "Down"
 msgstr "Ned"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:57
-#, fuzzy
 msgid "Translation options"
-msgstr "Generelle indstillinger"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:77
-#, fuzzy
 msgid "Translate internal links text"
-msgstr "Titel i tekst"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:84
 msgid "Convert internal links without interwiki to inter language links"
@@ -2351,48 +2339,3 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
-
-#~ msgid "Detection by [[{0}]]"
-#~ msgstr "Fundet af [[{0}]]"
-
-#~ msgid "&Help"
-#~ msgstr "&Hjælp"
-
-#~ msgid "&Remove page"
-#~ msgstr "&Fjern side"
-
-#~ msgid "&Add page"
-#~ msgstr "&Tilføj side"
-
-#~ msgid "Work"
-#~ msgstr "Arbejde"
-
-#~ msgid "Square brackets not correct end"
-#~ msgstr "Klammer ikke korrekt"
-
-#~ msgid "Headlines start with one \"=\""
-#~ msgstr "Overskrift starter med et \"=\""
-
-#~ msgid "Article with false <br/>"
-#~ msgstr "Artikel med forkert <br/>"
-
-#~ msgid "Double pipe in one link"
-#~ msgstr "Dobbelt-pipe i et link"
-
-#~ msgid "Template programming element"
-#~ msgstr "Skabelonprogrammeringselement"
-
-#~ msgid "Template not correct end"
-#~ msgstr "Skabelon slutter forkert"
-
-#~ msgid "Square brackets not correct begin"
-#~ msgstr "Klammer starter forkert"
-
-#~ msgid "Template not correct begin"
-#~ msgstr "Skabelon starter forkert"
-
-#~ msgid "Headline should end with \"=\""
-#~ msgstr "Overskrift bør slutte på \"=\""
-
-#~ msgid "Reference duplication"
-#~ msgstr "Artikel har ens noter"

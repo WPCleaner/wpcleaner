@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-04-16 19:58+0200\n"
-"PO-Revision-Date: 2012-02-05 15:16+0000\n"
+"PO-Revision-Date: 2012-04-15 01:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-05 22:52+0000\n"
-"X-Generator: Launchpad (build 14738)\n"
+"X-Launchpad-Export-Date: 2012-04-16 19:44+0000\n"
+"X-Generator: Launchpad (build 15099)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -179,9 +179,8 @@ msgid "Add DEFAULTSORT"
 msgstr "Adicionar DEFAULTSORT"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:41
-#, fuzzy
 msgid "Remove all links to title (first in bold)"
-msgstr "Remover todas as ligações para o título"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:42
 msgid "Remove all links to title"
@@ -428,9 +427,8 @@ msgstr "&Fechar"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:201
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:278
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:259
-#, fuzzy
 msgid "Automatic fixing"
-msgstr "Correção automática de desambiguação"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:221
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:126
@@ -469,9 +467,8 @@ msgid "Disambiguation (Alt + &D)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:503
-#, fuzzy
 msgid "You must select the pages on which running automatic fixing."
-msgstr "Você deve selecionar as páginas que sofrerão desambiguação automática."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:509
 msgid "You must input the initial and destination texts."
@@ -787,9 +784,8 @@ msgstr "Classificar"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:450
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:470
-#, fuzzy
 msgid "You must select pages on which running automatic fixing."
-msgstr "Você deve selecionar as páginas que sofrerão desambiguação automática."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:129
 msgid "Information"
@@ -2197,23 +2193,20 @@ msgid "Down"
 msgstr "Para baixo"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:57
-#, fuzzy
 msgid "Translation options"
-msgstr "Opções gerais"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:77
-#, fuzzy
 msgid "Translate internal links text"
-msgstr "Modificar todas as ligações internas"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:84
 msgid "Convert internal links without interwiki to inter language links"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:91
-#, fuzzy
 msgid "Translate categories"
-msgstr "Corrigir categorias"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:98
 msgid "Translate templates names"
@@ -2263,9 +2256,9 @@ msgstr "Atualizando conteúdo de página"
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:116
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:206
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:266
-#, fuzzy, java-format
+#, java-format
 msgid "Retrieving interwiki for {0}"
-msgstr "Recuperando possíveis desambiguações para {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:246
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:254
@@ -2346,37 +2339,3 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
-
-#~ msgid "&Save password"
-#~ msgstr "&Salvar senha"
-
-#~ msgid "&Help"
-#~ msgstr "&Ajuda"
-
-#~ msgid "Retrieving disambiguation informations"
-#~ msgstr "Recuperando informações de desambiguação"
-
-#~ msgid "&Random page"
-#~ msgstr "&Página randômica"
-
-#~ msgid "Retrieving namespaces"
-#~ msgstr "Recuperando espaço de nomes"
-
-#~ msgid "&Add page"
-#~ msgstr "Adicionar páginas"
-
-#~ msgid "&Remove page"
-#~ msgstr "&Remover página"
-
-#~ msgid "Set page &comments"
-#~ msgstr "Configurar &comentários de página"
-
-#~ msgid "&Update page information"
-#~ msgstr "&Atualizar informação de página"
-
-#~ msgid ""
-#~ "You have selected {0} pages.\n"
-#~ "Would you like to analyze the {0} pages ?"
-#~ msgstr ""
-#~ "Você selecionou {0} páginas.\n"
-#~ "Você gostaria de analisar as {0} páginas ?"

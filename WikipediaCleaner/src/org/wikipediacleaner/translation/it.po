@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-04-16 19:58+0200\n"
-"PO-Revision-Date: 2012-02-05 15:16+0000\n"
+"PO-Revision-Date: 2012-04-15 01:08+0000\n"
 "Last-Translator: simone.sandri <lexluxsox@hotmail.it>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-05 22:52+0000\n"
-"X-Generator: Launchpad (build 14738)\n"
+"X-Launchpad-Export-Date: 2012-04-16 19:44+0000\n"
+"X-Generator: Launchpad (build 15099)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -425,9 +425,8 @@ msgstr "&Chiudi"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:201
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:278
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:259
-#, fuzzy
 msgid "Automatic fixing"
-msgstr "Riparazione automatica disambiguazione"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:221
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:126
@@ -466,11 +465,8 @@ msgid "Disambiguation (Alt + &D)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:503
-#, fuzzy
 msgid "You must select the pages on which running automatic fixing."
 msgstr ""
-"Devi selezionare le pagine su cui sta lavorando la disambiguazione "
-"automatica."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:509
 msgid "You must input the initial and destination texts."
@@ -510,9 +506,8 @@ msgid "Do you want to continue ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:549
-#, fuzzy
 msgid "A comment is required for automatix fixing."
-msgstr "Un commento è richiesto per inviare la pagina."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
 #: org/wikipediacleaner/gui/swing/MainWindow.java:746
@@ -787,11 +782,8 @@ msgstr "Ordina"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:450
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:470
-#, fuzzy
 msgid "You must select pages on which running automatic fixing."
 msgstr ""
-"Devi selezionare le pagine su cui sta lavorando la disambiguazione "
-"automatica."
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:129
 msgid "Information"
@@ -2207,14 +2199,12 @@ msgid "Down"
 msgstr "Giù"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:57
-#, fuzzy
 msgid "Translation options"
-msgstr "Opzioni generali"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:77
-#, fuzzy
 msgid "Translate internal links text"
-msgstr "Wikilink al titolo della voce"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:84
 msgid "Convert internal links without interwiki to inter language links"
@@ -2272,9 +2262,9 @@ msgstr "Aggiornamento contenuti pagina"
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:116
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:206
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:266
-#, fuzzy, java-format
+#, java-format
 msgid "Retrieving interwiki for {0}"
-msgstr "Recupero di possili disambiguazioni per {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:246
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:254
@@ -2355,67 +2345,3 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
-
-#~ msgid "Work"
-#~ msgstr "Lavoro"
-
-#~ msgid "&Random page"
-#~ msgstr "Pagina &casuale"
-
-#~ msgid "&Save password"
-#~ msgstr "&Salva password"
-
-#~ msgid "&Help"
-#~ msgstr "&Aiuto"
-
-#~ msgid "Retrieving namespaces"
-#~ msgstr "Recupero namespace"
-
-#~ msgid "There's no known list of disambiguation pages for this Wikipedia."
-#~ msgstr ""
-#~ "Non c'è nessuna lista di disambiguazione conosciuta per questa Wikipedia."
-
-#~ msgid "&Add page"
-#~ msgstr "&Aggiungi pagina"
-
-#~ msgid "&Remove page"
-#~ msgstr "&Rimuovi pagina"
-
-#~ msgid "Set page &comments"
-#~ msgstr "Imposta &commenti pagina"
-
-#~ msgid "&Update page information"
-#~ msgstr "&Aggiorna informazioni pagina"
-
-#~ msgid "Square brackets not correct end"
-#~ msgstr "Doppie quadre non chiuse"
-
-#~ msgid "Headlines start with one \"=\""
-#~ msgstr "Sezioni che iniziano con un solo \"=\""
-
-#~ msgid "Article with false <br/>"
-#~ msgstr "Voci con falsi <br/>"
-
-#~ msgid "Double pipe in one link"
-#~ msgstr "Wikilink con doppia pipe"
-
-#~ msgid "Template programming element"
-#~ msgstr "Elementi di programmazione dei template"
-
-#~ msgid "Template not correct end"
-#~ msgstr "Template senza graffe di chiusura"
-
-#~ msgid "Square brackets not correct begin"
-#~ msgstr "Doppie quadre non aperte"
-
-#~ msgid "Template not correct begin"
-#~ msgstr "Template senza graffe di apertura"
-
-#~ msgid "Headline should end with \"=\""
-#~ msgstr "Titolo di sezione che non finisce con \"=\""
-
-#~ msgid "External link with line break"
-#~ msgstr "Collegamenti esterni con a capo"
-
-#~ msgid "Reference duplication"
-#~ msgstr "Nota doppia"

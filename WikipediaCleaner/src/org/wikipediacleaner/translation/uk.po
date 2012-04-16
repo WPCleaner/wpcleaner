@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-04-16 19:58+0200\n"
-"PO-Revision-Date: 2012-02-05 15:16+0000\n"
+"PO-Revision-Date: 2012-04-15 01:07+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-02-05 22:52+0000\n"
-"X-Generator: Launchpad (build 14738)\n"
+"X-Launchpad-Export-Date: 2012-04-16 19:44+0000\n"
+"X-Generator: Launchpad (build 15099)\n"
 
 #: org/wikipediacleaner/Version.java:37
 msgid "I hope you'll like WikiCleaner."
@@ -177,9 +177,8 @@ msgid "Add DEFAULTSORT"
 msgstr "Додати ТИПОВЕ_СОРТУВАННЯ"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:41
-#, fuzzy
 msgid "Remove all links to title (first in bold)"
-msgstr "Вилучити всі посилання на загаловок"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:42
 msgid "Remove all links to title"
@@ -296,9 +295,8 @@ msgid "List of false positives for this type of error"
 msgstr "Список помилкових спрацьовувань для такого типу помилки"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:240
-#, fuzzy
 msgid "Page containing the list of false positives for this type of error"
-msgstr "Список помилкових спрацьовувань для такого типу помилки"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/CWConfiguration.java:123
 #, java-format
@@ -429,9 +427,8 @@ msgstr "&Закрити"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:201
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:278
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:259
-#, fuzzy
 msgid "Automatic fixing"
-msgstr "Автоматичне виправлення сторінок значень"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:221
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:126
@@ -470,10 +467,8 @@ msgid "Disambiguation (Alt + &D)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:503
-#, fuzzy
 msgid "You must select the pages on which running automatic fixing."
 msgstr ""
-"Виберіть сторінки, на яких потрібно запустити автоматичну перевірку значень."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:509
 msgid "You must input the initial and destination texts."
@@ -517,9 +512,8 @@ msgid "Do you want to continue ?"
 msgstr "Хочете продовжити ?"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:549
-#, fuzzy
 msgid "A comment is required for automatix fixing."
-msgstr "Для надсилання сторінки потрібний коментар."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
 #: org/wikipediacleaner/gui/swing/MainWindow.java:746
@@ -759,30 +753,22 @@ msgstr ""
 "\">файлі перекладу</a> :"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1892
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
 "If you want to define a page you need to add :\n"
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
-"Немає сторінок означених для цього типу помилки.\n"
-"Якщо хочете означити сторінку, потрібно додати :\n"
-"  {0} = <назва сторінки> END\n"
-"для перенесеної сторінки ({1}) у {2} Вікіпедії"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1936
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "There''s no white list defined for this error type.\n"
 "If you want to define a white list you need to add :\n"
 "  {0} = <page name> END\n"
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
-"Немає сторінок означених для цього типу помилки.\n"
-"Якщо хочете означити сторінку, потрібно додати :\n"
-"  {0} = <назва сторінки> END\n"
-"для перенесеної сторінки ({1}) у {2} Вікіпедії"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:258
 #, java-format
@@ -812,10 +798,8 @@ msgstr "Сортування"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:450
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:470
-#, fuzzy
 msgid "You must select pages on which running automatic fixing."
 msgstr ""
-"Виберіть сторінки, на яких потрібно запустити автоматичну перевірку значень."
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:129
 msgid "Information"
@@ -1630,18 +1614,16 @@ msgid "Displaying templates found"
 msgstr "Показ знайдених шаблонів"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:96
-#, fuzzy, java-format
+#, java-format
 msgid "Unable to find if category {0} exists in \"{1}\"."
-msgstr "Не вдалось знайти чи категорія {0} наявна в {1} Вікіпедії."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:105
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "The category {0} exists in \"{1}\".\n"
 "Do you want to replace the category by [[{2}]] ?"
 msgstr ""
-"Категорія {0} наявна в {1} Вікіпедії.\n"
-"Хочете замінити цю категорію на [[{2}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:127
 #, java-format
@@ -1665,19 +1647,16 @@ msgstr ""
 "Хочете замінити цю категорію на [[{3}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:73
-#, fuzzy, java-format
+#, java-format
 msgid "The page {0} in \"{1}\" doesn''t have a language link to \"{2}\"."
 msgstr ""
-"Сторінка {0} у {1} Вікіпедії не має мовного посилання на {2} Вікіпедію."
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:79
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "The page {0} in \"{1}\" has a language link to \"{2}\": {3}.\n"
 "Do you want to replace the link by [[{3}]] ?"
 msgstr ""
-"Сторінка {0} у {1} Вікіпедії має мовне посилання на {2} Вікіпедію.: {3}.\n"
-"Хочете замінити це посилання на [[{3}]] ?"
 
 #: org/wikipediacleaner/gui/swing/action/FindTextAction.java:66
 msgid "String to find"
@@ -2262,23 +2241,20 @@ msgid "Down"
 msgstr "Вниз"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:57
-#, fuzzy
 msgid "Translation options"
-msgstr "Загальні параметри"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:77
-#, fuzzy
 msgid "Translate internal links text"
-msgstr "Внутрішні посилання"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:84
 msgid "Convert internal links without interwiki to inter language links"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:91
-#, fuzzy
 msgid "Translate categories"
-msgstr "Виправити категорії"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:98
 msgid "Translate templates names"
@@ -2328,9 +2304,9 @@ msgstr "Оновлення вмісту сторінок"
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:116
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:206
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:266
-#, fuzzy, java-format
+#, java-format
 msgid "Retrieving interwiki for {0}"
-msgstr "Отримання вмісту сторінки - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:246
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:254
@@ -2411,42 +2387,3 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
-
-#~ msgid "Existing references"
-#~ msgstr "Наявні виноски"
-
-#~ msgid "Detection by [[{0}]]"
-#~ msgstr "Виявлено [[{0}]]"
-
-#~ msgid "Error 'badtoken' detected: Retrying"
-#~ msgstr "Виявлена помилка «неправильна лексема»: Повторна спроба"
-
-#~ msgid "&Help"
-#~ msgstr "&Довідка"
-
-#~ msgid "&Remove page"
-#~ msgstr "&Вилучити сторінку"
-
-#~ msgid "&Add page"
-#~ msgstr "&Додоти сторінку"
-
-#~ msgid "Retrieving first section contents - {0}"
-#~ msgstr "Отримання вмісту першого розділу - {0}"
-
-#~ msgid "only"
-#~ msgstr "лише"
-
-#~ msgid "Load"
-#~ msgstr "Завантажити"
-
-#~ msgid "Comma separated list of errors to work on."
-#~ msgstr "Працювати над розділеним комами списком помилок."
-
-#~ msgid "except"
-#~ msgstr "за винятком"
-
-#~ msgid "Comma separated list of errors to ignore."
-#~ msgstr "Розділений комами список ігнорованих помилок."
-
-#~ msgid "Replace parameter {0} with"
-#~ msgstr "Замінити параметр {0} на"
