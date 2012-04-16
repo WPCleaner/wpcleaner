@@ -1104,7 +1104,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       }
       if (fixed.size() > 0) {
         Collections.sort(fixed);
-        comment.append(getWikipedia().getConfiguration().getDisambiguationComment());
+        comment.append(getWikipedia().getConfiguration().getDisambiguationComment(fixed.size()));
         int linksFixed = 0;
         for (String fix : fixed) {
           if (linksFixed > 0) {
