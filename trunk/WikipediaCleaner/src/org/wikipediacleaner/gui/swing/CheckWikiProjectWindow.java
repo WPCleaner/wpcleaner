@@ -1151,18 +1151,18 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         return;
       }
 
-      if (ACTION_FIRST_OCCURENCE.equals(e.getActionCommand())) {
-        actionFirstOccurence();
+      if (ACTION_FIRST_OCCURRENCE.equals(e.getActionCommand())) {
+        actionFirstOccurrence();
       } else if (ACTION_FULL_ANALYSIS_PAGE.equals(e.getActionCommand())) {
         Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
-      } else if (ACTION_LAST_OCCURENCE.equals(e.getActionCommand())) {
-        actionLastOccurence();
+      } else if (ACTION_LAST_OCCURRENCE.equals(e.getActionCommand())) {
+        actionLastOccurrence();
       } else if (ACTION_MARK_AS_FIXED.equals(e.getActionCommand())) {
         actionMarkAsFixed();
-      } else if (ACTION_NEXT_OCCURENCE.equals(e.getActionCommand())) {
-        actionNextOccurence();
-      } else if (ACTION_PREVIOUS_OCCURENCE.equals(e.getActionCommand())) {
-        actionPreviousOccurence();
+      } else if (ACTION_NEXT_OCCURRENCE.equals(e.getActionCommand())) {
+        actionNextOccurrence();
+      } else if (ACTION_PREVIOUS_OCCURRENCE.equals(e.getActionCommand())) {
+        actionPreviousOccurrence();
       } else if (ACTION_SEND.equals(e.getActionCommand())) {
         actionSend();
       } else if (ACTION_TOC.equals(e.getActionCommand())) {
@@ -1238,34 +1238,34 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     }
 
     /**
-     * Select first occurence. 
+     * Select first occurrence.
      */
-    private void actionFirstOccurence() {
-      textPage.getSelectionManager().selectFirstOccurence();
+    private void actionFirstOccurrence() {
+      textPage.getSelectionManager().selectFirstOccurrence();
       textPage.requestFocusInWindow();
     }
 
     /**
-     * Select previous occurence. 
+     * Select previous occurrence. 
      */
-    private void actionPreviousOccurence() {
-      textPage.getSelectionManager().selectPreviousOccurence();
+    private void actionPreviousOccurrence() {
+      textPage.getSelectionManager().selectPreviousOccurrence();
       textPage.requestFocusInWindow();
     }
 
     /**
-     * Select next occurence. 
+     * Select next occurrence.
      */
-    private void actionNextOccurence() {
-      textPage.getSelectionManager().selectNextOccurence();
+    private void actionNextOccurrence() {
+      textPage.getSelectionManager().selectNextOccurrence();
       textPage.requestFocusInWindow();
     }
 
     /**
-     * Select last occurence. 
+     * Select last occurrence.
      */
-    private void actionLastOccurence() {
-      textPage.getSelectionManager().selectLastOccurence();
+    private void actionLastOccurrence() {
+      textPage.getSelectionManager().selectLastOccurrence();
       textPage.requestFocusInWindow();
     }
 

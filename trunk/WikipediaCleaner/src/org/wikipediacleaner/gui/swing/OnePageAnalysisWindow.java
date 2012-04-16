@@ -731,14 +731,14 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       actionDisambiguationLink();
     } else if (ACTION_FULL_ANALYSIS_LINK.equals(e.getActionCommand())) {
       actionFullAnalysisLink();
-    } else if (ACTION_FIRST_OCCURENCE.equals(e.getActionCommand())) {
-      actionFirstOccurence();
-    } else if (ACTION_PREVIOUS_OCCURENCE.equals(e.getActionCommand())) {
-      actionPreviousOccurence();
-    } else if (ACTION_NEXT_OCCURENCE.equals(e.getActionCommand())) {
-      actionNextOccurence();
-    } else if (ACTION_LAST_OCCURENCE.equals(e.getActionCommand())) {
-      actionLastOccurence();
+    } else if (ACTION_FIRST_OCCURRENCE.equals(e.getActionCommand())) {
+      actionFirstOccurrence();
+    } else if (ACTION_PREVIOUS_OCCURRENCE.equals(e.getActionCommand())) {
+      actionPreviousOccurrence();
+    } else if (ACTION_NEXT_OCCURRENCE.equals(e.getActionCommand())) {
+      actionNextOccurrence();
+    } else if (ACTION_LAST_OCCURRENCE.equals(e.getActionCommand())) {
+      actionLastOccurrence();
     } else if (ACTION_DISAMBIGUATION_WARNING.equals(e.getActionCommand())) {
       actionDisambiguationWarning();
     } else if (ACTION_TRANSLATE.equals(e.getActionCommand())) {
@@ -1237,34 +1237,34 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   }
 
   /**
-   * Action called when First Occurence button is pressed. 
+   * Action called when First Occurrence button is pressed. 
    */
-  void actionFirstOccurence() {
-    getTextContents().getSelectionManager().selectFirstOccurence();
+  void actionFirstOccurrence() {
+    getTextContents().getSelectionManager().selectFirstOccurrence();
     getTextContents().requestFocusInWindow();
   }
 
   /**
-   * Action called when Previous Occurence button is pressed. 
+   * Action called when Previous Occurrence button is pressed. 
    */
-  private void actionPreviousOccurence() {
-    getTextContents().getSelectionManager().selectPreviousOccurence();
+  private void actionPreviousOccurrence() {
+    getTextContents().getSelectionManager().selectPreviousOccurrence();
     getTextContents().requestFocusInWindow();
   }
 
   /**
-   * Action called when Next Occurence button is pressed. 
+   * Action called when Next Occurrence button is pressed. 
    */
-  private void actionNextOccurence() {
-    getTextContents().getSelectionManager().selectNextOccurence();
+  private void actionNextOccurrence() {
+    getTextContents().getSelectionManager().selectNextOccurrence();
     getTextContents().requestFocusInWindow();
   }
 
   /**
-   * Action called when Last Occurence button is pressed. 
+   * Action called when Last Occurrence button is pressed. 
    */
-  private void actionLastOccurence() {
-    getTextContents().getSelectionManager().selectLastOccurence();
+  private void actionLastOccurrence() {
+    getTextContents().getSelectionManager().selectLastOccurrence();
     getTextContents().requestFocusInWindow();
   }
 }

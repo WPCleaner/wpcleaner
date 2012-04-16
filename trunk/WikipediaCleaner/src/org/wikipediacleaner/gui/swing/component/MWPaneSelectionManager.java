@@ -41,9 +41,9 @@ public class MWPaneSelectionManager {
   }
 
   /**
-   * Select first occurence of text. 
+   * Select first occurrence of text. 
    */
-  public void selectFirstOccurence() {
+  public void selectFirstOccurrence() {
     StyledDocument doc = textPane.getStyledDocument();
     int length = doc.getLength();
     int lastEnd = Integer.MAX_VALUE;
@@ -80,9 +80,9 @@ public class MWPaneSelectionManager {
   }
 
   /**
-   * Select previous occurence of text. 
+   * Select previous occurrence of text. 
    */
-  public void selectPreviousOccurence() {
+  public void selectPreviousOccurrence() {
     StyledDocument doc = textPane.getStyledDocument();
     int lastStart = Integer.MIN_VALUE;
     for (int pos = textPane.getSelectionStart(); pos > 0; pos = lastStart) {
@@ -96,13 +96,13 @@ public class MWPaneSelectionManager {
         return;
       }
     }
-    selectLastOccurence();
+    selectLastOccurrence();
   }
 
   /**
-   * Select next occurence of text. 
+   * Select next occurrence of text. 
    */
-  public void selectNextOccurence() {
+  public void selectNextOccurrence() {
     StyledDocument doc = textPane.getStyledDocument();
     int length = doc.getLength();
     int lastEnd = Integer.MAX_VALUE;
@@ -121,13 +121,13 @@ public class MWPaneSelectionManager {
         return;
       }
     }
-    selectFirstOccurence();
+    selectFirstOccurrence();
   }
 
   /**
-   * Select last occurence of text. 
+   * Select last occurrence of text. 
    */
-  public void selectLastOccurence() {
+  public void selectLastOccurrence() {
     StyledDocument doc = textPane.getStyledDocument();
     int lastStart = Integer.MIN_VALUE;
     for (int pos = doc.getLength(); pos > 0; pos = lastStart) {
@@ -147,8 +147,11 @@ public class MWPaneSelectionManager {
    * @param run Element to be selected.
    */
   private void select(Element run) {
+    int startOffset = MWPaneFormatter.getUUIDStartOffset(textPane, run);
+    int endOffset = MWPaneFormatter.getUUIDEndOffet(textPane, run);
+    textPane.moveCaretPosition(startOffset);
     textPane.select(
-        MWPaneFormatter.getUUIDStartOffset(textPane, run),
-        MWPaneFormatter.getUUIDEndOffet(textPane, run));
+        startOffset,
+        endOffset);
   }
 }

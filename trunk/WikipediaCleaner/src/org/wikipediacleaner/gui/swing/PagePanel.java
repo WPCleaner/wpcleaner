@@ -389,41 +389,41 @@ public class PagePanel
   }
 
   /**
-   * Action called when First Occurence button is pressed. 
+   * Action called when First Occurrence button is pressed. 
    */
-  private void actionFirstOccurence() {
+  private void actionFirstOccurrence() {
     if (textContents != null) {
-      textContents.getSelectionManager().selectFirstOccurence();
+      textContents.getSelectionManager().selectFirstOccurrence();
       textContents.requestFocusInWindow();
     }
   }
 
   /**
-   * Action called when Previous Occurence button is pressed. 
+   * Action called when Previous Occurrence button is pressed. 
    */
-  private void actionPreviousOccurence() {
+  private void actionPreviousOccurrence() {
     if (textContents != null) {
-      textContents.getSelectionManager().selectPreviousOccurence();
+      textContents.getSelectionManager().selectPreviousOccurrence();
       textContents.requestFocusInWindow();
     }
   }
 
   /**
-   * Action called when Next Occurence button is pressed. 
+   * Action called when Next Occurrence button is pressed. 
    */
-  private void actionNextOccurence() {
+  private void actionNextOccurrence() {
     if (textContents != null) {
-      textContents.getSelectionManager().selectNextOccurence();
+      textContents.getSelectionManager().selectNextOccurrence();
       textContents.requestFocusInWindow();
     }
   }
 
   /**
-   * Action called when Last Occurence button is pressed. 
+   * Action called when Last Occurrence button is pressed. 
    */
-  private void actionLastOccurence() {
+  private void actionLastOccurrence() {
     if (textContents != null) {
-      getTextContents().getSelectionManager().selectLastOccurence();
+      getTextContents().getSelectionManager().selectLastOccurrence();
       getTextContents().requestFocusInWindow();
     }
   }
@@ -553,13 +553,13 @@ public class PagePanel
 
     // Act depending on the command
     if (command.equals(ACTION_FIRST_OCCURRENCE)) {
-      actionFirstOccurence();
+      actionFirstOccurrence();
     } else if (command.equals(ACTION_PREVIOUS_OCCURRENCE)) {
-      actionPreviousOccurence();
+      actionPreviousOccurrence();
     } else if (command.equals(ACTION_NEXT_OCCURRENCE)) {
-      actionNextOccurence();
+      actionNextOccurrence();
     } else if (command.equals(ACTION_LAST_OCCURRENCE)) {
-      actionLastOccurence();
+      actionLastOccurrence();
     } else if (command.equals(ACTION_VIEW)) {
       actionView();
     } else if (command.equals(ACTION_VIEW_HISTORY)) {
