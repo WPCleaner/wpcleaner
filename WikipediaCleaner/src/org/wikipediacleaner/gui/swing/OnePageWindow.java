@@ -392,7 +392,7 @@ public abstract class OnePageWindow
     } else {
       button = Utilities.createJButton(GT._("&First occurrence"));
     }
-    button.setActionCommand(ACTION_FIRST_OCCURENCE);
+    button.setActionCommand(ACTION_FIRST_OCCURRENCE);
     button.addActionListener(listener);
     return button;
   }
@@ -447,7 +447,7 @@ public abstract class OnePageWindow
     } else {
       button = Utilities.createJButton(GT._("&Last occurrence"));
     }
-    button.setActionCommand(ACTION_LAST_OCCURENCE);
+    button.setActionCommand(ACTION_LAST_OCCURRENCE);
     button.addActionListener(listener);
     return button;
   }
@@ -468,7 +468,7 @@ public abstract class OnePageWindow
     } else {
       button = Utilities.createJButton(GT._("&Next occurrence"));
     }
-    button.setActionCommand(ACTION_NEXT_OCCURENCE);
+    button.setActionCommand(ACTION_NEXT_OCCURRENCE);
     button.addActionListener(listener);
     return button;
   }
@@ -489,7 +489,7 @@ public abstract class OnePageWindow
     } else {
       button = Utilities.createJButton(GT._("&Previous occurrence"));
     }
-    button.setActionCommand(ACTION_PREVIOUS_OCCURENCE);
+    button.setActionCommand(ACTION_PREVIOUS_OCCURRENCE);
     button.addActionListener(listener);
     return button;
   }
@@ -1136,13 +1136,13 @@ public abstract class OnePageWindow
   public final static String ACTION_DISAMBIGUATION_REDIR = "DISAMBIGUATION REDIR";
   public final static String ACTION_EXPAND_TEMPLATES     = "EXPAND TEMPLATES";
   public final static String ACTION_EXPAND_PREVIEW       = "EXPAND PREVIEW";
-  public final static String ACTION_FIRST_OCCURENCE      = "FIRST OCCURENCE";
+  public final static String ACTION_FIRST_OCCURRENCE     = "FIRST OCCURRENCE";
   public final static String ACTION_FULL_ANALYSIS_PAGE   = "FULL ANALYSIS PAGE";
   public final static String ACTION_FULL_ANALYSIS_REDIR  = "FULL ANALYSIS REDIR";
-  public final static String ACTION_LAST_OCCURENCE       = "LAST OCCURENCE";
-  public final static String ACTION_NEXT_OCCURENCE       = "NEXT OCCURENCE";
+  public final static String ACTION_LAST_OCCURRENCE      = "LAST OCCURRENCE";
+  public final static String ACTION_NEXT_OCCURRENCE      = "NEXT OCCURRENCE";
   public final static String ACTION_PREVIEW              = "PREVIEW";
-  public final static String ACTION_PREVIOUS_OCCURENCE   = "PREVIOUS OCCURENCE";
+  public final static String ACTION_PREVIOUS_OCCURRENCE  = "PREVIOUS OCCURRENCE";
   public final static String ACTION_RELOAD               = "RELOAD";
   public final static String ACTION_SEND                 = "SEND";
   public final static String ACTION_TOC                  = "TOC";
