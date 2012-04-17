@@ -19,6 +19,13 @@
 package org.wikipediacleaner.gui.swing.basic;
 
 import java.awt.Component;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -38,8 +45,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.table.TableModel;
+import javax.swing.text.JTextComponent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -60,6 +69,10 @@ public class Utilities {
   public final static int YES_ALL_OPTION = 101;
 
   public final static int NO_ALL_OPTION = 102;
+
+  /* ========================================================================== */
+  /* Display message box                                                        */
+  /* ========================================================================== */
 
   /**
    * Display an error message.
@@ -348,6 +361,10 @@ public class Utilities {
     return JOptionPane.CLOSED_OPTION;
   }
 
+  /* ========================================================================== */
+  /* Component management                                                       */
+  /* ========================================================================== */
+
   /**
    * Create a JButton.
    * 
@@ -507,6 +524,84 @@ public class Utilities {
   }
 
   /**
+   * Create a JTextField.
+   * 
+   * @param value Default value.
+   * @param columns Number of columns.
+   * @return JTextField.
+   */
+  public static JTextField createJTextField(String value, int columns) {
+    JTextField text = new JTextField(value, columns);
+    text.addKeyListener(new CopyPasteListener(text));
+    return text;
+  }
+
+  /**
+   * Copy/Paste listener.
+   */
+  private static class CopyPasteListener implements KeyListener {
+
+    /**
+     * Text field.
+     */
+    private final JTextComponent text;
+
+    /**
+     * @param text Text component.
+     */
+    public CopyPasteListener(JTextComponent text) {
+      this.text = text;
+    }
+
+    /**
+     * Listener for KeyTyped events.
+     * 
+     * @param e Event.
+     * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+     */
+    public void keyTyped(KeyEvent e) {
+      //
+    }
+
+    /**
+     * Listener for KeyPressed events.
+     * 
+     * @param e Event.
+     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+     */
+    public void keyPressed(KeyEvent e) {
+      if ((e.getKeyCode() == KeyEvent.VK_V) &&
+          ((e.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) != 0)) {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable clipData = clipboard.getContents(clipboard);
+        try {
+          String s = (String) clipData.getTransferData(DataFlavor.stringFlavor);
+          int start = text.getSelectionStart();
+          int end = text.getSelectionEnd();
+          if (end > start) {
+            text.getDocument().remove(start, end - start);
+          }
+          text.getDocument().insertString(start, s, null);
+          e.consume();
+        } catch (Exception ex) {
+          //
+        }
+      }
+    }
+
+    /**
+     * Listener for KeyRelease events.
+     * 
+     * @param e Event.
+     * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+     */
+    public void keyReleased(KeyEvent e) {
+      //
+    }
+    
+  }
+
+  /**
    * Create a JMenu.
    * 
    * @param message Label text with optional mnemonic inside.
@@ -587,6 +682,10 @@ public class Utilities {
     }
     return label.charAt(index + 1);
   }
+
+  /* ========================================================================== */
+  /* Desktop management                                                         */
+  /* ========================================================================== */
 
   /**
    * @return Flag indicating if desktop is supported.
@@ -678,6 +777,10 @@ public class Utilities {
       log.error("Error viewing page: " + e.getMessage());
     }
   }
+
+  /* ========================================================================== */
+  /* Various utilities                                                          */
+  /* ========================================================================== */
 
   /**
    * Create a RowSorter for a JTable (work only for JDK 6).

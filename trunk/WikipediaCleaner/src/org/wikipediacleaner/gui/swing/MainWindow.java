@@ -582,7 +582,7 @@ public class MainWindow
         ConfigurationValueBoolean.REMEMBER_LAST_PAGE)) {
       lastPage = configuration.getString(null, ConfigurationValueString.PAGE_NAME);
     }
-    textPagename = new JTextField(lastPage, 20);
+    textPagename = Utilities.createJTextField(lastPage, 20);
     panel.add(textPagename, constraints);
     constraints.gridx++;
 
