@@ -793,8 +793,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       for (Page p : links) {
         if ((p != null) &&
             (Boolean.TRUE.equals(p.isDisambiguationPage())) &&
-            (p.getCountOccurence() > 0)) {
-          mapLinksCount.put(p.getTitle(), Integer.valueOf(p.getCountOccurence()));
+            (p.getCountOccurrence() > 0)) {
+          mapLinksCount.put(p.getTitle(), Integer.valueOf(p.getCountOccurrence()));
         }
       }
     }
@@ -821,6 +821,21 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       Page pageLoaded = getPage();
       if ((pageLoaded != null) &&
           (Boolean.FALSE.equals(pageLoaded.isExisting()))) {
+        List<Page> similarPages = pageLoaded.getSimilarPages();
+        if ((similarPages != null) && (similarPages.size() > 0)) {
+          String answer = Utilities.askForValue(
+              getParentComponent(),
+              GT._(
+                  "Page {0} doesn''t exist, do you want to load a similar page ?",
+                  pageLoaded.getTitle()),
+              similarPages.toArray(), true,
+              similarPages.get(0).toString(), null);
+          if ((answer != null) && (answer.trim().length() > 0)) {
+            Controller.runFullAnalysis(answer, null, getWikipedia());
+          }
+          dispose();
+          return;
+        }
         int answer = Utilities.displayYesNoWarning(
             getParentComponent(),
             GT._(
@@ -1093,7 +1108,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
           if ((page != null) && (page.getLinks() != null)) {
             for (Page link : page.getLinks()) {
               if (Page.areSameTitle(p.getKey(), link.getTitle())) {
-                currentCount = link.getCountOccurence();
+                currentCount = link.getCountOccurrence();
               }
             }
           }
@@ -1216,7 +1231,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
           for (Object value : values) {
             if (value instanceof Page) {
               countElement++;
-              count += ((Page) value).getCountOccurence();
+              count += ((Page) value).getCountOccurrence();
             }
           }
         }

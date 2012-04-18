@@ -57,7 +57,8 @@ public class Page implements Comparable<Page> {
   private List<Page> backLinks;
   private List<Page> templates;
   private List<Page> redirects;
-  private int countOccurence;
+  private List<Page> similarPages;
+  private int countOccurrence;
 
   private PageComment comment;
 
@@ -185,14 +186,14 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @return Title with first letter as uppercase
+   * @return Title with first letter as upper case
    */
   public String getTitleUcFirst() {
     return getStringUcFirst(title);
   }
 
   /**
-   * @return Title with first letter as lowercase
+   * @return Title with first letter as lower case
    */
   public String getTitleLcFirst() {
     if ((title != null) && (title.length() > 0) && (Character.isUpperCase(title.charAt(0)))) {
@@ -251,14 +252,14 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @return Contents timestamp.
+   * @return Contents time stamp.
    */
   public String getContentsTimestamp() {
     return contentsTimestamp;
   }
 
   /**
-   * @param timestamp Contents timestamp.
+   * @param timestamp Contents time stamp.
    */
   public void setContentsTimestamp(String timestamp) {
     this.contentsTimestamp = timestamp;
@@ -284,14 +285,14 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @return Start timestamp.
+   * @return Start time stamp.
    */
   public String getStartTimestamp() {
     return startTimestamp;
   }
 
   /**
-   * @param timestamp Start timestamp.
+   * @param timestamp Start time stamp.
    */
   public void setStartTimestamp(String timestamp) {
     this.startTimestamp = timestamp;
@@ -390,7 +391,7 @@ public class Page implements Comparable<Page> {
 
   /**
    * @return Flag indicating if the page exists.
-   *         (null means unknow).
+   *         (null means unknown).
    */
   public Boolean isExisting() {
     return exist;
@@ -638,6 +639,20 @@ public class Page implements Comparable<Page> {
       subPage.setEditToken(getEditToken());
     }
     return subPage;
+  }
+
+  /**
+   * @return Similar pages.
+   */
+  public List<Page> getSimilarPages() {
+    return similarPages;
+  }
+
+  /**
+   * @param pages Similar pages.
+   */
+  public void setSimilarPages(List<Page> pages) {
+    this.similarPages = pages;
   }
 
   /**
@@ -944,17 +959,17 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @return Occurence count
+   * @return Occurrence count
    */
-  public int getCountOccurence() {
-    return countOccurence;
+  public int getCountOccurrence() {
+    return countOccurrence;
   }
 
   /**
-   * @param count Occurence count
+   * @param count Occurrence count
    */
-  public void setCountOccurence(int count) {
-    this.countOccurence = count;
+  public void setCountOccurrence(int count) {
+    this.countOccurrence = count;
   }
 
   /**

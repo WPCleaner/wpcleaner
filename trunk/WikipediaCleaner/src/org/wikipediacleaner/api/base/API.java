@@ -207,7 +207,16 @@ public interface API {
    * @throws APIException
    */
   public void purgePageCache(EnumWikipedia wikipedia, Page page) throws APIException;
-  
+
+  /**
+   * Retrieves similar pages.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param page The page.
+   * @throws APIException
+   */
+  public void retrieveSimilarPages(EnumWikipedia wikipedia, Page page) throws APIException;
+
   /**
    * Retrieves the links of <code>page</code>.
    * 

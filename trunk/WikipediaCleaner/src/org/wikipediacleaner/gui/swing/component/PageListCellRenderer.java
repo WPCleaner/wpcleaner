@@ -120,8 +120,8 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
       text = page.getTitle();
       disambiguation = page.isDisambiguationPage();
       exist = page.isExisting();
-      if (showCountOccurence && (page.getCountOccurence() > 0)) {
-        text += " => " + page.getCountOccurence(); 
+      if (showCountOccurence && (page.getCountOccurrence() > 0)) {
+        text += " => " + page.getCountOccurrence(); 
       }
       redirect = page.isRedirect();
     }
