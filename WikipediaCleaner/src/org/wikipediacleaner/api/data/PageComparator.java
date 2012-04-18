@@ -464,8 +464,8 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
     public int compare(Page o1, Page o2) {
-      int c1 = o1.getCountOccurence();
-      int c2 = o2.getCountOccurence();
+      int c1 = o1.getCountOccurrence();
+      int c2 = o2.getCountOccurrence();
       return c2 - c1;
     }
 

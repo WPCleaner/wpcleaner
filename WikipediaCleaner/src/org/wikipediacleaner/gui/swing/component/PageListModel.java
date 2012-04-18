@@ -331,10 +331,10 @@ public class PageListModel extends AbstractListModel {
       int mainCount = 0;
       for (Page p : filteredList) {
         if (p != null) {
-          totalCount += p.getCountOccurence();
+          totalCount += p.getCountOccurrence();
           if ((p.getNamespace() != null) &&
               (Namespace.MAIN == p.getNamespace().intValue())) {
-            mainCount += p.getCountOccurence();
+            mainCount += p.getCountOccurrence();
           }
         }
       }

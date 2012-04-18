@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-16 19:58+0200\n"
+"POT-Creation-Date: 2012-04-18 21:34+0200\n"
 "PO-Revision-Date: 2012-03-12 21:52+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -399,7 +399,7 @@ msgstr "Pobieranie linków"
 msgid "Parsing text"
 msgstr "Przetwarzanie tekstu"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2351
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2414
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -407,7 +407,7 @@ msgstr ""
 "To działanie posiada zabezpieczenie w postaci CAPTCHA.\n"
 "Jaka jest odpowiedź na następujące pytanie?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2358
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:2421
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1038,7 +1038,7 @@ msgid "You must input a page name for updating the disambiguation warning"
 msgstr "Musisz wpisać nazwę strony do aktualizacji komunikatów o disambigach"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1099
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:969
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:984
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:355
 msgid ""
 "You need to define the 'dab_warning_template' property in WikiCleaner "
@@ -1048,7 +1048,7 @@ msgstr ""
 "WikiCleaner"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1103
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:973
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:988
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:359
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr "Czy chcesz aktualizować komunikat o disambigach w dyskusji?"
@@ -1253,20 +1253,25 @@ msgstr "Licz inne strony"
 msgid "Add to Watch list (Alt + &W)"
 msgstr "Dodaj do listy obserowanych (Alt + &W)"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:827
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:829
+#, fuzzy, java-format
+msgid "Page {0} doesn''t exist, do you want to load a similar page ?"
+msgstr "Strona {0} nie istnieje, nadal masz zamiar ją analizować?"
+
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:842
 #, java-format
 msgid "Page {0} doesn''t exist, do you still want to analyze it ?"
 msgstr "Strona {0} nie istnieje, nadal masz zamiar ją analizować?"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:934
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:949
 msgid "Would you like to add these pages on your local Watch list ?"
 msgstr "Czy chcesz dodać te strony do lokalnej listy obserwowanych?"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:990
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1005
 msgid "From which Wikipedia is this text coming ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1083
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1098
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:118
 msgid "Translation"
 msgstr "Tłumaczenie"
@@ -1705,33 +1710,33 @@ msgstr "Pobieranie możliwych znaczeń dla {0}"
 msgid "Wikipedia Cleaner is working..."
 msgstr "Wikipedia Cleaner pracuje..."
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:79
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:84
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:92
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:97
 #, java-format
 msgid "An error occured: {0}"
 msgstr "Wystąpił błąd: {0}"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:89
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:102
 msgid "An unknown error occured"
 msgstr "Wystąpił nieznany błąd"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:228
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:241
 msgid "Other..."
 msgstr "Inaczej..."
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:322
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:335
 msgid "Yes"
 msgstr "Tak"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:323
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:336
 msgid "Yes to all"
 msgstr "Tak dla wszystkich"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:324
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:337
 msgid "No"
 msgstr "Nie"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:325
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:338
 msgid "No to all"
 msgstr "Nie dla wszystkich"
 

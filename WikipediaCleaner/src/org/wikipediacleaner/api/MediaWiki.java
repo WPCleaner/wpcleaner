@@ -291,6 +291,23 @@ public class MediaWiki extends MediaWikiController {
   }
 
   /**
+   * Retrieve similar pages of a page.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param page Page.
+   * @throws APIException
+   */
+  public void retrieveSimilarPages(
+      EnumWikipedia wikipedia,
+      Page page) throws APIException {
+    if (page == null) {
+      return;
+    }
+    final API api = APIFactory.getAPI();
+    api.retrieveSimilarPages(wikipedia, page);
+  }
+
+  /**
    * Retrieve all links (with redirects) of a page.
    * 
    * @param wikipedia Wikipedia.

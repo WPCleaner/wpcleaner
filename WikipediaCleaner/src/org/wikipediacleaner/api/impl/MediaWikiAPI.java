@@ -797,6 +797,36 @@ public class MediaWikiAPI implements API {
   }
 
   /**
+   * Retrieves similar pages.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param page The page.
+   * @throws APIException
+   */
+  public void retrieveSimilarPages(EnumWikipedia wikipedia, Page page)
+      throws APIException {
+    Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
+    properties.put("list", "search");
+    if (page.getNamespace() != null) {
+      properties.put("srnamespace", page.getNamespace().toString());
+    } else {
+      properties.put("srnamespace", "0");
+    }
+    properties.put("srprop", "titlesnippet");
+    properties.put("srredirect", "true");
+    properties.put("srsearch", "intitle:\"" + page.getTitle().replaceAll("\"", "\"\"") + "\"");
+    try {
+      constructSimilarPages(
+          page,
+          getRoot(wikipedia, properties, MAX_ATTEMPTS),
+          "/api/query/search/p");
+    } catch (JDOMParseException e) {
+      log.error("Error retrieving similar pages", e);
+      throw new APIException("Error parsing XML", e);
+    }
+  }
+
+  /**
    * Retrieves the links of <code>page</code>.
    * 
    * @param wikipedia Wikipedia.
@@ -1621,6 +1651,39 @@ public class MediaWikiAPI implements API {
       log.error("Error magic words", e);
       throw new APIException("Error parsing XML result", e);
     }
+  }
+
+  /**
+   * @param page Page.
+   * @param root Root element.
+   * @param query XPath query to retrieve the links 
+   * @throws APIException
+   */
+  private void constructSimilarPages(Page page, Element root, String query)
+      throws APIException {
+    if (page == null) {
+      throw new APIException("Page is null");
+    }
+    List<Page> similarPages = null;
+    try {
+      XPath xpa = XPath.newInstance(query);
+      List results = xpa.selectNodes(root);
+      Iterator iter = results.iterator();
+      similarPages = new ArrayList<Page>(results.size());
+      XPath xpaNs = XPath.newInstance("./@ns");
+      XPath xpaTitle = XPath.newInstance("./@title");
+      while (iter.hasNext()) {
+        Element currentNode = (Element) iter.next();
+        Page similarPage = DataManager.getPage(
+            page.getWikipedia(), xpaTitle.valueOf(currentNode), null, null);
+        similarPage.setNamespace(xpaNs.valueOf(currentNode));
+        similarPages.add(similarPage);
+      }
+    } catch (JDOMException e) {
+      log.error("Error links for page " + page.getTitle(), e);
+      throw new APIException("Error parsing XML result", e);
+    }
+    page.setSimilarPages(similarPages);
   }
 
   /**

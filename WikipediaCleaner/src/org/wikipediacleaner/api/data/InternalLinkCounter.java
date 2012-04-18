@@ -32,7 +32,7 @@ public class InternalLinkCounter implements InternalLinkNotification {
   public InternalLinkCounter(List<Page> links) {
     if (links != null) {
       for (Page link : links) {
-        link.setCountOccurence(0);
+        link.setCountOccurrence(0);
       }
     }
   }
@@ -70,6 +70,6 @@ public class InternalLinkCounter implements InternalLinkNotification {
     if (link == null) {
       return;
     }
-    link.setCountOccurence(link.getCountOccurence() + 1);
+    link.setCountOccurrence(link.getCountOccurrence() + 1);
   }
 }

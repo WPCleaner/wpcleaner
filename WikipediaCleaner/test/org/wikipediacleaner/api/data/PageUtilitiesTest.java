@@ -81,6 +81,6 @@ public class PageUtilitiesTest {
     Page link = DataManager.getPage(EnumWikipedia.FR, "AFP", null, null);
     Collection<PageElementComment> comments = PageContents.findAllComments(EnumWikipedia.FR, pageText);
     PageContents.countInternalLinks(EnumWikipedia.FR, page, pageText, comments, Collections.singletonList(link));
-    assertEquals(1, link.getCountOccurence());
+    assertEquals(1, link.getCountOccurrence());
   }
 }

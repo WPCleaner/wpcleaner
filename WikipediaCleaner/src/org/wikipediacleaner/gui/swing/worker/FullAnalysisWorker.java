@@ -67,6 +67,9 @@ public class FullAnalysisWorker extends BasicWorker {
         }
       }
       mw.block(true);
+      if (Boolean.FALSE.equals(page.isExisting())) {
+        mw.retrieveSimilarPages(getWikipedia(), page);
+      }
       setText("Analyzing data");
     } catch (APIException e) {
       return e;
