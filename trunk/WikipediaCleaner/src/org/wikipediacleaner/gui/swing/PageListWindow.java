@@ -61,7 +61,7 @@ import org.wikipediacleaner.utils.Configuration;
 
 
 /**
- * List of pages window.
+ * Window displaying a List of pages.
  */
 public class PageListWindow extends BasicWindow implements ActionListener {
 
@@ -195,6 +195,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     columnModel.getColumn(PageListTableModel.COLUMN_PAGE).setMinWidth(100);
     columnModel.getColumn(PageListTableModel.COLUMN_PAGE).setPreferredWidth(200);
     Utilities.addRowSorter(tablePages, modelPages);
+    tablePages.addMouseListener(new PageListMouseListener());
     JScrollPane scrollPages = new JScrollPane(tablePages);
     scrollPages.setMinimumSize(new Dimension(300, 200));
     scrollPages.setPreferredSize(new Dimension(450, 500));

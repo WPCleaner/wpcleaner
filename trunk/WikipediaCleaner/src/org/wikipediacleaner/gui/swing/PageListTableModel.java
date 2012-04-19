@@ -69,9 +69,19 @@ public class PageListTableModel extends AbstractTableModel {
    * @return List of pages.
    */
   public List<Page> getPages() {
-    return this.pages;
+    return pages;
   }
 
+  /**
+   * @param row Row number.
+   * @return Page.
+   */
+  public Page getPage(int row) {
+    if ((row < 0) || (row >= pages.size())) {
+      return null;
+    }
+    return pages.get(row);
+  }
   /**
    * @param pageList List of pages to remove.
    */
