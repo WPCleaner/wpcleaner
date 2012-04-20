@@ -40,7 +40,7 @@ public class MWPaneBasicFormatter extends MWPaneFormatter {
     cleanFormat(doc);
 
     // Format comments
-    //defaultFormatElements(doc, pageAnalysis);
+    defaultFormatElements(doc, pageAnalysis);
   }
 
   /**
