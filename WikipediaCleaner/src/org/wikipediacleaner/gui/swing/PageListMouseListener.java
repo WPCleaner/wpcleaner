@@ -24,6 +24,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTable;
 
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.gui.swing.basic.Utilities;
 
 
 /**
@@ -47,6 +48,7 @@ public class PageListMouseListener extends MouseAdapter {
           int column = table.columnAtPoint(e.getPoint());
           int row = table.rowAtPoint(e.getPoint());
           if ((column >= 0) && (row >= 0)) {
+            row = Utilities.convertRowIndexToModel(table, row);
             Page page = model.getPage(row);
             if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
               Controller.runDisambiguationAnalysis(page.getTitle(), page.getWikipedia());
