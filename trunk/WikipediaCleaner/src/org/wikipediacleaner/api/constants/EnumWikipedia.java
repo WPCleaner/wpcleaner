@@ -249,6 +249,22 @@ public enum EnumWikipedia {
     return userPrefix + ":" + userName + "/" + configPage;
   }
 
+  /* ========================================================================= */
+  /* Contributions management                                                  */
+  /* ========================================================================= */
+
+  /**
+   * Contributions.
+   */
+  private final Contributions contributions = new Contributions(this);
+
+  /**
+   * @return Contributions
+   */
+  public Contributions getContributions() {
+    return contributions;
+  }
+
   /**
    * @param text Comment.
    * @param details Details about the update.

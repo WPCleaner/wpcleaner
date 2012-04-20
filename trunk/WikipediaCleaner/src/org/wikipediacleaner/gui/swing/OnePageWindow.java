@@ -1307,7 +1307,7 @@ public abstract class OnePageWindow
             textComment.getText() :
             getWikipedia().getConfiguration().getUpdatePageMessage(),
         forceWatch, updateDabWarning, createDabWarning,
-        computeErrorsFixed());
+        getContributions(), computeErrorsFixed());
     sendWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(

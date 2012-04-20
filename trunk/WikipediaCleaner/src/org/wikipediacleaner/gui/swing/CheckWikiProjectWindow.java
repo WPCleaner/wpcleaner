@@ -87,6 +87,7 @@ import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
+import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -1344,6 +1345,13 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         return;
       }
 
+      // Count contributions
+      Contributions contributions = new Contributions(getWikipedia());
+      contributions.increasePages(1);
+      for (CheckErrorAlgorithm algorithm : errorsFixed) {
+        contributions.increaseCheckWikiError(algorithm.getErrorNumber(), 1);
+      }
+
       // Send page
       final Configuration configuration = Configuration.getConfiguration();
       SendWorker sendWorker = new SendWorker(
@@ -1353,7 +1361,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
               null,
               ConfigurationValueBoolean.FORCE_WATCH),
           false, false,
-          errorsFixed);
+          contributions, errorsFixed);
       sendWorker.setListener(new DefaultBasicWorkerListener() {
         @Override
         public void afterFinished(

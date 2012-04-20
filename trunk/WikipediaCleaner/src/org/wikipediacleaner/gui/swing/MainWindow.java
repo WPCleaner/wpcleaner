@@ -104,6 +104,7 @@ public class MainWindow
   private final static String ACTION_BOT_TOOLS        = "BOT TOOLS";
   private final static String ACTION_CAT_MEMBERS      = "CAT_MEMBERS";
   private final static String ACTION_CHECK_WIKI       = "CHECK WIKI";
+  private final static String ACTION_CONTRIBUTIONS    = "CONTRIBUTIONS";
   private final static String ACTION_CURRENT_DAB_LIST = "CURRENT DAB LIST";
   private final static String ACTION_DEMO             = "DEMO";
   private final static String ACTION_DISAMBIGUATION   = "DISAMBIGUATION";
@@ -162,6 +163,7 @@ public class MainWindow
   private JButton buttonCategoryMembers;
   private JButton buttonUpdateDabWarning;
   private JButton buttonRandomPage;
+  private JButton buttonContributions;
 
   private JButton buttonOptions;
   private JButton buttonOptionsSystem;
@@ -293,6 +295,7 @@ public class MainWindow
     buttonCategoryMembers.setEnabled(logged);
     buttonUpdateDabWarning.setEnabled(logged);
     buttonRandomPage.setEnabled(logged);
+    buttonContributions.setEnabled(logged);
   }
 
   /**
@@ -654,7 +657,17 @@ public class MainWindow
     constraints.weighty = 1;
     panel.add(emptyPanel, constraints);
     constraints.gridy++;
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.weighty = 0;
 
+    // Contributions
+    buttonContributions = Utilities.createJButton(
+        "gnome-utilities-system-monitor.png", EnumImageSize.NORMAL,
+        GT._("Your contributions"), true);
+    buttonContributions.setActionCommand(ACTION_CONTRIBUTIONS);
+    buttonContributions.addActionListener(this);
+    panel.add(buttonContributions, constraints);
+    constraints.gridy++;
     return panel;
   }
 
@@ -824,6 +837,8 @@ public class MainWindow
       actionBotTools();
     } else if (ACTION_UPDATE_DAB.equals(e.getActionCommand())) {
       actionUpdateDabWarning();
+    } else if (ACTION_CONTRIBUTIONS.equals(e.getActionCommand())) {
+      actionContributions();
     }
   }
 
@@ -1019,6 +1034,18 @@ public class MainWindow
     }
   }
 
+  /**
+   * Action called when Contributions button is pressed.
+   */
+  private void actionContributions() {
+    EnumWikipedia wikipedia = getWikipedia();
+    if ((wikipedia != null) && (wikipedia.getContributions() != null)) {
+      Utilities.displayInformationMessage(
+          getParentComponent(),
+          wikipedia.getContributions().getDescription());
+    }
+  }
+  
   /**
    * Action called when Save Password is changed. 
    */
