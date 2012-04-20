@@ -61,6 +61,7 @@ import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
+import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.Page;
@@ -1086,6 +1087,19 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   }
 
   /**
+   * Contributions.
+   */
+  private Contributions contributions;
+
+  /**
+   * @return Contributions.
+   */
+  @Override
+  public Contributions getContributions() {
+    return contributions;
+  }
+
+  /**
    * @return Default comment.
    */
   @Override
@@ -1097,6 +1111,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       }
       return GT._("Translation");
     }
+    contributions = new Contributions(getWikipedia());
+    contributions.increasePages(1);
     StringBuilder comment = new StringBuilder();
     if ((mapLinksCount != null) && (mapLinksCount.size() > 0)) {
       // Comment for fixed links to disambiguation pages
@@ -1119,6 +1135,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       }
       if (fixed.size() > 0) {
         Collections.sort(fixed);
+        contributions.increaseDabLinks(fixed.size());
         comment.append(getWikipedia().getConfiguration().getDisambiguationComment(fixed.size()));
         int linksFixed = 0;
         for (String fix : fixed) {
@@ -1142,6 +1159,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         comment.append(getWikipedia().getCWConfiguration().getComment());
         Configuration config = Configuration.getConfiguration();
         for (CheckErrorAlgorithm errorFixed : errorsFixed) {
+          contributions.increaseCheckWikiError(errorFixed.getErrorNumber(), 1);
           comment.append(" - ");
           String link = errorFixed.getLink();
           if ((link != null) &&

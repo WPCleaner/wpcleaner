@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
+import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
@@ -45,6 +46,7 @@ public class SendWorker extends BasicWorker {
   private final boolean forceWatch;
   private final boolean updateWarning;
   private final boolean createWarning;
+  private final Contributions contributions;
   private final Collection<CheckErrorAlgorithm> errorsFixed;
 
   /**
@@ -56,6 +58,7 @@ public class SendWorker extends BasicWorker {
    * @param forceWatch Force watching the page.
    * @param updateWarning Update warning on talk page.
    * @param createWarning Create warning on talk page.
+   * @param contributions Contributions.
    * @param errorsFixed Errors fixed by this update.
    */
   public SendWorker(
@@ -63,6 +66,7 @@ public class SendWorker extends BasicWorker {
       Page page, String text, String comment,
       boolean forceWatch,
       boolean updateWarning, boolean createWarning,
+      Contributions contributions,
       Collection<CheckErrorAlgorithm> errorsFixed) {
     super(wikipedia, window);
     this.page = page;
@@ -71,6 +75,7 @@ public class SendWorker extends BasicWorker {
     this.forceWatch = forceWatch;
     this.updateWarning = updateWarning;
     this.createWarning = createWarning;
+    this.contributions = contributions;
     this.errorsFixed = errorsFixed;
   }
 
@@ -111,6 +116,12 @@ public class SendWorker extends BasicWorker {
         }
       }
     } while (queryResult == null);
+
+    // Take contributions into account
+    if ((contributions != null) &&
+        (getWikipedia().getContributions() != null)) {
+      getWikipedia().getContributions().increaseContributions(contributions);
+    }
 
     // Updating disambiguation warning
     if (updateWarning) {

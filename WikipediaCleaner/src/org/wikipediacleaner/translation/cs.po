@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-18 21:34+0200\n"
+"POT-Creation-Date: 2012-04-20 20:06+0200\n"
 "PO-Revision-Date: 2012-04-15 01:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -63,7 +63,7 @@ msgid "Updating page {0}"
 msgstr "Aktualizuji stránku {0}"
 
 #: org/wikipediacleaner/api/MediaWiki.java:224
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:100
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:105
 #, java-format
 msgid "Error {0} detected: Waiting and retrying"
 msgstr ""
@@ -326,6 +326,31 @@ msgstr "Pro boty"
 msgid "Priority unknown"
 msgstr "Neznámá priorita"
 
+#: org/wikipediacleaner/api/constants/Contributions.java:53
+#, java-format
+msgid "You have done the following contributions on \"{0}\":"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/Contributions.java:58
+#, fuzzy, java-format
+msgid "You have edited {0} page(s)."
+msgstr "Sledovat všechny editované stránky"
+
+#: org/wikipediacleaner/api/constants/Contributions.java:64
+#, fuzzy, java-format
+msgid "You have fixed {0} link(s) to disambiguation pages."
+msgstr "Analyzuji odkazy pro rozcestníkové stránky"
+
+#: org/wikipediacleaner/api/constants/Contributions.java:74
+#, java-format
+msgid "You have fixed {0} error(s) \"{1}\"."
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/Contributions.java:85
+#, java-format
+msgid "You haven''t done any contribution on \"{0}\""
+msgstr ""
+
 #: org/wikipediacleaner/api/data/PageComparator.java:229
 msgid "Namespace"
 msgstr "Jmenný prostor"
@@ -409,7 +434,7 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:66
-#: org/wikipediacleaner/gui/swing/MainWindow.java:490
+#: org/wikipediacleaner/gui/swing/MainWindow.java:493
 msgid "About"
 msgstr "O aplikaci"
 
@@ -425,7 +450,7 @@ msgstr "&Zavři"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:151
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:201
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:278
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:259
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:260
 msgid "Automatic fixing"
 msgstr ""
 
@@ -451,17 +476,17 @@ msgid "Fix selected pages"
 msgstr "Opravit vybrané stránky"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:308
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:759
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:760
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:289
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:503
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:219
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:504
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:220
 msgid "Full analysis (Alt + &F)"
 msgstr "Plná analýza (Alt + &F)"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:314
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:295
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:509
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:225
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:510
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:226
 msgid "Disambiguation (Alt + &D)"
 msgstr "Rozcestník (Alt + &D)"
 
@@ -513,7 +538,7 @@ msgid "A comment is required for automatix fixing."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
-#: org/wikipediacleaner/gui/swing/MainWindow.java:746
+#: org/wikipediacleaner/gui/swing/MainWindow.java:759
 msgid "Bot tools"
 msgstr "Nástroje botů"
 
@@ -537,161 +562,161 @@ msgstr "Aktualizovat existující rozcestníkové varování"
 msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr "Na které stránce chcete zahájit aktualizaci rozcestníkového varování?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:184
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:575
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:185
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:576
 msgid "Check Wikipedia"
 msgstr "Kontrola Wikipedie"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:261
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:262
 msgid "No errors available"
 msgstr "Žádné chyby k dispozici"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:264
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:265
 msgid "No errors selected"
 msgstr "žádná chyba nevybrána"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:317
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:318
 msgid "Load all errors"
 msgstr "Nahrát všechny chyby"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:322
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:323
 msgid "Load all high priority errors"
 msgstr "Nahrát všechny velmi důležité chyby"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:327
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:328
 msgid "Load all high and middle priority errors"
 msgstr "Načíst všechny chyby s vysokou a střední prioritou"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:332
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:333
 msgid "Load all middle priority errors"
 msgstr "Načíst všechny chyby se střední prioritou"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:337
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:338
 msgid "Load all high, middle and lowest priority errors"
 msgstr "Načíst všechny chyby s vysokou, střední a nejnižší prioritou"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:342
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:343
 msgid "Load all high and lowest priority errors"
 msgstr "Nahrát všechny chyby s vysokou a nízkou prioritou"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:347
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:348
 msgid "Load all middle and lowest priority errors"
 msgstr "Nahrát všechny chyby se střední a nízkou prioritou"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:352
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:353
 msgid "Load all lowest priority errors"
 msgstr "Nahrát všechny chyby s nízkou prioritou"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:357
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:358
 msgid "Load all errors for bots"
 msgstr "Nahrát všechny chyby pro roboty"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:380
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:381
 #, java-format
 msgid "Load errors {0}"
 msgstr "Nahraj chyby {0}"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:387
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:622
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:388
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:623
 msgid "Select errors"
 msgstr "Vybrat chyby"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:391
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:392
 msgid "Select all errors"
 msgstr "Vybrat všechny chyby"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:396
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:397
 msgid "Select high priority errors"
 msgstr "Vybrat chyby s vysokou prioritou"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:401
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:402
 msgid "Select middle priority (and above) errors"
 msgstr "Vybrat chyby se střední (a vyšší) prioritou"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:406
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:407
 msgid "Select middle priority errors"
 msgstr "Vybrat chyby se střední prioritou"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:411
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:412
 msgid "Select lowest priority (and above) errors"
 msgstr "Vybrat chyby s nízkou (a vyšší) prioritou"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:416
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:417
 msgid "Select lowest priority errors"
 msgstr "Vybrat chyby s nízkou prioritou"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:438
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:486
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:439
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:487
 #, java-format
 msgid "Errors from {0} to {1}"
 msgstr "Chyby od {0} do {1}"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:484
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:485
 msgid "Select only"
 msgstr "Vybrat jenom"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:517
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:518
 msgid "Save current selection"
 msgstr "Uložit aktuální volbu"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:521
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:522
 msgid "Use selection"
 msgstr "Použít volbu"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:523
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:524
 msgid "Delete selection"
 msgstr "Odstranit výběr"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:612
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:613
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:228
 msgid "Maximum number of errors for Check Wiki :"
 msgstr "Maximální počet chyb pro Check Wikipedia:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:634
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:635
 msgid "Right click to select errors"
 msgstr "Klikněte pravým tlačítkem pro vybrání chyb"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:646
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:647
 msgid "List of errors detected :"
 msgstr "Seznam detekovaných chyb:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:667
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:668
 msgid "Reload error"
 msgstr "Znovunačti chybu"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:673
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:674
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:127
 msgid "Detail"
 msgstr "Podrobnosti"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:680
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:681
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:133
 msgid "List on toolserver"
 msgstr "Seznam na toolserveru"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:687
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:688
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:134
 msgid "View or edit white list"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:735
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:736
 msgid "Pages"
 msgstr "Stránek"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:753
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:754
 msgid "&Load pages"
 msgstr "Načti stránky"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:915
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:916
 msgid "Mark as Fixed"
 msgstr "Označ jako opravené"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1019
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1020
 #, java-format
 msgid "The page {0} doesn't exist on Wikipedia"
 msgstr "Stránka {0} na Wikipedii neexistuje"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1063
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1064
 #, java-format
 msgid ""
 "The error n°{0} hasn''t been found in the page {1}.\n"
@@ -700,12 +725,12 @@ msgstr ""
 "Chyba číslo {0} nebyla na stránce {1} nalezena.\n"
 "Chcete ji označit za opravenou?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1186
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1187
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr "Chceš označit  {0} jako vyřešená pro chybu č. {1}"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1198
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1199
 #, java-format
 msgid ""
 "The error n°{0} is still found {1} times in the page.\n"
@@ -714,7 +739,7 @@ msgstr ""
 "Chyba č. {0} je na stránce ještě {1}krát.\n"
 "Opravdu jí chceš označit jako opravenou?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1205
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1206
 #, java-format
 msgid ""
 "The error n°{0} is still found in the page.\n"
@@ -723,7 +748,7 @@ msgstr ""
 "Chyba číslo {0} je stále na této stránce.\n"
 "Opravdu ji chcete označit za opravenou?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1217
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1218
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
@@ -731,16 +756,16 @@ msgstr ""
 "Při editaci stránky jsi chybu opravil.\n"
 "Můžeš uložit změny, chyba bude označena jako vyřešená."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1343
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1344
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1279
 msgid "A comment is required for sending the page."
 msgstr "Pro odeslání této stránky je vyžadován ruční komentář."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1537
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1545
 msgid "Pages with several errors"
 msgstr "Stránky s několika chybami"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1686
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1694
 #, java-format
 msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
@@ -749,7 +774,7 @@ msgstr ""
 "Chyba číslo {0} může být <a href=\"{1}\">konfigurována</a> s následujícími "
 "parametry:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1892
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1900
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
@@ -758,7 +783,7 @@ msgid ""
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1936
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1944
 #, java-format
 msgid ""
 "There''s no white list defined for this error type.\n"
@@ -784,17 +809,17 @@ msgid "Select &next links"
 msgstr "Vyber další odkazy"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:306
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:225
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:226
 msgid "Link count"
 msgstr "Počet odkazů"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:343
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:428
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:429
 msgid "Sort"
 msgstr "Řadit"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:450
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:470
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:471
 msgid "You must select pages on which running automatic fixing."
 msgstr ""
 
@@ -802,152 +827,156 @@ msgstr ""
 msgid "Information"
 msgstr "Informace"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:216
+#: org/wikipediacleaner/gui/swing/MainWindow.java:218
 #, java-format
 msgid "Wikipedia Cleaner - Version {0} ({1})"
 msgstr "Wikipedia Cleaner - verze {0} ({1})"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:304
+#: org/wikipediacleaner/gui/swing/MainWindow.java:307
 msgid "Message"
 msgstr "Zpráva"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:332
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1430
+#: org/wikipediacleaner/gui/swing/MainWindow.java:335
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1457
 msgid "Login"
 msgstr "Přihlašuji uživatele"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:354
+#: org/wikipediacleaner/gui/swing/MainWindow.java:357
 msgid "&Wikipedia"
 msgstr "&Wikipedie"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:361
+#: org/wikipediacleaner/gui/swing/MainWindow.java:364
 msgid "Other Wikipedia"
 msgstr "Ostatní WIkipedie"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:381
+#: org/wikipediacleaner/gui/swing/MainWindow.java:384
 msgid "Lan&guage"
 msgstr "Jazyk"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:388
+#: org/wikipediacleaner/gui/swing/MainWindow.java:391
 msgid "Other Language"
 msgstr "Jiný jazyk"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:407
+#: org/wikipediacleaner/gui/swing/MainWindow.java:410
 msgid "&User name :"
 msgstr "&Uživatelské jméno:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:422
+#: org/wikipediacleaner/gui/swing/MainWindow.java:425
 msgid "&Password :"
 msgstr "Heslo :"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:436
+#: org/wikipediacleaner/gui/swing/MainWindow.java:439
 msgid "&Login"
 msgstr "Přihlásit"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:441
+#: org/wikipediacleaner/gui/swing/MainWindow.java:444
 msgid "&Demo"
 msgstr "Demo"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:446
+#: org/wikipediacleaner/gui/swing/MainWindow.java:449
 msgid "L&ogout"
 msgstr "Odhlásit"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:462
+#: org/wikipediacleaner/gui/swing/MainWindow.java:465
 msgid "Help (Alt + &H)"
 msgstr "Nápověda (Alt + &H)"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:468
+#: org/wikipediacleaner/gui/swing/MainWindow.java:471
 msgid "Options (Alt + &O)"
 msgstr "Možnosti (Alt + &O)"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:474
+#: org/wikipediacleaner/gui/swing/MainWindow.java:477
 msgid "System Options (Alt + &Y)"
 msgstr "Systémové možnosti"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:480
+#: org/wikipediacleaner/gui/swing/MainWindow.java:483
 msgid "Reload system options"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:485
+#: org/wikipediacleaner/gui/swing/MainWindow.java:488
 msgid "&Idea ? Bug ?"
 msgstr "Nápad/chyba ?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:505
+#: org/wikipediacleaner/gui/swing/MainWindow.java:508
 msgid "Save user name and password"
 msgstr "Uložit jméno i heslo"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:517
+#: org/wikipediacleaner/gui/swing/MainWindow.java:520
 msgid "Save user name only"
 msgstr "Uložit jen jméno"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:527
+#: org/wikipediacleaner/gui/swing/MainWindow.java:530
 msgid "Save none of them"
 msgstr "Neuložit nic"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:562
+#: org/wikipediacleaner/gui/swing/MainWindow.java:565
 msgid "Page"
 msgstr "Stránka"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:594
+#: org/wikipediacleaner/gui/swing/MainWindow.java:597
 msgid "Random page (Alt + &R)"
 msgstr "Náhodná stránka (Alt + &R)"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:609
+#: org/wikipediacleaner/gui/swing/MainWindow.java:612
 msgid "&Full analysis"
 msgstr "&Plná analýza"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:618
+#: org/wikipediacleaner/gui/swing/MainWindow.java:621
 msgid "&Disambiguation"
 msgstr "&Rozcestníky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:625
+#: org/wikipediacleaner/gui/swing/MainWindow.java:628
 msgid "Internal links"
 msgstr "Interní odkazy"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:634
+#: org/wikipediacleaner/gui/swing/MainWindow.java:637
 msgid "Category members"
 msgstr "Členové kategorie"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:643
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:231
+#: org/wikipediacleaner/gui/swing/MainWindow.java:646
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:232
 msgid "Update disambiguation warning"
 msgstr "Aktualizovat rozcestníkové varování"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:667
+#: org/wikipediacleaner/gui/swing/MainWindow.java:666
+msgid "Your contributions"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:680
 msgid "Projects"
 msgstr "Projekty"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:685
+#: org/wikipediacleaner/gui/swing/MainWindow.java:698
 msgid "Preload disambiguations pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:694
+#: org/wikipediacleaner/gui/swing/MainWindow.java:707
 msgid "&Current Disambiguation List"
 msgstr "Uživatelský seznam rozcestníků"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:703
+#: org/wikipediacleaner/gui/swing/MainWindow.java:716
 msgid "With many disambiguation links"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:712
+#: org/wikipediacleaner/gui/swing/MainWindow.java:725
 msgid "Project check wikipedia"
 msgstr "Projekt Check &Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:719
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1254
+#: org/wikipediacleaner/gui/swing/MainWindow.java:732
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1281
 msgid "Help requested on..."
 msgstr "Požadavek na nápovědu"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:728
+#: org/wikipediacleaner/gui/swing/MainWindow.java:741
 msgid "Local &Watch list"
 msgstr "Lokální seznam sledovaných"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:737
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1368
+#: org/wikipediacleaner/gui/swing/MainWindow.java:750
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1395
 msgid "Random pages"
 msgstr "Náhodné stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:842
+#: org/wikipediacleaner/gui/swing/MainWindow.java:857
 msgid ""
 "Demo mode is only available for testing WikiCleaner.\n"
 "You won't be able to modify pages on Wikipedia in Demo mode.\n"
@@ -957,45 +986,45 @@ msgstr ""
 "V tomto režimu nebudete moci editovat stránky na Wikipedii.\n"
 "Chcete pokračovat?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:859
+#: org/wikipediacleaner/gui/swing/MainWindow.java:874
 msgid "You can learn how to add other Wikipedia at the following URL:"
 msgstr "Informace o přidání jiné Wikipedie naleznete na této adrese:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:873
+#: org/wikipediacleaner/gui/swing/MainWindow.java:888
 msgid "You can learn how to add other languages at the following URL:"
 msgstr "Informace o přidání jiného jazyka naleznete na této adrese:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:888
+#: org/wikipediacleaner/gui/swing/MainWindow.java:903
 msgid "You must select which Wikipedia you want to work on before login"
 msgstr "Než se přihlásíte, musíte zvolit, na které Wikipedii chcete pracovat"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:897
+#: org/wikipediacleaner/gui/swing/MainWindow.java:912
 msgid "You must select a language before login"
 msgstr "Než se přihlásíte, musíte zvolit jazyk"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:910
+#: org/wikipediacleaner/gui/swing/MainWindow.java:925
 msgid "You must input your user name before login"
 msgstr "Než se přihlásíte, musíte zadat uživatelské jméno"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:922
+#: org/wikipediacleaner/gui/swing/MainWindow.java:937
 msgid "You must input your password before login"
 msgstr "Než se přihlásíte, musíte zadat heslo"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:968
+#: org/wikipediacleaner/gui/swing/MainWindow.java:983
 msgid "You can learn how to configure WikiCleaner at the following URL:"
 msgstr "Informace o konfiguraci WikiCleaneru naleznete na následující adrese:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1003
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1018
 msgid "You can read the help on Wikipedia Cleaner at the following URL:"
 msgstr "Nápovědu k programu Wikipedia Cleaner naleznete na této adrese:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1017
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1032
 msgid "You can submit bug reports or feature requests at the following URL:"
 msgstr ""
 "Můžete odeslat hlášení o chybě či požadavek na novou vlastnost pomocí této "
 "adresy:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1028
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1055
 msgid ""
 "The password will be saved on your disk, so anyone having access to your "
 "computer may be able to get it.\n"
@@ -1005,52 +1034,52 @@ msgstr ""
 "přístup k vašemu počítači.\n"
 "Opravdu ho chcete uložit?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1045
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1072
 msgid "You must input a page name for running a full analysis"
 msgstr "Musíte zadat název stránky pro plnou analýzu"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1068
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1095
 msgid "You must input a page name for running a disambiguation analysis"
 msgstr "Musíte zadat název stránky pro analýzu rozcestníků"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1091
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1118
 msgid "You must input a page name for updating the disambiguation warning"
 msgstr "Musíte zadat jméno stránky pro aktualizaci rozcestníkového varování"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1099
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:984
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:355
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1126
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:985
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:356
 msgid ""
 "You need to define the 'dab_warning_template' property in WikiCleaner "
 "configuration."
 msgstr ""
 "Musíte definovat vlastnost 'dab_warning_template' v konfiguraci WikiCleaneru."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1103
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:988
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:359
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1130
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:989
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:360
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr "Chcete aktualizovat rozcestníkové varování na diskuzní stránce?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1121
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1148
 msgid "You must input a page name for retrieving the list of internal links"
 msgstr "Musíte vložit název stránky pro získání seznamu interních odkazů"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1135
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1162
 #, java-format
 msgid "Internal links in {0}"
 msgstr "Interní odkazy v {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1146
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1173
 msgid "You must input a page name for retrieving the list of category members"
 msgstr "Musíte zadat jméno stránky pro získání seznamu členů kategorie"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1165
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1192
 #, java-format
 msgid "Category members of {0}"
 msgstr "Členové kategorie {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1182
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1209
 msgid ""
 "There's no known list of disambiguation pages for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -1058,22 +1087,22 @@ msgstr ""
 "Neexistuje seznam rozcestníků na této Wikipedii.\n"
 "Informace o konfiguraci programu WikiCleaner najdete na této adrese:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1194
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1221
 msgid "Current disambiguation list"
 msgstr "Současný seznam rozcestníků"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1211
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1238
 msgid ""
 "There's no known list of pages containing many disambiguation links for this "
 "Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1224
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1251
 msgid "Pages with many disambiguation links"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1240
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1267
 msgid ""
 "There's no known template for requesting help for the Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -1081,11 +1110,11 @@ msgstr ""
 "Neexistuje šablona pro žádost o pomoc na této Wikipedii.\n"
 "Informace o konfiguraci programu WikiCleaner najdete na této adrese:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1274
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1301
 msgid "All disambiguations pages"
 msgstr "Všechny rozcestníkové stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1290
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1317
 msgid ""
 "There's no known Check Wikipedia Project for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -1093,44 +1122,44 @@ msgstr ""
 "Neexistuje projekt Check Wikipedia na této Wikipedii.\n"
 "Informace o konfiguraci programu WikiCleaner najdete na této adrese:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1328
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1355
 msgid "Watched pages"
 msgstr "Sledované stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1339
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1366
 msgid "How many pages do you want?"
 msgstr "Kolik stránek chcete?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1351
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1378
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1425
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1452
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:67
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:69
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:57
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:82
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:87
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:109
 msgid "Retrieving MediaWiki API"
 msgstr "Získávám MediaWiki API"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1442
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1469
 msgid "Loading configuration"
 msgstr "Nahrávám konfiguraci"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1467
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1494
 msgid "Retrieving disambiguation templates"
 msgstr "Získávám rozcestníkové šablony"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1471
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1498
 msgid "Retrieving suggestions for text replacements"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1478
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1494
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1505
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1521
 msgid "Retrieving Check Wiki configuration"
 msgstr "Přijímám konfiguraci Check Wikipedia"
 
@@ -1173,79 +1202,79 @@ msgstr "O&věřit"
 msgid "&Cancel"
 msgstr "Storno"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:212
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:213
 #, java-format
 msgid "Analysis - {0}"
 msgstr "Analýza - {0}"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:382
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:383
 msgid "Add a warning on the talk page about the links to disambiguation pages"
 msgstr "Přidat varování na diskuzní stránku ohledně odkazů na rozcestníky"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:442
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:443
 msgid "&Options"
 msgstr "&Možnosti"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:444
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:445
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:132
 msgid "Show &disambiguation pages"
 msgstr "Ukaž  rozcestníky"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:448
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:449
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:139
 msgid "Show &missing pages"
 msgstr "Ukaž chybějící stránky"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:452
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:453
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:146
 msgid "Show &redirect pages"
 msgstr "Ukaž přesměrování"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:456
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:457
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:153
 msgid "Show &other pages"
 msgstr "Ukaž ostatní stránky"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:461
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:462
 msgid "Count disambiguation pages"
 msgstr "Počet rozcestníků"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:465
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:466
 msgid "Count missing pages"
 msgstr "Počet chybějících stránek"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:469
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:470
 msgid "Count redirect pages"
 msgstr "Počet přesměrování"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:473
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:474
 msgid "Count other pages"
 msgstr "Počet ostatních stránek"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:515
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:516
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:747
 msgid "Add to Watch list (Alt + &W)"
 msgstr "Přidat do sledovaných (Alt + &W)"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:829
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:830
 #, java-format
 msgid "Page {0} doesn''t exist, do you want to load a similar page ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:842
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:843
 #, java-format
 msgid "Page {0} doesn''t exist, do you still want to analyze it ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:949
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:950
 msgid "Would you like to add these pages on your local Watch list ?"
 msgstr "Chceš přidat tyto stránky do lokálního seznamu sledovaných?"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1005
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1006
 msgid "From which Wikipedia is this text coming ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1098
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1112
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:118
 msgid "Translation"
 msgstr ""
@@ -1347,7 +1376,7 @@ msgid "Validate (Alt + &V)"
 msgstr "Ověřit (Alt + &V)"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:679
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:249
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:250
 #: org/wikipediacleaner/gui/swing/PagePanel.java:485
 msgid "External Viewer (Alt + &E)"
 msgstr "Externí prohlížeč (Alt + &E)"
@@ -1357,7 +1386,7 @@ msgid "&External Viewer"
 msgstr "&Externí prohlížeč"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:713
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:255
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:256
 #: org/wikipediacleaner/gui/swing/PagePanel.java:500
 msgid "History (Alt + &H)"
 msgstr "Historie (Alt + &H)"
@@ -1455,7 +1484,7 @@ msgid "Page comments - {0}"
 msgstr "Komentáře stránky - {0}"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:125
-#: org/wikipediacleaner/gui/swing/PageListTableModel.java:150
+#: org/wikipediacleaner/gui/swing/PageListTableModel.java:160
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:135
 msgid "Comments"
 msgstr "Komentáře"
@@ -1480,27 +1509,27 @@ msgstr "&OK"
 msgid "&Remove page comments"
 msgstr "Odeb&rat komentáře stránky"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:206
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:207
 msgid "Backlinks"
 msgstr "Zpětné odkazy"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:237
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:238
 msgid "Update page information (Alt + &U)"
 msgstr "Aktualizovat informace o stránce (Alt + &U)"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:243
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:244
 msgid "Set page comments (Alt + &C)"
 msgstr "Nastavit komentář stránky  (Alt + &C)"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:266
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:267
 msgid "Remove page (Alt + &R)"
 msgstr "Odstranit stránku (Alt + &R)"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:272
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:273
 msgid "Add page (Alt + &A)"
 msgstr "Přidat stránku (Alt + &A)"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:372
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:373
 msgid ""
 "You are about to remove the pages from your local Watch list.\n"
 "Are you sure ?"
@@ -1508,18 +1537,18 @@ msgstr ""
 "Chystáte se odebrat stránky z vašeho lokálního seznamu sledovaných stránek.\n"
 "Chcete pokračovat?"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:392
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:393
 msgid "Enter the page title you want to add to your local watch list"
 msgstr ""
 "Zadejte název stránky, kterou chcete přidat do vašeho lokálního seznamu "
 "sledovaných stránek"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:524
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:525
 #, java-format
 msgid "{0} pages"
 msgstr "{0} stránek"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:526
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:527
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
@@ -2300,7 +2329,7 @@ msgstr ""
 msgid "Getting random page"
 msgstr "Získávám náhodou stránku"
 
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:87
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:92
 msgid "Updating page contents"
 msgstr "Aktualizuji obsah stránky"
 

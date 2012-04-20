@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeListener;
 
+import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 
 
@@ -32,5 +33,10 @@ public abstract class PageWindow
   extends BasicWindow
   implements ActionListener, ItemListener, PropertyChangeListener {
 
-  //
+  /**
+   * @return Contributions.
+   */
+  public Contributions getContributions() {
+    return null;
+  }
 }
