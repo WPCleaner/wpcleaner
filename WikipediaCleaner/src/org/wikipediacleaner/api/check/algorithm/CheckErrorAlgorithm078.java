@@ -67,36 +67,48 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
     Map<String, PageElementTag> firstTags = new HashMap<String, PageElementTag>();
     Set<String> tagUsed = new TreeSet<String>();
     for (PageElementTag referencesTag : referencesTags) {
-      // Retrieve "group"
-      PageElementTag.Parameter group = referencesTag.getParameter("group");
-      String groupName = "";
-      if ((group != null) && (group.getValue() != null)) {
-        groupName = group.getValue();
-      }
 
-      // Check if a <references> tag already exist for this group
-      PageElementTag firstTag = firstTags.get(groupName);
-      if (firstTag == null) {
-        firstTags.put(groupName, referencesTag);
-      } else {
-        if (errors == null) {
-          return true;
+      // Use only beginning tags
+      if (referencesTag.isFullTag() || !referencesTag.isEndTag()) {
+        // Retrieve "group"
+        PageElementTag.Parameter group = referencesTag.getParameter("group");
+        String groupName = "";
+        if ((group != null) && (group.getValue() != null)) {
+          groupName = group.getValue();
         }
-        result = true;
-        if (!tagUsed.contains(groupName)) {
-          tagUsed.add(groupName);
+  
+        // Check if a <references> tag already exist for this group
+        PageElementTag firstTag = firstTags.get(groupName);
+        if (firstTag == null) {
+          firstTags.put(groupName, referencesTag);
+        } else {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          if (!tagUsed.contains(groupName)) {
+            tagUsed.add(groupName);
+            PageElementTag matchingTag = firstTag.getMatchingTag();
+            if (matchingTag == null) {
+              matchingTag = firstTag;
+            }
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(),
+                firstTag.getBeginIndex(), matchingTag.getEndIndex(),
+                ErrorLevel.CORRECT);
+            errorResult.addReplacement("", GT._("Delete"));
+            errors.add(errorResult);
+          }
+          PageElementTag matchingTag = referencesTag.getMatchingTag();
+          if (matchingTag == null) {
+            matchingTag = referencesTag;
+          }
           CheckErrorResult errorResult = createCheckErrorResult(
               pageAnalysis.getPage(),
-              firstTag.getBeginIndex(), firstTag.getEndIndex(),
-              ErrorLevel.CORRECT);
+              referencesTag.getBeginIndex(), matchingTag.getEndIndex());
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
         }
-        CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(),
-            referencesTag.getBeginIndex(), referencesTag.getEndIndex());
-        errorResult.addReplacement("", GT._("Delete"));
-        errors.add(errorResult);
       }
     }
     return result;
