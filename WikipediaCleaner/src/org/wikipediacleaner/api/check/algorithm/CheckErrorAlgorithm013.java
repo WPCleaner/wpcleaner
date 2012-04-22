@@ -55,9 +55,7 @@ public class CheckErrorAlgorithm013 extends CheckErrorAlgorithmBase {
     List<PageElementTag> mathTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_MATH);
     boolean result = false;
     for (PageElementTag mathTag : mathTags) {
-      if ((!mathTag.isFullTag()) &&
-          (!mathTag.isEndTag()) &&
-          (mathTag.getMatchingTag() == null)) {
+      if (!mathTag.isEndTag() && !mathTag.isComplete()) {
         if (errors == null) {
           return true;
         }

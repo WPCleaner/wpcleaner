@@ -55,9 +55,7 @@ public class CheckErrorAlgorithm024 extends CheckErrorAlgorithmBase {
     List<PageElementTag> preTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_PRE);
     boolean result = false;
     for (PageElementTag preTag : preTags) {
-      if ((!preTag.isFullTag()) &&
-          (!preTag.isEndTag()) &&
-          (preTag.getMatchingTag() == null)) {
+      if (!preTag.isFullTag() && !preTag.isComplete()) {
         if (errors == null) {
           return true;
         }

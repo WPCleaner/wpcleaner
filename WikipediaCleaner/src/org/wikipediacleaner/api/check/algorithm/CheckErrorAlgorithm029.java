@@ -55,9 +55,7 @@ public class CheckErrorAlgorithm029 extends CheckErrorAlgorithmBase {
     List<PageElementTag> galleryTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_GALLERY);
     boolean result = false;
     for (PageElementTag galleryTag : galleryTags) {
-      if ((!galleryTag.isFullTag()) &&
-          (!galleryTag.isEndTag()) &&
-          (galleryTag.getMatchingTag() == null)) {
+      if (!galleryTag.isFullTag() && !galleryTag.isComplete()) {
         if (errors == null) {
           return true;
         }
