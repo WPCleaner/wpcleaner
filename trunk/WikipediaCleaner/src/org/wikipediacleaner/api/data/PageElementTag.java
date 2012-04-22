@@ -319,6 +319,59 @@ public class PageElementTag extends PageElement {
   }
 
   /**
+   * @return Beginning of the complete tag.
+   */
+  public int getCompleteBeginIndex() {
+    if (isEndTag() && (matchingTag != null)) {
+      return matchingTag.getBeginIndex();
+    }
+    return getBeginIndex();
+  }
+
+  /**
+   * @return Beginning of the value.
+   */
+  public int getValueBeginIndex() {
+    if (isFullTag() || !isComplete()) {
+      return getEndIndex();
+    }
+    if (isEndTag()) {
+      return getMatchingTag().getEndIndex();
+    }
+    return getEndIndex();
+  }
+
+  /**
+   * @return End of the value.
+   */
+  public int getValueEndIndex() {
+    if (isFullTag() || !isComplete()) {
+      return getEndIndex();
+    }
+    if (isEndTag()) {
+      return getBeginIndex();
+    }
+    return getMatchingTag().getBeginIndex();
+  }
+
+  /**
+   * @return End of the complete tag.
+   */
+  public int getCompleteEndIndex() {
+    if (isEndTag() || (matchingTag == null)) {
+      return getEndIndex();
+    }
+    return matchingTag.getEndIndex();
+  }
+
+  /**
+   * @return True if the tag is complete (either full or with matching tag).
+   */
+  public boolean isComplete() {
+    return (fullTag || (matchingTag != null));
+  }
+
+  /**
    * @return Matching tag.
    */
   public PageElementTag getMatchingTag() {

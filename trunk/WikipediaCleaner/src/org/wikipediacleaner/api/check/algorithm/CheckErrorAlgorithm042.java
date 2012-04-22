@@ -74,25 +74,21 @@ public class CheckErrorAlgorithm042 extends CheckErrorAlgorithmBase {
       } else if (tag.isEndTag()) {
         // Closing tag
         level--;
-        if (level == 0) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          int beginIndex = tag.getBeginIndex();
-          if (tag.getMatchingTag() != null) {
-            beginIndex = tag.getMatchingTag().getBeginIndex();
-          }
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
-              beginIndex, tag.getEndIndex());
-          errors.add(errorResult);
-        }
         if (level < 0) {
           level = 0;
         }
       } else {
         level++;
+        if (level == 1) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+          errors.add(errorResult);
+        }
       }
     }
 

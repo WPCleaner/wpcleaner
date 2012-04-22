@@ -88,24 +88,18 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
           result = true;
           if (!tagUsed.contains(groupName)) {
             tagUsed.add(groupName);
-            PageElementTag matchingTag = firstTag.getMatchingTag();
-            if (matchingTag == null) {
-              matchingTag = firstTag;
-            }
             CheckErrorResult errorResult = createCheckErrorResult(
                 pageAnalysis.getPage(),
-                firstTag.getBeginIndex(), matchingTag.getEndIndex(),
+                firstTag.getCompleteBeginIndex(),
+                firstTag.getCompleteEndIndex(),
                 ErrorLevel.CORRECT);
             errorResult.addReplacement("", GT._("Delete"));
             errors.add(errorResult);
           }
-          PageElementTag matchingTag = referencesTag.getMatchingTag();
-          if (matchingTag == null) {
-            matchingTag = referencesTag;
-          }
           CheckErrorResult errorResult = createCheckErrorResult(
               pageAnalysis.getPage(),
-              referencesTag.getBeginIndex(), matchingTag.getEndIndex());
+              referencesTag.getCompleteBeginIndex(),
+              referencesTag.getCompleteEndIndex());
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
         }

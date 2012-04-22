@@ -55,9 +55,7 @@ public class CheckErrorAlgorithm023 extends CheckErrorAlgorithmBase {
     List<PageElementTag> nowikiTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_NOWIKI);
     boolean result = false;
     for (PageElementTag nowikiTag : nowikiTags) {
-      if ((!nowikiTag.isFullTag()) &&
-          (!nowikiTag.isEndTag()) &&
-          (nowikiTag.getMatchingTag() == null)) {
+      if (!nowikiTag.isFullTag() && !nowikiTag.isComplete()) {
         if (errors == null) {
           return true;
         }

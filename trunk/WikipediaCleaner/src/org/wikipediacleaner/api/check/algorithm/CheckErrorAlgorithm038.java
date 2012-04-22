@@ -57,17 +57,15 @@ public class CheckErrorAlgorithm038 extends CheckErrorAlgorithmBase {
     for (PageElementTag iTag : iTags) {
 
       // Check if the tag is an error
-      PageElementTag endTag = null;
       boolean errorFound = false;
       if (iTag.isFullTag()) {
         errorFound = true;
       } else if (iTag.isEndTag()) {
-        if (iTag.getMatchingTag() == null) {
+        if (!iTag.isComplete()) {
           errorFound = true;
         }
       } else {
         errorFound = true;
-        endTag = iTag.getMatchingTag();
       }
 
       // Mark error
@@ -76,11 +74,14 @@ public class CheckErrorAlgorithm038 extends CheckErrorAlgorithmBase {
           return true;
         }
         result = true;
-        if (endTag != null) {
+        if (!iTag.isFullTag() && iTag.isComplete()) {
           CheckErrorResult error = createCheckErrorResult(
-              pageAnalysis.getPage(), iTag.getBeginIndex(), endTag.getEndIndex());
+              pageAnalysis.getPage(),
+              iTag.getCompleteBeginIndex(),
+              iTag.getCompleteEndIndex());
           String text = pageAnalysis.getContents().substring(
-              iTag.getEndIndex(), endTag.getBeginIndex());
+              iTag.getValueBeginIndex(),
+              iTag.getValueEndIndex());
           if ((text != null) && (text.trim().length() > 0)) {
             String visibleText = text;
             if (text.length() > 30) {

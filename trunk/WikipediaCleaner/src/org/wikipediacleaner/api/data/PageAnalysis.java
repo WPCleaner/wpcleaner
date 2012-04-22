@@ -618,9 +618,7 @@ public class PageAnalysis {
       if ((tag.getEndIndex() <= currentIndex) &&
           (!tag.isFullTag()) &&
           (!tag.isEndTag())) {
-        PageElementTag matchingTag = tag.getMatchingTag();
-        if ((matchingTag != null) &&
-            (matchingTag.getBeginIndex() > currentIndex)) {
+        if (tag.getValueEndIndex() > currentIndex) {
           if ((result == null) ||
               (tag.getBeginIndex() > result.getBeginIndex())) {
             result = tag;

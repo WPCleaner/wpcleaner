@@ -61,7 +61,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
     boolean result = false;
     String contents = pageAnalysis.getContents();
     for (PageElementTag tag : tags) {
-      if (!tag.isFullTag() && !tag.isEndTag() && (tag.getMatchingTag() != null)) {
+      if (!tag.isFullTag() && !tag.isEndTag() && tag.isComplete()) {
 
         // Check if tag can be of interest
         boolean interesting = false;
@@ -74,8 +74,8 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
         // Check tag
         if (interesting) {
           boolean textFound = false;
-          int currentIndex = tag.getEndIndex();
-          int lastIndex = tag.getMatchingTag().getBeginIndex();
+          int currentIndex = tag.getValueBeginIndex();
+          int lastIndex = tag.getValueEndIndex();
           while (!textFound && (currentIndex < lastIndex)) {
             if (!Character.isWhitespace(contents.charAt(currentIndex))) {
               textFound = true;
@@ -89,7 +89,8 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
                 pageAnalysis.getPage(),
-                tag.getBeginIndex(), tag.getMatchingTag().getEndIndex());
+                tag.getCompleteBeginIndex(),
+                tag.getCompleteEndIndex());
             errorResult.addReplacement("", GT._("Delete"));
             errors.add(errorResult);
           }
