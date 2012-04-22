@@ -18,7 +18,6 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +54,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve possible abreviations before <ref> tag
+    // Retrieve possible abbreviations before <ref> tag
     String abbreviations = getSpecificProperty(
         "abbreviations", true, false, false);
     String[] abbreviationsList = null;
@@ -77,147 +76,155 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     }
     boolean result = false;
     String contents = pageAnalysis.getContents();
-    for (int i = 0; i < tags.size(); i++) {
-      PageElementTag tag = tags.get(i);
-      if ((tag != null) &&
-          (tag.isFullTag() || !tag.isEndTag())) {
+    int tagIndex = 0;
+    int maxTags = tags.size();
+    while (tagIndex < maxTags) {
+      int firstTagIndex = tagIndex;
+      PageElementTag firstTag = tags.get(firstTagIndex);
 
-        // Remove possible whitespace
-        int tmpIndex = tag.getBeginIndex() - 1;
-        while ((tmpIndex >= 0) &&
-               (Character.isWhitespace(contents.charAt(tmpIndex)))) {
-          tmpIndex--;
-        }
-
-        // Check if previous character is a punctuation
-        boolean punctuationFound = false;
-        char punctuation = ' ';
-        if (tmpIndex >= 0) {
-          punctuation = contents.charAt(tmpIndex);
-          if (SpecialCharacters.isPunctuation(punctuation)) {
-            punctuationFound = true;
-          }
-        }
-
-        // Check for possible abbreviations
-        boolean abbreviationFound = false;
-        if ((punctuationFound) && (abbreviationsList != null)) {
-          for (String abbreviation : abbreviationsList) {
-            if (abbreviation != null) {
-              if (contents.startsWith(abbreviation, tmpIndex - abbreviation.length() + 1)) {
-                abbreviationFound = true;
-              }
-            }
-          }
-        }
-
-        // Punctuation found
-        if (punctuationFound) {
-          if (errors == null) {
-            if (!abbreviationFound) {
-              return true;
-            }
+      // Group tags separated only by punctuation characters
+      boolean endFound = false;
+      tagIndex = getEndIndex(tags, tagIndex) + 1;
+      while (!endFound && (tagIndex < maxTags)) {
+        int beginIndex = tags.get(tagIndex - 1).getEndIndex();
+        int endIndex = tags.get(tagIndex).getBeginIndex();
+        boolean separatorFound = false;
+        boolean tryNext = true;
+        while (tryNext && (beginIndex < endIndex)) {
+          if (!separatorFound && (contents.startsWith(separator, beginIndex))) {
+            separatorFound = true;
+            beginIndex += separator.length();
+          } else if (!Character.isWhitespace(contents.charAt(beginIndex)) &&
+                     (contents.charAt(beginIndex) != ',') &&
+                     (contents.charAt(beginIndex) != ';') &&
+                     (contents.charAt(beginIndex) != '\'')) {
+            tryNext = false;
           } else {
-            if (!abbreviationFound) {
-              result = true;
+            beginIndex++;
+          }
+        }
+        if (tryNext) {
+          tagIndex = getEndIndex(tags, tagIndex) + 1;
+        } else {
+          endFound = true;
+        }
+      }
+      int lastTagIndex = tagIndex - 1;
+      PageElementTag lastTag = tags.get(lastTagIndex);
+
+      // Remove possible whitespace characters before first reference
+      int tmpIndex = firstTag.getBeginIndex() - 1;
+      while ((tmpIndex >= 0) &&
+             (Character.isWhitespace(contents.charAt(tmpIndex)))) {
+        tmpIndex--;
+      }
+
+      // Check if previous character is a punctuation
+      boolean punctuationFound = false;
+      char punctuation = ' ';
+      if (tmpIndex >= 0) {
+        punctuation = contents.charAt(tmpIndex);
+        if (SpecialCharacters.isPunctuation(punctuation)) {
+          punctuationFound = true;
+        }
+      }
+      int beginIndex = tmpIndex;
+
+      // Check for possible abbreviations before punctuation
+      boolean abbreviationFound = false;
+      if ((punctuationFound && (abbreviationsList != null))) {
+        for (String abbreviation : abbreviationsList) {
+          if (abbreviation != null) {
+            if (contents.startsWith(abbreviation, tmpIndex - abbreviation.length() + 1)) {
+              abbreviationFound = true;
             }
-            String allPunctuations = "";
-            while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == punctuation)) {
-              allPunctuations = contents.charAt(tmpIndex) + allPunctuations;
-              tmpIndex--;
-            }
-            ArrayList<PageElementTag> tagList = new ArrayList<PageElementTag>();
-            tagList.add(tag);
-            boolean tryNext = true;
-            while (tryNext) {
-              PageElementTag lastTag = tagList.get(tagList.size() - 1);
-              if (lastTag.getMatchingTag() != null) {
-                lastTag = lastTag.getMatchingTag();
-              }
-              int lastTagIndex = i;
-              while ((lastTagIndex < tags.size()) &&
-                     (tags.get(lastTagIndex) != lastTag)) {
-                lastTagIndex++;
-              }
-              PageElementTag nextTag = (lastTagIndex + 1 < tags.size()) ?
-                  tags.get(lastTagIndex + 1) : null;
-              if (nextTag == null) {
-                tryNext = false;
-              } else {
-                boolean separatorFound = false;
-                int endIndex = lastTag.getEndIndex();
-                while ((endIndex < nextTag.getBeginIndex()) && (tryNext)) {
-                  if (!separatorFound && (contents.startsWith(separator, endIndex))) {
-                    separatorFound = true;
-                    endIndex += separator.length();
-                  } else if (!Character.isWhitespace(contents.charAt(endIndex)) &&
-                             (contents.charAt(endIndex) != ',') &&
-                             (contents.charAt(endIndex) != ';') &&
-                             (contents.charAt(endIndex) != '\'')) {
-                    tryNext = false;
-                  } else {
-                    endIndex++;
-                  }
-                }
-                if (tryNext) {
-                  tagList.add(nextTag);
-                  i = lastTagIndex;
-                }
-              }
-            }
-            PageElementTag lastTag = tagList.get(tagList.size() - 1);
-            if (lastTag.getMatchingTag() != null) {
-              lastTag = lastTag.getMatchingTag();
-            }
-            int endIndex = lastTag.getEndIndex();
-            while ((endIndex < contents.length()) && (contents.charAt(endIndex) == punctuation)) {
-              endIndex++;
-            }
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), tmpIndex + 1, endIndex,
-                abbreviationFound ? CheckErrorResult.ErrorLevel.CORRECT : CheckErrorResult.ErrorLevel.ERROR);
-            String tagText = "";
-            for (int j = 0; j < tagList.size(); j++) {
-              if (j > 0) {
-                tagText += separator; 
-              }
-              PageElementTag beginTag = tagList.get(j);
-              PageElementTag endTag = beginTag;
-              if (endTag.getMatchingTag() != null) {
-                endTag = endTag.getMatchingTag();
-              }
-              tagText += contents.substring(
-                  beginTag.getBeginIndex(),
-                  endTag.getEndIndex());
-            }
-            if (tagList.size() > 1) {
-              errorResult.addReplacement(
-                  tagText + allPunctuations,
-                  "<ref>...</ref>" + separator + "..." + separator + "<ref>...</ref>" + allPunctuations);
-            } else {
-              errorResult.addReplacement(
-                  tagText + allPunctuations,
-                  "<ref>...</ref>" + allPunctuations);
-            }
-            if ((endIndex > lastTag.getEndIndex()) &&
-                (endIndex - lastTag.getEndIndex() != allPunctuations.length())) {
-              String afterTag = contents.substring(lastTag.getEndIndex(), endIndex);
-              if (tagList.size() > 1) {
-                errorResult.addReplacement(
-                    tagText + afterTag,
-                    "<ref>...</ref>" + separator + "..." + separator + "<ref>...</ref>" + afterTag);
-              } else {
-                errorResult.addReplacement(
-                    tagText + afterTag,
-                    "<ref>...</ref>" + afterTag);
-              }
-            }
-            errors.add(errorResult);
           }
         }
       }
+
+      // Punctuation found
+      if (punctuationFound && !abbreviationFound) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+
+        // Check if the punctuation before is multiple
+        int lastPunctuationIndex = tmpIndex;
+        while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) == punctuation)) {
+          tmpIndex--;
+        }
+        tmpIndex++;
+        String allPunctuations = contents.substring(tmpIndex, lastPunctuationIndex + 1);
+
+        // Construct list of tags
+        StringBuilder buffer = new StringBuilder();
+        int tmpTagIndex = firstTagIndex;
+        int count = 0;
+        while (tmpTagIndex <= lastTagIndex) {
+          if (count > 0) {
+            buffer.append(separator);
+          }
+          int tmpBeginIndex = tags.get(tmpTagIndex).getBeginIndex();
+          tmpTagIndex = getEndIndex(tags, tmpTagIndex);
+          int tmpEndIndex = tags.get(tmpTagIndex).getEndIndex();
+          buffer.append(contents.substring(tmpBeginIndex, tmpEndIndex));
+          tmpTagIndex++;
+          count++;
+        }
+        String replace = buffer.toString();
+        String textReplace = (count > 1) ?
+            "<ref>...</ref>" + separator + "..." + separator + "<ref>...</ref>" :
+            "<ref>...</ref>";
+
+        // Check for possible punctuation after tags
+        tmpIndex = lastTag.getEndIndex();
+        while ((tmpIndex < contents.length()) &&
+               (Character.isWhitespace(contents.charAt(tmpIndex)))) {
+          tmpIndex++;
+        }
+        boolean punctuationFoundAfter = false;
+        int punctuationAfterIndex = tmpIndex;
+        while ((tmpIndex < contents.length()) &&
+               SpecialCharacters.isPunctuation(contents.charAt(tmpIndex))) {
+          punctuationFoundAfter = true;
+          tmpIndex++;
+        }
+        String punctuationAfter = contents.substring(punctuationAfterIndex, tmpIndex);
+
+        // Create error
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(), beginIndex, tmpIndex);
+        errorResult.addReplacement(
+            replace + allPunctuations,
+            textReplace + allPunctuations);
+        if (punctuationFoundAfter &&
+            !allPunctuations.equals(punctuationAfter)) {
+          errorResult.addReplacement(
+              replace + punctuationAfter,
+              textReplace + punctuationAfter);
+        }
+        errors.add(errorResult);
+      }
     }
     return result;
+  }
+
+  /**
+   * @param tags List of tags.
+   * @param currentIndex Index of current tag.
+   * @return Index of end tag matching the current tag.
+   */
+  private int getEndIndex(List<PageElementTag> tags, int currentIndex) {
+    PageElementTag currentTag = tags.get(currentIndex);
+    if (currentTag.isFullTag() || !currentTag.isComplete()) {
+      return currentIndex;
+    }
+    int endIndex = tags.indexOf(currentTag.getMatchingTag());
+    if (endIndex < currentIndex) {
+      return currentIndex;
+    }
+    return endIndex;
   }
 
   /* (non-Javadoc)
