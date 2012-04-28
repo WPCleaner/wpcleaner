@@ -152,6 +152,8 @@ public class WPCConfiguration {
     // Properties available also in user configuration
     if (name.equals("dab_comment")) {
       setDisambiguationComment(value);
+    } else if (name.equals("dab_comment_todo")) {
+      setDisambiguationCommentTodo(value);
     } else if (name.equals("dab_warning_comment")) {
       setDisambiguationWarningComment(value);
     } else if (name.equals("dab_warning_comment_done")) {
@@ -822,9 +824,14 @@ public class WPCConfiguration {
   private List<String> mostDisambiguationLinks;
 
   /**
-   * Comment for disambiguation fixing.
+   * Comment for disambiguation links that have been fixed.
    */
   private String disambiguationComment;
+
+  /**
+   * Comment for disambiguation links that still need to be fixed.
+   */
+  private String disambiguationCommentTodo;
 
   /**
    * @param value Pages containing the current list of disambiguation pages.
@@ -841,10 +848,17 @@ public class WPCConfiguration {
   }
 
   /**
-   * @param value Comment for disambiguation fixing.
+   * @param value Comment for disambiguation links that have been fixed.
    */
   private void setDisambiguationComment(String value) {
     this.disambiguationComment = nonEmptyString(value);
+  }
+
+  /**
+   * @param value Comment for disambiguation links that still need to be fixed.
+   */
+  private void setDisambiguationCommentTodo(String value) {
+    this.disambiguationCommentTodo = nonEmptyString(value);
   }
 
   /**
@@ -862,8 +876,8 @@ public class WPCConfiguration {
   }
 
   /**
-   * @param count Number of disambiguation links.
-   * @return Comment for disambiguation fixing.
+   * @param count Number of disambiguation links that have been fixed.
+   * @return Comment for disambiguation links that have been fixed.
    */
   public String getDisambiguationComment(int count) {
     if (disambiguationComment != null) {
@@ -873,6 +887,22 @@ public class WPCConfiguration {
         //
       }
       return disambiguationComment;
+    }
+    return "";
+  }
+
+  /**
+   * @param count Number of disambiguation links that still need to be fixed.
+   * @return Comment for disambiguation links that still need to be fixed.
+   */
+  public String getDisambiguationCommentTodo(int count) {
+    if (disambiguationCommentTodo != null) {
+      try {
+        return MessageFormat.format(disambiguationCommentTodo, Integer.valueOf(count));
+      } catch (IllegalArgumentException e) {
+        //
+      }
+      return disambiguationCommentTodo;
     }
     return "";
   }
