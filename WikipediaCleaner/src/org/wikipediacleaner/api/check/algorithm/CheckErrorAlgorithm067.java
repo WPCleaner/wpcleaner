@@ -180,7 +180,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         // Check for possible punctuation after tags
         tmpIndex = lastTag.getEndIndex();
         while ((tmpIndex < contents.length()) &&
-               (Character.isWhitespace(contents.charAt(tmpIndex)))) {
+               (contents.charAt(tmpIndex) == ' ')) {
           tmpIndex++;
         }
         boolean punctuationFoundAfter = false;
