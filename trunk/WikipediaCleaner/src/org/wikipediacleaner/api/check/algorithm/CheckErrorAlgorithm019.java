@@ -19,9 +19,11 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTitle;
 
 
 /**
@@ -48,40 +50,17 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      int titleIndex = contents.indexOf("=", startIndex);
-      if (titleIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        int endLineIndex = contents.indexOf("\n", titleIndex);
-        if ((titleIndex == 0) || (contents.charAt(titleIndex - 1) == '\n')) {
-          int titleLevel = 0;
-          int currentPos = titleIndex;
-          while ((currentPos < contents.length()) && (contents.charAt(currentPos) == '=')) {
-            currentPos++;
-            titleLevel++;
-          }
-          if (endLineIndex < 0) {
-            endLineIndex = contents.length();
-          }
-          if (titleLevel < 2) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            errors.add(createCheckErrorResult(
-                pageAnalysis.getPage(), titleIndex, endLineIndex));
-          }
-          startIndex = endLineIndex + 1;
-        } else {
-          if (endLineIndex < 0) {
-            startIndex = contents.length();
-          } else {
-            startIndex = endLineIndex;
-          }
+    List<PageElementTitle> titles = pageAnalysis.getTitles();
+    for (PageElementTitle title : titles) {
+      if (title.getFirstLevel() == 1) {
+        if (errors == null) {
+          return true;
         }
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            title.getBeginIndex(), title.getEndIndex());
+        errors.add(errorResult);
       }
     }
     return result;
