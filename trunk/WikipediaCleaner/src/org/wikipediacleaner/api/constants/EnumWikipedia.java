@@ -295,15 +295,14 @@ public enum EnumWikipedia {
         formattedComment.append(link);
         formattedComment.append("|WPCleaner]] ");
       } else {
-        formattedComment.append("WPCleaner");
+        formattedComment.append("WPCleaner ");
       }
-      formattedComment.append("(v");
+      formattedComment.append("v");
       formattedComment.append(Version.VERSION);
-      formattedComment.append(")");
     }
     if (comment != null) {
       if (formattedComment.length() > 0) {
-        formattedComment.append(" ");
+        formattedComment.append(" - ");
       }
       formattedComment.append(comment);
     }
