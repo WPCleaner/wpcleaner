@@ -214,7 +214,7 @@ public class PageElementTag extends PageElement {
     }
     paramString = paramString.trim();
     int equalIndex = paramString.indexOf('=');
-    if ((equalIndex <= 0) || (equalIndex + 2 >= paramString.length())) {
+    if ((equalIndex <= 0) || (equalIndex + 1 >= paramString.length())) {
       return false;
     }
     String name = paramString.substring(0, equalIndex);
