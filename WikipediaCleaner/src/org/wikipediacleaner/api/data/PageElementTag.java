@@ -151,6 +151,9 @@ public class PageElementTag extends PageElement {
            (Character.isLetter(contents.charAt(tmpIndex)))) {
       tmpIndex++;
     }
+    if (tmpIndex == beginIndex) {
+      return null;
+    }
     String name = contents.substring(beginIndex, tmpIndex);
 
     // Possible whitespace characters
@@ -209,43 +212,82 @@ public class PageElementTag extends PageElement {
   private static boolean analyzeParameters(
       String paramString,
       List<Parameter> parameters) {
-    if ((paramString == null) || (paramString.trim().length() == 0)) {
+    if (paramString == null) {
       return true;
     }
-    paramString = paramString.trim();
-    int equalIndex = paramString.indexOf('=');
-    if ((equalIndex <= 0) || (equalIndex + 1 >= paramString.length())) {
+    int maxLength = paramString.length();
+
+    // Find parameter name
+    int startNameIndex = 0;
+    while ((startNameIndex < maxLength) &&
+           (paramString.charAt(startNameIndex) == ' ')) {
+      startNameIndex++;
+    }
+    if (startNameIndex >= maxLength) {
+      return true;
+    }
+    int endNameIndex = startNameIndex;
+    while ((endNameIndex < maxLength) &&
+           (paramString.charAt(endNameIndex) != ' ') &&
+           (paramString.charAt(endNameIndex) != '=')) {
+      endNameIndex++;
+    }
+    String name = paramString.substring(startNameIndex, endNameIndex);
+
+    // Find equal sign
+    int equalIndex = endNameIndex;
+    while ((equalIndex < maxLength) &&
+           (paramString.charAt(equalIndex) == ' ')) {
+      equalIndex++;
+    }
+    if (equalIndex >= maxLength) {
+      Parameter param = new Parameter(name, null, null);
+      parameters.add(param);
+      return true;
+    }
+    if (paramString.charAt(equalIndex) != '=') {
+      Parameter param = new Parameter(name, null, null);
+      parameters.add(param);
+      return analyzeParameters(paramString.substring(equalIndex), parameters);
+    }
+
+    // Find beginning of parameter value
+    int startValueIndex = equalIndex + 1;
+    while ((startValueIndex < maxLength) &&
+           (paramString.charAt(startValueIndex) == ' ')) {
+      startValueIndex++;
+    }
+    if (startValueIndex >= maxLength) {
       return false;
     }
-    String name = paramString.substring(0, equalIndex);
-    paramString = paramString.substring(equalIndex + 1);
+
+    // Find parameter value
     String value = null;
-    int endIndex = 0;
     String marker = null;
-    if ((paramString.charAt(0) == '\'') ||
-        (paramString.charAt(0) == '\"')) {
-      endIndex = paramString.indexOf(paramString.charAt(0), 1);
-      if (endIndex < 0) {
+    int endValueIndex = startValueIndex;
+    if ((paramString.charAt(startValueIndex) == '\'') ||
+        (paramString.charAt(startValueIndex) == '\"')) {
+      marker = paramString.substring(startValueIndex, startValueIndex + 1);
+      endValueIndex = paramString.indexOf(paramString.charAt(startValueIndex), startValueIndex + 1);
+      if (endValueIndex < 0) {
         return false;
       }
-      marker = paramString.substring(0, 1);
-      value = paramString.substring(1, endIndex);
-      endIndex++;
+      startValueIndex++;
+      value = paramString.substring(startValueIndex, endValueIndex);
+      endValueIndex++;
     } else {
-      endIndex = paramString.indexOf(' ');
-      if (endIndex < 0) {
-        value = paramString;
-        endIndex = paramString.length();
-      } else {
-        value = paramString.substring(0, endIndex);
+      while ((endValueIndex < maxLength) &&
+             (paramString.charAt(endValueIndex) != ' ')) {
+        endValueIndex++;
       }
+      value = paramString.substring(startValueIndex, endValueIndex);
     }
-    if (parameters != null) {
-      Parameter param = new Parameter(name, value, marker);
-      parameters.add(param);
-    }
-    if (endIndex < paramString.length()) {
-      return analyzeParameters(paramString.substring(endIndex), parameters);
+    Parameter param = new Parameter(name, value, marker);
+    parameters.add(param);
+
+    // Deal with next parameter
+    if (endValueIndex < maxLength) {
+      return analyzeParameters(paramString.substring(endValueIndex), parameters);
     }
     return true;
   }
