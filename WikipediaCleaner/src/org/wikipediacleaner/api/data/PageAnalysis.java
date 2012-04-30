@@ -21,7 +21,9 @@ package org.wikipediacleaner.api.data;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -44,30 +46,10 @@ public class PageAnalysis {
    */
   private final String contents;
 
-  private boolean checkOrthograph;
-
-  private final Object categoriesLock = new Object();
-  private Collection<PageElementCategory> categories;
-  private final Object commentsLock = new Object();
-  private List<PageElementComment> comments;
-  private final Object defaultSortLock = new Object();
-  private Collection<PageElementDefaultsort> defaultSorts;
-  private final Object externalLinksLock = new Object();
-  private Collection<PageElementExternalLink> externalLinks;
-  private final Object imagesLock = new Object();
-  private Collection<PageElementImage> images;
-  private final Object internalLinksLock = new Object();
-  private Collection<PageElementInternalLink> internalLinks;
-  private final Object interwikiLinksLock = new Object();
-  private Collection<PageElementInterwikiLink> interwikiLinks;
-  private final Object languageLinksLock = new Object();
-  private Collection<PageElementLanguageLink> languageLinks;
-  private final Object tagsLock = new Object();
-  private List<PageElementTag> tags;
-  private final Object templatesLock = new Object();
-  private Collection<PageElementTemplate> templates;
-  private final Object titlesLock = new Object();
-  private List<PageElementTitle> titles;
+  /**
+   * True if spelling should be checked.
+   */
+  private boolean checkSpelling;
 
   /**
    * @param page Page.
@@ -79,8 +61,8 @@ public class PageAnalysis {
 
     // Default configuration
     Configuration config = Configuration.getConfiguration();
-    checkOrthograph = config.getBoolean(
-        null, ConfigurationValueBoolean.ORTHOGRAPH);
+    checkSpelling = config.getBoolean(
+        null, ConfigurationValueBoolean.SPELLING);
   }
 
   /**
@@ -131,34 +113,26 @@ public class PageAnalysis {
   }
 
   /**
-   * @param check True if orthograph should be checked.
+   * @param check True if spelling should be checked.
    */
-  public void shouldCheckOrthograph(boolean check) {
-    this.checkOrthograph = check;
+  public void shouldCheckSpelling(boolean check) {
+    this.checkSpelling = check;
   }
 
   /**
-   * @return True if orthograph should be checked.
+   * @return True if spelling should be checked.
    */
-  public boolean shouldCheckOrthograph() {
-    return checkOrthograph;
+  public boolean shouldCheckSpelling() {
+    return checkSpelling;
   }
 
   /**
    * Perform page analysis.
    */
-  public void performPageAnalysis() {
-    getCategories();
-    getComments();
-    getDefaultSorts();
-    getExternalLinks();
-    getImages();
-    getInternalLinks();
-    getInterwikiLinks();
-    getLanguageLinks();
-    getTags();
-    getTemplates();
-    getTitles();
+  public void performFullPageAnalysis() {
+    firstLevelAnalysis();
+    secondLevelAnalysis();
+    thirdLevelAnalysis();
   }
 
   // ==========================================================================
@@ -278,19 +252,377 @@ public class PageAnalysis {
   }
 
   // ==========================================================================
+  // Content analysis
+  // ==========================================================================
+
+  /**
+   * Internal lock for first level analysis.
+   */
+  private final Object firstLevelLock = new Object();
+
+  /**
+   * Internal lock for second level analysis.
+   */
+  private final Object secondLevelLock = new Object();
+
+  /**
+   * Internal lock for third level analysis.
+   */
+  private final Object thirdLevelLock = new Object();
+
+  /**
+   * Perform a first level analysis of the page (comments).
+   */
+  private void firstLevelAnalysis() {
+    synchronized (firstLevelLock) {
+      if (comments != null) {
+        return;
+      }
+
+      // Initialize
+      comments = new ArrayList<PageElementComment>();
+
+      // Go through all the text of the page
+      int maxIndex = contents.length();
+      int currentIndex = 0;
+      while (currentIndex < maxIndex) {
+        currentIndex = contents.indexOf("<!--", currentIndex);
+        if (currentIndex < 0) {
+          currentIndex = maxIndex;
+        } else {
+          PageElementComment comment = PageElementComment.analyzeBlock(
+              getWikipedia(), contents, currentIndex);
+          if (comment != null) {
+            comments.add(comment);
+            currentIndex = comment.getEndIndex();
+          } else {
+            currentIndex++;
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Perform a second level analysis of the page (tags).
+   */
+  private void secondLevelAnalysis() {
+    synchronized (secondLevelLock) {
+      if (tags != null) {
+        return;
+      }
+      firstLevelAnalysis();
+
+      // Initialize
+      int posComments = 0;
+      List<PageElementComment> tmpComments = comments;
+      tags = new ArrayList<PageElementTag>();
+
+      // Go through all the text of the page
+      int maxIndex = contents.length();
+      int currentIndex = 0;
+      while (currentIndex < maxIndex) {
+        currentIndex = contents.indexOf('<', currentIndex);
+        if (currentIndex < 0) {
+          currentIndex = maxIndex;
+        } else {
+          posComments = getFirstElementAfterPosition(tmpComments, posComments, currentIndex);
+          PageElement comment = isInElement(tmpComments, posComments, currentIndex);
+          if (comment != null) {
+            currentIndex = comment.getEndIndex();
+          } else {
+            PageElementTag tag = PageElementTag.analyzeBlock(contents, currentIndex);
+            if (tag != null) {
+              if (tag.isEndTag() && !tag.isFullTag()) {
+                boolean found = false;
+                int i = tags.size();
+                int level = 0;
+                while ((i > 0) && !found) {
+                  i--;
+                  PageElementTag tmpTag = tags.get(i);
+                  if (tag.getNormalizedName().equals(tmpTag.getNormalizedName())) {
+                    if (!tmpTag.isFullTag()) {
+                      if (tmpTag.isEndTag()) {
+                        level++;
+                      } else {
+                        level--;
+                        if (level < 0) {
+                          found = true;
+                          tmpTag.setMatchingTag(tag);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              tags.add(tag);
+              currentIndex = tag.getEndIndex();
+            } else {
+              currentIndex++;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Perform a third level analysis of the page (links, templates, ...).
+   */
+  private void thirdLevelAnalysis() {
+    synchronized (thirdLevelLock) {
+      if (internalLinks != null) {
+        return;
+      }
+      secondLevelAnalysis();
+      internalLinks = new ArrayList<PageElementInternalLink>();
+      images = new ArrayList<PageElementImage>();
+      categories = new ArrayList<PageElementCategory>();
+      interwikiLinks = new ArrayList<PageElementInterwikiLink>();
+      languageLinks = new ArrayList<PageElementLanguageLink>();
+      templates = new ArrayList<PageElementTemplate>();
+      defaultSorts = new ArrayList<PageElementDefaultsort>();
+      titles = new ArrayList<PageElementTitle>();
+      externalLinks = new ArrayList<PageElementExternalLink>();
+
+      // Initialize
+      int posComments = 0;
+      List<PageElementComment> tmpComments = comments;
+
+      // Go through all the text of the page
+      int maxIndex = contents.length();
+      int currentIndex = 0;
+      while (currentIndex < maxIndex) {
+
+        // Checking if the current index is in comments
+        posComments = getFirstElementAfterPosition(tmpComments, posComments, currentIndex);
+        PageElement comment = isInElement(tmpComments, posComments, currentIndex);
+        if (comment != null) {
+          currentIndex = comment.getEndIndex();
+        } else {
+          // TODO: Checking if the current index is in <nowiki> tags
+
+          if (contents.startsWith("[[", currentIndex)) {
+            currentIndex = analyze2SquareBrackets(currentIndex);
+          } else if (contents.startsWith("[", currentIndex)) {
+            currentIndex = analyze1SquareBracket(currentIndex);
+          } else if (contents.startsWith("{{", currentIndex)) {
+            currentIndex = analyze2CurlyBrackets(currentIndex);
+          } else if (contents.startsWith("=", currentIndex)) {
+            currentIndex = analyze1Equal(currentIndex);
+          } else {
+            currentIndex = analyzeText(currentIndex);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Part of the third level of analysis when text is beginning with "[[".
+   * 
+   * @param currentIndex Current index in the text.
+   * @return Next index.
+   */
+  private int analyze2SquareBrackets(int currentIndex) {
+
+    // Check if this is an internal link
+    PageElementInternalLink link = PageElementInternalLink.analyzeBlock(
+        getWikipedia(), contents, currentIndex);
+    if (link != null) {
+      internalLinks.add(link);
+      if (link.getText() == null) {
+        return link.getEndIndex();
+      }
+      return link.getBeginIndex() + Math.max(2, link.getTextOffset());
+    }
+
+    // Check if this is an image
+    PageElementImage image = PageElementImage.analyzeBlock(
+        getWikipedia(), contents, currentIndex);
+    if (image != null) {
+      images.add(image);
+      if (image.getDescription() == null) {
+        return image.getEndIndex();
+      }
+      return image.getBeginIndex() + Math.max(1, image.getDescriptionOffset());
+    }
+
+    // Check if this is a category
+    PageElementCategory category = PageElementCategory.analyzeBlock(
+        getWikipedia(), contents, currentIndex);
+    if (category != null) {
+      categories.add(category);
+      return category.getEndIndex();
+    }
+
+    // Check if this is an interwiki link
+    PageElementInterwikiLink interwiki = PageElementInterwikiLink.analyzeBlock(
+        getWikipedia(), contents, currentIndex);
+    if (interwiki != null) {
+      interwikiLinks.add(interwiki);
+      if (interwiki.getText() == null) {
+        return interwiki.getEndIndex();
+      }
+      return interwiki.getBeginIndex() + Math.max(2, interwiki.getTextOffset());
+    }
+
+    // Check if this is a language link
+    PageElementLanguageLink language = PageElementLanguageLink.analyzeBlock(
+        getWikipedia(), contents, currentIndex);
+    if (language != null) {
+      languageLinks.add(language);
+      return language.getEndIndex();
+    }
+
+    return currentIndex + 1;
+  }
+
+  /**
+   * Part of the third level of analysis when text is beginning with "[".
+   * 
+   * @param currentIndex Current index in the text.
+   * @return Next index.
+   */
+  private int analyze1SquareBracket(int currentIndex) {
+
+    // Check if this an external link
+    PageElementExternalLink link = PageElementExternalLink.analyzeBlock(
+        getWikipedia(), contents, currentIndex);
+    if (link != null) {
+      externalLinks.add(link);
+      if (link.getText() == null) {
+        return link.getEndIndex();
+      }
+      return link.getBeginIndex() + Math.max(2, link.getTextOffset());
+    }
+
+    return currentIndex + 1;
+  }
+
+  /**
+   * Part of the third level of analysis for regular text.
+   * 
+   * @param currentIndex Current index in the text.
+   * @return Next index.
+   */
+  private int analyzeText(int currentIndex) {
+
+    // Check if this is an external link
+    PageElementExternalLink link = PageElementExternalLink.analyzeBlock(
+        getWikipedia(), contents, currentIndex);
+    if (link != null) {
+      externalLinks.add(link);
+      return link.getEndIndex();
+    }
+
+    return currentIndex + 1;
+  }
+
+  /**
+   * Part of the third level of analysis when text is beginning with "{{".
+   * 
+   * @param currentIndex Current index in the text.
+   * @return Next index.
+   */
+  private int analyze2CurlyBrackets(int currentIndex) {
+
+    // Check if this is a template
+    PageElementTemplate template = PageElementTemplate.analyzeBlock(
+        getWikipedia(), contents, currentIndex);
+    if (template != null) {
+      templates.add(template);
+      return currentIndex + 2;
+    }
+
+    // Check if this is a DEFAULTSORT
+    PageElementDefaultsort defaultSort = PageElementDefaultsort.analyzeBlock(
+        getWikipedia(), contents, currentIndex);
+    if (defaultSort != null) {
+      defaultSorts.add(defaultSort);
+      return defaultSort.getEndIndex();
+    }
+
+    return currentIndex + 1;
+  }
+
+  /**
+   * Part of the third level of analysis when text is beginning with "=".
+   * 
+   * @param currentIndex Current index in the text.
+   * @return Next index.
+   */
+  private int analyze1Equal(int currentIndex) {
+
+    // Check if this is a title
+    PageElementTitle title = PageElementTitle.analyzeBlock(
+        getWikipedia(), contents, currentIndex);
+    if (title != null) {
+      titles.add(title);
+      return title.getBeginIndex() + title.getFirstLevel();
+    }
+
+    return currentIndex + 1;
+  }
+
+  /**
+   * Find the position of the first element in the list that starts after a given index.
+   * 
+   * @param elements List of elements.
+   * @param currentPos Current position in the list of elements.
+   * @param currentIndex Current index in the text.
+   * @return Position of the first element that starts after the index.
+   */
+  private int getFirstElementAfterPosition(List<? extends PageElement> elements, int currentPos, int currentIndex) {
+    if (elements == null) {
+      return currentPos;
+    }
+    int maxPos = elements.size();
+    while ((currentPos < maxPos) &&
+           (currentIndex >= elements.get(currentPos).getEndIndex())) {
+      currentPos++;
+    }
+    return currentPos;
+  }
+
+  /**
+   * Find element in which the current index is.
+   * 
+   * @param elements List of elements.
+   * @param currentPos Current position in the list of elements.
+   * @param currentIndex Current index in the text.
+   * @return
+   */
+  private PageElement isInElement(List<? extends PageElement> elements, int currentPos, int currentIndex) {
+    if (elements == null) {
+      return null;
+    }
+    int maxPos = elements.size();
+    while ((currentPos < maxPos) &&
+           (currentIndex < elements.get(currentPos).getEndIndex())) {
+      if (currentIndex >= elements.get(currentPos).getBeginIndex()) {
+        return elements.get(currentPos);
+      }
+      currentPos++;
+    }
+    return null;
+  }
+
+  // ==========================================================================
   // Comments management
   // ==========================================================================
 
   /**
-   * @return All comments in the page analysis.
+   * All comments in the page
+   */
+  private List<PageElementComment> comments;
+
+  /**
+   * @return All comments in the page.
    */
   public List<PageElementComment> getComments() {
-    synchronized (commentsLock) {
-      if (comments == null) {
-        comments = PageContents.findAllComments(getWikipedia(), getContents());
-      }
-      return comments;
-    }
+    firstLevelAnalysis();
+    return comments;
   }
 
   /**
@@ -313,37 +645,16 @@ public class PageAnalysis {
   // ==========================================================================
 
   /**
-   * @return All titles in the page analysis.
+   * All titles in the page.
    */
-  public List<PageElementTitle> getTitles() {
-    Collection<PageElementComment> tmpComments = getComments();
-
-    synchronized (titlesLock) {
-      if (titles == null) {
-        titles = PageContents.findAllTitles(getWikipedia(), getContents(), tmpComments);
-      }
-      return titles;
-    }
-  }
+  private List<PageElementTitle> titles;
 
   /**
-   * @param position Position in the text.
-   * @return All titles leading to the given position.
+   * @return All titles in the page.
    */
-  public Collection<PageElementTitle> getCurrentTitles(int position) {
-    Collection<PageElementTitle> tmpTitles = getTitles();
-
-    List<PageElementTitle> currentTitles = new ArrayList<PageElementTitle>();
-    for (PageElementTitle title : tmpTitles) {
-      if (title.getBeginIndex() < position) {
-        while ((!currentTitles.isEmpty()) &&
-               (currentTitles.get(currentTitles.size() - 1).getFirstLevel() >= title.getFirstLevel())) {
-          currentTitles.remove(currentTitles.size() - 1);
-        }
-        currentTitles.add(title);
-      }
-    }
-    return currentTitles;
+  public List<PageElementTitle> getTitles() {
+    thirdLevelAnalysis();
+    return titles;
   }
 
   /**
@@ -365,17 +676,16 @@ public class PageAnalysis {
   // ==========================================================================
 
   /**
-   * @return All internal links in the page analysis.
+   * All internal links in the page.
    */
-  public Collection<PageElementInternalLink> getInternalLinks() {
-    Collection<PageElementComment> tmpComments = getComments();
+  private List<PageElementInternalLink> internalLinks;
 
-    synchronized (internalLinksLock) {
-      if (internalLinks == null) {
-        internalLinks = PageContents.findAllInternalLinks(getPage(), getContents(), tmpComments);
-      }
-      return internalLinks;
-    }
+  /**
+   * @return All internal links in the page.
+   */
+  public List<PageElementInternalLink> getInternalLinks() {
+    thirdLevelAnalysis();
+    return internalLinks;
   }
 
   /**
@@ -412,17 +722,16 @@ public class PageAnalysis {
   // ==========================================================================
 
   /**
-   * @return All images in the page analysis.
+   * All images in the page.
+   */
+  private Collection<PageElementImage> images;
+
+  /**
+   * @return All images in the page.
    */
   public Collection<PageElementImage> getImages() {
-    Collection<PageElementComment> tmpComments = getComments();
-
-    synchronized (imagesLock) {
-      if (images == null) {
-        images = PageContents.findAllImages(getPage(), getContents(), tmpComments);
-      }
-      return images;
-    }
+    thirdLevelAnalysis();
+    return images;
   }
 
   /**
@@ -459,20 +768,16 @@ public class PageAnalysis {
   // ==========================================================================
 
   /**
-   * @return All external links in the page analysis.
+   * All external links in the page.
+   */
+  private Collection<PageElementExternalLink> externalLinks;
+
+  /**
+   * @return All external links in the page.
    */
   public Collection<PageElementExternalLink> getExternalLinks() {
-    Collection<PageElementComment> tmpComments = getComments();
-    Collection<PageElementTemplate> tmpTemplates = getTemplates();
-
-    synchronized (externalLinksLock) {
-      if (externalLinks == null) {
-        externalLinks = PageContents.findAllExternalLinks(
-            getPage(), getContents(),
-            tmpComments, tmpTemplates);
-      }
-      return externalLinks;
-    }
+    thirdLevelAnalysis();
+    return externalLinks;
   }
 
   /**
@@ -509,17 +814,16 @@ public class PageAnalysis {
   // ==========================================================================
 
   /**
-   * @return All templates in the page analysis.
+   * All templates in the page.
    */
-  public Collection<PageElementTemplate> getTemplates() {
-    Collection<PageElementComment> tmpComments = getComments();
+  private List<PageElementTemplate> templates;
 
-    synchronized (templatesLock) {
-      if (templates == null) {
-        templates = PageContents.findAllTemplates(getPage(), getContents(), tmpComments);
-      }
-      return templates;
-    }
+  /**
+   * @return All templates in the page.
+   */
+  public List<PageElementTemplate> getTemplates() {
+    thirdLevelAnalysis();
+    return templates;
   }
 
   /**
@@ -572,21 +876,25 @@ public class PageAnalysis {
   }
 
   // ==========================================================================
-  // Templates management
+  // Tags management
   // ==========================================================================
 
   /**
-   * @return All tags in the page analysis.
+   * All tags in the page.
+   */
+  private List<PageElementTag> tags;
+
+  /**
+   * All tags in the page categorized by name.
+   */
+  private Map<String, List<PageElementTag>> tagsByName;
+
+  /**
+   * @return All tags in the page.
    */
   public List<PageElementTag> getTags() {
-    Collection<PageElementComment> tmpComments = getComments();
-
-    synchronized (tagsLock) {
-      if (tags == null) {
-        tags = PageContents.findAllTags(getPage(), getContents(), tmpComments);
-      }
-      return tags;
-    }
+    secondLevelAnalysis();
+    return tags;
   }
 
   /**
@@ -597,12 +905,19 @@ public class PageAnalysis {
     if (name == null) {
       return null;
     }
-    Collection<PageElementTag> tmpTags = getTags();
-    List<PageElementTag> result = new ArrayList<PageElementTag>();
-    name = name.toLowerCase();
-    for (PageElementTag tag : tmpTags) {
-      if (name.equals(tag.getNormalizedName())) {
-        result.add(tag);
+    if (tagsByName == null) {
+      tagsByName = new HashMap<String, List<PageElementTag>>();
+    }
+    List<PageElementTag> result = tagsByName.get(name);
+    if (result == null) {
+      Collection<PageElementTag> tmpTags = getTags();
+      result = new ArrayList<PageElementTag>();
+      tagsByName.put(name, result);
+      name = name.toLowerCase();
+      for (PageElementTag tag : tmpTags) {
+        if (name.equals(tag.getNormalizedName())) {
+          result.add(tag);
+        }
       }
     }
     return result;
@@ -663,17 +978,16 @@ public class PageAnalysis {
   // ==========================================================================
 
   /**
-   * @return All DEFAULTSORT in the page analysis.
+   * All DEFAULTSORT in the page.
+   */
+  private Collection<PageElementDefaultsort> defaultSorts;
+
+  /**
+   * @return All DEFAULTSORT in the page.
    */
   public Collection<PageElementDefaultsort> getDefaultSorts() {
-    Collection<PageElementComment> tmpComments = getComments();
-
-    synchronized (defaultSortLock) {
-      if (defaultSorts == null) {
-        defaultSorts = PageContents.findAllDefaultSorts(getPage(), getContents(), tmpComments);
-      }
-      return defaultSorts;
-    }
+    thirdLevelAnalysis();
+    return defaultSorts;
   }
 
   /**
@@ -710,17 +1024,16 @@ public class PageAnalysis {
   // ==========================================================================
 
   /**
-   * @return All categories in the page analysis.
+   * All categories in the page.
+   */
+  private Collection<PageElementCategory> categories;
+
+  /**
+   * @return All categories in the page.
    */
   public Collection<PageElementCategory> getCategories() {
-    Collection<PageElementComment> tmpComments = getComments();
-
-    synchronized (categoriesLock) {
-      if (categories == null) {
-        categories = PageContents.findAllCategories(getPage(), getContents(), tmpComments);
-      }
-      return categories;
-    }
+    thirdLevelAnalysis();
+    return categories;
   }
 
   /**
@@ -757,17 +1070,16 @@ public class PageAnalysis {
   // ==========================================================================
 
   /**
-   * @return All interwiki links in the page analysis.
+   * All interwiki links in the page.
+   */
+  private Collection<PageElementInterwikiLink> interwikiLinks;
+
+  /**
+   * @return All interwiki links in the page.
    */
   public Collection<PageElementInterwikiLink> getInterwikiLinks() {
-    Collection<PageElementComment> tmpComments = getComments();
-
-    synchronized (interwikiLinksLock) {
-      if (interwikiLinks == null) {
-        interwikiLinks = PageContents.findAllInterwikiLinks(getPage(), getContents(), tmpComments);
-      }
-      return interwikiLinks;
-    }
+    thirdLevelAnalysis();
+    return interwikiLinks;
   }
 
   /**
@@ -804,17 +1116,16 @@ public class PageAnalysis {
   // ==========================================================================
 
   /**
-   * @return All language links in the page analysis.
+   * All language links in the page.
+   */
+  private Collection<PageElementLanguageLink> languageLinks;
+
+  /**
+   * @return All language links in the page.
    */
   public Collection<PageElementLanguageLink> getLanguageLinks() {
-    Collection<PageElementComment> tmpComments = getComments();
-
-    synchronized (languageLinksLock) {
-      if (languageLinks == null) {
-        languageLinks = PageContents.findAllLanguageLinks(getPage(), getContents(), tmpComments);
-      }
-      return languageLinks;
-    }
+    thirdLevelAnalysis();
+    return languageLinks;
   }
 
   /**

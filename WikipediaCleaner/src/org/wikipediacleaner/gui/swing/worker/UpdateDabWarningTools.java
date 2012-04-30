@@ -35,8 +35,7 @@ import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysisUtils;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -215,7 +214,8 @@ public class UpdateDabWarningTools {
     // Update disambiguation warning
     int count = 0;
     for (Page page : pages) {
-      if (updateDabWarning(page, page.getRevisionId(), page.getContents())) {
+      PageAnalysis pageAnalysis = new PageAnalysis(page, page.getContents());
+      if (updateDabWarning(pageAnalysis, page.getRevisionId())) {
         count++;
       }
     }
@@ -225,21 +225,22 @@ public class UpdateDabWarningTools {
   /**
    * Update disambiguation warning for a page.
    * 
-   * @param page Page (must have enough information to compute the list of disambiguation links).
+   * @param pageAnalysis Page analysis (must have enough information to compute the list of disambiguation links).
    * @param pageRevId Page revision id.
    * @param text Page contents (can be different than the current page text).
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
   public boolean updateDabWarning(
-      Page page, Integer pageRevId, String text) throws APIException {
-    if (page == null) {
+      PageAnalysis pageAnalysis, Integer pageRevId) throws APIException {
+    if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
       return false;
     }
     if ((configuration.getTodoTemplates() == null) ||
         (configuration.getTodoTemplates().isEmpty())) {
       return false;
     }
+    Page page = pageAnalysis.getPage();
 
     // Retrieving talk page contents
     Page talkPage = page.getTalkPage(wikipedia.getNamespaces());
@@ -258,22 +259,22 @@ public class UpdateDabWarningTools {
       if ((page.getNamespace() != null) &&
           (page.getNamespace().intValue() == Namespace.MAIN)) {
         if (configuration.getTodoSubpageForce()) {
-          return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
+          return manageDabWarningOnTodoSubpage(pageAnalysis, pageRevId, todoSubpage, talkPage);
         }
       } else if (configuration.getTodoSubpageForceOther()) {
-        return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
+        return manageDabWarningOnTodoSubpage(pageAnalysis, pageRevId, todoSubpage, talkPage);
       }
 
       // If todo subpage exists, the disambiguation warning must be on it
       if (Boolean.TRUE.equals(todoSubpage.isExisting())) {
-        return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
+        return manageDabWarningOnTodoSubpage(pageAnalysis, pageRevId, todoSubpage, talkPage);
       }
 
       // If talk page has a template linking to the todo subpage,
       // the disambiguation warning must be on the todo subpage
       PageElementTemplate templateTodoLink = getExistingTemplateTodoLink(talkPage, talkPage.getContents());
       if (templateTodoLink != null) {
-        return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
+        return manageDabWarningOnTodoSubpage(pageAnalysis, pageRevId, todoSubpage, talkPage);
       }
 
       // If talk page has a link to the todo subpage,
@@ -282,30 +283,29 @@ public class UpdateDabWarningTools {
       if (talkPage.getLinks() != null) {
         for (Page link : talkPage.getLinks()) {
           if (Page.areSameTitle(link.getTitle(), todoSubpage.getTitle())) {
-            return manageDabWarningOnTodoSubpage(page, pageRevId, text, todoSubpage, talkPage);
+            return manageDabWarningOnTodoSubpage(pageAnalysis, pageRevId, todoSubpage, talkPage);
           }
         }
       }*/
     }
 
-    return manageDabWarningOnTalkPage(page, pageRevId, text, talkPage);
+    return manageDabWarningOnTalkPage(pageAnalysis, pageRevId, talkPage);
   }
 
   /**
    * Update disambiguation warning on the todo subpage.
    * 
-   * @param page Page (must have enough information to compute the list of disambiguation links).
+   * @param pageAnalysis Page analysis (must have enough information to compute the list of disambiguation links).
    * @param pageRevId Page revision id.
-   * @param text Page contents (can be different than the current page text).
    * @param todoSubpage Todo subpage.
    * @param talkPage Talk page.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
   private boolean manageDabWarningOnTodoSubpage(
-      Page page, Integer pageRevId, String text,
+      PageAnalysis pageAnalysis, Integer pageRevId,
       Page todoSubpage, Page talkPage) throws APIException {
-    Collection<String> dabLinks = findDabLinks(page, text);
+    Collection<String> dabLinks = findDabLinks(pageAnalysis);
     boolean result = false;
     if ((dabLinks == null) || (dabLinks.isEmpty())) {
       result |= removeDabWarningOnTodoSubpage(todoSubpage);
@@ -322,16 +322,15 @@ public class UpdateDabWarningTools {
   /**
    * Update disambiguation warning on the talk page.
    * 
-   * @param page Page (must have enough information to compute the list of disambiguation links).
+   * @param pageAnalysis Page analysis (must have enough information to compute the list of disambiguation links).
    * @param pageRevId Page revision id.
-   * @param text Page contents (can be different than the current page text).
    * @param talkPage Talk page.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
   private boolean manageDabWarningOnTalkPage(
-      Page page, Integer pageRevId, String text, Page talkPage) throws APIException {
-    Collection<String> dabLinks = findDabLinks(page, text);
+      PageAnalysis pageAnalysis, Integer pageRevId, Page talkPage) throws APIException {
+    Collection<String> dabLinks = findDabLinks(pageAnalysis);
     boolean result = false;
     if ((dabLinks == null) || (dabLinks.isEmpty())) {
       result = removeDabWarningOnTalkPage(talkPage);
@@ -926,17 +925,15 @@ public class UpdateDabWarningTools {
   /**
    * Extract links to disambiguation pages.
    * 
-   * @param page Page (must have enough information to compute the list of disambiguation links).
-   * @param text Page contents (can be different than the current page text).
+   * @param pageAnalysis Page analysis (must have enough information to compute the list of disambiguation links).
    * @return List of links to disambiguation pages.
    */
-  private Collection<String> findDabLinks(Page page, String text) {
-    if ((page == null) || (page.getContents() == null)) {
+  private Collection<String> findDabLinks(PageAnalysis pageAnalysis) {
+    if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
       return null;
     }
-    Collection<PageElementComment> comments = PageContents.findAllComments(wikipedia, text);
-    Map<String, Integer> linkCount = PageContents.countInternalDisambiguationLinks(
-        wikipedia, page, text, comments, page.getLinks());
+    Map<String, Integer> linkCount = PageAnalysisUtils.countInternalDisambiguationLinks(
+        pageAnalysis, pageAnalysis.getPage().getLinks());
     List<String> dabLinks = new ArrayList<String>(linkCount.keySet());
     Collections.sort(dabLinks);
     return dabLinks;

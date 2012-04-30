@@ -885,7 +885,7 @@ public abstract class OnePageWindow
     }
     Configuration config = Configuration.getConfiguration();
     return config.getBoolean(
-        null, ConfigurationValueBoolean.ORTHOGRAPH);
+        null, ConfigurationValueBoolean.SPELLING);
   }
 
   /**
@@ -1397,7 +1397,7 @@ public abstract class OnePageWindow
       Collection<CheckErrorAlgorithm> algorithms) {
     if (page != null) {
       PageAnalysis pageAnalysis = new PageAnalysis(page, page.getContents());
-      pageAnalysis.shouldCheckOrthograph(shouldCheckOrthograph());
+      pageAnalysis.shouldCheckSpelling(shouldCheckOrthograph());
       List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
           algorithms, pageAnalysis);
       initialErrors = new ArrayList<CheckErrorPage>();
@@ -1451,7 +1451,7 @@ public abstract class OnePageWindow
       for (CheckErrorPage initialError : initialErrors) {
         if (pageAnalysis == null) {
           pageAnalysis = new PageAnalysis(initialError.getPage(), contents);
-          pageAnalysis.shouldCheckOrthograph(shouldCheckOrthograph());
+          pageAnalysis.shouldCheckSpelling(shouldCheckOrthograph());
         }
         CheckErrorPage errorPage = CheckError.analyzeError(
             initialError.getAlgorithm(), pageAnalysis);
