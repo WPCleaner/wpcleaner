@@ -179,6 +179,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
 
         // Check for possible punctuation after tags
         tmpIndex = lastTag.getEndIndex();
+        int endIndex = tmpIndex;
         while ((tmpIndex < contents.length()) &&
                (contents.charAt(tmpIndex) == ' ')) {
           tmpIndex++;
@@ -191,10 +192,13 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           tmpIndex++;
         }
         String punctuationAfter = contents.substring(punctuationAfterIndex, tmpIndex);
+        if (punctuationFoundAfter) {
+          endIndex = tmpIndex;
+        }
 
         // Create error
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(), beginIndex, tmpIndex);
+            pageAnalysis.getPage(), beginIndex, endIndex);
         errorResult.addReplacement(
             replace + allPunctuations,
             textReplace + allPunctuations);
