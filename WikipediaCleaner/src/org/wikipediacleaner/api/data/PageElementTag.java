@@ -228,9 +228,13 @@ public class PageElementTag extends PageElement {
     }
     int endNameIndex = startNameIndex;
     while ((endNameIndex < maxLength) &&
-           (paramString.charAt(endNameIndex) != ' ') &&
-           (paramString.charAt(endNameIndex) != '=')) {
+           (Character.isLetter(paramString.charAt(endNameIndex)))) {
       endNameIndex++;
+    }
+    if ((endNameIndex < maxLength) &&
+        (paramString.charAt(endNameIndex) != ' ') &&
+        (paramString.charAt(endNameIndex) != '=')) {
+      return false;
     }
     String name = paramString.substring(startNameIndex, endNameIndex);
 
