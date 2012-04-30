@@ -29,6 +29,7 @@ import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.gui.swing.OnePageWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -128,7 +129,8 @@ public class SendWorker extends BasicWorker {
       try {
         UpdateDabWarningTools dabWarningTools = new UpdateDabWarningTools(
             getWikipedia(), this, createWarning);
-        dabWarningTools.updateDabWarning(page, queryResult.getPageNewRevId(), text);
+        PageAnalysis pageAnalysis = new PageAnalysis(page, text);
+        dabWarningTools.updateDabWarning(pageAnalysis, queryResult.getPageNewRevId());
       } catch (APIException e) {
         return e;
       }

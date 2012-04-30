@@ -32,6 +32,7 @@ public class PageElementInternalLink extends PageElement {
   private final String anchor;
   private final String textNotTrimmed;
   private final String text;
+  private final int    textOffset;
 
   /**
    * Analyze contents to check if it matches an internal link.
@@ -124,15 +125,16 @@ public class PageElementInternalLink extends PageElement {
     String link = null;
     String anchor = null;
     String text = null;
+    int textOffset = -1;
     if ((pipeIndex >= 0) && (pipeIndex < endIndex)) {
       if ((anchorIndex >= 0) && (anchorIndex < pipeIndex)) {
         link = contents.substring(beginIndex, anchorIndex);
         anchor = contents.substring(anchorIndex + 1, pipeIndex);
-        text = contents.substring(pipeIndex + 1, endIndex);
       } else {
         link = contents.substring(beginIndex, pipeIndex);
-        text = contents.substring(pipeIndex + 1, endIndex);
       }
+      text = contents.substring(pipeIndex + 1, endIndex);
+      textOffset = pipeIndex + 1 - index;
     } else if ((anchorIndex >= 0) && (anchorIndex < endIndex)) {
       link = contents.substring(beginIndex, anchorIndex);
       anchor = contents.substring(anchorIndex + 1, endIndex);
@@ -175,7 +177,7 @@ public class PageElementInternalLink extends PageElement {
     return new PageElementInternalLink(
         wikipedia,
         index, endIndex + 2,
-        link, anchor, text);
+        link, anchor, text, textOffset);
   }
 
   public String getLink() {
@@ -197,6 +199,10 @@ public class PageElementInternalLink extends PageElement {
     return text;
   }
 
+  public int getTextOffset() {
+    return textOffset;
+  }
+
   public String getDisplayedText() {
     if (text != null) {
       return text;
@@ -210,7 +216,8 @@ public class PageElementInternalLink extends PageElement {
   private PageElementInternalLink(
       EnumWikipedia wikipedia,
       int beginIndex, int endIndex,
-      String link, String anchor, String text) {
+      String link, String anchor,
+      String text, int textOffset) {
     super(beginIndex, endIndex);
     this.linkNotTrimmed = link;
     this.link = (link != null) ? wikipedia.normalizeTitle(link.trim()) : null;
@@ -218,6 +225,7 @@ public class PageElementInternalLink extends PageElement {
     this.anchor = (anchor != null) ? anchor.trim() : null;
     this.textNotTrimmed = text;
     this.text = (text != null) ? text.trim() : null;
+    this.textOffset = textOffset;
   }
 
   /* (non-Javadoc)

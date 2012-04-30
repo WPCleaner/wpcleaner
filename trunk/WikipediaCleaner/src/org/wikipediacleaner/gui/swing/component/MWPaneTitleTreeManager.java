@@ -23,7 +23,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collection;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -43,8 +43,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.wikipediacleaner.api.data.PageContents;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
@@ -257,34 +256,25 @@ public class MWPaneTitleTreeManager
    * Update table of contents tree.
    */
   private void updateTreeToc() {
-    String contents = textPane.getText();
-    int currentIndex = 0;
     MWPaneTitleTreeNode rootNode = new MWPaneTitleTreeNode(null);
     MWPaneTitleTreeNode lastNode = rootNode;
-    Collection<PageElementComment> comments = PageContents.findAllComments(
-        textPane.getWikipedia(), contents);
-    while ((currentIndex < contents.length())) {
-      PageElementTitle title = PageContents.findNextTitle(
-          textPane.getWikipedia(), contents, currentIndex, comments);
-      if (title == null) {
-        currentIndex = contents.length();
-      } else {
-        while ((lastNode != null) &&
-               (lastNode.getInitialTitleLevel() >= title.getFirstLevel())) {
-          if (lastNode.getParent() != null) {
-            lastNode = (MWPaneTitleTreeNode) lastNode.getParent();
-          } else {
-            lastNode = null;
-          }
+    PageAnalysis pageAnalysis = new PageAnalysis(textPane.getWikiPage(), textPane.getText());
+    List<PageElementTitle> titles = pageAnalysis.getTitles();
+    for (PageElementTitle title : titles) {
+      while ((lastNode != null) &&
+             (lastNode.getInitialTitleLevel() >= title.getFirstLevel())) {
+        if (lastNode.getParent() != null) {
+          lastNode = (MWPaneTitleTreeNode) lastNode.getParent();
+        } else {
+          lastNode = null;
         }
-        if (lastNode == null) {
-          lastNode = rootNode;
-        }
-        MWPaneTitleTreeNode tmpNode = new MWPaneTitleTreeNode(title);
-        lastNode.add(tmpNode);
-        lastNode = tmpNode;
-        currentIndex = title.getEndIndex();
       }
+      if (lastNode == null) {
+        lastNode = rootNode;
+      }
+      MWPaneTitleTreeNode tmpNode = new MWPaneTitleTreeNode(title);
+      lastNode.add(tmpNode);
+      lastNode = tmpNode;
     }
     modelToc.setRoot(rootNode);
   }

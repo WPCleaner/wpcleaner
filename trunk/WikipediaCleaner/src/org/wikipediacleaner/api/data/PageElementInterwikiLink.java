@@ -36,6 +36,7 @@ public class PageElementInterwikiLink extends PageElement {
   private final String anchor;
   private final String textNotTrimmed;
   private final String text;
+  private final int    textOffset;
 
   /**
    * Analyze contents to check if it matches an internal link.
@@ -106,27 +107,30 @@ public class PageElementInterwikiLink extends PageElement {
             interwikiText,
             contents.substring(colonIndex + 1, anchorIndex),
             contents.substring(anchorIndex + 1, pipeIndex),
-            contents.substring(pipeIndex + 1, endIndex));
+            contents.substring(pipeIndex + 1, endIndex),
+            pipeIndex + 1 - index);
       }
       return new PageElementInterwikiLink(
           index, endIndex + 2,
           interwikiText,
           contents.substring(colonIndex + 1, pipeIndex),
           null,
-          contents.substring(pipeIndex + 1, endIndex));
+          contents.substring(pipeIndex + 1, endIndex),
+          pipeIndex + 1 - index);
     }
     if ((anchorIndex >= 0) && (anchorIndex < endIndex)) {
       return new PageElementInterwikiLink(
           index, endIndex + 2,
           interwikiText,
           contents.substring(colonIndex + 1, anchorIndex),
-          contents.substring(anchorIndex + 1, endIndex), null);
+          contents.substring(anchorIndex + 1, endIndex),
+          null, -1);
     }
     return new PageElementInterwikiLink(
         index, endIndex + 2,
         interwikiText,
         contents.substring(colonIndex + 1, endIndex),
-        null, null);
+        null, null, -1);
   }
 
   public String getInterwiki() {
@@ -152,10 +156,15 @@ public class PageElementInterwikiLink extends PageElement {
     return text;
   }
 
+  public int getTextOffset() {
+    return textOffset;
+  }
+
   private PageElementInterwikiLink(
       int beginIndex, int endIndex,
       String interwiki,
-      String link, String anchor, String text) {
+      String link, String anchor,
+      String text, int textOffset) {
     super(beginIndex, endIndex);
     this.interwikiNotTrimmed = interwiki;
     this.interwiki = (interwiki != null) ? interwiki.trim() : null;
@@ -165,6 +174,7 @@ public class PageElementInterwikiLink extends PageElement {
     this.anchor = (anchor != null) ? anchor.trim() : null;
     this.textNotTrimmed = text;
     this.text = (text != null) ? text.trim() : null;
+    this.textOffset = textOffset;
   }
 
   /* (non-Javadoc)

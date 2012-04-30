@@ -21,7 +21,6 @@ package org.wikipediacleaner.api.data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -44,6 +43,7 @@ public class Page implements Comparable<Page> {
   private Integer namespace;
   private String  title;
   private String  contents;
+  private PageAnalysis pageAnalysis;
   private Integer revisionId;
   private String  contentsTimestamp;
   private String  startTimestamp;
@@ -73,6 +73,7 @@ public class Page implements Comparable<Page> {
   Page(EnumWikipedia wikipedia, String title) {
     this.wikipedia = wikipedia;
     this.title = title;
+    setContents("");
   }
 
   /**
@@ -221,6 +222,7 @@ public class Page implements Comparable<Page> {
    */
   public void setContents(String contents) {
     this.contents = contents;
+    this.pageAnalysis = new PageAnalysis(this, contents);
   }
 
   /**
@@ -687,62 +689,17 @@ public class Page implements Comparable<Page> {
         Page page = redirects.get(i);
         List<Page> redirectLinks = page.links;
         if ((redirectLinks != null) && (!redirectLinks.isEmpty())) {
-          getAnchors(page.getContents(), redirectLinks, anchors);
+          PageAnalysisUtils.getAnchors(pageAnalysis, redirectLinks, anchors);
           return redirectLinks;
         }
       }
     }
     if (links != null) {
-      getAnchors(contents, links, anchors);
+      PageAnalysisUtils.getAnchors(pageAnalysis, links, anchors);
     } else if (redirects != null) {
-      getAnchors(contents, redirects, anchors);
+      PageAnalysisUtils.getAnchors(pageAnalysis, redirects, anchors);
     }
     return links;
-  }
-
-  /**
-   * @param pageContents Page contents.
-   * @param pageLinks Page links.
-   * @param anchors Anchors (OUT)
-   */
-  private void getAnchors(String pageContents, List<Page> pageLinks, Map<Page, List<String>> anchors) {
-    if ((pageContents == null) ||
-        (pageContents.length() == 0) ||
-        (anchors == null)) {
-      return;
-    }
-
-    // Check each internal link
-    int currentPos = 0;
-    Collection<PageElementComment> comments = PageContents.findAllComments(
-        getWikipedia(), pageContents);
-    while (currentPos < pageContents.length()) {
-      PageElementInternalLink internalLink =
-        PageContents.findNextInternalLink(this, pageContents, currentPos, comments);
-      if (internalLink == null) {
-        currentPos = pageContents.length();
-      } else {
-        currentPos = internalLink.getBeginIndex() + 2;
-        String anchor = internalLink.getAnchor();
-        if ((anchor != null) && (anchor.trim().length() > 0)) {
-          String fullAnchor = internalLink.getFullLink();
-          // Check if the internal link is for one of the links
-          for (Page link : pageLinks) {
-            if ((link != null) &&
-                (Page.areSameTitle(link.getTitle(), internalLink.getLink()))) {
-              List<String> listAnchors = anchors.get(link);
-              if (listAnchors == null) {
-                listAnchors = new ArrayList<String>();
-                anchors.put(link, listAnchors);
-              }
-              if (!listAnchors.contains(fullAnchor)) {
-                listAnchors.add(fullAnchor);
-              }
-            }
-          }
-        }
-      }
-    }
   }
 
   /**

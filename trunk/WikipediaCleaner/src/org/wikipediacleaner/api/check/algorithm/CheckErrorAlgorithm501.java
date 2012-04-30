@@ -59,7 +59,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
-    if (!pageAnalysis.shouldCheckOrthograph()) {
+    if (!pageAnalysis.shouldCheckSpelling()) {
       return false;
     }
     Map<String, Suggestion> suggestions = pageAnalysis.getWPCConfiguration().getSuggestions();

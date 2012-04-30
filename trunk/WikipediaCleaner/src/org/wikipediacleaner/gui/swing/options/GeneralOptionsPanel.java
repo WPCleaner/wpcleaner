@@ -180,7 +180,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
     // Check spelling
     chk = createJCheckBox(
         GT._("Check orthograph and typography"),
-        ConfigurationValueBoolean.ORTHOGRAPH);
+        ConfigurationValueBoolean.SPELLING);
     constraints.gridx = 0;
     constraints.weightx = 0;
     add(chk, constraints);

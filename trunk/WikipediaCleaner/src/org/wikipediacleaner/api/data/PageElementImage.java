@@ -38,6 +38,7 @@ public class PageElementImage extends PageElement {
   private final List<String> magicWords;
   private final String descriptionNotTrimmed;
   private final String description;
+  private final int descriptionOffset;
 
   /**
    * Analyze contents to check if it matches an image.
@@ -106,7 +107,7 @@ public class PageElementImage extends PageElement {
           wikipedia, index, tmpIndex + 2,
           contents.substring(beginIndex, colonIndex),
           contents.substring(colonIndex + 1, tmpIndex),
-          null, null);
+          null, null, -1);
     }
 
     // Find elements of image
@@ -128,7 +129,8 @@ public class PageElementImage extends PageElement {
             contents.substring(beginIndex, colonIndex),
             contents.substring(colonIndex + 1, firstPipeIndex),
             magicWords,
-            (pipeIndex < tmpIndex) ? contents.substring(pipeIndex + 1, tmpIndex) : null);
+            (pipeIndex < tmpIndex) ? contents.substring(pipeIndex + 1, tmpIndex) : null,
+            pipeIndex + 1 - index);
       } else if ((templateCount <= 0) && (linkCount <= 0) && (contents.charAt(tmpIndex) == '|')) {
         String element = contents.substring(pipeIndex + 1, tmpIndex);
         if (wikipedia.isPossibleAliasForImgMagicWord(element.trim())) {
@@ -183,6 +185,13 @@ public class PageElementImage extends PageElement {
   }
 
   /**
+   * @return Offset of image description.
+   */
+  public int getDescriptionOffset() {
+    return descriptionOffset;
+  }
+
+  /**
    * @return Image alternate description.
    */
   public String getAlternateDescription() {
@@ -209,7 +218,8 @@ public class PageElementImage extends PageElement {
   private PageElementImage(
       EnumWikipedia wikipedia, int beginIndex, int endIndex,
       String namespace, String image,
-      List<String> magicWords, String description) {
+      List<String> magicWords,
+      String description, int descriptionOffset) {
     super(beginIndex, endIndex);
     this.wikipedia = wikipedia;
     this.namespaceNotTrimmed = namespace;
@@ -219,6 +229,7 @@ public class PageElementImage extends PageElement {
     this.magicWords = magicWords;
     this.descriptionNotTrimmed = description;
     this.description = (description != null) ? description.trim() : null;
+    this.descriptionOffset = descriptionOffset;
   }
 
   public String getDescriptionReplacement(String newDescription) {

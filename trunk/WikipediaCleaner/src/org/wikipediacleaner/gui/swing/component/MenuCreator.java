@@ -46,6 +46,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageAnalysisUtils;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.TemplateMatcher;
@@ -221,7 +222,7 @@ public class MenuCreator {
    * 
    * @param popup Popup menu.
    * @param position Current position in text.
-   * @param pageAnalysis Page analyis.
+   * @param pageAnalysis Page analysis.
    */
   public static void addCurrentChapterToMenu(
       JPopupMenu popup,
@@ -229,7 +230,8 @@ public class MenuCreator {
     if ((popup == null) || (pageAnalysis == null)) {
       return;
     }
-    Collection<PageElementTitle> chapters = pageAnalysis.getCurrentTitles(position);
+    Collection<PageElementTitle> chapters =
+        PageAnalysisUtils.getCurrentTitles(pageAnalysis, position);
     if ((chapters != null) && !chapters.isEmpty()) {
       JMenu submenu = new JMenu(GT._("Current chapter"));
       for (PageElementTitle chapter : chapters) {
