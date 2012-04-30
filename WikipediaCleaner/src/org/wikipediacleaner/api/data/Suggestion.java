@@ -129,7 +129,11 @@ public class Suggestion {
   public List<String> getReplacements(String initialText) {
     List<String> list = new ArrayList<String>();
     for (String replacement : replacements) {
-      list.add(pattern.matcher(initialText).replaceFirst(replacement));
+      try {
+        list.add(pattern.matcher(initialText).replaceFirst(replacement));
+      } catch (Exception e) {
+        log.error("Unable to get replacement", e);
+      }
     }
     return list;
   }
