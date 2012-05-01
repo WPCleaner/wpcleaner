@@ -26,6 +26,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
  */
 public class PageElementCategory extends PageElement {
 
+  public final static String DEFAULT_NAME = "Category";
+
   private final String categoryNotTrimmed;
   private final String category;
   private final String nameNotTrimmed;
@@ -57,7 +59,7 @@ public class PageElementCategory extends PageElement {
     tmpIndex += 2;
     int beginIndex = tmpIndex;
 
-    // Possible whitespaces characters
+    // Possible white spaces characters
     while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
       tmpIndex++;
     }
@@ -74,7 +76,7 @@ public class PageElementCategory extends PageElement {
       return null;
     }
 
-    // Check that namespace is language
+    // Check that name space is a category
     int colonIndex = tmpIndex;
     Namespace categoryNamespace = Namespace.getNamespace(Namespace.CATEGORY, wikipedia.getNamespaces());
     if (!categoryNamespace.isPossibleName(contents.substring(beginIndex, colonIndex).trim())) {
@@ -119,12 +121,24 @@ public class PageElementCategory extends PageElement {
     return category;
   }
 
+  public String getCategoryNotTrimmed() {
+    return categoryNotTrimmed;
+  }
+
   public String getName() {
     return name;
   }
 
+  public String getNameNotTrimmed() {
+    return nameNotTrimmed;
+  }
+
   public String getSort() {
     return sort;
+  }
+
+  public String getSortNotTrimmed() {
+    return sortNotTrimmed;
   }
 
   private PageElementCategory(

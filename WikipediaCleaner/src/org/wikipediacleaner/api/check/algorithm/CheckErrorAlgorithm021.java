@@ -33,12 +33,12 @@ import org.wikipediacleaner.i18n.GT;
 
 /**
  * Algorithm for analyzing error 21 of check wikipedia project.
- * Error 21: Category is english
+ * Error 21: Category is English
  */
 public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm021() {
-    super("Category is english");
+    super("Category is English");
   }
 
   /**
@@ -55,60 +55,64 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyze the text from the begining
-    int startIndex = 0;
-    boolean result = false;
+    // Check category name space
+    if (EnumWikipedia.EN.equals(pageAnalysis.getWikipedia())) {
+      return false;
+    }
     Namespace categoryNamespace = Namespace.getNamespace(
         Namespace.CATEGORY, pageAnalysis.getWikipedia().getNamespaces());
     if (categoryNamespace == null) {
       return false;
     }
     String preferredCategory = categoryNamespace.getTitle();
+    if (PageElementCategory.DEFAULT_NAME.equalsIgnoreCase(preferredCategory)) {
+      return false;
+    }
+
+    // Check every category
+    List<PageElementCategory> categories = pageAnalysis.getCategories();
+    boolean result = false;
     String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      PageElementCategory category = pageAnalysis.getNextCategory(startIndex);
-      if (category == null) {
-        startIndex = contents.length();
-      } else {
-        if ("Category".equalsIgnoreCase(category.getCategory())) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), category.getBeginIndex(), category.getEndIndex());
-          errorResult.addPossibleAction(
-              GT._("Check category"),
-              new CheckCategoryLinkActionProvider(
-                  EnumWikipedia.EN, pageAnalysis.getWikipedia(),
-                  category.getName(), category.getSort()));
-          List<String> replacements = new ArrayList<String>();
-          if ((preferredCategory != null) && (categoryNamespace.isPossibleName(preferredCategory))) {
-            replacements.add(preferredCategory);
-          }
-          if (!replacements.contains(categoryNamespace.getCanonicalTitle())) {
-            replacements.add(categoryNamespace.getCanonicalTitle());
-          }
-          for (String alias : categoryNamespace.getAliases()) {
-            if (!replacements.contains(alias)) {
-              replacements.add(alias);
-            }
-          }
-          for (String replacement : replacements) {
-            if (!"Category".equalsIgnoreCase(replacement)) {
-              errorResult.addReplacement(
-                  "[[" + replacement + ":" + category.getName() +
-                  ((category.getSort() != null) ? "|" + category.getSort() : "") + "]]");
-            }
-          }
-          errorResult.addReplacement(
-              "<!-- " + contents.substring(category.getBeginIndex(), category.getEndIndex()) + " -->",
-              GT._("Comment category out"));
-          errors.add(errorResult);
+    for (PageElementCategory category : categories) {
+      if (PageElementCategory.DEFAULT_NAME.equalsIgnoreCase(category.getCategory())) {
+        if (errors == null) {
+          return true;
         }
-        startIndex = category.getEndIndex();
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(), category.getBeginIndex(), category.getEndIndex());
+        errorResult.addPossibleAction(
+            GT._("Check category"),
+            new CheckCategoryLinkActionProvider(
+                EnumWikipedia.EN, pageAnalysis.getWikipedia(),
+                category.getName(), category.getSort()));
+        List<String> replacements = new ArrayList<String>();
+        if ((preferredCategory != null) &&
+            (categoryNamespace.isPossibleName(preferredCategory))) {
+          replacements.add(preferredCategory);
+        }
+        if (!replacements.contains(categoryNamespace.getCanonicalTitle())) {
+          replacements.add(categoryNamespace.getCanonicalTitle());
+        }
+        for (String alias : categoryNamespace.getAliases()) {
+          if (!replacements.contains(alias)) {
+            replacements.add(alias);
+          }
+        }
+        for (String replacement : replacements) {
+          if (!PageElementCategory.DEFAULT_NAME.equalsIgnoreCase(replacement)) {
+            errorResult.addReplacement(
+                "[[" + replacement + ":" + category.getName() +
+                ((category.getSort() != null) ? "|" + category.getSort() : "") + "]]");
+          }
+        }
+        errorResult.addReplacement(
+            "<!-- " + contents.substring(category.getBeginIndex(), category.getEndIndex()) + " -->",
+            GT._("Comment category out"));
+        errors.add(errorResult);
       }
     }
+
     return result;
   }
 }

@@ -19,11 +19,13 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -57,76 +59,69 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
-    boolean result = false;
+
+    // Check category name space
     Namespace categoryNamespace = Namespace.getNamespace(
         Namespace.CATEGORY, pageAnalysis.getWikipedia().getNamespaces());
     if (categoryNamespace == null) {
-      return result;
+      return false;
     }
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      int beginIndex = contents.indexOf("[[", startIndex);
-      if (beginIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        int endIndex = contents.indexOf("]]", beginIndex);
-        if (endIndex < 0) {
-          startIndex = contents.length();
-        } else {
-          boolean spaceFound = false;
+    String preferredCategory = categoryNamespace.getTitle();
+    if (preferredCategory == null) {
+      preferredCategory = PageElementCategory.DEFAULT_NAME;
+    }
 
-          // Possible whitespaces
-          int linkBegin = beginIndex + 2;
-          while ((linkBegin < endIndex) && (contents.charAt(linkBegin) == ' ')) {
-            spaceFound = true;
-            linkBegin++;
-          }
-          // Link itself
-          int linkEnd = linkBegin;
-          while ((linkEnd < endIndex) &&
-              (contents.charAt(linkEnd) != ':') &&
-              (contents.charAt(linkEnd) != '|')) {
-            linkEnd++;
-          }
+    // Check every category
+    List<PageElementCategory> categories = pageAnalysis.getCategories();
+    boolean result = false;
+    for (PageElementCategory category : categories) {
 
-          // Check if namespace is Category
-          if ((contents.charAt(linkEnd) == ':') &&
-              (categoryNamespace.isPossibleName(contents.substring(linkBegin, linkEnd)))) {
-            // Possible whitespaces
-            int nameBegin = linkEnd + 1;
-            while ((nameBegin < endIndex) && (contents.charAt(nameBegin) == ' ')) {
-              spaceFound = true;
-              nameBegin++;
-            }
-            // Category itself
-            int nameEnd = nameBegin;
-            while ((nameEnd < endIndex) &&
-                (contents.charAt(nameEnd) != '|')) {
-              nameEnd++;
-            }
+      // Check if space was found
+      boolean spaceFound = false;
+      String categoryFull = category.getCategoryNotTrimmed();
+      String categorySimple = category.getCategory();
+      if ((categoryFull != null) &&
+          (categorySimple != null) &&
+          (categoryFull.length() > categorySimple.length())) {
+        spaceFound = true;
+      }
+      String nameFull = category.getNameNotTrimmed();
+      String nameSimple = category.getName();
+      if ((nameFull != null) &&
+          (nameSimple != null) &&
+          (nameFull.length() > nameSimple.length())) {
+        spaceFound = true;
+      }
+      String sortFull = category.getSortNotTrimmed();
+      String sortSimple = category.getSort();
+      if ((sortFull != null) &&
+          (sortSimple != null) &&
+          (sortFull.length() > sortSimple.length())) {
+        spaceFound = true;
+      }
 
-            // Check if category has a lower case as a first letter
-            String category = contents.substring(nameBegin, nameEnd);
-            if ((category.length() > 0) &&
-                (spaceFound == true)) {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), beginIndex, endIndex + 2);
-              errorResult.addReplacement(
-                  "[[" + categoryNamespace.getTitle() + ":" +
-                  Character.toUpperCase(contents.charAt(nameBegin)) +
-                  contents.substring(nameBegin + 1, endIndex + 2));
-              errors.add(errorResult);
-            }
-          }
-          startIndex = endIndex + 2;
+      // Register error
+      if (spaceFound) {
+        if (errors == null) {
+          return true;
         }
+        result = true;
+        nameSimple = Page.getStringUcFirst(nameSimple);
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            category.getBeginIndex(), category.getEndIndex());
+        if (sortSimple == null) {
+          errorResult.addReplacement(
+              "[[" + preferredCategory + ":" + nameSimple + "]]");
+        } else {
+          sortSimple = Page.getStringUcFirst(sortSimple);
+          errorResult.addReplacement(
+              "[[" + preferredCategory + ":" + nameSimple + "|" + sortSimple + "]]");
+        }
+        errors.add(errorResult);
       }
     }
+
     return result;
   }
 
