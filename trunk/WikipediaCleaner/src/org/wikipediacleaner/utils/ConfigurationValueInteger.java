@@ -35,7 +35,7 @@ public enum ConfigurationValueInteger {
   MENU_SIZE("MenuSize", 30),
   PLAF_TYPE("LookAndFeelType", ConfigurationConstants.VALUE_PLAF_TYPE_WPCLEANER),
   SAVE_USER("SaveUser", ConfigurationConstants.VALUE_SAVE_USER_NAME),
-  SYNTAX_HIGHLIGHTINH_LIMIT("SyntaxHighlightingLimit", 40000),
+  SYNTAX_HIGHLIGHTING_LIMIT("SyntaxHighlightingLimit", 40000),
   TIME_BETWEEN_EDIT("TimeBetweenEdit", 0);
 
   /**
