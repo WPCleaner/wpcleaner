@@ -1026,12 +1026,12 @@ public class PageAnalysis {
   /**
    * All categories in the page.
    */
-  private Collection<PageElementCategory> categories;
+  private List<PageElementCategory> categories;
 
   /**
    * @return All categories in the page.
    */
-  public Collection<PageElementCategory> getCategories() {
+  public List<PageElementCategory> getCategories() {
     thirdLevelAnalysis();
     return categories;
   }

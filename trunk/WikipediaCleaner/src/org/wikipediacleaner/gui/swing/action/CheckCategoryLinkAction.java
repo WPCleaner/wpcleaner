@@ -33,6 +33,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 
@@ -72,13 +73,14 @@ public class CheckCategoryLinkAction extends TextAction {
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     try {
       Namespace categoryNamespace = Namespace.getNamespace(Namespace.CATEGORY, toWikipedia.getNamespaces());
-      String categoryName = "Category";
+      String categoryName = PageElementCategory.DEFAULT_NAME;
       if (categoryNamespace != null) {
-        if (!"Category".equals(categoryNamespace.getCanonicalTitle())) {
+        if (!PageElementCategory.DEFAULT_NAME.equals(
+            categoryNamespace.getCanonicalTitle())) {
           categoryName = categoryNamespace.getCanonicalTitle();
         } else {
           for (String alias : categoryNamespace.getAliases()) {
-            if (!"Category".equals(alias)) {
+            if (!PageElementCategory.DEFAULT_NAME.equals(alias)) {
               categoryName = alias;
               break;
             }
