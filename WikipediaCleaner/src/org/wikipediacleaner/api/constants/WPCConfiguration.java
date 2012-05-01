@@ -152,10 +152,16 @@ public class WPCConfiguration {
     // Properties available also in user configuration
     if (name.equals("dab_comment")) {
       setDisambiguationComment(value);
+    } else if (name.equals("dab_comment_1")) {
+      setDisambiguationComment1(value);
     } else if (name.equals("dab_comment_todo")) {
       setDisambiguationCommentTodo(value);
+    } else if (name.equals("dab_comment_todo_1")) {
+      setDisambiguationCommentTodo1(value);
     } else if (name.equals("dab_warning_comment")) {
       setDisambiguationWarningComment(value);
+    } else if (name.equals("dab_warning_comment_1")) {
+      setDisambiguationWarningComment1(value);
     } else if (name.equals("dab_warning_comment_done")) {
       setDisambiguationWarningCommentDone(value);
     } else if (!general) {
@@ -287,12 +293,12 @@ public class WPCConfiguration {
   private String pipeTemplate;
 
   /**
-   * Encyclopedic namespaces.
+   * Encyclopedic name spaces.
    */
   private List<Integer> encyclopedicNamespaces;
 
   /**
-   * Encyclopedic talk namespaces.
+   * Encyclopedic talk name spaces.
    */
   private List<Integer> encyclopedicTalkNamespaces;
 
@@ -304,7 +310,7 @@ public class WPCConfiguration {
   }
 
   /**
-   * @param value Encyclopedic namespaces.
+   * @param value Encyclopedic name spaces.
    */
   private void setEncyclopedicNamespaces(String value) {
     if ((value != null) && (value.trim().length() > 0)) {
@@ -328,7 +334,7 @@ public class WPCConfiguration {
   }
 
   /**
-   * Default initialisation of encyclopedic namespaces.
+   * Default initialization of encyclopedic name spaces.
    */
   private void initDefaultEncyclopedicNamespaces() {
     encyclopedicNamespaces = new ArrayList<Integer>();
@@ -340,7 +346,7 @@ public class WPCConfiguration {
   }
 
   /**
-   * Initialisation of encyclopedic talk namespaces.
+   * Initialization of encyclopedic talk name spaces.
    */
   private void initEncyclopedicTalkNamespaces() {
     if (encyclopedicNamespaces == null) {
@@ -361,8 +367,8 @@ public class WPCConfiguration {
   }
 
   /**
-   * @param namespace Namespace.
-   * @return True if the namespace is encyclopedic.
+   * @param namespace Name space.
+   * @return True if the name space is encyclopedic.
    */
   public boolean isEncyclopedicNamespace(Integer namespace) {
     if ((encyclopedicNamespaces == null) || (namespace == null)) {
@@ -372,64 +378,64 @@ public class WPCConfiguration {
   }
 
   /**
-   * @return Encyclopedic talk namespaces.
+   * @return Encyclopedic talk name spaces.
    */
   public List<Integer> getEncyclopedicTalkNamespaces() {
     return encyclopedicTalkNamespaces;
   }
 
   /* ================================================================================= */
-  /* Todo                                                                              */
+  /* To do lists                                                                       */
   /* ================================================================================= */
 
   /**
-   * Templates creating todo lists.
+   * Templates creating "to do" lists.
    */
   private List<String> todoTemplates;
 
   /**
-   * Templates creating links to todo lists.
+   * Templates creating links to "to do" lists.
    */
   private List<String> todoLinkTemplates;
 
   /**
-   * Todo subpage.
+   * "To do" subpage.
    */
   private String todoSubpage;
 
   /**
-   * Force usage of todo subpage in main namespace.
+   * Force usage of "to do" subpage in main name space.
    */
   private boolean todoSubpageForce;
 
   /**
-   * Force usage of todo subpage in other namespaces.
+   * Force usage of "to do" subpage in other name spaces.
    */
   private boolean todoSubpageForceOther;
 
   /**
-   * @param value Templates creating todo lists.
+   * @param value Templates creating "to do" lists.
    */
   private void setTodoTemplates(String value) {
     todoTemplates = convertPropertyToStringList(value);
   }
 
   /**
-   * @param value Templates creating links to todo lists.
+   * @param value Templates creating links to "to do" lists.
    */
   private void setTodoLinkTemplates(String value) {
     this.todoLinkTemplates = convertPropertyToStringList(value);
   }
 
   /**
-   * Todo subpage.
+   * "To do" subpage.
    */
   private void setTodoSubpage(String value) {
     this.todoSubpage = nonEmptyString(value);
   }
 
   /**
-   * @param value Force usage of todo subpage in main namespace.
+   * @param value Force usage of "to do" subpage in main name space.
    */
   private void setTodoSubpageForce(String value) {
     this.todoSubpageForce = false;
@@ -439,7 +445,7 @@ public class WPCConfiguration {
   }
 
   /**
-   * @param value Force usage of todo subpage in other namespaces.
+   * @param value Force usage of "to do" subpage in other name spaces.
    */
   private void setTodoSubpageForceOther(String value) {
     this.todoSubpageForceOther = false;
@@ -449,35 +455,35 @@ public class WPCConfiguration {
   }
 
   /**
-   * @return Templates creating todo lists.
+   * @return Templates creating "to do" lists.
    */
   public List<String> getTodoTemplates() {
     return todoTemplates;
   }
 
   /**
-   * @return Templates creating links to todo lists.
+   * @return Templates creating links to "to do" lists.
    */
   public List<String> getTodoLinkTemplates() {
     return todoLinkTemplates;
   }
 
   /**
-   * @return Todo subpage.
+   * @return "To do" subpage.
    */
   public String getTodoSubpage() {
     return todoSubpage;
   }
 
   /**
-   * @return Force usage of todo subpage in main namespace.
+   * @return Force usage of "to do" subpage in main name space.
    */
   public boolean getTodoSubpageForce() {
     return todoSubpageForce;
   }
 
   /**
-   * @return Force usage of todo subpage in other namespaces.
+   * @return Force usage of "to do" subpage in other name spaces.
    */
   public boolean getTodoSubpageForceOther() {
     return todoSubpageForceOther;
@@ -488,17 +494,17 @@ public class WPCConfiguration {
   /* ================================================================================= */
 
   /**
-   * Pages containing orthograph suggestions.
+   * Pages containing spelling suggestions.
    */
   private List<String> suggestionPages;
 
   /**
-   * Orthograph suggestions.
+   * Spelling suggestions.
    */
   private Map<String, Suggestion> suggestions;
 
   /**
-   * @param value Pages containing orthograph suggestions.
+   * @param value Pages containing spelling suggestions.
    */
   private void setSuggestionPages(String value) {
     this.suggestionPages = convertPropertyToStringList(value);
@@ -829,9 +835,19 @@ public class WPCConfiguration {
   private String disambiguationComment;
 
   /**
+   * Comment for one disambiguation link that has been fixed.
+   */
+  private String disambiguationComment1;
+
+  /**
    * Comment for disambiguation links that still need to be fixed.
    */
   private String disambiguationCommentTodo;
+
+  /**
+   * Comment for one disambiguation link that still need to be fixed.
+   */
+  private String disambiguationCommentTodo1;
 
   /**
    * @param value Pages containing the current list of disambiguation pages.
@@ -855,10 +871,24 @@ public class WPCConfiguration {
   }
 
   /**
+   * @param value Comment for one disambiguation link that has been fixed.
+   */
+  private void setDisambiguationComment1(String value) {
+    this.disambiguationComment1 = nonEmptyString(value);
+  }
+
+  /**
    * @param value Comment for disambiguation links that still need to be fixed.
    */
   private void setDisambiguationCommentTodo(String value) {
     this.disambiguationCommentTodo = nonEmptyString(value);
+  }
+
+  /**
+   * @param value Comment for one disambiguation link that still need to be fixed.
+   */
+  private void setDisambiguationCommentTodo1(String value) {
+    this.disambiguationCommentTodo1 = nonEmptyString(value);
   }
 
   /**
@@ -880,6 +910,11 @@ public class WPCConfiguration {
    * @return Comment for disambiguation links that have been fixed.
    */
   public String getDisambiguationComment(int count) {
+    if ((count == 1) &&
+        (disambiguationComment1 != null) &&
+        (disambiguationComment1.length() > 0)) {
+      return disambiguationComment1;
+    }
     if (disambiguationComment != null) {
       try {
         return MessageFormat.format(disambiguationComment, Integer.valueOf(count));
@@ -896,6 +931,11 @@ public class WPCConfiguration {
    * @return Comment for disambiguation links that still need to be fixed.
    */
   public String getDisambiguationCommentTodo(int count) {
+    if ((count == 1) &&
+        (disambiguationCommentTodo1 != null) &&
+        (disambiguationCommentTodo1.length() > 0)) {
+      return disambiguationCommentTodo1;
+    }
     if (disambiguationCommentTodo != null) {
       try {
         return MessageFormat.format(disambiguationCommentTodo, Integer.valueOf(count));
@@ -939,6 +979,11 @@ public class WPCConfiguration {
   private String disambiguationWarningComment;
 
   /**
+   * Comment for warning about one disambiguation link in a page.
+   */
+  private String disambiguationWarningComment1;
+
+  /**
    * Comment for telling that disambiguation links have been fixed.
    */
   private String disambiguationWarningCommentDone;
@@ -969,6 +1014,13 @@ public class WPCConfiguration {
    */
   private void setDisambiguationWarningComment(String value) {
     this.disambiguationWarningComment = nonEmptyString(value);
+  }
+
+  /**
+   * @param value Comment for warning about one disambiguation link in a page.
+   */
+  private void setDisambiguationWarningComment1(String value) {
+    this.disambiguationWarningComment1 = nonEmptyString(value);
   }
 
   /**
@@ -1004,6 +1056,11 @@ public class WPCConfiguration {
    * @return Comment for warning about disambiguation links in a page.
    */
   public String getDisambiguationWarningComment(int count) {
+    if ((count == 1) &&
+        (disambiguationWarningComment1 != null) &&
+        (disambiguationWarningComment1.length() > 0)) {
+      return disambiguationWarningComment1;
+    }
     if (disambiguationWarningComment != null) {
       try {
         return MessageFormat.format(disambiguationWarningComment, Integer.valueOf(count));
