@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -48,32 +49,32 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
-    String contents = pageAnalysis.getContents();
-    PageElementTitle firstTitle = pageAnalysis.getNextTitle(0);
-    if (firstTitle == null) {
+
+    // Check first title
+    List<PageElementTitle> titles = pageAnalysis.getTitles();
+    if (titles.size() == 0) {
       return false;
     }
-    if (firstTitle.getFirstLevel() < 3) {
+    int firstTitle = titles.get(0).getFirstLevel();
+    if (firstTitle < 3) {
       return false;
     }
-    int startIndex = firstTitle.getEndIndex();
-    while (startIndex < contents.length()) {
-      PageElementTitle title = pageAnalysis.getNextTitle(startIndex);
-      if (title == null) {
-        startIndex = contents.length();
-      } else {
-        if (title.getFirstLevel() < 3) {
-          if (errors == null) {
-            return true;
-          }
-          errors.add(createCheckErrorResult(
-              pageAnalysis.getPage(),
-              firstTitle.getBeginIndex(), firstTitle.getEndIndex()));
+
+    // Check every title
+    boolean result = false;
+    for (PageElementTitle title : titles) {
+      if (title.getFirstLevel() < firstTitle) {
+        if (errors == null) {
           return true;
         }
-        startIndex = title.getEndIndex();
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            title.getBeginIndex(), title.getEndIndex());
+        errors.add(errorResult);
       }
     }
-    return false;
+
+    return result;
   }
 }
