@@ -19,9 +19,11 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTitle;
 
 
 /**
@@ -47,64 +49,30 @@ public class CheckErrorAlgorithm057 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
+
+    // Check every title
+    List<PageElementTitle> titles = pageAnalysis.getTitles();
     boolean result = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      int titleIndex = contents.indexOf("=", startIndex);
-      if (titleIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        int endLineIndex = contents.indexOf("\n", titleIndex);
-        if ((titleIndex == 0) || (contents.charAt(titleIndex - 1) == '\n')) {
-          int currentBegin = titleIndex;
-          // Reading the = at the beginning of the title
-          while ((currentBegin < contents.length()) && (contents.charAt(currentBegin) == '=')) {
-            currentBegin++;
+    for (PageElementTitle title : titles) {
+      String text = title.getTitle();
+      if (text != null) {
+        text = text.trim();
+        if ((text.length() > 0) && (text.charAt(text.length() - 1) == ':')) {
+          if (errors == null) {
+            return true;
           }
-          if (endLineIndex < 0) {
-            endLineIndex = contents.length();
-          }
-          // Reading possible whitespaces
-          while ((currentBegin < contents.length()) && (contents.charAt(currentBegin) == ' ')) {
-            currentBegin++;
-          }
-
-          int currentEnd = endLineIndex - 1;
-          // Reading possible whitespaces
-          while ((currentEnd > currentBegin) && (contents.charAt(currentEnd) == ' ')) {
-            currentEnd--;
-          }
-          // Reading the = at the end of the title
-          while ((currentEnd > currentBegin) && (contents.charAt(currentEnd) == '=')) {
-            currentEnd--;
-          }
-          // Reading possible whitespaces
-          while ((currentEnd > currentBegin) && (contents.charAt(currentEnd) == ' ')) {
-            currentEnd--;
-          }
-
-          // Analyzing the title
-          if ((currentEnd > currentBegin) && (contents.charAt(currentEnd) == ':')) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), titleIndex, endLineIndex);
-            errorResult.addReplacement(contents.substring(titleIndex, currentEnd) + contents.substring(currentEnd + 1, endLineIndex));
-            errors.add(errorResult);
-          }
-          startIndex = endLineIndex + 1;
-        } else {
-          if (endLineIndex < 0) {
-            startIndex = contents.length();
-          } else {
-            startIndex = endLineIndex;
-          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              title.getBeginIndex(), title.getEndIndex());
+          errorResult.addReplacement(PageElementTitle.createTitle(
+              title.getFirstLevel(),
+              text.substring(0, text.length() - 1)));
+          errors.add(errorResult);
         }
       }
     }
+
     return result;
   }
 }
