@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -50,29 +51,28 @@ public class CheckErrorAlgorithm053 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyzing the text from the beginning
+    // Retrieving last category
+    List<PageElementCategory> categories = pageAnalysis.getCategories();
+    if (categories.size() == 0) {
+      return false;
+    }
+    int lastCategory = categories.get(categories.size() - 1).getEndIndex();
+
+    // Check every language link
+    List<PageElementLanguageLink> languages = pageAnalysis.getLanguageLinks();
     boolean result = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      PageElementLanguageLink link = pageAnalysis.getNextLanguageLink(startIndex);
-      if (link != null) {
-        startIndex = link.getEndIndex();
-        PageElementCategory category = pageAnalysis.getNextCategory(startIndex);
-        if (category != null) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
-          errors.add(errorResult);
-        } else {
-          return result;
-        }
-      } else {
-        startIndex = contents.length();
+    for (PageElementLanguageLink language : languages) {
+      if (language.getBeginIndex() >= lastCategory) {
+        return result;
       }
+      if (errors == null) {
+        return true;
+      }
+      result = true;
+      CheckErrorResult errorResult = createCheckErrorResult(
+          pageAnalysis.getPage(),
+          language.getBeginIndex(), language.getEndIndex());
+      errors.add(errorResult);
     }
 
     return result;

@@ -1072,12 +1072,12 @@ public class PageAnalysis {
   /**
    * All interwiki links in the page.
    */
-  private Collection<PageElementInterwikiLink> interwikiLinks;
+  private List<PageElementInterwikiLink> interwikiLinks;
 
   /**
    * @return All interwiki links in the page.
    */
-  public Collection<PageElementInterwikiLink> getInterwikiLinks() {
+  public List<PageElementInterwikiLink> getInterwikiLinks() {
     thirdLevelAnalysis();
     return interwikiLinks;
   }
@@ -1118,12 +1118,12 @@ public class PageAnalysis {
   /**
    * All language links in the page.
    */
-  private Collection<PageElementLanguageLink> languageLinks;
+  private List<PageElementLanguageLink> languageLinks;
 
   /**
    * @return All language links in the page.
    */
-  public Collection<PageElementLanguageLink> getLanguageLinks() {
+  public List<PageElementLanguageLink> getLanguageLinks() {
     thirdLevelAnalysis();
     return languageLinks;
   }
