@@ -22,9 +22,9 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementDefaultsort;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -59,66 +59,25 @@ public class CheckErrorAlgorithm088 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyzing the text from the beginning
+    // Check every DEFAULTSORT
+    List<PageElementDefaultsort> defaultSorts = pageAnalysis.getDefaultSorts();
     boolean result = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      // Update position of next {{
-      int beginIndex = contents.indexOf("{{", startIndex);
-
-      if (beginIndex < 0) {
-        // No more {{
-        startIndex = contents.length();
-      } else {
-        int currentPos = beginIndex + 2;
-
-        // Update position of next }}
-        int endIndex = contents.indexOf("}}", currentPos);
-
-        if (endIndex < 0) {
-          startIndex = contents.length();
-        } else {
-
-          // Possible whitespaces
-          while ((currentPos < endIndex) && Character.isWhitespace(contents.charAt(currentPos))) {
-            currentPos++;
-          }
-
-          // Check that link is DEFAULTSORT
-          String defaultSort = null;
-          if (currentPos < endIndex) {
-            MagicWord magicDefaultsort = pageAnalysis.getWikipedia().getMagicWord(MagicWord.DEFAULT_SORT);
-            List<String> aliases = magicDefaultsort.getAliases();
-            for (int i = 0; (i < aliases.size()) && (defaultSort == null); i++) {
-              if (contents.startsWith(aliases.get(i), currentPos)) {
-                currentPos += aliases.get(i).length();
-                defaultSort = aliases.get(i);
-              }
-            }
-          }
-          // DEFAULTSORT found
-          if ((currentPos < endIndex) && (defaultSort != null)) {
-            int beginLink = currentPos;
-            while ((currentPos < endIndex) && (contents.charAt(currentPos) == ' ')) {
-              currentPos++;
-            }
-            if (currentPos > beginLink) {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), beginIndex, endIndex + 2);
-              errorResult.addReplacement(
-                  "{{" + defaultSort + contents.substring(currentPos, endIndex + 2));
-              errors.add(errorResult);
-            }
-          }
-          startIndex = endIndex + 2;
+    for (PageElementDefaultsort defaultSort : defaultSorts) {
+      String text = defaultSort.getValueNotTrimmed();
+      if ((text != null) && (text.startsWith(" "))) {
+        if (errors == null) {
+          return true;
         }
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            defaultSort.getBeginIndex(), defaultSort.getEndIndex());
+        errorResult.addReplacement(PageElementDefaultsort.createDefaultsort(
+            defaultSort.getTag(), text));
+        errors.add(errorResult);
       }
     }
+
     return result;
   }
   /**

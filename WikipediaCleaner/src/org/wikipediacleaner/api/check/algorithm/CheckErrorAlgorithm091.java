@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
@@ -80,32 +81,21 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
     }
 
     // Searching a DEFAULTSORT tag
-    String contents = pageAnalysis.getContents();
-    PageElementDefaultsort tag = pageAnalysis.getNextDefaultSort(0);
-    if (tag != null) {
+    List<PageElementDefaultsort> defaultSorts = pageAnalysis.getDefaultSorts();
+    if (defaultSorts.size() > 0) {
       return false;
     }
 
     // Searching for Categories without a sort key
-    boolean categoriesWithoutSort = false;
-    int currentIndex = 0;
-    while (currentIndex < contents.length()) {
-      PageElementCategory category = pageAnalysis.getNextCategory(currentIndex);
-      if (category != null) {
-        currentIndex = category.getEndIndex();
-        if ((category.getSort() == null) ||
-            (category.getSort().trim().length() == 0)) {
-          categoriesWithoutSort = true;
-        }
-      } else {
-        currentIndex = contents.length();
+    List<PageElementCategory> categories = pageAnalysis.getCategories();
+    for (PageElementCategory category : categories) {
+      if ((category.getSort() == null) ||
+          (category.getSort().trim().length() == 0)) {
+        return true;
       }
     }
-    if (!categoriesWithoutSort) {
-      return false;
-    }
 
-    return true;
+    return false;
   }
 
   /**
