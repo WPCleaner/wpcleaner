@@ -18,11 +18,11 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTitle;
 
@@ -53,7 +53,8 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
 
     boolean result = false;
     int previousTitleLevel = 0;
-    HashMap<Integer, ArrayList<String>> titles = new HashMap<Integer, ArrayList<String>>();
+    HashMap<Integer, HashMap<String, PageElementTitle>> titles =
+        new HashMap<Integer, HashMap<String, PageElementTitle>>();
     for (PageElementTitle title : pageAnalysis.getTitles()) {
 
       // Clean up titles with a lower level
@@ -65,23 +66,32 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
       }
 
       // Analyze current level
-      ArrayList<String> knownTitles = titles.get(Integer.valueOf(titleLevel));
+      HashMap<String, PageElementTitle> knownTitles = titles.get(Integer.valueOf(titleLevel));
       String titleValue = title.getTitle();
       if (knownTitles == null) {
-        knownTitles = new ArrayList<String>();
-        knownTitles.add(titleValue);
+        knownTitles = new HashMap<String, PageElementTitle>();
+        knownTitles.put(titleValue, title);
         titles.put(Integer.valueOf(titleLevel), knownTitles);
-      } else if (!knownTitles.contains(titleValue)) {
-        knownTitles.add(titleValue);
+      } else if (!knownTitles.containsKey(titleValue)) {
+        knownTitles.put(titleValue, title);
       } else {
         if (errors == null) {
           return true;
         }
         result = true;
-        errors.add(createCheckErrorResult(
+        PageElementTitle previousTitle = knownTitles.get(titleValue);
+        if (previousTitle != null) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              previousTitle.getBeginIndex(), previousTitle.getEndIndex(),
+              ErrorLevel.CORRECT);
+          errors.add(errorResult);
+          knownTitles.put(titleValue, null);
+        }
+        CheckErrorResult errorResult = createCheckErrorResult(
             pageAnalysis.getPage(),
-            title.getBeginIndex(),
-            title.getEndIndex()));
+            title.getBeginIndex(), title.getEndIndex());
+        errors.add(errorResult);
       }
 
       previousTitleLevel = titleLevel;
