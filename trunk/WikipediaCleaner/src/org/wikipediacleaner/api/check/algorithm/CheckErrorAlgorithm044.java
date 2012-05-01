@@ -19,9 +19,11 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTitle;
 
 
 /**
@@ -47,79 +49,43 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
+
+    // Check every title
+    List<PageElementTitle> titles = pageAnalysis.getTitles();
     boolean result = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
+    for (PageElementTitle title : titles) {
+      String text = title.getTitle();
+      if (text != null) {
+        text = text.trim();
 
-      // Find next =
-      int titleIndex = contents.indexOf("=", startIndex);
-      if (titleIndex < 0) {
-        startIndex = contents.length();
-      } else {
-
-        // Check if the = is the beginning of a title
-        int endLineIndex = contents.indexOf("\n", titleIndex);
-        if ((titleIndex == 0) || (contents.charAt(titleIndex - 1) == '\n')) {
-          int currentBegin = titleIndex;
-          // Reading the = at the beginning of the title
-          while ((currentBegin < contents.length()) && (contents.charAt(currentBegin) == '=')) {
-            currentBegin++;
-          }
-          if (endLineIndex < 0) {
-            endLineIndex = contents.length();
-          }
-          // Reading possible whitespaces
-          while ((currentBegin < contents.length()) && (contents.charAt(currentBegin) == ' ')) {
-            currentBegin++;
-          }
-
-          int currentEnd = endLineIndex - 1;
-          // Reading possible whitespaces
-          while ((currentEnd > currentBegin) && (contents.charAt(currentEnd) == ' ')) {
-            currentEnd--;
-          }
-          // Reading the = at the end of the title
-          while ((currentEnd > currentBegin) && (contents.charAt(currentEnd) == '=')) {
-            currentEnd--;
-          }
-          // Reading possible whitespaces
-          while ((currentEnd > currentBegin) && (contents.charAt(currentEnd) == ' ')) {
-            currentEnd--;
-          }
-
-          // Analyzing the title
-          String text = contents.substring(titleIndex, currentBegin);
-          int count = 0;
-          while (currentBegin <= currentEnd) {
-            if (contents.startsWith("'''", currentBegin)) {
-              count++;
-              currentBegin += 3;
-            } else {
-              text += contents.charAt(currentBegin);
-              currentBegin++;
-            }
-          }
-          if (count > 1) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), titleIndex, endLineIndex);
-            errorResult.addReplacement(text + contents.substring(currentEnd + 1, endLineIndex));
-            errors.add(errorResult);
-          }
-          startIndex = endLineIndex + 1;
-        } else {
-          if (endLineIndex < 0) {
-            startIndex = contents.length();
+        // Check if the title is bold
+        int index = 0;
+        int countBold = 0;
+        while (index < text.length()) {
+          if (text.startsWith("'''", index)) {
+            index += 3;
+            countBold++;
           } else {
-            startIndex = endLineIndex;
+            index++;
           }
+        }
+
+        // Register error
+        if (countBold > 1) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          text = text.replaceAll("'''", "");
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              title.getBeginIndex(), title.getEndIndex());
+          errorResult.addReplacement(PageElementTitle.createTitle(title.getFirstLevel(), text));
+          errors.add(errorResult);
         }
       }
     }
+
     return result;
   }
 }
