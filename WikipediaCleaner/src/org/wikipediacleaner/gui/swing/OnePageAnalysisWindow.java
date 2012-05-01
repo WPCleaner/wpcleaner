@@ -62,6 +62,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -1097,12 +1098,14 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   }
 
   /**
+   * @param pageAnalysis Page analysis.
    * @return Default comment.
    */
   @Override
-  protected String getAutomaticComment() {
+  protected String getAutomaticComment(PageAnalysis pageAnalysis) {
+    WPCConfiguration configuration = getConfiguration();
     if (translated) {
-      String text = getConfiguration().getTranslationComment();
+      String text = configuration.getTranslationComment();
       if ((text != null) && (text.trim().length() > 0)) {
         return text;
       }
@@ -1133,7 +1136,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       if (fixed.size() > 0) {
         Collections.sort(fixed);
         contributions.increaseDabLinks(fixed.size());
-        comment.append(getWikipedia().getConfiguration().getDisambiguationComment(fixed.size()));
+        comment.append(configuration.getDisambiguationComment(fixed.size()));
         int linksFixed = 0;
         for (String fix : fixed) {
           if (linksFixed > 0) {
@@ -1143,6 +1146,24 @@ public class OnePageAnalysisWindow extends OnePageWindow {
           }
           linksFixed++;
           comment.append("[[" + fix + "]]");
+        }
+
+        Map<String, Integer> linkCount = PageAnalysisUtils.countInternalDisambiguationLinks(
+            pageAnalysis, pageAnalysis.getPage().getLinks());
+        List<String> dabLinks = new ArrayList<String>(linkCount.keySet());
+        Collections.sort(dabLinks);
+        if (dabLinks.size() > 0) {
+          comment.append(configuration.getDisambiguationCommentTodo(dabLinks.size()));
+          int linksTodo = 0;
+          for (String todo : dabLinks) {
+            if (linksTodo > 0) {
+              comment.append(", ");
+            } else {
+              comment.append(" - ");
+            }
+            linksTodo++;
+            comment.append("[[" + todo + "]]");
+          }
         }
       }
     }
@@ -1219,7 +1240,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     listErrors.repaint();
 
     // Update comment 
-    setComment(getAutomaticComment());
+    setComment(getAutomaticComment(pageAnalysis));
 
     // Update selection
     if (fullValidate) {

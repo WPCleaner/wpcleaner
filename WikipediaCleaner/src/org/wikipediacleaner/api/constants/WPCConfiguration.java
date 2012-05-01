@@ -904,7 +904,7 @@ public class WPCConfiguration {
       }
       return disambiguationCommentTodo;
     }
-    return "";
+    return ", {0} to be fixed";
   }
 
   /**

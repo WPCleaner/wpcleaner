@@ -1302,7 +1302,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       }
       if (comment.length() > 0) {
         comment.append(" (");
-        comment.append(getAutomaticComment());
+        comment.append(getAutomaticComment(null));
         comment.append(")");
       }
       return comment.toString();
@@ -1499,10 +1499,11 @@ public class CheckWikiProjectWindow extends OnePageWindow {
   }
 
   /**
+   * @param pageAnalysis Page analysis.
    * @return Default comment.
    */
   @Override
-  protected String getAutomaticComment() {
+  protected String getAutomaticComment(PageAnalysis pageAnalysis) {
     return getWikipedia().getCWConfiguration().getComment();
   }
 
