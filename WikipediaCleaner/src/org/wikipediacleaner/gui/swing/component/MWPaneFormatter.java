@@ -41,7 +41,6 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.utils.Configuration;
-import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
@@ -128,10 +127,8 @@ public abstract class MWPaneFormatter {
 
     // Retrieve configuration
     Configuration config = Configuration.getConfiguration();
-    if (!config.getBoolean(null, ConfigurationValueBoolean.SYNTAX_HIGHLIGHTING)) {
-      return;
-    }
-    if (doc.getLength() > config.getInt(null, ConfigurationValueInteger.SYNTAX_HIGHLIGHTINH_LIMIT)) {
+    int limit = config.getInt(null, ConfigurationValueInteger.SYNTAX_HIGHLIGHTING_LIMIT);
+    if (doc.getLength() > limit) {
       return;
     }
     ConfigurationValueStyle.StyleProperties styleCategory = config.getStyle(

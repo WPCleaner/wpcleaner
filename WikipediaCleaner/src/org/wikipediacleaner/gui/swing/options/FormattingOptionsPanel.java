@@ -41,7 +41,6 @@ import org.wikipediacleaner.gui.swing.component.ColorButton;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
-import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
@@ -105,20 +104,11 @@ public class FormattingOptionsPanel extends OptionsPanel {
     constraints.weightx = 1;
     constraints.weighty = 0;
 
-    // Add global check box for syntax highlighting
-    JCheckBox chk = createJCheckBox(
-        GT._("Syntax highlighting"),
-        ConfigurationValueBoolean.SYNTAX_HIGHLIGHTING);
-    constraints.gridwidth = columnCount;
-    add(chk, constraints);
-    constraints.gridwidth = 1;
-    constraints.gridy++;
-
     // Add size limit for syntax highlighting
     JSpinner spinner = createJSpinner(
-        ConfigurationValueInteger.SYNTAX_HIGHLIGHTINH_LIMIT,
+        ConfigurationValueInteger.SYNTAX_HIGHLIGHTING_LIMIT,
         0, 1000000, 10000);
-    JLabel label = Utilities.createJLabel(GT._("Size limit"));
+    JLabel label = Utilities.createJLabel(GT._("Size limit for syntax highlighting"));
     label.setLabelFor(spinner);
     label.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
