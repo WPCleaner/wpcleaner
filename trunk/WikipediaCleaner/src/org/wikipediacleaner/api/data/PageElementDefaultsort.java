@@ -30,6 +30,7 @@ public class PageElementDefaultsort extends PageElement {
 
   private final String tag;
   private final String value;
+  private final String valueNotTrimmed;
 
   /**
    * Analyze contents to check if it matches a block for DEFAULTSORT.
@@ -54,8 +55,9 @@ public class PageElementDefaultsort extends PageElement {
     }
     tmpIndex += 2;
 
-    // Possible whitespaces characters
-    while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
+    // Possible white spaces characters
+    while ((tmpIndex < contents.length()) &&
+           (contents.charAt(tmpIndex) == ' ')) {
       tmpIndex++;
     }
 
@@ -76,8 +78,10 @@ public class PageElementDefaultsort extends PageElement {
       return null;
     }
 
-    // Possible whitespaces characters
-    while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
+    // Possible white spaces characters
+    int beginValueIndex = tmpIndex;
+    while ((tmpIndex < contents.length()) &&
+           (contents.charAt(tmpIndex) == ' ')) {
       tmpIndex++;
     }
     if (tmpIndex >= contents.length()) {
@@ -92,7 +96,7 @@ public class PageElementDefaultsort extends PageElement {
 
     return new PageElementDefaultsort(
         beginIndex, endIndex + 2,
-        defaultSort, contents.substring(tmpIndex, endIndex).trim());
+        defaultSort, contents.substring(beginValueIndex, endIndex));
   }
 
   public String getTag() {
@@ -103,12 +107,17 @@ public class PageElementDefaultsort extends PageElement {
     return value;
   }
 
+  public String getValueNotTrimmed() {
+    return valueNotTrimmed;
+  }
+
   private PageElementDefaultsort(
       int beginIndex, int endIndex,
       String tag, String value) {
     super(beginIndex, endIndex);
     this.tag = tag;
-    this.value = value;
+    this.valueNotTrimmed = value;
+    this.value = (value != null) ? value.trim() : null;
   }
 
   /* (non-Javadoc)
@@ -120,6 +129,20 @@ public class PageElementDefaultsort extends PageElement {
     sb.append("{{");
     sb.append(tag);
     sb.append(value);
+    sb.append("}}");
+    return sb.toString();
+  }
+
+  /**
+   * @param tag DEFAULTSORT tag.
+   * @param value Value of the DEFAULTSORT.
+   * @return Textual representation of the DEFAULTSORT.
+   */
+  public static String createDefaultsort(String tag, String value) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("{{");
+    sb.append(tag);
+    sb.append(value.trim());
     sb.append("}}");
     return sb.toString();
   }

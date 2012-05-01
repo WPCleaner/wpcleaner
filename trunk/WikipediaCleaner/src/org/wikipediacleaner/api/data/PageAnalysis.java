@@ -980,12 +980,12 @@ public class PageAnalysis {
   /**
    * All DEFAULTSORT in the page.
    */
-  private Collection<PageElementDefaultsort> defaultSorts;
+  private List<PageElementDefaultsort> defaultSorts;
 
   /**
    * @return All DEFAULTSORT in the page.
    */
-  public Collection<PageElementDefaultsort> getDefaultSorts() {
+  public List<PageElementDefaultsort> getDefaultSorts() {
     thirdLevelAnalysis();
     return defaultSorts;
   }
