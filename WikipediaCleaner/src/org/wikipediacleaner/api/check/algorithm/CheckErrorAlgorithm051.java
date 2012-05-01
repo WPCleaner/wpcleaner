@@ -19,10 +19,12 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementLanguageLink;
+import org.wikipediacleaner.api.data.PageElementTitle;
 
 
 /**
@@ -49,53 +51,30 @@ public class CheckErrorAlgorithm051 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Searching for last headline
-    String contents = pageAnalysis.getContents();
-    int startIndex = contents.length();
-    int lastHeadline = -1;
-    while ((startIndex >= 0) && (lastHeadline < 0)) {
-      int lineIndex = contents.lastIndexOf("=", startIndex);
-      if (lineIndex > 0) {
-        if ((lineIndex == 0) || (contents.charAt(lineIndex - 1) == '\n')) {
-          lastHeadline = lineIndex;
-        }
-      }
-      startIndex = lineIndex - 1;
-    }
-    if (lastHeadline < 0) {
+    // Retrieving last headline
+    List<PageElementTitle> titles = pageAnalysis.getTitles();
+    if (titles.size() == 0) {
       return false;
     }
+    int lastTitle = titles.get(titles.size() - 1).getEndIndex();
 
-    startIndex = 0;
+    // Checking every language link
+    List<PageElementLanguageLink> languages = pageAnalysis.getLanguageLinks();
     boolean result = false;
-    while (startIndex < lastHeadline) {
-
-      // Searching for next [[
-      int beginIndex = contents.indexOf("[[", startIndex);
-      if ((beginIndex < 0) || (beginIndex > lastHeadline)) {
-        startIndex = contents.length();
-      } else {
-        int colonIndex = contents.indexOf(":", beginIndex);
-        if (colonIndex >= 0) {
-          int endIndex = contents.indexOf("]]", beginIndex);
-          if (endIndex > colonIndex) {
-            String namespace = contents.substring(beginIndex + 2, colonIndex).trim();
-            for (Language lg : pageAnalysis.getWikipedia().getLanguages()) {
-              if (namespace.equals(lg.getCode())) {
-                if (errors == null) {
-                  return true;
-                }
-                result = true;
-                CheckErrorResult errorResult = createCheckErrorResult(
-                    pageAnalysis.getPage(), beginIndex, endIndex + 2);
-                errors.add(errorResult);
-              }
-            }
-          }
-        }
-        startIndex = beginIndex + 2;
+    for (PageElementLanguageLink language : languages) {
+      if (language.getBeginIndex() >= lastTitle) {
+        return result;
       }
+      if (errors == null) {
+        return true;
+      }
+      result = true;
+      CheckErrorResult errorResult = createCheckErrorResult(
+          pageAnalysis.getPage(),
+          language.getBeginIndex(), language.getEndIndex());
+      errors.add(errorResult);
     }
+
     return result;
   }
 }
