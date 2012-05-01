@@ -19,10 +19,11 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementCategory;
 
 
 /**
@@ -49,76 +50,62 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    int startIndex = 0;
+    // Check every category
+    List<PageElementCategory> categories = pageAnalysis.getCategories();
+    if (categories.size() < 2) {
+      return false;
+    }
+    int maxCategory = categories.size();
     boolean result = false;
-    Namespace categoryNamespace = Namespace.getNamespace(
-        Namespace.CATEGORY, pageAnalysis.getWikipedia().getNamespaces());
-    if (categoryNamespace == null) {
-      return result;
-    }
-    boolean newLine = true;
+    int currentCategory = 0;
     String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      if (contents.charAt(startIndex) == '\n') {
-        newLine = true;
-        startIndex++;
-      } else if (contents.startsWith("[[", startIndex)) {
-        int beginIndex = startIndex;
-        int currentIndex = beginIndex + 2;
-
-        // Namespace
-        int linkIndex = currentIndex;
-        while ((currentIndex < contents.length()) &&
-               (contents.charAt(currentIndex) != ':') &&
-               (contents.charAt(currentIndex) != '|') &&
-               (contents.charAt(currentIndex) != ']') &&
-               (contents.charAt(currentIndex) != '[')) {
+    while (currentCategory < maxCategory) {
+      // Group categories in the same line
+      boolean endFound = false;
+      int lastCategory = currentCategory;
+      while ((!endFound) && (lastCategory < maxCategory - 1)) {
+        int maxIndex = categories.get(lastCategory + 1).getBeginIndex();
+        int currentIndex = categories.get(lastCategory).getEndIndex();
+        while ((!endFound) && (currentIndex < maxIndex)) {
+          if (contents.charAt(currentIndex) == '\n') {
+            endFound = true;
+          }
           currentIndex++;
         }
-
-        // Check if namespace is Category
-        if ((currentIndex < contents.length()) &&
-            (contents.charAt(currentIndex) == ':') &&
-            (categoryNamespace.isPossibleName(contents.substring(linkIndex, currentIndex).trim()))) {
-
-          // Link itself
-          currentIndex++;
-          linkIndex = currentIndex;
-          while ((currentIndex < contents.length()) &&
-                 (contents.charAt(currentIndex) != '|') &&
-                 (contents.charAt(currentIndex) != ']')) {
-            currentIndex++;
-          }
-
-          // Go to the end
-          while ((currentIndex < contents.length()) &&
-                 (!contents.startsWith("]]", currentIndex))) {
-            currentIndex++;
-          }
-          if ((currentIndex < contents.length()) &&
-              (contents.startsWith("]]", currentIndex))) {
-            currentIndex += 2;
-            if (newLine == true) {
-              newLine = false;
-            } else {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), beginIndex, currentIndex);
-              errorResult.addReplacement(
-                  "\n[[" + categoryNamespace.getTitle() + ":" +
-                  contents.substring(linkIndex, currentIndex));
-              errors.add(errorResult);
-            }
-          }
+        if (!endFound) {
+          lastCategory++;
         }
-        startIndex = currentIndex;
-      } else {
-        startIndex++;
       }
+
+      // Register error
+      if (lastCategory > currentCategory) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            categories.get(currentCategory).getBeginIndex(),
+            categories.get(lastCategory).getEndIndex());
+        StringBuilder replacement = new StringBuilder();
+        for (int i = currentCategory; i < lastCategory; i++) {
+          replacement.append(contents.substring(
+              categories.get(i).getBeginIndex(),
+              categories.get(i + 1).getBeginIndex()).trim());
+          replacement.append('\n');
+        }
+        String replacementText = (lastCategory - currentCategory > 1) ?
+            "[[...]]\u21B5...\u21B5[[...]]" : "[[...]]\u21B5[[...]]";
+        replacement.append(contents.substring(
+            categories.get(lastCategory).getBeginIndex(),
+            categories.get(lastCategory).getEndIndex()));
+        errorResult.addReplacement(replacement.toString(), replacementText);
+        errors.add(errorResult);
+      }
+      currentCategory = lastCategory + 1;
     }
+
     return result;
   }
 }
