@@ -19,9 +19,11 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTitle;
 
 
 /**
@@ -47,75 +49,50 @@ public class CheckErrorAlgorithm058 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
+
+    // Check every title
+    List<PageElementTitle> titles = pageAnalysis.getTitles();
     boolean result = false;
-    int startIndex = 0;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      int titleIndex = contents.indexOf("=", startIndex);
-      if (titleIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        int endLineIndex = contents.indexOf("\n", titleIndex);
-        if ((titleIndex == 0) || (contents.charAt(titleIndex - 1) == '\n')) {
-          int currentBegin = titleIndex;
-          // Reading the = at the beginning of the title
-          while ((currentBegin < contents.length()) && (contents.charAt(currentBegin) == '=')) {
-            currentBegin++;
-          }
-          if (endLineIndex < 0) {
-            endLineIndex = contents.length();
-          }
-          // Reading possible whitespaces
-          while ((currentBegin < contents.length()) && (contents.charAt(currentBegin) == ' ')) {
-            currentBegin++;
-          }
+    for (PageElementTitle title : titles) {
+      String text = title.getTitle();
+      if (text != null) {
+        text = text.trim();
 
-          int currentEnd = endLineIndex - 1;
-          // Reading possible whitespaces
-          while ((currentEnd > currentBegin) && (contents.charAt(currentEnd) == ' ')) {
-            currentEnd--;
+        // Count lower and upper case characters
+        int upperCaseFound = 0;
+        int lowerCaseFound = 0;
+        int index = 0;
+        while ((lowerCaseFound == 0) && (index < text.length())) {
+          Character currentChar = text.charAt(index);
+          if (Character.isUpperCase(currentChar)) {
+            upperCaseFound++;
           }
-          // Reading the = at the end of the title
-          while ((currentEnd > currentBegin) && (contents.charAt(currentEnd) == '=')) {
-            currentEnd--;
+          if (Character.isLowerCase(currentChar)) {
+            lowerCaseFound++;
           }
-          // Reading possible whitespaces
-          while ((currentEnd > currentBegin) && (contents.charAt(currentEnd) == ' ')) {
-            currentEnd--;
-          }
+          index++;
+        }
 
-          // Analyzing the title
-          int lettersFound = 0;
-          boolean upperCaseFound = false;
-          boolean lowerCaseFound = false;
-          while (currentBegin <= currentEnd) {
-            if (Character.isLowerCase(contents.charAt(currentBegin))) {
-              lettersFound++;
-              lowerCaseFound = true;
-            } else if (Character.isUpperCase(contents.charAt(currentBegin))) {
-              lettersFound++;
-              upperCaseFound = true;
-            }
-            currentBegin++;
+        // Register error
+        if ((lowerCaseFound == 0) && (upperCaseFound >= 10)) {
+          if (errors == null) {
+            return true;
           }
-          if (upperCaseFound && !lowerCaseFound && (lettersFound >= 10)) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            errors.add(createCheckErrorResult(
-                pageAnalysis.getPage(), titleIndex, endLineIndex));
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              title.getBeginIndex(), title.getEndIndex());
+          StringBuilder sb = new StringBuilder(text);
+          for (int i = 1; i < sb.length(); i++) {
+            sb.setCharAt(i, Character.toLowerCase(sb.charAt(i)));
           }
-          startIndex = endLineIndex + 1;
-        } else {
-          if (endLineIndex < 0) {
-            startIndex = contents.length();
-          } else {
-            startIndex = endLineIndex;
-          }
+          errorResult.addReplacement(PageElementTitle.createTitle(
+              title.getFirstLevel(), sb.toString()));
+          errors.add(errorResult);
         }
       }
     }
+
     return result;
   }
 }

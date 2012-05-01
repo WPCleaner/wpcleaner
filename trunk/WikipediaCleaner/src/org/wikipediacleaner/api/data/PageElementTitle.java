@@ -142,4 +142,25 @@ public class PageElementTitle extends PageElement {
     }
     return sb.toString();
   }
+
+  /**
+   * @param level Title level.
+   * @param title Title text.
+   * @return Textual representation of the title.
+   */
+  public static String createTitle(int level, String title) {
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < level; i++) {
+      sb.append('=');
+    }
+    sb.append(' ');
+    if (title != null) {
+      sb.append(title.trim());
+      sb.append(' ');
+    }
+    for (int i = 0; i < level; i++) {
+      sb.append('=');
+    }
+    return sb.toString();
+  }
 }
