@@ -103,7 +103,7 @@ public class UpdateDabWarningTools {
   }
 
   /**
-   * Preload disambiguation pages.
+   * Load all disambiguation pages.
    */
   public void preloadDabPages() {
     dabPages.clear();
@@ -227,7 +227,6 @@ public class UpdateDabWarningTools {
    * 
    * @param pageAnalysis Page analysis (must have enough information to compute the list of disambiguation links).
    * @param pageRevId Page revision id.
-   * @param text Page contents (can be different than the current page text).
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
@@ -247,15 +246,15 @@ public class UpdateDabWarningTools {
     setText(GT._("Retrieving page contents - {0}", talkPage.getTitle()));
     api.retrieveSectionContents(wikipedia, talkPage, 0);
 
-    // Todo subpage
+    // "To do" sub-page
     if (configuration.getTodoSubpage() != null) {
 
-      // Retrieving todo subpage contents
+      // Retrieving "To do" sub-page contents
       Page todoSubpage = talkPage.getSubPage(configuration.getTodoSubpage());
       setText(GT._("Retrieving page contents - {0}", todoSubpage.getTitle()));
       api.retrieveContents(wikipedia, todoSubpage, false);
 
-      // If we force the use of todo subpage, the disambiguation warning must be on it
+      // If we force the use of "To do" sub-page, the disambiguation warning must be on it
       if ((page.getNamespace() != null) &&
           (page.getNamespace().intValue() == Namespace.MAIN)) {
         if (configuration.getTodoSubpageForce()) {
@@ -265,20 +264,20 @@ public class UpdateDabWarningTools {
         return manageDabWarningOnTodoSubpage(pageAnalysis, pageRevId, todoSubpage, talkPage);
       }
 
-      // If todo subpage exists, the disambiguation warning must be on it
+      // If "To do" sub-page exists, the disambiguation warning must be on it
       if (Boolean.TRUE.equals(todoSubpage.isExisting())) {
         return manageDabWarningOnTodoSubpage(pageAnalysis, pageRevId, todoSubpage, talkPage);
       }
 
-      // If talk page has a template linking to the todo subpage,
-      // the disambiguation warning must be on the todo subpage
+      // If talk page has a template linking to the "To do" sub-page,
+      // the disambiguation warning must be on the "To do" sub-page
       PageElementTemplate templateTodoLink = getExistingTemplateTodoLink(talkPage, talkPage.getContents());
       if (templateTodoLink != null) {
         return manageDabWarningOnTodoSubpage(pageAnalysis, pageRevId, todoSubpage, talkPage);
       }
 
-      // If talk page has a link to the todo subpage,
-      // the disambiguation warning must be on the todo subpage
+      // If talk page has a link to the "To do" sub-page,
+      // the disambiguation warning must be on the "To do" sub-page
       /*api.retrieveLinks(wikipedia, talkPage, talkPage.getNamespace());
       if (talkPage.getLinks() != null) {
         for (Page link : talkPage.getLinks()) {
@@ -293,11 +292,11 @@ public class UpdateDabWarningTools {
   }
 
   /**
-   * Update disambiguation warning on the todo subpage.
+   * Update disambiguation warning on the "To do" sub-page.
    * 
    * @param pageAnalysis Page analysis (must have enough information to compute the list of disambiguation links).
    * @param pageRevId Page revision id.
-   * @param todoSubpage Todo subpage.
+   * @param todoSubpage "To do" sub-page.
    * @param talkPage Talk page.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
@@ -341,10 +340,10 @@ public class UpdateDabWarningTools {
   }
 
   /**
-   * Create/update disambiguation warning on the todo subpage.
+   * Create/update disambiguation warning on the "To do" sub-page.
    * 
    * @param pageRevId Page revision id.
-   * @param todoSubpage Todo subpage.
+   * @param todoSubpage "To do" sub-page.
    * @param dabLinks List of existing disambiguation links.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
@@ -355,7 +354,7 @@ public class UpdateDabWarningTools {
       return false;
     }
 
-    // Search disambiguation warning in the todo subpage
+    // Search disambiguation warning in the "To do" sub-page
     String contents = todoSubpage.getContents();
     if (contents == null) {
       contents = "";
@@ -432,7 +431,7 @@ public class UpdateDabWarningTools {
       return false;
     }
 
-    // Search todo template in the talk page
+    // Search "To do" template in the talk page
     String contents = talkPage.getContents();
     if (contents == null) {
       contents = "";
@@ -454,13 +453,13 @@ public class UpdateDabWarningTools {
       }
     }
 
-    // If todo template is missing, add it
+    // If "To do" template is missing, add it
     if (templateTodo == null) {
       if (!createWarning) {
         return false;
       }
 
-      // Search where to add todo template
+      // Search where to add "To do" template
       PageElementTemplate templatePrevious = null;
       if (configuration.getDisambiguationWarningAfterTemplates() != null) {
         for (String previousTemplate : configuration.getDisambiguationWarningAfterTemplates()) {
@@ -502,7 +501,7 @@ public class UpdateDabWarningTools {
       return true;
     }
 
-    // Search disambiguation warning in the todo parameter
+    // Search disambiguation warning in the "To do" parameter
     String parameter = templateTodo.getParameterValue("1");
     PageAnalysis parameterAnalysis = new PageAnalysis(talkPage, parameter);
     List<PageElementTemplate> templates = parameterAnalysis.getTemplates(
@@ -570,9 +569,9 @@ public class UpdateDabWarningTools {
   }
 
   /**
-   * Remove disambiguation warning on the todo subpage.
+   * Remove disambiguation warning on the "To do" sub-page.
    * 
-   * @param todoSubpage Todo subpage.
+   * @param todoSubpage "To do" sub-page.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
@@ -587,7 +586,7 @@ public class UpdateDabWarningTools {
     }
     PageAnalysis analysis = new PageAnalysis(todoSubpage, contents);
 
-    // Search disambiguation warning in the todo subpage
+    // Search disambiguation warning in the "To do" sub-page
     List<PageElementTemplate> templates = analysis.getTemplates(
         configuration.getDisambiguationWarningTemplate());
     PageElementTemplate template = (templates != null) && (templates.size() > 0) ?
@@ -654,7 +653,7 @@ public class UpdateDabWarningTools {
     }
     PageAnalysis analysis = new PageAnalysis(talkPage, contents);
 
-    // Search todo in the talk page
+    // Search "To do" in the talk page
     PageElementTemplate templateTodo = null;
     if (configuration.getTodoTemplates() != null) {
       for (String templateName : configuration.getTodoTemplates()) {
@@ -665,7 +664,7 @@ public class UpdateDabWarningTools {
       }
     }
 
-    // If template is missing, verify that a link to the todo subpage exists
+    // If template is missing, verify that a link to the "To do" sub-page exists
     if (templateTodo == null) {
 
       // If link exists, nothing more to do
@@ -674,7 +673,7 @@ public class UpdateDabWarningTools {
         return false;
       }
 
-      // Search where to add todo template
+      // Search where to add "To do" template
       PageElementTemplate templatePrevious = null;
       if (configuration.getDisambiguationWarningAfterTemplates() != null) {
         for (String previousTemplate : configuration.getDisambiguationWarningAfterTemplates()) {
@@ -717,7 +716,7 @@ public class UpdateDabWarningTools {
       return false;
     }
 
-    // Search disambiguation warning in the todo parameter
+    // Search disambiguation warning in the "To do" parameter
     String parameter = templateTodo.getParameterValue("1");
     PageAnalysis parameterAnalysis = new PageAnalysis(talkPage, parameter);
     List<PageElementTemplate> templates = parameterAnalysis.getTemplates(
@@ -754,7 +753,7 @@ public class UpdateDabWarningTools {
         }
         tmp.append(templateTodo.getParameterReplacement("1", tmpParameter, null));
       } else {
-        // Search todo link
+        // Search "To do" link
         PageElementTemplate templateTodoLink = null;
         if (configuration.getTodoLinkTemplates() != null) {
           for (String templateName : configuration.getTodoLinkTemplates()) {
@@ -808,7 +807,7 @@ public class UpdateDabWarningTools {
     }
     PageAnalysis analysis = new PageAnalysis(talkPage, contents);
 
-    // Search todo in the talk page
+    // Search "To do" in the talk page
     PageElementTemplate templateTodo = null;
     if (configuration.getTodoTemplates() != null) {
       for (String templateName : configuration.getTodoTemplates()) {
@@ -819,7 +818,7 @@ public class UpdateDabWarningTools {
       }
     }
     if ((templateTodo != null) && (templateTodo.getParameterValue("1") != null)) {
-      // Search disambiguation warning in the todo parameter
+      // Search disambiguation warning in the "To do" parameter
       String parameter = templateTodo.getParameterValue("1");
       List<PageElementTemplate> templates = analysis.getTemplates(
           configuration.getDisambiguationWarningTemplate());
