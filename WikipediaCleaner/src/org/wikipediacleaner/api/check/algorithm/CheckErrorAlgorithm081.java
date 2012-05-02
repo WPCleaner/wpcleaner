@@ -102,10 +102,12 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
             valueRefs = new ArrayList<PageElementTag>();
             groupRefs.put(text, valueRefs);
           }
-          if (errors == null) {
-            return true;
+          if (valueRefs.size() > 0) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
           }
-          result = true;
           valueRefs.add(tag);
         }
       }
