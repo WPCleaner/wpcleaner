@@ -19,7 +19,6 @@
 package org.wikipediacleaner.api.data;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -630,7 +629,7 @@ public class PageAnalysis {
    * @return Comment if the current index is inside a comment.
    */
   public PageElementComment isInComment(int currentIndex) {
-    Collection<PageElementComment> tmpComments = getComments();
+    List<PageElementComment> tmpComments = getComments();
     for (PageElementComment comment : tmpComments) {
       if ((comment.getBeginIndex() <= currentIndex) &&
           (comment.getEndIndex() > currentIndex)) {
@@ -662,7 +661,7 @@ public class PageAnalysis {
    * @return Next title.
    */
   public PageElementTitle getNextTitle(int currentIndex) {
-    Collection<PageElementTitle> tmpTitles = getTitles();
+    List<PageElementTitle> tmpTitles = getTitles();
     for (PageElementTitle title : tmpTitles) {
       if (title.getBeginIndex() >= currentIndex) {
         return title;
@@ -693,7 +692,7 @@ public class PageAnalysis {
    * @return Next internal link.
    */
   public PageElementInternalLink getNextInternalLink(int currentIndex) {
-    Collection<PageElementInternalLink> tmpInternalLinks = getInternalLinks();
+    List<PageElementInternalLink> tmpInternalLinks = getInternalLinks();
     for (PageElementInternalLink link : tmpInternalLinks) {
       if (link.getBeginIndex() >= currentIndex) {
         return link;
@@ -707,7 +706,7 @@ public class PageAnalysis {
    * @return Internal link if the current index is inside an internal link.
    */
   public PageElementInternalLink isInInternalLink(int currentIndex) {
-    Collection<PageElementInternalLink> tmpLinks = getInternalLinks();
+    List<PageElementInternalLink> tmpLinks = getInternalLinks();
     for (PageElementInternalLink link : tmpLinks) {
       if ((link.getBeginIndex() <= currentIndex) &&
           (link.getEndIndex() > currentIndex)) {
@@ -724,12 +723,12 @@ public class PageAnalysis {
   /**
    * All images in the page.
    */
-  private Collection<PageElementImage> images;
+  private List<PageElementImage> images;
 
   /**
    * @return All images in the page.
    */
-  public Collection<PageElementImage> getImages() {
+  public List<PageElementImage> getImages() {
     thirdLevelAnalysis();
     return images;
   }
@@ -739,7 +738,7 @@ public class PageAnalysis {
    * @return Next image.
    */
   public PageElementImage getNextImage(int currentIndex) {
-    Collection<PageElementImage> tmpImages = getImages();
+    List<PageElementImage> tmpImages = getImages();
     for (PageElementImage image : tmpImages) {
       if (image.getBeginIndex() >= currentIndex) {
         return image;
@@ -753,7 +752,7 @@ public class PageAnalysis {
    * @return Image if the current index is inside an image.
    */
   public PageElementImage isInImage(int currentIndex) {
-    Collection<PageElementImage> tmpImages = getImages();
+    List<PageElementImage> tmpImages = getImages();
     for (PageElementImage image : tmpImages) {
       if ((image.getBeginIndex() <= currentIndex) &&
           (image.getEndIndex() > currentIndex)) {
@@ -770,12 +769,12 @@ public class PageAnalysis {
   /**
    * All external links in the page.
    */
-  private Collection<PageElementExternalLink> externalLinks;
+  private List<PageElementExternalLink> externalLinks;
 
   /**
    * @return All external links in the page.
    */
-  public Collection<PageElementExternalLink> getExternalLinks() {
+  public List<PageElementExternalLink> getExternalLinks() {
     thirdLevelAnalysis();
     return externalLinks;
   }
@@ -785,7 +784,7 @@ public class PageAnalysis {
    * @return Next external link.
    */
   public PageElementExternalLink getNextExternalLink(int currentIndex) {
-    Collection<PageElementExternalLink> tmpExternalLinks = getExternalLinks();
+    List<PageElementExternalLink> tmpExternalLinks = getExternalLinks();
     for (PageElementExternalLink link : tmpExternalLinks) {
       if (link.getBeginIndex() >= currentIndex) {
         return link;
@@ -799,7 +798,7 @@ public class PageAnalysis {
    * @return External link if the current index is inside an external link.
    */
   public PageElementExternalLink isInExternalLink(int currentIndex) {
-    Collection<PageElementExternalLink> tmpLinks = getExternalLinks();
+    List<PageElementExternalLink> tmpLinks = getExternalLinks();
     for (PageElementExternalLink link : tmpLinks) {
       if ((link.getBeginIndex() <= currentIndex) &&
           (link.getEndIndex() > currentIndex)) {
@@ -834,7 +833,7 @@ public class PageAnalysis {
     if (name == null) {
       return null;
     }
-    Collection<PageElementTemplate> tmpTemplates = getTemplates();
+    List<PageElementTemplate> tmpTemplates = getTemplates();
     List<PageElementTemplate> result = new ArrayList<PageElementTemplate>();
     if (tmpTemplates != null) {
       for (PageElementTemplate template : tmpTemplates) {
@@ -851,7 +850,7 @@ public class PageAnalysis {
    * @return Next template.
    */
   public PageElementTemplate getNextTemplate(int currentIndex) {
-    Collection<PageElementTemplate> tmpTemplates = getTemplates();
+    List<PageElementTemplate> tmpTemplates = getTemplates();
     for (PageElementTemplate template : tmpTemplates) {
       if (template.getBeginIndex() >= currentIndex) {
         return template;
@@ -865,7 +864,7 @@ public class PageAnalysis {
    * @return Template if the current index is inside a template.
    */
   public PageElementTemplate isInTemplate(int currentIndex) {
-    Collection<PageElementTemplate> tmpTemplates = getTemplates();
+    List<PageElementTemplate> tmpTemplates = getTemplates();
     for (PageElementTemplate template : tmpTemplates) {
       if ((template.getBeginIndex() <= currentIndex) &&
           (template.getEndIndex() > currentIndex)) {
@@ -885,9 +884,20 @@ public class PageAnalysis {
   private List<PageElementTag> tags;
 
   /**
+   * Lock for updating the tags categorized by name.
+   */
+  private final Object lockTagsByName = new Object();
+
+  /**
    * All tags in the page categorized by name.
    */
   private Map<String, List<PageElementTag>> tagsByName;
+
+  /**
+   * All complete tags in the page categorized by name.
+   * Complete tags are either full tags or opening tags associated with a closing tag.
+   */
+  private Map<String, List<PageElementTag>> completeTagsByName;
 
   /**
    * @return All tags in the page.
@@ -899,45 +909,80 @@ public class PageAnalysis {
 
   /**
    * @param name Tag name.
-   * @return All tags with this name in the page analysis.
+   * @return All tags with this name in the page.
    */
   public List<PageElementTag> getTags(String name) {
     if (name == null) {
       return null;
     }
-    if (tagsByName == null) {
-      tagsByName = new HashMap<String, List<PageElementTag>>();
-    }
-    List<PageElementTag> result = tagsByName.get(name);
-    if (result == null) {
-      Collection<PageElementTag> tmpTags = getTags();
-      result = new ArrayList<PageElementTag>();
-      tagsByName.put(name, result);
+    synchronized (lockTagsByName) {
+      if (tagsByName == null) {
+        tagsByName = new HashMap<String, List<PageElementTag>>();
+      }
       name = name.toLowerCase();
-      for (PageElementTag tag : tmpTags) {
-        if (name.equals(tag.getNormalizedName())) {
-          result.add(tag);
+      List<PageElementTag> result = tagsByName.get(name);
+      if (result == null) {
+        List<PageElementTag> tmpTags = getTags();
+        result = new ArrayList<PageElementTag>();
+        tagsByName.put(name, result);
+        for (PageElementTag tag : tmpTags) {
+          if (name.equals(tag.getNormalizedName())) {
+            result.add(tag);
+          }
         }
       }
+      return result;
     }
-    return result;
   }
 
+  /**
+   * @param name Tag name.
+   * @return All complete tags with this name in the page.
+   */
+  public List<PageElementTag> getCompleteTags(String name) {
+    if (name == null) {
+      return null;
+    }
+    synchronized (lockTagsByName) {
+      if (completeTagsByName == null) {
+        completeTagsByName = new HashMap<String, List<PageElementTag>>();
+      }
+      name = name.toLowerCase();
+      List<PageElementTag> result = completeTagsByName.get(name);
+      if (result == null) {
+        List<PageElementTag> tmpTags = getTags(name);
+        result = new ArrayList<PageElementTag>();
+        completeTagsByName.put(name, result);
+        for (PageElementTag tag : tmpTags) {
+          if (tag.isFullTag()) {
+            result.add(tag);
+          } else if (!tag.isEndTag() && tag.isComplete()) {
+            result.add(tag);
+          }
+        }
+      }
+      return result;
+    }
+  }
+
+  /**
+   * @param name Tag name.
+   * @param currentIndex Current index.
+   * @return Surrounding tag.
+   */
   public PageElementTag getSurroundingTag(String name, int currentIndex) {
-    Collection<PageElementTag> tmpTags = getTags(name);
+    List<PageElementTag> tmpTags = getCompleteTags(name);
     if (tmpTags == null) {
       return null;
     }
     PageElementTag result = null;
     for (PageElementTag tag : tmpTags) {
-      if ((tag.getEndIndex() <= currentIndex) &&
-          (!tag.isFullTag()) &&
-          (!tag.isEndTag())) {
-        if (tag.getValueEndIndex() > currentIndex) {
-          if ((result == null) ||
-              (tag.getBeginIndex() > result.getBeginIndex())) {
-            result = tag;
-          }
+      if ((!tag.isFullTag()) &&
+          (tag.getValueBeginIndex() <= currentIndex) &&
+          (tag.getValueEndIndex() > currentIndex)) {
+        if ((result == null) ||
+            (tag.getBeginIndex() > result.getBeginIndex())) {
+          result = tag;
         }
       }
     }
@@ -949,7 +994,7 @@ public class PageAnalysis {
    * @return Next tag.
    */
   public PageElementTag getNextTag(int currentIndex) {
-    Collection<PageElementTag> tmpTags = getTags();
+    List<PageElementTag> tmpTags = getTags();
     for (PageElementTag tag : tmpTags) {
       if (tag.getBeginIndex() >= currentIndex) {
         return tag;
@@ -963,7 +1008,7 @@ public class PageAnalysis {
    * @return Tag if the current index is inside a tag.
    */
   public PageElementTag isInTag(int currentIndex) {
-    Collection<PageElementTag> tmpTags = getTags();
+    List<PageElementTag> tmpTags = getTags();
     for (PageElementTag tag : tmpTags) {
       if ((tag.getBeginIndex() <= currentIndex) &&
           (tag.getEndIndex() > currentIndex)) {
@@ -995,7 +1040,7 @@ public class PageAnalysis {
    * @return Next DEFAULTSORT.
    */
   public PageElementDefaultsort getNextDefaultSort(int currentIndex) {
-    Collection<PageElementDefaultsort> tmpDefaultSorts = getDefaultSorts();
+    List<PageElementDefaultsort> tmpDefaultSorts = getDefaultSorts();
     for (PageElementDefaultsort defaultSort : tmpDefaultSorts) {
       if (defaultSort.getBeginIndex() >= currentIndex) {
         return defaultSort;
@@ -1009,7 +1054,7 @@ public class PageAnalysis {
    * @return DefaultSort if the current index is inside a DEFAULTSORT.
    */
   public PageElementDefaultsort isInDefaultSort(int currentIndex) {
-    Collection<PageElementDefaultsort> tmpDefaultSorts = getDefaultSorts();
+    List<PageElementDefaultsort> tmpDefaultSorts = getDefaultSorts();
     for (PageElementDefaultsort defaultSort : tmpDefaultSorts) {
       if ((defaultSort.getBeginIndex() <= currentIndex) &&
           (defaultSort.getEndIndex() > currentIndex)) {
@@ -1041,7 +1086,7 @@ public class PageAnalysis {
    * @return Next category.
    */
   public PageElementCategory getNextCategory(int currentIndex) {
-    Collection<PageElementCategory> tmpCategories = getCategories();
+    List<PageElementCategory> tmpCategories = getCategories();
     for (PageElementCategory category : tmpCategories) {
       if (category.getBeginIndex() >= currentIndex) {
         return category;
@@ -1055,7 +1100,7 @@ public class PageAnalysis {
    * @return Category if the current index is inside a category.
    */
   public PageElementCategory isInCategory(int currentIndex) {
-    Collection<PageElementCategory> tmpCategories = getCategories();
+    List<PageElementCategory> tmpCategories = getCategories();
     for (PageElementCategory category : tmpCategories) {
       if ((category.getBeginIndex() <= currentIndex) &&
           (category.getEndIndex() > currentIndex)) {
@@ -1087,7 +1132,7 @@ public class PageAnalysis {
    * @return Next interwiki link.
    */
   public PageElementInterwikiLink getNextInterwikiLink(int currentIndex) {
-    Collection<PageElementInterwikiLink> tmpLinks = getInterwikiLinks();
+    List<PageElementInterwikiLink> tmpLinks = getInterwikiLinks();
     for (PageElementInterwikiLink link : tmpLinks) {
       if (link.getBeginIndex() >= currentIndex) {
         return link;
@@ -1101,7 +1146,7 @@ public class PageAnalysis {
    * @return Interwiki link if the current index is inside an interwiki link.
    */
   public PageElementInterwikiLink isInInterwikiLink(int currentIndex) {
-    Collection<PageElementInterwikiLink> tmpLinks = getInterwikiLinks();
+    List<PageElementInterwikiLink> tmpLinks = getInterwikiLinks();
     for (PageElementInterwikiLink link : tmpLinks) {
       if ((link.getBeginIndex() <= currentIndex) &&
           (link.getEndIndex() > currentIndex)) {
@@ -1133,7 +1178,7 @@ public class PageAnalysis {
    * @return Next language link.
    */
   public PageElementLanguageLink getNextLanguageLink(int currentIndex) {
-    Collection<PageElementLanguageLink> tmpLinks = getLanguageLinks();
+    List<PageElementLanguageLink> tmpLinks = getLanguageLinks();
     for (PageElementLanguageLink link : tmpLinks) {
       if (link.getBeginIndex() >= currentIndex) {
         return link;
@@ -1147,7 +1192,7 @@ public class PageAnalysis {
    * @return Language link if the current index is inside a language link.
    */
   public PageElementLanguageLink isInLanguageLink(int currentIndex) {
-    Collection<PageElementLanguageLink> tmpLinks = getLanguageLinks();
+    List<PageElementLanguageLink> tmpLinks = getLanguageLinks();
     for (PageElementLanguageLink link : tmpLinks) {
       if ((link.getBeginIndex() <= currentIndex) &&
           (link.getEndIndex() > currentIndex)) {
