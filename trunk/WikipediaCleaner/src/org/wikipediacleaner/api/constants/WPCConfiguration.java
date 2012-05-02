@@ -399,17 +399,17 @@ public class WPCConfiguration {
   private List<String> todoLinkTemplates;
 
   /**
-   * "To do" subpage.
+   * "To do" sub-page.
    */
   private String todoSubpage;
 
   /**
-   * Force usage of "to do" subpage in main name space.
+   * Force usage of "to do" sub-page in main name space.
    */
   private boolean todoSubpageForce;
 
   /**
-   * Force usage of "to do" subpage in other name spaces.
+   * Force usage of "to do" sub-page in other name spaces.
    */
   private boolean todoSubpageForceOther;
 
@@ -428,14 +428,14 @@ public class WPCConfiguration {
   }
 
   /**
-   * "To do" subpage.
+   * "To do" sub-page.
    */
   private void setTodoSubpage(String value) {
     this.todoSubpage = nonEmptyString(value);
   }
 
   /**
-   * @param value Force usage of "to do" subpage in main name space.
+   * @param value Force usage of "to do" sub-page in main name space.
    */
   private void setTodoSubpageForce(String value) {
     this.todoSubpageForce = false;
@@ -445,7 +445,7 @@ public class WPCConfiguration {
   }
 
   /**
-   * @param value Force usage of "to do" subpage in other name spaces.
+   * @param value Force usage of "to do" sub-page in other name spaces.
    */
   private void setTodoSubpageForceOther(String value) {
     this.todoSubpageForceOther = false;
@@ -469,21 +469,21 @@ public class WPCConfiguration {
   }
 
   /**
-   * @return "To do" subpage.
+   * @return "To do" sub-page.
    */
   public String getTodoSubpage() {
     return todoSubpage;
   }
 
   /**
-   * @return Force usage of "to do" subpage in main name space.
+   * @return Force usage of "to do" sub-page in main name space.
    */
   public boolean getTodoSubpageForce() {
     return todoSubpageForce;
   }
 
   /**
-   * @return Force usage of "to do" subpage in other name spaces.
+   * @return Force usage of "to do" sub-page in other name spaces.
    */
   public boolean getTodoSubpageForceOther() {
     return todoSubpageForceOther;
@@ -936,15 +936,16 @@ public class WPCConfiguration {
         (disambiguationCommentTodo1.length() > 0)) {
       return disambiguationCommentTodo1;
     }
-    if (disambiguationCommentTodo != null) {
-      try {
-        return MessageFormat.format(disambiguationCommentTodo, Integer.valueOf(count));
-      } catch (IllegalArgumentException e) {
-        //
-      }
-      return disambiguationCommentTodo;
+    String tmp = disambiguationCommentTodo;
+    if (tmp == null) {
+      tmp = ", {0} to be fixed";
     }
-    return ", {0} to be fixed";
+    try {
+      return MessageFormat.format(tmp, Integer.valueOf(count));
+    } catch (IllegalArgumentException e) {
+      //
+    }
+    return tmp;
   }
 
   /**
