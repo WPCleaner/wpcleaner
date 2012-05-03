@@ -38,6 +38,8 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
@@ -181,6 +183,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
         setText(GT._("Retrieving disambiguation pages"));
         tools.preloadDabPages();
       }
+      String lastTitle = null;
       while (!dabWarningPages.isEmpty()) {
         // Creating sublist
         int size = Math.min(10, dabWarningPages.size());
@@ -202,6 +205,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
           try {
             countUpdated += tools.updateDabWarning(sublist, contentsAvailable, linksAvailable, dabInformationAvailable);
             countAnalyzed += sublist.size();
+            lastTitle = sublist.get(sublist.size() - 1).getTitle();
           } catch (APIException e) {
             if (getWindow() != null) {
               int answer = getWindow().displayYesNoWarning(GT._(
@@ -214,6 +218,8 @@ public class UpdateDabWarningWorker extends BasicWorker {
             }
           }
           if (shouldStop()) {
+            Configuration config = Configuration.getConfiguration();
+            config.setString(null, ConfigurationValueString.LAST_DAB_WARNING, lastTitle);
             return Integer.valueOf(countUpdated);
           }
         }
@@ -231,6 +237,10 @@ public class UpdateDabWarningWorker extends BasicWorker {
             return Integer.valueOf(lastCount);
           }*/
         }
+      }
+      if (dabWarningPages.isEmpty()) {
+        Configuration config = Configuration.getConfiguration();
+        config.setString(null, ConfigurationValueString.LAST_DAB_WARNING, (String) null);
       }
     } catch (APIException e) {
       return e;

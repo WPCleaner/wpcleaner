@@ -38,6 +38,8 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
@@ -198,12 +200,13 @@ public class BotToolsWindow
   }
 
   /**
-   * Action called when Update Dab Warning button is pressed.
+   * Action called when Update Disambiguation Warning button is pressed.
    */
   private void actionUpdateDabWarning() {
+    Configuration config = Configuration.getConfiguration();
     String start = askForValue(
         GT._("At what page do you wish to start updating the disambiguation warning ?"),
-        "", null);
+        config.getString(null, ConfigurationValueString.LAST_DAB_WARNING), null);
     if (start == null) {
       return;
     }
