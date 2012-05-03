@@ -26,6 +26,7 @@ import java.util.prefs.Preferences;
  */
 public enum ConfigurationValueString {
 
+  LAST_DAB_WARNING("LastDabWarning", null),
   PAGE_NAME("PageName", null),
   PASSWORD("Password", null),
   PLAF_NAME("LookAndFeelName", "Metal"),
