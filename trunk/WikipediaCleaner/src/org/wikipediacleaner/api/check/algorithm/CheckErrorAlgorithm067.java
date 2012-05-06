@@ -94,6 +94,8 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           if (!separatorFound && (contents.startsWith(separator, beginIndex))) {
             separatorFound = true;
             beginIndex += separator.length();
+          } else if (contents.startsWith("&nbsp;", beginIndex)) {
+            beginIndex += "&nbsp;".length();
           } else if (!Character.isWhitespace(contents.charAt(beginIndex)) &&
                      (contents.charAt(beginIndex) != ',') &&
                      (contents.charAt(beginIndex) != ';') &&
