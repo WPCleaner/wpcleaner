@@ -529,11 +529,14 @@ public class PageAnalysis {
   private int analyzeText(int currentIndex) {
 
     // Check if this is an external link
-    PageElementExternalLink link = PageElementExternalLink.analyzeBlock(
-        getWikipedia(), contents, currentIndex);
-    if (link != null) {
-      externalLinks.add(link);
-      return link.getEndIndex();
+    if ((externalLinks.size() == 0) ||
+        (externalLinks.get(externalLinks.size() - 1).getEndIndex() <= currentIndex)) {
+      PageElementExternalLink link = PageElementExternalLink.analyzeBlock(
+          getWikipedia(), contents, currentIndex);
+      if (link != null) {
+        externalLinks.add(link);
+        return link.getEndIndex();
+      }
     }
 
     return currentIndex + 1;
