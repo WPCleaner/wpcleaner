@@ -21,7 +21,6 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,7 +29,6 @@ import java.util.regex.Matcher;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
@@ -83,13 +81,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       }
     }
 
-    // Initialize iterators to the various page elements
     List<Suggestion> possibles = new ArrayList<Suggestion>();
-    Collection<PageElement> elements = pageAnalysis.getElements(
-        true, true, true, true, true, true, true, true, true, true, false);
-    Iterator<PageElement> itElement = elements.iterator();
-    PageElement currentElement = itElement.hasNext() ? itElement.next() : null;
-
     boolean result = false;
     int startIndex = 0;
     while (startIndex < contents.length()) {
@@ -99,33 +91,24 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       boolean checkOrthograph = true;
       Map<Suggestion, Matcher> matchers = matchersText;
 
-      // If the position is inside an element, go after
-      // TODO : be more specific ? for example, checking in an image description
-      if (checkOrthograph && (currentElement != null)) {
-        while ((currentElement != null) &&
-               (startIndex >= currentElement.getEndIndex())) {
-          currentElement = itElement.hasNext() ? itElement.next() : null;
+      // Check what kind of checking should be done
+      char currentChar = contents.charAt(startIndex);
+      if (currentChar == '[') {
+        PageElementInternalLink link = pageAnalysis.isInInternalLink(startIndex);
+        if ((link == null) || (link.getBeginIndex() != startIndex)) {
+          checkOrthograph = false;
         }
-        if ((currentElement != null) &&
-            (startIndex >= currentElement.getBeginIndex())) {
-          if ((startIndex == currentElement.getBeginIndex()) &&
-              (currentElement instanceof PageElementInternalLink)) {
-            matchers = matchersInternalLink;
-          } else if ((startIndex == currentElement.getBeginIndex()) &&
-                     (currentElement instanceof PageElementTemplate)) {
-            matchers = matchersTemplate;
-          } else {
-            checkOrthograph = false;
-            nextIndex = Math.max(nextIndex, currentElement.getEndIndex());
-          }
+      } else if (currentChar == '{') {
+        PageElementTemplate template = pageAnalysis.isInTemplate(startIndex);
+        if ((template == null) || (template.getBeginIndex() != startIndex)) {
+          checkOrthograph = false;
+        }
+      } else {
+        int tmp = pageAnalysis.getAreas().getEndArea(startIndex);
+        if (tmp > startIndex) {
+          checkOrthograph = false;
         }
       }
-
-      // If the position is inside a tag (<tag>, </tag> or <tag/>), go after
-      // TODO
-
-      // If the position is inside a table definition, go after
-      // TODO
 
       // Check spelling
       if (checkOrthograph) {

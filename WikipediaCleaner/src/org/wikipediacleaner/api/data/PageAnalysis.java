@@ -57,6 +57,7 @@ public class PageAnalysis {
   public PageAnalysis(Page page, String contents) {
     this.page = page;
     this.contents = (contents != null) ? contents : page.getContents();
+    this.areas = new PageElementAreas();
 
     // Default configuration
     Configuration config = Configuration.getConfiguration();
@@ -137,6 +138,19 @@ public class PageAnalysis {
   // ==========================================================================
   // Elements management
   // ==========================================================================
+
+  /**
+   * Management of non wiki text areas.
+   */
+  private final PageElementAreas areas;
+
+  /**
+   * @return List of non wiki text areas.
+   */
+  public PageElementAreas getAreas() {
+    thirdLevelAnalysis();
+    return areas;
+  }
 
   public List<PageElement> getElements(
       boolean withCategories, boolean withComments,
@@ -299,6 +313,9 @@ public class PageAnalysis {
           }
         }
       }
+
+      // Update areas of non wiki text
+      areas.addComments(comments);
     }
   }
 
@@ -313,8 +330,6 @@ public class PageAnalysis {
       firstLevelAnalysis();
 
       // Initialize
-      int posComments = 0;
-      List<PageElementComment> tmpComments = comments;
       tags = new ArrayList<PageElementTag>();
 
       // Go through all the text of the page
@@ -325,10 +340,9 @@ public class PageAnalysis {
         if (currentIndex < 0) {
           currentIndex = maxIndex;
         } else {
-          posComments = getFirstElementAfterPosition(tmpComments, posComments, currentIndex);
-          PageElement comment = isInElement(tmpComments, posComments, currentIndex);
-          if (comment != null) {
-            currentIndex = comment.getEndIndex();
+          int nextIndex = areas.getEndArea(currentIndex);
+          if (nextIndex > currentIndex) {
+            currentIndex = nextIndex;
           } else {
             PageElementTag tag = PageElementTag.analyzeBlock(contents, currentIndex);
             if (tag != null) {
@@ -362,6 +376,9 @@ public class PageAnalysis {
           }
         }
       }
+
+      // Update areas of non wiki text
+      areas.addTags(tags);
     }
   }
 
@@ -384,23 +401,16 @@ public class PageAnalysis {
       titles = new ArrayList<PageElementTitle>();
       externalLinks = new ArrayList<PageElementExternalLink>();
 
-      // Initialize
-      int posComments = 0;
-      List<PageElementComment> tmpComments = comments;
-
       // Go through all the text of the page
       int maxIndex = contents.length();
       int currentIndex = 0;
       while (currentIndex < maxIndex) {
 
-        // Checking if the current index is in comments
-        posComments = getFirstElementAfterPosition(tmpComments, posComments, currentIndex);
-        PageElement comment = isInElement(tmpComments, posComments, currentIndex);
-        if (comment != null) {
-          currentIndex = comment.getEndIndex();
+        // Checking if the current index is in wiki text area.
+        int nextIndex = areas.getEndArea(currentIndex);
+        if (nextIndex > currentIndex) {
+          currentIndex = nextIndex;
         } else {
-          // TODO: Checking if the current index is in <nowiki> tags
-
           if (contents.startsWith("[[", currentIndex)) {
             currentIndex = analyze2SquareBrackets(currentIndex);
           } else if (contents.startsWith("[", currentIndex)) {
@@ -414,6 +424,17 @@ public class PageAnalysis {
           }
         }
       }
+
+      // Update areas of non wiki text
+      areas.addInternalLinks(internalLinks);
+      areas.addImages(images);
+      areas.addCategories(categories);
+      areas.addInterwikiLinks(interwikiLinks);
+      areas.addLanguageLinks(languageLinks);
+      areas.addTemplates(templates);
+      areas.addDefaultSorts(defaultSorts);
+      areas.addTitles(titles);
+      areas.addExternalLinks(externalLinks);
     }
   }
 
@@ -562,49 +583,6 @@ public class PageAnalysis {
     }
 
     return currentIndex + 1;
-  }
-
-  /**
-   * Find the position of the first element in the list that starts after a given index.
-   * 
-   * @param elements List of elements.
-   * @param currentPos Current position in the list of elements.
-   * @param currentIndex Current index in the text.
-   * @return Position of the first element that starts after the index.
-   */
-  private int getFirstElementAfterPosition(List<? extends PageElement> elements, int currentPos, int currentIndex) {
-    if (elements == null) {
-      return currentPos;
-    }
-    int maxPos = elements.size();
-    while ((currentPos < maxPos) &&
-           (currentIndex >= elements.get(currentPos).getEndIndex())) {
-      currentPos++;
-    }
-    return currentPos;
-  }
-
-  /**
-   * Find element in which the current index is.
-   * 
-   * @param elements List of elements.
-   * @param currentPos Current position in the list of elements.
-   * @param currentIndex Current index in the text.
-   * @return
-   */
-  private PageElement isInElement(List<? extends PageElement> elements, int currentPos, int currentIndex) {
-    if (elements == null) {
-      return null;
-    }
-    int maxPos = elements.size();
-    while ((currentPos < maxPos) &&
-           (currentIndex < elements.get(currentPos).getEndIndex())) {
-      if (currentIndex >= elements.get(currentPos).getBeginIndex()) {
-        return elements.get(currentPos);
-      }
-      currentPos++;
-    }
-    return null;
   }
 
   // ==========================================================================

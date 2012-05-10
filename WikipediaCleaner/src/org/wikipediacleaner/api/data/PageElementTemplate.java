@@ -36,7 +36,11 @@ public class PageElementTemplate extends PageElement {
 
   private final static String templateNameUnauthorizedCharacters = "{}[]|";
 
+  /**
+   * Class containing information about a template parameter.
+   */
   private static class Parameter {
+    final int pipeIndex;
     final String name;
     final String nameNotTrimmed;
     final int nameStartIndex;
@@ -44,7 +48,18 @@ public class PageElementTemplate extends PageElement {
     final String valueNotTrimmed;
     final int valueStartIndex;
 
-    public Parameter(String name, int nameStartIndex, String value, int valueStartIndex) {
+    /**
+     * @param pipeIndex Index of the pipe "|" in page contents.
+     * @param name Parameter name.
+     * @param nameStartIndex Index of parameter name in page contents.
+     * @param value Parameter value.
+     * @param valueStartIndex Index of parameter value in page contents.
+     */
+    public Parameter(
+        int pipeIndex,
+        String name, int nameStartIndex,
+        String value, int valueStartIndex) {
+      this.pipeIndex = pipeIndex;
       this.nameNotTrimmed = name;
       this.name = (name != null) ? name.trim() : null;
       this.nameStartIndex = nameStartIndex;
@@ -141,7 +156,7 @@ public class PageElementTemplate extends PageElement {
     tmpIndex++;
     List<Parameter> parameters = new ArrayList<Parameter>();
     int endIndex = analyzeTemplateParameters(
-        wikipedia, contents, beginIndex, tmpIndex, parameters);
+        wikipedia, contents, beginIndex, tmpIndex - 1, tmpIndex, parameters);
     if (endIndex < 0) {
       return null;
     }
@@ -155,6 +170,7 @@ public class PageElementTemplate extends PageElement {
    * 
    * @param contents Contents of the page.
    * @param templateBeginIndex Start index of the template in the page.
+   * @param pipeIndex Index of the previous pipe.
    * @param parametersBeginIndex Start index of the parameters in the page.
    * @param parameters Parameters.
    * @return Position of the end of the template, or -1 if no template was found.
@@ -162,7 +178,7 @@ public class PageElementTemplate extends PageElement {
   private static int analyzeTemplateParameters(
       EnumWikipedia wikipedia,
       String contents,
-      int templateBeginIndex, int parametersBeginIndex,
+      int templateBeginIndex, int pipeIndex, int parametersBeginIndex,
       List<Parameter> parameters) {
     if (contents == null) {
       return -1;
@@ -190,7 +206,7 @@ public class PageElementTemplate extends PageElement {
             depthCurlyBrackets--;
           } else {
             addParameter(
-                parameters,
+                parameters, pipeIndex,
                 contents.substring(parameterBeginIndex, tmpIndex - 2),
                 equalIndex - parameterBeginIndex,
                 parameterBeginIndex);
@@ -259,10 +275,11 @@ public class PageElementTemplate extends PageElement {
             depthCurlyBrackets = 0;
             depthSquareBrackets = 0;
             addParameter(
-                parameters,
+                parameters, pipeIndex,
                 contents.substring(parameterBeginIndex, tmpIndex),
                 equalIndex - parameterBeginIndex,
                 parameterBeginIndex);
+            pipeIndex = tmpIndex;
             tmpIndex++;
             parameterBeginIndex = tmpIndex;
             equalIndex = -1;
@@ -282,12 +299,14 @@ public class PageElementTemplate extends PageElement {
 
   /**
    * @param parameters List of parameters.
+   * @param pipeIndex Index of "|".
    * @param parameter New parameter (name=value or value).
    * @param equalIndex Index of "=" in the parameter or < 0 if doesn't exist.
    * @param offset Offset of parameter start index in page contents.
    */
   private static void addParameter(
-      List<Parameter> parameters, String parameter,
+      List<Parameter> parameters,
+      int pipeIndex, String parameter,
       int equalIndex, int offset) {
     if (equalIndex < 0) {
       int spaces = 0;
@@ -295,7 +314,7 @@ public class PageElementTemplate extends PageElement {
         spaces++;
       }
       parameters.add(new Parameter(
-          "", offset + spaces, parameter, offset + spaces));
+          pipeIndex, "", offset + spaces, parameter, offset + spaces));
     } else {
       int spacesName = 0;
       while ((spacesName < equalIndex) && (Character.isWhitespace(parameter.charAt(spacesName)))) {
@@ -306,6 +325,7 @@ public class PageElementTemplate extends PageElement {
         spacesValue++;
       }
       parameters.add(new Parameter(
+          pipeIndex,
           parameter.substring(0, equalIndex), offset + spacesName,
           parameter.substring(equalIndex + 1), offset + spacesValue));
     }
@@ -328,6 +348,19 @@ public class PageElementTemplate extends PageElement {
       return 0;
     }
     return parameters.size();
+  }
+
+  /**
+   * Retrieve pipe offset.
+   * 
+   * @param index Parameter index.
+   * @return Pipe offset.
+   */
+  public int getParameterPipeOffset(int index) {
+    if ((index >= 0) && (index < parameters.size())) {
+      return parameters.get(index).pipeIndex;
+    }
+    return 0;
   }
 
   /**

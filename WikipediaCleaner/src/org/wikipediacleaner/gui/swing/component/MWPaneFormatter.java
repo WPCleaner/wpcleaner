@@ -40,6 +40,7 @@ import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
+import org.wikipediacleaner.api.data.PageElementAreas.Area;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
@@ -111,6 +112,11 @@ public abstract class MWPaneFormatter {
   protected abstract void moveCaret(MWPane pane);
 
   /**
+   * Replace the default formatting by highlighting non wiki text.
+   */
+  private final boolean showNonWikiText = false;
+
+  /**
    * Format elements in a MediaWikiPane.
    * 
    * @param doc Document to be formatted.
@@ -119,7 +125,22 @@ public abstract class MWPaneFormatter {
   public void defaultFormatElements(
       StyledDocument doc,
       PageAnalysis pageAnalysis) {
+    if (showNonWikiText) {
+      formatWikiText(doc, pageAnalysis);
+    } else {
+      formatWikiSyntax(doc, pageAnalysis);
+    }
+  }
 
+  /**
+   * Format elements in a MediaWikiPane following Wiki syntax.
+   * 
+   * @param doc Document to be formatted.
+   * @param pageAnalysis Page analysis.
+   */
+  private void formatWikiSyntax(
+      StyledDocument doc,
+      PageAnalysis pageAnalysis) {
     // Basic checks
     if ((doc == null) || (pageAnalysis == null)) {
       return;
@@ -166,6 +187,31 @@ public abstract class MWPaneFormatter {
         styleTemplate.getEnabled(),
         styleTitle.getEnabled());
     formatElementsDirectly(doc, elements, 0, elements.size());
+  }
+
+  /**
+   * Format elements in a MediaWikiPane highlighting non wiki text.
+   * 
+   * @param doc Document to be formatted.
+   * @param pageAnalysis Page analysis.
+   */
+  private void formatWikiText(
+      StyledDocument doc,
+      PageAnalysis pageAnalysis) {
+    if ((doc == null) || (pageAnalysis == null)) {
+      return;
+    }
+    Style style = doc.getStyle(ConfigurationValueStyle.COMMENTS.getName());
+    List<Area> areas = pageAnalysis.getAreas().getAreas();
+    if (areas != null) {
+      for (Area area : areas) {
+        int beginIndex = area.getBeginIndex();
+        int endIndex = area.getEndIndex();
+        doc.setCharacterAttributes(
+            beginIndex, endIndex - beginIndex,
+            style, true);
+      }
+    }
   }
 
   /**
