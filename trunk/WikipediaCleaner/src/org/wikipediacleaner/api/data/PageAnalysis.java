@@ -531,7 +531,7 @@ public class PageAnalysis {
     // Check if this is an external link
     PageElementExternalLink link = PageElementExternalLink.analyzeBlock(
         getWikipedia(), contents, currentIndex);
-    if ((link != null) && (isInTemplate(currentIndex) == null)) {
+    if (link != null) {
       externalLinks.add(link);
       return link.getEndIndex();
     }
