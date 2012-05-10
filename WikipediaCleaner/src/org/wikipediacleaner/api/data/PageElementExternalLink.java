@@ -37,7 +37,7 @@ public class PageElementExternalLink extends PageElement {
   private final int    textOffset;
   private final boolean hasSquare;
 
-  private final static String END_CHARACTERS = " \n\t<>";
+  private final static String END_CHARACTERS = " \n\t<>|";
 
   private final static List<String> privateProtocols = new ArrayList<String>();
   private final static List<String> publicProtocols = Collections.unmodifiableList(privateProtocols);
@@ -76,7 +76,7 @@ public class PageElementExternalLink extends PageElement {
     }
     int beginIndex = tmpIndex;
 
-    // Possible whitespaces characters
+    // Possible white spaces characters
     if (hasSquare) {
       while ((tmpIndex < maxLength) &&
              (contents.charAt(tmpIndex) == ' ')) {
