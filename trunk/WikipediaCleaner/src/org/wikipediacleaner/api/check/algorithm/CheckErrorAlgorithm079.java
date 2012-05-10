@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
@@ -68,9 +69,19 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
     for (PageElementExternalLink link : links) {
       String text = link.getText();
       if ((text == null) || (text.trim().length() == 0)) {
+        boolean hasError = false;
+        if (link.hasSquare()) {
+          hasError = true;
+        }
         PageElementTag refTag = pageAnalysis.getSurroundingTag(
             PageElementTag.TAG_WIKI_REF, link.getBeginIndex());
-        if ((refTag == null) || (link.hasSquare())) {
+        if (refTag == null) {
+          PageElementTemplate template = pageAnalysis.isInTemplate(link.getBeginIndex());
+          if (template == null) {
+            hasError = true;
+          }
+        }
+        if (hasError) {
           if (errors == null) {
             return true;
           }
