@@ -86,7 +86,7 @@ public class MediaWikiAPI implements API {
   private final static String ACTION_API_PURGE  = "purge";
   private final static String ACTION_API_QUERY  = "query";
 
-  private final static int MAX_PAGES_PER_QUERY = 50;
+  private final static int MAX_PAGES_PER_QUERY = 20; // TODO: put 50 when API is fixed.
   private final static int MAX_ATTEMPTS = 2;
 
   private static boolean DEBUG_TIME = false;
