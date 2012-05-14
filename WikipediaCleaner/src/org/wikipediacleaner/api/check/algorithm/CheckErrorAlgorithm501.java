@@ -97,11 +97,15 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         PageElementInternalLink link = pageAnalysis.isInInternalLink(startIndex);
         if ((link == null) || (link.getBeginIndex() != startIndex)) {
           checkOrthograph = false;
+        } else {
+          matchers = matchersInternalLink;
         }
       } else if (currentChar == '{') {
         PageElementTemplate template = pageAnalysis.isInTemplate(startIndex);
         if ((template == null) || (template.getBeginIndex() != startIndex)) {
           checkOrthograph = false;
+        } else {
+          matchers = matchersTemplate;
         }
       } else {
         int tmp = pageAnalysis.getAreas().getEndArea(startIndex);
