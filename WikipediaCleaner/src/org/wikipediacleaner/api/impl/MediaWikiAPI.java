@@ -86,7 +86,7 @@ public class MediaWikiAPI implements API {
   private final static String ACTION_API_PURGE  = "purge";
   private final static String ACTION_API_QUERY  = "query";
 
-  private final static int MAX_PAGES_PER_QUERY = 20; // TODO: put 50 when API is fixed.
+  private final static int MAX_PAGES_PER_QUERY = 50;
   private final static int MAX_ATTEMPTS = 2;
 
   private static boolean DEBUG_TIME = false;
@@ -1313,6 +1313,28 @@ public class MediaWikiAPI implements API {
   }
 
   /**
+   * Convert a list of pages into an argument usable by the API.
+   * 
+   * @param pages List of pages.
+   * @return Textual representation of the list of pages.
+   */
+  private String constructList(List<Page> pages) {
+    if ((pages == null) || (pages.size() == 0)) {
+      return "";
+    }
+    boolean first = true;
+    StringBuilder text = new StringBuilder();
+    for (Page page : pages) {
+      if (!first) {
+        text.append("|");
+      }
+      first = false;
+      text.append(page.getTitle());
+    }
+    return text.toString();
+  }
+
+  /**
    * Initialize the disambiguation flags of a list of <code>pages</code>.
    * 
    * @param wikipedia Wikipedia.
@@ -1337,6 +1359,7 @@ public class MediaWikiAPI implements API {
       Map<String, String> properties = getProperties(ACTION_API_QUERY, true);
       properties.put("prop", "templates");
       properties.put("tllimit", "max");
+      properties.put("tltemplates", constructList(wikipedia.getDisambiguationTemplates()));
       List<Page> tmpPages = new ArrayList<Page>();
       for (int i = 0; i < pages.size(); i++) {
         Iterator<Page> iter = pages.get(i).getRedirectIteratorWithPage();
@@ -2215,9 +2238,10 @@ public class MediaWikiAPI implements API {
     if (action == null) {
       return false;
     }
-    if (ACTION_API_QUERY.equals(action)) {
-      return true;
-    }
+    // TODO: Enable this again when API bug 36839 is fixed.
+    //if (ACTION_API_QUERY.equals(action)) {
+    //  return true;
+    //}
     return false;
   }
 
