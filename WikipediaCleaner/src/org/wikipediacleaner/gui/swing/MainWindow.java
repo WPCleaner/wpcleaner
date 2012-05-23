@@ -108,6 +108,7 @@ public class MainWindow
   private final static String ACTION_CURRENT_DAB_LIST = "CURRENT DAB LIST";
   private final static String ACTION_DEMO             = "DEMO";
   private final static String ACTION_DISAMBIGUATION   = "DISAMBIGUATION";
+  private final static String ACTION_EMBEDDED_IN      = "EMBEDDED IN";
   private final static String ACTION_FULL_ANALYSIS    = "FULL ANALYSIS";
   private final static String ACTION_HELP             = "HELP";
   private final static String ACTION_HELP_REQUESTED   = "HELP_REQUESTED";
@@ -159,6 +160,7 @@ public class MainWindow
   JTextField textPagename;
   private JButton buttonFullAnalysis;
   private JButton buttonDisambiguation;
+  private JButton buttonEmbeddedIn;
   private JButton buttonInternalLinks;
   private JButton buttonCategoryMembers;
   private JButton buttonUpdateDabWarning;
@@ -293,6 +295,7 @@ public class MainWindow
     buttonDisambiguation.setEnabled(logged);
     buttonInternalLinks.setEnabled(logged);
     buttonCategoryMembers.setEnabled(logged);
+    buttonEmbeddedIn.setEnabled(logged);
     buttonUpdateDabWarning.setEnabled(logged);
     buttonRandomPage.setEnabled(logged);
     buttonContributions.setEnabled(logged);
@@ -640,6 +643,15 @@ public class MainWindow
     panel.add(buttonCategoryMembers, constraints);
     constraints.gridy++;
 
+    // Embedded in
+    buttonEmbeddedIn = Utilities.createJButton(
+        "commons-curly-brackets.png", EnumImageSize.NORMAL,
+        GT._("Embedded in"), true);
+    buttonEmbeddedIn.setActionCommand(ACTION_EMBEDDED_IN);
+    buttonEmbeddedIn.addActionListener(this);
+    panel.add(buttonEmbeddedIn, constraints);
+    constraints.gridy++;
+
     // Update disambiguation warning
     buttonUpdateDabWarning = Utilities.createJButton(
         "gnome-dialog-warning.png", EnumImageSize.NORMAL,
@@ -807,6 +819,8 @@ public class MainWindow
       actionInternalLinks();
     } else if (ACTION_CAT_MEMBERS.equals(e.getActionCommand())) {
       actionCategoryMembers();
+    } else if (ACTION_EMBEDDED_IN.equals(e.getActionCommand())) {
+      actionEmbeddedIn();
     } else if (ACTION_CURRENT_DAB_LIST.equals(e.getActionCommand())) {
       actionCurrentDabList();
     } else if (ACTION_MOST_DAB_LINKS.equals(e.getActionCommand())) {
@@ -1190,6 +1204,36 @@ public class MainWindow
         Collections.singletonList(pageName),
         PageListWorker.Mode.CATEGORY_MEMBERS, false,
         GT._("Category members of {0}", pageName)).start();
+  }
+
+  /**
+   * Action called when Embedded In button is pressed.
+   */
+  private void actionEmbeddedIn() {
+    if ((textPagename == null) ||
+        (textPagename.getText() == null) ||
+        ("".equals(textPagename.getText().trim()))) {
+      displayWarning(
+          GT._("You must input a page name for retrieving the list of page it is embedded in"),
+          textPagename);
+      return;
+    }
+    String pageName = textPagename.getText().trim();
+    Configuration config = Configuration.getConfiguration();
+    config.setString(
+        null,
+        ConfigurationValueString.PAGE_NAME,
+        pageName);
+    config.save();
+    Page page = DataManager.getPage(
+        getWikipedia(),
+        Namespace.getTitle(Namespace.TEMPLATE, getWikipedia().getNamespaces(), pageName),
+        null, null);
+    new PageListWorker(
+        getWikipedia(), this, page,
+        Collections.singletonList(pageName),
+        PageListWorker.Mode.EMBEDDED_IN, false,
+        GT._("Template {0} embedded in", pageName)).start();
   }
 
   /**
