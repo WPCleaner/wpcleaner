@@ -164,6 +164,8 @@ public class WPCConfiguration {
       setDisambiguationWarningComment1(value);
     } else if (name.equals("dab_warning_comment_done")) {
       setDisambiguationWarningCommentDone(value);
+    } else if (name.equals("general_suggestions")) {
+      setSuggestionPages(value, general);
     } else if (!general) {
       return;
     }
@@ -187,8 +189,6 @@ public class WPCConfiguration {
       setTodoSubpageForce(value);
     } else if (name.equals("general_todo_subpage_force_other")) {
       setTodoSubpageForceOther(value);
-    } else if (name.equals("general_suggestions")) {
-      setSuggestionPages(value);
     } else if (name.equals("general_dab_1l_templates")) {
       setTemplateMatchersDab1L(value);
     } else if (name.equals("general_dab_1lt_templates")) {
@@ -505,9 +505,14 @@ public class WPCConfiguration {
 
   /**
    * @param value Pages containing spelling suggestions.
+   * @param general Flag indicating if dealing with general or user properties.
    */
-  private void setSuggestionPages(String value) {
-    this.suggestionPages = convertPropertyToStringList(value);
+  private void setSuggestionPages(String value, boolean general) {
+    if (general || (suggestionPages == null)) {
+      suggestionPages = convertPropertyToStringList(value);
+    } else {
+      suggestionPages.addAll(convertPropertyToStringList(value));
+    }
   }
 
   /**
