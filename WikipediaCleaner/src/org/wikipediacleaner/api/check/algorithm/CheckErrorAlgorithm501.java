@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
 
@@ -88,7 +89,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
       // Test if the position is correct to check spelling
       int nextIndex = startIndex + 1;
-      boolean checkOrthograph = true;
+      boolean checkSpelling = true;
       Map<Suggestion, Matcher> matchers = matchersText;
 
       // Check what kind of checking should be done
@@ -96,26 +97,48 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       if (currentChar == '[') {
         PageElementInternalLink link = pageAnalysis.isInInternalLink(startIndex);
         if ((link == null) || (link.getBeginIndex() != startIndex)) {
-          checkOrthograph = false;
+          checkSpelling = false;
         } else {
           matchers = matchersInternalLink;
         }
       } else if (currentChar == '{') {
         PageElementTemplate template = pageAnalysis.isInTemplate(startIndex);
         if ((template == null) || (template.getBeginIndex() != startIndex)) {
-          checkOrthograph = false;
+          checkSpelling = false;
         } else {
           matchers = matchersTemplate;
         }
       } else {
+        // Check for special areas
         int tmp = pageAnalysis.getAreas().getEndArea(startIndex);
         if (tmp > startIndex) {
-          checkOrthograph = false;
+          checkSpelling = false;
+          nextIndex = tmp;
+        }
+
+        // Check for template
+        if (checkSpelling) {
+          PageElementTemplate template = pageAnalysis.isInTemplate(startIndex);
+          if (template != null) {
+            checkSpelling = false;
+            nextIndex = template.getEndIndex();
+          }
+        }
+
+        // Check for gallery tag
+        if (checkSpelling) {
+          PageElementTag galleryTag = pageAnalysis.getSurroundingTag(
+              PageElementTag.TAG_WIKI_GALLERY, startIndex);
+          if (galleryTag != null) {
+            // TODO: Be more precise, analyze image descriptions
+            checkSpelling = false;
+            nextIndex = galleryTag.getCompleteEndIndex();
+          }
         }
       }
 
       // Check spelling
-      if (checkOrthograph) {
+      if (checkSpelling) {
         possibles.clear();
   
         // Test every suggestion
