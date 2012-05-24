@@ -79,40 +79,13 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     int tagIndex = 0;
     int maxTags = tags.size();
     while (tagIndex < maxTags) {
-      int firstTagIndex = tagIndex;
-      PageElementTag firstTag = tags.get(firstTagIndex);
 
       // Group tags separated only by punctuation characters
-      boolean endFound = false;
-      tagIndex = getEndIndex(tags, tagIndex) + 1;
-      while (!endFound && (tagIndex < maxTags)) {
-        int beginIndex = tags.get(tagIndex - 1).getEndIndex();
-        int endIndex = tags.get(tagIndex).getBeginIndex();
-        boolean separatorFound = false;
-        boolean tryNext = true;
-        while (tryNext && (beginIndex < endIndex)) {
-          if (!separatorFound && (contents.startsWith(separator, beginIndex))) {
-            separatorFound = true;
-            beginIndex += separator.length();
-          } else if (contents.startsWith("&nbsp;", beginIndex)) {
-            beginIndex += "&nbsp;".length();
-          } else if (!Character.isWhitespace(contents.charAt(beginIndex)) &&
-                     (contents.charAt(beginIndex) != ',') &&
-                     (contents.charAt(beginIndex) != ';') &&
-                     (contents.charAt(beginIndex) != '\'')) {
-            tryNext = false;
-          } else {
-            beginIndex++;
-          }
-        }
-        if (tryNext) {
-          tagIndex = getEndIndex(tags, tagIndex) + 1;
-        } else {
-          endFound = true;
-        }
-      }
-      int lastTagIndex = tagIndex - 1;
+      int firstTagIndex = tagIndex;
+      PageElementTag firstTag = tags.get(firstTagIndex);
+      int lastTagIndex = PageElementTag.groupTags(tags, firstTagIndex, contents, separator);
       PageElementTag lastTag = tags.get(lastTagIndex);
+      tagIndex = lastTagIndex + 1;
 
       // Remove possible whitespace characters before first reference
       int tmpIndex = firstTag.getBeginIndex() - 1;
@@ -160,24 +133,10 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         String allPunctuations = contents.substring(tmpIndex, lastPunctuationIndex + 1);
 
         // Construct list of tags
-        StringBuilder buffer = new StringBuilder();
-        int tmpTagIndex = firstTagIndex;
-        int count = 0;
-        while (tmpTagIndex <= lastTagIndex) {
-          if (count > 0) {
-            buffer.append(separator);
-          }
-          int tmpBeginIndex = tags.get(tmpTagIndex).getBeginIndex();
-          tmpTagIndex = getEndIndex(tags, tmpTagIndex);
-          int tmpEndIndex = tags.get(tmpTagIndex).getEndIndex();
-          buffer.append(contents.substring(tmpBeginIndex, tmpEndIndex));
-          tmpTagIndex++;
-          count++;
-        }
-        String replace = buffer.toString();
-        String textReplace = (count > 1) ?
-            "<ref>...</ref>" + separator + "..." + separator + "<ref>...</ref>" :
-            "<ref>...</ref>";
+        String replace = PageElementTag.createListOfTags(
+            tags, firstTagIndex, lastTagIndex, contents, separator);
+        String textReplace = PageElementTag.createReducedListOfTags(
+            tags, firstTagIndex, lastTagIndex, separator);
 
         // Check for possible punctuation after tags
         tmpIndex = lastTag.getEndIndex();
@@ -214,23 +173,6 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       }
     }
     return result;
-  }
-
-  /**
-   * @param tags List of tags.
-   * @param currentIndex Index of current tag.
-   * @return Index of end tag matching the current tag.
-   */
-  private int getEndIndex(List<PageElementTag> tags, int currentIndex) {
-    PageElementTag currentTag = tags.get(currentIndex);
-    if (currentTag.isFullTag() || !currentTag.isComplete()) {
-      return currentIndex;
-    }
-    int endIndex = tags.indexOf(currentTag.getMatchingTag());
-    if (endIndex < currentIndex) {
-      return currentIndex;
-    }
-    return endIndex;
   }
 
   /* (non-Javadoc)

@@ -462,6 +462,133 @@ public class PageElementTag extends PageElement {
   }
 
   /**
+   * Retrieve index of matching end tag.
+   * 
+   * @param tags List of tags.
+   * @param tagIndex Index of opening tag.
+   * @return Index of matching end tag.
+   */
+  public static int getMatchingTagIndex(List<PageElementTag> tags, int tagIndex) {
+    PageElementTag tag = tags.get(tagIndex);
+    if (!tag.isFullTag() && tag.isComplete()) {
+      int endIndex = tags.indexOf(tag.getMatchingTag());
+      if (endIndex > tagIndex) {
+        return endIndex;
+      }
+    }
+    return tagIndex;
+  }
+
+  /**
+   * Group consecutive tags.
+   * 
+   * @param tags List of tags.
+   * @param firstTagIndex Index of first tag in the list.
+   * @param contents Page contents.
+   * @param separator Possible separator between tags.
+   * @return Index of last tag in the group of consecutive tags.
+   */
+  public static int groupTags(
+      List<PageElementTag> tags,
+      int firstTagIndex,
+      String contents, String separator) {
+    if (tags == null) {
+      return firstTagIndex;
+    }
+    int tagIndex = firstTagIndex;
+    while (tagIndex < tags.size()) {
+
+      // Search for matching end tag
+      int lastTagIndex = getMatchingTagIndex(tags, tagIndex);
+      tagIndex = lastTagIndex + 1;
+
+      // Check text before next tag
+      if (tagIndex >= tags.size()) {
+        return lastTagIndex;
+      }
+      int nextBeginIndex = tags.get(tagIndex).getBeginIndex();
+      int currentIndex = tags.get(lastTagIndex).getEndIndex();
+      boolean separatorFound = false;
+      while (currentIndex < nextBeginIndex) {
+        if (!separatorFound &&
+            (separator != null) &&
+            contents.startsWith(separator, currentIndex)) {
+          separatorFound = true;
+          currentIndex += separator.length();
+        } else if (contents.startsWith("&nbsp;", currentIndex)) {
+          currentIndex += "&nbsp;".length();
+        } else if (!Character.isWhitespace(contents.charAt(currentIndex)) &&
+            (contents.charAt(currentIndex) != ',') &&
+            (contents.charAt(currentIndex) != ';') &&
+            (contents.charAt(currentIndex) != '\'')) {
+          return lastTagIndex;
+        } else {
+          currentIndex++;
+        }
+      }
+    }
+    return tagIndex;
+  }
+
+  /**
+   * Create a textual representation of a list of tags.
+   * 
+   * @param tags List of tags.
+   * @param firstTagIndex Index of first tag in the list.
+   * @param lastTagIndex Index of last tag in the list.
+   * @param contents Page contents.
+   * @param separator Separator.
+   * @return Textual representation of a list of tags.
+   */
+  public static String createListOfTags(
+      List<PageElementTag> tags,
+      int firstTagIndex, int lastTagIndex,
+      String contents, String separator) {
+    StringBuilder buffer = new StringBuilder();
+    int tagIndex = firstTagIndex;
+    while (tagIndex <= lastTagIndex) {
+      if ((tagIndex > firstTagIndex) && (separator != null)) {
+        buffer.append(separator);
+      }
+      int beginIndex = tags.get(tagIndex).getBeginIndex();
+      tagIndex = getMatchingTagIndex(tags, tagIndex);
+      int endIndex = tags.get(tagIndex).getEndIndex();
+      tagIndex++;
+      buffer.append(contents.substring(beginIndex, endIndex));
+    }
+    return buffer.toString();
+  }
+
+  /**
+   * Create a reduced textual representation of a list of tags.
+   * 
+   * @param tags List of tags.
+   * @param firstTagIndex Index of first tag in the list.
+   * @param lastTagIndex Index of last tag in the list.
+   * @param separator Separator.
+   * @return Reduced textual representation of a list of tags.
+   */
+  public static String createReducedListOfTags(
+      List<PageElementTag> tags,
+      int firstTagIndex, int lastTagIndex,
+      String separator) {
+    int tagIndex = firstTagIndex;
+    int count = 0;
+    while (tagIndex <= lastTagIndex) {
+      count++;
+      tagIndex = getMatchingTagIndex(tags, tagIndex);
+      tagIndex++;
+    }
+    if (count > 2) {
+      return "<ref>...</ref>" + separator + "..." + separator + "<ref>...</ref>";
+    }
+    if (count > 1) {
+      return "<ref>...</ref>" + separator + "<ref>...</ref>";
+    }
+    return "<ref>...</ref>";
+  }
+
+  /**
    * Class for managing a parameter
    */
   public static class Parameter {
