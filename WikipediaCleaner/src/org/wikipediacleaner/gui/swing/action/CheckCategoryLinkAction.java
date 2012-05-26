@@ -26,9 +26,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
 import javax.swing.text.TextAction;
 
-import org.wikipediacleaner.api.base.API;
-import org.wikipediacleaner.api.base.APIException;
-import org.wikipediacleaner.api.base.APIFactory;
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;

@@ -20,8 +20,8 @@ package org.wikipediacleaner.api.execution;
 
 import java.util.concurrent.Callable;
 
+import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.MediaWikiListener;
-import org.wikipediacleaner.api.base.API;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 

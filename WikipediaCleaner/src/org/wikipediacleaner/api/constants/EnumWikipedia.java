@@ -26,8 +26,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.wikipediacleaner.Version;
-import org.wikipediacleaner.api.base.API;
-import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
 import org.wikipediacleaner.api.constants.wiki.WikipediaAf;
 import org.wikipediacleaner.api.constants.wiki.WikipediaAr;

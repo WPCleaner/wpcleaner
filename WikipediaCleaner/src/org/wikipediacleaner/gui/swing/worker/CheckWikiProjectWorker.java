@@ -23,8 +23,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.httpclient.NameValuePair;
-import org.wikipediacleaner.api.base.APIException;
-import org.wikipediacleaner.api.base.APIFactory;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorComparator;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;

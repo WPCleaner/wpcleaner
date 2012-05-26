@@ -20,8 +20,8 @@ package org.wikipediacleaner.gui.swing.worker;
 
 import javax.swing.text.JTextComponent;
 
+import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
-import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;

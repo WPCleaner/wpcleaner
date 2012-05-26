@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 
-import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.i18n.GT;
 
 
