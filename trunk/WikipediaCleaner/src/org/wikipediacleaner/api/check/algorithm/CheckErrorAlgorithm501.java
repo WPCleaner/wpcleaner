@@ -121,7 +121,6 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
           PageElementTemplate template = pageAnalysis.isInTemplate(startIndex);
           if (template != null) {
             checkSpelling = false;
-            nextIndex = template.getEndIndex();
           }
         }
 

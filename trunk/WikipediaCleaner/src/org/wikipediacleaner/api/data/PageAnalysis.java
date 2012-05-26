@@ -846,13 +846,14 @@ public class PageAnalysis {
    */
   public PageElementTemplate isInTemplate(int currentIndex) {
     List<PageElementTemplate> tmpTemplates = getTemplates();
+    PageElementTemplate result = null;
     for (PageElementTemplate template : tmpTemplates) {
       if ((template.getBeginIndex() <= currentIndex) &&
           (template.getEndIndex() > currentIndex)) {
-        return template;
+        result = template;
       }
     }
-    return null;
+    return result;
   }
 
   // ==========================================================================
