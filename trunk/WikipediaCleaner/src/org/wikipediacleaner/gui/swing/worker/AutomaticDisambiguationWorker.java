@@ -21,8 +21,8 @@ package org.wikipediacleaner.gui.swing.worker;
 import java.util.Map;
 import java.util.Properties;
 
+import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
-import org.wikipediacleaner.api.base.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.InformationWindow;

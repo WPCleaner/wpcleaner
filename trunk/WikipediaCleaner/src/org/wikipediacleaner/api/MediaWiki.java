@@ -28,9 +28,6 @@ import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
-import org.wikipediacleaner.api.base.API;
-import org.wikipediacleaner.api.base.APIException;
-import org.wikipediacleaner.api.base.APIFactory;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;

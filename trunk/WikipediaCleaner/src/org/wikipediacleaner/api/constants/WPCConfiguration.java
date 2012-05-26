@@ -28,8 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.wikipediacleaner.api.base.API;
-import org.wikipediacleaner.api.base.APIException;
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;

@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.wikipediacleaner.api.base;
+package org.wikipediacleaner.api;
 
 import java.io.InputStream;
 import java.util.List;
@@ -30,9 +30,6 @@ import org.wikipediacleaner.api.data.QueryResult;
 
 /**
  * MediaWiki API.
- */
-/**
- * 
  */
 public interface API {
 

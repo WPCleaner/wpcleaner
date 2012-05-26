@@ -20,9 +20,9 @@ package org.wikipediacleaner.gui.swing.worker;
 
 import java.util.Collection;
 
-import org.wikipediacleaner.api.base.API;
-import org.wikipediacleaner.api.base.APIException;
-import org.wikipediacleaner.api.base.APIFactory;
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.Contributions;

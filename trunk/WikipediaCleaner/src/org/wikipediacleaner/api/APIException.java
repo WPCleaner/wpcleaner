@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.wikipediacleaner.api.base;
+package org.wikipediacleaner.api;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -1,6 +1,6 @@
 /*
  *  WikipediaCleaner: A tool to help on Wikipedia maintenance tasks.
- *  Copyright (C) 2007  Nicolas Vervelle
+ *  Copyright (C) 2012  Nicolas Vervelle
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,38 +16,34 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.wikipediacleaner.api.base;
+package org.wikipediacleaner.api.request;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpConnectionManager;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.wikipediacleaner.api.impl.MediaWikiAPI;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
 /**
- * Factory for API access. 
+ * Base interface for MediaWiki API results.
  */
-public class APIFactory {
-
-  private static HttpConnectionManager connectionManger;
-  private static API api;
-
-  static {
-    connectionManger = new MultiThreadedHttpConnectionManager();
-    api = new MediaWikiAPI(connectionManger);
-  }
+public interface ApiResult {
 
   /**
-   * @return MediaWiki API implementation.
+   * @return Format of the XML result.
    */
-  public static API getAPI() {
-    return api;
-  }
+  public String getFormat();
 
   /**
-   * @return A HTTP connection.
+   * @return Wiki on which requests are made.
    */
-  public static HttpClient getHttpClient() {
-    return new HttpClient(connectionManger);
-  }
+  public EnumWikipedia getWiki();
+
+  /**
+   * @return HTTP client for making requests.
+   */
+  public HttpClient getHttpClient();
+
+  /**
+   * @return Connection information.
+   */
+  public ConnectionInformation getConnectionInformation();
 }

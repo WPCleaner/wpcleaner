@@ -70,6 +70,13 @@ public enum EnumLoginResult {
   }
 
   /**
+   * @return Associated code.
+   */
+  public String getCode() {
+    return code;
+  }
+
+  /**
    * @return Associated text.
    */
   public String getText() {
