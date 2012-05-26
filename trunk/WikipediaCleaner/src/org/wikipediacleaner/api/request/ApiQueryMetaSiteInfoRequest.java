@@ -80,7 +80,11 @@ public class ApiQueryMetaSiteInfoRequest extends ApiQueryMetaRequest {
   /**
    * Load site information.
    * 
-   * @param page Page to be purged.
+   * @param namespaces True if information about name spaces are requested.
+   * @param namespaceAliases True if information about name spaces aliases are requested.
+   * @param languages True if information about languages are requested.
+   * @param interwikiMap True if information about interwiki map are requested.
+   * @param magicWords True if information about magic words are requested.
    */
   public void loadSiteInformation(
       boolean namespaces, boolean namespaceAliases,
