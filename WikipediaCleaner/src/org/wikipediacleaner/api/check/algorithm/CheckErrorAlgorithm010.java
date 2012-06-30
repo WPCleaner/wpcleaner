@@ -52,7 +52,8 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
 
     // Analyze contents from the end by counting ]] and [[
     String contents = pageAnalysis.getContents();
-    int startIndex = contents.length();
+    int maxLength = contents.length();
+    int startIndex = maxLength;
     boolean result = false;
     int beginIndex = contents.lastIndexOf("[[", startIndex);
     int endIndex = contents.lastIndexOf("]]", startIndex);
@@ -76,17 +77,18 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
           }
           result = true;
 
-          // Check if the situation is something like [[....] (replacement: [[....]])
+          // Check if there is a potential end
+          int tmpIndex = beginIndex + 2;
           boolean errorReported = false;
-          int nextEnd = contents.indexOf(']', beginIndex + 2);
-          if (nextEnd > 0) {
-            int nextCR = contents.indexOf('\n', beginIndex + 2);
-            int nextBegin = contents.indexOf('[', beginIndex + 2);
-            if (((nextCR < 0) || (nextCR > nextEnd)) &&
-                ((nextBegin < 0) || (nextBegin > nextEnd))) {
+          boolean finished = false;
+          while ((!finished) && (tmpIndex < maxLength)) {
+            char tmpChar = contents.charAt(tmpIndex);
+            if ((tmpChar == '\n') || (tmpChar == '[')) {
+              finished = true;
+            } else if (tmpChar == ']') {
               CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), beginIndex, nextEnd + 1);
-              errorResult.addReplacement(contents.substring(beginIndex, nextEnd + 1) + "]");
+                  pageAnalysis.getPage(), beginIndex, tmpIndex + 1);
+              errorResult.addReplacement(contents.substring(beginIndex, tmpIndex + 1) + "]");
 
               // Check if the situation is something like [[http://....] (replacement: [http://....])
               List<String> protocols = PageElementExternalLink.getProtocols();
@@ -97,12 +99,26 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
                 }
               }
               if (protocolFound) {
-                errorResult.addReplacement(contents.substring(beginIndex + 1, nextEnd + 1));
+                errorResult.addReplacement(contents.substring(beginIndex + 1, tmpIndex + 1));
               }
 
               errors.add(errorResult);
               errorReported = true;
+              finished = true;
+            } else if (tmpChar == '}') {
+              int lastChar = tmpIndex;
+              if ((lastChar + 1 < maxLength) && (contents.charAt(lastChar + 1) == '}')) {
+                lastChar++;
+              }
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(), beginIndex, lastChar + 1);
+              errorResult.addReplacement(contents.substring(beginIndex, tmpIndex) + "]]");
+              errorResult.addReplacement("{{" + contents.substring(beginIndex + 2, tmpIndex) + "}}");
+              errors.add(errorResult);
+              errorReported = true;
+              finished = true;
             }
+            tmpIndex++;
           }
 
           // Default
