@@ -76,33 +76,48 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
           }
           result = true;
 
-          // Check if the situation is something like [....]] (replacement: [[....]])
+          // Check if there is a potential beginning
+          int tmpIndex = endIndex - 1;
           boolean errorReported = false;
-          int previousBegin = contents.lastIndexOf('[', endIndex - 1);
-          if (previousBegin > 0) {
-            int previousCR = contents.lastIndexOf('\n', endIndex - 1);
-            int previousEnd = contents.lastIndexOf(']', endIndex - 1);
-            if (((previousCR < 0) || (previousCR < previousBegin)) &&
-                ((previousEnd < 0) || (previousEnd < previousBegin))) {
+          boolean finished = false;
+          while ((!finished) && (tmpIndex >= 0)) {
+            char tmpChar = contents.charAt(tmpIndex);
+            if ((tmpChar == '\n') || (tmpChar == ']')) {
+              finished = true;
+            } else if (tmpChar == '[') {
               CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), previousBegin, endIndex + 2);
-              errorResult.addReplacement("[" + contents.substring(previousBegin, endIndex + 2));
+                  pageAnalysis.getPage(), tmpIndex, endIndex + 2);
+              errorResult.addReplacement("[" + contents.substring(tmpIndex, endIndex + 2));
 
               // Check if the situation is something like [http://....]] (replacement: [http://....])
               List<String> protocols = PageElementExternalLink.getProtocols();
               boolean protocolFound = false;
               for (String protocol : protocols) {
-                if (contents.startsWith(protocol, previousBegin + 1)) {
+                if (contents.startsWith(protocol, tmpIndex + 1)) {
                   protocolFound = true;
                 }
               }
               if (protocolFound) {
-                errorResult.addReplacement(contents.substring(previousBegin, endIndex + 1));
+                errorResult.addReplacement(contents.substring(tmpIndex, endIndex + 1));
               }
 
               errors.add(errorResult);
               errorReported = true;
+              finished = true;
+            } else if (tmpChar == '{') {
+              int firstChar = tmpIndex;
+              if ((firstChar > 0) && (contents.charAt(firstChar - 1) == '{')) {
+                firstChar--;
+              }
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(), firstChar, endIndex + 2);
+              errorResult.addReplacement("[[" + contents.substring(tmpIndex + 1, endIndex + 2));
+              errorResult.addReplacement("{{" + contents.substring(tmpIndex + 1, endIndex) + "}}");
+              errors.add(errorResult);
+              errorReported = true;
+              finished = true;
             }
+            tmpIndex--;
           }
 
           // Default
