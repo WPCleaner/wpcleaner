@@ -113,7 +113,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         int tmp = pageAnalysis.getAreas().getEndArea(startIndex);
         if (tmp > startIndex) {
           checkSpelling = false;
-          nextIndex = tmp;
+          nextIndex = startIndex + 1;
         }
 
         // Check for template
