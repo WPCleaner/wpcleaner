@@ -231,7 +231,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     buttonDisambiguation.addActionListener(this);
     toolbar.add(buttonDisambiguation);
     buttonDisambiguationWatch = Utilities.createJButton(
-        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        "commons-disambig-colour-plus.png", EnumImageSize.NORMAL,
         GT._("Analyze pages with links to disambiguation pages"), false);
     buttonDisambiguationWatch.setActionCommand(ACTION_DAB_WATCH);
     buttonDisambiguationWatch.addActionListener(this);
