@@ -53,6 +53,7 @@ import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.ProgressionValueCellRenderer;
+import org.wikipediacleaner.gui.swing.worker.PageListWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateInfoWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -67,6 +68,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
 
   private final static String ACTION_ADD              = "ADD";
   private final static String ACTION_AUTOMATIC_FIXING = "AUTOMATIC FIXING";
+  private final static String ACTION_DAB_WATCH        = "DAB WATCH";
   private final static String ACTION_DISAMBIGUATION   = "DISAMBIGUATION";
   private final static String ACTION_FULL_ANALYSIS    = "FULL ANALYSIS";
   private final static String ACTION_REMOVE           = "REMOVE";
@@ -90,6 +92,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   
   private JButton buttonFullAnalysis;
   private JButton buttonDisambiguation;
+  private JButton buttonDisambiguationWatch;
   private JButton buttonUpdateDabWarning;
   private JButton buttonUpdateInfo;
   private JButton buttonComments;
@@ -227,6 +230,12 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     buttonDisambiguation.setActionCommand(ACTION_DISAMBIGUATION);
     buttonDisambiguation.addActionListener(this);
     toolbar.add(buttonDisambiguation);
+    buttonDisambiguationWatch = Utilities.createJButton(
+        "commons-disambig-colour.png", EnumImageSize.NORMAL,
+        GT._("Analyze pages with links to disambiguation pages"), false);
+    buttonDisambiguationWatch.setActionCommand(ACTION_DAB_WATCH);
+    buttonDisambiguationWatch.addActionListener(this);
+    toolbar.add(buttonDisambiguationWatch);
     buttonUpdateDabWarning = Utilities.createJButton(
         "gnome-dialog-warning.png", EnumImageSize.NORMAL,
         GT._("Update disambiguation warning"), false);
@@ -301,6 +310,8 @@ public class PageListWindow extends BasicWindow implements ActionListener {
       actionRunAutomaticFixing();
     } else if (ACTION_DISAMBIGUATION.equals(e.getActionCommand())) {
       actionDisambiguation();
+    } else if (ACTION_DAB_WATCH.equals(e.getActionCommand())) {
+      actionDisambiguationWatch();
     } else if (ACTION_UPDATE_DAB.equals(e.getActionCommand())) {
       actionUpdateDabWarning();
     } else if (ACTION_REMOVE.equals(e.getActionCommand())) {
@@ -336,6 +347,25 @@ public class PageListWindow extends BasicWindow implements ActionListener {
         getParentComponent(),
         getSelectedPages(),
         getWikipedia());
+  }
+
+  /**
+   * Action called when Disambiguation Watch button is pressed.
+   */
+  private void actionDisambiguationWatch() {
+    Page[] selectedPages = getSelectedPages();
+    if ((selectedPages == null) || (selectedPages.length == 0)) {
+      return;
+    }
+    List<String> pageNames = new ArrayList<String>(selectedPages.length);
+    for (Page page : selectedPages) {
+      pageNames.add(page.getTitle());
+    }
+    new PageListWorker(
+        getWikipedia(), this, null,
+        pageNames,
+        PageListWorker.Mode.DAB_WATCH, false,
+        GT._("Articles with links to disambiguation pages")).start();
   }
 
   /**
