@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.swing.JOptionPane;
@@ -33,40 +34,45 @@ import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.PageListWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.Configuration;
 
 /**
- * SwingWorker for getting current disambiguation list. 
+ * SwingWorker for getting various list of pages. 
  */
 public class PageListWorker extends BasicWorker {
 
   /**
    * The <code>Mode</code> allows to specify how the PageListWorker
    * will use the list of pages provided to it:
-   * <li>
-   * <ul>ALL_DAB_PAGES: List of disambiguation templates.
-   *     Retrieve list of pages embedding the templates.</ul>
-   * <ul>CATEGORY_MEMBERS: List of categories.
-   *     Retrieve list of articles in the categories.</ul>
-   * <ul>CATEGORY_MEMBERS_ARTICLES: List of categories.
+   * <ul>
+   * <li>ALL_DAB_PAGES: List of disambiguation templates.
+   *     Retrieve list of pages embedding the templates.</li>
+   * <li>CATEGORY_MEMBERS: List of categories.
+   *     Retrieve list of articles in the categories.</li>
+   * <li>CATEGORY_MEMBERS_ARTICLES: List of categories.
    *     Retrieve list of articles in the categories.
-   *     If talk pages are found, the related article is used instead.</ul> 
-   * <ul>DIRECT: Direct list</ul>
-   * <ul>EMBEDDED_IN: List of templates.
-   *     Retrieve list of pages embedding the templates.</ul>
-   * <ul>INTERNAL_LINKS: List of pages.
-   *     Retrieve list of internal links in the pages.</ul>
-   * </li> 
+   *     If talk pages are found, the related article is used instead.</li>
+   * <li>DAB_WATCH: List of disambiguation pages.
+   *     Retrieve list of pages linking to the disambiguation pages and needing attention.</li>
+   * <li>DIRECT: Direct list</li>
+   * <li>EMBEDDED_IN: List of templates.
+   *     Retrieve list of pages embedding the templates.</li>
+   * <li>INTERNAL_LINKS: List of pages.
+   *     Retrieve list of internal links in the pages.</li>
+   * </ul>
    */
   public static enum Mode {
     ALL_DAB_PAGES,
     CATEGORY_MEMBERS,
     CATEGORY_MEMBERS_ARTICLES,
+    DAB_WATCH,
     DIRECT,
     EMBEDDED_IN,
     INTERNAL_LINKS,
@@ -134,7 +140,6 @@ public class PageListWorker extends BasicWorker {
   @Override
   public Object construct() {
     try {
-      MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       List<Page> pages = new ArrayList<Page>();
       final API api = APIFactory.getAPI();
       boolean retrieveDisambiguationInformation = true;
@@ -142,98 +147,43 @@ public class PageListWorker extends BasicWorker {
 
       // List all disambiguations pages
       case ALL_DAB_PAGES:
-        if (pageNames != null) {
-          List<Page> tmpPages = new ArrayList<Page>(pageNames.size());
-          for (String pageName : pageNames) {
-            tmpPages.add(DataManager.getPage(getWikipedia(), pageName, null, null));
-          }
-          tmpPages = mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages);
-          if (tmpPages != null) {
-            for (Page page : tmpPages) {
-              if (page.isInMainNamespace()) {
-                page.setDisambiguationPage(Boolean.TRUE);
-                pages.add(page);
-              }
-            }
-          }
-          retrieveDisambiguationInformation = false;
-        }
+        constructAllDab(pages);
+        retrieveDisambiguationInformation = false;
         break;
 
       // List members of a category
       case CATEGORY_MEMBERS:
-        for (String pageName : pageNames) {
-          List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0);
-          if (tmpPages != null) {
-            for (Page tmpPage : tmpPages) {
-              if (!pages.contains(tmpPage)) {
-                pages.add(tmpPage);
-              }
-            }
-          }
-        }
+        constructCategoryMembers(pages);
         break;
 
         // List article members of a category
       case CATEGORY_MEMBERS_ARTICLES:
-        for (String pageName : pageNames) {
-          List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0);
-          if (tmpPages != null) {
-            WPCConfiguration configuration = getWikipedia().getConfiguration();
-            for (Page tmpPage : tmpPages) {
-              if (!tmpPage.isArticle()) {
-                String title = tmpPage.getArticlePageName(getWikipedia().getNamespaces());
-                if ((configuration.getTodoSubpage() != null) &&
-                    (configuration.getTodoSubpage().trim().length() > 0) &&
-                    (title.endsWith("/" + configuration.getTodoSubpage()))) {
-                  title = title.substring(0, title.length() - 1 - configuration.getTodoSubpage().length());
-                }
-                tmpPage = DataManager.getPage(getWikipedia(), title, null, null);
-              }
-              if (!pages.contains(tmpPage)) {
-                pages.add(tmpPage);
-              }
-            }
-          }
-        }
+        constructCategoryMembersArticles(pages);
+        break;
+
+      // List pages with disambiguation links requiring attention
+      case DAB_WATCH:
+        constructDabWatch(pages);
         break;
 
       // List pages embedding a template
       case EMBEDDED_IN:
-        if (pageNames != null) {
-          List<Page> tmpPages = new ArrayList<Page>(pageNames.size());
-          for (String pageName : pageNames) {
-            tmpPages.add(DataManager.getPage(getWikipedia(), pageName, null, null));
-          }
-          pages.addAll(mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages));
-        }
+        constructEmbeddedIn(pages);
         break;
 
       // List internal links in a page
       case INTERNAL_LINKS:
-        for (String dabList : pageNames) {
-          Page page = DataManager.getPage(getWikipedia(), dabList, null, null);
-          mw.retrieveAllLinks(getWikipedia(), page, null, null, true);
-          Iterator<Page> iter = page.getLinks().iterator();
-          while (iter.hasNext()) {
-            Page link = iter.next();
-            if ((link != null) &&
-                (link.isInMainNamespace()) &&
-                (!pages.contains(link))) {
-              pages.add(link);
-            }
-          }
-        }
+        constructInternalLinks(pages);
         break;
 
       default:
-        for (String page : pageNames) {
-          pages.add(DataManager.getPage(getWikipedia(), page, null, null));
-        }
+        pages.addAll(constructInternalPageList());
         api.initializeRedirect(getWikipedia(), pages);
         break;
       }
+
       if (retrieveDisambiguationInformation) {
+        MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
         mw.retrieveDisambiguationInformation(getWikipedia(), pages, null, false, true);
       }
       if (!shouldContinue()) {
@@ -244,5 +194,167 @@ public class PageListWorker extends BasicWorker {
       return e;
     }
     return null;
+  }
+
+  /**
+   * Construct the list of pages from the list of page names.
+   * 
+   * @return Internal list of pages.
+   */
+  private List<Page> constructInternalPageList() {
+    if (pageNames == null) {
+      return new ArrayList<Page>();
+    }
+    List<Page> pages = new ArrayList<Page>(pageNames.size());
+    for (String pageName : pageNames) {
+      pages.add(DataManager.getPage(getWikipedia(), pageName, null, null));
+    }
+    return pages;
+  }
+
+  /**
+   * Construct list of all disambiguation pages.
+   * 
+   * @param pages List of all disambiguation pages.
+   * @throws APIException
+   */
+  private void constructAllDab(List<Page> pages) throws APIException {
+    if (pageNames != null) {
+      List<Page> tmpPages = constructInternalPageList();
+      MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
+      tmpPages = mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages);
+      if (tmpPages != null) {
+        for (Page page : tmpPages) {
+          if (page.isInMainNamespace()) {
+            page.setDisambiguationPage(Boolean.TRUE);
+            pages.add(page);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Construct list of pages members of the categories.
+   * 
+   * @param pages List of pages members of the categories.
+   * @throws APIException
+   */
+  private void constructCategoryMembers(List<Page> pages) throws APIException {
+    final API api = APIFactory.getAPI();
+    for (String pageName : pageNames) {
+      List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0);
+      if (tmpPages != null) {
+        for (Page tmpPage : tmpPages) {
+          if (!pages.contains(tmpPage)) {
+            pages.add(tmpPage);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Construct list of articles members of the categories.
+   * 
+   * @param pages List of articles members of the categories.
+   * @throws APIException
+   */
+  private void constructCategoryMembersArticles(List<Page> pages) throws APIException {
+    final API api = APIFactory.getAPI();
+    for (String pageName : pageNames) {
+      List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0);
+      if (tmpPages != null) {
+        WPCConfiguration configuration = getWikipedia().getConfiguration();
+        for (Page tmpPage : tmpPages) {
+          if (!tmpPage.isArticle()) {
+            String title = tmpPage.getArticlePageName(getWikipedia().getNamespaces());
+            if ((configuration.getTodoSubpage() != null) &&
+                (configuration.getTodoSubpage().trim().length() > 0) &&
+                (title.endsWith("/" + configuration.getTodoSubpage()))) {
+              title = title.substring(0, title.length() - 1 - configuration.getTodoSubpage().length());
+            }
+            tmpPage = DataManager.getPage(getWikipedia(), title, null, null);
+          }
+          if (!pages.contains(tmpPage)) {
+            pages.add(tmpPage);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Construct list of pages with disambiguation links requiring attention.
+   * 
+   * @param pages List of disambiguation pages.
+   * @throws APIException
+   */
+  private void constructDabWatch(List<Page> pages) throws APIException {
+    if (pageNames != null) {
+      List<Page> tmpPages = constructInternalPageList();
+      Page[] tmpPages2 = new Page[tmpPages.size()];
+      tmpPages2 = tmpPages.toArray(tmpPages2);
+      MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
+      mw.retrieveAllBacklinks(getWikipedia(), tmpPages2, true);
+      Configuration configuration = Configuration.getConfiguration();
+      for (Page tmpPage : tmpPages2) {
+        List<Page> backlinks = tmpPage.getBackLinksWithRedirects();
+        if (backlinks != null) {
+          Properties pageProperties = configuration.getSubProperties(
+              getWikipedia(), Configuration.PROPERTIES_BACKLINKS, tmpPage.getTitle());
+          for (Page page : backlinks) {
+            if ((pageProperties == null) ||
+                (!pageProperties.containsKey(page.getTitle()))) {
+              Integer namespace = page.getNamespace();
+              if ((namespace != null) &&
+                  ((namespace.intValue() == Namespace.MAIN) ||
+                   (namespace.intValue() == Namespace.TEMPLATE))) {
+                if (!pages.contains(page)) {
+                  pages.add(page);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Construct list of pages embedding the templates.
+   * 
+   * @param pages List of pages embedding the templates.
+   * @throws APIException
+   */
+  private void constructEmbeddedIn(List<Page> pages) throws APIException {
+    if (pageNames != null) {
+      List<Page> tmpPages = constructInternalPageList();
+      MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
+      pages.addAll(mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages));
+    }
+  }
+
+  /**
+   * Construct list of internal links contained in the pages.
+   * 
+   * @param pages List of internal links in the pages.
+   * @throws APIException
+   */
+  private void constructInternalLinks(List<Page> pages) throws APIException {
+    for (String dabList : pageNames) {
+      Page page = DataManager.getPage(getWikipedia(), dabList, null, null);
+      MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
+      mw.retrieveAllLinks(getWikipedia(), page, null, null, true);
+      Iterator<Page> iter = page.getLinks().iterator();
+      while (iter.hasNext()) {
+        Page link = iter.next();
+        if ((link != null) &&
+            (link.isInMainNamespace()) &&
+            (!pages.contains(link))) {
+          pages.add(link);
+        }
+      }
+    }
   }
 }
