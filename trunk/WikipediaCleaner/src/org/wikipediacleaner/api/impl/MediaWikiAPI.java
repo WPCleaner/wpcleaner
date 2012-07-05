@@ -69,6 +69,8 @@ import org.wikipediacleaner.api.request.ApiParseRequest;
 import org.wikipediacleaner.api.request.ApiParseResult;
 import org.wikipediacleaner.api.request.ApiPurgeRequest;
 import org.wikipediacleaner.api.request.ApiPurgeResult;
+import org.wikipediacleaner.api.request.ApiQueryListRawWatchlistRequest;
+import org.wikipediacleaner.api.request.ApiQueryListRawWatchlistResult;
 import org.wikipediacleaner.api.request.ApiQueryMetaSiteInfoRequest;
 import org.wikipediacleaner.api.request.ApiQueryMetaSiteInfoResult;
 import org.wikipediacleaner.api.request.ApiRequest;
@@ -77,6 +79,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlExpandResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLoginResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlParseResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPurgeResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlQueryListRawWatchlistResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlQueryMetaSiteInfoResult;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
@@ -162,6 +165,20 @@ public class MediaWikiAPI implements API {
       return loginRequest.login(username, password);
     }
     return LoginResult.createCorrectLogin();
+  }
+
+  /**
+   * Retrieve raw watch list.
+   * 
+   * @param wiki Wiki.
+   * @throws APIException
+   */
+  public List<Page> retrieveRawWatchlist(EnumWikipedia wiki) throws APIException {
+    ApiQueryListRawWatchlistResult watchlistResult =
+        new ApiXmlQueryListRawWatchlistResult(wiki, httpClient, connection);
+    ApiQueryListRawWatchlistRequest watchlistRequest =
+        new ApiQueryListRawWatchlistRequest(watchlistResult);
+    return watchlistRequest.loadWatchlistRaw();
   }
 
   /**
@@ -456,7 +473,7 @@ public class MediaWikiAPI implements API {
       }
     }
   }
-  
+
   /**
    * Expand templates in a text.
    * 

@@ -20,21 +20,21 @@ package org.wikipediacleaner.api.request;
 
 
 /**
- * Interface for MediaWiki API meta requests.
+ * Interface for MediaWiki API list query requests.
  */
-public class ApiQueryMetaRequest extends ApiRequest {
+public class ApiQueryListRequest extends ApiRequest {
 
   // ==========================================================================
   // API properties
   // ==========================================================================
 
   /**
-   * Property for Meta.
+   * Property for List.
    */
-  public final static String PROPERTY_META = "meta";
+  public final static String PROPERTY_LIST = "list";
 
   /**
-   * Property for Meta / Site info.
+   * Property for List / WatchlistRaw info.
    */
-  public final static String PROPERTY_META_SITEINFO = "siteinfo";
+  public final static String PROPERTY_LIST_WATCHLISTRAW = "watchlistraw";
 }

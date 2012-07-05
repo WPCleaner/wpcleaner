@@ -55,6 +55,15 @@ public interface API {
       boolean login) throws APIException;
 
   /**
+   * Retrieve raw watch list.
+   * 
+   * @param wiki Wiki.
+   * @throws APIException
+   */
+  public List<Page> retrieveRawWatchlist(
+      EnumWikipedia wiki) throws APIException;
+
+  /**
    * Load Wikipedia configuration.
    * 
    * @param wikipedia Wikipedia.

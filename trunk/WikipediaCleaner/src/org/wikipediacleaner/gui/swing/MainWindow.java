@@ -126,7 +126,8 @@ public class MainWindow
   private final static String ACTION_RELOAD_CONFIG    = "RELOAD CONFIG";
   private final static String ACTION_SAVE_PASSWORD    = "SAVE PASSWORD";
   private final static String ACTION_UPDATE_DAB       = "UPDATE DAB WARNING";
-  private final static String ACTION_WATCHED_PAGES    = "WATCHED PAGES";
+  private final static String ACTION_WATCH_LIST_LOCAL = "WATCH LIST LOCAL";
+  private final static String ACTION_WATCH_LIST       = "WATCH LIST";
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(3);
 
@@ -153,7 +154,8 @@ public class MainWindow
   private JButton buttonCheckWiki;
   private JButton buttonHelpRequested;
   private JButton buttonAllDab;
-  private JButton buttonWatchedPages;
+  private JButton buttonWatchlistLocal;
+  private JButton buttonWatchlist;
   private JButton buttonRandomPages;
   private JButton buttonBotTools;
 
@@ -286,7 +288,8 @@ public class MainWindow
     buttonCheckWiki.setEnabled(logged);
     buttonHelpRequested.setEnabled(logged);
     buttonAllDab.setEnabled(logged);
-    buttonWatchedPages.setEnabled(logged);
+    buttonWatchlistLocal.setEnabled(logged);
+    buttonWatchlist.setEnabled(logged);
     buttonRandomPages.setEnabled(logged);
     buttonBotTools.setEnabled(userLogged);
 
@@ -747,13 +750,22 @@ public class MainWindow
     panel.add(buttonHelpRequested, constraints);
     constraints.gridy++;
 
-    // Watched pages button
-    buttonWatchedPages = Utilities.createJButton(
+    // Local watch list button
+    buttonWatchlistLocal = Utilities.createJButton(
         "gnome-logviewer.png", EnumImageSize.NORMAL,
         GT._("Local &Watch list"), true);
-    buttonWatchedPages.setActionCommand(ACTION_WATCHED_PAGES);
-    buttonWatchedPages.addActionListener(this);
-    panel.add(buttonWatchedPages, constraints);
+    buttonWatchlistLocal.setActionCommand(ACTION_WATCH_LIST_LOCAL);
+    buttonWatchlistLocal.addActionListener(this);
+    panel.add(buttonWatchlistLocal, constraints);
+    constraints.gridy++;
+
+    // Watch list button
+    buttonWatchlist = Utilities.createJButton(
+        "gnome-logviewer.png", EnumImageSize.NORMAL,
+        GT._("Watch list"), true);
+    buttonWatchlist.setActionCommand(ACTION_WATCH_LIST);
+    buttonWatchlist.addActionListener(this);
+    panel.add(buttonWatchlist, constraints);
     constraints.gridy++;
 
     // Random pages button
@@ -827,8 +839,10 @@ public class MainWindow
       actionMostDabLinks();
     } else if (ACTION_RANDOM_PAGE.equals(e.getActionCommand())) {
       actionRandomPage();
-    } else if (ACTION_WATCHED_PAGES.equals(e.getActionCommand())) {
-      actionWatchedPages();
+    } else if (ACTION_WATCH_LIST_LOCAL.equals(e.getActionCommand())) {
+      actionWatchlistLocal();
+    } else if (ACTION_WATCH_LIST.equals(e.getActionCommand())) {
+      actionWatchlist();
     } else if (ACTION_OPTIONS.equals(e.getActionCommand())) {
       Controller.runOptions();
     } else if (ACTION_OPTIONS_SYSTEM.equals(e.getActionCommand())) {
@@ -1384,9 +1398,9 @@ public class MainWindow
   }
 
   /**
-   * Action called when Watched pages button is pressed.
+   * Action called when local watch list button is pressed.
    */
-  private void actionWatchedPages() {
+  private void actionWatchlistLocal() {
     Configuration config = Configuration.getConfiguration();
     List<String> pageNames = config.getStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES);
     EnumWikipedia wikipedia = getWikipedia();
@@ -1396,7 +1410,21 @@ public class MainWindow
     new PageListWorker(
         wikipedia, this, null,
         pageNames, PageListWorker.Mode.DIRECT, true,
-        GT._("Watched pages")).start();
+        GT._("Local watch list")).start();
+  }
+
+  /**
+   * Action called when watch list button is pressed.
+   */
+  private void actionWatchlist() {
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia == null) {
+      return;
+    }
+    new PageListWorker(
+        wikipedia, this, null,
+        null, PageListWorker.Mode.WATCH_LIST, true,
+        GT._("Watch list")).start();
   }
 
   /**
