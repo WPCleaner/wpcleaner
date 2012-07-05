@@ -66,6 +66,8 @@ public class PageListWorker extends BasicWorker {
    *     Retrieve list of pages embedding the templates.</li>
    * <li>INTERNAL_LINKS: List of pages.
    *     Retrieve list of internal links in the pages.</li>
+   * <li>WATCH_LIST: Not used.
+   *     Retrieve list of pages in the watch list.</li>
    * </ul>
    */
   public static enum Mode {
@@ -76,6 +78,7 @@ public class PageListWorker extends BasicWorker {
     DIRECT,
     EMBEDDED_IN,
     INTERNAL_LINKS,
+    WATCH_LIST,
   }
 
   private final Page referencePage;
@@ -174,6 +177,11 @@ public class PageListWorker extends BasicWorker {
       // List internal links in a page
       case INTERNAL_LINKS:
         constructInternalLinks(pages);
+        break;
+
+      // List pages in the watch list
+      case WATCH_LIST:
+        constructWatchList(pages);
         break;
 
       default:
@@ -355,6 +363,20 @@ public class PageListWorker extends BasicWorker {
           pages.add(link);
         }
       }
+    }
+  }
+
+  /**
+   * Construct list of pages in the watch list.
+   * 
+   * @param pages List of pages in the watch list.
+   * @throws APIException
+   */
+  private void constructWatchList(List<Page> pages) throws APIException {
+    final API api = APIFactory.getAPI();
+    List<Page> tmpPages = api.retrieveRawWatchlist(getWikipedia());
+    if (tmpPages != null) {
+      pages.addAll(tmpPages);
     }
   }
 }

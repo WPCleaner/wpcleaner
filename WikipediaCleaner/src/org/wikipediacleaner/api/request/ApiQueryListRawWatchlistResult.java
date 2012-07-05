@@ -18,23 +18,27 @@
 
 package org.wikipediacleaner.api.request;
 
+import java.util.List;
+import java.util.Map;
+
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.data.Page;
+
 
 /**
- * Interface for MediaWiki API meta requests.
+ * Base interface for MediaWiki API raw watch list results.
  */
-public class ApiQueryMetaRequest extends ApiRequest {
-
-  // ==========================================================================
-  // API properties
-  // ==========================================================================
+public interface ApiQueryListRawWatchlistResult extends ApiResult {
 
   /**
-   * Property for Meta.
+   * Execute watch list raw request.
+   * 
+   * @param properties Properties defining request.
+   * @param watchlist List of pages to be filled with the watch list.
+   * @return Value for continuing request if needed.
+   * @throws APIException
    */
-  public final static String PROPERTY_META = "meta";
-
-  /**
-   * Property for Meta / Site info.
-   */
-  public final static String PROPERTY_META_SITEINFO = "siteinfo";
+  public String executeWatchlistRaw(
+      Map<String, String> properties,
+      List<Page> watchlist) throws APIException;
 }

@@ -26,7 +26,7 @@ import org.wikipediacleaner.api.APIException;
 
 
 /**
- * Interface for MediaWiki API purge requests.
+ * Interface for MediaWiki API site information requests.
  */
 public class ApiQueryMetaSiteInfoRequest extends ApiQueryMetaRequest {
 
