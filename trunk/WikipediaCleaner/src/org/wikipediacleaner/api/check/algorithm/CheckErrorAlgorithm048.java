@@ -24,6 +24,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.i18n.GT;
 
@@ -63,19 +64,35 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     boolean result = false;
     Collection<PageElementInternalLink> links = pageAnalysis.getInternalLinks();
     String pageTitle = pageAnalysis.getPage().getTitle();
+    String contents = pageAnalysis.getContents();
     for (PageElementInternalLink link : links) {
       if (Page.areSameTitle(pageTitle, link.getFullLink())) {
         if (errors == null) {
           return true;
         }
         result = true;
-        CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(),
-            link.getBeginIndex(),
-            link.getEndIndex());
-        errorResult.addReplacement(link.getDisplayedText());
-        errorResult.addReplacement("'''" + link.getDisplayedText() + "'''");
-        errors.add(errorResult);
+        PageElementTag tagImagemap = pageAnalysis.getSurroundingTag(
+            PageElementTag.TAG_WIKI_IMAGEMAP, link.getBeginIndex());
+        if (tagImagemap != null) {
+          int previousCR = getPreviousCR(contents, link.getBeginIndex());
+          int nextCR = getNextCR(contents, link.getEndIndex());
+          nextCR = Math.min(nextCR, tagImagemap.getMatchingTag().getBeginIndex());
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(), previousCR, nextCR);
+          if ((previousCR > tagImagemap.getEndIndex()) &&
+              (contents.charAt(nextCR) == '\n')) {
+            errorResult.addReplacement("", GT._("Delete"));
+          }
+          errors.add(errorResult);
+        } else {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              link.getBeginIndex(),
+              link.getEndIndex());
+          errorResult.addReplacement(link.getDisplayedText());
+          errorResult.addReplacement("'''" + link.getDisplayedText() + "'''");
+          errors.add(errorResult);
+        }
       }
     }
     return result;
@@ -119,22 +136,74 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     int currentIndex = 0;
     for (PageElementInternalLink link : links) {
       if (Page.areSameTitle(pageTitle, link.getFullLink())) {
-        if (link.getBeginIndex() > currentIndex) {
-          newContents.append(contents.substring(currentIndex, link.getBeginIndex()));
-        }
-        if ((currentIndex == 0) && (link.getBeginIndex() < firstTitle)) {
-          newContents.append("'''");
-          newContents.append(link.getDisplayedText());
-          newContents.append("'''");
+        PageElementTag tagImagemap = analysis.getSurroundingTag(
+            PageElementTag.TAG_WIKI_IMAGEMAP, link.getBeginIndex());
+        if (tagImagemap != null) {
+          int previousCR = getPreviousCR(contents, link.getBeginIndex());
+          int nextCR = getNextCR(contents, link.getEndIndex());
+          nextCR = Math.min(nextCR, tagImagemap.getMatchingTag().getBeginIndex());
+          if ((previousCR > tagImagemap.getEndIndex()) &&
+              (contents.charAt(nextCR) == '\n')) {
+            if (previousCR > currentIndex) {
+              newContents.append(contents.substring(currentIndex, previousCR));
+              currentIndex = nextCR;
+            }
+          }
         } else {
-          newContents.append(link.getDisplayedText());
+          if (link.getBeginIndex() > currentIndex) {
+            newContents.append(contents.substring(currentIndex, link.getBeginIndex()));
+          }
+          if ((currentIndex == 0) && (link.getBeginIndex() < firstTitle)) {
+            newContents.append("'''");
+            newContents.append(link.getDisplayedText());
+            newContents.append("'''");
+          } else {
+            newContents.append(link.getDisplayedText());
+          }
+          currentIndex = link.getEndIndex();
         }
-        currentIndex = link.getEndIndex();
       }
     }
     if (currentIndex < contents.length()) {
       newContents.append(contents.substring(currentIndex));
     }
     return newContents.toString();
+  }
+
+  /**
+   * Find position of previous carriage return.
+   * 
+   * @param contents Page contents.
+   * @param currentIndex Current index.
+   * @return Index of previous carriage return.
+   */
+  private int getPreviousCR(String contents, int currentIndex) {
+    if (contents == null) {
+      return 0;
+    }
+    int tmpIndex = currentIndex - 1;
+    while ((tmpIndex >= 0) && (contents.charAt(tmpIndex) != '\n')) {
+      tmpIndex--;
+    }
+    return Math.max(0, tmpIndex);
+  }
+
+  /**
+   * Find position of next carriage return.
+   * 
+   * @param contents Page contents.
+   * @param currentIndex Current index.
+   * @return Index of next carriage return.
+   */
+  private int getNextCR(String contents, int currentIndex) {
+    if (contents == null) {
+      return -1;
+    }
+    int tmpIndex = currentIndex;
+    while ((tmpIndex < contents.length()) &&
+           (contents.charAt(tmpIndex) != '\n')) {
+      tmpIndex++;
+    }
+    return tmpIndex;
   }
 }
