@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-07-05 21:42+0200\n"
+"POT-Creation-Date: 2012-07-08 01:21+0200\n"
 "PO-Revision-Date: 2012-07-01 10:58+0000\n"
 "Last-Translator: Rogelio Meza Torres <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -28,8 +28,8 @@ msgid ""
 "WikiCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
-"La configuración de WikiCleaner está disponible en línea, visite la "
-"{0}Configuración de sistema{1}"
+"La configuración de WikiCleaner está disponible en línea, visite la {0}"
+"Configuración de sistema{1}"
 
 #: org/wikipediacleaner/Version.java:43
 msgid "Many new features were added recently : try them !"
@@ -52,8 +52,7 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:47
 msgid "Fixing orthograph or typography based on a list of suggestions."
-msgstr ""
-"Reparando ortografía o tipografía basado en una lista de sugerencias."
+msgstr "Reparando ortografía o tipografía basado en una lista de sugerencias."
 
 #: org/wikipediacleaner/Version.java:50
 msgid "Please, report any other problem you find to me."
@@ -106,6 +105,7 @@ msgstr "Reemplazar con {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:97
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:103
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:71
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:84
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:73
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:122
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:96
@@ -182,11 +182,11 @@ msgstr "Ver imagen"
 msgid "Add DEFAULTSORT"
 msgstr "Agregar DEFAULTSORT"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:41
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:42
 msgid "Remove all links to title (first in bold)"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:42
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:43
 msgid "Remove all links to title"
 msgstr "Eliminar todos los enlaces al artículo"
 
@@ -247,9 +247,9 @@ msgstr "Visor externo"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:153
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page "
-"name>|<param name for code of other language>|<param name for page name in "
-"other language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page name>|"
+"<param name for code of other language>|<param name for page name in other "
+"language>|<param name for displayed text>"
 msgstr ""
 "Se puede usar una plantilla en lugar del enlace a otro idioma. Debe "
 "especificarse así: <nombre de la plantilla>|<nombre del parámetro para el "
@@ -530,8 +530,7 @@ msgstr "Esto modificará muchas páginas en poco tiempo."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:517
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:108
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "En algunas proyectos de Wikipedia, podría requerir tener el permiso de bot "
 "para hacer esto."
@@ -581,8 +580,7 @@ msgid "Update existing disambiguation warning messages"
 msgstr "Actualizar mensajes de advertencia de desambiguación"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:208
-msgid ""
-"At what page do you wish to start updating the disambiguation warning ?"
+msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 "¿A partir de cuál página desea comenzar a actualizar el aviso de "
 "desambiguación?"
@@ -1118,8 +1116,7 @@ msgid "Internal links in {0}"
 msgstr "Enlaces internos en {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1201
-msgid ""
-"You must input a page name for retrieving the list of category members"
+msgid "You must input a page name for retrieving the list of category members"
 msgstr ""
 "Debe indicar un nombre de página para obtener la lista de miembros de "
 "categoría"
@@ -1271,8 +1268,7 @@ msgid "Analysis - {0}"
 msgstr "Análisis - {0}"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:382
-msgid ""
-"Add a warning on the talk page about the links to disambiguation pages"
+msgid "Add a warning on the talk page about the links to disambiguation pages"
 msgstr ""
 "Añadir una advertencia en la discusión acerca de los enlaces a páginas de "
 "desambiguación"
@@ -1479,8 +1475,7 @@ msgstr "&Añadir una nota a la página de discusión"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:839
 msgid "Update disambiguation warning on talk page"
-msgstr ""
-"Actualizar la advertencia de desambiguación en la página de discusión"
+msgstr "Actualizar la advertencia de desambiguación en la página de discusión"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:854
 msgid "Create disambiguation warning on talk page"
@@ -2029,8 +2024,7 @@ msgstr ""
 "de nombres principal)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:97
-msgid ""
-"Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 "Crear advertencia de desambiguación en la página de comentarios (en los "
 "espacios de nombres enciclopédicos)"
@@ -2048,8 +2042,7 @@ msgstr ""
 "Principal)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:118
-msgid ""
-"Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 "Actualizar la advertencia de desambiguación en la página de comentarios (en "
 "espacios de nombres enciclopédicos)"
