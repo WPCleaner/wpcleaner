@@ -18,33 +18,27 @@
 
 package org.wikipediacleaner.api.request;
 
+import java.util.List;
+import java.util.Map;
+
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.data.Page;
+
 
 /**
- * Interface for MediaWiki API list query requests.
+ * Base interface for MediaWiki API back links list results.
  */
-public class ApiQueryListRequest extends ApiRequest {
-
-  // ==========================================================================
-  // API properties
-  // ==========================================================================
+public interface ApiQueryListBacklinksResult extends ApiResult {
 
   /**
-   * Property for List.
+   * Execute back links list request.
+   * 
+   * @param properties Properties defining request.
+   * @param list List to be filled with back links.
+   * @return Value for continuing request if needed.
+   * @throws APIException
    */
-  public final static String PROPERTY_LIST = "list";
-
-  /**
-   * Property value for List / Back links.
-   */
-  public final static String PROPERTY_LIST_BACKLINKS = "backlinks";
-
-  /**
-   * Property value for List / Random pages.
-   */
-  public final static String PROPERTY_LIST_RANDOM = "random";
-
-  /**
-   * Property value for List / Raw watch list.
-   */
-  public final static String PROPERTY_LIST_WATCHLISTRAW = "watchlistraw";
+  public String executeBacklinks(
+      Map<String, String> properties,
+      List<Page> list) throws APIException;
 }
