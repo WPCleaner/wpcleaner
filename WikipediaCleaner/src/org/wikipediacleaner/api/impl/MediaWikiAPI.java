@@ -69,6 +69,8 @@ import org.wikipediacleaner.api.request.ApiParseRequest;
 import org.wikipediacleaner.api.request.ApiParseResult;
 import org.wikipediacleaner.api.request.ApiPurgeRequest;
 import org.wikipediacleaner.api.request.ApiPurgeResult;
+import org.wikipediacleaner.api.request.ApiQueryListRandomRequest;
+import org.wikipediacleaner.api.request.ApiQueryListRandomResult;
 import org.wikipediacleaner.api.request.ApiQueryListRawWatchlistRequest;
 import org.wikipediacleaner.api.request.ApiQueryListRawWatchlistResult;
 import org.wikipediacleaner.api.request.ApiQueryMetaSiteInfoRequest;
@@ -79,6 +81,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlExpandResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLoginResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlParseResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPurgeResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlQueryListRandomResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlQueryListRawWatchlistResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlQueryMetaSiteInfoResult;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -332,39 +335,17 @@ public class MediaWikiAPI implements API {
   /**
    * Retrieves random pages.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param count Number of random pages.
    * @throws APIException
    */
   public List<Page> getRandomPages(
-      EnumWikipedia wikipedia, int count) throws APIException {
-    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
-    properties.put("list", "random");
-    properties.put("rnlimit", Integer.toString(count));
-    properties.put("rnnamespace", Integer.toString(Namespace.MAIN));
-    List<Page> pages = new ArrayList<Page>(count);
-    try {
-      XPath xpa = XPath.newInstance("/api/query/random/page");
-      Element root = getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS);
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
-      XPath xpaPageId = XPath.newInstance("./@id");
-      XPath xpaNs = XPath.newInstance("./@ns");
-      XPath xpaTitle = XPath.newInstance("./@title");
-      while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
-        Page page = DataManager.getPage(
-            wikipedia, xpaTitle.valueOf(currentNode), null, null);
-        page.setNamespace(xpaNs.valueOf(currentNode));
-        page.setPageId(xpaPageId.valueOf(currentNode));
-        pages.add(page);
-      }
-    } catch (JDOMException e) {
-      log.error("Error random pages", e);
-      throw new APIException("Error parsing XML result", e);
-    }
-    Collections.sort(pages);
-    return pages;
+      EnumWikipedia wiki, int count) throws APIException {
+    ApiQueryListRandomResult randomResult =
+        new ApiXmlQueryListRandomResult(wiki, httpClient, connection);
+    ApiQueryListRandomRequest randomRequest =
+        new ApiQueryListRandomRequest(randomResult);
+    return randomRequest.loadRandomList(count);
   }
 
   /**

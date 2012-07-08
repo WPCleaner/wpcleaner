@@ -18,28 +18,26 @@
 
 package org.wikipediacleaner.api.request;
 
+import java.util.List;
+import java.util.Map;
+
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.data.Page;
+
 
 /**
- * Interface for MediaWiki API list query requests.
+ * Base interface for MediaWiki API random list results.
  */
-public class ApiQueryListRequest extends ApiRequest {
-
-  // ==========================================================================
-  // API properties
-  // ==========================================================================
+public interface ApiQueryListRandomResult extends ApiResult {
 
   /**
-   * Property for List.
+   * Execute random list request.
+   * 
+   * @param properties Properties defining request.
+   * @param list List to be filled with random pages.
+   * @throws APIException
    */
-  public final static String PROPERTY_LIST = "list";
-
-  /**
-   * Property for List / Random info.
-   */
-  public final static String PROPERTY_LIST_RANDOM = "random";
-
-  /**
-   * Property for List / WatchlistRaw info.
-   */
-  public final static String PROPERTY_LIST_WATCHLISTRAW = "watchlistraw";
+  public void executeRandomList(
+      Map<String, String> properties,
+      List<Page> list) throws APIException;
 }
