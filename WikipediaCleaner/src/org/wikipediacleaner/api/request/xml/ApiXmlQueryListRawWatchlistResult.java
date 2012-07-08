@@ -68,7 +68,7 @@ public class ApiXmlQueryListRawWatchlistResult extends ApiXmlResult implements A
     try {
       return constructWatchlist(
           getRoot(properties, ApiRequest.MAX_ATTEMPTS),
-          "/api", watchlist);
+          watchlist);
     } catch (JDOMParseException e) {
       log.error("Error loading watch list", e);
       throw new APIException("Error parsing XML", e);
@@ -79,19 +79,18 @@ public class ApiXmlQueryListRawWatchlistResult extends ApiXmlResult implements A
    * Construct watch list.
    * 
    * @param root Root element.
-   * @param query XPath query to retrieve the watch list
    * @param watchlist List of pages to be filled with the watch list.
    * @return Value for continuing request if needed.
    * @throws APIException
    */
   private String constructWatchlist(
-      Element root, String query,
+      Element root,
       List<Page> watchlist)
       throws APIException {
 
     // Retrieve watch list
     try {
-      XPath xpa = XPath.newInstance(query + "/watchlistraw/wr");
+      XPath xpa = XPath.newInstance("/api/watchlistraw/wr");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
       XPath xpaTitle = XPath.newInstance("./@title");
@@ -110,7 +109,7 @@ public class ApiXmlQueryListRawWatchlistResult extends ApiXmlResult implements A
 
     // Retrieve continue
     try {
-      XPath xpa = XPath.newInstance(query + "/query-continue/watchlistraw");
+      XPath xpa = XPath.newInstance("/api/query-continue/watchlistraw");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
       XPath xpaContinue = XPath.newInstance("./@wrcontinue");

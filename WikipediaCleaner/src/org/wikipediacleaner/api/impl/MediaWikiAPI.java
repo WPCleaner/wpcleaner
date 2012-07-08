@@ -69,6 +69,8 @@ import org.wikipediacleaner.api.request.ApiParseRequest;
 import org.wikipediacleaner.api.request.ApiParseResult;
 import org.wikipediacleaner.api.request.ApiPurgeRequest;
 import org.wikipediacleaner.api.request.ApiPurgeResult;
+import org.wikipediacleaner.api.request.ApiQueryListBacklinksRequest;
+import org.wikipediacleaner.api.request.ApiQueryListBacklinksResult;
 import org.wikipediacleaner.api.request.ApiQueryListRandomRequest;
 import org.wikipediacleaner.api.request.ApiQueryListRandomResult;
 import org.wikipediacleaner.api.request.ApiQueryListRawWatchlistRequest;
@@ -81,6 +83,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlExpandResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLoginResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlParseResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPurgeResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlQueryListBacklinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlQueryListRandomResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlQueryListRawWatchlistResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlQueryMetaSiteInfoResult;
@@ -148,24 +151,24 @@ public class MediaWikiAPI implements API {
   }
 
   /**
-   * Login into Wikipedia.
+   * Login into Wiki.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param username User name.
    * @param password Password.
    * @param login Flag indicating if login should be done.
    * @return Login status.
    */
   public LoginResult login(
-      EnumWikipedia wikipedia,
+      EnumWikipedia wiki,
       String username,
       String password,
       boolean login) throws APIException {
     logout();
-    ApiLoginResult loginResult = new ApiXmlLoginResult(wikipedia, httpClient, connection);
-    ApiLoginRequest loginRequest = new ApiLoginRequest(loginResult);
+    ApiLoginResult result = new ApiXmlLoginResult(wiki, httpClient, connection);
+    ApiLoginRequest request = new ApiLoginRequest(result);
     if (login) {
-      return loginRequest.login(username, password);
+      return request.login(username, password);
     }
     return LoginResult.createCorrectLogin();
   }
@@ -177,45 +180,45 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    */
   public List<Page> retrieveRawWatchlist(EnumWikipedia wiki) throws APIException {
-    ApiQueryListRawWatchlistResult watchlistResult =
+    ApiQueryListRawWatchlistResult result =
         new ApiXmlQueryListRawWatchlistResult(wiki, httpClient, connection);
-    ApiQueryListRawWatchlistRequest watchlistRequest =
-        new ApiQueryListRawWatchlistRequest(watchlistResult);
-    return watchlistRequest.loadWatchlistRaw();
+    ApiQueryListRawWatchlistRequest request =
+        new ApiQueryListRawWatchlistRequest(result);
+    return request.loadWatchlistRaw();
   }
 
   /**
-   * Load Wikipedia configuration.
+   * Load Wiki configuration.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param userName User name.
    */
   public void loadConfiguration(
-      EnumWikipedia wikipedia,
+      EnumWikipedia wiki,
       String userName) throws APIException {
 
     // Retrieve site data
-    loadSiteInfo(wikipedia);
+    loadSiteInfo(wiki);
 
     // Retrieve configuration
-    if (wikipedia.getConfigurationPage() != null) {
-      String configPageName = wikipedia.getConfigurationPage();
+    if (wiki.getConfigurationPage() != null) {
+      String configPageName = wiki.getConfigurationPage();
       Page page = DataManager.getPage(
-          wikipedia, configPageName, null, null);
-      retrieveContents(wikipedia, page, false);
-      wikipedia.getConfiguration().setGeneralConfiguration(
+          wiki, configPageName, null, null);
+      retrieveContents(wiki, page, false);
+      wiki.getConfiguration().setGeneralConfiguration(
           new StringReader(page.getContents()));
 
       if ((userName != null) && (userName.trim().length() > 0) &&
-          (wikipedia.getUserConfigurationPage(userName) != null) &&
-          (!Page.areSameTitle(wikipedia.getUserConfigurationPage(userName), configPageName))) {
+          (wiki.getUserConfigurationPage(userName) != null) &&
+          (!Page.areSameTitle(wiki.getUserConfigurationPage(userName), configPageName))) {
         Page userConfigPage = DataManager.getPage(
-            wikipedia,
-            wikipedia.getUserConfigurationPage(userName),
+            wiki,
+            wiki.getUserConfigurationPage(userName),
             null, null);
-        retrieveContents(wikipedia, userConfigPage, false);
+        retrieveContents(wiki, userConfigPage, false);
         if (Boolean.TRUE.equals(userConfigPage.isExisting())) {
-          wikipedia.getConfiguration().setUserConfiguration(
+          wiki.getConfiguration().setUserConfiguration(
               new StringReader(userConfigPage.getContents()));
         }
       }
@@ -341,11 +344,11 @@ public class MediaWikiAPI implements API {
    */
   public List<Page> getRandomPages(
       EnumWikipedia wiki, int count) throws APIException {
-    ApiQueryListRandomResult randomResult =
+    ApiQueryListRandomResult result =
         new ApiXmlQueryListRandomResult(wiki, httpClient, connection);
-    ApiQueryListRandomRequest randomRequest =
-        new ApiQueryListRandomRequest(randomResult);
-    return randomRequest.loadRandomList(count);
+    ApiQueryListRandomRequest request =
+        new ApiQueryListRandomRequest(result);
+    return request.loadRandomList(count);
   }
 
   /**
@@ -458,31 +461,31 @@ public class MediaWikiAPI implements API {
   /**
    * Expand templates in a text.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param title The title to use (for example in {{PAGENAME}}).
    * @param text The text with templates in it.
    * @return Text with templates expanded.
    * @throws APIException
    */
-  public String expandTemplates(EnumWikipedia wikipedia, String title, String text) throws APIException {
-    ApiExpandResult expandResult = new ApiXmlExpandResult(wikipedia, httpClient, connection);
-    ApiExpandRequest expandRequest = new ApiExpandRequest(expandResult);
-    return expandRequest.expandTemplates(title, text);
+  public String expandTemplates(EnumWikipedia wiki, String title, String text) throws APIException {
+    ApiExpandResult result = new ApiXmlExpandResult(wiki, httpClient, connection);
+    ApiExpandRequest request = new ApiExpandRequest(result);
+    return request.expandTemplates(title, text);
   }
 
   /**
    * Parse text.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param title The title to use (for example in {{PAGENAME}}).
    * @param text The text with templates in it.
    * @return Parsed text.
    * @throws APIException
    */
-  public String parseText(EnumWikipedia wikipedia, String title, String text) throws APIException {
-    ApiParseResult parseResult = new ApiXmlParseResult(wikipedia, httpClient, connection);
-    ApiParseRequest parseRequest = new ApiParseRequest(parseResult);
-    return parseRequest.parseText(title, text);
+  public String parseText(EnumWikipedia wiki, String title, String text) throws APIException {
+    ApiParseResult result = new ApiXmlParseResult(wiki, httpClient, connection);
+    ApiParseRequest request = new ApiParseRequest(result);
+    return request.parseText(title, text);
   }
 
   /**
@@ -689,14 +692,14 @@ public class MediaWikiAPI implements API {
   /**
    * Purge the cache of <code>page</code>.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param page The page.
    */
-  public void purgePageCache(EnumWikipedia wikipedia, Page page)
+  public void purgePageCache(EnumWikipedia wiki, Page page)
       throws APIException {
-    ApiPurgeResult purgeResult = new ApiXmlPurgeResult(wikipedia, httpClient, connection);
-    ApiPurgeRequest purgeRequest = new ApiPurgeRequest(purgeResult);
-    purgeRequest.purgePage(page);
+    ApiPurgeResult result = new ApiXmlPurgeResult(wiki, httpClient, connection);
+    ApiPurgeRequest request = new ApiPurgeRequest(result);
+    request.purgePage(page);
   }
 
   /**
@@ -863,53 +866,16 @@ public class MediaWikiAPI implements API {
   /**
    * Retrieves the back links of <code>page</code>.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param page The page.
    */
-  public void retrieveBackLinks(EnumWikipedia wikipedia, Page page)
+  public void retrieveBackLinks(EnumWikipedia wiki, Page page)
       throws APIException {
-    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
-    properties.put("list", "backlinks");
-    properties.put("bltitle", page.getTitle());
-    properties.put("bllimit", "max");
-    List<Page> links = new ArrayList<Page>();
-    boolean blcontinue = false;
-    do {
-      try {
-        XPath xpa = XPath.newInstance("/api/query/backlinks/bl");
-        Element root = getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS);
-        List results = xpa.selectNodes(root);
-        Iterator iter = results.iterator();
-        //links.ensureCapacity(links.size() + results.size());
-        XPath xpaPageId = XPath.newInstance("./@pageid");
-        XPath xpaNs = XPath.newInstance("./@ns");
-        XPath xpaTitle = XPath.newInstance("./@title");
-        while (iter.hasNext()) {
-          Element currentNode = (Element) iter.next();
-          Page link = DataManager.getPage(
-              page.getWikipedia(), xpaTitle.valueOf(currentNode), null, null);
-          link.setNamespace(xpaNs.valueOf(currentNode));
-          link.setPageId(xpaPageId.valueOf(currentNode));
-          links.add(link);
-        }
-        XPath xpaContinue = XPath.newInstance("/api/query-continue/backlinks");
-        XPath xpaBlContinue = XPath.newInstance("./@blcontinue");
-        results = xpaContinue.selectNodes(root);
-        iter = results.iterator();
-        blcontinue = false;
-        while (iter.hasNext()) {
-          Element currentNode = (Element) iter.next();
-          properties.remove("bltitle");
-          blcontinue = true;
-          properties.put("blcontinue", xpaBlContinue.valueOf(currentNode));
-        }
-      } catch (JDOMException e) {
-        log.error("Error backlinks for page " + page.getTitle(), e);
-        throw new APIException("Error parsing XML result", e);
-      }
-    } while (blcontinue);
-    Collections.sort(links);
-    page.setBackLinks(links);
+    ApiQueryListBacklinksResult result =
+        new ApiXmlQueryListBacklinksResult(wiki, httpClient, connection);
+    ApiQueryListBacklinksRequest request =
+        new ApiQueryListBacklinksRequest(result);
+    request.loadBacklinks(page);
   }
 
   /**

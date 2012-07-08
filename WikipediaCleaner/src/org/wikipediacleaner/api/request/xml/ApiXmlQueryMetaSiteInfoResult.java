@@ -68,9 +68,7 @@ public class ApiXmlQueryMetaSiteInfoResult extends ApiXmlResult implements ApiQu
       Map<String, String> properties)
           throws APIException {
     try {
-      constructSiteInfo(
-          getRoot(properties, ApiRequest.MAX_ATTEMPTS),
-          "/api/query");
+      constructSiteInfo(getRoot(properties, ApiRequest.MAX_ATTEMPTS));
     } catch (JDOMParseException e) {
       log.error("Error loading namespaces", e);
       throw new APIException("Error parsing XML", e);
@@ -79,17 +77,15 @@ public class ApiXmlQueryMetaSiteInfoResult extends ApiXmlResult implements ApiQu
 
   /**
    * @param root Root element.
-   * @param query XPath query to retrieve the name spaces
    * @throws APIException
    */
-  private void constructSiteInfo(
-      Element root, String query)
+  private void constructSiteInfo(Element root)
       throws APIException {
 
     // Retrieve name spaces
     HashMap<Integer, Namespace> namespaces = null;
     try {
-      XPath xpa = XPath.newInstance(query + "/namespaces/ns");
+      XPath xpa = XPath.newInstance("/api/query/namespaces/ns");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
       namespaces = new HashMap<Integer, Namespace>();
@@ -111,7 +107,7 @@ public class ApiXmlQueryMetaSiteInfoResult extends ApiXmlResult implements ApiQu
 
     // Retrieve name space aliases
     try {
-      XPath xpa = XPath.newInstance(query + "/namespacealiases/ns");
+      XPath xpa = XPath.newInstance("/api/query/namespacealiases/ns");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
       XPath xpaId = XPath.newInstance("./@id");
@@ -141,7 +137,7 @@ public class ApiXmlQueryMetaSiteInfoResult extends ApiXmlResult implements ApiQu
     // Retrieve languages
     try {
       List<Language> languages = new ArrayList<Language>();
-      XPath xpa = XPath.newInstance(query + "/languages/lang");
+      XPath xpa = XPath.newInstance("/api/query/languages/lang");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
       XPath xpaCode = XPath.newInstance("./@code");
@@ -159,7 +155,7 @@ public class ApiXmlQueryMetaSiteInfoResult extends ApiXmlResult implements ApiQu
     // Retrieve interwikis
     try {
       List<Interwiki> interwikis = new ArrayList<Interwiki>();
-      XPath xpa = XPath.newInstance(query + "/interwikimap/iw");
+      XPath xpa = XPath.newInstance("/api/query/interwikimap/iw");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
       XPath xpaPrefix = XPath.newInstance("./@prefix");
@@ -183,7 +179,7 @@ public class ApiXmlQueryMetaSiteInfoResult extends ApiXmlResult implements ApiQu
     // Retrieve magic words
     try {
       Map<String, MagicWord> magicWords = new HashMap<String, MagicWord>();
-      XPath xpa = XPath.newInstance(query + "/magicwords/magicword");
+      XPath xpa = XPath.newInstance("/api/query/magicwords/magicword");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
       XPath xpaName = XPath.newInstance("./@name");

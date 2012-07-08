@@ -62,14 +62,10 @@ public class ApiXmlLoginResult extends ApiXmlResult implements ApiLoginResult {
       Map<String, String> properties)
           throws APIException {
     try {
-      LoginResult result = constructLogin(
-          getRoot(properties, 1),
-          "/api/login");
+      LoginResult result = constructLogin(getRoot(properties, 1));
       if ((result != null) && (result.isTokenNeeded())) {
         properties.put(ApiLoginRequest.PROPERTY_TOKEN, result.getDetails());
-        result = constructLogin(
-            getRoot(properties, 1),
-            "/api/login");
+        result = constructLogin(getRoot(properties, 1));
       }
       return result;
     } catch (JDOMParseException e) {
@@ -79,16 +75,16 @@ public class ApiXmlLoginResult extends ApiXmlResult implements ApiLoginResult {
   }
 
   /**
-   * @param root Root element in MediaWiki answer.
+   * Analyze login answer.
    * 
-   * @param query Path to the answer.
+   * @param root Root element in MediaWiki answer.
    * @return Result of the login.
    * @throws APIException
    */
-  private LoginResult constructLogin(Element root, String query)
+  private LoginResult constructLogin(Element root)
       throws APIException {
     try {
-      XPath xpa = XPath.newInstance(query);
+      XPath xpa = XPath.newInstance("/api/login");
       Element node = (Element) xpa.selectSingleNode(root);
       if (node != null) {
         XPath xpaResult = XPath.newInstance("./@result");
