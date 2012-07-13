@@ -150,6 +150,10 @@ public class MediaWikiAPI implements API {
     return MAX_PAGES_PER_QUERY;
   }
 
+  // ==========================================================================
+  // User and login
+  // ==========================================================================
+
   /**
    * Login into Wiki.
    * 
@@ -231,6 +235,10 @@ public class MediaWikiAPI implements API {
   public void logout() {
     connection.clean();
   }
+
+  // ==========================================================================
+  // Tool server
+  // ==========================================================================
 
   /**
    * Send a POST request to the Tool Server.

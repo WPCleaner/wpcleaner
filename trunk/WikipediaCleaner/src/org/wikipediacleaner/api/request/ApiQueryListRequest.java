@@ -44,6 +44,11 @@ public class ApiQueryListRequest extends ApiRequest {
   public final static String PROPERTY_LIST_RANDOM = "random";
 
   /**
+   * Property value for List / Search.
+   */
+  public final static String PROPERTY_LIST_SEARCH = "search";
+
+  /**
    * Property value for List / Raw watch list.
    */
   public final static String PROPERTY_LIST_WATCHLISTRAW = "watchlistraw";

@@ -1,0 +1,196 @@
+/*
+ *  WikipediaCleaner: A tool to help on Wikipedia maintenance tasks.
+ *  Copyright (C) 2012  Nicolas Vervelle
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package org.wikipediacleaner.api.request;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.data.Page;
+
+
+/**
+ * Interface for MediaWiki search requests.
+ */
+public class ApiQueryListSearchRequest extends ApiQueryMetaRequest {
+
+  // ==========================================================================
+  // API properties
+  // ==========================================================================
+
+  /**
+   * Property for Info.
+   */
+  public final static String PROPERTY_INFO = "srinfo";
+
+  /**
+   * Property value for Info / Total hits.
+   */
+  public final static String PROPERTY_INFO_TOTALHITS = "totalhits";
+
+  /**
+   * Property value for Info / Suggestion.
+   */
+  public final static String PROPERTY_INFO_SUGGESTION = "suggestion";
+
+  /**
+   * Property for Limit.
+   */
+  public final static String PROPERTY_LIMIT = "srlimit";
+
+  /**
+   * Property for Name space.
+   */
+  public final static String PROPERTY_NAMESPACE = "srnamespace";
+
+  /**
+   * Property for Offset.
+   */
+  public final static String PROPERTY_OFFSET = "sroffset";
+
+  /**
+   * Property for Properties.
+   */
+  public final static String PROPERTY_PROP = "srprop";
+
+  /**
+   * Property value for Properties / Has related.
+   */
+  public final static String PROPERTY_PROP_HASRELATED = "hasrelated";
+
+  /**
+   * Property value for Properties / Redirect snippet.
+   */
+  public final static String PROPERTY_PROP_REDIRECTSNIPPET = "redirectsnippet";
+
+  /**
+   * Property value for Properties / Redirect title.
+   */
+  public final static String PROPERTY_PROP_REDIRECTTITLE = "redirecttitle";
+
+  /**
+   * Property value for Properties / Score.
+   */
+  public final static String PROPERTY_PROP_SCORE = "score";
+
+  /**
+   * Property value for Properties / Section snippet.
+   */
+  public final static String PROPERTY_PROP_SECTIONSNIPPET = "sectionsnippet";
+
+  /**
+   * Property value for Properties / Section title.
+   */
+  public final static String PROPERTY_PROP_SECTIONTITLE = "sectiontitle";
+
+  /**
+   * Property value for Properties / Size.
+   */
+  public final static String PROPERTY_PROP_SIZE = "size";
+
+  /**
+   * Property value for Properties / Snippet.
+   */
+  public final static String PROPERTY_PROP_SNIPPET = "snippet";
+
+  /**
+   * Property value for Properties / Time stamp.
+   */
+  public final static String PROPERTY_PROP_TIMESTAMP = "timestamp";
+
+  /**
+   * Property value for Properties / Title snippet.
+   */
+  public final static String PROPERTY_PROP_TITLESNIPPET = "titlesnippet";
+
+  /**
+   * Property value for Properties / Word count.
+   */
+  public final static String PROPERTY_PROP_WORDCOUNT = "wordcount";
+
+  /**
+   * Property for Redirect.
+   */
+  public final static String PROPERTY_REDIRECT = "srredirect";
+
+  /**
+   * Property for Search.
+   */
+  public final static String PROPERTY_SEARCH = "srsearch";
+
+  /**
+   * Property for What.
+   */
+  public final static String PROPERTY_WHAT = "srwhat";
+
+  /**
+   * Property value for What / text.
+   */
+  public final static String PROPERTY_WHAT_TEXT = "text";
+
+  /**
+   * Property value for What / title.
+   */
+  public final static String PROPERTY_WHAT_TITLE = "title";
+
+  // ==========================================================================
+  // Request management
+  // ==========================================================================
+
+  private final ApiQueryListSearchResult result;
+
+  /**
+   * @param result Parser for result depending on chosen format.
+   */
+  public ApiQueryListSearchRequest(ApiQueryListSearchResult result) {
+    this.result = result;
+  }
+
+  /**
+   * Execute a search.
+   * 
+   * @param page Page for which similar pages are searched.
+   */
+  public void searchSimilarPages(Page page) throws APIException {
+    Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
+    properties.put(
+        ApiQueryListRequest.PROPERTY_LIST,
+        ApiQueryListRequest.PROPERTY_LIST_SEARCH);
+    if (page.getNamespace() != null) {
+      properties.put(PROPERTY_NAMESPACE, page.getNamespace().toString());
+    } else {
+      properties.put(PROPERTY_NAMESPACE, "0");
+    }
+    properties.put(PROPERTY_PROP, PROPERTY_PROP_TITLESNIPPET);
+    properties.put(PROPERTY_REDIRECT, "true");
+    properties.put(PROPERTY_SEARCH, "intitle:\"" + page.getTitle().replaceAll("\"", "\"\"") + "\"");
+    List<Page> list = new ArrayList<Page>();
+    while (true) {
+      String continueValue = result.executeSearch(properties, list);
+      if (continueValue == null) {
+        break;
+      }
+      properties.put(PROPERTY_OFFSET, continueValue);
+    }
+    Collections.sort(list);
+    page.setSimilarPages(list);
+  }
+}
