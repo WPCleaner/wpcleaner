@@ -75,6 +75,8 @@ import org.wikipediacleaner.api.request.ApiQueryListRandomRequest;
 import org.wikipediacleaner.api.request.ApiQueryListRandomResult;
 import org.wikipediacleaner.api.request.ApiQueryListRawWatchlistRequest;
 import org.wikipediacleaner.api.request.ApiQueryListRawWatchlistResult;
+import org.wikipediacleaner.api.request.ApiQueryListSearchRequest;
+import org.wikipediacleaner.api.request.ApiQueryListSearchResult;
 import org.wikipediacleaner.api.request.ApiQueryMetaSiteInfoRequest;
 import org.wikipediacleaner.api.request.ApiQueryMetaSiteInfoResult;
 import org.wikipediacleaner.api.request.ApiRequest;
@@ -86,6 +88,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlPurgeResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlQueryListBacklinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlQueryListRandomResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlQueryListRawWatchlistResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlQueryListSearchResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlQueryMetaSiteInfoResult;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
@@ -764,31 +767,15 @@ public class MediaWikiAPI implements API {
   /**
    * Retrieves similar pages.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param page The page.
    * @throws APIException
    */
-  public void retrieveSimilarPages(EnumWikipedia wikipedia, Page page)
+  public void retrieveSimilarPages(EnumWikipedia wiki, Page page)
       throws APIException {
-    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
-    properties.put("list", "search");
-    if (page.getNamespace() != null) {
-      properties.put("srnamespace", page.getNamespace().toString());
-    } else {
-      properties.put("srnamespace", "0");
-    }
-    properties.put("srprop", "titlesnippet");
-    properties.put("srredirect", "true");
-    properties.put("srsearch", "intitle:\"" + page.getTitle().replaceAll("\"", "\"\"") + "\"");
-    try {
-      constructSimilarPages(
-          page,
-          getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS),
-          "/api/query/search/p");
-    } catch (JDOMParseException e) {
-      log.error("Error retrieving similar pages", e);
-      throw new APIException("Error parsing XML", e);
-    }
+    ApiQueryListSearchResult result = new ApiXmlQueryListSearchResult(wiki, httpClient, connection);
+    ApiQueryListSearchRequest request = new ApiQueryListSearchRequest(result);
+    request.searchSimilarPages(page);
   }
 
   /**
@@ -1421,39 +1408,6 @@ public class MediaWikiAPI implements API {
       throw new APIException("Error parsing XML result", e);
     }
     return QueryResult.createErrorQuery(null, null, null);
-  }
-
-  /**
-   * @param page Page.
-   * @param root Root element.
-   * @param query XPath query to retrieve the links 
-   * @throws APIException
-   */
-  private void constructSimilarPages(Page page, Element root, String query)
-      throws APIException {
-    if (page == null) {
-      throw new APIException("Page is null");
-    }
-    List<Page> similarPages = null;
-    try {
-      XPath xpa = XPath.newInstance(query);
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
-      similarPages = new ArrayList<Page>(results.size());
-      XPath xpaNs = XPath.newInstance("./@ns");
-      XPath xpaTitle = XPath.newInstance("./@title");
-      while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
-        Page similarPage = DataManager.getPage(
-            page.getWikipedia(), xpaTitle.valueOf(currentNode), null, null);
-        similarPage.setNamespace(xpaNs.valueOf(currentNode));
-        similarPages.add(similarPage);
-      }
-    } catch (JDOMException e) {
-      log.error("Error links for page " + page.getTitle(), e);
-      throw new APIException("Error parsing XML result", e);
-    }
-    page.setSimilarPages(similarPages);
   }
 
   /**
