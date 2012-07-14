@@ -125,6 +125,7 @@ public class MainWindow
   private final static String ACTION_RANDOM_PAGES     = "RANDOM PAGES";
   private final static String ACTION_RELOAD_CONFIG    = "RELOAD CONFIG";
   private final static String ACTION_SAVE_PASSWORD    = "SAVE PASSWORD";
+  private final static String ACTION_SEARCH_TITLES    = "SEARCH TITLES";
   private final static String ACTION_UPDATE_DAB       = "UPDATE DAB WARNING";
   private final static String ACTION_WATCH_LIST_LOCAL = "WATCH LIST LOCAL";
   private final static String ACTION_WATCH_LIST       = "WATCH LIST";
@@ -162,6 +163,7 @@ public class MainWindow
   JTextField textPagename;
   private JButton buttonFullAnalysis;
   private JButton buttonDisambiguation;
+  private JButton buttonSearchTitles;
   private JButton buttonEmbeddedIn;
   private JButton buttonInternalLinks;
   private JButton buttonCategoryMembers;
@@ -296,6 +298,7 @@ public class MainWindow
     textPagename.setEnabled(logged);
     buttonFullAnalysis.setEnabled(logged);
     buttonDisambiguation.setEnabled(logged);
+    buttonSearchTitles.setEnabled(logged);
     buttonInternalLinks.setEnabled(logged);
     buttonCategoryMembers.setEnabled(logged);
     buttonEmbeddedIn.setEnabled(logged);
@@ -630,6 +633,15 @@ public class MainWindow
     panel.add(buttonDisambiguation, constraints);
     constraints.gridy++;
 
+    // Search button
+    buttonSearchTitles = Utilities.createJButton(
+        "gnome-system-search.png", EnumImageSize.NORMAL,
+        GT._("Search in titles"), true);
+    buttonSearchTitles.setActionCommand(ACTION_SEARCH_TITLES);
+    buttonSearchTitles.addActionListener(this);
+    panel.add(buttonSearchTitles, constraints);
+    constraints.gridy++;
+
     // Links button
     buttonInternalLinks = Utilities.createJButton(GT._("Internal links"));
     buttonInternalLinks.setActionCommand(ACTION_INTERNAL_LINKS);
@@ -829,6 +841,8 @@ public class MainWindow
       actionDisambiguation();
     } else if (ACTION_INTERNAL_LINKS.equals(e.getActionCommand())) {
       actionInternalLinks();
+    } else if (ACTION_SEARCH_TITLES.equals(e.getActionCommand())) {
+      actionSearchTitles();
     } else if (ACTION_CAT_MEMBERS.equals(e.getActionCommand())) {
       actionCategoryMembers();
     } else if (ACTION_EMBEDDED_IN.equals(e.getActionCommand())) {
@@ -1188,6 +1202,25 @@ public class MainWindow
         Collections.singletonList(textPagename.getText().trim()),
         PageListWorker.Mode.INTERNAL_LINKS, false,
         GT._("Internal links in {0}", textPagename.getText().trim())).start();
+  }
+
+  /**
+   * Action called when Search Titles button is pressed.
+   */
+  private void actionSearchTitles() {
+    if ((textPagename == null) ||
+        (textPagename.getText() == null) ||
+        ("".equals(textPagename.getText().trim()))) {
+      displayWarning(
+          GT._("You must input a page name"),
+          textPagename);
+      return;
+    }
+    new PageListWorker(
+        getWikipedia(), this, null,
+        Collections.singletonList(textPagename.getText().trim()),
+        PageListWorker.Mode.SEARCH_TITLES, false,
+        GT._("Search results for {0}", textPagename.getText().trim())).start();
   }
 
   /**
