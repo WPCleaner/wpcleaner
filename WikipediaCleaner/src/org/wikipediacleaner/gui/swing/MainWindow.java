@@ -1582,10 +1582,12 @@ public class MainWindow
           Properties props = configuration.getProperties(getWikipedia(), Configuration.PROPERTIES_USERS);
           if (saveUser == ConfigurationConstants.VALUE_SAVE_USER_NONE) {
             props.remove(username);
+            configuration.setString(getWikipedia(), ConfigurationValueString.LAST_USER, (String) null);
           } else {
             props.setProperty(
                 username,
                 (saveUser == ConfigurationConstants.VALUE_SAVE_USER_BOTH) ? new String(password) : "");
+            configuration.setString(getWikipedia(), ConfigurationValueString.LAST_USER, username);
           }
           configuration.setProperties(getWikipedia(), Configuration.PROPERTIES_USERS, props);
           configuration.setInt(
@@ -1715,6 +1717,10 @@ public class MainWindow
       }
       if (comboUser.getItemCount() > 0) {
         comboUser.setSelectedIndex(0);
+      }
+      String lastUser = configuration.getString(wikipedia, ConfigurationValueString.LAST_USER);
+      if (lastUser != null) {
+        comboUser.setSelectedItem(lastUser);
       }
     }
     resetPassword();
