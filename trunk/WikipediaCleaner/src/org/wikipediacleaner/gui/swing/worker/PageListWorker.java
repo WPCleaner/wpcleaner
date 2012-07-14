@@ -78,6 +78,7 @@ public class PageListWorker extends BasicWorker {
     DIRECT,
     EMBEDDED_IN,
     INTERNAL_LINKS,
+    SEARCH_TITLES,
     WATCH_LIST,
   }
 
@@ -177,6 +178,11 @@ public class PageListWorker extends BasicWorker {
       // List internal links in a page
       case INTERNAL_LINKS:
         constructInternalLinks(pages);
+        break;
+
+      // Search similar pages
+      case SEARCH_TITLES:
+        constructSearchTitles(pages);
         break;
 
       // List pages in the watch list
@@ -362,6 +368,23 @@ public class PageListWorker extends BasicWorker {
             (!pages.contains(link))) {
           pages.add(link);
         }
+      }
+    }
+  }
+
+  /**
+   * Construct list of search results.
+   * 
+   * @param pages List of search results.
+   * @throws APIException
+   */
+  private void constructSearchTitles(List<Page> pages) throws APIException {
+    if (pageNames != null) {
+      final API api = APIFactory.getAPI();
+      for (String pageName : pageNames) {
+        Page page = DataManager.getPage(getWikipedia(), pageName, null, null);
+        api.retrieveSimilarPages(getWikipedia(), page);
+        pages.addAll(page.getSimilarPages());
       }
     }
   }
