@@ -31,7 +31,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.request.ApiQueryListSearchResult;
+import org.wikipediacleaner.api.request.ApiSearchResult;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ConnectionInformation;
 
@@ -39,14 +39,14 @@ import org.wikipediacleaner.api.request.ConnectionInformation;
 /**
  * Class for MediaWiki API XML search results.
  */
-public class ApiXmlQueryListSearchResult extends ApiXmlResult implements ApiQueryListSearchResult {
+public class ApiXmlSearchResult extends ApiXmlResult implements ApiSearchResult {
 
   /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
    * @param connection Connection information.
    */
-  public ApiXmlQueryListSearchResult(
+  public ApiXmlSearchResult(
       EnumWikipedia wiki,
       HttpClient httpClient,
       ConnectionInformation connection) {

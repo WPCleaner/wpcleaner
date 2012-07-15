@@ -24,7 +24,7 @@ import org.wikipediacleaner.api.APIException;
 
 
 /**
- * Interface for MediaWiki API expand requests.
+ * MediaWiki API expand requests.
  */
 public class ApiExpandRequest extends ApiRequest {
 

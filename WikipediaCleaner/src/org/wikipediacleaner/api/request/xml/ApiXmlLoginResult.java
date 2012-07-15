@@ -35,7 +35,7 @@ import org.wikipediacleaner.api.request.ConnectionInformation;
 
 
 /**
- * Class for MediaWiki API XML login results.
+ * MediaWiki API XML login results.
  */
 public class ApiXmlLoginResult extends ApiXmlResult implements ApiLoginResult {
 

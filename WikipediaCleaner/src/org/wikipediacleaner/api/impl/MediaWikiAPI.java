@@ -69,27 +69,27 @@ import org.wikipediacleaner.api.request.ApiParseRequest;
 import org.wikipediacleaner.api.request.ApiParseResult;
 import org.wikipediacleaner.api.request.ApiPurgeRequest;
 import org.wikipediacleaner.api.request.ApiPurgeResult;
-import org.wikipediacleaner.api.request.ApiQueryListBacklinksRequest;
-import org.wikipediacleaner.api.request.ApiQueryListBacklinksResult;
-import org.wikipediacleaner.api.request.ApiQueryListRandomRequest;
-import org.wikipediacleaner.api.request.ApiQueryListRandomResult;
-import org.wikipediacleaner.api.request.ApiQueryListRawWatchlistRequest;
-import org.wikipediacleaner.api.request.ApiQueryListRawWatchlistResult;
-import org.wikipediacleaner.api.request.ApiQueryListSearchRequest;
-import org.wikipediacleaner.api.request.ApiQueryListSearchResult;
-import org.wikipediacleaner.api.request.ApiQueryMetaSiteInfoRequest;
-import org.wikipediacleaner.api.request.ApiQueryMetaSiteInfoResult;
+import org.wikipediacleaner.api.request.ApiBacklinksRequest;
+import org.wikipediacleaner.api.request.ApiBacklinksResult;
+import org.wikipediacleaner.api.request.ApiRandomPagesRequest;
+import org.wikipediacleaner.api.request.ApiRandomPagesResult;
+import org.wikipediacleaner.api.request.ApiRawWatchlistRequest;
+import org.wikipediacleaner.api.request.ApiRawWatchlistResult;
+import org.wikipediacleaner.api.request.ApiSearchRequest;
+import org.wikipediacleaner.api.request.ApiSearchResult;
+import org.wikipediacleaner.api.request.ApiSiteInfoRequest;
+import org.wikipediacleaner.api.request.ApiSiteInfoResult;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ConnectionInformation;
 import org.wikipediacleaner.api.request.xml.ApiXmlExpandResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLoginResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlParseResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPurgeResult;
-import org.wikipediacleaner.api.request.xml.ApiXmlQueryListBacklinksResult;
-import org.wikipediacleaner.api.request.xml.ApiXmlQueryListRandomResult;
-import org.wikipediacleaner.api.request.xml.ApiXmlQueryListRawWatchlistResult;
-import org.wikipediacleaner.api.request.xml.ApiXmlQueryListSearchResult;
-import org.wikipediacleaner.api.request.xml.ApiXmlQueryMetaSiteInfoResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlBacklinksResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlRandomPagesResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlRawWatchlistResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlSearchResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlSiteInfoResult;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -187,10 +187,10 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    */
   public List<Page> retrieveRawWatchlist(EnumWikipedia wiki) throws APIException {
-    ApiQueryListRawWatchlistResult result =
-        new ApiXmlQueryListRawWatchlistResult(wiki, httpClient, connection);
-    ApiQueryListRawWatchlistRequest request =
-        new ApiQueryListRawWatchlistRequest(result);
+    ApiRawWatchlistResult result =
+        new ApiXmlRawWatchlistResult(wiki, httpClient, connection);
+    ApiRawWatchlistRequest request =
+        new ApiRawWatchlistRequest(result);
     return request.loadWatchlistRaw();
   }
 
@@ -355,10 +355,10 @@ public class MediaWikiAPI implements API {
    */
   public List<Page> getRandomPages(
       EnumWikipedia wiki, int count) throws APIException {
-    ApiQueryListRandomResult result =
-        new ApiXmlQueryListRandomResult(wiki, httpClient, connection);
-    ApiQueryListRandomRequest request =
-        new ApiQueryListRandomRequest(result);
+    ApiRandomPagesResult result =
+        new ApiXmlRandomPagesResult(wiki, httpClient, connection);
+    ApiRandomPagesRequest request =
+        new ApiRandomPagesRequest(result);
     return request.loadRandomList(count);
   }
 
@@ -773,8 +773,8 @@ public class MediaWikiAPI implements API {
    */
   public void retrieveSimilarPages(EnumWikipedia wiki, Page page)
       throws APIException {
-    ApiQueryListSearchResult result = new ApiXmlQueryListSearchResult(wiki, httpClient, connection);
-    ApiQueryListSearchRequest request = new ApiQueryListSearchRequest(result);
+    ApiSearchResult result = new ApiXmlSearchResult(wiki, httpClient, connection);
+    ApiSearchRequest request = new ApiSearchRequest(result);
     request.searchSimilarPages(page);
   }
 
@@ -866,10 +866,10 @@ public class MediaWikiAPI implements API {
    */
   public void retrieveBackLinks(EnumWikipedia wiki, Page page)
       throws APIException {
-    ApiQueryListBacklinksResult result =
-        new ApiXmlQueryListBacklinksResult(wiki, httpClient, connection);
-    ApiQueryListBacklinksRequest request =
-        new ApiQueryListBacklinksRequest(result);
+    ApiBacklinksResult result =
+        new ApiXmlBacklinksResult(wiki, httpClient, connection);
+    ApiBacklinksRequest request =
+        new ApiBacklinksRequest(result);
     request.loadBacklinks(page);
   }
 
@@ -1337,8 +1337,8 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    */
   private void loadSiteInfo(EnumWikipedia wikipedia) throws APIException {
-    ApiQueryMetaSiteInfoResult siteInfoResult = new ApiXmlQueryMetaSiteInfoResult(wikipedia, httpClient, connection);
-    ApiQueryMetaSiteInfoRequest siteInfoRequest = new ApiQueryMetaSiteInfoRequest(siteInfoResult);
+    ApiSiteInfoResult siteInfoResult = new ApiXmlSiteInfoResult(wikipedia, httpClient, connection);
+    ApiSiteInfoRequest siteInfoRequest = new ApiSiteInfoRequest(siteInfoResult);
     siteInfoRequest.loadSiteInformation(true, true, true, true, true);
   }
 

@@ -26,18 +26,19 @@ import org.wikipediacleaner.api.data.Page;
 
 
 /**
- * Base interface for MediaWiki API random list results.
+ * Base interface for MediaWiki API back links results.
  */
-public interface ApiQueryListRandomResult extends ApiResult {
+public interface ApiBacklinksResult extends ApiResult {
 
   /**
-   * Execute random list request.
+   * Execute back links request.
    * 
    * @param properties Properties defining request.
-   * @param list List to be filled with random pages.
+   * @param list List to be filled with back links.
+   * @return Value for continuing request if needed.
    * @throws APIException
    */
-  public void executeRandomList(
+  public String executeBacklinks(
       Map<String, String> properties,
       List<Page> list) throws APIException;
 }

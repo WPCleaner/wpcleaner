@@ -26,7 +26,7 @@ import org.wikipediacleaner.api.data.Page;
 
 
 /**
- * Interface for MediaWiki API purge requests.
+ * MediaWiki API purge requests.
  */
 public class ApiPurgeRequest extends ApiRequest {
 

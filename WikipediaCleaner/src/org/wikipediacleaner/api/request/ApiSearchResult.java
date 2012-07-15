@@ -26,19 +26,19 @@ import org.wikipediacleaner.api.data.Page;
 
 
 /**
- * Base interface for MediaWiki API raw watch list results.
+ * Base interface for MediaWiki API search results.
  */
-public interface ApiQueryListRawWatchlistResult extends ApiResult {
+public interface ApiSearchResult extends ApiResult {
 
   /**
-   * Execute watch list raw request.
+   * Execute search request.
    * 
    * @param properties Properties defining request.
-   * @param watchlist List of pages to be filled with the watch list.
+   * @param list List to be filled with back links.
    * @return Value for continuing request if needed.
    * @throws APIException
    */
-  public String executeWatchlistRaw(
+  public String executeSearch(
       Map<String, String> properties,
-      List<Page> watchlist) throws APIException;
+      List<Page> list) throws APIException;
 }

@@ -25,7 +25,7 @@ import org.wikipediacleaner.api.data.LoginResult;
 
 
 /**
- * Interface for MediaWiki API login requests.
+ * MediaWiki API login requests.
  */
 public class ApiLoginRequest extends ApiRequest {
 

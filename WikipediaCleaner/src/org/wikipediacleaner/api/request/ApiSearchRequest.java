@@ -28,9 +28,9 @@ import org.wikipediacleaner.api.data.Page;
 
 
 /**
- * Interface for MediaWiki search requests.
+ * MediaWiki search requests.
  */
-public class ApiQueryListSearchRequest extends ApiQueryMetaRequest {
+public class ApiSearchRequest extends ApiMetaRequest {
 
   // ==========================================================================
   // API properties
@@ -155,12 +155,12 @@ public class ApiQueryListSearchRequest extends ApiQueryMetaRequest {
   // Request management
   // ==========================================================================
 
-  private final ApiQueryListSearchResult result;
+  private final ApiSearchResult result;
 
   /**
    * @param result Parser for result depending on chosen format.
    */
-  public ApiQueryListSearchRequest(ApiQueryListSearchResult result) {
+  public ApiSearchRequest(ApiSearchResult result) {
     this.result = result;
   }
 
@@ -172,8 +172,8 @@ public class ApiQueryListSearchRequest extends ApiQueryMetaRequest {
   public void searchSimilarPages(Page page) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
-        ApiQueryListRequest.PROPERTY_LIST,
-        ApiQueryListRequest.PROPERTY_LIST_SEARCH);
+        ApiListRequest.PROPERTY_LIST,
+        ApiListRequest.PROPERTY_LIST_SEARCH);
     if (page.getNamespace() != null) {
       properties.put(PROPERTY_NAMESPACE, page.getNamespace().toString());
     } else {

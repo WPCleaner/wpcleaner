@@ -32,7 +32,7 @@ import org.wikipediacleaner.api.request.ConnectionInformation;
 
 
 /**
- * Class for MediaWiki API XML expand results.
+ * MediaWiki API XML expand results.
  */
 public class ApiXmlExpandResult extends ApiXmlResult implements ApiExpandResult {
 

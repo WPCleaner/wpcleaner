@@ -31,98 +31,80 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.request.ApiQueryListBacklinksResult;
+import org.wikipediacleaner.api.request.ApiRandomPagesResult;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ConnectionInformation;
 
 
 /**
- * Class for MediaWiki API XML back links list results.
+ * MediaWiki API XML random pages results.
  */
-public class ApiXmlQueryListBacklinksResult extends ApiXmlResult implements ApiQueryListBacklinksResult {
+public class ApiXmlRandomPagesResult extends ApiXmlResult implements ApiRandomPagesResult {
 
   /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
    * @param connection Connection information.
    */
-  public ApiXmlQueryListBacklinksResult(
+  public ApiXmlRandomPagesResult(
       EnumWikipedia wiki,
       HttpClient httpClient,
       ConnectionInformation connection) {
     super(wiki, httpClient, connection);
   }
 
+
   /**
-   * Execute back links request.
+   * Execute random pages request.
    * 
    * @param properties Properties defining request.
-   * @param list List of pages to be filled with the back links.
-   * @return Value for continuing request if needed.
+   * @param list List to be filled with random pages.
    * @throws APIException
    */
-  public String executeBacklinks(
+  public void executeRandomList(
       Map<String, String> properties,
-      List<Page> list)
-          throws APIException {
+      List<Page> list) throws APIException {
     try {
-      return constructBacklinks(
+      constructRandomList(
           getRoot(properties, ApiRequest.MAX_ATTEMPTS),
           list);
     } catch (JDOMParseException e) {
-      log.error("Error loading watch list", e);
+      log.error("Error loading random list", e);
       throw new APIException("Error parsing XML", e);
     }
   }
 
   /**
-   * Construct list of back links.
+   * Construct random list.
    * 
    * @param root Root element.
-   * @param list List of pages to be filled with back links.
-   * @return Value for continuing request if needed.
+   * @param list List of pages to be filled with the watch list.
    * @throws APIException
    */
-  private String constructBacklinks(
+  private void constructRandomList(
       Element root,
       List<Page> list)
       throws APIException {
 
-    // Retrieve back links
+    // Retrieve watch list
     try {
-      XPath xpa = XPath.newInstance("/api/query/backlinks/bl");
+      XPath xpa = XPath.newInstance("/api/query/random/page");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
-      XPath xpaPageId = XPath.newInstance("./@pageid");
+      XPath xpaPageId = XPath.newInstance("./@id");
       XPath xpaNs = XPath.newInstance("./@ns");
       XPath xpaTitle = XPath.newInstance("./@title");
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
-        Page link = DataManager.getPage(
+        Page page = DataManager.getPage(
             getWiki(), xpaTitle.valueOf(currentNode), null, null);
-        link.setNamespace(xpaNs.valueOf(currentNode));
-        link.setPageId(xpaPageId.valueOf(currentNode));
-        list.add(link);
+        page.setNamespace(xpaNs.valueOf(currentNode));
+        page.setPageId(xpaPageId.valueOf(currentNode));
+        list.add(page);
       }
     } catch (JDOMException e) {
-      log.error("Error backlinks", e);
+      log.error("Error random list", e);
       throw new APIException("Error parsing XML result", e);
     }
-
-    // Retrieve continue
-    try {
-      XPath xpa = XPath.newInstance("/api/query-continue/backlinks");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
-      XPath xpaContinue = XPath.newInstance("./@blcontinue");
-      while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
-        return xpaContinue.valueOf(currentNode);
-      }
-    } catch (JDOMException e) {
-      log.error("Error watchlist raw", e);
-      throw new APIException("Error parsing XML result", e);
-    }
-    return null;
   }
 }

@@ -28,9 +28,9 @@ import org.wikipediacleaner.api.data.Page;
 
 
 /**
- * Interface for MediaWiki back links list requests.
+ * MediaWiki back links requests.
  */
-public class ApiQueryListBacklinksRequest extends ApiQueryMetaRequest {
+public class ApiBacklinksRequest extends ApiMetaRequest {
 
   // ==========================================================================
   // API properties
@@ -85,12 +85,12 @@ public class ApiQueryListBacklinksRequest extends ApiQueryMetaRequest {
   // Request management
   // ==========================================================================
 
-  private final ApiQueryListBacklinksResult result;
+  private final ApiBacklinksResult result;
 
   /**
    * @param result Parser for result depending on chosen format.
    */
-  public ApiQueryListBacklinksRequest(ApiQueryListBacklinksResult result) {
+  public ApiBacklinksRequest(ApiBacklinksResult result) {
     this.result = result;
   }
 
@@ -102,8 +102,8 @@ public class ApiQueryListBacklinksRequest extends ApiQueryMetaRequest {
   public void loadBacklinks(Page page) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
-        ApiQueryListRequest.PROPERTY_LIST,
-        ApiQueryListRequest.PROPERTY_LIST_BACKLINKS);
+        ApiListRequest.PROPERTY_LIST,
+        ApiListRequest.PROPERTY_LIST_BACKLINKS);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     properties.put(PROPERTY_TITLE, page.getTitle());
     List<Page> list = new ArrayList<Page>();
