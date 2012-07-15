@@ -36,22 +36,22 @@ import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
-import org.wikipediacleaner.api.request.ApiQueryMetaSiteInfoResult;
+import org.wikipediacleaner.api.request.ApiSiteInfoResult;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ConnectionInformation;
 
 
 /**
- * Class for MediaWiki API XML site information results.
+ * MediaWiki API XML site information results.
  */
-public class ApiXmlQueryMetaSiteInfoResult extends ApiXmlResult implements ApiQueryMetaSiteInfoResult {
+public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoResult {
 
   /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
    * @param connection Connection information.
    */
-  public ApiXmlQueryMetaSiteInfoResult(
+  public ApiXmlSiteInfoResult(
       EnumWikipedia wiki,
       HttpClient httpClient,
       ConnectionInformation connection) {

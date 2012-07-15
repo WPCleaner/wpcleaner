@@ -27,9 +27,9 @@ import org.wikipediacleaner.api.data.Page;
 
 
 /**
- * Interface for MediaWiki API raw watch list requests.
+ * MediaWiki API raw watch list requests.
  */
-public class ApiQueryListRawWatchlistRequest extends ApiQueryMetaRequest {
+public class ApiRawWatchlistRequest extends ApiMetaRequest {
 
   // ==========================================================================
   // API properties
@@ -89,12 +89,12 @@ public class ApiQueryListRawWatchlistRequest extends ApiQueryMetaRequest {
   // Request management
   // ==========================================================================
 
-  private final ApiQueryListRawWatchlistResult result;
+  private final ApiRawWatchlistResult result;
 
   /**
    * @param result Parser for result depending on chosen format.
    */
-  public ApiQueryListRawWatchlistRequest(ApiQueryListRawWatchlistResult result) {
+  public ApiRawWatchlistRequest(ApiRawWatchlistResult result) {
     this.result = result;
   }
 
@@ -106,8 +106,8 @@ public class ApiQueryListRawWatchlistRequest extends ApiQueryMetaRequest {
   public List<Page> loadWatchlistRaw() throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
-        ApiQueryListRequest.PROPERTY_LIST,
-        ApiQueryListRequest.PROPERTY_LIST_WATCHLISTRAW);
+        ApiListRequest.PROPERTY_LIST,
+        ApiListRequest.PROPERTY_LIST_WATCHLISTRAW);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     List<Page> watchlist = new ArrayList<Page>();
     while (true) {

@@ -20,9 +20,9 @@ package org.wikipediacleaner.api.request;
 
 
 /**
- * Interface for MediaWiki API list query requests.
+ * Base class MediaWiki API list query requests.
  */
-public class ApiQueryListRequest extends ApiRequest {
+public class ApiListRequest extends ApiRequest {
 
   // ==========================================================================
   // API properties

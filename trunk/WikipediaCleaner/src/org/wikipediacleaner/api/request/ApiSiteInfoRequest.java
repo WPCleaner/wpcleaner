@@ -26,9 +26,9 @@ import org.wikipediacleaner.api.APIException;
 
 
 /**
- * Interface for MediaWiki API site information requests.
+ * MediaWiki API site information requests.
  */
-public class ApiQueryMetaSiteInfoRequest extends ApiQueryMetaRequest {
+public class ApiSiteInfoRequest extends ApiMetaRequest {
 
   // ==========================================================================
   // API properties
@@ -68,12 +68,12 @@ public class ApiQueryMetaSiteInfoRequest extends ApiQueryMetaRequest {
   // Request management
   // ==========================================================================
 
-  private final ApiQueryMetaSiteInfoResult result;
+  private final ApiSiteInfoResult result;
 
   /**
    * @param result Parser for result depending on chosen format.
    */
-  public ApiQueryMetaSiteInfoRequest(ApiQueryMetaSiteInfoResult result) {
+  public ApiSiteInfoRequest(ApiSiteInfoResult result) {
     this.result = result;
   }
 
@@ -92,8 +92,8 @@ public class ApiQueryMetaSiteInfoRequest extends ApiQueryMetaRequest {
       boolean magicWords) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
-        ApiQueryMetaRequest.PROPERTY_META,
-        ApiQueryMetaRequest.PROPERTY_META_SITEINFO);
+        ApiMetaRequest.PROPERTY_META,
+        ApiMetaRequest.PROPERTY_META_SITEINFO);
     Collection<String> information = new ArrayList<String>();
     if (namespaces) {
       information.add(PROPERTY_SIPROP_NAMESPACES);
@@ -111,7 +111,7 @@ public class ApiQueryMetaSiteInfoRequest extends ApiQueryMetaRequest {
       information.add(PROPERTY_SIPROP_MAGIC_WORDS);
     }
     properties.put(
-        ApiQueryMetaSiteInfoRequest.PROPERTY_SIPROP,
+        ApiSiteInfoRequest.PROPERTY_SIPROP,
         constructList(information));
     result.executeSiteInformation(properties);
   }

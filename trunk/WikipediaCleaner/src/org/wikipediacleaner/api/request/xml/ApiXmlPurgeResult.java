@@ -30,7 +30,7 @@ import org.wikipediacleaner.api.request.ConnectionInformation;
 
 
 /**
- * Class for MediaWiki API XML purge results.
+ * MediaWiki API XML purge results.
  */
 public class ApiXmlPurgeResult extends ApiXmlResult implements ApiPurgeResult {
 

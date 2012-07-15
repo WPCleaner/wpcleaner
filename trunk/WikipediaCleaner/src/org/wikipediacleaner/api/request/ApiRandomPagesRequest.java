@@ -28,9 +28,9 @@ import org.wikipediacleaner.api.data.Page;
 
 
 /**
- * Interface for MediaWiki random list requests.
+ * MediaWiki random pages requests.
  */
-public class ApiQueryListRandomRequest extends ApiQueryMetaRequest {
+public class ApiRandomPagesRequest extends ApiMetaRequest {
 
   // ==========================================================================
   // API properties
@@ -55,12 +55,12 @@ public class ApiQueryListRandomRequest extends ApiQueryMetaRequest {
   // Request management
   // ==========================================================================
 
-  private final ApiQueryListRandomResult result;
+  private final ApiRandomPagesResult result;
 
   /**
    * @param result Parser for result depending on chosen format.
    */
-  public ApiQueryListRandomRequest(ApiQueryListRandomResult result) {
+  public ApiRandomPagesRequest(ApiRandomPagesResult result) {
     this.result = result;
   }
 
@@ -73,8 +73,8 @@ public class ApiQueryListRandomRequest extends ApiQueryMetaRequest {
   public List<Page> loadRandomList(int count) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
-        ApiQueryListRequest.PROPERTY_LIST,
-        ApiQueryListRequest.PROPERTY_LIST_RANDOM);
+        ApiListRequest.PROPERTY_LIST,
+        ApiListRequest.PROPERTY_LIST_RANDOM);
     properties.put(PROPERTY_LIMIT, Integer.toString(count));
     properties.put(PROPERTY_NAMESPACE, Integer.toString(Namespace.MAIN));
     List<Page> list = new ArrayList<Page>();

@@ -31,7 +31,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.request.ApiQueryListRawWatchlistResult;
+import org.wikipediacleaner.api.request.ApiRawWatchlistResult;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ConnectionInformation;
 
@@ -39,14 +39,14 @@ import org.wikipediacleaner.api.request.ConnectionInformation;
 /**
  * Class for MediaWiki API XML raw watch list results.
  */
-public class ApiXmlQueryListRawWatchlistResult extends ApiXmlResult implements ApiQueryListRawWatchlistResult {
+public class ApiXmlRawWatchlistResult extends ApiXmlResult implements ApiRawWatchlistResult {
 
   /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
    * @param connection Connection information.
    */
-  public ApiXmlQueryListRawWatchlistResult(
+  public ApiXmlRawWatchlistResult(
       EnumWikipedia wiki,
       HttpClient httpClient,
       ConnectionInformation connection) {

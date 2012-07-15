@@ -18,27 +18,23 @@
 
 package org.wikipediacleaner.api.request;
 
-import java.util.List;
-import java.util.Map;
-
-import org.wikipediacleaner.api.APIException;
-import org.wikipediacleaner.api.data.Page;
-
 
 /**
- * Base interface for MediaWiki API search results.
+ * Base class for MediaWiki API meta requests.
  */
-public interface ApiQueryListSearchResult extends ApiResult {
+public class ApiMetaRequest extends ApiRequest {
+
+  // ==========================================================================
+  // API properties
+  // ==========================================================================
 
   /**
-   * Execute search request.
-   * 
-   * @param properties Properties defining request.
-   * @param list List to be filled with back links.
-   * @return Value for continuing request if needed.
-   * @throws APIException
+   * Property for Meta.
    */
-  public String executeSearch(
-      Map<String, String> properties,
-      List<Page> list) throws APIException;
+  public final static String PROPERTY_META = "meta";
+
+  /**
+   * Property for Meta / Site info.
+   */
+  public final static String PROPERTY_META_SITEINFO = "siteinfo";
 }
