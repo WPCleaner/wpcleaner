@@ -37,11 +37,6 @@ public class ApiBacklinksRequest extends ApiMetaRequest {
   // ==========================================================================
 
   /**
-   * Property for Continue.
-   */
-  public final static String PROPERTY_CONTINUE = "blcontinue";
-
-  /**
    * Property for Filter redirection.
    */
   public final static String PROPERTY_FILTERREDID = "blfilterredir";
@@ -107,12 +102,8 @@ public class ApiBacklinksRequest extends ApiMetaRequest {
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     properties.put(PROPERTY_TITLE, page.getTitle());
     List<Page> list = new ArrayList<Page>();
-    while (true) {
-      String continueValue = result.executeBacklinks(properties, list);
-      if (continueValue == null) {
-        break;
-      }
-      properties.put(PROPERTY_CONTINUE, continueValue);
+    while (result.executeBacklinks(properties, list)) {
+      //
     }
     Collections.sort(list);
     page.setBackLinks(list);

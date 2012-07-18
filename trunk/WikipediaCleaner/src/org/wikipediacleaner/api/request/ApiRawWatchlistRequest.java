@@ -36,11 +36,6 @@ public class ApiRawWatchlistRequest extends ApiMetaRequest {
   // ==========================================================================
 
   /**
-   * Property for Continue.
-   */
-  public final static String PROPERTY_CONTINUE = "wrcontinue";
-
-  /**
    * Property for Name space.
    */
   public final static String PROPERTY_NAMESPACE = "wrnamespace";
@@ -110,12 +105,8 @@ public class ApiRawWatchlistRequest extends ApiMetaRequest {
         ApiListRequest.PROPERTY_LIST_WATCHLISTRAW);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     List<Page> watchlist = new ArrayList<Page>();
-    while (true) {
-      String continueValue = result.executeWatchlistRaw(properties, watchlist);
-      if (continueValue == null) {
-        break;
-      }
-      properties.put(PROPERTY_CONTINUE, continueValue);
+    while (result.executeWatchlistRaw(properties, watchlist)) {
+      //
     }
     return watchlist;
   }

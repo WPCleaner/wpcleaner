@@ -58,16 +58,17 @@ public class ApiXmlSearchResult extends ApiXmlResult implements ApiSearchResult 
    * 
    * @param properties Properties defining request.
    * @param list List to be filled with back links.
-   * @return Value for continuing request if needed.
+   * @return True if request should be continued.
    * @throws APIException
    */
-  public String executeSearch(
+  public boolean executeSearch(
       Map<String, String> properties,
       List<Page> list)
           throws APIException {
     try {
       return constructSearchResults(
           getRoot(properties, ApiRequest.MAX_ATTEMPTS),
+          properties,
           list);
     } catch (JDOMParseException e) {
       log.error("Error searching", e);
@@ -79,12 +80,13 @@ public class ApiXmlSearchResult extends ApiXmlResult implements ApiSearchResult 
    * Construct list of search results.
    * 
    * @param root Root element.
+   * @param properties Properties defining request.
    * @param list List of pages to be filled with back links.
-   * @return Value for continuing request if needed.
+   * @return True if request should be continued.
    * @throws APIException
    */
-  private String constructSearchResults(
-      Element root,
+  private boolean constructSearchResults(
+      Element root, Map<String, String> properties,
       List<Page> list)
       throws APIException {
 
@@ -108,19 +110,8 @@ public class ApiXmlSearchResult extends ApiXmlResult implements ApiSearchResult 
     }
 
     // Retrieve continue
-    try {
-      XPath xpa = XPath.newInstance("/api/query-continue/backlinks");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
-      XPath xpaContinue = XPath.newInstance("./@blcontinue");
-      while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
-        return xpaContinue.valueOf(currentNode);
-      }
-    } catch (JDOMException e) {
-      log.error("Error watchlist raw", e);
-      throw new APIException("Error parsing XML result", e);
-    }
-    return null;
+    return shouldContinue(
+        root, "/api/query-continue/search",
+        properties);
   }
 }

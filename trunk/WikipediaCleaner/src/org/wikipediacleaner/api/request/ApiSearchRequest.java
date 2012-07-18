@@ -62,11 +62,6 @@ public class ApiSearchRequest extends ApiMetaRequest {
   public final static String PROPERTY_NAMESPACE = "srnamespace";
 
   /**
-   * Property for Offset.
-   */
-  public final static String PROPERTY_OFFSET = "sroffset";
-
-  /**
    * Property for Properties.
    */
   public final static String PROPERTY_PROP = "srprop";
@@ -183,12 +178,8 @@ public class ApiSearchRequest extends ApiMetaRequest {
     properties.put(PROPERTY_REDIRECT, "true");
     properties.put(PROPERTY_SEARCH, "intitle:\"" + page.getTitle().replaceAll("\"", "\"\"") + "\"");
     List<Page> list = new ArrayList<Page>();
-    while (true) {
-      String continueValue = result.executeSearch(properties, list);
-      if (continueValue == null) {
-        break;
-      }
-      properties.put(PROPERTY_OFFSET, continueValue);
+    while (result.executeSearch(properties, list)) {
+      //
     }
     Collections.sort(list);
     page.setSimilarPages(list);
