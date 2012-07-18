@@ -30,6 +30,7 @@ import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
+import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -213,6 +214,43 @@ public abstract class ApiXmlResult extends BasicApiResult {
     } catch( JDOMException e) {
       log.error("JDOMException: " + e.getMessage());
     }
+  }
+
+  /**
+   * Manage query-continue in request.
+   * 
+   * @param root Root of the DOM tree.
+   * @param queryContinue XPath query to the query-continue node.
+   * @param properties Properties defining request.
+   * @return True if request should be continued.
+   */
+  protected boolean shouldContinue(
+      Element root, String queryContinue,
+      Map<String, String> properties) {
+    if ((root == null) || (queryContinue == null)) {
+      return false;
+    }
+    boolean result = false;
+    try {
+      XPath xpa = XPath.newInstance(queryContinue);
+      List results = xpa.selectNodes(root);
+      if (results != null) {
+        for (Object currentNode : results) {
+          List attributes = ((Element) currentNode).getAttributes();
+          if (attributes != null) {
+            for (Object currentAttribute : attributes) {
+              Attribute attribute = (Attribute) currentAttribute;
+              properties.put(attribute.getName(), attribute.getValue());
+              result = true;
+            }
+          }
+        }
+      }
+    } catch (JDOMException e) {
+      log.error("Error analyzing query-continue", e);
+      return false;
+    }
+    return result;
   }
 
   /**

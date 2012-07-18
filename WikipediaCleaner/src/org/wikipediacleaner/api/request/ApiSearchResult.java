@@ -35,10 +35,10 @@ public interface ApiSearchResult extends ApiResult {
    * 
    * @param properties Properties defining request.
    * @param list List to be filled with back links.
-   * @return Value for continuing request if needed.
+   * @return True if request should be continued.
    * @throws APIException
    */
-  public String executeSearch(
+  public boolean executeSearch(
       Map<String, String> properties,
       List<Page> list) throws APIException;
 }

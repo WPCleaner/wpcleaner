@@ -35,10 +35,10 @@ public interface ApiRawWatchlistResult extends ApiResult {
    * 
    * @param properties Properties defining request.
    * @param watchlist List of pages to be filled with the watch list.
-   * @return Value for continuing request if needed.
+   * @return True if request should be continued.
    * @throws APIException
    */
-  public String executeWatchlistRaw(
+  public boolean executeWatchlistRaw(
       Map<String, String> properties,
       List<Page> watchlist) throws APIException;
 }

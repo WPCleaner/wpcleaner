@@ -58,16 +58,17 @@ public class ApiXmlRawWatchlistResult extends ApiXmlResult implements ApiRawWatc
    * 
    * @param properties Properties defining request.
    * @param watchlist List of pages to be filled with the watch list.
-   * @return Value for continuing request if needed.
+   * @return True if request should be continued.
    * @throws APIException
    */
-  public String executeWatchlistRaw(
+  public boolean executeWatchlistRaw(
       Map<String, String> properties,
       List<Page> watchlist)
           throws APIException {
     try {
       return constructWatchlist(
           getRoot(properties, ApiRequest.MAX_ATTEMPTS),
+          properties,
           watchlist);
     } catch (JDOMParseException e) {
       log.error("Error loading watch list", e);
@@ -79,12 +80,13 @@ public class ApiXmlRawWatchlistResult extends ApiXmlResult implements ApiRawWatc
    * Construct watch list.
    * 
    * @param root Root element.
+   * @param properties Properties defining request.
    * @param watchlist List of pages to be filled with the watch list.
-   * @return Value for continuing request if needed.
+   * @return True if request should be continued.
    * @throws APIException
    */
-  private String constructWatchlist(
-      Element root,
+  private boolean constructWatchlist(
+      Element root, Map<String, String> properties,
       List<Page> watchlist)
       throws APIException {
 
@@ -108,19 +110,8 @@ public class ApiXmlRawWatchlistResult extends ApiXmlResult implements ApiRawWatc
     }
 
     // Retrieve continue
-    try {
-      XPath xpa = XPath.newInstance("/api/query-continue/watchlistraw");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
-      XPath xpaContinue = XPath.newInstance("./@wrcontinue");
-      while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
-        return xpaContinue.valueOf(currentNode);
-      }
-    } catch (JDOMException e) {
-      log.error("Error watchlist raw", e);
-      throw new APIException("Error parsing XML result", e);
-    }
-    return null;
+    return shouldContinue(
+        root, "/api/query-continue/watchlistraw",
+        properties);
   }
 }
