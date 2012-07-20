@@ -134,6 +134,16 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             nextIndex = galleryTag.getCompleteEndIndex();
           }
         }
+
+        // Check for math tag
+        if (checkSpelling) {
+          PageElementTag mathTag = pageAnalysis.getSurroundingTag(
+              PageElementTag.TAG_WIKI_MATH, startIndex);
+          if (mathTag != null) {
+            checkSpelling = false;
+            nextIndex = mathTag.getCompleteEndIndex();
+          }
+        }
       }
 
       // Check spelling
@@ -149,10 +159,6 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             int pos = matcher.end();
             if ((pos >= contents.length()) ||
                 (!Character.isLetterOrDigit(contents.charAt(pos)))) {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
               if (pos - startIndex >= maxLength) {
                 if (pos - startIndex > maxLength) {
                   possibles.clear();
@@ -170,6 +176,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
               pageAnalysis.getPage(), startIndex, startIndex + maxLength);
           String text = contents.substring(
               startIndex, startIndex + maxLength);
+          boolean suggestionAdded = false;
           for (Suggestion suggestion : possibles) {
             String comment = suggestion.getComment();
             if (comment != null) {
@@ -178,11 +185,20 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             List<String> replacements = suggestion.getReplacements(text);
             if (replacements != null) {
               for (String replacement : replacements) {
-                error.addReplacement(replacement);
+                if (!text.equals(replacement)) {
+                  suggestionAdded = true;
+                  error.addReplacement(replacement);
+                }
               }
             }
           }
-          errors.add(error);
+          if (suggestionAdded) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            errors.add(error);
+          }
           nextIndex = Math.max(nextIndex, startIndex + maxLength);
         }
       }
