@@ -150,16 +150,16 @@ public abstract class ApiRequest {
   /**
    * Construct a textual representation of a list of strings.
    * 
-   * @param values List of strings.
+   * @param values List of objects.
    * @return Textual representation of the list.
    */
-  protected String constructList(Collection<String> values) {
+  protected String constructList(Collection<?> values) {
     StringBuilder buffer = new StringBuilder();
-    for (String value : values) {
+    for (Object value : values) {
       if (buffer.length() > 0) {
         buffer.append("|");
       }
-      buffer.append(value);
+      buffer.append(value.toString());
     }
     return buffer.toString();
   }

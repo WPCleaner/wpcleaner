@@ -30,7 +30,7 @@ import org.wikipediacleaner.api.data.Page;
 /**
  * MediaWiki search requests.
  */
-public class ApiSearchRequest extends ApiMetaRequest {
+public class ApiSearchRequest extends ApiListRequest {
 
   // ==========================================================================
   // API properties
@@ -167,8 +167,8 @@ public class ApiSearchRequest extends ApiMetaRequest {
   public void searchSimilarPages(Page page) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
-        ApiListRequest.PROPERTY_LIST,
-        ApiListRequest.PROPERTY_LIST_SEARCH);
+        PROPERTY_LIST,
+        PROPERTY_LIST_SEARCH);
     if (page.getNamespace() != null) {
       properties.put(PROPERTY_NAMESPACE, page.getNamespace().toString());
     } else {

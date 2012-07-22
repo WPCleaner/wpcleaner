@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.request;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -27,87 +28,85 @@ import org.wikipediacleaner.api.data.Page;
 
 
 /**
- * MediaWiki API raw watch list requests.
+ * MediaWiki embedded in requests.
  */
-public class ApiRawWatchlistRequest extends ApiListRequest {
+public class ApiEmbeddedInRequest extends ApiListRequest {
 
   // ==========================================================================
   // API properties
   // ==========================================================================
 
   /**
-   * Property for Name space.
+   * Property for Filter redirection.
    */
-  public final static String PROPERTY_NAMESPACE = "wrnamespace";
+  public final static String PROPERTY_FILTERREDIR = "eifilterredir";
+
+  /**
+   * Property value for Filter redirection / All.
+   */
+  public final static String PROPERTY_FILTERREDID_ALL = "all";
+
+  /**
+   * Property value for Filter redirection / Non redirects.
+   */
+  public final static String PROPERTY_FILTERREDID_NON_REDIRECTS = "nonredirects";
+
+  /**
+   * Property value for Filter redirection / Redirects.
+   */
+  public final static String PROPERTY_FILTERREDID_REDIRECTS = "redirects";
 
   /**
    * Property for Limit.
    */
-  public final static String PROPERTY_LIMIT = "wrlimit";
+  public final static String PROPERTY_LIMIT = "eilimit";
 
   /**
-   * Property for Properties.
+   * Property for Name space.
    */
-  public final static String PROPERTY_PROP = "wrprop";
+  public final static String PROPERTY_NAMESPACE = "einamespace";
 
   /**
-   * Property for Properties / Changed.
+   * Property for Title.
    */
-  public final static String PROPERTY_PROP_CHANGED = "changed";
-
-  /**
-   * Property for Show.
-   */
-  public final static String PROPERTY_SHOW = "wrshow";
-
-  /**
-   * Property for Show / Changed.
-   */
-  public final static String PROPERTY_SHOW_CHANGED = "changed";
-
-  /**
-   * Property for Show / Not Changed.
-   */
-  public final static String PROPERTY_SHOW_NOT_CHANGED = "!changed";
-
-  /**
-   * Property for Owner.
-   */
-  public final static String PROPERTY_OWNER = "wrowner";
-
-  /**
-   * Property for Token.
-   */
-  public final static String PROPERTY_TOKEN = "wrtoken";
+  public final static String PROPERTY_TITLE = "eititle";
 
   // ==========================================================================
   // Request management
   // ==========================================================================
 
-  private final ApiRawWatchlistResult result;
+  private final ApiEmbeddedInResult result;
 
   /**
    * @param result Parser for result depending on chosen format.
    */
-  public ApiRawWatchlistRequest(ApiRawWatchlistResult result) {
+  public ApiEmbeddedInRequest(ApiEmbeddedInResult result) {
     this.result = result;
   }
 
   /**
-   * Load watch list raw.
+   * Load list of pages embedding a page.
    * 
-   * @return List of pages in the watch list.
+   * @param page Page for list of embedding pages is requested.
+   * @param namespaces List of name spaces to restrict result.
+   * @return List of pages embedding the page.
    */
-  public List<Page> loadWatchlistRaw() throws APIException {
+  public List<Page> loadEmbeddedIn(
+      Page page, List<Integer> namespaces) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
         PROPERTY_LIST,
-        PROPERTY_LIST_WATCHLISTRAW);
+        PROPERTY_LIST_EMBEDDEDIN);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
-    List<Page> watchlist = new ArrayList<Page>();
-    while (result.executeWatchlistRaw(properties, watchlist)) {
+    if ((namespaces != null) && (namespaces.size() > 0)) {
+      properties.put(PROPERTY_NAMESPACE, constructList(namespaces));
+    }
+    properties.put(PROPERTY_TITLE, page.getTitle());
+    List<Page> list = new ArrayList<Page>();
+    while (result.executeEmbeddedIn(properties, list)) {
       //
     }
-    return watchlist;
+    Collections.sort(list);
+    return list;
   }
 }

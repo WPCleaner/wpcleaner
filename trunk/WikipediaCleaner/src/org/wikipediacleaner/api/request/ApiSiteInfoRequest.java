@@ -92,8 +92,8 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
       boolean magicWords) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
-        ApiMetaRequest.PROPERTY_META,
-        ApiMetaRequest.PROPERTY_META_SITEINFO);
+        PROPERTY_META,
+        PROPERTY_META_SITEINFO);
     Collection<String> information = new ArrayList<String>();
     if (namespaces) {
       information.add(PROPERTY_SIPROP_NAMESPACES);

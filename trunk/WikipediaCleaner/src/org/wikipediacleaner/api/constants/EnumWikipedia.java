@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.constants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -360,7 +361,9 @@ public enum EnumWikipedia {
     try {
       HashSet<String> tmpResult = new HashSet<String>();
       for (Page dabTemplate : disambiguationTemplates) {
-        List<Page> tmpPages = api.retrieveEmbeddedIn(this, dabTemplate, Namespace.MAIN);
+        List<Page> tmpPages = api.retrieveEmbeddedIn(
+            this, dabTemplate,
+            Collections.singletonList(Namespace.MAIN));
         for (Page page : tmpPages) {
           tmpResult.add(page.getTitle());
         }

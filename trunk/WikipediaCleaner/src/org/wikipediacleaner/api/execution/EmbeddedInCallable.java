@@ -53,7 +53,7 @@ public class EmbeddedInCallable extends MediaWikiCallable<List<Page>> {
    */
   public List<Page> call() throws APIException {
     setText(GT._("Retrieving page usage") + " - " + page.getTitle());
-    return api.retrieveEmbeddedIn(getWikipedia(), page, (Integer) null);
+    return api.retrieveEmbeddedIn(getWikipedia(), page, null);
   }
 
 }
