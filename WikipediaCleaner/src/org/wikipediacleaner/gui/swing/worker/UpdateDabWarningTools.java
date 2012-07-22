@@ -472,11 +472,14 @@ public class UpdateDabWarningTools {
           }
         }
       }
+      int indexStart = (templatePrevious != null) ? templatePrevious.getEndIndex() : 0;
+      if ((indexStart == 0) && (talkPage.isRedirect())) {
+        indexStart = contents.length();
+      }
 
       // Add warning
       setText(GT._("Updating disambiguation warning - {0}", talkPage.getTitle()));
       StringBuilder tmp = new StringBuilder();
-      int indexStart = (templatePrevious != null) ? templatePrevious.getEndIndex() : 0;
       if (indexStart > 0) {
         tmp.append(contents.substring(0, indexStart));
         if (tmp.charAt(tmp.length() - 1) != '\n') {
