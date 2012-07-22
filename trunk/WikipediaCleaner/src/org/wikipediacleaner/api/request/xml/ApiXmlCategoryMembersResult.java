@@ -30,23 +30,24 @@ import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.request.ApiEmbeddedInResult;
+import org.wikipediacleaner.api.request.ApiCategoryMembersResult;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ConnectionInformation;
 
 
 /**
- * MediaWiki API XML embedded in results.
+ * MediaWiki API XML category members results.
  */
-public class ApiXmlEmbeddedInResult extends ApiXmlResult implements ApiEmbeddedInResult {
+public class ApiXmlCategoryMembersResult extends ApiXmlResult implements ApiCategoryMembersResult {
 
   /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
    * @param connection Connection information.
    */
-  public ApiXmlEmbeddedInResult(
+  public ApiXmlCategoryMembersResult(
       EnumWikipedia wiki,
       HttpClient httpClient,
       ConnectionInformation connection) {
@@ -54,45 +55,51 @@ public class ApiXmlEmbeddedInResult extends ApiXmlResult implements ApiEmbeddedI
   }
 
   /**
-   * Execute embedded in request.
+   * Execute category members request.
    * 
    * @param properties Properties defining request.
-   * @param list List to be filled with embedding pages.
+   * @param list List to be filled with category members.
+   * @param categories Map of categories to be analyzed with their depth.
+   * @param depth Current depth of the analysis.
    * @return True if request should be continued.
    * @throws APIException
    */
-  public boolean executeEmbeddedIn(
+  public boolean executeCategoryMembers(
       Map<String, String> properties,
-      List<Page> list) throws APIException {
+      List<Page> list,
+      Map<String, Integer> categories, int depth) throws APIException {
     try {
-      return constructEmbeddedIn(
+      return constructCategoryMembers(
           getRoot(properties, ApiRequest.MAX_ATTEMPTS),
           properties,
-          list);
+          list, categories, depth);
     } catch (JDOMParseException e) {
-      log.error("Error loading embedded in list", e);
+      log.error("Error loading category members list", e);
       throw new APIException("Error parsing XML", e);
     }
   }
 
   /**
-   * Construct list of pages embedding a page.
+   * Construct list of category members.
    * 
    * @param root Root element.
    * @param properties Properties defining request.
-   * @param list List of pages to be filled with back links.
+   * @param list List of pages to be filled with category members.
+   * @param categories Map of categories to be analyzed with their depth.
+   * @param depth Current depth of the analysis.
    * @return True if request should be continued.
    * @throws APIException
    */
-  private boolean constructEmbeddedIn(
+  private boolean constructCategoryMembers(
       Element root,
       Map<String, String> properties,
-      List<Page> list)
+      List<Page> list,
+      Map<String, Integer> categories, int depth)
       throws APIException {
 
-    // Retrieve back links
+    // Retrieve category members
     try {
-      XPath xpa = XPath.newInstance("/api/query/embeddedin/ei");
+      XPath xpa = XPath.newInstance("/api/query/categorymembers/cm");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
       XPath xpaPageId = XPath.newInstance("./@pageid");
@@ -104,16 +111,23 @@ public class ApiXmlEmbeddedInResult extends ApiXmlResult implements ApiEmbeddedI
             getWiki(), xpaTitle.valueOf(currentNode), null, null);
         page.setNamespace(xpaNs.valueOf(currentNode));
         page.setPageId(xpaPageId.valueOf(currentNode));
-        list.add(page);
+        if ((page.getNamespace() != null) &&
+            (page.getNamespace().intValue() == Namespace.CATEGORY)) {
+          categories.put(page.getTitle(), depth + 1);
+        } else {
+          if (!list.contains(page)) {
+            list.add(page);
+          }
+        }
       }
     } catch (JDOMException e) {
-      log.error("Error backlinks", e);
+      log.error("Error category members", e);
       throw new APIException("Error parsing XML result", e);
     }
 
     // Retrieve continue
     return shouldContinue(
-        root, "/api/query-continue/embeddedin",
+        root, "/api/query-continue/categorymembers",
         properties);
   }
 }

@@ -44,17 +44,17 @@ public class ApiBacklinksRequest extends ApiListRequest {
   /**
    * Property value for Filter redirection / All.
    */
-  public final static String PROPERTY_FILTERREDID_ALL = "all";
+  public final static String PROPERTY_FILTERREDIR_ALL = "all";
 
   /**
    * Property value for Filter redirection / Non redirects.
    */
-  public final static String PROPERTY_FILTERREDID_NON_REDIRECTS = "nonredirects";
+  public final static String PROPERTY_FILTERREDIR_NON_REDIRECTS = "nonredirects";
 
   /**
    * Property value for Filter redirection / Redirects.
    */
-  public final static String PROPERTY_FILTERREDID_REDIRECTS = "redirects";
+  public final static String PROPERTY_FILTERREDIR_REDIRECTS = "redirects";
 
   /**
    * Property for Limit.
