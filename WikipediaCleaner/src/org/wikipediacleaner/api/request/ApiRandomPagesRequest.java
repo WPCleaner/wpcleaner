@@ -30,7 +30,7 @@ import org.wikipediacleaner.api.data.Page;
 /**
  * MediaWiki random pages requests.
  */
-public class ApiRandomPagesRequest extends ApiMetaRequest {
+public class ApiRandomPagesRequest extends ApiListRequest {
 
   // ==========================================================================
   // API properties
@@ -73,8 +73,8 @@ public class ApiRandomPagesRequest extends ApiMetaRequest {
   public List<Page> loadRandomList(int count) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
-        ApiListRequest.PROPERTY_LIST,
-        ApiListRequest.PROPERTY_LIST_RANDOM);
+        PROPERTY_LIST,
+        PROPERTY_LIST_RANDOM);
     properties.put(PROPERTY_LIMIT, Integer.toString(count));
     properties.put(PROPERTY_NAMESPACE, Integer.toString(Namespace.MAIN));
     List<Page> list = new ArrayList<Page>();

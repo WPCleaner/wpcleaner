@@ -30,7 +30,7 @@ import org.wikipediacleaner.api.data.Page;
 /**
  * MediaWiki back links requests.
  */
-public class ApiBacklinksRequest extends ApiMetaRequest {
+public class ApiBacklinksRequest extends ApiListRequest {
 
   // ==========================================================================
   // API properties
@@ -39,7 +39,7 @@ public class ApiBacklinksRequest extends ApiMetaRequest {
   /**
    * Property for Filter redirection.
    */
-  public final static String PROPERTY_FILTERREDID = "blfilterredir";
+  public final static String PROPERTY_FILTERREDIR = "blfilterredir";
 
   /**
    * Property value for Filter redirection / All.
@@ -97,8 +97,8 @@ public class ApiBacklinksRequest extends ApiMetaRequest {
   public void loadBacklinks(Page page) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
-        ApiListRequest.PROPERTY_LIST,
-        ApiListRequest.PROPERTY_LIST_BACKLINKS);
+        PROPERTY_LIST,
+        PROPERTY_LIST_BACKLINKS);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     properties.put(PROPERTY_TITLE, page.getTitle());
     List<Page> list = new ArrayList<Page>();

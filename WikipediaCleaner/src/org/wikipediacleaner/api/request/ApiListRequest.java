@@ -39,6 +39,11 @@ public class ApiListRequest extends ApiRequest {
   public final static String PROPERTY_LIST_BACKLINKS = "backlinks";
 
   /**
+   * Property value for List / Embedded in.
+   */
+  public final static String PROPERTY_LIST_EMBEDDEDIN = "embeddedin";
+
+  /**
    * Property value for List / Random pages.
    */
   public final static String PROPERTY_LIST_RANDOM = "random";
