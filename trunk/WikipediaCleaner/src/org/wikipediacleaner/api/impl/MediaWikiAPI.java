@@ -1575,6 +1575,7 @@ public class MediaWikiAPI implements API {
         page.setNamespace(xpaNamespace.valueOf(node));
         if (node.getAttribute("redirect") != null) {
           redirect = true;
+          page.isRedirect(true);
         }
         if (node.getAttribute("missing") != null) {
           page.setExisting(Boolean.FALSE);
