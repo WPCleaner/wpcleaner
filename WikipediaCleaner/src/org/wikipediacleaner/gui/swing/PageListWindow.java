@@ -72,6 +72,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   private final static String ACTION_DISAMBIGUATION   = "DISAMBIGUATION";
   private final static String ACTION_FULL_ANALYSIS    = "FULL ANALYSIS";
   private final static String ACTION_REMOVE           = "REMOVE";
+  private final static String ACTION_SELECT_DAB       = "SELECT DAB";
   private final static String ACTION_SET_COMMENTS     = "SET COMMENTS";
   private final static String ACTION_UPDATE           = "UPDATE INFO";
   private final static String ACTION_UPDATE_DAB       = "UPDATE DAB WARNING";
@@ -92,6 +93,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   
   private JButton buttonFullAnalysis;
   private JButton buttonDisambiguation;
+  private JButton buttonSelectDab;
   private JButton buttonDisambiguationWatch;
   private JButton buttonUpdateDabWarning;
   private JButton buttonUpdateInfo;
@@ -215,7 +217,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     panel.add(labelLinksCount, constraints);
     constraints.gridy++;
 
-    // Toolbar
+    // Tool bar
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
     buttonFullAnalysis = Utilities.createJButton(
@@ -224,52 +226,68 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     buttonFullAnalysis.setActionCommand(ACTION_FULL_ANALYSIS);
     buttonFullAnalysis.addActionListener(this);
     toolbar.add(buttonFullAnalysis);
+
     buttonDisambiguation = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Disambiguation (Alt + &D)"), false);
     buttonDisambiguation.setActionCommand(ACTION_DISAMBIGUATION);
     buttonDisambiguation.addActionListener(this);
     toolbar.add(buttonDisambiguation);
+
+    buttonSelectDab = Utilities.createJButton(
+        "wpc-select-disambig.png", EnumImageSize.NORMAL,
+        GT._("Select disambiguation pages with too many backlinks"), false);
+    buttonSelectDab.setActionCommand(ACTION_SELECT_DAB);
+    buttonSelectDab.addActionListener(this);
+    toolbar.add(buttonSelectDab);
+
     buttonDisambiguationWatch = Utilities.createJButton(
         "commons-disambig-colour-plus.png", EnumImageSize.NORMAL,
         GT._("Analyze pages with links to disambiguation pages"), false);
     buttonDisambiguationWatch.setActionCommand(ACTION_DAB_WATCH);
     buttonDisambiguationWatch.addActionListener(this);
     toolbar.add(buttonDisambiguationWatch);
+
     buttonUpdateDabWarning = Utilities.createJButton(
         "gnome-dialog-warning.png", EnumImageSize.NORMAL,
         GT._("Update disambiguation warning"), false);
     buttonUpdateDabWarning.setActionCommand(ACTION_UPDATE_DAB);
     buttonUpdateDabWarning.addActionListener(this);
     toolbar.add(buttonUpdateDabWarning);
+
     buttonUpdateInfo = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
         GT._("Update page information (Alt + &U)"), false);
     buttonUpdateInfo.setActionCommand(ACTION_UPDATE);
     buttonUpdateInfo.addActionListener(this);
     toolbar.add(buttonUpdateInfo);
+
     buttonComments = Utilities.createJButton(
         "tango-internet-group-chat.png", EnumImageSize.NORMAL,
         GT._("Set page comments (Alt + &C)"), false);
     buttonComments.setActionCommand(ACTION_SET_COMMENTS);
     buttonComments.addActionListener(this);
     toolbar.add(buttonComments);
+
     buttonView = Utilities.createJButton(
         "gnome-emblem-web.png", EnumImageSize.NORMAL,
         GT._("External Viewer (Alt + &E)"), false);
     buttonView.setActionCommand(ACTION_VIEW);
     buttonView.addActionListener(this);
     toolbar.add(buttonView);
+
     buttonViewHistory = Utilities.createJButton(
         "gnome-emblem-documents.png", EnumImageSize.NORMAL,
         GT._("History (Alt + &H)"), false);
     buttonViewHistory.setActionCommand(ACTION_VIEW_HISTORY);
     buttonViewHistory.addActionListener(this);
     toolbar.add(buttonViewHistory);
+
     buttonAutomaticFixing = Utilities.createJButton(GT._("Automatic fixing"));
     buttonAutomaticFixing.setActionCommand(ACTION_AUTOMATIC_FIXING);
     buttonAutomaticFixing.addActionListener(this);
     toolbar.add(buttonAutomaticFixing);
+
     if (watchList) {
       buttonRemove = Utilities.createJButton(
           "gnome-list-remove.png", EnumImageSize.NORMAL,
@@ -310,6 +328,8 @@ public class PageListWindow extends BasicWindow implements ActionListener {
       actionRunAutomaticFixing();
     } else if (ACTION_DISAMBIGUATION.equals(e.getActionCommand())) {
       actionDisambiguation();
+    } else if (ACTION_SELECT_DAB.equals(e.getActionCommand())) {
+      actionSelectDisambiguation();
     } else if (ACTION_DAB_WATCH.equals(e.getActionCommand())) {
       actionDisambiguationWatch();
     } else if (ACTION_UPDATE_DAB.equals(e.getActionCommand())) {
@@ -347,6 +367,28 @@ public class PageListWindow extends BasicWindow implements ActionListener {
         getParentComponent(),
         getSelectedPages(),
         getWikipedia());
+  }
+
+  /**
+   * Action called when Select Disambiguation button is pressed.
+   */
+  private void actionSelectDisambiguation() {
+    tablePages.clearSelection();
+    int index = 0;
+    for (Page page : pages) {
+      if (page.isDisambiguationPage()) {
+        if ((page.getComment() != null) &&
+            (page.getComment().getMaxMainArticles() != null)) {
+          int maxArticles = page.getComment().getMaxMainArticles().intValue();
+          Integer articles = page.getBacklinksCountInMainNamespace();
+          if ((articles != null) && (maxArticles < articles.intValue())) {
+            int tmpIndex = tablePages.convertRowIndexToView(index);
+            tablePages.addRowSelectionInterval(tmpIndex, tmpIndex);
+          }
+        }
+      }
+      index++;
+    }
   }
 
   /**
