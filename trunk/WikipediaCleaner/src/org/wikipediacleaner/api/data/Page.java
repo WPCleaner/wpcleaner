@@ -34,7 +34,7 @@ import org.wikipediacleaner.api.constants.WPCConfiguration;
 
 
 /**
- * Information about pages
+ * Information about pages.
  */
 public class Page implements Comparable<Page> {
 
@@ -56,7 +56,6 @@ public class Page implements Comparable<Page> {
   private List<Page> links;
   private List<Page> backLinks;
   private List<Page> templates;
-  private List<Page> redirects;
   private List<Page> similarPages;
   private int countOccurrence;
 
@@ -67,7 +66,7 @@ public class Page implements Comparable<Page> {
   private ProgressionValue backLinksTemplateProgression;
 
   /**
-   * @param wikipedia Wikipedia;
+   * @param wiki Wiki;
    * @param title Page title.
    */
   Page(EnumWikipedia wikipedia, String title) {
@@ -124,14 +123,14 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @return Namespace number.
+   * @return Name space number.
    */
   public Integer getNamespace() {
     return namespace;
   }
 
   /**
-   * @param namespace Namespace number.
+   * @param namespace Name space number.
    */
   public void setNamespace(String namespace) {
     try {
@@ -142,14 +141,14 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @param namespace Namespace number.
+   * @param namespace Name space number.
    */
   public void setNamespace(Integer namespace) {
     this.namespace = namespace;
   }
 
   /**
-   * @return Wikipedia.
+   * @return Wiki.
    */
   public EnumWikipedia getWikipedia() {
     return wikipedia;
@@ -404,118 +403,6 @@ public class Page implements Comparable<Page> {
    */
   public void setExisting(Boolean exist) {
     this.exist = exist;
-  }
-
-  /**
-   * @return Flag indicating if there's a redirection
-   */
-  public boolean isRedirect() {
-    return redirects != null;
-  }
-
-  /**
-   * @return The title of the page when redirects are followed.
-   */
-  public String getRedirectTitle() {
-    if ((redirects != null) && (redirects.size() > 0)) {
-      return redirects.get(redirects.size() - 1).getTitle();
-    }
-    return getTitle();
-  }
-
-  /**
-   * @return Redirection.
-   */
-  public List<Page> getRedirects() {
-    return redirects;
-  }
-
-  /**
-   * @return Redirection destination.
-   */
-  public String getRedirectDestination() {
-    if ((redirects == null) || (redirects.isEmpty())) {
-      return getTitle();
-    }
-    Page to = redirects.get(redirects.size() - 1);
-    String toTitle = to.getTitle();
-    String pageContents = contents;
-    if ((pageContents != null) && (pageContents.length() > 0)) {
-      boolean redirectFound = false;
-      int startIndex = 0;
-      while ((!redirectFound) && (startIndex < pageContents.length())) {
-        boolean ok = true;
-        int endIndex = pageContents.indexOf('\n', startIndex);
-        if (endIndex < 0) {
-          endIndex = pageContents.length();
-        }
-        // Removing white spaces
-        if (ok) {
-          while ((startIndex < endIndex) &&
-                 Character.isWhitespace(pageContents.charAt(startIndex))) {
-            startIndex++;
-          }
-        }
-        // Removing REDIRECT
-        if (ok) {
-          ok = false;
-          MagicWord magicRedirect = wikipedia.getMagicWord(MagicWord.REDIRECT);
-          if ((magicRedirect != null) && (magicRedirect.getAliases() != null)) {
-            int length = 0;
-            for (String magic : magicRedirect.getAliases()) {
-              if ((pageContents.length() > startIndex + magic.length()) &&
-                  (magic.length() > length)) {
-                if (magic.equalsIgnoreCase(pageContents.substring(startIndex, startIndex + magic.length()))) {
-                  ok = true;
-                  length = magic.length();
-                }
-              }
-            }
-            startIndex += length;
-          }
-        }
-        // Removing white spaces
-        if (ok) {
-          while ((startIndex < endIndex) &&
-                 Character.isWhitespace(pageContents.charAt(startIndex))) {
-            startIndex++;
-          }
-        }
-        if (ok && pageContents.startsWith("[[", startIndex)) {
-          redirectFound = true;
-          startIndex += "[[".length();
-          int endRedirect = pageContents.indexOf("]]", startIndex);
-          int sharp = pageContents.indexOf("#", startIndex);
-          if ((endRedirect > 0) && (sharp > 0) && (sharp < endRedirect)) {
-            toTitle += pageContents.substring(sharp, endRedirect);
-          }
-        }
-        startIndex = endIndex + 1;
-      }
-    }
-    if ((to.getNamespace() != null) &&
-        (to.getNamespace() == Namespace.CATEGORY) &&
-        (!toTitle.startsWith(":"))) {
-      toTitle = ":" + toTitle;
-    }
-    return toTitle;
-  }
-  
-  /**
-   * @param redirect Redirection.
-   */
-  public void setRedirects(List<Page> redirect) {
-    this.redirects = redirect;
-  }
-
-  /**
-   * @param redirect Redirection.
-   */
-  public void addRedirect(Page redirect) {
-    if (redirects == null) {
-      redirects = new ArrayList<Page>(); 
-    }
-    redirects.add(redirect);
   }
 
   /**
@@ -950,7 +837,155 @@ public class Page implements Comparable<Page> {
     return title;
   }
 
-  /* (non-Javadoc)
+  // ==========================================================================
+  // Redirects
+  // ==========================================================================
+
+  /**
+   * Flag indicating if the page is a redirect.
+   */
+  private boolean isRedirect;
+
+  /**
+   * List of pages the page is redirecting to.
+   */
+  private List<Page> redirects;
+
+  /**
+   * Indicates if the page is a redirection to an other page.
+   * 
+   * @return <code>true</code> if the page is a redirection.
+   */
+  public boolean isRedirect() {
+    return isRedirect;
+  }
+
+  /**
+   * Indicates if the page is a redirection to an other page.
+   * 
+   * @param redirect Indicates if the page is a redirection.
+   */
+  public void isRedirect(boolean redirect) {
+    isRedirect = redirect;
+  }
+
+  /**
+   * @return Redirection.
+   */
+  public List<Page> getRedirects() {
+    return redirects;
+  }
+  
+  /**
+   * @param redirect Redirection.
+   */
+  public void setRedirects(List<Page> redirect) {
+    this.redirects = redirect;
+    if (redirects != null) {
+      isRedirect(true);
+    }
+  }
+
+  /**
+   * @param redirect Redirection.
+   */
+  public void addRedirect(Page redirect) {
+    if (redirects == null) {
+      redirects = new ArrayList<Page>(); 
+    }
+    redirects.add(redirect);
+    isRedirect(true);
+  }
+
+  /**
+   * @return The title of the page when redirects are followed.
+   */
+  public String getRedirectTitle() {
+    if ((redirects != null) && (redirects.size() > 0)) {
+      return redirects.get(redirects.size() - 1).getTitle();
+    }
+    return getTitle();
+  }
+
+  /**
+   * @return Redirection destination.
+   */
+  public String getRedirectDestination() {
+    if ((redirects == null) || (redirects.isEmpty())) {
+      return getTitle();
+    }
+    Page to = redirects.get(redirects.size() - 1);
+    String toTitle = to.getTitle();
+    String pageContents = contents;
+    if ((pageContents != null) && (pageContents.length() > 0)) {
+      boolean redirectFound = false;
+      int startIndex = 0;
+      while ((!redirectFound) && (startIndex < pageContents.length())) {
+        boolean ok = true;
+        int endIndex = pageContents.indexOf('\n', startIndex);
+        if (endIndex < 0) {
+          endIndex = pageContents.length();
+        }
+        // Removing white spaces
+        if (ok) {
+          while ((startIndex < endIndex) &&
+                 Character.isWhitespace(pageContents.charAt(startIndex))) {
+            startIndex++;
+          }
+        }
+        // Removing REDIRECT
+        if (ok) {
+          ok = false;
+          MagicWord magicRedirect = wikipedia.getMagicWord(MagicWord.REDIRECT);
+          if ((magicRedirect != null) && (magicRedirect.getAliases() != null)) {
+            int length = 0;
+            for (String magic : magicRedirect.getAliases()) {
+              if ((pageContents.length() > startIndex + magic.length()) &&
+                  (magic.length() > length)) {
+                if (magic.equalsIgnoreCase(pageContents.substring(startIndex, startIndex + magic.length()))) {
+                  ok = true;
+                  length = magic.length();
+                }
+              }
+            }
+            startIndex += length;
+          }
+        }
+        // Removing white spaces
+        if (ok) {
+          while ((startIndex < endIndex) &&
+                 Character.isWhitespace(pageContents.charAt(startIndex))) {
+            startIndex++;
+          }
+        }
+        if (ok && pageContents.startsWith("[[", startIndex)) {
+          redirectFound = true;
+          startIndex += "[[".length();
+          int endRedirect = pageContents.indexOf("]]", startIndex);
+          int sharp = pageContents.indexOf("#", startIndex);
+          if ((endRedirect > 0) && (sharp > 0) && (sharp < endRedirect)) {
+            toTitle += pageContents.substring(sharp, endRedirect);
+          }
+        }
+        startIndex = endIndex + 1;
+      }
+    }
+    if ((to.getNamespace() != null) &&
+        (to.getNamespace() == Namespace.CATEGORY) &&
+        (!toTitle.startsWith(":"))) {
+      toTitle = ":" + toTitle;
+    }
+    return toTitle;
+  }
+
+  // ==========================================================================
+  // General methods
+  // ==========================================================================
+
+  /**
+   * Returns a String representation of the page.
+   * 
+   * @return String representation of the page.
    * @see java.lang.Object#toString()
    */
   @Override
@@ -958,13 +993,18 @@ public class Page implements Comparable<Page> {
     return title;
   }
 
-  /* (non-Javadoc)
+  /**
+   * Compares this page with the specified page for order.
+   * 
+   * @param bl The page to be compared.
+   * @return a negative integer, zero, or a positive integer as this page
+   *         is less than, equal to, or greater the specified page.
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
   public int compareTo(Page bl) {
     int compare;
 
-    // Namespace
+    // Name space
     if (namespace == null) {
       if (bl.namespace != null) {
         return -1;
@@ -1003,7 +1043,12 @@ public class Page implements Comparable<Page> {
     return 0;
   }
 
-  /* (non-Javadoc)
+  /**
+   * Indicates whether some other page is "equal to" this one.
+   * 
+   * @param o The reference page with which to compare.
+   * @return <code>true</code> if this page is the same as the page argument;
+   *         <code>false</code> otherwise.
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -1022,7 +1067,10 @@ public class Page implements Comparable<Page> {
     return equals;
   }
 
-  /* (non-Javadoc)
+  /**
+   * Returns a hash code value for the page.
+   * 
+   * @return A hash code value for this page.
    * @see java.lang.Object#hashCode()
    */
   @Override
