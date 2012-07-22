@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.httpclient.Header;
@@ -61,6 +60,8 @@ import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
+import org.wikipediacleaner.api.request.ApiCategoryMembersRequest;
+import org.wikipediacleaner.api.request.ApiCategoryMembersResult;
 import org.wikipediacleaner.api.request.ApiEmbeddedInRequest;
 import org.wikipediacleaner.api.request.ApiEmbeddedInResult;
 import org.wikipediacleaner.api.request.ApiExpandRequest;
@@ -83,6 +84,7 @@ import org.wikipediacleaner.api.request.ApiSiteInfoRequest;
 import org.wikipediacleaner.api.request.ApiSiteInfoResult;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ConnectionInformation;
+import org.wikipediacleaner.api.request.xml.ApiXmlCategoryMembersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlEmbeddedInResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlExpandResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLoginResult;
@@ -807,92 +809,6 @@ public class MediaWikiAPI implements API {
   }
 
   /**
-   * Retrieves the pages in which <code>page</code> is embedded.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param category Category.
-   * @param depth Depth of lookup for sub-categories.
-   * @throws APIException
-   */
-  public List<Page> retrieveCategoryMembers(
-      EnumWikipedia wikipedia, String category, int depth) throws APIException {
-    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
-    properties.put("list", "categorymembers");
-    properties.put("cmlimit", "max");
-    List<Page> categoryMembers = new ArrayList<Page>();
-    List<String> categoryAnalyzed = new ArrayList<String>();
-    Map<String, Integer> categories = new HashMap<String, Integer>();
-    categories.put(category, Integer.valueOf(0));
-    while (!categories.isEmpty()) {
-
-      // Find category to analyze
-      Entry<String, Integer> entry = categories.entrySet().iterator().next();
-      String categoryName = entry.getKey();
-      categories.remove(categoryName);
-      int colonIndex = categoryName.indexOf(':');
-      if (colonIndex < 0) {
-        categoryName = Namespace.getTitle(Namespace.CATEGORY, wikipedia.getNamespaces(), categoryName);
-      } else {
-        Namespace namespaceCategory = Namespace.getNamespace(Namespace.CATEGORY, wikipedia.getNamespaces());
-        if (!namespaceCategory.isPossibleName(categoryName.substring(0, colonIndex))) {
-          categoryName = Namespace.getTitle(Namespace.CATEGORY, wikipedia.getNamespaces(), categoryName);
-        }
-      }
-
-      // Analyze category
-      if (!categoryAnalyzed.contains(categoryName)) {
-        categoryAnalyzed.add(categoryName);
-        properties.put("cmtitle", categoryName);
-        properties.remove("cmcontinue");
-        boolean cmcontinue = false;
-        do {
-          try {
-            XPath xpa = XPath.newInstance("/api/query/categorymembers/cm");
-            Element root = getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS);
-            List results = xpa.selectNodes(root);
-            Iterator iter = results.iterator();
-            XPath xpaPageId = XPath.newInstance("./@pageid");
-            XPath xpaNs = XPath.newInstance("./@ns");
-            XPath xpaTitle = XPath.newInstance("./@title");
-            while (iter.hasNext()) {
-              Element currentNode = (Element) iter.next();
-              Page page = DataManager.getPage(
-                  wikipedia, xpaTitle.valueOf(currentNode), null, null);
-              page.setNamespace(xpaNs.valueOf(currentNode));
-              page.setPageId(xpaPageId.valueOf(currentNode));
-              if ((page.getNamespace() != null) &&
-                  (page.getNamespace().intValue() == Namespace.CATEGORY)) {
-                if (entry.getValue().intValue() < depth) {
-                  categories.put(page.getTitle(), Integer.valueOf(entry.getValue().intValue() + 1));
-                }
-              } else {
-                if (!categoryMembers.contains(page)) {
-                  categoryMembers.add(page);
-                }
-              }
-            }
-            XPath xpaContinue = XPath.newInstance("/api/query-continue/categorymembers");
-            XPath xpaCmContinue = XPath.newInstance("./@cmcontinue");
-            results = xpaContinue.selectNodes(root);
-            iter = results.iterator();
-            cmcontinue = false;
-            while (iter.hasNext()) {
-              Element currentNode = (Element) iter.next();
-              cmcontinue = true;
-              properties.put("cmcontinue", xpaCmContinue.valueOf(currentNode));
-            }
-          } catch (JDOMException e) {
-            log.error("Error for category members " + category, e);
-            throw new APIException("Error parsing XML result", e);
-          }
-        } while (cmcontinue);
-      }
-    }
-    Collections.sort(categoryMembers);
-    return categoryMembers;
-  }
-
-  /**
    * Retrieves the templates of <code>page</code>.
    * 
    * @param wikipedia Wikipedia.
@@ -1601,6 +1517,7 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param page The page.
+   * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Backlinks">API:Backlinks</a>
    */
   public void retrieveBackLinks(EnumWikipedia wiki, Page page)
@@ -1608,6 +1525,23 @@ public class MediaWikiAPI implements API {
     ApiBacklinksResult result = new ApiXmlBacklinksResult(wiki, httpClient, connection);
     ApiBacklinksRequest request = new ApiBacklinksRequest(result);
     request.loadBacklinks(page);
+  }
+
+  /**
+   * Retrieves the pages in which <code>page</code> is embedded.
+   * (<code>action=query</code>, <code>list=categorymembers</code>).
+   * 
+   * @param wiki Wiki.
+   * @param category Category.
+   * @param depth Depth of lookup for sub-categories.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Categorymembers">API:Categorymembers</a>
+   */
+  public List<Page> retrieveCategoryMembers(
+      EnumWikipedia wiki, String category, int depth) throws APIException {
+    ApiCategoryMembersResult result = new ApiXmlCategoryMembersResult(wiki, httpClient, connection);
+    ApiCategoryMembersRequest request = new ApiCategoryMembersRequest(result);
+    return request.loadCategoryMembers(category, depth);
   }
 
   /**

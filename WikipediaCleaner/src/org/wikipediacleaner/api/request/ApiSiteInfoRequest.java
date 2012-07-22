@@ -37,32 +37,32 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
   /**
    * Property for Properties.
    */
-  public final static String PROPERTY_SIPROP = "siprop";
+  public final static String PROPERTY_PROP = "siprop";
 
   /**
    * Property for Properties / Name spaces.
    */
-  public final static String PROPERTY_SIPROP_NAMESPACES = "namespaces";
+  public final static String PROPERTY_PROP_NAMESPACES = "namespaces";
 
   /**
    * Property for Properties / Name space aliases.
    */
-  public final static String PROPERTY_SIPROP_NAMESPACE_ALIASES = "namespacealiases";
+  public final static String PROPERTY_PROP_NAMESPACE_ALIASES = "namespacealiases";
 
   /**
    * Property for Properties / Languages.
    */
-  public final static String PROPERTY_SIPROP_LANGUAGES = "languages";
+  public final static String PROPERTY_PROP_LANGUAGES = "languages";
 
   /**
    * Property for Properties / Interwiki map.
    */
-  public final static String PROPERTY_SIPROP_INTERWIKI_MAP = "interwikimap";
+  public final static String PROPERTY_PROP_INTERWIKI_MAP = "interwikimap";
 
   /**
    * Property for Properties / Magic words.
    */
-  public final static String PROPERTY_SIPROP_MAGIC_WORDS = "magicwords";
+  public final static String PROPERTY_PROP_MAGIC_WORDS = "magicwords";
 
   // ==========================================================================
   // Request management
@@ -96,22 +96,22 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
         PROPERTY_META_SITEINFO);
     Collection<String> information = new ArrayList<String>();
     if (namespaces) {
-      information.add(PROPERTY_SIPROP_NAMESPACES);
+      information.add(PROPERTY_PROP_NAMESPACES);
     }
     if (namespaceAliases) {
-      information.add(PROPERTY_SIPROP_NAMESPACE_ALIASES);
+      information.add(PROPERTY_PROP_NAMESPACE_ALIASES);
     }
     if (languages) {
-      information.add(PROPERTY_SIPROP_LANGUAGES);
+      information.add(PROPERTY_PROP_LANGUAGES);
     }
     if (interwikiMap) {
-      information.add(PROPERTY_SIPROP_INTERWIKI_MAP);
+      information.add(PROPERTY_PROP_INTERWIKI_MAP);
     }
     if (magicWords) {
-      information.add(PROPERTY_SIPROP_MAGIC_WORDS);
+      information.add(PROPERTY_PROP_MAGIC_WORDS);
     }
     properties.put(
-        ApiSiteInfoRequest.PROPERTY_SIPROP,
+        PROPERTY_PROP,
         constructList(information));
     result.executeSiteInformation(properties);
   }
