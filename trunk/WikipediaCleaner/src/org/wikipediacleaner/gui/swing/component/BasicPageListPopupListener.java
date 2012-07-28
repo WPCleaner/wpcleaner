@@ -36,7 +36,7 @@ public class BasicPageListPopupListener extends
   /**
    * @param wiki Wiki
    * @param textPane Text pane.
-   * @param JList List.
+   * @param list List.
    * @param window Window.
    */
   public BasicPageListPopupListener(
