@@ -25,7 +25,6 @@ import java.util.Map;
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.input.JDOMParseException;
 import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -65,29 +64,9 @@ public class ApiXmlRandomPagesResult extends ApiXmlResult implements ApiRandomPa
       Map<String, String> properties,
       List<Page> list) throws APIException {
     try {
-      constructRandomList(
-          getRoot(properties, ApiRequest.MAX_ATTEMPTS),
-          list);
-    } catch (JDOMParseException e) {
-      log.error("Error loading random list", e);
-      throw new APIException("Error parsing XML", e);
-    }
-  }
+      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-  /**
-   * Construct random list.
-   * 
-   * @param root Root element.
-   * @param list List of pages to be filled with the watch list.
-   * @throws APIException
-   */
-  private void constructRandomList(
-      Element root,
-      List<Page> list)
-      throws APIException {
-
-    // Retrieve watch list
-    try {
+      // Get random list
       XPath xpa = XPath.newInstance("/api/query/random/page");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
@@ -103,8 +82,8 @@ public class ApiXmlRandomPagesResult extends ApiXmlResult implements ApiRandomPa
         list.add(page);
       }
     } catch (JDOMException e) {
-      log.error("Error random list", e);
-      throw new APIException("Error parsing XML result", e);
+      log.error("Error loading random list", e);
+      throw new APIException("Error parsing XML", e);
     }
   }
 }

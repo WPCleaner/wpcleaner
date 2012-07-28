@@ -28,7 +28,6 @@ import java.util.Map;
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.input.JDOMParseException;
 import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -68,23 +67,10 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       Map<String, String> properties)
           throws APIException {
     try {
-      constructSiteInfo(getRoot(properties, ApiRequest.MAX_ATTEMPTS));
-    } catch (JDOMParseException e) {
-      log.error("Error loading namespaces", e);
-      throw new APIException("Error parsing XML", e);
-    }
-  }
+      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-  /**
-   * @param root Root element.
-   * @throws APIException
-   */
-  private void constructSiteInfo(Element root)
-      throws APIException {
-
-    // Retrieve name spaces
-    HashMap<Integer, Namespace> namespaces = null;
-    try {
+      // Retrieve name spaces
+      HashMap<Integer, Namespace> namespaces = null;
       XPath xpa = XPath.newInstance("/api/query/namespaces/ns");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
@@ -100,18 +86,13 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
             xpaCanonical.valueOf(currentNode));
         namespaces.put(ns.getId(), ns);
       }
-    } catch (JDOMException e) {
-      log.error("Error namespaces", e);
-      throw new APIException("Error parsing XML result", e);
-    }
 
-    // Retrieve name space aliases
-    try {
-      XPath xpa = XPath.newInstance("/api/query/namespacealiases/ns");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
-      XPath xpaId = XPath.newInstance("./@id");
-      XPath xpaTitle = XPath.newInstance(".");
+      // Retrieve name space aliases
+      xpa = XPath.newInstance("/api/query/namespacealiases/ns");
+      results = xpa.selectNodes(root);
+      iter = results.iterator();
+      xpaId = XPath.newInstance("./@id");
+      xpaTitle = XPath.newInstance(".");
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
         Integer nsId = null;
@@ -125,21 +106,16 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
           //
         }
       }
-    } catch (JDOMException e) {
-      log.error("Error namespaces", e);
-      throw new APIException("Error parsing XML result", e);
-    }
 
-    // Update name space list
-    LinkedList<Namespace> list = new LinkedList<Namespace>(namespaces.values());
-    getWiki().setNamespaces(list);
+      // Update name space list
+      LinkedList<Namespace> list = new LinkedList<Namespace>(namespaces.values());
+      getWiki().setNamespaces(list);
 
-    // Retrieve languages
-    try {
+      // Retrieve languages
       List<Language> languages = new ArrayList<Language>();
-      XPath xpa = XPath.newInstance("/api/query/languages/lang");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
+      xpa = XPath.newInstance("/api/query/languages/lang");
+      results = xpa.selectNodes(root);
+      iter = results.iterator();
       XPath xpaCode = XPath.newInstance("./@code");
       XPath xpaName = XPath.newInstance(".");
       while (iter.hasNext()) {
@@ -147,17 +123,12 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
         languages.add(new Language(xpaCode.valueOf(currentNode), xpaName.valueOf(currentNode)));
       }
       getWiki().setLanguages(languages);
-    } catch (JDOMException e) {
-      log.error("Error languages", e);
-      throw new APIException("Error parsing XML result", e);
-    }
 
-    // Retrieve interwikis
-    try {
+      // Retrieve interwikis
       List<Interwiki> interwikis = new ArrayList<Interwiki>();
-      XPath xpa = XPath.newInstance("/api/query/interwikimap/iw");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
+      xpa = XPath.newInstance("/api/query/interwikimap/iw");
+      results = xpa.selectNodes(root);
+      iter = results.iterator();
       XPath xpaPrefix = XPath.newInstance("./@prefix");
       XPath xpaLocal = XPath.newInstance("./@local");
       XPath xpaLanguage = XPath.newInstance("./@language");
@@ -171,18 +142,13 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
             xpaUrl.valueOf(currentNode)));
       }
       getWiki().setInterwikis(interwikis);
-    } catch (JDOMException e) {
-      log.error("Error languages", e);
-      throw new APIException("Error parsing XML result", e);
-    }
 
-    // Retrieve magic words
-    try {
+      // Retrieve magic words
       Map<String, MagicWord> magicWords = new HashMap<String, MagicWord>();
-      XPath xpa = XPath.newInstance("/api/query/magicwords/magicword");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
-      XPath xpaName = XPath.newInstance("./@name");
+      xpa = XPath.newInstance("/api/query/magicwords/magicword");
+      results = xpa.selectNodes(root);
+      iter = results.iterator();
+      xpaName = XPath.newInstance("./@name");
       XPath xpaAlias = XPath.newInstance("./aliases/alias");
       XPath xpaAliasValue = XPath.newInstance(".");
       while (iter.hasNext()) {
@@ -200,8 +166,8 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       }
       getWiki().setMagicWords(magicWords);
     } catch (JDOMException e) {
-      log.error("Error magic words", e);
-      throw new APIException("Error parsing XML result", e);
+      log.error("Error loading namespaces", e);
+      throw new APIException("Error parsing XML", e);
     }
   }
 }

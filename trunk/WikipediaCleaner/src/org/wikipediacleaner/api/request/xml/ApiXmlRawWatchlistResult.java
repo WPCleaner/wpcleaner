@@ -25,7 +25,6 @@ import java.util.Map;
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.input.JDOMParseException;
 import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -66,32 +65,9 @@ public class ApiXmlRawWatchlistResult extends ApiXmlResult implements ApiRawWatc
       List<Page> watchlist)
           throws APIException {
     try {
-      return constructWatchlist(
-          getRoot(properties, ApiRequest.MAX_ATTEMPTS),
-          properties,
-          watchlist);
-    } catch (JDOMParseException e) {
-      log.error("Error loading watch list", e);
-      throw new APIException("Error parsing XML", e);
-    }
-  }
+      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-  /**
-   * Construct watch list.
-   * 
-   * @param root Root element.
-   * @param properties Properties defining request.
-   * @param watchlist List of pages to be filled with the watch list.
-   * @return True if request should be continued.
-   * @throws APIException
-   */
-  private boolean constructWatchlist(
-      Element root, Map<String, String> properties,
-      List<Page> watchlist)
-      throws APIException {
-
-    // Retrieve watch list
-    try {
+      // Retrieve watch list
       XPath xpa = XPath.newInstance("/api/watchlistraw/wr");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
@@ -104,14 +80,14 @@ public class ApiXmlRawWatchlistResult extends ApiXmlResult implements ApiRawWatc
           watchlist.add(page);
         }
       }
-    } catch (JDOMException e) {
-      log.error("Error watchlist raw", e);
-      throw new APIException("Error parsing XML result", e);
-    }
 
-    // Retrieve continue
-    return shouldContinue(
-        root, "/api/query-continue/watchlistraw",
-        properties);
+      // Retrieve continue
+      return shouldContinue(
+          root, "/api/query-continue/watchlistraw",
+          properties);
+    } catch (JDOMException e) {
+      log.error("Error loading watch list", e);
+      throw new APIException("Error parsing XML", e);
+    }
   }
 }

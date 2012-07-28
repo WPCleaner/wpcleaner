@@ -25,7 +25,6 @@ import java.util.Map;
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.input.JDOMParseException;
 import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -66,32 +65,9 @@ public class ApiXmlSearchResult extends ApiXmlResult implements ApiSearchResult 
       List<Page> list)
           throws APIException {
     try {
-      return constructSearchResults(
-          getRoot(properties, ApiRequest.MAX_ATTEMPTS),
-          properties,
-          list);
-    } catch (JDOMParseException e) {
-      log.error("Error searching", e);
-      throw new APIException("Error parsing XML", e);
-    }
-  }
+      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-  /**
-   * Construct list of search results.
-   * 
-   * @param root Root element.
-   * @param properties Properties defining request.
-   * @param list List of pages to be filled with back links.
-   * @return True if request should be continued.
-   * @throws APIException
-   */
-  private boolean constructSearchResults(
-      Element root, Map<String, String> properties,
-      List<Page> list)
-      throws APIException {
-
-    // Retrieve back links
-    try {
+      // Retrieve search results
       XPath xpa = XPath.newInstance("/api/query/search/p");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
@@ -104,14 +80,14 @@ public class ApiXmlSearchResult extends ApiXmlResult implements ApiSearchResult 
         similarPage.setNamespace(xpaNs.valueOf(currentNode));
         list.add(similarPage);
       }
-    } catch (JDOMException e) {
-      log.error("Error search", e);
-      throw new APIException("Error parsing XML result", e);
-    }
 
-    // Retrieve continue
-    return shouldContinue(
-        root, "/api/query-continue/search",
-        properties);
+      // Retrieve continue
+      return shouldContinue(
+          root, "/api/query-continue/search",
+          properties);
+    } catch (JDOMException e) {
+      log.error("Error searching", e);
+      throw new APIException("Error parsing XML", e);
+    }
   }
 }
