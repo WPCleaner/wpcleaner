@@ -74,6 +74,8 @@ public class DisambiguationWindow extends OnePageWindow {
   private final static String ACTION_DISAMBIGUATION_LINK   = "DISAMBIGUATION LINK";
   private final static String ACTION_EXTERNAL_VIEWER_LINK  = "EXTERNAL VIEWER LINK";
   private final static String ACTION_FULL_ANALYSIS_LINK    = "FULL ANALYSIS LINK";
+  private final static String ACTION_MARK_NEED_HELP        = "MARK NEED HELP";
+  private final static String ACTION_MARK_NORMAL           = "MARK NORMAL";
   private final static String ACTION_NEXT_LINKS            = "NEXT LINKS";
 
   //public final static Integer WINDOW_VERSION = Integer.valueOf(2);
@@ -87,6 +89,8 @@ public class DisambiguationWindow extends OnePageWindow {
   JLabel linkCount;
   private JButton buttonFullAnalysisLink;
   private JButton buttonDisambiguationLink;
+  private JButton buttonMarkNeedHelp;
+  private JButton buttonMarkNormal;
   private JButton buttonExternalViewerLink;
   private JButton buttonSelectNextLinks;
   private JButton buttonAutomaticFixing;
@@ -296,6 +300,18 @@ public class DisambiguationWindow extends OnePageWindow {
     buttonDisambiguationLink.setActionCommand(ACTION_DISAMBIGUATION_LINK);
     buttonDisambiguationLink.addActionListener(this);
     toolbar.add(buttonDisambiguationLink);
+    buttonMarkNormal = Utilities.createJButton(
+        "wpc-mark-normal.png", EnumImageSize.NORMAL,
+        GT._("Mark backlink as normal"), false);
+    buttonMarkNormal.setActionCommand(ACTION_MARK_NORMAL);
+    buttonMarkNormal.addActionListener(this);
+    toolbar.add(buttonMarkNormal);
+    buttonMarkNeedHelp = Utilities.createJButton(
+        "wpc-mark-need-help.png", EnumImageSize.NORMAL,
+        GT._("Mark backlink as needing help"), false);
+    buttonMarkNeedHelp.setActionCommand(ACTION_MARK_NEED_HELP);
+    buttonMarkNeedHelp.addActionListener(this);
+    toolbar.add(buttonMarkNeedHelp);
     buttonExternalViewerLink = Utilities.createJButton(
         "gnome-emblem-web.png", EnumImageSize.NORMAL,
         GT._("External Viewer"), false);
@@ -364,6 +380,10 @@ public class DisambiguationWindow extends OnePageWindow {
       actionFullAnalysisLink();
     } else if (ACTION_DISAMBIGUATION_LINK.equals(e.getActionCommand())) {
       actionDisambiguationLink();
+    } else if (ACTION_MARK_NORMAL.equals(e.getActionCommand())) {
+      actionMarkBacklink(Configuration.VALUE_PAGE_NORMAL);
+    } else if (ACTION_MARK_NEED_HELP.equals(e.getActionCommand())) {
+      actionMarkBacklink(Configuration.VALUE_PAGE_HELP_NEEDED);
     } else if (ACTION_EXTERNAL_VIEWER_LINK.equals(e.getActionCommand())) {
       actionExternalViewerLink();
     } else if (ACTION_NEXT_LINKS.equals(e.getActionCommand())) {
@@ -483,6 +503,24 @@ public class DisambiguationWindow extends OnePageWindow {
   private void actionDisambiguationLink() {
     Controller.runDisambiguationAnalysis(
         getParentComponent(), listLinks.getSelectedValues(), getWikipedia());
+  }
+
+  /**
+   * Action called when Mark back link button is pressed.
+   */
+  private void actionMarkBacklink(String mark) {
+    for (Object selection : listLinks.getSelectedValues()) {
+      if (selection instanceof Page) {
+        Page selected = (Page) selection;
+        backlinksProperties.put(selected.getTitle(), mark);
+      }
+    }
+    Configuration configuration = Configuration.getConfiguration();
+    configuration.setSubProperties(
+        getWikipedia(),
+        Configuration.PROPERTIES_BACKLINKS, getPageName(),
+        backlinksProperties);
+    listLinks.repaint();
   }
 
   /**
