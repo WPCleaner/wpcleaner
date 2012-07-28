@@ -138,7 +138,7 @@ public class TemplateListWindow extends BasicWindow {
     constraints.weighty = 1;
     listLinks = new JList(modelLinks);
     listLinks.setCellRenderer(new PageListCellRenderer());
-    listLinks.addMouseListener(new BasicPageListPopupListener(getWikipedia(), null, this));
+    listLinks.addMouseListener(new BasicPageListPopupListener(getWikipedia(), null, listLinks, this));
     listLinks.addMouseListener(new PageListAnalyzeListener(getWikipedia(), null));
     JScrollPane scrollLinks = new JScrollPane(listLinks);
     scrollLinks.setMinimumSize(new Dimension(100, 100));

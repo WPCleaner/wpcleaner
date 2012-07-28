@@ -532,7 +532,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     listCellRenderer.showRedirect(true);
     listLinks.setCellRenderer(listCellRenderer);
     popupListenerLinks = new AnalysisPageListPopupListener(
-        getWikipedia(), getTextContents(), this);
+        getWikipedia(), getTextContents(), listLinks, this);
     listLinks.addMouseListener(popupListenerLinks);
     listLinks.addMouseListener(new PageListAnalyzeListener(getWikipedia(), null));
     listLinks.addListSelectionListener(new AnalysisListSelectionListener());
