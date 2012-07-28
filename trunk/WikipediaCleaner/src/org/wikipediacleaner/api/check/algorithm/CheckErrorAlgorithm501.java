@@ -144,6 +144,16 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             nextIndex = mathTag.getCompleteEndIndex();
           }
         }
+
+        // Check for code tag
+        if (checkSpelling) {
+          PageElementTag codeTag = pageAnalysis.getSurroundingTag(
+              PageElementTag.TAG_WIKI_CODE, startIndex);
+          if (codeTag != null) {
+            checkSpelling = false;
+            nextIndex = codeTag.getCompleteEndIndex();
+          }
+        }
       }
 
       // Check spelling
