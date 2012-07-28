@@ -254,6 +254,26 @@ public abstract class ApiXmlResult extends BasicApiResult {
   }
 
   /**
+   * Utility method to create a XPath.
+   * 
+   * @param element Element.
+   * @param attribute Attribute.
+   * @param value Attribute value.
+   * @return XPath
+   * @throws JDOMException
+   */
+  protected static XPath createXPath(
+      String element,
+      String attribute,
+      String value)
+      throws JDOMException {
+    if ((value != null) && (value.indexOf("\"") != -1)) {
+      return XPath.newInstance(element + "[@" + attribute + "=\"" + xmlOutputter.escapeAttributeEntities(value) + "\"]");
+    }
+    return XPath.newInstance(element + "[@" + attribute + "=\"" + value + "\"]");
+  }
+
+  /**
    * Formatter for XML output.
    */
   private static XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());

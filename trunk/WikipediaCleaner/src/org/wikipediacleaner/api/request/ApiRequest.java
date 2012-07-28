@@ -18,8 +18,12 @@
 
 package org.wikipediacleaner.api.request;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.data.Page;
@@ -131,6 +135,34 @@ public abstract class ApiRequest {
   }
 
   /**
+   * Split a list of pages in smaller lists.
+   * 
+   * @param pages Full list of pages.
+   * @param maxSize Maximum size for the resulting lists.
+   * @return Lists of pages.
+   */
+  protected List<List<Page>> splitListPages(List<Page> pages, int maxSize) {
+    if (pages == null) {
+      return null;
+    }
+    if (pages.size() <= maxSize) {
+      return Collections.singletonList(pages);
+    }
+    List<List<Page>> result = new ArrayList<List<Page>>();
+    Iterator<Page> itPage = pages.iterator();
+    while (itPage.hasNext()) {
+      List<Page> splitList = new ArrayList<Page>();
+      int count = 0;
+      while ((itPage.hasNext()) && (count < maxSize)) {
+        splitList.add(itPage.next());
+        count++;
+      }
+      result.add(splitList);
+    }
+    return result;
+  }
+
+  /**
    * Construct a textual representation of a list of pages.
    * 
    * @param pages List of pages.
@@ -148,7 +180,7 @@ public abstract class ApiRequest {
   }
 
   /**
-   * Construct a textual representation of a list of strings.
+   * Construct a textual representation of a list of objects.
    * 
    * @param values List of objects.
    * @return Textual representation of the list.
