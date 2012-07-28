@@ -321,7 +321,7 @@ public class DisambiguationWindow extends OnePageWindow {
     }
     listLinks.setCellRenderer(listCellRenderer);
     popupListenerLinks = new DisambiguationPageListPopupListener(
-        getWikipedia(), getTextContents(), this);
+        getWikipedia(), getTextContents(), listLinks, this);
     listLinks.addMouseListener(popupListenerLinks);
     listLinks.addMouseListener(new PageListAnalyzeListener(getWikipedia(), this));
     JScrollPane scrollLinks = new JScrollPane(listLinks);

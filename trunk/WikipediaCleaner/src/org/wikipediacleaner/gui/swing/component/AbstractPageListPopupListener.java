@@ -24,6 +24,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
@@ -33,24 +35,27 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 /**
  * An abstract popup menu listener for Page list. 
  */
-public abstract class AbstractPageListPopupListener extends MouseAdapter {
+public abstract class AbstractPageListPopupListener extends MouseAdapter implements PopupMenuListener {
 
   protected Page page;
   protected final EnumWikipedia wikipedia;
   protected final MWPane textPane;
+  private final JList list;
   protected final BasicWindow window;
 
   /**
-   * @param wikipedia Wikipedia
+   * @param wiki Wiki
    * @param textPane Text pane.
+   * @param JList List.
    * @param window Window.
    */
   public AbstractPageListPopupListener(
-      EnumWikipedia wikipedia,
-      MWPane textPane,
+      EnumWikipedia wiki,
+      MWPane textPane, JList list,
       BasicWindow   window) {
-    this.wikipedia = wikipedia;
+    this.wikipedia = wiki;
     this.textPane = textPane;
+    this.list = list;
     this.window = window;
   }
 
@@ -99,12 +104,12 @@ public abstract class AbstractPageListPopupListener extends MouseAdapter {
     if (!(e.getComponent() instanceof JList)) {
       return;
     }
-    JList list = (JList) e.getComponent();
-    int position = list.locationToIndex(e.getPoint());
+    JList tmpList = (JList) e.getComponent();
+    int position = tmpList.locationToIndex(e.getPoint());
     if (position < 0) {
       return;
     }
-    Object object = list.getModel().getElementAt(position);
+    Object object = tmpList.getModel().getElementAt(position);
     if (!(object instanceof Page)) {
       return;
     }
@@ -120,6 +125,7 @@ public abstract class AbstractPageListPopupListener extends MouseAdapter {
     createPopup(popup, link);
 
     popup.show(e.getComponent(), e.getX(), e.getY());
+    popup.addPopupMenuListener(this);
   }
 
   /**
@@ -129,4 +135,39 @@ public abstract class AbstractPageListPopupListener extends MouseAdapter {
    * @param link Link.
    */
   abstract protected void createPopup(JPopupMenu popup, Page link);
+
+  // ==========================================================================
+  // PopupMenuListener methods
+  // ==========================================================================
+
+
+  /**
+   *  This method is called before the popup menu becomes visible
+   *  
+   *  @param e Event.
+   */
+  public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+    // Nothing to do
+  }
+
+  /**
+   * This method is called before the popup menu becomes invisible
+   * Note that a JPopupMenu can become invisible any time
+   * 
+   * @param e Event.
+   */
+  public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+    if (list != null) {
+      list.repaint();
+    }
+  }
+
+  /**
+   * This method is called when the popup menu is canceled
+   * 
+   * @param e Event.
+   */
+  public void popupMenuCanceled(PopupMenuEvent e) {
+    // Nothing to do
+  }
 }

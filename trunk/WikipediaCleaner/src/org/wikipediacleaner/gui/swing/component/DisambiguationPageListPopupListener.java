@@ -20,6 +20,7 @@ package org.wikipediacleaner.gui.swing.component;
 
 import java.util.Properties;
 
+import javax.swing.JList;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 
@@ -37,15 +38,16 @@ public class DisambiguationPageListPopupListener extends
   private Properties backlinksProperties;
 
   /**
-   * @param wikipedia Wikipedia
+   * @param wiki Wiki
    * @param textPane Text pane.
+   * @param JList List.
    * @param window Window.
    */
   public DisambiguationPageListPopupListener(
-      EnumWikipedia wikipedia,
-      MWPane textPane,
+      EnumWikipedia wiki,
+      MWPane textPane, JList list,
       BasicWindow window) {
-    super(wikipedia, textPane, window);
+    super(wiki, textPane, list, window);
   }
 
   /**

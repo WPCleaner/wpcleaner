@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.gui.swing.component;
 
+import javax.swing.JList;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 
@@ -33,15 +34,16 @@ public class BasicPageListPopupListener extends
     AbstractPageListPopupListener {
 
   /**
-   * @param wikipedia Wikipedia
+   * @param wiki Wiki
    * @param textPane Text pane.
+   * @param JList List.
    * @param window Window.
    */
   public BasicPageListPopupListener(
-      EnumWikipedia wikipedia,
-      MWPane textPane,
+      EnumWikipedia wiki,
+      MWPane textPane, JList list,
       BasicWindow window) {
-    super(wikipedia, textPane, window);
+    super(wiki, textPane, list, window);
   }
 
   /* (non-Javadoc)
