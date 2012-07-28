@@ -57,7 +57,6 @@ import org.wikipediacleaner.api.CaptchaException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
-import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.api.request.ApiCategoryMembersRequest;
@@ -83,6 +82,8 @@ import org.wikipediacleaner.api.request.ApiSearchResult;
 import org.wikipediacleaner.api.request.ApiSiteInfoRequest;
 import org.wikipediacleaner.api.request.ApiSiteInfoResult;
 import org.wikipediacleaner.api.request.ApiRequest;
+import org.wikipediacleaner.api.request.ApiTemplatesRequest;
+import org.wikipediacleaner.api.request.ApiTemplatesResult;
 import org.wikipediacleaner.api.request.ConnectionInformation;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoryMembersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlEmbeddedInResult;
@@ -95,6 +96,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlRandomPagesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlRawWatchlistResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlSearchResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlSiteInfoResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlTemplatesResult;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -891,109 +893,6 @@ public class MediaWikiAPI implements API {
   }
 
   /**
-   * Convert a list of pages into an argument usable by the API.
-   * 
-   * @param pages List of pages.
-   * @return Textual representation of the list of pages.
-   */
-  private String constructList(List<Page> pages) {
-    if ((pages == null) || (pages.size() == 0)) {
-      return "";
-    }
-    boolean first = true;
-    StringBuilder text = new StringBuilder();
-    for (Page page : pages) {
-      if (!first) {
-        text.append("|");
-      }
-      first = false;
-      text.append(page.getTitle());
-    }
-    return text.toString();
-  }
-
-  /**
-   * Initialize the disambiguation flags of a list of <code>pages</code>.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param pages List of pages.
-   * @throws APIException
-   */
-  public void initializeDisambiguationStatus(EnumWikipedia wikipedia, List<Page> pages)
-      throws APIException {
-    if ((pages == null) || (pages.isEmpty())) {
-      return;
-    }
-    if (wikipedia.isDisambiguationPagesLoaded()) {
-      for (Page page : pages) {
-        page.setDisambiguationPage(wikipedia.isDisambiguationPage(page));
-        if (page.isRedirect()) {
-          for (Page page2 : page.getRedirects()) {
-            page2.setDisambiguationPage(wikipedia.isDisambiguationPage(page2));
-          }
-        }
-      }
-    } else {
-      Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
-      properties.put("prop", "templates");
-      properties.put("tllimit", "max");
-      properties.put("tltemplates", constructList(wikipedia.getDisambiguationTemplates()));
-      List<Page> tmpPages = new ArrayList<Page>();
-      for (int i = 0; i < pages.size(); i++) {
-        Iterator<Page> iter = pages.get(i).getRedirectIteratorWithPage();
-        while (iter.hasNext()) {
-          Page page = iter.next();
-          if (page.isInMainNamespace()) {
-            if (!tmpPages.contains(page)) {
-              tmpPages.add(page);
-            }
-          } else {
-            page.setDisambiguationPage(Boolean.FALSE);
-          }
-        }
-      }
-      StringBuilder titles = new StringBuilder();
-      for (int i = 0; i < tmpPages.size();) {
-        titles.setLength(0);
-        for (int j = 0; (j < MAX_PAGES_PER_QUERY) && (i < tmpPages.size()); i++, j++) {
-          Page p = tmpPages.get(i);
-          if (j > 0) {
-            titles.append("|");
-          }
-          titles.append(p.getTitle());
-          p.setDisambiguationPage(null);
-        }
-        properties.put("titles", titles.toString());
-        try {
-          boolean tlcontinue = false;
-          do {
-            Element root = getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS);
-            updateDisambiguationStatus(
-                wikipedia, tmpPages, root,
-                "/api/query/pages/page");
-            XPath xpaContinue = XPath.newInstance("/api/query-continue/templates");
-            XPath xpaTlContinue = XPath.newInstance("./@tlcontinue");
-            List results = xpaContinue.selectNodes(root);
-            Iterator iter = results.iterator();
-            tlcontinue = false;
-            while (iter.hasNext()) {
-              Element currentNode = (Element) iter.next();
-              tlcontinue = true;
-              properties.put("tlcontinue", xpaTlContinue.valueOf(currentNode));
-            }
-          } while (tlcontinue);
-        } catch (JDOMParseException e) {
-          log.error("Error retrieving disambiguation status", e);
-          throw new APIException("Error parsing XML", e);
-        } catch (JDOMException e) {
-          log.error("Error retrieving disambiguation status", e);
-          throw new APIException("Error parsing XML", e);
-        }
-      }
-    }
-  }
-
-  /**
    * @param root Root element in MediaWiki answer.
    * 
    * @param query Path to the answer.
@@ -1383,69 +1282,6 @@ public class MediaWikiAPI implements API {
     }
   }
 
-  /**
-   * Update disambiguation information of a list of pages.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param pages List of pages.
-   * @param root Root element.
-   * @param query XPath query to retrieve the list of templates.
-   * @throws APIException
-   */
-  private void updateDisambiguationStatus(
-      EnumWikipedia wikipedia,
-      List<Page> pages,
-      Element root,
-      String query)
-      throws APIException {
-    try {
-      XPath xpa = XPath.newInstance(query);
-      List listPages = xpa.selectNodes(root);
-      Iterator iterPages = listPages.iterator();
-      XPath xpaTitle = XPath.newInstance("./@title");
-      XPath xpaTemplate = createXPath("templates/tl", "ns", "" + Namespace.TEMPLATE);
-      XPath xpaTemplateName = XPath.newInstance("./@title");
-      while (iterPages.hasNext()) {
-        Element currentNode = (Element) iterPages.next();
-        String title = xpaTitle.valueOf(currentNode);
-        for (Page p : pages) {
-          Iterator<Page> it = p.getRedirectIteratorWithPage();
-          while (it.hasNext()) {
-            Page p2 = it.next();
-            if ((p2.getTitle() != null) &&
-                (p2.getTitle().equals(title))) {
-              Boolean disambiguation = Boolean.FALSE;
-              Boolean wiktionaryLink = Boolean.FALSE;
-              List listTemplates = xpaTemplate.selectNodes(currentNode);
-              Iterator iterTemplates = listTemplates.iterator();
-              while (iterTemplates.hasNext()) {
-                Element currentTemplate = (Element) iterTemplates.next();
-                String templateName = xpaTemplateName.valueOf(currentTemplate);
-                if (wikipedia.isDisambiguationTemplate(templateName, this)) {
-                  disambiguation = Boolean.TRUE;
-                }
-                if (wikipedia.getConfiguration().isWiktionaryTemplate(templateName)) {
-                  wiktionaryLink = Boolean.TRUE;
-                }
-              }
-              if ((p2.isDisambiguationPage() == null) ||
-                  (Boolean.TRUE.equals(disambiguation))) {
-                p2.setDisambiguationPage(disambiguation);
-              }
-              if ((p2.hasWiktionaryLink() == null) ||
-                  (Boolean.TRUE.equals(wiktionaryLink))) {
-                p2.setWiktionaryLink(wiktionaryLink);
-              }
-            }
-          }
-        }
-      }
-    } catch (JDOMException e) {
-      log.error("Error disambiguation", e);
-      throw new APIException("Error parsing XML result", e);
-    }
-  }
-
   // ==========================================================================
   // API : Authentication
   // ==========================================================================
@@ -1506,6 +1342,36 @@ public class MediaWikiAPI implements API {
   // ==========================================================================
   // API : Queries / Properties
   // ==========================================================================
+
+  /**
+   * Initialize the disambiguation flags of a list of <code>pages</code>.
+   * (<code>action=query</code>, <code>prop=templates</code>).
+   * 
+   * @param wiki Wiki.
+   * @param pages List of pages.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Properties#templates_.2F_tl">API:Properties#templates</a>
+   */
+  public void initializeDisambiguationStatus(EnumWikipedia wiki, List<Page> pages)
+      throws APIException {
+    if ((pages == null) || (pages.isEmpty())) {
+      return;
+    }
+    if (wiki.isDisambiguationPagesLoaded()) {
+      for (Page page : pages) {
+        page.setDisambiguationPage(wiki.isDisambiguationPage(page));
+        if (page.isRedirect()) {
+          for (Page page2 : page.getRedirects()) {
+            page2.setDisambiguationPage(wiki.isDisambiguationPage(page2));
+          }
+        }
+      }
+    } else {
+      ApiTemplatesResult result = new ApiXmlTemplatesResult(wiki, httpClient, connection);
+      ApiTemplatesRequest request = new ApiTemplatesRequest(result);
+      request.setDisambiguationStatus(pages);
+    }
+  }
 
   // ==========================================================================
   // API : Queries / Lists
