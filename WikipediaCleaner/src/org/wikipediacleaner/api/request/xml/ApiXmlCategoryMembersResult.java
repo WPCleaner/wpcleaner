@@ -25,7 +25,6 @@ import java.util.Map;
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.input.JDOMParseException;
 import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -69,36 +68,9 @@ public class ApiXmlCategoryMembersResult extends ApiXmlResult implements ApiCate
       List<Page> list,
       Map<String, Integer> categories, int depth) throws APIException {
     try {
-      return constructCategoryMembers(
-          getRoot(properties, ApiRequest.MAX_ATTEMPTS),
-          properties,
-          list, categories, depth);
-    } catch (JDOMParseException e) {
-      log.error("Error loading category members list", e);
-      throw new APIException("Error parsing XML", e);
-    }
-  }
+      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-  /**
-   * Construct list of category members.
-   * 
-   * @param root Root element.
-   * @param properties Properties defining request.
-   * @param list List of pages to be filled with category members.
-   * @param categories Map of categories to be analyzed with their depth.
-   * @param depth Current depth of the analysis.
-   * @return True if request should be continued.
-   * @throws APIException
-   */
-  private boolean constructCategoryMembers(
-      Element root,
-      Map<String, String> properties,
-      List<Page> list,
-      Map<String, Integer> categories, int depth)
-      throws APIException {
-
-    // Retrieve category members
-    try {
+      // Retrieve category members
       XPath xpa = XPath.newInstance("/api/query/categorymembers/cm");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
@@ -120,14 +92,14 @@ public class ApiXmlCategoryMembersResult extends ApiXmlResult implements ApiCate
           }
         }
       }
-    } catch (JDOMException e) {
-      log.error("Error category members", e);
-      throw new APIException("Error parsing XML result", e);
-    }
 
-    // Retrieve continue
-    return shouldContinue(
-        root, "/api/query-continue/categorymembers",
-        properties);
+      // Retrieve continue
+      return shouldContinue(
+          root, "/api/query-continue/categorymembers",
+          properties);
+    } catch (JDOMException e) {
+      log.error("Error loading category members list", e);
+      throw new APIException("Error parsing XML", e);
+    }
   }
 }

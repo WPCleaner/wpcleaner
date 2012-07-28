@@ -25,7 +25,6 @@ import java.util.Map;
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.input.JDOMParseException;
 import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -65,33 +64,9 @@ public class ApiXmlEmbeddedInResult extends ApiXmlResult implements ApiEmbeddedI
       Map<String, String> properties,
       List<Page> list) throws APIException {
     try {
-      return constructEmbeddedIn(
-          getRoot(properties, ApiRequest.MAX_ATTEMPTS),
-          properties,
-          list);
-    } catch (JDOMParseException e) {
-      log.error("Error loading embedded in list", e);
-      throw new APIException("Error parsing XML", e);
-    }
-  }
+      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-  /**
-   * Construct list of pages embedding a page.
-   * 
-   * @param root Root element.
-   * @param properties Properties defining request.
-   * @param list List of pages to be filled with back links.
-   * @return True if request should be continued.
-   * @throws APIException
-   */
-  private boolean constructEmbeddedIn(
-      Element root,
-      Map<String, String> properties,
-      List<Page> list)
-      throws APIException {
-
-    // Retrieve back links
-    try {
+      // Retrieve embedding pages
       XPath xpa = XPath.newInstance("/api/query/embeddedin/ei");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
@@ -106,14 +81,14 @@ public class ApiXmlEmbeddedInResult extends ApiXmlResult implements ApiEmbeddedI
         page.setPageId(xpaPageId.valueOf(currentNode));
         list.add(page);
       }
-    } catch (JDOMException e) {
-      log.error("Error backlinks", e);
-      throw new APIException("Error parsing XML result", e);
-    }
 
-    // Retrieve continue
-    return shouldContinue(
-        root, "/api/query-continue/embeddedin",
-        properties);
+      // Retrieve continue
+      return shouldContinue(
+          root, "/api/query-continue/embeddedin",
+          properties);
+    } catch (JDOMException e) {
+      log.error("Error loading embedded in list", e);
+      throw new APIException("Error parsing XML", e);
+    }
   }
 }

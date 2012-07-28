@@ -72,7 +72,7 @@ public class ApiTemplatesRequest extends ApiPropertiesRequest {
   /**
    * Set disambiguation status of a list of pages.
    * 
-   * @return List of pages in the watch list.
+   * @param pages List of pages.
    */
   public void setDisambiguationStatus(List<Page> pages) throws APIException {
 
