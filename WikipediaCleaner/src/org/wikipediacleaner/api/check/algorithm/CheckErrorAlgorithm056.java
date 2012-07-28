@@ -19,11 +19,11 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageElementTag;
 
 
 /**
@@ -78,86 +78,85 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve all comments
-    List<PageElementComment> comments = pageAnalysis.getComments();
-    int maxComments = comments.size();
-    int currentComment = 0;
-
     // Check each character from the beginning
     boolean result = false;
-    int startIndex = 0;
+    int currentIndex = 0;
     String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      // Check if in comment
-      while ((currentComment < maxComments) &&
-             (comments.get(currentComment).getEndIndex() <= startIndex)) {
-        currentComment++;
-      }
-      if ((currentComment < maxComments) &&
-          (comments.get(currentComment).getBeginIndex() <= startIndex)) {
-        startIndex = comments.get(currentComment).getEndIndex();
+    while (currentIndex < contents.length()) {
+      PageElementComment comment = pageAnalysis.isInComment(currentIndex);
+      if (comment != null) {
+        currentIndex = comment.getEndIndex();
       } else {
-        int arrowLen = 0;
-        String[] arrows = null;
-        switch (contents.charAt(startIndex)) {
-        case '<':
-          // Check for bidirectional arrows or left arrows
-          for (int i = 0; (i < leftArrows.length) && (arrowLen == 0); i++) {
-            if ((leftArrows[i] != null) &&
-                (leftArrows[i].length > 0) &&
-                (leftArrows[i][0] != null) &&
-                (contents.startsWith(leftArrows[i][0], startIndex))) {
-              arrowLen = leftArrows[i][0].length();
-              arrows = leftArrows[i];
-            }
-          }
-          break;
-        case '-':
-          // Check for right simple arrows
-          for (int i = 0; (i < simpleRightArrows.length) && (arrowLen == 0); i++) {
-            if ((simpleRightArrows[i] != null) &&
-                (simpleRightArrows[i].length > 0) &&
-                (simpleRightArrows[i][0] != null) &&
-                (contents.startsWith(simpleRightArrows[i][0], startIndex))) {
-              arrowLen = simpleRightArrows[i][0].length();
-              arrows = simpleRightArrows[i];
-            }
-          }
-          break;
-        case '=':
-          // Check for right double arrows
-          for (int i = 0; (i < doubleRightArrows.length) && (arrowLen == 0); i++) {
-            if ((doubleRightArrows[i] != null) &&
-                (doubleRightArrows[i].length > 0) &&
-                (doubleRightArrows[i][0] != null) &&
-                (contents.startsWith(doubleRightArrows[i][0], startIndex))) {
-              arrowLen = doubleRightArrows[i][0].length();
-              arrows = doubleRightArrows[i];
-            }
-          }
-          break;
-        }
-
-        // Check if a possible arrow has been found
-        if (arrowLen > 0) {
-          if (arrows != null) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), startIndex, startIndex + arrowLen);
-            for (int i = 1; i < arrows.length; i++) {
-              errorResult.addReplacement(arrows[i]);
-            }
-            errors.add(errorResult);
-          }
-          startIndex += arrowLen;
+        PageElementTag tagSource = pageAnalysis.getSurroundingTag(
+            PageElementTag.TAG_WIKI_SOURCE, currentIndex);
+        if (tagSource != null) {
+          currentIndex = tagSource.getCompleteEndIndex();
         } else {
-          startIndex++;
+          int arrowLen = 0;
+          String[] arrows = null;
+          switch (contents.charAt(currentIndex)) {
+          case '<':
+            // Check for bidirectional arrows or left arrows
+            for (int i = 0; (i < leftArrows.length) && (arrowLen == 0); i++) {
+              if ((leftArrows[i] != null) &&
+                  (leftArrows[i].length > 0) &&
+                  (leftArrows[i][0] != null) &&
+                  (contents.startsWith(leftArrows[i][0], currentIndex))) {
+                arrowLen = leftArrows[i][0].length();
+                arrows = leftArrows[i];
+              }
+            }
+            break;
+
+          case '-':
+            // Check for right simple arrows
+            for (int i = 0; (i < simpleRightArrows.length) && (arrowLen == 0); i++) {
+              if ((simpleRightArrows[i] != null) &&
+                  (simpleRightArrows[i].length > 0) &&
+                  (simpleRightArrows[i][0] != null) &&
+                  (contents.startsWith(simpleRightArrows[i][0], currentIndex))) {
+                arrowLen = simpleRightArrows[i][0].length();
+                arrows = simpleRightArrows[i];
+              }
+            }
+            break;
+
+          case '=':
+            // Check for right double arrows
+            for (int i = 0; (i < doubleRightArrows.length) && (arrowLen == 0); i++) {
+              if ((doubleRightArrows[i] != null) &&
+                  (doubleRightArrows[i].length > 0) &&
+                  (doubleRightArrows[i][0] != null) &&
+                  (contents.startsWith(doubleRightArrows[i][0], currentIndex))) {
+                arrowLen = doubleRightArrows[i][0].length();
+                arrows = doubleRightArrows[i];
+              }
+            }
+            break;
+          }
+
+          // Check if a possible arrow has been found
+          if (arrowLen > 0) {
+            if (arrows != null) {
+              if (errors == null) {
+                return true;
+              }
+              result = true;
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(), currentIndex, currentIndex + arrowLen);
+              for (int i = 1; i < arrows.length; i++) {
+                errorResult.addReplacement(arrows[i]);
+              }
+              errors.add(errorResult);
+            }
+            currentIndex += arrowLen;
+          } else {
+            currentIndex++;
+          }
         }
       }
     }
+
     return result;
   }
 }
