@@ -145,7 +145,6 @@ public class PageListWorker extends BasicWorker {
   public Object construct() {
     try {
       List<Page> pages = new ArrayList<Page>();
-      final API api = APIFactory.getAPI();
       boolean retrieveDisambiguationInformation = true;
       switch (mode) {
 
@@ -192,7 +191,6 @@ public class PageListWorker extends BasicWorker {
 
       default:
         pages.addAll(constructInternalPageList());
-        api.initializeRedirect(getWikipedia(), pages);
         break;
       }
 

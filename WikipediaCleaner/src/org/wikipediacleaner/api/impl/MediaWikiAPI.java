@@ -59,6 +59,8 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
+import org.wikipediacleaner.api.request.ApiCategoriesRequest;
+import org.wikipediacleaner.api.request.ApiCategoriesResult;
 import org.wikipediacleaner.api.request.ApiCategoryMembersRequest;
 import org.wikipediacleaner.api.request.ApiCategoryMembersResult;
 import org.wikipediacleaner.api.request.ApiEmbeddedInRequest;
@@ -85,11 +87,13 @@ import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ApiTemplatesRequest;
 import org.wikipediacleaner.api.request.ApiTemplatesResult;
 import org.wikipediacleaner.api.request.ConnectionInformation;
+import org.wikipediacleaner.api.request.xml.ApiXmlCategoriesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoryMembersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlEmbeddedInResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlExpandResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLoginResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlParseResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlPropertiesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPurgeResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlBacklinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlRandomPagesResult;
@@ -881,10 +885,8 @@ public class MediaWikiAPI implements API {
       properties.put("titles", titles.toString());
       try {
         updateRedirectStatus(
-            pages,
-            getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS),
-            "/api/query/redirects/r",
-            "/api/query/pages");
+            wikipedia, pages,
+            getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS));
       } catch (JDOMParseException e) {
         log.error("Error retrieving redirects", e);
         throw new APIException("Error parsing XML", e);
@@ -1200,82 +1202,19 @@ public class MediaWikiAPI implements API {
   /**
    * Update redirect information of a list of pages.
    * 
+   * @param wiki Wiki.
    * @param pages List of pages.
    * @param root Root element.
-   * @param queryRedirects XPath query to retrieve the redirects.
-   * @param queryPages XPath query to retrieve the pages.
    * @throws APIException
    */
   private void updateRedirectStatus(
+      EnumWikipedia wiki,
       List<Page> pages,
-      Element root,
-      String queryRedirects,
-      String queryPages)
+      Element root)
       throws APIException {
     try {
-      XPath xpaRedirects = XPath.newInstance(queryRedirects);
-      XPath xpaPages = XPath.newInstance(queryPages);
-      List listRedirects = xpaRedirects.selectNodes(root);
-      Element listPages = (Element) xpaPages.selectSingleNode(root);
-      Iterator iterRedirects = listRedirects.iterator();
-      XPath xpaFrom = XPath.newInstance("./@from");
-      XPath xpaTo = XPath.newInstance("./@to");
-      XPath xpaPageId = XPath.newInstance("./@pageid");
-      XPath xpaNamespace = XPath.newInstance("./@ns");
-      XPath xpaTitle = XPath.newInstance("./@title");
-
-      // Analyzing redirects
-      while (iterRedirects.hasNext()) {
-        Element currentRedirect = (Element) iterRedirects.next();
-        String fromPage = xpaFrom.valueOf(currentRedirect);
-        String toPage = xpaTo.valueOf(currentRedirect);
-        for (Page p : pages) {
-          boolean exist = false;
-          Iterator<Page> iter = p.getRedirectIteratorWithPage();
-          while (iter.hasNext()) {
-            Page tmp = iter.next();
-            if ((tmp.getTitle() != null) && (tmp.getTitle().equals(toPage))) {
-              exist = true;
-            }
-            if (!exist &&
-                (tmp.getTitle() != null) &&
-                (tmp.getTitle().equals(fromPage))) {
-              XPath xpaPage = createXPath("page", "title", toPage);
-              List listTo = xpaPage.selectNodes(listPages);
-              if (!listTo.isEmpty()) {
-                Element to = (Element) listTo.get(0);
-                Page pageTo = DataManager.getPage(
-                    p.getWikipedia(), xpaTitle.valueOf(to), null, null);
-                pageTo.setNamespace(xpaNamespace.valueOf(to));
-                pageTo.setPageId(xpaPageId.valueOf(to));
-                p.addRedirect(pageTo);
-              }
-            }
-          }
-        }
-      }
-
-      // Analyzing missing pages
-      XPath xpaMissing = XPath.newInstance("./@missing");
-      for (Page p : pages) {
-        Iterator<Page> iter = p.getRedirectIteratorWithPage();
-        while (iter.hasNext()) {
-          Page tmp = iter.next();
-          XPath xpaPage = createXPath("page", "title", tmp.getTitle());
-          Element page = (Element) xpaPage.selectSingleNode(listPages);
-          if (page != null) {
-            List pageId = xpaPageId.selectNodes(page);
-            if ((pageId != null) && (!pageId.isEmpty())) {
-              tmp.setExisting(Boolean.TRUE);
-            } else {
-              List missing = xpaMissing.selectNodes(page);
-              if ((missing != null) && (!missing.isEmpty())) {
-                tmp.setExisting(Boolean.FALSE);
-              }
-            }
-          }
-        }
-      }
+      ApiXmlPropertiesResult result = new ApiXmlPropertiesResult(wiki, httpClient, connection);
+      result.updateRedirect(root, pages);
     } catch (JDOMException e) {
       log.error("Error redirects", e);
       throw new APIException("Error parsing XML result", e);
@@ -1345,11 +1284,13 @@ public class MediaWikiAPI implements API {
 
   /**
    * Initialize the disambiguation flags of a list of <code>pages</code>.
+   * (<code>action=query</code>, <code>prop=categories</code>) or
    * (<code>action=query</code>, <code>prop=templates</code>).
    * 
    * @param wiki Wiki.
    * @param pages List of pages.
    * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Properties#categories_.2F_cl">API:Properties#categories</a>
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#templates_.2F_tl">API:Properties#templates</a>
    */
   public void initializeDisambiguationStatus(EnumWikipedia wiki, List<Page> pages)
@@ -1367,9 +1308,16 @@ public class MediaWikiAPI implements API {
         }
       }
     } else {
-      ApiTemplatesResult result = new ApiXmlTemplatesResult(wiki, httpClient, connection);
-      ApiTemplatesRequest request = new ApiTemplatesRequest(result);
-      request.setDisambiguationStatus(pages);
+      List<Page> dabCategories = wiki.getConfiguration().getDisambiguationCategories();
+      if ((dabCategories != null) && (dabCategories.size() > 0)) {
+        ApiCategoriesResult result = new ApiXmlCategoriesResult(wiki, httpClient, connection);
+        ApiCategoriesRequest request = new ApiCategoriesRequest(result);
+        request.setDisambiguationStatus(pages);
+      } else {
+        ApiTemplatesResult result = new ApiXmlTemplatesResult(wiki, httpClient, connection);
+        ApiTemplatesRequest request = new ApiTemplatesRequest(result);
+        request.setDisambiguationStatus(pages);
+      }
     }
   }
 
@@ -1906,26 +1854,6 @@ public class MediaWikiAPI implements API {
           "", null);
     }
     return null;
-  }
-
-  /**
-   * Utility method to create a XPath.
-   * 
-   * @param element Element.
-   * @param attribute Attribute.
-   * @param value Attribute value.
-   * @return XPath
-   * @throws JDOMException
-   */
-  private static XPath createXPath(
-      String element,
-      String attribute,
-      String value)
-      throws JDOMException {
-    if ((value != null) && (value.indexOf("\"") != -1)) {
-      return XPath.newInstance(element + "[@" + attribute + "=\"" + xmlOutputter.escapeAttributeEntities(value) + "\"]");
-    }
-    return XPath.newInstance(element + "[@" + attribute + "=\"" + value + "\"]");
   }
 
   /**
