@@ -39,6 +39,11 @@ public class ApiPropertiesRequest extends ApiRequest {
   public final static String PROPERTY_PROP = "prop";
 
   /**
+   * Property value for Properties / Categories.
+   */
+  public final static String PROPERTY_PROP_CATEGORIES = "categories";
+
+  /**
    * Property value for Properties / Templates.
    */
   public final static String PROPERTY_PROP_TEMPLATES = "templates";

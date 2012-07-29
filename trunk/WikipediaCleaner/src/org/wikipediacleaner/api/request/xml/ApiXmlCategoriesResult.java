@@ -31,22 +31,22 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.request.ApiCategoriesResult;
 import org.wikipediacleaner.api.request.ApiRequest;
-import org.wikipediacleaner.api.request.ApiTemplatesResult;
 import org.wikipediacleaner.api.request.ConnectionInformation;
 
 
 /**
- * MediaWiki API XML templates results.
+ * MediaWiki API XML categories results.
  */
-public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements ApiTemplatesResult {
+public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements ApiCategoriesResult {
 
   /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
    * @param connection Connection information.
    */
-  public ApiXmlTemplatesResult(
+  public ApiXmlCategoriesResult(
       EnumWikipedia wiki,
       HttpClient httpClient,
       ConnectionInformation connection) {
@@ -75,7 +75,7 @@ public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements Api
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
       XPath xpaTitle = XPath.newInstance("./@title");
-      XPath xpaTemplate = createXPath("templates/tl", "ns", "" + Namespace.TEMPLATE);
+      XPath xpaCategory = createXPath("categories/cl", "ns", "" + Namespace.CATEGORY);
       List<Page> tmpPages = new ArrayList<Page>();
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
@@ -88,8 +88,8 @@ public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements Api
             tmpPages.add(p2);
             if ((p2.getTitle() != null) &&
                 (p2.getTitle().equals(title))) {
-              List listTemplates = xpaTemplate.selectNodes(currentNode);
-              if (listTemplates.size() > 0) {
+              List listCategories = xpaCategory.selectNodes(currentNode);
+              if (listCategories.size() > 0) {
                 for (Page p3 : tmpPages) {
                   p3.setDisambiguationPage(Boolean.TRUE);
                 }
@@ -101,7 +101,7 @@ public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements Api
 
       // Retrieve continue
       return shouldContinue(
-          root, "/api/query-continue/templates",
+          root, "/api/query-continue/categories",
           properties);
     } catch (JDOMException e) {
       log.error("Error updating disambiguation status", e);

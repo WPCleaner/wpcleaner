@@ -49,17 +49,17 @@ import org.wikipediacleaner.api.data.TemplateMatcher1LT;
 public class WPCConfiguration {
 
   /**
-   * Wikipedia.
+   * Wiki.
    */
-  private final EnumWikipedia wikipedia;
+  private final EnumWikipedia wiki;
 
   /**
    * Constructor for WPCleaner configuration.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    */
-  public WPCConfiguration(EnumWikipedia wikipedia) {
-    this.wikipedia = wikipedia;
+  public WPCConfiguration(EnumWikipedia wiki) {
+    this.wiki = wiki;
     initDefaultEncyclopedicNamespaces();
   }
 
@@ -203,6 +203,8 @@ public class WPCConfiguration {
       setTemplateMatchersHelp1L(value);
     } else if (name.equals("general_help_1lt_templates")) {
       setTemplateMatchersHelp1LT(value);
+    } else if (name.equals("dab_categories")) {
+      setDisambiguationCategories(value);
     } else if (name.equals("dab_list")) {
       setCurrentDisambiguationList(value);
     } else if (name.equals("most_dab_links")) {
@@ -228,13 +230,13 @@ public class WPCConfiguration {
     } else if (name.equals("translation_comment")) {
       setTranslationComment(value);
     } else if (name.equals("check_wiki_project_page")) {
-      wikipedia.getCWConfiguration().setProjectPage(value);
+      wiki.getCWConfiguration().setProjectPage(value);
     } else if (name.equals("check_wiki_comment")) {
-      wikipedia.getCWConfiguration().setComment(value);
+      wiki.getCWConfiguration().setComment(value);
     } else if (name.equals("check_wiki_translation_page")) {
-      wikipedia.getCWConfiguration().setTranslationPage(value);
+      wiki.getCWConfiguration().setTranslationPage(value);
     } else if (name.equals("check_wiki_force")) {
-      wikipedia.getCWConfiguration().setForce(value);
+      wiki.getCWConfiguration().setForce(value);
     }
   }
 
@@ -529,9 +531,9 @@ public class WPCConfiguration {
             String[] elements = suggestionPage.split("\\|");
             if (elements.length >= 4) {
               String[] elementsReplacement = elements[3].split(",");
-              Page page = DataManager.getPage(wikipedia, elements[0], null, null);
+              Page page = DataManager.getPage(wiki, elements[0], null, null);
               try {
-                api.retrieveContents(wikipedia, page, false);
+                api.retrieveContents(wiki, page, false);
                 String contents = page.getContents();
                 if (contents != null) {
                   PageAnalysis analysis = new PageAnalysis(page, contents);
@@ -623,7 +625,7 @@ public class WPCConfiguration {
       List<String> tmpList = convertPropertyToStringList(value);
       for (String template : tmpList) {
         String[] elements = template.split("\\|");
-        String templateName = (elements.length > 0) ? wikipedia.normalizeTitle(elements[0]) : null;
+        String templateName = (elements.length > 0) ? wiki.normalizeTitle(elements[0]) : null;
         String parameterList = (elements.length > 1) ? elements[1] : null;
         String explanation = (elements.length > 2) ? elements[2] : null;
         String defaultValue = (elements.length > 3) ? elements[3] : null;
@@ -636,7 +638,7 @@ public class WPCConfiguration {
           String[] parameterNames = parameterList.split(",");
           for (String parameterName : parameterNames) {
             TemplateMatcher matcher = new TemplateMatcher1L(
-                wikipedia, templateName, explanation, false, false,
+                wiki, templateName, explanation, false, false,
                 parameterName, defaultValue, neededParameter);
             list.add(matcher);
           }
@@ -651,7 +653,7 @@ public class WPCConfiguration {
       List<String> tmpList = convertPropertyToStringList(value);
       for (String template : tmpList) {
         String[] elements = template.split("\\|");
-        String templateName = (elements.length > 0) ? wikipedia.normalizeTitle(elements[0]) : null;
+        String templateName = (elements.length > 0) ? wiki.normalizeTitle(elements[0]) : null;
         String parameterList = (elements.length > 1) ? elements[1] : null;
         String explanation = (elements.length > 2) ? elements[2] : null;
         String defaultValue = (elements.length > 3) ? elements[3] : null;
@@ -664,7 +666,7 @@ public class WPCConfiguration {
           String[] parameterNames = parameterList.split(",");
           for (String parameterName : parameterNames) {
             TemplateMatcher matcher = new TemplateMatcher1LT(
-                wikipedia, templateName, explanation, false, false,
+                wiki, templateName, explanation, false, false,
                 parameterName, defaultValue, neededParameter);
             list.add(matcher);
           }
@@ -679,7 +681,7 @@ public class WPCConfiguration {
       List<String> tmpList = convertPropertyToStringList(value);
       for (String template : tmpList) {
         String[] elements = template.split("\\|");
-        String templateName = (elements.length > 0) ? wikipedia.normalizeTitle(elements[0]) : null;
+        String templateName = (elements.length > 0) ? wiki.normalizeTitle(elements[0]) : null;
         String parameterName1 = (elements.length > 1) ? elements[1] : null;
         String parameterName2 = (elements.length > 2) ? elements[2] : null;
         String explanation = (elements.length > 3) ? elements[3] : null;
@@ -689,7 +691,7 @@ public class WPCConfiguration {
             list = new ArrayList<TemplateMatcher>();
           }
           TemplateMatcher matcher = new TemplateMatcher1L2T(
-              wikipedia, templateName, explanation,
+              wiki, templateName, explanation,
               parameterName1, parameterName2);
           list.add(matcher);
           templateMatchers.put(templateName, list);
@@ -703,7 +705,7 @@ public class WPCConfiguration {
       List<String> tmpList = convertPropertyToStringList(value);
       for (String template : tmpList) {
         String[] elements = template.split("\\|");
-        String templateName = (elements.length > 0) ? wikipedia.normalizeTitle(elements[0]) : null;
+        String templateName = (elements.length > 0) ? wiki.normalizeTitle(elements[0]) : null;
         String parameterList = (elements.length > 1) ? elements[1] : null;
         String explanation = (elements.length > 2) ? elements[2] : null;
         String defaultValue = (elements.length > 3) ? elements[3] : null;
@@ -716,7 +718,7 @@ public class WPCConfiguration {
           String[] parameterNames = parameterList.split(",");
           for (String parameterName : parameterNames) {
             TemplateMatcher matcher = new TemplateMatcher1L(
-                wikipedia, templateName, explanation, true, false,
+                wiki, templateName, explanation, true, false,
                 parameterName, defaultValue, neededParameter);
             list.add(matcher);
           }
@@ -731,7 +733,7 @@ public class WPCConfiguration {
       List<String> tmpList = convertPropertyToStringList(value);
       for (String template : tmpList) {
         String[] elements = template.split("\\|");
-        String templateName = (elements.length > 0) ? wikipedia.normalizeTitle(elements[0]) : null;
+        String templateName = (elements.length > 0) ? wiki.normalizeTitle(elements[0]) : null;
         String parameterList = (elements.length > 1) ? elements[1] : null;
         String explanation = (elements.length > 2) ? elements[2] : null;
         String defaultValue = (elements.length > 3) ? elements[3] : null;
@@ -744,7 +746,7 @@ public class WPCConfiguration {
           String[] parameterNames = parameterList.split(",");
           for (String parameterName : parameterNames) {
             TemplateMatcher matcher = new TemplateMatcher1LT(
-                wikipedia, templateName, explanation, true, false,
+                wiki, templateName, explanation, true, false,
                 parameterName, defaultValue, neededParameter);
             list.add(matcher);
           }
@@ -759,7 +761,7 @@ public class WPCConfiguration {
       List<String> tmpList = convertPropertyToStringList(value);
       for (String template : tmpList) {
         String[] elements = template.split("\\|");
-        String templateName = (elements.length > 0) ? wikipedia.normalizeTitle(elements[0]) : null;
+        String templateName = (elements.length > 0) ? wiki.normalizeTitle(elements[0]) : null;
         String parameterList = (elements.length > 1) ? elements[1] : null;
         String explanation = (elements.length > 2) ? elements[2] : null;
         String defaultValue = (elements.length > 3) ? elements[3] : null;
@@ -772,7 +774,7 @@ public class WPCConfiguration {
           String[] parameterNames = parameterList.split(",");
           for (String parameterName : parameterNames) {
             TemplateMatcher matcher = new TemplateMatcher1L(
-                wikipedia, templateName, explanation, false, true,
+                wiki, templateName, explanation, false, true,
                 parameterName, defaultValue, neededParameter);
             list.add(matcher);
           }
@@ -787,7 +789,7 @@ public class WPCConfiguration {
       List<String> tmpList = convertPropertyToStringList(value);
       for (String template : tmpList) {
         String[] elements = template.split("\\|");
-        String templateName = (elements.length > 0) ? wikipedia.normalizeTitle(elements[0]) : null;
+        String templateName = (elements.length > 0) ? wiki.normalizeTitle(elements[0]) : null;
         String parameterList = (elements.length > 1) ? elements[1] : null;
         String explanation = (elements.length > 2) ? elements[2] : null;
         String defaultValue = (elements.length > 3) ? elements[3] : null;
@@ -800,7 +802,7 @@ public class WPCConfiguration {
           String[] parameterNames = parameterList.split(",");
           for (String parameterName : parameterNames) {
             TemplateMatcher matcher = new TemplateMatcher1LT(
-                wikipedia, templateName, explanation, false, true,
+                wiki, templateName, explanation, false, true,
                 parameterName, defaultValue, neededParameter);
             list.add(matcher);
           }
@@ -815,7 +817,7 @@ public class WPCConfiguration {
    */
   public List<TemplateMatcher> getTemplateMatchers(String templateName) {
     if (templateMatchers != null) {
-      return templateMatchers.get(wikipedia.normalizeTitle(templateName));
+      return templateMatchers.get(wiki.normalizeTitle(templateName));
     }
     return null;
   }
@@ -823,6 +825,11 @@ public class WPCConfiguration {
   /* ================================================================================= */
   /* Disambiguation                                                                    */
   /* ================================================================================= */
+
+  /**
+   * Categories allowing to decide if a page is a disambiguation page.
+   */
+  private List<Page> disambiguationCategories;
 
   /**
    * Pages containing the current list of disambiguation pages.
@@ -853,6 +860,22 @@ public class WPCConfiguration {
    * Comment for one disambiguation link that still need to be fixed.
    */
   private String disambiguationCommentTodo1;
+
+  /**
+   * @param value Categories allowing to decide if a page is a disambiguation page.
+   */
+  private void setDisambiguationCategories(String value) {
+    List<String> tmp = convertPropertyToStringList(value);
+    if ((tmp != null) && (tmp.size() > 0)) {
+      this.disambiguationCategories = new ArrayList<Page>(tmp.size());
+      for (String category : tmp) {
+        this.disambiguationCategories.add(
+            DataManager.getPage(wiki, category, null, null));
+      }
+    } else {
+      this.disambiguationCategories = null;
+    }
+  }
 
   /**
    * @param value Pages containing the current list of disambiguation pages.
@@ -894,6 +917,13 @@ public class WPCConfiguration {
    */
   private void setDisambiguationCommentTodo1(String value) {
     this.disambiguationCommentTodo1 = nonEmptyString(value);
+  }
+
+  /**
+   * @return Categories allowing to decide if a page is a disambiguation page.
+   */
+  public List<Page> getDisambiguationCategories() {
+    return disambiguationCategories;
   }
 
   /**
@@ -1168,8 +1198,8 @@ public class WPCConfiguration {
       List<Page> tmp = new ArrayList<Page>(templatesForHelpRequested.size());
       for (String template : templatesForHelpRequested) {
         tmp.add(DataManager.getPage(
-            wikipedia,
-            Namespace.getTitle(Namespace.TEMPLATE, wikipedia.getNamespaces(), template),
+            wiki,
+            Namespace.getTitle(Namespace.TEMPLATE, wiki.getNamespaces(), template),
             null, null));
       }
       return tmp;
@@ -1239,7 +1269,7 @@ public class WPCConfiguration {
     for (TemplateMatch element : wiktionaryMatches) {
       if (page.equals(Namespace.getTitle(
           Namespace.TEMPLATE,
-          wikipedia.getNamespaces(),
+          wiki.getNamespaces(),
           element.getName()))) {
         return true;
       }
