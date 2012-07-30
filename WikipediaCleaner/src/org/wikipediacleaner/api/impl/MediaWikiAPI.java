@@ -67,6 +67,8 @@ import org.wikipediacleaner.api.request.ApiEmbeddedInRequest;
 import org.wikipediacleaner.api.request.ApiEmbeddedInResult;
 import org.wikipediacleaner.api.request.ApiExpandRequest;
 import org.wikipediacleaner.api.request.ApiExpandResult;
+import org.wikipediacleaner.api.request.ApiLanguageLinksRequest;
+import org.wikipediacleaner.api.request.ApiLanguageLinksResult;
 import org.wikipediacleaner.api.request.ApiLoginRequest;
 import org.wikipediacleaner.api.request.ApiLoginResult;
 import org.wikipediacleaner.api.request.ApiParseRequest;
@@ -91,6 +93,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlCategoriesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoryMembersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlEmbeddedInResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlExpandResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlLanguageLinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLoginResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlParseResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPropertiesResult;
@@ -619,57 +622,6 @@ public class MediaWikiAPI implements API {
       throw new APIException("Error parsing XML", e);
     }
     return result;
-  }
-
-  /**
-   * @param from Wikipedia in which the article is.
-   * @param to Wikipedia to which the link is searched.
-   * @param title Page title.
-   * @return Page title in the destination Wikipedia.
-   * @throws APIException
-   */
-  public String getLanguageLink(EnumWikipedia from, EnumWikipedia to, String title)
-      throws APIException {
-    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
-    properties.put("lllimit", "max");
-    properties.put("prop", "langlinks");
-    properties.put("titles", title);
-    boolean llcontinue = false;
-    do {
-      try {
-        Element root = getRoot(from, properties, ApiRequest.MAX_ATTEMPTS);
-
-        // Analyzing result
-        XPath xpaLangLink = XPath.newInstance(
-            "/api/query/pages/page/langlinks/ll[@lang=\"" + to.getSettings().getCode() + "\"]");
-        List results = xpaLangLink.selectNodes(root);
-        Iterator iter = results.iterator();
-        while (iter.hasNext()) {
-          Element currentNode = (Element) iter.next();
-          XPath xpaLink = XPath.newInstance(".");
-          String link = xpaLink.valueOf(currentNode);
-          if ((link != null) && (link.trim().length() > 0)) {
-            return link.trim();
-          }
-        }
-
-        // Checking if need to continue
-        XPath xpaContinue = XPath.newInstance("/api/query-continue/langlinks");
-        XPath xpaLlContinue = XPath.newInstance("./@llcontinue");
-        results = xpaContinue.selectNodes(root);
-        iter = results.iterator();
-        llcontinue = false;
-        while (iter.hasNext()) {
-          Element currentNode = (Element) iter.next();
-          llcontinue = true;
-          properties.put("llcontinue", xpaLlContinue.valueOf(currentNode));
-        }
-      } catch (JDOMException e) {
-        log.error("Error retrieving language links", e);
-        throw new APIException("Error retrieving language links", e);
-      }
-    } while (llcontinue);
-    return null;
   }
 
   /**
@@ -1319,6 +1271,24 @@ public class MediaWikiAPI implements API {
         request.setDisambiguationStatus(pages);
       }
     }
+  }
+
+  /**
+   * Retrieve a specific language link in a page.
+   * (<code>action=query</code>, <code>prop=langlinks</code>).
+   * 
+   * @param from Wiki in which the article is.
+   * @param to Wiki to which the link is searched.
+   * @param title Page title.
+   * @return Page title in the destination wiki.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Properties#langlinks_.2F_ll">API:Properties#langlinks</a>
+   */
+  public String getLanguageLink(EnumWikipedia from, EnumWikipedia to, String title)
+      throws APIException {
+    ApiLanguageLinksResult result = new ApiXmlLanguageLinksResult(from, httpClient, connection);
+    ApiLanguageLinksRequest request = new ApiLanguageLinksRequest(result);
+    return request.getLanguageLink(DataManager.getPage(from, title, null, null), to);
   }
 
   // ==========================================================================

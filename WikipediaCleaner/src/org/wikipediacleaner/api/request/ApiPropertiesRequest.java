@@ -44,6 +44,11 @@ public class ApiPropertiesRequest extends ApiRequest {
   public final static String PROPERTY_PROP_CATEGORIES = "categories";
 
   /**
+   * Property value for Properties / Language links.
+   */
+  public final static String PROPERTY_PROP_LANGLINKS = "langlinks";
+
+  /**
    * Property value for Properties / Templates.
    */
   public final static String PROPERTY_PROP_TEMPLATES = "templates";
