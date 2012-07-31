@@ -32,7 +32,7 @@ public interface ApiLanguageLinksResult extends ApiResult {
    * Get language links of a page.
    * 
    * @param properties Properties defining request.
-   * @param list List of pages for which disambiguation status needs to be set.
+   * @param languageLinks Map of language links to be set.
    * @return True if request should be continued.
    * @throws APIException
    */
