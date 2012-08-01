@@ -30,22 +30,22 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.request.ApiBacklinksResult;
+import org.wikipediacleaner.api.request.ApiLinksResult;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ConnectionInformation;
 
 
 /**
- * MediaWiki API XML back links results.
+ * MediaWiki API XML links results.
  */
-public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksResult {
+public class ApiXmlLinksResult extends ApiXmlResult implements ApiLinksResult {
 
   /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
    * @param connection Connection information.
    */
-  public ApiXmlBacklinksResult(
+  public ApiXmlLinksResult(
       EnumWikipedia wiki,
       HttpClient httpClient,
       ConnectionInformation connection) {
@@ -53,25 +53,23 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
   }
 
   /**
-   * Execute back links request.
+   * Execute links request.
    * 
    * @param properties Properties defining request.
-   * @param list List of pages to be filled with the back links.
+   * @param list List to be filled with links.
    * @return True if request should be continued.
    * @throws APIException
    */
-  public boolean executeBacklinks(
+  public boolean executeLinks(
       Map<String, String> properties,
-      List<Page> list)
-          throws APIException {
+      List<Page> list) throws APIException {
     try {
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
       // Retrieve back links
-      XPath xpa = XPath.newInstance("/api/query/backlinks/bl");
+      XPath xpa = XPath.newInstance("/api/query/pages/page/links/pl");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
-      XPath xpaPageId = XPath.newInstance("./@pageid");
       XPath xpaNs = XPath.newInstance("./@ns");
       XPath xpaTitle = XPath.newInstance("./@title");
       while (iter.hasNext()) {
@@ -79,16 +77,15 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
         Page link = DataManager.getPage(
             getWiki(), xpaTitle.valueOf(currentNode), null, null);
         link.setNamespace(xpaNs.valueOf(currentNode));
-        link.setPageId(xpaPageId.valueOf(currentNode));
         list.add(link);
       }
 
       // Retrieve continue
       return shouldContinue(
-          root, "/api/query-continue/backlinks",
+          root, "/api/query-continue/links",
           properties);
     } catch (JDOMException e) {
-      log.error("Error loading back links", e);
+      log.error("Error loading links", e);
       throw new APIException("Error parsing XML", e);
     }
   }

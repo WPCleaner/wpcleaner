@@ -69,6 +69,8 @@ import org.wikipediacleaner.api.request.ApiExpandRequest;
 import org.wikipediacleaner.api.request.ApiExpandResult;
 import org.wikipediacleaner.api.request.ApiLanguageLinksRequest;
 import org.wikipediacleaner.api.request.ApiLanguageLinksResult;
+import org.wikipediacleaner.api.request.ApiLinksRequest;
+import org.wikipediacleaner.api.request.ApiLinksResult;
 import org.wikipediacleaner.api.request.ApiLoginRequest;
 import org.wikipediacleaner.api.request.ApiLoginResult;
 import org.wikipediacleaner.api.request.ApiParseRequest;
@@ -94,6 +96,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlCategoryMembersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlEmbeddedInResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlExpandResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLanguageLinksResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlLinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLoginResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlParseResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPropertiesResult;
@@ -629,33 +632,6 @@ public class MediaWikiAPI implements API {
    * 
    * @param wikipedia Wikipedia.
    * @param page The page.
-   * @param namespace Restrict links to a specific namespace.
-   */
-  public void retrieveLinks(EnumWikipedia wikipedia, Page page, Integer namespace)
-      throws APIException {
-    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
-    properties.put("pllimit", "max");
-    if (namespace != null) {
-      properties.put("plnamespace", namespace.toString());
-    }
-    properties.put("prop", "links");
-    properties.put("titles", page.getTitle());
-    try {
-      constructLinks(
-          page,
-          getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS),
-          "/api/query/pages/page/links/pl");
-    } catch (JDOMParseException e) {
-      log.error("Error retrieving page content", e);
-      throw new APIException("Error parsing XML", e);
-    }
-  }
-
-  /**
-   * Retrieves the links of <code>page</code>.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param page The page.
    * @param namespace If set, retrieve only links in this namespace.
    * @param knownPages Already known pages.
    */
@@ -917,39 +893,6 @@ public class MediaWikiAPI implements API {
   /**
    * @param page Page.
    * @param root Root element.
-   * @param query XPath query to retrieve the links 
-   * @throws APIException
-   */
-  private void constructLinks(Page page, Element root, String query)
-      throws APIException {
-    if (page == null) {
-      throw new APIException("Page is null");
-    }
-    List<Page> links = null;
-    try {
-      XPath xpa = XPath.newInstance(query);
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
-      links = new ArrayList<Page>(results.size());
-      XPath xpaNs = XPath.newInstance("./@ns");
-      XPath xpaTitle = XPath.newInstance("./@title");
-      while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
-        Page link = DataManager.getPage(
-            page.getWikipedia(), xpaTitle.valueOf(currentNode), null, null);
-        link.setNamespace(xpaNs.valueOf(currentNode));
-        links.add(link);
-      }
-    } catch (JDOMException e) {
-      log.error("Error links for page " + page.getTitle(), e);
-      throw new APIException("Error parsing XML result", e);
-    }
-    page.setLinks(links);
-  }
-
-  /**
-   * @param page Page.
-   * @param root Root element.
    * @param query XPath query to retrieve the links.
    * @param knownPages Already known pages.
    * @param redirects List of redirects filled by the method.
@@ -1186,6 +1129,7 @@ public class MediaWikiAPI implements API {
    * @param password Password.
    * @param login Flag indicating if login should be done.
    * @return Login status.
+   * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Login">API:Login</a>
    */
   public LoginResult login(
@@ -1271,6 +1215,22 @@ public class MediaWikiAPI implements API {
         request.setDisambiguationStatus(pages);
       }
     }
+  }
+
+  /**
+   * Retrieves the links of <code>page</code>.
+   * (<code>action=query</code>, <code>prop=links</code>).
+   * 
+   * @param wiki Wiki.
+   * @param page The page.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Properties#links_.2F_pl">API:Properties#links</a>
+   */
+  public void retrieveLinks(EnumWikipedia wiki, Page page)
+      throws APIException {
+    ApiLinksResult result = new ApiXmlLinksResult(wiki, httpClient, connection);
+    ApiLinksRequest request = new ApiLinksRequest(result);
+    request.loadLinks(page);
   }
 
   /**
@@ -1442,6 +1402,7 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param page The page.
+   * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Purge">API:Purge</a>
    */
   public void purgePageCache(EnumWikipedia wiki, Page page)

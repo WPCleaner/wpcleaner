@@ -87,7 +87,7 @@ public class ReloadLinksAction implements ActionListener {
               "Retrieving possible disambiguations for {0}",
               new Object[] { tmp.getTitle() } ));
         }
-        api.retrieveLinks(wikipedia, tmp, null);
+        api.retrieveLinks(wikipedia, tmp);
       }
     } catch (APIException ex) {
       //
