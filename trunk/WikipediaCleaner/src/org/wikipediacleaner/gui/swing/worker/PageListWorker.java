@@ -234,7 +234,7 @@ public class PageListWorker extends BasicWorker {
     if (pageNames != null) {
       List<Page> tmpPages = constructInternalPageList();
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      tmpPages = mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages);
+      tmpPages = mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages, false);
       if (tmpPages != null) {
         for (Page page : tmpPages) {
           if (page.isInMainNamespace()) {
@@ -255,7 +255,7 @@ public class PageListWorker extends BasicWorker {
   private void constructCategoryMembers(List<Page> pages) throws APIException {
     final API api = APIFactory.getAPI();
     for (String pageName : pageNames) {
-      List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0);
+      List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0, true);
       if (tmpPages != null) {
         for (Page tmpPage : tmpPages) {
           if (!pages.contains(tmpPage)) {
@@ -275,7 +275,7 @@ public class PageListWorker extends BasicWorker {
   private void constructCategoryMembersArticles(List<Page> pages) throws APIException {
     final API api = APIFactory.getAPI();
     for (String pageName : pageNames) {
-      List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0);
+      List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0, true);
       if (tmpPages != null) {
         WPCConfiguration configuration = getWikipedia().getConfiguration();
         for (Page tmpPage : tmpPages) {
@@ -343,7 +343,7 @@ public class PageListWorker extends BasicWorker {
     if (pageNames != null) {
       List<Page> tmpPages = constructInternalPageList();
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      pages.addAll(mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages));
+      pages.addAll(mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages, true));
     }
   }
 

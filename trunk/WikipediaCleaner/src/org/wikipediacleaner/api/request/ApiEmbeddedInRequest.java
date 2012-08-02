@@ -24,7 +24,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
@@ -78,9 +80,11 @@ public class ApiEmbeddedInRequest extends ApiListRequest {
   private final ApiEmbeddedInResult result;
 
   /**
+   * @param wiki Wiki.
    * @param result Parser for result depending on chosen format.
    */
-  public ApiEmbeddedInRequest(ApiEmbeddedInResult result) {
+  public ApiEmbeddedInRequest(EnumWikipedia wiki, ApiEmbeddedInResult result) {
+    super(wiki);
     this.result = result;
   }
 
@@ -89,10 +93,12 @@ public class ApiEmbeddedInRequest extends ApiListRequest {
    * 
    * @param page Page for list of embedding pages is requested.
    * @param namespaces List of name spaces to restrict result.
+   * @param limit Flag indicating if the number of results should be limited.
    * @return List of pages embedding the page.
    */
   public List<Page> loadEmbeddedIn(
-      Page page, List<Integer> namespaces) throws APIException {
+      Page page, List<Integer> namespaces,
+      boolean limit) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
         PROPERTY_LIST,
@@ -103,7 +109,9 @@ public class ApiEmbeddedInRequest extends ApiListRequest {
     }
     properties.put(PROPERTY_TITLE, page.getTitle());
     List<Page> list = new ArrayList<Page>();
-    while (result.executeEmbeddedIn(properties, list)) {
+    int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_EMBEDDED_IN);
+    while (result.executeEmbeddedIn(properties, list) &&
+           (list.size() < maxSize)) {
       //
     }
     Collections.sort(list);

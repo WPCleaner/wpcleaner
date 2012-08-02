@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.request;
 
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+
 
 /**
  * Base class for MediaWiki API meta requests.
@@ -37,4 +39,17 @@ public class ApiMetaRequest extends ApiRequest {
    * Property for Meta / Site info.
    */
   public final static String PROPERTY_META_SITEINFO = "siteinfo";
+
+  // ==========================================================================
+  // Wiki management
+  // ==========================================================================
+
+  /**
+   * Base constructor.
+   * 
+   * @param wiki Wiki.
+   */
+  protected ApiMetaRequest(EnumWikipedia wiki) {
+    super(wiki);
+  }
 }

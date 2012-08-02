@@ -1139,7 +1139,7 @@ public class MediaWikiAPI implements API {
       boolean login) throws APIException {
     logout();
     ApiLoginResult result = new ApiXmlLoginResult(wiki, httpClient, connection);
-    ApiLoginRequest request = new ApiLoginRequest(result);
+    ApiLoginRequest request = new ApiLoginRequest(wiki, result);
     if (login) {
       return request.login(username, password);
     }
@@ -1170,7 +1170,7 @@ public class MediaWikiAPI implements API {
    */
   private void loadSiteInfo(EnumWikipedia wiki) throws APIException {
     ApiSiteInfoResult result = new ApiXmlSiteInfoResult(wiki, httpClient, connection);
-    ApiSiteInfoRequest request = new ApiSiteInfoRequest(result);
+    ApiSiteInfoRequest request = new ApiSiteInfoRequest(wiki, result);
     request.loadSiteInformation(true, true, true, true, true);
   }
 
@@ -1207,11 +1207,11 @@ public class MediaWikiAPI implements API {
       List<Page> dabCategories = wiki.getConfiguration().getDisambiguationCategories();
       if ((dabCategories != null) && (dabCategories.size() > 0)) {
         ApiCategoriesResult result = new ApiXmlCategoriesResult(wiki, httpClient, connection);
-        ApiCategoriesRequest request = new ApiCategoriesRequest(result);
+        ApiCategoriesRequest request = new ApiCategoriesRequest(wiki, result);
         request.setDisambiguationStatus(pages);
       } else {
         ApiTemplatesResult result = new ApiXmlTemplatesResult(wiki, httpClient, connection);
-        ApiTemplatesRequest request = new ApiTemplatesRequest(result);
+        ApiTemplatesRequest request = new ApiTemplatesRequest(wiki, result);
         request.setDisambiguationStatus(pages);
       }
     }
@@ -1229,7 +1229,7 @@ public class MediaWikiAPI implements API {
   public void retrieveLinks(EnumWikipedia wiki, Page page)
       throws APIException {
     ApiLinksResult result = new ApiXmlLinksResult(wiki, httpClient, connection);
-    ApiLinksRequest request = new ApiLinksRequest(result);
+    ApiLinksRequest request = new ApiLinksRequest(wiki, result);
     request.loadLinks(page);
   }
 
@@ -1247,7 +1247,7 @@ public class MediaWikiAPI implements API {
   public String getLanguageLink(EnumWikipedia from, EnumWikipedia to, String title)
       throws APIException {
     ApiLanguageLinksResult result = new ApiXmlLanguageLinksResult(from, httpClient, connection);
-    ApiLanguageLinksRequest request = new ApiLanguageLinksRequest(result);
+    ApiLanguageLinksRequest request = new ApiLanguageLinksRequest(from, result);
     return request.getLanguageLink(DataManager.getPage(from, title, null, null), to);
   }
 
@@ -1267,7 +1267,7 @@ public class MediaWikiAPI implements API {
   public void retrieveBackLinks(EnumWikipedia wiki, Page page)
       throws APIException {
     ApiBacklinksResult result = new ApiXmlBacklinksResult(wiki, httpClient, connection);
-    ApiBacklinksRequest request = new ApiBacklinksRequest(result);
+    ApiBacklinksRequest request = new ApiBacklinksRequest(wiki, result);
     request.loadBacklinks(page);
   }
 
@@ -1278,14 +1278,16 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param category Category.
    * @param depth Depth of lookup for sub-categories.
+   * @param limit Flag indicating if the number of results should be limited.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Categorymembers">API:Categorymembers</a>
    */
   public List<Page> retrieveCategoryMembers(
-      EnumWikipedia wiki, String category, int depth) throws APIException {
+      EnumWikipedia wiki, String category,
+      int depth, boolean limit) throws APIException {
     ApiCategoryMembersResult result = new ApiXmlCategoryMembersResult(wiki, httpClient, connection);
-    ApiCategoryMembersRequest request = new ApiCategoryMembersRequest(result);
-    return request.loadCategoryMembers(category, depth);
+    ApiCategoryMembersRequest request = new ApiCategoryMembersRequest(wiki, result);
+    return request.loadCategoryMembers(category, depth, limit);
   }
 
   /**
@@ -1295,15 +1297,17 @@ public class MediaWikiAPI implements API {
    * @param wiki Wiki.
    * @param page Page.
    * @param namespaces Limit to some name spaces.
+   * @param limit Flag indicating if the number of results should be limited.
    * @return List of pages where <code>page</code> is embedded.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Embeddedin">API:Embeddedin</a>
    */
   public List<Page> retrieveEmbeddedIn(
-      EnumWikipedia wiki, Page page, List<Integer> namespaces) throws APIException {
+      EnumWikipedia wiki, Page page,
+      List<Integer> namespaces, boolean limit) throws APIException {
     ApiEmbeddedInResult result = new ApiXmlEmbeddedInResult(wiki, httpClient, connection);
-    ApiEmbeddedInRequest request = new ApiEmbeddedInRequest(result);
-    return request.loadEmbeddedIn(page, namespaces);
+    ApiEmbeddedInRequest request = new ApiEmbeddedInRequest(wiki, result);
+    return request.loadEmbeddedIn(page, namespaces, limit);
   }
 
   /**
@@ -1318,7 +1322,7 @@ public class MediaWikiAPI implements API {
   public List<Page> getRandomPages(
       EnumWikipedia wiki, int count) throws APIException {
     ApiRandomPagesResult result = new ApiXmlRandomPagesResult(wiki, httpClient, connection);
-    ApiRandomPagesRequest request = new ApiRandomPagesRequest(result);
+    ApiRandomPagesRequest request = new ApiRandomPagesRequest(wiki, result);
     return request.loadRandomList(count);
   }
 
@@ -1334,7 +1338,7 @@ public class MediaWikiAPI implements API {
   public void retrieveSimilarPages(EnumWikipedia wiki, Page page)
       throws APIException {
     ApiSearchResult result = new ApiXmlSearchResult(wiki, httpClient, connection);
-    ApiSearchRequest request = new ApiSearchRequest(result);
+    ApiSearchRequest request = new ApiSearchRequest(wiki, result);
     request.searchSimilarPages(page);
   }
 
@@ -1350,7 +1354,7 @@ public class MediaWikiAPI implements API {
     ApiRawWatchlistResult result =
         new ApiXmlRawWatchlistResult(wiki, httpClient, connection);
     ApiRawWatchlistRequest request =
-        new ApiRawWatchlistRequest(result);
+        new ApiRawWatchlistRequest(wiki, result);
     return request.loadWatchlistRaw();
   }
 
@@ -1371,7 +1375,7 @@ public class MediaWikiAPI implements API {
    */
   public String expandTemplates(EnumWikipedia wiki, String title, String text) throws APIException {
     ApiExpandResult result = new ApiXmlExpandResult(wiki, httpClient, connection);
-    ApiExpandRequest request = new ApiExpandRequest(result);
+    ApiExpandRequest request = new ApiExpandRequest(wiki, result);
     return request.expandTemplates(title, text);
   }
 
@@ -1388,7 +1392,7 @@ public class MediaWikiAPI implements API {
    */
   public String parseText(EnumWikipedia wiki, String title, String text) throws APIException {
     ApiParseResult result = new ApiXmlParseResult(wiki, httpClient, connection);
-    ApiParseRequest request = new ApiParseRequest(result);
+    ApiParseRequest request = new ApiParseRequest(wiki, result);
     return request.parseText(title, text);
   }
 
@@ -1408,7 +1412,7 @@ public class MediaWikiAPI implements API {
   public void purgePageCache(EnumWikipedia wiki, Page page)
       throws APIException {
     ApiPurgeResult result = new ApiXmlPurgeResult(wiki, httpClient, connection);
-    ApiPurgeRequest request = new ApiPurgeRequest(result);
+    ApiPurgeRequest request = new ApiPurgeRequest(wiki, result);
     request.purgePage(page);
   }
 

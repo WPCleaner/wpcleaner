@@ -31,7 +31,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -69,7 +68,6 @@ public class GeneralOptionsPanel extends OptionsPanel {
     setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), GT._("General options")));
     JCheckBox chk = null;
-    JSpinner spin = null;
     JTextField txt = null;
 
     // Initialize constraints
@@ -184,92 +182,6 @@ public class GeneralOptionsPanel extends OptionsPanel {
     constraints.gridx = 0;
     constraints.weightx = 0;
     add(chk, constraints);
-    constraints.gridy++;
-
-    // Menu size
-    spin = createJSpinner(
-        ConfigurationValueInteger.MENU_SIZE,
-        2, 999, 1);
-    JLabel labelMenuSize = Utilities.createJLabel(GT._("Maximum number of items in a menu :"));
-    labelMenuSize.setLabelFor(spin);
-    labelMenuSize.setHorizontalAlignment(SwingConstants.TRAILING);
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 0;
-    add(labelMenuSize, constraints);
-    constraints.gridwidth = 1;
-    constraints.gridx = 2;
-    constraints.weightx = 1;
-    add(spin, constraints);
-    constraints.gridy++;
-
-    // Max pages
-    spin = createJSpinner(
-        ConfigurationValueInteger.MAXIMUM_PAGES,
-        1, 99, 1);
-    JLabel labelMaxPages = Utilities.createJLabel(GT._("Maximum number of simultaneous analysis :"));
-    labelMaxPages.setLabelFor(spin);
-    labelMaxPages.setHorizontalAlignment(SwingConstants.TRAILING);
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 0;
-    add(labelMaxPages, constraints);
-    constraints.gridwidth = 1;
-    constraints.gridx = 2;
-    constraints.weightx = 1;
-    add(spin, constraints);
-    constraints.gridy++;
-
-    // Max errors for Check Wiki
-    spin = createJSpinner(
-        ConfigurationValueInteger.CHECK_NB_ERRORS,
-        10, 1000, 5);
-    JLabel labelMaxErrorsCheckWiki = Utilities.createJLabel(
-        GT._("Maximum number of errors for Check Wiki :"));
-    labelMaxErrorsCheckWiki.setLabelFor(spin);
-    labelMaxErrorsCheckWiki.setHorizontalAlignment(SwingConstants.TRAILING);
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 0;
-    add(labelMaxErrorsCheckWiki, constraints);
-    constraints.gridwidth = 1;
-    constraints.gridx = 2;
-    constraints.weightx = 1;
-    add(spin, constraints);
-    constraints.gridy++;
-
-    // Time between edits
-    spin = createJSpinner(
-        ConfigurationValueInteger.TIME_BETWEEN_EDIT,
-        0, 120, 1);
-    JLabel labelTime = Utilities.createJLabel(GT._("Minimum time between consecutive edits :"));
-    labelTime.setLabelFor(spin);
-    labelTime.setHorizontalAlignment(SwingConstants.TRAILING);
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 0;
-    add(labelTime, constraints);
-    constraints.gridwidth = 1;
-    constraints.gridx = 2;
-    constraints.weightx = 1;
-    add(spin, constraints);
-    constraints.gridy++;
-
-    // Interrogation threads
-    spin = createJSpinner(
-        ConfigurationValueInteger.INTERROG_THREAD,
-        1, 99, 1);
-    JLabel labelThreads = Utilities.createJLabel(GT._("Maximum number of interrogation threads :"));
-    labelThreads.setLabelFor(spin);
-    labelThreads.setHorizontalAlignment(SwingConstants.TRAILING);
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
-    constraints.weightx = 0;
-    add(labelThreads, constraints);
-    constraints.gridwidth = 1;
-    constraints.gridx = 2;
-    constraints.weightx = 1;
-    add(spin, constraints);
     constraints.gridy++;
 
     // Signature

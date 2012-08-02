@@ -32,6 +32,8 @@ public enum ConfigurationValueInteger {
   CONFIG_VERSION("ConfigurationVersion", 1),
   INTERROG_THREAD("InterrogationThreads", 30),
   MAXIMUM_PAGES("MaximumPages", 20),
+  MAX_CATEGORY_MEMBERS("MaxCategoryMembers", 1000),
+  MAX_EMBEDDED_IN("MaxEmbeddedIn", 1000),
   MENU_SIZE("MenuSize", 30),
   PLAF_TYPE("LookAndFeelType", ConfigurationConstants.VALUE_PLAF_TYPE_WPCLEANER),
   SAVE_USER("SaveUser", ConfigurationConstants.VALUE_SAVE_USER_NAME),

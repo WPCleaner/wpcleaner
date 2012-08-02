@@ -35,17 +35,21 @@ public class EmbeddedInCallable extends MediaWikiCallable<List<Page>> {
 
   private final Page page;
 
+  private final boolean limit;
+
   /**
    * @param wikipedia Wikipedia.
    * @param listener Listener of MediaWiki events.
    * @param api MediaWiki API.
    * @param page Page.
+   * @param limit Flag indicating if the number of results should be limited.
    */
   public EmbeddedInCallable(
       EnumWikipedia wikipedia, MediaWikiListener listener, API api,
-      Page page) {
+      Page page, boolean limit) {
     super(wikipedia, listener, api);
     this.page = page;
+    this.limit = limit;
   }
 
   /* (non-Javadoc)
@@ -53,7 +57,7 @@ public class EmbeddedInCallable extends MediaWikiCallable<List<Page>> {
    */
   public List<Page> call() throws APIException {
     setText(GT._("Retrieving page usage") + " - " + page.getTitle());
-    return api.retrieveEmbeddedIn(getWikipedia(), page, null);
+    return api.retrieveEmbeddedIn(getWikipedia(), page, null, limit);
   }
 
 }

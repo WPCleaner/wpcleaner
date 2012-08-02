@@ -392,17 +392,19 @@ public class MediaWiki extends MediaWikiController {
    * 
    * @param wikipedia Wikipedia.
    * @param pageList List of pages.
+   * @param limit Flag indicating if the number of results should be limited.
    * @throws APIException
    */
   @SuppressWarnings("unchecked")
   public List<Page> retrieveAllEmbeddedIn(
-      EnumWikipedia wikipedia, List<Page> pageList) throws APIException {
+      EnumWikipedia wikipedia, List<Page> pageList,
+      boolean limit) throws APIException {
     if ((pageList == null) || (pageList.size() == 0)) {
       return null;
     }
     final API api = APIFactory.getAPI();
     for (final Page page : pageList) {
-      addTask(new EmbeddedInCallable(wikipedia, this, api, page));
+      addTask(new EmbeddedInCallable(wikipedia, this, api, page, limit));
     }
     List<Page> resultList = new ArrayList<Page>();
     while (hasRemainingTask() && !shouldStop()) {

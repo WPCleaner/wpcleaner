@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 
 
@@ -87,9 +88,11 @@ public class ApiRawWatchlistRequest extends ApiListRequest {
   private final ApiRawWatchlistResult result;
 
   /**
+   * @param wiki Wiki.
    * @param result Parser for result depending on chosen format.
    */
-  public ApiRawWatchlistRequest(ApiRawWatchlistResult result) {
+  public ApiRawWatchlistRequest(EnumWikipedia wiki, ApiRawWatchlistResult result) {
+    super(wiki);
     this.result = result;
   }
 

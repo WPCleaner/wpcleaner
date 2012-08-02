@@ -270,10 +270,12 @@ public interface API {
    * @param wikipedia Wikipedia.
    * @param category Category.
    * @param depth Depth of lookup for sub-categories.
+   * @param limit Flag indicating if the number of results should be limited.
    * @throws APIException
    */
   public List<Page> retrieveCategoryMembers(
-      EnumWikipedia wikipedia, String category, int depth) throws APIException;
+      EnumWikipedia wikipedia, String category,
+      int depth, boolean limit) throws APIException;
 
   /**
    * Retrieves the pages in which <code>page</code> is embedded.
@@ -281,11 +283,13 @@ public interface API {
    * @param wikipedia Wikipedia.
    * @param page Page.
    * @param namespaces Limit to some namespaces.
+   * @param limit Flag indicating if the number of results should be limited.
    * @return List of pages where <code>page</code> is embedded.
    * @throws APIException
    */
   public List<Page> retrieveEmbeddedIn(
-      EnumWikipedia wikipedia, Page page, List<Integer> namespaces) throws APIException;
+      EnumWikipedia wikipedia, Page page,
+      List<Integer> namespaces, boolean limit) throws APIException;
 
   /**
    * Retrieves the templates of <code>page</code>.

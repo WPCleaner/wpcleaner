@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 
@@ -58,9 +59,11 @@ public class ApiRandomPagesRequest extends ApiListRequest {
   private final ApiRandomPagesResult result;
 
   /**
+   * @param wiki Wiki.
    * @param result Parser for result depending on chosen format.
    */
-  public ApiRandomPagesRequest(ApiRandomPagesResult result) {
+  public ApiRandomPagesRequest(EnumWikipedia wiki, ApiRandomPagesResult result) {
+    super(wiki);
     this.result = result;
   }
 

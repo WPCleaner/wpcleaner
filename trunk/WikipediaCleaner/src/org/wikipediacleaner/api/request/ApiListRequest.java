@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.request;
 
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+
 
 /**
  * Base class MediaWiki API list query requests.
@@ -62,4 +64,17 @@ public class ApiListRequest extends ApiRequest {
    * Property value for List / Raw watch list.
    */
   public final static String PROPERTY_LIST_WATCHLISTRAW = "watchlistraw";
+
+  // ==========================================================================
+  // Wiki management
+  // ==========================================================================
+
+  /**
+   * Base constructor.
+   * 
+   * @param wiki Wiki.
+   */
+  protected ApiListRequest(EnumWikipedia wiki) {
+    super(wiki);
+  }
 }

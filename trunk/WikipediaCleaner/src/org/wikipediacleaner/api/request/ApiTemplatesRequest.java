@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 
 
@@ -63,9 +64,11 @@ public class ApiTemplatesRequest extends ApiPropertiesRequest {
   private final ApiTemplatesResult result;
 
   /**
+   * @param wiki Wiki.
    * @param result Parser for result depending on chosen format.
    */
-  public ApiTemplatesRequest(ApiTemplatesResult result) {
+  public ApiTemplatesRequest(EnumWikipedia wiki, ApiTemplatesResult result) {
+    super(wiki);
     this.result = result;
   }
 
@@ -98,7 +101,7 @@ public class ApiTemplatesRequest extends ApiPropertiesRequest {
         }
       }
       List<List<Page>> splitTemplatesList = splitListPages(
-          result.getWiki().getDisambiguationTemplates(), MAX_TEMPLATES_PER_QUERY);
+          getWiki().getDisambiguationTemplates(), MAX_TEMPLATES_PER_QUERY);
       for (List<Page> templates : splitTemplatesList) {
         Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
         properties.put(

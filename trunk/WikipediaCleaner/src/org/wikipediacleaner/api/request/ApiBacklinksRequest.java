@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 
 
@@ -83,9 +84,11 @@ public class ApiBacklinksRequest extends ApiListRequest {
   private final ApiBacklinksResult result;
 
   /**
+   * @param wiki Wiki.
    * @param result Parser for result depending on chosen format.
    */
-  public ApiBacklinksRequest(ApiBacklinksResult result) {
+  public ApiBacklinksRequest(EnumWikipedia wiki, ApiBacklinksResult result) {
+    super(wiki);
     this.result = result;
   }
 
