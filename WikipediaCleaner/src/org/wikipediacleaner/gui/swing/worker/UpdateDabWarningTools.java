@@ -211,11 +211,31 @@ public class UpdateDabWarningTools {
       }
     }
 
+    // Load talk pages and Todo sub pages
+    Map<Page, Page> mapTalkPages = new HashMap<Page, Page>();
+    Map<Page, Page> mapTodoSubpages = new HashMap<Page, Page>();
+    for (Page page : pages) {
+      Page talkPage = page.getTalkPage(wikipedia.getNamespaces());
+      mapTalkPages.put(page, talkPage);
+      if (configuration.getTodoSubpage() != null) {
+        Page todoSubpage = talkPage.getSubPage(configuration.getTodoSubpage());
+        mapTodoSubpages.put(page, todoSubpage);
+      }
+    }
+    mw.retrieveSectionContents(wikipedia, mapTalkPages.values(), 0, false);
+    mw.retrieveContents(wikipedia, mapTodoSubpages.values(), true, false);
+    if (mw.shouldStop()) {
+      return 0;
+    }
+
     // Update disambiguation warning
     int count = 0;
     for (Page page : pages) {
       PageAnalysis pageAnalysis = new PageAnalysis(page, page.getContents());
-      if (updateDabWarning(pageAnalysis, page.getRevisionId())) {
+      if (updateDabWarning(
+          pageAnalysis, page.getRevisionId(),
+          mapTalkPages.get(page),
+          mapTodoSubpages.get(page))) {
         count++;
       }
     }
@@ -227,11 +247,14 @@ public class UpdateDabWarningTools {
    * 
    * @param pageAnalysis Page analysis (must have enough information to compute the list of disambiguation links).
    * @param pageRevId Page revision id.
+   * @param talkPage (Optional) Talk page with contents of section 0.
+   * @param todoSubpage (Optional) Todo sub page with contents.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
   public boolean updateDabWarning(
-      PageAnalysis pageAnalysis, Integer pageRevId) throws APIException {
+      PageAnalysis pageAnalysis, Integer pageRevId,
+      Page talkPage, Page todoSubpage) throws APIException {
     if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
       return false;
     }
@@ -242,17 +265,25 @@ public class UpdateDabWarningTools {
     Page page = pageAnalysis.getPage();
 
     // Retrieving talk page contents
-    Page talkPage = page.getTalkPage(wikipedia.getNamespaces());
-    setText(GT._("Retrieving page contents - {0}", talkPage.getTitle()));
-    api.retrieveSectionContents(wikipedia, talkPage, 0);
+    if (talkPage == null) {
+      talkPage = page.getTalkPage(wikipedia.getNamespaces());
+    }
+    if (talkPage.getContents() == null) {
+      setText(GT._("Retrieving page contents - {0}", talkPage.getTitle()));
+      api.retrieveSectionContents(wikipedia, talkPage, 0);
+    }
 
     // "To do" sub-page
     if (configuration.getTodoSubpage() != null) {
 
       // Retrieving "To do" sub-page contents
-      Page todoSubpage = talkPage.getSubPage(configuration.getTodoSubpage());
-      setText(GT._("Retrieving page contents - {0}", todoSubpage.getTitle()));
-      api.retrieveContents(wikipedia, todoSubpage, false);
+      if (todoSubpage == null) {
+        todoSubpage = talkPage.getSubPage(configuration.getTodoSubpage());
+      }
+      if (todoSubpage.getContents() == null) {
+        setText(GT._("Retrieving page contents - {0}", todoSubpage.getTitle()));
+        api.retrieveContents(wikipedia, todoSubpage, false);
+      }
 
       // If we force the use of "To do" sub-page, the disambiguation warning must be on it
       if ((page.getNamespace() != null) &&
