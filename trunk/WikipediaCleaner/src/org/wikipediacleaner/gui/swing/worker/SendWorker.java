@@ -130,7 +130,9 @@ public class SendWorker extends BasicWorker {
         UpdateDabWarningTools dabWarningTools = new UpdateDabWarningTools(
             getWikipedia(), this, createWarning);
         PageAnalysis pageAnalysis = new PageAnalysis(page, text);
-        dabWarningTools.updateDabWarning(pageAnalysis, queryResult.getPageNewRevId());
+        dabWarningTools.updateDabWarning(
+            pageAnalysis, queryResult.getPageNewRevId(),
+            null, null);
       } catch (APIException e) {
         return e;
       }

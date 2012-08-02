@@ -34,6 +34,7 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
   private final Page page;
   private final Page returnPage;
   private final boolean withRedirects;
+  private final Integer section;
 
   /**
    * @param wikipedia Wikipedia.
@@ -42,14 +43,17 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
    * @param page Page.
    * @param returnPage Page to return at the end of the processing.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
+   * @param section (Optional) Section of the page.
    */
   public ContentsCallable(
       EnumWikipedia wikipedia, MediaWikiListener listener, API api,
-      Page page, Page returnPage, boolean withRedirects) {
+      Page page, Page returnPage,
+      boolean withRedirects, Integer section) {
     super(wikipedia, listener, api);
     this.page = page;
     this.returnPage = returnPage;
     this.withRedirects = withRedirects;
+    this.section = section;
   }
 
   /* (non-Javadoc)
@@ -57,11 +61,15 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
    */
   public Page call() throws APIException {
     setText(GT._("Retrieving contents") + " - " + page.getTitle());
-    api.retrieveContents(getWikipedia(), page, withRedirects);
-    if (withRedirects &&
-        page.isRedirect() &&
-        (page.getRedirects().size() > 0)) {
-      api.retrieveContents(getWikipedia(), page.getRedirects().get(0), false);
+    if (section == null) {
+      api.retrieveContents(getWikipedia(), page, withRedirects);
+      if (withRedirects &&
+          page.isRedirect() &&
+          (page.getRedirects().size() > 0)) {
+        api.retrieveContents(getWikipedia(), page.getRedirects().get(0), false);
+      }
+    } else {
+      api.retrieveSectionContents(getWikipedia(), page, section.intValue());
     }
     return returnPage;
   }

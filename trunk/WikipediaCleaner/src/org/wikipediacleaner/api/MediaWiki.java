@@ -97,7 +97,8 @@ public class MediaWiki extends MediaWikiController {
     final API api = APIFactory.getAPI();
     addTask(new ContentsCallable(
         wikipedia, this, api,
-        page, returnPage ? page : null, withRedirects));
+        page, returnPage ? page : null,
+        withRedirects, null));
     block(block);
   }
 
@@ -120,7 +121,33 @@ public class MediaWiki extends MediaWikiController {
     for (Page page : pages) {
       addTask(new ContentsCallable(
           wikipedia, this, api,
-          page, null, withRedirects));
+          page, null,
+          withRedirects, null));
+    }
+    block(block);
+  }
+
+  /**
+   * Retrieve page section contents.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param pages Pages.
+   * @param section Section.
+   * @param block Flag indicating if the call should block until completed.
+   * @throws APIException
+   */
+  public void retrieveSectionContents(
+      EnumWikipedia wikipedia, Collection<Page> pages,
+      int section, boolean block) throws APIException {
+    if (pages == null) {
+      return;
+    }
+    final API api = APIFactory.getAPI();
+    for (Page page : pages) {
+      addTask(new ContentsCallable(
+          wikipedia, this, api,
+          page, null,
+          false, Integer.valueOf(section)));
     }
     block(block);
   }
