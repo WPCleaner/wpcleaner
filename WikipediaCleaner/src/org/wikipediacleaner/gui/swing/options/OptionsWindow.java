@@ -50,7 +50,7 @@ public class OptionsWindow
   private final static String ACTION_DEFAULT     = "RESTORE_DEFAULT";
   private final static String ACTION_VALIDATE    = "VALIDATE";
 
-  public final static Integer WINDOW_VERSION = Integer.valueOf(2);
+  public final static Integer WINDOW_VERSION = Integer.valueOf(3);
 
   public final List<OptionsPanel> panels = new ArrayList<OptionsPanel>();
 
@@ -102,6 +102,9 @@ public class OptionsWindow
     GeneralOptionsPanel generalOptions = new GeneralOptionsPanel();
     pane.addTab(GT._("General"), generalOptions);
     panels.add(generalOptions);
+    LimitOptionsPanel limitOptions = new LimitOptionsPanel();
+    pane.addTab(GT._("Limits"), limitOptions);
+    panels.add(limitOptions);
     AnalysisOptionsPanel analysisOptions = new AnalysisOptionsPanel();
     pane.addTab(GT._("Full analysis"), analysisOptions);
     panels.add(analysisOptions);

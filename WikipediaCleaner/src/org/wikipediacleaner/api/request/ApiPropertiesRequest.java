@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.request;
 
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+
 
 /**
  * Base class MediaWiki API properties query requests.
@@ -78,4 +80,17 @@ public class ApiPropertiesRequest extends ApiRequest {
   // ==========================================================================
 
   public final static int MAX_PAGES_PER_QUERY = 50;
+
+  // ==========================================================================
+  // Wiki management
+  // ==========================================================================
+
+  /**
+   * Base constructor.
+   * 
+   * @param wiki Wiki.
+   */
+  protected ApiPropertiesRequest(EnumWikipedia wiki) {
+    super(wiki);
+  }
 }

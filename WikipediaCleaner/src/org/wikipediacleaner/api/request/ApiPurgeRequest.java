@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 
 
@@ -46,9 +47,11 @@ public class ApiPurgeRequest extends ApiRequest {
   private final ApiPurgeResult result;
 
   /**
+   * @param wiki Wiki.
    * @param result Parser for result depending on chosen format.
    */
-  public ApiPurgeRequest(ApiPurgeResult result) {
+  public ApiPurgeRequest(EnumWikipedia wiki, ApiPurgeResult result) {
+    super(wiki);
     this.result = result;
   }
 

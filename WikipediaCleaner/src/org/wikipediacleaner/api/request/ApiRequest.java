@@ -26,7 +26,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
@@ -109,11 +112,22 @@ public abstract class ApiRequest {
   // Wiki management
   // ==========================================================================
 
+  private final EnumWikipedia wiki;
+
   /**
    * Base constructor.
+   * 
+   * @param wiki Wiki.
    */
-  protected ApiRequest() {
-    //
+  protected ApiRequest(EnumWikipedia wiki) {
+    this.wiki = wiki;
+  }
+
+  /**
+   * @return Wiki.
+   */
+  protected EnumWikipedia getWiki() {
+    return wiki;
   }
 
   // ==========================================================================
@@ -194,5 +208,21 @@ public abstract class ApiRequest {
       buffer.append(value.toString());
     }
     return buffer.toString();
+  }
+
+  /**
+   * Get the maximum size authorized.
+   * 
+   * @param limit Flag indicating if the number of results should be limited.
+   * @param property Property for the maximum size.
+   * @return Maximum size authorized.
+   */
+  protected int getMaxSize(boolean limit, ConfigurationValueInteger property) {
+    int maxSize = Integer.MAX_VALUE;
+    if (limit) {
+      Configuration config = Configuration.getConfiguration();
+      maxSize = config.getInt(null, property);
+    }
+    return maxSize;
   }
 }

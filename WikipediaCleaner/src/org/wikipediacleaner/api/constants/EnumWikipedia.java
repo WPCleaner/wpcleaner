@@ -365,7 +365,8 @@ public enum EnumWikipedia {
       for (Page dabTemplate : disambiguationTemplates) {
         List<Page> tmpPages = api.retrieveEmbeddedIn(
             this, dabTemplate,
-            Collections.singletonList(Namespace.MAIN));
+            Collections.singletonList(Namespace.MAIN),
+            false);
         for (Page page : tmpPages) {
           tmpResult.add(page.getTitle());
         }

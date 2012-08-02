@@ -47,9 +47,11 @@ public class ApiLanguageLinksRequest extends ApiPropertiesRequest {
   private final ApiLanguageLinksResult result;
 
   /**
+   * @param wiki Wiki.
    * @param result Parser for result depending on chosen format.
    */
-  public ApiLanguageLinksRequest(ApiLanguageLinksResult result) {
+  public ApiLanguageLinksRequest(EnumWikipedia wiki, ApiLanguageLinksResult result) {
+    super(wiki);
     this.result = result;
   }
 

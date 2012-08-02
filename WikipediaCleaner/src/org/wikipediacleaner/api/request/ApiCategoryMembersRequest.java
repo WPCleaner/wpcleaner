@@ -26,8 +26,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
@@ -181,9 +183,11 @@ public class ApiCategoryMembersRequest extends ApiListRequest {
   private final ApiCategoryMembersResult result;
 
   /**
+   * @param wiki Wiki.
    * @param result Parser for result depending on chosen format.
    */
-  public ApiCategoryMembersRequest(ApiCategoryMembersResult result) {
+  public ApiCategoryMembersRequest(EnumWikipedia wiki, ApiCategoryMembersResult result) {
+    super(wiki);
     this.result = result;
   }
 
@@ -191,15 +195,21 @@ public class ApiCategoryMembersRequest extends ApiListRequest {
    * Load list of category members.
    * 
    * @param category Category for which members are requested.
+   * @param depth Depth of lookup for sub-categories.
+   * @param limit Flag indicating if the number of results should be limited.
    * @return List of category members.
    */
-  public List<Page> loadCategoryMembers(String category, int depth) throws APIException {
+  public List<Page> loadCategoryMembers(
+      String category,
+      int depth, boolean limit) throws APIException {
+
     List<Page> list = new ArrayList<Page>();
     List<String> categoriesAnalyzed = new ArrayList<String>();
     Map<String, Integer> categories = new HashMap<String, Integer>();
     categories.put(category, Integer.valueOf(0));
-    List<Namespace> namespaces = result.getWiki().getNamespaces();
-    while (!categories.isEmpty()) {
+    List<Namespace> namespaces = getWiki().getNamespaces();
+    int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_CATEGORY_MEMBERS);
+    while (!categories.isEmpty() && (list.size() < maxSize)) {
 
       // Find which category to analyze
       Entry<String, Integer> entry = categories.entrySet().iterator().next();
@@ -236,7 +246,8 @@ public class ApiCategoryMembersRequest extends ApiListRequest {
         properties.put(PROPERTY_LIMIT, LIMIT_MAX);
         properties.put(PROPERTY_TITLE, categoryName);
         while (result.executeCategoryMembers(
-            properties, list, categories, currentDepth)) {
+            properties, list, categories, currentDepth) &&
+            (list.size() < maxSize)) {
           //
         }
       }

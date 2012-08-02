@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 
 
@@ -88,9 +89,11 @@ public class ApiCategoriesRequest extends ApiPropertiesRequest {
   private final ApiCategoriesResult result;
 
   /**
+   * @param wiki Wiki.
    * @param result Parser for result depending on chosen format.
    */
-  public ApiCategoriesRequest(ApiCategoriesResult result) {
+  public ApiCategoriesRequest(EnumWikipedia wiki, ApiCategoriesResult result) {
+    super(wiki);
     this.result = result;
   }
 
@@ -123,7 +126,7 @@ public class ApiCategoriesRequest extends ApiPropertiesRequest {
         }
       }
       List<List<Page>> splitCategoriesList = splitListPages(
-          result.getWiki().getConfiguration().getDisambiguationCategories(),
+          getWiki().getConfiguration().getDisambiguationCategories(),
           MAX_CATEGORIES_PER_QUERY);
       for (List<Page> categories : splitCategoriesList) {
         Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());

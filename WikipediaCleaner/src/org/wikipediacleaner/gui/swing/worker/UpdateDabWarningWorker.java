@@ -125,7 +125,8 @@ public class UpdateDabWarningWorker extends BasicWorker {
             null, null);
         List<Page> dabWarningTalkPages = api.retrieveEmbeddedIn(
             wikipedia, dabWarningTemplate,
-            configuration.getEncyclopedicTalkNamespaces());
+            configuration.getEncyclopedicTalkNamespaces(),
+            false);
   
         // Construct list of articles with disambiguation warning
         setText(GT._("Constructing list of articles with disambiguation warning"));
