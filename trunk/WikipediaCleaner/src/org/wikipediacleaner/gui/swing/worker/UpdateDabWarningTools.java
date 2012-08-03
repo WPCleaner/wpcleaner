@@ -267,8 +267,6 @@ public class UpdateDabWarningTools {
     // Retrieving talk page contents
     if (talkPage == null) {
       talkPage = page.getTalkPage(wikipedia.getNamespaces());
-    }
-    if (talkPage.getContents() == null) {
       setText(GT._("Retrieving page contents - {0}", talkPage.getTitle()));
       api.retrieveSectionContents(wikipedia, talkPage, 0);
     }
@@ -279,8 +277,6 @@ public class UpdateDabWarningTools {
       // Retrieving "To do" sub-page contents
       if (todoSubpage == null) {
         todoSubpage = talkPage.getSubPage(configuration.getTodoSubpage());
-      }
-      if (todoSubpage.getContents() == null) {
         setText(GT._("Retrieving page contents - {0}", todoSubpage.getTitle()));
         api.retrieveContents(wikipedia, todoSubpage, false);
       }
