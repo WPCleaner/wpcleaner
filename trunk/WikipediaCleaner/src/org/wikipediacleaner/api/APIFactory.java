@@ -31,18 +31,27 @@ import org.wikipediacleaner.api.impl.MediaWikiAPI;
 public class APIFactory {
 
   /**
-   * HTTP connection manager.
-   */
-  private static HttpConnectionManager connectionManger;
-
-  /**
    * MediaWiki API.
    */
   private static API api;
 
+  /**
+   * Access to the tool server.
+   */
+  private static ToolServer toolServer;
+
+  // Initialize static members
   static {
+
+    // Initialize MediaWiki API
+    HttpConnectionManager connectionManger = new MultiThreadedHttpConnectionManager();
+    HttpClient httpClient = createHttpClient(connectionManger);
+    api = new MediaWikiAPI(httpClient);
+
+    // Initialize ToolServer access
     connectionManger = new MultiThreadedHttpConnectionManager();
-    api = new MediaWikiAPI(connectionManger);
+    httpClient = createHttpClient(connectionManger);
+    toolServer = new ToolServer(httpClient);
   }
 
   /**
@@ -52,12 +61,16 @@ public class APIFactory {
     return api;
   }
 
+  public static ToolServer getToolServer() {
+    return toolServer;
+  }
+
   /**
    * Create an HTTP connection.
    * 
    * @return A HTTP connection.
    */
-  public static HttpClient createHttpClient(HttpConnectionManager manager) {
+  private static HttpClient createHttpClient(HttpConnectionManager manager) {
     HttpClient client = new HttpClient(manager);
     client.getParams().setParameter(
         HttpMethodParams.USER_AGENT,
