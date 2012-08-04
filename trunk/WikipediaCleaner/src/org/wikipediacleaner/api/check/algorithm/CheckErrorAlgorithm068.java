@@ -272,7 +272,6 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
             //
           }
           textPane.select(link.getBeginIndex(), link.getEndIndex());
-          //textPane.paintImmediately(0, 0, textPane.getWidth(), textPane.getHeight());
 
           // Check for language link
           String toTitle = api.getLanguageLink(fromWiki, toWiki, pageTitle);
