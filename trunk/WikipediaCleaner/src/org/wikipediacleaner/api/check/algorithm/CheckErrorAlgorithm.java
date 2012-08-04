@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.gui.swing.component.MWPane;
 
 
 /**
@@ -148,7 +149,8 @@ public interface CheckErrorAlgorithm {
    * @param fixName Fix name (extracted from getGlobalFixes()).
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
+   * @param textPane Text pane.
    * @return Page contents after fix.
    */
-  public String fix(String fixName, Page page, String contents);
+  public String fix(String fixName, Page page, String contents, MWPane textPane);
 }

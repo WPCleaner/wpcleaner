@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
+import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -112,10 +113,11 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
    * @param fixName Fix name (extracted from getGlobalFixes()).
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
+   * @param textPane Text pane.
    * @return Page contents after fix.
    */
   @Override
-  public String fix(String fixName, Page page, String contents) {
+  public String fix(String fixName, Page page, String contents, MWPane textPane) {
     PageAnalysis analysis = new PageAnalysis(page, contents);
 
     // Find first title

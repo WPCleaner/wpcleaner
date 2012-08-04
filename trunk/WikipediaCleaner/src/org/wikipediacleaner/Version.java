@@ -33,11 +33,13 @@ public final class Version {
   public final static String VERSION = "1.14";
   public final static Date   DATE = new GregorianCalendar(2012, Calendar.JULY, 5).getTime();
 
+  public final static String PROGRAM = "WPCleaner";
+
   public final static String MESSAGE =
-    GT._("I hope you'll like WikiCleaner.") +
+    GT._("I hope you'll like WPCleaner.", PROGRAM) +
     "<br><br>" +
     GT._(
-        "WikiCleaner configuration is available online, check the {0}System configuration{1}.",
+        "WPCleaner configuration is available online, check the {0}System configuration{1}.",
         new Object[] { "<a href=\"http://fr.wikipedia.org/wiki/Utilisateur:NicoV/WikiCleanerConfigurationDocumentation\">", "</a>" }) +
     "<br>" +
     GT._("Many new features were added recently : try them !") +
@@ -48,5 +50,6 @@ public final class Version {
     "</ul>" +
     "<br>" +
     GT._("Please, report any other problem you find to me.");
+
   public final static boolean HIGHLIGHT = false;
 }
