@@ -34,6 +34,7 @@ import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementDefaultsort;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -265,9 +266,10 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param fixName Fix name (extracted from getGlobalFixes()).
    * @param page Page.
    * @param contents Page contents (may be different from page.getContents()).
+   * @param textPane Text pane.
    * @return Page contents after fix.
    */
-  public String fix(String fixName, Page page, String contents) {
+  public String fix(String fixName, Page page, String contents, MWPane textPane) {
     throw new IllegalStateException("This algorithm has no global fixes");
   }
 

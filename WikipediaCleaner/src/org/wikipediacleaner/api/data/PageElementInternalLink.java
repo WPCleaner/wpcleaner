@@ -247,4 +247,27 @@ public class PageElementInternalLink extends PageElement {
     sb.append("]]");
     return sb.toString();
   }
+
+  /**
+   * Create an internal link.
+   * 
+   * @param link Link.
+   * @param text Displayed text.
+   * @return Internal link.
+   */
+  public static String createInternalLink(String link, String text) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("[[");
+    if (text != null) {
+      if ((link != null) && (!Page.areSameTitle(link, text))) {
+        sb.append(link);
+        sb.append("|");
+      }
+      sb.append(text);
+    } else {
+      sb.append(link);
+    }
+    sb.append("]]");
+    return sb.toString();
+  }
 }

@@ -52,6 +52,7 @@ import javax.swing.text.JTextComponent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.i18n.GT;
@@ -194,7 +195,7 @@ public class Utilities {
     String defaultValue = value;
     while (true) {
       Object result = JOptionPane.showInputDialog(
-          parent, message, "Wikipedia Cleaner",
+          parent, message, Version.PROGRAM,
           JOptionPane.QUESTION_MESSAGE, null, null,
           defaultValue);
       if (result == null) {
@@ -246,7 +247,7 @@ public class Utilities {
     }
     while (true) {
       Object result = JOptionPane.showInputDialog(
-          parent, message, "Wikipedia Cleaner",
+          parent, message, Version.PROGRAM,
           JOptionPane.QUESTION_MESSAGE, null,
           possibles, defaultValue);
       if (result == null) {
@@ -290,7 +291,7 @@ public class Utilities {
       return null;
     }
     return JOptionPane.showInputDialog(
-        parent, message, "Wikipedia Cleaner",
+        parent, message, Version.PROGRAM,
         JOptionPane.QUESTION_MESSAGE, null,
         possibleValues, value);
   }
@@ -304,8 +305,7 @@ public class Utilities {
    */
   public static int displayYesNoWarning(Component parent, String message) {
     return JOptionPane.showConfirmDialog(
-        parent, message,
-        "Wikipedia Cleaner",
+        parent, message, Version.PROGRAM,
         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
   }
 
@@ -318,8 +318,7 @@ public class Utilities {
    */
   public static int displayYesNoCancelWarning(Component parent, String message) {
     return JOptionPane.showConfirmDialog(
-        parent, message,
-        "Wikipedia Cleaner",
+        parent, message, Version.PROGRAM,
         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
   }
 
@@ -340,7 +339,7 @@ public class Utilities {
     JOptionPane pane = new JOptionPane(
         message, JOptionPane.WARNING_MESSAGE,
         JOptionPane.YES_NO_OPTION, null, options);
-    JDialog dialog = pane.createDialog(parent, "Wikipedia Cleaner");
+    JDialog dialog = pane.createDialog(parent, Version.PROGRAM);
     dialog.setVisible(true);
     Object selectedValue = pane.getValue();
     if (selectedValue == null) {
@@ -745,7 +744,7 @@ public class Utilities {
   /**
    * Display an URL in the default browser.
    * 
-   * @param wiki Wikipedia.
+   * @param wiki Wiki.
    * @param title Page title.
    * @param action Page action.
    */
@@ -756,7 +755,7 @@ public class Utilities {
   /**
    * Display an URL in the default browser.
    * 
-   * @param wiki Wikipedia.
+   * @param wiki Wiki.
    * @param title Page title.
    * @param redirect Flag indicating if redirects should be followed.
    */
