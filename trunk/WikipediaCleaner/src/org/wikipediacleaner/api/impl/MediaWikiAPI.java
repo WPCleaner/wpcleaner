@@ -54,6 +54,7 @@ import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.CaptchaException;
+import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
@@ -1551,10 +1552,10 @@ public class MediaWikiAPI implements API {
   private HttpMethod createHttpMethod(
       EnumWikipedia       wikipedia,
       Map<String, String> properties) {
-    if (canUseGetMethod(properties)) {
-      return createHttpGetMethod(wikipedia, properties);
-    }
-    return createHttpPostMethod(wikipedia, properties);
+    return HttpUtils.createHttpMethod(
+        wikipedia.getSettings().getApiURL(),
+        properties,
+        canUseGetMethod(properties));
   }
 
   /**
@@ -1574,134 +1575,6 @@ public class MediaWikiAPI implements API {
     //  return true;
     //}
     return false;
-  }
-
-  /**
-   * Create an HTTP POST Method.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param properties Properties to drive the API.
-   * @return POST Method
-   */
-  private PostMethod createHttpPostMethod(
-      EnumWikipedia       wikipedia,
-      Map<String, String> properties) {
-    String url = wikipedia.getSettings().getApiURL();
-    StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("POST " + url) : null;
-    PostMethod method = new PostMethod(url);
-    method.getParams().setContentCharset("UTF-8");
-    method.setRequestHeader("Accept-Encoding", "gzip");
-    if (properties != null) {
-      boolean first = true;
-      Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();
-      while (iter.hasNext()) {
-        Map.Entry<String, String> property = iter.next();
-        String key = property.getKey();
-        String value = property.getValue();
-        method.addParameter(key, value);
-        if (DEBUG_URL && (debugUrl != null)) {
-          int start = 0;
-          while ((start < value.length()) && Character.isWhitespace(value.charAt(start))) {
-            start++;
-          }
-          if (value.indexOf('\n', start) > 0) {
-            value = value.substring(start, value.indexOf('\n', start)) + "...";
-          }
-          debugUrl.append(
-              (first ? "?" : "&") +
-              key + "=" +
-              (ApiLoginRequest.PROPERTY_PASSWORD.equals(key) ? "XXXXX" : value));
-          first = false;
-        }
-      }
-      if (DEBUG_URL && (debugUrl != null)) {
-        debugText(debugUrl.toString());
-      }
-    }
-    if (connection.getLgToken() != null) {
-      method.addParameter(
-          ApiLoginRequest.PROPERTY_PASSWORD,
-          connection.getLgToken());
-    }
-    if (connection.getLgUserName() != null) {
-      method.addParameter(
-          ApiLoginRequest.PROPERTY_USER_NAME,
-          connection.getLgUserName());
-    }
-    if (connection.getLgUserId() != null) {
-      method.addParameter(
-          ApiLoginRequest.PROPERTY_USER_ID,
-          connection.getLgUserId());
-    }
-    return method;
-  }
-
-  /**
-   * Create an HTTP GET Method.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param properties Properties to drive the API.
-   * @return GET Method
-   */
-  private GetMethod createHttpGetMethod(
-      EnumWikipedia       wikipedia,
-      Map<String, String> properties) {
-
-    // Initialize GET Method
-    String url = wikipedia.getSettings().getApiURL();
-    GetMethod method = new GetMethod(url);
-    method.getParams().setContentCharset("UTF-8");
-    method.setRequestHeader("Accept-Encoding", "gzip");
-
-    // Manager query string
-    StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("GET  " + url) : null;
-    List<NameValuePair> params = new ArrayList<NameValuePair>();
-    if (properties != null) {
-      boolean first = true;
-      Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();
-      while (iter.hasNext()) {
-        Map.Entry<String, String> property = iter.next();
-        String key = property.getKey();
-        String value = property.getValue();
-        params.add(new NameValuePair(key, value));
-        if (DEBUG_URL && (debugUrl != null)) {
-          int start = 0;
-          while ((start < value.length()) && Character.isWhitespace(value.charAt(start))) {
-            start++;
-          }
-          if (value.indexOf('\n', start) > 0) {
-            value = value.substring(start, value.indexOf('\n', start)) + "...";
-          }
-          debugUrl.append(
-              (first ? "?" : "&") +
-              key + "=" +
-              (ApiLoginRequest.PROPERTY_PASSWORD.equals(key) ? "XXXXX" : value));
-        }
-        first = false;
-      }
-      if (DEBUG_URL && (debugUrl != null)) {
-        debugText(debugUrl.toString());
-      }
-    }
-    if (connection.getLgToken() != null) {
-      params.add(new NameValuePair(
-          ApiLoginRequest.PROPERTY_TOKEN,
-          connection.getLgToken()));
-    }
-    if (connection.getLgUserName() != null) {
-      params.add(new NameValuePair(
-          ApiLoginRequest.PROPERTY_USER_NAME,
-          connection.getLgUserName()));
-    }
-    if (connection.getLgUserId() != null) {
-      params.add(new NameValuePair(
-          ApiLoginRequest.PROPERTY_USER_ID,
-          connection.getLgUserId()));
-    }
-    NameValuePair[] tmpParams = new NameValuePair[params.size()];
-    method.setQueryString(params.toArray(tmpParams));
-
-    return method;
   }
 
   /**

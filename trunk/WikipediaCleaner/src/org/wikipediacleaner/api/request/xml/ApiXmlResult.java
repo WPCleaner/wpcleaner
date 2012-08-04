@@ -52,6 +52,11 @@ import org.wikipediacleaner.api.request.ConnectionInformation;
 public abstract class ApiXmlResult extends BasicApiResult {
 
   /**
+   * Flag for tracing XML.
+   */
+  public static boolean DEBUG_XML = false;
+
+  /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
    * @param connection Connection information.
