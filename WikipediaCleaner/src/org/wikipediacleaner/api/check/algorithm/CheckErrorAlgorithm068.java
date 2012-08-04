@@ -18,12 +18,15 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
 
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.API;
@@ -249,6 +252,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
     int currentIndex = 0;
 
     // Check all internal links
+    Object highlight = null;
     try {
       PageAnalysis pageAnalysis = new PageAnalysis(page, contents);
       for (PageElementInternalLink link : pageAnalysis.getInternalLinks()) {
@@ -259,11 +263,16 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
           String pageTitle = analysis.title;
           String replacement = null;
 
-          // TODO: Display selection
-          textPane.setCaretPosition(link.getBeginIndex());
-          textPane.moveCaretPosition(link.getEndIndex());
+          // Display selection
+          try {
+            highlight = textPane.getHighlighter().addHighlight(
+                link.getBeginIndex(), link.getEndIndex(),
+                new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW));
+          } catch (BadLocationException e) {
+            //
+          }
           textPane.select(link.getBeginIndex(), link.getEndIndex());
-          textPane.paintImmediately(0, 0, textPane.getWidth(), textPane.getHeight());
+          //textPane.paintImmediately(0, 0, textPane.getWidth(), textPane.getHeight());
 
           // Check for language link
           String toTitle = api.getLanguageLink(fromWiki, toWiki, pageTitle);
@@ -314,10 +323,18 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
             tmpContents.append(replacement);
             currentIndex = link.getEndIndex();
           }
+          if (highlight != null) {
+            textPane.getHighlighter().removeHighlight(highlight);
+            highlight = null;
+          }
         }
       }
     } catch (APIException e) {
       //
+    }
+    if (highlight != null) {
+      textPane.getHighlighter().removeHighlight(highlight);
+      highlight = null;
     }
 
     // Return result
