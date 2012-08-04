@@ -20,9 +20,10 @@ package org.wikipediacleaner.gui.swing.worker;
 
 import java.io.InputStream;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.httpclient.NameValuePair;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
@@ -86,19 +87,18 @@ public class CheckWikiProjectWorker extends BasicWorker {
               (algorithm.isAvailable()) &&
               (algorithm.getPriority() != CWConfigurationError.PRIORITY_BOT_ONLY)) {
             // Retrieving list of pages for the error number
-            NameValuePair[] parameters = new NameValuePair[] {
-                new NameValuePair("id", algorithm.getErrorNumberString()),
-                new NameValuePair("limit", Integer.toString(errorLimit)),
-                new NameValuePair("offset", Integer.toString(0)),
-                new NameValuePair("project", code),
-                new NameValuePair("view", "bots")
-            };
+            Map<String, String> properties = new HashMap<String, String>();
+            properties.put("id", algorithm.getErrorNumberString());
+            properties.put("limit", Integer.toString(errorLimit));
+            properties.put("offset", Integer.toString(0));
+            properties.put("project", code);
+            properties.put("view", "bots");
             InputStream stream = null;
             setText(
                 GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
                 " - " + algorithm.getShortDescriptionReplaced());
-            stream = APIFactory.getAPI().askToolServerPost(
-                "~sk/cgi-bin/checkwiki/checkwiki.cgi", parameters, true);
+            stream = APIFactory.getToolServer().sendPost(
+                "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, true);
             CheckError.addCheckError(
                 errors, getWikipedia(),
                 Integer.valueOf(algorithm.getErrorNumberString()), stream);

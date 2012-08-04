@@ -1610,7 +1610,7 @@ public class MainWindow
         String code = getWikipedia().getSettings().getCodeCheckWiki().replace("-", "_");
         try {
           setText(GT._("Retrieving Check Wiki configuration"));
-          InputStream stream = APIFactory.getAPI().askToolServerGet(
+          InputStream stream = APIFactory.getToolServer().sendGet(
               "~sk/checkwiki/" + code + "/" + code + "_translation.txt",
               true);
           if (stream != null) {

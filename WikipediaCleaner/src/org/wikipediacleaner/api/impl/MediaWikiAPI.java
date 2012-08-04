@@ -32,15 +32,8 @@ import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpConnectionManager;
-import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.NameValuePair;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom.Document;
@@ -105,6 +98,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlPurgeResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlBacklinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlRandomPagesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlRawWatchlistResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlSearchResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlSiteInfoResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlTemplatesResult;
@@ -124,8 +118,6 @@ public class MediaWikiAPI implements API {
 
   private final static int MAX_PAGES_PER_QUERY = 50;
 
-  private static boolean DEBUG_TIME = false;
-  private static boolean DEBUG_URL = true;
   private static boolean DEBUG_XML = false;
   private static XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
 
@@ -141,14 +133,12 @@ public class MediaWikiAPI implements API {
 
   /**
    * Constructor.
-   * @param manager HTTP connection manager.
+   * 
+   * @param httpClient HTTP client.
    */
-  public MediaWikiAPI(HttpConnectionManager manager) {
+  public MediaWikiAPI(HttpClient httpClient) {
     connection = new ConnectionInformation();
-    httpClient = new HttpClient(manager);
-    httpClient.getParams().setParameter(
-        HttpMethodParams.USER_AGENT,
-        "WPCleaner (+http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation)");
+    this.httpClient = httpClient;
   }
 
   /**
@@ -156,12 +146,10 @@ public class MediaWikiAPI implements API {
    */
   public static void updateConfiguration() {
     Configuration config = Configuration.getConfiguration();
-    DEBUG_TIME = config.getBoolean(
-        null, ConfigurationValueBoolean.DEBUG_TIME);
-    DEBUG_URL = config.getBoolean(
-        null, ConfigurationValueBoolean.DEBUG_URL);
     DEBUG_XML = config.getBoolean(
         null, ConfigurationValueBoolean.DEBUG_XML);
+    HttpUtils.updateConfiguration();
+    ApiXmlResult.updateConfiguration();
   }
 
   /**
@@ -210,113 +198,6 @@ public class MediaWikiAPI implements API {
               new StringReader(userConfigPage.getContents()));
         }
       }
-    }
-  }
-
-  // ==========================================================================
-  // Tool server
-  // ==========================================================================
-
-  /**
-   * Send a POST request to the Tool Server.
-   * 
-   * @param path Path on the tool server.
-   * @param parameters Request parameters.
-   * @param stream Flag indicating if the stream is needed.
-   * @return Answer.
-   * @throws APIException
-   */
-  public InputStream askToolServerPost(
-      String          path,
-      NameValuePair[] parameters,
-      boolean         stream) throws APIException {
-    try {
-      String url = "http://toolserver.org/" + path;
-      StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("POST " + url) : null;
-      PostMethod method = new PostMethod(url);
-      method.getParams().setContentCharset("UTF-8");
-      method.setRequestHeader("Accept-Encoding", "gzip");
-      if (parameters != null) {
-        method.addParameters(parameters);
-      }
-      if (DEBUG_URL && (debugUrl != null)) {
-        if (parameters != null) {
-          for (int i = 0; i < parameters.length; i++) {
-            debugUrl.append(
-                (i == 0 ? "?" : "&") +
-                parameters[i].getName() + "=" + parameters[i].getValue());
-          }
-        }
-        debugText(debugUrl.toString());
-      }
-      HttpClient toolClient = new HttpClient(new MultiThreadedHttpConnectionManager());
-      int statusCode = toolClient.executeMethod(method);
-      if (statusCode != HttpStatus.SC_OK) {
-        throw new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
-      }
-      if (!stream) {
-        return null;
-      }
-      InputStream inputStream = method.getResponseBodyAsStream();
-      inputStream = new BufferedInputStream(inputStream);
-      Header contentEncoding = method.getResponseHeader("Content-Encoding");
-      if (contentEncoding != null) {
-        if (contentEncoding.getValue().equals("gzip")) {
-          inputStream = new GZIPInputStream(inputStream);
-        }
-      }
-      return inputStream;
-    } catch (HttpException e) {
-      throw new APIException("HttpException: " + e.getMessage());
-    } catch (IOException e) {
-      throw new APIException("IOException: " + e.getMessage());
-    }
-  }
-
-  /**
-   * Send a GET request to the Tool Server.
-   * 
-   * @param path Path on the tool server.
-   * @param stream Flag indicating if the stream is needed.
-   * @return Answer.
-   * @throws APIException
-   */
-  public InputStream askToolServerGet(
-      String          path,
-      boolean         stream) throws APIException {
-    try {
-      String url = "http://toolserver.org/" + path;
-      StringBuilder debugUrl = (DEBUG_URL) ? new StringBuilder("GET  " + url) : null;
-      GetMethod method = new GetMethod(url);
-      method.getParams().setContentCharset("UTF-8");
-      method.setRequestHeader("Accept-Encoding", "gzip");
-      if (DEBUG_URL && (debugUrl != null)) {
-        debugText(debugUrl.toString());
-      }
-      HttpClient toolClient = new HttpClient(new MultiThreadedHttpConnectionManager());
-      int statusCode = toolClient.executeMethod(method);
-      if (statusCode == HttpStatus.SC_NOT_FOUND) {
-        return null;
-      }
-      if (statusCode != HttpStatus.SC_OK) {
-        throw new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
-      }
-      if (!stream) {
-        return null;
-      }
-      InputStream inputStream = method.getResponseBodyAsStream();
-      inputStream = new BufferedInputStream(inputStream);
-      Header contentEncoding = method.getResponseHeader("Content-Encoding");
-      if (contentEncoding != null) {
-        if (contentEncoding.getValue().equals("gzip")) {
-          inputStream = new GZIPInputStream(inputStream);
-        }
-      }
-      return inputStream;
-    } catch (HttpException e) {
-      throw new APIException("HttpException: " + e.getMessage());
-    } catch (IOException e) {
-      throw new APIException("IOException: " + e.getMessage());
     }
   }
 
@@ -1575,17 +1456,6 @@ public class MediaWikiAPI implements API {
     //  return true;
     //}
     return false;
-  }
-
-  /**
-   * @param text Text to add to debug.
-   */
-  private void debugText(String text) {
-    if (DEBUG_TIME) {
-      System.out.println("" + System.currentTimeMillis() + ": " + text);
-    } else {
-      System.out.println(text);
-    }
   }
 
   /**

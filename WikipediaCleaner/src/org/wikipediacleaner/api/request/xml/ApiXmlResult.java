@@ -44,6 +44,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.BasicApiResult;
 import org.wikipediacleaner.api.request.ConnectionInformation;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
@@ -51,10 +53,27 @@ import org.wikipediacleaner.api.request.ConnectionInformation;
  */
 public abstract class ApiXmlResult extends BasicApiResult {
 
+  // ==========================================================================
+  // Configuration
+  // ==========================================================================
+
   /**
    * Flag for tracing XML.
    */
-  public static boolean DEBUG_XML = false;
+  private static boolean DEBUG_XML = false;
+
+  /**
+   * Update configuration.
+   */
+  public static void updateConfiguration() {
+    Configuration config = Configuration.getConfiguration();
+    DEBUG_XML = config.getBoolean(
+        null, ConfigurationValueBoolean.DEBUG_XML);
+  }
+
+  // ==========================================================================
+  // XML Results
+  // ==========================================================================
 
   /**
    * @param wiki Wiki on which requests are made.

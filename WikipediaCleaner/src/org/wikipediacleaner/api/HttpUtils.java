@@ -28,6 +28,8 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.wikipediacleaner.api.request.ApiLoginRequest;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
@@ -35,15 +37,34 @@ import org.wikipediacleaner.api.request.ApiLoginRequest;
  */
 public class HttpUtils {
 
+  // ==========================================================================
+  // Configuration
+  // ==========================================================================
+
   /**
    * Flag for tracing time.
    */
-  public static boolean DEBUG_TIME = false;
+  private static boolean DEBUG_TIME = false;
 
   /**
    * Flag for tracing URL.
    */
-  public static boolean DEBUG_URL = true;
+  private static boolean DEBUG_URL = true;
+
+  /**
+   * Update configuration.
+   */
+  public static void updateConfiguration() {
+    Configuration config = Configuration.getConfiguration();
+    DEBUG_TIME = config.getBoolean(
+        null, ConfigurationValueBoolean.DEBUG_TIME);
+    DEBUG_URL = config.getBoolean(
+        null, ConfigurationValueBoolean.DEBUG_URL);
+  }
+
+  // ==========================================================================
+  // HTTP methods
+  // ==========================================================================
 
   /**
    * Create an HttpMethod.

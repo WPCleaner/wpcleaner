@@ -18,10 +18,8 @@
 
 package org.wikipediacleaner.api;
 
-import java.io.InputStream;
 import java.util.List;
 
-import org.apache.commons.httpclient.NameValuePair;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Page;
@@ -77,32 +75,6 @@ public interface API {
    * Logout.
    */
   public void logout();
-
-  /**
-   * Send a POST request to the Tool Server.
-   * 
-   * @param path Path on the tool server.
-   * @param parameters Request parameters.
-   * @param stream Flag indicating if the stream is needed.
-   * @return Answer.
-   * @throws APIException
-   */
-  public InputStream askToolServerPost(
-      String          path,
-      NameValuePair[] parameters,
-      boolean         stream) throws APIException;
-
-  /**
-   * Send a GET request to the Tool Server.
-   * 
-   * @param path Path on the tool server.
-   * @param stream Flag indicating if the stream is needed.
-   * @return Answer.
-   * @throws APIException
-   */
-  public InputStream askToolServerGet(
-      String          path,
-      boolean         stream) throws APIException;
 
   /**
    * Retrieves random pages.

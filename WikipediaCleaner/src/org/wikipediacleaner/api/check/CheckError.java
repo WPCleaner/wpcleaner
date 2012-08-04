@@ -25,10 +25,11 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.apache.commons.httpclient.NameValuePair;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -269,14 +270,13 @@ public class CheckError {
    */
   public static boolean fix(Page page, String errorNumber) {
     try {
-      NameValuePair[] parameters = new NameValuePair[] {
-          new NameValuePair("id", Integer.toString(Integer.parseInt(errorNumber))),
-          new NameValuePair("pageid", Integer.toString(page.getPageId())),
-          new NameValuePair("project", page.getWikipedia().getSettings().getCodeCheckWiki()),
-          new NameValuePair("view", "only")
-      };
-      APIFactory.getAPI().askToolServerPost(
-          "~sk/cgi-bin/checkwiki/checkwiki.cgi", parameters, false);
+      Map<String, String> properties = new HashMap<String, String>();
+      properties.put("id", Integer.toString(Integer.parseInt(errorNumber)));
+      properties.put("pageid", Integer.toString(page.getPageId()));
+      properties.put("project", page.getWikipedia().getSettings().getCodeCheckWiki());
+      properties.put("view", "only");
+      APIFactory.getToolServer().sendPost(
+          "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, false);
     } catch (NumberFormatException e) {
       return false;
     } catch (APIException e) {
