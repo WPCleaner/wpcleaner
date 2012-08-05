@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-05 13:20+0200\n"
+"POT-Creation-Date: 2012-08-05 14:06+0200\n"
 "PO-Revision-Date: 2012-07-22 17:41+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
@@ -320,7 +320,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:364
 #, java-format
-msgid "Do you want to replace this <ref> tag by \"{0}\""
+msgid "Do you want to replace this <ref> tag by \"{0}\" ?"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:374

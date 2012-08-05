@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-05 13:20+0200\n"
-"PO-Revision-Date: 2012-08-05 07:19+0000\n"
+"POT-Creation-Date: 2012-08-05 14:06+0200\n"
+"PO-Revision-Date: 2012-08-05 11:52+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-08-05 07:21+0000\n"
+"X-Launchpad-Export-Date: 2012-08-05 11:56+0000\n"
 "X-Generator: Launchpad (build 15742)\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-Language: French\n"
@@ -324,7 +324,7 @@ msgstr "Navigateur externe"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:63
 msgid "Fix reference duplication"
-msgstr ""
+msgstr "Corriger les références en double"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:258
 msgid "Give a name to the <ref> tag"
@@ -337,22 +337,23 @@ msgstr "Quel nom souhaitez-vous utiliser pour la balise <ref> ?"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:363
 #, java-format
 msgid "A <ref> tag shares the same content, and is named \"{0}\"."
-msgstr ""
+msgstr "Une balise <ref> partage le même contenu, et est nommée « {0} »."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:364
-#, java-format
-msgid "Do you want to replace this <ref> tag by \"{0}\""
-msgstr ""
+#, fuzzy, java-format
+msgid "Do you want to replace this <ref> tag by \"{0}\" ?"
+msgstr "Voulez-vous remplacer cette balise <ref> par « {0} » ?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:374
 msgid ""
 "Several <ref> tags share the same content, but none has been given a name."
 msgstr ""
+"Plusieurs balises <ref> partagent le même contenu, mais aucune n’a reçu de "
+"nom."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:375
-#, fuzzy
 msgid "What name do you want to use for this <ref> tag ?"
-msgstr "Quel nom souhaitez-vous utiliser pour la balise <ref> ?"
+msgstr "Quel nom souhaitez-vous utiliser pour cette balise <ref> ?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm502.java:85
 #, java-format
@@ -2612,3 +2613,13 @@ msgstr "Une valeur ne peut pas contenir les caractères suivants : {0}"
 
 #~ msgid "Help requested on pages"
 #~ msgstr "Aide requise sur les pages"
+
+#~ msgid "I hope you'll like WikiCleaner."
+#~ msgstr "J’espère que vous aimerez WikiCleaner"
+
+#~ msgid ""
+#~ "WikiCleaner configuration is available online, check the {0}System "
+#~ "configuration{1}."
+#~ msgstr ""
+#~ "La configuration de WikiCleaner est disponible en ligne, essayez la {0}"
+#~ "Configuration système{1}."

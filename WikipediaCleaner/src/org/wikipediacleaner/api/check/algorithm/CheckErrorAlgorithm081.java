@@ -361,7 +361,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
             String tmp = getClosedRefTag(groupName, selectedName, null);
             String message =
                 GT._("A <ref> tag shares the same content, and is named \"{0}\".", selectedName) + "\n" +
-                GT._("Do you want to replace this <ref> tag by \"{0}\"", tmp);
+                GT._("Do you want to replace this <ref> tag by \"{0}\" ?", tmp);
             int answer = Utilities.displayYesNoCancelWarning(textPane.getParent(), message);
             if (answer == JOptionPane.YES_OPTION) {
               replacement = tmp;
