@@ -18,11 +18,17 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter.HighlightPainter;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
@@ -563,5 +569,48 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     }
 
     return buffer.toString();
+  }
+
+  // ==========================================================================
+  // Manage highlights in the text
+  // ==========================================================================
+
+  /**
+   * A painter for highlighting text.
+   */
+  private final static HighlightPainter highlighter =
+      new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
+
+  /**
+   * Add an highlight on the text pane.
+   * 
+   * @param textPane Text pane.
+   * @param beginIndex Beginning of the highlight area.
+   * @param endIndex End of the highlight area.
+   * @return Highlight tag.
+   */
+  protected Object addHighlight(
+      JTextPane textPane, int beginIndex, int endIndex) {
+    if (textPane != null) {
+      try {
+        return textPane.getHighlighter().addHighlight(
+            beginIndex, endIndex, highlighter);
+      } catch (BadLocationException e) {
+        //
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Remove an highlight of the text pane.
+   * 
+   * @param textPane Text pane.
+   * @param highlight Highlight tag.
+   */
+  protected void removeHighlight(JTextPane textPane, Object highlight) {
+    if (textPane != null) {
+      textPane.getHighlighter().removeHighlight(highlight);
+    }
   }
 }

@@ -164,7 +164,7 @@ public class Utilities {
       String message,
       Component focus,
       int messageType) {
-    JOptionPane.showMessageDialog(parent, message, "Wikipedia Cleaner", messageType);
+    JOptionPane.showMessageDialog(parent, message, Version.PROGRAM, messageType);
     if (focus != null) {
       focus.requestFocusInWindow();
     }
@@ -358,6 +358,13 @@ public class Utilities {
       return NO_ALL_OPTION;
     }
     return JOptionPane.CLOSED_OPTION;
+  }
+
+  public static int displayQuestion(Component parent, String message, Object[] values) {
+    return JOptionPane.showOptionDialog(
+        parent, message, Version.PROGRAM,
+        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+        null, values, null);
   }
 
   /* ========================================================================== */

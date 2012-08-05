@@ -18,17 +18,11 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JOptionPane;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultHighlighter;
-
-import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
@@ -42,6 +36,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
+import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
@@ -124,6 +119,19 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * @return Possible templates to replace the link to an other language.
+   */
+  private String[] getTemplatesList() {
+    String templatesParam = getSpecificProperty(
+        "template", true, false, false);
+    String[] templatesList = null;
+    if (templatesParam != null) {
+      templatesList = EnumWikipedia.convertPropertyToStringArray(templatesParam);
+    }
+    return templatesList;
+  }
+
+  /**
    * Analyze a page to check if errors are present.
    * 
    * @param pageAnalysis Page analysis.
@@ -138,12 +146,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve possible templates to replace the link to other language
-    String templatesParam = getSpecificProperty(
-        "template", true, false, false);
-    String[] templatesList = null;
-    if (templatesParam != null) {
-      templatesList = EnumWikipedia.convertPropertyToStringArray(templatesParam);
-    }
+    String[] templatesList = getTemplatesList();
 
     // Analyzing the text from the beginning
     boolean result = false;
@@ -251,6 +254,16 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
     StringBuilder tmpContents = new StringBuilder();
     int currentIndex = 0;
 
+    // Manage templates that can be used to replace a link to an other language
+    String[] templatesList = getTemplatesList();
+    String[] templateArgs = null;
+    if ((templatesList != null) && (templatesList.length > 0)) {
+      String[] tmp = templatesList[0].split("\\|");
+      if (tmp.length >= 5) {
+        templateArgs = tmp;
+      }
+    }
+
     // Check all internal links
     Object highlight = null;
     try {
@@ -261,16 +274,12 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
           EnumWikipedia fromWiki = analysis.fromWiki;
           EnumWikipedia toWiki = pageAnalysis.getWikipedia();
           String pageTitle = analysis.title;
+          String lgCode = analysis.language.getCode();
           String replacement = null;
 
           // Display selection
-          try {
-            highlight = textPane.getHighlighter().addHighlight(
-                link.getBeginIndex(), link.getEndIndex(),
-                new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW));
-          } catch (BadLocationException e) {
-            //
-          }
+          highlight = addHighlight(
+              textPane, link.getBeginIndex(), link.getEndIndex());
           textPane.select(link.getBeginIndex(), link.getEndIndex());
 
           // Check for language link
@@ -298,19 +307,40 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
             possibleValues.add(GT._("Cancel"));
 
             // Ask user what replacement to use
-            int answer = JOptionPane.showOptionDialog(
-                textPane.getParent(),
-                GT._(
-                    "The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\n" +
-                    "By what text do you want to replace the link ?",
-                    new Object[] { pageTitle, fromWiki.toString(), toWiki.toString(), toTitle } ),
-                Version.PROGRAM,
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, possibleValues.toArray(), null);
+            String message = GT._(
+                "The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\n" +
+                "By what text do you want to replace the link ?",
+                new Object[] { pageTitle, fromWiki, toWiki, toTitle } );
+            int answer = Utilities.displayQuestion(
+                textPane.getParent(), message,
+                possibleValues.toArray());
             if ((answer < 0) || (answer >= possibleValues.size() - 1)) {
               break;
             } else if (answer < possibleValues.size() - 2) {
               replacement = possibleValues.get(answer);
+            }
+          } else if (templateArgs != null) {
+            String message =
+                GT._("The page \"{0}\" in \"{1}\" doesn''t have a language link to \"{2}\".",
+                     new Object[] { pageTitle, fromWiki, toWiki }) +"\n" +
+                GT._("You can replace the link using template {0}.",
+                     "{{" + templateArgs[0] + "}}") + "\n" +
+                GT._("What is the title of the page on this wiki ?");
+            if ((link.getText() != null) && (!link.getText().equals(pageTitle))) {
+              toTitle = Utilities.askForValue(
+                  textPane.getParent(), message, link.getText(), checker);
+            } else {
+              toTitle = Utilities.askForValue(
+                  textPane.getParent(), message, pageTitle, checker);
+            }
+            if (toTitle != null) {
+              replacement =
+                  "{{" + templateArgs[0] +
+                  "|" + templateArgs[1] + "=" + toTitle +
+                  "|" + templateArgs[2] + "=" + lgCode +
+                  "|" + templateArgs[3] + "=" + pageTitle +
+                  "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : pageTitle) +
+                  "}}";
             }
           }
 
@@ -322,19 +352,15 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
             tmpContents.append(replacement);
             currentIndex = link.getEndIndex();
           }
-          if (highlight != null) {
-            textPane.getHighlighter().removeHighlight(highlight);
-            highlight = null;
-          }
+          removeHighlight(textPane, highlight);
+          highlight = null;
         }
       }
     } catch (APIException e) {
       //
     }
-    if (highlight != null) {
-      textPane.getHighlighter().removeHighlight(highlight);
-      highlight = null;
-    }
+    removeHighlight(textPane, highlight);
+    highlight = null;
 
     // Return result
     if (currentIndex == 0) {
