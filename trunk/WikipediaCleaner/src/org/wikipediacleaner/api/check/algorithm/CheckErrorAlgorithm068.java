@@ -212,8 +212,10 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
     return result;
   }
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (Name -> description).
    */
   @Override
   public Map<String, String> getParameters() {

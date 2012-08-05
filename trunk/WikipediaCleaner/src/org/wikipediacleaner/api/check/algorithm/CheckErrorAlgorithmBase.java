@@ -237,8 +237,10 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     return configuration.getSpecificProperty(property, useWiki, useGeneral, acceptEmpty);
   }
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#getParameters()
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (Name -> description).
    */
   public Map<String, String> getParameters() {
     Map<String, String> parameters = new Hashtable<String, String>();
@@ -609,7 +611,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param highlight Highlight tag.
    */
   protected void removeHighlight(JTextPane textPane, Object highlight) {
-    if (textPane != null) {
+    if ((textPane != null) && (highlight != null)) {
       textPane.getHighlighter().removeHighlight(highlight);
     }
   }
