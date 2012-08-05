@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-04 23:51+0200\n"
+"POT-Creation-Date: 2012-08-05 08:44+0200\n"
 "PO-Revision-Date: 2012-07-22 17:41+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -216,25 +216,26 @@ msgstr ""
 "Список сокращений, которые вызывают ложное срабатывание, когда помещены "
 "перед {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:63
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:61
 #, fuzzy
 msgid "Check all links to other language"
 msgstr "Удалить все ссылки на заголовок"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:165
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:171
 msgid "Check language links"
 msgstr "Проверить языковые ссылки"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:180
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:186
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:328
 msgid "What is the title of the page on this wiki ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:193
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:199
 #, java-format
 msgid "Replace using template {0}"
 msgstr "Заменить с помощью шаблона {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:199
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:205
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:207
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:320
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:317
@@ -244,7 +245,7 @@ msgstr "Заменить с помощью шаблона {0}"
 msgid "External Viewer"
 msgstr "Внешний просмотрщик"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:216
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:222
 msgid ""
 "A template that can be used instead of the link to an other language. It "
 "must be specified as: <template name>|<param name for local page name>|"
@@ -252,21 +253,31 @@ msgid ""
 "language>|<param name for displayed text>"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:289
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:306
 msgid "Do not replace"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:290
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:307
 #, fuzzy
 msgid "Cancel"
 msgstr "&Отмена"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:296
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:311
 #, java-format
 msgid ""
 "The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\n"
 "By what text do you want to replace the link ?"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:324
+#, java-format
+msgid "The page \"{0}\" in \"{1}\" doesn''t have a language link to \"{2}\"."
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:326
+#, fuzzy, java-format
+msgid "You can replace the link using template {0}."
+msgstr "Заменить с помощью шаблона {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:132
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:154
@@ -308,15 +319,15 @@ msgstr "Какое имя вы предпочтёте использовать �
 msgid "Remove {0} namespace from template name"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:239
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:245
 msgid "Title of the article describing this type of error"
 msgstr "Заголовок статьи, описывающий этот тип ошибки"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:240
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:246
 msgid "List of false positives for this type of error"
 msgstr "Список ложных срабатываний для этого типа ошибки"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:241
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:247
 msgid "Page containing the list of false positives for this type of error"
 msgstr ""
 
