@@ -42,6 +42,11 @@ public class HttpUtils {
   // ==========================================================================
 
   /**
+   * Flag for tracing secret keys.
+   */
+  private static boolean DEBUG_SECRET_KEYS = false;
+
+  /**
    * Flag for tracing time.
    */
   private static boolean DEBUG_TIME = false;
@@ -106,7 +111,9 @@ public class HttpUtils {
         String key = property.getKey();
         String value = property.getValue();
         method.addParameter(key, value);
-        if (DEBUG_URL && (debugUrl != null)) {
+        if (DEBUG_URL &&
+            (debugUrl != null) &&
+            (DEBUG_SECRET_KEYS || !isSecretKey(key))) {
           int start = 0;
           while ((start < value.length()) && Character.isWhitespace(value.charAt(start))) {
             start++;
@@ -155,7 +162,9 @@ public class HttpUtils {
         String key = property.getKey();
         String value = property.getValue();
         params.add(new NameValuePair(key, value));
-        if (DEBUG_URL && (debugUrl != null)) {
+        if (DEBUG_URL &&
+            (debugUrl != null) &&
+            (DEBUG_SECRET_KEYS || !isSecretKey(key))) {
           int start = 0;
           while ((start < value.length()) && Character.isWhitespace(value.charAt(start))) {
             start++;

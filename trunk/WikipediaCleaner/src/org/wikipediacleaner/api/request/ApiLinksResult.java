@@ -28,7 +28,7 @@ import org.wikipediacleaner.api.data.Page;
 /**
  * Base interface for MediaWiki API links results.
  */
-public interface ApiLinksResult extends ApiResult {
+public interface ApiLinksResult extends ApiPropertiesResult {
 
   /**
    * Execute links request.

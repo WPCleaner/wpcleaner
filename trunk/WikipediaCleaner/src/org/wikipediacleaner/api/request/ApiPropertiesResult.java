@@ -26,19 +26,19 @@ import org.wikipediacleaner.api.data.Page;
 
 
 /**
- * Base interface for MediaWiki API categories results.
+ * Base interface for MediaWiki API properties results.
  */
-public interface ApiCategoriesResult extends ApiPropertiesResult {
+public interface ApiPropertiesResult extends ApiResult {
 
   /**
-   * Set disambiguation status of a list of pages.
+   * Execute redirect request.
    * 
    * @param properties Properties defining request.
-   * @param list List of pages for which disambiguation status needs to be set.
+   * @param pages Pages to be filled with redirect information.
    * @return True if request should be continued.
    * @throws APIException
    */
-  public boolean setDiambiguationStatus(
+  public void executeRedirect(
       Map<String, String> properties,
-      List<Page> list) throws APIException;
+      List<Page> pages) throws APIException;
 }
