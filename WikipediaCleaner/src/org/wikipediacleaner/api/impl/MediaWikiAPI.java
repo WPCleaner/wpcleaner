@@ -77,6 +77,8 @@ import org.wikipediacleaner.api.request.ApiRandomPagesRequest;
 import org.wikipediacleaner.api.request.ApiRandomPagesResult;
 import org.wikipediacleaner.api.request.ApiRawWatchlistRequest;
 import org.wikipediacleaner.api.request.ApiRawWatchlistResult;
+import org.wikipediacleaner.api.request.ApiRevisionsRequest;
+import org.wikipediacleaner.api.request.ApiRevisionsResult;
 import org.wikipediacleaner.api.request.ApiSearchRequest;
 import org.wikipediacleaner.api.request.ApiSearchResult;
 import org.wikipediacleaner.api.request.ApiSiteInfoRequest;
@@ -99,6 +101,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlBacklinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlRandomPagesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlRawWatchlistResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlRevisionsResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlSearchResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlSiteInfoResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlTemplatesResult;
@@ -198,40 +201,6 @@ public class MediaWikiAPI implements API {
               new StringReader(userConfigPage.getContents()));
         }
       }
-    }
-  }
-
-  /**
-   * Retrieves the contents of <code>page</code>.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param page The page.
-   * @param withRedirects Flag indicating if redirects information should be retrieved.
-   * @throws APIException
-   */
-  public void retrieveContents(EnumWikipedia wikipedia, Page page, boolean withRedirects)
-      throws APIException {
-    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
-    properties.put("inprop", "protection");
-    properties.put("prop", "revisions|info");
-    properties.put("titles", page.getTitle());
-    properties.put("rvprop", "content|ids|timestamp");
-    if (connection.getLgToken() != null) {
-      properties.put("intoken", "edit");
-    }
-    try {
-      boolean redirect = constructContents(
-          page,
-          getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS),
-          "/api/query/pages/page");
-      if (redirect && withRedirects) {
-        List<Page> pages = new ArrayList<Page>(1);
-        pages.add(page);
-        initializeRedirect(wikipedia, pages);
-      }
-    } catch (JDOMParseException e) {
-      log.error("Error retrieving page content", e);
-      throw new APIException("Error parsing XML", e);
     }
   }
 
@@ -1059,6 +1028,23 @@ public class MediaWikiAPI implements API {
   // ==========================================================================
   // API : Queries / Properties
   // ==========================================================================
+
+  /**
+   * Retrieves the contents of <code>page</code>.
+   * (<code>action=query</code>, <code>prop=revisions</code>).
+   * 
+   * @param wiki Wiki.
+   * @param page The page.
+   * @param withRedirects Flag indicating if redirects information should be retrieved.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Properties#revisions_.2F_rv">API:Properties#revisions</a>
+   */
+  public void retrieveContents(EnumWikipedia wiki, Page page, boolean withRedirects)
+      throws APIException {
+    ApiRevisionsResult result = new ApiXmlRevisionsResult(wiki, httpClient, connection);
+    ApiRevisionsRequest request = new ApiRevisionsRequest(wiki, result);
+    request.loadContent(page, withRedirects);
+  }
 
   /**
    * Initialize the disambiguation flags of a list of <code>pages</code>.

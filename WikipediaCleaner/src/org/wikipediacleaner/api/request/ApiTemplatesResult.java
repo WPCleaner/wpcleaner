@@ -28,7 +28,7 @@ import org.wikipediacleaner.api.data.Page;
 /**
  * Base interface for MediaWiki API templates results.
  */
-public interface ApiTemplatesResult extends ApiResult {
+public interface ApiTemplatesResult extends ApiPropertiesResult {
 
   /**
    * Set disambiguation status of a list of pages.

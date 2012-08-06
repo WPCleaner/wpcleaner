@@ -26,7 +26,7 @@ import org.wikipediacleaner.api.APIException;
 /**
  * Base interface for MediaWiki API language links results.
  */
-public interface ApiLanguageLinksResult extends ApiResult {
+public interface ApiLanguageLinksResult extends ApiPropertiesResult {
 
   /**
    * Get language links of a page.
