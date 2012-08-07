@@ -1989,7 +1989,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
               contentPanels.add(contentPanel);
               if (page.isRedirect()) {
                 List<Page> redirects = page.getRedirects();
-                if (redirects.size() > 0) {
+                if ((redirects != null) && (redirects.size() > 0)) {
                   page = redirects.get(0);
                 } else {
                   page = null;
