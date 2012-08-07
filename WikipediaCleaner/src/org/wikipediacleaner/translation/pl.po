@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-05 14:06+0200\n"
-"PO-Revision-Date: 2012-08-06 11:25+0000\n"
+"PO-Revision-Date: 2012-08-07 03:00+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-08-06 18:48+0000\n"
+"X-Launchpad-Export-Date: 2012-08-07 05:16+0000\n"
 "X-Generator: Launchpad (build 15745)\n"
 
 #: org/wikipediacleaner/Version.java:39
@@ -1565,7 +1565,7 @@ msgstr "Sprawdź ortografię i typografię"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:874
 msgid "Orthograph"
-msgstr ""
+msgstr "Ortografia"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:909
 msgid "Protection level for editing the page"
@@ -2162,7 +2162,7 @@ msgstr "Poziomy cofania:"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:57
 msgid "Debug options"
-msgstr ""
+msgstr "Opcje debugowania"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:77
 msgid "Log all URL called by WikiCleaner"
@@ -2385,7 +2385,7 @@ msgstr "Ogólne"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:106
 msgid "Limits"
-msgstr ""
+msgstr "Limity"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:112
 msgid "Sorting"
@@ -2425,7 +2425,7 @@ msgstr "W dół"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:57
 msgid "Translation options"
-msgstr ""
+msgstr "Opcje tłumaczeń"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:77
 msgid "Translate internal links text"
