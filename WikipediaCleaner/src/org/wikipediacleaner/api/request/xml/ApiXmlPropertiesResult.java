@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
+import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.xpath.XPath;
@@ -62,14 +63,16 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
   public void updatePageInformation(Element node, Page page) throws JDOMException {
 
     // Retrieve basic page information
-    XPath xpaEditToken = XPath.newInstance("./@edittoken");
-    page.setEditToken(xpaEditToken.valueOf(node));
+    Attribute attrEditToken = node.getAttribute("edittoken");
+    if (attrEditToken != null) {
+      page.setEditToken(attrEditToken.getValue());
+    }
     XPath xpaPageId = XPath.newInstance("./@pageid");
     page.setPageId(xpaPageId.valueOf(node));
     XPath xpaStartTimestamp = XPath.newInstance("./@starttimestamp");
     page.setStartTimestamp(xpaStartTimestamp.valueOf(node));
-    XPath xpaRedirect = XPath.newInstance("./@redirect");
-    if (xpaRedirect.valueOf(node) != null) {
+    Attribute attrRedirect = node.getAttribute("redirect");
+    if (attrRedirect != null) {
       page.isRedirect(true);
     }
 
@@ -167,7 +170,6 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
     }
 
     // Analyzing missing pages
-    XPath xpaMissing = XPath.newInstance("./@missing");
     for (Page p : pages) {
       Iterator<Page> itPage = p.getRedirectIteratorWithPage();
       while (itPage.hasNext()) {
@@ -179,8 +181,8 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
           if ((pageId != null) && (!pageId.isEmpty())) {
             tmp.setExisting(Boolean.TRUE);
           } else {
-            List missing = xpaMissing.selectNodes(page);
-            if ((missing != null) && (!missing.isEmpty())) {
+            Attribute attrMissing = page.getAttribute("missing");
+            if (attrMissing != null) {
               tmp.setExisting(Boolean.FALSE);
             }
           }
