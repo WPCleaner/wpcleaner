@@ -57,7 +57,7 @@ public class LimitOptionsPanel extends OptionsPanel {
    */
   private void initialize() {
     setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("General options")));
+        BorderFactory.createEtchedBorder(), GT._("Limits")));
     JSpinner spin = null;
 
     // Initialize constraints

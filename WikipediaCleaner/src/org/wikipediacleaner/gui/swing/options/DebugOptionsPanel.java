@@ -27,6 +27,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
+import org.wikipediacleaner.Version;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
@@ -74,7 +75,7 @@ public class DebugOptionsPanel extends OptionsPanel {
 
     // Debug URL
     chk = createJCheckBox(
-        GT._("Log all URL called by WikiCleaner"),
+        GT._("Log all URL called by {0}", Version.PROGRAM),
         ConfigurationValueBoolean.DEBUG_URL);
     add(chk, constraints);
     constraints.gridy++;

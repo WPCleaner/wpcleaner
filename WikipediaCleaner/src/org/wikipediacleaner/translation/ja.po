@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-05 14:06+0200\n"
+"POT-Creation-Date: 2012-08-11 00:13+0200\n"
 "PO-Revision-Date: 2012-08-08 08:02+0000\n"
 "Last-Translator: Shushi Kurose <md81bird@hitaki.net>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -243,9 +243,9 @@ msgstr "外部ブラウザ"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:224
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page "
-"name>|<param name for code of other language>|<param name for page name in "
-"other language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page name>|"
+"<param name for code of other language>|<param name for page name in other "
+"language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:308
@@ -472,13 +472,13 @@ msgstr "ページのリンクを取得"
 msgid "Parsing text"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1524
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1510
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1531
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1517
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -564,15 +564,16 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:517
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:108
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr "プロジェクトごとに事前にボットフラグの取得が必要です。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:518
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:109
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
-msgstr "各プロジェクトのルールをチェックし、ボットフラグが必要かどうか確認してください。"
+msgstr ""
+"各プロジェクトのルールをチェックし、ボットフラグが必要かどうか確認してくださ"
+"い。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:519
 msgid ""
@@ -609,8 +610,7 @@ msgid "Update existing disambiguation warning messages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:208
-msgid ""
-"At what page do you wish to start updating the disambiguation warning ?"
+msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:185
@@ -879,8 +879,8 @@ msgid "Information"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:224
-#, java-format
-msgid "Wikipedia Cleaner - Version {0} ({1})"
+#, fuzzy, java-format
+msgid "{0} - Version {1} ({2})"
 msgstr "ウィキペディア・クリーナー - バージョン {0} ({1})"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:316
@@ -1135,8 +1135,7 @@ msgid "Search results for {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1234
-msgid ""
-"You must input a page name for retrieving the list of category members"
+msgid "You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1253
@@ -1277,8 +1276,7 @@ msgid "Analysis - {0}"
 msgstr "解析 - {0}"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:382
-msgid ""
-"Add a warning on the talk page about the links to disambiguation pages"
+msgid "Add a warning on the talk page about the links to disambiguation pages"
 msgstr "曖昧さ回避ページへのリンクについて、会話ページに案内を貼り付け"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:442
@@ -1490,7 +1488,6 @@ msgid "Create disambiguation warning on talk page"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:872
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:180
 msgid "Check orthograph and typography"
 msgstr ""
 
@@ -1778,9 +1775,10 @@ msgstr ""
 msgid "Retrieving possible disambiguations for {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/BasicWindow.java:63
-msgid "Wikipedia Cleaner is working..."
-msgstr "ウィキペディア・クリーナー動作中... しばらくお待ちください..."
+#: org/wikipediacleaner/gui/swing/basic/BasicWindow.java:64
+#, java-format
+msgid "{0} is working..."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:93
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:98
@@ -2014,8 +2012,7 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:97
-msgid ""
-"Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:104
@@ -2027,8 +2024,7 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:118
-msgid ""
-"Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:125
@@ -2071,19 +2067,20 @@ msgstr ""
 msgid "Undo levels :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:57
+#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:58
 msgid "Debug options"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:77
-msgid "Log all URL called by WikiCleaner"
+#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:78
+#, java-format
+msgid "Log all URL called by {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:84
+#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:85
 msgid "Log all answers to MediaWiki API calls"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:91
+#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:92
 msgid "Add a timestamp to logs"
 msgstr ""
 
@@ -2193,69 +2190,79 @@ msgstr ""
 msgid "Choose background color"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:69
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:60
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:70
 msgid "General options"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:90
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:91
 msgid "Close disambiguation window after sending"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:99
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:100
 msgid "Ignore disambiguation links from User namespace"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:108
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:109
 msgid "Restore window position"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:117
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:118
 msgid "Save window position"
 msgstr "ウィンドウ位置を保存"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:126
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:127
 msgid "Use short notation [[Xxxxx (yyy)|]]"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:135
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:136
 msgid "Use advanced features (experimental)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:144
-msgid "Display WikiCleaner link in update comments"
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:145
+#, java-format
+msgid "Display {0} link in update comments"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:153
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:154
 msgid "Show errors with no detection found"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:162
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:163
 msgid "Add link to error description in comments"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:171
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:172
 msgid "Watch all edited pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:189
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:181
+msgid "Check spelling and typography"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:190
 msgid "Signature :"
 msgstr "署名 :"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:205
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:206
 msgid "Look & Feel"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:209
-msgid "Let WPCleaner choose the Look && Feel"
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:210
+#, java-format
+msgid "Let {0} choose the Look && Feel"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:214
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:215
 msgid "Use System Look && Feel"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:219
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:220
 msgid "Choose Look && Feel"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:60
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:106
+msgid "Limits"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:80
@@ -2293,10 +2300,6 @@ msgstr "オプション"
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:103
 msgid "General"
 msgstr "全般"
-
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:106
-msgid "Limits"
-msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:112
 msgid "Sorting"
@@ -2477,3 +2480,6 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
+
+#~ msgid "Wikipedia Cleaner is working..."
+#~ msgstr "ウィキペディア・クリーナー動作中... しばらくお待ちください..."

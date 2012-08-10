@@ -36,6 +36,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import org.wikipediacleaner.Version;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
@@ -141,7 +142,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Display "WikiCleaner" in the update comments
     chk = createJCheckBox(
-        GT._("Display WikiCleaner link in update comments"),
+        GT._("Display {0} link in update comments", Version.PROGRAM),
         ConfigurationValueBoolean.WIKICLEANER_COMMENT);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -177,7 +178,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     // Check spelling
     chk = createJCheckBox(
-        GT._("Check orthograph and typography"),
+        GT._("Check spelling and typography"),
         ConfigurationValueBoolean.SPELLING);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -206,7 +207,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
     plafPanel.setLayout(new BoxLayout(plafPanel, BoxLayout.PAGE_AXIS));
     ButtonGroup plafGroup = new ButtonGroup();
     JRadioButton radPlafWPCleaner = Utilities.createJRadioButton(
-        GT._("Let WPCleaner choose the Look && Feel"),
+        GT._("Let {0} choose the Look && Feel", Version.PROGRAM),
         false);
     plafPanel.add(radPlafWPCleaner);
     plafGroup.add(radPlafWPCleaner);

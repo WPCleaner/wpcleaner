@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-05 14:06+0200\n"
+"POT-Creation-Date: 2012-08-11 00:13+0200\n"
 "PO-Revision-Date: 2012-04-15 01:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
@@ -473,13 +473,13 @@ msgstr ""
 msgid "Parsing text"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1524
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1510
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1531
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1517
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -879,7 +879,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:224
 #, java-format
-msgid "Wikipedia Cleaner - Version {0} ({1})"
+msgid "{0} - Version {1} ({2})"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:316
@@ -1487,7 +1487,6 @@ msgid "Create disambiguation warning on talk page"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:872
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:180
 msgid "Check orthograph and typography"
 msgstr ""
 
@@ -1775,8 +1774,9 @@ msgstr ""
 msgid "Retrieving possible disambiguations for {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/BasicWindow.java:63
-msgid "Wikipedia Cleaner is working..."
+#: org/wikipediacleaner/gui/swing/basic/BasicWindow.java:64
+#, java-format
+msgid "{0} is working..."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:93
@@ -2066,19 +2066,20 @@ msgstr ""
 msgid "Undo levels :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:57
+#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:58
 msgid "Debug options"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:77
-msgid "Log all URL called by WikiCleaner"
+#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:78
+#, java-format
+msgid "Log all URL called by {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:84
+#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:85
 msgid "Log all answers to MediaWiki API calls"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:91
+#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:92
 msgid "Add a timestamp to logs"
 msgstr ""
 
@@ -2188,69 +2189,79 @@ msgstr ""
 msgid "Choose background color"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:69
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:60
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:70
 msgid "General options"
 msgstr "Generelle innstillinger"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:90
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:91
 msgid "Close disambiguation window after sending"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:99
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:100
 msgid "Ignore disambiguation links from User namespace"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:108
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:109
 msgid "Restore window position"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:117
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:118
 msgid "Save window position"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:126
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:127
 msgid "Use short notation [[Xxxxx (yyy)|]]"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:135
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:136
 msgid "Use advanced features (experimental)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:144
-msgid "Display WikiCleaner link in update comments"
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:145
+#, java-format
+msgid "Display {0} link in update comments"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:153
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:154
 msgid "Show errors with no detection found"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:162
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:163
 msgid "Add link to error description in comments"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:171
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:172
 msgid "Watch all edited pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:189
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:181
+msgid "Check spelling and typography"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:190
 msgid "Signature :"
 msgstr "Signatur:"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:205
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:206
 msgid "Look & Feel"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:209
-msgid "Let WPCleaner choose the Look && Feel"
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:210
+#, java-format
+msgid "Let {0} choose the Look && Feel"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:214
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:215
 msgid "Use System Look && Feel"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:219
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:220
 msgid "Choose Look && Feel"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:60
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:106
+msgid "Limits"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:80
@@ -2288,10 +2299,6 @@ msgstr "Innstillinger"
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:103
 msgid "General"
 msgstr "Generelt"
-
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:106
-msgid "Limits"
-msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:112
 msgid "Sorting"
