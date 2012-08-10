@@ -221,8 +221,8 @@ public class MainWindow
   @Override
   public String getTitle() {
     return GT._(
-        "Wikipedia Cleaner - Version {0} ({1})",
-        new Object[] { Version.VERSION, DateFormat.getDateInstance().format(Version.DATE) });
+        "{0} - Version {1} ({2})",
+        new Object[] { Version.PROGRAM, Version.VERSION, DateFormat.getDateInstance().format(Version.DATE) });
   }
 
   /**

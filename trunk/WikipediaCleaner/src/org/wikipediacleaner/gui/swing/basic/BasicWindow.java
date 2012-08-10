@@ -33,6 +33,7 @@ import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.i18n.GT;
@@ -60,7 +61,7 @@ public abstract class BasicWindow implements ActionListener {
    * Constructor.
    */
   protected BasicWindow() {
-    this.glassPane = new ProgressPanel(GT._("Wikipedia Cleaner is working..."));
+    this.glassPane = new ProgressPanel(GT._("{0} is working...", Version.PROGRAM));
   }
 
   /**

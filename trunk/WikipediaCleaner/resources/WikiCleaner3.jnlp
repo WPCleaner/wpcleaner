@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.0+" codebase="http://site4145.mutu.sivit.org/WikiCleaner" href="WikiCleaner2.jnlp">
+<jnlp spec="1.0+" codebase="http://site4145.mutu.sivit.org/WikiCleaner" href="WikiCleaner3.jnlp">
   <information>
-    <title>Wiki Cleaner (test)</title>
+    <title>WPCleaner (test)</title>
     <vendor>User:NicoV</vendor>
-    <description>Wikipedia Cleaner (test)</description>
+    <description>WPCleaner (test)</description>
     <description kind="short">A tool for Wikipedia maintenance</description>
-    <homepage href="http://fr.wikipedia.org/wiki/Utilisateur:NicoV/Wikipedia_Cleaner/Documentation"/>
+    <homepage href="http://en.wikipedia.org/wiki/WP:CLEANER"/>
     <icon href="commons-nuvola-web-broom.png"/>
     <shortcut>
       <desktop/>
