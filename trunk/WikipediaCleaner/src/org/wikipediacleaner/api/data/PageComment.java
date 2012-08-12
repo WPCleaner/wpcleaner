@@ -94,7 +94,7 @@ public class PageComment {
   }
 
   /**
-   * @return
+   * @return Maximum number of back links.
    */
   public Integer computeMaxArticles() {
     if ((maxMainArticles == null) &&
