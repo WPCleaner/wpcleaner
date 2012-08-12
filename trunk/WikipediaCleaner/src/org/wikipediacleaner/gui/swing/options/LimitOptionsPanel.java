@@ -210,6 +210,23 @@ public class LimitOptionsPanel extends OptionsPanel {
     add(spin, constraints);
     constraints.gridy++;
 
+    // Maximum number of search results
+    spin = createJSpinner(
+        ConfigurationValueInteger.MAX_SEARCH,
+        100, 1000000, 1000);
+    JLabel labelSearch = Utilities.createJLabel(GT._("Maximum number of search results :"));
+    labelSearch.setLabelFor(spin);
+    labelSearch.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridwidth = 2;
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(labelSearch, constraints);
+    constraints.gridwidth = 1;
+    constraints.gridx = 2;
+    constraints.weightx = 1;
+    add(spin, constraints);
+    constraints.gridy++;
+
     // Empty panel
     JPanel emptyPanel = new JPanel();
     emptyPanel.setMinimumSize(new Dimension(0, 0));

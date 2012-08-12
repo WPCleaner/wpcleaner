@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-11 00:13+0200\n"
+"POT-Creation-Date: 2012-08-12 10:46+0200\n"
 "PO-Revision-Date: 2012-07-22 17:39+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -480,13 +480,13 @@ msgstr "Пошук посилань на сорінці"
 msgid "Parsing text"
 msgstr "Аналіз тексту"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1510
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1512
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1517
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1519
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -2350,6 +2350,11 @@ msgstr "Максимальна кількість пунктів в меню :"
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:200
 #, fuzzy
 msgid "Maximum number of embedding pages :"
+msgstr "Максимальна кількість пунктів в меню :"
+
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:217
+#, fuzzy
+msgid "Maximum number of search results :"
 msgstr "Максимальна кількість пунктів в меню :"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:79

@@ -381,7 +381,7 @@ public class PageListWorker extends BasicWorker {
       final API api = APIFactory.getAPI();
       for (String pageName : pageNames) {
         Page page = DataManager.getPage(getWikipedia(), pageName, null, null);
-        api.retrieveSimilarPages(getWikipedia(), page);
+        api.retrieveSimilarPages(getWikipedia(), page, true);
         pages.addAll(page.getSimilarPages());
       }
     }

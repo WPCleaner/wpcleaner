@@ -26,6 +26,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
@@ -166,12 +167,15 @@ public class ApiSearchRequest extends ApiListRequest {
    * Execute a search.
    * 
    * @param page Page for which similar pages are searched.
+   * @param limit Flag indicating if the number of results should be limited.
    */
-  public void searchSimilarPages(Page page) throws APIException {
+  public void searchSimilarPages(
+      Page page, boolean limit) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
         PROPERTY_LIST,
         PROPERTY_LIST_SEARCH);
+    properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     if (page.getNamespace() != null) {
       properties.put(PROPERTY_NAMESPACE, page.getNamespace().toString());
     } else {
@@ -181,7 +185,8 @@ public class ApiSearchRequest extends ApiListRequest {
     properties.put(PROPERTY_REDIRECT, "true");
     properties.put(PROPERTY_SEARCH, "intitle:\"" + page.getTitle().replaceAll("\"", "\"\"") + "\"");
     List<Page> list = new ArrayList<Page>();
-    while (result.executeSearch(properties, list)) {
+    int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_SEARCH);
+    while (result.executeSearch(properties, list) && (list.size() < maxSize)) {
       //
     }
     Collections.sort(list);

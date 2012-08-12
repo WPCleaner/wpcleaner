@@ -1200,14 +1200,16 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param page The page.
+   * @param limit Flag indicating if the number of results should be limited.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Search">API:Search</a>
    */
-  public void retrieveSimilarPages(EnumWikipedia wiki, Page page)
+  public void retrieveSimilarPages(
+      EnumWikipedia wiki, Page page, boolean limit)
       throws APIException {
     ApiSearchResult result = new ApiXmlSearchResult(wiki, httpClient, connection);
     ApiSearchRequest request = new ApiSearchRequest(wiki, result);
-    request.searchSimilarPages(page);
+    request.searchSimilarPages(page, limit);
   }
 
   /**

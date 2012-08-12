@@ -328,7 +328,7 @@ public class MediaWiki extends MediaWikiController {
       return;
     }
     final API api = APIFactory.getAPI();
-    api.retrieveSimilarPages(wikipedia, page);
+    api.retrieveSimilarPages(wikipedia, page, true);
   }
 
   /**

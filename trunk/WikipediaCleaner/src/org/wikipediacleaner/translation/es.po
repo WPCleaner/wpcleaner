@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-11 00:13+0200\n"
+"POT-Creation-Date: 2012-08-12 10:46+0200\n"
 "PO-Revision-Date: 2012-07-01 10:58+0000\n"
 "Last-Translator: Rogelio Meza Torres <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -490,7 +490,7 @@ msgstr "Recuperando los enlaces de la página"
 msgid "Parsing text"
 msgstr "Analizando sintácticamente el texto"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1510
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1512
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -498,7 +498,7 @@ msgstr ""
 "Esta acción está protegida por un CAPTCHA\n"
 "¿Cuál es la respuesta a la siguiente pregunta?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1517
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1519
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -2392,6 +2392,11 @@ msgstr "Número máximo de items en un menu :"
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:200
 #, fuzzy
 msgid "Maximum number of embedding pages :"
+msgstr "Número máximo de items en un menu :"
+
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:217
+#, fuzzy
+msgid "Maximum number of search results :"
 msgstr "Número máximo de items en un menu :"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:79
