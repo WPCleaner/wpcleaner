@@ -1285,7 +1285,7 @@ public abstract class OnePageWindow
         (page != null) && (page.getTalkPage(getWikipedia().getNamespaces()) != null)) {
       Controller.runNewSection(
           page.getTalkPage(getWikipedia().getNamespaces()),
-          getTextContents().getText(),
+          getTextContents().getText(), page.getTitle(),
           getWikipedia());
     }
     Configuration config = Configuration.getConfiguration();

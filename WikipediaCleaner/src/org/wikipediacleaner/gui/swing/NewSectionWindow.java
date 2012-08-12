@@ -43,10 +43,13 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.BadLocationException;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.component.MWPane;
+import org.wikipediacleaner.gui.swing.component.MWPaneBasicFormatter;
 import org.wikipediacleaner.gui.swing.worker.NewSectionWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -65,13 +68,14 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
   public final static Integer WINDOW_VERSION = Integer.valueOf(2);
 
   Page page;
+  Page articlePage;
   String articleText;
 
   private JTextField textTitle;
   private JCheckBox chkForceWatch;
   private JButton   buttonSignature;
   private JTextPane textNewSection;
-  private JTextPane textArticle;
+  private MWPane textArticle;
 
   private JButton buttonValidate;
   private JButton buttonCancel;
@@ -81,11 +85,13 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
    * 
    * @param page Page name.
    * @param articleText Text of the article.
+   * @param articleTitle Title of the article.
    * @param wikipedia Wikipedia.
    */
   public static void createNewSectionWindow(
       final Page page,
       final String articleText,
+      final String articleTitle,
       final EnumWikipedia wikipedia) {
     createWindow(
         "NewSectionWindow",
@@ -99,6 +105,8 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
               NewSectionWindow newSection = (NewSectionWindow) window;
               newSection.page = page;
               newSection.articleText = articleText;
+              newSection.articlePage = DataManager.getPage(wikipedia, articleTitle, null, null);
+              newSection.articlePage.setContents(articleText);
             }
           }
         });
@@ -188,10 +196,11 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
 
     // Article contents
     if ((articleText != null) && (articleText.length() > 0)) {
-      textArticle = new JTextPane();
-      textArticle.setEditable(false);
+      textArticle = new MWPane(getWikipedia(), articlePage, this);
       textArticle.setText(articleText);
-      textArticle.setCaretPosition(0);
+      textArticle.setFormatter(new MWPaneBasicFormatter());
+      textArticle.setEditable(false);
+      textArticle.resetAttributes();
       JScrollPane scrollText = new JScrollPane(textArticle);
       scrollText.setMinimumSize(new Dimension(100, 100));
       scrollText.setPreferredSize(new Dimension(1000, 300));
