@@ -191,9 +191,12 @@ public interface API {
    * 
    * @param wikipedia Wikipedia.
    * @param page The page.
+   * @param limit Flag indicating if the number of results should be limited.
    * @throws APIException
    */
-  public void retrieveSimilarPages(EnumWikipedia wikipedia, Page page) throws APIException;
+  public void retrieveSimilarPages(
+      EnumWikipedia wikipedia, Page page,
+      boolean limit) throws APIException;
 
   /**
    * Retrieves the links of <code>page</code>.
