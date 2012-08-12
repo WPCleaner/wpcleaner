@@ -100,9 +100,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           while ((tmpIndex < maxSize) && (contents.charAt(tmpIndex) == ' ')) {
             tmpIndex++;
           }
-          boolean correctEnd = false;
           if ((tmpIndex < maxSize) && (contents.charAt(tmpIndex) == '/')) {
-            correctEnd = true;
             tmpIndex++;
           }
           while ((tmpIndex < maxSize) && (" \\.:?/".indexOf(contents.charAt(tmpIndex)) >= 0)) {
@@ -110,7 +108,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
             incorrectChar = true;
           }
           if ((tmpIndex < maxSize) && (contents.charAt(tmpIndex) == '>')) {
-            if (incorrectChar || !correctEnd) {
+            if (incorrectChar) {
               if (errors == null) {
                 return true;
               }
