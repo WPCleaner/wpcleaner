@@ -53,21 +53,27 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public class PageCommentsWindow extends BasicWindow implements ActionListener {
 
-  private final static String ACTION_CANCEL        = "CANCEL";
-  private final static String ACTION_COPY_MAX_MAIN = "COPY MAX MAIN";
-  private final static String ACTION_COPY_MAX      = "COPY MAX";
-  private final static String ACTION_OK            = "OK";
-  private final static String ACTION_REMOVE        = "REMOVE";
+  private final static String ACTION_CANCEL            = "CANCEL";
+  private final static String ACTION_COPY_MAX_MAIN     = "COPY MAX MAIN";
+  private final static String ACTION_COPY_MAX_OTHER    = "COPY MAX OTHER";
+  private final static String ACTION_COPY_MAX_TEMPLATE = "COPY MAX TEMPLATE";
+  private final static String ACTION_OK                = "OK";
+  private final static String ACTION_REMOVE            = "REMOVE";
 
   Page   page;
+  private Integer countMain;
+  private Integer countOther;
+  private Integer countTemplate;
 
   private JTextField txtComments;
   private JFormattedTextField txtMaxMain;
-  private JFormattedTextField txtMax;
+  private JFormattedTextField txtMaxOther;
+  private JFormattedTextField txtMaxTemplate;
 
   private JButton buttonCancel;
   private JButton buttonCopyMaxMain;
-  private JButton buttonCopyMax;
+  private JButton buttonCopyMaxOther;
+  private JButton buttonCopyMaxTemplate;
   private JButton buttonOk;
   private JButton buttonRemove;
 
@@ -167,13 +173,13 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     JLabel labelMaxMain = Utilities.createJLabel(GT._("Max backlinks in Main :"));
     labelMaxMain.setLabelFor(txtMaxMain);
     labelMaxMain.setHorizontalAlignment(SwingConstants.TRAILING);
-    Integer main = (page != null) ? page.getBacklinksCountInMainNamespace() : null;
-    JLabel labelMain = new JLabel((main != null) ? "/ " + main.toString() : "");
+    countMain = (page != null) ? page.getBacklinksCountInMainNamespace() : null;
+    JLabel labelMain = new JLabel((countMain != null) ? "/ " + countMain.toString() : "");
     labelMain.setHorizontalAlignment(SwingConstants.LEADING);
     buttonCopyMaxMain = Utilities.createJButton("\u21D0");
     buttonCopyMaxMain.setActionCommand(ACTION_COPY_MAX_MAIN);
     buttonCopyMaxMain.addActionListener(this);
-    buttonCopyMaxMain.setEnabled(main != null);
+    buttonCopyMaxMain.setEnabled(countMain != null);
     constraints.gridx = 0;
     constraints.weightx = 0;
     panel.add(labelMaxMain, constraints);
@@ -187,37 +193,80 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     constraints.weightx = 1;
     panel.add(labelMain, constraints);
     constraints.gridy++;
-    
-    txtMax = new JFormattedTextField(NumberFormat.getIntegerInstance());
-    txtMax.setFocusLostBehavior(JFormattedTextField.COMMIT);
-    txtMax.setColumns(4);
+
+    txtMaxTemplate = new JFormattedTextField(NumberFormat.getIntegerInstance());
+    txtMaxTemplate.setFocusLostBehavior(JFormattedTextField.COMMIT);
+    txtMaxTemplate.setColumns(4);
     if ((page != null) &&
         (page.getComment() != null) &&
-        (page.getComment().getMaxArticles() != null)) {
-      txtMax.setValue(page.getComment().getMaxArticles());
+        (page.getComment().getMaxTemplateArticles() != null)) {
+      txtMaxTemplate.setValue(page.getComment().getMaxTemplateArticles());
     }
-    JLabel labelMax = Utilities.createJLabel(GT._("Max backlinks :"));
-    labelMax.setLabelFor(txtMax);
-    labelMax.setHorizontalAlignment(SwingConstants.TRAILING);
-    Integer all = (page != null) ? page.getBacklinksCount() : null;
-    JLabel labelAll = new JLabel((all != null) ? "/ " + all.toString() : "");
-    labelAll.setHorizontalAlignment(SwingConstants.LEADING);
-    buttonCopyMax = Utilities.createJButton("\u21D0");
-    buttonCopyMax.setActionCommand(ACTION_COPY_MAX);
-    buttonCopyMax.addActionListener(this);
-    buttonCopyMax.setEnabled(main != null);
+    JLabel labelMaxTemplate = Utilities.createJLabel(GT._("Max backlinks in Template :"));
+    labelMaxTemplate.setLabelFor(txtMaxTemplate);
+    labelMaxTemplate.setHorizontalAlignment(SwingConstants.TRAILING);
+    countTemplate = (page != null) ? page.getBacklinksCountInTemplateNamespace() : null;
+    JLabel labelTemplate = new JLabel((countTemplate != null) ? "/ " + countTemplate.toString() : "");
+    labelTemplate.setHorizontalAlignment(SwingConstants.LEADING);
+    buttonCopyMaxTemplate = Utilities.createJButton("\u21D0");
+    buttonCopyMaxTemplate.setActionCommand(ACTION_COPY_MAX_TEMPLATE);
+    buttonCopyMaxTemplate.addActionListener(this);
+    buttonCopyMaxTemplate.setEnabled(countTemplate != null);
     constraints.gridx = 0;
     constraints.weightx = 0;
-    panel.add(labelMax, constraints);
+    panel.add(labelMaxTemplate, constraints);
     constraints.gridx++;
     constraints.weightx = 0;
-    panel.add(txtMax, constraints);
+    panel.add(txtMaxTemplate, constraints);
     constraints.gridx++;
     constraints.weightx = 0;
-    panel.add(buttonCopyMax, constraints);
+    panel.add(buttonCopyMaxTemplate, constraints);
     constraints.gridx++;
     constraints.weightx = 1;
-    panel.add(labelAll, constraints);
+    panel.add(labelTemplate, constraints);
+    constraints.gridy++;
+
+    txtMaxOther = new JFormattedTextField(NumberFormat.getIntegerInstance());
+    txtMaxOther.setFocusLostBehavior(JFormattedTextField.COMMIT);
+    txtMaxOther.setColumns(4);
+    if ((page != null) &&
+        (page.getComment() != null) &&
+        (page.getComment().getMaxOtherArticles() != null)) {
+      txtMaxOther.setValue(page.getComment().getMaxOtherArticles());
+    }
+    JLabel labelMaxOther = Utilities.createJLabel(GT._("Max backlinks in other namespaces :"));
+    labelMaxOther.setLabelFor(txtMaxOther);
+    labelMaxOther.setHorizontalAlignment(SwingConstants.TRAILING);
+    if (page.getBacklinksCount() != null) {
+      int count = page.getBacklinksCount().intValue();
+      if (page.getBacklinksCountInMainNamespace() != null) {
+        count -= page.getBacklinksCountInMainNamespace().intValue();
+      }
+      if (page.getBacklinksCountInTemplateNamespace() != null) {
+        count -= page.getBacklinksCountInTemplateNamespace().intValue();
+      }
+      countOther = Integer.valueOf(count);
+    } else {
+      countOther = null;
+    }
+    JLabel labelOther = new JLabel((countOther != null) ? "/ " + countOther.toString() : "");
+    labelOther.setHorizontalAlignment(SwingConstants.LEADING);
+    buttonCopyMaxOther = Utilities.createJButton("\u21D0");
+    buttonCopyMaxOther.setActionCommand(ACTION_COPY_MAX_OTHER);
+    buttonCopyMaxOther.addActionListener(this);
+    buttonCopyMaxOther.setEnabled(countOther != null);
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    panel.add(labelMaxOther, constraints);
+    constraints.gridx++;
+    constraints.weightx = 0;
+    panel.add(txtMaxOther, constraints);
+    constraints.gridx++;
+    constraints.weightx = 0;
+    panel.add(buttonCopyMaxOther, constraints);
+    constraints.gridx++;
+    constraints.weightx = 1;
+    panel.add(labelOther, constraints);
     constraints.gridy++;
 
     // Empty panel
@@ -280,15 +329,17 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
       actionRemove();
     } else if (ACTION_CANCEL.equals(e.getActionCommand())) {
       actionCancel();
-    } else if (ACTION_COPY_MAX.equals(e.getActionCommand())) {
-      Integer max = page.getBacklinksCount();
-      if (max != null) {
-        txtMax.setText(max.toString());
-      }
     } else if (ACTION_COPY_MAX_MAIN.equals(e.getActionCommand())) {
-      Integer max = page.getBacklinksCountInMainNamespace();
-      if (max != null) {
-        txtMaxMain.setText(max.toString());
+      if (countMain != null) {
+        txtMaxMain.setText(countMain.toString());
+      }
+    } else if (ACTION_COPY_MAX_OTHER.equals(e.getActionCommand())) {
+      if (countOther != null) {
+        txtMaxOther.setText(countOther.toString());
+      }
+    } else if (ACTION_COPY_MAX_TEMPLATE.equals(e.getActionCommand())) {
+      if (countTemplate != null) {
+        txtMaxTemplate.setText(countTemplate.toString());
       }
     }
   }
@@ -304,14 +355,19 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
       }
       comment.setComment(txtComments.getText());
       try {
-        comment.setMaxArticles(Integer.valueOf(txtMax.getText()));
-      } catch (NumberFormatException e) {
-        comment.setMaxArticles(null);
-      }
-      try {
         comment.setMaxMainArticles(Integer.valueOf(txtMaxMain.getText()));
       } catch (NumberFormatException e) {
         comment.setMaxMainArticles(null);
+      }
+      try {
+        comment.setMaxTemplateArticles(Integer.valueOf(txtMaxTemplate.getText()));
+      } catch (NumberFormatException e) {
+        comment.setMaxTemplateArticles(null);
+      }
+      try {
+        comment.setMaxOtherArticles(Integer.valueOf(txtMaxOther.getText()));
+      } catch (NumberFormatException e) {
+        comment.setMaxOtherArticles(null);
       }
       page.setComment(comment);
       Configuration config = Configuration.getConfiguration();

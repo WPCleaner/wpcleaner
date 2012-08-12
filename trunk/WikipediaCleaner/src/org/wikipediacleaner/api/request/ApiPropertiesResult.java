@@ -35,7 +35,6 @@ public interface ApiPropertiesResult extends ApiResult {
    * 
    * @param properties Properties defining request.
    * @param pages Pages to be filled with redirect information.
-   * @return True if request should be continued.
    * @throws APIException
    */
   public void executeRedirect(

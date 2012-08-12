@@ -61,8 +61,8 @@ public class Page implements Comparable<Page> {
 
   private PageComment comment;
 
-  private ProgressionValue backLinksProgression;
   private ProgressionValue backLinksMainProgression;
+  private ProgressionValue backLinksOtherProgression;
   private ProgressionValue backLinksTemplateProgression;
 
   /**
@@ -678,22 +678,6 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @return A simple object indicating progression.
-   */
-  public ProgressionValue getBacklinksProgression() {
-    if (backLinksProgression == null) {
-      backLinksProgression = new ProgressionValue(null, null, true);
-    }
-    backLinksProgression.setCurrent(getBacklinksCount());
-    if (comment != null) {
-      backLinksProgression.setGoal(comment.getMaxArticles());
-    } else {
-      backLinksProgression.setGoal(null);
-    }
-    return backLinksProgression;
-  }
-
-  /**
    * @return Backlinks count in article namespace.
    */
   public Integer getBacklinksCountInMainNamespace() {
@@ -702,6 +686,23 @@ public class Page implements Comparable<Page> {
       int count = 0;
       for (int i = 0; i < backlinks.size(); i++) {
         if (backlinks.get(i).isInMainNamespace()) {
+          count++;
+        }
+      }
+      return Integer.valueOf(count);
+    }
+    return null;
+  }
+
+  /**
+   * @return Backlinks count in template namespace.
+   */
+  public Integer getBacklinksCountInTemplateNamespace() {
+    List<Page> backlinks = getBackLinksWithRedirects();
+    if (backlinks != null) {
+      int count = 0;
+      for (int i = 0; i < backlinks.size(); i++) {
+        if (backlinks.get(i).isInTemplateNamespace()) {
           count++;
         }
       }
@@ -727,23 +728,6 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @return Backlinks count in template namespace.
-   */
-  public Integer getBacklinksCountInTemplateNamespace() {
-    List<Page> backlinks = getBackLinksWithRedirects();
-    if (backlinks != null) {
-      int count = 0;
-      for (int i = 0; i < backlinks.size(); i++) {
-        if (backlinks.get(i).isInTemplateNamespace()) {
-          count++;
-        }
-      }
-      return Integer.valueOf(count);
-    }
-    return null;
-  }
-
-  /**
    * @return A simple object indicating progression.
    */
   public ProgressionValue getBacklinksProgressionInTemplateNamespace() {
@@ -757,6 +741,33 @@ public class Page implements Comparable<Page> {
       backLinksTemplateProgression.setGoal(null);
     }
     return backLinksTemplateProgression;
+  }
+
+  /**
+   * @return A simple object indicating progression.
+   */
+  public ProgressionValue getBacklinksProgressionInOtherNamespaces() {
+    if (backLinksOtherProgression == null) {
+      backLinksOtherProgression = new ProgressionValue(null, null, false);
+    }
+    Integer current = null;
+    if (getBacklinksCount() != null) {
+      int tmp = getBacklinksCount().intValue();
+      if (getBacklinksCountInMainNamespace() != null) {
+        tmp -= getBacklinksCountInMainNamespace().intValue();
+      }
+      if (getBacklinksCountInTemplateNamespace() != null) {
+        tmp -= getBacklinksCountInTemplateNamespace().intValue();
+      }
+      current = Integer.valueOf(tmp);
+    }
+    backLinksOtherProgression.setCurrent(current);
+    if (comment != null) {
+      backLinksOtherProgression.setGoal(comment.getMaxOtherArticles());
+    } else {
+      backLinksOtherProgression.setGoal(null);
+    }
+    return backLinksOtherProgression;
   }
 
   /**

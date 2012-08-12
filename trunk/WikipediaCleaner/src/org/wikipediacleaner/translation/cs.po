@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-12 10:46+0200\n"
+"POT-Creation-Date: 2012-08-12 12:50+0200\n"
 "PO-Revision-Date: 2012-07-22 17:41+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -978,6 +978,7 @@ msgid "Save none of them"
 msgstr "Neuložit nic"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:574
+#: org/wikipediacleaner/gui/swing/PageListTableModel.java:164
 msgid "Page"
 msgstr "Stránka"
 
@@ -1297,7 +1298,7 @@ msgid "&Validate"
 msgstr "O&věřit"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:212
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:258
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:307
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:147
 msgid "&Cancel"
 msgstr "Storno"
@@ -1577,36 +1578,51 @@ msgid "Would you like to add this page on your local Watch list ?"
 msgstr ""
 "Chcete přidat tuto stránku do vašeho lokálního seznamu sledovaných stránek?"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:104
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:110
 #, java-format
 msgid "Page comments - {0}"
 msgstr "Komentáře stránky - {0}"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:125
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:131
 #: org/wikipediacleaner/gui/swing/PageListTableModel.java:160
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:107
 msgid "Comments"
 msgstr "Komentáře"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:145
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:151
 msgid "Comments :"
 msgstr "Komentáře:"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:167
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:173
 msgid "Max backlinks in Main :"
 msgstr "Maximum zpětných odkazů:"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:199
-msgid "Max backlinks :"
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:205
+#, fuzzy
+msgid "Max backlinks in Template :"
 msgstr "Maximum zpětných odkazů:"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:246
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:237
+#, fuzzy
+msgid "Max backlinks in other namespaces :"
+msgstr "Maximum zpětných odkazů:"
+
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:295
 msgid "&OK"
 msgstr "&OK"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:252
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:301
 msgid "&Remove page comments"
 msgstr "Odeb&rat komentáře stránky"
+
+#: org/wikipediacleaner/gui/swing/PageListTableModel.java:154
+msgid "Main"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/PageListTableModel.java:158
+#, fuzzy
+msgid "Other"
+msgstr "Ostatní…"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:212
 msgid "Backlinks"
@@ -1654,12 +1670,12 @@ msgstr ""
 "Zadejte název stránky, kterou chcete přidat do vašeho lokálního seznamu "
 "sledovaných stránek"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:597
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:587
 #, java-format
 msgid "{0} pages"
 msgstr "{0} stránek"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:599
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:589
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
@@ -2555,6 +2571,9 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
+
+#~ msgid "Max backlinks :"
+#~ msgstr "Maximum zpětných odkazů:"
 
 #~ msgid "Wikipedia Cleaner is working..."
 #~ msgstr "Wikipedia Cleaner pracuje…"

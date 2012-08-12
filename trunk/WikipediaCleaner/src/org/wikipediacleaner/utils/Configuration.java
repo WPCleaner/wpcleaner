@@ -628,7 +628,13 @@ public class Configuration implements WindowListener {
         Preferences node = globalNode.node(name);
         Object result = valueClass.newInstance();
         Method[] methods = valueClass.getMethods();
+        Method fixValuesMethod = null;
         for (Method m : methods) {
+          if (Modifier.isPublic(m.getModifiers()) &&
+              (m.getName().equals("fixValues")) &&
+              (m.getGenericParameterTypes().length == 0)) {
+            fixValuesMethod = m;
+          }
           if (Modifier.isPublic(m.getModifiers()) &&
               m.getName().startsWith("set") &&
               (m.getGenericParameterTypes().length == 1)) {
@@ -658,6 +664,9 @@ public class Configuration implements WindowListener {
               }
             }
           }
+        }
+        if (fixValuesMethod != null) {
+          fixValuesMethod.invoke(result);
         }
         return result;
       }
@@ -779,7 +788,13 @@ public class Configuration implements WindowListener {
           Preferences node = pageNode.node(Integer.toString(i));
           Object result = valueClass.newInstance();
           Method[] methods = valueClass.getMethods();
+          Method fixValuesMethod = null;
           for (Method m : methods) {
+            if (Modifier.isPublic(m.getModifiers()) &&
+                (m.getName().equals("fixValues")) &&
+                (m.getGenericParameterTypes().length == 0)) {
+              fixValuesMethod = m;
+            }
             if (Modifier.isPublic(m.getModifiers()) &&
                 m.getName().startsWith("set") &&
                 (m.getGenericParameterTypes().length == 1)) {
@@ -809,6 +824,9 @@ public class Configuration implements WindowListener {
                 }
               }
             }
+          }
+          if (fixValuesMethod != null) {
+            fixValuesMethod.invoke(result);
           }
           results.add(result);
           i++;

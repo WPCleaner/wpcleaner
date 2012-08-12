@@ -181,12 +181,12 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     tablePages = new JTable(modelPages);
     tablePages.setDefaultRenderer(ProgressionValue.class, new ProgressionValueCellRenderer());
     TableColumnModel columnModel = tablePages.getColumnModel();
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS).setMinWidth(50);
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS).setPreferredWidth(50);
-    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS).setMaxWidth(100);
     columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_MAIN).setMinWidth(50);
     columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_MAIN).setPreferredWidth(50);
     columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_MAIN).setMaxWidth(100);
+    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_OTHER).setMinWidth(50);
+    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_OTHER).setPreferredWidth(50);
+    columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_OTHER).setMaxWidth(100);
     columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_TEMPLATE).setMinWidth(40);
     columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_TEMPLATE).setPreferredWidth(40);
     columnModel.getColumn(PageListTableModel.COLUMN_BACKLINKS_TEMPLATE).setMaxWidth(100);
@@ -557,9 +557,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     int backlinksMain = 0;
     int backlinks = 0;
     int maxMain = 0;
-    int max = 0;
     int actualMain = 0;
-    int actual = 0;
     for (Page page : pages) {
       if (page != null) {
         PageComment comment = page.getComment();
@@ -574,10 +572,6 @@ public class PageListWindow extends BasicWindow implements ActionListener {
         tmpLinks = page.getBacklinksCount();
         if (tmpLinks != null) {
           backlinks += tmpLinks.intValue();
-          if ((comment != null) && (comment.getMaxArticles() != null)) {
-            max += comment.getMaxArticles().intValue();
-            actual += tmpLinks.intValue();
-          }
         }
       }
     }
@@ -588,11 +582,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
       txtMain = "" + backlinksMain;
     }
     String txtAll  = null;
-    if ((actual > 0) || (max > 0)) {
-      txtAll = "" + backlinks + " (" + actual + "/" + max + ")";
-    } else {
-      txtAll = "" + backlinks;
-    }
+    txtAll = "" + backlinks;
     labelLinksCount.setText(
         GT._("{0} pages", Integer.toString(pages.size()) ) + ", " +
         GT._(

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-12 10:46+0200\n"
+"POT-Creation-Date: 2012-08-12 12:50+0200\n"
 "PO-Revision-Date: 2012-07-01 10:58+0000\n"
 "Last-Translator: Rogelio Meza Torres <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -1002,6 +1002,7 @@ msgid "Save none of them"
 msgstr "No guardar ninguno"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:574
+#: org/wikipediacleaner/gui/swing/PageListTableModel.java:164
 msgid "Page"
 msgstr "Página"
 
@@ -1337,7 +1338,7 @@ msgid "&Validate"
 msgstr "&Validar"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:212
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:258
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:307
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:147
 msgid "&Cancel"
 msgstr "&Cancelar"
@@ -1618,36 +1619,51 @@ msgstr "Enviando {0}"
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr "¿Desea agregar esta página a su lista de seguimiento local?"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:104
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:110
 #, java-format
 msgid "Page comments - {0}"
 msgstr "Página de comentarios - {0}"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:125
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:131
 #: org/wikipediacleaner/gui/swing/PageListTableModel.java:160
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:107
 msgid "Comments"
 msgstr "Comentarios"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:145
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:151
 msgid "Comments :"
 msgstr "Comentarios :"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:167
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:173
 msgid "Max backlinks in Main :"
 msgstr "Número máximo de páginas enlazadas en el Espacio Principal"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:199
-msgid "Max backlinks :"
-msgstr "Número máximo de páginas enlazadas:"
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:205
+#, fuzzy
+msgid "Max backlinks in Template :"
+msgstr "Número máximo de páginas enlazadas en el Espacio Principal"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:246
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:237
+#, fuzzy
+msgid "Max backlinks in other namespaces :"
+msgstr "Número máximo de páginas enlazadas en el Espacio Principal"
+
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:295
 msgid "&OK"
 msgstr "&Aceptar"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:252
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:301
 msgid "&Remove page comments"
 msgstr "Quitar &resumen de ediciones de las páginas"
+
+#: org/wikipediacleaner/gui/swing/PageListTableModel.java:154
+msgid "Main"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/PageListTableModel.java:158
+#, fuzzy
+msgid "Other"
+msgstr "Otros..."
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:212
 msgid "Backlinks"
@@ -1695,12 +1711,12 @@ msgstr ""
 "Ingrese el título de la página que desea añadir a su lista local de "
 "seguimiento"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:597
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:587
 #, java-format
 msgid "{0} pages"
 msgstr "{0} páginas"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:599
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:589
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr "Páginas enlazadas - Espacio Principal: {0}, Todos los Espacios: {1}"
@@ -2605,6 +2621,9 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr "El valor no contiene ninguno de estos caractéres: {0}"
+
+#~ msgid "Max backlinks :"
+#~ msgstr "Número máximo de páginas enlazadas:"
 
 #~ msgid "Wikipedia Cleaner is working..."
 #~ msgstr "Wikipedia Cleaner está trabajando..."
