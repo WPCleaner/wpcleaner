@@ -206,14 +206,15 @@ public class Controller {
    * 
    * @param page Page.
    * @param articleText Text of the article.
+   * @param articleTitle Title of the article.
    * @param wikipedia Wikipedia
    */
   public static void runNewSection(
       Page page,
-      String articleText,
+      String articleText, String articleTitle,
       EnumWikipedia wikipedia) {
     if ((page != null) && (wikipedia != null)) {
-      NewSectionWindow.createNewSectionWindow(page, articleText, wikipedia);
+      NewSectionWindow.createNewSectionWindow(page, articleText, articleTitle, wikipedia);
     }
   }
 
