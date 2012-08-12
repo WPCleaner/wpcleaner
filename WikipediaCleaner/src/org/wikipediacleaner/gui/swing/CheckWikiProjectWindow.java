@@ -607,8 +607,8 @@ public class CheckWikiProjectWindow extends OnePageWindow {
             ConfigurationValueInteger.CHECK_NB_ERRORS),
         10, 1000, 5);
     JSpinner spinMaxErrors = new JSpinner(modelMaxErrors);
-    spinMaxErrors.setPreferredSize(new Dimension(80, 20));
-    spinMaxErrors.setMaximumSize(new Dimension(80, 20));
+    spinMaxErrors.setPreferredSize(new Dimension(80, 25));
+    spinMaxErrors.setMaximumSize(new Dimension(80, 25));
     JLabel labelMaxErrors = Utilities.createJLabel(
         GT._("Maximum number of errors for Check Wiki :"));
     labelMaxErrors.setLabelFor(spinMaxErrors);

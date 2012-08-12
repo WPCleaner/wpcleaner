@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-12 12:50+0200\n"
+"POT-Creation-Date: 2012-08-12 18:31+0200\n"
 "PO-Revision-Date: 2012-08-08 10:47+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -107,6 +107,10 @@ msgstr "Zastąp przez {0}"
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:131
 msgid "Delete"
 msgstr "Usuń"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:41
+msgid "Fix all <br/> tags"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:110
 #, java-format
@@ -507,7 +511,7 @@ msgstr "O programie"
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:279
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:143
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:176
-#: org/wikipediacleaner/gui/swing/PreviewWindow.java:226
+#: org/wikipediacleaner/gui/swing/PreviewWindow.java:229
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:218
 msgid "&Close"
 msgstr "&Zamknij"
@@ -868,7 +872,7 @@ msgstr ""
 "  {0} = <nazwa strony> END\n"
 "w odpowiednim miejscu na stronie z tłumaczeniem ({1}) na \"{2}\""
 
-#: org/wikipediacleaner/gui/swing/Controller.java:258
+#: org/wikipediacleaner/gui/swing/Controller.java:259
 #, java-format
 msgid ""
 "You have selected {0} pages.\n"
@@ -1294,40 +1298,40 @@ msgstr "Pobieranie sugestii zamiany tekstu"
 msgid "Retrieving Check Wiki configuration"
 msgstr "Pobieranie konfiguracji Check Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:112
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:120
 #, java-format
 msgid "New section in {0}"
 msgstr "Nowa sekcja w {0}"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:122
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:130
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:779
 msgid "Comment"
 msgstr "Komentarz"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:139
-#: org/wikipediacleaner/gui/swing/PreviewWindow.java:161
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:147
+#: org/wikipediacleaner/gui/swing/PreviewWindow.java:165
 msgid "&Title"
 msgstr "Nagłówek"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:151
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:159
 msgid "&Signature"
 msgstr "&Podpis"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:158
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:166
 msgid "&Force watching page"
 msgstr "Wy&muś obserwowanie strony"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:200
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:209
 msgid "Article contents"
 msgstr "Zawartość artykułu"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:208
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:217
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:648
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:141
 msgid "&Validate"
 msgstr "Sprawdź"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:212
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:221
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:307
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:147
 msgid "&Cancel"
@@ -1707,22 +1711,22 @@ msgstr "{0} stron"
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr "Linkujące - z przestrzeni głównej: {0}, ze wszystkich: {1}"
 
-#: org/wikipediacleaner/gui/swing/PreviewWindow.java:131
+#: org/wikipediacleaner/gui/swing/PreviewWindow.java:135
 #, java-format
 msgid "Expand Templates and Preview - {0}"
 msgstr "Rozwiń szablony i Podgląd - {0}"
 
-#: org/wikipediacleaner/gui/swing/PreviewWindow.java:132
+#: org/wikipediacleaner/gui/swing/PreviewWindow.java:136
 #, java-format
 msgid "Preview - {0}"
 msgstr "Podgląd - {0}"
 
-#: org/wikipediacleaner/gui/swing/PreviewWindow.java:135
+#: org/wikipediacleaner/gui/swing/PreviewWindow.java:139
 #, java-format
 msgid "Expand Templates - {0}"
 msgstr "Rozwiń szablony - {0}"
 
-#: org/wikipediacleaner/gui/swing/PreviewWindow.java:222
+#: org/wikipediacleaner/gui/swing/PreviewWindow.java:225
 msgid "&Update"
 msgstr "Uaktualnij"
 

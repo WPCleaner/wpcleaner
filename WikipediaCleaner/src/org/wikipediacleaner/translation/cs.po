@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-12 12:50+0200\n"
+"POT-Creation-Date: 2012-08-12 18:31+0200\n"
 "PO-Revision-Date: 2012-07-22 17:41+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -109,6 +109,10 @@ msgstr "Nahradit za {0}"
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:131
 msgid "Delete"
 msgstr "Smazat"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:41
+msgid "Fix all <br/> tags"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:110
 #, java-format
@@ -499,7 +503,7 @@ msgstr "O aplikaci"
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:279
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:143
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:176
-#: org/wikipediacleaner/gui/swing/PreviewWindow.java:226
+#: org/wikipediacleaner/gui/swing/PreviewWindow.java:229
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:218
 msgid "&Close"
 msgstr "&Zavři"
@@ -850,7 +854,7 @@ msgid ""
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/Controller.java:258
+#: org/wikipediacleaner/gui/swing/Controller.java:259
 #, java-format
 msgid ""
 "You have selected {0} pages.\n"
@@ -1264,40 +1268,40 @@ msgstr ""
 msgid "Retrieving Check Wiki configuration"
 msgstr "Přijímám konfiguraci Check Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:112
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:120
 #, java-format
 msgid "New section in {0}"
 msgstr "Nová část v {0}"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:122
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:130
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:779
 msgid "Comment"
 msgstr "Poznámka"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:139
-#: org/wikipediacleaner/gui/swing/PreviewWindow.java:161
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:147
+#: org/wikipediacleaner/gui/swing/PreviewWindow.java:165
 msgid "&Title"
 msgstr "&Titulek"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:151
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:159
 msgid "&Signature"
 msgstr "Podpi&s"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:158
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:166
 msgid "&Force watching page"
 msgstr "Vynutit sledování stránky"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:200
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:209
 msgid "Article contents"
 msgstr "Obsahy článků"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:208
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:217
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:648
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:141
 msgid "&Validate"
 msgstr "O&věřit"
 
-#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:212
+#: org/wikipediacleaner/gui/swing/NewSectionWindow.java:221
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:307
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:147
 msgid "&Cancel"
@@ -1681,22 +1685,22 @@ msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
 "Zpětné odkazy - hlavní jmenný prostor: {0}, všechny jmenné prostory: {1}"
 
-#: org/wikipediacleaner/gui/swing/PreviewWindow.java:131
+#: org/wikipediacleaner/gui/swing/PreviewWindow.java:135
 #, java-format
 msgid "Expand Templates and Preview - {0}"
 msgstr "Rozšířit šablony a náhled - {0}"
 
-#: org/wikipediacleaner/gui/swing/PreviewWindow.java:132
+#: org/wikipediacleaner/gui/swing/PreviewWindow.java:136
 #, java-format
 msgid "Preview - {0}"
 msgstr "Náhled - {0}"
 
-#: org/wikipediacleaner/gui/swing/PreviewWindow.java:135
+#: org/wikipediacleaner/gui/swing/PreviewWindow.java:139
 #, java-format
 msgid "Expand Templates - {0}"
 msgstr "Rozšířit šablony - {0}"
 
-#: org/wikipediacleaner/gui/swing/PreviewWindow.java:222
+#: org/wikipediacleaner/gui/swing/PreviewWindow.java:225
 msgid "&Update"
 msgstr "Akt&ualizovat"
 
