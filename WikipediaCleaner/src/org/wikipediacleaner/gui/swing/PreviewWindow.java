@@ -18,7 +18,6 @@
 
 package org.wikipediacleaner.gui.swing;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -35,7 +34,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -47,10 +45,14 @@ import org.lobobrowser.html.parser.DocumentBuilderImpl;
 import org.lobobrowser.html.test.SimpleUserAgentContext;
 import org.w3c.dom.Document;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWHtmlRendererContext;
+import org.wikipediacleaner.gui.swing.component.MWPane;
+import org.wikipediacleaner.gui.swing.component.MWPaneBasicFormatter;
 import org.wikipediacleaner.gui.swing.worker.ExpandTemplatesWorker;
 import org.wikipediacleaner.gui.swing.worker.HtmlPreview;
 import org.wikipediacleaner.i18n.GT;
@@ -70,12 +72,13 @@ public class PreviewWindow
 
   boolean showExpand;
   boolean showPreview;
-  String page;
+  String pageTitle;
+  Page page;
   JTextField textTitle;
   private JButton    buttonUpdate;
   private JButton    buttonClose;
-  JTextPane  textOriginal;
-  private JTextPane  textExpanded;
+  MWPane  textOriginal;
+  private MWPane  textExpanded;
   private HtmlPanel  htmlPreview;
   UserAgentContext ucontext;
   HtmlRendererContext rcontext;
@@ -102,7 +105,8 @@ public class PreviewWindow
           public void initializeWindow(BasicWindow window) {
             if (window instanceof PreviewWindow) {
               PreviewWindow expand = (PreviewWindow) window;
-              expand.page = page;
+              expand.pageTitle = page;
+              expand.page = DataManager.getPage(wikipedia, page, null, null);
               expand.showExpand = showExpand;
               expand.showPreview = showPreview;
             }
@@ -128,11 +132,11 @@ public class PreviewWindow
   public String getTitle() {
     return showPreview ?
         (showExpand ?
-            GT._("Expand Templates and Preview - {0}", page) :
-            GT._("Preview - {0}", page))
+            GT._("Expand Templates and Preview - {0}", pageTitle) :
+            GT._("Preview - {0}", pageTitle))
         :
         (showExpand ?
-            GT._("Expand Templates - {0}", page) :
+            GT._("Expand Templates - {0}", pageTitle) :
             "?");
   }
 
@@ -170,9 +174,8 @@ public class PreviewWindow
     constraints.gridy++;
 
     // Original contents
-    textOriginal = new JTextPane();
-    textOriginal.setBackground(Color.WHITE);
-    textOriginal.setEditable(true);
+    textOriginal = new MWPane(getWikipedia(), page, this);
+    textOriginal.setFormatter(new MWPaneBasicFormatter());
     JScrollPane scrollOriginal = new JScrollPane(textOriginal);
     scrollOriginal.setMinimumSize(new Dimension(100, 100));
     scrollOriginal.setPreferredSize(new Dimension(1000, 500));
@@ -187,8 +190,8 @@ public class PreviewWindow
 
     // Expanded contents
     if (showExpand) {
-      textExpanded = new JTextPane();
-      textExpanded.setBackground(Color.WHITE);
+      textExpanded = new MWPane(getWikipedia(), page, this);
+      textExpanded.setFormatter(new MWPaneBasicFormatter());
       textExpanded.setEditable(false);
       JScrollPane scrollExpanded = new JScrollPane(textExpanded);
       scrollExpanded.setMinimumSize(new Dimension(100, 100));
@@ -260,6 +263,7 @@ public class PreviewWindow
    * Action called when Update button is pressed.
    */
   void actionUpdate() {
+    textOriginal.resetAttributes();
     new ExpandTemplatesWorker(
         getWikipedia(), this, textTitle.getText(),
         textOriginal,
