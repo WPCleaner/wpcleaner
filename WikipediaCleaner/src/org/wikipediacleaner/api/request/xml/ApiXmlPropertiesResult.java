@@ -90,7 +90,6 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
    * 
    * @param properties Properties defining request.
    * @param pages Pages to be filled with redirect information.
-   * @return True if request should be continued.
    * @throws APIException
    */
   public void executeRedirect(

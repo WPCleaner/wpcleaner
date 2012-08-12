@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-12 10:46+0200\n"
+"POT-Creation-Date: 2012-08-12 12:50+0200\n"
 "PO-Revision-Date: 2012-07-22 17:40+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -960,6 +960,7 @@ msgid "Save none of them"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:574
+#: org/wikipediacleaner/gui/swing/PageListTableModel.java:164
 msgid "Page"
 msgstr ""
 
@@ -1267,7 +1268,7 @@ msgid "&Validate"
 msgstr "&אימות"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:212
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:258
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:307
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:147
 msgid "&Cancel"
 msgstr "&ביטול"
@@ -1546,36 +1547,50 @@ msgstr "שולח את {0}"
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr "האם ברצונך להוסיף עמוד זה לרשימת המעקב המקומית שלך?"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:104
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:110
 #, java-format
 msgid "Page comments - {0}"
 msgstr "הערות עמוד - {0}"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:125
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:131
 #: org/wikipediacleaner/gui/swing/PageListTableModel.java:160
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:107
 msgid "Comments"
 msgstr "הערות"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:145
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:151
 msgid "Comments :"
 msgstr "הערות :"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:167
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:173
 msgid "Max backlinks in Main :"
 msgstr "מספר קישורי החזרה המירבי בראשי :"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:199
-msgid "Max backlinks :"
-msgstr "מספר הקישורים החוזרים המירבי :"
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:205
+#, fuzzy
+msgid "Max backlinks in Template :"
+msgstr "מספר קישורי החזרה המירבי בראשי :"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:246
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:237
+#, fuzzy
+msgid "Max backlinks in other namespaces :"
+msgstr "מספר קישורי החזרה המירבי בראשי :"
+
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:295
 msgid "&OK"
 msgstr "&אישור"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:252
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:301
 msgid "&Remove page comments"
 msgstr "ה&סר הערות עמוד"
+
+#: org/wikipediacleaner/gui/swing/PageListTableModel.java:154
+msgid "Main"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/PageListTableModel.java:158
+msgid "Other"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:212
 msgid "Backlinks"
@@ -1621,12 +1636,12 @@ msgstr ""
 msgid "Enter the page title you want to add to your local watch list"
 msgstr "הזינו את כותרת העמוד שברצונכם להוסיף לרשימת המעקב המקומית שלכם"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:597
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:587
 #, java-format
 msgid "{0} pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:599
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:589
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
@@ -2491,6 +2506,9 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
+
+#~ msgid "Max backlinks :"
+#~ msgstr "מספר הקישורים החוזרים המירבי :"
 
 #~ msgid "Wikipedia Cleaner is working..."
 #~ msgstr "מנקה הויקיפדיה עובד..."

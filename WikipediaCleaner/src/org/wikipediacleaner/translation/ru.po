@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-12 10:46+0200\n"
+"POT-Creation-Date: 2012-08-12 12:50+0200\n"
 "PO-Revision-Date: 2012-07-22 17:41+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -982,6 +982,7 @@ msgid "Save none of them"
 msgstr "Ничего не сохранять"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:574
+#: org/wikipediacleaner/gui/swing/PageListTableModel.java:164
 msgid "Page"
 msgstr "Страница"
 
@@ -1300,7 +1301,7 @@ msgid "&Validate"
 msgstr "П&роверить"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:212
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:258
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:307
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:147
 msgid "&Cancel"
 msgstr "&Отмена"
@@ -1581,36 +1582,50 @@ msgstr "Отправка {0}"
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr "Хотите добавить эту страницу в локальный список наблюдения ?"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:104
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:110
 #, java-format
 msgid "Page comments - {0}"
 msgstr "Комментарии к странице - {0}"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:125
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:131
 #: org/wikipediacleaner/gui/swing/PageListTableModel.java:160
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:107
 msgid "Comments"
 msgstr "Комментарии"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:145
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:151
 msgid "Comments :"
 msgstr "Комментарии :"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:167
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:173
 msgid "Max backlinks in Main :"
 msgstr "Максимальное число обратных ссылок в Main :"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:199
-msgid "Max backlinks :"
-msgstr "Максимальное число обратных ссылок :"
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:205
+#, fuzzy
+msgid "Max backlinks in Template :"
+msgstr "Максимальное число обратных ссылок в Main :"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:246
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:237
+#, fuzzy
+msgid "Max backlinks in other namespaces :"
+msgstr "Максимальное число обратных ссылок в Main :"
+
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:295
 msgid "&OK"
 msgstr "&OK"
 
-#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:252
+#: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:301
 msgid "&Remove page comments"
 msgstr "&Удалить комментарии к странице"
+
+#: org/wikipediacleaner/gui/swing/PageListTableModel.java:154
+msgid "Main"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/PageListTableModel.java:158
+msgid "Other"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:212
 msgid "Backlinks"
@@ -1656,12 +1671,12 @@ msgstr ""
 msgid "Enter the page title you want to add to your local watch list"
 msgstr "Введите заголовок страницы для добавления в локаьный список наблюдения"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:597
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:587
 #, java-format
 msgid "{0} pages"
 msgstr "{0} страниц"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:599
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:589
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
@@ -2540,6 +2555,9 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
+
+#~ msgid "Max backlinks :"
+#~ msgstr "Максимальное число обратных ссылок :"
 
 #~ msgid "Wikipedia Cleaner is working..."
 #~ msgstr "Wikipedia Cleaner работает..."

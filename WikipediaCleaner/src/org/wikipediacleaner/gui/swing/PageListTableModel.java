@@ -41,9 +41,9 @@ public class PageListTableModel extends AbstractTableModel {
   public final static int COLUMN_DISAMBIGUATION = COLUMN_PAGE + 1;
   public final static int COLUMN_REDIRECT = COLUMN_DISAMBIGUATION + 1;
   public final static int COLUMN_BACKLINKS_MAIN = COLUMN_REDIRECT + 1;
-  public final static int COLUMN_BACKLINKS = COLUMN_BACKLINKS_MAIN + 1;
-  public final static int COLUMN_BACKLINKS_TEMPLATE = COLUMN_BACKLINKS + 1;
-  public final static int COLUMN_COMMENTS_TEXT = COLUMN_BACKLINKS_TEMPLATE + 1;
+  public final static int COLUMN_BACKLINKS_TEMPLATE = COLUMN_BACKLINKS_MAIN + 1;
+  public final static int COLUMN_BACKLINKS_OTHER = COLUMN_BACKLINKS_TEMPLATE + 1;
+  public final static int COLUMN_COMMENTS_TEXT = COLUMN_BACKLINKS_OTHER + 1;
   public final static int NB_COLUMNS = COLUMN_COMMENTS_TEXT + 1;
 
   public PageListTableModel(List<Page> pages) {
@@ -126,8 +126,8 @@ public class PageListTableModel extends AbstractTableModel {
         return page.getBacklinksProgressionInMainNamespace();
       case COLUMN_BACKLINKS_TEMPLATE:
         return page.getBacklinksProgressionInTemplateNamespace();
-      case COLUMN_BACKLINKS:
-        return page.getBacklinksProgression();
+      case COLUMN_BACKLINKS_OTHER:
+        return page.getBacklinksProgressionInOtherNamespaces();
       case COLUMN_COMMENTS_TEXT:
         if (page.getComment() != null) {
           return page.getComment().getComment();
@@ -151,17 +151,17 @@ public class PageListTableModel extends AbstractTableModel {
   public String getColumnName(int column) {
     switch (column) {
     case COLUMN_BACKLINKS_MAIN:
-      return "Main";
+      return GT._("Main");
     case COLUMN_BACKLINKS_TEMPLATE:
       return "{{.}}";
-    case COLUMN_BACKLINKS:
-      return "All";
+    case COLUMN_BACKLINKS_OTHER:
+      return GT._("Other");
     case COLUMN_COMMENTS_TEXT:
       return GT._("Comments");
     case COLUMN_DISAMBIGUATION:
       return "D";
     case COLUMN_PAGE:
-      return "Page";
+      return GT._("Page");
     case COLUMN_REDIRECT:
       return "R";
     }
@@ -178,7 +178,7 @@ public class PageListTableModel extends AbstractTableModel {
       return ProgressionValue.class;
     case COLUMN_BACKLINKS_TEMPLATE:
       return ProgressionValue.class;
-    case COLUMN_BACKLINKS:
+    case COLUMN_BACKLINKS_OTHER:
       return ProgressionValue.class;
     case COLUMN_COMMENTS_TEXT:
       return String.class;
