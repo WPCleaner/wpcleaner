@@ -18,8 +18,9 @@
 
 package org.wikipediacleaner.api.request;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,20 +66,28 @@ public class ApiLinksRequest extends ApiPropertiesRequest {
   /**
    * Load list of links.
    * 
-   * @param page Page for which links are requested.
+   * @param pages List of pages for which links are requested.
    */
-  public void loadLinks(Page page) throws APIException {
-    Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
-    properties.put(
-        PROPERTY_PROP,
-        PROPERTY_PROP_LINKS);
-    properties.put(PROPERTY_LIMIT, LIMIT_MAX);
-    properties.put(PROPERTY_TITLES, page.getTitle());
-    List<Page> list = new ArrayList<Page>();
-    while (result.executeLinks(properties, list)) {
-      //
+  public void loadLinks(Collection<Page> pages) throws APIException {
+    List<Collection<Page>> splitPagesList = splitListPages(pages, MAX_PAGES_PER_QUERY);
+    for (Collection<Page> splitPages : splitPagesList) {
+      Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
+      properties.put(
+          PROPERTY_PROP,
+          PROPERTY_PROP_LINKS);
+      properties.put(PROPERTY_LIMIT, LIMIT_MAX);
+      properties.put(PROPERTY_TITLES, constructListPages(splitPages));
+      Map<String, List<Page>> lists = new HashMap<String, List<Page>>();
+      while (result.executeLinks(properties, lists)) {
+        //
+      }
+      for (Page page : splitPages) {
+        List<Page> list = lists.get(page.getTitle());
+        if (list != null) {
+          Collections.sort(list);
+        }
+        page.setLinks(list);
+      }
     }
-    Collections.sort(list);
-    page.setLinks(list);
   }
 }

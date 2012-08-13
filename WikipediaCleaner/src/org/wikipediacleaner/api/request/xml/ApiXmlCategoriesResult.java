@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.request.xml;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements Ap
    */
   public boolean setDiambiguationStatus(
       Map<String, String> properties,
-      List<Page> pages) throws APIException {
+      Collection<Page> pages) throws APIException {
     try {
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 

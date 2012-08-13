@@ -21,6 +21,7 @@ package org.wikipediacleaner.gui.swing.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import org.wikipediacleaner.api.API;
@@ -87,7 +88,7 @@ public class ReloadLinksAction implements ActionListener {
               "Retrieving possible disambiguations for {0}",
               new Object[] { tmp.getTitle() } ));
         }
-        api.retrieveLinks(wikipedia, tmp);
+        api.retrieveLinks(wikipedia, Collections.singletonList(tmp));
       }
     } catch (APIException ex) {
       //

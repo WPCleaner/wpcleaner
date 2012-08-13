@@ -34,11 +34,11 @@ public interface ApiLinksResult extends ApiPropertiesResult {
    * Execute links request.
    * 
    * @param properties Properties defining request.
-   * @param list List to be filled with links.
+   * @param lists Map of lists to be filled with links.
    * @return True if request should be continued.
    * @throws APIException
    */
   public boolean executeLinks(
       Map<String, String> properties,
-      List<Page> list) throws APIException;
+      Map<String, List<Page>> lists) throws APIException;
 }
