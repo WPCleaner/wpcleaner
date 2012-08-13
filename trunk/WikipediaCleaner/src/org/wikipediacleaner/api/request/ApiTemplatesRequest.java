@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.request;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,7 @@ public class ApiTemplatesRequest extends ApiPropertiesRequest {
    * 
    * @param pages List of pages.
    */
-  public void setDisambiguationStatus(List<Page> pages) throws APIException {
+  public void setDisambiguationStatus(Collection<Page> pages) throws APIException {
 
     // Check for pages outside the main name space
     List<Page> tmpPages = new ArrayList<Page>();
@@ -92,17 +93,17 @@ public class ApiTemplatesRequest extends ApiPropertiesRequest {
     }
 
     // Search disambiguation templates for pages in the main name space
-    List<List<Page>> splitPagesList = splitListPages(pages, MAX_PAGES_PER_QUERY);
-    for (List<Page> splitPages : splitPagesList) {
+    List<Collection<Page>> splitPagesList = splitListPages(pages, MAX_PAGES_PER_QUERY);
+    for (Collection<Page> splitPages : splitPagesList) {
       for (Page page : splitPages) {
         Iterator<Page> itPage = page.getRedirectIteratorWithPage();
         while (itPage.hasNext()) {
           itPage.next().setDisambiguationPage(null);
         }
       }
-      List<List<Page>> splitTemplatesList = splitListPages(
+      List<Collection<Page>> splitTemplatesList = splitListPages(
           getWiki().getDisambiguationTemplates(), MAX_TEMPLATES_PER_QUERY);
-      for (List<Page> templates : splitTemplatesList) {
+      for (Collection<Page> templates : splitTemplatesList) {
         Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
         properties.put(
             PROPERTY_PROP,

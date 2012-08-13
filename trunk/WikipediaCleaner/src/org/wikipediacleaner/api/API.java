@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.api;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -199,13 +200,13 @@ public interface API {
       boolean limit) throws APIException;
 
   /**
-   * Retrieves the links of <code>page</code>.
+   * Retrieve internal links in pages.
    * 
    * @param wikipedia Wikipedia.
-   * @param page The page.
+   * @param pages List of pages.
    * @throws APIException
    */
-  public void retrieveLinks(EnumWikipedia wikipedia, Page page) throws APIException;
+  public void retrieveLinks(EnumWikipedia wikipedia, Collection<Page> pages) throws APIException;
 
   /**
    * Retrieves the links of <code>page</code> and initialize redirect status.

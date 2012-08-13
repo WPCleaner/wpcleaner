@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -1086,19 +1087,19 @@ public class MediaWikiAPI implements API {
   }
 
   /**
-   * Retrieves the links of <code>page</code>.
+   * Retrieves internal links of pages.
    * (<code>action=query</code>, <code>prop=links</code>).
    * 
    * @param wiki Wiki.
-   * @param page The page.
+   * @param pages List of pages.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#links_.2F_pl">API:Properties#links</a>
    */
-  public void retrieveLinks(EnumWikipedia wiki, Page page)
+  public void retrieveLinks(EnumWikipedia wiki, Collection<Page> pages)
       throws APIException {
     ApiLinksResult result = new ApiXmlLinksResult(wiki, httpClient, connection);
     ApiLinksRequest request = new ApiLinksRequest(wiki, result);
-    request.loadLinks(page);
+    request.loadLinks(pages);
   }
 
   /**

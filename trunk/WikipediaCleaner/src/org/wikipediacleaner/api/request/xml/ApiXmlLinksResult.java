@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.api.request.xml;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -56,28 +57,40 @@ public class ApiXmlLinksResult extends ApiXmlPropertiesResult implements ApiLink
    * Execute links request.
    * 
    * @param properties Properties defining request.
-   * @param list List to be filled with links.
+   * @param lists Map of lists to be filled with links.
    * @return True if request should be continued.
    * @throws APIException
    */
   public boolean executeLinks(
       Map<String, String> properties,
-      List<Page> list) throws APIException {
+      Map<String, List<Page>> lists) throws APIException {
     try {
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
       // Retrieve back links
-      XPath xpa = XPath.newInstance("/api/query/pages/page/links/pl");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
+      XPath xpaPages = XPath.newInstance("/api/query/pages/page");
+      List listPages = xpaPages.selectNodes(root);
+      Iterator itPage = listPages.iterator();
       XPath xpaNs = XPath.newInstance("./@ns");
       XPath xpaTitle = XPath.newInstance("./@title");
-      while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
-        Page link = DataManager.getPage(
-            getWiki(), xpaTitle.valueOf(currentNode), null, null);
-        link.setNamespace(xpaNs.valueOf(currentNode));
-        list.add(link);
+      XPath xpaLinks = XPath.newInstance("links/pl");
+      while (itPage.hasNext()) {
+        Element pageNode = (Element) itPage.next();
+        String pageTitle = xpaTitle.valueOf(pageNode);
+        List<Page> links = lists.get(pageTitle);
+        if (links == null) {
+          links = new ArrayList<Page>();
+          lists.put(pageTitle, links);
+        }
+        List listLinks = xpaLinks.selectNodes(pageNode);
+        Iterator itLinks = listLinks.iterator();
+        while (itLinks.hasNext()) {
+          Element linkNode = (Element) itLinks.next();
+          Page link = DataManager.getPage(
+              getWiki(), xpaTitle.valueOf(linkNode), null, null);
+          link.setNamespace(xpaNs.valueOf(linkNode));
+          links.add(link);
+        }
       }
 
       // Retrieve continue

@@ -1651,11 +1651,7 @@ public class MainWindow
           }
         }
         if (whiteListPages.size() > 0) {
-          MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-          for (Page page : whiteListPages.values()) {
-            mw.retrieveAllLinks(getWikipedia(), page, null, null, false);
-          }
-          mw.block(true);
+          api.retrieveLinks(getWikipedia(), whiteListPages.values());
           for (int i = 0; i < CWConfiguration.MAX_ERROR_NUMBER; i++) {
             CWConfigurationError error = cwConfiguration.getErrorConfiguration(i);
             if ((error != null) && (error.getWhiteListPageName() != null)) {

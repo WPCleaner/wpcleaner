@@ -218,12 +218,7 @@ public class TemplateListWindow extends BasicWindow {
         setText(GT._("Retrieving templates"));
         api.retrieveTemplates(getWikipedia(), page1);
         setText(GT._("Retrieving links in templates"));
-        for (Page p : page1.getTemplates()) {
-          if (!shouldContinue()) {
-            return null;
-          }
-          api.retrieveLinks(getWikipedia(), p);
-        }
+        api.retrieveLinks(getWikipedia(), page1.getTemplates());
         setText(GT._("Displaying templates found"));
         for (Page p : page1.getTemplates()) {
           boolean found = false;

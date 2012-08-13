@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.api.request.xml;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -113,7 +114,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
    * @param pages List of pages.
    * @throws JDOMException
    */
-  public void updateRedirect(Element root, List<Page> pages) throws JDOMException {
+  public void updateRedirect(Element root, Collection<Page> pages) throws JDOMException {
 
     // Retrieving redirects
     XPath xpaRedirects = XPath.newInstance("/api/query/redirects/r");

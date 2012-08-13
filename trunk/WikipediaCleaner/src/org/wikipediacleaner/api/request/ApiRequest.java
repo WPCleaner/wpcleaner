@@ -155,14 +155,14 @@ public abstract class ApiRequest {
    * @param maxSize Maximum size for the resulting lists.
    * @return Lists of pages.
    */
-  protected List<List<Page>> splitListPages(List<Page> pages, int maxSize) {
+  protected List<Collection<Page>> splitListPages(Collection<Page> pages, int maxSize) {
     if (pages == null) {
       return null;
     }
     if (pages.size() <= maxSize) {
       return Collections.singletonList(pages);
     }
-    List<List<Page>> result = new ArrayList<List<Page>>();
+    List<Collection<Page>> result = new ArrayList<Collection<Page>>();
     Iterator<Page> itPage = pages.iterator();
     while (itPage.hasNext()) {
       List<Page> splitList = new ArrayList<Page>();

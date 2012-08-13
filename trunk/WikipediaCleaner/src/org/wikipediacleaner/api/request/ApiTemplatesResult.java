@@ -18,7 +18,7 @@
 
 package org.wikipediacleaner.api.request;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
@@ -40,5 +40,5 @@ public interface ApiTemplatesResult extends ApiPropertiesResult {
    */
   public boolean setDiambiguationStatus(
       Map<String, String> properties,
-      List<Page> list) throws APIException;
+      Collection<Page> list) throws APIException;
 }
