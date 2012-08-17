@@ -34,11 +34,13 @@ public interface ApiBacklinksResult extends ApiResult {
    * Execute back links request.
    * 
    * @param properties Properties defining request.
+   * @param page Page.
    * @param list List to be filled with back links.
    * @return True if request should be continued.
    * @throws APIException
    */
   public boolean executeBacklinks(
       Map<String, String> properties,
+      Page page,
       List<Page> list) throws APIException;
 }

@@ -227,18 +227,12 @@ public interface API {
    * 
    * @param wikipedia Wikipedia.
    * @param page The page.
+   * @param redirects True if it should also retrieve links through redirects.
    * @throws APIException
    */
-  public void retrieveBackLinks(EnumWikipedia wikipedia, Page page) throws APIException;
-
-  /**
-   * Retrieves the back links of <code>page</code> and initialize redirect status.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param page The page.
-   * @throws APIException
-   */
-  public void retrieveBackLinksWithRedirects(EnumWikipedia wikipedia, Page page) throws APIException;
+  public void retrieveBackLinks(
+      EnumWikipedia wikipedia, Page page,
+      boolean redirects) throws APIException;
 
   /**
    * Retrieves the pages in which <code>page</code> is embedded.

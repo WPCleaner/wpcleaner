@@ -533,68 +533,6 @@ public class MediaWikiAPI implements API {
   }
 
   /**
-   * Retrieves the back links of <code>page</code> and initialize redirect status.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param page The page.
-   */
-  public void retrieveBackLinksWithRedirects(EnumWikipedia wikipedia, Page page)
-      throws APIException {
-    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
-    properties.put("generator", "backlinks");
-    properties.put("prop", "info");
-    properties.put("gbltitle", page.getTitle());
-    properties.put("gbllimit", "max");
-    List<Page> links = new ArrayList<Page>();
-    boolean blcontinue = false;
-    do {
-      try {
-        XPath xpa = XPath.newInstance("/api/query/pages/page");
-        Element root = getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS);
-        List results = xpa.selectNodes(root);
-        Iterator iter = results.iterator();
-        //links.ensureCapacity(links.size() + results.size());
-        XPath xpaPageId = XPath.newInstance("./@pageid");
-        XPath xpaNs = XPath.newInstance("./@ns");
-        XPath xpaTitle = XPath.newInstance("./@title");
-        //XPath xpaTouched = XPath.newInstance("./@touched");
-        XPath xpaLastRevId = XPath.newInstance("./@lastrevid");
-        //XPath xpaCounter = XPath.newInstance("./@counter");
-        //XPath xpaLength = XPath.newInstance("./@length");
-        while (iter.hasNext()) {
-          Element currentNode = (Element) iter.next();
-          Page link = DataManager.getPage(
-              page.getWikipedia(), xpaTitle.valueOf(currentNode), null, null);
-          link.setNamespace(xpaNs.valueOf(currentNode));
-          link.setPageId(xpaPageId.valueOf(currentNode));
-          link.setRevisionId(xpaLastRevId.valueOf(currentNode));
-          if (currentNode.getAttribute("redirect") != null) {
-            link.addRedirect(page);
-          }
-          links.add(link);
-        }
-        XPath xpaContinue = XPath.newInstance("/api/query-continue/backlinks");
-        XPath xpaBlContinue = XPath.newInstance("./@gblcontinue");
-        results = xpaContinue.selectNodes(root);
-        iter = results.iterator();
-        blcontinue = false;
-        while (iter.hasNext()) {
-          Element currentNode = (Element) iter.next();
-          properties.remove("titles");
-          blcontinue = true;
-          properties.put("gblcontinue", xpaBlContinue.valueOf(currentNode));
-          
-        }
-      } catch (JDOMException e) {
-        log.error("Error backlinks+redirects for page " + page.getTitle(), e);
-        throw new APIException("Error parsing XML result", e);
-      }
-    } while (blcontinue);
-    Collections.sort(links);
-    page.setBackLinks(links);
-  }
-
-  /**
    * Retrieves the templates of <code>page</code>.
    * 
    * @param wikipedia Wikipedia.
@@ -1125,19 +1063,22 @@ public class MediaWikiAPI implements API {
   // ==========================================================================
 
   /**
-   * Retrieves the back links of <code>page</code>.
+   * Retrieves the back links of <code>page</code> and initialize redirect status.
    * (<code>action=query</code>, <code>list=backlinks</code>).
    * 
    * @param wiki Wiki.
    * @param page The page.
+   * @param redirects True if it should also retrieve links through redirects.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Backlinks">API:Backlinks</a>
    */
-  public void retrieveBackLinks(EnumWikipedia wiki, Page page)
+  public void retrieveBackLinks(
+      EnumWikipedia wiki, Page page,
+      boolean redirects)
       throws APIException {
     ApiBacklinksResult result = new ApiXmlBacklinksResult(wiki, httpClient, connection);
     ApiBacklinksRequest request = new ApiBacklinksRequest(wiki, result);
-    request.loadBacklinks(page);
+    request.loadBacklinks(page, redirects);
   }
 
   /**
