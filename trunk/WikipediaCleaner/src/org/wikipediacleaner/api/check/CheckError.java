@@ -136,8 +136,9 @@ public class CheckError {
     // Create error
     CheckError error = new CheckError(wikipedia, errorNumber);
     if (stream != null) {
+      BufferedReader reader = null;
       try {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
         String line = null;
         // TODO: Correctly parse HTML ?
         while (((line = reader.readLine()) != null) && !line.endsWith("<pre>")) {
@@ -154,6 +155,14 @@ public class CheckError {
         //
       } catch (IOException e) {
         //
+      } finally {
+        if (reader != null) {
+          try {
+            reader.close();
+          } catch (IOException e) {
+            //
+          }
+        }
       }
     }
 

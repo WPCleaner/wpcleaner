@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
@@ -93,16 +94,26 @@ public class CheckWikiProjectWorker extends BasicWorker {
             properties.put("offset", Integer.toString(0));
             properties.put("project", code);
             properties.put("view", "bots");
-            InputStream stream = null;
             setText(
                 GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
                 " - " + algorithm.getShortDescriptionReplaced());
-            stream = APIFactory.getToolServer().sendPost(
-                "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, true);
-            CheckError.addCheckError(
-                errors, getWikipedia(),
-                Integer.valueOf(algorithm.getErrorNumberString()), stream);
-            errorLoaded = true;
+            InputStream stream = null;
+            try {
+              stream = APIFactory.getToolServer().sendPost(
+                  "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, true);
+              CheckError.addCheckError(
+                  errors, getWikipedia(),
+                  Integer.valueOf(algorithm.getErrorNumberString()), stream);
+              errorLoaded = true;
+            } finally {
+              if (stream != null) {
+                try {
+                  stream.close();
+                } catch (IOException e) {
+                  //
+                }
+              }
+            }
           }
         } catch (APIException e) {
           exception = e;
