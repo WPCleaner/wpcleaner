@@ -389,28 +389,6 @@ public class MediaWiki extends MediaWikiController {
     for (final Page page : pageList) {
       addTask(new BacklinksWRCallable(wikipedia, this, api, page));
     }
-    while (hasRemainingTask() && !shouldStop()) {
-      Object result = getNextResult();
-      if (result != null) {
-        if (result instanceof Page) {
-          final Page page = (Page) result;
-          List<Page> backlinks = page.getBackLinks();
-          Iterator<Page> iter1 = backlinks.iterator();
-          while (iter1.hasNext()) {
-            final Page p = iter1.next();
-            if (!Page.areSameTitle(page.getTitle(), p.getTitle())) {
-              Iterator<Page> iter = p.getRedirectIteratorWithPage();
-              while (iter.hasNext()) {
-                Page tmp = iter.next();
-                if (Page.areSameTitle(page.getTitle(), tmp.getTitle())) {
-                  addTask(new BacklinksWRCallable(wikipedia, this, api, p));
-                }
-              }
-            }
-          }
-        }
-      }
-    }
     block(block);
   }
 

@@ -56,12 +56,14 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
    * Execute back links request.
    * 
    * @param properties Properties defining request.
+   * @param page Page.
    * @param list List of pages to be filled with the back links.
    * @return True if request should be continued.
    * @throws APIException
    */
   public boolean executeBacklinks(
       Map<String, String> properties,
+      Page page,
       List<Page> list)
           throws APIException {
     try {
@@ -69,18 +71,40 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
 
       // Retrieve back links
       XPath xpa = XPath.newInstance("/api/query/backlinks/bl");
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
+      List listBacklinks = xpa.selectNodes(root);
+      Iterator itBacklink = listBacklinks.iterator();
       XPath xpaPageId = XPath.newInstance("./@pageid");
       XPath xpaNs = XPath.newInstance("./@ns");
       XPath xpaTitle = XPath.newInstance("./@title");
-      while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
+      XPath xpaRedirLinks = XPath.newInstance("redirlinks/bl");
+      while (itBacklink.hasNext()) {
+        Element currentBacklink = (Element) itBacklink.next();
         Page link = DataManager.getPage(
-            getWiki(), xpaTitle.valueOf(currentNode), null, null);
-        link.setNamespace(xpaNs.valueOf(currentNode));
-        link.setPageId(xpaPageId.valueOf(currentNode));
-        list.add(link);
+            getWiki(), xpaTitle.valueOf(currentBacklink), null, null);
+        link.setNamespace(xpaNs.valueOf(currentBacklink));
+        link.setPageId(xpaPageId.valueOf(currentBacklink));
+        if (currentBacklink.getAttribute("redirect") != null) {
+          link.addRedirect(page);
+        }
+        if (!list.contains(link)) {
+          list.add(link);
+        }
+
+        // Links through redirects
+        List listRedirLinks = xpaRedirLinks.selectNodes(currentBacklink);
+        if (listRedirLinks != null) {
+          Iterator itRedirLink = listRedirLinks.iterator();
+          while (itRedirLink.hasNext()) {
+            currentBacklink = (Element) itRedirLink.next();
+            link = DataManager.getPage(
+                getWiki(), xpaTitle.valueOf(currentBacklink), null, null);
+            link.setNamespace(xpaNs.valueOf(currentBacklink));
+            link.setPageId(xpaPageId.valueOf(currentBacklink));
+            if (!list.contains(link)) {
+              list.add(link);
+            }
+          }
+        }
       }
 
       // Retrieve continue

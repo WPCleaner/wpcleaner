@@ -96,16 +96,20 @@ public class ApiBacklinksRequest extends ApiListRequest {
    * Load list of back links.
    * 
    * @param page Page for which back links are requested.
+   * @param redirects True if it should also retrieve links through redirects.
    */
-  public void loadBacklinks(Page page) throws APIException {
+  public void loadBacklinks(Page page, boolean redirects) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
         PROPERTY_LIST,
         PROPERTY_LIST_BACKLINKS);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
+    if (redirects) {
+      properties.put(PROPERTY_REDIRECT, "");
+    }
     properties.put(PROPERTY_TITLE, page.getTitle());
     List<Page> list = new ArrayList<Page>();
-    while (result.executeBacklinks(properties, list)) {
+    while (result.executeBacklinks(properties, page, list)) {
       //
     }
     Collections.sort(list);
