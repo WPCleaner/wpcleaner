@@ -1067,7 +1067,7 @@ public class MenuCreator {
             StringBuilder newText = new StringBuilder();
             newText.append(PageElementInternalLink.createInternalLink(page.getTitle(), text));
             newText.append("{{");
-            newText.append(templatesAfter.get(0));
+            newText.append(template);
             newText.append("}}");
             ActionListener action = new MarkLinkAction(
                 element, newText.toString(), textPane, checkBox);
