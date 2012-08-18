@@ -948,6 +948,44 @@ public class MenuCreator {
   }
 
   /**
+   * Create a replacement text in the form {{template|pageTitle}} or {{template|pageTitle|text}}
+   * 
+   * @param template Template name.
+   * @param pageTitle Page title.
+   * @param text Text
+   * @return
+   */
+  private static String createTextForTemplate(String template, String pageTitle, String text) {
+    StringBuilder newText = new StringBuilder();
+    newText.append("{{");
+    newText.append(template);
+    newText.append("|");
+    newText.append(pageTitle);
+    if ((text != null) && (!text.equals(pageTitle))) {
+      newText.append("|");
+      newText.append(text);
+    }
+    newText.append("}}");
+    return newText.toString();
+  }
+
+  /**
+   * Create a replacement text in the form [[pageTitle]]{{template}} or [[pageTitle|text]]{{template}}
+   * 
+   * @param template Template name.
+   * @param pageTitle Page title.
+   * @param text Text
+   * @return
+   */
+  private static String createTextForTemplateAfterLink(String template, String pageTitle, String text) {
+    StringBuilder newText = new StringBuilder();
+    newText.append(PageElementInternalLink.createInternalLink(pageTitle, text));
+    newText.append("{{");
+    newText.append(template);
+    newText.append("}}");
+    return newText.toString();
+  }
+  /**
    * Add submenus for marking link as normal.
    * 
    * @param wikipedia Wikipedia.
@@ -973,36 +1011,20 @@ public class MenuCreator {
         JMenu submenu = new JMenu(GT._("Mark as normal link"));
         for (String template : templates) {
           JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
-          StringBuilder newText = new StringBuilder();
-          newText.append("{{");
-          newText.append(template);
-          newText.append("|");
-          newText.append(page.getTitle());
-          if (!text.equals(page.getTitle())) {
-            newText.append("|");
-            newText.append(text);
-          }
-          newText.append("}}");
           ActionListener action = new MarkLinkAction(
-              element, newText.toString(), textPane, null);
+              element,
+              createTextForTemplate(template, page.getTitle(), text),
+              textPane, null);
           menuItem.addActionListener(action);
           submenu.add(menuItem);
         }
         popup.add(submenu);
       } else {
         JMenuItem menuItem = new JMenuItem(GT._("Mark as normal link"));
-        StringBuilder newText = new StringBuilder();
-        newText.append("{{");
-        newText.append(templates.get(0));
-        newText.append("|");
-        newText.append(page.getTitle());
-        if (!text.equals(page.getTitle())) {
-          newText.append("|");
-          newText.append(text);
-        }
-        newText.append("}}");
         ActionListener action = new MarkLinkAction(
-            element, newText.toString(), textPane, null);
+            element,
+            createTextForTemplate(templates.get(0), page.getTitle(), text),
+            textPane, null);
         menuItem.addActionListener(action);
         popup.add(menuItem);
       }
@@ -1045,18 +1067,10 @@ public class MenuCreator {
         if (templates != null) {
           for (String template : templates) {
             JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
-            StringBuilder newText = new StringBuilder();
-            newText.append("{{");
-            newText.append(template);
-            newText.append("|");
-            newText.append(page.getTitle());
-            if (!text.equals(page.getTitle())) {
-              newText.append("|");
-              newText.append(text);
-            }
-            newText.append("}}");
             ActionListener action = new MarkLinkAction(
-                element, newText.toString(), textPane, checkBox);
+                element,
+                createTextForTemplate(template, page.getTitle(), text),
+                textPane, checkBox);
             menuItem.addActionListener(action);
             submenu.add(menuItem);
           }
@@ -1070,7 +1084,9 @@ public class MenuCreator {
             newText.append(template);
             newText.append("}}");
             ActionListener action = new MarkLinkAction(
-                element, newText.toString(), textPane, checkBox);
+                element,
+                createTextForTemplateAfterLink(template, page.getTitle(), text),
+                textPane, checkBox);
             menuItem.addActionListener(action);
             submenu.add(menuItem);
           }
@@ -1078,24 +1094,13 @@ public class MenuCreator {
         popup.add(submenu);
       } else {
         JMenuItem menuItem = new JMenuItem(GT._("Mark as needing help"));
-        StringBuilder newText = new StringBuilder();
+        String newText = null;
         if ((templates != null) && (templates.size() > 0)) {
-          newText.append("{{");
-          newText.append(templates.get(0));
-          newText.append("|");
-          newText.append(page.getTitle());
-          if (!text.equals(page.getTitle())) {
-            newText.append("|");
-            newText.append(text);
-          }
-          newText.append("}}");
+          newText = createTextForTemplate(templates.get(0), page.getTitle(), text);
         } else if ((templatesAfter != null) && (templatesAfter.size() > 0)) {
-          newText.append(PageElementInternalLink.createInternalLink(page.getTitle(), text));
-          newText.append("{{");
-          newText.append(templatesAfter.get(0));
-          newText.append("}}");
+          newText = createTextForTemplateAfterLink(templatesAfter.get(0), page.getTitle(), newText);
         }
-        if (newText.length() > 0) {
+        if (newText != null) {
           ActionListener action = new MarkLinkAction(
               element, newText.toString(), textPane, checkBox);
           menuItem.addActionListener(action);
@@ -1131,36 +1136,20 @@ public class MenuCreator {
         JMenu submenu = new JMenu(GT._("Link text"));
         for (String template : templates) {
           JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
-          StringBuilder newText = new StringBuilder();
-          newText.append("{{");
-          newText.append(template);
-          newText.append("|");
-          newText.append(page.getTitle());
-          if (!text.equals(page.getTitle())) {
-            newText.append("|");
-            newText.append(text);
-          }
-          newText.append("}}");
           ActionListener action = new MarkLinkAction(
-              element, newText.toString(), textPane, null);
+              element,
+              createTextForTemplate(template, page.getTitle(), text),
+              textPane, null);
           menuItem.addActionListener(action);
           submenu.add(menuItem);
         }
         popup.add(submenu);
       } else {
         JMenuItem menuItem = new JMenuItem(GT._("Link text"));
-        StringBuilder newText = new StringBuilder();
-        newText.append("{{");
-        newText.append(templates.get(0));
-        newText.append("|");
-        newText.append(page.getTitle());
-        if (!text.equals(page.getTitle())) {
-          newText.append("|");
-          newText.append(text);
-        }
-        newText.append("}}");
         ActionListener action = new MarkLinkAction(
-            element, newText.toString(), textPane, null);
+            element,
+            createTextForTemplate(templates.get(0), page.getTitle(), text),
+            textPane, null);
         menuItem.addActionListener(action);
         popup.add(menuItem);
       }
