@@ -1010,7 +1010,7 @@ public class MenuCreator {
       if (templates.size() > 1) {
         JMenu submenu = new JMenu(GT._("Mark as normal link"));
         for (String template : templates) {
-          JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
+          JMenuItem menuItem = new JMenuItem(GT._("Using {0}", "{{" + template + "}}"));
           ActionListener action = new MarkLinkAction(
               element,
               createTextForTemplate(template, page.getTitle(), text),
@@ -1066,7 +1066,7 @@ public class MenuCreator {
         JMenu submenu = new JMenu(GT._("Mark as needing help"));
         if (templates != null) {
           for (String template : templates) {
-            JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
+            JMenuItem menuItem = new JMenuItem(GT._("Using {0}", "{{" + template + "}}"));
             ActionListener action = new MarkLinkAction(
                 element,
                 createTextForTemplate(template, page.getTitle(), text),
@@ -1077,7 +1077,7 @@ public class MenuCreator {
         }
         if (templatesAfter != null) {
           for (String template : templatesAfter) {
-            JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
+            JMenuItem menuItem = new JMenuItem(GT._("Using {0}", "[[…]]{{" + template + "}}"));
             StringBuilder newText = new StringBuilder();
             newText.append(PageElementInternalLink.createInternalLink(page.getTitle(), text));
             newText.append("{{");
@@ -1135,7 +1135,7 @@ public class MenuCreator {
       if (templates.size() > 1) {
         JMenu submenu = new JMenu(GT._("Link text"));
         for (String template : templates) {
-          JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
+          JMenuItem menuItem = new JMenuItem(GT._("Using {0}", "{{" + template + "}}"));
           ActionListener action = new MarkLinkAction(
               element,
               createTextForTemplate(template, page.getTitle(), text),
