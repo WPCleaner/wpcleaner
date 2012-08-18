@@ -26,6 +26,8 @@ import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
 
+import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
+
 
 /**
  * An action listener for marking a link to a disambiguation page as normal.
@@ -57,8 +59,8 @@ public class MarkLinkAction implements ActionListener {
         (newText != null)) {
 
       // Initialize
-      int startOffset = element.getStartOffset();
-      int endOffset = element.getEndOffset();
+      int startOffset = MWPaneFormatter.getUUIDStartOffset(textPane, element);
+      int endOffset = MWPaneFormatter.getUUIDEndOffet(textPane, element);
 
       // Replace
       try {
