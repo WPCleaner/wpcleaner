@@ -209,6 +209,8 @@ public class WPCConfiguration {
       setCurrentDisambiguationList(value);
     } else if (name.equals("most_dab_links")) {
       setMostDisambiguationLinks(value);
+    } else if (name.equals("dab_after_templates")) {
+      setTemplatesAfterDisambiguationLink(value);
     } else if (name.equals("dab_warning_template")) {
       setDisambiguationWarningTemplate(value);
     } else if (name.equals("dab_warning_template_comment")) {
@@ -1128,6 +1130,11 @@ public class WPCConfiguration {
   private List<String> templatesForDisambiguationLink;
 
   /**
+   * Templates used after a disambiguation link to ask for help.
+   */
+  private List<String> templatesAfterDisambiguationLink;
+
+  /**
    * Templates used for a link where help is required.
    */
   private List<String> templatesForNeedingHelp;
@@ -1147,6 +1154,13 @@ public class WPCConfiguration {
    */
   private void setTemplatesForDisambiguationLink(String value) {
     this.templatesForDisambiguationLink = convertPropertyToStringList(value);
+  }
+
+  /**
+   * @param value Templates used after a disambiguation link to ask for help.
+   */
+  private void setTemplatesAfterDisambiguationLink(String value) {
+    this.templatesAfterDisambiguationLink = convertPropertyToStringList(value);
   }
 
   /**
@@ -1176,6 +1190,16 @@ public class WPCConfiguration {
   public List<String> getTemplatesForDisambiguationLink() {
     if (templatesForDisambiguationLink != null) {
       return new ArrayList<String>(templatesForDisambiguationLink);
+    }
+    return null;
+  }
+
+  /**
+   * @return Templates used after a disambiguation link to ask for help.
+   */
+  public List<String> getTemplatesAfterDisambiguationLink() {
+    if (templatesAfterDisambiguationLink != null) {
+      return new ArrayList<String>(templatesAfterDisambiguationLink);
     }
     return null;
   }

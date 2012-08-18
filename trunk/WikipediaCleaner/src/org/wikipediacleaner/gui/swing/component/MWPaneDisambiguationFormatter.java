@@ -91,7 +91,7 @@ public class MWPaneDisambiguationFormatter extends
       return;
     }
     for (PageElementInternalLink link : pageAnalysis.getInternalLinks()) {
-      formatInternalLink(doc, link);
+      formatInternalLink(doc, link, pageAnalysis);
     }
   }
 
@@ -100,10 +100,12 @@ public class MWPaneDisambiguationFormatter extends
    * 
    * @param doc Document to be formatted.
    * @param internalLink Internal link to be formatted.
+   * @param pageAnalysis Page analysis.
    */
   private void formatInternalLink(
       StyledDocument doc,
-      PageElementInternalLink internalLink) {
+      PageElementInternalLink internalLink,
+      PageAnalysis pageAnalysis) {
 
     // Basic verifications
     if ((doc == null) || (internalLink == null)) {
@@ -118,13 +120,38 @@ public class MWPaneDisambiguationFormatter extends
 
     // Format the link
     boolean disambiguation = Boolean.TRUE.equals(link.isDisambiguationPage());
-    ConfigurationValueStyle styleType = disambiguation ?
-        ConfigurationValueStyle.INTERNAL_LINK_DAB :
-        link.isRedirect() ?
-            ConfigurationValueStyle.INTERNAL_LINK_REDIRECT :
-            link.isExisting() ?
-                ConfigurationValueStyle.INTERNAL_LINK_NORMAL :
-                ConfigurationValueStyle.INTERNAL_LINK_MISSING;
+    int start = internalLink.getBeginIndex();
+    int end = internalLink.getEndIndex();
+    ConfigurationValueStyle styleType = null;
+    if (disambiguation) {
+      styleType = ConfigurationValueStyle.INTERNAL_LINK_DAB;
+      List<String> templatesAfter = wikipedia.getConfiguration().getTemplatesAfterDisambiguationLink();
+      if ((templatesAfter != null) && (templatesAfter.size() > 0)) {
+        String contents = pageAnalysis.getContents();
+        int maxSize = contents.length();
+        int currentPos = end;
+        while ((currentPos < maxSize) && (contents.charAt(currentPos) == ' ')) {
+          currentPos++;
+        }
+        if ((currentPos < maxSize) && (contents.charAt(currentPos) == '{')) {
+          PageElementTemplate nextTemplate = pageAnalysis.isInTemplate(currentPos);
+          if (nextTemplate != null) {
+            for (String templateAfter : templatesAfter) {
+              if (Page.areSameTitle(templateAfter, nextTemplate.getTemplateName())) {
+                styleType = ConfigurationValueStyle.HELP_REQUESTED;
+                end = nextTemplate.getEndIndex();
+              }
+            }
+          }
+        }
+      }
+    } else if (link.isRedirect()) {
+      styleType = ConfigurationValueStyle.INTERNAL_LINK_REDIRECT;
+    } else if (Boolean.TRUE.equals(link.isExisting())) {
+      styleType = ConfigurationValueStyle.INTERNAL_LINK_NORMAL;
+    } else {
+      styleType = ConfigurationValueStyle.INTERNAL_LINK_MISSING;
+    }
     Style attr = doc.getStyle(styleType.getName());
     if (attr == null) {
       return;
@@ -133,8 +160,6 @@ public class MWPaneDisambiguationFormatter extends
     attr.addAttribute(ATTRIBUTE_PAGE, link);
     attr.addAttribute(ATTRIBUTE_TEXT, internalLink.getDisplayedText());
     attr.addAttribute(ATTRIBUTE_UUID, UUID.randomUUID());
-    int start = internalLink.getBeginIndex();
-    int end = internalLink.getEndIndex();
     doc.setCharacterAttributes(start, end - start, attr, true);
     if (start < startPosition) {
       startPosition = start;

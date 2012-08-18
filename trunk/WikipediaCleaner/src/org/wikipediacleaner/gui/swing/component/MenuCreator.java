@@ -43,10 +43,12 @@ import javax.swing.text.Element;
 import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageAnalysisUtils;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.TemplateMatcher;
@@ -971,18 +973,36 @@ public class MenuCreator {
         JMenu submenu = new JMenu(GT._("Mark as normal link"));
         for (String template : templates) {
           JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
+          StringBuilder newText = new StringBuilder();
+          newText.append("{{");
+          newText.append(template);
+          newText.append("|");
+          newText.append(page.getTitle());
+          if (!text.equals(page.getTitle())) {
+            newText.append("|");
+            newText.append(text);
+          }
+          newText.append("}}");
           ActionListener action = new MarkLinkAction(
-              page.getTitle(), text, template,
-              element, textPane, null);
+              element, newText.toString(), textPane, null);
           menuItem.addActionListener(action);
           submenu.add(menuItem);
         }
         popup.add(submenu);
       } else {
         JMenuItem menuItem = new JMenuItem(GT._("Mark as normal link"));
+        StringBuilder newText = new StringBuilder();
+        newText.append("{{");
+        newText.append(templates.get(0));
+        newText.append("|");
+        newText.append(page.getTitle());
+        if (!text.equals(page.getTitle())) {
+          newText.append("|");
+          newText.append(text);
+        }
+        newText.append("}}");
         ActionListener action = new MarkLinkAction(
-            page.getTitle(), text, templates.get(0),
-            element, textPane, null);
+            element, newText.toString(), textPane, null);
         menuItem.addActionListener(action);
         popup.add(menuItem);
       }
@@ -1004,32 +1024,83 @@ public class MenuCreator {
       EnumWikipedia wikipedia, JPopupMenu popup, Page page, String text,
       Element element, JTextPane textPane, JCheckBox checkBox) {
     List<String> templates = null;
+    List<String> templatesAfter = null;
+    int templatesCount = 0;
     if (wikipedia != null) {
-      templates = wikipedia.getConfiguration().getTemplatesForNeedingHelp();
+      WPCConfiguration config = wikipedia.getConfiguration();
+      templates = config.getTemplatesForNeedingHelp();
+      if (templates != null) {
+        templatesCount += templates.size();
+      }
+      templatesAfter = config.getTemplatesAfterDisambiguationLink();
+      if (templatesAfter != null) {
+        templatesCount += templatesAfter.size();
+      }
     }
-    if ((text != null) &&
-        (page != null) &&
+    if ((text != null) && (page != null) &&
         Boolean.TRUE.equals(page.isDisambiguationPage()) &&
-        (templates != null) &&
-        (templates.size() > 0)) {
-      if (templates.size() > 1) {
+        (templatesCount > 0)) {
+      if (templatesCount > 1) {
         JMenu submenu = new JMenu(GT._("Mark as needing help"));
-        for (String template : templates) {
-          JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
-          ActionListener action = new MarkLinkAction(
-              page.getTitle(), text, template,
-              element, textPane, checkBox);
-          menuItem.addActionListener(action);
-          submenu.add(menuItem);
+        if (templates != null) {
+          for (String template : templates) {
+            JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
+            StringBuilder newText = new StringBuilder();
+            newText.append("{{");
+            newText.append(template);
+            newText.append("|");
+            newText.append(page.getTitle());
+            if (!text.equals(page.getTitle())) {
+              newText.append("|");
+              newText.append(text);
+            }
+            newText.append("}}");
+            ActionListener action = new MarkLinkAction(
+                element, newText.toString(), textPane, checkBox);
+            menuItem.addActionListener(action);
+            submenu.add(menuItem);
+          }
+        }
+        if (templatesAfter != null) {
+          for (String template : templatesAfter) {
+            JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
+            StringBuilder newText = new StringBuilder();
+            newText.append(PageElementInternalLink.createInternalLink(page.getTitle(), text));
+            newText.append("{{");
+            newText.append(templatesAfter.get(0));
+            newText.append("}}");
+            ActionListener action = new MarkLinkAction(
+                element, newText.toString(), textPane, checkBox);
+            menuItem.addActionListener(action);
+            submenu.add(menuItem);
+          }
         }
         popup.add(submenu);
       } else {
         JMenuItem menuItem = new JMenuItem(GT._("Mark as needing help"));
-        ActionListener action = new MarkLinkAction(
-            page.getTitle(), text, templates.get(0),
-            element, textPane, checkBox);
-        menuItem.addActionListener(action);
-        popup.add(menuItem);
+        StringBuilder newText = new StringBuilder();
+        if ((templates != null) && (templates.size() > 0)) {
+          newText.append("{{");
+          newText.append(templates.get(0));
+          newText.append("|");
+          newText.append(page.getTitle());
+          if (!text.equals(page.getTitle())) {
+            newText.append("|");
+            newText.append(text);
+          }
+          newText.append("}}");
+        } else if ((templatesAfter != null) && (templatesAfter.size() > 0)) {
+          newText.append(PageElementInternalLink.createInternalLink(page.getTitle(), text));
+          newText.append("{{");
+          newText.append(templatesAfter.get(0));
+          newText.append("}}");
+        }
+        if (newText.length() > 0) {
+          ActionListener action = new MarkLinkAction(
+              element, newText.toString(), textPane, checkBox);
+          menuItem.addActionListener(action);
+          popup.add(menuItem);
+        }
       }
     }
   }
@@ -1060,18 +1131,36 @@ public class MenuCreator {
         JMenu submenu = new JMenu(GT._("Link text"));
         for (String template : templates) {
           JMenuItem menuItem = new JMenuItem(GT._("Using '{{'{0}'}}'", template));
+          StringBuilder newText = new StringBuilder();
+          newText.append("{{");
+          newText.append(template);
+          newText.append("|");
+          newText.append(page.getTitle());
+          if (!text.equals(page.getTitle())) {
+            newText.append("|");
+            newText.append(text);
+          }
+          newText.append("}}");
           ActionListener action = new MarkLinkAction(
-              page.getTitle(), text, template,
-              element, textPane, null);
+              element, newText.toString(), textPane, null);
           menuItem.addActionListener(action);
           submenu.add(menuItem);
         }
         popup.add(submenu);
       } else {
         JMenuItem menuItem = new JMenuItem(GT._("Link text"));
+        StringBuilder newText = new StringBuilder();
+        newText.append("{{");
+        newText.append(templates.get(0));
+        newText.append("|");
+        newText.append(page.getTitle());
+        if (!text.equals(page.getTitle())) {
+          newText.append("|");
+          newText.append(text);
+        }
+        newText.append("}}");
         ActionListener action = new MarkLinkAction(
-            page.getTitle(), text, templates.get(0),
-            element, textPane, null);
+            element, newText.toString(), textPane, null);
         menuItem.addActionListener(action);
         popup.add(menuItem);
       }
