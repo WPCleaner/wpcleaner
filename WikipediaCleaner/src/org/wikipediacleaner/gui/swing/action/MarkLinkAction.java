@@ -32,23 +32,17 @@ import javax.swing.text.Element;
  */
 public class MarkLinkAction implements ActionListener {
 
-  private final String oldTitle;
-  private final String text;
-  private final String template;
   private final Element element;
+  private final String newText;
   private final JTextPane textPane;
   private final JCheckBox checkBox;
 
   public MarkLinkAction(
-      String oldTitle,
-      String text,
-      String template,
       Element element,
+      String newText,
       JTextPane textPane,
       JCheckBox checkBox) {
-    this.oldTitle = oldTitle;
-    this.text = text;
-    this.template = template;
+    this.newText = newText;
     this.element = element;
     this.textPane = textPane;
     this.checkBox = checkBox;
@@ -60,17 +54,11 @@ public class MarkLinkAction implements ActionListener {
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     if ((element != null) &&
         (textPane != null) &&
-        (oldTitle != null) &&
-        (oldTitle.length() > 0)) {
+        (newText != null)) {
 
       // Initialize
       int startOffset = element.getStartOffset();
       int endOffset = element.getEndOffset();
-      String newText = "{{" + template + "|" + oldTitle;
-      if ((text != null) && (text.length() > 0) && (!text.equals(oldTitle))) {
-        newText += "|" + text;
-      }
-      newText += "}}";
 
       // Replace
       try {
