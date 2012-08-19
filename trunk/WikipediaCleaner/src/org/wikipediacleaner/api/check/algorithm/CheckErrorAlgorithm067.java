@@ -130,6 +130,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           tmpIndex--;
         }
         tmpIndex++;
+        beginIndex = tmpIndex;
         String allPunctuations = contents.substring(tmpIndex, lastPunctuationIndex + 1);
 
         // Construct list of tags
