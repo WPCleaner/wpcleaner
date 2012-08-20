@@ -430,6 +430,7 @@ public class UpdateDabWarningTools {
       while ((index < contents.length()) && (contents.charAt(index) != '\n')) {
         index++;
       }
+      index++;
       if (index < contents.length()) {
         tmp.append(contents.substring(index));
       }
