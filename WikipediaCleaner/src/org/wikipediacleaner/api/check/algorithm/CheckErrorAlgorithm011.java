@@ -48,6 +48,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
     { "&acirc;" , "â" },
     { "&agrave;", "à" },
     { "&atilde;", "ã" },
+    { "&auml;"  , "ä" },
 
     { "&bull;"   , "•" },
 
@@ -69,6 +70,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
 
     { "&iacute;", "í" },
     { "&infin;" , "∞" },
+    { "&iquest;", "¿" },
     { "&isin;"  , "∈" },
 
     { "&lambda;", "λ" },
@@ -84,6 +86,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
     { "&nu;"    , "ν" },
 
     { "&Omega;" , "Ω" },
+    { "&oacute;", "ó" },
     { "&omega;" , "ω" },
     { "&ouml;"  , "ö" },
 
