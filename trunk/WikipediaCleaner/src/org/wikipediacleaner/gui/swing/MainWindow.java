@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,6 +63,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWiki;
+import org.wikipediacleaner.api.ResponseManager;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfiguration;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
@@ -1606,20 +1606,23 @@ public class MainWindow
         getConfiguration().initSuggestions(api, reloadOnly);
 
         // Retrieving general Check Wiki configuration
-        CWConfiguration cwConfiguration = getWikipedia().getCWConfiguration();
+        final CWConfiguration cwConfiguration = getWikipedia().getCWConfiguration();
         String code = getWikipedia().getSettings().getCodeCheckWiki().replace("-", "_");
         try {
           setText(GT._("Retrieving Check Wiki configuration"));
-          InputStream stream = APIFactory.getToolServer().sendGet(
+          ResponseManager manager = new ResponseManager() {
+            
+            public void manageResponse(InputStream stream) throws IOException, APIException {
+              if (stream != null) {
+                cwConfiguration.setGeneralConfiguration(
+                    new InputStreamReader(stream, "UTF-8"));
+              }
+            }
+          };
+          APIFactory.getToolServer().sendGet(
               "~sk/checkwiki/" + code + "/" + code + "_translation.txt",
-              true);
-          if (stream != null) {
-            cwConfiguration.setGeneralConfiguration(
-                new InputStreamReader(stream, "UTF-8"));
-          }
+              manager);
         } catch (APIException e) {
-          System.err.println("Error retrieving Check Wiki configuration: " + e.getMessage());
-        } catch (UnsupportedEncodingException e) {
           System.err.println("Error retrieving Check Wiki configuration: " + e.getMessage());
         }
 

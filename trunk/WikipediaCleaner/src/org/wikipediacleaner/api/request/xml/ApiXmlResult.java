@@ -107,14 +107,45 @@ public abstract class ApiXmlResult extends BasicApiResult {
       Map<String, String> properties,
       int maxTry)
           throws JDOMParseException, APIException {
-    Element root = null;
-    HttpMethod method = null;
     int attempt = 0;
     for (;;) {
+      Element root = null;
+      HttpMethod method = null;
+      InputStream stream = null;
       try {
+        // Executing HTTP method
         attempt++;
         method = createHttpMethod(properties);
         int statusCode = getHttpClient().executeMethod(method);
+
+        // Accessing response
+        stream = method.getResponseBodyAsStream();
+        stream = new BufferedInputStream(stream);
+        Header contentEncoding = method.getResponseHeader("Content-Encoding");
+        if (contentEncoding != null) {
+          if (contentEncoding.getValue().equals("gzip")) {
+            stream = new GZIPInputStream(stream);
+          }
+        }
+
+        // Read the response
+        if (statusCode == HttpStatus.SC_OK){
+          SAXBuilder sxb = new SAXBuilder();
+          Document document = sxb.build(stream);
+          traceDocument(document);
+          root = document.getRootElement();
+          checkForError(root);
+        } else {
+          try {
+            while (stream.read() >= 0) {
+              //
+            }
+          } catch (IOException e) {
+            //
+          }
+        }
+
+        // Act depending on the status
         if (statusCode != HttpStatus.SC_OK) {
           String message = "URL access returned " + HttpStatus.getStatusText(statusCode);
           log.error(message);
@@ -128,33 +159,7 @@ public abstract class ApiXmlResult extends BasicApiResult {
             // Nothing
           }
         } else {
-          InputStream stream = method.getResponseBodyAsStream();
-          stream = new BufferedInputStream(stream);
-          Header contentEncoding = method.getResponseHeader("Content-Encoding");
-          if (contentEncoding != null) {
-            if (contentEncoding.getValue().equals("gzip")) {
-              stream = new GZIPInputStream(stream);
-            }
-          }
-          SAXBuilder sxb = new SAXBuilder();
-          Document document = sxb.build(stream);
-          traceDocument(document);
-          root = document.getRootElement();
-          checkForError(root);
           return root;
-        }
-      } catch (JDOMParseException e) {
-        // NOTE: to deal with api.php login action being disabled.
-        String message = "JDOMParseException: " + e.getMessage();
-        log.error(message);
-        if (attempt > maxTry) {
-          log.warn("Error. Maximum attempts count reached.");
-          throw e;
-        }
-        try {
-          Thread.sleep(30000);
-        } catch (InterruptedException e2) {
-          // Nothing
         }
       } catch (JDOMException e) {
         String message = "JDOMException: " + e.getMessage();
@@ -186,6 +191,13 @@ public abstract class ApiXmlResult extends BasicApiResult {
         }
         e.waitForRetry();
       } finally {
+        if (stream != null) {
+          try {
+            stream.close();
+          } catch (IOException e) {
+            log.warn("Error closing stream");
+          }
+        }
         if (method != null) {
           method.releaseConnection();
         }
