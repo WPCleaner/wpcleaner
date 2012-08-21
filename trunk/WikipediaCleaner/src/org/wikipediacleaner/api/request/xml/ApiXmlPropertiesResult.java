@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.request.xml;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -108,6 +109,52 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
   }
 
   /**
+   * Retrieve information about page title normalization.
+   * 
+   * @param root Root element.
+   * @return Map containing information about title normalization (From => To).
+   * @throws JDOMException
+   */
+  public Map<String, String> retrieveNormalization(Element root) throws JDOMException {
+    XPath xpaNormalized = XPath.newInstance("/api/query/normalized/n");
+    List listNormalized = xpaNormalized.selectNodes(root);
+    if ((listNormalized == null) || (listNormalized.isEmpty())) {
+      return null;
+    }
+    Map<String, String> result = new HashMap<String, String>();
+    Iterator itNormalized = listNormalized.iterator();
+    XPath xpaFrom = XPath.newInstance("./@from");
+    XPath xpaTo = XPath.newInstance("./@to");
+    while (itNormalized.hasNext()) {
+      Element normalized = (Element) itNormalized.next();
+      String from = xpaFrom.valueOf(normalized);
+      String to = xpaTo.valueOf(normalized);
+      if ((from != null) && (to != null)) {
+        result.put(from, to);
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Retrieve the normalized title of a page.
+   * 
+   * @param title Title.
+   * @param normalization Normalization information.
+   * @return Normalized title.
+   */
+  public String getNormalizedTitle(String title, Map<String, String> normalization) {
+    if ((title == null) || (normalization == null)) {
+      return title;
+    }
+    String tmp = normalization.get(title);
+    if (tmp != null) {
+      return tmp;
+    }
+    return title;
+  }
+
+  /**
    * Update redirect and missing information of a list of pages.
    * 
    * @param root Root element.
@@ -129,6 +176,9 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
     XPath xpaNamespace = XPath.newInstance("./@ns");
     XPath xpaTitle = XPath.newInstance("./@title");
 
+    // Retrieving normalization information
+    Map<String, String> normalization = retrieveNormalization(root);
+
     // Analyzing redirects
     Iterator itRedirect = listRedirects.iterator();
     while (itRedirect.hasNext()) {
@@ -142,7 +192,8 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
         Iterator<Page> itPage = p.getRedirectIteratorWithPage();
         while (itPage.hasNext()) {
           Page tmp = itPage.next();
-          if ((tmp.getTitle() != null) && (tmp.getTitle().equals(toPage))) {
+          String title = getNormalizedTitle(tmp.getTitle(), normalization);
+          if (Page.areSameTitle(title, toPage)) {
             exists = true;
           }
         }
@@ -151,9 +202,8 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
         itPage = p.getRedirectIteratorWithPage();
         while (itPage.hasNext()) {
           Page tmp = itPage.next();
-          if (!exists &&
-              (tmp.getTitle() != null) &&
-              (tmp.getTitle().equals(fromPage))) {
+          String title = getNormalizedTitle(tmp.getTitle(), normalization);
+          if (!exists && Page.areSameTitle(title, fromPage)) {
             XPath xpaPage = createXPath("page", "title", toPage);
             List listTo = xpaPage.selectNodes(listPages);
             if (!listTo.isEmpty()) {
@@ -174,7 +224,8 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
       Iterator<Page> itPage = p.getRedirectIteratorWithPage();
       while (itPage.hasNext()) {
         Page tmp = itPage.next();
-        XPath xpaPage = createXPath("page", "title", tmp.getTitle());
+        String title = getNormalizedTitle(tmp.getTitle(), normalization);
+        XPath xpaPage = createXPath("page", "title", title);
         Element page = (Element) xpaPage.selectSingleNode(listPages);
         if (page != null) {
           List pageId = xpaPageId.selectNodes(page);
