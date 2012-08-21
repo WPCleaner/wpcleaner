@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.ResponseManager;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorComparator;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -41,7 +42,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckWikiProjectWorker extends BasicWorker {
 
-  private final List<CheckError> errors;
+  final List<CheckError> errors;
   private final List<CheckErrorAlgorithm> selectedAlgorithms;
   private final int errorLimit;
 
@@ -81,7 +82,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
     APIException exception = null;
     String code = getWikipedia().getSettings().getCodeCheckWiki().replace("-", "_");
     if (selectedAlgorithms != null) {
-      for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
+      for (final CheckErrorAlgorithm algorithm : selectedAlgorithms) {
         try {
           
           if ((algorithm != null) &&
@@ -97,23 +98,18 @@ public class CheckWikiProjectWorker extends BasicWorker {
             setText(
                 GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
                 " - " + algorithm.getShortDescriptionReplaced());
-            InputStream stream = null;
-            try {
-              stream = APIFactory.getToolServer().sendPost(
-                  "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, true);
-              CheckError.addCheckError(
-                  errors, getWikipedia(),
-                  Integer.valueOf(algorithm.getErrorNumberString()), stream);
-              errorLoaded = true;
-            } finally {
-              if (stream != null) {
-                try {
-                  stream.close();
-                } catch (IOException e) {
-                  //
-                }
+            ResponseManager manager = new ResponseManager() {
+              
+              public void manageResponse(InputStream stream)
+                  throws IOException, APIException {
+                CheckError.addCheckError(
+                    errors, getWikipedia(),
+                    Integer.valueOf(algorithm.getErrorNumberString()), stream);
               }
-            }
+            };
+            APIFactory.getToolServer().sendPost(
+                "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, manager);
+            errorLoaded = true;
           }
         } catch (APIException e) {
           exception = e;

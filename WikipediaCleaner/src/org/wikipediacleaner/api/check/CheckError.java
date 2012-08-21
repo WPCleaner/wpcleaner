@@ -285,7 +285,7 @@ public class CheckError {
       properties.put("project", page.getWikipedia().getSettings().getCodeCheckWiki());
       properties.put("view", "only");
       APIFactory.getToolServer().sendPost(
-          "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, false);
+          "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, null);
     } catch (NumberFormatException e) {
       return false;
     } catch (APIException e) {

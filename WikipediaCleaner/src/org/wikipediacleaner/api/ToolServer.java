@@ -29,12 +29,16 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 /**
  * Manage interactions with the tool server.
  */
 public class ToolServer {
+
+  private final Log log = LogFactory.getLog(ToolServer.class);
 
   /**
    * HTTP Client.
@@ -55,25 +59,20 @@ public class ToolServer {
    * 
    * @param path Path on the tool server.
    * @param properties Request properties.
-   * @param stream Flag indicating if the stream is needed.
-   * @return Answer.
+   * @param manager Response manager.
    * @throws APIException
    */
-  public InputStream sendPost(
+  public void sendPost(
       String              path,
       Map<String, String> properties,
-      boolean             stream) throws APIException {
+      ResponseManager     manager) throws APIException {
+    HttpMethod method = null;
+    InputStream inputStream = null;
     try {
       String url = "http://toolserver.org/" + path;
-      HttpMethod method = HttpUtils.createHttpMethod(url, properties, false);
+      method = HttpUtils.createHttpMethod(url, properties, false);
       int statusCode = httpClient.executeMethod(method);
-      if (statusCode != HttpStatus.SC_OK) {
-        throw new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
-      }
-      if (!stream) {
-        return null;
-      }
-      InputStream inputStream = method.getResponseBodyAsStream();
+      inputStream = method.getResponseBodyAsStream();
       inputStream = new BufferedInputStream(inputStream);
       Header contentEncoding = method.getResponseHeader("Content-Encoding");
       if (contentEncoding != null) {
@@ -81,11 +80,34 @@ public class ToolServer {
           inputStream = new GZIPInputStream(inputStream);
         }
       }
-      return inputStream;
+      if ((statusCode == HttpStatus.SC_OK) && (manager != null)) {
+        manager.manageResponse(inputStream);
+      }
+      try {
+        while (inputStream.read() >= 0) {
+          //
+        }
+      } catch (IOException e) {
+        //
+      }
+      if (statusCode != HttpStatus.SC_OK) {
+        throw new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
+      }
     } catch (HttpException e) {
       throw new APIException("HttpException: " + e.getMessage());
     } catch (IOException e) {
       throw new APIException("IOException: " + e.getMessage());
+    } finally {
+      if (inputStream != null) {
+        try {
+          inputStream.close();
+        } catch (IOException e) {
+          log.warn("Error closing stream: " + e.getMessage());
+        }
+      }
+      if (method != null) {
+        method.releaseConnection();
+      }
     }
   }
 
@@ -94,26 +116,22 @@ public class ToolServer {
    * 
    * @param path Path on the tool server.
    * @param stream Flag indicating if the stream is needed.
-   * @return Answer.
+   * @param manager Response manager.
    * @throws APIException
    */
-  public InputStream sendGet(
+  public void sendGet(
       String          path,
-      boolean         stream) throws APIException {
+      ResponseManager manager) throws APIException {
+    HttpMethod method = null;
+    InputStream inputStream = null;
     try {
       String url = "http://toolserver.org/" + path;
-      HttpMethod method = HttpUtils.createHttpMethod(url, null, true);
+      method = HttpUtils.createHttpMethod(url, null, true);
       int statusCode = httpClient.executeMethod(method);
       if (statusCode == HttpStatus.SC_NOT_FOUND) {
-        return null;
+        return;
       }
-      if (statusCode != HttpStatus.SC_OK) {
-        throw new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
-      }
-      if (!stream) {
-        return null;
-      }
-      InputStream inputStream = method.getResponseBodyAsStream();
+      inputStream = method.getResponseBodyAsStream();
       inputStream = new BufferedInputStream(inputStream);
       Header contentEncoding = method.getResponseHeader("Content-Encoding");
       if (contentEncoding != null) {
@@ -121,11 +139,34 @@ public class ToolServer {
           inputStream = new GZIPInputStream(inputStream);
         }
       }
-      return inputStream;
+      if ((statusCode == HttpStatus.SC_OK) && (manager != null)) {
+        manager.manageResponse(inputStream);
+      }
+      try {
+        while (inputStream.read() >= 0) {
+          //
+        }
+      } catch (IOException e) {
+        //
+      }
+      if (statusCode != HttpStatus.SC_OK) {
+        throw new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
+      }
     } catch (HttpException e) {
       throw new APIException("HttpException: " + e.getMessage());
     } catch (IOException e) {
       throw new APIException("IOException: " + e.getMessage());
+    } finally {
+      if (inputStream != null) {
+        try {
+          inputStream.close();
+        } catch (IOException e) {
+          log.warn("Error closing stream: " + e.getMessage());
+        }
+      }
+      if (method != null) {
+        method.releaseConnection();
+      }
     }
   }
 }
