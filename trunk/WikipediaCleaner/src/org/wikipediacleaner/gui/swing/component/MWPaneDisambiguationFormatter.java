@@ -125,7 +125,7 @@ public class MWPaneDisambiguationFormatter extends
     ConfigurationValueStyle styleType = null;
     if (disambiguation) {
       styleType = ConfigurationValueStyle.INTERNAL_LINK_DAB;
-      List<String> templatesAfter = wikipedia.getConfiguration().getTemplatesAfterDisambiguationLink();
+      List<String> templatesAfter = wikipedia.getConfiguration().getTemplatesAfterHelpAsked();
       if ((templatesAfter != null) && (templatesAfter.size() > 0)) {
         String contents = pageAnalysis.getContents();
         int maxSize = contents.length();

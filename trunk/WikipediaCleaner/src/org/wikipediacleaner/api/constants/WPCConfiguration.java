@@ -24,6 +24,7 @@ import java.io.Reader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -209,8 +210,10 @@ public class WPCConfiguration {
       setCurrentDisambiguationList(value);
     } else if (name.equals("most_dab_links")) {
       setMostDisambiguationLinks(value);
-    } else if (name.equals("dab_after_templates")) {
-      setTemplatesAfterDisambiguationLink(value);
+    } else if (name.equals("dab_ask_help_templates_after")) {
+      setTemplatesAfterAskHelp(value);
+    } else if (name.equals("dab_help_asked_templates_after")) {
+      setTemplatesAfterHelpAsked(value);
     } else if (name.equals("dab_warning_template")) {
       setDisambiguationWarningTemplate(value);
     } else if (name.equals("dab_warning_template_comment")) {
@@ -1130,9 +1133,14 @@ public class WPCConfiguration {
   private List<String> templatesForDisambiguationLink;
 
   /**
-   * Templates used after a disambiguation link to ask for help.
+   * Templates to be used after a disambiguation link to ask for help.
    */
-  private List<String> templatesAfterDisambiguationLink;
+  private List<List<String>> templatesAfterAskHelp;
+
+  /**
+   * Templates used after a disambiguation link asking for help.
+   */
+  private List<String> templatesAfterHelpAsked;
 
   /**
    * Templates used for a link where help is required.
@@ -1157,10 +1165,34 @@ public class WPCConfiguration {
   }
 
   /**
-   * @param value Templates used after a disambiguation link to ask for help.
+   * @param value Templates to be used after a disambiguation link to ask for help.
    */
-  private void setTemplatesAfterDisambiguationLink(String value) {
-    this.templatesAfterDisambiguationLink = convertPropertyToStringList(value);
+  private void setTemplatesAfterAskHelp(String value) {
+    List<String> tmp = convertPropertyToStringList(value);
+    if (tmp != null) {
+      List<List<String>> result = new ArrayList<List<String>>(tmp.size());
+      for (String element : tmp) {
+        int pipeIndex = element.indexOf("|");
+        if (pipeIndex < 0) {
+          result.add(Collections.singletonList(element));
+        } else {
+          List<String> tmpElement = new ArrayList<String>(2);
+          tmpElement.add(element.substring(0, pipeIndex));
+          tmpElement.add(element.substring(pipeIndex + 1));
+          result.add(tmpElement);
+        }
+      }
+      this.templatesAfterAskHelp = result;
+    } else {
+      this.templatesAfterAskHelp = null;
+    }
+  }
+
+  /**
+   * @param value Templates used after a disambiguation link asking for help.
+   */
+  private void setTemplatesAfterHelpAsked(String value) {
+    this.templatesAfterHelpAsked = convertPropertyToStringList(value);
   }
 
   /**
@@ -1195,13 +1227,17 @@ public class WPCConfiguration {
   }
 
   /**
-   * @return Templates used after a disambiguation link to ask for help.
+   * @return Templates to be used after a disambiguation link to ask for help.
    */
-  public List<String> getTemplatesAfterDisambiguationLink() {
-    if (templatesAfterDisambiguationLink != null) {
-      return new ArrayList<String>(templatesAfterDisambiguationLink);
-    }
-    return null;
+  public List<List<String>> getTemplatesAfterAskHelp() {
+    return templatesAfterAskHelp;
+  }
+
+  /**
+   * @return Templates used after a disambiguation link asking for help.
+   */
+  public List<String> getTemplatesAfterHelpAsked() {
+    return templatesAfterHelpAsked;
   }
 
   /**
