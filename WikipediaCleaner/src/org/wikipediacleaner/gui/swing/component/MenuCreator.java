@@ -972,16 +972,20 @@ public class MenuCreator {
   /**
    * Create a replacement text in the form [[pageTitle]]{{template}} or [[pageTitle|text]]{{template}}
    * 
-   * @param template Template name.
+   * @param template Template name and optional arguments.
    * @param pageTitle Page title.
    * @param text Text
    * @return
    */
-  private static String createTextForTemplateAfterLink(String template, String pageTitle, String text) {
+  private static String createTextForTemplateAfterLink(List<String> template, String pageTitle, String text) {
     StringBuilder newText = new StringBuilder();
     newText.append(PageElementInternalLink.createInternalLink(pageTitle, text));
     newText.append("{{");
-    newText.append(template);
+    newText.append(template.get(0));
+    for (int i = 1; i < template.size(); i++) {
+      newText.append("|");
+      newText.append(template.get(i));
+    }
     newText.append("}}");
     return newText.toString();
   }
@@ -1046,7 +1050,7 @@ public class MenuCreator {
       EnumWikipedia wikipedia, JPopupMenu popup, Page page, String text,
       Element element, JTextPane textPane, JCheckBox checkBox) {
     List<String> templates = null;
-    List<String> templatesAfter = null;
+    List<List<String>> templatesAfter = null;
     int templatesCount = 0;
     if (wikipedia != null) {
       WPCConfiguration config = wikipedia.getConfiguration();
@@ -1054,7 +1058,7 @@ public class MenuCreator {
       if (templates != null) {
         templatesCount += templates.size();
       }
-      templatesAfter = config.getTemplatesAfterDisambiguationLink();
+      templatesAfter = config.getTemplatesAfterAskHelp();
       if (templatesAfter != null) {
         templatesCount += templatesAfter.size();
       }
@@ -1076,13 +1080,9 @@ public class MenuCreator {
           }
         }
         if (templatesAfter != null) {
-          for (String template : templatesAfter) {
-            JMenuItem menuItem = new JMenuItem(GT._("Using {0}", "[[…]]{{" + template + "}}"));
-            StringBuilder newText = new StringBuilder();
-            newText.append(PageElementInternalLink.createInternalLink(page.getTitle(), text));
-            newText.append("{{");
-            newText.append(template);
-            newText.append("}}");
+          for (List<String> template : templatesAfter) {
+            String templateName = template.get(0);
+            JMenuItem menuItem = new JMenuItem(GT._("Using {0}", "[[…]]{{" + templateName + "}}"));
             ActionListener action = new MarkLinkAction(
                 element,
                 createTextForTemplateAfterLink(template, page.getTitle(), text),
