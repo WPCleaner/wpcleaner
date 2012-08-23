@@ -19,6 +19,7 @@
 package org.wikipediacleaner.gui.swing.worker;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
@@ -107,7 +108,7 @@ public class SendWorker extends BasicWorker {
               "'" + e.getErrorCode() + "'"));
           try {
             Page tmpPage = page.replicatePage();
-            api.retrieveContents(getWikipedia(), tmpPage, false);
+            api.retrieveContents(getWikipedia(), Collections.singletonList(tmpPage), false);
             page.setEditToken(tmpPage.getEditToken());
           } catch (APIException e2) {
             return e;

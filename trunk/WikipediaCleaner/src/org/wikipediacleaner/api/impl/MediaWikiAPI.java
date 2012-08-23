@@ -182,21 +182,33 @@ public class MediaWikiAPI implements API {
 
     // Retrieve configuration
     if (wiki.getConfigurationPage() != null) {
+
+      // Decide which pages to be retrieved
       String configPageName = wiki.getConfigurationPage();
       Page page = DataManager.getPage(
           wiki, configPageName, null, null);
-      retrieveContents(wiki, page, false);
-      wiki.getConfiguration().setGeneralConfiguration(
-          new StringReader(page.getContents()));
-
+      Page userConfigPage = null;
       if ((userName != null) && (userName.trim().length() > 0) &&
           (wiki.getUserConfigurationPage(userName) != null) &&
           (!Page.areSameTitle(wiki.getUserConfigurationPage(userName), configPageName))) {
-        Page userConfigPage = DataManager.getPage(
+        userConfigPage = DataManager.getPage(
             wiki,
             wiki.getUserConfigurationPage(userName),
             null, null);
-        retrieveContents(wiki, userConfigPage, false);
+      }
+
+      // Retrieve contents
+      List<Page> pages = new ArrayList<Page>();
+      pages.add(page);
+      if (userConfigPage != null) {
+        pages.add(userConfigPage);
+      }
+      retrieveContents(wiki, pages, false);
+
+      // Set configuration
+      wiki.getConfiguration().setGeneralConfiguration(
+          new StringReader(page.getContents()));
+      if (userConfigPage != null) {
         if (Boolean.TRUE.equals(userConfigPage.isExisting())) {
           wiki.getConfiguration().setUserConfiguration(
               new StringReader(userConfigPage.getContents()));
@@ -973,16 +985,18 @@ public class MediaWikiAPI implements API {
    * (<code>action=query</code>, <code>prop=revisions</code>).
    * 
    * @param wiki Wiki.
-   * @param page The page.
+   * @param pages The pages.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#revisions_.2F_rv">API:Properties#revisions</a>
    */
-  public void retrieveContents(EnumWikipedia wiki, Page page, boolean withRedirects)
+  public void retrieveContents(
+      EnumWikipedia wiki,
+      Collection<Page> pages, boolean withRedirects)
       throws APIException {
     ApiRevisionsResult result = new ApiXmlRevisionsResult(wiki, httpClient, connection);
     ApiRevisionsRequest request = new ApiRevisionsRequest(wiki, result);
-    request.loadContent(page, withRedirects);
+    request.loadContent(pages, withRedirects);
   }
 
   /**

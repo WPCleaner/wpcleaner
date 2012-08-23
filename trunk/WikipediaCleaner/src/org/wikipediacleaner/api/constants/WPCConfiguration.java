@@ -35,6 +35,8 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
 import org.wikipediacleaner.api.data.TemplateMatch;
@@ -167,6 +169,8 @@ public class WPCConfiguration {
       setDisambiguationWarningCommentDone(value);
     } else if (name.equals("general_suggestions")) {
       setSuggestionPages(value, general);
+    } else if (name.equals("general_suggestions_typo")) {
+      setSuggestionTypoPages(value, general);
     } else if (!general) {
       return;
     }
@@ -506,6 +510,11 @@ public class WPCConfiguration {
   private List<String> suggestionPages;
 
   /**
+   * Pages containing spelling suggestions in AWB format.
+   */
+  private List<String> suggestionTypoPages;
+
+  /**
    * Spelling suggestions.
    */
   private Map<String, Suggestion> suggestions;
@@ -523,6 +532,18 @@ public class WPCConfiguration {
   }
 
   /**
+   * @param value Pages containing spelling suggestions in AWB format.
+   * @param general Flag indicating if dealing with general or user properties.
+   */
+  private void setSuggestionTypoPages(String value, boolean general) {
+    if (general || (suggestionTypoPages == null)) {
+      suggestionTypoPages = convertPropertyToStringList(value);
+    } else {
+      suggestionTypoPages.addAll(convertPropertyToStringList(value));
+    }
+  }
+
+  /**
    * Initialize suggestions for text replacements.
    * 
    * @param api
@@ -530,47 +551,128 @@ public class WPCConfiguration {
   public void initSuggestions(API api, boolean forceInit) {
     if ((suggestions == null) || forceInit) {
       synchronized (api) {
+
+        // Load all pages contents
+        Map<String, Page> pages = new HashMap<String, Page>();
+        if (suggestionPages != null) {
+          for (String suggestionPage : suggestionPages) {
+            String[] elements = suggestionPage.split("\\|");
+            if (elements.length >= 4) {
+              String pageName = elements[0];
+              if (!pages.containsKey(pageName)) {
+                pages.put(pageName, DataManager.getPage(wiki, pageName, null, null));
+              }
+            }
+          }
+        }
+        if (suggestionTypoPages != null) {
+          for (String suggestionPage : suggestionTypoPages) {
+            if (!pages.containsKey(suggestionPage)) {
+              pages.put(suggestionPage, DataManager.getPage(wiki, suggestionPage, null, null));
+            }
+          }
+        }
+        try {
+          api.retrieveContents(wiki, pages.values(), false);
+        } catch (APIException e) {
+          System.err.println("Exception retrieving contents for suggestions");
+        }
+
+        // Construct suggestions
         Map<String, Suggestion> tmpMap = new HashMap<String, Suggestion>();
         if (suggestionPages != null) {
           for (String suggestionPage : suggestionPages) {
             String[] elements = suggestionPage.split("\\|");
             if (elements.length >= 4) {
+              String pageName = elements[0];
               String[] elementsReplacement = elements[3].split(",");
-              Page page = DataManager.getPage(wiki, elements[0], null, null);
-              try {
-                api.retrieveContents(wiki, page, false);
+              Page page = pages.get(pageName);
+              if ((page != null) && (page.getContents() != null)) {
                 String contents = page.getContents();
-                if (contents != null) {
-                  PageAnalysis analysis = new PageAnalysis(page, contents);
-                  Collection<PageElementTemplate> templates = analysis.getTemplates(elements[1]);
-                  for (PageElementTemplate template : templates) {
-                    String patternText = template.getParameterValue(elements[2]);
-                    Suggestion suggestion = tmpMap.get(patternText);
-                    if (suggestion == null) {
-                      suggestion = Suggestion.createSuggestion(patternText);
-                      if (suggestion != null) {
-                        tmpMap.put(patternText, suggestion);
-                      }
-                    }
+                PageAnalysis analysis = new PageAnalysis(page, contents);
+                Collection<PageElementTemplate> templates = analysis.getTemplates(elements[1]);
+                for (PageElementTemplate template : templates) {
+                  String patternText = template.getParameterValue(elements[2]);
+                  Suggestion suggestion = tmpMap.get(patternText);
+                  if (suggestion == null) {
+                    suggestion = Suggestion.createSuggestion(patternText);
                     if (suggestion != null) {
-                      if (elements.length > 4) {
-                        suggestion.setComment(template.getParameterValue(elements[4]));
-                      }
-                      for (String elementReplacement : elementsReplacement) {
-                        String replacementText = template.getParameterValue(elementReplacement);
-                        if ((replacementText != null) && (replacementText.length() > 0)) {
-                          suggestion.addReplacement(replacementText);
-                        }
+                      tmpMap.put(patternText, suggestion);
+                    }
+                  }
+                  if (suggestion != null) {
+                    if (elements.length > 4) {
+                      suggestion.setComment(template.getParameterValue(elements[4]));
+                    }
+                    for (String elementReplacement : elementsReplacement) {
+                      String replacementText = template.getParameterValue(elementReplacement);
+                      if ((replacementText != null) &&
+                          (replacementText.length() > 0)) {
+                        suggestion.addReplacement(replacementText);
                       }
                     }
                   }
                 }
-              } catch (APIException e) {
-                // Error retrieving suggestion page.
               }
             }
           }
         }
+
+        // Construct suggestions from AWB format
+        if (suggestionTypoPages != null) {
+          for (String suggestionPage : suggestionTypoPages) {
+            Page page = pages.get(suggestionPage);
+            if ((page != null) && (page.getContents() != null)) {
+              String contents = page.getContents();
+              PageAnalysis analysis = new PageAnalysis(page, contents);
+              Collection<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_OTHER_TYPO);
+              for (PageElementTag tag : tags) {
+                Parameter word = tag.getParameter("word");
+                Parameter find = tag.getParameter("find");
+                Parameter replace = tag.getParameter("replace");
+                if ((word != null) && (find != null) && (replace != null)) {
+                  String wordValue = word.getValue();
+                  String findValue = find.getValue();
+                  String replaceValue = replace.getValue();
+                  if ((wordValue != null) && (findValue != null) && (replaceValue != null)) {
+                    while (findValue.startsWith("\\b")) {
+                      findValue = findValue.substring(2);
+                    }
+                    while (findValue.endsWith("\\b")) {
+                      findValue = findValue.substring(0, findValue.length() - 2);
+                    }
+                    boolean shouldUse = true;
+                    if (findValue.contains("\\b") || findValue.contains("\\B")) {
+                      shouldUse = false;
+                    }
+                    if (findValue.contains("(?<")) {
+                      shouldUse = false;
+                    }
+                    if (findValue.contains("{{") || findValue.contains("}}")) {
+                      shouldUse = false;
+                    }
+                    if (shouldUse) {
+                      Suggestion suggestion = tmpMap.get(findValue);
+                      if (suggestion == null) {
+                        suggestion = Suggestion.createSuggestion(findValue);
+                        if (suggestion != null) {
+                          tmpMap.put(findValue, suggestion);
+                        }
+                      }
+                      if (suggestion != null) {
+                        suggestion.setComment("Typo AWB " + wordValue);
+                        suggestion.addReplacement(replaceValue);
+                      }
+                    } else {
+                      System.err.println("Rejecting " + wordValue + " : " + findValue);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
         suggestions = tmpMap;
       }
     }

@@ -18,7 +18,8 @@
 
 package org.wikipediacleaner.api.request;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -189,10 +190,10 @@ public class ApiRevisionsRequest extends ApiPropertiesRequest {
   /**
    * Load content of a page.
    * 
-   * @param page Page for which content is requested.
+   * @param pages Pages for which content is requested.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
    */
-  public void loadContent(Page page, boolean withRedirects) throws APIException {
+  public void loadContent(Collection<Page> pages, boolean withRedirects) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
         PROPERTY_PROP,
@@ -209,18 +210,25 @@ public class ApiRevisionsRequest extends ApiPropertiesRequest {
           ApiInfoRequest.PROPERTY_TOKEN,
           ApiInfoRequest.PROPERTY_TOKEN_EDIT);
     }
-    properties.put(PROPERTY_TITLES, page.getTitle());
-    List<Page> pages = Collections.singletonList(page);
+    properties.put(PROPERTY_TITLES, constructListPages(pages));
     while (result.executeLastRevision(properties, pages)) {
       //
     }
 
     // TODO: move this to a base class ?
-    if (withRedirects && page.isRedirect()) {
-      properties = getProperties(ACTION_QUERY, result.getFormat());
-      properties.put(PROPERTY_REDIRECTS, "");
-      properties.put(PROPERTY_TITLES, page.getTitle());
-      result.executeRedirect(properties, pages);
+    if (withRedirects) {
+      List<Page> redirectPages = new ArrayList<Page>();
+      for (Page page : pages) {
+        if (page.isRedirect()) {
+          redirectPages.add(page);
+        }
+      }
+      if (!redirectPages.isEmpty()) {
+        properties = getProperties(ACTION_QUERY, result.getFormat());
+        properties.put(PROPERTY_REDIRECTS, "");
+        properties.put(PROPERTY_TITLES, constructListPages(redirectPages));
+        result.executeRedirect(properties, redirectPages);
+      }
     }
   }
 }
