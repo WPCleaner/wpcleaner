@@ -18,7 +18,7 @@
 
 package org.wikipediacleaner.api.request;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
@@ -40,5 +40,5 @@ public interface ApiRevisionsResult extends ApiPropertiesResult {
    */
   public boolean executeLastRevision(
       Map<String, String> properties,
-      List<Page> pages) throws APIException;
+      Collection<Page> pages) throws APIException;
 }

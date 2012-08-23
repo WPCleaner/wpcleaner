@@ -19,6 +19,7 @@
 package org.wikipediacleaner.gui.swing.action;
 
 import java.awt.event.ActionEvent;
+import java.util.Collections;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
@@ -90,7 +91,7 @@ public class CheckCategoryLinkAction extends TextAction {
 
       API api = APIFactory.getAPI();
       Page category = DataManager.getPage(toWikipedia, "Category:" + title, null, null); 
-      api.retrieveContents(toWikipedia, category, false);
+      api.retrieveContents(toWikipedia, Collections.singletonList(category), false);
       if (category.isExisting() == null) {
         Utilities.displayWarning(
             textPane.getParent(),

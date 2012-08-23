@@ -115,7 +115,6 @@ public class ToolServer {
    * Send a GET request to the Tool Server.
    * 
    * @param path Path on the tool server.
-   * @param stream Flag indicating if the stream is needed.
    * @param manager Response manager.
    * @throws APIException
    */

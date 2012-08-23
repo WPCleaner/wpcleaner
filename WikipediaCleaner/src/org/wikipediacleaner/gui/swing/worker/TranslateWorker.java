@@ -320,7 +320,7 @@ public class TranslateWorker extends BasicWorker {
     if (!original.isRedirect()) {
       return link;
     }
-    api.retrieveContents(from, original, true);
+    api.retrieveContents(from, Collections.singletonList(original), true);
     link = api.getLanguageLink(from, getWikipedia(), original.getRedirectTitle());
     if (link == null) {
       return null;

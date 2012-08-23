@@ -249,7 +249,7 @@ public class MediaWiki extends MediaWikiController {
                       "'" + e.getErrorCode() + "'"));
                   attemptDone = false;
                   Page tmpPage = page.replicatePage();
-                  api.retrieveContents(wikipedia, tmpPage, false);
+                  api.retrieveContents(wikipedia, Collections.singletonList(tmpPage), false);
                   page.setEditToken(tmpPage.getEditToken());
                 } else {
                   throw e;

@@ -91,11 +91,13 @@ public interface API {
    * Retrieves the contents of <code>page</code>.
    * 
    * @param wikipedia Wikipedia.
-   * @param page Page.
+   * @param pages Pages.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
    * @throws APIException
    */
-  public void retrieveContents(EnumWikipedia wikipedia, Page page, boolean withRedirects) throws APIException;
+  public void retrieveContents(
+      EnumWikipedia wikipedia,
+      Collection<Page> pages, boolean withRedirects) throws APIException;
 
   /**
    * Retrieves the contents of a section in a <code>page</code>.

@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.execution;
 
+import java.util.Collections;
+
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWikiListener;
@@ -62,11 +64,11 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
   public Page call() throws APIException {
     setText(GT._("Retrieving contents") + " - " + page.getTitle());
     if (section == null) {
-      api.retrieveContents(getWikipedia(), page, withRedirects);
+      api.retrieveContents(getWikipedia(), Collections.singletonList(page), withRedirects);
       if (withRedirects &&
           page.isRedirect() &&
           (page.getRedirects().size() > 0)) {
-        api.retrieveContents(getWikipedia(), page.getRedirects().get(0), false);
+        api.retrieveContents(getWikipedia(), page.getRedirects(), false);
       }
     } else {
       api.retrieveSectionContents(getWikipedia(), page, section.intValue());

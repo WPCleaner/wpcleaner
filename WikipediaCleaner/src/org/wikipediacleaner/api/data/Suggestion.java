@@ -93,7 +93,9 @@ public class Suggestion {
             TAG_NOWIKI_1.length(),
             replacement.length() - TAG_NOWIKI_2.length());
       }
-      replacements.add(replacement);
+      if (!replacements.contains(replacement)) {
+        replacements.add(replacement);
+      }
     }
   }
 

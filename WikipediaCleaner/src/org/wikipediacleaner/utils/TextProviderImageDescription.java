@@ -20,6 +20,7 @@ package org.wikipediacleaner.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
@@ -58,14 +59,16 @@ public class TextProviderImageDescription implements TextProvider {
       try {
         API api = APIFactory.getAPI();
 
-        // Retrieve image description on the wiki
+        // Retrieve image descriptions
         Page imagePage = DataManager.getPage(
             image.getWikipedia(),
             image.getNamespace() + ":" + image.getImage(),
             null, null);
         api.retrieveContents(
             image.getWikipedia(),
-            imagePage, false);
+            Collections.singletonList(imagePage), false);
+
+        // Use image description on the wiki
         if (Boolean.TRUE.equals(imagePage.isExisting())) {
           PageAnalysis pageAnalysis = new PageAnalysis(imagePage, imagePage.getContents());
           for (PageElementTemplate template : pageAnalysis.getTemplates()) {
@@ -85,7 +88,7 @@ public class TextProviderImageDescription implements TextProvider {
             null, null);
         api.retrieveContents(
             EnumWikipedia.COMMONS,
-            commonsPage, false);
+            Collections.singletonList(commonsPage), false);
         if (Boolean.TRUE.equals(commonsPage.isExisting())) {
           PageAnalysis pageAnalysis = new PageAnalysis(commonsPage, commonsPage.getContents());
           for (PageElementTemplate template : pageAnalysis.getTemplates()) {
