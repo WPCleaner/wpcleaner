@@ -114,7 +114,8 @@ public class WPCConfiguration {
         boolean nameOk = true;
         for (int i = 0; i < posEqual; i++) {
           if (!Character.isLetterOrDigit(line.charAt(i)) &&
-              (line.charAt(i) != '_')) {
+              (line.charAt(i) != '_') &&
+              (line.charAt(i) != ' ')) {
             nameOk = false;
           }
         }
