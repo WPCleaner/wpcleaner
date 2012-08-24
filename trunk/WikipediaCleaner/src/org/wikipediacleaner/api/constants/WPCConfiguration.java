@@ -111,7 +111,14 @@ public class WPCConfiguration {
     try {
       while ((line = reader.readLine()) != null) {
         int posEqual = line.indexOf('=');
-        if (posEqual > 0) {
+        boolean nameOk = true;
+        for (int i = 0; i < posEqual; i++) {
+          if (!Character.isLetterOrDigit(line.charAt(i)) &&
+              (line.charAt(i) != '_')) {
+            nameOk = false;
+          }
+        }
+        if ((posEqual > 0) && nameOk) {
           String name = line.substring(0, posEqual);
           line = line.substring(posEqual + 1);
           int posEnd = line.indexOf(" END");
