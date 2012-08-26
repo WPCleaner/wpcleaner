@@ -78,11 +78,16 @@ public class ApiLinksRequest extends ApiPropertiesRequest {
       properties.put(PROPERTY_LIMIT, LIMIT_MAX);
       properties.put(PROPERTY_TITLES, constructListPages(splitPages));
       Map<String, List<Page>> lists = new HashMap<String, List<Page>>();
-      while (result.executeLinks(properties, lists)) {
+      Map<String, String> normalization = new HashMap<String, String>();
+      while (result.executeLinks(properties, lists, normalization)) {
         //
       }
       for (Page page : splitPages) {
-        List<Page> list = lists.get(page.getTitle());
+        String pageTitle = page.getTitle();
+        if (normalization.containsKey(pageTitle)) {
+          pageTitle = normalization.get(pageTitle);
+        }
+        List<Page> list = lists.get(pageTitle);
         if (list != null) {
           Collections.sort(list);
         }

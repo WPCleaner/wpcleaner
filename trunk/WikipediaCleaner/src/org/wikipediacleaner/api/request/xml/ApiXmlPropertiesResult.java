@@ -112,16 +112,17 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
    * Retrieve information about page title normalization.
    * 
    * @param root Root element.
-   * @return Map containing information about title normalization (From => To).
+   * @param normalization Map containing information about title normalization (From => To).
    * @throws JDOMException
    */
-  public Map<String, String> retrieveNormalization(Element root) throws JDOMException {
+  public void retrieveNormalization(
+      Element root,
+      Map<String, String> normalization) throws JDOMException {
     XPath xpaNormalized = XPath.newInstance("/api/query/normalized/n");
     List listNormalized = xpaNormalized.selectNodes(root);
     if ((listNormalized == null) || (listNormalized.isEmpty())) {
-      return null;
+      return;
     }
-    Map<String, String> result = new HashMap<String, String>();
     Iterator itNormalized = listNormalized.iterator();
     XPath xpaFrom = XPath.newInstance("./@from");
     XPath xpaTo = XPath.newInstance("./@to");
@@ -130,10 +131,9 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
       String from = xpaFrom.valueOf(normalized);
       String to = xpaTo.valueOf(normalized);
       if ((from != null) && (to != null)) {
-        result.put(from, to);
+        normalization.put(from, to);
       }
     }
-    return result;
   }
 
   /**
@@ -177,7 +177,8 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
     XPath xpaTitle = XPath.newInstance("./@title");
 
     // Retrieving normalization information
-    Map<String, String> normalization = retrieveNormalization(root);
+    Map<String, String> normalization = new HashMap<String, String>();
+    retrieveNormalization(root, normalization);
 
     // Analyzing redirects
     Iterator itRedirect = listRedirects.iterator();
