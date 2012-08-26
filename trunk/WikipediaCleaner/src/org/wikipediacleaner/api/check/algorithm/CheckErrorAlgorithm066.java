@@ -19,12 +19,12 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageContents;
 import org.wikipediacleaner.api.data.PageElementImage;
-import org.wikipediacleaner.api.data.PageElementTagFull;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -52,42 +52,47 @@ public class CheckErrorAlgorithm066 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyzing the text from the beginning
+    // Analyzing all images
     boolean result = false;
-    for (PageElementImage image : pageAnalysis.getImages()) {
-      if (image != null) {
-        String text = image.getDescription();
-        if (text != null) {
-          PageElementTagFull tag = PageContents.findNextTagFull(
-              pageAnalysis.getPage(), text, "small", 0);
-          if (tag != null) {
-            boolean onlySpaces = true;
-            int tmpIndex = 0;
-            while (tmpIndex < tag.getStartTagBeginIndex()) {
-              if (!Character.isWhitespace(text.charAt(tmpIndex))) {
-                onlySpaces = false;
-              }
-              tmpIndex++;
+    List<PageElementImage> images = pageAnalysis.getImages();
+    for (PageElementImage image : images) {
+      String description = image.getDescription();
+      if (description != null) {
+        description = description.trim();
+        PageAnalysis descAnalysis = new PageAnalysis(pageAnalysis.getPage(), description);
+        List<PageElementTag> smallTags = descAnalysis.getTags(PageElementTag.TAG_HTML_SMALL);
+        if ((smallTags != null) && (!smallTags.isEmpty())) {
+          int lastTest = 0;
+          int currentDepth = 0;
+          boolean onlySmall = true;
+          StringBuilder innerText = new StringBuilder();
+          for (PageElementTag smallTag : smallTags) {
+            if ((currentDepth == 0) && (smallTag.getBeginIndex() > lastTest)) {
+              onlySmall = false;
             }
-            tmpIndex = tag.getEndTagEndIndex();
-            while (tmpIndex < text.length()) {
-              if (!Character.isWhitespace(text.charAt(tmpIndex))) {
-                onlySpaces = false;
-              }
-              tmpIndex++;
+            if (smallTag.getBeginIndex() > lastTest) {
+              innerText.append(description.substring(lastTest, smallTag.getBeginIndex()));
             }
-            if (onlySpaces) {
-              if (errors == null) {
-                return true;
+            lastTest = smallTag.getEndIndex();
+            if (!smallTag.isFullTag()) {
+              if (smallTag.isEndTag()) {
+                currentDepth = Math.max(0, currentDepth - 1);
+              } else {
+                currentDepth++;
               }
-              result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), image.getBeginIndex(), image.getEndIndex());
-              errorResult.addReplacement(
-                  image.getDescriptionReplacement(tag.getText()),
-                  GT._("Remove <small> tag"));
-              errors.add(errorResult);
             }
+          }
+          if (onlySmall) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(), image.getBeginIndex(), image.getEndIndex());
+            errorResult.addReplacement(
+                image.getDescriptionReplacement(innerText.toString()),
+                GT._("Remove <small> tag"));
+            errors.add(errorResult);
           }
         }
       }
