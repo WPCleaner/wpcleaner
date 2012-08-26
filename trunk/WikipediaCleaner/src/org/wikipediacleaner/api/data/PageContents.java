@@ -65,39 +65,4 @@ public class PageContents {
     result = result.replaceAll("\\{\\{PAGENAME\\}\\}", page.getValuePAGENAME());
     return result;
   }
-
-  // ==========================================================================
-  // Tag management
-  // ==========================================================================
-
-  /**
-   * Find the first tag after an index in the page contents.
-   * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
-   * @param tagName Tag to be found.
-   * @param currentIndex The last index.
-   * @return Tag found.
-   */
-  public static PageElementTagFull findNextTagFull(
-      Page page, String contents,
-      String tagName, int currentIndex) {
-    if (contents == null) {
-      return null;
-    }
-    while (currentIndex < contents.length()) {
-      int tmpIndex = contents.indexOf("<", currentIndex);
-      if (tmpIndex < 0) {
-        currentIndex = contents.length();
-      } else {
-        PageElementTagFull tag = PageElementTagFull.analyzeBlock(
-            tagName, contents, tmpIndex);
-        if (tag != null) {
-          return tag;
-        }
-        currentIndex = tmpIndex + 1;
-      }
-    }
-    return null;
-  }
 }
