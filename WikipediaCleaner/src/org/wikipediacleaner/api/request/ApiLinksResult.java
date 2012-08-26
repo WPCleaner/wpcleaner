@@ -35,10 +35,12 @@ public interface ApiLinksResult extends ApiPropertiesResult {
    * 
    * @param properties Properties defining request.
    * @param lists Map of lists to be filled with links.
+   * @param normalization Map containing information about title normalization (From => To).
    * @return True if request should be continued.
    * @throws APIException
    */
   public boolean executeLinks(
       Map<String, String> properties,
-      Map<String, List<Page>> lists) throws APIException;
+      Map<String, List<Page>> lists,
+      Map<String, String> normalization) throws APIException;
 }
