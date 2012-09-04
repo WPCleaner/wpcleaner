@@ -465,7 +465,12 @@ public class Configuration implements WindowListener {
         if (value != null) {
           Preferences node = getPreferences(wikipedia).node(property + "/" + subProperty);
           for (Entry<Object, Object> p : value.entrySet()) {
-            node.put(p.getKey().toString(), p.getValue().toString());
+            String key = p.getKey().toString();
+            String keyValue = p.getValue().toString();
+            if ((key != null) && (key.length() <= Preferences.MAX_KEY_LENGTH) &&
+                (keyValue != null) && (keyValue.length() <= Preferences.MAX_VALUE_LENGTH)) {
+              node.put(key, keyValue);
+            }
           }
         }
       }
