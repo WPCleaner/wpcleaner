@@ -603,7 +603,7 @@ public class WPCConfiguration {
                   String patternText = template.getParameterValue(elements[2]);
                   Suggestion suggestion = tmpMap.get(patternText);
                   if (suggestion == null) {
-                    suggestion = Suggestion.createSuggestion(patternText);
+                    suggestion = Suggestion.createSuggestion(patternText, false);
                     if (suggestion != null) {
                       tmpMap.put(patternText, suggestion);
                     }
@@ -662,7 +662,7 @@ public class WPCConfiguration {
                     if (shouldUse) {
                       Suggestion suggestion = tmpMap.get(findValue);
                       if (suggestion == null) {
-                        suggestion = Suggestion.createSuggestion(findValue);
+                        suggestion = Suggestion.createSuggestion(findValue, true);
                         if (suggestion != null) {
                           tmpMap.put(findValue, suggestion);
                         }
