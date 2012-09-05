@@ -38,17 +38,34 @@ public class Suggestion {
   private final static String TAG_NOWIKI_1 = "<nowiki>";
   private final static String TAG_NOWIKI_2 = "</nowiki>";
 
+  /**
+   * Regular expression pattern.
+   */
   private final Pattern pattern;
+
+  /**
+   *  True if the pattern is not a native WPCleaner pattern (AWB, ...)
+   */
+  private final boolean other;
+
+  /**
+   * List of possible replacements.
+   */
   private final List<String> replacements;
+
+  /**
+   * Comment for the replacements.
+   */
   private String comment;
 
   /**
    * Create a Suggestion.
    * 
    * @param patternText Search pattern.
+   * @param other True if the pattern is not a native WPCleaner pattern.
    * @return Suggestion or null if there's a problem.
    */
-  public static Suggestion createSuggestion(String patternText) {
+  public static Suggestion createSuggestion(String patternText, boolean other) {
     try {
       if ((patternText.startsWith(TAG_NOWIKI_1)) &&
           (patternText.endsWith(TAG_NOWIKI_2))) {
@@ -57,7 +74,7 @@ public class Suggestion {
             patternText.length() - TAG_NOWIKI_2.length());
       }
       Pattern pattern = Pattern.compile(patternText);
-      return new Suggestion(pattern);
+      return new Suggestion(pattern, other);
     } catch (PatternSyntaxException e) {
       log.warn("Incorrect pattern syntax for [" + patternText + "]: " + e.getMessage());
     }
@@ -66,11 +83,20 @@ public class Suggestion {
 
   /**
    * @param pattern Search pattern.
+   * @param other True if the pattern is not a native WPCleaner pattern.
    */
-  private Suggestion(Pattern pattern) {
+  private Suggestion(Pattern pattern, boolean other) {
     this.pattern = pattern;
+    this.other = other;
     this.replacements = new ArrayList<String>();
     this.comment = null;
+  }
+
+  /**
+   * @return True if the pattern is not a native WPCleaner pattern.
+   */
+  public boolean isOtherPattern() {
+    return other;
   }
 
   /**
