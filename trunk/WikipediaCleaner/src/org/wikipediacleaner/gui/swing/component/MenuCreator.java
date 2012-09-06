@@ -709,45 +709,6 @@ public class MenuCreator {
             submenuReplace.add(menuItem);
             fixedEndReplace++;
           }
-        } else {
-          String title = getLastReplacement(page.getTitle());
-          if (title != null) {
-            if ((withLastSuffix != null) && (withLastSuffix.equals(title))) {
-              withLastSuffix = null;
-            }
-            fixedEndLink += addSeparator(submenuLink);
-            menuItem = new JMenuItem(title);
-            action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false);
-            menuItem.addActionListener(action);
-            menuItem.setAccelerator(MWPane.getLastLinkKeyStroke());
-            submenuLink.add(menuItem);
-            fixedEndLink++;
-    
-            fixedEndReplace += addSeparator(submenuReplace);
-            menuItem = new JMenuItem(title);
-            action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
-            menuItem.addActionListener(action);
-            menuItem.setAccelerator(MWPane.getLastReplaceKeyStroke());
-            submenuReplace.add(menuItem);
-            fixedEndReplace++;
-          }
-        }
-        if (withLastSuffix != null) {
-          fixedEndLink += addSeparator(submenuLink);
-          menuItem = new JMenuItem(withLastSuffix);
-          action = new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, false);
-          menuItem.addActionListener(action);
-          menuItem.setAccelerator(MWPane.getLastLinkKeyStroke());
-          submenuLink.add(menuItem);
-          fixedEndLink++;
-  
-          fixedEndReplace += addSeparator(submenuReplace);
-          menuItem = new JMenuItem(withLastSuffix);
-          action = new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, true);
-          menuItem.addActionListener(action);
-          menuItem.setAccelerator(MWPane.getLastReplaceKeyStroke());
-          submenuReplace.add(menuItem);
-          fixedEndReplace++;
         }
       }
 
