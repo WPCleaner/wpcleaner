@@ -70,7 +70,7 @@ public class ProgressionValue implements Comparable<ProgressionValue> {
       if ((goalValue != null) && (!currentValue.equals(goalValue))) {
         return "" + currentValue + " / " + goalValue;
       }
-      if (!displayZero && (currentValue.intValue() == 0)) {
+      if (!displayZero && (currentValue.intValue() == 0) && (goalValue == null)) {
         return "";
       }
       return currentValue.toString();
