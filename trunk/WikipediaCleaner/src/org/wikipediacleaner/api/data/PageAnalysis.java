@@ -651,6 +651,21 @@ public class PageAnalysis {
     return null;
   }
 
+  /**
+   * @param currentIndex Current index.
+   * @return Title if the current index is inside a title.
+   */
+  public PageElementTitle isInTitle(int currentIndex) {
+    List<PageElementTitle> tmpTitles = getTitles();
+    for (PageElementTitle title : tmpTitles) {
+      if ((title.getBeginIndex() <= currentIndex) &&
+          (title.getEndIndex() > currentIndex)) {
+        return title;
+      }
+    }
+    return null;
+  }
+
   // ==========================================================================
   // Internal links management
   // ==========================================================================
