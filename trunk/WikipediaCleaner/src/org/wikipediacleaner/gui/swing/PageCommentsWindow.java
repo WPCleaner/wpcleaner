@@ -77,6 +77,8 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
   private JButton buttonOk;
   private JButton buttonRemove;
 
+  public final static Integer WINDOW_VERSION = Integer.valueOf(2);
+
   /**
    * Create and display a PageCommentsWindow.
    * 
