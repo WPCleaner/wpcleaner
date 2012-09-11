@@ -31,7 +31,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Suggestions for text replacements.
  */
-public class Suggestion {
+public class Suggestion implements Comparable<Suggestion> {
 
   private final static Log log = LogFactory.getLog(Suggestion.class);
 
@@ -167,5 +167,34 @@ public class Suggestion {
       }
     }
     return list;
+  }
+
+  // ==========================================================================
+  // Comparable interface
+  // ==========================================================================
+
+  /**
+   * @param   o the object to be compared.
+   * @return  a negative integer, zero, or a positive integer as this object
+   *    is less than, equal to, or greater than the specified object.
+   * @see java.lang.Comparable#compareTo(java.lang.Object)
+   */
+  public int compareTo(Suggestion o) {
+    if (o == null) {
+      return -1;
+    }
+    if (this.other != o.other) {
+      return this.other ? 1 : -1;
+    }
+    if (this.comment != null) {
+      if (o.comment == null) {
+        return -1;
+      }
+      return this.comment.compareTo(o.comment);
+    }
+    if (o.comment != null) {
+      return 1;
+    }
+    return 0;
   }
 }

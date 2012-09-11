@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -186,23 +187,27 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
               pageAnalysis.getPage(), startIndex, startIndex + maxLength);
           String text = contents.substring(
               startIndex, startIndex + maxLength);
-          boolean suggestionAdded = false;
+          Collections.sort(possibles);
+          List<String> added = new ArrayList<String>();
           for (Suggestion suggestion : possibles) {
             String comment = suggestion.getComment();
-            if (comment != null) {
-              error.addPossibleAction(comment, new NullActionProvider());
-            }
             List<String> replacements = suggestion.getReplacements(text);
             if (replacements != null) {
               for (String replacement : replacements) {
                 if (!text.equals(replacement)) {
-                  suggestionAdded = true;
-                  error.addReplacement(replacement);
+                  if (!added.contains(replacement)) {
+                    if (comment != null) {
+                      error.addPossibleAction(comment, new NullActionProvider());
+                      comment = null;
+                    }
+                    added.add(replacement);
+                    error.addReplacement(replacement);
+                  }
                 }
               }
             }
           }
-          if (suggestionAdded) {
+          if (!added.isEmpty()) {
             if (errors == null) {
               return true;
             }
