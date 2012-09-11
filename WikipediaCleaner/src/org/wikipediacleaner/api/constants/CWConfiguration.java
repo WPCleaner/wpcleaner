@@ -189,18 +189,27 @@ public class CWConfiguration {
   private final static String PREFIX = "error_";
 
   /**
+   * Enumerated value for the origin of the configuration.
+   */
+  public static enum Origin {
+    GENERAL_CONFIGURATION,
+    WIKI_CONFIGURATION,
+    USER_CONFIGURATION,
+  }
+
+  /**
    * Set property.
    * 
    * @param name Property name.
    * @param value Property value.
    * @param suffix Suffix for properties to consider.
    * @param otherSuffix Suffix for properties not to consider.
-   * @param general Flag indicating if dealing with general properties or wiki properties.
+   * @param origin Origin of the configuration.
    */
   private void setProperty(
       String name, String value,
       String suffix, String otherSuffix,
-      boolean general) {
+      Origin origin) {
     boolean matches = true;
 
     // Check that property prefix is OK
@@ -258,7 +267,7 @@ public class CWConfiguration {
           }
           configuration.set(errorNumber, error);
         }
-        error.addProperty(name, value, general);
+        error.addProperty(name, value, origin);
       }
     }
   }
@@ -269,14 +278,14 @@ public class CWConfiguration {
    * @param reader Reader for the configuration.
    * @param suffix Suffix for properties to consider.
    * @param otherSuffix Suffix for properties not to consider.
-   * @param general Flag indicating if dealing with general properties or wiki properties.
+   * @param origin Origin of the configuration.
    * @return Next parameter found.
    * @throw APIException.
    */
   private boolean setNextParameter(
       BufferedReader reader,
       String suffix, String otherSuffix,
-      boolean general) throws APIException {
+      Origin origin) throws APIException {
     String line;
     try {
       while ((line = reader.readLine()) != null) {
@@ -296,7 +305,7 @@ public class CWConfiguration {
           }
           line = line.substring(0, posEnd);
           if ((name != null) && (line != null)) {
-            setProperty(name.trim(), line, suffix, otherSuffix, general);
+            setProperty(name.trim(), line, suffix, otherSuffix, origin);
           }
           return true;
         }
@@ -312,7 +321,7 @@ public class CWConfiguration {
    */
   public void setGeneralConfiguration(Reader input) throws APIException {
     BufferedReader reader = new BufferedReader(input);
-    while (setNextParameter(reader, "script", code, true)) {
+    while (setNextParameter(reader, "script", code, Origin.GENERAL_CONFIGURATION)) {
       //
     }
     try {
@@ -327,7 +336,7 @@ public class CWConfiguration {
    */
   public void setWikiConfiguration(Reader input) throws APIException {
     BufferedReader reader = new BufferedReader(input);
-    while (setNextParameter(reader, code, "script", false)) {
+    while (setNextParameter(reader, code, "script", Origin.WIKI_CONFIGURATION)) {
       //
     }
     try {
@@ -335,5 +344,13 @@ public class CWConfiguration {
     } catch (IOException e) {
       // Nothing
     }
+  }
+
+  /**
+   * @param name Parameter name.
+   * @param value Parameter value.
+   */
+  void setUserConfiguration(String name, String value) {
+    setProperty(name, value, code, "script", Origin.USER_CONFIGURATION);
   }
 }

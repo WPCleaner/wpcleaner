@@ -179,6 +179,8 @@ public class WPCConfiguration {
       setSuggestionPages(value, general);
     } else if (name.equals("general_suggestions_typo")) {
       setSuggestionTypoPages(value, general);
+    } else if (name.startsWith("error_")) {
+      wiki.getCWConfiguration().setUserConfiguration(name, value);
     } else if (!general) {
       return;
     }

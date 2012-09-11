@@ -23,12 +23,16 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import org.wikipediacleaner.api.constants.CWConfiguration.Origin;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.i18n.GT;
 
 
 /**
  * Configuration for an error in Check Wiki project.
+ */
+/**
+ * 
  */
 public class CWConfigurationError {
 
@@ -76,9 +80,11 @@ public class CWConfigurationError {
   /**
    * @param name Property name.
    * @param value Property value.
-   * @param general Flag indicating if dealing with a general property or a wiki property.
+   * @param origin Origin of the configuration.
    */
-  void addProperty(String name, String value, boolean general) {
+  void addProperty(
+      String name, String value,
+      CWConfiguration.Origin origin) {
     if (name == null) {
       return;
     }
@@ -86,32 +92,36 @@ public class CWConfigurationError {
       value = value.trim();
     }
     if (name.equals("prio")) {
-      setPriority(value, general);
+      setPriority(value, origin);
     } else if (name.equals("bot")) {
-      setBot(value, general);
+      setBot(value, origin);
     } else if (name.equals("head")) {
-      setShortDescription(value, general);
+      setShortDescription(value, origin);
     } else if (name.equals("desc")) {
-      setLongDescription(value, general);
+      setLongDescription(value, origin);
     } else if (name.equals("link")) {
-      setLink(value, general);
+      setLink(value, origin);
     } else if (name.equals("whitelist")) {
-      setWhiteList(value, general);
+      setWhiteList(value, origin);
     } else if (name.equals("whitelistpage")) {
-      setWhiteListPageName(value, general);
+      setWhiteListPageName(value, origin);
     } else {
-      if (general) {
+      switch (origin) {
+      case GENERAL_CONFIGURATION:
         if (value == null) {
           generalConfiguration.remove(name);
         } else {
           generalConfiguration.setProperty(name, value);
         }
-      } else {
+        break;
+
+      case WIKI_CONFIGURATION:
         if (value == null) {
           wikiConfiguration.remove(name);
         } else {
           wikiConfiguration.setProperty(name, value);
         }
+        break;
       }
     }
   }
@@ -161,15 +171,20 @@ public class CWConfigurationError {
   private Integer priorityWiki = null;
 
   /**
+   * Priority (user configuration).
+   */
+  private Integer priorityUser = null;
+
+  /**
    * Flag indicating if error should be considered by bots even if deactivated.
    */
   private boolean botWiki = false;
 
   /**
    * @param value Priority value.
-   * @param general Flag indicating if general configuration is concerned.
+   * @param origin Origin of the configuration.
    */
-  private void setPriority(String value, boolean general) {
+  private void setPriority(String value, Origin origin) {
     Integer intValue = null;
     if (value != null) {
       try {
@@ -178,19 +193,25 @@ public class CWConfigurationError {
         //
       }
     }
-    if (general) {
+    switch (origin) {
+    case GENERAL_CONFIGURATION:
       priorityGeneral = intValue;
-    } else {
+      break;
+    case WIKI_CONFIGURATION:
       priorityWiki = intValue;
+      break;
+    case USER_CONFIGURATION:
+      priorityUser = intValue;
+      break;
     }
   }
 
   /**
    * @param value Value.
-   * @param general Flag indicating if general configuration is concerned.
+   * @param origin Origin of the configuration.
    */
-  private void setBot(String value, boolean general) {
-    if (general) {
+  private void setBot(String value, Origin origin) {
+    if (origin == Origin.GENERAL_CONFIGURATION) {
       return;
     }
     if (value == null) {
@@ -205,7 +226,10 @@ public class CWConfigurationError {
    */
   public int getPriority() {
     int priority = PRIORITY_UNKOWN;
-    if (priorityWiki != null) {
+    if ((priority == PRIORITY_UNKOWN) && (priorityUser != null)) {
+      priority = priorityUser.intValue();
+    }
+    if ((priority == PRIORITY_UNKOWN) && (priorityWiki != null)) {
       priority = priorityWiki.intValue();
     }
     if ((priority == PRIORITY_UNKOWN) && (priorityGeneral != null)) {
@@ -295,21 +319,34 @@ public class CWConfigurationError {
   private String shortDescriptionReplacedWiki = null;
 
   /**
-   * @param value Short description value.
-   * @param general Flag indicating if general configuration is concerned.
+   * Short description of the error (user configuration).
    */
-  private void setShortDescription(String value, boolean general) {
+  private String shortDescriptionUser = null;
+  private String shortDescriptionReplacedUser = null;
+
+  /**
+   * @param value Short description value.
+   * @param origin Origin of the configuration.
+   */
+  private void setShortDescription(String value, Origin origin) {
     String replaced = value;
     if (replaced != null) {
       replaced = replaced.replaceAll("&lt;", "<");
       replaced = replaced.replaceAll("&gt;", ">");
     }
-    if (general) {
+    switch (origin) {
+    case GENERAL_CONFIGURATION:
       shortDescriptionGeneral = value;
       shortDescriptionReplacedGeneral = replaced;
-    } else {
+      break;
+    case WIKI_CONFIGURATION:
       shortDescriptionWiki = value;
       shortDescriptionReplacedWiki = replaced;
+      break;
+    case USER_CONFIGURATION:
+      shortDescriptionUser = value;
+      shortDescriptionReplacedUser = replaced;
+      break;
     }
   }
 
@@ -317,6 +354,9 @@ public class CWConfigurationError {
    * @return Short description.
    */
   public String getShortDescription() {
+    if ((shortDescriptionUser != null) && (shortDescriptionUser.length() > 0)) {
+      return shortDescriptionUser;
+    }
     if ((shortDescriptionWiki != null) && (shortDescriptionWiki.length() > 0)) {
       return shortDescriptionWiki;
     }
@@ -327,6 +367,10 @@ public class CWConfigurationError {
    * @return Short description.
    */
   public String getShortDescriptionReplaced() {
+    if ((shortDescriptionReplacedUser != null) &&
+        (shortDescriptionReplacedUser.length() > 0)) {
+      return shortDescriptionReplacedUser;
+    }
     if ((shortDescriptionReplacedWiki != null) &&
         (shortDescriptionReplacedWiki.length() > 0)) {
       return shortDescriptionReplacedWiki;
@@ -349,14 +393,25 @@ public class CWConfigurationError {
   private String longDescriptionWiki = null;
 
   /**
-   * @param value Long description value.
-   * @param general Flag indicating if general configuration is concerned.
+   * Long description of the error (user configuration).
    */
-  private void setLongDescription(String value, boolean general) {
-    if (general) {
+  private String longDescriptionUser = null;
+
+  /**
+   * @param value Long description value.
+   * @param origin Origin of the configuration.
+   */
+  private void setLongDescription(String value, Origin origin) {
+    switch (origin) {
+    case GENERAL_CONFIGURATION:
       longDescriptionGeneral = value;
-    } else {
+      break;
+    case WIKI_CONFIGURATION:
       longDescriptionWiki = value;
+      break;
+    case USER_CONFIGURATION:
+      longDescriptionUser = value;
+      break;
     }
   }
 
@@ -364,6 +419,9 @@ public class CWConfigurationError {
    * @return Long description.
    */
   public String getLongDescription() {
+    if ((longDescriptionUser != null) && (longDescriptionUser.length() > 0)) {
+      return longDescriptionUser;
+    }
     if ((longDescriptionWiki != null) && (longDescriptionWiki.length() > 0)) {
       return longDescriptionWiki;
     }
@@ -381,10 +439,10 @@ public class CWConfigurationError {
 
   /**
    * @param value Link value.
-   * @param general Flag indicating if general configuration is concerned.
+   * @param origin Origin of the configuration.
    */
-  private void setLink(String value, boolean general) {
-    if (general) {
+  private void setLink(String value, Origin origin) {
+    if (origin == Origin.GENERAL_CONFIGURATION) {
       return;
     }
     linkWiki = value;
@@ -408,10 +466,10 @@ public class CWConfigurationError {
 
   /**
    * @param value Page containing the white list.
-   * @param general Flag indicating if general configuration is concerned.
+   * @param origin Origin of the configuration.
    */
-  private void setWhiteListPageName(String value, boolean general) {
-    if (general) {
+  private void setWhiteListPageName(String value, Origin origin) {
+    if (origin == Origin.GENERAL_CONFIGURATION) {
       return;
     }
     whiteListPageName = value;
@@ -450,10 +508,10 @@ public class CWConfigurationError {
 
   /**
    * @param value White list value.
-   * @param general Flag indicating if general configuration is concerned.
+   * @param origin Origin of the configuration.
    */
-  private void setWhiteList(String value, boolean general) {
-    if (general) {
+  private void setWhiteList(String value, Origin origin) {
+    if (origin == Origin.GENERAL_CONFIGURATION) {
       return;
     }
     whiteListWiki = null;
