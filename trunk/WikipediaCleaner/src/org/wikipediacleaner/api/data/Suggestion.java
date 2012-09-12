@@ -59,6 +59,66 @@ public class Suggestion implements Comparable<Suggestion> {
   private String comment;
 
   /**
+   * Clean a non WPCleaner pattern.
+   * 
+   * @param patternText Original pattern.
+   * @return Cleaned up pattern.
+   */
+  public static String cleanPattern(String patternText) {
+    if (patternText == null) {
+      return null;
+    }
+    
+    // Remove possible \b at the beginning and the end
+    while (patternText.startsWith("\\b")) {
+      patternText = patternText.substring(2);
+    }
+    while (patternText.endsWith("\\b")) {
+      patternText = patternText.substring(0, patternText.length() - 2);
+    }
+
+    // Check for problematic constructions
+    if (patternText.contains("\\b") || patternText.contains("\\B")) {
+      return null;
+    }
+    if (patternText.contains("(?<")) {
+      return null;
+    }
+
+    // Check for {{ or }}
+    int lastIndex = 0;
+    int currentIndex = 0;
+    StringBuilder tmpPattern = new StringBuilder();
+    while (currentIndex < patternText.length()) {
+      if (patternText.startsWith("{{", currentIndex)) {
+        if (currentIndex > lastIndex) {
+          tmpPattern.append(patternText.substring(lastIndex, currentIndex));
+        }
+        tmpPattern.append("\\{\\{");
+        currentIndex += 2;
+        lastIndex = currentIndex;
+      } else if (patternText.startsWith("}}", currentIndex)) {
+        if (currentIndex > lastIndex) {
+          tmpPattern.append(patternText.substring(lastIndex, currentIndex));
+        }
+        tmpPattern.append("\\}\\}}");
+        currentIndex += 2;
+        lastIndex = currentIndex;
+      } else {
+        currentIndex++;
+      }
+    }
+    if (currentIndex > 0) {
+      if (lastIndex < patternText.length()) {
+        tmpPattern.append(patternText.substring(lastIndex));
+      }
+      patternText = tmpPattern.toString();
+    }
+
+    return patternText;
+  }
+
+  /**
    * Create a Suggestion.
    * 
    * @param patternText Search pattern.

@@ -645,36 +645,21 @@ public class WPCConfiguration {
                   String findValue = find.getValue();
                   String replaceValue = replace.getValue();
                   if ((wordValue != null) && (findValue != null) && (replaceValue != null)) {
-                    while (findValue.startsWith("\\b")) {
-                      findValue = findValue.substring(2);
-                    }
-                    while (findValue.endsWith("\\b")) {
-                      findValue = findValue.substring(0, findValue.length() - 2);
-                    }
-                    boolean shouldUse = true;
-                    if (findValue.contains("\\b") || findValue.contains("\\B")) {
-                      shouldUse = false;
-                    }
-                    if (findValue.contains("(?<")) {
-                      shouldUse = false;
-                    }
-                    if (findValue.contains("{{") || findValue.contains("}}")) {
-                      shouldUse = false;
-                    }
-                    if (shouldUse) {
-                      Suggestion suggestion = tmpMap.get(findValue);
+                    String cleanFindValue = Suggestion.cleanPattern(findValue);
+                    if (cleanFindValue == null) {
+                      System.err.println("Rejecting " + wordValue + " : " + findValue);
+                    } else {
+                      Suggestion suggestion = tmpMap.get(cleanFindValue);
                       if (suggestion == null) {
-                        suggestion = Suggestion.createSuggestion(findValue, true);
+                        suggestion = Suggestion.createSuggestion(cleanFindValue, true);
                         if (suggestion != null) {
-                          tmpMap.put(findValue, suggestion);
+                          tmpMap.put(cleanFindValue, suggestion);
                         }
                       }
                       if (suggestion != null) {
                         suggestion.setComment("Typo AWB " + wordValue);
                         suggestion.addReplacement(replaceValue);
                       }
-                    } else {
-                      System.err.println("Rejecting " + wordValue + " : " + findValue);
                     }
                   }
                 }
