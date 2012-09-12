@@ -88,7 +88,7 @@ public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements Api
             Page p2 = it.next();
             tmpPages.add(p2);
             if ((p2.getTitle() != null) &&
-                (p2.getTitle().equals(title))) {
+                (Page.areSameTitle(p2.getTitle(), title))) {
               List listTemplates = xpaTemplate.selectNodes(currentNode);
               if (listTemplates.size() > 0) {
                 for (Page p3 : tmpPages) {

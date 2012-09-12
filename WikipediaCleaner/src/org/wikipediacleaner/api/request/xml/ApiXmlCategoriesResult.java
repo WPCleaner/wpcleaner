@@ -88,7 +88,7 @@ public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements Ap
             Page p2 = it.next();
             tmpPages.add(p2);
             if ((p2.getTitle() != null) &&
-                (p2.getTitle().equals(title))) {
+                (Page.areSameTitle(p2.getTitle(), title))) {
               List listCategories = xpaCategory.selectNodes(currentNode);
               if (listCategories.size() > 0) {
                 for (Page p3 : tmpPages) {
