@@ -1381,16 +1381,10 @@ public class MainWindow
     if (wikipedia == null) {
       return;
     }
-    if (wikipedia.getDisambiguationTemplates() != null) {
-      List<String> pageNames = new ArrayList<String>();
-      for (Page template : wikipedia.getDisambiguationTemplates()) {
-        pageNames.add(template.getTitle());
-      }
-      new PageListWorker(
-          wikipedia, this, null,
-          pageNames, PageListWorker.Mode.ALL_DAB_PAGES, false,
-          GT._("All disambiguations pages")).start();
-    }
+    new PageListWorker(
+        wikipedia, this, null,
+        null, PageListWorker.Mode.ALL_DAB_PAGES, false,
+        GT._("All disambiguations pages")).start();
   }
 
   /**

@@ -351,25 +351,62 @@ public enum EnumWikipedia {
   }
 
   /**
+   * Construct list of disambiguation pages.
+   * 
+   * @param api Wikipedia API
+   * @return List of disambiguation pages
+   * @throws APIException
+   */
+  public List<Page> constuctDisambiguationPages(API api) throws APIException {
+    ArrayList<Page> tmpResult = new ArrayList<Page>();
+    List<Page> dabCategories = getConfiguration().getDisambiguationCategories();
+    if ((dabCategories != null) && (dabCategories.size() > 0)) {
+      for (Page dabCategory : dabCategories) {
+        List<Page> tmpPages = api.retrieveCategoryMembers(
+            this, dabCategory.getTitle(), 0, false);
+        if (tmpPages != null) {
+          tmpResult.ensureCapacity(tmpResult.size() + tmpPages.size());
+          for (Page page : tmpPages) {
+            if (page.isInMainNamespace()) {
+              tmpResult.add(page);
+            }
+          }
+        }
+      }
+    } else {
+      if (disambiguationTemplates == null) {
+        return null;
+      }
+      for (Page dabTemplate : disambiguationTemplates) {
+        List<Page> tmpPages = api.retrieveEmbeddedIn(
+            this, dabTemplate,
+            Collections.singletonList(Namespace.MAIN),
+            false);
+        if (tmpPages != null) {
+          tmpResult.ensureCapacity(tmpResult.size() + tmpPages.size());
+          for (Page page : tmpPages) {
+            if (page.isInMainNamespace()) {
+              tmpResult.add(page);
+            }
+          }
+        }
+      }
+    }
+    return tmpResult;
+  }
+
+  /**
    * Load all disambiguation pages.
    * 
    * @param api Wikipedia API.
    * @throws APIException
    */
   public void loadDisambiguationPages(API api) throws APIException {
-    if (disambiguationTemplates == null) {
-      return;
-    }
     try {
+      List<Page> tmpPages = constuctDisambiguationPages(api);
       HashSet<String> tmpResult = new HashSet<String>();
-      for (Page dabTemplate : disambiguationTemplates) {
-        List<Page> tmpPages = api.retrieveEmbeddedIn(
-            this, dabTemplate,
-            Collections.singletonList(Namespace.MAIN),
-            false);
-        for (Page page : tmpPages) {
-          tmpResult.add(page.getTitle());
-        }
+      for (Page page : tmpPages) {
+        tmpResult.add(page.getTitle());
       }
       disambiguationPages = tmpResult;
     } catch (APIException e) {

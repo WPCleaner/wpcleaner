@@ -52,8 +52,8 @@ public class PageListWorker extends BasicWorker {
    * The <code>Mode</code> allows to specify how the PageListWorker
    * will use the list of pages provided to it:
    * <ul>
-   * <li>ALL_DAB_PAGES: List of disambiguation templates.
-   *     Retrieve list of pages embedding the templates.</li>
+   * <li>ALL_DAB_PAGES: Not used.
+   *     Retrieve list of all disambiguation pages.</li>
    * <li>CATEGORY_MEMBERS: List of categories.
    *     Retrieve list of articles in the categories.</li>
    * <li>CATEGORY_MEMBERS_ARTICLES: List of categories.
@@ -231,18 +231,11 @@ public class PageListWorker extends BasicWorker {
    * @throws APIException
    */
   private void constructAllDab(List<Page> pages) throws APIException {
-    if (pageNames != null) {
-      List<Page> tmpPages = constructInternalPageList();
-      MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      tmpPages = mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages, false);
-      if (tmpPages != null) {
-        for (Page page : tmpPages) {
-          if (page.isInMainNamespace()) {
-            page.setDisambiguationPage(Boolean.TRUE);
-            pages.add(page);
-          }
-        }
-      }
+    final API api = APIFactory.getAPI();
+    EnumWikipedia wiki = getWikipedia();
+    List<Page> tmpPages = wiki.constuctDisambiguationPages(api);
+    if (tmpPages != null) {
+      pages.addAll(tmpPages);
     }
   }
 
