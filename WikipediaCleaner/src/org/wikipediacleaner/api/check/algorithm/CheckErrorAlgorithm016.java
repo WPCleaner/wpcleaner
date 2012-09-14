@@ -65,35 +65,39 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     }
     boolean result = false;
     String contents = pageAnalysis.getContents();
+    int lastEnd = 0;
     for (PageElementTemplate template : templates) {
       int begin = template.getBeginIndex();
       int end = template.getEndIndex();
-      boolean found = false;
-      for (int index = begin; index < end; index++) {
-        char character = contents.charAt(index);
-        if ((character == (char) 0xFEFF) ||
-            (character == (char) 0x200E) ||
-            (character == (char) 0x200B)) {
-          found = true;
-        }
-      }
-      if (found) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-        CheckErrorResult errorResult = createCheckErrorResult(pageAnalysis.getPage(), begin, end);
-        StringBuilder replacement = new StringBuilder();
+      if (begin >= lastEnd) {
+        boolean found = false;
         for (int index = begin; index < end; index++) {
           char character = contents.charAt(index);
-          if ((character != (char) 0xFEFF) &&
-              (character != (char) 0x200E) &&
-              (character != (char) 0x200B)) {
-            replacement.append(character);
+          if ((character == (char) 0xFEFF) ||
+              (character == (char) 0x200E) ||
+              (character == (char) 0x200B)) {
+            found = true;
           }
         }
-        errorResult.addReplacement(replacement.toString(), GT._("Remove all control characters"));
-        errors.add(errorResult);
+        if (found) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(pageAnalysis.getPage(), begin, end);
+          StringBuilder replacement = new StringBuilder();
+          for (int index = begin; index < end; index++) {
+            char character = contents.charAt(index);
+            if ((character != (char) 0xFEFF) &&
+                (character != (char) 0x200E) &&
+                (character != (char) 0x200B)) {
+              replacement.append(character);
+            }
+          }
+          errorResult.addReplacement(replacement.toString(), GT._("Remove all control characters"));
+          errors.add(errorResult);
+        }
+        lastEnd = end;
       }
     }
     return result;
