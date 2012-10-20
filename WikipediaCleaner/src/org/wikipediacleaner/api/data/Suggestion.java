@@ -87,12 +87,12 @@ public class Suggestion implements Comparable<Suggestion> {
     }
 
     // Check for problematic constructions
-    if (patternText.contains("\\b") || patternText.contains("\\B")) {
+    /*if (patternText.contains("\\b") || patternText.contains("\\B")) {
       return null;
-    }
-    if (patternText.contains("(?<")) {
+    }*/
+    /*if (patternText.contains("(?<")) {
       return null;
-    }
+    }*/
 
     // Check for {{ or }}
     int lastIndex = 0;
