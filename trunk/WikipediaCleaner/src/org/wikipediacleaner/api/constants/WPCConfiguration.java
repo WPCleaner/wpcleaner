@@ -71,7 +71,7 @@ public class WPCConfiguration {
    * @param input Reader for general WPCleaner configuration.
    */
   public void setGeneralConfiguration(Reader input) throws APIException {
-    templateMatchers = new HashMap<String, List<TemplateMatcher>>();
+    cleanConfiguration();
     BufferedReader reader = new BufferedReader(input);
     while (setNextParameter(reader, true)) {
       //
@@ -81,6 +81,48 @@ public class WPCConfiguration {
     } catch (IOException e) {
       // Nothing
     }
+  }
+
+  /**
+   * Clean configuration.
+   */
+  private void cleanConfiguration() {
+    initDefaultEncyclopedicNamespaces();
+    currentDisambiguationList = null;
+    disambiguationCategories = null;
+    disambiguationComment = null;
+    disambiguationComment1 = null;
+    disambiguationCommentTodo = null;
+    disambiguationCommentTodo1 = null;
+    disambiguationWarningAfterTemplates = null;
+    disambiguationWarningComment = null;
+    disambiguationWarningComment1 = null;
+    disambiguationWarningCommentDone = null;
+    disambiguationWarningTemplate = null;
+    disambiguationWarningTemplateComment = null;
+    helpPage = null;
+    helpURL = null;
+    mostDisambiguationLinks = null;
+    pipeTemplate = null;
+    suggestionIgnore = null;
+    suggestionPages = null;
+    suggestionTypoPages = null;
+    suggestions = null;
+    templateMatchers = new HashMap<String, List<TemplateMatcher>>();
+    templatesAfterAskHelp = null;
+    templatesAfterHelpAsked = null;
+    templatesForDisambiguationLink = null;
+    templatesForHelpRequested = null;
+    templatesForLinkingText = null;
+    templatesForNeedingHelp = null;
+    todoLinkTemplates = null;
+    todoSubpage = null;
+    todoSubpageForce = false;
+    todoSubpageForceOther = false;
+    todoTemplates = null;
+    translationComment = null;
+    wiktionaryInterwiki = null;
+    wiktionaryMatches = null;
   }
 
   /**
@@ -297,7 +339,7 @@ public class WPCConfiguration {
     if (helpURL != null) {
       return helpURL;
     }
-    return "http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation";
+    return "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner";
   }
 
   /**
@@ -1504,7 +1546,7 @@ public class WPCConfiguration {
    * @param property Property.
    * @return String list.
    */
-  private List<String> convertPropertyToStringList(String property) {
+  public static List<String> convertPropertyToStringList(String property) {
     List<String> result = null;
     if ((property != null) && (property.trim().length() > 0)) {
       String[] results = property.trim().split("\n");

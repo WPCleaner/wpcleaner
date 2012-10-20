@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.i18n.GT;
@@ -62,9 +62,9 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
 
     // Retrieve texts that can be added to sections without content
     String allTexts = getSpecificProperty("texts", true, true, false);
-    String[] texts = null;
+    List<String> texts = null;
     if (allTexts != null) {
-      texts = EnumWikipedia.convertPropertyToStringArray(allTexts);
+      texts = WPCConfiguration.convertPropertyToStringList(allTexts);
     }
 
     // Analyzing titles

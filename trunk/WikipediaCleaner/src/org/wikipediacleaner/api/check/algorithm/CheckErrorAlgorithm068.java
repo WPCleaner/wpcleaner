@@ -31,6 +31,7 @@ import org.wikipediacleaner.api.check.BasicActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -121,12 +122,12 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
   /**
    * @return Possible templates to replace the link to an other language.
    */
-  private String[] getTemplatesList() {
+  private List<String> getTemplatesList() {
     String templatesParam = getSpecificProperty(
         "template", true, false, false);
-    String[] templatesList = null;
+    List<String> templatesList = null;
     if (templatesParam != null) {
-      templatesList = EnumWikipedia.convertPropertyToStringArray(templatesParam);
+      templatesList = WPCConfiguration.convertPropertyToStringList(templatesParam);
     }
     return templatesList;
   }
@@ -146,7 +147,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve possible templates to replace the link to other language
-    String[] templatesList = getTemplatesList();
+    List<String> templatesList = getTemplatesList();
 
     // Analyzing the text from the beginning
     boolean result = false;
@@ -172,7 +173,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
               new CheckLanguageLinkActionProvider(
                   fromWikipedia, pageAnalysis.getWikipedia(),
                   pageTitle));
-          if ((templatesList != null) && (templatesList.length > 0)) {
+          if ((templatesList != null) && (templatesList.size() > 0)) {
             for (String template : templatesList) {
               String[] templateArgs = template.split("\\|");
               if (templateArgs.length >= 5) {
@@ -257,10 +258,10 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
     int currentIndex = 0;
 
     // Manage templates that can be used to replace a link to an other language
-    String[] templatesList = getTemplatesList();
+    List<String> templatesList = getTemplatesList();
     String[] templateArgs = null;
-    if ((templatesList != null) && (templatesList.length > 0)) {
-      String[] tmp = templatesList[0].split("\\|");
+    if ((templatesList != null) && (templatesList.size() > 0)) {
+      String[] tmp = templatesList.get(0).split("\\|");
       if (tmp.length >= 5) {
         templateArgs = tmp;
       }
