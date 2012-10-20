@@ -125,7 +125,8 @@ public class Suggestion implements Comparable<Suggestion> {
    * @param other True if the pattern is not a native WPCleaner pattern.
    * @return Suggestion or null if there's a problem.
    */
-  public static Suggestion createSuggestion(String patternText, boolean other) {
+  public static Suggestion createSuggestion(
+      String patternText, boolean other) {
     try {
       if ((patternText.startsWith(TAG_NOWIKI_1)) &&
           (patternText.endsWith(TAG_NOWIKI_2))) {
@@ -145,7 +146,8 @@ public class Suggestion implements Comparable<Suggestion> {
    * @param pattern Search pattern.
    * @param other True if the pattern is not a native WPCleaner pattern.
    */
-  private Suggestion(Pattern pattern, boolean other) {
+  private Suggestion(
+      Pattern pattern, boolean other) {
     this.pattern = pattern;
     this.other = other;
     this.replacements = new ArrayList<String>();
