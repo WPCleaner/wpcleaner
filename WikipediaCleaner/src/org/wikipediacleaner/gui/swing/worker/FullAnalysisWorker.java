@@ -18,13 +18,17 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
+import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 
@@ -35,18 +39,22 @@ public class FullAnalysisWorker extends BasicWorker {
 
   private final Page page;
   private final List<Page> knownPages;
+  private final Collection<CheckErrorAlgorithm> algorithms;
 
   /**
    * @param wikipedia Wikipedia.
    * @param window Window.
    * @param page Page.
-   * @param knownPages
+   * @param knownPages Known information about some pages.
+   * @param algorithms Check Wiki errors.
    */
   public FullAnalysisWorker(
-      EnumWikipedia wikipedia, BasicWindow window, Page page, List<Page> knownPages) {
+      EnumWikipedia wikipedia, BasicWindow window, Page page,
+      List<Page> knownPages, Collection<CheckErrorAlgorithm> algorithms) {
     super(wikipedia, window);
     this.page = page;
     this.knownPages = knownPages;
+    this.algorithms = algorithms;
   }
 
   /* (non-Javadoc)
@@ -71,6 +79,8 @@ public class FullAnalysisWorker extends BasicWorker {
         mw.retrieveSimilarPages(getWikipedia(), page);
       }
       setText("Analyzing data");
+      PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
+      CheckError.analyzeErrors(algorithms, analysis);
     } catch (APIException e) {
       return e;
     }

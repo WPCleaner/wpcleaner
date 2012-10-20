@@ -764,7 +764,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   @Override
   protected void actionReload() {
     clean();
-    FullAnalysisWorker reloadWorker = new FullAnalysisWorker(getWikipedia(), this, getPage(), knownPages);
+    FullAnalysisWorker reloadWorker = new FullAnalysisWorker(
+        getWikipedia(), this, getPage(), knownPages, allAlgorithms);
     knownPages = null;
     setupReloadWorker(reloadWorker);
     reloadWorker.start();
