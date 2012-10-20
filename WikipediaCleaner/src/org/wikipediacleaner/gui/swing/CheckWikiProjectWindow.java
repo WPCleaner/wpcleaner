@@ -277,7 +277,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     boolean noBotOnlyPrioritySelected = true;
     for (CheckErrorAlgorithm algorithm : allAlgorithms) {
       if (algorithm.isAvailable() &&
-          CWConfigurationError.isPriorityActive(algorithm.getPriority())) {
+          CWConfigurationError.isPriorityFullyActive(algorithm.getPriority())) {
         if (!selectedAlgorithms.contains(algorithm)) {
           allErrorsSelected = false;
           switch (algorithm.getPriority()) {
@@ -447,7 +447,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
             algorithm.getShortDescriptionReplaced();
 
           menuItem = new JCheckBoxMenuItem(label, selectedAlgorithms.contains(algorithm));
-          if (!CWConfigurationError.isPriorityActive(algorithm.getPriority())) {
+          if (!CWConfigurationError.isPriorityFullyActive(algorithm.getPriority())) {
             menuItem.setEnabled(false);
             menuItem.setFont(menuItem.getFont().deriveFont(inactiveAttributes));
           } else if (!algorithm.isAvailable()) {
@@ -591,7 +591,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     selectedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
     for (CheckErrorAlgorithm algorithm : allAlgorithms) {
       if (algorithm.isAvailable() &&
-          CWConfigurationError.isPriorityActive(algorithm.getPriority())) {
+          CWConfigurationError.isPriorityFullyActive(algorithm.getPriority())) {
         selectedAlgorithms.add(algorithm);
       }
     }
@@ -1777,7 +1777,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       selectedAlgorithms.clear();
       for (CheckErrorAlgorithm algorithm : allAlgorithms) {
         if (algorithm.isAvailable() &&
-            CWConfigurationError.isPriorityActive(algorithm.getPriority())) {
+            CWConfigurationError.isPriorityFullyActive(algorithm.getPriority())) {
           selectedAlgorithms.add(algorithm);
         }
       }

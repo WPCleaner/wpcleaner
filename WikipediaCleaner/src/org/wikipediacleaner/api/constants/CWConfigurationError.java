@@ -256,6 +256,19 @@ public class CWConfigurationError {
   }
 
   /**
+   * @param priority Priority.
+   * @return Flag indicating if the priority is fully active.
+   */
+  public static boolean isPriorityFullyActive(int priority) {
+    if ((priority == PRIORITY_TOP) ||
+        (priority == PRIORITY_MIDDLE) ||
+        (priority == PRIORITY_LOWEST)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Compare 2 priorities.
    * 
    * @param p1 Priority 1.
