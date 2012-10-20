@@ -208,4 +208,49 @@ public class PageAnalysisUtils {
     }
     return currentTitles;
   }
+
+  /**
+   * Retrieve current chapter.
+   * 
+   * @param pageAnalysis Page analysis.
+   * @param position Position in the text.
+   * @return Current title.
+   */
+  public static PageElementTitle getCurrentChapter(
+      PageAnalysis pageAnalysis, int position) {
+    if (pageAnalysis == null) {
+      return null;
+    }
+
+    // Analyze each title
+    List<PageElementTitle> titles = pageAnalysis.getTitles();
+    PageElementTitle lastTitle = null;
+    for (PageElementTitle title : titles) {
+      if (title.getBeginIndex() < position) {
+        lastTitle = title;
+      } else {
+        return lastTitle;
+      }
+    }
+    return lastTitle;
+  }
+
+  /**
+   * Retrieve the identifier of the current chapter.
+   * 
+   * @param pageAnalysis Page analysis.
+   * @param position Position in the text.
+   * @return Identifier of the current chapter.
+   */
+  public static String getCurrentChapterId(
+      PageAnalysis pageAnalysis, int position) {
+    if (pageAnalysis == null) {
+      return null;
+    }
+    PageElementTitle title = getCurrentChapter(pageAnalysis, position);
+    if (title == null) {
+      return pageAnalysis.getPage().getTitle();
+    }
+    return pageAnalysis.getPage().getTitle() + "#" + title.getTitle();
+  }
 }
