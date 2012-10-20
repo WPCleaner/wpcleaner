@@ -69,6 +69,7 @@ public class PageElementTag extends PageElement {
   public final static String TAG_WIKI_REF         = "ref";
   public final static String TAG_WIKI_REFERENCES  = "references";
   public final static String TAG_WIKI_SOURCE      = "source";
+  public final static String TAG_WIKI_TIMELINE    = "timeline";
 
   // =========================================================================
   // Other tags

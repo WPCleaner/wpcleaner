@@ -157,6 +157,25 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             nextIndex = codeTag.getCompleteEndIndex();
           }
         }
+
+        // Check for timeline tag
+        if (checkSpelling) {
+          PageElementTag timelineTag = pageAnalysis.getSurroundingTag(
+              PageElementTag.TAG_WIKI_TIMELINE, startIndex);
+          if (timelineTag != null) {
+            checkSpelling = false;
+            nextIndex = timelineTag.getCompleteEndIndex();
+          }
+        }
+
+        // Check for ]] just before (not a full word)
+        if (checkSpelling) {
+          if ((startIndex > 1) &&
+              (Character.isLetter(currentChar)) &&
+              (contents.startsWith("]]", startIndex - 2))) {
+            checkSpelling = false;
+          }
+        }
       }
 
       // Check spelling
@@ -227,7 +246,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
                (Character.isLetterOrDigit(contents.charAt(startIndex)))) ||
               (Character.isSpaceChar(contents.charAt(startIndex))) ||
               (Character.isWhitespace(contents.charAt(startIndex))) ||
-              ("'.=|\"-)$*:;".indexOf(contents.charAt(startIndex)) >= 0))) {
+              ("'.=|\"-)$*:;]}".indexOf(contents.charAt(startIndex)) >= 0))) {
         startIndex++;
       }
     }
