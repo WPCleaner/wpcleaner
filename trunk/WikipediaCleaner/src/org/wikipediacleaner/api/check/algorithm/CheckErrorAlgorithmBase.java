@@ -253,12 +253,11 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * Automatic fixing of all the errors in the page.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param analysis Page analysis.
    * @return Page contents after fix.
    */
-  public String automaticFix(Page page, String contents) {
-    return contents;
+  public String automaticFix(PageAnalysis analysis) {
+    return analysis.getContents();
   }
 
   /**
@@ -272,12 +271,11 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * Fix all the errors in the page.
    * 
    * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param analysis Page analysis.
    * @param textPane Text pane.
    * @return Page contents after fix.
    */
-  public String fix(String fixName, Page page, String contents, MWPane textPane) {
+  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
     throw new IllegalStateException("This algorithm has no global fixes");
   }
 
@@ -285,15 +283,13 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * Fix all the errors in the page by using the first replacement proposed.
    * 
    * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param analysis Page analysis.
    * @return Page contents after fix.
    */
-  public String fixUsingFirstReplacement(String fixName, Page page, String contents) {
-    String result = contents;
-    PageAnalysis pageAnalysis = new PageAnalysis(page, contents);
+  public String fixUsingFirstReplacement(String fixName, PageAnalysis analysis) {
+    String result = analysis.getContents();
     List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
-    if (analyze(pageAnalysis, errors)) {
+    if (analyze(analysis, errors)) {
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
         String newText = errorResult.getFirstReplacement();
@@ -313,15 +309,13 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * Fix all the errors in the page by removing.
    * 
    * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param analysis Page analysis.
    * @return Page contents after fix.
    */
-  public String fixUsingRemove(String fixName, Page page, String contents) {
-    String result = contents;
-    PageAnalysis pageAnalysis = new PageAnalysis(page, contents);
+  public String fixUsingRemove(String fixName, PageAnalysis analysis) {
+    String result = analysis.getContents();
     List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
-    if (analyze(pageAnalysis, errors)) {
+    if (analyze(analysis, errors)) {
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
         String tmp =

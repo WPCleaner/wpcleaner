@@ -30,7 +30,6 @@ import javax.swing.JOptionPane;
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
-import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -290,23 +289,21 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    * Fix all the errors in the page.
    * 
    * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param analysis Page analysis.
    * @param textPane Text pane.
    * @return Page contents after fix.
    */
   @Override
-  public String fix(String fixName, Page page, String contents, MWPane textPane) {
+  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
 
     // Initialize
     StringBuilder tmpContents = new StringBuilder();
-    PageAnalysis pageAnalysis = new PageAnalysis(page, contents);
     int currentIndex = 0;
 
     // Group tags by group and value for further analyze
     Map<String, Map<String, List<PageElementTag>>> refs =
         new HashMap<String, Map<String, List<PageElementTag>>>();
-    groupTags(pageAnalysis, refs);
+    groupTags(analysis, refs);
 
     // Memorize tag names by group and value
     Map<String, Map<String, String>> refNames =
@@ -328,8 +325,9 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
 
     // Check all reference tags
     List<PageElementTag> completeRefTags =
-        pageAnalysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
+        analysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
     Object highlight = null;
+    String contents = analysis.getContents();
     for (PageElementTag refTag : completeRefTags) {
 
       // Retrieve basic information

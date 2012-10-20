@@ -25,7 +25,6 @@ import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementDefaultsort;
-import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -116,14 +115,12 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
    * Fix all the errors in the page.
    * 
    * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param analysis Page analysis.
    * @param textPane Text pane.
    * @return Page contents after fix.
    */
   @Override
-  public String fix(String fixName, Page page, String contents, MWPane textPane) {
-    PageAnalysis pageAnalysis = new PageAnalysis(page, contents);
-    return addDefaultSort(pageAnalysis);
+  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
+    return addDefaultSort(analysis);
   }
 }

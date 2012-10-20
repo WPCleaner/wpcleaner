@@ -111,16 +111,15 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
    * Fix all the errors in the page.
    * 
    * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param analysis Page analysis.
    * @param textPane Text pane.
    * @return Page contents after fix.
    */
   @Override
-  public String fix(String fixName, Page page, String contents, MWPane textPane) {
-    PageAnalysis analysis = new PageAnalysis(page, contents);
+  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
 
     // Find first title
+    String contents = analysis.getContents();
     int firstTitle = 0;
     if (fixName.equals(globalFixes[0])) {
       Collection<PageElementTitle> titles = analysis.getTitles();
@@ -133,7 +132,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
 
     // Replace all texts
     StringBuilder newContents = new StringBuilder(contents.length());
-    String pageTitle = page.getTitle();
+    String pageTitle = analysis.getPage().getTitle();
     Collection<PageElementInternalLink> links = analysis.getInternalLinks();
     int currentIndex = 0;
     for (PageElementInternalLink link : links) {
