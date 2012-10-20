@@ -19,7 +19,11 @@
 package org.wikipediacleaner.api.data;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -37,6 +41,11 @@ public class Suggestion implements Comparable<Suggestion> {
 
   private final static String TAG_NOWIKI_1 = "<nowiki>";
   private final static String TAG_NOWIKI_2 = "</nowiki>";
+
+  /**
+   * Page and chapter in which the suggestion is defined.
+   */
+  private final String chapter;
 
   /**
    * Regular expression pattern.
@@ -123,10 +132,12 @@ public class Suggestion implements Comparable<Suggestion> {
    * 
    * @param patternText Search pattern.
    * @param other True if the pattern is not a native WPCleaner pattern.
+   * @param chapter Page and chapter in which the suggestion is defined.
    * @return Suggestion or null if there's a problem.
    */
   public static Suggestion createSuggestion(
-      String patternText, boolean other) {
+      String patternText, boolean other,
+      String chapter) {
     try {
       if ((patternText.startsWith(TAG_NOWIKI_1)) &&
           (patternText.endsWith(TAG_NOWIKI_2))) {
@@ -135,7 +146,7 @@ public class Suggestion implements Comparable<Suggestion> {
             patternText.length() - TAG_NOWIKI_2.length());
       }
       Pattern pattern = Pattern.compile(patternText);
-      return new Suggestion(pattern, other);
+      return new Suggestion(pattern, other, chapter);
     } catch (PatternSyntaxException e) {
       log.warn("Incorrect pattern syntax for [" + patternText + "]: " + e.getMessage());
     }
@@ -145,13 +156,23 @@ public class Suggestion implements Comparable<Suggestion> {
   /**
    * @param pattern Search pattern.
    * @param other True if the pattern is not a native WPCleaner pattern.
+   * @param chapter Page and chapter in which the suggestion is defined.
    */
   private Suggestion(
-      Pattern pattern, boolean other) {
+      Pattern pattern, boolean other,
+      String chapter) {
+    this.chapter = chapter;
     this.pattern = pattern;
     this.other = other;
     this.replacements = new ArrayList<String>();
     this.comment = null;
+  }
+
+  /**
+   * @return Page and chapter in which the suggestion is defined.
+   */
+  public String getChapter() {
+    return chapter;
   }
 
   /**
@@ -229,6 +250,80 @@ public class Suggestion implements Comparable<Suggestion> {
       }
     }
     return list;
+  }
+
+  // ==========================================================================
+  // Chapters management
+  // ==========================================================================
+
+  /**
+   * List of inactive chapters.
+   */
+  private final static List<String> inactiveChapters = new ArrayList<String>();
+
+  /**
+   * @param chapter Chapter.
+   * @return True if the chapter is active.
+   */
+  public static boolean isChapterActive(String chapter) {
+    return !inactiveChapters.contains(chapter);
+  }
+
+  /**
+   * @param page Page.
+   * @param title Title.
+   * @return True if the chapter is active.
+   */
+  public static boolean isChapterActive(String page, String title) {
+    return !inactiveChapters.contains(page + "#" + title);
+  }
+
+  /**
+   * @return True if the suggestion is active.
+   */
+  public boolean isActive() {
+    return isChapterActive(chapter);
+  }
+
+  /**
+   * Activate or deactivate a chapter.
+   * 
+   * @param chapter Chapter.
+   * @param activate True to activate, false to deactivate.
+   */
+  public static void activateChapter(String chapter, boolean activate) {
+    if (activate) {
+      inactiveChapters.remove(chapter);
+    } else if (!inactiveChapters.contains(chapter)) {
+      inactiveChapters.add(chapter);
+      Collections.sort(inactiveChapters);
+    }
+  }
+
+  /**
+   * Construct a list of chapters containing suggestions.
+   * 
+   * @param suggestions List of suggestions.
+   * @return List of chapters containing suggestions (Page => Chapters).
+   */
+  public static Map<String, List<String>> getChapters(Collection<Suggestion> suggestions) {
+    Map<String, List<String>> chapters = new HashMap<String, List<String>>();
+    for (Suggestion suggestion : suggestions) {
+      String chapter = suggestion.getChapter();
+      int sharpIndex = chapter.indexOf('#');
+      String page = (sharpIndex < 0) ? chapter : chapter.substring(0, sharpIndex);
+      String title = (sharpIndex < 0) ? "" : chapter.substring(sharpIndex + 1);
+      List<String> pageChapters = chapters.get(page);
+      if (pageChapters == null) {
+        pageChapters = new ArrayList<String>();
+        chapters.put(page, pageChapters);
+      }
+      if (!pageChapters.contains(title)) {
+        pageChapters.add(title);
+        Collections.sort(pageChapters);
+      }
+    }
+    return chapters;
   }
 
   // ==========================================================================

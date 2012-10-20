@@ -37,17 +37,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
@@ -74,6 +80,8 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.Suggestion;
+import org.wikipediacleaner.gui.swing.action.ActivateChapterAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -103,6 +111,7 @@ public class MainWindow
   private final static String ACTION_ALL_DAB          = "ALL DAB";
   private final static String ACTION_BOT_TOOLS        = "BOT TOOLS";
   private final static String ACTION_CAT_MEMBERS      = "CAT_MEMBERS";
+  private final static String ACTION_CHECK_SPELLING   = "CHECK SPELLING";
   private final static String ACTION_CHECK_WIKI       = "CHECK WIKI";
   private final static String ACTION_CONTRIBUTIONS    = "CONTRIBUTIONS";
   private final static String ACTION_CURRENT_DAB_LIST = "CURRENT DAB LIST";
@@ -174,6 +183,7 @@ public class MainWindow
   private JButton buttonOptions;
   private JButton buttonOptionsSystem;
   private JButton buttonReloadOptions;
+  private JButton buttonCheckSpelling;
   private JButton buttonIdea;
   private JButton buttonAbout;
 
@@ -284,6 +294,7 @@ public class MainWindow
     buttonLogout.setEnabled(logged);
     buttonOptionsSystem.setEnabled(logged);
     buttonReloadOptions.setEnabled(logged);
+    buttonCheckSpelling.setEnabled(logged);
 
     buttonCurrentDabList.setEnabled(logged);
     buttonMostDabLinks.setEnabled(logged);
@@ -493,6 +504,12 @@ public class MainWindow
     buttonReloadOptions.setActionCommand(ACTION_RELOAD_CONFIG);
     buttonReloadOptions.addActionListener(this);
     buttonToolbar.add(buttonReloadOptions);
+    buttonCheckSpelling = Utilities.createJButton(
+        "gnome-tools-check-spelling.png", EnumImageSize.NORMAL,
+        GT._("Check spelling options"), false);
+    buttonCheckSpelling.setActionCommand(ACTION_CHECK_SPELLING);
+    buttonCheckSpelling.addActionListener(this);
+    buttonToolbar.add(buttonCheckSpelling);
     buttonToolbar.addSeparator();
     buttonIdea = Utilities.createJButton(GT._("&Idea ? Bug ?"));
     buttonIdea.setActionCommand(ACTION_IDEA);
@@ -863,6 +880,8 @@ public class MainWindow
       actionOptionsSystem();
     } else if (ACTION_RELOAD_CONFIG.equals(e.getActionCommand())) {
       actionReloadOptions();
+    } else if (ACTION_CHECK_SPELLING.equals(e.getActionCommand())) {
+      actionCheckSpelling();
     } else if (ACTION_OTHER_LANGUAGE.equals(e.getActionCommand())) {
       actionOtherLanguage();
     } else if (ACTION_OTHER_WIKIPEDIA.equals(e.getActionCommand())) {
@@ -1042,6 +1061,53 @@ public class MainWindow
                 ConfigurationConstants.VALUE_SAVE_USER_NAME :
                 ConfigurationConstants.VALUE_SAVE_USER_NONE,
         false, true).start();
+  }
+
+  /**
+   * Action called when Check Spelling button is pressed.
+   */
+  private void actionCheckSpelling() {
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia == null) {
+      return;
+    }
+
+    // Retrieve all suggestions grouped by page and chapter
+    Map<String, Suggestion> suggestions = wikipedia.getConfiguration().getSuggestions();
+    Map<String, List<String>> chapters = Suggestion.getChapters(suggestions.values());
+    if (chapters.isEmpty()) {
+      return;
+    }
+
+    // Construct list of pages containing suggestions
+    List<String> pages = new ArrayList<String>();
+    pages.addAll(chapters.keySet());
+    Collections.sort(pages);
+
+    // Create menu for suggestions
+    JPopupMenu menu = new JPopupMenu();
+    for (String page : pages) {
+      List<String> pageChapters = chapters.get(page);
+      if (pageChapters.size() > 1) {
+        JMenu pageMenu = new JMenu(page);
+        for (String chapter : pageChapters) {
+          boolean active = Suggestion.isChapterActive(page, chapter);
+          Action action = new ActivateChapterAction(chapter, active, page + "#" + chapter);
+          JMenuItem chapterItem = new JCheckBoxMenuItem(action);
+          pageMenu.add(chapterItem);
+        }
+        menu.add(pageMenu);
+      } else {
+        boolean active = Suggestion.isChapterActive(page, pageChapters.get(0));
+        Action action = new ActivateChapterAction(page, active, page + "#" + pageChapters.get(0));
+        JMenuItem pageItem = new JCheckBoxMenuItem(action);
+        menu.add(pageItem);
+      }
+    }
+    menu.show(
+        buttonCheckSpelling,
+        0,
+        buttonCheckSpelling.getY() + buttonCheckSpelling.getHeight());
   }
 
   /**

@@ -73,13 +73,15 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     Map<Suggestion, Matcher> matchersInternalLink = new HashMap<Suggestion, Matcher>();
     Map<Suggestion, Matcher> matchersTemplate = new HashMap<Suggestion, Matcher>();
     for (Suggestion suggestion : suggestions.values()) {
-      Matcher matcher = suggestion.initMatcher(contents);
-      if (suggestion.getPatternText().startsWith("\\[")) {
-        matchersInternalLink.put(suggestion, matcher);
-      } else if (suggestion.getPatternText().startsWith("\\{\\{")) {
-        matchersTemplate.put(suggestion, matcher);
-      } else {
-        matchersText.put(suggestion, matcher);
+      if (suggestion.isActive()) {
+        Matcher matcher = suggestion.initMatcher(contents);
+        if (suggestion.getPatternText().startsWith("\\[")) {
+          matchersInternalLink.put(suggestion, matcher);
+        } else if (suggestion.getPatternText().startsWith("\\{\\{")) {
+          matchersTemplate.put(suggestion, matcher);
+        } else {
+          matchersText.put(suggestion, matcher);
+        }
       }
     }
 
