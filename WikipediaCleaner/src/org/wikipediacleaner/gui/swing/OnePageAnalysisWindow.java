@@ -884,7 +884,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       String initialContents = getTextContents().getText();
       String contents = initialContents;
       for (CheckErrorPage error : getInitialErrors()) {
-        contents = error.getAlgorithm().automaticFix(getPage(), contents);
+        PageAnalysis analysis = new PageAnalysis(getPage(), contents);
+        contents = error.getAlgorithm().automaticFix(analysis);
       }
       if (!contents.equals(initialContents)) {
         getTextContents().changeText(contents);

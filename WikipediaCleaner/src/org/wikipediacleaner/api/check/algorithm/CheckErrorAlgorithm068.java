@@ -33,7 +33,6 @@ import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Language;
-import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.gui.swing.action.PageViewAction;
@@ -244,13 +243,12 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
    * Fix all the errors in the page.
    * 
    * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param analysis Page analysis.
    * @param textPane Text pane.
    * @return Page contents after fix.
    */
   @Override
-  public String fix(String fixName, Page page, String contents, MWPane textPane) {
+  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
 
     // Initialize
     API api = APIFactory.getAPI();
@@ -269,15 +267,15 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
 
     // Check all internal links
     Object highlight = null;
+    String contents = analysis.getContents();
     try {
-      PageAnalysis pageAnalysis = new PageAnalysis(page, contents);
-      for (PageElementInternalLink link : pageAnalysis.getInternalLinks()) {
-        ErrorAnalysis analysis = isLinkToOtherLanguage(link, pageAnalysis);
-        if ((analysis != null) && (analysis.fromWiki != null)) {
-          EnumWikipedia fromWiki = analysis.fromWiki;
-          EnumWikipedia toWiki = pageAnalysis.getWikipedia();
-          String pageTitle = analysis.title;
-          String lgCode = analysis.language.getCode();
+      for (PageElementInternalLink link : analysis.getInternalLinks()) {
+        ErrorAnalysis errorAnalysis = isLinkToOtherLanguage(link, analysis);
+        if ((errorAnalysis != null) && (errorAnalysis.fromWiki != null)) {
+          EnumWikipedia fromWiki = errorAnalysis.fromWiki;
+          EnumWikipedia toWiki = analysis.getWikipedia();
+          String pageTitle = errorAnalysis.title;
+          String lgCode = errorAnalysis.language.getCode();
           String replacement = null;
 
           // Display selection

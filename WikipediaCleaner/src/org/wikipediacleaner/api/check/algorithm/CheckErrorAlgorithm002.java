@@ -21,7 +21,6 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -141,13 +140,12 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
    * Fix all the errors in the page.
    * 
    * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param analysis Page analysis.
    * @param textPane Text pane.
    * @return Page contents after fix.
    */
   @Override
-  public String fix(String fixName, Page page, String contents, MWPane textPane) {
-    return fixUsingFirstReplacement(fixName, page, contents);
+  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
+    return fixUsingFirstReplacement(fixName, analysis);
   }
 }

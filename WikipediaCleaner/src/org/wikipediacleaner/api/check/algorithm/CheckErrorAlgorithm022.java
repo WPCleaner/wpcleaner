@@ -122,13 +122,12 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
   /**
    * Automatic fixing of all the errors in the page.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param analysis Page analysis.
    * @return Page contents after fix.
    */
   @Override
-  public String automaticFix(Page page, String contents) {
-    return fix(globalFixes[0], page, contents, null);
+  public String automaticFix(PageAnalysis analysis) {
+    return fix(globalFixes[0], analysis, null);
   }
 
   /**
@@ -143,13 +142,12 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
    * Fix all the errors in the page.
    * 
    * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param analysis Page analysis.
    * @param textPane Text pane.
    * @return Page contents after fix.
    */
   @Override
-  public String fix(String fixName, Page page, String contents, MWPane textPane) {
-    return fixUsingFirstReplacement(fixName, page, contents);
+  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
+    return fixUsingFirstReplacement(fixName, analysis);
   }
 }

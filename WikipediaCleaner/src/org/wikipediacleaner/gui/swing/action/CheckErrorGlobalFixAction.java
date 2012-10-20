@@ -25,6 +25,7 @@ import javax.swing.AbstractButton;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 
 
@@ -65,7 +66,8 @@ public class CheckErrorGlobalFixAction extends AbstractAction {
    */
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     String contents = textComponent.getText();
-    contents = algorithm.fix(fixName, page, contents, textComponent);
+    PageAnalysis analysis = new PageAnalysis(page, contents);
+    contents = algorithm.fix(fixName, analysis, textComponent);
     textComponent.setText(contents);
     if (button != null) {
       button.doClick();

@@ -1095,7 +1095,8 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         String initialContents = textPage.getText();
         String contents = initialContents;
         for (CheckErrorPage initialError : initialErrors) {
-          contents = initialError.getAlgorithm().automaticFix(page, contents);
+          PageAnalysis analysis = new PageAnalysis(page, contents);
+          contents = initialError.getAlgorithm().automaticFix(analysis);
         }
         if (!contents.equals(initialContents)) {
           textPage.changeText(contents);
