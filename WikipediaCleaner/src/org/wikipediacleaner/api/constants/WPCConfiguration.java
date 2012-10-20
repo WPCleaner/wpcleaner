@@ -627,7 +627,8 @@ public class WPCConfiguration {
                     String patternText = template.getParameterValue(elements[2]);
                     Suggestion suggestion = tmpMap.get(patternText);
                     if (suggestion == null) {
-                      suggestion = Suggestion.createSuggestion(patternText, false);
+                      String chapter = PageAnalysisUtils.getCurrentChapterId(analysis, template.getBeginIndex());
+                      suggestion = Suggestion.createSuggestion(patternText, false, chapter);
                       if (suggestion != null) {
                         tmpMap.put(patternText, suggestion);
                       }
@@ -676,7 +677,8 @@ public class WPCConfiguration {
                       } else {
                         Suggestion suggestion = tmpMap.get(cleanFindValue);
                         if (suggestion == null) {
-                          suggestion = Suggestion.createSuggestion(cleanFindValue, true);
+                          String chapter = PageAnalysisUtils.getCurrentChapterId(analysis, tag.getBeginIndex());
+                          suggestion = Suggestion.createSuggestion(cleanFindValue, true, chapter);
                           if (suggestion != null) {
                             tmpMap.put(cleanFindValue, suggestion);
                           }

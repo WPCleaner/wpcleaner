@@ -248,9 +248,6 @@ public class PageAnalysisUtils {
       return null;
     }
     PageElementTitle title = getCurrentChapter(pageAnalysis, position);
-    if (title == null) {
-      return pageAnalysis.getPage().getTitle();
-    }
-    return pageAnalysis.getPage().getTitle() + "#" + title.getTitle();
+    return pageAnalysis.getPage().getTitle() + "#" + ((title != null) ? title.getTitle() : "");
   }
 }
