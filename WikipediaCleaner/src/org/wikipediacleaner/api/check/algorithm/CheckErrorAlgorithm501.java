@@ -42,6 +42,8 @@ import org.wikipediacleaner.api.data.Suggestion;
  */
 public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
+  private final static boolean TRACE_POSITION = false;
+
   public CheckErrorAlgorithm501() {
     super("Spelling and typography");
   }
@@ -180,6 +182,14 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
       // Check spelling
       if (checkSpelling) {
+        if (TRACE_POSITION) {
+          String testingAt = contents.substring(startIndex, startIndex + 10);
+          int newLine = testingAt.indexOf('\n');
+          if (newLine >= 0) {
+            testingAt = testingAt.substring(0, newLine);
+          }
+          System.out.println("Checking at \"" + testingAt + "\"");
+        }
         possibles.clear();
   
         // Test every suggestion
@@ -190,7 +200,8 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
           if (matcher.region(startIndex, contentsLength).lookingAt()) {
             int pos = matcher.end();
             if ((pos >= contents.length()) ||
-                (!Character.isLetterOrDigit(contents.charAt(pos)))) {
+                (!Character.isLetterOrDigit(contents.charAt(pos))) ||
+                (!Character.isLetterOrDigit(contents.charAt(pos - 1)))) {
               if (pos - startIndex >= maxLength) {
                 if (pos - startIndex > maxLength) {
                   possibles.clear();
@@ -244,9 +255,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       while ((startIndex < contents.length()) &&
              (((Character.isLetterOrDigit(contents.charAt(startIndex - 1))) &&
                (Character.isLetterOrDigit(contents.charAt(startIndex)))) ||
-              (Character.isSpaceChar(contents.charAt(startIndex))) ||
-              (Character.isWhitespace(contents.charAt(startIndex))) ||
-              ("'.=|\"-)$*:;]}".indexOf(contents.charAt(startIndex)) >= 0))) {
+              ("'.=|\"-)$*:;]}>\n".indexOf(contents.charAt(startIndex)) >= 0))) {
         startIndex++;
       }
     }
