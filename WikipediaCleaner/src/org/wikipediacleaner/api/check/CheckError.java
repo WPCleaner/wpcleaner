@@ -72,7 +72,15 @@ public class CheckError {
             (algorithm.isAvailable()) &&
             (CWConfigurationError.isPriorityActive(algorithm.getPriority()))) {
           List<CheckErrorResult> results = new ArrayList<CheckErrorResult>();
-          boolean errorFound = algorithm.analyze(pageAnalysis, results);
+          boolean errorFound = false;
+          int errorNumber = algorithm.getErrorNumber();
+          PageAnalysis.Result result = pageAnalysis.getCheckWikiErrors(errorNumber);
+          if (result != null) {
+            errorFound = result.getErrors(results);
+          } else {
+            errorFound = algorithm.analyze(pageAnalysis, results);
+            pageAnalysis.setCheckWikiErrors(errorNumber, errorFound, results);
+          }
           if (errorFound) {
             CheckErrorPage errorPage = new CheckErrorPage(pageAnalysis.getPage(), algorithm);
             errorPage.setResults(true, results);
@@ -110,7 +118,14 @@ public class CheckError {
     CheckErrorPage errorPage = new CheckErrorPage(pageAnalysis.getPage(), algorithm);
     boolean errorFound = false;
     List<CheckErrorResult> errorsFound = new ArrayList<CheckErrorResult>();
-    errorFound = algorithm.analyze(pageAnalysis, errorsFound);
+    int errorNumber = algorithm.getErrorNumber();
+    PageAnalysis.Result result = pageAnalysis.getCheckWikiErrors(errorNumber);
+    if (result != null) {
+      errorFound = result.getErrors(errorsFound);
+    } else {
+      errorFound = algorithm.analyze(pageAnalysis, errorsFound);
+      pageAnalysis.setCheckWikiErrors(errorNumber, errorFound, errorsFound);
+    }
     errorPage.setResults(errorFound, errorsFound);
     if (traceTime) {
       perf.printStep("Error n°" + algorithm.getErrorNumber());
