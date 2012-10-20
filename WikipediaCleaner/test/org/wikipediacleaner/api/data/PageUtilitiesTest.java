@@ -78,7 +78,7 @@ public class PageUtilitiesTest {
   public void testCountLinkOccurencesInText() {
     Page page = DataManager.getPage(EnumWikipedia.FR, "Utilisateur:Salebot/Journal/2008-11-05", null, null);
     Page link = DataManager.getPage(EnumWikipedia.FR, "AFP", null, null);
-    PageAnalysis pageAnalysis = new PageAnalysis(page, pageText);
+    PageAnalysis pageAnalysis = page.getAnalysis(pageText, true);
     PageAnalysisUtils.countInternalLinks(pageAnalysis, Collections.singletonList(link));
     assertEquals(1, link.getCountOccurrence());
   }

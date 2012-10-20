@@ -54,7 +54,7 @@ public class PageAnalysis {
    * @param page Page.
    * @param contents Page contents (may differ from page.getContents()).
    */
-  public PageAnalysis(Page page, String contents) {
+  PageAnalysis(Page page, String contents) {
     this.page = page;
     this.contents = (contents != null) ? contents : page.getContents();
     this.areas = new PageElementAreas();

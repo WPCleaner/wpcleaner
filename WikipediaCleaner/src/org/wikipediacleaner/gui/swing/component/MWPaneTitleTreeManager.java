@@ -258,7 +258,7 @@ public class MWPaneTitleTreeManager
   private void updateTreeToc() {
     MWPaneTitleTreeNode rootNode = new MWPaneTitleTreeNode(null);
     MWPaneTitleTreeNode lastNode = rootNode;
-    PageAnalysis pageAnalysis = new PageAnalysis(textPane.getWikiPage(), textPane.getText());
+    PageAnalysis pageAnalysis = textPane.getWikiPage().getAnalysis(textPane.getText(), true);
     List<PageElementTitle> titles = pageAnalysis.getTitles();
     for (PageElementTitle title : titles) {
       while ((lastNode != null) &&

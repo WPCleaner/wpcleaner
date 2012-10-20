@@ -330,7 +330,7 @@ public class MWPane
 
     // First remove MediaWiki styles
     String contents = getText();
-    PageAnalysis pageAnalysis = new PageAnalysis(page, contents);
+    PageAnalysis pageAnalysis = (page != null) ? page.getAnalysis(contents, true) : null;
     formatter.format(this, pageAnalysis);
 
     isInInternalModification = oldState;

@@ -661,7 +661,7 @@ public class WPCConfiguration {
               Page page = pages.get(pageName);
               if ((page != null) && (page.getContents() != null)) {
                 String contents = page.getContents();
-                PageAnalysis analysis = new PageAnalysis(page, contents);
+                PageAnalysis analysis = page.getAnalysis(contents, true);
                 Collection<PageElementTemplate> templates = analysis.getTemplates(elements[1]);
                 for (PageElementTemplate template : templates) {
                   String chapterId = PageAnalysisUtils.getCurrentChapterId(analysis, template.getBeginIndex());
@@ -700,7 +700,7 @@ public class WPCConfiguration {
             Page page = pages.get(suggestionPage);
             if ((page != null) && (page.getContents() != null)) {
               String contents = page.getContents();
-              PageAnalysis analysis = new PageAnalysis(page, contents);
+              PageAnalysis analysis = page.getAnalysis(contents, true);
               Collection<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_OTHER_TYPO);
               for (PageElementTag tag : tags) {
                 String chapterId = PageAnalysisUtils.getCurrentChapterId(analysis, tag.getBeginIndex());

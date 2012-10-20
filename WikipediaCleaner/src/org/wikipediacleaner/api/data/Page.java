@@ -43,7 +43,6 @@ public class Page implements Comparable<Page> {
   private Integer namespace;
   private String  title;
   private String  contents;
-  private PageAnalysis pageAnalysis;
   private Integer revisionId;
   private String  contentsTimestamp;
   private String  startTimestamp;
@@ -221,7 +220,6 @@ public class Page implements Comparable<Page> {
    */
   public void setContents(String contents) {
     this.contents = contents;
-    this.pageAnalysis = new PageAnalysis(this, contents);
   }
 
   /**
@@ -571,6 +569,7 @@ public class Page implements Comparable<Page> {
    * @return Links from the page (working if the page is a redirection).
    */
   public List<Page> getLinksWithRedirect(Map<Page, List<String>> anchors) {
+    PageAnalysis pageAnalysis = getAnalysis(contents, false);
     if (redirects != null) {
       for (int i = 0; i < redirects.size(); i++) {
         Page page = redirects.get(i);
@@ -987,6 +986,38 @@ public class Page implements Comparable<Page> {
       toTitle = ":" + toTitle;
     }
     return toTitle;
+  }
+
+  // ==========================================================================
+  // Analysis
+  // ==========================================================================
+
+  /**
+   * Page analysis.
+   */
+  private PageAnalysis analysis;
+
+  /**
+   * Page analysis.
+   * 
+   * @param currentContents Current page content to take into account.
+   * @param update True to update the analysis stored with the page.
+   * @return Page analysis for the current page contents.
+   */
+  public PageAnalysis getAnalysis(String currentContents, boolean update) {
+    if (currentContents == null) {
+      return null;
+    }
+    PageAnalysis result = null;
+    if ((analysis == null) || (!currentContents.equals(analysis.getContents()))) {
+      result = new PageAnalysis(this, currentContents);
+      if ((update) || (analysis == null)) {
+        analysis = result;
+      }
+    } else {
+      result = analysis;
+    }
+    return result;
   }
 
   // ==========================================================================

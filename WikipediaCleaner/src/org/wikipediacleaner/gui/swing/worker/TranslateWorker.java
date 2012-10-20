@@ -106,7 +106,7 @@ public class TranslateWorker extends BasicWorker {
       String text,
       boolean translateText,
       boolean useInterLanguage) throws APIException {
-    PageAnalysis analysis = new PageAnalysis(page, text);
+    PageAnalysis analysis = page.getAnalysis(text, true);
     Collection<PageElementInternalLink> links = analysis.getInternalLinks();
     Map<String, String> interwikis = new HashMap<String, String>();
     StringBuilder newText = new StringBuilder();
@@ -195,7 +195,7 @@ public class TranslateWorker extends BasicWorker {
     if (categoryNamespace == null) {
       return text;
     }
-    PageAnalysis analysis = new PageAnalysis(page, text);
+    PageAnalysis analysis = page.getAnalysis(text, true);
     Collection<PageElementCategory> categories = analysis.getCategories();
     Map<String, String> interwikis = new HashMap<String, String>();
     StringBuilder newText = new StringBuilder();
@@ -255,7 +255,7 @@ public class TranslateWorker extends BasicWorker {
     if (templateNamespace == null) {
       return text;
     }
-    PageAnalysis analysis = new PageAnalysis(page, text);
+    PageAnalysis analysis = page.getAnalysis(text, true);
     Collection<PageElementTemplate> templates = analysis.getTemplates();
     Map<String, String> interwikis = new HashMap<String, String>();
     StringBuilder newText = new StringBuilder();

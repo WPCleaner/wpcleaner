@@ -132,7 +132,7 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
 
     // Create popup menu
     Page originalPage = textPane.getWikiPage();
-    PageAnalysis pageAnalysis = new PageAnalysis(originalPage, textPane.getText());
+    PageAnalysis pageAnalysis = originalPage.getAnalysis(textPane.getText(), true);
     JPopupMenu popup = createPopup(textPane, position, pageAnalysis);
     if (popup == null) {
       popup = createDefaultPopup(textPane, position, pageAnalysis);

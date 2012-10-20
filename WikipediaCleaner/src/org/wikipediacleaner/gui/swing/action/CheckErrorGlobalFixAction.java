@@ -66,7 +66,7 @@ public class CheckErrorGlobalFixAction extends AbstractAction {
    */
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     String contents = textComponent.getText();
-    PageAnalysis analysis = new PageAnalysis(page, contents);
+    PageAnalysis analysis = page.getAnalysis(contents, true);
     contents = algorithm.fix(fixName, analysis, textComponent);
     textComponent.setText(contents);
     if (button != null) {
