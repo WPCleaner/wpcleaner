@@ -1090,9 +1090,16 @@ public class MainWindow
       List<String> pageChapters = chapters.get(page);
       if (pageChapters.size() > 1) {
         JMenu pageMenu = new JMenu(page);
+        Action action = new ActivateChapterAction(GT._("Activate all"), true, page, pageChapters);
+        JMenuItem item = new JMenuItem(action);
+        pageMenu.add(item);
+        action = new ActivateChapterAction(GT._("Deactivate all"), false, page, pageChapters);
+        item = new JMenuItem(action);
+        pageMenu.add(item);
+        pageMenu.addSeparator();
         for (String chapter : pageChapters) {
           boolean active = Suggestion.isChapterActive(page, chapter);
-          Action action = new ActivateChapterAction(chapter, active, page + "#" + chapter);
+          action = new ActivateChapterAction(chapter, active, page + "#" + chapter);
           JMenuItem chapterItem = new JCheckBoxMenuItem(action);
           pageMenu.add(chapterItem);
         }

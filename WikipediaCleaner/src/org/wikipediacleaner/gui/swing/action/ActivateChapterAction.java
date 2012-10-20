@@ -19,6 +19,9 @@
 package org.wikipediacleaner.gui.swing.action;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 
@@ -38,7 +41,12 @@ public class ActivateChapterAction extends AbstractAction {
   /**
    * Chapter to activate or deactivate.
    */
-  private final String chapter;
+  private final List<String> chapters;
+
+  /**
+   * True if the suggestions should be activated.
+   */
+  private final boolean activate;
 
   /**
    * @param name Displayed name.
@@ -48,7 +56,23 @@ public class ActivateChapterAction extends AbstractAction {
   public ActivateChapterAction(String name, boolean active, String chapter) {
     super(name);
     putValue(SELECTED_KEY, active);
-    this.chapter = chapter;
+    this.chapters = Collections.singletonList(chapter);
+    this.activate = !active;
+  }
+
+  /**
+   * @param name Displayed name.
+   * @param activate Should we activate the chapters ?
+   * @param page Page.
+   * @param chapters Actual chapters name.
+   */
+  public ActivateChapterAction(String name, boolean activate, String page, List<String> chapters) {
+    super(name);
+    this.chapters = new ArrayList<String>(chapters.size());
+    for (String chapter : chapters) {
+      this.chapters.add(page + "#" + chapter);
+    }
+    this.activate = activate;
   }
 
   /**
@@ -59,10 +83,8 @@ public class ActivateChapterAction extends AbstractAction {
     if ((e == null) || (e.getSource() == null)) {
       return;
     }
-    Object selected = getValue(SELECTED_KEY);
-    if (selected instanceof Boolean) {
-      Suggestion.activateChapter(chapter, ((Boolean) selected).booleanValue());
+    for (String chapter : chapters) {
+      Suggestion.activateChapter(chapter, activate);
     }
   }
-
 }
