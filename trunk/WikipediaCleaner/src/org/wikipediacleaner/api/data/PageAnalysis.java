@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.utils.Configuration;
@@ -1197,5 +1198,71 @@ public class PageAnalysis {
       }
     }
     return null;
+  }
+
+  // ==========================================================================
+  // Errors management
+  // ==========================================================================
+
+  /**
+   * Bean for holding results about error detection.
+   */
+  public static class Result {
+
+    /**
+     * True if errors of this kind have been found.
+     */
+    private final boolean found;
+
+    /**
+     * List of errors found.
+     */
+    private final List<CheckErrorResult> errors;
+
+    Result(boolean found, List<CheckErrorResult> errors) {
+      this.found = found;
+      this.errors = (errors != null) ? new ArrayList<CheckErrorResult>(errors) : null;
+    }
+
+    /**
+     * @param results (Out) List of errors found.
+     * @return True if errors of this kind have been found.
+     */
+    public boolean getErrors(List<CheckErrorResult> results) {
+      if ((results != null) && (errors != null)) {
+        results.addAll(errors);
+      }
+      return found;
+    }
+  }
+
+  /**
+   * Memorizing Check Wiki errors.
+   */
+  private Map<Integer, Result> checkWikiErrors;
+
+  /**
+   * Memorize Check Wiki erros.
+   * 
+   * @param errorNumber Error number.
+   * @param found True if errors of this kind have been found.
+   * @param errors List of errors found.
+   */
+  public void setCheckWikiErrors(int errorNumber, boolean found, List<CheckErrorResult> errors) {
+    if (checkWikiErrors == null) {
+      checkWikiErrors = new HashMap<Integer, PageAnalysis.Result>();
+    }
+    checkWikiErrors.put(Integer.valueOf(errorNumber), new Result(found, errors));
+  }
+
+  /**
+   * @param errorNumber Error number.
+   * @return Errors for this error number.
+   */
+  public Result getCheckWikiErrors(int errorNumber) {
+    if (checkWikiErrors == null) {
+      return null;
+    }
+    return checkWikiErrors.get(Integer.valueOf(errorNumber));
   }
 }
