@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -77,9 +77,9 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       // Search for templates like {{References}}
       String templates = getSpecificProperty(
           "references_templates", true, true, false);
-      String[] referencesTemplates = null;
+      List<String> referencesTemplates = null;
       if (templates != null) {
-        referencesTemplates = EnumWikipedia.convertPropertyToStringArray(templates);
+        referencesTemplates = WPCConfiguration.convertPropertyToStringList(templates);
       }
       if (referencesTemplates != null) {
         for (String referencesTemplate : referencesTemplates) {

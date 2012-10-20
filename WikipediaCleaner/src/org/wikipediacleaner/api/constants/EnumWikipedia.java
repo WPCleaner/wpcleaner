@@ -321,36 +321,6 @@ public enum EnumWikipedia {
   }
 
   /**
-   * Convert a multi-line property to a string array.
-   * 
-   * @param property Property.
-   * @return String array.
-   */
-  public static String[] convertPropertyToStringArray(String property) {
-    String[] result = null;
-    if ((property != null) && (property.trim().length() > 0)) {
-      String[] results = property.trim().split("\n");
-      if ((results != null) && (results.length > 0)) {
-        int count = 0;
-        for (int i = 0; i < results.length; i++) {
-          results[i] = results[i].trim();
-          if (results[i].length() > 0) {
-            count++;
-          }
-        }
-        result = new String[count];
-        for (int i = results.length; i > 0; i--) {
-          if (results[i - 1].length() > 0) {
-            count--;
-            result[count] = results[i - 1];
-          }
-        }
-      }
-    }
-    return result;
-  }
-
-  /**
    * Construct list of disambiguation pages.
    * 
    * @param api Wikipedia API

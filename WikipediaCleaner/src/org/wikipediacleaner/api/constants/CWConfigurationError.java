@@ -529,12 +529,10 @@ public class CWConfigurationError {
     }
     whiteListWiki = null;
     if (value != null) {
-      String[] tmp = EnumWikipedia.convertPropertyToStringArray(value);
+      List<String> tmp = WPCConfiguration.convertPropertyToStringList(value);
       if (tmp != null) {
         whiteListWiki = new HashSet<String>();
-        for (int i = 0; i < tmp.length; i++) {
-          whiteListWiki.add(tmp[i]);
-        }
+        whiteListWiki.addAll(tmp);
       }
     }
   }
