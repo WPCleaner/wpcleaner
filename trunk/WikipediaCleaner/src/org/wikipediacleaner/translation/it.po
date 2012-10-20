@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-09-16 21:36+0200\n"
+"POT-Creation-Date: 2012-09-22 11:03+0200\n"
 "PO-Revision-Date: 2012-08-21 11:43+0000\n"
 "Last-Translator: simone.sandri <lexluxsox@hotmail.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -335,6 +335,20 @@ msgstr ""
 msgid "What name do you want to use for this <ref> tag ?"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:98
+#, fuzzy, java-format
+msgid "Add {0}"
+msgstr "Aggiungi"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:101
+#, fuzzy
+msgid "Delete section"
+msgstr "Elimina"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:116
+msgid "A list of texts that can be added to sections without content"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm502.java:85
 #, java-format
 msgid "Remove {0} namespace from template name"
@@ -357,27 +371,27 @@ msgstr ""
 msgid "Fixed using [[{0}]]"
 msgstr ""
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:291
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:304
 msgid "Deactivated"
 msgstr "Disattivato"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:293
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:306
 msgid "Low priority"
 msgstr "Bassa priorità"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:295
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:308
 msgid "Middle priority"
 msgstr "Media priorità"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:297
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:310
 msgid "Top priority"
 msgstr "Alta priorità"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:299
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:312
 msgid "For Bot"
 msgstr ""
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:301
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:314
 msgid "Priority unknown"
 msgstr "Priorità sconosciuta"
 

@@ -20,10 +20,13 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTitle;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -57,6 +60,13 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Retrieve texts that can be added to sections without content
+    String allTexts = getSpecificProperty("texts", true, true, false);
+    String[] texts = null;
+    if (allTexts != null) {
+      texts = EnumWikipedia.convertPropertyToStringArray(allTexts);
+    }
+
     // Analyzing titles
     String contents = pageAnalysis.getContents();
     for (int i = 0; i < titles.size(); i++) {
@@ -79,11 +89,31 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), title.getBeginIndex(), title.getEndIndex());
+              pageAnalysis.getPage(), title.getBeginIndex(), lastPos);
+          if (texts != null) {
+            for (String text : texts) {
+              String replacement =
+                  contents.substring(title.getBeginIndex(), title.getEndIndex()) + "\n" +
+                  text + "\n\n";
+              errorResult.addReplacement(replacement, GT._("Add {0}", text));
+            }
+          }
+          errorResult.addReplacement("", GT._("Delete section"));
           errors.add(errorResult);
         }
       }
     }
     return result;
+  }
+
+  /**
+   * @return Map of parameters (Name -> description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put("texts", GT._("A list of texts that can be added to sections without content"));
+    return parameters;
   }
 }
