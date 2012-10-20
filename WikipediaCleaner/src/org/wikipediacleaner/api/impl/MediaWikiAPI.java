@@ -1469,7 +1469,7 @@ public class MediaWikiAPI implements API {
           "", null);
     }
     if ((captcha.getURL() != null) && (captcha.getURL().trim().length() > 0)) {
-      Utilities.browseURL(wikipedia.getSettings().getHostURL() + captcha.getURL());
+      Utilities.browseURL(wikipedia.getSettings().getHostURL(false) + captcha.getURL());
       return Utilities.askForValue(
           null,
           GT._("This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"),

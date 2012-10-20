@@ -53,6 +53,7 @@ public enum ConfigurationValueBoolean {
   RESTORE_WINDOW("RestoreWindow", true),
   SAVE_LAST_REPLACEMENT("SaveLastReplacement", false),
   SAVE_WINDOW("SaveWindow", true),
+  SECURE_URL("SecureURL", false),
   SHORT_NOTATION("ShortNotation", false),
   SPELLING("Orthograph", true),
   TRANSLATION_CATEGORY("TranslationCategory", true),

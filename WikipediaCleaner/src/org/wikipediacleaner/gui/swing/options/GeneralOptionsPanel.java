@@ -86,6 +86,15 @@ public class GeneralOptionsPanel extends OptionsPanel {
 
     constraints.gridwidth = 3;
 
+    // Use secure URL in external viewer
+    chk = createJCheckBox(
+        GT._("Use secure URL in external viewer (https)"),
+        ConfigurationValueBoolean.SECURE_URL);
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(chk, constraints);
+    constraints.gridy++;
+
     // Close disambiguation window after sending
     chk = createJCheckBox(
         GT._("Close disambiguation window after sending"),
@@ -140,7 +149,7 @@ public class GeneralOptionsPanel extends OptionsPanel {
     add(chk, constraints);
     constraints.gridy++;
 
-    // Display "WikiCleaner" in the update comments
+    // Display "WPCleaner" in the update comments
     chk = createJCheckBox(
         GT._("Display {0} link in update comments", Version.PROGRAM),
         ConfigurationValueBoolean.WIKICLEANER_COMMENT);
