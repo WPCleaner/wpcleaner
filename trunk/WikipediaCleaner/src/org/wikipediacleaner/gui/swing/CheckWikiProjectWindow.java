@@ -1688,8 +1688,10 @@ public class CheckWikiProjectWindow extends OnePageWindow {
 
       // Parameters description
       try {
+        Configuration config = Configuration.getConfiguration();
+        boolean secured = config.getBoolean(null, ConfigurationValueBoolean.SECURE_URL);
         String url =
-          getWikipedia().getSettings().getURL(getWikipedia().getCWConfiguration().getTranslationPage(), true);
+          getWikipedia().getSettings().getURL(getWikipedia().getCWConfiguration().getTranslationPage(), true, secured);
         StringBuilder parametersDescription = new StringBuilder();
         parametersDescription.append(GT._(
             "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :",

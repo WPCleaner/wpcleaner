@@ -36,8 +36,10 @@ public abstract class AbstractWikipediaSettings
     this.codeCheckWiki = language + "wiki";
     this.name = name;
     this.hostUrl = "http://" + language + ".wikipedia.org";
+    this.securedHostUrl = "https://" + language + ".wikipedia.org";
     this.apiUrl = hostUrl + "/w/api.php";
     this.indexUrl = hostUrl + "/w/index.php";
+    this.securedIndexUrl = securedHostUrl + "/w/index.php";
   }
 
   /**
@@ -98,10 +100,19 @@ public abstract class AbstractWikipediaSettings
   private final String hostUrl;
 
   /**
+   * Secured host URL (URL to Wikipedia host).
+   */
+  private final String securedHostUrl;
+
+  /**
+   * @param secured True if secured connection is requested.
    * @return Host URL (URL to Wikipedia host).
    */
   @Override
-  public String getHostURL() {
+  public String getHostURL(boolean secured) {
+    if (secured) {
+      return securedHostUrl;
+    }
     return hostUrl;
   }
 
@@ -124,10 +135,19 @@ public abstract class AbstractWikipediaSettings
   private final String indexUrl;
 
   /**
+   * Secured index URL (URL to index.php).
+   */
+  private final String securedIndexUrl;
+
+  /**
+   * @param secured True if secured connection is requested.
    * @return Index URL (URL to index.php).
    */
   @Override
-  public String getIndexURL() {
+  public String getIndexURL(boolean secured) {
+    if (secured) {
+      return securedIndexUrl;
+    }
     return indexUrl;
   }
 }

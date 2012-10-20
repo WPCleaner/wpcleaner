@@ -39,6 +39,8 @@ import org.wikipediacleaner.api.execution.ExpandTemplatesCallable;
 import org.wikipediacleaner.api.execution.LinksWRCallable;
 import org.wikipediacleaner.api.execution.ParseTextCallable;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
@@ -177,6 +179,8 @@ public class MediaWiki extends MediaWikiController {
     int count = 0;
     final API api = APIFactory.getAPI();
     StringBuilder details = new StringBuilder();
+    Configuration config = Configuration.getConfiguration();
+    boolean secured = config.getBoolean(null, ConfigurationValueBoolean.SECURE_URL);
     while (hasRemainingTask() && !shouldStop()) {
       Object result = getNextResult();
       if ((result != null) && (result instanceof Page)) {
@@ -201,7 +205,7 @@ public class MediaWiki extends MediaWikiController {
                 if (description != null) {
                   if (!changed) {
                     String title =
-                      "<a href=\"" + wikipedia.getSettings().getURL(page.getTitle(), false) + "\">" +
+                      "<a href=\"" + wikipedia.getSettings().getURL(page.getTitle(), false, secured) + "\">" +
                       page.getTitle() + "</a>";
                     description.append(GT._("Page {0}:", title));
                     description.append("\n");

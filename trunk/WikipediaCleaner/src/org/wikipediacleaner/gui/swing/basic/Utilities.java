@@ -57,6 +57,8 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.StringChecker;
 
 
@@ -756,7 +758,9 @@ public class Utilities {
    * @param action Page action.
    */
   public static void browseURL(EnumWikipedia wiki, String title, String action) {
-    browseURL(wiki.getSettings().getURL(title, action));
+    Configuration config = Configuration.getConfiguration();
+    boolean secured = config.getBoolean(null, ConfigurationValueBoolean.SECURE_URL);
+    browseURL(wiki.getSettings().getURL(title, action, secured));
   }
 
   /**
@@ -767,7 +771,9 @@ public class Utilities {
    * @param redirect Flag indicating if redirects should be followed.
    */
   public static void browseURL(EnumWikipedia wiki, String title, boolean redirect) {
-    browseURL(wiki.getSettings().getURL(title, redirect));
+    Configuration config = Configuration.getConfiguration();
+    boolean secured = config.getBoolean(null, ConfigurationValueBoolean.SECURE_URL);
+    browseURL(wiki.getSettings().getURL(title, redirect, secured));
   }
 
   /**

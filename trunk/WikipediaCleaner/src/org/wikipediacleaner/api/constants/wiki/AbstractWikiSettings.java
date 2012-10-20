@@ -56,9 +56,10 @@ public abstract class AbstractWikiSettings {
   }
 
   /**
+   * @param secured True if secured connection is requested.
    * @return Host URL (URL to wiki host).
    */
-  public abstract String getHostURL();
+  public abstract String getHostURL(boolean secured);
 
   /**
    * @return API URL (URL to api.php).
@@ -66,38 +67,41 @@ public abstract class AbstractWikiSettings {
   public abstract String getApiURL();
 
   /**
+   * @param secured True if secured connection is requested.
    * @return Index URL (URL to index.php).
    */
-  public abstract String getIndexURL();
+  public abstract String getIndexURL(boolean secured);
 
   /**
    * @param pageTitle Title.
    * @param redirect Follow redirect ?
+   * @param secured True if secured connection is requested.
    * @return URL of the wiki.
    */
-  public String getURL(String pageTitle, boolean redirect) {
+  public String getURL(String pageTitle, boolean redirect, boolean secured) {
     try {
-      return getIndexURL() +
+      return getIndexURL(secured) +
              "?title=" + URLEncoder.encode(pageTitle, "UTF-8") +
              (redirect ? "" : "&redirect=no");
     } catch (UnsupportedEncodingException e) {
-      return getIndexURL();
+      return getIndexURL(secured);
     }
   }
 
   /**
    * @param pageTitle Title.
    * @param action Action.
+   * @param secured True if secured connection is requested.
    * @return URL of the wiki.
    */
-  public String getURL(String pageTitle, String action) {
+  public String getURL(String pageTitle, String action, boolean secured) {
     try {
-      return getIndexURL() +
+      return getIndexURL(secured) +
              "?title=" + URLEncoder.encode(pageTitle, "UTF-8") +
              "&redirect=no" +
              "&action=" + action;
     } catch (UnsupportedEncodingException e) {
-      return getIndexURL();
+      return getIndexURL(secured);
     }
   }
 
