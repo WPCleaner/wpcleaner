@@ -70,7 +70,7 @@ public class TextProviderImageDescription implements TextProvider {
 
         // Use image description on the wiki
         if (Boolean.TRUE.equals(imagePage.isExisting())) {
-          PageAnalysis pageAnalysis = new PageAnalysis(imagePage, imagePage.getContents());
+          PageAnalysis pageAnalysis = imagePage.getAnalysis(imagePage.getContents(), true);
           for (PageElementTemplate template : pageAnalysis.getTemplates()) {
             if (Page.areSameTitle("Information", template.getTemplateName())) {
               String description = template.getParameterValue("Description");
@@ -90,12 +90,12 @@ public class TextProviderImageDescription implements TextProvider {
             EnumWikipedia.COMMONS,
             Collections.singletonList(commonsPage), false);
         if (Boolean.TRUE.equals(commonsPage.isExisting())) {
-          PageAnalysis pageAnalysis = new PageAnalysis(commonsPage, commonsPage.getContents());
+          PageAnalysis pageAnalysis = commonsPage.getAnalysis(commonsPage.getContents(), true);
           for (PageElementTemplate template : pageAnalysis.getTemplates()) {
             if (Page.areSameTitle("Information", template.getTemplateName())) {
               String global = template.getParameterValue("Description");
               if ((global != null) && (global.trim().length() > 0)) {
-                PageAnalysis descAnalysis = new PageAnalysis(commonsPage, global);
+                PageAnalysis descAnalysis = commonsPage.getAnalysis(global, true);
                 for (PageElementTemplate template2 : descAnalysis.getTemplates()) {
                   if (Page.areSameTitle(image.getWikipedia().getSettings().getCode(), template2.getTemplateName())) {
                     String description = template2.getParameterValue("1");

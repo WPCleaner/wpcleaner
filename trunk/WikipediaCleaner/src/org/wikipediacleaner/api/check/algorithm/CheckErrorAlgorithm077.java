@@ -59,7 +59,7 @@ public class CheckErrorAlgorithm077 extends CheckErrorAlgorithmBase {
       String description = image.getDescription();
       if (description != null) {
         description = description.trim();
-        PageAnalysis descAnalysis = new PageAnalysis(pageAnalysis.getPage(), description);
+        PageAnalysis descAnalysis = pageAnalysis.getPage().getAnalysis(description, false);
         List<PageElementTag> smallTags = descAnalysis.getTags(PageElementTag.TAG_HTML_SMALL);
         if ((smallTags != null) && (!smallTags.isEmpty())) {
           int lastTest = 0;

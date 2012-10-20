@@ -49,7 +49,7 @@ public class ReplaceAllLinksAction implements ActionListener {
    */
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     String originalText = textPane.getText();
-    PageAnalysis analysis = new PageAnalysis(textPane.getWikiPage(), originalText);
+    PageAnalysis analysis = textPane.getWikiPage().getAnalysis(originalText, true);
     StringBuilder buffer = new StringBuilder();
     int lastPosition = 0;
     Collection<PageElementInternalLink> links = analysis.getInternalLinks();

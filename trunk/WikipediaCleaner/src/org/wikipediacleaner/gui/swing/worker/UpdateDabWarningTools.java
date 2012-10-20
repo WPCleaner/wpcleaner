@@ -231,7 +231,7 @@ public class UpdateDabWarningTools {
     // Update disambiguation warning
     int count = 0;
     for (Page page : pages) {
-      PageAnalysis pageAnalysis = new PageAnalysis(page, page.getContents());
+      PageAnalysis pageAnalysis = page.getAnalysis(page.getContents(), true);
       if (updateDabWarning(
           pageAnalysis, page.getRevisionId(),
           mapTalkPages.get(page),
@@ -386,7 +386,7 @@ public class UpdateDabWarningTools {
     if (contents == null) {
       contents = "";
     }
-    PageAnalysis analysis = new PageAnalysis(todoSubpage, contents);
+    PageAnalysis analysis = todoSubpage.getAnalysis(contents, true);
     List<PageElementTemplate> templates = analysis.getTemplates(
         configuration.getDisambiguationWarningTemplate());
     PageElementTemplate templateWarning = ((templates != null) && (templates.size() > 0)) ?
@@ -464,7 +464,7 @@ public class UpdateDabWarningTools {
     if (contents == null) {
       contents = "";
     }
-    PageAnalysis analysis = new PageAnalysis(talkPage, contents);
+    PageAnalysis analysis = talkPage.getAnalysis(contents, true);
     PageElementTemplate templateTodo = null;
     if ((configuration.getTodoTemplates() == null) ||
         (configuration.getTodoTemplates().isEmpty())) {
@@ -534,7 +534,7 @@ public class UpdateDabWarningTools {
 
     // Search disambiguation warning in the "To do" parameter
     String parameter = templateTodo.getParameterValue("1");
-    PageAnalysis parameterAnalysis = new PageAnalysis(talkPage, parameter);
+    PageAnalysis parameterAnalysis = talkPage.getAnalysis(parameter, false);
     List<PageElementTemplate> templates = parameterAnalysis.getTemplates(
         configuration.getDisambiguationWarningTemplate());
     PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
@@ -615,7 +615,7 @@ public class UpdateDabWarningTools {
     if ((contents == null) || (contents.equals(""))) {
       return false;
     }
-    PageAnalysis analysis = new PageAnalysis(todoSubpage, contents);
+    PageAnalysis analysis = todoSubpage.getAnalysis(contents, true);
 
     // Search disambiguation warning in the "To do" sub-page
     List<PageElementTemplate> templates = analysis.getTemplates(
@@ -682,7 +682,7 @@ public class UpdateDabWarningTools {
     if (contents == null) {
       return false;
     }
-    PageAnalysis analysis = new PageAnalysis(talkPage, contents);
+    PageAnalysis analysis = talkPage.getAnalysis(contents, true);
 
     // Search "To do" in the talk page
     PageElementTemplate templateTodo = null;
@@ -749,7 +749,7 @@ public class UpdateDabWarningTools {
 
     // Search disambiguation warning in the "To do" parameter
     String parameter = templateTodo.getParameterValue("1");
-    PageAnalysis parameterAnalysis = new PageAnalysis(talkPage, parameter);
+    PageAnalysis parameterAnalysis = talkPage.getAnalysis(parameter, false);
     List<PageElementTemplate> templates = parameterAnalysis.getTemplates(
         configuration.getDisambiguationWarningTemplate());
     PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
@@ -836,7 +836,7 @@ public class UpdateDabWarningTools {
     if (contents == null) {
       return false;
     }
-    PageAnalysis analysis = new PageAnalysis(talkPage, contents);
+    PageAnalysis analysis = talkPage.getAnalysis(contents, true);
 
     // Search "To do" in the talk page
     PageElementTemplate templateTodo = null;
@@ -977,7 +977,7 @@ public class UpdateDabWarningTools {
   private PageElementTemplate getExistingTemplateTodoLink(Page talkPage, String contents) {
     PageElementTemplate templateTodoLink = null;
     if (configuration.getTodoLinkTemplates() != null) {
-      PageAnalysis analysis = new PageAnalysis(talkPage, contents);
+      PageAnalysis analysis = talkPage.getAnalysis(contents, true);
       for (String todoLink : configuration.getTodoLinkTemplates()) {
         List<PageElementTemplate> templates = analysis.getTemplates(todoLink);
         if ((templates != null) && (templates.size() > 0)) {

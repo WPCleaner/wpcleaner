@@ -884,7 +884,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       String initialContents = getTextContents().getText();
       String contents = initialContents;
       for (CheckErrorPage error : getInitialErrors()) {
-        PageAnalysis analysis = new PageAnalysis(getPage(), contents);
+        PageAnalysis analysis = getPage().getAnalysis(contents, true);
         contents = error.getAlgorithm().automaticFix(analysis);
       }
       if (!contents.equals(initialContents)) {
@@ -1080,7 +1080,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
           }
         }
       }
-      PageAnalysis pageAnalysis = new PageAnalysis(page, text);
+      PageAnalysis pageAnalysis = page.getAnalysis(text, true);
       PageAnalysisUtils.countInternalLinks(pageAnalysis, links);
     }
   }
@@ -1210,7 +1210,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     listLinks.repaint();
 
     // Check for new errors
-    PageAnalysis pageAnalysis = new PageAnalysis(getPage(), getTextContents().getText());
+    PageAnalysis pageAnalysis = getPage().getAnalysis(getTextContents().getText(), true);
     pageAnalysis.shouldCheckSpelling(shouldCheckOrthograph());
     List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
         allAlgorithms, pageAnalysis);

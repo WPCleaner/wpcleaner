@@ -1397,7 +1397,7 @@ public abstract class OnePageWindow
   protected void initializeInitialErrors(
       Collection<CheckErrorAlgorithm> algorithms) {
     if (page != null) {
-      PageAnalysis pageAnalysis = new PageAnalysis(page, page.getContents());
+      PageAnalysis pageAnalysis = page.getAnalysis(page.getContents(), false);
       pageAnalysis.shouldCheckSpelling(shouldCheckOrthograph());
       List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
           algorithms, pageAnalysis);
@@ -1451,7 +1451,7 @@ public abstract class OnePageWindow
       String contents = getTextContents().getText();
       for (CheckErrorPage initialError : initialErrors) {
         if (pageAnalysis == null) {
-          pageAnalysis = new PageAnalysis(initialError.getPage(), contents);
+          pageAnalysis = initialError.getPage().getAnalysis(contents, true);
           pageAnalysis.shouldCheckSpelling(shouldCheckOrthograph());
         }
         CheckErrorPage errorPage = CheckError.analyzeError(

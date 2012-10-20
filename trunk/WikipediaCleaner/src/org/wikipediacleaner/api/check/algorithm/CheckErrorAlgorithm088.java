@@ -83,8 +83,7 @@ public class CheckErrorAlgorithm088 extends CheckErrorAlgorithmBase {
   /**
    * Automatic fixing of all the errors in the page.
    * 
-   * @param page Page.
-   * @param contents Page contents (may be different from page.getContents()).
+   * @param analysis Page analysis.
    * @return Page contents after fix.
    */
   @Override

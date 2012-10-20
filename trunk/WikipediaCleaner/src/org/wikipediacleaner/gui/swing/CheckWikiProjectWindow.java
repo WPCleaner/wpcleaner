@@ -1030,7 +1030,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       }
       textPage.setText(page.getContents());
       textPage.setModified(false);
-      PageAnalysis pageAnalysis = new PageAnalysis(page, textPage.getText());
+      PageAnalysis pageAnalysis = page.getAnalysis(textPage.getText(), true);
       List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
           allAlgorithms, pageAnalysis);
       modelErrors.clear();
@@ -1095,7 +1095,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         String initialContents = textPage.getText();
         String contents = initialContents;
         for (CheckErrorPage initialError : initialErrors) {
-          PageAnalysis analysis = new PageAnalysis(page, contents);
+          PageAnalysis analysis = page.getAnalysis(contents, true);
           contents = initialError.getAlgorithm().automaticFix(analysis);
         }
         if (!contents.equals(initialContents)) {
@@ -1191,7 +1191,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       }
 
       // Check if error is still present
-      PageAnalysis pageAnalysis = new PageAnalysis(page, textPage.getText());
+      PageAnalysis pageAnalysis = page.getAnalysis(textPage.getText(), true);
       CheckErrorPage errorPage = CheckError.analyzeError(
           error.getAlgorithm(), pageAnalysis);
       if ((errorPage.getResults() != null) &&
@@ -1318,7 +1318,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       if (initialErrors != null) {
         for (CheckErrorPage initialError : initialErrors) {
           if (pageAnalysis == null) {
-            pageAnalysis = new PageAnalysis(initialError.getPage(), textPage.getText());
+            pageAnalysis = initialError.getPage().getAnalysis(textPage.getText(), true);
           }
           CheckErrorPage errorPage = CheckError.analyzeError(
               initialError.getAlgorithm(), pageAnalysis);
@@ -1414,7 +1414,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
      */
     private void actionValidate() {
       // Check for new errors
-      PageAnalysis pageAnalysis = new PageAnalysis(page, textPage.getText());
+      PageAnalysis pageAnalysis = page.getAnalysis(textPage.getText(), true);
       List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
           allAlgorithms, pageAnalysis);
       if (errorsFound != null) {
