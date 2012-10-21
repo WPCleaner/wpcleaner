@@ -156,7 +156,7 @@ public interface API {
    * @see <a href="http://www.mediawiki.org/wiki/API:Login">API:Login</a>
    */
   public LoginResult login(
-      EnumWikipedia wikipedia,
+      EnumWikipedia wiki,
       String username,
       String password,
       boolean login) throws APIException;
@@ -188,7 +188,7 @@ public interface API {
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#revisions_.2F_rv">API:Properties#revisions</a>
    */
   public void retrieveContents(
-      EnumWikipedia wikipedia,
+      EnumWikipedia wiki,
       Collection<Page> pages, boolean withRedirects) throws APIException;
 
   /**
@@ -203,7 +203,7 @@ public interface API {
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#templates_.2F_tl">API:Properties#templates</a>
    */
   public void initializeDisambiguationStatus(
-      EnumWikipedia wikipedia, List<Page> pages) throws APIException;
+      EnumWikipedia wiki, List<Page> pages) throws APIException;
 
   /**
    * Retrieves internal links of pages.
@@ -215,7 +215,7 @@ public interface API {
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#links_.2F_pl">API:Properties#links</a>
    */
   public void retrieveLinks(
-      EnumWikipedia wikipedia, Collection<Page> pages) throws APIException;
+      EnumWikipedia wiki, Collection<Page> pages) throws APIException;
 
   /**
    * Retrieve a specific language link in a page.
@@ -246,7 +246,7 @@ public interface API {
    * @see <a href="http://www.mediawiki.org/wiki/API:Backlinks">API:Backlinks</a>
    */
   public void retrieveBackLinks(
-      EnumWikipedia wikipedia, Page page,
+      EnumWikipedia wiki, Page page,
       boolean redirects) throws APIException;
 
   /**
@@ -261,7 +261,7 @@ public interface API {
    * @see <a href="http://www.mediawiki.org/wiki/API:Categorymembers">API:Categorymembers</a>
    */
   public List<Page> retrieveCategoryMembers(
-      EnumWikipedia wikipedia, String category,
+      EnumWikipedia wiki, String category,
       int depth, boolean limit) throws APIException;
 
   /**
@@ -277,7 +277,7 @@ public interface API {
    * @see <a href="http://www.mediawiki.org/wiki/API:Embeddedin">API:Embeddedin</a>
    */
   public List<Page> retrieveEmbeddedIn(
-      EnumWikipedia wikipedia, Page page,
+      EnumWikipedia wiki, Page page,
       List<Integer> namespaces, boolean limit) throws APIException;
 
   /**
@@ -290,7 +290,7 @@ public interface API {
    * @see <a href="http://www.mediawiki.org/wiki/API:Random">API:Random</a>
    */
   public List<Page> getRandomPages(
-      EnumWikipedia wikipedia, int count) throws APIException;
+      EnumWikipedia wiki, int count) throws APIException;
 
   /**
    * Retrieves recent changes.
@@ -318,7 +318,7 @@ public interface API {
    * @see <a href="http://www.mediawiki.org/wiki/API:Search">API:Search</a>
    */
   public void retrieveSimilarPages(
-      EnumWikipedia wikipedia, Page page,
+      EnumWikipedia wiki, Page page,
       boolean limit) throws APIException;
 
   /**
@@ -347,18 +347,20 @@ public interface API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#expandtemplates">API:Parsing wikitext</a>
    */
-  public String expandTemplates(EnumWikipedia wikipedia, String title, String text) throws APIException;
+  public String expandTemplates(
+      EnumWikipedia wiki, String title, String text) throws APIException;
 
   /**
    * Parse text.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param title The title to use (for example in {{PAGENAME}}).
    * @param text The text with templates in it.
    * @return Parsed text.
    * @throws APIException
    */
-  public String parseText(EnumWikipedia wikipedia, String title, String text) throws APIException;
+  public String parseText(
+      EnumWikipedia wiki, String title, String text) throws APIException;
 
   // ==========================================================================
   // API : Purging pages' caches.
@@ -373,7 +375,8 @@ public interface API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Purge">API:Purge</a>
    */
-  public void purgePageCache(EnumWikipedia wikipedia, Page page) throws APIException;
+  public void purgePageCache(
+      EnumWikipedia wiki, Page page) throws APIException;
 
   // ==========================================================================
   // API : Changing wiki content / Create and edit pages.
