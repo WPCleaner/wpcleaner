@@ -64,9 +64,9 @@ import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.CompositeComparator;
+import org.wikipediacleaner.api.data.InternalLinkCount;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageAnalysisUtils;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -116,6 +116,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   private JButton buttonValidate;
 
   JList listLinks;
+  PageListCellRenderer listCellRenderer;
   PageListModel modelLinks;
   Map<String, Integer> mapLinksCount;
   private AbstractPageListPopupListener popupListenerLinks;
@@ -525,7 +526,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     constraints.fill = GridBagConstraints.BOTH;
     constraints.weighty = 1;
     listLinks = new JList(modelLinks);
-    PageListCellRenderer listCellRenderer = new PageListCellRenderer();
+    listCellRenderer = new PageListCellRenderer();
     listCellRenderer.showCountOccurence(true);
     listCellRenderer.showDisambiguation(true);
     listCellRenderer.showMissing(true);
@@ -786,16 +787,19 @@ public class OnePageAnalysisWindow extends OnePageWindow {
 
     // Update links information
     Page page = getPage();
+    PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
     mapLinksCount = new HashMap<String, Integer>();
-    if ((page != null) && (page.getLinks() != null)) {
+    if (page.getLinks() != null) {
       List<Page> links = page.getLinks();
       modelLinks.setElements(links);
-      countOccurrences(page.getContents(), true);
+      countOccurrences(analysis, true);
       for (Page p : links) {
         if ((p != null) &&
-            (Boolean.TRUE.equals(p.isDisambiguationPage())) &&
-            (p.getCountOccurrence() > 0)) {
-          mapLinksCount.put(p.getTitle(), Integer.valueOf(p.getCountOccurrence()));
+            (Boolean.TRUE.equals(p.isDisambiguationPage()))) {
+          InternalLinkCount count = analysis.getLinkCount(p);
+          if ((count != null) && (count.getTotalLinkCount() > 0)) {
+            mapLinksCount.put(p.getTitle(), Integer.valueOf(count.getTotalLinkCount()));
+          }
         }
       }
     }
@@ -885,7 +889,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       String initialContents = getTextContents().getText();
       String contents = initialContents;
       for (CheckErrorPage error : getInitialErrors()) {
-        PageAnalysis analysis = getPage().getAnalysis(contents, true);
+        analysis = getPage().getAnalysis(contents, true);
         contents = error.getAlgorithm().automaticFix(analysis);
       }
       if (!contents.equals(initialContents)) {
@@ -1049,10 +1053,10 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   /**
    * Count pages occurrences.
    * 
-   * @param text Page text.
+   * @param analysis Page analysis.
    * @param forceDisambiguation Flag indicating if disambiguation should be counted.
    */
-  void countOccurrences(String text, boolean forceDisambiguation) {
+  void countOccurrences(PageAnalysis analysis, boolean forceDisambiguation) {
     Page page = getPage();
     if ((page != null) && (page.getLinks() != null)) {
       List<Page> links = new ArrayList<Page>();
@@ -1081,8 +1085,9 @@ public class OnePageAnalysisWindow extends OnePageWindow {
           }
         }
       }
-      PageAnalysis pageAnalysis = page.getAnalysis(text, true);
-      PageAnalysisUtils.countInternalLinks(pageAnalysis, links);
+      analysis.countLinks(links);
+      listCellRenderer.setPageAnalysis(analysis);
+      modelLinks.setPageAnalysis(analysis);
     }
   }
 
@@ -1126,7 +1131,10 @@ public class OnePageAnalysisWindow extends OnePageWindow {
           if ((page != null) && (page.getLinks() != null)) {
             for (Page link : page.getLinks()) {
               if (Page.areSameTitle(p.getKey(), link.getTitle())) {
-                currentCount = link.getCountOccurrence();
+                InternalLinkCount count = pageAnalysis.getLinkCount(link);
+                if (count != null) {
+                  currentCount = count.getTotalLinkCount();
+                }
               }
             }
           }
@@ -1150,9 +1158,23 @@ public class OnePageAnalysisWindow extends OnePageWindow {
           comment.append("[[" + fix + "]]");
         }
 
-        Map<String, Integer> linkCount = PageAnalysisUtils.countInternalDisambiguationLinks(
-            pageAnalysis, pageAnalysis.getPage().getLinks());
-        List<String> dabLinks = new ArrayList<String>(linkCount.keySet());
+        List<String> dabLinks = new ArrayList<String>();
+        List<Page> links = pageAnalysis.getPage().getLinks();
+        if (links != null) {
+          pageAnalysis.countLinks(links);
+          for (Page link : links) {
+            if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
+              InternalLinkCount linkCount = pageAnalysis.getLinkCount(link);
+              if (linkCount != null) {
+                if ((linkCount.getInternalLinkCount() > 0) ||
+                    (linkCount.getIncorrectTemplateCount() > 0) ||
+                    (linkCount.getHelpNeededTemplateCount() > 0)) {
+                  dabLinks.add(link.getTitle());
+                }
+              }
+            }
+          }
+        }
         Collections.sort(dabLinks);
         if (dabLinks.size() > 0) {
           comment.append(configuration.getDisambiguationCommentTodo(dabLinks.size()));
@@ -1207,14 +1229,14 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   @Override
   protected void actionValidate(boolean fullValidate) {
     getTextContents().resetAttributes();
-    countOccurrences(getTextContents().getText(), false);
+    PageAnalysis analysis = getPage().getAnalysis(getTextContents().getText(), true);
+    countOccurrences(analysis, false);
     listLinks.repaint();
 
     // Check for new errors
-    PageAnalysis pageAnalysis = getPage().getAnalysis(getTextContents().getText(), true);
-    pageAnalysis.shouldCheckSpelling(shouldCheckOrthograph());
+    analysis.shouldCheckSpelling(shouldCheckOrthograph());
     List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-        allAlgorithms, pageAnalysis);
+        allAlgorithms, analysis);
     if (errorsFound != null) {
       for (CheckErrorPage tmpError : errorsFound) {
         boolean errorFound = false;
@@ -1242,7 +1264,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     listErrors.repaint();
 
     // Update comment 
-    setComment(getAutomaticComment(pageAnalysis));
+    setComment(getAutomaticComment(analysis));
 
     // Update selection
     if (fullValidate) {
@@ -1269,7 +1291,10 @@ public class OnePageAnalysisWindow extends OnePageWindow {
           for (Object value : values) {
             if (value instanceof Page) {
               countElement++;
-              count += ((Page) value).getCountOccurrence();
+              InternalLinkCount tmpCount = analysis.getLinkCount((Page) value);
+              if (tmpCount != null) {
+                count += tmpCount.getTotalLinkCount();
+              }
             }
           }
         }

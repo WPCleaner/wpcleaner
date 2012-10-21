@@ -737,6 +737,47 @@ public class PageAnalysis {
     return null;
   }
 
+  /**
+   * Links count.
+   */
+  private Map<String, InternalLinkCount> linksCount = new HashMap<String, InternalLinkCount>();
+
+  /**
+   * @param title Page title.
+   * @return Number of links to the page.
+   */
+  public InternalLinkCount getLinkCount(Page link) {
+    InternalLinkCount result = linksCount.get(link.getTitle());
+    if (result != null) {
+      return result;
+    }
+    List<Page> links = Collections.singletonList(link);
+    InternalLinkCounter counter = new InternalLinkCounter(linksCount, links);
+    PageAnalysisUtils.findInternalLinks(this, links, counter);
+    return linksCount.get(link.getTitle());
+  }
+
+  /**
+   * Count number of links in the page.
+   * 
+   * @param links Links.
+   */
+  public void countLinks(List<Page> links) {
+    if ((links == null) || (links.size() == 0)) {
+      return;
+    }
+    List<Page> interestingLinks = new ArrayList<Page>();
+    for (Page link : links) {
+      if (!linksCount.containsKey(link.getTitle())) {
+        interestingLinks.add(link);
+      }
+    }
+    if (interestingLinks.size() > 0) {
+      InternalLinkCounter counter = new InternalLinkCounter(linksCount, interestingLinks);
+      PageAnalysisUtils.findInternalLinks(this, interestingLinks, counter);
+    }
+  }
+
   // ==========================================================================
   // Images management
   // ==========================================================================

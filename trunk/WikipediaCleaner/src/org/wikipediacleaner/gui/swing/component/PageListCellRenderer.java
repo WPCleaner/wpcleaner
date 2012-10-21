@@ -30,7 +30,9 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.EmptyBorder;
 
+import org.wikipediacleaner.api.data.InternalLinkCount;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.utils.Configuration;
 
 
@@ -40,6 +42,8 @@ import org.wikipediacleaner.utils.Configuration;
 public class PageListCellRenderer extends JLabel implements ListCellRenderer {
 
   private static final long serialVersionUID = 1456336109709806845L;
+
+  private PageAnalysis analysis;
 
   private boolean showCountOccurence;
   private boolean showDisambiguation;
@@ -86,6 +90,13 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
   }
 
   /**
+   * @param analysis Page analyis.
+   */
+  public void setPageAnalysis(PageAnalysis analysis) {
+    this.analysis = analysis;
+  }
+
+  /**
    * @param show Flag indicating if the missing flag is shown.
    */
   public void showMissing(boolean show) {
@@ -115,15 +126,19 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
     Boolean disambiguation = null;
     Boolean exist = null;
     boolean redirect = false;
+    InternalLinkCount count = null;
     if (value instanceof Page) {
-      Page page = (Page) value;
-      text = page.getTitle();
-      disambiguation = page.isDisambiguationPage();
-      exist = page.isExisting();
-      if (showCountOccurence && (page.getCountOccurrence() > 0)) {
-        text += " => " + page.getCountOccurrence(); 
+      Page pageElement = (Page) value;
+      text = pageElement.getTitle();
+      disambiguation = pageElement.isDisambiguationPage();
+      exist = pageElement.isExisting();
+      count = (analysis != null) ? analysis.getLinkCount(pageElement) : null;
+      if (showCountOccurence &&
+          (count != null) &&
+          (count.getTotalLinkCount() > 0)) {
+        text += " => " + count.getTotalLinkCount(); 
       }
-      redirect = page.isRedirect();
+      redirect = pageElement.isRedirect();
     }
 
     // Text
@@ -138,7 +153,15 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
           foreground = Color.DARK_GRAY;
         }
       } else if (disambiguation.booleanValue()) {
-        foreground = Color.RED;
+        if (count == null) {
+          foreground = Color.RED;
+        } else if ((count.getInternalLinkCount() > 0) || (count.getIncorrectTemplateCount() > 0)) {
+          foreground = Color.RED;
+        } else if ((count.getHelpNeededTemplateCount() > 0)) {
+          foreground = Color.ORANGE;
+        } else {
+          foreground = Color.BLUE;
+        }
       }
     } else if (pageProperties != null) {
       String property = pageProperties.getProperty(text);

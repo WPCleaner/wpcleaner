@@ -111,34 +111,6 @@ public class PageAnalysisUtils {
   }
 
   /**
-   * Count internal links in a page.
-   * 
-   * @param pageAnalysis Page analysis.
-   * @param links Links that are requested.
-   */
-  public static void countInternalLinks(
-      PageAnalysis pageAnalysis,
-      List<Page> links) {
-    InternalLinkNotification counter = new InternalLinkCounter(links);
-    findInternalLinks(pageAnalysis, links, counter);
-  }
-
-  /**
-   * Count internal disambiguation links in a page.
-   * 
-   * @param pageAnalysis Page analysis.
-   * @param links Links that are requested.
-   * @return Link count.
-   */
-  public static Map<String, Integer> countInternalDisambiguationLinks(
-      PageAnalysis pageAnalysis,
-      List<Page> links) {
-    InternalDisambiguationLinkCounter counter = new InternalDisambiguationLinkCounter();
-    findInternalLinks(pageAnalysis, links, counter);
-    return counter.getLinkCount();
-  }
-
-  /**
    * Get anchors in internal links.
    * 
    * @param pageAnalysis Page analysis.

@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.data;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -26,13 +27,16 @@ import java.util.List;
  */
 public class InternalLinkCounter implements InternalLinkNotification {
 
+  private final Map<String, InternalLinkCount> linksCount;
+
   /**
    * Constructor.
    */
-  public InternalLinkCounter(List<Page> links) {
+  InternalLinkCounter(Map<String, InternalLinkCount> linksCount, List<Page> links) {
+    this.linksCount = linksCount;
     if (links != null) {
       for (Page link : links) {
-        link.setCountOccurrence(0);
+        getLinkCount(link);
       }
     }
   }
@@ -45,7 +49,8 @@ public class InternalLinkCounter implements InternalLinkNotification {
    */
   public void linkFound(
       Page link, PageElementInternalLink internalLink) {
-    countLink(link);
+    InternalLinkCount linkCount = getLinkCount(link);
+    linkCount.addInternalLink();
   }
 
   /**
@@ -58,18 +63,27 @@ public class InternalLinkCounter implements InternalLinkNotification {
   public void linkFound(
       Page link, PageElementTemplate template,
       TemplateMatcher matcher) {
-    countLink(link);
+    InternalLinkCount linkCount = getLinkCount(link);
+    if (matcher.isHelpNeeded()) {
+      linkCount.addHelpNeededTemplateLink();
+    } else if (matcher.isGood()) {
+      linkCount.addGoodTemplateLink();
+    } else {
+      linkCount.addIncorrectTemplateLink();
+    }
   }
 
   /**
-   * Increment the number of times a link has been found.
-   * 
-   * @param link Link found.
+   * @param link Link requested.
+   * @return Structure for counting links.
    */
-  private void countLink(Page link) {
-    if (link == null) {
-      return;
+  private InternalLinkCount getLinkCount(Page link) {
+    String title = link.getTitle();
+    InternalLinkCount linkCount = linksCount.get(title);
+    if (linkCount == null) {
+      linkCount = new InternalLinkCount(title);
+      linksCount.put(title, linkCount);
     }
-    link.setCountOccurrence(link.getCountOccurrence() + 1);
+    return linkCount;
   }
 }
