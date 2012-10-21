@@ -134,7 +134,7 @@ public class Performance {
    */
   public void printEnd() {
     long time = currentTime();
-    if (time > 0) {
+    if (time > initialTime) {
       printMessage("(" + (time - initialTime) + unit + ")");
     }
   }
