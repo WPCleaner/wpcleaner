@@ -24,8 +24,8 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -65,10 +65,7 @@ import org.xml.sax.SAXException;
  */
 public class PreviewWindow
   extends BasicWindow
-  implements ActionListener, HtmlPreview {
-
-  private final static String ACTION_CLOSE  = "CLOSE";
-  private final static String ACTION_UPDATE = "UPDATE";
+  implements HtmlPreview {
 
   boolean showExpand;
   boolean showPreview;
@@ -223,12 +220,12 @@ public class PreviewWindow
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     buttonUpdate = Utilities.createJButton(GT._("&Update"));
-    buttonUpdate.setActionCommand(ACTION_UPDATE);
-    buttonUpdate.addActionListener(this);
+    buttonUpdate.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionUpdate"));
     buttonPanel.add(buttonUpdate);
     buttonClose = Utilities.createJButton(GT._("&Close"));
-    buttonClose.setActionCommand(ACTION_CLOSE);
-    buttonClose.addActionListener(this);
+    buttonClose.addActionListener(EventHandler.create(
+        ActionListener.class, this, "dispose"));
     buttonPanel.add(buttonClose);
     constraints.fill = GridBagConstraints.NONE;
     constraints.gridwidth = 2;
@@ -242,27 +239,9 @@ public class PreviewWindow
   }
 
   /**
-   * Invoked when an action occurs.
-   * 
-   * @param e Event.
-   */
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if (e == null) {
-      return;
-    }
-
-    if (ACTION_UPDATE.equals(e.getActionCommand())) {
-      actionUpdate();
-    } else if (ACTION_CLOSE.equals(e.getActionCommand())) {
-      actionClose();
-    }
-  }
-
-  /**
    * Action called when Update button is pressed.
    */
-  void actionUpdate() {
+  public void actionUpdate() {
     textOriginal.resetAttributes();
     new ExpandTemplatesWorker(
         getWikipedia(), this, textTitle.getText(),
@@ -286,12 +265,5 @@ public class PreviewWindow
     } catch (IOException e) {
       htmlPreview.clearDocument();
     }
-  }
-
-  /**
-   * Action called when Close button is pressed.
-   */
-  private void actionClose() {
-    dispose();
   }
 }

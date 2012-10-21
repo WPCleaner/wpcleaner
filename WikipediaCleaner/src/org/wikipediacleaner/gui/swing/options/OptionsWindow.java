@@ -21,8 +21,8 @@ package org.wikipediacleaner.gui.swing.options;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,13 +42,7 @@ import org.wikipediacleaner.utils.Configuration;
  * Options Window of WikipediaCleaner. 
  */
 public class OptionsWindow
-  extends BasicWindow
-  implements ActionListener {
-
-  private final static String ACTION_APPLY       = "APPLY";
-  private final static String ACTION_CANCEL      = "CANCEL";
-  private final static String ACTION_DEFAULT     = "RESTORE_DEFAULT";
-  private final static String ACTION_VALIDATE    = "VALIDATE";
+  extends BasicWindow {
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(3);
 
@@ -133,57 +127,35 @@ public class OptionsWindow
 
     // Apply button
     buttonApply = Utilities.createJButton(GT._("&Apply"));
-    buttonApply.setActionCommand(ACTION_APPLY);
-    buttonApply.addActionListener(this);
+    buttonApply.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionApply"));
     panel.add(buttonApply);
 
     // Validate button
     buttonValidate = Utilities.createJButton(GT._("&Validate"));
-    buttonValidate.setActionCommand(ACTION_VALIDATE);
-    buttonValidate.addActionListener(this);
+    buttonValidate.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionValidate"));
     panel.add(buttonValidate);
 
     // Cancel button
     buttonCancel = Utilities.createJButton(GT._("&Cancel"));
-    buttonCancel.setActionCommand(ACTION_CANCEL);
-    buttonCancel.addActionListener(this);
+    buttonCancel.addActionListener(EventHandler.create(
+        ActionListener.class, this, "dispose"));
     panel.add(buttonCancel);
 
     // Restore defaults button
     buttonDefault = Utilities.createJButton(GT._("&Restore defaults"));
-    buttonDefault.setActionCommand(ACTION_DEFAULT);
-    buttonDefault.addActionListener(this);
+    buttonDefault.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionDefault"));
     panel.add(buttonDefault);
 
     return panel;
   }
 
   /**
-   * Invoked when an action occurs.
-   * 
-   * @param e Event.
-   */
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if (e == null) {
-      return;
-    }
-
-    if (ACTION_APPLY.equals(e.getActionCommand())) {
-      actionApply();
-    } else if (ACTION_VALIDATE.equals(e.getActionCommand())) {
-      actionValidate();
-    } else if (ACTION_CANCEL.equals(e.getActionCommand())) {
-      actionCancel();
-    } else if (ACTION_DEFAULT.equals(e.getActionCommand())) {
-      actionDefault();
-    }
-  }
-
-  /**
    * Action called when Apply button is pressed.
    */
-  private void actionApply() {
+  public void actionApply() {
     for (OptionsPanel panel : panels) {
       panel.apply();
     }
@@ -194,7 +166,7 @@ public class OptionsWindow
   /**
    * Action called when Default button is pressed.
    */
-  private void actionDefault() {
+  public void actionDefault() {
     for (OptionsPanel panel : panels) {
       panel.defaultValues();
     }
@@ -203,15 +175,8 @@ public class OptionsWindow
   /**
    * Action called when Validate button is pressed.
    */
-  private void actionValidate() {
+  public void actionValidate() {
     actionApply();
-    dispose();
-  }
-
-  /**
-   * Action called when Cancel button is pressed.
-   */
-  private void actionCancel() {
     dispose();
   }
 }

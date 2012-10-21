@@ -25,10 +25,10 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.EventHandler;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
@@ -62,13 +62,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class RedLinksWindow extends BasicWindow implements ActionListener, ItemListener {
 
-  private final static String ACTION_CLOSE    = "CLOSE";
-  private final static String ACTION_RELOAD   = "RELOAD";
-  private final static String ACTION_REPLACE  = "REPLACE";
-  private final static String ACTION_SEARCH   = "SEARCH";
-  private final static String ACTION_TYPE     = "SEARCH TYPE";
-
-  Page           page;
+  Page    page;
   MWPane  textPane;
 
   private JButton buttonClose;
@@ -194,7 +188,7 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
    * Update component state.
    */
   @Override
-  protected void updateComponentState() {
+  public void updateComponentState() {
     chkOnlyPage.setEnabled(textPane != null);
     listPages.setEnabled(!chkOnlyPage.isSelected());
     comboBegin.setEnabled(buttonBegin.isSelected());
@@ -210,14 +204,14 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
 
     // Replace button
     buttonReplace = Utilities.createJButton(GT._("Re&place"));
-    buttonReplace.setActionCommand(ACTION_REPLACE);
-    buttonReplace.addActionListener(this);
+    buttonReplace.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionReplace"));
     panel.add(buttonReplace);
 
     // Close button
     buttonClose = Utilities.createJButton(GT._("&Close"));
-    buttonClose.setActionCommand(ACTION_CLOSE);
-    buttonClose.addActionListener(this);
+    buttonClose.addActionListener(EventHandler.create(
+        ActionListener.class, this, "dispose"));
     panel.add(buttonClose);
 
     return panel;
@@ -266,8 +260,8 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
 
     // Reload button
     buttonReload = Utilities.createJButton(GT._("&Reload page list"));
-    buttonReload.setActionCommand(ACTION_RELOAD);
-    buttonReload.addActionListener(this);
+    buttonReload.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionReload"));
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weighty = 0;
     panel.add(buttonReload, constraints);
@@ -353,8 +347,8 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
       values.add(title);
     }
     buttonBegin = Utilities.createJRadioButton(GT._("&Begins with"), true);
-    buttonBegin.setActionCommand(ACTION_TYPE);
-    buttonBegin.addActionListener(this);
+    buttonBegin.addActionListener(EventHandler.create(
+        ActionListener.class, this, "updateComponentState"));
     grpSearch.add(buttonBegin);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -367,8 +361,8 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
 
     // Contain
     buttonContain = Utilities.createJRadioButton(GT._("&Contains"), true);
-    buttonContain.setActionCommand(ACTION_TYPE);
-    buttonContain.addActionListener(this);
+    buttonContain.addActionListener(EventHandler.create(
+        ActionListener.class, this, "updateComponentState"));
     buttonContain.setEnabled(false);
     grpSearch.add(buttonContain);
     constraints.gridx = 0;
@@ -382,8 +376,8 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
 
     // End with
     buttonEnd = Utilities.createJRadioButton(GT._("&Ends with"), true);
-    buttonEnd.setActionCommand(ACTION_TYPE);
-    buttonEnd.addActionListener(this);
+    buttonEnd.addActionListener(EventHandler.create(
+        ActionListener.class, this, "updateComponentState"));
     buttonEnd.setEnabled(false);
     grpSearch.add(buttonEnd);
     constraints.gridx = 0;
@@ -397,36 +391,12 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
 
     // Search
     buttonSearch = Utilities.createJButton(GT._("&Search for possible pages"));
-    buttonSearch.setActionCommand(ACTION_SEARCH);
-    buttonSearch.addActionListener(this);
     constraints.gridwidth = 2;
     constraints.gridx = 0;
     panel.add(buttonSearch, constraints);
     constraints.gridy++;
 
     return panel;
-  }
-
-  /**
-   * Invoked when an action occurs.
-   * 
-   * @param e Event.
-   */
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if (e == null) {
-      return;
-    }
-
-    if (ACTION_RELOAD.equals(e.getActionCommand())) {
-      actionReload();
-    } else if (ACTION_REPLACE.equals(e.getActionCommand())) {
-      actionReplace();
-    } else if (ACTION_CLOSE.equals(e.getActionCommand())) {
-      actionClose();
-    } else if (ACTION_TYPE.equals(e.getActionCommand())) {
-      updateComponentState();
-    }
   }
 
   /* (non-Javadoc)
@@ -445,7 +415,7 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
   /**
    * Action called when Reload button is pressed. 
    */
-  void actionReload() {
+  public void actionReload() {
     RedLinksAnalysisWorker reloadWorker = new RedLinksAnalysisWorker(getWikipedia(), this, page);
     reloadWorker.setListener(new DefaultBasicWorkerListener () {
       @Override
@@ -461,14 +431,7 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
   /**
    * Action called when Replace button is pressed. 
    */
-  private void actionReplace() {
+  public void actionReplace() {
     //TODO
-  }
-
-  /**
-   * Action called when Close button is pressed.
-   */
-  private void actionClose() {
-    dispose();
   }
 }

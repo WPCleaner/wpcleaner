@@ -24,7 +24,8 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -69,14 +70,6 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
  * Disambiguation window.
  */
 public class DisambiguationWindow extends OnePageWindow {
-
-  private final static String ACTION_AUTOMATIC_FIXING      = "AUTOMATIC FIXING";
-  private final static String ACTION_DISAMBIGUATION_LINK   = "DISAMBIGUATION LINK";
-  private final static String ACTION_EXTERNAL_VIEWER_LINK  = "EXTERNAL VIEWER LINK";
-  private final static String ACTION_FULL_ANALYSIS_LINK    = "FULL ANALYSIS LINK";
-  private final static String ACTION_MARK_NEED_HELP        = "MARK NEED HELP";
-  private final static String ACTION_MARK_NORMAL           = "MARK NORMAL";
-  private final static String ACTION_NEXT_LINKS            = "NEXT LINKS";
 
   //public final static Integer WINDOW_VERSION = Integer.valueOf(2);
 
@@ -271,8 +264,8 @@ public class DisambiguationWindow extends OnePageWindow {
 
     // Select next links button
     buttonSelectNextLinks = Utilities.createJButton(GT._("Select &next links"));
-    buttonSelectNextLinks.setActionCommand(ACTION_NEXT_LINKS);
-    buttonSelectNextLinks.addActionListener(this);
+    buttonSelectNextLinks.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSelectNextLinks"));
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weightx = 1;
     panel.add(buttonSelectNextLinks, constraints);
@@ -280,8 +273,8 @@ public class DisambiguationWindow extends OnePageWindow {
 
     // Automatic fixing
     buttonAutomaticFixing = Utilities.createJButton(GT._("Automatic fixing"));
-    buttonAutomaticFixing.setActionCommand(ACTION_AUTOMATIC_FIXING);
-    buttonAutomaticFixing.addActionListener(this);
+    buttonAutomaticFixing.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionRunAutomaticFixing"));
     panel.add(buttonAutomaticFixing, constraints);
     constraints.gridy++;
 
@@ -291,32 +284,32 @@ public class DisambiguationWindow extends OnePageWindow {
     buttonFullAnalysisLink = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
         GT._("Full analysis (Alt + &F)"), false);
-    buttonFullAnalysisLink.setActionCommand(ACTION_FULL_ANALYSIS_LINK);
-    buttonFullAnalysisLink.addActionListener(this);
+    buttonFullAnalysisLink.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionFullAnalysisLink"));
     toolbar.add(buttonFullAnalysisLink);
     buttonDisambiguationLink = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Disambiguation (Alt + &D)"), false);
-    buttonDisambiguationLink.setActionCommand(ACTION_DISAMBIGUATION_LINK);
-    buttonDisambiguationLink.addActionListener(this);
+    buttonDisambiguationLink.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionDisambiguationLink"));
     toolbar.add(buttonDisambiguationLink);
     buttonMarkNormal = Utilities.createJButton(
         "wpc-mark-normal.png", EnumImageSize.NORMAL,
         GT._("Mark backlink as normal"), false);
-    buttonMarkNormal.setActionCommand(ACTION_MARK_NORMAL);
-    buttonMarkNormal.addActionListener(this);
+    buttonMarkNormal.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionMarkBacklinkNormal"));
     toolbar.add(buttonMarkNormal);
     buttonMarkNeedHelp = Utilities.createJButton(
         "wpc-mark-need-help.png", EnumImageSize.NORMAL,
         GT._("Mark backlink as needing help"), false);
-    buttonMarkNeedHelp.setActionCommand(ACTION_MARK_NEED_HELP);
-    buttonMarkNeedHelp.addActionListener(this);
+    buttonMarkNeedHelp.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionMarkBacklinkHelpNeeded"));
     toolbar.add(buttonMarkNeedHelp);
     buttonExternalViewerLink = Utilities.createJButton(
         "gnome-emblem-web.png", EnumImageSize.NORMAL,
         GT._("External Viewer"), false);
-    buttonExternalViewerLink.setActionCommand(ACTION_EXTERNAL_VIEWER_LINK);
-    buttonExternalViewerLink.addActionListener(this);
+    buttonExternalViewerLink.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionExternalViewerLink"));
     toolbar.add(buttonExternalViewerLink);
     toolbar.addSeparator();
     linkCount = new JLabel(GT._("Link count"));
@@ -364,33 +357,6 @@ public class DisambiguationWindow extends OnePageWindow {
       menu.add(menuItem);
     }
     return menu;
-  }
-
-  /* (non-Javadoc)
-   * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-   */
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if (e == null) {
-      return;
-    }
-
-    super.actionPerformed(e);
-    if (ACTION_FULL_ANALYSIS_LINK.equals(e.getActionCommand())) {
-      actionFullAnalysisLink();
-    } else if (ACTION_DISAMBIGUATION_LINK.equals(e.getActionCommand())) {
-      actionDisambiguationLink();
-    } else if (ACTION_MARK_NORMAL.equals(e.getActionCommand())) {
-      actionMarkBacklink(Configuration.VALUE_PAGE_NORMAL);
-    } else if (ACTION_MARK_NEED_HELP.equals(e.getActionCommand())) {
-      actionMarkBacklink(Configuration.VALUE_PAGE_HELP_NEEDED);
-    } else if (ACTION_EXTERNAL_VIEWER_LINK.equals(e.getActionCommand())) {
-      actionExternalViewerLink();
-    } else if (ACTION_NEXT_LINKS.equals(e.getActionCommand())) {
-      actionSelectNextLinks();
-    } else if (ACTION_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
-      actionRunAutomaticFixing();
-    }
   }
 
   /**
@@ -462,7 +428,7 @@ public class DisambiguationWindow extends OnePageWindow {
   /**
    * Action called when Run Automatic Fixing button is pressed. 
    */
-  private void actionRunAutomaticFixing() {
+  public void actionRunAutomaticFixing() {
     Object[] values = listLinks.getSelectedValues();
     if ((values == null) || (values.length == 0)) {
       Utilities.displayWarning(
@@ -480,7 +446,7 @@ public class DisambiguationWindow extends OnePageWindow {
   /**
    * Action called when Full analysis button is pressed.
    */
-  private void actionFullAnalysisLink() {
+  public void actionFullAnalysisLink() {
     List<Page> knownPages = null;
     if (getPage() != null) {
       knownPages = new ArrayList<Page>(1);
@@ -500,9 +466,23 @@ public class DisambiguationWindow extends OnePageWindow {
   /**
    * Action called when Disambiguation button is pressed.
    */
-  private void actionDisambiguationLink() {
+  public void actionDisambiguationLink() {
     Controller.runDisambiguationAnalysis(
         getParentComponent(), listLinks.getSelectedValues(), getWikipedia());
+  }
+
+  /**
+   * Action called when Mark back link button is pressed.
+   */
+  public void actionMarkBacklinkNormal() {
+    actionMarkBacklink(Configuration.VALUE_PAGE_NORMAL);
+  }
+
+  /**
+   * Action called when Mark back link button is pressed.
+   */
+  public void actionMarkBacklinkHelpNeeded() {
+    actionMarkBacklink(Configuration.VALUE_PAGE_HELP_NEEDED);
   }
 
   /**
@@ -526,7 +506,7 @@ public class DisambiguationWindow extends OnePageWindow {
   /**
    * Action called when External Viewer button is pressed.
    */
-  private void actionExternalViewerLink() {
+  public void actionExternalViewerLink() {
     for (Object selection : listLinks.getSelectedValues()) {
       if (selection instanceof Page) {
         Utilities.browseURL(getWikipedia(), ((Page) selection).getTitle(), false);
@@ -537,7 +517,7 @@ public class DisambiguationWindow extends OnePageWindow {
   /**
    * Action called when Select next links button is pressed. 
    */
-  private void actionSelectNextLinks() {
+  public void actionSelectNextLinks() {
 
     // Test
     if (listLinks.getModel().getSize() == 0) {

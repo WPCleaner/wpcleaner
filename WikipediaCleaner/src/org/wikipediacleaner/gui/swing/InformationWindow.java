@@ -24,8 +24,8 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -54,10 +54,7 @@ import org.xml.sax.SAXException;
  * A window to show information.
  */
 public class InformationWindow
-  extends BasicWindow
-  implements ActionListener {
-
-  private final static String ACTION_CLOSE  = "CLOSE";
+  extends BasicWindow {
 
   String title;
   String information;
@@ -174,8 +171,8 @@ public class InformationWindow
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     buttonClose = Utilities.createJButton(GT._("&Close"));
-    buttonClose.setActionCommand(ACTION_CLOSE);
-    buttonClose.addActionListener(this);
+    buttonClose.addActionListener(EventHandler.create(
+        ActionListener.class, this, "dispose"));
     buttonPanel.add(buttonClose);
     constraints.fill = GridBagConstraints.NONE;
     constraints.gridx = 0;
@@ -185,28 +182,5 @@ public class InformationWindow
     constraints.gridy++;
 
     return panel;
-  }
-
-  /**
-   * Invoked when an action occurs.
-   * 
-   * @param e Event.
-   */
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if (e == null) {
-      return;
-    }
-
-    if (ACTION_CLOSE.equals(e.getActionCommand())) {
-      actionClose();
-    }
-  }
-
-  /**
-   * Action called when Close button is pressed.
-   */
-  private void actionClose() {
-    dispose();
   }
 }

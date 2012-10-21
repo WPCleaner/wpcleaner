@@ -23,7 +23,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -68,16 +69,6 @@ import org.wikipediacleaner.utils.Configuration;
  * Automatic fixing window.
  */
 public class AutomaticFixingWindow extends OnePageWindow {
-
-  private final static String ACTION_ADD_AUTOMATIC_FIXING  = "ADD AUTOMATIC FIXING";
-  private final static String ACTION_CLR_AUTOMATIC_FIXING  = "CLR AUTOMATIC FIXING";
-  private final static String ACTION_DISAMBIGUATION_LINK   = "DISAMBIGUATION LINK";
-  private final static String ACTION_EXTERNAL_VIEWER_LINK  = "EXTERNAL VIEWER LINK";
-  private final static String ACTION_FULL_ANALYSIS_LINK    = "FULL ANALYSIS LINK";
-  private final static String ACTION_MDF_AUTOMATIC_FIXING  = "MDF AUTOMATIC FIXING";
-  private final static String ACTION_RMV_AUTOMATIC_FIXING  = "RMV AUTOMATIC FIXING";
-  private final static String ACTION_RUN_AUTOMATIC_FIXING  = "RUN AUTOMATIC FIXING";
-  private final static String ACTION_SAVE_AUTOMATIC_FIXING = "SAVE AUTOMATIC FIXING";
 
   //public final static Integer WINDOW_VERSION = Integer.valueOf(2);
 
@@ -219,38 +210,38 @@ public class AutomaticFixingWindow extends OnePageWindow {
     buttonAddAutomaticFixing = Utilities.createJButton(
         "gnome-list-add.png", EnumImageSize.NORMAL,
         GT._("Add"), false);
-    buttonAddAutomaticFixing.setActionCommand(ACTION_ADD_AUTOMATIC_FIXING);
-    buttonAddAutomaticFixing.addActionListener(this);
+    buttonAddAutomaticFixing.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionAddAutomaticFixing"));
     toolBarButtons.add(buttonAddAutomaticFixing);
     buttonRmvAutomaticFixing = Utilities.createJButton(
         "gnome-list-remove.png", EnumImageSize.NORMAL,
         GT._("Remove"), false);
-    buttonRmvAutomaticFixing.setActionCommand(ACTION_RMV_AUTOMATIC_FIXING);
-    buttonRmvAutomaticFixing.addActionListener(this);
+    buttonRmvAutomaticFixing.addActionListener(EventHandler.create(
+        ActionListener.class, this, "ActionRmvAutomaticFixing"));
     toolBarButtons.add(buttonRmvAutomaticFixing);
     buttonMdfAutomaticFixing = Utilities.createJButton(
         "gnome-accessories-text-editor.png", EnumImageSize.NORMAL,
         GT._("Modify"), false);
-    buttonMdfAutomaticFixing.setActionCommand(ACTION_MDF_AUTOMATIC_FIXING);
-    buttonMdfAutomaticFixing.addActionListener(this);
+    buttonMdfAutomaticFixing.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionMdfAutomaticFixing"));
     toolBarButtons.add(buttonMdfAutomaticFixing);
     buttonClrAutomaticFixing = Utilities.createJButton(
         "gnome-edit-clear.png", EnumImageSize.NORMAL,
         GT._("Clear"), false);
-    buttonClrAutomaticFixing.setActionCommand(ACTION_CLR_AUTOMATIC_FIXING);
-    buttonClrAutomaticFixing.addActionListener(this);
+    buttonClrAutomaticFixing.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionClrAutomaticFixing"));
     toolBarButtons.add(buttonClrAutomaticFixing);
     buttonSaveAutomaticFixing = Utilities.createJButton(
         "gnome-media-floppy.png", EnumImageSize.NORMAL,
         GT._("Save"), false);
-    buttonSaveAutomaticFixing.setActionCommand(ACTION_SAVE_AUTOMATIC_FIXING);
-    buttonSaveAutomaticFixing.addActionListener(this);
+    buttonSaveAutomaticFixing.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSaveAutomaticFixing"));
     toolBarButtons.add(buttonSaveAutomaticFixing);
     buttonRunAutomaticFixing = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
         GT._("Fix selected pages"), false);
-    buttonRunAutomaticFixing.setActionCommand(ACTION_RUN_AUTOMATIC_FIXING);
-    buttonRunAutomaticFixing.addActionListener(this);
+    buttonRunAutomaticFixing.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionRunAutomaticFixing"));
     toolBarButtons.add(buttonRunAutomaticFixing);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridwidth = 2;
@@ -306,20 +297,20 @@ public class AutomaticFixingWindow extends OnePageWindow {
     buttonFullAnalysisLink = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
         GT._("Full analysis (Alt + &F)"), false);
-    buttonFullAnalysisLink.setActionCommand(ACTION_FULL_ANALYSIS_LINK);
-    buttonFullAnalysisLink.addActionListener(this);
+    buttonFullAnalysisLink.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionFullAnalysisLink"));
     toolbar.add(buttonFullAnalysisLink);
     buttonDisambiguationLink = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Disambiguation (Alt + &D)"), false);
-    buttonDisambiguationLink.setActionCommand(ACTION_DISAMBIGUATION_LINK);
-    buttonDisambiguationLink.addActionListener(this);
+    buttonDisambiguationLink.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionDisambiguationLink"));
     toolbar.add(buttonDisambiguationLink);
     buttonExternalViewerLink = Utilities.createJButton(
         "gnome-emblem-web.png", EnumImageSize.NORMAL,
         GT._("External Viewer"), false);
-    buttonExternalViewerLink.setActionCommand(ACTION_EXTERNAL_VIEWER_LINK);
-    buttonExternalViewerLink.addActionListener(this);
+    buttonExternalViewerLink.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionExternalViewerLink"));
     toolbar.add(buttonExternalViewerLink);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weighty = 0;
@@ -358,37 +349,6 @@ public class AutomaticFixingWindow extends OnePageWindow {
     buttonRmvAutomaticFixing.setEnabled(true);
     buttonRunAutomaticFixing.setEnabled(true);
     buttonSaveAutomaticFixing.setEnabled(hasReference);
-  }
-
-  /* (non-Javadoc)
-   * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-   */
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if (e == null) {
-      return;
-    }
-
-    super.actionPerformed(e);
-    if (ACTION_FULL_ANALYSIS_LINK.equals(e.getActionCommand())) {
-      actionFullAnalysisLink();
-    } else if (ACTION_DISAMBIGUATION_LINK.equals(e.getActionCommand())) {
-      actionDisambiguationLink();
-    } else if (ACTION_EXTERNAL_VIEWER_LINK.equals(e.getActionCommand())) {
-      actionExternalViewerLink();
-    } else if (ACTION_ADD_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
-      actionAddAutomaticFixing();
-    } else if (ACTION_MDF_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
-      actionMdfAutomaticFixing();
-    } else if (ACTION_RMV_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
-      ActionRmvAutomaticFixing();
-    } else if (ACTION_CLR_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
-      actionClrAutomaticFixing();
-    } else if (ACTION_RUN_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
-      actionRunAutomaticFixing();
-    } else if (ACTION_SAVE_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
-      actionSaveAutomaticFixing();
-    }
   }
 
   /**
@@ -436,7 +396,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   /**
    * Action called when Add Automatic Fixing button is pressed.
    */
-  private void actionAddAutomaticFixing() {
+  public void actionAddAutomaticFixing() {
     String initialText = Utilities.askForValue(
         getParentComponent(), "Input the text that should be replaced", "", null);
     if ((initialText == null) || (initialText.length() == 0)) {
@@ -453,7 +413,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   /**
    * Action called when Modify Automatic Fixing button is pressed. 
    */
-  private void actionMdfAutomaticFixing() {
+  public void actionMdfAutomaticFixing() {
     Object selected = listAutomaticFixing.getSelectedValue();
     if (selected instanceof AutomaticFixing) {
       AutomaticFixing fixing = (AutomaticFixing) selected;
@@ -478,7 +438,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   /**
    * Action called when Remove Automatic Fixing button is pressed.
    */
-  private void ActionRmvAutomaticFixing() {
+  public void ActionRmvAutomaticFixing() {
     int selected = listAutomaticFixing.getSelectedIndex();
     if (selected != - 1) {
       modelAutomaticFixing.remove(selected);
@@ -488,14 +448,14 @@ public class AutomaticFixingWindow extends OnePageWindow {
   /**
    * Action called when Clear Automatic Fixing button is pressed. 
    */
-  private void actionClrAutomaticFixing() {
+  public void actionClrAutomaticFixing() {
     modelAutomaticFixing.clear();
   }
 
   /**
    * Action called when Run Automatic Fixing button is pressed. 
    */
-  private void actionRunAutomaticFixing() {
+  public void actionRunAutomaticFixing() {
     Object[] values = listPages.getSelectedValues();
     if ((values == null) || (values.length == 0)) {
       Utilities.displayWarning(
@@ -575,7 +535,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   /**
    * Action called when Save Automatic Fixing button is pressed. 
    */
-  private void actionSaveAutomaticFixing() {
+  public void actionSaveAutomaticFixing() {
     Configuration config = Configuration.getConfiguration();
     Object[] replacements = modelAutomaticFixing.toArray();
     Arrays.sort(replacements, new Comparator<Object>() {
@@ -604,7 +564,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   /**
    * Action called when Full analysis button is pressed.
    */
-  private void actionFullAnalysisLink() {
+  public void actionFullAnalysisLink() {
     List<Page> knownPages = null;
     if (getPage() != null) {
       knownPages = new ArrayList<Page>(1);
@@ -624,7 +584,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   /**
    * Action called when Disambiguation button is pressed.
    */
-  private void actionDisambiguationLink() {
+  public void actionDisambiguationLink() {
     Controller.runDisambiguationAnalysis(
         getParentComponent(), listPages.getSelectedValues(), getWikipedia());
   }
@@ -632,7 +592,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   /**
    * Action called when External Viewer button is pressed.
    */
-  private void actionExternalViewerLink() {
+  public void actionExternalViewerLink() {
     for (Object selection : listPages.getSelectedValues()) {
       if (selection instanceof Page) {
         Utilities.browseURL(getWikipedia(), ((Page) selection).getTitle(), false);

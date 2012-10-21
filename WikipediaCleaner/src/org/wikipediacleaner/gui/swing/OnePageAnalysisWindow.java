@@ -25,7 +25,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -101,12 +103,6 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
  * Analysis window.
  */
 public class OnePageAnalysisWindow extends OnePageWindow {
-
-  private final static String ACTION_DISAMBIGUATION_LINK    = "DISAMBIGUATION LINK";
-  private final static String ACTION_FULL_ANALYSIS_LINK     = "FULL ANALYSIS LINK";
-  private final static String ACTION_WATCH_LINK             = "WATCH LINK";
-  private final static String ACTION_DISAMBIGUATION_WARNING = "DISAMBIGUATION WARNING";
-  private final static String ACTION_TRANSLATE              = "TRANSLATE";
 
   private JButton buttonFirst;
   private JButton buttonPrevious;
@@ -382,8 +378,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         "gnome-dialog-warning.png", EnumImageSize.NORMAL,
         GT._("Add a warning on the talk page about the links to disambiguation pages"),
         false); 
-    buttonDisambiguationWarning.setActionCommand(ACTION_DISAMBIGUATION_WARNING);
-    buttonDisambiguationWarning.addActionListener(this);
+    buttonDisambiguationWarning.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionDisambiguationWarning"));
     toolbarButtons.add(buttonDisambiguationWarning);
     toolbarButtons.addSeparator();
     addButtonReload(toolbarButtons, true);
@@ -395,8 +391,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     toolbarButtons.addSeparator();
     buttonTranslation = Utilities.createJButton(
         "(??) \u21d2 (" + getWikipedia().getSettings().getLanguage() + ")");
-    buttonTranslation.setActionCommand(ACTION_TRANSLATE);
-    buttonTranslation.addActionListener(this);
+    buttonTranslation.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionTranslate"));
     toolbarButtons.add(buttonTranslation);
     toolbarButtons.addSeparator();
     addLblLastModified(toolbarButtons);
@@ -502,20 +498,20 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     buttonFullAnalysisLink = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
         GT._("Full analysis (Alt + &F)"), false);
-    buttonFullAnalysisLink.setActionCommand(ACTION_FULL_ANALYSIS_LINK);
-    buttonFullAnalysisLink.addActionListener(this);
+    buttonFullAnalysisLink.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionFullAnalysisLink"));
     toolbar.add(buttonFullAnalysisLink);
     buttonDisambiguationLink = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Disambiguation (Alt + &D)"), false);
-    buttonDisambiguationLink.setActionCommand(ACTION_DISAMBIGUATION_LINK);
-    buttonDisambiguationLink.addActionListener(this);
+    buttonDisambiguationLink.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionDisambiguationLink"));
     toolbar.add(buttonDisambiguationLink);
     buttonWatchLink = Utilities.createJButton(
         "gnome-logviewer-add.png", EnumImageSize.NORMAL,
         GT._("Add to Watch list (Alt + &W)"), false);
-    buttonWatchLink.setActionCommand(ACTION_WATCH_LINK);
-    buttonWatchLink.addActionListener(this);
+    buttonWatchLink.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionWatchLink"));
     toolbar.add(buttonWatchLink);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weightx = 1;
@@ -726,13 +722,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     }
 
     super.actionPerformed(e);
-    if (ACTION_WATCH_LINK.equals(e.getActionCommand())) {
-      actionWatchLink();
-    } else if (ACTION_DISAMBIGUATION_LINK.equals(e.getActionCommand())) {
-      actionDisambiguationLink();
-    } else if (ACTION_FULL_ANALYSIS_LINK.equals(e.getActionCommand())) {
-      actionFullAnalysisLink();
-    } else if (ACTION_FIRST_OCCURRENCE.equals(e.getActionCommand())) {
+    if (ACTION_FIRST_OCCURRENCE.equals(e.getActionCommand())) {
       actionFirstOccurrence();
     } else if (ACTION_PREVIOUS_OCCURRENCE.equals(e.getActionCommand())) {
       actionPreviousOccurrence();
@@ -740,10 +730,6 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       actionNextOccurrence();
     } else if (ACTION_LAST_OCCURRENCE.equals(e.getActionCommand())) {
       actionLastOccurrence();
-    } else if (ACTION_DISAMBIGUATION_WARNING.equals(e.getActionCommand())) {
-      actionDisambiguationWarning();
-    } else if (ACTION_TRANSLATE.equals(e.getActionCommand())) {
-      actionTranslate();
     }
   }
 
@@ -946,7 +932,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   /**
    * Action called when Watch link button is pressed. 
    */
-  private void actionWatchLink() {
+  public void actionWatchLink() {
     Object[] links = listLinks.getSelectedValues();
     if ((links == null) || (links.length == 0)) {
       return;
@@ -972,7 +958,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   /**
    * Action called when Disambiguation button is pressed.
    */
-  private void actionDisambiguationLink() {
+  public void actionDisambiguationLink() {
     Controller.runDisambiguationAnalysis(
         getParentComponent(),
         listLinks.getSelectedValues(),
@@ -982,7 +968,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   /**
    * Action called when Disambiguation warning button is pressed.  
    */
-  private void actionDisambiguationWarning() {
+  public void actionDisambiguationWarning() {
     String template = getConfiguration().getDisambiguationWarningTemplate();
     if ((template == null) || (template.trim().length() == 0)) {
       Utilities.displayWarning(
@@ -1005,7 +991,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   /**
    * Action called when Translate button is pressed.
    */
-  private void actionTranslate() {
+  public void actionTranslate() {
     Object from = Utilities.askForValue(
         getParentComponent(),
         GT._("From which Wikipedia is this text coming ?"),
@@ -1042,7 +1028,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   /**
    * Action called when Full analysis button is pressed.
    */
-  private void actionFullAnalysisLink() {
+  public void actionFullAnalysisLink() {
     Controller.runFullAnalysis(
         getParentComponent(),
         listLinks.getSelectedValues(),

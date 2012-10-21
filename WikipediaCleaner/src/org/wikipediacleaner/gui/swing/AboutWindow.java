@@ -23,8 +23,8 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -33,6 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
+import org.wikipediacleaner.Version;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
@@ -41,9 +42,7 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * About WikipediaCleaner. 
  */
-public class AboutWindow extends BasicWindow implements ActionListener {
-
-  private final static String ACTION_CLOSE = "CLOSE";
+public class AboutWindow extends BasicWindow {
 
   private JButton buttonClose;
 
@@ -63,7 +62,7 @@ public class AboutWindow extends BasicWindow implements ActionListener {
    */
   @Override
   public String getTitle() {
-    return GT._("About") + " - Wikipedia Cleaner"; 
+    return GT._("About") + " - " + Version.PROGRAM; 
   }
 
   /**
@@ -106,7 +105,7 @@ public class AboutWindow extends BasicWindow implements ActionListener {
    */
   private Component createAboutComponents() {
     JTabbedPane pane = new JTabbedPane();
-    pane.addTab("Wikipedia Cleaner", createWikipediaCleanerTab());
+    pane.addTab(Version.PROGRAM, createWPCleanerTab());
     pane.addTab("Commons Logging", createCommonsLoggingTab());
     pane.addTab("Commons Codec", createCommonsCodecTab());
     pane.addTab("Commons HttpClient", createCommonsHttpClientTab());
@@ -119,7 +118,7 @@ public class AboutWindow extends BasicWindow implements ActionListener {
   /**
    * @return Wikipedia Cleaner tab.
    */
-  private Component createWikipediaCleanerTab() {
+  private Component createWPCleanerTab() {
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     //TODO
@@ -277,33 +276,10 @@ public class AboutWindow extends BasicWindow implements ActionListener {
 
     // Close button
     buttonClose = Utilities.createJButton(GT._("&Close"));
-    buttonClose.setActionCommand(ACTION_CLOSE);
-    buttonClose.addActionListener(this);
+    buttonClose.addActionListener(EventHandler.create(
+        ActionListener.class, this, "dispose"));
     panel.add(buttonClose);
 
     return panel;
-  }
-
-  /**
-   * Invoked when an action occurs.
-   * 
-   * @param e Event.
-   */
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if (e == null) {
-      return;
-    }
-
-    if (ACTION_CLOSE.equals(e.getActionCommand())) {
-      actionClose();
-    }
-  }
-
-  /**
-   * Action called when Close button is pressed.
-   */
-  private void actionClose() {
-    dispose();
   }
 }

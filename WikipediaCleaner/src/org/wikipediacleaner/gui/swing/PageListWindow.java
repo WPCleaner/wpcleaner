@@ -23,8 +23,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -64,20 +64,7 @@ import org.wikipediacleaner.utils.Configuration;
 /**
  * Window displaying a List of pages.
  */
-public class PageListWindow extends BasicWindow implements ActionListener {
-
-  private final static String ACTION_ADD              = "ADD";
-  private final static String ACTION_AUTOMATIC_FIXING = "AUTOMATIC FIXING";
-  private final static String ACTION_DAB_WATCH        = "DAB WATCH";
-  private final static String ACTION_DISAMBIGUATION   = "DISAMBIGUATION";
-  private final static String ACTION_FULL_ANALYSIS    = "FULL ANALYSIS";
-  private final static String ACTION_REMOVE           = "REMOVE";
-  private final static String ACTION_SELECT_DAB       = "SELECT DAB";
-  private final static String ACTION_SET_COMMENTS     = "SET COMMENTS";
-  private final static String ACTION_UPDATE           = "UPDATE INFO";
-  private final static String ACTION_UPDATE_DAB       = "UPDATE DAB WARNING";
-  private final static String ACTION_VIEW             = "VIEW";
-  private final static String ACTION_VIEW_HISTORY     = "VIEW_HISTORY";
+public class PageListWindow extends BasicWindow {
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(2);
 
@@ -223,83 +210,83 @@ public class PageListWindow extends BasicWindow implements ActionListener {
     buttonFullAnalysis = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
         GT._("Full analysis (Alt + &F)"), false);
-    buttonFullAnalysis.setActionCommand(ACTION_FULL_ANALYSIS);
-    buttonFullAnalysis.addActionListener(this);
+    buttonFullAnalysis.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionFullAnalysis"));
     toolbar.add(buttonFullAnalysis);
 
     buttonDisambiguation = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Disambiguation (Alt + &D)"), false);
-    buttonDisambiguation.setActionCommand(ACTION_DISAMBIGUATION);
-    buttonDisambiguation.addActionListener(this);
+    buttonDisambiguation.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionDisambiguation"));
     toolbar.add(buttonDisambiguation);
 
     buttonSelectDab = Utilities.createJButton(
         "wpc-select-disambig.png", EnumImageSize.NORMAL,
         GT._("Select disambiguation pages with too many backlinks"), false);
-    buttonSelectDab.setActionCommand(ACTION_SELECT_DAB);
-    buttonSelectDab.addActionListener(this);
+    buttonSelectDab.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSelectDisambiguation"));
     toolbar.add(buttonSelectDab);
 
     buttonDisambiguationWatch = Utilities.createJButton(
         "commons-disambig-colour-plus.png", EnumImageSize.NORMAL,
         GT._("Analyze pages with links to disambiguation pages"), false);
-    buttonDisambiguationWatch.setActionCommand(ACTION_DAB_WATCH);
-    buttonDisambiguationWatch.addActionListener(this);
+    buttonDisambiguationWatch.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionDisambiguationWatch"));
     toolbar.add(buttonDisambiguationWatch);
 
     buttonUpdateDabWarning = Utilities.createJButton(
         "gnome-dialog-warning.png", EnumImageSize.NORMAL,
         GT._("Update disambiguation warning"), false);
-    buttonUpdateDabWarning.setActionCommand(ACTION_UPDATE_DAB);
-    buttonUpdateDabWarning.addActionListener(this);
+    buttonUpdateDabWarning.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionUpdateDabWarning"));
     toolbar.add(buttonUpdateDabWarning);
 
     buttonUpdateInfo = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
         GT._("Update page information (Alt + &U)"), false);
-    buttonUpdateInfo.setActionCommand(ACTION_UPDATE);
-    buttonUpdateInfo.addActionListener(this);
+    buttonUpdateInfo.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionUpdateInfo"));
     toolbar.add(buttonUpdateInfo);
 
     buttonComments = Utilities.createJButton(
         "tango-internet-group-chat.png", EnumImageSize.NORMAL,
         GT._("Set page comments (Alt + &C)"), false);
-    buttonComments.setActionCommand(ACTION_SET_COMMENTS);
-    buttonComments.addActionListener(this);
+    buttonComments.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSetComments"));
     toolbar.add(buttonComments);
 
     buttonView = Utilities.createJButton(
         "gnome-emblem-web.png", EnumImageSize.NORMAL,
         GT._("External Viewer (Alt + &E)"), false);
-    buttonView.setActionCommand(ACTION_VIEW);
-    buttonView.addActionListener(this);
+    buttonView.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionView"));
     toolbar.add(buttonView);
 
     buttonViewHistory = Utilities.createJButton(
         "gnome-emblem-documents.png", EnumImageSize.NORMAL,
         GT._("History (Alt + &H)"), false);
-    buttonViewHistory.setActionCommand(ACTION_VIEW_HISTORY);
-    buttonViewHistory.addActionListener(this);
+    buttonViewHistory.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionViewHistory"));
     toolbar.add(buttonViewHistory);
 
     buttonAutomaticFixing = Utilities.createJButton(GT._("Automatic fixing"));
-    buttonAutomaticFixing.setActionCommand(ACTION_AUTOMATIC_FIXING);
-    buttonAutomaticFixing.addActionListener(this);
+    buttonAutomaticFixing.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionRunAutomaticFixing"));
     toolbar.add(buttonAutomaticFixing);
 
     if (watchList) {
       buttonRemove = Utilities.createJButton(
           "gnome-list-remove.png", EnumImageSize.NORMAL,
           GT._("Remove page (Alt + &R)"), false);
-      buttonRemove.setActionCommand(ACTION_REMOVE);
-      buttonRemove.addActionListener(this);
+      buttonRemove.addActionListener(EventHandler.create(
+          ActionListener.class, this, "actionRemove"));
       toolbar.add(buttonRemove);
       buttonAdd = Utilities.createJButton(
           "gnome-list-add.png", EnumImageSize.NORMAL,
           GT._("Add page (Alt + &A)"), false);
-      buttonAdd.setActionCommand(ACTION_ADD);
-      buttonAdd.addActionListener(this);
+      buttonAdd.addActionListener(EventHandler.create(
+          ActionListener.class, this, "actionAdd"));
       toolbar.add(buttonAdd);
     }
     constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -312,47 +299,9 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   }
 
   /**
-   * Invoked when an action occurs.
-   * 
-   * @param e Event.
-   */
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if (e == null) {
-      return;
-    }
-
-    if (ACTION_FULL_ANALYSIS.equals(e.getActionCommand())) {
-      actionFullAnalysis();
-    } else if (ACTION_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
-      actionRunAutomaticFixing();
-    } else if (ACTION_DISAMBIGUATION.equals(e.getActionCommand())) {
-      actionDisambiguation();
-    } else if (ACTION_SELECT_DAB.equals(e.getActionCommand())) {
-      actionSelectDisambiguation();
-    } else if (ACTION_DAB_WATCH.equals(e.getActionCommand())) {
-      actionDisambiguationWatch();
-    } else if (ACTION_UPDATE_DAB.equals(e.getActionCommand())) {
-      actionUpdateDabWarning();
-    } else if (ACTION_REMOVE.equals(e.getActionCommand())) {
-      actionRemove();
-    } else if (ACTION_SET_COMMENTS.equals(e.getActionCommand())) {
-      actionSetComments();
-    } else if (ACTION_UPDATE.equals(e.getActionCommand())) {
-      actionUpdateInfo();
-    } else if (ACTION_VIEW.equals(e.getActionCommand())) {
-      actionView();
-    } else if (ACTION_VIEW_HISTORY.equals(e.getActionCommand())) {
-      actionViewHistory();
-    } else if (ACTION_ADD.equals(e.getActionCommand())) {
-      actionAdd();
-    }
-  }
-
-  /**
    * Action called when Full analysis button is pressed.
    */
-  private void actionFullAnalysis() {
+  public void actionFullAnalysis() {
     Controller.runFullAnalysis(
         getParentComponent(),
         getSelectedPages(), null,
@@ -362,7 +311,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   /**
    * Action called when Disambiguation button is pressed.
    */
-  private void actionDisambiguation() {
+  public void actionDisambiguation() {
     Controller.runDisambiguationAnalysis(
         getParentComponent(),
         getSelectedPages(),
@@ -372,7 +321,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   /**
    * Action called when Select Disambiguation button is pressed.
    */
-  private void actionSelectDisambiguation() {
+  public void actionSelectDisambiguation() {
     tablePages.clearSelection();
     int index = 0;
     for (Page page : pages) {
@@ -394,7 +343,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   /**
    * Action called when Disambiguation Watch button is pressed.
    */
-  private void actionDisambiguationWatch() {
+  public void actionDisambiguationWatch() {
     Page[] selectedPages = getSelectedPages();
     if ((selectedPages == null) || (selectedPages.length == 0)) {
       return;
@@ -413,7 +362,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   /**
    * Action called when Update Dab Warning button is pressed.
    */
-  private void actionUpdateDabWarning() {
+  public void actionUpdateDabWarning() {
     List<Page> tmpPages = new ArrayList<Page>();
     for (int i = 0; i < getSelectedPages().length; i++) {
       tmpPages.add(getSelectedPages()[i]);
@@ -440,7 +389,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   /**
    * Action called when Disambiguation button is pressed.
    */
-  private void actionRemove() {
+  public void actionRemove() {
     if (displayYesNoWarning(GT._(
         "You are about to remove the pages from your local Watch list.\n" +
         "Are you sure ?")) != JOptionPane.YES_OPTION) {
@@ -460,7 +409,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   /**
    * Action called when Add button is pressed. 
    */
-  private void actionAdd() {
+  public void actionAdd() {
     String value = askForValue(
         GT._("Enter the page title you want to add to your local watch list"),
         "", null);
@@ -479,7 +428,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   /**
    * Action called when Set comments button is pressed.
    */
-  private void actionSetComments() {
+  public void actionSetComments() {
     Page[] selectedPages = getSelectedPages();
     Controller.runPageComments(selectedPages, getWikipedia());
   }
@@ -487,7 +436,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   /**
    * Action called when Update information button is pressed. 
    */
-  private void actionUpdateInfo() {
+  public void actionUpdateInfo() {
     Page[] tmpPages = getSelectedPages();
     if ((tmpPages == null) || (tmpPages.length == 0)) {
       return;
@@ -511,7 +460,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   /**
    * Action called when View button is pressed. 
    */
-  private void actionView() {
+  public void actionView() {
     Page[] tmpPages = getSelectedPages();
     if (tmpPages != null) {
       for (Page page : tmpPages) {
@@ -523,7 +472,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   /**
    * Action called when View History button is pressed. 
    */
-  private void actionViewHistory() {
+  public void actionViewHistory() {
     Page[] tmpPages = getSelectedPages();
     if (tmpPages != null) {
       for (Page page : tmpPages) {
@@ -535,7 +484,7 @@ public class PageListWindow extends BasicWindow implements ActionListener {
   /**
    * Action called when Run Automatic Fixing button is pressed. 
    */
-  private void actionRunAutomaticFixing() {
+  public void actionRunAutomaticFixing() {
     Page[] values = getSelectedPages();
     if ((values == null) || (values.length == 0)) {
       Utilities.displayWarning(

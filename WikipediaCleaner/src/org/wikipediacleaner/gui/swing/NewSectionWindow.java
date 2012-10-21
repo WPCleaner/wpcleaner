@@ -26,8 +26,8 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -59,11 +59,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 /**
  * A window to create a new section.
  */
-public class NewSectionWindow extends BasicWindow implements ActionListener {
-
-  private final static String ACTION_CANCEL    = "CANCEL";
-  private final static String ACTION_SIGNATURE = "SIGNATURE";
-  private final static String ACTION_VALIDATE  = "VALIDATE";
+public class NewSectionWindow extends BasicWindow {
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(2);
 
@@ -157,8 +153,8 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
 
     // Force watching and signature
     buttonSignature = Utilities.createJButton(GT._("&Signature"));
-    buttonSignature.setActionCommand(ACTION_SIGNATURE);
-    buttonSignature.addActionListener(this);
+    buttonSignature.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSignature"));
     constraints.gridx = 0;
     constraints.weightx = 0;
     panelComment.add(buttonSignature, constraints);
@@ -215,12 +211,12 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     buttonValidate = Utilities.createJButton(GT._("&Validate"));
-    buttonValidate.setActionCommand(ACTION_VALIDATE);
-    buttonValidate.addActionListener(this);
+    buttonValidate.addActionListener(
+        EventHandler.create(ActionListener.class, this, "actionValidate"));
     buttonPanel.add(buttonValidate);
     buttonCancel = Utilities.createJButton(GT._("&Cancel"));
-    buttonCancel.setActionCommand(ACTION_CANCEL);
-    buttonCancel.addActionListener(this);
+    buttonCancel.addActionListener(EventHandler.create(
+        ActionListener.class, this, "dispose"));
     buttonPanel.add(buttonCancel);
     constraints.fill = GridBagConstraints.NONE;
     constraints.gridwidth = 2;
@@ -234,29 +230,9 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
   }
 
   /**
-   * Invoked when an action occurs.
-   * 
-   * @param e Event.
-   */
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if (e == null) {
-      return;
-    }
-
-    if (ACTION_VALIDATE.equals(e.getActionCommand())) {
-      actionValidate();
-    } else if (ACTION_CANCEL.equals(e.getActionCommand())) {
-      actionCancel();
-    } else if (ACTION_SIGNATURE.equals(e.getActionCommand())) {
-      actionSignature();
-    }
-  }
-
-  /**
    * Action called when Validate button is pressed.
    */
-  private void actionValidate() {
+  public void actionValidate() {
     String section = textTitle.getText().trim();
     String text = textNewSection.getText().trim();
     if (("".equals(section)) || ("".equals(text))) {
@@ -269,16 +245,9 @@ public class NewSectionWindow extends BasicWindow implements ActionListener {
   }
 
   /**
-   * Action called when Cancel button is pressed.
-   */
-  private void actionCancel() {
-    dispose();
-  }
-
-  /**
    * Action called when Signature button is pressed.
    */
-  private void actionSignature() {
+  public void actionSignature() {
     Configuration config = Configuration.getConfiguration();
     try {
       textNewSection.getDocument().insertString(
