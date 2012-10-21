@@ -133,7 +133,7 @@ public class PageElementTemplate extends PageElement {
     // Check that it's not a DEFAULTSORT
     int colonIndex = templateName.indexOf(':');
     if (colonIndex > 0) {
-      MagicWord magicDefaultsort = wikipedia.getMagicWord(MagicWord.DEFAULT_SORT);
+      MagicWord magicDefaultsort = wikipedia.getWikiConfiguration().getMagicWord(MagicWord.DEFAULT_SORT);
       if ((magicDefaultsort != null) &&
           (magicDefaultsort.isPossibleAlias(templateName.substring(0, colonIndex + 1)))) {
         return null;

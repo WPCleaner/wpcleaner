@@ -27,6 +27,8 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WikiConfiguration;
+import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
@@ -79,6 +81,28 @@ public class PageAnalysis {
   public EnumWikipedia getWikipedia() {
     if (page != null) {
       return page.getWikipedia();
+    }
+    return null;
+  }
+
+  /**
+   * @return Wiki settings.
+   */
+  public AbstractWikiSettings getSettings() {
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia != null) {
+      return wikipedia.getSettings();
+    }
+    return null;
+  }
+
+  /**
+   * @return Wiki configuration.
+   */
+  public WikiConfiguration getWikiConfiguration() {
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia != null) {
+      return wikipedia.getWikiConfiguration();
     }
     return null;
   }

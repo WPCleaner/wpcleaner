@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 import org.wikipediacleaner.Version;
@@ -75,9 +74,6 @@ import org.wikipediacleaner.api.constants.wiki.WikipediaZh;
 import org.wikipediacleaner.api.constants.wiki.WikisourceFr;
 import org.wikipediacleaner.api.constants.wiki.WikiversityFr;
 import org.wikipediacleaner.api.data.DataManager;
-import org.wikipediacleaner.api.data.Interwiki;
-import org.wikipediacleaner.api.data.Language;
-import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.utils.Configuration;
@@ -148,10 +144,10 @@ public enum EnumWikipedia {
   private Set<String> disambiguationPages;
   private List<Page> disambiguationTemplates;
 
-  private List<Namespace> namespaces;
-  private List<Language>  languages;
-  private List<Interwiki> interwikis;
-  private Map<String, MagicWord> magicWords;
+  /**
+   * Wiki configuration.
+   */
+  private final WikiConfiguration wikiConfiguration;
 
   /**
    * WPCleaner configuration.
@@ -169,6 +165,7 @@ public enum EnumWikipedia {
   EnumWikipedia(AbstractWikiSettings settings) {
     this.settings = settings;
     this.configPage = settings.getConfigurationPage();
+    this.wikiConfiguration = new WikiConfiguration();
     this.WPCConfiguration = new WPCConfiguration(this);
     this.CWConfiguration = new CWConfiguration(settings.getCodeCheckWiki());
   }
@@ -236,6 +233,13 @@ public enum EnumWikipedia {
   }
 
   /**
+   * @return Wiki configuration.
+   */
+  public WikiConfiguration getWikiConfiguration() {
+    return wikiConfiguration;
+  }
+
+  /**
    * @return Configuration page.
    */
   public String getConfigurationPage() {
@@ -247,7 +251,7 @@ public enum EnumWikipedia {
    * @return Configuration page.
    */
   public String getUserConfigurationPage(String userName) {
-    Namespace userNamespace = Namespace.getNamespace(Namespace.USER, namespaces);
+    Namespace userNamespace = wikiConfiguration.getNamespace(Namespace.USER);
     String userPrefix = (userNamespace != null) ? userNamespace.getTitle() : "User";
     return userPrefix + ":" + userName + "/" + configPage;
   }
@@ -493,98 +497,6 @@ public enum EnumWikipedia {
    */
   public CWConfiguration getCWConfiguration() {
     return CWConfiguration;
-  }
-
-  /**
-   * @return List of namespaces
-   */
-  public List<Namespace> getNamespaces() {
-    return namespaces;
-  }
-
-  /**
-   * @param namespaces List of namespaces
-   */
-  public void setNamespaces(List<Namespace> namespaces) {
-    this.namespaces = namespaces;
-  }
-
-  /**
-   * @return List of languages
-   */
-  public List<Language> getLanguages() {
-    return languages;
-  }
-
-  /**
-   * @param languages List of languages
-   */
-  public void setLanguages(List<Language> languages) {
-    this.languages = languages;
-  }
-
-  /**
-   * @return List of inter-wikis
-   */
-  public List<Interwiki> getInterwikis() {
-    return interwikis;
-  }
-
-  /**
-   * @param interwikis List of inter-wikis
-   */
-  public void setInterwikis(List<Interwiki> interwikis) {
-    this.interwikis = interwikis;
-  }
-
-  /**
-   * @param name Magic word name.
-   * @return Magic word.
-   */
-  public MagicWord getMagicWord(String name) {
-    if ((name == null) || (magicWords == null)) {
-      return null;
-    }
-    return magicWords.get(name); 
-  }
-
-  /**
-   * @param text Text
-   * @return Flag indicating if the text is an alias for a Image Magic Word.
-   */
-  public boolean isPossibleAliasForImgMagicWord(String text) {
-    if ((getMagicWord(MagicWord.IMG_ALT).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_BASELINE).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_BORDER).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_BOTTOM).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_CENTER).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_FRAMED).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_FRAMELESS).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_LEFT).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_LINK).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_MANUAL_THUMB).isPossibleAlias(text, "[0-9]*")) ||
-        (getMagicWord(MagicWord.IMG_MIDDLE).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_NONE).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_PAGE).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_RIGHT).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_SUB).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_SUPER).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_TEXT_BOTTOM).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_TEXT_TOP).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_THUMBNAIL).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_TOP).isPossibleAlias(text)) ||
-        (getMagicWord(MagicWord.IMG_UPRIGHT).isPossibleAlias(text, "[0-9 ]*")) ||
-        (getMagicWord(MagicWord.IMG_WIDTH).isPossibleAlias(text, "[0-9 ]*"))) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * @param magicWords Magic words.
-   */
-  public void setMagicWords(Map<String, MagicWord> magicWords) {
-    this.magicWords = magicWords;
   }
 
   /* (non-Javadoc)

@@ -78,7 +78,7 @@ public class PageElementLanguageLink extends PageElement {
 
     // Check that namespace is language
     int colonIndex = tmpIndex;
-    List<Language> languages = wikipedia.getLanguages();
+    List<Language> languages = wikipedia.getWikiConfiguration().getLanguages();
     if (!Language.isLanguageCode(languages, contents.substring(beginIndex, colonIndex).trim())) {
       return null;
     }

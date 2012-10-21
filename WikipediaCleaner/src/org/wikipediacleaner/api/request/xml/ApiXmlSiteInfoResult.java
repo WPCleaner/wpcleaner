@@ -30,7 +30,9 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.constants.EnumCaseSensitiveness;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.MagicWord;
@@ -68,6 +70,7 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
           throws APIException {
     try {
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+      WikiConfiguration wikiConfiguration = getWiki().getWikiConfiguration();
 
       // Retrieve name spaces
       HashMap<Integer, Namespace> namespaces = null;
@@ -75,15 +78,14 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
       namespaces = new HashMap<Integer, Namespace>();
-      XPath xpaId = XPath.newInstance("./@id");
-      XPath xpaTitle = XPath.newInstance(".");
-      XPath xpaCanonical = XPath.newInstance("./@canonical");
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
-        Namespace ns = new Namespace(
-            xpaId.valueOf(currentNode),
-            xpaTitle.valueOf(currentNode),
-            xpaCanonical.valueOf(currentNode));
+        String title = currentNode.getText();
+        String canonical = currentNode.getAttributeValue("canonical");
+        String id = currentNode.getAttributeValue("id");
+        EnumCaseSensitiveness caseSensitiveness = EnumCaseSensitiveness.getCase(currentNode.getAttributeValue("case"));
+        boolean subPages = (currentNode.getAttribute("subpages") != null);
+        Namespace ns = new Namespace(id, title, canonical, caseSensitiveness, subPages);
         namespaces.put(ns.getId(), ns);
       }
 
@@ -91,16 +93,14 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       xpa = XPath.newInstance("/api/query/namespacealiases/ns");
       results = xpa.selectNodes(root);
       iter = results.iterator();
-      xpaId = XPath.newInstance("./@id");
-      xpaTitle = XPath.newInstance(".");
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
         Integer nsId = null;
         try {
-          nsId = Integer.parseInt(xpaId.valueOf(currentNode));
+          nsId = Integer.parseInt(currentNode.getAttributeValue("id"));
           Namespace namespace = namespaces.get(nsId);
           if (namespace != null) {
-            namespace.addAlias(xpaTitle.valueOf(currentNode));
+            namespace.addAlias(currentNode.getText());
           }
         } catch (NumberFormatException e) {
           //
@@ -109,51 +109,46 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
 
       // Update name space list
       LinkedList<Namespace> list = new LinkedList<Namespace>(namespaces.values());
-      getWiki().setNamespaces(list);
+      wikiConfiguration.setNamespaces(list);
 
       // Retrieve languages
       List<Language> languages = new ArrayList<Language>();
       xpa = XPath.newInstance("/api/query/languages/lang");
       results = xpa.selectNodes(root);
       iter = results.iterator();
-      XPath xpaCode = XPath.newInstance("./@code");
-      XPath xpaName = XPath.newInstance(".");
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
-        languages.add(new Language(xpaCode.valueOf(currentNode), xpaName.valueOf(currentNode)));
+        String code = currentNode.getAttributeValue("code");
+        String name = currentNode.getText();
+        languages.add(new Language(code, name));
       }
-      getWiki().setLanguages(languages);
+      wikiConfiguration.setLanguages(languages);
 
       // Retrieve interwikis
       List<Interwiki> interwikis = new ArrayList<Interwiki>();
       xpa = XPath.newInstance("/api/query/interwikimap/iw");
       results = xpa.selectNodes(root);
       iter = results.iterator();
-      XPath xpaPrefix = XPath.newInstance("./@prefix");
-      XPath xpaLocal = XPath.newInstance("./@local");
-      XPath xpaLanguage = XPath.newInstance("./@language");
-      XPath xpaUrl = XPath.newInstance("./@url");
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
-        interwikis.add(new Interwiki(
-            xpaPrefix.valueOf(currentNode),
-            xpaLocal.valueOf(currentNode),
-            xpaLanguage.valueOf(currentNode),
-            xpaUrl.valueOf(currentNode)));
+        String prefix = currentNode.getAttributeValue("prefix");
+        boolean local = (currentNode.getAttribute("local") != null);
+        String language = currentNode.getAttributeValue("language");
+        String url = currentNode.getAttributeValue("url");
+        interwikis.add(new Interwiki( prefix, local, language, url));
       }
-      getWiki().setInterwikis(interwikis);
+      wikiConfiguration.setInterwikis(interwikis);
 
       // Retrieve magic words
       Map<String, MagicWord> magicWords = new HashMap<String, MagicWord>();
       xpa = XPath.newInstance("/api/query/magicwords/magicword");
       results = xpa.selectNodes(root);
       iter = results.iterator();
-      xpaName = XPath.newInstance("./@name");
       XPath xpaAlias = XPath.newInstance("./aliases/alias");
       XPath xpaAliasValue = XPath.newInstance(".");
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
-        String magicWord = xpaName.valueOf(currentNode);
+        String magicWord = currentNode.getAttributeValue("name");
         List<String> aliases = new ArrayList<String>();
         List resultsAlias = xpaAlias.selectNodes(currentNode);
         Iterator iterAlias = resultsAlias.iterator();
@@ -164,7 +159,7 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
         }
         magicWords.put(magicWord, new MagicWord(magicWord, aliases));
       }
-      getWiki().setMagicWords(magicWords);
+      wikiConfiguration.setMagicWords(magicWords);
     } catch (JDOMException e) {
       log.error("Error loading namespaces", e);
       throw new APIException("Error parsing XML", e);

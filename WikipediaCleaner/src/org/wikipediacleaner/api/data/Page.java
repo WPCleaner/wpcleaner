@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WikiConfiguration;
 
 
 /**
@@ -433,14 +434,13 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @param namespaces List of namespaces.
    * @return Article page.
    */
-  public Page getArticlePage(List<Namespace> namespaces) {
+  public Page getArticlePage() {
     if (isArticle()) {
       return this;
     }
-    String articlePageName = getArticlePageName(namespaces);
+    String articlePageName = getArticlePageName();
     if (articlePageName == null) {
       return null;
     }
@@ -452,14 +452,18 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @param namespaces List of namespaces.
    * @return Article page title.
    */
-  public String getArticlePageName(List<Namespace> namespaces) {
+  public String getArticlePageName() {
     if (isArticle()) {
       return title;
     }
-    if ((namespace == null) || (namespaces == null)) {
+    if (namespace == null) {
+      return null;
+    }
+    WikiConfiguration wikiConfiguration = wikipedia.getWikiConfiguration();
+    List<Namespace> namespaces = wikiConfiguration.getNamespaces();
+    if (namespaces == null) {
       return null;
     }
     if (Namespace.MAIN_TALK == namespace.intValue()) {
@@ -469,7 +473,7 @@ public class Page implements Comparable<Page> {
       }
       return title;
     }
-    Namespace n = Namespace.getNamespace(namespace.intValue() - 1, namespaces);
+    Namespace n = wikiConfiguration.getNamespace(namespace.intValue() - 1);
     int firstColon = title.indexOf(':');
     if ((firstColon >= 0) && (n != null)) {
       return n.getTitle() + ":" + title.substring(firstColon + 1);
@@ -478,11 +482,10 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @param namespaces List of namespaces.
    * @return Talk page.
    */
-  public Page getTalkPage(List<Namespace> namespaces) {
-    String talkPageName = getTalkPageName(namespaces);
+  public Page getTalkPage() {
+    String talkPageName = getTalkPageName();
     if (talkPageName == null) {
       return null;
     }
@@ -494,21 +497,27 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @param namespaces List of namespaces.
    * @return Talk page title.
    */
-  public String getTalkPageName(List<Namespace> namespaces) {
-    if (!isArticle() || (namespace == null) || (namespaces == null)) {
+  public String getTalkPageName() {
+    if (!isArticle() ||
+        (namespace == null) ||
+        (wikipedia == null)) {
+      return null;
+    }
+    WikiConfiguration wikiConfiguration = wikipedia.getWikiConfiguration();
+    List<Namespace> namespaces = wikiConfiguration.getNamespaces();
+    if (namespaces == null) {
       return null;
     }
     if (Namespace.MAIN == namespace.intValue()) {
-      Namespace n = Namespace.getNamespace(Namespace.MAIN_TALK, namespaces);
+      Namespace n = wikiConfiguration.getNamespace(Namespace.MAIN_TALK);
       if (n != null) {
         return n.getTitle() + ":" + title;
       }
       return "Talk:" + title;
     }
-    Namespace n = Namespace.getNamespace(namespace.intValue() + 1, namespaces);
+    Namespace n = wikiConfiguration.getNamespace(namespace.intValue() + 1);
     int firstColon = title.indexOf(':');
     if ((firstColon >= 0) && (n != null)) {
       return n.getTitle() + ":" + title.substring(firstColon + 1);
@@ -946,7 +955,7 @@ public class Page implements Comparable<Page> {
         // Removing REDIRECT
         if (ok) {
           ok = false;
-          MagicWord magicRedirect = wikipedia.getMagicWord(MagicWord.REDIRECT);
+          MagicWord magicRedirect = wikipedia.getWikiConfiguration().getMagicWord(MagicWord.REDIRECT);
           if ((magicRedirect != null) && (magicRedirect.getAliases() != null)) {
             int length = 0;
             for (String magic : magicRedirect.getAliases()) {
@@ -1006,7 +1015,7 @@ public class Page implements Comparable<Page> {
    */
   public PageAnalysis getAnalysis(String currentContents, boolean update) {
     if (currentContents == null) {
-      return null;
+      return new PageAnalysis(this, null);
     }
     PageAnalysis result = null;
     if ((analysis == null) || (!currentContents.equals(analysis.getContents()))) {

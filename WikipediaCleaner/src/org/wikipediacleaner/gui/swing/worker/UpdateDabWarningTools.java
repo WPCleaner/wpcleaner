@@ -215,7 +215,7 @@ public class UpdateDabWarningTools {
     Map<Page, Page> mapTalkPages = new HashMap<Page, Page>();
     Map<Page, Page> mapTodoSubpages = new HashMap<Page, Page>();
     for (Page page : pages) {
-      Page talkPage = page.getTalkPage(wikipedia.getNamespaces());
+      Page talkPage = page.getTalkPage();
       mapTalkPages.put(page, talkPage);
       if (configuration.getTodoSubpage() != null) {
         Page todoSubpage = talkPage.getSubPage(configuration.getTodoSubpage());
@@ -266,7 +266,7 @@ public class UpdateDabWarningTools {
 
     // Retrieving talk page contents
     if (talkPage == null) {
-      talkPage = page.getTalkPage(wikipedia.getNamespaces());
+      talkPage = page.getTalkPage();
       setText(GT._("Retrieving page contents - {0}", talkPage.getTitle()));
       api.retrieveSectionContents(wikipedia, talkPage, 0);
     }

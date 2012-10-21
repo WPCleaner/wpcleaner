@@ -149,26 +149,27 @@ public class PageElementInternalLink extends PageElement {
       String namespaceName = linkTrimmed.substring(0, colonIndex);
 
       // Is it a category ?
-      Namespace category = Namespace.getNamespace(Namespace.CATEGORY, wikipedia.getNamespaces());
+      Namespace category = wikipedia.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
       if ((category != null) && (category.isPossibleName(namespaceName))) {
         return null;
       }
 
       // Is it a file / image ?
-      Namespace image = Namespace.getNamespace(Namespace.IMAGE, wikipedia.getNamespaces());
+      Namespace image = wikipedia.getWikiConfiguration().getNamespace(Namespace.IMAGE);
       if ((image != null) && (image.isPossibleName(namespaceName))) {
         return null;
       }
 
       // Is it an interwiki ?
-      for (Interwiki iw : wikipedia.getInterwikis()) {
+      for (Interwiki iw : wikipedia.getWikiConfiguration().getInterwikis()) {
         if (iw.getPrefix().equals(namespaceName)) {
           return null;
         }
       }
 
       // Is it a language link ?
-      if (Language.isLanguageCode(wikipedia.getLanguages(), namespaceName)) {
+      if (Language.isLanguageCode(
+          wikipedia.getWikiConfiguration().getLanguages(), namespaceName)) {
         return null;
       }
     }

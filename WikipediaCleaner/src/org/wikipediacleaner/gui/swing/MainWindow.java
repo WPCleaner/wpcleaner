@@ -1315,10 +1315,10 @@ public class MainWindow
         ConfigurationValueString.PAGE_NAME,
         pageName);
     config.save();
+    String title = getWikipedia().getWikiConfiguration().getPageTitle(
+        Namespace.CATEGORY, pageName); 
     Page page = DataManager.getPage(
-        getWikipedia(),
-        Namespace.getTitle(Namespace.CATEGORY, getWikipedia().getNamespaces(), pageName),
-        null, null);
+        getWikipedia(), title, null, null);
     new PageListWorker(
         getWikipedia(), this, page,
         Collections.singletonList(pageName),
@@ -1345,10 +1345,10 @@ public class MainWindow
         ConfigurationValueString.PAGE_NAME,
         pageName);
     config.save();
+    String title = getWikipedia().getWikiConfiguration().getPageTitle(
+        Namespace.TEMPLATE, pageName);
     Page page = DataManager.getPage(
-        getWikipedia(),
-        Namespace.getTitle(Namespace.TEMPLATE, getWikipedia().getNamespaces(), pageName),
-        null, null);
+        getWikipedia(), title, null, null);
     new PageListWorker(
         getWikipedia(), this, page,
         Collections.singletonList(pageName),

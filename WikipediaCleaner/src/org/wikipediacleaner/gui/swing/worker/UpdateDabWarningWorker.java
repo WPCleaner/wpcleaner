@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -113,16 +114,18 @@ public class UpdateDabWarningWorker extends BasicWorker {
     int countAnalyzed = 0;
     int countUpdated = 0;
     int lastCount = countUpdated;
+    WikiConfiguration wikiConfiguration = wikipedia.getWikiConfiguration();
 
     try {
       if (!useList) {
         // Retrieve talk pages including a disambiguation warning
         String dabWarningTemplateName = configuration.getDisambiguationWarningTemplate();
         setText(GT._("Retrieving talk pages including {0}", "{{" + dabWarningTemplateName + "}}"));
+        String templateTitle = wikiConfiguration.getPageTitle(
+            Namespace.TEMPLATE,
+            dabWarningTemplateName);
         Page dabWarningTemplate = DataManager.getPage(
-            wikipedia,
-            Namespace.getTitle(Namespace.TEMPLATE, wikipedia.getNamespaces(), dabWarningTemplateName),
-            null, null);
+            wikipedia, templateTitle, null, null);
         List<Page> dabWarningTalkPages = api.retrieveEmbeddedIn(
             wikipedia, dabWarningTemplate,
             configuration.getEncyclopedicTalkNamespaces(),
@@ -139,12 +142,12 @@ public class UpdateDabWarningWorker extends BasicWorker {
           int colonIndex = title.indexOf(':');
           if (colonIndex >= 0) {
             for (Integer namespace : configuration.getEncyclopedicTalkNamespaces()) {
-              Namespace namespaceTalk = Namespace.getNamespace(namespace, wikipedia.getNamespaces());
+              Namespace namespaceTalk = wikiConfiguration.getNamespace(namespace);
               if ((namespaceTalk != null) &&
                   (namespaceTalk.isPossibleName(title.substring(0, colonIndex)))) {
                 String tmpTitle = title.substring(colonIndex + 1);
                 if (namespace != Namespace.MAIN_TALK) {
-                  tmpTitle = Namespace.getTitle(namespace - 1, wikipedia.getNamespaces(), tmpTitle);
+                  tmpTitle = wikiConfiguration.getPageTitle(namespace - 1, tmpTitle);
                 }
                 Page page = DataManager.getPage(wikipedia, tmpTitle, null, null);
                 if (!tmpWarningPages.contains(page)) {
