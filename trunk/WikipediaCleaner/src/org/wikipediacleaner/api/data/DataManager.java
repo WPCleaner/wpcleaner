@@ -18,6 +18,9 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -25,7 +28,7 @@ import org.wikipediacleaner.utils.Configuration;
 
 
 /**
- * 
+ * Utility class to manage wiki data.
  */
 public class DataManager {
 
@@ -87,4 +90,21 @@ public class DataManager {
     return page;
   }
 
+  /**
+   * Date formatter for ISO 8601 Date and Time.
+   */
+  private final static SimpleDateFormat iso8601DateTime = new SimpleDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'");
+
+  /**
+   * Convert a string holding a date in ISO 8601 format.
+   * 
+   * @param date Date in ISO 8601 format.
+   * @return Date.
+   * @throws ParseException
+   */
+  public static Date convertIso8601DateTime(String date) throws ParseException {
+    synchronized (iso8601DateTime) {
+      return iso8601DateTime.parse(date);
+    }
+  }
 }
