@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wikipedia Cleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-10-20 11:58+0200\n"
+"POT-Creation-Date: 2012-10-21 18:31+0200\n"
 "PO-Revision-Date: 2012-10-13 06:46+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: France <nicove@users.sourceforge.net>\n"
@@ -450,6 +450,7 @@ msgid "Namespace"
 msgstr "Espace de nom"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:246
+#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:148
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:125
 msgid "Title"
 msgstr "Titre"
@@ -533,8 +534,9 @@ msgid "About"
 msgstr "À propos"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:278
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:138
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:150
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:173
+#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:123
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:226
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:212
 msgid "&Close"
@@ -595,7 +597,7 @@ msgid "You must input the initial and destination texts."
 msgstr "Vous devez saisir le texte initial et le texte de remplacement"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:474
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:100
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
 msgid "!!! WARNING !!!"
 msgstr "!!! ATTENTION !!!"
 
@@ -610,14 +612,14 @@ msgid "It may modify a lot of pages in a short period of time."
 msgstr "Cela peut modifier rapidement beaucoup de pages"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:477
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:103
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:106
 msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Sur certains projets Wikipédia, vous aurez besoin du statut de bot pour "
 "faire cela."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:478
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:104
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:107
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
 msgstr ""
@@ -639,29 +641,34 @@ msgstr "Voulez-vous continuer ?"
 msgid "A comment is required for automatix fixing."
 msgstr "Un commentaire est requis pour la correction automatique."
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:75
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:78
 #: org/wikipediacleaner/gui/swing/MainWindow.java:780
 msgid "Bot tools"
 msgstr "Outils pour robot"
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:101
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:104
 msgid "Functions available here are considered as bot tools."
 msgstr ""
 "Les fonctions disponibles ici sont considérées comme des outils pour bots."
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:102
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:105
 msgid "They may modify a lot of pages in a short period of time."
 msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:117
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:120
 msgid "Semi-automatic disambiguation fixing"
 msgstr "Correction d’homonymie semi-automatique"
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:130
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:133
 msgid "Update existing disambiguation warning messages"
 msgstr "Mettre à jour le message d’avertissement existant"
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:176
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:142
+#, fuzzy
+msgid "Monitor recent changes"
+msgstr "Compter les pages de redirections"
+
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:189
 msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 "A quelle page voulez-vous débuter la mise à jour du message d’avertissement ?"
@@ -904,7 +911,7 @@ msgstr ""
 "  {0} = <nom de page> END\n"
 "à la page de traduction ({1}) sur \"{2}\""
 
-#: org/wikipediacleaner/gui/swing/Controller.java:259
+#: org/wikipediacleaner/gui/swing/Controller.java:268
 #, java-format
 msgid ""
 "You have selected {0} pages.\n"
@@ -1351,6 +1358,10 @@ msgstr "Récupération des suggestions pour les remplacements de texte"
 msgid "Retrieving Check Wiki configuration"
 msgstr "Récupération de la configuration du projet de correction syntaxique"
 
+#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:77
+msgid "Recent changes monitoring"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:116
 #, java-format
 msgid "New section in {0}"
@@ -1787,6 +1798,10 @@ msgstr "Développer les modèles – {0}"
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:222
 msgid "&Update"
 msgstr "&Mettre à jour"
+
+#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:146
+msgid "Id"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:141
 #, java-format
