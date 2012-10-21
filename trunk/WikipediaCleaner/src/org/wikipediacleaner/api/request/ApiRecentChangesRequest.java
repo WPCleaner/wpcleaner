@@ -257,7 +257,7 @@ public class ApiRecentChangesRequest extends ApiListRequest {
         PROPERTY_PROPERTIES_TITLE + "|" +
         PROPERTY_PROPERTIES_USER);
     if (start != null) {
-      properties.put(PROPERTY_START, start);
+      properties.put(PROPERTY_END, start);
     }
     String nextStart = result.executeRecentChanges(properties, recentChanges);
     return nextStart;

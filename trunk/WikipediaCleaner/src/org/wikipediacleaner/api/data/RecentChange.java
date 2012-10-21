@@ -25,7 +25,7 @@ import java.util.Date;
 /**
  * Information about a recent change.
  */
-public class RecentChange {
+public class RecentChange implements Comparable<RecentChange> {
 
   /**
    * Recent change identifier.
@@ -242,5 +242,39 @@ public class RecentChange {
    */
   public void setComment(String comment) {
     this.comment = comment;
+  }
+
+  /**
+   * @return Hash code.
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    return id;
+  }
+
+  /**
+   * @param obj Object to be compared.
+   * @return True if objects are equal.
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof RecentChange) {
+      return id == ((RecentChange) obj).id;
+    }
+    return false;
+  }
+
+  /**
+   * @param o
+   * @return
+   * @see java.lang.Comparable#compareTo(java.lang.Object)
+   */
+  public int compareTo(RecentChange o) {
+    if (o.id != id) {
+      return (o.id < id) ? -1 : 1;
+    }
+    return 0;
   }
 }

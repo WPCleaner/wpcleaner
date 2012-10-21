@@ -188,6 +188,15 @@ public class Controller {
   }
 
   /**
+   * Monitor recent changes.
+   * 
+   * @param wiki Wiki.
+   */
+  public static void runMonitorRC(EnumWikipedia wiki) {
+    MonitorRCWindow.createMonitorRCWindow(wiki);
+  }
+
+  /**
    * Open the options window.
    */
   public static void runOptions() {

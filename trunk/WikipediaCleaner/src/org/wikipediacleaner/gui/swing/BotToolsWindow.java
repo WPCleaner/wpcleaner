@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.beans.EventHandler;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
@@ -48,9 +49,11 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 public class BotToolsWindow
   extends BasicWindow {
 
+  public final static Integer WINDOW_VERSION = Integer.valueOf(2);
+
   private JButton buttonAutomaticFixing;
+  private JButton buttonMonitorRC;
   private JButton buttonUpdateDabWarning;
-  private JButton buttonClose;
 
   /**
    * Create and display a BotToolsWindow.
@@ -133,9 +136,18 @@ public class BotToolsWindow
     panel.add(buttonUpdateDabWarning, constraints);
     constraints.gridy++;
 
+    // Tools : monitor recent changes
+    buttonMonitorRC = Utilities.createJButton(
+        "commons-nuvola-apps-kcmsystem.png", EnumImageSize.NORMAL,
+        GT._("Monitor recent changes"), true);
+    buttonMonitorRC.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionMonitorRC"));
+    panel.add(buttonMonitorRC, constraints);
+    constraints.gridy++;
+
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    buttonClose = Utilities.createJButton(GT._("&Close"));
+    JButton buttonClose = Utilities.createJButton(GT._("&Close"));
     buttonClose.addActionListener(EventHandler.create(
         ActionListener.class, this, "dispose"));
     buttonPanel.add(buttonClose);
@@ -157,6 +169,7 @@ public class BotToolsWindow
   protected void updateComponentState() {
     super.updateComponentState();
     buttonAutomaticFixing.setEnabled(false);
+    buttonMonitorRC.setEnabled(true);
     buttonUpdateDabWarning.setEnabled(true);
   }
 
@@ -181,5 +194,16 @@ public class BotToolsWindow
     UpdateDabWarningWorker worker = new UpdateDabWarningWorker(
         getWikipedia(), this, start);
     worker.start();
+  }
+
+  /**
+   * Action called when Monitor Recent Changes button is pressed.
+   */
+  public void actionMonitorRC() {
+    String message = "This function is experimental. Use at your own risk.\nDo you want to proceed ?";
+    if (displayYesNoWarning(message) != JOptionPane.YES_OPTION) {
+      return;
+    }
+    Controller.runMonitorRC(getWikipedia());
   }
 }
