@@ -743,7 +743,7 @@ public class PageAnalysis {
   private Map<String, InternalLinkCount> linksCount = new HashMap<String, InternalLinkCount>();
 
   /**
-   * @param title Page title.
+   * @param link Link.
    * @return Number of links to the page.
    */
   public InternalLinkCount getLinkCount(Page link) {
