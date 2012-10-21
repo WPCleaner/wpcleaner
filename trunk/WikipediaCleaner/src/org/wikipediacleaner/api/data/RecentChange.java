@@ -18,6 +18,9 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.text.ParseException;
+import java.util.Date;
+
 
 /**
  * Information about a recent change.
@@ -77,7 +80,7 @@ public class RecentChange {
   /**
    * Timestamp of the change.
    */
-  private String timestamp;
+  private Date timestamp;
 
   /**
    * Comment.
@@ -170,7 +173,7 @@ public class RecentChange {
   /**
    * @return Timestamp of the change.
    */
-  public String getTimestamp() {
+  public Date getTimestamp() {
     return timestamp;
   }
 
@@ -227,7 +230,11 @@ public class RecentChange {
    * @param timestamp Timestamp of the change.
    */
   public void setTimestamp(String timestamp) {
-    this.timestamp = timestamp;
+    try {
+      this.timestamp = DataManager.convertIso8601DateTime(timestamp);
+    } catch (ParseException e) {
+      this.timestamp = null;
+    }
   }
 
   /**
