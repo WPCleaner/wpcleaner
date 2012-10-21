@@ -213,7 +213,7 @@ public class RecentChange {
   }
 
   /**
-   * @param bot True if this is a bot edit.
+   * @param isBot True if this is a bot edit.
    */
   public void setBot(boolean isBot) {
     this.isBot = isBot;
