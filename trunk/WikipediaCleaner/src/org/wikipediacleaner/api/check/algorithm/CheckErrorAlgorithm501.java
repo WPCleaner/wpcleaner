@@ -157,6 +157,16 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * Characters that are considered incorrect before a suggestion.
+   */
+  private final static String incorrectCharactersBefore = ".-";
+
+  /**
+   * Characteres that are considered incorrect after a suggestion.
+   */
+  private final static String incorrectCharactersAfter = ".-";
+
+  /**
    * Check spelling in normal text with native regular expressions.
    * 
    * @param analysis Page analysis.
@@ -205,10 +215,10 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             }
             // Remove texts between dots (potential URL)
             if ((begin > 1) &&
-                (contents.charAt(begin - 1) == '.') &&
+                (incorrectCharactersBefore.indexOf(contents.charAt(begin - 1)) >= 0) &&
                 (Character.isLetterOrDigit(contents.charAt(begin - 2))) &&
                 (end + 1 < contents.length()) &&
-                (contents.charAt(end) == '.') &&
+                (incorrectCharactersAfter.indexOf(contents.charAt(end)) >= 0) &&
                 (Character.isLetterOrDigit(contents.charAt(end + 1)))) {
               shouldKeep = false;
             }
@@ -257,10 +267,10 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             boolean shouldKeep = true;
             // Remove texts between dots (potential URL)
             if ((begin > 1) &&
-                (contents.charAt(begin - 1) == '.') &&
+                (incorrectCharactersBefore.indexOf(contents.charAt(begin - 1)) >= 0) &&
                 (Character.isLetterOrDigit(contents.charAt(begin - 2))) &&
                 (end + 1 < contents.length()) &&
-                (contents.charAt(end) == '.') &&
+                (incorrectCharactersAfter.indexOf(contents.charAt(end)) >= 0) &&
                 (Character.isLetterOrDigit(contents.charAt(end + 1)))) {
               shouldKeep = false;
             }
