@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-09-25 23:41+0200\n"
+"POT-Creation-Date: 2012-10-11 22:07+0200\n"
 "PO-Revision-Date: 2012-04-15 01:06+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -487,13 +487,13 @@ msgstr ""
 msgid "Parsing text"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1468
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1491
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1475
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1498
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -2339,16 +2339,20 @@ msgid "Size limit for syntax highlighting"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:183
+msgid "Threshold for slow regular expressions (ms)"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:200
 #, fuzzy
 msgid "Maximum number of category members :"
 msgstr "Maksimalt antal emner i en menu :"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:200
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:217
 #, fuzzy
 msgid "Maximum number of embedding pages :"
 msgstr "Maksimalt antal emner i en menu :"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:217
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:234
 #, fuzzy
 msgid "Maximum number of search results :"
 msgstr "Maksimalt antal emner i en menu :"

@@ -163,13 +163,30 @@ public class LimitOptionsPanel extends OptionsPanel {
     spin = createJSpinner(
         ConfigurationValueInteger.SYNTAX_HIGHLIGHTING_LIMIT,
         0, 1000000, 10000);
-    JLabel label = Utilities.createJLabel(GT._("Size limit for syntax highlighting"));
-    label.setLabelFor(spin);
-    label.setHorizontalAlignment(SwingConstants.TRAILING);
+    JLabel labelHighlight = Utilities.createJLabel(GT._("Size limit for syntax highlighting"));
+    labelHighlight.setLabelFor(spin);
+    labelHighlight.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridwidth = 2;
     constraints.gridx = 0;
     constraints.weightx = 0;
-    add(label, constraints);
+    add(labelHighlight, constraints);
+    constraints.gridwidth = 1;
+    constraints.gridx = 2;
+    constraints.weightx = 1;
+    add(spin, constraints);
+    constraints.gridy++;
+
+    // Add size limit for syntax highlighting
+    spin = createJSpinner(
+        ConfigurationValueInteger.SLOW_REGEXP,
+        0, 1000000, 1000);
+    JLabel labelRegexp = Utilities.createJLabel(GT._("Threshold for slow regular expressions (ms)"));
+    labelRegexp.setLabelFor(spin);
+    labelRegexp.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridwidth = 2;
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(labelRegexp, constraints);
     constraints.gridwidth = 1;
     constraints.gridx = 2;
     constraints.weightx = 1;
