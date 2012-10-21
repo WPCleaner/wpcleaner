@@ -171,7 +171,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     boolean result = false;
 
     // Check every suggestion
-    List<ContentsChunck> chuncks = computeContentsChuncks(analysis);
+    List<ContentsChunck> chuncks = computeContentsChuncks(analysis, true);
     String contents = analysis.getContents();
     Iterator<Suggestion> itSuggestion = suggestions.iterator();
     while (itSuggestion.hasNext()) {
@@ -186,14 +186,22 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
           while (matcher.find()) {
             int begin = matcher.start();
             int end = matcher.end();
-            if ((begin == 0) ||
-                (!Character.isLetterOrDigit(contents.charAt(begin))) ||
-                (!Character.isLetterOrDigit(contents.charAt(begin - 1)))) {
-              if ((end >= contents.length()) ||
-                  (!Character.isLetterOrDigit(contents.charAt(end))) ||
-                  (!Character.isLetterOrDigit(contents.charAt(end - 1)))) {
-                result |= addReplacements(begin, end, contents, suggestion, replacements);
-              }
+            boolean shouldKeep = true;
+            if (shouldKeep && (begin > 0) &&
+                (Character.isLetterOrDigit(contents.charAt(begin))) &&
+                (Character.isLetterOrDigit(contents.charAt(begin - 1)))) {
+              shouldKeep = false;
+            }
+            if (shouldKeep && (end < contents.length()) &&
+                (Character.isLetterOrDigit(contents.charAt(end))) &&
+                (Character.isLetterOrDigit(contents.charAt(end - 1)))) {
+              shouldKeep = false;
+            }
+            if (shouldKeep && (analysis.getAreas().getEndArea(begin) > begin)) {
+              shouldKeep = false;
+            }
+            if (shouldKeep) {
+              result |= addReplacements(begin, end, contents, suggestion, replacements);
             }
           }
         }
@@ -219,7 +227,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     boolean result = false;
 
     // Check every suggestion
-    List<ContentsChunck> chuncks = computeContentsChuncks(analysis);
+    List<ContentsChunck> chuncks = computeContentsChuncks(analysis, false);
     String contents = analysis.getContents();
     Iterator<Suggestion> itSuggestion = suggestions.iterator();
     while (itSuggestion.hasNext()) {
@@ -396,30 +404,36 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    * Split contents into analyzable chuncks.
    * 
    * @param analysis Page analysis.
+   * @param nativeRegexp True if creating chunks for WPCleaner regular expressions.
    * @return List of contents chuncks.
    */
-  private List<ContentsChunck> computeContentsChuncks(PageAnalysis analysis) {
+  private List<ContentsChunck> computeContentsChuncks(
+      PageAnalysis analysis, boolean nativeRegexp) {
     String contents = analysis.getContents();
     List<ContentsChunck> chuncks = new LinkedList<ContentsChunck>();
     chuncks.add(new ContentsChunck(0, contents.length()));
 
     // Remove templates
-    List<PageElementTemplate> templates = analysis.getTemplates();
-    for (PageElementTemplate template : templates) {
-      removeArea(chuncks, template.getBeginIndex(), template.getEndIndex());
+    if (!nativeRegexp) {
+      List<PageElementTemplate> templates = analysis.getTemplates();
+      for (PageElementTemplate template : templates) {
+        removeArea(chuncks, template.getBeginIndex(), template.getEndIndex());
+      }
     }
 
     // Remove tags
-    // TODO: Be more precise, analyze image descriptions
+    // TODO: Be more precise, analyze image descriptions in gallery
     removeCompleteTags(chuncks, analysis, PageElementTag.TAG_WIKI_GALLERY);
     removeCompleteTags(chuncks, analysis, PageElementTag.TAG_WIKI_MATH);
     removeCompleteTags(chuncks, analysis, PageElementTag.TAG_WIKI_CODE);
     removeCompleteTags(chuncks, analysis, PageElementTag.TAG_WIKI_TIMELINE);
 
     // Remove areas
-    PageElementAreas areas = analysis.getAreas();
-    for (PageElementAreas.Area area : areas.getAreas()) {
-      removeArea(chuncks, area.getBeginIndex(), area.getEndIndex());
+    if (!nativeRegexp) {
+      PageElementAreas areas = analysis.getAreas();
+      for (PageElementAreas.Area area : areas.getAreas()) {
+        removeArea(chuncks, area.getBeginIndex(), area.getEndIndex());
+      }
     }
 
     // Remove empty chuncks
