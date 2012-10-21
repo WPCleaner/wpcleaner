@@ -33,7 +33,6 @@ import org.wikipediacleaner.i18n.GT;
 public abstract class PageComparator implements NamedComparator<Page>, Externalizable {
 
   private final static PageComparator namespaceComparator  = new NamespaceComparator();
-  private final static PageComparator occurenceComparator  = new LinkOccurenceComparator();
   private final static PageComparator pageIdComparator     = new PageIdComparator();
   private final static PageComparator redirectComparator   = new RedirectComparator();
   private final static PageComparator revisionIdComparator = new RevisionIdComparator();
@@ -53,7 +52,6 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     unitComparators.add(titleComparator);
     unitComparators.add(revisionIdComparator);
     unitComparators.add(pageIdComparator);
-    unitComparators.add(occurenceComparator);
     CompositeComparator<Page> comparator = new CompositeComparator<Page>(
         "Template first", unitComparators);
     return comparator;
@@ -70,7 +68,6 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     unitComparators.add(namespaceComparator);
     unitComparators.add(titleComparator);
     unitComparators.add(pageIdComparator);
-    unitComparators.add(occurenceComparator);
     CompositeComparator<Page> comparator = new CompositeComparator<Page>(
         "Revision Id first", unitComparators);
     return comparator;
@@ -87,7 +84,6 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     unitComparators.add(pageIdComparator);
     unitComparators.add(templateComparator);
     unitComparators.add(redirectComparator);
-    unitComparators.add(occurenceComparator);
     CompositeComparator<Page> comparator = new CompositeComparator<Page>(
         "Namespace first", unitComparators);
     return comparator;
@@ -104,29 +100,11 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     unitComparators.add(namespaceComparator);
     unitComparators.add(templateComparator);
     unitComparators.add(redirectComparator);
-    unitComparators.add(occurenceComparator);
     CompositeComparator<Page> comparator = new CompositeComparator<Page>(
         "Title first", unitComparators);
     return comparator;
   }
   
-  /**
-   * @return Page comparator with namespace first then occurence.
-   */
-  public static CompositeComparator<Page> getOccurenceFirstComparator() {
-    List<NamedComparator<Page>> unitComparators = new LinkedList<NamedComparator<Page>>();
-    unitComparators.add(namespaceComparator);
-    unitComparators.add(occurenceComparator);
-    unitComparators.add(titleComparator);
-    unitComparators.add(revisionIdComparator);
-    unitComparators.add(pageIdComparator);
-    unitComparators.add(templateComparator);
-    unitComparators.add(redirectComparator);
-    CompositeComparator<Page> comparator = new CompositeComparator<Page>(
-        "Occurence first", unitComparators);
-    return comparator;
-  }
-
   /**
    * @param name Comparator name.
    * @return Comparator initialized with default order.
@@ -139,7 +117,6 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     unitComparators.add(pageIdComparator);
     unitComparators.add(templateComparator);
     unitComparators.add(redirectComparator);
-    unitComparators.add(occurenceComparator);
     CompositeComparator<Page> comparator = new CompositeComparator<Page>(
         name, unitComparators);
     return comparator;
@@ -152,7 +129,6 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     List<CompositeComparator<Page>> defComparators = new LinkedList<CompositeComparator<Page>>();
     defComparators.add(getNamespaceFirstComparator());
     defComparators.add(getTemplateFirstComparator());
-    defComparators.add(getOccurenceFirstComparator());
     defComparators.add(getRevisionIdFirstComparator());
     return defComparators;
   }
@@ -438,40 +414,6 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     @Override
     public String toString() {
       return GT._("Redirect");
-    }
-  }
-
-  /**
-   * A comparator for links occurence.
-   */
-  static class LinkOccurenceComparator extends PageComparator {
-
-    /**
-     * Restricted to Externalisation. 
-     */
-    public LinkOccurenceComparator() {
-      //
-    }
-
-    /* (non-Javadoc)
-     * @see org.wikipediacleaner.api.data.NamedComparator#getName()
-     */
-    public String getName() {
-      return "Occurrence";
-    }
-
-    /* (non-Javadoc)
-     * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-     */
-    public int compare(Page o1, Page o2) {
-      int c1 = o1.getCountOccurrence();
-      int c2 = o2.getCountOccurrence();
-      return c2 - c1;
-    }
-
-    @Override
-    public String toString() {
-      return GT._("Occurrence");
     }
   }
 }

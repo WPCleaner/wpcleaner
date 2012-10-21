@@ -57,7 +57,6 @@ public class Page implements Comparable<Page> {
   private List<Page> backLinks;
   private List<Page> templates;
   private List<Page> similarPages;
-  private int countOccurrence;
 
   private PageComment comment;
 
@@ -819,20 +818,6 @@ public class Page implements Comparable<Page> {
    */
   public void setTemplates(List<Page> templates) {
     this.templates = templates;
-  }
-
-  /**
-   * @return Occurrence count
-   */
-  public int getCountOccurrence() {
-    return countOccurrence;
-  }
-
-  /**
-   * @param count Occurrence count
-   */
-  public void setCountOccurrence(int count) {
-    this.countOccurrence = count;
   }
 
   /**

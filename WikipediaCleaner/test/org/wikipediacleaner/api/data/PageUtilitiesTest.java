@@ -79,7 +79,9 @@ public class PageUtilitiesTest {
     Page page = DataManager.getPage(EnumWikipedia.FR, "Utilisateur:Salebot/Journal/2008-11-05", null, null);
     Page link = DataManager.getPage(EnumWikipedia.FR, "AFP", null, null);
     PageAnalysis pageAnalysis = page.getAnalysis(pageText, true);
-    PageAnalysisUtils.countInternalLinks(pageAnalysis, Collections.singletonList(link));
-    assertEquals(1, link.getCountOccurrence());
+    pageAnalysis.countLinks(Collections.singletonList(link));
+    InternalLinkCount count = pageAnalysis.getLinkCount(link);
+    assertNotNull(count);
+    assertEquals(1, count.getTotalLinkCount());
   }
 }

@@ -32,10 +32,10 @@ import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.data.InternalLinkCount;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageAnalysisUtils;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -962,9 +962,23 @@ public class UpdateDabWarningTools {
     if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
       return null;
     }
-    Map<String, Integer> linkCount = PageAnalysisUtils.countInternalDisambiguationLinks(
-        pageAnalysis, pageAnalysis.getPage().getLinks());
-    List<String> dabLinks = new ArrayList<String>(linkCount.keySet());
+    List<String> dabLinks = new ArrayList<String>();
+    List<Page> links = pageAnalysis.getPage().getLinks();
+    if (links != null) {
+      pageAnalysis.countLinks(links);
+      for (Page link : links) {
+        if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
+          InternalLinkCount linkCount = pageAnalysis.getLinkCount(link);
+          if (linkCount != null) {
+            if ((linkCount.getInternalLinkCount() > 0) ||
+                (linkCount.getIncorrectTemplateCount() > 0) ||
+                (linkCount.getHelpNeededTemplateCount() > 0)) {
+              dabLinks.add(link.getTitle());
+            }
+          }
+        }
+      }
+    }
     Collections.sort(dabLinks);
     return dabLinks;
   }

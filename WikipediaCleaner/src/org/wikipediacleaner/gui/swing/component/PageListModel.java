@@ -26,8 +26,10 @@ import javax.swing.AbstractListModel;
 import javax.swing.JLabel;
 
 import org.wikipediacleaner.api.data.CompositeComparator;
+import org.wikipediacleaner.api.data.InternalLinkCount;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -43,6 +45,7 @@ public class PageListModel extends AbstractListModel {
   private boolean showOther;
   private boolean showRedirect;
 
+  private PageAnalysis analysis;
   private boolean countDisambiguation;
   private boolean countMissing;
   private boolean countOther;
@@ -210,6 +213,10 @@ public class PageListModel extends AbstractListModel {
     return false;
   }
 
+  public void setPageAnalysis(PageAnalysis analysis) {
+    this.analysis = analysis;
+  }
+
   public boolean getShowDisambiguation() {
     return showDisambiguation;
   }
@@ -326,15 +333,19 @@ public class PageListModel extends AbstractListModel {
    * Update link count.
    */
   public void updateLinkCount() {
-    if (linkCount != null) {
+    if ((linkCount != null) && (analysis != null)) {
       int totalCount = 0;
       int mainCount = 0;
+      analysis.countLinks(filteredList);
       for (Page p : filteredList) {
         if (p != null) {
-          totalCount += p.getCountOccurrence();
-          if ((p.getNamespace() != null) &&
-              (Namespace.MAIN == p.getNamespace().intValue())) {
-            mainCount += p.getCountOccurrence();
+          InternalLinkCount count = analysis.getLinkCount(p);
+          if (count != null) {
+            totalCount += count.getTotalLinkCount();
+            if ((p.getNamespace() != null) &&
+                (Namespace.MAIN == p.getNamespace().intValue())) {
+              mainCount += count.getTotalLinkCount();
+            }
           }
         }
       }
