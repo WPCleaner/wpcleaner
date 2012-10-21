@@ -79,12 +79,12 @@ public class Suggestion implements Comparable<Suggestion> {
     }
     
     // Remove possible \b at the beginning and the end
-    while (patternText.startsWith("\\b")) {
+    /*while (patternText.startsWith("\\b")) {
       patternText = patternText.substring(2);
     }
     while (patternText.endsWith("\\b")) {
       patternText = patternText.substring(0, patternText.length() - 2);
-    }
+    }*/
 
     // Check for problematic constructions
     /*if (patternText.contains("\\b") || patternText.contains("\\B")) {
