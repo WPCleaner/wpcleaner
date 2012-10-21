@@ -31,6 +31,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
+import java.beans.EventHandler;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -153,14 +154,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
 
   JTabbedPane contentPane;
 
-  public final static String ACTION_ANALYZE_PAGES = "ANALYZE_PAGES";
-  public final static String ACTION_ERROR_DETAIL  = "ERROR_DETAIL";
-  public final static String ACTION_ERROR_LIST    = "ERROR_LIST";
-  public final static String ACTION_LOAD_PAGES    = "LOAD_PAGES";
-  public final static String ACTION_RELOAD_ERROR  = "RELOAD_ERROR";
-  public final static String ACTION_CHOOSE_ERRORS = "CHOOSE_ERRORS";
   public final static String ACTION_SELECT_ERRORS = "SELECT_ERRORS:";
-  public final static String ACTION_WHITE_LIST    = "WHITE_LIST";
 
   /**
    * Create and display a CheckWikiProjectWindow.
@@ -621,8 +615,8 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     buttonSelectErrors = Utilities.createJButton(
         "gnome-preferences-desktop.png", EnumImageSize.NORMAL,
         GT._("Select errors"), true);
-    buttonSelectErrors.setActionCommand(ACTION_CHOOSE_ERRORS);
-    buttonSelectErrors.addActionListener(this);
+    buttonSelectErrors.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionChooseErrors"));
     toolbarLoad.add(buttonSelectErrors);
     buttonLoadErrors = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
@@ -666,28 +660,28 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     buttonReloadError = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
         GT._("Reload error"), false);
-    buttonReloadError.setActionCommand(ACTION_RELOAD_ERROR);
-    buttonReloadError.addActionListener(this);
+    buttonReloadError.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionReloadError"));
     toolbar.add(buttonReloadError);
     buttonErrorDetail = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.NORMAL,
         GT._("Detail"), false);
-    buttonErrorDetail.setActionCommand(ACTION_ERROR_DETAIL);
-    buttonErrorDetail.addActionListener(this);
+    buttonErrorDetail.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionErrorDetail"));
     buttonErrorDetail.setEnabled(false);
     toolbar.add(buttonErrorDetail);
     buttonErrorList = Utilities.createJButton(
         "gnome-web-browser.png", EnumImageSize.NORMAL,
         GT._("List on toolserver"), false);
-    buttonErrorList.setActionCommand(ACTION_ERROR_LIST);
-    buttonErrorList.addActionListener(this);
+    buttonErrorList.addActionListener(
+        EventHandler.create(ActionListener.class, this, "actionErrorList"));
     buttonErrorList.setEnabled(false);
     toolbar.add(buttonErrorList);
     buttonWhiteList = Utilities.createJButton(
         "gnome-accessories-text-editor.png", EnumImageSize.NORMAL,
         GT._("View or edit white list"), false);
-    buttonWhiteList.setActionCommand(ACTION_WHITE_LIST);
-    buttonWhiteList.addActionListener(this);
+    buttonWhiteList.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionErrorWhiteList"));
     buttonWhiteList.setEnabled(false);
     toolbar.add(buttonWhiteList);
     constraints.gridx++;
@@ -752,14 +746,14 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarButtons.setFloatable(false);
     JButton buttonLoad = Utilities.createJButton(GT._("&Load pages"));
-    buttonLoad.setActionCommand(ACTION_LOAD_PAGES);
-    buttonLoad.addActionListener(this);
+    buttonLoad.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSelectPage"));
     toolbarButtons.add(buttonLoad);
     JButton buttonAnalysis = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
         GT._("Full analysis (Alt + &F)"), false);
-    buttonAnalysis.setActionCommand(ACTION_ANALYZE_PAGES);
-    buttonAnalysis.addActionListener(this);
+    buttonAnalysis.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionAnalyzePage"));
     toolbarButtons.add(buttonAnalysis);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
@@ -1733,22 +1727,8 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     }
 
     super.actionPerformed(e);
-    if (ACTION_ERROR_DETAIL.equals(e.getActionCommand())) {
-      actionErrorDetail();
-    } else if (ACTION_ERROR_LIST.equals(e.getActionCommand())) {
-      actionErrorList();
-    } else if (ACTION_LOAD_PAGES.equals(e.getActionCommand())) {
-      actionSelectPage();
-    } else if (ACTION_ANALYZE_PAGES.equals(e.getActionCommand())) {
-      actionAnalyzePage();
-    } else if (ACTION_WHITE_LIST.equals(e.getActionCommand())) {
-      actionErrorWhiteList();
-    } else if (ACTION_RELOAD_ERROR.equals(e.getActionCommand())) {
-      actionReloadError();
-    } else if (ACTION_CHOOSE_ERRORS.equals(e.getActionCommand())) {
-      actionChooseErrors();
-    } else if ((e.getActionCommand() != null) &&
-               (e.getActionCommand().startsWith(ACTION_SELECT_ERRORS))) {
+    if ((e.getActionCommand() != null) &&
+        (e.getActionCommand().startsWith(ACTION_SELECT_ERRORS))) {
       actionSelectErrors(e.getActionCommand().substring(ACTION_SELECT_ERRORS.length()));
     }
   }
@@ -1891,7 +1871,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
   /**
    * Action called to display error detail. 
    */
-  private void actionErrorDetail() {
+  public void actionErrorDetail() {
     Object selected = listAllErrors.getSelectedItem();
     if ((selected instanceof CheckError) &&
         (Utilities.isDesktopSupported())) {
@@ -1917,7 +1897,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
   /**
    * Action called to display error list on toolserver. 
    */
-  private void actionErrorList() {
+  public void actionErrorList() {
     Object selected = listAllErrors.getSelectedItem();
     if ((selected instanceof CheckError) &&
         (Utilities.isDesktopSupported())) {
@@ -1935,7 +1915,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
   /**
    * Action called to display error white list. 
    */
-  private void actionErrorWhiteList() {
+  public void actionErrorWhiteList() {
     Object selected = listAllErrors.getSelectedItem();
     if ((selected instanceof CheckError) &&
         (Utilities.isDesktopSupported())) {
@@ -1961,7 +1941,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
   /**
    * Action called when a page is selected.
    */
-  void actionSelectPage() {
+  public void actionSelectPage() {
     Object[] selection = listPages.getSelectedValues();
     final List<Page> pages = new ArrayList<Page>();
     if (selection != null) {
@@ -2019,7 +1999,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
   /**
    * Action called when a page is analyzed.
    */
-  void actionAnalyzePage() {
+  public void actionAnalyzePage() {
     Object[] selection = listPages.getSelectedValues();
     if (selection != null) {
       for (int i = 0; i < selection.length; i++) {
@@ -2049,7 +2029,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
   /**
    * Action called when Reload Error button is pressed. 
    */
-  protected void actionReloadError() {
+  public void actionReloadError() {
     Object selected = listAllErrors.getSelectedItem();
     if (selected instanceof CheckError) {
       CheckError error = (CheckError) selected;

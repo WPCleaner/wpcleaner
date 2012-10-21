@@ -22,8 +22,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -54,17 +54,12 @@ import org.wikipediacleaner.images.EnumImageSize;
  */
 public class SortingOptionsPanel
   extends OptionsPanel
-  implements ActionListener, ListSelectionListener {
+  implements ListSelectionListener {
 
   /**
    * Serialisation.
    */
   private static final long serialVersionUID = 2014796573945564540L;
-
-  private final static String ACTION_SORT_ADD    = "SORT ADD";
-  private final static String ACTION_SORT_DELETE = "SORT DELETE";
-  private final static String ACTION_SORT_DOWN   = "SORT DOWN";
-  private final static String ACTION_SORT_UP     = "SORT UP";
 
   private JButton buttonSortAdd;
   private JButton buttonSortDelete;
@@ -124,13 +119,13 @@ public class SortingOptionsPanel
     toolbarButtons.setFloatable(false);
     buttonSortAdd = Utilities.createJButton(
         "gnome-list-add.png", EnumImageSize.NORMAL, GT._("Add"), false);
-    buttonSortAdd.setActionCommand(ACTION_SORT_ADD);
-    buttonSortAdd.addActionListener(this);
+    buttonSortAdd.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSortAdd"));
     toolbarButtons.add(buttonSortAdd);
     buttonSortDelete = Utilities.createJButton(
         "gnome-list-remove.png", EnumImageSize.NORMAL, GT._("Delete"), false);
-    buttonSortDelete.setActionCommand(ACTION_SORT_DELETE);
-    buttonSortDelete.addActionListener(this);
+    buttonSortDelete.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSortDelete"));
     toolbarButtons.add(buttonSortDelete);
     constraints.gridy++;
     constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -158,13 +153,13 @@ public class SortingOptionsPanel
     toolbarButtons.setFloatable(false);
     buttonSortUp = Utilities.createJButton(
         "gnome-go-up.png", EnumImageSize.NORMAL, GT._("Up"), false);
-    buttonSortUp.setActionCommand(ACTION_SORT_UP);
-    buttonSortUp.addActionListener(this);
+    buttonSortUp.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSortMoveUp"));
     toolbarButtons.add(buttonSortUp);
     buttonSortDown = Utilities.createJButton(
         "gnome-go-down.png", EnumImageSize.NORMAL, GT._("Down"), false);
-    buttonSortDown.setActionCommand(ACTION_SORT_DOWN);
-    buttonSortDown.addActionListener(this);
+    buttonSortDown.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSortMoveDown"));
     toolbarButtons.add(buttonSortDown);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weighty = 0;
@@ -220,7 +215,7 @@ public class SortingOptionsPanel
   /**
    * Action called when Sort Add button is pressed.
    */
-  private void actionSortAdd() {
+  public void actionSortAdd() {
     String name = Utilities.askForValue(this.getParent(), "Input name :", "", null);
     if (name != null) {
       CompositeComparator<Page> comparator = PageComparator.createComparator(name);
@@ -232,7 +227,7 @@ public class SortingOptionsPanel
   /**
    * Action called when Sort Delete button is pressed.
    */
-  private void actionSortDelete() {
+  public void actionSortDelete() {
     int selected = listSort.getSelectedIndex();
     if (selected != -1) {
       modelSort.remove(selected);
@@ -242,6 +237,20 @@ public class SortingOptionsPanel
         listSort.setSelectedIndex(selected - 1);
       }
     }
+  }
+
+  /**
+   * Action called when Sort Up button is pressed.
+   */
+  public void actionSortMoveUp() {
+    actionSortMove(true);
+  }
+
+  /**
+   * Action called when Sort Down button is pressed.
+   */
+  public void actionSortMoveDown() {
+    actionSortMove(false);
   }
 
   /**
@@ -264,27 +273,6 @@ public class SortingOptionsPanel
         modelSortItem.addElement(item);
       }
       listSortItem.setSelectedIndex(Math.min(Math.max(0, selected), modelSortItem.size() - 1));
-    }
-  }
-
-  /**
-   * Invoked when an action occurs.
-   * 
-   * @param e Event.
-   */
-  public void actionPerformed(ActionEvent e) {
-    if (e == null) {
-      return;
-    }
-
-    if (ACTION_SORT_ADD.equals(e.getActionCommand())) {
-      actionSortAdd();
-    } else if (ACTION_SORT_DELETE.equals(e.getActionCommand())) {
-      actionSortDelete();
-    } else if (ACTION_SORT_DOWN.equals(e.getActionCommand())) {
-      actionSortMove(false);
-    } else if (ACTION_SORT_UP.equals(e.getActionCommand())) {
-      actionSortMove(true);
     }
   }
 

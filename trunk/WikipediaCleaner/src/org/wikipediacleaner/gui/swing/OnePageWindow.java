@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.EventHandler;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -371,8 +372,8 @@ public abstract class OnePageWindow
       } else {
         buttonDisambiguation = Utilities.createJButton(GT._("Disambiguation"));
       }
-      buttonDisambiguation.setActionCommand(ACTION_DISAMBIGUATION_PAGE);
-      buttonDisambiguation.addActionListener(this);
+      buttonDisambiguation.addActionListener(EventHandler.create(
+          ActionListener.class, this, "actionDisambiguation"));
       panel.add(buttonDisambiguation);
     }
   }
@@ -508,8 +509,8 @@ public abstract class OnePageWindow
     panel.add(buttonFullAnalysisRedirect);
     buttonDisambiguationRedirect = Utilities.createJButton(GT._(
         "Disambiguation analysis of redirect"));
-    buttonDisambiguationRedirect.setActionCommand(ACTION_DISAMBIGUATION_REDIR);
-    buttonDisambiguationRedirect.addActionListener(this);
+    buttonDisambiguationRedirect.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionDisambiguationRedir"));
     panel.add(buttonDisambiguationRedirect);
   }
 
@@ -1073,18 +1074,18 @@ public abstract class OnePageWindow
     menu.add(createFixRedirectsMenu());
 
     menuItem = Utilities.createJMenuItem(GT._("&Preview"));
-    menuItem.setActionCommand(ACTION_PREVIEW);
-    menuItem.addActionListener(this);
+    menuItem.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionPreview"));
     menu.add(menuItem);
 
     menuItem = Utilities.createJMenuItem(GT._("&Expand templates"));
-    menuItem.setActionCommand(ACTION_EXPAND_TEMPLATES);
-    menuItem.addActionListener(this);
+    menuItem.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionExpandTemplates"));
     menu.add(menuItem);
 
     menuItem = Utilities.createJMenuItem(GT._("Expand templates &and Preview"));
-    menuItem.setActionCommand(ACTION_EXPAND_PREVIEW);
-    menuItem.addActionListener(this);
+    menuItem.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionExpandTemplatesPreview"));
     menu.add(menuItem);
  
     return menu;
@@ -1132,17 +1133,11 @@ public abstract class OnePageWindow
   /* ActionListener                                                         */
   /* ====================================================================== */
 
-  public final static String ACTION_DISAMBIGUATION_PAGE  = "DISAMBIGUATION PAGE";
-
-  public final static String ACTION_DISAMBIGUATION_REDIR = "DISAMBIGUATION REDIR";
-  public final static String ACTION_EXPAND_TEMPLATES     = "EXPAND TEMPLATES";
-  public final static String ACTION_EXPAND_PREVIEW       = "EXPAND PREVIEW";
   public final static String ACTION_FIRST_OCCURRENCE     = "FIRST OCCURRENCE";
   public final static String ACTION_FULL_ANALYSIS_PAGE   = "FULL ANALYSIS PAGE";
   public final static String ACTION_FULL_ANALYSIS_REDIR  = "FULL ANALYSIS REDIR";
   public final static String ACTION_LAST_OCCURRENCE      = "LAST OCCURRENCE";
   public final static String ACTION_NEXT_OCCURRENCE      = "NEXT OCCURRENCE";
-  public final static String ACTION_PREVIEW              = "PREVIEW";
   public final static String ACTION_PREVIOUS_OCCURRENCE  = "PREVIOUS OCCURRENCE";
   public final static String ACTION_RELOAD               = "RELOAD";
   public final static String ACTION_SEND                 = "SEND";
@@ -1163,20 +1158,10 @@ public abstract class OnePageWindow
       return;
     }
 
-    if (ACTION_DISAMBIGUATION_PAGE.equals(e.getActionCommand())) {
-      actionDisambiguation();
-    } else if (ACTION_DISAMBIGUATION_REDIR.equals(e.getActionCommand())) {
-      actionDisambiguationRedir();
-    } else if (ACTION_EXPAND_TEMPLATES.equals(e.getActionCommand())) {
-      actionExpandTemplates();
-    } else if (ACTION_EXPAND_PREVIEW.equals(e.getActionCommand())) {
-      actionExpandTemplatesPreview();
-    } else if (ACTION_FULL_ANALYSIS_PAGE.equals(e.getActionCommand())) {
+    if (ACTION_FULL_ANALYSIS_PAGE.equals(e.getActionCommand())) {
       actionFullAnalysis();
     } else if (ACTION_FULL_ANALYSIS_REDIR.equals(e.getActionCommand())) {
       actionFullAnalysisRedir();
-    } else if (ACTION_PREVIEW.equals(e.getActionCommand())) {
-      actionPreview();
     } else if (ACTION_RELOAD.equals(e.getActionCommand())) {
       actionReload();
     } else if (ACTION_SEND.equals(e.getActionCommand())) {
@@ -1197,14 +1182,14 @@ public abstract class OnePageWindow
   /**
    * Action called when Disambiguation button is pressed.
    */
-  private void actionDisambiguation() {
+  public void actionDisambiguation() {
     Controller.runDisambiguationAnalysis(getPageName(), getWikipedia());
   }
 
   /**
    * Action called when Disambiguation Redirect button is pressed.
    */
-  private void actionDisambiguationRedir() {
+  public void actionDisambiguationRedir() {
     if (page != null) {
       Controller.runDisambiguationAnalysis(
           page.getRedirectTitle(), getWikipedia());
@@ -1214,7 +1199,7 @@ public abstract class OnePageWindow
   /**
    * Action called when Expand Templates menu is selected. 
    */
-  private void actionExpandTemplates() {
+  public void actionExpandTemplates() {
     if (textContents != null) {
       Controller.runExpandTemplates(
           getPageName(), textContents.getText(),
@@ -1225,7 +1210,7 @@ public abstract class OnePageWindow
   /**
    * Action called when Expand Templates / Preview menu is selected. 
    */
-  private void actionExpandTemplatesPreview() {
+  public void actionExpandTemplatesPreview() {
     if (textContents != null) {
       Controller.runExpandTemplates(
           getPageName(), textContents.getText(),
@@ -1254,7 +1239,7 @@ public abstract class OnePageWindow
   /**
    * Action called when Preview menu is selected. 
    */
-  private void actionPreview() {
+  public void actionPreview() {
     if (textContents != null) {
       Controller.runExpandTemplates(
           getPageName(), textContents.getText(),

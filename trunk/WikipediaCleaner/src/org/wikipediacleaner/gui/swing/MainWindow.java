@@ -24,10 +24,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.EventHandler;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -106,38 +106,6 @@ import org.xml.sax.SAXException;
 public class MainWindow
   extends BasicWindow
   implements ActionListener, ItemListener {
-
-  private final static String ACTION_ABOUT            = "ABOUT";
-  private final static String ACTION_ALL_DAB          = "ALL DAB";
-  private final static String ACTION_BOT_TOOLS        = "BOT TOOLS";
-  private final static String ACTION_CAT_MEMBERS      = "CAT_MEMBERS";
-  private final static String ACTION_CHECK_SPELLING   = "CHECK SPELLING";
-  private final static String ACTION_CHECK_WIKI       = "CHECK WIKI";
-  private final static String ACTION_CONTRIBUTIONS    = "CONTRIBUTIONS";
-  private final static String ACTION_CURRENT_DAB_LIST = "CURRENT DAB LIST";
-  private final static String ACTION_DEMO             = "DEMO";
-  private final static String ACTION_DISAMBIGUATION   = "DISAMBIGUATION";
-  private final static String ACTION_EMBEDDED_IN      = "EMBEDDED IN";
-  private final static String ACTION_FULL_ANALYSIS    = "FULL ANALYSIS";
-  private final static String ACTION_HELP             = "HELP";
-  private final static String ACTION_HELP_REQUESTED   = "HELP_REQUESTED";
-  private final static String ACTION_IDEA             = "IDEA";
-  private final static String ACTION_INTERNAL_LINKS   = "INTERNAL LINKS";
-  private final static String ACTION_LOGIN            = "LOGIN";
-  private final static String ACTION_LOGOUT           = "LOGOUT";
-  private final static String ACTION_MOST_DAB_LINKS   = "MOST DAB LINKS";
-  private final static String ACTION_OPTIONS          = "OPTIONS";
-  private final static String ACTION_OPTIONS_SYSTEM   = "OPTIONS SYSTEM";
-  private final static String ACTION_OTHER_LANGUAGE   = "OTHER LANGUAGE";
-  private final static String ACTION_OTHER_WIKIPEDIA  = "OTHER WIKIPEDIA";
-  private final static String ACTION_RANDOM_PAGE      = "RANDOM PAGE";
-  private final static String ACTION_RANDOM_PAGES     = "RANDOM PAGES";
-  private final static String ACTION_RELOAD_CONFIG    = "RELOAD CONFIG";
-  private final static String ACTION_SAVE_PASSWORD    = "SAVE PASSWORD";
-  private final static String ACTION_SEARCH_TITLES    = "SEARCH TITLES";
-  private final static String ACTION_UPDATE_DAB       = "UPDATE DAB WARNING";
-  private final static String ACTION_WATCH_LIST_LOCAL = "WATCH LIST LOCAL";
-  private final static String ACTION_WATCH_LIST       = "WATCH LIST";
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(3);
 
@@ -382,8 +350,8 @@ public class MainWindow
     JButton buttonWikipediaInfo = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.SMALL,
         GT._("Other Wikipedia"), false);
-    buttonWikipediaInfo.setActionCommand(ACTION_OTHER_WIKIPEDIA);
-    buttonWikipediaInfo.addActionListener(this);
+    buttonWikipediaInfo.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionOtherWikipedia"));
     toolbarWikipedia.add(buttonWikipediaInfo);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -409,8 +377,8 @@ public class MainWindow
     JButton buttonLanguageInfo = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.SMALL,
         GT._("Other Language"), false);
-    buttonLanguageInfo.setActionCommand(ACTION_OTHER_LANGUAGE);
-    buttonLanguageInfo.addActionListener(this);
+    buttonLanguageInfo.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionOtherLanguage"));
     toolbarLanguage.add(buttonLanguageInfo);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -457,18 +425,18 @@ public class MainWindow
     JToolBar buttonToolbar = new JToolBar(SwingConstants.HORIZONTAL);
     buttonToolbar.setFloatable(false);
     buttonLogin = Utilities.createJButton(GT._("&Login"));
-    buttonLogin.setActionCommand(ACTION_LOGIN);
-    buttonLogin.addActionListener(this);
+    buttonLogin.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionLogin"));
     buttonToolbar.add(buttonLogin);
     buttonToolbar.addSeparator();
     buttonDemo = Utilities.createJButton(GT._("&Demo"));
-    buttonDemo.setActionCommand(ACTION_DEMO);
-    buttonDemo.addActionListener(this);
+    buttonDemo.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionDemo"));
     buttonToolbar.add(buttonDemo);
     buttonToolbar.addSeparator();
     buttonLogout = Utilities.createJButton(GT._("L&ogout"));
-    buttonLogout.setActionCommand(ACTION_LOGOUT);
-    buttonLogout.addActionListener(this);
+    buttonLogout.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionLogout"));
     buttonToolbar.add(buttonLogout);
     constraints.fill = GridBagConstraints.NONE;
     constraints.gridwidth = 2;
@@ -483,42 +451,42 @@ public class MainWindow
     buttonHelp = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.NORMAL,
         GT._("Help (Alt + &H)"), false);
-    buttonHelp.setActionCommand(ACTION_HELP);
-    buttonHelp.addActionListener(this);
+    buttonHelp.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionHelp"));
     buttonToolbar.add(buttonHelp);
     buttonOptions = Utilities.createJButton(
         "gnome-preferences-other.png", EnumImageSize.NORMAL,
         GT._("Options (Alt + &O)"), false);
-    buttonOptions.setActionCommand(ACTION_OPTIONS);
-    buttonOptions.addActionListener(this);
+    buttonOptions.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionOptions"));
     buttonToolbar.add(buttonOptions);
     buttonOptionsSystem = Utilities.createJButton(
         "gnome-preferences-system.png", EnumImageSize.NORMAL,
         GT._("System Options (Alt + &Y)"), false);
-    buttonOptionsSystem.setActionCommand(ACTION_OPTIONS_SYSTEM);
-    buttonOptionsSystem.addActionListener(this);
+    buttonOptionsSystem.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionOptionsSystem"));
     buttonToolbar.add(buttonOptionsSystem);
     buttonReloadOptions = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
         GT._("Reload system options"), false);
-    buttonReloadOptions.setActionCommand(ACTION_RELOAD_CONFIG);
-    buttonReloadOptions.addActionListener(this);
+    buttonReloadOptions.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionReloadOptions"));
     buttonToolbar.add(buttonReloadOptions);
     buttonCheckSpelling = Utilities.createJButton(
         "gnome-tools-check-spelling.png", EnumImageSize.NORMAL,
         GT._("Check spelling options"), false);
-    buttonCheckSpelling.setActionCommand(ACTION_CHECK_SPELLING);
-    buttonCheckSpelling.addActionListener(this);
+    buttonCheckSpelling.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionCheckSpelling"));
     buttonToolbar.add(buttonCheckSpelling);
     buttonToolbar.addSeparator();
     buttonIdea = Utilities.createJButton(GT._("&Idea ? Bug ?"));
-    buttonIdea.setActionCommand(ACTION_IDEA);
-    buttonIdea.addActionListener(this);
+    buttonIdea.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionIdea"));
     buttonToolbar.add(buttonIdea);
     buttonToolbar.addSeparator();
     buttonAbout = Utilities.createJButton(GT._("About"));
-    buttonAbout.setActionCommand(ACTION_ABOUT);
-    buttonAbout.addActionListener(this);
+    buttonAbout.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionAbout"));
     buttonAbout.setEnabled(false);
     buttonToolbar.add(buttonAbout);
     constraints.fill = GridBagConstraints.NONE;
@@ -533,8 +501,8 @@ public class MainWindow
     radSavePassword = Utilities.createJRadioButton(
         GT._("Save user name and password"),
         (saveUser == ConfigurationConstants.VALUE_SAVE_USER_BOTH));
-    radSavePassword.setActionCommand(ACTION_SAVE_PASSWORD);
-    radSavePassword.addActionListener(this);
+    radSavePassword.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSavePassword"));
     groupSaveUsernamePassword.add(radSavePassword);
     constraints.fill = GridBagConstraints.NONE;
     constraints.gridx = 0;
@@ -621,8 +589,8 @@ public class MainWindow
     buttonRandomPage = Utilities.createJButton(
         "commons-nuvola-apps-atlantik.png", EnumImageSize.SMALL,
         GT._("Random page (Alt + &R)"), false);
-    buttonRandomPage.setActionCommand(ACTION_RANDOM_PAGE);
-    buttonRandomPage.addActionListener(this);
+    buttonRandomPage.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionRandomPage"));
     toolbarRandom.add(buttonRandomPage);
     constraints.weightx = 0;
     panel.add(toolbarRandom, constraints);
@@ -636,8 +604,8 @@ public class MainWindow
     buttonFullAnalysis = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
         GT._("&Full analysis"), true);
-    buttonFullAnalysis.setActionCommand(ACTION_FULL_ANALYSIS);
-    buttonFullAnalysis.addActionListener(this);
+    buttonFullAnalysis.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionFullAnalysis"));
     panel.add(buttonFullAnalysis, constraints);
     constraints.gridy++;
 
@@ -645,8 +613,8 @@ public class MainWindow
     buttonDisambiguation = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("&Disambiguation"), true);
-    buttonDisambiguation.setActionCommand(ACTION_DISAMBIGUATION);
-    buttonDisambiguation.addActionListener(this);
+    buttonDisambiguation.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionDisambiguation"));
     panel.add(buttonDisambiguation, constraints);
     constraints.gridy++;
 
@@ -654,15 +622,15 @@ public class MainWindow
     buttonSearchTitles = Utilities.createJButton(
         "gnome-system-search.png", EnumImageSize.NORMAL,
         GT._("Search in titles"), true);
-    buttonSearchTitles.setActionCommand(ACTION_SEARCH_TITLES);
-    buttonSearchTitles.addActionListener(this);
+    buttonSearchTitles.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSearchTitles"));
     panel.add(buttonSearchTitles, constraints);
     constraints.gridy++;
 
     // Links button
     buttonInternalLinks = Utilities.createJButton(GT._("Internal links"));
-    buttonInternalLinks.setActionCommand(ACTION_INTERNAL_LINKS);
-    buttonInternalLinks.addActionListener(this);
+    buttonInternalLinks.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionInternalLinks"));
     panel.add(buttonInternalLinks, constraints);
     constraints.gridy++;
 
@@ -670,8 +638,8 @@ public class MainWindow
     buttonCategoryMembers = Utilities.createJButton(
         "commons-nuvola-apps-kpager.png", EnumImageSize.NORMAL,
         GT._("Category members"), true);
-    buttonCategoryMembers.setActionCommand(ACTION_CAT_MEMBERS);
-    buttonCategoryMembers.addActionListener(this);
+    buttonCategoryMembers.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionCategoryMembers"));
     panel.add(buttonCategoryMembers, constraints);
     constraints.gridy++;
 
@@ -679,8 +647,8 @@ public class MainWindow
     buttonEmbeddedIn = Utilities.createJButton(
         "commons-curly-brackets.png", EnumImageSize.NORMAL,
         GT._("Embedded in"), true);
-    buttonEmbeddedIn.setActionCommand(ACTION_EMBEDDED_IN);
-    buttonEmbeddedIn.addActionListener(this);
+    buttonEmbeddedIn.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionEmbeddedIn"));
     panel.add(buttonEmbeddedIn, constraints);
     constraints.gridy++;
 
@@ -688,8 +656,8 @@ public class MainWindow
     buttonUpdateDabWarning = Utilities.createJButton(
         "gnome-dialog-warning.png", EnumImageSize.NORMAL,
         GT._("Update disambiguation warning"), true);
-    buttonUpdateDabWarning.setActionCommand(ACTION_UPDATE_DAB);
-    buttonUpdateDabWarning.addActionListener(this);
+    buttonUpdateDabWarning.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionUpdateDabWarning"));
     panel.add(buttonUpdateDabWarning, constraints);
     constraints.gridy++;
 
@@ -708,8 +676,8 @@ public class MainWindow
     buttonContributions = Utilities.createJButton(
         "gnome-utilities-system-monitor.png", EnumImageSize.NORMAL,
         GT._("Your contributions"), true);
-    buttonContributions.setActionCommand(ACTION_CONTRIBUTIONS);
-    buttonContributions.addActionListener(this);
+    buttonContributions.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionContributions"));
     panel.add(buttonContributions, constraints);
     constraints.gridy++;
     return panel;
@@ -740,8 +708,8 @@ public class MainWindow
     buttonAllDab = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Preload disambiguations pages"), true);
-    buttonAllDab.setActionCommand(ACTION_ALL_DAB);
-    buttonAllDab.addActionListener(this);
+    buttonAllDab.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionAllDab"));
     panel.add(buttonAllDab, constraints);
     constraints.gridy++;
 
@@ -749,8 +717,8 @@ public class MainWindow
     buttonCurrentDabList = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("&Current Disambiguation List"), true);
-    buttonCurrentDabList.setActionCommand(ACTION_CURRENT_DAB_LIST);
-    buttonCurrentDabList.addActionListener(this);
+    buttonCurrentDabList.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionCurrentDabList"));
     panel.add(buttonCurrentDabList, constraints);
     constraints.gridy++;
 
@@ -758,8 +726,8 @@ public class MainWindow
     buttonMostDabLinks = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("With many disambiguation links"), true);
-    buttonMostDabLinks.setActionCommand(ACTION_MOST_DAB_LINKS);
-    buttonMostDabLinks.addActionListener(this);
+    buttonMostDabLinks.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionMostDabLinks"));
     panel.add(buttonMostDabLinks, constraints);
     constraints.gridy++;
 
@@ -767,15 +735,15 @@ public class MainWindow
     buttonCheckWiki = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
         GT._("Project check wikipedia"), true);
-    buttonCheckWiki.setActionCommand(ACTION_CHECK_WIKI);
-    buttonCheckWiki.addActionListener(this);
+    buttonCheckWiki.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionCheckWiki"));
     panel.add(buttonCheckWiki, constraints);
     constraints.gridy++;
 
     // Help requested button
     buttonHelpRequested = Utilities.createJButton(GT._("Help requested on..."));
-    buttonHelpRequested.setActionCommand(ACTION_HELP_REQUESTED);
-    buttonHelpRequested.addActionListener(this);
+    buttonHelpRequested.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionHelpRequestedOn"));
     panel.add(buttonHelpRequested, constraints);
     constraints.gridy++;
 
@@ -783,8 +751,8 @@ public class MainWindow
     buttonWatchlistLocal = Utilities.createJButton(
         "gnome-logviewer.png", EnumImageSize.NORMAL,
         GT._("Local &Watch list"), true);
-    buttonWatchlistLocal.setActionCommand(ACTION_WATCH_LIST_LOCAL);
-    buttonWatchlistLocal.addActionListener(this);
+    buttonWatchlistLocal.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionWatchlistLocal"));
     panel.add(buttonWatchlistLocal, constraints);
     constraints.gridy++;
 
@@ -792,8 +760,8 @@ public class MainWindow
     buttonWatchlist = Utilities.createJButton(
         "gnome-logviewer.png", EnumImageSize.NORMAL,
         GT._("Watch list"), true);
-    buttonWatchlist.setActionCommand(ACTION_WATCH_LIST);
-    buttonWatchlist.addActionListener(this);
+    buttonWatchlist.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionWatchlist"));
     panel.add(buttonWatchlist, constraints);
     constraints.gridy++;
 
@@ -801,8 +769,8 @@ public class MainWindow
     buttonRandomPages = Utilities.createJButton(
         "commons-nuvola-apps-atlantik.png", EnumImageSize.NORMAL,
         GT._("Random pages"), true);
-    buttonRandomPages.setActionCommand(ACTION_RANDOM_PAGES);
-    buttonRandomPages.addActionListener(this);
+    buttonRandomPages.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionRandomPages"));
     panel.add(buttonRandomPages, constraints);
     constraints.gridy++;
 
@@ -810,8 +778,8 @@ public class MainWindow
     buttonBotTools = Utilities.createJButton(
         "commons-nuvola-apps-kcmsystem.png", EnumImageSize.NORMAL,
         GT._("Bot tools"), true);
-    buttonBotTools.setActionCommand(ACTION_BOT_TOOLS);
-    buttonBotTools.addActionListener(this);
+    buttonBotTools.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionBotTools"));
     panel.add(buttonBotTools, constraints);
     constraints.gridy++;
 
@@ -828,92 +796,30 @@ public class MainWindow
   }
 
   /**
-   * Invoked when an action occurs.
-   * 
-   * @param e Event.
+   * Action called when About button is pressed.
    */
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if (e == null) {
-      return;
-    }
+  public void actionAbout() {
+    Controller.runAbout();
+  }
 
-    if (ACTION_LOGIN.equals(e.getActionCommand())) {
-      actionLogin();
-    } else if (ACTION_DEMO.equals(e.getActionCommand())) {
-      actionDemo();
-    } else if (ACTION_LOGOUT.equals(e.getActionCommand())) {
-      actionLogout();
-    } else if (ACTION_HELP.equals(e.getActionCommand())) {
-      actionHelp();
-    } else if (ACTION_IDEA.equals(e.getActionCommand())) {
-      actionIdea();
-    } else if (ACTION_ABOUT.equals(e.getActionCommand())) {
-      Controller.runAbout();
-    } else if (ACTION_SAVE_PASSWORD.equals(e.getActionCommand())) {
-      actionSavePassword();
-    } else if (ACTION_FULL_ANALYSIS.equals(e.getActionCommand())) {
-      actionFullAnalysis();
-    } else if (ACTION_DISAMBIGUATION.equals(e.getActionCommand())) {
-      actionDisambiguation();
-    } else if (ACTION_INTERNAL_LINKS.equals(e.getActionCommand())) {
-      actionInternalLinks();
-    } else if (ACTION_SEARCH_TITLES.equals(e.getActionCommand())) {
-      actionSearchTitles();
-    } else if (ACTION_CAT_MEMBERS.equals(e.getActionCommand())) {
-      actionCategoryMembers();
-    } else if (ACTION_EMBEDDED_IN.equals(e.getActionCommand())) {
-      actionEmbeddedIn();
-    } else if (ACTION_CURRENT_DAB_LIST.equals(e.getActionCommand())) {
-      actionCurrentDabList();
-    } else if (ACTION_MOST_DAB_LINKS.equals(e.getActionCommand())) {
-      actionMostDabLinks();
-    } else if (ACTION_RANDOM_PAGE.equals(e.getActionCommand())) {
-      actionRandomPage();
-    } else if (ACTION_WATCH_LIST_LOCAL.equals(e.getActionCommand())) {
-      actionWatchlistLocal();
-    } else if (ACTION_WATCH_LIST.equals(e.getActionCommand())) {
-      actionWatchlist();
-    } else if (ACTION_OPTIONS.equals(e.getActionCommand())) {
-      Controller.runOptions();
-    } else if (ACTION_OPTIONS_SYSTEM.equals(e.getActionCommand())) {
-      actionOptionsSystem();
-    } else if (ACTION_RELOAD_CONFIG.equals(e.getActionCommand())) {
-      actionReloadOptions();
-    } else if (ACTION_CHECK_SPELLING.equals(e.getActionCommand())) {
-      actionCheckSpelling();
-    } else if (ACTION_OTHER_LANGUAGE.equals(e.getActionCommand())) {
-      actionOtherLanguage();
-    } else if (ACTION_OTHER_WIKIPEDIA.equals(e.getActionCommand())) {
-      actionOtherWikipedia();
-    } else if (ACTION_HELP_REQUESTED.equals(e.getActionCommand())) {
-      actionHelpRequestedOn();
-    } else if (ACTION_ALL_DAB.equals(e.getActionCommand())) {
-      actionAllDab();
-    } else if (ACTION_CHECK_WIKI.equals(e.getActionCommand())) {
-      actionCheckWiki();
-    } else if (ACTION_RANDOM_PAGES.equals(e.getActionCommand())) {
-      actionRandomPages();
-    } else if (ACTION_BOT_TOOLS.equals(e.getActionCommand())) {
-      actionBotTools();
-    } else if (ACTION_UPDATE_DAB.equals(e.getActionCommand())) {
-      actionUpdateDabWarning();
-    } else if (ACTION_CONTRIBUTIONS.equals(e.getActionCommand())) {
-      actionContributions();
-    }
+  /**
+   * Action called when Options button is pressed.
+   */
+  public void actionOptions() {
+    Controller.runOptions();
   }
 
   /**
    * Action called when Login button is pressed.
    */
-  private void actionLogin() {
+  public void actionLogin() {
     actionLoginDemo(true);
   }
   
   /**
    * Action called when Demo button is pressed. 
    */
-  private void actionDemo() {
+  public void actionDemo() {
     int answer = displayYesNoWarning(GT._(
         "Demo mode is only available for testing WikiCleaner.\n" +
         "You won't be able to modify pages on Wikipedia in Demo mode.\n" +
@@ -1024,7 +930,7 @@ public class MainWindow
   /**
    * Action called when Logout button is pressed.
    */
-  private void actionLogout() {
+  public void actionLogout() {
     API api = APIFactory.getAPI();
     api.logout();
     logged = false;
@@ -1035,7 +941,7 @@ public class MainWindow
   /**
    * Action called when System Options button is pressed.
    */
-  private void actionOptionsSystem() {
+  public void actionOptionsSystem() {
     if (Utilities.isDesktopSupported()) {
       EnumWikipedia wikipedia = getWikipedia();
       Utilities.browseURL(wikipedia, wikipedia.getConfigurationPage(), true);
@@ -1049,7 +955,7 @@ public class MainWindow
   /**
    * Action called when Reload System Options button is pressed.
    */
-  private void actionReloadOptions() {
+  public void actionReloadOptions() {
     new LoginWorker(
         getWikipedia(), this,
         (EnumLanguage) comboLanguage.getSelectedItem(),
@@ -1066,7 +972,7 @@ public class MainWindow
   /**
    * Action called when Check Spelling button is pressed.
    */
-  private void actionCheckSpelling() {
+  public void actionCheckSpelling() {
     EnumWikipedia wikipedia = getWikipedia();
     if (wikipedia == null) {
       return;
@@ -1120,7 +1026,7 @@ public class MainWindow
   /**
    * Action called when Help button is pressed.
    */
-  private void actionHelp() {
+  public void actionHelp() {
     EnumWikipedia wikipedia = getWikipedia();
     String url = EnumWikipedia.EN.getConfiguration().getHelpURL();
     if ((wikipedia != null) && (wikipedia.getConfiguration().getHelpURL() != null)) {
@@ -1138,7 +1044,7 @@ public class MainWindow
   /**
    * Action called when Idea button is pressed.
    */
-  private void actionIdea() {
+  public void actionIdea() {
     String url = URL_TALK_PAGE;
     if (Utilities.isDesktopSupported()) {
       Utilities.browseURL(url);
@@ -1152,7 +1058,7 @@ public class MainWindow
   /**
    * Action called when Contributions button is pressed.
    */
-  private void actionContributions() {
+  public void actionContributions() {
     EnumWikipedia wikipedia = getWikipedia();
     if ((wikipedia != null) && (wikipedia.getContributions() != null)) {
       Utilities.displayInformationMessage(
@@ -1164,7 +1070,7 @@ public class MainWindow
   /**
    * Action called when Save Password is changed. 
    */
-  private void actionSavePassword() {
+  public void actionSavePassword() {
     if ((radSavePassword.isSelected())) {
       int answer = displayYesNoWarning(
           GT._("The password will be saved on your disk, " +
@@ -1179,7 +1085,7 @@ public class MainWindow
   /**
    * Action called when Full analysis button is pressed.
    */
-  private void actionFullAnalysis() {
+  public void actionFullAnalysis() {
     if ((textPagename == null) ||
         (textPagename.getText() == null) ||
         ("".equals(textPagename.getText().trim()))) {
@@ -1202,7 +1108,7 @@ public class MainWindow
   /**
    * Action called when Disambiguation button is pressed.
    */
-  private void actionDisambiguation() {
+  public void actionDisambiguation() {
     if ((textPagename == null) ||
         (textPagename.getText() == null) ||
         ("".equals(textPagename.getText().trim()))) {
@@ -1225,7 +1131,7 @@ public class MainWindow
   /**
    * Action called when Update Dab Warning button is pressed.
    */
-  private void actionUpdateDabWarning() {
+  public void actionUpdateDabWarning() {
     if ((textPagename == null) ||
         (textPagename.getText() == null) ||
         ("".equals(textPagename.getText().trim()))) {
@@ -1255,7 +1161,7 @@ public class MainWindow
   /**
    * Action called when Internal Links button is pressed.
    */
-  private void actionInternalLinks() {
+  public void actionInternalLinks() {
     if ((textPagename == null) ||
         (textPagename.getText() == null) ||
         ("".equals(textPagename.getText().trim()))) {
@@ -1280,7 +1186,7 @@ public class MainWindow
   /**
    * Action called when Search Titles button is pressed.
    */
-  private void actionSearchTitles() {
+  public void actionSearchTitles() {
     if ((textPagename == null) ||
         (textPagename.getText() == null) ||
         ("".equals(textPagename.getText().trim()))) {
@@ -1299,7 +1205,7 @@ public class MainWindow
   /**
    * Action called when Category Members button is pressed.
    */
-  private void actionCategoryMembers() {
+  public void actionCategoryMembers() {
     if ((textPagename == null) ||
         (textPagename.getText() == null) ||
         ("".equals(textPagename.getText().trim()))) {
@@ -1329,7 +1235,7 @@ public class MainWindow
   /**
    * Action called when Embedded In button is pressed.
    */
-  private void actionEmbeddedIn() {
+  public void actionEmbeddedIn() {
     if ((textPagename == null) ||
         (textPagename.getText() == null) ||
         ("".equals(textPagename.getText().trim()))) {
@@ -1359,7 +1265,7 @@ public class MainWindow
   /**
    * Action called when Current Disambiguation List is pressed.
    */
-  private void actionCurrentDabList() {
+  public void actionCurrentDabList() {
     EnumWikipedia wikipedia = getWikipedia();
     if (wikipedia == null) {
       return;
@@ -1388,7 +1294,7 @@ public class MainWindow
   /**
    * Action called when "Pages with most disambiguation links" is pressed.
    */
-  private void actionMostDabLinks() {
+  public void actionMostDabLinks() {
     EnumWikipedia wikipedia = getWikipedia();
     if (wikipedia == null) {
       return;
@@ -1418,7 +1324,7 @@ public class MainWindow
   /**
    * Action called when Help Requested On is pressed.
    */
-  private void actionHelpRequestedOn() {
+  public void actionHelpRequestedOn() {
     EnumWikipedia wikipedia = getWikipedia();
     if (wikipedia == null) {
       return;
@@ -1449,7 +1355,7 @@ public class MainWindow
   /**
    * Action called when All disambiguations pages is pressed.
    */
-  private void actionAllDab() {
+  public void actionAllDab() {
     EnumWikipedia wikipedia = getWikipedia();
     if (wikipedia == null) {
       return;
@@ -1463,7 +1369,7 @@ public class MainWindow
   /**
    * Action called when Check Wiki is pressed. 
    */
-  private void actionCheckWiki() {
+  public void actionCheckWiki() {
     EnumWikipedia wikipedia = getWikipedia();
     if (wikipedia == null) {
       return;
@@ -1486,21 +1392,21 @@ public class MainWindow
   /**
    * Action called when Bot Tools is pressed. 
    */
-  private void actionBotTools() {
+  public void actionBotTools() {
     Controller.runBotTools(getWikipedia());
   }
   
   /**
    * Action called when Random page button is pressed.
    */
-  private void actionRandomPage() {
+  public void actionRandomPage() {
     new RandomPageWorker(getWikipedia(), this, textPagename).start();
   }
 
   /**
    * Action called when local watch list button is pressed.
    */
-  private void actionWatchlistLocal() {
+  public void actionWatchlistLocal() {
     Configuration config = Configuration.getConfiguration();
     List<String> pageNames = config.getStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES);
     EnumWikipedia wikipedia = getWikipedia();
@@ -1516,7 +1422,7 @@ public class MainWindow
   /**
    * Action called when watch list button is pressed.
    */
-  private void actionWatchlist() {
+  public void actionWatchlist() {
     EnumWikipedia wikipedia = getWikipedia();
     if (wikipedia == null) {
       return;
@@ -1530,7 +1436,7 @@ public class MainWindow
   /**
    * Action called when Random Pages is pressed.
    */
-  private void actionRandomPages() {
+  public void actionRandomPages() {
     final int maxPages = 50;
     int count = 0;
     while ((count < 1) || (count > maxPages)) {

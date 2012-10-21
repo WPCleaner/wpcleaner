@@ -24,8 +24,8 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
@@ -51,14 +51,7 @@ import org.wikipediacleaner.utils.Configuration;
 /**
  * Page Comments Window of WikipediaCleaner. 
  */
-public class PageCommentsWindow extends BasicWindow implements ActionListener {
-
-  private final static String ACTION_CANCEL            = "CANCEL";
-  private final static String ACTION_COPY_MAX_MAIN     = "COPY MAX MAIN";
-  private final static String ACTION_COPY_MAX_OTHER    = "COPY MAX OTHER";
-  private final static String ACTION_COPY_MAX_TEMPLATE = "COPY MAX TEMPLATE";
-  private final static String ACTION_OK                = "OK";
-  private final static String ACTION_REMOVE            = "REMOVE";
+public class PageCommentsWindow extends BasicWindow {
 
   Page   page;
   private Integer countMain;
@@ -179,8 +172,8 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     JLabel labelMain = new JLabel((countMain != null) ? "/ " + countMain.toString() : "");
     labelMain.setHorizontalAlignment(SwingConstants.LEADING);
     buttonCopyMaxMain = Utilities.createJButton("\u21D0");
-    buttonCopyMaxMain.setActionCommand(ACTION_COPY_MAX_MAIN);
-    buttonCopyMaxMain.addActionListener(this);
+    buttonCopyMaxMain.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionCopyMain"));
     buttonCopyMaxMain.setEnabled(countMain != null);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -211,8 +204,8 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     JLabel labelTemplate = new JLabel((countTemplate != null) ? "/ " + countTemplate.toString() : "");
     labelTemplate.setHorizontalAlignment(SwingConstants.LEADING);
     buttonCopyMaxTemplate = Utilities.createJButton("\u21D0");
-    buttonCopyMaxTemplate.setActionCommand(ACTION_COPY_MAX_TEMPLATE);
-    buttonCopyMaxTemplate.addActionListener(this);
+    buttonCopyMaxTemplate.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionCopyTemplate"));
     buttonCopyMaxTemplate.setEnabled(countTemplate != null);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -254,8 +247,8 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
     JLabel labelOther = new JLabel((countOther != null) ? "/ " + countOther.toString() : "");
     labelOther.setHorizontalAlignment(SwingConstants.LEADING);
     buttonCopyMaxOther = Utilities.createJButton("\u21D0");
-    buttonCopyMaxOther.setActionCommand(ACTION_COPY_MAX_OTHER);
-    buttonCopyMaxOther.addActionListener(this);
+    buttonCopyMaxOther.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionCopyOther"));
     buttonCopyMaxOther.setEnabled(countOther != null);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -295,61 +288,56 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
 
     // Ok button
     buttonOk = Utilities.createJButton(GT._("&OK"));
-    buttonOk.setActionCommand(ACTION_OK);
-    buttonOk.addActionListener(this);
+    buttonOk.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionOk"));
     panel.add(buttonOk);
 
     // Validate button
     buttonRemove = Utilities.createJButton(GT._("&Remove page comments"));
-    buttonRemove.setActionCommand(ACTION_REMOVE);
-    buttonRemove.addActionListener(this);
+    buttonRemove.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionRemove"));
     panel.add(buttonRemove);
 
     // Cancel button
     buttonCancel = Utilities.createJButton(GT._("&Cancel"));
-    buttonCancel.setActionCommand(ACTION_CANCEL);
-    buttonCancel.addActionListener(this);
+    buttonCancel.addActionListener(EventHandler.create(
+        ActionListener.class, this, "dispose"));
     panel.add(buttonCancel);
 
     return panel;
   }
 
   /**
-   * Invoked when an action occurs.
-   * 
-   * @param e Event.
+   * Action called when Copy Main button is pressed.
    */
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if (e == null) {
-      return;
+  public void actionCopyMain() {
+    if (countMain != null) {
+      txtMaxMain.setText(countMain.toString());
     }
+  }
 
-    if (ACTION_OK.equals(e.getActionCommand())) {
-      actionOk();
-    } else if (ACTION_REMOVE.equals(e.getActionCommand())) {
-      actionRemove();
-    } else if (ACTION_CANCEL.equals(e.getActionCommand())) {
-      actionCancel();
-    } else if (ACTION_COPY_MAX_MAIN.equals(e.getActionCommand())) {
-      if (countMain != null) {
-        txtMaxMain.setText(countMain.toString());
-      }
-    } else if (ACTION_COPY_MAX_OTHER.equals(e.getActionCommand())) {
-      if (countOther != null) {
-        txtMaxOther.setText(countOther.toString());
-      }
-    } else if (ACTION_COPY_MAX_TEMPLATE.equals(e.getActionCommand())) {
-      if (countTemplate != null) {
-        txtMaxTemplate.setText(countTemplate.toString());
-      }
+  /**
+   * Action called when Copy Template button is pressed.
+   */
+  public void actionCopyTemplate() {
+    if (countTemplate != null) {
+      txtMaxTemplate.setText(countTemplate.toString());
+    }
+  }
+
+  /**
+   * Action called when Copy Other button is pressed.
+   */
+  public void actionCopyOther() {
+    if (countOther != null) {
+      txtMaxOther.setText(countOther.toString());
     }
   }
 
   /**
    * Action called when OK button is pressed.
    */
-  private void actionOk() {
+  public void actionOk() {
     if (page != null) {
       PageComment comment = page.getComment();
       if (comment == null) {
@@ -379,16 +367,9 @@ public class PageCommentsWindow extends BasicWindow implements ActionListener {
   }
 
   /**
-   * Action called when Cancel button is pressed.
-   */
-  private void actionCancel() {
-    dispose();
-  }
-
-  /**
    * Action called when Remove button is pressed.
    */
-  private void actionRemove() {
+  public void actionRemove() {
     if (page != null) {
       page.setComment(null);
       Configuration config = Configuration.getConfiguration();

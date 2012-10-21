@@ -137,7 +137,7 @@ public class BotToolsWindow
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     buttonClose = Utilities.createJButton(GT._("&Close"));
     buttonClose.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionClose"));
+        ActionListener.class, this, "dispose"));
     buttonPanel.add(buttonClose);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
@@ -158,13 +158,6 @@ public class BotToolsWindow
     super.updateComponentState();
     buttonAutomaticFixing.setEnabled(false);
     buttonUpdateDabWarning.setEnabled(true);
-  }
-
-  /**
-   * Action called when Close button is pressed.
-   */
-  public void actionClose() {
-    dispose();
   }
 
   /**
