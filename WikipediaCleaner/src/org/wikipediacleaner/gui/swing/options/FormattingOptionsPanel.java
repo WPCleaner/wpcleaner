@@ -87,7 +87,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
    */
   private void initialize() {
     setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Formatting options")));
+        BorderFactory.createEtchedBorder(), GT._("Formatting options (restart needed)")));
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();

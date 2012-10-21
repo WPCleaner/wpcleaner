@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-10-11 22:07+0200\n"
+"POT-Creation-Date: 2012-10-13 00:39+0200\n"
 "PO-Revision-Date: 2012-08-16 19:42+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -2208,7 +2208,8 @@ msgid "Add a timestamp to logs"
 msgstr "Dodaj sygnaturę czasową do logów"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:90
-msgid "Formatting options"
+#, fuzzy
+msgid "Formatting options (restart needed)"
 msgstr "Opcje formatu"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:113
