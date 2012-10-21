@@ -228,7 +228,19 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
           while (matcher.find()) {
             int begin = matcher.start();
             int end = matcher.end();
-            result |= addReplacements(begin, end, contents, suggestion, replacements);
+            boolean keep = true;
+            // Remove texts between dots (potential URL)
+            if ((begin > 1) &&
+                (contents.charAt(begin - 1) == '.') &&
+                (Character.isLetterOrDigit(contents.charAt(begin - 2))) &&
+                (end + 1 < contents.length()) &&
+                (contents.charAt(end) == '.') &&
+                (Character.isLetterOrDigit(contents.charAt(end + 1)))) {
+              keep = false;
+            }
+            if (keep) {
+              result |= addReplacements(begin, end, contents, suggestion, replacements);
+            }
           }
         }
         perf.printEnd();
