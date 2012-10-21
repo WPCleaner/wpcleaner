@@ -566,6 +566,11 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         return (o1.isOtherPattern() ? 1 : -1);
       }
 
+      // Comparison on begin
+      if (o1.getBegin() != o2.getBegin()) {
+        return (o1.getBegin() < o2.getBegin() ? -1 : 1);
+      }
+
       // Comparison on comments
       if (o1.getComment() == null) {
         if (o2.getComment() != null) {
@@ -580,10 +585,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         }
       }
 
-      // Comparison on begin and end
-      if (o1.getBegin() != o2.getBegin()) {
-        return (o1.getBegin() < o2.getBegin() ? -1 : 1);
-      }
+      // Comparison on end
       if (o2.getEnd() != o2.getEnd()) {
         return (o1.getEnd() < o2.getEnd() ? -1 : 1);
       }
