@@ -56,6 +56,11 @@ public class ApiListRequest extends ApiRequest {
   public final static String PROPERTY_LIST_RANDOM = "random";
 
   /**
+   * Property value for List / Recent changes.
+   */
+  public final static String PROPERTY_LIST_RECENTCHANGES = "recentchanges";
+
+  /**
    * Property value for List / Search.
    */
   public final static String PROPERTY_LIST_SEARCH = "search";
