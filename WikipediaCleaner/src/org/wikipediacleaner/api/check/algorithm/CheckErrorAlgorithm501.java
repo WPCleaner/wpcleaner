@@ -21,19 +21,23 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Matcher;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementAreas;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
+import org.wikipediacleaner.utils.Performance;
 
 
 /**
@@ -41,8 +45,6 @@ import org.wikipediacleaner.api.data.Suggestion;
  * Error 501: Spelling and typography
  */
 public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
-
-  private final static boolean TRACE_POSITION = false;
 
   public CheckErrorAlgorithm501() {
     super("Spelling and typography");
@@ -58,207 +60,535 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
   public boolean analyze(
       PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
-      return false;
+    boolean result = false;
+    if ((pageAnalysis == null) || (!pageAnalysis.shouldCheckSpelling())) {
+      return result;
     }
-    if (!pageAnalysis.shouldCheckSpelling()) {
-      return false;
-    }
+
+    // Initialize active suggestions
     Map<String, Suggestion> suggestions = pageAnalysis.getWPCConfiguration().getSuggestions();
     if ((suggestions == null) || (suggestions.isEmpty())) {
-      return false;
+      return result;
     }
-
-    // Initialize matchers
-    String contents = pageAnalysis.getContents();
-    Map<Suggestion, Matcher> matchersText = new HashMap<Suggestion, Matcher>(suggestions.size());
-    Map<Suggestion, Matcher> matchersInternalLink = new HashMap<Suggestion, Matcher>();
-    Map<Suggestion, Matcher> matchersTemplate = new HashMap<Suggestion, Matcher>();
+    List<Suggestion> activeSuggestions = new LinkedList<Suggestion>();
     for (Suggestion suggestion : suggestions.values()) {
       if (suggestion.isActive()) {
+        activeSuggestions.add(suggestion);
+      }
+    }
+    if (activeSuggestions.isEmpty()) {
+      return result;
+    }
+
+    // Check spelling in templates
+    List<Replacement> replacements = new ArrayList<Replacement>();
+    if ((result == false) || (errors != null)) {
+      result |= analyzeTemplates(pageAnalysis, activeSuggestions, replacements);
+    }
+
+    // Check spelling in internal links
+    if ((result == false) || (errors != null)) {
+      result |= analyzeInternalLinks(pageAnalysis, activeSuggestions, replacements);
+    }
+
+    // Check spelling in normal text with non native regular expressions
+    if ((result == false) || (errors != null)) {
+      result |= analyzeNonNativeText(pageAnalysis, activeSuggestions, replacements);
+    }
+
+    // Check spelling in normal text with native regular expressions
+    if ((result == false) || (errors != null)) {
+      result |= analyzeNativeText(pageAnalysis, activeSuggestions, replacements);
+    }
+
+    // Analyze replacements
+    if (errors != null) {
+      String contents = pageAnalysis.getContents();
+      Collections.sort(replacements);
+      ReplacementComparator comparator = new ReplacementComparator();
+      while (!replacements.isEmpty()) {
+        // Analyze group of replacements
+        List<Replacement> group = getFirstGroup(replacements);
+        Collections.sort(group, comparator);
+        int minBegin = Integer.MAX_VALUE;
+        int maxEnd = 0;
+        for (Replacement replacement : group) {
+          minBegin = Math.min(minBegin, replacement.getBegin());
+          maxEnd = Math.max(maxEnd, replacement.getEnd());
+        }
+  
+        // Create error
+        CheckErrorResult error = createCheckErrorResult(
+            pageAnalysis.getPage(), minBegin, maxEnd);
+        String previousComment = null;
+        List<String> alreadyAdded = new ArrayList<String>();
+        for (Replacement replacement : group) {
+
+          // Construct replacement
+          int begin = replacement.getBegin();
+          int end = replacement.getEnd();
+          String newText =
+              contents.substring(minBegin, begin) +
+              replacement.getReplacement() +
+              contents.substring(end, maxEnd);
+
+          if (!alreadyAdded.contains(newText)) {
+            // Manage comment
+            String comment = replacement.getComment();
+            if ((comment != null) &&
+                (!comment.equals(previousComment))) {
+              error.addPossibleAction(comment, new NullActionProvider());
+            }
+            previousComment = comment;
+
+            error.addReplacement(newText);
+            alreadyAdded.add(newText);
+          }
+        }
+        errors.add(error);
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Check spelling in normal text with native regular expressions.
+   * 
+   * @param analysis Page analysis.
+   * @param suggestions Active suggestions.
+   * @param replacements List of possible replacements.
+   * @return True if an error has been found.
+   */
+  private boolean analyzeNativeText(
+      PageAnalysis analysis, List<Suggestion> suggestions,
+      List<Replacement> replacements) {
+    boolean result = false;
+
+    // Check every suggestion
+    List<ContentsChunck> chuncks = computeContentsChuncks(analysis);
+    String contents = analysis.getContents();
+    Iterator<Suggestion> itSuggestion = suggestions.iterator();
+    while (itSuggestion.hasNext()) {
+      Suggestion suggestion = itSuggestion.next();
+      if (!suggestion.isOtherPattern()) {
+        Performance perf = new Performance("Slow regular expression: " + suggestion.getPatternText());
+        perf.setThreshold(1000);
+        itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
-        if (suggestion.getPatternText().startsWith("\\[")) {
-          matchersInternalLink.put(suggestion, matcher);
-        } else if (suggestion.getPatternText().startsWith("\\{\\{")) {
-          matchersTemplate.put(suggestion, matcher);
-        } else {
-          matchersText.put(suggestion, matcher);
+        for (ContentsChunck chunck : chuncks) {
+          matcher.region(chunck.getBegin(), chunck.getEnd());
+          while (matcher.find()) {
+            int begin = matcher.start();
+            int end = matcher.end();
+            if ((begin == 0) ||
+                (!Character.isLetterOrDigit(contents.charAt(begin))) ||
+                (!Character.isLetterOrDigit(contents.charAt(begin - 1)))) {
+              if ((end >= contents.length()) ||
+                  (!Character.isLetterOrDigit(contents.charAt(end))) ||
+                  (!Character.isLetterOrDigit(contents.charAt(end - 1)))) {
+                result |= addReplacements(begin, end, contents, suggestion, replacements);
+              }
+            }
+          }
+        }
+        perf.printEnd();
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Check spelling in normal text with non native regular expressions.
+   * 
+   * @param analysis Page analysis.
+   * @param suggestions Active suggestions.
+   * @param replacements List of possible replacements.
+   * @return True if an error has been found.
+   */
+  private boolean analyzeNonNativeText(
+      PageAnalysis analysis, List<Suggestion> suggestions,
+      List<Replacement> replacements) {
+    boolean result = false;
+
+    // Check every suggestion
+    List<ContentsChunck> chuncks = computeContentsChuncks(analysis);
+    String contents = analysis.getContents();
+    Iterator<Suggestion> itSuggestion = suggestions.iterator();
+    while (itSuggestion.hasNext()) {
+      Suggestion suggestion = itSuggestion.next();
+      if (suggestion.isOtherPattern()) {
+        Performance perf = new Performance("Slow " + suggestion.getComment() + ":" + suggestion.getPatternText());
+        perf.setThreshold(1000);
+        itSuggestion.remove();
+        Matcher matcher = suggestion.initMatcher(contents);
+        for (ContentsChunck chunck : chuncks) {
+          matcher.region(chunck.getBegin(), chunck.getEnd());
+          while (matcher.find()) {
+            int begin = matcher.start();
+            int end = matcher.end();
+            result |= addReplacements(begin, end, contents, suggestion, replacements);
+          }
+        }
+        perf.printEnd();
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Check spelling in templates.
+   * 
+   * @param analysis Page analysis.
+   * @param suggestions Active suggestions.
+   * @param replacements List of possible replacements.
+   * @return True if an error has been found.
+   */
+  private boolean analyzeTemplates(
+      PageAnalysis analysis, List<Suggestion> suggestions,
+      List<Replacement> replacements) {
+    boolean result = false;
+
+    // Check every suggestion
+    List<PageElementTemplate> templates = analysis.getTemplates();
+    String contents = analysis.getContents();
+    int contentsLength = contents.length();
+    Iterator<Suggestion> itSuggestion = suggestions.iterator();
+    while (itSuggestion.hasNext()) {
+      Suggestion suggestion = itSuggestion.next();
+      if (suggestion.getPatternText().startsWith("\\{\\{")) {
+        itSuggestion.remove();
+        Matcher matcher = suggestion.initMatcher(contents);
+
+        // Check suggestion on every template
+        for (PageElementTemplate template : templates) {
+          int begin = template.getBeginIndex();
+          if (matcher.region(begin, contentsLength).lookingAt()) {
+            int end = matcher.end();
+            if ((end >= contentsLength) ||
+                (!Character.isLetterOrDigit(contents.charAt(end))) ||
+                (!Character.isLetterOrDigit(contents.charAt(end - 1)))) {
+              result |= addReplacements(begin, end, contents, suggestion, replacements);
+            }
+          }
         }
       }
     }
 
-    List<Suggestion> possibles = new ArrayList<Suggestion>();
+    return result;
+  }
+
+  /**
+   * Check spelling in internal links.
+   * 
+   * @param analysis Page analysis.
+   * @param suggestions Active suggestions.
+   * @param replacements List of possible replacements.
+   * @return True if an error has been found.
+   */
+  private boolean analyzeInternalLinks(
+      PageAnalysis analysis, List<Suggestion> suggestions,
+      List<Replacement> replacements) {
     boolean result = false;
-    int startIndex = 0;
-    while (startIndex < contents.length()) {
 
-      // Test if the position is correct to check spelling
-      int nextIndex = startIndex + 1;
-      boolean checkSpelling = true;
-      Map<Suggestion, Matcher> matchers = matchersText;
+    // Check every suggestion
+    List<PageElementInternalLink> links = analysis.getInternalLinks();
+    String contents = analysis.getContents();
+    int contentsLength = contents.length();
+    Iterator<Suggestion> itSuggestion = suggestions.iterator();
+    while (itSuggestion.hasNext()) {
+      Suggestion suggestion = itSuggestion.next();
+      if (suggestion.getPatternText().startsWith("\\[\\[")) {
+        itSuggestion.remove();
+        Matcher matcher = suggestion.initMatcher(contents);
 
-      // Check what kind of checking should be done
-      char currentChar = contents.charAt(startIndex);
-      if (currentChar == '[') {
-        PageElementInternalLink link = pageAnalysis.isInInternalLink(startIndex);
-        if ((link == null) || (link.getBeginIndex() != startIndex)) {
-          checkSpelling = false;
-        } else {
-          matchers = matchersInternalLink;
-        }
-      } else if (currentChar == '{') {
-        PageElementTemplate template = pageAnalysis.isInTemplate(startIndex);
-        if ((template == null) || (template.getBeginIndex() != startIndex)) {
-          checkSpelling = false;
-        } else {
-          matchers = matchersTemplate;
-        }
-      } else {
-        // Check for special areas
-        int tmp = pageAnalysis.getAreas().getEndArea(startIndex);
-        if (tmp > startIndex) {
-          checkSpelling = false;
-          nextIndex = startIndex + 1;
-        }
-
-        // Check for template
-        if (checkSpelling) {
-          PageElementTemplate template = pageAnalysis.isInTemplate(startIndex);
-          if (template != null) {
-            checkSpelling = false;
-          }
-        }
-
-        // Check for gallery tag
-        if (checkSpelling) {
-          PageElementTag galleryTag = pageAnalysis.getSurroundingTag(
-              PageElementTag.TAG_WIKI_GALLERY, startIndex);
-          if (galleryTag != null) {
-            // TODO: Be more precise, analyze image descriptions
-            checkSpelling = false;
-            nextIndex = galleryTag.getCompleteEndIndex();
-          }
-        }
-
-        // Check for math tag
-        if (checkSpelling) {
-          PageElementTag mathTag = pageAnalysis.getSurroundingTag(
-              PageElementTag.TAG_WIKI_MATH, startIndex);
-          if (mathTag != null) {
-            checkSpelling = false;
-            nextIndex = mathTag.getCompleteEndIndex();
-          }
-        }
-
-        // Check for code tag
-        if (checkSpelling) {
-          PageElementTag codeTag = pageAnalysis.getSurroundingTag(
-              PageElementTag.TAG_WIKI_CODE, startIndex);
-          if (codeTag != null) {
-            checkSpelling = false;
-            nextIndex = codeTag.getCompleteEndIndex();
-          }
-        }
-
-        // Check for timeline tag
-        if (checkSpelling) {
-          PageElementTag timelineTag = pageAnalysis.getSurroundingTag(
-              PageElementTag.TAG_WIKI_TIMELINE, startIndex);
-          if (timelineTag != null) {
-            checkSpelling = false;
-            nextIndex = timelineTag.getCompleteEndIndex();
-          }
-        }
-
-        // Check for ]] just before (not a full word)
-        if (checkSpelling) {
-          if ((startIndex > 1) &&
-              (Character.isLetter(currentChar)) &&
-              (contents.startsWith("]]", startIndex - 2))) {
-            checkSpelling = false;
+        // Check suggestion on every internal links
+        for (PageElementInternalLink link : links) {
+          int begin = link.getBeginIndex();
+          if (matcher.region(begin, contentsLength).lookingAt()) {
+            int end = matcher.end();
+            if ((end >= contentsLength) ||
+                (!Character.isLetterOrDigit(contents.charAt(end))) ||
+                (!Character.isLetterOrDigit(contents.charAt(end - 1)))) {
+              result |= addReplacements(begin, end, contents, suggestion, replacements);
+            }
           }
         }
       }
+    }
 
-      // Check spelling
-      if (checkSpelling) {
-        if (TRACE_POSITION) {
-          String testingAt = contents.substring(startIndex, startIndex + 10);
-          int newLine = testingAt.indexOf('\n');
-          if (newLine >= 0) {
-            testingAt = testingAt.substring(0, newLine);
-          }
-          System.out.println("Checking at \"" + testingAt + "\"");
-        }
-        possibles.clear();
-  
-        // Test every suggestion
-        int maxLength = 0;
-        int contentsLength = contents.length();
-        for (Entry<Suggestion, Matcher> entry : matchers.entrySet()) {
-          Matcher matcher = entry.getValue();
-          if (matcher.region(startIndex, contentsLength).lookingAt()) {
-            int pos = matcher.end();
-            if ((pos >= contents.length()) ||
-                (!Character.isLetterOrDigit(contents.charAt(pos))) ||
-                (!Character.isLetterOrDigit(contents.charAt(pos - 1)))) {
-              if (pos - startIndex >= maxLength) {
-                if (pos - startIndex > maxLength) {
-                  possibles.clear();
-                  maxLength = pos - startIndex;
-                }
-                possibles.add(entry.getKey());
-              }
-            }
-          }
-        }
-  
-        // Analyze matching suggestions
-        if (!possibles.isEmpty()) {
-          CheckErrorResult error = createCheckErrorResult(
-              pageAnalysis.getPage(), startIndex, startIndex + maxLength);
-          String text = contents.substring(
-              startIndex, startIndex + maxLength);
-          Collections.sort(possibles);
-          List<String> added = new ArrayList<String>();
-          for (Suggestion suggestion : possibles) {
-            String comment = suggestion.getComment();
-            List<String> replacements = suggestion.getReplacements(text);
-            if (replacements != null) {
-              for (String replacement : replacements) {
-                if (!text.equals(replacement)) {
-                  if (!added.contains(replacement)) {
-                    if (comment != null) {
-                      error.addPossibleAction(comment, new NullActionProvider());
-                      comment = null;
-                    }
-                    added.add(replacement);
-                    error.addReplacement(replacement);
-                  }
-                }
-              }
-            }
-          }
-          if (!added.isEmpty()) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            errors.add(error);
-          }
-          nextIndex = Math.max(nextIndex, startIndex + maxLength);
-        }
-      }
+    return result;
+  }
 
-      // Go to the next non letter/digit character
-      startIndex = Math.max(startIndex + 1, nextIndex);
-      while ((startIndex < contents.length()) &&
-             (((Character.isLetterOrDigit(contents.charAt(startIndex - 1))) &&
-               (Character.isLetterOrDigit(contents.charAt(startIndex)))) ||
-              ("'.=|\"-)$*:;]}>\n".indexOf(contents.charAt(startIndex)) >= 0))) {
-        startIndex++;
+  /**
+   * Memorize possible replacements for a text.
+   * 
+   * @param begin Begin index of the initial text.
+   * @param end End index of the initial text.
+   * @param contents Current contents.
+   * @param suggestion Suggestion.
+   * @param replacements List of replacements.
+   * @return True if a replacement has been added.
+   */
+  private boolean addReplacements(
+      int begin, int end, String contents,
+      Suggestion suggestion, List<Replacement> replacements) {
+    boolean result = false;
+    String text = contents.substring(begin, end);
+    List<String> possibles = suggestion.getReplacements(text);
+    if (possibles != null) {
+      for (String possible : possibles) {
+        if (!text.equals(possible)) {
+          Replacement replacement = new Replacement(
+              begin, end,
+              suggestion.getComment(), suggestion.isOtherPattern(),
+              possible);
+          replacements.add(replacement);
+          result = true;
+        }
       }
     }
     return result;
+  }
+
+  /**
+   * Retrieve first group of replacements.
+   * 
+   * @param replacements List of replacements.
+   * @return First group of replacements.
+   */
+  private List<Replacement> getFirstGroup(List<Replacement> replacements) {
+    List<Replacement> firstGroup = new LinkedList<Replacement>();
+    Replacement replacement = replacements.get(0);
+    int end = replacement.getEnd();
+    firstGroup.add(replacement);
+    replacements.remove(0);
+    while (!replacements.isEmpty() && (replacements.get(0).getBegin() < end)) {
+      replacement = replacements.get(0);
+      end = Math.max(end, replacement.getEnd());
+      firstGroup.add(replacement);
+      replacements.remove(0);
+    }
+    return firstGroup;
+  }
+
+  /**
+   * Split contents into analyzable chuncks.
+   * 
+   * @param analysis Page analysis.
+   * @return List of contents chuncks.
+   */
+  private List<ContentsChunck> computeContentsChuncks(PageAnalysis analysis) {
+    String contents = analysis.getContents();
+    List<ContentsChunck> chuncks = new LinkedList<ContentsChunck>();
+    chuncks.add(new ContentsChunck(0, contents.length()));
+
+    // Remove templates
+    List<PageElementTemplate> templates = analysis.getTemplates();
+    for (PageElementTemplate template : templates) {
+      removeArea(chuncks, template.getBeginIndex(), template.getEndIndex());
+    }
+
+    // Remove tags
+    // TODO: Be more precise, analyze image descriptions
+    removeCompleteTags(chuncks, analysis, PageElementTag.TAG_WIKI_GALLERY);
+    removeCompleteTags(chuncks, analysis, PageElementTag.TAG_WIKI_MATH);
+    removeCompleteTags(chuncks, analysis, PageElementTag.TAG_WIKI_CODE);
+    removeCompleteTags(chuncks, analysis, PageElementTag.TAG_WIKI_TIMELINE);
+
+    // Remove areas
+    PageElementAreas areas = analysis.getAreas();
+    for (PageElementAreas.Area area : areas.getAreas()) {
+      removeArea(chuncks, area.getBeginIndex(), area.getEndIndex());
+    }
+
+    // Remove empty chuncks
+    Iterator<ContentsChunck> itChuncks = chuncks.iterator();
+    while (itChuncks.hasNext()) {
+      ContentsChunck chunck = itChuncks.next();
+      int begin = chunck.getBegin();
+      int end = chunck.getEnd();
+      String chunckContents = contents.substring(begin, end);
+      int length = chunckContents.length();
+      int currentIndex = 0;
+      while ((currentIndex < length) &&
+             (Character.isWhitespace(chunckContents.charAt(currentIndex)))) {
+        currentIndex++;
+      }
+      if (currentIndex >= length) {
+        itChuncks.remove();
+      }
+    }
+
+    return chuncks;
+  }
+
+  /**
+   * Remove complete tags from the list of chuncks of text.
+   * 
+   * @param chuncks List of chuncks of text.
+   * @param analysis Page analysis.
+   * @param tagName Tag name to remove.
+   */
+  private void removeCompleteTags(List<ContentsChunck> chuncks, PageAnalysis analysis, String tagName) {
+    List<PageElementTag> tags = analysis.getCompleteTags(tagName);
+    for (PageElementTag tag : tags) {
+      removeArea(chuncks, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+    }
+  }
+
+  /**
+   * Remove an area from the list of chuncks of text.
+   * 
+   * @param chuncks List of chuncks of text.
+   * @param begin Begin of the area to remove.
+   * @param end End of the area to remove.
+   */
+  private void removeArea(List<ContentsChunck> chuncks, int begin, int end) {
+    ListIterator<ContentsChunck> itChuncks = chuncks.listIterator();
+    while (itChuncks.hasNext()) {
+      ContentsChunck chunck = itChuncks.next();
+      if ((begin >= chunck.getEnd()) || (end <= chunck.getBegin())) {
+        // Nothing to do
+      } else {
+        itChuncks.remove();
+        if (begin > chunck.getBegin()) {
+          itChuncks.add(new ContentsChunck(chunck.getBegin(), begin));
+        }
+        if (end < chunck.getEnd()) {
+          itChuncks.add(new ContentsChunck(end, chunck.getEnd()));
+        }
+      }
+    }
+  }
+
+  /**
+   * Utility class to manage chuncks of text.
+   */
+  private static class ContentsChunck {
+    private final int begin;
+    private final int end;
+
+    public ContentsChunck(int begin, int end) {
+      this.begin = begin;
+      this.end = end;
+    }
+
+    public int getBegin() {
+      return begin;
+    }
+
+    public int getEnd() {
+      return end;
+    }
+  }
+
+  /**
+   * Utility class to memorize possible replacements.
+   */
+  private static class Replacement implements Comparable<Replacement> {
+    private final int begin;
+    private final int end;
+    private final String comment;
+    private final boolean otherPattern;
+    private final String replacement;
+
+    public Replacement(
+        int begin, int end,
+        String comment, boolean otherPattern,
+        String replacement) {
+      this.begin = begin;
+      this.end = end;
+      this.otherPattern = otherPattern;
+      this.comment = comment;
+      this.replacement = replacement;
+    }
+
+    public int getBegin() {
+      return begin;
+    }
+
+    public int getEnd() {
+      return end;
+    }
+
+    public String getComment() {
+      return comment;
+    }
+
+    public boolean isOtherPattern() {
+      return otherPattern;
+    }
+
+    public String getReplacement() {
+      return replacement;
+    }
+
+    /**
+     * @param o
+     * @return
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compareTo(Replacement o) {
+      if (begin != o.begin) {
+        return (begin < o.begin ? -1 : 1);
+      }
+      if (end != o.end) {
+        return (end < o.end ? -1 : 1);
+      }
+      return 0;
+    }
+  }
+
+  /**
+   * Utility class to sort Replacement in a group.
+   */
+  private static class ReplacementComparator implements Comparator<Replacement> {
+
+    /**
+     * Constructor.
+     */
+    public ReplacementComparator() {
+    }
+
+    /**
+     * @param o1
+     * @param o2
+     * @return
+     * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+     */
+    public int compare(Replacement o1, Replacement o2) {
+      
+      // Comparison on native pattern
+      if (o1.isOtherPattern() != o2.isOtherPattern()) {
+        return (o1.isOtherPattern() ? 1 : -1);
+      }
+
+      // Comparison on comments
+      if (o1.getComment() == null) {
+        if (o2.getComment() != null) {
+          return 1;
+        }
+      } else if (o2.getComment() == null) {
+        return -1;
+      } else {
+        int compare = o1.getComment().compareTo(o2.getComment());
+        if (compare != 0) {
+          return compare;
+        }
+      }
+
+      // Comparison on begin and end
+      if (o1.getBegin() != o2.getBegin()) {
+        return (o1.getBegin() < o2.getBegin() ? -1 : 1);
+      }
+      if (o2.getEnd() != o2.getEnd()) {
+        return (o1.getEnd() < o2.getEnd() ? -1 : 1);
+      }
+
+      return 0;
+    }
   }
 }
