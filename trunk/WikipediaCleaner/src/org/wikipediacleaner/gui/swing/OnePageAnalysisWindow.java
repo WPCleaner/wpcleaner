@@ -29,6 +29,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.beans.EventHandler;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -70,6 +71,7 @@ import org.wikipediacleaner.api.data.InternalLinkCount;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageComparator;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -126,6 +128,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   JCheckBoxMenuItem menuItemCountRedirect;
   private JButton buttonFullAnalysisLink;
   private JButton buttonDisambiguationLink;
+  private JButton buttonRemoveLinks;
   private JButton buttonWatchLink;
   private JButton buttonDisambiguationWarning;
   private JButton buttonTranslation;
@@ -507,6 +510,12 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     buttonDisambiguationLink.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguationLink"));
     toolbar.add(buttonDisambiguationLink);
+    buttonRemoveLinks = Utilities.createJButton(
+        "WPCleaner-remove-link.png", EnumImageSize.NORMAL,
+        GT._("Remove all links"), false);
+    buttonRemoveLinks.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionRemoveAllLinks"));
+    toolbar.add(buttonRemoveLinks);
     buttonWatchLink = Utilities.createJButton(
         "gnome-logviewer-add.png", EnumImageSize.NORMAL,
         GT._("Add to Watch list (Alt + &W)"), false);
@@ -963,6 +972,49 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         getParentComponent(),
         listLinks.getSelectedValues(),
         getWikipedia());
+  }
+
+  /**
+   * Action called when Remove all links button is pressed.
+   */
+  public void actionRemoveAllLinks() {
+    Object[] selected = listLinks.getSelectedValues();
+    if ((selected == null) || (selected.length == 0)) {
+      return;
+    }
+    List<String> titles = new ArrayList<String>();
+    for (Object selectedLine : selected) {
+      if (selectedLine instanceof Page) {
+        titles.add(((Page) selectedLine).getTitle());
+      }
+    }
+    if (titles.size() == 0) {
+      return;
+    }
+    String currentText = getTextContents().getText();
+    PageAnalysis analysis = getPage().getAnalysis(currentText, false);
+    StringBuilder buffer = new StringBuilder();
+    int lastPosition = 0;
+    Collection<PageElementInternalLink> links = analysis.getInternalLinks();
+    for (PageElementInternalLink link : links) {
+      boolean shouldChange = false;
+      for (String title : titles) {
+        if (Page.areSameTitle(title, link.getLink())) {
+          shouldChange = true;
+        }
+      }
+      if (shouldChange) {
+        buffer.append(currentText.substring(lastPosition, link.getBeginIndex()));
+        lastPosition = link.getBeginIndex();
+        buffer.append(link.getDisplayedText());
+        lastPosition = link.getEndIndex();
+      }
+    }
+    if (lastPosition > 0) {
+      buffer.append(currentText.substring(lastPosition));
+      getTextContents().changeText(buffer.toString());
+    }
+    actionValidate(true);
   }
 
   /**
