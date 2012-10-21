@@ -200,6 +200,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             if (shouldKeep && (analysis.getAreas().getEndArea(begin) > begin)) {
               shouldKeep = false;
             }
+            if (shouldKeep && (analysis.isInTemplate(begin) != null)) {
+              shouldKeep = false;
+            }
             if (shouldKeep) {
               result |= addReplacements(begin, end, contents, suggestion, replacements);
             }
