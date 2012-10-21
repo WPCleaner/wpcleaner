@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-09-25 23:41+0200\n"
+"POT-Creation-Date: 2012-10-11 22:07+0200\n"
 "PO-Revision-Date: 2012-08-16 19:42+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -497,7 +497,7 @@ msgstr "Pobieranie linków"
 msgid "Parsing text"
 msgstr "Przetwarzanie tekstu"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1468
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1491
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -505,7 +505,7 @@ msgstr ""
 "To działanie posiada zabezpieczenie w postaci CAPTCHA.\n"
 "Jaka jest odpowiedź na następujące pytanie?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1475
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1498
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -2413,14 +2413,18 @@ msgid "Size limit for syntax highlighting"
 msgstr "Ograniczenie rozmiaru dla kolorowania kodu"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:183
+msgid "Threshold for slow regular expressions (ms)"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:200
 msgid "Maximum number of category members :"
 msgstr "Maksymalna liczba stron w kategorii:"
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:200
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:217
 msgid "Maximum number of embedding pages :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:217
+#: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:234
 msgid "Maximum number of search results :"
 msgstr "Maksymalna liczba wyników przeszukiwania:"
 

@@ -37,6 +37,8 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.Performance;
 
 
@@ -79,6 +81,8 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     if (activeSuggestions.isEmpty()) {
       return result;
     }
+    Configuration config = Configuration.getConfiguration();
+    int slowRegexp = config.getInt(null, ConfigurationValueInteger.SLOW_REGEXP);
 
     // Check spelling in templates
     List<Replacement> replacements = new ArrayList<Replacement>();
@@ -93,12 +97,12 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
     // Check spelling in normal text with non native regular expressions
     if ((result == false) || (errors != null)) {
-      result |= analyzeNonNativeText(pageAnalysis, activeSuggestions, replacements);
+      result |= analyzeNonNativeText(pageAnalysis, activeSuggestions, replacements, slowRegexp);
     }
 
     // Check spelling in normal text with native regular expressions
     if ((result == false) || (errors != null)) {
-      result |= analyzeNativeText(pageAnalysis, activeSuggestions, replacements);
+      result |= analyzeNativeText(pageAnalysis, activeSuggestions, replacements, slowRegexp);
     }
 
     // Analyze replacements
@@ -158,11 +162,12 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param suggestions Active suggestions.
    * @param replacements List of possible replacements.
+   * @param slowRegexp Threshold for slow regular expression.
    * @return True if an error has been found.
    */
   private boolean analyzeNativeText(
       PageAnalysis analysis, List<Suggestion> suggestions,
-      List<Replacement> replacements) {
+      List<Replacement> replacements, int slowRegexp) {
     boolean result = false;
 
     // Check every suggestion
@@ -173,7 +178,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       Suggestion suggestion = itSuggestion.next();
       if (!suggestion.isOtherPattern()) {
         Performance perf = new Performance("Slow regular expression: " + suggestion.getPatternText());
-        perf.setThreshold(1000);
+        perf.setThreshold(slowRegexp);
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
         for (ContentsChunck chunck : chuncks) {
@@ -205,11 +210,12 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param suggestions Active suggestions.
    * @param replacements List of possible replacements.
+   * @param slowRegexp Threshold for slow regular expression.
    * @return True if an error has been found.
    */
   private boolean analyzeNonNativeText(
       PageAnalysis analysis, List<Suggestion> suggestions,
-      List<Replacement> replacements) {
+      List<Replacement> replacements, int slowRegexp) {
     boolean result = false;
 
     // Check every suggestion
@@ -220,7 +226,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       Suggestion suggestion = itSuggestion.next();
       if (suggestion.isOtherPattern()) {
         Performance perf = new Performance("Slow " + suggestion.getComment() + ":" + suggestion.getPatternText());
-        perf.setThreshold(1000);
+        perf.setThreshold(slowRegexp);
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
         for (ContentsChunck chunck : chuncks) {
