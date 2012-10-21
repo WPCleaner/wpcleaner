@@ -338,7 +338,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       List<PageElementTag> valueRefs = groupRefs.get(valueRef);
 
       // Check if there is more than one tag with the same value
-      if (valueRefs.size() > 1) {
+      if ((valueRefs != null) && (valueRefs.size() > 1)) {
 
         // Display selection
         highlight = addHighlight(
