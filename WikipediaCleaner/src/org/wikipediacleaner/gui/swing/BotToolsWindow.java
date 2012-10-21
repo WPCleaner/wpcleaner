@@ -24,8 +24,8 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -46,12 +46,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
  * A window for bot tools.
  */
 public class BotToolsWindow
-  extends BasicWindow
-  implements ActionListener {
-
-  private final static String ACTION_AUTOMATIC_FIXING   = "AUTOMATIC FIXING";
-  private final static String ACTION_CLOSE              = "CLOSE";
-  private final static String ACTION_UPDATE_DAB_WARNING = "UPDATE DAB WARNING";
+  extends BasicWindow {
 
   private JButton buttonAutomaticFixing;
   private JButton buttonUpdateDabWarning;
@@ -120,8 +115,8 @@ public class BotToolsWindow
     buttonAutomaticFixing = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Semi-automatic disambiguation fixing"), true);
-    buttonAutomaticFixing.setActionCommand(ACTION_AUTOMATIC_FIXING);
-    buttonAutomaticFixing.addActionListener(this);
+    buttonAutomaticFixing.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionAutomaticFixing"));
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
     constraints.weighty = 1;
@@ -133,16 +128,16 @@ public class BotToolsWindow
     buttonUpdateDabWarning = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Update existing disambiguation warning messages"), true);
-    buttonUpdateDabWarning.setActionCommand(ACTION_UPDATE_DAB_WARNING);
-    buttonUpdateDabWarning.addActionListener(this);
+    buttonUpdateDabWarning.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionUpdateDabWarning"));
     panel.add(buttonUpdateDabWarning, constraints);
     constraints.gridy++;
 
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     buttonClose = Utilities.createJButton(GT._("&Close"));
-    buttonClose.setActionCommand(ACTION_CLOSE);
-    buttonClose.addActionListener(this);
+    buttonClose.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionClose"));
     buttonPanel.add(buttonClose);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
@@ -166,43 +161,23 @@ public class BotToolsWindow
   }
 
   /**
-   * Invoked when an action occurs.
-   * 
-   * @param e Event.
-   */
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if (e == null) {
-      return;
-    }
-
-    if (ACTION_CLOSE.equals(e.getActionCommand())) {
-      actionClose();
-    } else if (ACTION_AUTOMATIC_FIXING.equals(e.getActionCommand())) {
-      actionAutomaticFixing();
-    } else if (ACTION_UPDATE_DAB_WARNING.equals(e.getActionCommand())) {
-      actionUpdateDabWarning();
-    }
-  }
-
-  /**
    * Action called when Close button is pressed.
    */
-  private void actionClose() {
+  public void actionClose() {
     dispose();
   }
 
   /**
    * Action called when Automatic Fixing button is pressed.
    */
-  private void actionAutomaticFixing() {
+  public void actionAutomaticFixing() {
     // TODO
   }
 
   /**
    * Action called when Update Disambiguation Warning button is pressed.
    */
-  private void actionUpdateDabWarning() {
+  public void actionUpdateDabWarning() {
     Configuration config = Configuration.getConfiguration();
     String start = askForValue(
         GT._("At what page do you wish to start updating the disambiguation warning ?"),
