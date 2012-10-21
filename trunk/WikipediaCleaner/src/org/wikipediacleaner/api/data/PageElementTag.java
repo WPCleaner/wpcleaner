@@ -185,6 +185,9 @@ public class PageElementTag extends PageElement {
     // Check for possible full tag
     boolean fullTag = false;
     if (contents.charAt(tmpIndex2) == '/') {
+      if (endTag) {
+        return null; // Tag with / at the beginning and at the end
+      }
       fullTag = true;
       tmpIndex2--;
       while ((tmpIndex2 > tmpIndex) &&
