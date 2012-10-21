@@ -54,6 +54,7 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
+import org.wikipediacleaner.api.data.RecentChange;
 import org.wikipediacleaner.api.request.ApiCategoriesRequest;
 import org.wikipediacleaner.api.request.ApiCategoriesResult;
 import org.wikipediacleaner.api.request.ApiCategoryMembersRequest;
@@ -78,6 +79,8 @@ import org.wikipediacleaner.api.request.ApiRandomPagesRequest;
 import org.wikipediacleaner.api.request.ApiRandomPagesResult;
 import org.wikipediacleaner.api.request.ApiRawWatchlistRequest;
 import org.wikipediacleaner.api.request.ApiRawWatchlistResult;
+import org.wikipediacleaner.api.request.ApiRecentChangesRequest;
+import org.wikipediacleaner.api.request.ApiRecentChangesResult;
 import org.wikipediacleaner.api.request.ApiRevisionsRequest;
 import org.wikipediacleaner.api.request.ApiRevisionsResult;
 import org.wikipediacleaner.api.request.ApiSearchRequest;
@@ -101,6 +104,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlPurgeResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlBacklinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlRandomPagesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlRawWatchlistResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlRecentChangesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlRevisionsResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlSearchResult;
@@ -1148,6 +1152,25 @@ public class MediaWikiAPI implements API {
     ApiRandomPagesResult result = new ApiXmlRandomPagesResult(wiki, httpClient, connection);
     ApiRandomPagesRequest request = new ApiRandomPagesRequest(wiki, result);
     return request.loadRandomList(count);
+  }
+
+  /**
+   * Retrieves recent changes.
+   * (<code>action=query</code>, <code>list=recentchanges</code>).
+   * 
+   * @param wiki Wiki.
+   * @param start The timestamp to start listing from.
+   * @param recentChanges The list of recent changes to be filled.
+   * @return The timestamp to use as a starting point for the next call.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Recentchanges">API:Recentchanges</a>
+   */
+  public String getRecentChanges(
+      EnumWikipedia wiki,
+      String start, List<RecentChange> recentChanges) throws APIException {
+    ApiRecentChangesResult result = new ApiXmlRecentChangesResult(wiki, httpClient, connection);
+    ApiRecentChangesRequest request = new ApiRecentChangesRequest(wiki, result);
+    return request.loadRecentChanges(start, recentChanges);
   }
 
   /**

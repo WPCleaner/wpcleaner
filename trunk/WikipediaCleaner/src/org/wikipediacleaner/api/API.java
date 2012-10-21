@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
+import org.wikipediacleaner.api.data.RecentChange;
 
 
 /**
@@ -287,6 +288,21 @@ public interface API {
    */
   public List<Page> getRandomPages(
       EnumWikipedia wikipedia, int count) throws APIException;
+
+  /**
+   * Retrieves recent changes.
+   * (<code>action=query</code>, <code>list=recentchanges</code>).
+   * 
+   * @param wiki Wiki.
+   * @param start The timestamp to start listing from.
+   * @param recentChanges The list of recent changes to be filled.
+   * @return The timestamp to use as a starting point for the next call.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Recentchanges">API:Recentchanges</a>
+   */
+  public String getRecentChanges(
+      EnumWikipedia wiki,
+      String start, List<RecentChange> recentChanges) throws APIException;
 
   /**
    * Retrieves similar pages.
