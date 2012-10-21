@@ -24,6 +24,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -123,8 +124,10 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
 
           // Default
           if (!errorReported) {
-            errors.add(createCheckErrorResult(
-                pageAnalysis.getPage(), beginIndex, beginIndex + 2));
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(), beginIndex, beginIndex + 2);
+            errorResult.addReplacement("", GT._("Delete"));
+            errors.add(errorResult);
           }
           count = 0;
         }
