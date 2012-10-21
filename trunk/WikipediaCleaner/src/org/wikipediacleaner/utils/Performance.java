@@ -62,6 +62,11 @@ public class Performance {
   private long lastTime;
 
   /**
+   * Threshold for printing duration.
+   */
+  private long threshold;
+
+  /**
    * @param method Method name.
    */
   public Performance(String method) {
@@ -69,6 +74,14 @@ public class Performance {
     this.unit = highPrecision ? "ns" : "ms";
     initialTime = currentTime();
     lastTime = initialTime;
+    threshold = 0;
+  }
+
+  /**
+   * @param threshold Threshold for printing duration.
+   */
+  public void setThreshold(long threshold) {
+    this.threshold = threshold;
   }
 
   /**
@@ -134,7 +147,7 @@ public class Performance {
    */
   public void printEnd() {
     long time = currentTime();
-    if (time > initialTime) {
+    if (time > initialTime + threshold) {
       printMessage("(" + (time - initialTime) + unit + ")");
     }
   }
