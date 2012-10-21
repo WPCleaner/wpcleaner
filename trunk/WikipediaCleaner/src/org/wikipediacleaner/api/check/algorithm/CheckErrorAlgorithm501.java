@@ -203,6 +203,15 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             if (shouldKeep && (analysis.isInTemplate(begin) != null)) {
               shouldKeep = false;
             }
+            // Remove texts between dots (potential URL)
+            if ((begin > 1) &&
+                (contents.charAt(begin - 1) == '.') &&
+                (Character.isLetterOrDigit(contents.charAt(begin - 2))) &&
+                (end + 1 < contents.length()) &&
+                (contents.charAt(end) == '.') &&
+                (Character.isLetterOrDigit(contents.charAt(end + 1)))) {
+              shouldKeep = false;
+            }
             if (shouldKeep) {
               result |= addReplacements(begin, end, contents, suggestion, replacements);
             }
@@ -245,7 +254,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
           while (matcher.find()) {
             int begin = matcher.start();
             int end = matcher.end();
-            boolean keep = true;
+            boolean shouldKeep = true;
             // Remove texts between dots (potential URL)
             if ((begin > 1) &&
                 (contents.charAt(begin - 1) == '.') &&
@@ -253,9 +262,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
                 (end + 1 < contents.length()) &&
                 (contents.charAt(end) == '.') &&
                 (Character.isLetterOrDigit(contents.charAt(end + 1)))) {
-              keep = false;
+              shouldKeep = false;
             }
-            if (keep) {
+            if (shouldKeep) {
               result |= addReplacements(begin, end, contents, suggestion, replacements);
             }
           }
