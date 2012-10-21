@@ -78,7 +78,7 @@ public class PageElementCategory extends PageElement {
 
     // Check that name space is a category
     int colonIndex = tmpIndex;
-    Namespace categoryNamespace = Namespace.getNamespace(Namespace.CATEGORY, wikipedia.getNamespaces());
+    Namespace categoryNamespace = wikipedia.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
     if (!categoryNamespace.isPossibleName(contents.substring(beginIndex, colonIndex).trim())) {
       return null;
     }

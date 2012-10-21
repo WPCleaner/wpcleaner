@@ -62,8 +62,7 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
     }
 
     // Check category name space
-    Namespace categoryNamespace = Namespace.getNamespace(
-        Namespace.CATEGORY, pageAnalysis.getWikipedia().getNamespaces());
+    Namespace categoryNamespace = pageAnalysis.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
     if (categoryNamespace == null) {
       return false;
     }

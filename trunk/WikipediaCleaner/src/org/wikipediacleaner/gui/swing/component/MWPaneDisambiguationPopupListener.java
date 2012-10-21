@@ -82,8 +82,9 @@ public class MWPaneDisambiguationPopupListener extends MWPanePopupListener {
       PageElementTemplate template = (PageElementTemplate) attrPageElement;
       JPopupMenu popup = new JPopupMenu();
 
-      String templateTitle = Namespace.getTitle(
-          Namespace.TEMPLATE, getWikipedia().getNamespaces(), template.getTemplateName());
+      String templateTitle = getWikipedia().getWikiConfiguration().getPageTitle(
+          Namespace.TEMPLATE,
+          template.getTemplateName());
       JMenuItem menuItem = new JMenuItem(templateTitle);
       menuItem.setEnabled(false);
       popup.add(menuItem);

@@ -52,9 +52,7 @@ public class CheckErrorAlgorithm502 extends CheckErrorAlgorithmBase {
     }
 
     // Retrieve template namespace
-    Namespace templateNamespace = Namespace.getNamespace(
-        Namespace.TEMPLATE,
-        pageAnalysis.getWikipedia().getNamespaces());
+    Namespace templateNamespace = pageAnalysis.getWikiConfiguration().getNamespace(Namespace.TEMPLATE);
 
     // Check every template
     Collection<PageElementTemplate> templates = pageAnalysis.getTemplates();

@@ -80,7 +80,7 @@ public class PageElementInterwikiLink extends PageElement {
       return null;
     }
     String interwikiText = contents.substring(beginIndex, colonIndex);
-    List<Interwiki> interwikis = wikipedia.getInterwikis();
+    List<Interwiki> interwikis = wikipedia.getWikiConfiguration().getInterwikis();
     if (interwikis == null) {
       return null;
     }

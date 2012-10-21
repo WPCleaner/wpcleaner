@@ -19,7 +19,8 @@
 package org.wikipediacleaner.api.data;
 
 import java.util.LinkedList;
-import java.util.List;
+
+import org.wikipediacleaner.api.constants.EnumCaseSensitiveness;
 
 
 /**
@@ -47,14 +48,20 @@ public class Namespace implements Comparable<Namespace> {
   private final Integer id;
   private final String title;
   private final String canonicalTitle;
+  private final EnumCaseSensitiveness caseSensitiveness;
+  private final boolean subPages;
   private final LinkedList<String> aliases;
 
   /**
    * @param id Namespace Id.
    * @param title Namespace title.
    * @param canonicalTitle Canonical title.
+   * @param caseSensitiveness Case sensitiveness.
+   * @param subPages True if sub pages are allowed.
    */
-  public Namespace(String id, String title, String canonicalTitle) {
+  public Namespace(
+      String id, String title, String canonicalTitle,
+      EnumCaseSensitiveness caseSensitiveness, boolean subPages) {
     Integer tmpId = null;
     try {
       tmpId = Integer.parseInt(id);
@@ -64,45 +71,11 @@ public class Namespace implements Comparable<Namespace> {
     this.id = tmpId;
     this.title = title;
     this.canonicalTitle = canonicalTitle;
+    this.caseSensitiveness = caseSensitiveness;
+    this.subPages = subPages;
     this.aliases = new LinkedList<String>();
     addAlias(this.title);
     addAlias(this.canonicalTitle);
-  }
-
-  /**
-   * @param id Namespace id.
-   * @param namespaces List of namespaces.
-   * @return Matching namespace.
-   */
-  public static Namespace getNamespace(int id, List<Namespace> namespaces) {
-    if (namespaces == null) {
-      return null;
-    }
-    for (Namespace n : namespaces) {
-      if ((n != null) && (n.getId() != null) && (id == n.getId().intValue())) {
-        return n;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Construct a full title name.
-   * 
-   * @param namespaceId Namespace identifier.
-   * @param namespaces List of namespaces.
-   * @param title Title (without namespace).
-   * @return Fully qualified title.
-   */
-  public static String getTitle(int namespaceId, List<Namespace> namespaces, String title) {
-    if (namespaceId == MAIN) {
-      return title;
-    }
-    Namespace namespace = getNamespace(namespaceId, namespaces);
-    if (namespace != null) {
-      return namespace.getTitle() + ":" + title;
-    }
-    return title;
   }
 
   /**
@@ -125,7 +98,21 @@ public class Namespace implements Comparable<Namespace> {
   public String getCanonicalTitle() {
     return canonicalTitle;
   }
-  
+
+  /**
+   * @return Case sensitiveness.
+   */
+  public EnumCaseSensitiveness getCaseSensitiveness() {
+    return caseSensitiveness;
+  }
+
+  /**
+   * @return True if sub pages are allowed.
+   */
+  public boolean areSubPagesAllowed() {
+    return subPages;
+  }
+
   /**
    * @return Aliases.
    */

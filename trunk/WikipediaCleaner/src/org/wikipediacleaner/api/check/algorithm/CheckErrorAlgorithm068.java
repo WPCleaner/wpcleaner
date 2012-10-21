@@ -104,12 +104,12 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
 
     // Check that it's not a link to the current wiki
     String namespace = linkUrl.substring(1, currentPos);
-    if (namespace.equals(pageAnalysis.getWikipedia().getSettings().getCode())) {
+    if (namespace.equals(pageAnalysis.getSettings().getCode())) {
       return null;
     }
 
     // Check that it's a link to an other wiki
-    for (Language lg : pageAnalysis.getWikipedia().getLanguages()) {
+    for (Language lg : pageAnalysis.getWikiConfiguration().getLanguages()) {
       if (namespace.equals(lg.getCode())) {
         return new ErrorAnalysis(lg, linkUrl.substring(currentPos + 1));
       }

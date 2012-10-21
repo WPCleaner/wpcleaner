@@ -207,7 +207,6 @@ public class ApiCategoryMembersRequest extends ApiListRequest {
     List<String> categoriesAnalyzed = new ArrayList<String>();
     Map<String, Integer> categories = new HashMap<String, Integer>();
     categories.put(category, Integer.valueOf(0));
-    List<Namespace> namespaces = getWiki().getNamespaces();
     int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_CATEGORY_MEMBERS);
     while (!categories.isEmpty() && (list.size() < maxSize)) {
 
@@ -218,14 +217,12 @@ public class ApiCategoryMembersRequest extends ApiListRequest {
       int currentDepth = entry.getValue().intValue();
       int colonIndex = categoryName.indexOf(':');
       if (colonIndex < 0) {
-        categoryName = Namespace.getTitle(
-            Namespace.CATEGORY, namespaces, categoryName);
+        categoryName = getWiki().getWikiConfiguration().getPageTitle(
+            Namespace.CATEGORY, categoryName);
       } else {
-        Namespace namespaceCategory = Namespace.getNamespace(
-            Namespace.CATEGORY, namespaces);
+        Namespace namespaceCategory = getWiki().getWikiConfiguration().getNamespace(Namespace.CATEGORY);
         if (!namespaceCategory.isPossibleName(categoryName.substring(0, colonIndex))) {
-          categoryName = Namespace.getTitle(
-              Namespace.CATEGORY, namespaces, categoryName);
+          categoryName = getWiki().getWikiConfiguration().getPageTitle(Namespace.CATEGORY, categoryName);
         }
       }
       boolean shouldAnalyze = true;

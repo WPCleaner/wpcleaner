@@ -59,8 +59,7 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
     if (EnumWikipedia.EN.equals(pageAnalysis.getWikipedia())) {
       return false;
     }
-    Namespace categoryNamespace = Namespace.getNamespace(
-        Namespace.CATEGORY, pageAnalysis.getWikipedia().getNamespaces());
+    Namespace categoryNamespace = pageAnalysis.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
     if (categoryNamespace == null) {
       return false;
     }

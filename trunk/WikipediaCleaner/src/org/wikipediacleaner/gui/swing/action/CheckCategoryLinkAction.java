@@ -73,7 +73,7 @@ public class CheckCategoryLinkAction extends TextAction {
    */
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     try {
-      Namespace categoryNamespace = Namespace.getNamespace(Namespace.CATEGORY, toWikipedia.getNamespaces());
+      Namespace categoryNamespace = toWikipedia.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
       String categoryName = PageElementCategory.DEFAULT_NAME;
       if (categoryNamespace != null) {
         if (!PageElementCategory.DEFAULT_NAME.equals(

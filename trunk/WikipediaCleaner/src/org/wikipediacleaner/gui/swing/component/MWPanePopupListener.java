@@ -366,9 +366,8 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
     }
 
     // Initialization
-    String fullName = Namespace.getTitle(
+    String fullName = wikipedia.getWikiConfiguration().getPageTitle(
         Namespace.IMAGE,
-        wikipedia.getNamespaces(),
         image.getImage());
     Page page = DataManager.getPage(wikipedia, fullName, null, null);
 
@@ -406,9 +405,8 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
     }
 
     // Initialization
-    String fullName = Namespace.getTitle(
+    String fullName = wikipedia.getWikiConfiguration().getPageTitle(
         Namespace.CATEGORY,
-        wikipedia.getNamespaces(),
         category.getName());
     Page page = DataManager.getPage(wikipedia, fullName, null, null);
 
@@ -474,9 +472,8 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
     }
 
     // Initialization
-    String fullName = Namespace.getTitle(
+    String fullName = wikipedia.getWikiConfiguration().getPageTitle(
         Namespace.TEMPLATE,
-        wikipedia.getNamespaces(),
         template.getTemplateName());
     Page page = DataManager.getPage(wikipedia, fullName, null, null);
 

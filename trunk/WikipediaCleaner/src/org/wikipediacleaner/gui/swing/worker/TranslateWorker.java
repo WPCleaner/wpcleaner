@@ -190,8 +190,7 @@ public class TranslateWorker extends BasicWorker {
     if (!translate) {
       return text;
     }
-    Namespace categoryNamespace = Namespace.getNamespace(
-        Namespace.CATEGORY, getWikipedia().getNamespaces());
+    Namespace categoryNamespace = getWikipedia().getWikiConfiguration().getNamespace(Namespace.CATEGORY);
     if (categoryNamespace == null) {
       return text;
     }
@@ -250,8 +249,7 @@ public class TranslateWorker extends BasicWorker {
     if (!translateName) {
       return text;
     }
-    Namespace templateNamespace = Namespace.getNamespace(
-        Namespace.TEMPLATE, getWikipedia().getNamespaces());
+    Namespace templateNamespace = getWikipedia().getWikiConfiguration().getNamespace(Namespace.TEMPLATE);
     if (templateNamespace == null) {
       return text;
     }

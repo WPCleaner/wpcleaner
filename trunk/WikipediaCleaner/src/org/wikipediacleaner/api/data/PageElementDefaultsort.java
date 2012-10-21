@@ -66,7 +66,7 @@ public class PageElementDefaultsort extends PageElement {
       return null;
     }
     String defaultSort = null;
-    MagicWord magicDefaultsort = wikipedia.getMagicWord(MagicWord.DEFAULT_SORT);
+    MagicWord magicDefaultsort = wikipedia.getWikiConfiguration().getMagicWord(MagicWord.DEFAULT_SORT);
     List<String> aliases = magicDefaultsort.getAliases();
     for (int i = 0; (i < aliases.size()) && (defaultSort == null); i++) {
       if (contents.startsWith(aliases.get(i), tmpIndex)) {

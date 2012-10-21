@@ -1282,9 +1282,10 @@ public abstract class OnePageWindow
     }
 
     if ((chkEditTalkPage != null) && chkEditTalkPage.isSelected() &&
-        (page != null) && (page.getTalkPage(getWikipedia().getNamespaces()) != null)) {
+        (page != null) &&
+        (page.getTalkPage() != null)) {
       Controller.runNewSection(
-          page.getTalkPage(getWikipedia().getNamespaces()),
+          page.getTalkPage(),
           getTextContents().getText(), page.getTitle(),
           getWikipedia());
     }

@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WikiConfiguration;
 
 
 /**
@@ -83,7 +84,7 @@ public class PageElementImage extends PageElement {
 
     // Check that namespace is Image
     int colonIndex = tmpIndex;
-    Namespace imageNamespace = Namespace.getNamespace(Namespace.IMAGE, wikipedia.getNamespaces());
+    Namespace imageNamespace = wikipedia.getWikiConfiguration().getNamespace(Namespace.IMAGE);
     if (!imageNamespace.isPossibleName(contents.substring(beginIndex, colonIndex).trim())) {
       return null;
     }
@@ -117,10 +118,11 @@ public class PageElementImage extends PageElement {
     int linkCount = 0;
     int templateCount = 0;
     List<String> magicWords = new ArrayList<String>();
+    WikiConfiguration wikiConfiguration = wikipedia.getWikiConfiguration();
     while (tmpIndex < contents.length()) {
       if ((templateCount <= 0) && (linkCount <= 0) && (contents.startsWith("]]", tmpIndex))) {
         String element = contents.substring(pipeIndex + 1, tmpIndex);
-        if (wikipedia.isPossibleAliasForImgMagicWord(element.trim())) {
+        if (wikiConfiguration.isPossibleAliasForImgMagicWord(element.trim())) {
           magicWords.add(element);
           pipeIndex = tmpIndex;
         }
@@ -133,7 +135,7 @@ public class PageElementImage extends PageElement {
             pipeIndex + 1 - index);
       } else if ((templateCount <= 0) && (linkCount <= 0) && (contents.charAt(tmpIndex) == '|')) {
         String element = contents.substring(pipeIndex + 1, tmpIndex);
-        if (wikipedia.isPossibleAliasForImgMagicWord(element.trim())) {
+        if (wikiConfiguration.isPossibleAliasForImgMagicWord(element.trim())) {
           magicWords.add(element);
           pipeIndex = tmpIndex;
         }
@@ -196,8 +198,9 @@ public class PageElementImage extends PageElement {
    */
   public String getAlternateDescription() {
     if (magicWords != null) {
+      WikiConfiguration wikiConfiguration = wikipedia.getWikiConfiguration();
       for (String magicWord : magicWords) {
-        if (wikipedia.getMagicWord(MagicWord.IMG_ALT).isPossibleAlias(magicWord)) {
+        if (wikiConfiguration.getMagicWord(MagicWord.IMG_ALT).isPossibleAlias(magicWord)) {
           int equalIndex = magicWord.indexOf("=");
           if (equalIndex >= 0) {
             return magicWord.substring(equalIndex + 1).trim();

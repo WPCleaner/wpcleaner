@@ -25,7 +25,7 @@ package org.wikipediacleaner.api.data;
 public class Interwiki implements Comparable<Interwiki> {
 
   private final String prefix;
-  private final String local;
+  private final boolean local;
   private final String language;
   private final String url;
 
@@ -35,7 +35,7 @@ public class Interwiki implements Comparable<Interwiki> {
    * @param language Inter-wiki language.
    * @param url Inter-wiki URL.
    */
-  public Interwiki(String prefix, String local, String language, String url) {
+  public Interwiki(String prefix, boolean local, String language, String url) {
     this.prefix = prefix;
     this.local = local;
     this.language = language;
@@ -52,7 +52,7 @@ public class Interwiki implements Comparable<Interwiki> {
   /**
    * @return Inter-wiki local.
    */
-  public String getLocal() {
+  public boolean getLocal() {
     return local;
   }
 
@@ -99,7 +99,7 @@ public class Interwiki implements Comparable<Interwiki> {
     Interwiki iw = (Interwiki) o;
     boolean equals = true;
     equals &= prefix.equals(iw.prefix);
-    equals &= (local == null) ? (iw.local == null) : local.equals(iw.local);
+    equals &= (local == iw.local);
     equals &= (language == null) ? (iw.language == null) : language.equals(iw.language);
     equals &= (url == null) ? (iw.url == null) : url.equals(iw.url);
     return equals;

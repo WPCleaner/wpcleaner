@@ -58,8 +58,7 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
-    Namespace categoryNamespace = Namespace.getNamespace(
-        Namespace.CATEGORY, pageAnalysis.getWikipedia().getNamespaces());
+    Namespace categoryNamespace = pageAnalysis.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
     if (categoryNamespace == null) {
       return false;
     }

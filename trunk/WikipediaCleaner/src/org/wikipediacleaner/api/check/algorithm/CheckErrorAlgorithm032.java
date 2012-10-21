@@ -51,8 +51,7 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
-    Namespace fileNamespace = Namespace.getNamespace(
-        Namespace.IMAGE, pageAnalysis.getWikipedia().getNamespaces());
+    Namespace fileNamespace = pageAnalysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
     for (PageElementInternalLink link : pageAnalysis.getInternalLinks()) {
       // Finding possible namespace
       String namespace = null;

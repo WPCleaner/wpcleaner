@@ -273,7 +273,7 @@ public class PageListWorker extends BasicWorker {
         WPCConfiguration configuration = getWikipedia().getConfiguration();
         for (Page tmpPage : tmpPages) {
           if (!tmpPage.isArticle()) {
-            String title = tmpPage.getArticlePageName(getWikipedia().getNamespaces());
+            String title = tmpPage.getArticlePageName();
             if ((configuration.getTodoSubpage() != null) &&
                 (configuration.getTodoSubpage().trim().length() > 0) &&
                 (title.endsWith("/" + configuration.getTodoSubpage()))) {

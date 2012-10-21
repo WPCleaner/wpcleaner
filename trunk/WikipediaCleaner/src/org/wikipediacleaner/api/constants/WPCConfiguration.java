@@ -1424,10 +1424,9 @@ public class WPCConfiguration {
     if (templatesForHelpRequested != null) {
       List<Page> tmp = new ArrayList<Page>(templatesForHelpRequested.size());
       for (String template : templatesForHelpRequested) {
-        tmp.add(DataManager.getPage(
-            wiki,
-            Namespace.getTitle(Namespace.TEMPLATE, wiki.getNamespaces(), template),
-            null, null));
+        String title = wiki.getWikiConfiguration().getPageTitle(
+            Namespace.TEMPLATE, template);
+        tmp.add(DataManager.getPage(wiki, title, null, null));
       }
       return tmp;
     }
@@ -1494,9 +1493,8 @@ public class WPCConfiguration {
       return false;
     }
     for (TemplateMatch element : wiktionaryMatches) {
-      if (page.equals(Namespace.getTitle(
+      if (page.equals(wiki.getWikiConfiguration().getPageTitle(
           Namespace.TEMPLATE,
-          wiki.getNamespaces(),
           element.getName()))) {
         return true;
       }

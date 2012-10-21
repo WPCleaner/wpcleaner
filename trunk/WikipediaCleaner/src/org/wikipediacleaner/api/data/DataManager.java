@@ -62,7 +62,7 @@ public class DataManager {
       int colonIndex = page.getTitle().indexOf(':');
       if (colonIndex > 0) {
         String namespaceText = page.getTitle().substring(0, colonIndex);
-        List<Namespace> namespaces = wikipedia.getNamespaces();
+        List<Namespace> namespaces = wikipedia.getWikiConfiguration().getNamespaces();
         if (namespaces != null) {
           for (Namespace namespace : namespaces) {
             if (namespace.isPossibleName(namespaceText)) {
