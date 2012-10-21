@@ -296,9 +296,12 @@ public enum EnumWikipedia {
       if ((link != null) && (link.trim().length() > 0)) {
         formattedComment.append("[[");
         formattedComment.append(link);
-        formattedComment.append("|WPCleaner]] ");
+        formattedComment.append("|");
+        formattedComment.append(Version.PROGRAM);
+        formattedComment.append("]] ");
       } else {
-        formattedComment.append("WPCleaner ");
+        formattedComment.append(Version.PROGRAM);
+        formattedComment.append(" ");
       }
       formattedComment.append("v");
       formattedComment.append(Version.VERSION);
