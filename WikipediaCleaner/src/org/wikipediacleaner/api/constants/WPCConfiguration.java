@@ -708,7 +708,8 @@ public class WPCConfiguration {
                   Parameter word = tag.getParameter("word");
                   Parameter find = tag.getParameter("find");
                   Parameter replace = tag.getParameter("replace");
-                  if ((word != null) && (find != null) && (replace != null)) {
+                  Parameter disabled = tag.getParameter("disabled");
+                  if ((word != null) && (find != null) && (replace != null) && (disabled == null)) {
                     String wordValue = word.getValue();
                     String findValue = find.getValue();
                     String replaceValue = replace.getValue();
