@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.CaptchaException;
 import org.wikipediacleaner.api.HttpUtils;
+import org.wikipediacleaner.api.RecentChangesListener;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
@@ -1268,6 +1270,48 @@ public class MediaWikiAPI implements API {
   // ==========================================================================
   // API : Changing wiki content / Create and edit pages.
   // ==========================================================================
+
+  // ==========================================================================
+  // Recent changes management.
+  // ==========================================================================
+
+  /**
+   * Recent changes manager.
+   */
+  private final Map<EnumWikipedia, RecentChangesManager> rcManagers =
+      new Hashtable<EnumWikipedia, RecentChangesManager>();
+
+  /**
+   * Adds a <code>RecentChangesListener</code> to the API.
+   *
+   * @param wiki Wiki.
+   * @param listener Recent changes listener.
+   */
+  public void addRecentChangesListener(
+      EnumWikipedia wiki,
+      RecentChangesListener listener) {
+    RecentChangesManager rcManager = rcManagers.get(wiki);
+    if (rcManager == null) {
+      rcManager = new RecentChangesManager(wiki, this);
+      rcManagers.put(wiki, rcManager);
+    }
+    rcManager.addRecentChangesListener(listener);
+  }
+
+  /**
+   * Removes a <code>RecentChangesListener</code> from the API.
+   * 
+   * @param wiki Wiki.
+   * @param listener Recent changes listener.
+   */
+  public void removeRecentChangesListener(
+      EnumWikipedia wiki,
+      RecentChangesListener listener) {
+    RecentChangesManager rcManager = rcManagers.get(wiki);
+    if (rcManager != null) {
+      rcManager.removeRecentChangesListener(listener);
+    }
+  }
 
   // ==========================================================================
   // General methods

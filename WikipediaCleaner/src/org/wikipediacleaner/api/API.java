@@ -202,7 +202,8 @@ public interface API {
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#categories_.2F_cl">API:Properties#categories</a>
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#templates_.2F_tl">API:Properties#templates</a>
    */
-  public void initializeDisambiguationStatus(EnumWikipedia wikipedia, List<Page> pages) throws APIException;
+  public void initializeDisambiguationStatus(
+      EnumWikipedia wikipedia, List<Page> pages) throws APIException;
 
   /**
    * Retrieves internal links of pages.
@@ -213,7 +214,8 @@ public interface API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#links_.2F_pl">API:Properties#links</a>
    */
-  public void retrieveLinks(EnumWikipedia wikipedia, Collection<Page> pages) throws APIException;
+  public void retrieveLinks(
+      EnumWikipedia wikipedia, Collection<Page> pages) throws APIException;
 
   /**
    * Retrieve a specific language link in a page.
@@ -226,7 +228,8 @@ public interface API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#langlinks_.2F_ll">API:Properties#langlinks</a>
    */
-  public String getLanguageLink(EnumWikipedia from, EnumWikipedia to, String title) throws APIException;
+  public String getLanguageLink(
+      EnumWikipedia from, EnumWikipedia to, String title) throws APIException;
 
   // ==========================================================================
   // API : Queries / Lists
@@ -375,4 +378,28 @@ public interface API {
   // ==========================================================================
   // API : Changing wiki content / Create and edit pages.
   // ==========================================================================
+
+  // ==========================================================================
+  // Recent changes management.
+  // ==========================================================================
+
+  /**
+   * Adds a <code>RecentChangesListener</code> to the API.
+   * 
+   * @param wiki Wiki.
+   * @param listener Recent changes listener.
+   */
+  public void addRecentChangesListener(
+      EnumWikipedia wiki,
+      RecentChangesListener listener);
+
+  /**
+   * Removes a <code>RecentChangesListener</code> from the API.
+   * 
+   * @param wiki Wiki.
+   * @param listener Recent changes listener.
+   */
+  public void removeRecentChangesListener(
+      EnumWikipedia wiki,
+      RecentChangesListener listener);
 }
