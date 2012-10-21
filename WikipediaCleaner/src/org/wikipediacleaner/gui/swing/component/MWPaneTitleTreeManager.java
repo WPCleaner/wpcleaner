@@ -21,8 +21,8 @@ package org.wikipediacleaner.gui.swing.component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -34,7 +34,6 @@ import javax.swing.JToolBar;
 import javax.swing.JTree;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -53,8 +52,7 @@ import org.wikipediacleaner.images.EnumImageSize;
 /**
  * A manager for the tree of titles.
  */
-public class MWPaneTitleTreeManager
-  implements TreeSelectionListener, ActionListener {
+public class MWPaneTitleTreeManager {
 
   private final MWPane textPane;
   private final JSplitPane splitPane;
@@ -99,20 +97,20 @@ public class MWPaneTitleTreeManager
     JButton buttonLess = Utilities.createJButton(
         "gnome-go-previous.png", EnumImageSize.NORMAL,
         GT._("Decrement title level"), false);
-    buttonLess.setActionCommand("-");
-    buttonLess.addActionListener(this);
+    buttonLess.addActionListener(EventHandler.create(
+        ActionListener.class, this, "decreaseLevel"));
     toolbarButtons.add(buttonLess);
     JButton buttonMore = Utilities.createJButton(
         "gnome-go-next.png", EnumImageSize.NORMAL,
         GT._("Increment title level"), false);
-    buttonMore.setActionCommand("+");
-    buttonMore.addActionListener(this);
+    buttonMore.addActionListener(EventHandler.create(
+        ActionListener.class, this, "increaseLevel"));
     toolbarButtons.add(buttonMore);
     JButton buttonDone = Utilities.createJButton(
         "commons-approve-icon.png", EnumImageSize.NORMAL,
         GT._("Validate the new table of contents"), false);
-    buttonDone.setActionCommand("OK");
-    buttonDone.addActionListener(this);
+    buttonDone.addActionListener(EventHandler.create(
+        ActionListener.class, this, "validate"));
     toolbarButtons.add(buttonDone);
     constraints.weightx = 0;
     panelTOC.add(toolbarButtons, constraints);
@@ -129,9 +127,10 @@ public class MWPaneTitleTreeManager
     treeToc.setRootVisible(false);
     treeToc.setShowsRootHandles(true);
     treeToc.getSelectionModel().setSelectionMode(
-        TreeSelectionModel.SINGLE_TREE_SELECTION);
+        TreeSelectionModel.CONTIGUOUS_TREE_SELECTION);
     treeToc.setCellRenderer(rendererToc);
-    treeToc.addTreeSelectionListener(this);
+    treeToc.addTreeSelectionListener(EventHandler.create(
+        TreeSelectionListener.class, this, "selectionChanged"));
     JScrollPane scrollTree = new JScrollPane(treeToc);
     scrollTree.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     constraints.weightx = 1;
@@ -202,10 +201,10 @@ public class MWPaneTitleTreeManager
     textPane.setEditableInternal(textPane.isEditable);
   }
 
-  /* (non-Javadoc)
-   * @see javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event.TreeSelectionEvent)
+  /**
+   * Apply change in selection.
    */
-  public void valueChanged(@SuppressWarnings("unused") TreeSelectionEvent e) {
+  public void selectionChanged() {
     MWPaneTitleTreeNode treeNode = (MWPaneTitleTreeNode) treeToc.getLastSelectedPathComponent();
     if (treeNode == null) {
       return;
@@ -224,30 +223,59 @@ public class MWPaneTitleTreeManager
     selectTreeToc2();
   }
 
-  /* (non-Javadoc)
-   * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+  /**
+   * Validate modifications.
    */
-  public void actionPerformed(ActionEvent e) {
+  public void validate() {
+    StringBuilder contents = new StringBuilder(textPane.getText());
+    applyChanges(contents, treeToc.getModel().getRoot());
+    textPane.changeText(contents.toString());
+    treeToc.repaint();
+    textPane.requestFocusInWindow();
+  }
+
+  /**
+   * Increase level of the currently selected titles.
+   */
+  public void increaseLevel() {
+    changeLevel(1);
+  }
+
+  /**
+   * Decrease level of the currently selected titles.
+   */
+  public void decreaseLevel() {
+    changeLevel(-1);
+  }
+
+  /**
+   * Change level of the currently selected titles.
+   * 
+   * @param delta Delta to apply.
+   */
+  private void changeLevel(int delta) {
     if (treeToc == null) {
       return;
     }
-    MWPaneTitleTreeNode treeNode = (MWPaneTitleTreeNode) treeToc.getLastSelectedPathComponent();
-    if (treeNode == null) {
+    TreePath[] selections = treeToc.getSelectionPaths();
+    if (selections == null) {
       return;
     }
-    if ("+".equals(e.getActionCommand())) {
-      changeTitleLevel(treeNode, 1);
-      updateTreeToc2();
-      selectTreeToc2();
-    } else if ("-".equals(e.getActionCommand())) {
-      changeTitleLevel(treeNode, -1);
-      updateTreeToc2();
-      selectTreeToc2();
-    } else if ("OK".equals(e.getActionCommand())) {
-      StringBuilder contents = new StringBuilder(textPane.getText());
-      applyChanges(contents, treeToc.getModel().getRoot());
-      textPane.changeText(contents.toString());
+    for (int i = 0; i < selections.length; i++) {
+      TreePath selection = selections[i];
+      boolean use = true;
+      for (int j = 0; j < i; j++) {
+        if (selections[j].isDescendant(selection)) {
+          use = false;
+        }
+      }
+      if (use) {
+        MWPaneTitleTreeNode treeNode = (MWPaneTitleTreeNode) selection.getLastPathComponent();
+        changeTitleLevel(treeNode, delta);
+      }
     }
+    updateTreeToc2();
+    selectTreeToc2();
     treeToc.repaint();
     textPane.requestFocusInWindow();
   }
