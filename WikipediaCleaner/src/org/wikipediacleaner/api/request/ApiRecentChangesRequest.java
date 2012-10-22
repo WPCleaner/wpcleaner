@@ -247,7 +247,6 @@ public class ApiRecentChangesRequest extends ApiListRequest {
     properties.put(
         PROPERTY_LIST,
         PROPERTY_LIST_RECENTCHANGES);
-    properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     properties.put(
         PROPERTY_PROPERTIES,
         PROPERTY_PROPERTIES_COMMENT + "|" +
@@ -258,6 +257,7 @@ public class ApiRecentChangesRequest extends ApiListRequest {
         PROPERTY_PROPERTIES_USER);
     if (start != null) {
       properties.put(PROPERTY_END, start);
+      properties.put(PROPERTY_LIMIT, LIMIT_MAX);
     }
     String nextStart = result.executeRecentChanges(properties, recentChanges);
     return nextStart;

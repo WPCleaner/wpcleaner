@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-10-21 18:31+0200\n"
+"POT-Creation-Date: 2012-10-22 23:43+0200\n"
 "PO-Revision-Date: 2012-10-13 06:23+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -440,7 +440,7 @@ msgid "Namespace"
 msgstr "Espacio de nombres"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:246
-#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:148
+#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:209
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:125
 msgid "Title"
 msgstr "Título"
@@ -526,7 +526,7 @@ msgstr "Acerca de"
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:278
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:150
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:173
-#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:123
+#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:166
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:226
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:212
 msgid "&Close"
@@ -1334,7 +1334,7 @@ msgstr "Obteniendo sugerencias para el reemplazo de texto"
 msgid "Retrieving Check Wiki configuration"
 msgstr "Recuperando la configuración de CheckWikipedia"
 
-#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:77
+#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:113
 msgid "Recent changes monitoring"
 msgstr ""
 
@@ -1776,8 +1776,12 @@ msgstr "Expandir plantillas - {0}"
 msgid "&Update"
 msgstr "Act&ualizar"
 
-#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:146
+#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:205
 msgid "Id"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:211
+msgid "User"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:141

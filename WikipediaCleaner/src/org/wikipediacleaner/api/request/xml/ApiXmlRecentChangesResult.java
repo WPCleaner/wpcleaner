@@ -81,6 +81,9 @@ public class ApiXmlRecentChangesResult extends ApiXmlResult implements ApiRecent
         String pageId = currentNode.getAttributeValue("pageid");
         String rcid = currentNode.getAttributeValue("rcid");
         String timestamp = currentNode.getAttributeValue("timestamp");
+        if (nextStart == null) {
+          nextStart = timestamp;
+        }
         String title = currentNode.getAttributeValue("title");
         String type = currentNode.getAttributeValue("type");
         String user = currentNode.getAttributeValue("user");
@@ -100,13 +103,6 @@ public class ApiXmlRecentChangesResult extends ApiXmlResult implements ApiRecent
         } catch (NumberFormatException e) {
           log.error("Error loading recent changes", e);
         }
-      }
-
-      // Get start for next request
-      XPath xpaNext = XPath.newInstance("/api/query-continue/recentchanges");
-      Element node = (Element) xpaNext.selectSingleNode(root);
-      if (node != null) {
-        nextStart = node.getAttributeValue("rcstart");
       }
     } catch (JDOMException e) {
       log.error("Error loading recent changes", e);
