@@ -84,7 +84,7 @@
     <!-- Java compilation -->
   	<javac srcdir="${WikiCleaner.src.dir}"
            destdir="${WikiCleaner.classes.dir}"
-           optimize="on" encoding="UTF-8" target="1.5">
+           optimize="on" encoding="UTF-8" target="1.5" source="1.5">
       <classpath refid="WikiCleaner.class.path" />
     </javac>
 

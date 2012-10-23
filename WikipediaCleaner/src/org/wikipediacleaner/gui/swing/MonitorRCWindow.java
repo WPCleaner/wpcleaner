@@ -207,13 +207,23 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
     // Update list of interesting recent changes
     for (RecentChange rc : newRC) {
       if (rc.getNamespace() == Namespace.MAIN) {
-        if (rc.isNew()) {
-          interestingRC.put(rc.getTitle(), rc.getTimestamp());
-          modelRCInteresting.addRecentChange(rc);
-        } else if (interestingRC.containsKey(rc.getTitle())) {
-          if (rc.getTimestamp().getTime() > interestingRC.get(rc.getTitle()).getTime()) {
+        if (RecentChange.TYPE_NEW.equals(rc.getType())) {
+          if (rc.isNew()) {
             interestingRC.put(rc.getTitle(), rc.getTimestamp());
             modelRCInteresting.addRecentChange(rc);
+          }
+        } else if (RecentChange.TYPE_EDIT.equals(rc.getType())) {
+          if (interestingRC.containsKey(rc.getTitle())) {
+            if (rc.getTimestamp().getTime() > interestingRC.get(rc.getTitle()).getTime()) {
+              interestingRC.put(rc.getTitle(), rc.getTimestamp());
+              modelRCInteresting.addRecentChange(rc);
+            }
+          }
+        } else if (RecentChange.TYPE_LOG.equals(rc.getType())) {
+          if (RecentChange.LOG_TYPE_DELETE.equals(rc.getLogType()) &&
+              RecentChange.LOG_ACTION_DELETE_DELETE.equals(rc.getLogAction())) {
+            interestingRC.remove(rc.getTitle());
+            modelRCInteresting.removeRecentChanges(rc.getTitle());
           }
         }
       }

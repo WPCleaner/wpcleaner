@@ -165,9 +165,9 @@ public class RecentChangesTableModel extends AbstractTableModel {
   }
 
   /**
-   * @param rowIndex
-   * @param columnIndex
-   * @return
+   * @param rowIndex Row index.
+   * @param columnIndex Column index.
+   * @return Value at row and column.
    * @see javax.swing.table.TableModel#getValueAt(int, int)
    */
   public Object getValueAt(int rowIndex, int columnIndex) {
@@ -175,6 +175,26 @@ public class RecentChangesTableModel extends AbstractTableModel {
       RecentChange rc = recentChanges.get(rowIndex);
       switch (columnIndex) {
       case COLUMN_FLAGS:
+        if (RecentChange.TYPE_LOG.equals(rc.getType())) {
+          if (RecentChange.LOG_TYPE_BLOCK.equals(rc.getLogType())) {
+            return "B";
+          }
+          if (RecentChange.LOG_TYPE_DELETE.equals(rc.getLogType())) {
+            return "D";
+          }
+          if (RecentChange.LOG_TYPE_MOVE.equals(rc.getLogType())) {
+            return "M";
+          }
+          if (RecentChange.LOG_TYPE_NEWUSERS.equals(rc.getLogType())) {
+            return "User";
+          }
+          if (RecentChange.LOG_TYPE_PROTECT.equals(rc.getLogType())) {
+            return "P";
+          }
+          if (RecentChange.LOG_TYPE_UPLOAD.equals(rc.getLogType())) {
+            return "Upld";
+          }
+        }
         return (rc.isNew() ? "N" : "") + (rc.isMinor() ? "m" : "") + (rc.isBot() ? "b" : "");
       case COLUMN_RC_ID:
         return rc.getId();

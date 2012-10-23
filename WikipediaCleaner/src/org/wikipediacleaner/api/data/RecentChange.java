@@ -27,6 +27,33 @@ import java.util.Date;
  */
 public class RecentChange implements Comparable<RecentChange> {
 
+  // Types of recent changes
+  public final static String TYPE_NEW = "new";
+  public final static String TYPE_EDIT = "edit";
+  public final static String TYPE_LOG = "log";
+
+  // Types of logs
+  public final static String LOG_TYPE_BLOCK = "block";
+  public final static String LOG_TYPE_DELETE = "delete";
+  public final static String LOG_TYPE_MOVE = "move";
+  public final static String LOG_TYPE_NEWUSERS = "newusers";
+  public final static String LOG_TYPE_PROTECT = "protect";
+  public final static String LOG_TYPE_UPLOAD = "upload";
+
+  // Actions for logs
+  public final static String LOG_ACTION_BLOCK_BLOCK = "block";
+  public final static String LOG_ACTION_BLOCK_REBLOCK = "reblock";
+  public final static String LOG_ACTION_BLOCK_UNBLOCK = "unblock";
+  public final static String LOG_ACTION_DELETE_DELETE = "delete";
+  public final static String LOG_ACTION_DELETE_RESTORE = "restore";
+  public final static String LOG_ACTION_DELETE_REVISION = "revision";
+  public final static String LOG_ACTION_MOVE_MOVE = "move";
+  public final static String LOG_ACTION_MOVE_MOVEREDIR = "move_redir";
+  public final static String LOG_ACTION_NEWUSERS_CREATE = "create";
+  public final static String LOG_ACTION_PROTECT_PROTECT = "protect";
+  public final static String LOG_ACTION_UPLOAD_OVERWRITE = "overwrite";
+  public final static String LOG_ACTION_UPLOAD_UPLOAD = "upload";
+
   /**
    * Recent change identifier.
    */
@@ -51,6 +78,16 @@ public class RecentChange implements Comparable<RecentChange> {
    * Type of change (new, edit, log, ...).
    */
   private String type;
+
+  /**
+   * Type of log for logs.
+   */
+  private String logType;
+
+  /**
+   * Type of action for logs.
+   */
+  private String logAction;
 
   /**
    * User at the origin of the change.
@@ -136,6 +173,20 @@ public class RecentChange implements Comparable<RecentChange> {
   }
 
   /**
+   * @return Type of log.
+   */
+  public String getLogType() {
+    return logType;
+  }
+
+  /**
+   * @return Action for the log.
+   */
+  public String getLogAction() {
+    return logAction;
+  }
+
+  /**
    * @return User at the origin of the change.
    */
   public String getUser() {
@@ -189,6 +240,20 @@ public class RecentChange implements Comparable<RecentChange> {
    */
   public void setType(String type) {
     this.type = type;
+  }
+
+  /**
+   * @param type Type of log.
+   */
+  public void setLogType(String type) {
+    this.logType = type;
+  }
+
+  /**
+   * @param action Action for log.
+   */
+  public void setLogAction(String action) {
+    this.logAction = action;
   }
 
   /**
@@ -267,8 +332,9 @@ public class RecentChange implements Comparable<RecentChange> {
   }
 
   /**
-   * @param o
-   * @return
+   * @param o Object to be compared.
+   * @return  A negative integer, zero, or a positive integer as this object
+   *    is less than, equal to, or greater than the specified object.
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
   public int compareTo(RecentChange o) {
