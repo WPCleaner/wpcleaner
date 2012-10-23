@@ -87,6 +87,8 @@ public class ApiXmlRecentChangesResult extends ApiXmlResult implements ApiRecent
         String title = currentNode.getAttributeValue("title");
         String type = currentNode.getAttributeValue("type");
         String user = currentNode.getAttributeValue("user");
+        String logType = currentNode.getAttributeValue("logtype");
+        String logAction = currentNode.getAttributeValue("logaction");
         try {
           RecentChange rc = new RecentChange(
               Integer.valueOf(rcid), Integer.valueOf(ns),
@@ -94,6 +96,8 @@ public class ApiXmlRecentChangesResult extends ApiXmlResult implements ApiRecent
           rc.setAnonymous(isAnonymous);
           rc.setBot(isBot);
           rc.setComment(comment);
+          rc.setLogAction(logAction);
+          rc.setLogType(logType);
           rc.setMinor(isMinor);
           rc.setNew(isNew);
           rc.setTimestamp(timestamp);

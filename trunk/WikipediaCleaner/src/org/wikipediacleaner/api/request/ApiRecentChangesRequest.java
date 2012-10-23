@@ -252,6 +252,7 @@ public class ApiRecentChangesRequest extends ApiListRequest {
         PROPERTY_PROPERTIES_COMMENT + "|" +
         PROPERTY_PROPERTIES_FLAGS + "|" +
         PROPERTY_PROPERTIES_IDS + "|" +
+        PROPERTY_PROPERTIES_LOGINFO + "|" +
         PROPERTY_PROPERTIES_TIMESTAMP + "|" +
         PROPERTY_PROPERTIES_TITLE + "|" +
         PROPERTY_PROPERTIES_USER);
