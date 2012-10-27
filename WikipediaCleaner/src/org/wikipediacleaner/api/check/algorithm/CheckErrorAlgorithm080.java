@@ -23,6 +23,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementTag;
 
 
 /**
@@ -51,6 +52,7 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
 
     // Check every external links
     Collection<PageElementExternalLink> links = pageAnalysis.getExternalLinks();
+    String contents = pageAnalysis.getContents();
     boolean result = false;
     for (PageElementExternalLink link : links) {
       String text = link.getTextNotTrimmed();
@@ -61,12 +63,28 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
-              link.getBeginIndex(), link.getEndIndex());
-          errorResult.addReplacement(
-              "[" + link.getLink() + " " + link.getText().replaceAll("\\n", "") + "]");
-          errors.add(errorResult);
+          int beginIndex = link.getBeginIndex();
+          PageElementTag refTag = pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, beginIndex);
+          if ((refTag != null) &&
+              (refTag.getMatchingTag() != null) &&
+              (refTag.getMatchingTag().getBeginIndex() < link.getEndIndex())) {
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(),
+                beginIndex, refTag.getMatchingTag().getBeginIndex());
+            String replacement =
+                (link.hasSquare() ? "" : "[") +
+                contents.substring(beginIndex, refTag.getMatchingTag().getBeginIndex()) +
+                "]";
+            errorResult.addReplacement(replacement);
+            errors.add(errorResult);
+          } else {
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(),
+                beginIndex, link.getEndIndex());
+            errorResult.addReplacement(
+                "[" + link.getLink() + " " + link.getText().replaceAll("\\n", "") + "]");
+            errors.add(errorResult);
+          }
         }
       }
     }
