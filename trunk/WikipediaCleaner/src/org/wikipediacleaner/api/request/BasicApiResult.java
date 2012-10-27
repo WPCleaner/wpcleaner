@@ -100,25 +100,34 @@ public abstract class BasicApiResult implements ApiResult {
    */
   protected HttpMethod createHttpMethod(
       Map<String, String> properties) {
-    if (connection.getLgToken() != null) {
-      properties.put(
-          ApiLoginRequest.PROPERTY_TOKEN,
-          connection.getLgToken());
-    }
-    if (connection.getLgUserName() != null) {
-      properties.put(
-          ApiLoginRequest.PROPERTY_USER_NAME,
-          connection.getLgUserName());
-    }
-    if (connection.getLgUserId() != null) {
-      properties.put(
-          ApiLoginRequest.PROPERTY_USER_ID,
-          connection.getLgUserId());
+    if (shouldSendIdentification()) {
+      if (connection.getLgToken() != null) {
+        properties.put(
+            ApiLoginRequest.PROPERTY_TOKEN,
+            connection.getLgToken());
+      }
+      if (connection.getLgUserName() != null) {
+        properties.put(
+            ApiLoginRequest.PROPERTY_USER_NAME,
+            connection.getLgUserName());
+      }
+      if (connection.getLgUserId() != null) {
+        properties.put(
+            ApiLoginRequest.PROPERTY_USER_ID,
+            connection.getLgUserId());
+      }
     }
     return HttpUtils.createHttpMethod(
         getWiki().getSettings().getApiURL(),
         properties,
         canUseGetMethod(properties));
+  }
+
+  /**
+   * @return True if identification parameters should be sent.
+   */
+  protected boolean shouldSendIdentification() {
+    return false;
   }
 
   /**

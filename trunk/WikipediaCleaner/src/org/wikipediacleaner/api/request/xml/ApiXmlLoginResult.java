@@ -111,4 +111,12 @@ public class ApiXmlLoginResult extends ApiXmlResult implements ApiLoginResult {
     }
     return LoginResult.createErrorLogin(null, null, null);
   }
+
+  /**
+   * @return True if identification parameters should be sent.
+   */
+  @Override
+  protected boolean shouldSendIdentification() {
+    return true;
+  }
 }
