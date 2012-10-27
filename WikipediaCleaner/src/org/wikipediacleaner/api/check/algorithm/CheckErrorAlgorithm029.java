@@ -55,14 +55,17 @@ public class CheckErrorAlgorithm029 extends CheckErrorAlgorithmBase {
     List<PageElementTag> galleryTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_GALLERY);
     boolean result = false;
     for (PageElementTag galleryTag : galleryTags) {
-      if (!galleryTag.isFullTag() && !galleryTag.isComplete()) {
+      int beginIndex = galleryTag.getBeginIndex();
+      if (!galleryTag.isFullTag() &&
+          !galleryTag.isComplete() &&
+          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) == null)) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
             pageAnalysis.getPage(),
-            galleryTag.getBeginIndex(), galleryTag.getEndIndex());
+            beginIndex, galleryTag.getEndIndex());
         errorResult.addReplacement("", GT._("Delete"));
         errors.add(errorResult);
       }

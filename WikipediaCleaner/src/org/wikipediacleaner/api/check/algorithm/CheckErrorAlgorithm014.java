@@ -55,14 +55,17 @@ public class CheckErrorAlgorithm014 extends CheckErrorAlgorithmBase {
     List<PageElementTag> sourceTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_SOURCE);
     boolean result = false;
     for (PageElementTag sourceTag : sourceTags) {
-      if (!sourceTag.isFullTag() && !sourceTag.isComplete()) {
+      int beginIndex = sourceTag.getBeginIndex();
+      if (!sourceTag.isFullTag() &&
+          !sourceTag.isComplete() &&
+          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) == null)) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
             pageAnalysis.getPage(),
-            sourceTag.getBeginIndex(), sourceTag.getEndIndex());
+            beginIndex, sourceTag.getEndIndex());
         errorResult.addReplacement("", GT._("Delete"));
         errors.add(errorResult);
       }
