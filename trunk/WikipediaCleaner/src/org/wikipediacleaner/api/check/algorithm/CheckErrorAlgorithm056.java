@@ -83,78 +83,94 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
     int currentIndex = 0;
     String contents = pageAnalysis.getContents();
     while (currentIndex < contents.length()) {
-      PageElementComment comment = pageAnalysis.isInComment(currentIndex);
-      if (comment != null) {
-        currentIndex = comment.getEndIndex();
-      } else {
+      boolean shouldCheck = true;
+      int nextIndex = currentIndex + 1;
+
+      if (shouldCheck) {
+        PageElementComment comment = pageAnalysis.isInComment(currentIndex);
+        if (comment != null) {
+          nextIndex = comment.getEndIndex();
+          shouldCheck = false;
+        }
+      }
+      if (shouldCheck) {
+        PageElementTag tagNoWiki = pageAnalysis.getSurroundingTag(
+            PageElementTag.TAG_WIKI_NOWIKI, currentIndex);
+        if (tagNoWiki != null) {
+          nextIndex = tagNoWiki.getCompleteEndIndex();
+          shouldCheck = false;
+        }
+      }
+      if (shouldCheck) {
         PageElementTag tagSource = pageAnalysis.getSurroundingTag(
             PageElementTag.TAG_WIKI_SOURCE, currentIndex);
         if (tagSource != null) {
-          currentIndex = tagSource.getCompleteEndIndex();
-        } else {
-          int arrowLen = 0;
-          String[] arrows = null;
-          switch (contents.charAt(currentIndex)) {
-          case '<':
-            // Check for bidirectional arrows or left arrows
-            for (int i = 0; (i < leftArrows.length) && (arrowLen == 0); i++) {
-              if ((leftArrows[i] != null) &&
-                  (leftArrows[i].length > 0) &&
-                  (leftArrows[i][0] != null) &&
-                  (contents.startsWith(leftArrows[i][0], currentIndex))) {
-                arrowLen = leftArrows[i][0].length();
-                arrows = leftArrows[i];
-              }
-            }
-            break;
-
-          case '-':
-            // Check for right simple arrows
-            for (int i = 0; (i < simpleRightArrows.length) && (arrowLen == 0); i++) {
-              if ((simpleRightArrows[i] != null) &&
-                  (simpleRightArrows[i].length > 0) &&
-                  (simpleRightArrows[i][0] != null) &&
-                  (contents.startsWith(simpleRightArrows[i][0], currentIndex))) {
-                arrowLen = simpleRightArrows[i][0].length();
-                arrows = simpleRightArrows[i];
-              }
-            }
-            break;
-
-          case '=':
-            // Check for right double arrows
-            for (int i = 0; (i < doubleRightArrows.length) && (arrowLen == 0); i++) {
-              if ((doubleRightArrows[i] != null) &&
-                  (doubleRightArrows[i].length > 0) &&
-                  (doubleRightArrows[i][0] != null) &&
-                  (contents.startsWith(doubleRightArrows[i][0], currentIndex))) {
-                arrowLen = doubleRightArrows[i][0].length();
-                arrows = doubleRightArrows[i];
-              }
-            }
-            break;
-          }
-
-          // Check if a possible arrow has been found
-          if (arrowLen > 0) {
-            if (arrows != null) {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), currentIndex, currentIndex + arrowLen);
-              for (int i = 1; i < arrows.length; i++) {
-                errorResult.addReplacement(arrows[i]);
-              }
-              errors.add(errorResult);
-            }
-            currentIndex += arrowLen;
-          } else {
-            currentIndex++;
-          }
+          nextIndex = tagSource.getCompleteEndIndex();
+          shouldCheck = false;
         }
       }
+      if (shouldCheck) {
+        int arrowLen = 0;
+        String[] arrows = null;
+        switch (contents.charAt(currentIndex)) {
+        case '<':
+          // Check for bidirectional arrows or left arrows
+          for (int i = 0; (i < leftArrows.length) && (arrowLen == 0); i++) {
+            if ((leftArrows[i] != null) &&
+                (leftArrows[i].length > 0) &&
+                (leftArrows[i][0] != null) &&
+                (contents.startsWith(leftArrows[i][0], currentIndex))) {
+              arrowLen = leftArrows[i][0].length();
+              arrows = leftArrows[i];
+            }
+          }
+          break;
+  
+        case '-':
+          // Check for right simple arrows
+          for (int i = 0; (i < simpleRightArrows.length) && (arrowLen == 0); i++) {
+            if ((simpleRightArrows[i] != null) &&
+                (simpleRightArrows[i].length > 0) &&
+                (simpleRightArrows[i][0] != null) &&
+                (contents.startsWith(simpleRightArrows[i][0], currentIndex))) {
+              arrowLen = simpleRightArrows[i][0].length();
+              arrows = simpleRightArrows[i];
+            }
+          }
+          break;
+  
+        case '=':
+          // Check for right double arrows
+          for (int i = 0; (i < doubleRightArrows.length) && (arrowLen == 0); i++) {
+            if ((doubleRightArrows[i] != null) &&
+                (doubleRightArrows[i].length > 0) &&
+                (doubleRightArrows[i][0] != null) &&
+                (contents.startsWith(doubleRightArrows[i][0], currentIndex))) {
+              arrowLen = doubleRightArrows[i][0].length();
+              arrows = doubleRightArrows[i];
+            }
+          }
+          break;
+        }
+  
+        // Check if a possible arrow has been found
+        if (arrowLen > 0) {
+          if (arrows != null) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(), currentIndex, currentIndex + arrowLen);
+            for (int i = 1; i < arrows.length; i++) {
+              errorResult.addReplacement(arrows[i]);
+            }
+            errors.add(errorResult);
+          }
+          nextIndex = currentIndex + arrowLen;
+        }
+      }
+      currentIndex = nextIndex;
     }
 
     return result;
