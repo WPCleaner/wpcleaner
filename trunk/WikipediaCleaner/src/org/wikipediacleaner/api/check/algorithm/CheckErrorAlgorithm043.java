@@ -19,9 +19,14 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -48,59 +53,89 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyze contents from the end by counting }} and {{
+    // Analyze contents from the beginning
     String contents = pageAnalysis.getContents();
-    int startIndex = contents.length();
+    int maxLength = contents.length();
+    int currentIndex = contents.indexOf("{{");
     boolean result = false;
-    int beginIndex = contents.lastIndexOf("{{", startIndex);
-    int endIndex = contents.lastIndexOf("}}", startIndex);
-    int count = 0;
-    while (startIndex > 0) {
-      if ((beginIndex < 0) && (endIndex < 0)) {
-        // No more }} or {{
-        startIndex = 0;
-      } else if ((endIndex >= 0) && ((beginIndex < endIndex) || (beginIndex < 0))) {
-        // Found a }}
-        count++;
-        startIndex = endIndex;
-        endIndex = contents.lastIndexOf("}}", startIndex - 1);
-      } else {
-        // Found a {{
-        count--;
-        if (count < 0) {
-          // Found more {{ than }}
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-
-          // Check if the situation is something like {{....} (replacement: {{....}})
-          boolean errorReported = false;
-          int nextEnd = contents.indexOf('}', beginIndex + 2);
-          if (nextEnd > 0) {
-            int nextCR = contents.indexOf('\n', beginIndex + 2);
-            int nextBegin = contents.indexOf('{', beginIndex + 2);
-            if (((nextCR < 0) || (nextCR > nextEnd)) &&
-                ((nextBegin < 0) || (nextBegin > nextEnd))) {
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), beginIndex, nextEnd + 1);
-              errorResult.addReplacement(contents.substring(beginIndex, nextEnd + 1) + "}");
-              errors.add(errorResult);
-              errorReported = true;
-            }
-          }
-
-          // Default
-          if (!errorReported) {
-            errors.add(createCheckErrorResult(
-                pageAnalysis.getPage(), beginIndex, beginIndex + 2));
-          }
-          count = 0;
-        }
-        startIndex = beginIndex;
-        beginIndex = contents.lastIndexOf("{{", startIndex - 1);
+    while (currentIndex >= 0) {
+      boolean shouldCount = true;
+      if ((pageAnalysis.isInComment(currentIndex) != null) ||
+          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
+          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null)) {
+        shouldCount = false;
       }
+      if (shouldCount) {
+        PageElementTemplate template = pageAnalysis.isInTemplate(currentIndex + 2);
+        if ((template != null) &&
+            ((template.getBeginIndex() == currentIndex) ||
+             (template.getBeginIndex() == currentIndex + 1))) {
+          shouldCount = false;
+        }
+      }
+      if (shouldCount) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        
+        // Check if there is a potential end
+        int tmpIndex = currentIndex + 2;
+        boolean errorReported = false;
+        boolean finished = false;
+        while (!finished && (tmpIndex < maxLength)) {
+          char tmpChar = contents.charAt(tmpIndex);
+          if ((tmpChar == '\n') ||
+              (tmpChar == '[') ||
+              (tmpChar == '{')) {
+            finished = true;
+          } else if (tmpChar == '}') {
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(), currentIndex, tmpIndex + 1);
+            errorResult.addReplacement(contents.substring(currentIndex, tmpIndex + 1) + "}");
+
+            // Check if the situation is something like [[http://....] (replacement: [http://....])
+            List<String> protocols = PageElementExternalLink.getProtocols();
+            boolean protocolFound = false;
+            for (String protocol : protocols) {
+              if (contents.startsWith(protocol, currentIndex + 2)) {
+                protocolFound = true;
+              }
+            }
+            if (protocolFound) {
+              errorResult.addReplacement(contents.substring(currentIndex + 1, tmpIndex + 1));
+            }
+
+            errors.add(errorResult);
+            errorReported = true;
+            finished = true;
+          } else if (tmpChar == ']') {
+            int lastChar = tmpIndex;
+            if ((lastChar + 1 < maxLength) && (contents.charAt(lastChar + 1) == ']')) {
+              lastChar++;
+            }
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(), currentIndex, lastChar + 1);
+            errorResult.addReplacement(contents.substring(currentIndex, tmpIndex) + "}}");
+            errorResult.addReplacement("[[" + contents.substring(currentIndex + 2, tmpIndex) + "]]");
+            errors.add(errorResult);
+            errorReported = true;
+            finished = true;
+          }
+          tmpIndex++;
+        }
+
+        // Default
+        if (!errorReported) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(), currentIndex, currentIndex + 2);
+          errorResult.addReplacement("", GT._("Delete"));
+          errors.add(errorResult);
+        }
+      }
+      currentIndex = contents.indexOf("{{", currentIndex + 2);
     }
+
     return result;
   }
 }

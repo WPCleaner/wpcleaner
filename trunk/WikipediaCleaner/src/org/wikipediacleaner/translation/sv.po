@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-10-22 23:43+0200\n"
+"POT-Creation-Date: 2012-10-27 20:36+0200\n"
 "PO-Revision-Date: 2012-10-13 06:21+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -87,7 +87,7 @@ msgid "Replace with {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:129
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:158
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm013.java:66
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm014.java:66
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm015.java:66
@@ -99,7 +99,9 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:97
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:103
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:71
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:128
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:132
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:142
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:114
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:85
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:73
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:122
@@ -114,7 +116,7 @@ msgstr "Ta bort"
 msgid "Fix all <br/> tags"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:110
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:121
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr ""
@@ -426,7 +428,7 @@ msgid "Namespace"
 msgstr "Namnrymd"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:246
-#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:209
+#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:229
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:125
 msgid "Title"
 msgstr "Rubrik"
@@ -1699,11 +1701,11 @@ msgstr ""
 msgid "&Update"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:205
+#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:225
 msgid "Id"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:211
+#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:231
 msgid "User"
 msgstr ""
 

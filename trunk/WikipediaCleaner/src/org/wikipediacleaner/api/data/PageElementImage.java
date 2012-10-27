@@ -36,6 +36,7 @@ public class PageElementImage extends PageElement {
   private final String namespace;
   private final String imageNotTrimmed;
   private final String image;
+  private final int pipeOffset;
   private final List<String> magicWords;
   private final String descriptionNotTrimmed;
   private final String description;
@@ -100,6 +101,7 @@ public class PageElementImage extends PageElement {
     }
 
     // Simple Image tag [[Image:name]]
+    int firstPipeIndex = tmpIndex;
     if (contents.charAt(tmpIndex) == ']') {
       if (!contents.startsWith("]]", tmpIndex)) {
         return null;
@@ -108,11 +110,10 @@ public class PageElementImage extends PageElement {
           wikipedia, index, tmpIndex + 2,
           contents.substring(beginIndex, colonIndex),
           contents.substring(colonIndex + 1, tmpIndex),
-          null, null, -1);
+          firstPipeIndex - index, null, null, -1);
     }
 
     // Find elements of image
-    int firstPipeIndex = tmpIndex;
     int pipeIndex = firstPipeIndex;
     tmpIndex++;
     int linkCount = 0;
@@ -130,7 +131,7 @@ public class PageElementImage extends PageElement {
             wikipedia, index, tmpIndex + 2,
             contents.substring(beginIndex, colonIndex),
             contents.substring(colonIndex + 1, firstPipeIndex),
-            magicWords,
+            firstPipeIndex - index, magicWords,
             (pipeIndex < tmpIndex) ? contents.substring(pipeIndex + 1, tmpIndex) : null,
             pipeIndex + 1 - index);
       } else if ((templateCount <= 0) && (linkCount <= 0) && (contents.charAt(tmpIndex) == '|')) {
@@ -180,6 +181,13 @@ public class PageElementImage extends PageElement {
   }
 
   /**
+   * @return Offset of the first |
+   */
+  public int getPipeOffset() {
+    return pipeOffset;
+  }
+
+  /**
    * @return Image description.
    */
   public String getDescription() {
@@ -221,6 +229,7 @@ public class PageElementImage extends PageElement {
   private PageElementImage(
       EnumWikipedia wikipedia, int beginIndex, int endIndex,
       String namespace, String image,
+      int pipeOffset,
       List<String> magicWords,
       String description, int descriptionOffset) {
     super(beginIndex, endIndex);
@@ -229,6 +238,7 @@ public class PageElementImage extends PageElement {
     this.namespace = (namespace != null) ? namespace.trim() : null;
     this.imageNotTrimmed = image;
     this.image = (image != null) ? image.trim() : null;
+    this.pipeOffset = pipeOffset;
     this.magicWords = magicWords;
     this.descriptionNotTrimmed = description;
     this.description = (description != null) ? description.trim() : null;

@@ -126,8 +126,8 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
             }
             CheckErrorResult errorResult = createCheckErrorResult(
                 pageAnalysis.getPage(), firstChar, currentIndex + 2);
-            errorResult.addReplacement("[[" + contents.substring(tmpIndex, currentIndex + 2));
-            errorResult.addReplacement("{{" + contents.substring(tmpIndex, currentIndex) + "}}");
+            errorResult.addReplacement("[[" + contents.substring(tmpIndex + 1, currentIndex + 2));
+            errorResult.addReplacement("{{" + contents.substring(tmpIndex + 1, currentIndex) + "}}");
             errors.add(errorResult);
             errorReported = true;
             finished = true;

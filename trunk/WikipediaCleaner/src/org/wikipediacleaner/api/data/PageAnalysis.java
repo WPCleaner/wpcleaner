@@ -487,10 +487,7 @@ public class PageAnalysis {
         getWikipedia(), contents, currentIndex);
     if (image != null) {
       images.add(image);
-      if (image.getDescription() == null) {
-        return image.getEndIndex();
-      }
-      return image.getBeginIndex() + Math.max(1, image.getDescriptionOffset());
+      return image.getBeginIndex() + image.getPipeOffset();
     }
 
     // Check if this is a category

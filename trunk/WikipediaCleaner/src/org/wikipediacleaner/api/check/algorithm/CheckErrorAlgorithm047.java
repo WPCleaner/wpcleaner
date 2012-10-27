@@ -22,6 +22,9 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -48,66 +51,73 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyze contents from the beginning by counting {{ and }}
-    int startIndex = 0;
-    boolean result = false;
-    int levelCurlyBrackets = 0;
-    int levelMath = 0;
-    int previousCurlyBracket = -1;
+    // Analyze contents from the beginning
     String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      switch (contents.charAt(startIndex)) {
-      case '<':
-        // Check if <math> or </math> tag
-        if (contents.startsWith("<math>", startIndex)) {
-          levelMath++;
-        } else if (contents.startsWith("</math>", startIndex)) {
-          levelMath--;
-        }
-        break;
-      case '{':
-        // Check if {{
-        if (levelMath == 0) {
-          if (((startIndex + 1) < contents.length()) &&
-              (contents.charAt(startIndex + 1) == '{')) {
-            levelCurlyBrackets++;
-            startIndex++;
-          } else {
-            previousCurlyBracket = startIndex;
-          }
-        }
-        break;
-      case '}':
-        // Check if }}
-        if (levelMath == 0) {
-          if (((startIndex + 1) < contents.length()) &&
-              (contents.charAt(startIndex + 1) == '}')) {
-            if (levelCurlyBrackets == 0) {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              CheckErrorResult errorResult = null;
-              if (previousCurlyBracket < 0) {
-                errorResult = createCheckErrorResult(
-                    pageAnalysis.getPage(), startIndex, startIndex + 2);
-              } else {
-                errorResult = createCheckErrorResult(
-                    pageAnalysis.getPage(), previousCurlyBracket, startIndex + 2);
-                errorResult.addReplacement(
-                    "{" + contents.substring(previousCurlyBracket, startIndex + 2));
-              }
-              errors.add(errorResult);
-            } else {
-              levelCurlyBrackets--;
-            }
-            startIndex++;
-          }
-        }
-        break;
+    int currentIndex = contents.indexOf("}}");
+    boolean result = false;
+    while (currentIndex > 0) {
+      boolean shouldCount = true;
+      if ((pageAnalysis.isInComment(currentIndex) != null) ||
+          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
+          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null)) {
+        shouldCount = false;
       }
-      startIndex++;
+      if (shouldCount) {
+        PageElementTemplate template = pageAnalysis.isInTemplate(currentIndex);
+        if ((template != null) && (template.getEndIndex() == currentIndex + 2)) {
+          shouldCount = false;
+        }
+      }
+      if (shouldCount) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+
+        // Check if there is a potential beginning
+        int tmpIndex = currentIndex - 1;
+        boolean errorReported = false;
+        boolean finished = false;
+        while (!finished && tmpIndex >= 0) {
+          char tmpChar = contents.charAt(tmpIndex);
+          if ((tmpChar == '\n') ||
+              (tmpChar == ']') ||
+              (tmpChar == '}')) {
+            finished = true;
+          } else if (tmpChar == '{') {
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(), tmpIndex, currentIndex + 2);
+            errorResult.addReplacement("{" + contents.substring(tmpIndex, currentIndex + 2));
+            errors.add(errorResult);
+            errorReported = true;
+            finished = true;
+          } else if (tmpChar == '[') {
+            int firstChar = tmpIndex;
+            if ((firstChar > 0) && (contents.charAt(firstChar - 1) == '[')) {
+              firstChar--;
+            }
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(), firstChar, currentIndex + 2);
+            errorResult.addReplacement("{{" + contents.substring(tmpIndex + 1, currentIndex + 2));
+            errorResult.addReplacement("[[" + contents.substring(tmpIndex + 1, currentIndex) + "]]");
+            errors.add(errorResult);
+            errorReported = true;
+            finished = true;
+          }
+          tmpIndex--;
+        }
+
+        // Default
+        if (!errorReported) {
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(), currentIndex, currentIndex + 2);
+          errorResult.addReplacement("", GT._("Delete"));
+          errors.add(errorResult);
+        }
+      }
+      currentIndex = contents.indexOf("}}", currentIndex + 2);
     }
+
     return result;
   }
 }
