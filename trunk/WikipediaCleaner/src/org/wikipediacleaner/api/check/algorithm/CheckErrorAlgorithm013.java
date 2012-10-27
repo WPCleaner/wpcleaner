@@ -55,14 +55,17 @@ public class CheckErrorAlgorithm013 extends CheckErrorAlgorithmBase {
     List<PageElementTag> mathTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_MATH);
     boolean result = false;
     for (PageElementTag mathTag : mathTags) {
-      if (!mathTag.isEndTag() && !mathTag.isComplete()) {
+      int beginIndex = mathTag.getBeginIndex();
+      if (!mathTag.isEndTag() &&
+          !mathTag.isComplete() &&
+          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) == null)) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
             pageAnalysis.getPage(),
-            mathTag.getBeginIndex(), mathTag.getEndIndex());
+            beginIndex, mathTag.getEndIndex());
         errorResult.addReplacement("", GT._("Delete"));
         errors.add(errorResult);
       }
