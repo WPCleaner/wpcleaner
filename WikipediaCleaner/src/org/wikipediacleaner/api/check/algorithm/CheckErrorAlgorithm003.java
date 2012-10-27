@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +60,17 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       // Search for <ref>
       List<PageElementTag> refTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REF);
       if ((refTags != null) && (refTags.size() > 0)) {
-        refFound = true;
+        Iterator<PageElementTag> itRefTags = refTags.iterator();
+        while (!refFound && itRefTags.hasNext()) {
+          boolean usefulRef = true;
+          PageElementTag refTag = itRefTags.next();
+          if (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, refTag.getBeginIndex()) != null) {
+            usefulRef =  false;
+          }
+          if (usefulRef) {
+            refFound = true;
+          }
+        }
       }
     }
 
