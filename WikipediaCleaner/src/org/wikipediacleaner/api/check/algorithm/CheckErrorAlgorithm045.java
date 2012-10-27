@@ -47,7 +47,10 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
   public boolean analyze(
       PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
+      return false;
+    }
+    if (!pageAnalysis.getPage().isArticle()) {
       return false;
     }
 
