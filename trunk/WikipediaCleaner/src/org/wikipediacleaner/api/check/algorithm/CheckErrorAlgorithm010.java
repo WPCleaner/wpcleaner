@@ -24,6 +24,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -65,71 +66,83 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
         startIndex = 0;
       } else if ((endIndex >= 0) && ((beginIndex < endIndex) || (beginIndex < 0))) {
         // Found a ]]
-        count++;
+        boolean shouldCount = true;
+        if (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, endIndex) != null) {
+          shouldCount = false;
+        }
+        if (shouldCount) {
+          count++;
+        }
         startIndex = endIndex;
         endIndex = contents.lastIndexOf("]]", startIndex - 2);
       } else {
         // Found a [[
-        count--;
-        if (count < 0) {
-          // Found more [[ than ]]
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-
-          // Check if there is a potential end
-          int tmpIndex = beginIndex + 2;
-          boolean errorReported = false;
-          boolean finished = false;
-          while ((!finished) && (tmpIndex < maxLength)) {
-            char tmpChar = contents.charAt(tmpIndex);
-            if ((tmpChar == '\n') || (tmpChar == '[')) {
-              finished = true;
-            } else if (tmpChar == ']') {
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), beginIndex, tmpIndex + 1);
-              errorResult.addReplacement(contents.substring(beginIndex, tmpIndex + 1) + "]");
-
-              // Check if the situation is something like [[http://....] (replacement: [http://....])
-              List<String> protocols = PageElementExternalLink.getProtocols();
-              boolean protocolFound = false;
-              for (String protocol : protocols) {
-                if (contents.startsWith(protocol, beginIndex + 2)) {
-                  protocolFound = true;
-                }
-              }
-              if (protocolFound) {
-                errorResult.addReplacement(contents.substring(beginIndex + 1, tmpIndex + 1));
-              }
-
-              errors.add(errorResult);
-              errorReported = true;
-              finished = true;
-            } else if (tmpChar == '}') {
-              int lastChar = tmpIndex;
-              if ((lastChar + 1 < maxLength) && (contents.charAt(lastChar + 1) == '}')) {
-                lastChar++;
-              }
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), beginIndex, lastChar + 1);
-              errorResult.addReplacement(contents.substring(beginIndex, tmpIndex) + "]]");
-              errorResult.addReplacement("{{" + contents.substring(beginIndex + 2, tmpIndex) + "}}");
-              errors.add(errorResult);
-              errorReported = true;
-              finished = true;
+        boolean shouldCount = true;
+        if (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) != null) {
+          shouldCount = false;
+        }
+        if (shouldCount) {
+          count--;
+          if (count < 0) {
+            // Found more [[ than ]]
+            if (errors == null) {
+              return true;
             }
-            tmpIndex++;
+            result = true;
+  
+            // Check if there is a potential end
+            int tmpIndex = beginIndex + 2;
+            boolean errorReported = false;
+            boolean finished = false;
+            while ((!finished) && (tmpIndex < maxLength)) {
+              char tmpChar = contents.charAt(tmpIndex);
+              if ((tmpChar == '\n') || (tmpChar == '[')) {
+                finished = true;
+              } else if (tmpChar == ']') {
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    pageAnalysis.getPage(), beginIndex, tmpIndex + 1);
+                errorResult.addReplacement(contents.substring(beginIndex, tmpIndex + 1) + "]");
+  
+                // Check if the situation is something like [[http://....] (replacement: [http://....])
+                List<String> protocols = PageElementExternalLink.getProtocols();
+                boolean protocolFound = false;
+                for (String protocol : protocols) {
+                  if (contents.startsWith(protocol, beginIndex + 2)) {
+                    protocolFound = true;
+                  }
+                }
+                if (protocolFound) {
+                  errorResult.addReplacement(contents.substring(beginIndex + 1, tmpIndex + 1));
+                }
+  
+                errors.add(errorResult);
+                errorReported = true;
+                finished = true;
+              } else if (tmpChar == '}') {
+                int lastChar = tmpIndex;
+                if ((lastChar + 1 < maxLength) && (contents.charAt(lastChar + 1) == '}')) {
+                  lastChar++;
+                }
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    pageAnalysis.getPage(), beginIndex, lastChar + 1);
+                errorResult.addReplacement(contents.substring(beginIndex, tmpIndex) + "]]");
+                errorResult.addReplacement("{{" + contents.substring(beginIndex + 2, tmpIndex) + "}}");
+                errors.add(errorResult);
+                errorReported = true;
+                finished = true;
+              }
+              tmpIndex++;
+            }
+  
+            // Default
+            if (!errorReported) {
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(), beginIndex, beginIndex + 2);
+              errorResult.addReplacement("", GT._("Delete"));
+              errors.add(errorResult);
+            }
+            count = 0;
           }
-
-          // Default
-          if (!errorReported) {
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), beginIndex, beginIndex + 2);
-            errorResult.addReplacement("", GT._("Delete"));
-            errors.add(errorResult);
-          }
-          count = 0;
         }
         startIndex = beginIndex;
         beginIndex = contents.lastIndexOf("[[", startIndex - 2);
