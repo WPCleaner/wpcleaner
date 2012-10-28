@@ -66,18 +66,18 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
 
     boolean result = false;
     Collection<PageElementExternalLink> links = pageAnalysis.getExternalLinks();
+    String contents = pageAnalysis.getContents();
     for (PageElementExternalLink link : links) {
       String text = link.getText();
       if ((text == null) || (text.trim().length() == 0)) {
         boolean hasError = false;
-        PageElementTag refTag = null;
+        PageElementTag refTag = pageAnalysis.getSurroundingTag(
+            PageElementTag.TAG_WIKI_REF, link.getBeginIndex());
         if (link.hasSquare()) {
           hasError = true;
         } else {
           PageElementTemplate template = pageAnalysis.isInTemplate(link.getBeginIndex());
           if (template == null) {
-            refTag = pageAnalysis.getSurroundingTag(
-                PageElementTag.TAG_WIKI_REF, link.getBeginIndex());
             if (refTag != null) {
               hasError = true;
             }
@@ -88,13 +88,27 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
           String url = link.getLink();
+          int endIndex = link.getEndIndex();
+          String suffix =  "";
+          if ((refTag != null) &&
+              (refTag.getMatchingTag() != null) &&
+              (refTag.getMatchingTag().getBeginIndex() > endIndex)) {
+            while ((endIndex < refTag.getMatchingTag().getBeginIndex()) &&
+                   (contents.charAt(endIndex) != '[') &&
+                   (contents.charAt(endIndex) != ']')) {
+              endIndex++;
+            }
+            if (endIndex > link.getEndIndex()) {
+              suffix = contents.substring(link.getEndIndex(), endIndex);
+            }
+          }
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(), link.getBeginIndex(), endIndex);
           errorResult.addPossibleAction(
               GT._("Add a description..."),
               new AddTextActionProvider(
-                  "[" + url + " ", "]",
+                  "[" + url + " ", "]" + suffix,
                   new TextProviderUrlTitle(url),
                   GT._("What description would like to use for the external link ?"),
                   descriptionChecker));
@@ -109,8 +123,17 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
                     new TextProviderUrlTitle(url),
                     GT._("What description would like to use for the external link ?"),
                     descriptionChecker));
-          } else if (link.hasSquare()){
-            errorResult.addReplacement(url);
+          } else {
+            if (suffix.length() > 0) {
+              if (link.hasSquare()) {
+                errorResult.addReplacement(contents.substring(link.getBeginIndex(), link.getEndIndex() - 1) + suffix + "]");
+              } else {
+                errorResult.addReplacement("[" + contents.substring(link.getBeginIndex(), endIndex) + "]");
+              }
+            }
+            if (link.hasSquare()) {
+              errorResult.addReplacement(url + suffix);
+            }
           }
           errorResult.addPossibleAction(
               new SimpleAction(GT._("External viewer"),
