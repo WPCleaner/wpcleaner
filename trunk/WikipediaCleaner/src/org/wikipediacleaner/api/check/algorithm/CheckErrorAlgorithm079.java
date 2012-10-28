@@ -70,15 +70,17 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
       String text = link.getText();
       if ((text == null) || (text.trim().length() == 0)) {
         boolean hasError = false;
+        PageElementTag refTag = null;
         if (link.hasSquare()) {
           hasError = true;
-        }
-        PageElementTag refTag = pageAnalysis.getSurroundingTag(
-            PageElementTag.TAG_WIKI_REF, link.getBeginIndex());
-        if (refTag == null) {
+        } else {
           PageElementTemplate template = pageAnalysis.isInTemplate(link.getBeginIndex());
           if (template == null) {
-            hasError = true;
+            refTag = pageAnalysis.getSurroundingTag(
+                PageElementTag.TAG_WIKI_REF, link.getBeginIndex());
+            if (refTag != null) {
+              hasError = true;
+            }
           }
         }
         if (hasError) {
