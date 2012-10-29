@@ -54,6 +54,7 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
     boolean result = false;
     HashMap<String, PageElementCategory> categories = new HashMap<String, PageElementCategory>();
     ArrayList<String> categoriesTwice = new ArrayList<String>();
+    String contents = pageAnalysis.getContents();
     for (PageElementCategory category : pageAnalysis.getCategories()) {
       PageElementCategory existingCategory = categories.get(category.getName());
       if (existingCategory == null) {
@@ -72,10 +73,25 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
           errors.add(errorResult);
           categoriesTwice.add(category.getName());
         }
+        int beginIndex = category.getBeginIndex();
+        while ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == ' ')) {
+          beginIndex--;
+        }
+        boolean beginLine = (beginIndex == 0) || (contents.charAt(beginIndex - 1) == '\n');
+        int endIndex = category.getEndIndex();
+        while ((endIndex < contents.length()) && (contents.charAt(endIndex) == ' ')) {
+          endIndex++;
+        }
+        boolean endLine = (endIndex >= contents.length()) || (contents.charAt(endIndex) == '\n');
+        if (beginLine && endLine) {
+          endIndex = Math.min(endIndex + 1, contents.length());
+        } else {
+          beginIndex = category.getBeginIndex();
+          endIndex = category.getEndIndex();
+        }
         CheckErrorResult errorResult = createCheckErrorResult(
             pageAnalysis.getPage(),
-            category.getBeginIndex(),
-            category.getEndIndex());
+            beginIndex, endIndex);
         errorResult.addReplacement("");
         errors.add(errorResult);
       }
