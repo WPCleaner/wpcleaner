@@ -60,7 +60,9 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
       boolean shouldCount = true;
       if ((pageAnalysis.isInComment(currentIndex) != null) ||
           (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null)) {
+          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
+          (pageAnalysis.isInCategory(currentIndex) != null) ||
+          (pageAnalysis.isInTag(currentIndex) != null)) {
         shouldCount = false;
       }
       if (shouldCount) {
@@ -76,10 +78,6 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
         }
       }
       if (shouldCount) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
 
         // Check if there is a potential beginning
         int tmpIndex = currentIndex - 1;
@@ -92,6 +90,10 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
               (tmpChar == '}')) {
             finished = true;
           } else if (tmpChar == '{') {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
                 pageAnalysis.getPage(), tmpIndex, currentIndex + 2);
             errorResult.addReplacement("{" + contents.substring(tmpIndex, currentIndex + 2));
