@@ -110,6 +110,14 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
         }
       }
       if (shouldCheck) {
+        PageElementTag tagHiero = pageAnalysis.getSurroundingTag(
+            PageElementTag.TAG_WIKI_HIERO, currentIndex);
+        if (tagHiero != null) {
+          nextIndex = tagHiero.getCompleteEndIndex();
+          shouldCheck = false;
+        }
+      }
+      if (shouldCheck) {
         int arrowLen = 0;
         String[] arrows = null;
         switch (contents.charAt(currentIndex)) {
