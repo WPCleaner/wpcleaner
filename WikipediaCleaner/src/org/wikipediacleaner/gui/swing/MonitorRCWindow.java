@@ -206,7 +206,7 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
 
     // Update list of interesting recent changes
     for (RecentChange rc : newRC) {
-      if (rc.getNamespace() == Namespace.MAIN) {
+      if (isInterestingNamespace(rc)) {
         if (RecentChange.TYPE_NEW.equals(rc.getType())) {
           if (rc.isNew()) {
             interestingRC.put(rc.getTitle(), rc.getTimestamp());
@@ -247,5 +247,22 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
         // Nothing to do
       }
     }
+  }
+
+  /**
+   * @param rc Recent change.
+   * @return True if the recent change is in an interesting namespace.
+   */
+  private boolean isInterestingNamespace(RecentChange rc) {
+    if (rc == null) {
+      return false;
+    }
+    int namespace = rc.getNamespace();
+    if ((namespace == Namespace.MAIN) ||
+        (namespace == Namespace.TEMPLATE) ||
+        (namespace == Namespace.CATEGORY)) {
+      return true;
+    }
+    return false;
   }
 }
