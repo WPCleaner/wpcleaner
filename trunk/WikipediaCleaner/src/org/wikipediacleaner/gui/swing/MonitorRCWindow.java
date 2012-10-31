@@ -27,10 +27,11 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -218,13 +219,16 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
 
     // Check if interesting recent changes are old enough
     List<RecentChange> interestingRC = modelRCInteresting.getRecentChanges();
+    List<Page> pages = new ArrayList<Page>();
+    Map<String, String> creators = new HashMap<String, String>();
+    Map<String, List<String>> modifiers = new HashMap<String, List<String>>();
     while (!interestingRC.isEmpty()) {
 
       // Retrieve synthetic information about recent changes for one title
       List<RecentChange> listRC = extractRecentChanges(interestingRC);
       String title = listRC.get(0).getTitle();
       String creator = null;
-      List<String> modifiers = new ArrayList<String>();
+      List<String> pageModifiers = new ArrayList<String>();
       boolean oldEnough = true;
       for (RecentChange rc : listRC) {
         if (currentTime.getTime() <= rc.getTimestamp().getTime() + 15*60*1000) {
@@ -236,8 +240,8 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
         } else {
           if (!rc.isBot()) {
             if ((creator == null) || (!creator.equals(user))) {
-              if (!modifiers.contains(user)) {
-                modifiers.add(user);
+              if (!pageModifiers.contains(user)) {
+                pageModifiers.add(user);
               }
             }
           }
@@ -247,11 +251,18 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
       if (oldEnough) {
         modelRCInteresting.removeRecentChanges(title);
         Page page = DataManager.getPage(getWikipedia(), title, null, null);
-        try {
-          dabWarningTools.updateDabWarning(Collections.singletonList(page), false, false, false);
-        } catch (APIException e) {
-          // Nothing to do
-        }
+        pages.add(page);
+        creators.put(title, creator);
+        modifiers.put(title, pageModifiers);
+      }
+    }
+
+    // Update disambiguation warnings
+    if (!pages.isEmpty()) {
+      try {
+        dabWarningTools.updateDabWarning(pages, false, false, false);
+      } catch (APIException e) {
+        // Nothing to do
       }
     }
   }
