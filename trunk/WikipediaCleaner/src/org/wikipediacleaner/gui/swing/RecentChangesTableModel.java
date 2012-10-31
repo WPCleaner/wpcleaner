@@ -20,6 +20,7 @@ package org.wikipediacleaner.gui.swing;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -82,6 +83,15 @@ public class RecentChangesTableModel extends AbstractTableModel {
   }
 
   /**
+   * @return List of all recent changes.
+   */
+  public List<RecentChange> getRecentChanges() {
+    List<RecentChange> result = new ArrayList<RecentChange>(recentChanges.size());
+    result.addAll(recentChanges);
+    return result;
+  }
+
+  /**
    * Add new recent changes to the list.
    * 
    * @param newRC New recent changes.
@@ -98,7 +108,9 @@ public class RecentChangesTableModel extends AbstractTableModel {
   }
 
   /**
-   * @param rc Add one recent change to the list.
+   * Add one recent change to the list.
+   * 
+   * @param rc Recent change.
    */
   public void addRecentChange(RecentChange rc) {
     if (!recentChanges.contains(rc)) {
@@ -107,6 +119,11 @@ public class RecentChangesTableModel extends AbstractTableModel {
     }
   }
 
+  /**
+   * Remove all recent changes for a given title.
+   * 
+   * @param title Title.
+   */
   public void removeRecentChanges(String title) {
     Iterator<RecentChange> itRC = recentChanges.iterator();
     while (itRC.hasNext()) {
@@ -116,6 +133,21 @@ public class RecentChangesTableModel extends AbstractTableModel {
       }
     }
     cleanUpList();
+  }
+
+  /**
+   * Check if there are recent changes for a given title.
+   * 
+   * @param title Title.
+   * @return True if there are recent changes for the title.
+   */
+  public boolean containsRecentChange(String title) {
+    for (RecentChange rc : recentChanges) {
+      if (Page.areSameTitle(title, rc.getTitle())) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -233,6 +265,11 @@ public class RecentChangesTableModel extends AbstractTableModel {
     return super.getColumnName(column);
   }
 
+  /**
+   * @param columnIndex Column index.
+   * @return Class of that data in the column.
+   * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
+   */
   @Override
   public Class<?> getColumnClass(int columnIndex) {
     switch (columnIndex) {
