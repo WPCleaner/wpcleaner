@@ -79,7 +79,8 @@ public class ApiXmlRecentChangesResult extends ApiXmlResult implements ApiRecent
         String comment = currentNode.getAttributeValue("comment");
         String ns = currentNode.getAttributeValue("ns");
         String pageId = currentNode.getAttributeValue("pageid");
-        String rcid = currentNode.getAttributeValue("rcid");
+        String rcId = currentNode.getAttributeValue("rcid");
+        String revId = currentNode.getAttributeValue("revid");
         String timestamp = currentNode.getAttributeValue("timestamp");
         if (nextStart == null) {
           nextStart = timestamp;
@@ -91,8 +92,9 @@ public class ApiXmlRecentChangesResult extends ApiXmlResult implements ApiRecent
         String logAction = currentNode.getAttributeValue("logaction");
         try {
           RecentChange rc = new RecentChange(
-              Integer.valueOf(rcid), Integer.valueOf(ns),
-              title, Integer.valueOf(pageId));
+              Integer.valueOf(rcId), Integer.valueOf(ns),
+              title, Integer.valueOf(pageId),
+              Integer.valueOf(revId));
           rc.setAnonymous(isAnonymous);
           rc.setBot(isBot);
           rc.setComment(comment);

@@ -75,6 +75,11 @@ public class RecentChange implements Comparable<RecentChange> {
   private final int pageId;
 
   /**
+   * Revision identifier.
+   */
+  private final int revisionId;
+
+  /**
    * Type of change (new, edit, log, ...).
    */
   private String type;
@@ -129,12 +134,16 @@ public class RecentChange implements Comparable<RecentChange> {
    * @param namespace Namespace.
    * @param title Page title.
    * @param pageId Page identifier.
+   * @param revId Revision identifier.
    */
-  public RecentChange(int id, int namespace, String title, int pageId) {
+  public RecentChange(
+      int id, int namespace,
+      String title, int pageId, int revId) {
     this.id = id;
     this.namespace = namespace;
     this.title = title;
     this.pageId = pageId;
+    this.revisionId = revId;
   }
 
   /**
@@ -163,6 +172,13 @@ public class RecentChange implements Comparable<RecentChange> {
    */
   public int getPageId() {
     return pageId;
+  }
+
+  /**
+   * @return Revision identifier.
+   */
+  public int getRevisionId() {
+    return revisionId;
   }
 
   /**
