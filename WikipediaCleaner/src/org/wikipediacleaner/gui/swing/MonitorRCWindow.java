@@ -27,12 +27,10 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -80,11 +78,6 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
    * Table for the list of recent changes.
    */
   private JTable tableRCInteresting;
-
-  /**
-   * Interesting recent changes with their last modification.
-   */
-  private Map<String, Date> interestingRC;
 
   /**
    * Tools for updating disambiguation warning.
@@ -175,7 +168,6 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
     constraints.gridy++;
 
     updateComponentState();
-    interestingRC = new HashMap<String, Date>();
     dabWarningTools = new UpdateDabWarningTools(getWikipedia(), this);
     API api = APIFactory.getAPI();
     api.addRecentChangesListener(getWikipedia(), this);
@@ -209,20 +201,15 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
       if (isInterestingNamespace(rc)) {
         if (RecentChange.TYPE_NEW.equals(rc.getType())) {
           if (rc.isNew()) {
-            interestingRC.put(rc.getTitle(), rc.getTimestamp());
             modelRCInteresting.addRecentChange(rc);
           }
         } else if (RecentChange.TYPE_EDIT.equals(rc.getType())) {
-          if (interestingRC.containsKey(rc.getTitle())) {
-            if (rc.getTimestamp().getTime() > interestingRC.get(rc.getTitle()).getTime()) {
-              interestingRC.put(rc.getTitle(), rc.getTimestamp());
-              modelRCInteresting.addRecentChange(rc);
-            }
+          if (modelRCInteresting.containsRecentChange(rc.getTitle())) {
+            modelRCInteresting.addRecentChange(rc);
           }
         } else if (RecentChange.TYPE_LOG.equals(rc.getType())) {
           if (RecentChange.LOG_TYPE_DELETE.equals(rc.getLogType()) &&
               RecentChange.LOG_ACTION_DELETE_DELETE.equals(rc.getLogAction())) {
-            interestingRC.remove(rc.getTitle());
             modelRCInteresting.removeRecentChanges(rc.getTitle());
           }
         }
@@ -230,23 +217,66 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
     }
 
     // Check if interesting recent changes are old enough
-    Iterator<Entry<String, Date>> itRC = interestingRC.entrySet().iterator();
-    List<Page> pages = new ArrayList<Page>();
+    List<RecentChange> interestingRC = modelRCInteresting.getRecentChanges();
+    while (!interestingRC.isEmpty()) {
+
+      // Retrieve synthetic information about recent changes for one title
+      List<RecentChange> listRC = extractRecentChanges(interestingRC);
+      String title = listRC.get(0).getTitle();
+      String creator = null;
+      List<String> modifiers = new ArrayList<String>();
+      boolean oldEnough = true;
+      for (RecentChange rc : listRC) {
+        if (currentTime.getTime() <= rc.getTimestamp().getTime() + 15*60*1000) {
+          oldEnough = false;
+        }
+        String user = rc.getUser();
+        if (rc.isNew()) {
+          creator = user;
+        } else {
+          if (!rc.isBot()) {
+            if ((creator == null) || (!creator.equals(user))) {
+              if (!modifiers.contains(user)) {
+                modifiers.add(user);
+              }
+            }
+          }
+        }
+      }
+
+      if (oldEnough) {
+        modelRCInteresting.removeRecentChanges(title);
+        Page page = DataManager.getPage(getWikipedia(), title, null, null);
+        try {
+          dabWarningTools.updateDabWarning(Collections.singletonList(page), false, false, false);
+        } catch (APIException e) {
+          // Nothing to do
+        }
+      }
+    }
+  }
+
+  /**
+   * Extract a list of recent changes for the same page.
+   * 
+   * @param allRC List of recent changes.
+   * @return List of recent changes for one page.
+   */
+  private List<RecentChange> extractRecentChanges(List<RecentChange> allRC) {
+    if ((allRC == null) || (allRC.isEmpty())) {
+      return null;
+    }
+    List<RecentChange> result = new ArrayList<RecentChange>();
+    String title = allRC.get(0).getTitle();
+    Iterator<RecentChange> itRC = allRC.iterator();
     while (itRC.hasNext()) {
-      Entry<String, Date> rc = itRC.next();
-      if (currentTime.getTime() > rc.getValue().getTime() + 15*60*1000) {
+      RecentChange rc = itRC.next();
+      if (Page.areSameTitle(title, rc.getTitle())) {
+        result.add(rc);
         itRC.remove();
-        modelRCInteresting.removeRecentChanges(rc.getKey());
-        pages.add(DataManager.getPage(getWikipedia(), rc.getKey(), null, null));
       }
     }
-    if (!pages.isEmpty()) {
-      try {
-        dabWarningTools.updateDabWarning(pages, false, false, false);
-      } catch (APIException e) {
-        // Nothing to do
-      }
-    }
+    return result;
   }
 
   /**
