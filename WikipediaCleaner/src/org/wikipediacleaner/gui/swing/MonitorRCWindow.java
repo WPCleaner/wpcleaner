@@ -230,7 +230,8 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
       String creator = null;
       List<String> pageModifiers = new ArrayList<String>();
       boolean oldEnough = true;
-      for (RecentChange rc : listRC) {
+      for (int rcNum = listRC.size(); rcNum > 0; rcNum--) {
+        RecentChange rc = listRC.get(rcNum - 1);
         if (currentTime.getTime() <= rc.getTimestamp().getTime() + 15*60*1000) {
           oldEnough = false;
         }
@@ -247,6 +248,10 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
           }
         }
       }
+      if ((creator != null) && (!pageModifiers.isEmpty())) {
+        pageModifiers.add(creator);
+        creator = null;
+      }
 
       if (oldEnough) {
         modelRCInteresting.removeRecentChanges(title);
@@ -260,7 +265,9 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
     // Update disambiguation warnings
     if (!pages.isEmpty()) {
       try {
-        dabWarningTools.updateDabWarning(pages, false, false, false);
+        dabWarningTools.updateDabWarning(
+            pages, false, false, false,
+            creators, modifiers);
       } catch (APIException e) {
         // Nothing to do
       }

@@ -122,12 +122,16 @@ public class UpdateDabWarningTools {
    * @param contentsAvailable True if contents is already available in pages.
    * @param linksAvailable True if links are already available in pages.
    * @param dabInformationAvailable True if disambiguation information is already available in pages.
+   * @param creators For each page title, user who has created the page.
+   * @param modifiers For each page title, users who have modified the page.
    * @return Number of pages updated
    * @throws APIException
    */
   public int updateDabWarning(
       List<Page> pages, boolean contentsAvailable,
-      boolean linksAvailable, boolean dabInformationAvailable) throws APIException {
+      boolean linksAvailable, boolean dabInformationAvailable,
+      Map<String, String> creators,
+      Map<String, List<String>> modifiers) throws APIException {
     if ((pages == null) || (pages.isEmpty())) {
       return 0;
     }
@@ -235,7 +239,9 @@ public class UpdateDabWarningTools {
       if (updateDabWarning(
           pageAnalysis, page.getRevisionId(),
           mapTalkPages.get(page),
-          mapTodoSubpages.get(page))) {
+          mapTodoSubpages.get(page),
+          creators.get(page.getTitle()),
+          modifiers.get(page.getTitle()))) {
         count++;
       }
     }
@@ -249,12 +255,15 @@ public class UpdateDabWarningTools {
    * @param pageRevId Page revision id.
    * @param talkPage (Optional) Talk page with contents of section 0.
    * @param todoSubpage (Optional) Todo sub page with contents.
+   * @param creator User who has created the page.
+   * @param modifiers Users who have modified the page.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
   public boolean updateDabWarning(
       PageAnalysis pageAnalysis, Integer pageRevId,
-      Page talkPage, Page todoSubpage) throws APIException {
+      Page talkPage, Page todoSubpage,
+      String creator, List<String> modifiers) throws APIException {
     if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
       return false;
     }
@@ -315,7 +324,9 @@ public class UpdateDabWarningTools {
       }*/
     }
 
-    return manageDabWarningOnTalkPage(pageAnalysis, pageRevId, talkPage);
+    return manageDabWarningOnTalkPage(
+        pageAnalysis, pageRevId, talkPage,
+        creator, modifiers);
   }
 
   /**
@@ -351,17 +362,21 @@ public class UpdateDabWarningTools {
    * @param pageAnalysis Page analysis (must have enough information to compute the list of disambiguation links).
    * @param pageRevId Page revision id.
    * @param talkPage Talk page.
+   * @param creator User who has created the page.
+   * @param modifiers Users who have modified the page.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
   private boolean manageDabWarningOnTalkPage(
-      PageAnalysis pageAnalysis, Integer pageRevId, Page talkPage) throws APIException {
+      PageAnalysis pageAnalysis, Integer pageRevId, Page talkPage,
+      String creator, List<String> modifiers) throws APIException {
     Collection<String> dabLinks = findDabLinks(pageAnalysis);
     boolean result = false;
     if ((dabLinks == null) || (dabLinks.isEmpty())) {
       result = removeDabWarningOnTalkPage(talkPage);
     } else {
-      result |= updateDabWarningOnTalkPage(pageRevId, talkPage, dabLinks);
+      result |= updateDabWarningOnTalkPage(
+          pageAnalysis, pageRevId, talkPage, dabLinks, creator, modifiers);
     }
     return result;
   }
@@ -447,14 +462,19 @@ public class UpdateDabWarningTools {
   /**
    * Create/update disambiguation warning on the talk page.
    * 
+   * @param analysis Page analysis.
    * @param pageRevId Page revision id.
    * @param talkPage Talk page.
    * @param dabLinks List of existing disambiguation links.
+   * @param creator User who has created the page.
+   * @param modifiers Users who have modified the page.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
   private boolean updateDabWarningOnTalkPage(
-      Integer pageRevId, Page talkPage, Collection<String> dabLinks) throws APIException {
+      PageAnalysis analysis, Integer pageRevId,
+      Page talkPage, Collection<String> dabLinks,
+      String creator, List<String> modifiers) throws APIException {
     if ((talkPage == null) || (dabLinks == null)) {
       return false;
     }
@@ -464,14 +484,14 @@ public class UpdateDabWarningTools {
     if (contents == null) {
       contents = "";
     }
-    PageAnalysis analysis = talkPage.getAnalysis(contents, true);
+    PageAnalysis talkAnalysis = talkPage.getAnalysis(contents, true);
     PageElementTemplate templateTodo = null;
     if ((configuration.getTodoTemplates() == null) ||
         (configuration.getTodoTemplates().isEmpty())) {
       return false;
     }
     for (String todoTemplate : configuration.getTodoTemplates()) {
-      List<PageElementTemplate> templates = analysis.getTemplates(todoTemplate);
+      List<PageElementTemplate> templates = talkAnalysis.getTemplates(todoTemplate);
       PageElementTemplate templateTmp = (templates != null) && (templates.size() > 0) ?
           templates.get(0) : null;
       if (templateTmp != null) {
@@ -491,7 +511,7 @@ public class UpdateDabWarningTools {
       PageElementTemplate templatePrevious = null;
       if (configuration.getDisambiguationWarningAfterTemplates() != null) {
         for (String previousTemplate : configuration.getDisambiguationWarningAfterTemplates()) {
-          Collection<PageElementTemplate> templates = analysis.getTemplates(previousTemplate);
+          Collection<PageElementTemplate> templates = talkAnalysis.getTemplates(previousTemplate);
           for (PageElementTemplate templateTmp : templates) {
             if ((templatePrevious == null) ||
                 (templateTmp.getEndIndex() > templatePrevious.getEndIndex())) {
@@ -529,6 +549,11 @@ public class UpdateDabWarningTools {
           talkPage,
           wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           0, tmp.toString(), false);
+
+      // Inform creator and modifiers of the page
+      informCreator(analysis, creator);
+      informModifiers(analysis, modifiers);
+
       return true;
     }
 
@@ -896,6 +921,36 @@ public class UpdateDabWarningTools {
     }
 
     return false;
+  }
+
+  /**
+   * Inform page creator of links to disambiguation pages.
+   * 
+   * @param analysis Page analysis.
+   * @param creator User who has created the page.
+   */
+  private void informCreator(PageAnalysis analysis, String creator) {
+    if ((analysis == null) || (creator == null)) {
+      return;
+    }
+    // TODO
+    System.err.println("Should inform " + creator + " for creating page " + analysis.getPage().getTitle());
+  }
+
+  /**
+   * Inform page modifiers of links to disambiguation pages.
+   * 
+   * @param analysis Page analysis.
+   * @param modifiers Users who have modified the page.
+   */
+  private void informModifiers(PageAnalysis analysis, List<String> modifiers) {
+    if ((analysis == null) || (modifiers == null)) {
+      return;
+    }
+    for (String modifier : modifiers) {
+      // TODO
+      System.err.println("Should inform " + modifier + " for modifying page " + analysis.getPage().getTitle());
+    }
   }
 
   /**
