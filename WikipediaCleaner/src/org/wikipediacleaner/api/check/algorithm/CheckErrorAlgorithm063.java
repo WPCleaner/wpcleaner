@@ -19,9 +19,11 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
 
 
 /**
@@ -48,96 +50,26 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyzing the text from the beginning
+    // Analyze each <small> tag
     boolean result = false;
-    int startIndex = 0;
-    int levelRef = 0;
-    int levelSub = 0;
-    int levelSup = 0;
-    int levelSmall = 0;
-    int errorLevel = -1;
-    int errorIndex = -1;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      switch (contents.charAt(startIndex)) {
-      case '<':
-        if (contents.startsWith("<ref", startIndex)) {
-          startIndex += 3;
-          while ((startIndex < contents.length()) &&
-                 (contents.charAt(startIndex) != '>')) {
-            startIndex++;
-          }
-          if ((startIndex < contents.length()) &&
-              (contents.charAt(startIndex) == '>')) {
-            if (contents.charAt(startIndex - 1) != '/') {
-              levelRef++;
-            }
-          }
-        } else if (contents.startsWith("</ref", startIndex)) {
-          levelRef--;
-          startIndex += 4;
-        } else if (contents.startsWith("<sub", startIndex)) {
-          startIndex += 3;
-          while ((startIndex < contents.length()) &&
-                 (contents.charAt(startIndex) != '>')) {
-            startIndex++;
-          }
-          if ((startIndex < contents.length()) &&
-              (contents.charAt(startIndex) == '>')) {
-            if (contents.charAt(startIndex - 1) != '/') {
-              levelSub++;
-            }
-          }
-        } else if (contents.startsWith("</sub", startIndex)) {
-          levelSub--;
-          startIndex += 4;
-        } else if (contents.startsWith("<sup", startIndex)) {
-          startIndex += 3;
-          while ((startIndex < contents.length()) &&
-                 (contents.charAt(startIndex) != '>')) {
-            startIndex++;
-          }
-          if ((startIndex < contents.length()) &&
-              (contents.charAt(startIndex) == '>')) {
-            if (contents.charAt(startIndex - 1) != '/') {
-              levelSup++;
-            }
-          }
-        } else if (contents.startsWith("</sup", startIndex)) {
-          levelSup--;
-          startIndex += 4;
-        } else if (contents.startsWith("<small>", startIndex)) {
-          if ((levelRef > 0) || (levelSub > 0) || (levelSup > 0)) {
-            if (errorLevel < 0) {
-              errorLevel = levelSmall;
-              errorIndex = startIndex;
-            }
-          }
-          levelSmall++;
-          startIndex += 6;
-        } else if (contents.startsWith("</small>", startIndex)) {
-          levelSmall--;
-          if (levelSmall < 0) {
-            levelSmall = 0;
-          }
-          startIndex += 7;
-          if ((levelRef > 0) || (levelSub > 0) || (levelSup > 0)) {
-            if (levelSmall == errorLevel) {
-              if (errors == null) {
-                return true;
-              }
-              result = true;
-              errorLevel = -1;
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), errorIndex, startIndex + 1);
-              errors.add(errorResult);
-            }
-          }
+    List<PageElementTag> smallTags = pageAnalysis.getTags(PageElementTag.TAG_HTML_SMALL);
+    for (PageElementTag smallTag : smallTags) {
+      int index = smallTag.getBeginIndex();
+      PageElementTag refTag = pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, index);
+      PageElementTag subTag = pageAnalysis.getSurroundingTag(PageElementTag.TAG_HTML_SUB, index);
+      PageElementTag supTag = pageAnalysis.getSurroundingTag(PageElementTag.TAG_HTML_SUP, index);
+      if ((refTag != null) || (subTag != null) || (supTag != null)) {
+        if (errors == null) {
+          return true;
         }
-        break;
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            smallTag.getBeginIndex(), smallTag.getEndIndex());
+        errors.add(errorResult);
       }
-      startIndex++;
     }
+
     return result;
   }
 }
