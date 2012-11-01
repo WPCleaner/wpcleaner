@@ -574,7 +574,8 @@ public class PageAnalysis {
 
     // Check if this is a template
     PageElementTemplate template = PageElementTemplate.analyzeBlock(
-        getWikipedia(), contents, currentIndex);
+        getWikipedia(), contents, currentIndex,
+        comments, tags);
     if (template != null) {
       templates.add(template);
       return currentIndex + 2;

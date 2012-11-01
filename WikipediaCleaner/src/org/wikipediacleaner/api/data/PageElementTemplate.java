@@ -34,7 +34,7 @@ public class PageElementTemplate extends PageElement {
   private final String templateNameNotTrimmed;
   private final List<Parameter> parameters;
 
-  private final static String templateNameUnauthorizedCharacters = "{}[]|";
+  private final static String templateNameUnauthorizedCharacters = "{}[]|<>";
 
   /**
    * Class containing information about a template parameter.
@@ -83,14 +83,18 @@ public class PageElementTemplate extends PageElement {
   /**
    * Analyze contents to check if it matches a block for the given template name.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param contents Contents.
    * @param index Block start index.
+   * @param comments Comments in the page.
+   * @param tags Tags in the page.
    * @return Block details it there's a block.
    */
   public static PageElementTemplate analyzeBlock(
-      EnumWikipedia wikipedia,
-      String contents, int index) {
+      EnumWikipedia wiki,
+      String contents, int index,
+      List<PageElementComment> comments,
+      List<PageElementTag> tags) {
     // Verify arguments
     if (contents == null) {
       return null;
@@ -112,6 +116,30 @@ public class PageElementTemplate extends PageElement {
             (contents.charAt(tmpIndex) == '\n'))) {
       tmpIndex++;
     }
+
+    // Possible comment
+    if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
+      PageElementComment comment = null;
+      if (comments != null) {
+        for (PageElementComment tmpComment : comments) {
+          if (tmpComment.getBeginIndex() == tmpIndex) {
+            comment = tmpComment;
+          }
+        }
+      }
+      if (comment == null) {
+        return null;
+      }
+      tmpIndex = comment.getEndIndex();
+    }
+
+    // Possible whitespace characters
+    while ((tmpIndex < contents.length()) &&
+           ((contents.charAt(tmpIndex) == ' ') ||
+            (contents.charAt(tmpIndex) == '\n'))) {
+      tmpIndex++;
+    }
+
     int startTemplateName = tmpIndex;
 
     // Retrieve template name
@@ -133,11 +161,34 @@ public class PageElementTemplate extends PageElement {
     // Check that it's not a DEFAULTSORT
     int colonIndex = templateName.indexOf(':');
     if (colonIndex > 0) {
-      MagicWord magicDefaultsort = wikipedia.getWikiConfiguration().getMagicWord(MagicWord.DEFAULT_SORT);
+      MagicWord magicDefaultsort = wiki.getWikiConfiguration().getMagicWord(MagicWord.DEFAULT_SORT);
       if ((magicDefaultsort != null) &&
           (magicDefaultsort.isPossibleAlias(templateName.substring(0, colonIndex + 1)))) {
         return null;
       }
+    }
+
+    // Possible comment
+    if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
+      PageElementComment comment = null;
+      if (comments != null) {
+        for (PageElementComment tmpComment : comments) {
+          if (tmpComment.getBeginIndex() == tmpIndex) {
+            comment = tmpComment;
+          }
+        }
+      }
+      if (comment == null) {
+        return null;
+      }
+      tmpIndex = comment.getEndIndex();
+    }
+
+    // Possible whitespace characters
+    while ((tmpIndex < contents.length()) &&
+           ((contents.charAt(tmpIndex) == ' ') ||
+            (contents.charAt(tmpIndex) == '\n'))) {
+      tmpIndex++;
     }
 
     // Check if it's a template without parameters
@@ -156,7 +207,8 @@ public class PageElementTemplate extends PageElement {
     tmpIndex++;
     List<Parameter> parameters = new ArrayList<Parameter>();
     int endIndex = analyzeTemplateParameters(
-        wikipedia, contents, beginIndex, tmpIndex - 1, tmpIndex, parameters);
+        wiki, contents, beginIndex, tmpIndex - 1, tmpIndex, parameters,
+        comments, tags);
     if (endIndex < 0) {
       return null;
     }
@@ -168,18 +220,22 @@ public class PageElementTemplate extends PageElement {
   /**
    * Analyze the parameters of template.
    * 
+   * @param wiki Wiki.
    * @param contents Contents of the page.
    * @param templateBeginIndex Start index of the template in the page.
    * @param pipeIndex Index of the previous pipe.
    * @param parametersBeginIndex Start index of the parameters in the page.
    * @param parameters Parameters.
+   * @param comments Comments in the page.
+   * @param tags Tags in the page.
    * @return Position of the end of the template, or -1 if no template was found.
    */
   private static int analyzeTemplateParameters(
-      EnumWikipedia wikipedia,
-      String contents,
+      EnumWikipedia wiki, String contents,
       int templateBeginIndex, int pipeIndex, int parametersBeginIndex,
-      List<Parameter> parameters) {
+      List<Parameter> parameters,
+      List<PageElementComment> comments,
+      List<PageElementTag> tags) {
     if (contents == null) {
       return -1;
     }
@@ -231,7 +287,14 @@ public class PageElementTemplate extends PageElement {
         }
       } else if (contents.startsWith("<", tmpIndex)) {
         // Possible start of a tag
-        PageElementTag tag = PageElementTag.analyzeBlock(contents, tmpIndex);
+        PageElementTag tag = null;
+        if (tags != null) {
+          for (PageElementTag tmpTag : tags) {
+            if (tmpTag.getBeginIndex() == tmpIndex) {
+              tag = tmpTag;
+            }
+          }
+        }
         if (tag != null) {
           int count = 0;
           if (tag.isFullTag()) {
@@ -257,7 +320,14 @@ public class PageElementTemplate extends PageElement {
           tmpIndex = tag.getEndIndex();
         } else {
           // Possible start of a comment
-          PageElementComment comment = PageElementComment.analyzeBlock(wikipedia, contents, tmpIndex);
+          PageElementComment comment = null;
+          if (comments != null) {
+            for (PageElementComment tmpComment : comments) {
+              if (tmpComment.getBeginIndex() == tmpIndex) {
+                comment = tmpComment;
+              }
+            }
+          }
           if (comment != null) {
             tmpIndex = comment.getEndIndex();
           } else {
