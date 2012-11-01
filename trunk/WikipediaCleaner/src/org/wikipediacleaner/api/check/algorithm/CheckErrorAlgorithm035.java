@@ -18,14 +18,59 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTag.Parameter;
+
 
 /**
  * Algorithm for analyzing error 35 of check wikipedia project.
  * Error 35: Gallery without description
  */
-public class CheckErrorAlgorithm035 extends CheckErrorAlgorithmUnavailable {
+public class CheckErrorAlgorithm035 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm035() {
     super("Gallery without description");
+  }
+
+  /**
+   * Analyze a page to check if errors are present.
+   * 
+   * @param pageAnalysis Page analysis.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyze(
+      PageAnalysis pageAnalysis,
+      Collection<CheckErrorResult> errors) {
+    if (pageAnalysis == null) {
+      return false;
+    }
+
+    // Analyze each gallery tag
+    List<PageElementTag> galleryTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_GALLERY);
+    boolean result = false;
+    for (PageElementTag galleryTag : galleryTags) {
+      if (!galleryTag.isFullTag() && !galleryTag.isEndTag()) {
+        Parameter description = galleryTag.getParameter("caption");
+        if ((description == null) ||
+            (description.getValue() == null) ||
+            (description.getValue().trim().length() == 0)) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(), galleryTag.getBeginIndex(), galleryTag.getEndIndex());
+          errors.add(errorResult);
+        }
+      }
+    }
+    return result;
   }
 }
