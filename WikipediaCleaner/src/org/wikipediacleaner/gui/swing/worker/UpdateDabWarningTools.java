@@ -294,22 +294,26 @@ public class UpdateDabWarningTools {
       if ((page.getNamespace() != null) &&
           (page.getNamespace().intValue() == Namespace.MAIN)) {
         if (configuration.getTodoSubpageForce()) {
-          return manageDabWarningOnTodoSubpage(pageAnalysis, pageRevId, todoSubpage, talkPage);
+          return manageDabWarningOnTodoSubpage(
+              pageAnalysis, pageRevId, todoSubpage, talkPage, creator, modifiers);
         }
       } else if (configuration.getTodoSubpageForceOther()) {
-        return manageDabWarningOnTodoSubpage(pageAnalysis, pageRevId, todoSubpage, talkPage);
+        return manageDabWarningOnTodoSubpage(
+            pageAnalysis, pageRevId, todoSubpage, talkPage, creator, modifiers);
       }
 
       // If "To do" sub-page exists, the disambiguation warning must be on it
       if (Boolean.TRUE.equals(todoSubpage.isExisting())) {
-        return manageDabWarningOnTodoSubpage(pageAnalysis, pageRevId, todoSubpage, talkPage);
+        return manageDabWarningOnTodoSubpage(
+            pageAnalysis, pageRevId, todoSubpage, talkPage, creator, modifiers);
       }
 
       // If talk page has a template linking to the "To do" sub-page,
       // the disambiguation warning must be on the "To do" sub-page
       PageElementTemplate templateTodoLink = getExistingTemplateTodoLink(talkPage, talkPage.getContents());
       if (templateTodoLink != null) {
-        return manageDabWarningOnTodoSubpage(pageAnalysis, pageRevId, todoSubpage, talkPage);
+        return manageDabWarningOnTodoSubpage(
+            pageAnalysis, pageRevId, todoSubpage, talkPage, creator, modifiers);
       }
 
       // If talk page has a link to the "To do" sub-page,
@@ -336,19 +340,23 @@ public class UpdateDabWarningTools {
    * @param pageRevId Page revision id.
    * @param todoSubpage "To do" sub-page.
    * @param talkPage Talk page.
+   * @param creator User who has created the page.
+   * @param modifiers Users who have modified the page.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
   private boolean manageDabWarningOnTodoSubpage(
       PageAnalysis pageAnalysis, Integer pageRevId,
-      Page todoSubpage, Page talkPage) throws APIException {
+      Page todoSubpage, Page talkPage,
+      String creator, List<String> modifiers) throws APIException {
     Collection<String> dabLinks = findDabLinks(pageAnalysis);
     boolean result = false;
     if ((dabLinks == null) || (dabLinks.isEmpty())) {
       result |= removeDabWarningOnTodoSubpage(todoSubpage);
       result |= removeDabWarningOnTalkPage(talkPage);
     } else {
-      result |= updateDabWarningOnTodoSubpage(pageRevId, todoSubpage, dabLinks);
+      result |= updateDabWarningOnTodoSubpage(
+          pageRevId, todoSubpage, dabLinks, creator, modifiers);
       if (createWarning) {
         result |= cleanDabWarningOnTalkPage(talkPage, dabLinks);
       }
@@ -387,11 +395,14 @@ public class UpdateDabWarningTools {
    * @param pageRevId Page revision id.
    * @param todoSubpage "To do" sub-page.
    * @param dabLinks List of existing disambiguation links.
+   * @param creator User who has created the page.
+   * @param modifiers Users who have modified the page.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
   private boolean updateDabWarningOnTodoSubpage(
-      Integer pageRevId, Page todoSubpage, Collection<String> dabLinks) throws APIException {
+      Integer pageRevId, Page todoSubpage, Collection<String> dabLinks,
+      String creator, List<String> modifiers) throws APIException {
     if ((todoSubpage == null) || (dabLinks == null)) {
       return false;
     }
@@ -453,6 +464,11 @@ public class UpdateDabWarningTools {
           wikipedia, todoSubpage, tmp.toString(),
           wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           false);
+
+      // Inform creator and modifiers of the page
+      informCreator(analysis, creator);
+      informModifiers(analysis, modifiers);
+
       return true;
     }
 
