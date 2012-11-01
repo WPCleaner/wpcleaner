@@ -207,7 +207,9 @@ public class UpdateDabWarningWorker extends BasicWorker {
         while (!finish) {
           finish = true;
           try {
-            countUpdated += tools.updateDabWarning(sublist, contentsAvailable, linksAvailable, dabInformationAvailable);
+            countUpdated += tools.updateDabWarning(
+                sublist, contentsAvailable, linksAvailable, dabInformationAvailable,
+                null, null);
             countAnalyzed += sublist.size();
             lastTitle = sublist.get(sublist.size() - 1).getTitle();
           } catch (APIException e) {

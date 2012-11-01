@@ -133,7 +133,7 @@ public class SendWorker extends BasicWorker {
         PageAnalysis pageAnalysis = page.getAnalysis(text, true);
         dabWarningTools.updateDabWarning(
             pageAnalysis, queryResult.getPageNewRevId(),
-            null, null);
+            null, null, null, null);
       } catch (APIException e) {
         return e;
       }
