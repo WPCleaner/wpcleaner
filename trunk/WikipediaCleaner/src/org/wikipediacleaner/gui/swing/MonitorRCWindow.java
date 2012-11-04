@@ -248,10 +248,6 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
           }
         }
       }
-      if ((creator != null) && (!pageModifiers.isEmpty())) {
-        pageModifiers.add(creator);
-        creator = null;
-      }
 
       if (oldEnough) {
         modelRCInteresting.removeRecentChanges(title);

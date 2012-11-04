@@ -466,8 +466,7 @@ public class UpdateDabWarningTools {
           false);
 
       // Inform creator and modifiers of the page
-      informCreator(analysis, creator);
-      informModifiers(analysis, modifiers);
+      informContributors(analysis, creator, modifiers);
 
       return true;
     }
@@ -567,8 +566,7 @@ public class UpdateDabWarningTools {
           0, tmp.toString(), false);
 
       // Inform creator and modifiers of the page
-      informCreator(analysis, creator);
-      informModifiers(analysis, modifiers);
+      informContributors(analysis, creator, modifiers);
 
       return true;
     }
@@ -940,37 +938,37 @@ public class UpdateDabWarningTools {
   }
 
   /**
-   * Inform page creator of links to disambiguation pages.
+   * Inform page contributors of links to disambiguation pages.
    * 
    * @param analysis Page analysis.
    * @param creator User who has created the page.
    */
-  private void informCreator(PageAnalysis analysis, String creator) {
-    if ((analysis == null) || (creator == null)) {
+  private void informContributors(
+      PageAnalysis analysis,
+      String creator,
+      List<String> modifiers) {
+    if (analysis == null) {
       return;
     }
-    // TODO
-    System.err.println("Should inform " + creator + " for creating page " + analysis.getPage().getTitle());
+    if (creator != null) {
+      if ((modifiers == null) || (modifiers.isEmpty())) {
+        // TODO
+        System.err.println("Should inform " + creator + " for creating page " + analysis.getPage().getTitle());
+      } else {
+        // TODO
+        System.err.println("Should inform " + creator + " for creating page " + analysis.getPage().getTitle() + " (+)");
+      }
+    }
+    if (modifiers != null) {
+      for (String modifier : modifiers) {
+        // TODO
+        System.err.println("Should inform " + modifier + " for modifying page " + analysis.getPage().getTitle());
+      }
+    }
   }
 
   /**
-   * Inform page modifiers of links to disambiguation pages.
-   * 
-   * @param analysis Page analysis.
-   * @param modifiers Users who have modified the page.
-   */
-  private void informModifiers(PageAnalysis analysis, List<String> modifiers) {
-    if ((analysis == null) || (modifiers == null)) {
-      return;
-    }
-    for (String modifier : modifiers) {
-      // TODO
-      System.err.println("Should inform " + modifier + " for modifying page " + analysis.getPage().getTitle());
-    }
-  }
-
-  /**
-   * Update a page on Wikipedia.
+   * Update a page on Wiki.
    * 
    * @param page Page.
    * @param newContents New contents to use.
