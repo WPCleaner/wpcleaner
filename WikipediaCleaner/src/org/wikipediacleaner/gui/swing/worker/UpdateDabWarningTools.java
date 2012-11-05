@@ -240,8 +240,8 @@ public class UpdateDabWarningTools {
           pageAnalysis, page.getRevisionId(),
           mapTalkPages.get(page),
           mapTodoSubpages.get(page),
-          creators.get(page.getTitle()),
-          modifiers.get(page.getTitle()))) {
+          (creators != null) ? creators.get(page.getTitle()) : null,
+          (modifiers != null) ? modifiers.get(page.getTitle()) : null)) {
         count++;
       }
     }
