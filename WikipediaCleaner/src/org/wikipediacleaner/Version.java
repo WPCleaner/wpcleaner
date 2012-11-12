@@ -36,7 +36,7 @@ public final class Version {
   public final static String PROGRAM = "WPCleaner";
 
   public final static String MESSAGE =
-    GT._("I hope you'll like WPCleaner.", PROGRAM) +
+    GT._("I hope you''ll like {0}.", PROGRAM) +
     "<br><br>" +
     GT._(
         "WPCleaner configuration is available online, check the {0}System configuration{1}.",

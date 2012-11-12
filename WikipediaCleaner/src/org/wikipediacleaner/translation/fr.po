@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-10-27 20:36+0200\n"
+"POT-Creation-Date: 2012-11-12 21:21+0100\n"
 "PO-Revision-Date: 2012-10-23 05:53+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -18,7 +18,8 @@ msgstr ""
 "X-Generator: Launchpad (build 16179)\n"
 
 #: org/wikipediacleaner/Version.java:39
-msgid "I hope you'll like WPCleaner."
+#, fuzzy, java-format
+msgid "I hope you''ll like {0}."
 msgstr "J’espère que vous apprécierez WPCleaner"
 
 #: org/wikipediacleaner/Version.java:42
@@ -96,21 +97,21 @@ msgid "Replace with {0}"
 msgstr "Remplacer par {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:158
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm013.java:66
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm014.java:66
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm015.java:66
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:159
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm013.java:69
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm014.java:69
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm015.java:69
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm023.java:66
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm024.java:66
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm024.java:69
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:97
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:103
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm029.java:66
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm029.java:69
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:97
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:103
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:71
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:132
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:142
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:114
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:143
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:143
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:123
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:85
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:73
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:122
@@ -167,7 +168,7 @@ msgid "Comment category out"
 msgstr "Mettre la catégorie en commentaires"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:100
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:93
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:109
 msgid "Add a description..."
 msgstr "Ajouter une description…"
 
@@ -309,20 +310,20 @@ msgstr "La somme de contrôle est {0} à la place de {1}"
 msgid "Replace %20 by space character"
 msgstr "Remplacer %20 par un espace"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:97
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:108
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:113
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:124
 msgid "What description would like to use for the external link ?"
 msgstr "Quelle description voulez-vous utiliser pour le lien externe ?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:102
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:118
 msgid "Convert into <ref> tag"
 msgstr "Convertir en référence"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:104
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:120
 msgid "Add a description and convert into <ref> tag"
 msgstr "Ajouter une description et mettre entre balise <ref>"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:114
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:139
 msgid "External viewer"
 msgstr "Navigateur externe"
 
@@ -448,7 +449,7 @@ msgid "Namespace"
 msgstr "Espace de nom"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:246
-#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:229
+#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:261
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:125
 msgid "Title"
 msgstr "Titre"
@@ -534,7 +535,7 @@ msgstr "À propos"
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:278
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:150
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:173
-#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:166
+#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:160
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:226
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:212
 msgid "&Close"
@@ -1355,7 +1356,7 @@ msgstr "Récupération des suggestions pour les remplacements de texte"
 msgid "Retrieving Check Wiki configuration"
 msgstr "Récupération de la configuration du projet de correction syntaxique"
 
-#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:113
+#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:107
 msgid "Recent changes monitoring"
 msgstr "Surveillance des modifications récentes"
 
@@ -1796,11 +1797,11 @@ msgstr "Développer les modèles – {0}"
 msgid "&Update"
 msgstr "&Mettre à jour"
 
-#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:225
+#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:257
 msgid "Id"
 msgstr "Id"
 
-#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:231
+#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:263
 msgid "User"
 msgstr "Utilisateur"
 
@@ -2593,22 +2594,22 @@ msgstr "Mise à jour du contenu de la page"
 msgid "Retrieving interwiki for {0}"
 msgstr "Récupération des interwikis pour {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:270
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:280
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:279
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:289
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Récupération du contenu de la page - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:400
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:509
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:722
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:426
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:544
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:761
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Mise à jour de l’avertissement d’homonymie - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:630
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:758
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:859
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:669
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:797
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:898
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Suppression de l’avertissement d’homonymie - {0}"
@@ -2635,7 +2636,7 @@ msgstr ""
 msgid "Retrieving disambiguation pages"
 msgstr "Récupération des pages d’homonymie"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:216
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:218
 #, java-format
 msgid ""
 "An error occured when updating disambiguation warnings. Do you want to "
@@ -2648,7 +2649,7 @@ msgstr ""
 "\n"
 "Erreur : {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:258
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:260
 #, java-format
 msgid ""
 "Disambiguation links have been analyzed in {0} pages.\n"
