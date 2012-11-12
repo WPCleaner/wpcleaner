@@ -22,19 +22,19 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 
 
 /**
  * Algorithm for analyzing error 35 of check wikipedia project.
- * Error 35: Gallery without description
+ * Error 35: Gallery image without description
  */
 public class CheckErrorAlgorithm035 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm035() {
-    super("Gallery without description");
+    super("Gallery image without description");
   }
 
   /**
@@ -51,23 +51,39 @@ public class CheckErrorAlgorithm035 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Retrieve image name space
+    Namespace imageNamespace = pageAnalysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
+
     // Analyze each gallery tag
-    List<PageElementTag> galleryTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_GALLERY);
+    List<PageElementTag> galleryTags = pageAnalysis.getCompleteTags(PageElementTag.TAG_WIKI_GALLERY);
+    String contents = pageAnalysis.getContents();
     boolean result = false;
     for (PageElementTag galleryTag : galleryTags) {
-      if (!galleryTag.isFullTag() && !galleryTag.isEndTag()) {
-        Parameter description = galleryTag.getParameter("caption");
-        if ((description == null) ||
-            (description.getValue() == null) ||
-            (description.getValue().trim().length() == 0)) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
+      if (galleryTag.getMatchingTag() != null) {
+        PageElementTag endTag = galleryTag.getMatchingTag();
+        int beginIndex = galleryTag.getEndIndex();
+        int tmpIndex = beginIndex;
+        while (tmpIndex <= endTag.getBeginIndex()) {
+          if ((tmpIndex == endTag.getBeginIndex()) ||
+              (contents.charAt(tmpIndex) == '\n')) {
+            String line = contents.substring(beginIndex, tmpIndex).trim();
+            int colonIndex = line.indexOf(':');
+            if ((colonIndex > 0) && (imageNamespace.isPossibleName(line.substring(0, colonIndex)))) {
+              int pipeIndex = line.indexOf('|', colonIndex);
+              if (pipeIndex < 0) {
+                if (errors == null) {
+                  return true;
+                }
+                result = true;
 
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), galleryTag.getBeginIndex(), galleryTag.getEndIndex());
-          errors.add(errorResult);
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    pageAnalysis.getPage(), beginIndex, tmpIndex);
+                errors.add(errorResult);
+              }
+            }
+            beginIndex = tmpIndex + 1;
+          }
+          tmpIndex++;
         }
       }
     }
