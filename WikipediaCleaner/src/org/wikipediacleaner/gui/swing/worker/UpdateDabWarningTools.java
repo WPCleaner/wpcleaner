@@ -32,6 +32,8 @@ import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationAttributeBoolean;
+import org.wikipediacleaner.api.constants.WPCConfigurationAttributeString;
 import org.wikipediacleaner.api.data.InternalLinkCount;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -221,8 +223,9 @@ public class UpdateDabWarningTools {
     for (Page page : pages) {
       Page talkPage = page.getTalkPage();
       mapTalkPages.put(page, talkPage);
-      if (configuration.getTodoSubpage() != null) {
-        Page todoSubpage = talkPage.getSubPage(configuration.getTodoSubpage());
+      String todoSubpageAttr = configuration.getStringProperty(WPCConfigurationAttributeString.TODO_SUBPAGE);
+      if (todoSubpageAttr != null) {
+        Page todoSubpage = talkPage.getSubPage(todoSubpageAttr);
         mapTodoSubpages.put(page, todoSubpage);
       }
     }
@@ -281,11 +284,12 @@ public class UpdateDabWarningTools {
     }
 
     // "To do" sub-page
-    if (configuration.getTodoSubpage() != null) {
+    String todoSubpageAttr = configuration.getStringProperty(WPCConfigurationAttributeString.TODO_SUBPAGE);
+    if (todoSubpageAttr != null) {
 
       // Retrieving "To do" sub-page contents
       if (todoSubpage == null) {
-        todoSubpage = talkPage.getSubPage(configuration.getTodoSubpage());
+        todoSubpage = talkPage.getSubPage(todoSubpageAttr);
         setText(GT._("Retrieving page contents - {0}", todoSubpage.getTitle()));
         api.retrieveContents(wikipedia, Collections.singletonList(todoSubpage), false);
       }
@@ -293,11 +297,11 @@ public class UpdateDabWarningTools {
       // If we force the use of "To do" sub-page, the disambiguation warning must be on it
       if ((page.getNamespace() != null) &&
           (page.getNamespace().intValue() == Namespace.MAIN)) {
-        if (configuration.getTodoSubpageForce()) {
+        if (configuration.getBooleanProperty(WPCConfigurationAttributeBoolean.TODO_SUBPAGE_FORCE)) {
           return manageDabWarningOnTodoSubpage(
               pageAnalysis, pageRevId, todoSubpage, talkPage, creator, modifiers);
         }
-      } else if (configuration.getTodoSubpageForceOther()) {
+      } else if (configuration.getBooleanProperty(WPCConfigurationAttributeBoolean.TODO_SUBPAGE_FORCE_OTHER)) {
         return manageDabWarningOnTodoSubpage(
             pageAnalysis, pageRevId, todoSubpage, talkPage, creator, modifiers);
       }
@@ -414,7 +418,7 @@ public class UpdateDabWarningTools {
     }
     PageAnalysis analysis = todoSubpage.getAnalysis(contents, true);
     List<PageElementTemplate> templates = analysis.getTemplates(
-        configuration.getDisambiguationWarningTemplate());
+        configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE));
     PageElementTemplate templateWarning = ((templates != null) && (templates.size() > 0)) ?
         templates.get(0) : null;
 
@@ -575,7 +579,7 @@ public class UpdateDabWarningTools {
     String parameter = templateTodo.getParameterValue("1");
     PageAnalysis parameterAnalysis = talkPage.getAnalysis(parameter, false);
     List<PageElementTemplate> templates = parameterAnalysis.getTemplates(
-        configuration.getDisambiguationWarningTemplate());
+        configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE));
     PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
         templates.get(0) : null;
     if (templateWarning == null) {
@@ -658,7 +662,7 @@ public class UpdateDabWarningTools {
 
     // Search disambiguation warning in the "To do" sub-page
     List<PageElementTemplate> templates = analysis.getTemplates(
-        configuration.getDisambiguationWarningTemplate());
+        configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE));
     PageElementTemplate template = (templates != null) && (templates.size() > 0) ?
         templates.get(0) : null;
     if (template == null) {
@@ -790,7 +794,7 @@ public class UpdateDabWarningTools {
     String parameter = templateTodo.getParameterValue("1");
     PageAnalysis parameterAnalysis = talkPage.getAnalysis(parameter, false);
     List<PageElementTemplate> templates = parameterAnalysis.getTemplates(
-        configuration.getDisambiguationWarningTemplate());
+        configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE));
     PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
         templates.get(0) : null;
     if (templateWarning != null) {
@@ -891,7 +895,7 @@ public class UpdateDabWarningTools {
       // Search disambiguation warning in the "To do" parameter
       String parameter = templateTodo.getParameterValue("1");
       List<PageElementTemplate> templates = analysis.getTemplates(
-          configuration.getDisambiguationWarningTemplate());
+          configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE));
       PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
           templates.get(0) : null;
       if (templateWarning != null) {
@@ -1142,7 +1146,7 @@ public class UpdateDabWarningTools {
       StringBuilder talkText,
       Integer pageRevId, Collection<String> dabLinks) {
     talkText.append("{{ ");
-    talkText.append(configuration.getDisambiguationWarningTemplate());
+    talkText.append(configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE));
     if (pageRevId != null) {
       talkText.append(" | revisionid=");
       talkText.append(pageRevId);
@@ -1152,9 +1156,10 @@ public class UpdateDabWarningTools {
       talkText.append(dabLink);
     }
     talkText.append(" }} -- ~~~~~");
-    if (configuration.getDisambiguationWarningTemplateComment() != null) {
+    String comment = configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE_COMMENT);
+    if (comment != null) {
       talkText.append(" <!-- ");
-      talkText.append(configuration.getDisambiguationWarningTemplateComment());
+      talkText.append(comment);
       talkText.append(" -->");
     }
   }

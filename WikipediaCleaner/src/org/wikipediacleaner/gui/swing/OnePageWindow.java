@@ -53,6 +53,7 @@ import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfigurationAttributeString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -319,7 +320,7 @@ public abstract class OnePageWindow
     }
     boolean dabWarning =
       article &&
-      (getConfiguration().getDisambiguationWarningTemplate() != null) &&
+      (getConfiguration().getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE) != null) &&
       (getConfiguration().getTodoTemplates() != null);
     if (chkUpdateDabWarning != null) {
       chkUpdateDabWarning.setEnabled(pageLoaded && dabWarning);

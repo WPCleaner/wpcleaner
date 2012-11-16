@@ -43,6 +43,7 @@ import javax.swing.WindowConstants;
 import javax.swing.table.TableColumnModel;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfigurationAttributeString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComment;
@@ -370,7 +371,7 @@ public class PageListWindow extends BasicWindow {
     if (tmpPages.isEmpty()) {
       return;
     }
-    String template = getConfiguration().getDisambiguationWarningTemplate();
+    String template = getConfiguration().getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE);
     if ((template == null) || (template.trim().length() == 0)) {
       Utilities.displayWarning(
           getParentComponent(),

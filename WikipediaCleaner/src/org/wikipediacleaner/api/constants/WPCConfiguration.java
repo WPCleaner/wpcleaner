@@ -29,6 +29,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.data.DataManager;
@@ -45,12 +47,18 @@ import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.api.data.TemplateMatcher1L;
 import org.wikipediacleaner.api.data.TemplateMatcher1L2T;
 import org.wikipediacleaner.api.data.TemplateMatcher1LT;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
  * Configuration for WPCleaner.
  */
 public class WPCConfiguration {
+
+  /**
+   * Logger.
+   */
+  private final Log log = LogFactory.getLog(WPCConfiguration.class);
 
   /**
    * Wiki.
@@ -64,6 +72,10 @@ public class WPCConfiguration {
    */
   public WPCConfiguration(EnumWikipedia wiki) {
     this.wiki = wiki;
+    generalBooleanValues = new HashMap<WPCConfigurationAttributeBoolean, Boolean>();
+    userBooleanValues = new HashMap<WPCConfigurationAttributeBoolean, Boolean>();
+    generalStringValues = new HashMap<WPCConfigurationAttributeString, String>();
+    userStringValues = new HashMap<WPCConfigurationAttributeString, String>();
     initDefaultEncyclopedicNamespaces();
   }
 
@@ -90,20 +102,8 @@ public class WPCConfiguration {
     initDefaultEncyclopedicNamespaces();
     currentDisambiguationList = null;
     disambiguationCategories = null;
-    disambiguationComment = null;
-    disambiguationComment1 = null;
-    disambiguationCommentTodo = null;
-    disambiguationCommentTodo1 = null;
     disambiguationWarningAfterTemplates = null;
-    disambiguationWarningComment = null;
-    disambiguationWarningComment1 = null;
-    disambiguationWarningCommentDone = null;
-    disambiguationWarningTemplate = null;
-    disambiguationWarningTemplateComment = null;
-    helpPage = null;
-    helpURL = null;
     mostDisambiguationLinks = null;
-    pipeTemplate = null;
     suggestionIgnore = null;
     suggestionPages = null;
     suggestionTypoPages = null;
@@ -116,11 +116,7 @@ public class WPCConfiguration {
     templatesForLinkingText = null;
     templatesForNeedingHelp = null;
     todoLinkTemplates = null;
-    todoSubpage = null;
-    todoSubpageForce = false;
-    todoSubpageForceOther = false;
     todoTemplates = null;
-    translationComment = null;
     wiktionaryInterwiki = null;
     wiktionaryMatches = null;
   }
@@ -187,6 +183,61 @@ public class WPCConfiguration {
   }
 
   /**
+   * Map for holding boolean values for general settings.
+   */
+  private final Map<WPCConfigurationAttributeBoolean, Boolean> generalBooleanValues;
+
+  /**
+   * Map for holding boolean values for user settings.
+   */
+  private final Map<WPCConfigurationAttributeBoolean, Boolean> userBooleanValues;
+
+  /**
+   * Map for holding String values for general settings.
+   */
+  private final Map<WPCConfigurationAttributeString, String> generalStringValues;
+
+  /**
+   * Map for holding String values for user settings.
+   */
+  private final Map<WPCConfigurationAttributeString, String> userStringValues;
+
+  /**
+   * @param attribute Attribute.
+   * @return Attribute value.
+   */
+  public boolean getBooleanProperty(WPCConfigurationAttributeBoolean attribute) {
+    Boolean result = userBooleanValues.get(attribute);
+    if (result == null) {
+      result = generalBooleanValues.get(attribute);
+    }
+    if (result == null) {
+      result = Boolean.valueOf(attribute.getDefaultValue());
+    }
+    return result.booleanValue();
+  }
+
+  /**
+   * @param attribute Attribute.
+   * @return Attribute value.
+   */
+  public String getStringProperty(WPCConfigurationAttributeString attribute) {
+    String result = userStringValues.get(attribute);
+    if ((result == null) ||
+        ((!attribute.canBeEmpty()) && (result.trim().length() == 0))) {
+      result = generalStringValues.get(attribute);
+    }
+    if ((result == null) ||
+        ((!attribute.canBeEmpty()) && (result.trim().length() == 0))) {
+      result = attribute.getDefaultValue();
+    }
+    if ((result != null) && (!attribute.canBeEmpty()) && (result.trim().length() == 0)) {
+      result = null;
+    }
+    return result;
+  }
+
+  /**
    * Set property.
    * 
    * @param name Property name.
@@ -203,22 +254,46 @@ public class WPCConfiguration {
       value = value.trim();
     }
 
+    // Check if it is a Boolean attribute
+    WPCConfigurationAttributeBoolean booleanAttribute = WPCConfigurationAttributeBoolean.getValue(name);
+    if (booleanAttribute != null) {
+      Boolean booleanValue = Boolean.valueOf(value);
+      if (general) {
+        if (booleanAttribute.isGeneralAttribute()) {
+          generalBooleanValues.put(booleanAttribute, booleanValue);
+        } else {
+          log.warn(GT._("Attribute {0} can''t be set in general configuration", name));
+        }
+      } else {
+        if (booleanAttribute.isUserAttribute()) {
+          userBooleanValues.put(booleanAttribute, booleanValue);
+        } else {
+          log.warn(GT._("Attribute {0} can''t be set in user configuration", name));
+        }
+      }
+      return;
+    }
+
+    // Check if it is a String attribute
+    WPCConfigurationAttributeString stringAttribute = WPCConfigurationAttributeString.getValue(name);
+    if (stringAttribute != null) {
+      if (general) {
+        if (stringAttribute.isGeneralAttribute()) {
+          generalStringValues.put(stringAttribute, value);
+        } else {
+          log.warn(GT._("Attribute {0} can''t be set in general configuration", name));
+        }
+      } else {
+        if (stringAttribute.isUserAttribute()) {
+          userStringValues.put(stringAttribute, value);
+        } else {
+          log.warn(GT._("Attribute {0} can''t be set in user configuration", name));
+        }
+      }
+    }
+
     // Properties available also in user configuration
-    if (name.equals("dab_comment")) {
-      setDisambiguationComment(value);
-    } else if (name.equals("dab_comment_1")) {
-      setDisambiguationComment1(value);
-    } else if (name.equals("dab_comment_todo")) {
-      setDisambiguationCommentTodo(value);
-    } else if (name.equals("dab_comment_todo_1")) {
-      setDisambiguationCommentTodo1(value);
-    } else if (name.equals("dab_warning_comment")) {
-      setDisambiguationWarningComment(value);
-    } else if (name.equals("dab_warning_comment_1")) {
-      setDisambiguationWarningComment1(value);
-    } else if (name.equals("dab_warning_comment_done")) {
-      setDisambiguationWarningCommentDone(value);
-    } else if (name.equals("general_suggestions")) {
+    if (name.equals("general_suggestions")) {
       setSuggestionPages(value, general);
     } else if (name.equals("general_suggestions_typo")) {
       setSuggestionTypoPages(value, general);
@@ -231,24 +306,12 @@ public class WPCConfiguration {
     }
 
     // Properties available only in general configuration
-    if (name.equals("help_url")) {
-      setHelpURL(value);
-    } else if (name.equals("help_page")) {
-      setHelpPage(value);
-    } else if (name.equals("general_pipe_template")) {
-      setPipeTemplate(value);
-    } else if (name.equals("general_encyclopedic_namespaces")) {
+    if (name.equals("general_encyclopedic_namespaces")) {
       setEncyclopedicNamespaces(value);
     } else if (name.equals("general_todo_templates")) {
       setTodoTemplates(value);
     } else if (name.equals("general_todo_link_templates")) {
       setTodoLinkTemplates(value);
-    } else if (name.equals("general_todo_subpage")) {
-      setTodoSubpage(value);
-    } else if (name.equals("general_todo_subpage_force")) {
-      setTodoSubpageForce(value);
-    } else if (name.equals("general_todo_subpage_force_other")) {
-      setTodoSubpageForceOther(value);
     } else if (name.equals("general_dab_1l_templates")) {
       setTemplateMatchersDab1L(value);
     } else if (name.equals("general_dab_1lt_templates")) {
@@ -273,10 +336,6 @@ public class WPCConfiguration {
       setTemplatesAfterAskHelp(value);
     } else if (name.equals("dab_help_asked_templates_after")) {
       setTemplatesAfterHelpAsked(value);
-    } else if (name.equals("dab_warning_template")) {
-      setDisambiguationWarningTemplate(value);
-    } else if (name.equals("dab_warning_template_comment")) {
-      setDisambiguationWarningTemplateComment(value);
     } else if (name.equals("dab_warning_after_templates")) {
       setDisambiguationWarningAfterTemplates(value);
     } else if (name.equals("dab_link_templates")) {
@@ -291,8 +350,6 @@ public class WPCConfiguration {
       setWiktionaryInterwiki(value);
     } else if (name.equals("wikt_templates")) {
       setWiktionaryMatches(value);
-    } else if (name.equals("translation_comment")) {
-      setTranslationComment(value);
     } else if (name.equals("check_wiki_project_page")) {
       wiki.getCWConfiguration().setProjectPage(value);
     } else if (name.equals("check_wiki_comment")) {
@@ -305,58 +362,8 @@ public class WPCConfiguration {
   }
 
   /* ================================================================================= */
-  /* Help                                                                              */
-  /* ================================================================================= */
-
-  /**
-   * URL of the help page.
-   */
-  private String helpURL;
-
-  /**
-   * Help page.
-   */
-  private String helpPage;
-
-  /**
-   * @param value URL of the help page.
-   */
-  private void setHelpURL(String value) {
-    this.helpURL = nonEmptyString(value);
-  }
-
-  /**
-   * @param value Help page.
-   */
-  private void setHelpPage(String value) {
-    this.helpPage = nonEmptyString(value);
-  }
-
-  /**
-   * @return URL of the help page.
-   */
-  public String getHelpURL() {
-    if (helpURL != null) {
-      return helpURL;
-    }
-    return "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner";
-  }
-
-  /**
-   * @return Help page.
-   */
-  public String getHelpPage() {
-    return helpPage;
-  }
-
-  /* ================================================================================= */
   /* General                                                                           */
   /* ================================================================================= */
-
-  /**
-   * Template creating a "|".
-   */
-  private String pipeTemplate;
 
   /**
    * Encyclopedic name spaces.
@@ -367,13 +374,6 @@ public class WPCConfiguration {
    * Encyclopedic talk name spaces.
    */
   private List<Integer> encyclopedicTalkNamespaces;
-
-  /**
-   * @param value Template creating a "|".
-   */
-  private void setPipeTemplate(String value) {
-    this.pipeTemplate = nonEmptyString(value);
-  }
 
   /**
    * @param value Encyclopedic name spaces.
@@ -426,13 +426,6 @@ public class WPCConfiguration {
   }
 
   /**
-   * @return Template creating a "|".
-   */
-  public String getPipeTemplate() {
-    return pipeTemplate;
-  }
-
-  /**
    * @param namespace Name space.
    * @return True if the name space is encyclopedic.
    */
@@ -465,21 +458,6 @@ public class WPCConfiguration {
   private List<String> todoLinkTemplates;
 
   /**
-   * "To do" sub-page.
-   */
-  private String todoSubpage;
-
-  /**
-   * Force usage of "to do" sub-page in main name space.
-   */
-  private boolean todoSubpageForce;
-
-  /**
-   * Force usage of "to do" sub-page in other name spaces.
-   */
-  private boolean todoSubpageForceOther;
-
-  /**
    * @param value Templates creating "to do" lists.
    */
   private void setTodoTemplates(String value) {
@@ -494,33 +472,6 @@ public class WPCConfiguration {
   }
 
   /**
-   * "To do" sub-page.
-   */
-  private void setTodoSubpage(String value) {
-    this.todoSubpage = nonEmptyString(value);
-  }
-
-  /**
-   * @param value Force usage of "to do" sub-page in main name space.
-   */
-  private void setTodoSubpageForce(String value) {
-    this.todoSubpageForce = false;
-    if (value != null) {
-      this.todoSubpageForce = Boolean.parseBoolean(value);
-    }
-  }
-
-  /**
-   * @param value Force usage of "to do" sub-page in other name spaces.
-   */
-  private void setTodoSubpageForceOther(String value) {
-    this.todoSubpageForceOther = false;
-    if (value != null) {
-      this.todoSubpageForceOther = Boolean.parseBoolean(value);
-    }
-  }
-
-  /**
    * @return Templates creating "to do" lists.
    */
   public List<String> getTodoTemplates() {
@@ -532,27 +483,6 @@ public class WPCConfiguration {
    */
   public List<String> getTodoLinkTemplates() {
     return todoLinkTemplates;
-  }
-
-  /**
-   * @return "To do" sub-page.
-   */
-  public String getTodoSubpage() {
-    return todoSubpage;
-  }
-
-  /**
-   * @return Force usage of "to do" sub-page in main name space.
-   */
-  public boolean getTodoSubpageForce() {
-    return todoSubpageForce;
-  }
-
-  /**
-   * @return Force usage of "to do" sub-page in other name spaces.
-   */
-  public boolean getTodoSubpageForceOther() {
-    return todoSubpageForceOther;
   }
 
   /* ================================================================================= */
@@ -749,29 +679,6 @@ public class WPCConfiguration {
    */
   public Map<String, Suggestion> getSuggestions() {
     return suggestions;
-  }
-
-  /* ================================================================================= */
-  /* Translation                                                                       */
-  /* ================================================================================= */
-
-  /**
-   * Comment used when translating.
-   */
-  private String translationComment;
-
-  /**
-   * @param value Comment used when translating.
-   */
-  private void setTranslationComment(String value) {
-    this.translationComment = nonEmptyString(value);
-  }
-
-  /**
-   * @return Comment used when translating.
-   */
-  public String getTranslationComment() {
-    return translationComment;
   }
 
   /* ================================================================================= */
@@ -1015,26 +922,6 @@ public class WPCConfiguration {
   private List<String> mostDisambiguationLinks;
 
   /**
-   * Comment for disambiguation links that have been fixed.
-   */
-  private String disambiguationComment;
-
-  /**
-   * Comment for one disambiguation link that has been fixed.
-   */
-  private String disambiguationComment1;
-
-  /**
-   * Comment for disambiguation links that still need to be fixed.
-   */
-  private String disambiguationCommentTodo;
-
-  /**
-   * Comment for one disambiguation link that still need to be fixed.
-   */
-  private String disambiguationCommentTodo1;
-
-  /**
    * @param value Categories allowing to decide if a page is a disambiguation page.
    */
   private void setDisambiguationCategories(String value) {
@@ -1065,34 +952,6 @@ public class WPCConfiguration {
   }
 
   /**
-   * @param value Comment for disambiguation links that have been fixed.
-   */
-  private void setDisambiguationComment(String value) {
-    this.disambiguationComment = nonEmptyString(value);
-  }
-
-  /**
-   * @param value Comment for one disambiguation link that has been fixed.
-   */
-  private void setDisambiguationComment1(String value) {
-    this.disambiguationComment1 = nonEmptyString(value);
-  }
-
-  /**
-   * @param value Comment for disambiguation links that still need to be fixed.
-   */
-  private void setDisambiguationCommentTodo(String value) {
-    this.disambiguationCommentTodo = nonEmptyString(value);
-  }
-
-  /**
-   * @param value Comment for one disambiguation link that still need to be fixed.
-   */
-  private void setDisambiguationCommentTodo1(String value) {
-    this.disambiguationCommentTodo1 = nonEmptyString(value);
-  }
-
-  /**
    * @return Categories allowing to decide if a page is a disambiguation page.
    */
   public List<Page> getDisambiguationCategories() {
@@ -1118,18 +977,20 @@ public class WPCConfiguration {
    * @return Comment for disambiguation links that have been fixed.
    */
   public String getDisambiguationComment(int count) {
-    if ((count == 1) &&
-        (disambiguationComment1 != null) &&
-        (disambiguationComment1.length() > 0)) {
-      return disambiguationComment1;
+    if (count == 1) {
+      String comment1 = getStringProperty(WPCConfigurationAttributeString.DAB_COMMENT_1);
+      if (comment1 != null) {
+        return comment1;
+      }
     }
-    if (disambiguationComment != null) {
+    String comment = getStringProperty(WPCConfigurationAttributeString.DAB_COMMENT);
+    if (comment != null) {
       try {
-        return MessageFormat.format(disambiguationComment, Integer.valueOf(count));
+        return MessageFormat.format(comment, Integer.valueOf(count));
       } catch (IllegalArgumentException e) {
         //
       }
-      return disambiguationComment;
+      return comment;
     }
     return "";
   }
@@ -1139,21 +1000,19 @@ public class WPCConfiguration {
    * @return Comment for disambiguation links that still need to be fixed.
    */
   public String getDisambiguationCommentTodo(int count) {
-    if ((count == 1) &&
-        (disambiguationCommentTodo1 != null) &&
-        (disambiguationCommentTodo1.length() > 0)) {
-      return disambiguationCommentTodo1;
+    if (count == 1) {
+      String comment1 = getStringProperty(WPCConfigurationAttributeString.DAB_COMMENT_TODO_1);
+      if (comment1 != null) {
+        return comment1;
+      }
     }
-    String tmp = disambiguationCommentTodo;
-    if (tmp == null) {
-      tmp = ", {0} to be fixed";
-    }
+    String comment = getStringProperty(WPCConfigurationAttributeString.DAB_COMMENT_TODO);
     try {
-      return MessageFormat.format(tmp, Integer.valueOf(count));
+      return MessageFormat.format(comment, Integer.valueOf(count));
     } catch (IllegalArgumentException e) {
       //
     }
-    return tmp;
+    return comment;
   }
 
   /**
@@ -1168,89 +1027,15 @@ public class WPCConfiguration {
   /* ================================================================================= */
 
   /**
-   * Template for warning about disambiguation links in a page.
-   */
-  private String disambiguationWarningTemplate;
-
-  /**
-   * Comment for warning template about disambiguation links in a page.
-   */
-  private String disambiguationWarningTemplateComment;
-
-  /**
    * List of templates that should be before the disambiguation warning.
    */
   private List<String> disambiguationWarningAfterTemplates;
-
-  /**
-   * Comment for warning about disambiguation links in a page.
-   */
-  private String disambiguationWarningComment;
-
-  /**
-   * Comment for warning about one disambiguation link in a page.
-   */
-  private String disambiguationWarningComment1;
-
-  /**
-   * Comment for telling that disambiguation links have been fixed.
-   */
-  private String disambiguationWarningCommentDone;
-
-  /**
-   * @param value Template for warning about disambiguation links in a page.
-   */
-  private void setDisambiguationWarningTemplate(String value) {
-    this.disambiguationWarningTemplate = nonEmptyString(value);
-  }
-
-  /**
-   * @param value Comment for warning template about disambiguation links in a page.
-   */
-  private void setDisambiguationWarningTemplateComment(String value) {
-    this.disambiguationWarningTemplateComment = nonEmptyString(value);
-  }
 
   /**
    * @param value List of templates that should be before the disambiguation warning.
    */
   private void setDisambiguationWarningAfterTemplates(String value) {
     this.disambiguationWarningAfterTemplates = convertPropertyToStringList(value);
-  }
-
-  /**
-   * @param value Comment for warning about disambiguation links in a page.
-   */
-  private void setDisambiguationWarningComment(String value) {
-    this.disambiguationWarningComment = nonEmptyString(value);
-  }
-
-  /**
-   * @param value Comment for warning about one disambiguation link in a page.
-   */
-  private void setDisambiguationWarningComment1(String value) {
-    this.disambiguationWarningComment1 = nonEmptyString(value);
-  }
-
-  /**
-   * @param value Comment for telling that disambiguation links have been fixed.
-   */
-  private void setDisambiguationWarningCommentDone(String value) {
-    this.disambiguationWarningCommentDone = nonEmptyString(value);
-  }
-
-  /**
-   * @return Template for warning about disambiguation links in a page.
-   */
-  public String getDisambiguationWarningTemplate() {
-    return disambiguationWarningTemplate;
-  }
-
-  /**
-   * @return Comment for warning template about disambiguation links in a page.
-   */
-  public String getDisambiguationWarningTemplateComment() {
-    return disambiguationWarningTemplateComment;
   }
 
   /**
@@ -1265,30 +1050,33 @@ public class WPCConfiguration {
    * @return Comment for warning about disambiguation links in a page.
    */
   public String getDisambiguationWarningComment(int count) {
-    if ((count == 1) &&
-        (disambiguationWarningComment1 != null) &&
-        (disambiguationWarningComment1.length() > 0)) {
-      return disambiguationWarningComment1;
+    if (count == 1) {
+      String comment1 = getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_COMMENT_1);
+      if ((comment1 != null) && (comment1.length() > 0)) {
+        return comment1;
+      }
     }
-    if (disambiguationWarningComment != null) {
+    String comment = getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_COMMENT);
+    if (comment != null) {
       try {
-        return MessageFormat.format(disambiguationWarningComment, Integer.valueOf(count));
+        return MessageFormat.format(comment, Integer.valueOf(count));
       } catch (IllegalArgumentException e) {
         //
       }
-      return disambiguationWarningComment;
+      return comment;
     }
-    return disambiguationWarningTemplate;
+    return getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE);
   }
 
   /**
    * @return Comment for telling that disambiguation links have been fixed.
    */
   public String getDisambiguationWarningCommentDone() {
-    if (disambiguationWarningCommentDone != null) {
-      return disambiguationWarningCommentDone;
+    String comment = getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_COMMENT_DONE);
+    if (comment != null) {
+      return comment;
     }
-    return disambiguationWarningTemplate;
+    return getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE);
   }
 
   /* ================================================================================= */
