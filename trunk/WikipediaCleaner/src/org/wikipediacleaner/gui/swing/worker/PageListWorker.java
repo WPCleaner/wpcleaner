@@ -33,6 +33,7 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationAttributeString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -274,10 +275,11 @@ public class PageListWorker extends BasicWorker {
         for (Page tmpPage : tmpPages) {
           if (!tmpPage.isArticle()) {
             String title = tmpPage.getArticlePageName();
-            if ((configuration.getTodoSubpage() != null) &&
-                (configuration.getTodoSubpage().trim().length() > 0) &&
-                (title.endsWith("/" + configuration.getTodoSubpage()))) {
-              title = title.substring(0, title.length() - 1 - configuration.getTodoSubpage().length());
+            String todoSubpage = configuration.getStringProperty(WPCConfigurationAttributeString.TODO_SUBPAGE);
+            if ((todoSubpage != null) &&
+                (todoSubpage.trim().length() > 0) &&
+                (title.endsWith("/" + todoSubpage))) {
+              title = title.substring(0, title.length() - 1 - todoSubpage.length());
             }
             tmpPage = DataManager.getPage(getWikipedia(), title, null, null);
           }

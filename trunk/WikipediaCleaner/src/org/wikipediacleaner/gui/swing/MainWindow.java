@@ -76,6 +76,7 @@ import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationAttributeString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Namespace;
@@ -302,7 +303,7 @@ public class MainWindow
     DocumentBuilderImpl dbi = new DocumentBuilderImpl(
         ucontextMessage, rcontextMessage);
     InputSource is = new InputSource(new StringReader(Version.MESSAGE));
-    is.setSystemId(EnumWikipedia.EN.getConfiguration().getHelpURL());
+    is.setSystemId(EnumWikipedia.EN.getConfiguration().getStringProperty(WPCConfigurationAttributeString.HELP_URL));
     try {
       textMessage.setDocument(dbi.parse(is), rcontextMessage);
     } catch (SAXException e) {
@@ -1028,9 +1029,10 @@ public class MainWindow
    */
   public void actionHelp() {
     EnumWikipedia wikipedia = getWikipedia();
-    String url = EnumWikipedia.EN.getConfiguration().getHelpURL();
-    if ((wikipedia != null) && (wikipedia.getConfiguration().getHelpURL() != null)) {
-      url = wikipedia.getConfiguration().getHelpURL();
+    WPCConfigurationAttributeString attributeHelpURL = WPCConfigurationAttributeString.HELP_URL;
+    String url = EnumWikipedia.EN.getConfiguration().getStringProperty(attributeHelpURL);
+    if ((wikipedia != null) && (wikipedia.getConfiguration().getStringProperty(attributeHelpURL) != null)) {
+      url = wikipedia.getConfiguration().getStringProperty(attributeHelpURL);
     }
     if (Utilities.isDesktopSupported()) {
       Utilities.browseURL(url);
@@ -1140,7 +1142,7 @@ public class MainWindow
           textPagename);
       return;
     }
-    String template = getConfiguration().getDisambiguationWarningTemplate();
+    String template = getConfiguration().getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE);
     if ((template == null) || (template.trim().length() == 0)) {
       Utilities.displayWarning(
           getParentComponent(),
