@@ -110,35 +110,35 @@ public class PageElementTemplate extends PageElement {
     }
     tmpIndex += 2;
 
-    // Possible whitespace characters
-    while ((tmpIndex < contents.length()) &&
-           ((contents.charAt(tmpIndex) == ' ') ||
-            (contents.charAt(tmpIndex) == '\n'))) {
-      tmpIndex++;
-    }
+    boolean moved = false;
+    do {
+      moved = false;
 
-    // Possible comment
-    if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
-      PageElementComment comment = null;
-      if (comments != null) {
-        for (PageElementComment tmpComment : comments) {
-          if (tmpComment.getBeginIndex() == tmpIndex) {
-            comment = tmpComment;
+      // Possible whitespace characters
+      while ((tmpIndex < contents.length()) &&
+             ((contents.charAt(tmpIndex) == ' ') ||
+              (contents.charAt(tmpIndex) == '\n'))) {
+        tmpIndex++;
+        moved = true;
+      }
+  
+      // Possible comment
+      if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
+        PageElementComment comment = null;
+        if (comments != null) {
+          for (PageElementComment tmpComment : comments) {
+            if (tmpComment.getBeginIndex() == tmpIndex) {
+              comment = tmpComment;
+            }
           }
         }
+        if (comment == null) {
+          return null;
+        }
+        tmpIndex = comment.getEndIndex();
+        moved = true;
       }
-      if (comment == null) {
-        return null;
-      }
-      tmpIndex = comment.getEndIndex();
-    }
-
-    // Possible whitespace characters
-    while ((tmpIndex < contents.length()) &&
-           ((contents.charAt(tmpIndex) == ' ') ||
-            (contents.charAt(tmpIndex) == '\n'))) {
-      tmpIndex++;
-    }
+    } while (moved);
 
     int startTemplateName = tmpIndex;
 
@@ -168,28 +168,34 @@ public class PageElementTemplate extends PageElement {
       }
     }
 
-    // Possible comment
-    if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
-      PageElementComment comment = null;
-      if (comments != null) {
-        for (PageElementComment tmpComment : comments) {
-          if (tmpComment.getBeginIndex() == tmpIndex) {
-            comment = tmpComment;
+    do {
+      moved = false;
+
+      // Possible comment
+      if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == '<')) {
+        PageElementComment comment = null;
+        if (comments != null) {
+          for (PageElementComment tmpComment : comments) {
+            if (tmpComment.getBeginIndex() == tmpIndex) {
+              comment = tmpComment;
+            }
           }
         }
+        if (comment == null) {
+          return null;
+        }
+        tmpIndex = comment.getEndIndex();
+        moved = true;
       }
-      if (comment == null) {
-        return null;
+  
+      // Possible whitespace characters
+      while ((tmpIndex < contents.length()) &&
+             ((contents.charAt(tmpIndex) == ' ') ||
+              (contents.charAt(tmpIndex) == '\n'))) {
+        tmpIndex++;
+        moved = true;
       }
-      tmpIndex = comment.getEndIndex();
-    }
-
-    // Possible whitespace characters
-    while ((tmpIndex < contents.length()) &&
-           ((contents.charAt(tmpIndex) == ' ') ||
-            (contents.charAt(tmpIndex) == '\n'))) {
-      tmpIndex++;
-    }
+    } while (moved);
 
     // Check if it's a template without parameters
     if (contents.startsWith("}}", tmpIndex)) {
