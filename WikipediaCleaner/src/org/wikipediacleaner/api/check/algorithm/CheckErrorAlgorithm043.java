@@ -85,6 +85,12 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
         }
       }
       if (shouldCount) {
+        if ((currentIndex + 2 < maxLength) &&
+            (contents.charAt(currentIndex + 2) == '{')) {
+          shouldCount = false;
+        }
+      }
+      if (shouldCount) {
         if (errors == null) {
           return true;
         }

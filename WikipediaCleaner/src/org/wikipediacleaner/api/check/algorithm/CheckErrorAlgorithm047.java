@@ -54,6 +54,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
 
     // Analyze contents from the beginning
     String contents = pageAnalysis.getContents();
+    int maxLength = contents.length();
     int currentIndex = contents.indexOf("}}");
     boolean result = false;
     while (currentIndex > 0) {
@@ -74,6 +75,12 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
       if (shouldCount) {
         PageElementDefaultsort sort = pageAnalysis.isInDefaultSort(currentIndex);
         if ((sort != null) && (sort.getEndIndex() == currentIndex + 2)) {
+          shouldCount = false;
+        }
+      }
+      if (shouldCount) {
+        if ((currentIndex + 2 < maxLength) &&
+            (contents.charAt(currentIndex + 2) == '}')) {
           shouldCount = false;
         }
       }
