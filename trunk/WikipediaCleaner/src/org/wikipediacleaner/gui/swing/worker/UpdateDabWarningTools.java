@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,6 +36,7 @@ import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.InternalLinkCount;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -472,7 +474,7 @@ public class UpdateDabWarningTools {
           false);
 
       // Inform creator and modifiers of the page
-      informContributors(analysis, creator, modifiers);
+      informContributors(analysis, dabLinks, creator, modifiers);
 
       return true;
     }
@@ -575,7 +577,7 @@ public class UpdateDabWarningTools {
           0, tmp.toString(), false);
 
       // Inform creator and modifiers of the page
-      informContributors(analysis, creator, modifiers);
+      informContributors(analysis, dabLinks, creator, modifiers);
 
       return true;
     }
@@ -956,29 +958,119 @@ public class UpdateDabWarningTools {
    * Inform page contributors of links to disambiguation pages.
    * 
    * @param analysis Page analysis.
+   * @param dabLinks List of links to disambiguation pages.
    * @param creator User who has created the page.
+   * @param modifiers Other contributors to the page.
    */
   private void informContributors(
       PageAnalysis analysis,
+      Collection<String> dabLinks,
       String creator,
       List<String> modifiers) {
     if (analysis == null) {
       return;
     }
+
     if (creator != null) {
       if ((modifiers == null) || (modifiers.isEmpty())) {
-        // TODO
-        System.err.println("Should inform " + creator + " for creating page " + analysis.getPage().getTitle());
+        addMessage(
+            analysis, dabLinks, creator,
+            WPCConfigurationString.MSG_NEW_ARTICLE_WITH_DAB_TITLE,
+            WPCConfigurationString.MSG_NEW_ARTICLE_WITH_DAB_TEMPLATE);
       } else {
-        // TODO
-        System.err.println("Should inform " + creator + " for creating page " + analysis.getPage().getTitle() + " (+)");
+        addMessage(
+            analysis, dabLinks, creator,
+            WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIED_WITH_DAB_TITLE,
+            WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIED_WITH_DAB_TEMPLATE);
       }
     }
     if (modifiers != null) {
       for (String modifier : modifiers) {
-        // TODO
-        System.err.println("Should inform " + modifier + " for modifying page " + analysis.getPage().getTitle());
+        addMessage(
+            analysis, dabLinks, modifier,
+            WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIER_WITH_DAB_TITLE,
+            WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIER_WITH_DAB_TEMPLATE);
       }
+    }
+  }
+
+  /**
+   * Add a message on user talk page for disambiguation links.
+   * 
+   * @param analysis Page analysis.
+   * @param dabLinks List of disambiguation links.
+   * @param user User to inform.
+   * @param titleParam Parameter for the title of the new section.
+   * @param templateParam Parameter for the template used to inform.
+   */
+  private void addMessage(
+      PageAnalysis analysis, Collection<String> dabLinks,
+      String user,
+      WPCConfigurationString titleParam,
+      WPCConfigurationString templateParam) {
+    if ((analysis == null) || (user == null)) {
+      return;
+    }
+    String article = analysis.getPage().getTitle();
+    WPCConfiguration config = analysis.getWPCConfiguration();
+
+    // Prepare message
+    String template = config.getString(templateParam);
+    if ((template == null) || (template.trim().length() == 0)) {
+      return;
+    }
+    String[] templateElements = template.split("\\|");
+    if (templateElements[0].trim().length() == 0) {
+      return;
+    }
+    StringBuilder message = new StringBuilder();
+    message.append("{{");
+    message.append(templateElements[0].trim());
+    if ((templateElements.length > 1) && (templateElements[1].trim().length() > 0)) {
+      message.append("|");
+      message.append(templateElements[1].trim());
+      message.append("=");
+      message.append(article);
+    }
+    if ((templateElements.length > 2) && (templateElements[2].trim().length() > 0)) {
+      String wpcUser = config.getString(WPCConfigurationString.USER);
+      if ((wpcUser != null) && (wpcUser.trim().length() > 0)) {
+        message.append("|");
+        message.append(templateElements[2].trim());
+        message.append("=");
+        message.append(wpcUser);
+      }
+    }
+    if (dabLinks != null) {
+      for (String dabLink : dabLinks) {
+        message.append("|");
+        message.append(dabLink);
+      }
+    }
+    message.append("}}");
+
+    // Retrieve user talk page name
+    Namespace userTalkNS = wikipedia.getWikiConfiguration().getNamespace(Namespace.USER_TALK);
+    String userTalk = userTalkNS.getTitle() + ":" + user;
+
+    // Check title
+    String title = config.getString(titleParam);
+    if (title != null) {
+      try {
+        title = MessageFormat.format(title, article);
+      } catch (IllegalArgumentException e) {
+        //
+      }
+      Page userTalkPage = DataManager.getPage(analysis.getWikipedia(), userTalk, null, null);
+      try {
+        api.retrieveSectionContents(wikipedia, userTalkPage, 0);
+        api.addNewSection(wikipedia, userTalkPage, title, message.toString(), false);
+      } catch (APIException e) {
+        //
+      }
+    } else {
+      // TODO
+      System.err.println("Shoudl add " + message + " in " + userTalk);
     }
   }
 

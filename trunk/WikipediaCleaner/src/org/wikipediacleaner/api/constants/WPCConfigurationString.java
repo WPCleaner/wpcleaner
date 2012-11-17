@@ -24,35 +24,49 @@ package org.wikipediacleaner.api.constants;
  */
 public enum WPCConfigurationString {
 
-  // Comment for disambiguation links that have been fixed.
+  // Comment for disambiguation links that have been fixed
   DAB_COMMENT("dab_comment", null, false, true, true),
-  // Comment for one disambiguation link that has been fixed.
+  // Comment for one disambiguation link that has been fixed
   DAB_COMMENT_1("dab_comment_1", null, false, true, true),
-  // Comment for disambiguation links that still need to be fixed.
+  // Comment for disambiguation links that still need to be fixed
   DAB_COMMENT_TODO("dab_comment_todo", ", {0} to be fixed", false, true, true),
-  // Comment for one disambiguation link that still need to be fixed.
+  // Comment for one disambiguation link that still need to be fixed
   DAB_COMMENT_TODO_1("dab_comment_todo_1", null, false, true, true),
-  // Comment for warning about disambiguation links in a page.
+  // Comment for warning about disambiguation links in a page
   DAB_WARNING_COMMENT("dab_warning_comment", null, false, true, true),
-  // Comment for warning about one disambiguation link in a page.
+  // Comment for warning about one disambiguation link in a page
   DAB_WARNING_COMMENT_1("dab_warning_comment_1", null, false, true, true),
-  // Comment for telling that disambiguation links have been fixed.
+  // Comment for telling that disambiguation links have been fixed
   DAB_WARNING_COMMENT_DONE("dab_warning_comment_done", null, false, true, true),
-  // Template for warning about disambiguation links in a page.
+  // Template for warning about disambiguation links in a page
   DAB_WARNING_TEMPLATE("dab_warning_template", null, false, true, false),
-  // Comment for warning template about disambiguation links in a page.
+  // Comment for warning template about disambiguation links in a page
   DAB_WARNING_TEMPLATE_COMMENT("dab_warning_template_comment", null, false, true, false),
-  // Help page.
+  // Help page
   HELP_PAGE("help_page", null, false, true, false),
-  // URL of the help page.
+  // URL of the help page
   HELP_URL("help_url", "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner", false, true, false),
-  // Template creating a "|".
+  // Template used to warn a user who has created a new article with disambiguation links
+  MSG_NEW_ARTICLE_MODIFIED_WITH_DAB_TEMPLATE("rc_msg_new_article_modified_with_dab_template", null, false, true, true),
+  // Title used to warn a user who has created a new article with disambiguation links
+  MSG_NEW_ARTICLE_MODIFIED_WITH_DAB_TITLE("rc_msg_new_article_modified_with_dab_title", null, false, true, true),
+  // Template used to warn a user who has modified a new article with disambiguation links
+  MSG_NEW_ARTICLE_MODIFIER_WITH_DAB_TEMPLATE("rc_msg_new_article_modifier_with_dab_template", null, false, true, true),
+  // Title used to warn a user who has modified a new article with disambiguation links
+  MSG_NEW_ARTICLE_MODIFIER_WITH_DAB_TITLE("rc_msg_new_article_modifier_with_dab_title", null, false, true, true),
+  // Template used to warn a user who has created a new article with disambiguation links
+  MSG_NEW_ARTICLE_WITH_DAB_TEMPLATE("rc_msg_new_article_with_dab_template", null, false, true, true),
+  // Title used to warn a user who has created a new article with disambiguation links
+  MSG_NEW_ARTICLE_WITH_DAB_TITLE("rc_msg_new_article_with_dab_title", null, false, true, true),
+  // Template creating a "|"
   PIPE_TEMPLATE("general_pipe_template", null, false, true, false),
-  // "To do" sub-page.
+  // "To do" sub-page
   TODO_SUBPAGE("general_todo_subpage", null, false, true, false),
-  // Comment used when translating.
+  // Comment used when translating
   TRANSLATION_COMMENT("translation_comment", null, false, true, true),
-  // Wiktionary interwiki.
+  // User
+  USER("general_user", null, false, false, true),
+  // Wiktionary interwiki
   WIKTIONARY_INTERWIKI("wikt_interwiki", null, false, true, false);
 
   /**

@@ -197,8 +197,16 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
   public void recentChanges(List<RecentChange> newRC, Date currentTime) {
     modelRC.addRecentChanges(newRC);
 
-    // Update list of interesting recent changes
+    // Remove old changes
+    List<RecentChange> filteredNewRC = new ArrayList<RecentChange>();
     for (RecentChange rc : newRC) {
+      if (currentTime.getTime() < rc.getTimestamp().getTime() + 15*60*1000) {
+        filteredNewRC.add(rc);
+      }
+    }
+
+    // Update list of interesting recent changes
+    for (RecentChange rc : filteredNewRC) {
       if (isInterestingNamespace(rc)) {
         if (RecentChange.TYPE_NEW.equals(rc.getType())) {
           if (rc.isNew()) {
