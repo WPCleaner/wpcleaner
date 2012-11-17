@@ -97,14 +97,13 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
               (tmpChar == '}')) {
             finished = true;
           } else if (tmpChar == '{') {
-            if (errors == null) {
-              return true;
+            if ((tmpIndex == 0) || (contents.charAt(tmpIndex - 1) != '{')) {
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(), tmpIndex, currentIndex + 2);
+              errorResult.addReplacement("{" + contents.substring(tmpIndex, currentIndex + 2));
+              errors.add(errorResult);
+              result = true;
             }
-            result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), tmpIndex, currentIndex + 2);
-            errorResult.addReplacement("{" + contents.substring(tmpIndex, currentIndex + 2));
-            errors.add(errorResult);
             errorReported = true;
             finished = true;
           } else if (tmpChar == '[') {
@@ -117,6 +116,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
             errorResult.addReplacement("{{" + contents.substring(tmpIndex + 1, currentIndex + 2));
             errorResult.addReplacement("[[" + contents.substring(tmpIndex + 1, currentIndex) + "]]");
             errors.add(errorResult);
+            result = true;
             errorReported = true;
             finished = true;
           }
@@ -129,6 +129,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
               pageAnalysis.getPage(), currentIndex, currentIndex + 2);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
+          result = true;
         }
       }
       currentIndex = contents.indexOf("}}", currentIndex + 2);
