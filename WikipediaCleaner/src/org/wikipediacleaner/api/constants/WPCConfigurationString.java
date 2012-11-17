@@ -43,9 +43,9 @@ public enum WPCConfigurationString {
   // Comment for warning template about disambiguation links in a page.
   DAB_WARNING_TEMPLATE_COMMENT("dab_warning_template_comment", null, false, true, false),
   // Help page.
-  HELP_PAGE("general_todo_subpage_force_other", null, false, true, false),
+  HELP_PAGE("help_page", null, false, true, false),
   // URL of the help page.
-  HELP_URL("general_todo_subpage_force", "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner", false, true, false),
+  HELP_URL("help_url", "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner", false, true, false),
   // Template creating a "|".
   PIPE_TEMPLATE("general_pipe_template", null, false, true, false),
   // "To do" sub-page.
