@@ -34,6 +34,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
@@ -521,12 +522,13 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     // Remove special characters from title
     String title = pageAnalysis.getPage().getTitle();
     StringBuilder currentTitle = new StringBuilder();
+    EnumWikipedia wiki = pageAnalysis.getWikipedia();
     for (int i = 0; i < title.length(); i++) {
       char character = title.charAt(i);
-      if (SpecialCharacters.isAuthorized(character, pageAnalysis.getWikipedia())) {
+      if (SpecialCharacters.isAuthorized(character, wiki)) {
         currentTitle.append(character);
       } else {
-        currentTitle.append(SpecialCharacters.proposeReplacement(character));
+        currentTitle.append(SpecialCharacters.proposeReplacement(character, wiki));
       }
     }
 

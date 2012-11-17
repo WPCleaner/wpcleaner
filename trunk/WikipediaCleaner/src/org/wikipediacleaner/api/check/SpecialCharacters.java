@@ -35,7 +35,7 @@ public class SpecialCharacters {
   private final static String punctuation = ".,;:!?";
 
   /**
-   * Characters authorized for every Wikipedia.
+   * Characters authorized for every Wiki.
    */
   private final static String authorizedCharacters =
     "abcdefghijklmnopqrstuvwxyz" +
@@ -43,29 +43,25 @@ public class SpecialCharacters {
     " 0123456789-:,.!?'&#/()*";
 
   /**
-   * Characters authorized for specific Wikipedia. 
+   * Characters authorized for specific Wiki. 
    */
   private final static Map<EnumWikipedia, String> localAuthorizedCharacters =
     new HashMap<EnumWikipedia, String>();
 
   /**
-   * Possible replacements for unauthorized characters.
+   * Possible replacements for unauthorized characters for every Wiki.
    */
   private final static Map<Character, String> replacements = new HashMap<Character, String>();
 
-  static {
-    // Locally authorized characters
-    localAuthorizedCharacters.put(EnumWikipedia.CS, "čďěňřšťžČĎŇŘŠŤŽ");
-    localAuthorizedCharacters.put(EnumWikipedia.DA, "ÆØÅæøå");
-    localAuthorizedCharacters.put(EnumWikipedia.FI, "ÅÄÖåäö");
-    //localAuthorizedCharacters.put(EnumWikipedia.NN, "ÆØÅæøå");
-    localAuthorizedCharacters.put(EnumWikipedia.NO, "ÆØÅæøå");
-    localAuthorizedCharacters.put(EnumWikipedia.RO, "ăîâşţ");
-    localAuthorizedCharacters.put(EnumWikipedia.RU, "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдежзийклмнопрстуфхцчшщьыъэюя");
-    localAuthorizedCharacters.put(EnumWikipedia.SV, "ÅÄÖåäö");
-    localAuthorizedCharacters.put(EnumWikipedia.UK, "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдежзийклмнопрстуфхцчшщьыъэюяіїґ");
+  /**
+   * Possible replacements for unauthorize characters for specific Wiki.
+   */
+  private final static Map<EnumWikipedia, Map<Character, String>> localReplacements =
+      new HashMap<EnumWikipedia, Map<Character,String>>();
 
-    // Possible replacements
+  static {
+
+    // Possible replacements for every Wiki
     replacements.put((char) 0xFEFF, "");
     replacements.put((char) 0x200E, "");
     replacements.put((char) 0x200B, "");
@@ -149,6 +145,52 @@ public class SpecialCharacters {
 
     addReplacements("ŹẐŻŽẒ", "Z");
     addReplacements("źẑżẓž", "z");
+
+    // Specific configuration for CS
+    localAuthorizedCharacters.put(EnumWikipedia.CS, "čďěňřšťžČĎŇŘŠŤŽ");
+
+    // Specific configuration for DA
+    localAuthorizedCharacters.put(EnumWikipedia.DA, "ÆØÅæøå");
+
+    // Specific configuration for EL
+    localAuthorizedCharacters.put(EnumWikipedia.EL, "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθικλμνξοπρσςτυφχψω");
+    addReplacements(EnumWikipedia.EL, "ά", "α");
+    addReplacements(EnumWikipedia.EL, "έ", "ε");
+    addReplacements(EnumWikipedia.EL, "ή", "η");
+    addReplacements(EnumWikipedia.EL, "ί", "ι");
+    addReplacements(EnumWikipedia.EL, "ϊ", "ι");
+    addReplacements(EnumWikipedia.EL, "ό", "ο");
+    addReplacements(EnumWikipedia.EL, "ύ", "υ");
+    addReplacements(EnumWikipedia.EL, "ϋ", "υ");
+    addReplacements(EnumWikipedia.EL, "ώ", "ω");
+    addReplacements(EnumWikipedia.EL, "Ά", "Α");
+    addReplacements(EnumWikipedia.EL, "Έ", "Ε");
+    addReplacements(EnumWikipedia.EL, "Ή", "Η");
+    addReplacements(EnumWikipedia.EL, "Ί", "Ι");
+    addReplacements(EnumWikipedia.EL, "Ό", "Ο");
+    addReplacements(EnumWikipedia.EL, "Ύ", "Υ");
+    addReplacements(EnumWikipedia.EL, "Ώ", "Ω");
+
+    // Specific configuration for FI
+    localAuthorizedCharacters.put(EnumWikipedia.FI, "ÅÄÖåäö");
+
+    // Specific configuration for NN
+    //localAuthorizedCharacters.put(EnumWikipedia.NN, "ÆØÅæøå");
+
+    // Specific configuration for NO
+    localAuthorizedCharacters.put(EnumWikipedia.NO, "ÆØÅæøå");
+
+    // Specific configuration for RO
+    localAuthorizedCharacters.put(EnumWikipedia.RO, "ăîâşţ");
+
+    // Specific configuration for RU
+    localAuthorizedCharacters.put(EnumWikipedia.RU, "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдежзийклмнопрстуфхцчшщьыъэюя");
+
+    // Specific configuration for SV
+    localAuthorizedCharacters.put(EnumWikipedia.SV, "ÅÄÖåäö");
+
+    // Specific configuration for UK
+    localAuthorizedCharacters.put(EnumWikipedia.UK, "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдежзийклмнопрстуфхцчшщьыъэюяіїґ");
   }
 
   /**
@@ -160,6 +202,24 @@ public class SpecialCharacters {
   private static void addReplacements(String characters, String replacement) {
     for (int i = 0; i < characters.length(); i++) {
       replacements.put(characters.charAt(i), replacement);
+    }
+  }
+
+  /**
+   * Add replacements for some characters for a specific Wiki.
+   * 
+   * @param wiki Wiki.
+   * @param characters All the characters to replace.
+   * @param replacement Replacement.
+   */
+  private static void addReplacements(EnumWikipedia wiki, String characters, String replacement) {
+    Map<Character, String> localReplacement = localReplacements.get(wiki);
+    if (localReplacement == null) {
+      localReplacement = new HashMap<Character, String>();
+      localReplacements.put(wiki, localReplacement);
+    }
+    for (int i = 0; i < characters.length(); i++) {
+      localReplacement.put(characters.charAt(i), replacement);
     }
   }
 
@@ -176,17 +236,17 @@ public class SpecialCharacters {
 
   /**
    * @param character Character tested.
-   * @param code Wikipedia code.
+   * @param wiki Wiki.
    * @return Flag indicating if the character is authorized.
    */
-  public static boolean isAuthorized(char character, EnumWikipedia code) {
+  public static boolean isAuthorized(char character, EnumWikipedia wiki) {
     if (authorizedCharacters.indexOf(character) >= 0) {
       return true;
     }
-    if (code == null) {
+    if (wiki == null) {
       return false;
     }
-    String local = localAuthorizedCharacters.get(code);
+    String local = localAuthorizedCharacters.get(wiki);
     if (local == null) {
       return false;
     }
@@ -195,9 +255,17 @@ public class SpecialCharacters {
 
   /**
    * @param character Character to be replaced.
+   * @param wiki Wiki.
    * @return Replacement.
    */
-  public static String proposeReplacement(char character) {
+  public static String proposeReplacement(char character, EnumWikipedia wiki) {
+    Map<Character, String> localReplacement = localReplacements.get(wiki);
+    if (localReplacement != null) {
+      String replacement = localReplacement.get(Character.valueOf(character));
+      if (replacement != null) {
+        return replacement;
+      }
+    }
     String replacement = replacements.get(Character.valueOf(character));
     if (replacement != null) {
       return replacement;

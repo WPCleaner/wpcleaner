@@ -23,6 +23,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.check.SpecialCharacters;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementDefaultsort;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -65,6 +66,7 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
+    EnumWikipedia wiki = pageAnalysis.getWikipedia();
     for (PageElementDefaultsort tag : tags) {
       if (tag != null) {
         boolean characterFound = false;
@@ -76,12 +78,12 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
         while (currentPos < value.length()) {
           boolean error = false;
           char character = value.charAt(currentPos);
-          if (!SpecialCharacters.isAuthorized(character, pageAnalysis.getWikipedia())) {
+          if (!SpecialCharacters.isAuthorized(character, wiki)) {
             characterFound = true;
             error = true;
           }
           if (error) {
-            String newCharacter = SpecialCharacters.proposeReplacement(character);
+            String newCharacter = SpecialCharacters.proposeReplacement(character, wiki);
             if (!Character.toString(character).equals(newCharacter)) {
               characterReplaced = true;
             } else {
