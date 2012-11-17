@@ -383,6 +383,8 @@ public class WPCConfiguration {
       wiki.getCWConfiguration().setTranslationPage(value);
     } else if (name.equals("check_wiki_force")) {
       wiki.getCWConfiguration().setForce(value);
+    } else {
+      log.warn(GT._("Attribute {0} can''t be set in general configuration", name));
     }
   }
 
