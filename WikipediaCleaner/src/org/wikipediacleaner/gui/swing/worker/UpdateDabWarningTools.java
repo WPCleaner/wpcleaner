@@ -32,8 +32,9 @@ import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationAttributeBoolean;
-import org.wikipediacleaner.api.constants.WPCConfigurationAttributeString;
+import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
+import org.wikipediacleaner.api.constants.WPCConfigurationString;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.InternalLinkCount;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -223,7 +224,7 @@ public class UpdateDabWarningTools {
     for (Page page : pages) {
       Page talkPage = page.getTalkPage();
       mapTalkPages.put(page, talkPage);
-      String todoSubpageAttr = configuration.getStringProperty(WPCConfigurationAttributeString.TODO_SUBPAGE);
+      String todoSubpageAttr = configuration.getString(WPCConfigurationString.TODO_SUBPAGE);
       if (todoSubpageAttr != null) {
         Page todoSubpage = talkPage.getSubPage(todoSubpageAttr);
         mapTodoSubpages.put(page, todoSubpage);
@@ -270,8 +271,9 @@ public class UpdateDabWarningTools {
     if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
       return false;
     }
-    if ((configuration.getTodoTemplates() == null) ||
-        (configuration.getTodoTemplates().isEmpty())) {
+    List<String> todoTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_TEMPLATES);
+    if ((todoTemplates == null) ||
+        (todoTemplates.isEmpty())) {
       return false;
     }
     Page page = pageAnalysis.getPage();
@@ -284,7 +286,7 @@ public class UpdateDabWarningTools {
     }
 
     // "To do" sub-page
-    String todoSubpageAttr = configuration.getStringProperty(WPCConfigurationAttributeString.TODO_SUBPAGE);
+    String todoSubpageAttr = configuration.getString(WPCConfigurationString.TODO_SUBPAGE);
     if (todoSubpageAttr != null) {
 
       // Retrieving "To do" sub-page contents
@@ -297,11 +299,11 @@ public class UpdateDabWarningTools {
       // If we force the use of "To do" sub-page, the disambiguation warning must be on it
       if ((page.getNamespace() != null) &&
           (page.getNamespace().intValue() == Namespace.MAIN)) {
-        if (configuration.getBooleanProperty(WPCConfigurationAttributeBoolean.TODO_SUBPAGE_FORCE)) {
+        if (configuration.getBoolean(WPCConfigurationBoolean.TODO_SUBPAGE_FORCE)) {
           return manageDabWarningOnTodoSubpage(
               pageAnalysis, pageRevId, todoSubpage, talkPage, creator, modifiers);
         }
-      } else if (configuration.getBooleanProperty(WPCConfigurationAttributeBoolean.TODO_SUBPAGE_FORCE_OTHER)) {
+      } else if (configuration.getBoolean(WPCConfigurationBoolean.TODO_SUBPAGE_FORCE_OTHER)) {
         return manageDabWarningOnTodoSubpage(
             pageAnalysis, pageRevId, todoSubpage, talkPage, creator, modifiers);
       }
@@ -418,7 +420,7 @@ public class UpdateDabWarningTools {
     }
     PageAnalysis analysis = todoSubpage.getAnalysis(contents, true);
     List<PageElementTemplate> templates = analysis.getTemplates(
-        configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE));
+        configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE));
     PageElementTemplate templateWarning = ((templates != null) && (templates.size() > 0)) ?
         templates.get(0) : null;
 
@@ -505,11 +507,12 @@ public class UpdateDabWarningTools {
     }
     PageAnalysis talkAnalysis = talkPage.getAnalysis(contents, true);
     PageElementTemplate templateTodo = null;
-    if ((configuration.getTodoTemplates() == null) ||
-        (configuration.getTodoTemplates().isEmpty())) {
+    List<String> todoTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_TEMPLATES);
+    if ((todoTemplates == null) ||
+        (todoTemplates.isEmpty())) {
       return false;
     }
-    for (String todoTemplate : configuration.getTodoTemplates()) {
+    for (String todoTemplate : todoTemplates) {
       List<PageElementTemplate> templates = talkAnalysis.getTemplates(todoTemplate);
       PageElementTemplate templateTmp = (templates != null) && (templates.size() > 0) ?
           templates.get(0) : null;
@@ -528,8 +531,10 @@ public class UpdateDabWarningTools {
 
       // Search where to add "To do" template
       PageElementTemplate templatePrevious = null;
-      if (configuration.getDisambiguationWarningAfterTemplates() != null) {
-        for (String previousTemplate : configuration.getDisambiguationWarningAfterTemplates()) {
+      List<String> dabWarningAfterTemplates = configuration.getStringList(
+          WPCConfigurationStringList.DAB_WARNING_AFTER_TEMPLATES);
+      if (dabWarningAfterTemplates != null) {
+        for (String previousTemplate : dabWarningAfterTemplates) {
           Collection<PageElementTemplate> templates = talkAnalysis.getTemplates(previousTemplate);
           for (PageElementTemplate templateTmp : templates) {
             if ((templatePrevious == null) ||
@@ -554,7 +559,7 @@ public class UpdateDabWarningTools {
         }
       }
       tmp.append("{{");
-      tmp.append(configuration.getTodoTemplates().get(0));
+      tmp.append(todoTemplates.get(0));
       tmp.append("|* ");
       addWarning(tmp, pageRevId, dabLinks);
       tmp.append("}}");
@@ -579,7 +584,7 @@ public class UpdateDabWarningTools {
     String parameter = templateTodo.getParameterValue("1");
     PageAnalysis parameterAnalysis = talkPage.getAnalysis(parameter, false);
     List<PageElementTemplate> templates = parameterAnalysis.getTemplates(
-        configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE));
+        configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE));
     PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
         templates.get(0) : null;
     if (templateWarning == null) {
@@ -662,7 +667,7 @@ public class UpdateDabWarningTools {
 
     // Search disambiguation warning in the "To do" sub-page
     List<PageElementTemplate> templates = analysis.getTemplates(
-        configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE));
+        configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE));
     PageElementTemplate template = (templates != null) && (templates.size() > 0) ?
         templates.get(0) : null;
     if (template == null) {
@@ -713,11 +718,15 @@ public class UpdateDabWarningTools {
     if (talkPage == null) {
       return false;
     }
+    List<String> todoTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_TEMPLATES);
+    if ((todoTemplates == null) || (todoTemplates.isEmpty())) {
+      return false;
+    }
     if (Boolean.FALSE.equals(talkPage.isExisting())) {
       updateSection(
           talkPage,
           wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
-          0, "{{" + configuration.getTodoTemplates().get(0) + "}}", false);
+          0, "{{" + todoTemplates.get(0) + "}}", false);
       return true;
     }
 
@@ -729,12 +738,10 @@ public class UpdateDabWarningTools {
 
     // Search "To do" in the talk page
     PageElementTemplate templateTodo = null;
-    if (configuration.getTodoTemplates() != null) {
-      for (String templateName : configuration.getTodoTemplates()) {
-        List<PageElementTemplate> templates = analysis.getTemplates(templateName);
-        if ((templates != null) && (templates.size() > 0)) {
-          templateTodo = templates.get(0);
-        }
+    for (String templateName : todoTemplates) {
+      List<PageElementTemplate> templates = analysis.getTemplates(templateName);
+      if ((templates != null) && (templates.size() > 0)) {
+        templateTodo = templates.get(0);
       }
     }
 
@@ -749,8 +756,10 @@ public class UpdateDabWarningTools {
 
       // Search where to add "To do" template
       PageElementTemplate templatePrevious = null;
-      if (configuration.getDisambiguationWarningAfterTemplates() != null) {
-        for (String previousTemplate : configuration.getDisambiguationWarningAfterTemplates()) {
+      List<String> dabWarningAfterTemplates = configuration.getStringList(
+          WPCConfigurationStringList.DAB_WARNING_AFTER_TEMPLATES);
+      if (dabWarningAfterTemplates != null) {
+        for (String previousTemplate : dabWarningAfterTemplates) {
           Collection<PageElementTemplate> templates = analysis.getTemplates(previousTemplate);
           for (PageElementTemplate templateTmp : templates) {
             if ((templatePrevious == null) ||
@@ -772,7 +781,7 @@ public class UpdateDabWarningTools {
         }
       }
       tmp.append("{{");
-      tmp.append(configuration.getTodoTemplates().get(0));
+      tmp.append(todoTemplates.get(0));
       tmp.append("}}");
       if (indexStart < contents.length()) {
         if (contents.charAt(indexStart) != '\n') {
@@ -794,7 +803,7 @@ public class UpdateDabWarningTools {
     String parameter = templateTodo.getParameterValue("1");
     PageAnalysis parameterAnalysis = talkPage.getAnalysis(parameter, false);
     List<PageElementTemplate> templates = parameterAnalysis.getTemplates(
-        configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE));
+        configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE));
     PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
         templates.get(0) : null;
     if (templateWarning != null) {
@@ -829,8 +838,9 @@ public class UpdateDabWarningTools {
       } else {
         // Search "To do" link
         PageElementTemplate templateTodoLink = null;
-        if (configuration.getTodoLinkTemplates() != null) {
-          for (String templateName : configuration.getTodoLinkTemplates()) {
+        List<String> todoLinkTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_LINK_TEMPLATES);
+        if (todoLinkTemplates != null) {
+          for (String templateName : todoLinkTemplates) {
             List<PageElementTemplate> tmpTemplates = analysis.getTemplates(templateName);
             if ((tmpTemplates != null) && (tmpTemplates.size() > 0)) {
               templateTodoLink = tmpTemplates.get(0);
@@ -883,8 +893,9 @@ public class UpdateDabWarningTools {
 
     // Search "To do" in the talk page
     PageElementTemplate templateTodo = null;
-    if (configuration.getTodoTemplates() != null) {
-      for (String templateName : configuration.getTodoTemplates()) {
+    List<String> todoTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_TEMPLATES);
+    if (todoTemplates != null) {
+      for (String templateName : todoTemplates) {
         List<PageElementTemplate> templates = analysis.getTemplates(templateName);
         if ((templates != null) && (templates.size() > 0)) {
           templateTodo = templates.get(0);
@@ -895,7 +906,7 @@ public class UpdateDabWarningTools {
       // Search disambiguation warning in the "To do" parameter
       String parameter = templateTodo.getParameterValue("1");
       List<PageElementTemplate> templates = analysis.getTemplates(
-          configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE));
+          configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE));
       PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
           templates.get(0) : null;
       if (templateWarning != null) {
@@ -1063,9 +1074,10 @@ public class UpdateDabWarningTools {
    */
   private PageElementTemplate getExistingTemplateTodoLink(Page talkPage, String contents) {
     PageElementTemplate templateTodoLink = null;
-    if (configuration.getTodoLinkTemplates() != null) {
+    List<String> todoLinkTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_LINK_TEMPLATES);
+    if (todoLinkTemplates != null) {
       PageAnalysis analysis = talkPage.getAnalysis(contents, true);
-      for (String todoLink : configuration.getTodoLinkTemplates()) {
+      for (String todoLink : todoLinkTemplates) {
         List<PageElementTemplate> templates = analysis.getTemplates(todoLink);
         if ((templates != null) && (templates.size() > 0)) {
           templateTodoLink = templates.get(0);
@@ -1146,7 +1158,7 @@ public class UpdateDabWarningTools {
       StringBuilder talkText,
       Integer pageRevId, Collection<String> dabLinks) {
     talkText.append("{{ ");
-    talkText.append(configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE));
+    talkText.append(configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE));
     if (pageRevId != null) {
       talkText.append(" | revisionid=");
       talkText.append(pageRevId);
@@ -1156,7 +1168,7 @@ public class UpdateDabWarningTools {
       talkText.append(dabLink);
     }
     talkText.append(" }} -- ~~~~~");
-    String comment = configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE_COMMENT);
+    String comment = configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE_COMMENT);
     if (comment != null) {
       talkText.append(" <!-- ");
       talkText.append(comment);

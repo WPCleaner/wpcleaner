@@ -76,7 +76,8 @@ import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationAttributeString;
+import org.wikipediacleaner.api.constants.WPCConfigurationString;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Namespace;
@@ -303,7 +304,7 @@ public class MainWindow
     DocumentBuilderImpl dbi = new DocumentBuilderImpl(
         ucontextMessage, rcontextMessage);
     InputSource is = new InputSource(new StringReader(Version.MESSAGE));
-    is.setSystemId(EnumWikipedia.EN.getConfiguration().getStringProperty(WPCConfigurationAttributeString.HELP_URL));
+    is.setSystemId(EnumWikipedia.EN.getConfiguration().getString(WPCConfigurationString.HELP_URL));
     try {
       textMessage.setDocument(dbi.parse(is), rcontextMessage);
     } catch (SAXException e) {
@@ -1029,10 +1030,10 @@ public class MainWindow
    */
   public void actionHelp() {
     EnumWikipedia wikipedia = getWikipedia();
-    WPCConfigurationAttributeString attributeHelpURL = WPCConfigurationAttributeString.HELP_URL;
-    String url = EnumWikipedia.EN.getConfiguration().getStringProperty(attributeHelpURL);
-    if ((wikipedia != null) && (wikipedia.getConfiguration().getStringProperty(attributeHelpURL) != null)) {
-      url = wikipedia.getConfiguration().getStringProperty(attributeHelpURL);
+    WPCConfigurationString attributeHelpURL = WPCConfigurationString.HELP_URL;
+    String url = EnumWikipedia.EN.getConfiguration().getString(attributeHelpURL);
+    if ((wikipedia != null) && (wikipedia.getConfiguration().getString(attributeHelpURL) != null)) {
+      url = wikipedia.getConfiguration().getString(attributeHelpURL);
     }
     if (Utilities.isDesktopSupported()) {
       Utilities.browseURL(url);
@@ -1142,7 +1143,7 @@ public class MainWindow
           textPagename);
       return;
     }
-    String template = getConfiguration().getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE);
+    String template = getConfiguration().getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
     if ((template == null) || (template.trim().length() == 0)) {
       Utilities.displayWarning(
           getParentComponent(),
@@ -1273,8 +1274,9 @@ public class MainWindow
       return;
     }
     WPCConfiguration configuration = wikipedia.getConfiguration();
-    if ((configuration.getCurrentDisambiguationList() == null) ||
-        (configuration.getCurrentDisambiguationList().isEmpty())) {
+    List<String> currentDabList = configuration.getStringList(WPCConfigurationStringList.CURRENT_DAB_LIST);
+    if ((currentDabList == null) ||
+        (currentDabList.isEmpty())) {
       String url = URL_OTHER_WIKIPEDIA;
       displayUrlMessage(
           GT._(
@@ -1288,7 +1290,7 @@ public class MainWindow
     }
     new PageListWorker(
         wikipedia, this, null,
-        configuration.getCurrentDisambiguationList(),
+        currentDabList,
         PageListWorker.Mode.INTERNAL_LINKS, false,
         GT._("Current disambiguation list")).start();
   }
@@ -1302,8 +1304,9 @@ public class MainWindow
       return;
     }
     WPCConfiguration configuration = wikipedia.getConfiguration();
-    if ((configuration.getMostDisambiguationLinks() == null) ||
-        (configuration.getMostDisambiguationLinks().isEmpty())) {
+    List<String> mostDabLinks = configuration.getStringList(WPCConfigurationStringList.MOST_DAB_LINKS);
+    if ((mostDabLinks == null) ||
+        (mostDabLinks.isEmpty())) {
       String url = URL_OTHER_WIKIPEDIA;
       displayUrlMessage(
           GT._(
@@ -1317,7 +1320,7 @@ public class MainWindow
     }
     new PageListWorker(
         wikipedia, this, null,
-        configuration.getMostDisambiguationLinks(),
+        mostDabLinks,
         PageListWorker.Mode.CATEGORY_MEMBERS_ARTICLES,
         false,
         GT._("Pages with many disambiguation links")).start();

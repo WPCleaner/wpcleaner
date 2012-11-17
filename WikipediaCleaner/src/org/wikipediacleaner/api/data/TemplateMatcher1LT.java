@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.constants.WPCConfigurationAttributeString;
+import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -92,7 +92,7 @@ public class TemplateMatcher1LT extends TemplateMatcher {
               "???" } ));
       String value = getParameterValue(page, template);
       if ((value != null) && (value.trim().length() > 0)) {
-        String pipeTemplate = getWikipedia().getConfiguration().getStringProperty(WPCConfigurationAttributeString.PIPE_TEMPLATE);
+        String pipeTemplate = getWikipedia().getConfiguration().getString(WPCConfigurationString.PIPE_TEMPLATE);
         replacements.add(GT._(
             "Replace parameter {0} with {1}",
             new Object[] {
@@ -122,7 +122,7 @@ public class TemplateMatcher1LT extends TemplateMatcher {
       parameterValue =
         text +
         "{{" +
-        getWikipedia().getConfiguration().getStringProperty(WPCConfigurationAttributeString.PIPE_TEMPLATE) +
+        getWikipedia().getConfiguration().getString(WPCConfigurationString.PIPE_TEMPLATE) +
         "}}" +
         getParameterValue(page, template);
       break;

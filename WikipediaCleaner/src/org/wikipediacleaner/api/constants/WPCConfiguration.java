@@ -72,10 +72,12 @@ public class WPCConfiguration {
    */
   public WPCConfiguration(EnumWikipedia wiki) {
     this.wiki = wiki;
-    generalBooleanValues = new HashMap<WPCConfigurationAttributeBoolean, Boolean>();
-    userBooleanValues = new HashMap<WPCConfigurationAttributeBoolean, Boolean>();
-    generalStringValues = new HashMap<WPCConfigurationAttributeString, String>();
-    userStringValues = new HashMap<WPCConfigurationAttributeString, String>();
+    generalBooleanValues = new HashMap<WPCConfigurationBoolean, Boolean>();
+    userBooleanValues = new HashMap<WPCConfigurationBoolean, Boolean>();
+    generalStringValues = new HashMap<WPCConfigurationString, String>();
+    userStringValues = new HashMap<WPCConfigurationString, String>();
+    generalStringListValues = new HashMap<WPCConfigurationStringList, List<String>>();
+    userStringListValues = new HashMap<WPCConfigurationStringList, List<String>>();
     initDefaultEncyclopedicNamespaces();
   }
 
@@ -99,25 +101,17 @@ public class WPCConfiguration {
    * Clean configuration.
    */
   private void cleanConfiguration() {
+    generalBooleanValues.clear();
+    userBooleanValues.clear();
+    generalStringValues.clear();
+    userStringValues.clear();
+    generalStringListValues.clear();
+    userStringListValues.clear();
     initDefaultEncyclopedicNamespaces();
-    currentDisambiguationList = null;
     disambiguationCategories = null;
-    disambiguationWarningAfterTemplates = null;
-    mostDisambiguationLinks = null;
-    suggestionIgnore = null;
-    suggestionPages = null;
-    suggestionTypoPages = null;
     suggestions = null;
     templateMatchers = new HashMap<String, List<TemplateMatcher>>();
     templatesAfterAskHelp = null;
-    templatesAfterHelpAsked = null;
-    templatesForDisambiguationLink = null;
-    templatesForHelpRequested = null;
-    templatesForLinkingText = null;
-    templatesForNeedingHelp = null;
-    todoLinkTemplates = null;
-    todoTemplates = null;
-    wiktionaryInterwiki = null;
     wiktionaryMatches = null;
   }
 
@@ -185,28 +179,40 @@ public class WPCConfiguration {
   /**
    * Map for holding boolean values for general settings.
    */
-  private final Map<WPCConfigurationAttributeBoolean, Boolean> generalBooleanValues;
+  private final Map<WPCConfigurationBoolean, Boolean> generalBooleanValues;
 
   /**
    * Map for holding boolean values for user settings.
    */
-  private final Map<WPCConfigurationAttributeBoolean, Boolean> userBooleanValues;
+  private final Map<WPCConfigurationBoolean, Boolean> userBooleanValues;
 
   /**
    * Map for holding String values for general settings.
    */
-  private final Map<WPCConfigurationAttributeString, String> generalStringValues;
+  private final Map<WPCConfigurationString, String> generalStringValues;
 
   /**
    * Map for holding String values for user settings.
    */
-  private final Map<WPCConfigurationAttributeString, String> userStringValues;
+  private final Map<WPCConfigurationString, String> userStringValues;
 
   /**
+   * Map for holding String list values for general settings.
+   */
+  private final Map<WPCConfigurationStringList, List<String>> generalStringListValues;
+
+  /**
+   * Map for holding String list values for user settings.
+   */
+  private final Map<WPCConfigurationStringList, List<String>> userStringListValues;
+
+  /**
+   * Retrieve the value of a Boolean attribute.
+   * 
    * @param attribute Attribute.
    * @return Attribute value.
    */
-  public boolean getBooleanProperty(WPCConfigurationAttributeBoolean attribute) {
+  public boolean getBoolean(WPCConfigurationBoolean attribute) {
     Boolean result = userBooleanValues.get(attribute);
     if (result == null) {
       result = generalBooleanValues.get(attribute);
@@ -218,10 +224,12 @@ public class WPCConfiguration {
   }
 
   /**
+   * Retrieve the value of a String attribute.
+   * 
    * @param attribute Attribute.
    * @return Attribute value.
    */
-  public String getStringProperty(WPCConfigurationAttributeString attribute) {
+  public String getString(WPCConfigurationString attribute) {
     String result = userStringValues.get(attribute);
     if ((result == null) ||
         ((!attribute.canBeEmpty()) && (result.trim().length() == 0))) {
@@ -233,6 +241,28 @@ public class WPCConfiguration {
     }
     if ((result != null) && (!attribute.canBeEmpty()) && (result.trim().length() == 0)) {
       result = null;
+    }
+    return result;
+  }
+
+  /**
+   * Retrieve the value of a String list attribute.
+   * 
+   * @param attribute Attribute.
+   * @return Attribute value.
+   */
+  public List<String> getStringList(WPCConfigurationStringList attribute) {
+    List<String> userResult = userStringListValues.get(attribute);
+    List<String> generalResult = generalStringListValues.get(attribute);
+    if ((userResult == null) && (generalResult == null)) {
+      return null;
+    }
+    List<String> result = new ArrayList<String>();
+    if ((generalResult != null) && ((userResult == null) || (attribute.canCombine()))) {
+      result.addAll(generalResult);
+    }
+    if (userResult != null) {
+      result.addAll(userResult);
     }
     return result;
   }
@@ -255,7 +285,7 @@ public class WPCConfiguration {
     }
 
     // Check if it is a Boolean attribute
-    WPCConfigurationAttributeBoolean booleanAttribute = WPCConfigurationAttributeBoolean.getValue(name);
+    WPCConfigurationBoolean booleanAttribute = WPCConfigurationBoolean.getValue(name);
     if (booleanAttribute != null) {
       Boolean booleanValue = Boolean.valueOf(value);
       if (general) {
@@ -275,7 +305,7 @@ public class WPCConfiguration {
     }
 
     // Check if it is a String attribute
-    WPCConfigurationAttributeString stringAttribute = WPCConfigurationAttributeString.getValue(name);
+    WPCConfigurationString stringAttribute = WPCConfigurationString.getValue(name);
     if (stringAttribute != null) {
       if (general) {
         if (stringAttribute.isGeneralAttribute()) {
@@ -290,28 +320,41 @@ public class WPCConfiguration {
           log.warn(GT._("Attribute {0} can''t be set in user configuration", name));
         }
       }
+      return;
+    }
+
+    // Check if it is a String list attribute
+    WPCConfigurationStringList listAttribute = WPCConfigurationStringList.getValue(name);
+    if (listAttribute != null) {
+      List<String> listValue = convertPropertyToStringList(value);
+      if (general) {
+        if (listAttribute.isGeneralAttribute()) {
+          generalStringListValues.put(listAttribute, listValue);
+        } else {
+          log.warn(GT._("Attribute {0} can''t be set in general configuration", name));
+        }
+      } else {
+        if (listAttribute.isUserAttribute()) {
+          userStringListValues.put(listAttribute, listValue);
+        } else {
+          log.warn(GT._("Attribute {0} can''t be set in user configuration", name));
+        }
+      }
+      return;
     }
 
     // Properties available also in user configuration
-    if (name.equals("general_suggestions")) {
-      setSuggestionPages(value, general);
-    } else if (name.equals("general_suggestions_typo")) {
-      setSuggestionTypoPages(value, general);
-    } else if (name.equals("general_suggestions_ignore")) {
-      setSuggestionIgnore(value, general);
-    } else if (name.startsWith("error_")) {
+    if (name.startsWith("error_")) {
       wiki.getCWConfiguration().setUserConfiguration(name, value);
+      return;
     } else if (!general) {
+      log.warn(GT._("Attribute {0} can''t be set in user configuration", name));
       return;
     }
 
     // Properties available only in general configuration
     if (name.equals("general_encyclopedic_namespaces")) {
       setEncyclopedicNamespaces(value);
-    } else if (name.equals("general_todo_templates")) {
-      setTodoTemplates(value);
-    } else if (name.equals("general_todo_link_templates")) {
-      setTodoLinkTemplates(value);
     } else if (name.equals("general_dab_1l_templates")) {
       setTemplateMatchersDab1L(value);
     } else if (name.equals("general_dab_1lt_templates")) {
@@ -328,26 +371,8 @@ public class WPCConfiguration {
       setTemplateMatchersHelp1LT(value);
     } else if (name.equals("dab_categories")) {
       setDisambiguationCategories(value);
-    } else if (name.equals("dab_list")) {
-      setCurrentDisambiguationList(value);
-    } else if (name.equals("most_dab_links")) {
-      setMostDisambiguationLinks(value);
     } else if (name.equals("dab_ask_help_templates_after")) {
       setTemplatesAfterAskHelp(value);
-    } else if (name.equals("dab_help_asked_templates_after")) {
-      setTemplatesAfterHelpAsked(value);
-    } else if (name.equals("dab_warning_after_templates")) {
-      setDisambiguationWarningAfterTemplates(value);
-    } else if (name.equals("dab_link_templates")) {
-      setTemplatesForDisambiguationLink(value);
-    } else if (name.equals("needing_help_templates")) {
-      setTemplatesForNeedingHelp(value);
-    } else if (name.equals("help_requested_templates")) {
-      setTemplatesForHelpRequested(value);
-    } else if (name.equals("link_text_templates")) {
-      setTemplatesForLinkingText(value);
-    } else if (name.equals("wikt_interwiki")) {
-      setWiktionaryInterwiki(value);
     } else if (name.equals("wikt_templates")) {
       setWiktionaryMatches(value);
     } else if (name.equals("check_wiki_project_page")) {
@@ -444,106 +469,13 @@ public class WPCConfiguration {
   }
 
   /* ================================================================================= */
-  /* To do lists                                                                       */
-  /* ================================================================================= */
-
-  /**
-   * Templates creating "to do" lists.
-   */
-  private List<String> todoTemplates;
-
-  /**
-   * Templates creating links to "to do" lists.
-   */
-  private List<String> todoLinkTemplates;
-
-  /**
-   * @param value Templates creating "to do" lists.
-   */
-  private void setTodoTemplates(String value) {
-    todoTemplates = convertPropertyToStringList(value);
-  }
-
-  /**
-   * @param value Templates creating links to "to do" lists.
-   */
-  private void setTodoLinkTemplates(String value) {
-    this.todoLinkTemplates = convertPropertyToStringList(value);
-  }
-
-  /**
-   * @return Templates creating "to do" lists.
-   */
-  public List<String> getTodoTemplates() {
-    return todoTemplates;
-  }
-
-  /**
-   * @return Templates creating links to "to do" lists.
-   */
-  public List<String> getTodoLinkTemplates() {
-    return todoLinkTemplates;
-  }
-
-  /* ================================================================================= */
   /* Suggestions                                                                       */
   /* ================================================================================= */
-
-  /**
-   * Pages containing spelling suggestions.
-   */
-  private List<String> suggestionPages;
-
-  /**
-   * Pages containing spelling suggestions in AWB format.
-   */
-  private List<String> suggestionTypoPages;
-
-  /**
-   * Chapters to be ignored for suggestions.
-   */
-  private List<String> suggestionIgnore;
 
   /**
    * Spelling suggestions.
    */
   private Map<String, Suggestion> suggestions;
-
-  /**
-   * @param value Pages containing spelling suggestions.
-   * @param general Flag indicating if dealing with general or user properties.
-   */
-  private void setSuggestionPages(String value, boolean general) {
-    if (general || (suggestionPages == null)) {
-      suggestionPages = convertPropertyToStringList(value);
-    } else {
-      suggestionPages.addAll(convertPropertyToStringList(value));
-    }
-  }
-
-  /**
-   * @param value Pages containing spelling suggestions in AWB format.
-   * @param general Flag indicating if dealing with general or user properties.
-   */
-  private void setSuggestionTypoPages(String value, boolean general) {
-    if (general || (suggestionTypoPages == null)) {
-      suggestionTypoPages = convertPropertyToStringList(value);
-    } else {
-      suggestionTypoPages.addAll(convertPropertyToStringList(value));
-    }
-  }
-
-  /**
-   * @param value Chapters to be ignored for suggestions.
-   * @param general Flag indicating if dealing with general or user properties.
-   */
-  private void setSuggestionIgnore(String value, boolean general) {
-    if (general || (suggestionIgnore == null)) {
-      suggestionIgnore = convertPropertyToStringList(value);
-    } else {
-      suggestionIgnore.addAll(convertPropertyToStringList(value));
-    }
-  }
 
   /**
    * Initialize suggestions for text replacements.
@@ -556,6 +488,7 @@ public class WPCConfiguration {
 
         // Load all pages contents
         Map<String, Page> pages = new HashMap<String, Page>();
+        List<String> suggestionPages = getStringList(WPCConfigurationStringList.SUGGESTION_PAGES);
         if (suggestionPages != null) {
           for (String suggestionPage : suggestionPages) {
             String[] elements = suggestionPage.split("\\|");
@@ -567,6 +500,7 @@ public class WPCConfiguration {
             }
           }
         }
+        List<String> suggestionTypoPages = getStringList(WPCConfigurationStringList.SUGGESTION_TYPO_PAGES);
         if (suggestionTypoPages != null) {
           for (String suggestionPage : suggestionTypoPages) {
             if (!pages.containsKey(suggestionPage)) {
@@ -583,6 +517,7 @@ public class WPCConfiguration {
         // Construct suggestions
         Map<String, Suggestion> tmpMap = new HashMap<String, Suggestion>();
         if (suggestionPages != null) {
+          List<String> suggestionIgnore = getStringList(WPCConfigurationStringList.SUGGESTION_IGNORE);
           for (String suggestionPage : suggestionPages) {
             String[] elements = suggestionPage.split("\\|");
             if (elements.length >= 4) {
@@ -626,6 +561,7 @@ public class WPCConfiguration {
 
         // Construct suggestions from AWB format
         if (suggestionTypoPages != null) {
+          List<String> suggestionIgnore = getStringList(WPCConfigurationStringList.SUGGESTION_IGNORE);
           for (String suggestionPage : suggestionTypoPages) {
             Page page = pages.get(suggestionPage);
             if ((page != null) && (page.getContents() != null)) {
@@ -912,16 +848,6 @@ public class WPCConfiguration {
   private List<Page> disambiguationCategories;
 
   /**
-   * Pages containing the current list of disambiguation pages.
-   */
-  private List<String> currentDisambiguationList;
-
-  /**
-   * Pages containing the list of pages with many disambiguation links.
-   */
-  private List<String> mostDisambiguationLinks;
-
-  /**
    * @param value Categories allowing to decide if a page is a disambiguation page.
    */
   private void setDisambiguationCategories(String value) {
@@ -938,38 +864,10 @@ public class WPCConfiguration {
   }
 
   /**
-   * @param value Pages containing the current list of disambiguation pages.
-   */
-  private void setCurrentDisambiguationList(String value) {
-    this.currentDisambiguationList = convertPropertyToStringList(value);
-  }
-
-  /**
-   * @param value Pages containing the list of pages with many disambiguation links.
-   */
-  private void setMostDisambiguationLinks(String value) {
-    this.mostDisambiguationLinks = convertPropertyToStringList(value);
-  }
-
-  /**
    * @return Categories allowing to decide if a page is a disambiguation page.
    */
   public List<Page> getDisambiguationCategories() {
     return disambiguationCategories;
-  }
-
-  /**
-   * @return Pages containing the current list of disambiguation pages.
-   */
-  public List<String> getCurrentDisambiguationList() {
-    return currentDisambiguationList;
-  }
-
-  /**
-   * @return Pages containing the list of pages with many disambiguation links.
-   */
-  public List<String> getMostDisambiguationLinks() {
-    return mostDisambiguationLinks;
   }
 
   /**
@@ -978,12 +876,12 @@ public class WPCConfiguration {
    */
   public String getDisambiguationComment(int count) {
     if (count == 1) {
-      String comment1 = getStringProperty(WPCConfigurationAttributeString.DAB_COMMENT_1);
+      String comment1 = getString(WPCConfigurationString.DAB_COMMENT_1);
       if (comment1 != null) {
         return comment1;
       }
     }
-    String comment = getStringProperty(WPCConfigurationAttributeString.DAB_COMMENT);
+    String comment = getString(WPCConfigurationString.DAB_COMMENT);
     if (comment != null) {
       try {
         return MessageFormat.format(comment, Integer.valueOf(count));
@@ -1001,12 +899,12 @@ public class WPCConfiguration {
    */
   public String getDisambiguationCommentTodo(int count) {
     if (count == 1) {
-      String comment1 = getStringProperty(WPCConfigurationAttributeString.DAB_COMMENT_TODO_1);
+      String comment1 = getString(WPCConfigurationString.DAB_COMMENT_TODO_1);
       if (comment1 != null) {
         return comment1;
       }
     }
-    String comment = getStringProperty(WPCConfigurationAttributeString.DAB_COMMENT_TODO);
+    String comment = getString(WPCConfigurationString.DAB_COMMENT_TODO);
     try {
       return MessageFormat.format(comment, Integer.valueOf(count));
     } catch (IllegalArgumentException e) {
@@ -1027,36 +925,17 @@ public class WPCConfiguration {
   /* ================================================================================= */
 
   /**
-   * List of templates that should be before the disambiguation warning.
-   */
-  private List<String> disambiguationWarningAfterTemplates;
-
-  /**
-   * @param value List of templates that should be before the disambiguation warning.
-   */
-  private void setDisambiguationWarningAfterTemplates(String value) {
-    this.disambiguationWarningAfterTemplates = convertPropertyToStringList(value);
-  }
-
-  /**
-   * @return List of templates that should be before the disambiguation warning.
-   */
-  public List<String> getDisambiguationWarningAfterTemplates() {
-    return disambiguationWarningAfterTemplates;
-  }
-
-  /**
    * @param count Number of disambiguation links.
    * @return Comment for warning about disambiguation links in a page.
    */
   public String getDisambiguationWarningComment(int count) {
     if (count == 1) {
-      String comment1 = getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_COMMENT_1);
+      String comment1 = getString(WPCConfigurationString.DAB_WARNING_COMMENT_1);
       if ((comment1 != null) && (comment1.length() > 0)) {
         return comment1;
       }
     }
-    String comment = getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_COMMENT);
+    String comment = getString(WPCConfigurationString.DAB_WARNING_COMMENT);
     if (comment != null) {
       try {
         return MessageFormat.format(comment, Integer.valueOf(count));
@@ -1065,18 +944,18 @@ public class WPCConfiguration {
       }
       return comment;
     }
-    return getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE);
+    return getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
   }
 
   /**
    * @return Comment for telling that disambiguation links have been fixed.
    */
   public String getDisambiguationWarningCommentDone() {
-    String comment = getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_COMMENT_DONE);
+    String comment = getString(WPCConfigurationString.DAB_WARNING_COMMENT_DONE);
     if (comment != null) {
       return comment;
     }
-    return getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE);
+    return getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
   }
 
   /* ================================================================================= */
@@ -1084,41 +963,9 @@ public class WPCConfiguration {
   /* ================================================================================= */
 
   /**
-   * Templates used for a normal link to a disambiguation page.
-   */
-  private List<String> templatesForDisambiguationLink;
-
-  /**
    * Templates to be used after a disambiguation link to ask for help.
    */
   private List<List<String>> templatesAfterAskHelp;
-
-  /**
-   * Templates used after a disambiguation link asking for help.
-   */
-  private List<String> templatesAfterHelpAsked;
-
-  /**
-   * Templates used for a link where help is required.
-   */
-  private List<String> templatesForNeedingHelp;
-
-  /**
-   * Templates used for finding pages where help is requested.
-   */
-  private List<String> templatesForHelpRequested;
-
-  /**
-   * Templates used for linking text.
-   */
-  private List<String> templatesForLinkingText;
-
-  /**
-   * @param value Templates used for a normal link to a disambiguation page.
-   */
-  private void setTemplatesForDisambiguationLink(String value) {
-    this.templatesForDisambiguationLink = convertPropertyToStringList(value);
-  }
 
   /**
    * @param value Templates to be used after a disambiguation link to ask for help.
@@ -1145,44 +992,6 @@ public class WPCConfiguration {
   }
 
   /**
-   * @param value Templates used after a disambiguation link asking for help.
-   */
-  private void setTemplatesAfterHelpAsked(String value) {
-    this.templatesAfterHelpAsked = convertPropertyToStringList(value);
-  }
-
-  /**
-   * @param value Templates used for a link where help is required.
-   */
-  private void setTemplatesForNeedingHelp(String value) {
-    this.templatesForNeedingHelp = convertPropertyToStringList(value);
-  }
-
-  /**
-   * @param value Templates used for finding pages where help is requested.
-   */
-  private void setTemplatesForHelpRequested(String value) {
-    templatesForHelpRequested = convertPropertyToStringList(value);
-  }
-
-  /**
-   * @param value Templates used for linking text.
-   */
-  private void setTemplatesForLinkingText(String value) {
-    templatesForLinkingText = convertPropertyToStringList(value);
-  }
-
-  /**
-   * @return Templates used for a normal link to a disambiguation page.s
-   */
-  public List<String> getTemplatesForDisambiguationLink() {
-    if (templatesForDisambiguationLink != null) {
-      return new ArrayList<String>(templatesForDisambiguationLink);
-    }
-    return null;
-  }
-
-  /**
    * @return Templates to be used after a disambiguation link to ask for help.
    */
   public List<List<String>> getTemplatesAfterAskHelp() {
@@ -1190,26 +999,11 @@ public class WPCConfiguration {
   }
 
   /**
-   * @return Templates used after a disambiguation link asking for help.
-   */
-  public List<String> getTemplatesAfterHelpAsked() {
-    return templatesAfterHelpAsked;
-  }
-
-  /**
-   * @return Templates used for a link where help is required.
-   */
-  public List<String> getTemplatesForNeedingHelp() {
-    if (templatesForNeedingHelp != null) {
-      return new ArrayList<String>(templatesForNeedingHelp);
-    }
-    return null;
-  }
-
-  /**
    * @return Templates used for finding pages where help is requested.
    */
   public List<Page> getTemplatesForHelpRequested() {
+    List<String> templatesForHelpRequested = getStringList(
+        WPCConfigurationStringList.TEMPLATES_FOR_HELP_REQUESTED);
     if (templatesForHelpRequested != null) {
       List<Page> tmp = new ArrayList<Page>(templatesForHelpRequested.size());
       for (String template : templatesForHelpRequested) {
@@ -1222,33 +1016,11 @@ public class WPCConfiguration {
     return null;
   }
 
-  /**
-   * @return Templates used for linking text.
-   */
-  public List<String> getTemplatesForLinkingText() {
-    if (templatesForLinkingText != null) {
-      return new ArrayList<String>(templatesForLinkingText);
-    }
-    return null;
-  }
-
   /* ================================================================================= */
   /* Wiktionary                                                                        */
   /* ================================================================================= */
 
-  /**
-   * Wiktionary interwiki.
-   */
-  private String wiktionaryInterwiki;
-
   private List<TemplateMatch> wiktionaryMatches;
-
-  /**
-   * @param value Wiktionary interwiki.
-   */
-  private void setWiktionaryInterwiki(String value) {
-    this.wiktionaryInterwiki = nonEmptyString(value);
-  }
 
   private void setWiktionaryMatches(String value) {
     List<String> tmpList = convertPropertyToStringList(value);
@@ -1264,13 +1036,6 @@ public class WPCConfiguration {
         wiktionaryMatches.add(match);
       }
     }
-  }
-
-  /**
-   * @return Wiktionary interwiki.
-   */
-  public String getWiktionaryInterwiki() {
-    return wiktionaryInterwiki;
   }
 
   /**
@@ -1315,17 +1080,6 @@ public class WPCConfiguration {
   /* ================================================================================= */
   /* Utilities                                                                         */
   /* ================================================================================= */
-
-  /**
-   * @param value Value.
-   * @return Value either null or not empty.
-   */
-  private String nonEmptyString(String value) {
-    if ((value != null) && (value.trim().length() > 0)) {
-      return value;
-    }
-    return null;
-  }
 
   /**
    * Convert a multi-line property to a string list.

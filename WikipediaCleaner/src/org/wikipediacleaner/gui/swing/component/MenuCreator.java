@@ -44,6 +44,7 @@ import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -965,7 +966,8 @@ public class MenuCreator {
       Element element, JTextPane textPane) {
     List<String> templates = null;
     if (wikipedia != null) {
-      templates = wikipedia.getConfiguration().getTemplatesForDisambiguationLink();
+      templates = wikipedia.getConfiguration().getStringList(
+          WPCConfigurationStringList.TEMPLATES_FOR_DAB_LINK);
     }
     if ((text != null) &&
         (page != null) &&
@@ -1015,7 +1017,8 @@ public class MenuCreator {
     int templatesCount = 0;
     if (wikipedia != null) {
       WPCConfiguration config = wikipedia.getConfiguration();
-      templates = config.getTemplatesForNeedingHelp();
+      templates = config.getStringList(
+          WPCConfigurationStringList.TEMPLATES_FOR_NEEDING_HELP);
       if (templates != null) {
         templatesCount += templates.size();
       }
@@ -1086,7 +1089,8 @@ public class MenuCreator {
       Element element, JTextPane textPane) {
     List<String> templates = null;
     if (wikipedia != null) {
-      templates = wikipedia.getConfiguration().getTemplatesForLinkingText();
+      templates = wikipedia.getConfiguration().getStringList(
+          WPCConfigurationStringList.TEMPLATES_FOR_LINKING_TEXT);
     }
     if ((text != null) &&
         (page != null) &&

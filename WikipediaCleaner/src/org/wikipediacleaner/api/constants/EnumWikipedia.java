@@ -298,7 +298,7 @@ public enum EnumWikipedia {
         ConfigurationValueBoolean.WIKICLEANER_COMMENT);
     StringBuilder formattedComment = new StringBuilder();
     if (showWikiCleaner) {
-      String link = WPCConfiguration.getStringProperty(WPCConfigurationAttributeString.HELP_PAGE);
+      String link = WPCConfiguration.getString(WPCConfigurationString.HELP_PAGE);
       if ((link != null) && (link.trim().length() > 0)) {
         formattedComment.append("[[");
         formattedComment.append(link);
