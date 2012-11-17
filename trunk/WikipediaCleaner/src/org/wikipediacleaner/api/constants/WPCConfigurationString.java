@@ -22,7 +22,7 @@ package org.wikipediacleaner.api.constants;
 /**
  * Configuration for String attributes.
  */
-public enum WPCConfigurationAttributeString {
+public enum WPCConfigurationString {
 
   // Comment for disambiguation links that have been fixed.
   DAB_COMMENT("dab_comment", null, false, true, true),
@@ -51,7 +51,9 @@ public enum WPCConfigurationAttributeString {
   // "To do" sub-page.
   TODO_SUBPAGE("general_todo_subpage", null, false, true, false),
   // Comment used when translating.
-  TRANSLATION_COMMENT("translation_comment", null, false, true, true);
+  TRANSLATION_COMMENT("translation_comment", null, false, true, true),
+  // Wiktionary interwiki.
+  WIKTIONARY_INTERWIKI("wikt_interwiki", null, false, true, false);
 
   /**
    * Attribute name.
@@ -85,7 +87,7 @@ public enum WPCConfigurationAttributeString {
    * @param generalAttribute True if it can be set as a general attribute.
    * @param userAttribute True if it can be set as a user attribute.
    */
-  WPCConfigurationAttributeString(
+  WPCConfigurationString(
       String attributeName, String defaultValue, boolean canBeEmpty,
       boolean generalAttribute, boolean userAttribute) {
     this.attributeName = attributeName;
@@ -101,12 +103,12 @@ public enum WPCConfigurationAttributeString {
    * @param attributeName Attribute name.
    * @return Attribute for the given name.
    */
-  public static WPCConfigurationAttributeString getValue(String attributeName) {
+  public static WPCConfigurationString getValue(String attributeName) {
     if (attributeName == null) {
       return null;
     }
     attributeName = attributeName.trim();
-    for (WPCConfigurationAttributeString value : values()) {
+    for (WPCConfigurationString value : values()) {
       if (attributeName.equals(value.getAttributeName())) {
         return value;
       }

@@ -30,7 +30,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationAttributeString;
+import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
@@ -120,7 +120,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
     try {
       if (!useList) {
         // Retrieve talk pages including a disambiguation warning
-        String dabWarningTemplateName = configuration.getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE);
+        String dabWarningTemplateName = configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
         setText(GT._("Retrieving talk pages including {0}", "{{" + dabWarningTemplateName + "}}"));
         String templateTitle = wikiConfiguration.getPageTitle(
             Namespace.TEMPLATE,
@@ -137,7 +137,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
         HashSet<Page> tmpWarningPages = new HashSet<Page>();
         for (Page dabWarningPage : dabWarningTalkPages) {
           String title = dabWarningPage.getTitle();
-          String todoSubpage = configuration.getStringProperty(WPCConfigurationAttributeString.TODO_SUBPAGE);
+          String todoSubpage = configuration.getString(WPCConfigurationString.TODO_SUBPAGE);
           if (title.endsWith("/" + todoSubpage)) {
             title = title.substring(0, title.length() - 1 - todoSubpage.length());
           }

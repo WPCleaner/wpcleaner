@@ -66,7 +66,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationAttributeString;
+import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.InternalLinkCount;
 import org.wikipediacleaner.api.data.Page;
@@ -1022,7 +1022,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
    * Action called when Disambiguation warning button is pressed.  
    */
   public void actionDisambiguationWarning() {
-    String template = getConfiguration().getStringProperty(WPCConfigurationAttributeString.DAB_WARNING_TEMPLATE);
+    String template = getConfiguration().getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
     if ((template == null) || (template.trim().length() == 0)) {
       Utilities.displayWarning(
           getParentComponent(),
@@ -1151,7 +1151,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   protected String getAutomaticComment(PageAnalysis pageAnalysis) {
     WPCConfiguration configuration = getConfiguration();
     if (translated) {
-      String text = configuration.getStringProperty(WPCConfigurationAttributeString.TRANSLATION_COMMENT);
+      String text = configuration.getString(WPCConfigurationString.TRANSLATION_COMMENT);
       if ((text != null) && (text.trim().length() > 0)) {
         return text;
       }

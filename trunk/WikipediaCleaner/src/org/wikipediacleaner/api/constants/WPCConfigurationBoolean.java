@@ -22,7 +22,7 @@ package org.wikipediacleaner.api.constants;
 /**
  * Configuration for Boolean attributes.
  */
-public enum WPCConfigurationAttributeBoolean {
+public enum WPCConfigurationBoolean {
 
   // Force usage of "to do" sub-page in main name space.
   TODO_SUBPAGE_FORCE("general_todo_subpage_force", false, true, false),
@@ -55,7 +55,7 @@ public enum WPCConfigurationAttributeBoolean {
    * @param generalAttribute True if it can be set as a general attribute.
    * @param userAttribute True if it can be set as a user attribute.
    */
-  WPCConfigurationAttributeBoolean(
+  WPCConfigurationBoolean(
       String attributeName, boolean defaultValue,
       boolean generalAttribute, boolean userAttribute) {
     this.attributeName = attributeName;
@@ -70,12 +70,12 @@ public enum WPCConfigurationAttributeBoolean {
    * @param attributeName Attribute name.
    * @return Attribute for the given name.
    */
-  public static WPCConfigurationAttributeBoolean getValue(String attributeName) {
+  public static WPCConfigurationBoolean getValue(String attributeName) {
     if (attributeName == null) {
       return null;
     }
     attributeName = attributeName.trim();
-    for (WPCConfigurationAttributeBoolean value : values()) {
+    for (WPCConfigurationBoolean value : values()) {
       if (attributeName.equals(value.getAttributeName())) {
         return value;
       }

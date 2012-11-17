@@ -25,6 +25,7 @@ import javax.swing.text.Style;
 import javax.swing.text.StyledDocument;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -125,7 +126,8 @@ public class MWPaneDisambiguationFormatter extends
     ConfigurationValueStyle styleType = null;
     if (disambiguation) {
       styleType = ConfigurationValueStyle.INTERNAL_LINK_DAB;
-      List<String> templatesAfter = wikipedia.getConfiguration().getTemplatesAfterHelpAsked();
+      List<String> templatesAfter = wikipedia.getConfiguration().getStringList(
+          WPCConfigurationStringList.TEMPLATES_AFTER_HELP_ASKED);
       if ((templatesAfter != null) && (templatesAfter.size() > 0)) {
         String contents = pageAnalysis.getContents();
         int maxSize = contents.length();
