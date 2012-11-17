@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-17 10:24+0100\n"
+"POT-Creation-Date: 2012-11-17 20:11+0100\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -100,9 +100,9 @@ msgstr "Замінити на {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:97
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:103
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:71
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:143
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:150
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:143
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:123
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:130
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:85
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:73
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:122
@@ -122,14 +122,14 @@ msgstr ""
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr "Список шаблонів, що випливають з попереднього включення {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:41
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:42
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:41
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089.java:41
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:41
 msgid "Fix DEFAULTSORT"
 msgstr "Виправити DEFAULTSORT"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:109
 #, java-format
 msgid "Unable to replace the characters [{0}]"
 msgstr "Не вдалось замінити символи [{0}]"
@@ -360,15 +360,15 @@ msgstr ""
 msgid "Remove {0} namespace from template name"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:247
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:248
 msgid "Title of the article describing this type of error"
 msgstr "Назва статті, що описує цей тип помилки"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:248
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:249
 msgid "List of false positives for this type of error"
 msgstr "Список помилкових спрацьовувань для такого типу помилки"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:249
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:250
 msgid "Page containing the list of false positives for this type of error"
 msgstr ""
 
@@ -429,6 +429,7 @@ msgstr ""
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:295
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:314
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:334
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:387
 #, java-format
 msgid "Attribute {0} can''t be set in general configuration"
 msgstr ""
