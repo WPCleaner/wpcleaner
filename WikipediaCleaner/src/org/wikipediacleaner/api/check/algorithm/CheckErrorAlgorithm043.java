@@ -91,10 +91,6 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
         }
       }
       if (shouldCount) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
         
         // Check if there is a potential end
         int tmpIndex = currentIndex + 2;
@@ -107,23 +103,27 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
               (tmpChar == '{')) {
             finished = true;
           } else if (tmpChar == '}') {
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), currentIndex, tmpIndex + 1);
-            errorResult.addReplacement(contents.substring(currentIndex, tmpIndex + 1) + "}");
-
-            // Check if the situation is something like [[http://....] (replacement: [http://....])
-            List<String> protocols = PageElementExternalLink.getProtocols();
-            boolean protocolFound = false;
-            for (String protocol : protocols) {
-              if (contents.startsWith(protocol, currentIndex + 2)) {
-                protocolFound = true;
+            if ((tmpIndex + 1 >= maxLength) ||
+                (contents.charAt(tmpIndex + 1) != '}')) {
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(), currentIndex, tmpIndex + 1);
+              errorResult.addReplacement(contents.substring(currentIndex, tmpIndex + 1) + "}");
+  
+              // Check if the situation is something like [[http://....] (replacement: [http://....])
+              List<String> protocols = PageElementExternalLink.getProtocols();
+              boolean protocolFound = false;
+              for (String protocol : protocols) {
+                if (contents.startsWith(protocol, currentIndex + 2)) {
+                  protocolFound = true;
+                }
               }
+              if (protocolFound) {
+                errorResult.addReplacement(contents.substring(currentIndex + 1, tmpIndex + 1));
+              }
+  
+              errors.add(errorResult);
+              result = true;
             }
-            if (protocolFound) {
-              errorResult.addReplacement(contents.substring(currentIndex + 1, tmpIndex + 1));
-            }
-
-            errors.add(errorResult);
             errorReported = true;
             finished = true;
           } else if (tmpChar == ']') {
@@ -136,6 +136,7 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
             errorResult.addReplacement(contents.substring(currentIndex, tmpIndex) + "}}");
             errorResult.addReplacement("[[" + contents.substring(currentIndex + 2, tmpIndex) + "]]");
             errors.add(errorResult);
+            result = true;
             errorReported = true;
             finished = true;
           }
@@ -148,6 +149,7 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
               pageAnalysis.getPage(), currentIndex, currentIndex + 2);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
+          result = true;
         }
       }
       currentIndex = contents.indexOf("{{", currentIndex + 2);
