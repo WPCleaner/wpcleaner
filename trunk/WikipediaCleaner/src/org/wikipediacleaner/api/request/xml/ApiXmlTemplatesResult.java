@@ -30,6 +30,7 @@ import org.jdom.JDOMException;
 import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.request.ApiRequest;
@@ -52,6 +53,54 @@ public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements Api
       HttpClient httpClient,
       ConnectionInformation connection) {
     super(wiki, httpClient, connection);
+  }
+
+  /**
+   * Execute templates request.
+   * 
+   * @param properties Properties defining request.
+   * @param page Page.
+   * @param list List of pages to be filled with the templates.
+   * @return True if request should be continued.
+   * @throws APIException
+   */
+  public boolean executeTemplates(
+      Map<String, String> properties,
+      Page page,
+      List<Page> list)
+          throws APIException {
+    try {
+      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+
+      // Retrieve back links
+      XPath xpa = XPath.newInstance("/api/query/pages/page");
+      List listTemplates = xpa.selectNodes(root);
+      Iterator itTemplate = listTemplates.iterator();
+      while (itTemplate.hasNext()) {
+        Element currentTemplate = (Element) itTemplate.next();
+        String pageId = currentTemplate.getAttributeValue("pageid");
+        String ns = currentTemplate.getAttributeValue("ns");
+        String title = currentTemplate.getAttributeValue("title");
+        Page template = DataManager.getPage(
+            getWiki(), title, null, null);
+        template.setNamespace(ns);
+        template.setPageId(pageId);
+        if (currentTemplate.getAttribute("missing") != null) {
+          template.setExisting(Boolean.FALSE);
+        }
+        if (!list.contains(template)) {
+          list.add(template);
+        }
+      }
+
+      // Retrieve continue
+      return shouldContinue(
+          root, "/api/query-continue/templates",
+          properties);
+    } catch (JDOMException e) {
+      log.error("Error loading templates", e);
+      throw new APIException("Error parsing XML", e);
+    }
   }
 
   /**

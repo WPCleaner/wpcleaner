@@ -24,7 +24,6 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -551,51 +550,6 @@ public class MediaWikiAPI implements API {
   }
 
   /**
-   * Retrieves the templates of <code>page</code>.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param page The page.
-   */
-  public void retrieveTemplates(EnumWikipedia wikipedia, Page page)
-      throws APIException {
-    List<Page> templates = new ArrayList<Page>();
-    List<Page> newTemplates = new ArrayList<Page>();
-    newTemplates.add(page);
-    StringBuilder titles = new StringBuilder();
-    do {
-      Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
-      titles.setLength(0);
-      int count = 0;
-      while ((count < (MAX_PAGES_PER_QUERY / 5)) && !newTemplates.isEmpty()) {
-        Page p = newTemplates.remove(0);
-        if (count > 0) {
-          titles.append("|");
-        }
-        titles.append(p.getTitle());
-        if (!p.getTitle().equals(page.getTitle())) {
-          templates.add(p);
-        }
-        count++;
-      }
-      properties.put("titles", titles.toString());
-      properties.put("prop", "templates");
-      properties.put("tllimit", "max" /*"1000"*/);
-      try {
-        constructTemplates(
-            page.getWikipedia(),
-            newTemplates, templates,
-            getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS),
-            "/api/query/pages/page/templates/tl");
-      } catch (JDOMParseException e) {
-        log.error("Error retrieving templates", e);
-        throw new APIException("Error parsing XML", e);
-      }
-    } while (!newTemplates.isEmpty());
-    Collections.sort(templates);
-    page.setTemplates(templates);
-  }
-
-  /**
    * Initialize the information concerning redirects.
    * 
    * @param wikipedia Wikipedia.
@@ -755,59 +709,6 @@ public class MediaWikiAPI implements API {
       throw new APIException("Error parsing XML result", e);
     }
     page.setLinks(links);
-  }
-
-  /**
-   * @param wikipedia Wikipedia.
-   * @param newTemplates New list of templates (where to add new ones).
-   * @param templates List of already found templates.
-   * @param root Root element.
-   * @param query XPath query to retrieve the links 
-   * @throws APIException
-   */
-  private void constructTemplates(
-      EnumWikipedia wikipedia,
-      List<Page> newTemplates, List<Page> templates,
-      Element root, String query)
-      throws APIException {
-    if ((newTemplates == null) || (templates == null)) {
-      throw new APIException("Templates are null");
-    }
-    try {
-      XPath xpa = XPath.newInstance(query);
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
-      XPath xpaNs = XPath.newInstance("./@ns");
-      XPath xpaTitle = XPath.newInstance("./@title");
-      while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
-        String namespace = xpaNs.valueOf(currentNode);
-        String title = xpaTitle.valueOf(currentNode);
-        if (title != null) {
-          boolean alreadyFound = false;
-          for (Page p : newTemplates) {
-            if (title.equals(p.getTitle())) {
-              alreadyFound = true;
-              break;
-            }
-          }
-          for (Page p : templates) {
-            if (title.equals(p.getTitle())) {
-              alreadyFound = true;
-              break;
-            }
-          }
-          if (!alreadyFound) {
-            Page template = DataManager.getPage(wikipedia, title, null, null);
-            template.setNamespace(namespace);
-            newTemplates.add(template);
-          }
-        }
-      }
-    } catch (JDOMException e) {
-      log.error("Error templates", e);
-      throw new APIException("Error parsing XML result", e);
-    }
   }
 
   /**
@@ -1003,6 +904,19 @@ public class MediaWikiAPI implements API {
     ApiRevisionsResult result = new ApiXmlRevisionsResult(wiki, httpClient, connection);
     ApiRevisionsRequest request = new ApiRevisionsRequest(wiki, result);
     request.loadContent(pages, withRedirects);
+  }
+
+  /**
+   * Retrieves the templates of <code>page</code>.
+   * 
+   * @param wiki Wiki.
+   * @param page The page.
+   */
+  public void retrieveTemplates(EnumWikipedia wiki, Page page)
+      throws APIException {
+    ApiTemplatesResult result = new ApiXmlTemplatesResult(wiki, httpClient, connection);
+    ApiTemplatesRequest request = new ApiTemplatesRequest(wiki, result);
+    request.loadTemplates(page);
   }
 
   /**

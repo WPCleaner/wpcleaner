@@ -38,6 +38,7 @@ import org.wikipediacleaner.api.execution.EmbeddedInCallable;
 import org.wikipediacleaner.api.execution.ExpandTemplatesCallable;
 import org.wikipediacleaner.api.execution.LinksWRCallable;
 import org.wikipediacleaner.api.execution.ParseTextCallable;
+import org.wikipediacleaner.api.execution.TemplatesCallable;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
@@ -355,6 +356,26 @@ public class MediaWiki extends MediaWikiController {
     }
     final API api = APIFactory.getAPI();
     addTask(new LinksWRCallable(wikipedia, this, api, page, namespace, knownPages));
+    block(block);
+  }
+
+  /**
+   * Retrieve all templates of a page.
+   * 
+   * @param wikipedia Wikipedia.
+   * @param page Page.
+   * @param block Flag indicating if the call should block until completed.
+   * @throws APIException
+   */
+  public void retrieveAllTemplates(
+      EnumWikipedia wikipedia,
+      Page page,
+      boolean block) throws APIException {
+    if (page == null) {
+      return;
+    }
+    final API api = APIFactory.getAPI();
+    addTask(new TemplatesCallable(wikipedia, this, api, page));
     block(block);
   }
 

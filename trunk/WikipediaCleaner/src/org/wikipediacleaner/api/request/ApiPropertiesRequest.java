@@ -31,6 +31,11 @@ public class ApiPropertiesRequest extends ApiRequest {
   // ==========================================================================
 
   /**
+   * Property for Generator.
+   */
+  public final static String PROPERTY_GENERATOR = "generator";
+
+  /**
    * Property for Page identifiers.
    */
   public final static String PROPERTY_PAGEIDS = "pageids";

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-17 20:11+0100\n"
+"POT-Creation-Date: 2012-11-18 20:03+0100\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -52,17 +52,17 @@ msgstr ""
 msgid "Please, report any other problem you find to me."
 msgstr ""
 
-#: org/wikipediacleaner/api/MediaWiki.java:210
+#: org/wikipediacleaner/api/MediaWiki.java:211
 #, java-format
 msgid "Page {0}:"
 msgstr "Strona {0}:"
 
-#: org/wikipediacleaner/api/MediaWiki.java:237
+#: org/wikipediacleaner/api/MediaWiki.java:238
 #, java-format
 msgid "Updating page {0}"
 msgstr "Aktualizowanie strony {0}"
 
-#: org/wikipediacleaner/api/MediaWiki.java:252
+#: org/wikipediacleaner/api/MediaWiki.java:253
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:107
 #, java-format
 msgid "Error {0} detected: Waiting and retrying"
@@ -201,7 +201,7 @@ msgstr "Usuń wszystkie <br /> z list"
 msgid "Remove"
 msgstr "Usuń"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:165
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:184
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:190
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
@@ -518,7 +518,12 @@ msgstr "Pobieranie linków"
 msgid "Parsing text"
 msgstr "Przetwarzanie tekstu"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1535
+#: org/wikipediacleaner/api/execution/TemplatesCallable.java:53
+#: org/wikipediacleaner/gui/swing/TemplateListWindow.java:218
+msgid "Retrieving templates"
+msgstr "Pobieranie szablonów"
+
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1449
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -526,7 +531,7 @@ msgstr ""
 "To działanie posiada zabezpieczenie w postaci CAPTCHA.\n"
 "Jaka jest odpowiedź na następujące pytanie?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1542
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1456
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1849,10 +1854,6 @@ msgstr "Szablony w {0}"
 msgid "Templates used in {0}, linking to {1}"
 msgstr "Szablony użyte w {0}, linkujące do {1}"
 
-#: org/wikipediacleaner/gui/swing/TemplateListWindow.java:218
-msgid "Retrieving templates"
-msgstr "Pobieranie szablonów"
-
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:220
 msgid "Retrieving links in templates"
 msgstr "Pobieranie linków w szablonach"
@@ -2576,22 +2577,22 @@ msgstr "Odświeżanie zawartości strony"
 msgid "Retrieving interwiki for {0}"
 msgstr "Pobieranie interwiki dla {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:284
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:295
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:288
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:299
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Pobieranie zawartości strony - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:432
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:553
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:774
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:436
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:557
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:778
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Aktualizowanie komunikatu o disambigach - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:678
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:810
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:913
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:682
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:814
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:917
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Usuwanie komunikatu o disambigach - {0}"
