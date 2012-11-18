@@ -81,9 +81,26 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
 
       // Remove possible whitespace characters after last reference
       int tmpIndex = lastTag.getEndIndex();
-      while ((tmpIndex < contents.length()) &&
-             (Character.isWhitespace(contents.charAt(tmpIndex)))) {
-        tmpIndex++;
+      boolean finished = false;
+      while (!finished) {
+        if (tmpIndex >= contents.length()) {
+          finished = true;
+        } else if (contents.charAt(tmpIndex) == '\n') {
+          if ((tmpIndex + 1 < contents.length()) &&
+              ((Character.isWhitespace(contents.charAt(tmpIndex + 1))) ||
+               (contents.charAt(tmpIndex + 1) == '*') ||
+               (contents.charAt(tmpIndex + 1) == '#') ||
+               (contents.charAt(tmpIndex + 1) == ';') ||
+               (contents.charAt(tmpIndex + 1) == ':'))) {
+            finished = true;
+          } else {
+            tmpIndex++;
+          }
+        } else if (Character.isWhitespace(contents.charAt(tmpIndex))) {
+          tmpIndex++;
+        } else {
+          finished = true;
+        }
       }
 
       // Check if next character is a punctuation
