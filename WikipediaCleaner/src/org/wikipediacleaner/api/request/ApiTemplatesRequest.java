@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.request;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,26 @@ public class ApiTemplatesRequest extends ApiPropertiesRequest {
   public ApiTemplatesRequest(EnumWikipedia wiki, ApiTemplatesResult result) {
     super(wiki);
     this.result = result;
+  }
+
+  /**
+   * Load list of templates.
+   * 
+   * @param page Page for which templates are requested.
+   * @throws APIException
+   */
+  public void loadTemplates(Page page) throws APIException {
+    Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
+    properties.put(PROPERTY_PROP, PROPERTY_PROP_INFO);
+    properties.put(PROPERTY_GENERATOR, PROPERTY_PROP_TEMPLATES);
+    properties.put("g" + PROPERTY_LIMIT, LIMIT_MAX);
+    properties.put(PROPERTY_TITLES, page.getTitle());
+    List<Page> list = new ArrayList<Page>();
+    while (result.executeTemplates(properties, page, list)) {
+      //
+    }
+    Collections.sort(list);
+    page.setTemplates(list);
   }
 
   /**

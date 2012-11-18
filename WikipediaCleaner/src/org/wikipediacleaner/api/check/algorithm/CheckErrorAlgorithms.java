@@ -111,10 +111,12 @@ public final class CheckErrorAlgorithms {
     if (algorithms == null) {
       return null;
     }
-    if ((errorNumber < 1) || (errorNumber > CWConfiguration.MAX_ERROR_NUMBER)) {
-      return null;
+    for (CheckErrorAlgorithm algorithm : algorithms) {
+      if (algorithm.getErrorNumber() == errorNumber) {
+        return algorithm;
+      }
     }
-    return algorithms.get(errorNumber - 1);
+    return null;
   }
 
   /**

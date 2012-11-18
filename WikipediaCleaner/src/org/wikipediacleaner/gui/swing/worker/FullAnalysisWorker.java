@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -73,6 +74,9 @@ public class FullAnalysisWorker extends BasicWorker {
             (link.getContents() == null)) {
           mw.retrieveContents(getWikipedia(), link, false, false, true);
         }
+      }
+      if (CheckErrorAlgorithms.isAlgorithmActive(getWikipedia(), 508)) {
+        mw.retrieveAllTemplates(getWikipedia(), page, false);
       }
       mw.block(true);
       if (Boolean.FALSE.equals(page.isExisting())) {
