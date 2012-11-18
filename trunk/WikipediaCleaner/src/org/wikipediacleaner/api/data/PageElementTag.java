@@ -533,6 +533,7 @@ public class PageElementTag extends PageElement {
         } else if (!Character.isWhitespace(contents.charAt(currentIndex)) &&
             (contents.charAt(currentIndex) != ',') &&
             (contents.charAt(currentIndex) != ';') &&
+            (contents.charAt(currentIndex) != '.') &&
             (contents.charAt(currentIndex) != '\'')) {
           return lastTagIndex;
         } else {
