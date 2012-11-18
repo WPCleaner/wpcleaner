@@ -120,6 +120,11 @@ public class RecentChange implements Comparable<RecentChange> {
   private boolean isNew;
 
   /**
+   * True if this is a redirect.
+   */
+  private boolean isRedirect;
+
+  /**
    * Timestamp of the change.
    */
   private Date timestamp;
@@ -238,6 +243,13 @@ public class RecentChange implements Comparable<RecentChange> {
   }
 
   /**
+   * @return True if this is a redirect.
+   */
+  public boolean isRedirect() {
+    return isRedirect;
+  }
+
+  /**
    * @return Timestamp of the change.
    */
   public Date getTimestamp() {
@@ -305,6 +317,13 @@ public class RecentChange implements Comparable<RecentChange> {
    */
   public void setNew(boolean isNew) {
     this.isNew = isNew;
+  }
+
+  /**
+   * @param isRedirect True if this is a redirect.
+   */
+  public void setRedirect(boolean isRedirect) {
+    this.isRedirect = isRedirect;
   }
 
   /**

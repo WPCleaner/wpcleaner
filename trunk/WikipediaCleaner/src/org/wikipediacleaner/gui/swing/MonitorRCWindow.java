@@ -238,12 +238,14 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
       String creator = null;
       List<String> pageModifiers = new ArrayList<String>();
       boolean oldEnough = true;
+      boolean redirect = false;
       for (int rcNum = listRC.size(); rcNum > 0; rcNum--) {
         RecentChange rc = listRC.get(rcNum - 1);
         if (currentTime.getTime() <= rc.getTimestamp().getTime() + 15*60*1000) {
           oldEnough = false;
         }
         String user = rc.getUser();
+        redirect = rc.isRedirect();
         if (rc.isNew()) {
           creator = user;
         } else {
@@ -259,10 +261,12 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
 
       if (oldEnough) {
         modelRCInteresting.removeRecentChanges(title);
-        Page page = DataManager.getPage(getWikipedia(), title, null, null);
-        pages.add(page);
-        creators.put(title, creator);
-        modifiers.put(title, pageModifiers);
+        if (!redirect) {
+          Page page = DataManager.getPage(getWikipedia(), title, null, null);
+          pages.add(page);
+          creators.put(title, creator);
+          modifiers.put(title, pageModifiers);
+        }
       }
     }
 
