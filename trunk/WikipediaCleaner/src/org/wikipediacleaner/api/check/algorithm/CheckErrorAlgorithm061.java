@@ -88,10 +88,11 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
         } else if (contents.charAt(tmpIndex) == '\n') {
           if ((tmpIndex + 1 < contents.length()) &&
               ((Character.isWhitespace(contents.charAt(tmpIndex + 1))) ||
-               (contents.charAt(tmpIndex + 1) == '*') ||
-               (contents.charAt(tmpIndex + 1) == '#') ||
-               (contents.charAt(tmpIndex + 1) == ';') ||
-               (contents.charAt(tmpIndex + 1) == ':'))) {
+               (contents.charAt(tmpIndex + 1) == '*') || // List
+               (contents.charAt(tmpIndex + 1) == '#') || // List
+               (contents.charAt(tmpIndex + 1) == ';') || // Definition
+               (contents.charAt(tmpIndex + 1) == ':') || // Definition
+               (contents.charAt(tmpIndex + 1) == '!'))) { // Table heading
             finished = true;
           } else {
             tmpIndex++;
