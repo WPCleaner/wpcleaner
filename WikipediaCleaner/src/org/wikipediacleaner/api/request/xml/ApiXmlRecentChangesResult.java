@@ -76,6 +76,7 @@ public class ApiXmlRecentChangesResult extends ApiXmlResult implements ApiRecent
         boolean isBot = currentNode.getAttribute("bot") != null;
         boolean isMinor = currentNode.getAttribute("minor") != null;
         boolean isNew = currentNode.getAttribute("new") != null;
+        boolean isRedirect = currentNode.getAttribute("redirect") != null;
         String comment = currentNode.getAttributeValue("comment");
         String ns = currentNode.getAttributeValue("ns");
         String pageId = currentNode.getAttributeValue("pageid");
@@ -102,6 +103,7 @@ public class ApiXmlRecentChangesResult extends ApiXmlResult implements ApiRecent
           rc.setLogType(logType);
           rc.setMinor(isMinor);
           rc.setNew(isNew);
+          rc.setRedirect(isRedirect);
           rc.setTimestamp(timestamp);
           rc.setType(type);
           rc.setUser(user);
