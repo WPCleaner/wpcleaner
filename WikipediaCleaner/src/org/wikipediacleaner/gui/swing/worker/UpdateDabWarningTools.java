@@ -46,6 +46,8 @@ import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
@@ -1012,10 +1014,10 @@ public class UpdateDabWarningTools {
       return;
     }
     String article = analysis.getPage().getTitle();
-    WPCConfiguration config = analysis.getWPCConfiguration();
+    WPCConfiguration wpcConfig = analysis.getWPCConfiguration();
 
     // Prepare message
-    String template = config.getString(templateParam);
+    String template = wpcConfig.getString(templateParam);
     if ((template == null) || (template.trim().length() == 0)) {
       return;
     }
@@ -1033,7 +1035,7 @@ public class UpdateDabWarningTools {
       message.append(article);
     }
     if ((templateElements.length > 2) && (templateElements[2].trim().length() > 0)) {
-      String wpcUser = config.getString(WPCConfigurationString.USER);
+      String wpcUser = wpcConfig.getString(WPCConfigurationString.USER);
       if ((wpcUser != null) && (wpcUser.trim().length() > 0)) {
         message.append("|");
         message.append(templateElements[2].trim());
@@ -1048,13 +1050,19 @@ public class UpdateDabWarningTools {
       }
     }
     message.append("}}");
+    Configuration config = Configuration.getConfiguration();
+    String signature = config.getString(null, ConfigurationValueString.SIGNATURE);
+    if (signature != null) {
+      message.append(" ");
+      message.append(signature);
+    }
 
     // Retrieve user talk page name
     Namespace userTalkNS = wikipedia.getWikiConfiguration().getNamespace(Namespace.USER_TALK);
     String userTalk = userTalkNS.getTitle() + ":" + user;
 
     // Check title
-    String title = config.getString(titleParam);
+    String title = wpcConfig.getString(titleParam);
     if (title != null) {
       try {
         title = MessageFormat.format(title, article);
