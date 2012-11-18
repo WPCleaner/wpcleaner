@@ -124,6 +124,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
                (contents.charAt(tmpIndex) == ' ')) {
           tmpIndex--;
         }
+        beginIndex = tmpIndex + 1;
         boolean punctuationFoundBefore = false;
         int punctuationBeforeIndex = tmpIndex;
         while ((tmpIndex >= 0) &&
