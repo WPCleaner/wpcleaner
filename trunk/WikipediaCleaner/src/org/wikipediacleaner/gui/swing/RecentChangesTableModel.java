@@ -227,7 +227,11 @@ public class RecentChangesTableModel extends AbstractTableModel {
             return "Upld";
           }
         }
-        return (rc.isNew() ? "N" : "") + (rc.isMinor() ? "m" : "") + (rc.isBot() ? "b" : "");
+        return
+            (rc.isNew() ? "N" : "") +
+            (rc.isMinor() ? "m" : "") +
+            (rc.isBot() ? "b" : "") +
+            (rc.isRedirect() ? "R" : "");
       case COLUMN_RC_ID:
         return rc.getId();
       case COLUMN_TIMESTAMP:
