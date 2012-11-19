@@ -27,11 +27,13 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -45,6 +47,8 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.RecentChangesListener;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationLong;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -81,9 +85,19 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
   private JTable tableRCInteresting;
 
   /**
+   * Map for monitored pages (Title => Last modified time).
+   */
+  private Map<String, Long> monitoredPages;
+
+  /**
+   * Tools for creating disambiguation warning.
+   */
+  private UpdateDabWarningTools createDabWarning;
+
+  /**
    * Tools for updating disambiguation warning.
    */
-  private UpdateDabWarningTools dabWarningTools;
+  private UpdateDabWarningTools updateDabWarning;
 
   /**
    * Create and display a window for monitoring recent changes.
@@ -169,7 +183,9 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
     constraints.gridy++;
 
     updateComponentState();
-    dabWarningTools = new UpdateDabWarningTools(getWikipedia(), this);
+    monitoredPages = new HashMap<String, Long>();
+    createDabWarning = new UpdateDabWarningTools(getWikipedia(), this);
+    updateDabWarning = new UpdateDabWarningTools(getWikipedia(), this, false);
     API api = APIFactory.getAPI();
     api.addRecentChangesListener(getWikipedia(), this);
     return panel;
@@ -195,13 +211,42 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
    * @see org.wikipediacleaner.api.RecentChangesListener#recentChanges(java.util.List, java.util.Date)
    */
   public void recentChanges(List<RecentChange> newRC, Date currentTime) {
+
+    // Retrieve configuration
+    WPCConfiguration config = getWikipedia().getConfiguration();
+    long delayForNew = config.getLong(WPCConfigurationLong.RC_NEW_ARTICLE_WITH_DAB_DELAY) * 60 * 1000;
+    long delayMonitoring = config.getLong(WPCConfigurationLong.RC_KEEP_MONITORING_DELAY) * 60 * 1000;
+
+    // Add new recent changes to the list
     modelRC.addRecentChanges(newRC);
 
     // Remove old changes
     List<RecentChange> filteredNewRC = new ArrayList<RecentChange>();
     for (RecentChange rc : newRC) {
-      if (currentTime.getTime() < rc.getTimestamp().getTime() + 15*60*1000) {
+      if (currentTime.getTime() < rc.getTimestamp().getTime() + delayForNew) {
         filteredNewRC.add(rc);
+      }
+    }
+
+    // Check if an update has been made on a monitored page
+    for (RecentChange rc : filteredNewRC) {
+      if (monitoredPages.containsKey(rc.getTitle())) {
+        Page page = DataManager.getPage(getWikipedia(), rc.getTitle(), null, null);
+        try {
+          updateDabWarning.updateDabWarning(Collections.singletonList(page), false, false, false, null, null);
+        } catch (APIException e) {
+          // Nothing to do
+        }
+        monitoredPages.put(rc.getTitle(), Long.valueOf(currentTime.getTime()));
+      }
+    }
+
+    // Check monitored pages for expired delay
+    Iterator<Entry<String, Long>> itPages = monitoredPages.entrySet().iterator();
+    while (itPages.hasNext()) {
+      Entry<String, Long> entry = itPages.next();
+      if (currentTime.getTime() > entry.getValue().longValue() + delayMonitoring) {
+        itPages.remove();
       }
     }
 
@@ -241,7 +286,7 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
       boolean redirect = false;
       for (int rcNum = listRC.size(); rcNum > 0; rcNum--) {
         RecentChange rc = listRC.get(rcNum - 1);
-        if (currentTime.getTime() <= rc.getTimestamp().getTime() + 15*60*1000) {
+        if (currentTime.getTime() <= rc.getTimestamp().getTime() + delayForNew) {
           oldEnough = false;
         }
         String user = rc.getUser();
@@ -273,9 +318,14 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
     // Update disambiguation warnings
     if (!pages.isEmpty()) {
       try {
-        dabWarningTools.updateDabWarning(
+        List<Page> updatedPages = createDabWarning.updateDabWarning(
             pages, false, false, false,
             creators, modifiers);
+        if (updatedPages != null) {
+          for (Page page : updatedPages) {
+            monitoredPages.put(page.getTitle(), Long.valueOf(currentTime.getTime()));
+          }
+        }
       } catch (APIException e) {
         // Nothing to do
       }

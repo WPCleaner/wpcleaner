@@ -78,6 +78,8 @@ public class WPCConfiguration {
     userStringValues = new HashMap<WPCConfigurationString, String>();
     generalStringListValues = new HashMap<WPCConfigurationStringList, List<String>>();
     userStringListValues = new HashMap<WPCConfigurationStringList, List<String>>();
+    generalLongValues = new HashMap<WPCConfigurationLong, Long>();
+    userLongValues = new HashMap<WPCConfigurationLong, Long>();
     initDefaultEncyclopedicNamespaces();
   }
 
@@ -107,6 +109,8 @@ public class WPCConfiguration {
     userStringValues.clear();
     generalStringListValues.clear();
     userStringListValues.clear();
+    generalLongValues.clear();
+    userLongValues.clear();
     initDefaultEncyclopedicNamespaces();
     disambiguationCategories = null;
     suggestions = null;
@@ -207,6 +211,16 @@ public class WPCConfiguration {
   private final Map<WPCConfigurationStringList, List<String>> userStringListValues;
 
   /**
+   * Map for holding Long values for general settings.
+   */
+  private final Map<WPCConfigurationLong, Long> generalLongValues;
+
+  /**
+   * Map for holding Long values for user settings.
+   */
+  private final Map<WPCConfigurationLong, Long> userLongValues;
+
+  /**
    * Retrieve the value of a Boolean attribute.
    * 
    * @param attribute Attribute.
@@ -265,6 +279,23 @@ public class WPCConfiguration {
       result.addAll(userResult);
     }
     return result;
+  }
+
+  /**
+   * Retrieve the value of a Long attribute.
+   * 
+   * @param attribute Attribute.
+   * @return Attribute value.
+   */
+  public long getLong(WPCConfigurationLong attribute) {
+    Long result = userLongValues.get(attribute);
+    if (result == null) {
+      result = generalLongValues.get(attribute);
+    }
+    if (result == null) {
+      result = Long.valueOf(attribute.getDefaultValue());
+    }
+    return result.longValue();
   }
 
   /**
@@ -339,6 +370,30 @@ public class WPCConfiguration {
         } else {
           log.warn(GT._("Attribute {0} can''t be set in user configuration", name));
         }
+      }
+      return;
+    }
+
+    // Check if it is a Long attribute
+    WPCConfigurationLong longAttribute = WPCConfigurationLong.getValue(name);
+    if (longAttribute != null) {
+      try {
+        Long longValue = Long.valueOf(value);
+        if (general) {
+          if (longAttribute.isGeneralAttribute()) {
+            generalLongValues.put(longAttribute, longValue);
+          } else {
+            log.warn(GT._("Attribute {0} can''t be set in general configuration", name));
+          }
+        } else {
+          if (longAttribute.isUserAttribute()) {
+            userLongValues.put(longAttribute, longValue);
+          } else {
+            log.warn(GT._("Attribute {0} can''t be set in user configuration", name));
+          }
+        }
+      } catch (NumberFormatException e) {
+        log.warn(GT._("Attribute {0} should be integer value", name));
       }
       return;
     }
