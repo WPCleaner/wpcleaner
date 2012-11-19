@@ -91,6 +91,15 @@ public class UpdateDabWarningTools {
 
   /**
    * @param wikipedia Wikipedia.
+   * @param window Window.
+   * @param createWarning Create warning if necessary.
+   */
+  public UpdateDabWarningTools(EnumWikipedia wikipedia, BasicWindow window, boolean createWarning) {
+    this(wikipedia, null, window, createWarning);
+  }
+
+  /**
+   * @param wikipedia Wikipedia.
    * @param worker Worker.
    * @param window Window.
    * @param createWarning Create warning if necessary.
@@ -134,13 +143,13 @@ public class UpdateDabWarningTools {
    * @return Number of pages updated
    * @throws APIException
    */
-  public int updateDabWarning(
+  public List<Page> updateDabWarning(
       List<Page> pages, boolean contentsAvailable,
       boolean linksAvailable, boolean dabInformationAvailable,
       Map<String, String> creators,
       Map<String, List<String>> modifiers) throws APIException {
     if ((pages == null) || (pages.isEmpty())) {
-      return 0;
+      return Collections.emptyList();
     }
     MediaWiki mw = MediaWiki.getMediaWikiAccess(worker);
 
@@ -151,7 +160,7 @@ public class UpdateDabWarningTools {
       }
       mw.block(true);
       if (shouldStop()) {
-        return 0;
+        return Collections.emptyList();
       }
     }
 
@@ -199,7 +208,7 @@ public class UpdateDabWarningTools {
         }
       }
       if (shouldStop()) {
-        return 0;
+        return Collections.emptyList();
       }
     }
 
@@ -237,11 +246,11 @@ public class UpdateDabWarningTools {
     mw.retrieveSectionContents(wikipedia, mapTalkPages.values(), 0, false);
     mw.retrieveContents(wikipedia, mapTodoSubpages.values(), true, false);
     if (mw.shouldStop()) {
-      return 0;
+      return Collections.emptyList();
     }
 
     // Update disambiguation warning
-    int count = 0;
+    List<Page> result = new ArrayList<Page>();
     for (Page page : pages) {
       PageAnalysis pageAnalysis = page.getAnalysis(page.getContents(), true);
       if (updateDabWarning(
@@ -250,10 +259,10 @@ public class UpdateDabWarningTools {
           mapTodoSubpages.get(page),
           (creators != null) ? creators.get(page.getTitle()) : null,
           (modifiers != null) ? modifiers.get(page.getTitle()) : null)) {
-        count++;
+        result.add(page);
       }
     }
-    return count;
+    return result;
   }
 
   /**
@@ -445,6 +454,10 @@ public class UpdateDabWarningTools {
           todoSubpage, tmp.toString(),
           wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           false);
+
+      // Inform creator and modifiers of the page
+      informContributors(analysis, dabLinks, creator, modifiers);
+
       return true;
     }
 
@@ -474,9 +487,6 @@ public class UpdateDabWarningTools {
           wikipedia, todoSubpage, tmp.toString(),
           wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
           false);
-
-      // Inform creator and modifiers of the page
-      informContributors(analysis, dabLinks, creator, modifiers);
 
       return true;
     }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-18 20:03+0100\n"
+"POT-Creation-Date: 2012-11-19 23:26+0100\n"
 "PO-Revision-Date: 2012-11-17 07:29+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -444,23 +444,30 @@ msgstr "Vous avez corrigé {0} erreur(s) « {1} »"
 msgid "You haven''t done any contribution on \"{0}\""
 msgstr "Vous n’avez fait aucune contribution sur « {0} »"
 
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:295
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:314
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:334
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:387
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:326
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:345
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:365
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:386
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:442
 #, java-format
 msgid "Attribute {0} can''t be set in general configuration"
 msgstr ""
 "La propriété {0} ne peut pas être définie dans la configuration générale"
 
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:301
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:320
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:340
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:332
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:351
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:371
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:392
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:406
 #, java-format
 msgid "Attribute {0} can''t be set in user configuration"
 msgstr ""
 "La propriété {0} ne peut pas être définie dans la configuration utilisateur"
+
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:396
+#, java-format
+msgid "Attribute {0} should be integer value"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:205
 msgid "Namespace"
@@ -558,7 +565,7 @@ msgstr "À propos"
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:278
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:150
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:173
-#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:160
+#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:174
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:226
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:212
 msgid "&Close"
@@ -1379,7 +1386,7 @@ msgstr "Récupération des suggestions pour les remplacements de texte"
 msgid "Retrieving Check Wiki configuration"
 msgstr "Récupération de la configuration du projet de correction syntaxique"
 
-#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:107
+#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:121
 msgid "Recent changes monitoring"
 msgstr "Surveillance des modifications récentes"
 
@@ -2613,22 +2620,22 @@ msgstr "Mise à jour du contenu de la page"
 msgid "Retrieving interwiki for {0}"
 msgstr "Récupération des interwikis pour {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:288
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:299
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:297
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:308
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Récupération du contenu de la page - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:436
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:557
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:778
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:445
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:567
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:788
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Mise à jour de l’avertissement d’homonymie - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:682
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:814
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:917
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:692
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:824
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:927
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Suppression de l’avertissement d’homonymie - {0}"
@@ -2655,7 +2662,7 @@ msgstr ""
 msgid "Retrieving disambiguation pages"
 msgstr "Récupération des pages d’homonymie"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:220
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:221
 #, java-format
 msgid ""
 "An error occured when updating disambiguation warnings. Do you want to "
@@ -2668,7 +2675,7 @@ msgstr ""
 "\n"
 "Erreur : {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:262
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:263
 #, java-format
 msgid ""
 "Disambiguation links have been analyzed in {0} pages.\n"
