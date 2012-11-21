@@ -123,6 +123,9 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
               pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+          if ((link.getFullLink() == null) || (link.getFullLink().trim().length() == 0)) {
+            errorResult.addReplacement("[[" + link.getText() + "]]");
+          }
           for (int i = 0; i <= pipeIndex.size(); i++) {
             int beginText = (i > 0) ? (pipeIndex.get(i - 1).intValue() + 1) : 0;
             int endText = (i < pipeIndex.size()) ? pipeIndex.get(i).intValue() : text.length();
