@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.api.data.RecentChange;
+import org.wikipediacleaner.api.data.Section;
 
 
 /**
@@ -352,15 +353,30 @@ public interface API {
 
   /**
    * Parse text.
+   * (<code>action=parse</code>).
    * 
    * @param wiki Wiki.
    * @param title The title to use (for example in {{PAGENAME}}).
    * @param text The text with templates in it.
    * @return Parsed text.
    * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#parse">API:Parsing wikitext</a>
    */
   public String parseText(
       EnumWikipedia wiki, String title, String text) throws APIException;
+
+  /**
+   * Retrieve list of sections.
+   * (<code>action=parse</code>).
+   * 
+   * @param wiki Wiki.
+   * @param Page page.
+   * @return List of sections.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#parse">API:Parsing wikitext</a>
+   */
+  public List<Section> retrieveSections(
+      EnumWikipedia wiki, Page page) throws APIException;
 
   // ==========================================================================
   // API : Purging pages' caches.

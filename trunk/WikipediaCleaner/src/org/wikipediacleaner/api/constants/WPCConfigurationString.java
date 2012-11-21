@@ -46,6 +46,8 @@ public enum WPCConfigurationString {
   HELP_PAGE("help_page", null, false, true, false),
   // URL of the help page
   HELP_URL("help_url", "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner", false, true, false),
+  // Title used to group all messages on a user talk page
+  MSG__GLOBAL_TITLE("rc_msg_global_title", null, false, true, true), // TODO: Not for users
   // Template used to warn a user who has created a new article with disambiguation links
   MSG_NEW_ARTICLE_MODIFIED_WITH_DAB_TEMPLATE("rc_msg_new_article_modified_with_dab_template", null, false, true, true),
   // Title used to warn a user who has created a new article with disambiguation links

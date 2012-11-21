@@ -56,6 +56,7 @@ import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.api.data.RecentChange;
+import org.wikipediacleaner.api.data.Section;
 import org.wikipediacleaner.api.request.ApiCategoriesRequest;
 import org.wikipediacleaner.api.request.ApiCategoriesResult;
 import org.wikipediacleaner.api.request.ApiCategoryMembersRequest;
@@ -1138,7 +1139,8 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#expandtemplates">API:Parsing wikitext</a>
    */
-  public String expandTemplates(EnumWikipedia wiki, String title, String text) throws APIException {
+  public String expandTemplates(
+      EnumWikipedia wiki, String title, String text) throws APIException {
     ApiExpandResult result = new ApiXmlExpandResult(wiki, httpClient, connection);
     ApiExpandRequest request = new ApiExpandRequest(wiki, result);
     return request.expandTemplates(title, text);
@@ -1155,10 +1157,28 @@ public class MediaWikiAPI implements API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#parse">API:Parsing wikitext</a>
    */
-  public String parseText(EnumWikipedia wiki, String title, String text) throws APIException {
+  public String parseText(
+      EnumWikipedia wiki, String title, String text) throws APIException {
     ApiParseResult result = new ApiXmlParseResult(wiki, httpClient, connection);
     ApiParseRequest request = new ApiParseRequest(wiki, result);
     return request.parseText(title, text);
+  }
+
+  /**
+   * Retrieve list of sections.
+   * (<code>action=parse</code>).
+   * 
+   * @param wiki Wiki.
+   * @param Page page.
+   * @return List of sections.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#parse">API:Parsing wikitext</a>
+   */
+  public List<Section> retrieveSections(
+      EnumWikipedia wiki, Page page) throws APIException {
+    ApiParseResult result = new ApiXmlParseResult(wiki, httpClient, connection);
+    ApiParseRequest request = new ApiParseRequest(wiki, result);
+    return request.retrieveSections(page);
   }
 
   // ==========================================================================

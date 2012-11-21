@@ -18,9 +18,12 @@
 
 package org.wikipediacleaner.api.request;
 
+import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.Section;
 
 
 /**
@@ -36,4 +39,14 @@ public interface ApiParseResult extends ApiResult {
    * @throws APIException
    */
   public String executeParse(Map<String, String> properties) throws APIException;
+
+  /**
+   * Execute sections request.
+   * 
+   * @param page Page.
+   * @param properties Properties defining request.
+   * @return List of sections.
+   * @throws APIException
+   */
+  public List<Section> executeSections(Page page, Map<String, String> properties) throws APIException;
 }
