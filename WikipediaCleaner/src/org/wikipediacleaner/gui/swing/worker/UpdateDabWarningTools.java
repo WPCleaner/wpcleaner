@@ -43,6 +43,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.QueryResult;
+import org.wikipediacleaner.api.data.Section;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -1026,14 +1027,93 @@ public class UpdateDabWarningTools {
     String article = analysis.getPage().getTitle();
     WPCConfiguration wpcConfig = analysis.getWPCConfiguration();
 
-    // Prepare message
+    // Prepare elements
+    String message = createMessage(article, dabLinks, wpcConfig, templateParam);
+    if ((message == null) || (message.trim().length() == 0)) {
+      return;
+    }
+    String globalTitle = wpcConfig.getString(WPCConfigurationString.MSG__GLOBAL_TITLE);
+    String title = wpcConfig.getString(titleParam);
+
+    // Retrieve user talk page name
+    Namespace userTalkNS = wikipedia.getWikiConfiguration().getNamespace(Namespace.USER_TALK);
+    String userTalk = userTalkNS.getTitle() + ":" + user;
+    Page userTalkPage = DataManager.getPage(analysis.getWikipedia(), userTalk, null, null);
+
+    // Add message
+    try {
+      if (globalTitle != null) {
+        // Check if global title already exists in the talk page
+        List<Section> sections = api.retrieveSections(wikipedia, userTalkPage);
+        Section section = null;
+        for (Section tmpSection : sections) {
+          if (globalTitle.equals(tmpSection.getLine())) {
+            section = tmpSection;
+          }
+        }
+
+        if (section == null) {
+          // Add the title
+          api.retrieveSectionContents(wikipedia, userTalkPage, 0); // TODO: Remove, just here for editToken
+          if (title == null) {
+            api.addNewSection(wikipedia, userTalkPage, globalTitle, message, false);
+          } else {
+            StringBuilder fullMessage = new StringBuilder();
+            fullMessage.append("== ");
+            fullMessage.append(title);
+            fullMessage.append(" ==\n\n");
+            fullMessage.append(message);
+            api.addNewSection(wikipedia, userTalkPage, title, fullMessage.toString(), false);
+          }
+        } else {
+          // Add the message in the existing title
+          Integer revisionId = userTalkPage.getRevisionId();
+          api.retrieveSectionContents(wikipedia, userTalkPage, section.getIndex());
+          if (revisionId.equals(userTalkPage.getRevisionId())) {
+            // TODO : Update section
+            System.err.println("Should add " + message + " in " + userTalk);
+          } else {
+            System.err.println("Page " + userTalk + " has been modified between two requests");
+          }
+        }
+      } else {
+        if (title != null) {
+          try {
+            title = MessageFormat.format(title, article);
+          } catch (IllegalArgumentException e) {
+            //
+          }
+          api.retrieveSectionContents(wikipedia, userTalkPage, 0); // TODO: Remove, just here for editToken
+          api.addNewSection(wikipedia, userTalkPage, title, message, false);
+        } else {
+          // TODO: No global title, no title => Should append the message add the end
+          System.err.println("Should add " + message + " in " + userTalk);
+        }
+      }
+    } catch (APIException e) {
+      //
+    }
+  }
+
+  /**
+   * Create a message that should be added on user talk page for disambiguation links.
+   * 
+   * @param article Article.
+   * @param dabLinks List of disambiguation links.
+   * @param wpcConfig Configuration.
+   * @param templateParam Parameter for the template used to inform.
+   */
+  private String createMessage(
+      String article, Collection<String> dabLinks,
+      WPCConfiguration wpcConfig,
+      WPCConfigurationString templateParam) {
     String template = wpcConfig.getString(templateParam);
     if ((template == null) || (template.trim().length() == 0)) {
-      return;
+      return null;
     }
     String[] templateElements = template.split("\\|");
     if (templateElements[0].trim().length() == 0) {
-      return;
+      return null;
     }
     StringBuilder message = new StringBuilder();
     message.append("{{");
@@ -1066,30 +1146,7 @@ public class UpdateDabWarningTools {
       message.append(" ");
       message.append(signature);
     }
-
-    // Retrieve user talk page name
-    Namespace userTalkNS = wikipedia.getWikiConfiguration().getNamespace(Namespace.USER_TALK);
-    String userTalk = userTalkNS.getTitle() + ":" + user;
-
-    // Check title
-    String title = wpcConfig.getString(titleParam);
-    if (title != null) {
-      try {
-        title = MessageFormat.format(title, article);
-      } catch (IllegalArgumentException e) {
-        //
-      }
-      Page userTalkPage = DataManager.getPage(analysis.getWikipedia(), userTalk, null, null);
-      try {
-        api.retrieveSectionContents(wikipedia, userTalkPage, 0);
-        api.addNewSection(wikipedia, userTalkPage, title, message.toString(), false);
-      } catch (APIException e) {
-        //
-      }
-    } else {
-      // TODO
-      System.err.println("Shoudl add " + message + " in " + userTalk);
-    }
+    return message.toString();
   }
 
   /**
