@@ -58,7 +58,7 @@ public class WPCConfiguration {
   /**
    * Logger.
    */
-  private final Log log = LogFactory.getLog(WPCConfiguration.class);
+  private final static Log log = LogFactory.getLog(WPCConfiguration.class);
 
   /**
    * Wiki.

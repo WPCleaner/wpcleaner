@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
@@ -55,6 +57,8 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
  * Tools for updating disambiguation warnings.
  */
 public class UpdateDabWarningTools {
+
+  private final static Log log = LogFactory.getLog(UpdateDabWarningTools.class);
 
   private final EnumWikipedia wikipedia;
   private final WPCConfiguration configuration;
@@ -128,7 +132,7 @@ public class UpdateDabWarningTools {
     try {
       wikipedia.loadDisambiguationPages(api);
     } catch (APIException e) {
-      //
+      log.error("Error preloading disambiguation pages", e);
     }
   }
 
@@ -232,7 +236,7 @@ public class UpdateDabWarningTools {
       }
     }
 
-    // Load talk pages and Todo sub pages
+    // Load talk pages and "To do" sub pages
     Map<Page, Page> mapTalkPages = new HashMap<Page, Page>();
     Map<Page, Page> mapTodoSubpages = new HashMap<Page, Page>();
     for (Page page : pages) {
@@ -1032,8 +1036,18 @@ public class UpdateDabWarningTools {
     if ((message == null) || (message.trim().length() == 0)) {
       return;
     }
+    String globalTemplate = wpcConfig.getString(WPCConfigurationString.MSG__GLOBAL_TEMPLATE);
     String globalTitle = wpcConfig.getString(WPCConfigurationString.MSG__GLOBAL_TITLE);
     String title = wpcConfig.getString(titleParam);
+    if (title != null) {
+      try {
+        title = MessageFormat.format(title, article);
+      } catch (IllegalArgumentException e) {
+        log.warn("Parameter " + titleParam.getAttributeName() + " has an incorrect format");
+      }
+    }
+    Configuration config = Configuration.getConfiguration();
+    String signature = config.getString(null, ConfigurationValueString.SIGNATURE);
 
     // Retrieve user talk page name
     Namespace userTalkNS = wikipedia.getWikiConfiguration().getNamespace(Namespace.USER_TALK);
@@ -1054,40 +1068,47 @@ public class UpdateDabWarningTools {
 
         if (section == null) {
           // Add the title
-          api.retrieveSectionContents(wikipedia, userTalkPage, 0); // TODO: Remove, just here for editToken
-          if (title == null) {
-            api.addNewSection(wikipedia, userTalkPage, globalTitle, message, false);
-          } else {
-            StringBuilder fullMessage = new StringBuilder();
+          StringBuilder fullMessage = new StringBuilder();
+          if ((globalTemplate != null) && (globalTemplate.trim().length() > 0)) {
+            fullMessage.append(globalTemplate.trim());
+            fullMessage.append("\n");
+            if ((signature != null) && (signature.trim().length() > 0)) {
+              fullMessage.append(signature.trim());
+              fullMessage.append("\n");
+            }
+            fullMessage.append("\n");
+          }
+          if (title != null) {
             fullMessage.append("== ");
             fullMessage.append(title);
             fullMessage.append(" ==\n\n");
-            fullMessage.append(message);
-            api.addNewSection(wikipedia, userTalkPage, title, fullMessage.toString(), false);
           }
+          fullMessage.append(message);
+          api.retrieveSectionContents(wikipedia, userTalkPage, 0); // TODO: Remove, just here for editToken
+          api.addNewSection(wikipedia, userTalkPage, globalTitle, fullMessage.toString(), false);
         } else {
           // Add the message in the existing title
           Integer revisionId = userTalkPage.getRevisionId();
           api.retrieveSectionContents(wikipedia, userTalkPage, section.getIndex());
           if (revisionId.equals(userTalkPage.getRevisionId())) {
-            // TODO : Update section
-            System.err.println("Should add " + message + " in " + userTalk);
+            StringBuilder fullMessage = new StringBuilder();
+            fullMessage.append(userTalkPage.getContents());
+            if (fullMessage.charAt(fullMessage.length() - 1) != '\n') {
+              fullMessage.append("\n");
+            }
+            fullMessage.append(message);
+            api.updateSection(wikipedia, userTalkPage, globalTitle, section.getIndex(), fullMessage.toString(), false);
           } else {
             System.err.println("Page " + userTalk + " has been modified between two requests");
           }
         }
       } else {
         if (title != null) {
-          try {
-            title = MessageFormat.format(title, article);
-          } catch (IllegalArgumentException e) {
-            //
-          }
           api.retrieveSectionContents(wikipedia, userTalkPage, 0); // TODO: Remove, just here for editToken
           api.addNewSection(wikipedia, userTalkPage, title, message, false);
         } else {
           // TODO: No global title, no title => Should append the message add the end
-          System.err.println("Should add " + message + " in " + userTalk);
+          log.warn("Should add " + message + " in " + userTalk);
         }
       }
     } catch (APIException e) {
@@ -1140,12 +1161,6 @@ public class UpdateDabWarningTools {
       }
     }
     message.append("}}");
-    Configuration config = Configuration.getConfiguration();
-    String signature = config.getString(null, ConfigurationValueString.SIGNATURE);
-    if (signature != null) {
-      message.append(" ");
-      message.append(signature);
-    }
     return message.toString();
   }
 
