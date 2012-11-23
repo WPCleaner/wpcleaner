@@ -54,7 +54,7 @@ public class SpecialCharacters {
   private final static Map<Character, String> replacements = new HashMap<Character, String>();
 
   /**
-   * Possible replacements for unauthorize characters for specific Wiki.
+   * Possible replacements for unauthorized characters for specific Wiki.
    */
   private final static Map<EnumWikipedia, Map<Character, String>> localReplacements =
       new HashMap<EnumWikipedia, Map<Character,String>>();
