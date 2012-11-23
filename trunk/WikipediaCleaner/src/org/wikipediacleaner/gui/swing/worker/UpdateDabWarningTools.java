@@ -1036,6 +1036,7 @@ public class UpdateDabWarningTools {
     if ((message == null) || (message.trim().length() == 0)) {
       return;
     }
+    String globalListTemplate = wpcConfig.getString(WPCConfigurationString.MSG__GLOBAL_LIST_TEMPLATE);
     String globalTemplate = wpcConfig.getString(WPCConfigurationString.MSG__GLOBAL_TEMPLATE);
     String globalTitle = wpcConfig.getString(WPCConfigurationString.MSG__GLOBAL_TITLE);
     String title = wpcConfig.getString(titleParam);
@@ -1058,18 +1059,13 @@ public class UpdateDabWarningTools {
     try {
       if (globalTitle != null) {
         // Check if global title already exists in the talk page
-        List<Section> sections = null;
+        List<Section> sections = api.retrieveSections(wikipedia, userTalkPage);
         Section section = null;
-        try {
-          sections = api.retrieveSections(wikipedia, userTalkPage);
+        if (sections != null) {
           for (Section tmpSection : sections) {
             if (globalTitle.equals(tmpSection.getLine())) {
               section = tmpSection;
             }
-          }
-        } catch (APIException e) {
-          if (!EnumQueryResult.MISSING_TITLE.equals(e.getQueryResult())) {
-            throw e;
           }
         }
 
@@ -1082,14 +1078,18 @@ public class UpdateDabWarningTools {
             fullMessage.append("}}\n");
             if ((signature != null) && (signature.trim().length() > 0)) {
               fullMessage.append(signature.trim());
-              fullMessage.append("\n");
+              fullMessage.append("\n\n");
             }
-            fullMessage.append("\n");
+          }
+          if ((globalListTemplate != null) && (globalListTemplate.trim().length() > 0)) {
+            fullMessage.append("{{");
+            fullMessage.append(globalListTemplate.trim());
+            fullMessage.append("}}\n");
           }
           if (title != null) {
             fullMessage.append("== ");
             fullMessage.append(title);
-            fullMessage.append(" ==\n\n");
+            fullMessage.append(" ==\n");
           }
           fullMessage.append(message);
           api.retrieveSectionContents(wikipedia, userTalkPage, 0); // TODO: Remove, just here for editToken

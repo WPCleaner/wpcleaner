@@ -28,6 +28,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.Section;
@@ -85,7 +86,15 @@ public class ApiXmlParseResult extends ApiXmlResult implements ApiParseResult {
       Page page, Map<String, String> properties)
           throws APIException {
     try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+      Element root = null;
+      try {
+        root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+      } catch (APIException e) {
+        if (EnumQueryResult.MISSING_TITLE.equals(EnumQueryResult.MISSING_TITLE)) {
+          return null;
+        }
+        throw e;
+      }
 
       // Retrieve sections
       XPath xpaSections = XPath.newInstance("/api/parse/sections/s");
