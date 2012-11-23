@@ -47,6 +47,8 @@ public enum WPCConfigurationString {
   // URL of the help page
   HELP_URL("help_url", "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner", false, true, false),
   // Template used to group all messages on a user talk page
+  MSG__GLOBAL_LIST_TEMPLATE("rc_msg_global_list_template", null, false, true, true),
+  // Template used to group all messages on a user talk page
   MSG__GLOBAL_TEMPLATE("rc_msg_global_template", null, false, true, true),
   // Title used to group all messages on a user talk page
   MSG__GLOBAL_TITLE("rc_msg_global_title", null, false, true, true),
