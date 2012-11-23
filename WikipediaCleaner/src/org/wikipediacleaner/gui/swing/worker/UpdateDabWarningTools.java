@@ -1058,11 +1058,18 @@ public class UpdateDabWarningTools {
     try {
       if (globalTitle != null) {
         // Check if global title already exists in the talk page
-        List<Section> sections = api.retrieveSections(wikipedia, userTalkPage);
+        List<Section> sections = null;
         Section section = null;
-        for (Section tmpSection : sections) {
-          if (globalTitle.equals(tmpSection.getLine())) {
-            section = tmpSection;
+        try {
+          sections = api.retrieveSections(wikipedia, userTalkPage);
+          for (Section tmpSection : sections) {
+            if (globalTitle.equals(tmpSection.getLine())) {
+              section = tmpSection;
+            }
+          }
+        } catch (APIException e) {
+          if (!EnumQueryResult.MISSING_TITLE.equals(e.getQueryResult())) {
+            throw e;
           }
         }
 
