@@ -1070,8 +1070,9 @@ public class UpdateDabWarningTools {
           // Add the title
           StringBuilder fullMessage = new StringBuilder();
           if ((globalTemplate != null) && (globalTemplate.trim().length() > 0)) {
+            fullMessage.append("{{");
             fullMessage.append(globalTemplate.trim());
-            fullMessage.append("\n");
+            fullMessage.append("}}\n");
             if ((signature != null) && (signature.trim().length() > 0)) {
               fullMessage.append(signature.trim());
               fullMessage.append("\n");
