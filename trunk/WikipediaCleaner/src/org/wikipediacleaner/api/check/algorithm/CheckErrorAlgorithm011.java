@@ -21,6 +21,7 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -37,78 +38,6 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
    */
   private final static String[] globalFixes = new String[] {
     GT._("Replace all"),
-  };
-
-  private final static String[][] characters = new String[][] {
-    { "&Aacute;", "Á" },
-    { "&Agrave;", "À" },
-    { "&Aring;" , "Å" },
-    { "&aacute;", "á" },
-    { "&acirc;" , "â" },
-    { "&agrave;", "à" },
-    { "&atilde;", "ã" },
-    { "&auml;"  , "ä" },
-
-    { "&bull;"   , "•" },
-
-    { "&cap;"   , "∩" },
-    { "&ccedil;", "ç" },
-    { "&copy;"  , "©" },
-    { "&cup;"   , "∪" },
-
-    { "&darr;"  , "↓" },
-    { "&deg;"   , "°" },
-
-    { "&Eacute;", "É" },
-    { "&eacute;", "é" },
-    { "&ecirc;" , "ê" },
-    { "&egrave;", "è" },
-    { "&euro;"  , "€" },
-
-    { "&hellip;", "…" },
-
-    { "&iacute;", "í" },
-    { "&infin;" , "∞" },
-    { "&iquest;", "¿" },
-    { "&isin;"  , "∈" },
-
-    { "&lambda;", "λ" },
-    { "&laquo;" , "«" },
-    { "&larr;"  , "←" },
-    { "&le;"    , "≤" },
-
-    { "&middot;", "·" },
-    { "&minus;" , "−" },
-
-    { "&ne;"    , "≠" },
-    { "&ntilde;", "ñ" },
-    { "&nu;"    , "ν" },
-
-    { "&Omega;" , "Ω" },
-    { "&oacute;", "ó" },
-    { "&omega;" , "ω" },
-    { "&ouml;"  , "ö" },
-
-    { "&pound;" , "£" },
-
-    { "&quot;"  , "\"" },
-
-    { "&raquo;" , "»" },
-    { "&rarr;"  , "→" },
-    { "&reg;"   , "®" },
-    { "&rsquo;" , "’" },
-
-    { "&sect;"  , "§" },
-    { "&sigma;" , "σ" },
-    { "&sube;"  , "⊆" },
-
-    { "&thinsp;", " " },
-    { "&times;" , "×" },
-
-    { "&uarr;"  , "↑" },
-    { "&ucirc;" , "û" },
-    { "&Uuml;"  , "Ü" },
-    { "&uuml;"  , "ü" },
   };
 
   public CheckErrorAlgorithm011() {
@@ -128,12 +57,33 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
+
+    // Analyzing the text from the beginning
     boolean result = false;
-    for (int i = 0; i < characters.length; i++) {
-      result |= simpleTextSearch(pageAnalysis, errors, characters[i][0], characters[i][1]);
-      if ((result) && (errors == null)) {
-        return true;
+    String contents = pageAnalysis.getContents();
+    int ampersandIndex = contents.indexOf('&');
+    int maxLength = contents.length();
+    while ((ampersandIndex >= 0) && (ampersandIndex + 2 < maxLength)) {
+      // TODO : Check if we should look for a match a this position
+      for (HtmlCharacters htmlCharacter : HtmlCharacters.values()) {
+        String name = htmlCharacter.getName();
+        if ((name != null) &&
+            contents.startsWith(name, ampersandIndex + 1) &&
+            htmlCharacter.shouldReplaceName()) {
+          int colonIndex = ampersandIndex + name.length() + 1;
+          if ((colonIndex < maxLength) && (contents.charAt(colonIndex) == ';')) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(), ampersandIndex, colonIndex + 1);
+            errorResult.addReplacement("" + htmlCharacter.getValue());
+            errors.add(errorResult);
+          }
+        }
       }
+      ampersandIndex = contents.indexOf('&', ampersandIndex + 1);
     }
     return result;
   }
@@ -156,10 +106,6 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-    String result = analysis.getContents();
-    for (int i = 0; i < characters.length; i++) {
-      result = result.replaceAll(characters[i][0], characters[i][1]);
-    }
-    return result;
+    return fixUsingFirstReplacement(fixName, analysis);
   }
 }

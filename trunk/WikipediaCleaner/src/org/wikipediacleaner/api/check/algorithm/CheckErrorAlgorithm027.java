@@ -21,7 +21,10 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.HtmlCharacters;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -30,6 +33,13 @@ import org.wikipediacleaner.i18n.GT;
  * Error 27: Unicode syntax
  */
 public class CheckErrorAlgorithm027 extends CheckErrorAlgorithmBase {
+
+  /**
+   * Possible global fixes.
+   */
+  private final static String[] globalFixes = new String[] {
+    GT._("Replace all"),
+  };
 
   public CheckErrorAlgorithm027() {
     super("Unicode syntax");
@@ -51,50 +61,66 @@ public class CheckErrorAlgorithm027 extends CheckErrorAlgorithmBase {
 
     // Analyzing the text from the beginning
     boolean result = false;
-    int startIndex = 0;
     String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      startIndex = contents.indexOf('&', startIndex);
-      if (startIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        int beginIndex = startIndex;
-        startIndex++;
-        if ((startIndex < contents.length()) &&
-            (contents.charAt(startIndex) == '#')) {
-          startIndex++;
-        }
-        int startNumber = startIndex;
-        boolean digitFound = false;
-        while ((startIndex < contents.length()) &&
-               (Character.isDigit(contents.charAt(startIndex)))) {
-          startIndex++;
-          digitFound = true;
-        }
-        if ((digitFound) &&
-            (startIndex < contents.length()) &&
-            (contents.charAt(startIndex) == ';')) {
-          startIndex++;
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), beginIndex, startIndex);
-          try {
-            int codePoint = Integer.parseInt(contents.substring(startNumber, startIndex - 1));
-            if (Character.isValidCodePoint(codePoint)) {
-              String replacement = new String(Character.toChars(codePoint));
-              errorResult.addReplacement(replacement, GT._("Replace with {0}", replacement));
-            }
-          } catch (NumberFormatException e) {
-            //
-          }
-          errors.add(errorResult);
-        }
+    int ampersandIndex = contents.indexOf('&');
+    int maxLength = contents.length();
+    while ((ampersandIndex >= 0) && (ampersandIndex < maxLength)) {
+      // TODO : Check if we should look for a match a this position
+      int tmpIndex = ampersandIndex + 1;
+      if ((tmpIndex < maxLength) && (contents.charAt(tmpIndex) == '#')) {
+        tmpIndex++;
       }
+      int radix = 10;
+      if ((tmpIndex < maxLength) && (contents.charAt(tmpIndex) == 'x')) {
+        radix = 16;
+        tmpIndex++;
+      }
+      int startIndex = tmpIndex;
+      while ((tmpIndex < maxLength) &&
+             (Character.digit(contents.charAt(tmpIndex), radix) >= 0)) {
+        tmpIndex++;
+      }
+      if ((tmpIndex > startIndex) &&
+          (tmpIndex < maxLength) &&
+          (contents.charAt(tmpIndex) == ';')) {
+        int entityNumber = Integer.parseInt(contents.substring(startIndex, tmpIndex), radix);
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        HtmlCharacters htmlCharacter = HtmlCharacters.getCharacterByEntityNumber(entityNumber);
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(), ampersandIndex, tmpIndex + 1,
+            htmlCharacter != null ? ErrorLevel.ERROR : ErrorLevel.WARNING);
+        if (htmlCharacter != null) {
+          errorResult.addReplacement("" + htmlCharacter.getValue());
+        }
+        errors.add(errorResult);
+      }
+      ampersandIndex = contents.indexOf('&', ampersandIndex + 1);
     }
 
     return result;
+  }
+
+  /**
+   * @return List of possible global fixes.
+   */
+  @Override
+  public String[] getGlobalFixes() {
+    return globalFixes;
+  }
+
+  /**
+   * Fix all the errors in the page.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param analysis Page analysis.
+   * @param textPane Text pane.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
+    return fixUsingFirstReplacement(fixName, analysis);
   }
 }
