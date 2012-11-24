@@ -30,7 +30,7 @@ public enum HtmlCharacters {
   SYMBOL_NUMBER_SIGN(35, null, '#'),
   SYMBOL_DOLLAR_SIGN(36, null, '$'),
   SYMBOL_PERCENT_SIGN(37, null, '%'),
-  SYMBOL_AMPERSAND(38, "amp", '&', false),
+  SYMBOL_AMPERSAND(38, "amp", '&', false, false),
   SYMBOL_APOSTROPHE(39, "apos", '\''),
   SYMBOL_LEFT_PARENTHESIS(40, null, '('),
   SYMBOL_RIGHT_PARENTHESIS(41, null, ')'),
@@ -52,9 +52,9 @@ public enum HtmlCharacters {
   DIGIT_9(57, null, '9'),
   SYMBOL_COLON(58, null, ':'),
   SYMBOL_SEMICOLON(59, null, ';'),
-  SYMBOL_LESS_THAN(60, "lt", '<', false),
+  SYMBOL_LESS_THAN(60, "lt", '<', false, false),
   SYMBOL_EQUAL(61, null, '='),
-  SYMBOL_GREATER_THAN(62, "gt", '>', false),
+  SYMBOL_GREATER_THAN(62, "gt", '>', false, false),
   SYMBOL_QUESTION_MARK(63, null, '?'),
   SYMBOL_AT_SIGN(64, null, '@'),
   LETTER_CAPITAL_A(65, null, 'A'),
@@ -119,7 +119,7 @@ public enum HtmlCharacters {
   SYMBOL_VERICAL_BAR(124, null, '|'),
   SYMBOL_RIGHT_CURLY_BRACE(125, null, '}'),
   SYMBOL_TILDE(126, null, '~'),
-  SYMBOL_NON_BREAKING_SPACE(160, "nbsp", '\u00A0', false),
+  SYMBOL_NON_BREAKING_SPACE(160, "nbsp", '\u00A0', false, false),
   SYMBOL_INVERTED_EXCLAMATION_MARK(161, "iexl", '¡'),
   SYMBOL_CENT(162, "cent", '¢'),
   SYMBOL_POUND(163, "pound", '£'),
@@ -222,7 +222,7 @@ public enum HtmlCharacters {
   LETTER_CAPITAL_Y_UMLAUT_MARK(376, "Yuml", 'Ÿ', 159),
   LETTER_F_WITH_HOOK(402, "fnof", 'ƒ', 131),
   MODIFIER_LETTER_CIRCUMFLEX_ACCENT(710, "circ", 'ˆ', 136),
-  SMALL_TILDE(732, "tilde", '˜', 152),
+  SYMBOL_SMALL_TILDE(732, "tilde", '˜', 152),
   LETTER_CAPITAL_ALPHA(913, "Alpha", 'Α'),
   LETTER_CAPITAL_BETA(914, "Beta", 'Β'),
   LETTER_CAPITAL_GAMMA(915, "Gamma", 'Γ'),
@@ -282,23 +282,24 @@ public enum HtmlCharacters {
   ZERO_WIDTH_JOINER(8205, "zwj", '\u200D'),
   LEFT_TO_RIGHT_MARK(8206, "lrm", '\u200E'),
   RIGHT_TO_LEFT_MARK(8207, "rlm", '\u200F'),
-  EN_DASH(8211, "ndash", '–', 150),
-  EM_DASH(8212, "mdash", '—', 151),
-  LEFT_SINGLE_QUOTATION_MARK(8216, "lsquo", '‘', 145),
-  RIGHT_SINGLE_QUOTATION_MARK(8217, "rsquo", '’', 146),
-  SINGLE_LOW_9_QUOTATION_MARK(8218, "sbquo", '‚', 130),
-  LEFT_DOUBLE_QUOTATION_MARK(8220, "ldquo", '“', 147),
-  RIGHT_DOUBLE_QUOTATION_MARK(8221, "rdquo", '”', 148),
-  DOUBLE_LOW_9_QUOTATION_MARK(8222, "bdquo", '„', 132),
-  DAGGER(8224, "dagger", '†', 134),
-  DOUBLE_DAGGER(8225, "Dagger", '‡', 135),
-  BULLET(8226, "bull", '•', 149),
-  HORIZONTAL_ELLIPSIS(8230, "hellip", '…', 133),
-  PER_MILLE(8240, "permil", '‰', 137),
-  MINUTES(8242, "prime", '′'),
-  SECONDS(8243, "Prime", '″'),
-  SINGLE_LEFT_ANGLE_QUOTATION(8249, "lsaquo", '‹', 139),
-  SINGLE_RIGHT_ANGLE_QUOTATION(8250, "rsaquo", '›', 155),
+  SYMBOL_UNBREAKABLE_HYPHEN(8209, null, '\u2011', false, false),
+  SYMBOL_EN_DASH(8211, "ndash", '–', 150),
+  SYMBOL_EM_DASH(8212, "mdash", '—', 151),
+  SYMBOL_LEFT_SINGLE_QUOTATION_MARK(8216, "lsquo", '‘', 145),
+  SYMBOL_RIGHT_SINGLE_QUOTATION_MARK(8217, "rsquo", '’', 146),
+  SYMBOL_SINGLE_LOW_9_QUOTATION_MARK(8218, "sbquo", '‚', 130),
+  SYMBOL_LEFT_DOUBLE_QUOTATION_MARK(8220, "ldquo", '“', 147),
+  SYMBOL_RIGHT_DOUBLE_QUOTATION_MARK(8221, "rdquo", '”', 148),
+  SYMBOL_DOUBLE_LOW_9_QUOTATION_MARK(8222, "bdquo", '„', 132),
+  SYMBOL_DAGGER(8224, "dagger", '†', 134),
+  SYMBOL_DOUBLE_DAGGER(8225, "Dagger", '‡', 135),
+  SYMBOL_BULLET(8226, "bull", '•', 149),
+  SYMBOL_HORIZONTAL_ELLIPSIS(8230, "hellip", '…', 133),
+  SYMBOL_PER_MILLE(8240, "permil", '‰', 137),
+  SYMBOL_MINUTES(8242, "prime", '′'),
+  SYMBOL_SECONDS(8243, "Prime", '″'),
+  SYMBOL_SINGLE_LEFT_ANGLE_QUOTATION(8249, "lsaquo", '‹', 139),
+  SYMBOL_SINGLE_RIGHT_ANGLE_QUOTATION(8250, "rsaquo", '›', 155),
   SYMBOL_OVERLINE(8254, "oline", '‾'),
   SYMBOL_FRACTION_SLASH(8260, "frasl", '⁄'),
   SYMBOL_EURO(8364, "euro", '€', 128),
@@ -306,18 +307,18 @@ public enum HtmlCharacters {
   LETTER_CAPITAL_P_SCRIPT(8472, "weierp", '\u2118'),
   LETTER_CAPITAL_R_BLACK(8476, "real", '\u211C'),
   SYMBOL_TRADEMARK(8482, "trade", '™', 153),
-  ALEF_SYMBOL(9501, "alefsym", '\u2135'),
-  LEFT_ARROW(8592, "larr", '←'),
-  UP_ARROW(8593, "uarr", '↑'),
-  RIGHT_ARROW(8594, "rarr", '→'),
-  DOWN_ARROW(8595, "darr", '↓'),
-  LEFT_RIGHT_ARROW(8596, "harr", '↔'),
-  CARRIAGE_RETURN_ARROW(8629, "crarr", '\u21B5'),
-  LEFT_DOUBLE_ARROW(8656, "lArr", '\u21D0'),
-  UP_DOUBLE_ARROW(8657, "uArr", '\u21D1'),
-  RIGHT_DOUBLE_ARROW(8658, "rArr", '\u21D2'),
-  DOWN_DOUBLE_ARROW(8659, "dArr", '\u21D3'),
-  LEFT_RIGHT_DOUBLE_ARROW(8660, "hArr", '\u21D4'),
+  SYMBOL_ALEF(9501, "alefsym", '\u2135'),
+  SYMBOL_LEFT_ARROW(8592, "larr", '←'),
+  SYMBOL_UP_ARROW(8593, "uarr", '↑'),
+  SYMBOL_RIGHT_ARROW(8594, "rarr", '→'),
+  SYMBOL_DOWN_ARROW(8595, "darr", '↓'),
+  SYMBOL_LEFT_RIGHT_ARROW(8596, "harr", '↔'),
+  SYMBOL_CARRIAGE_RETURN_ARROW(8629, "crarr", '\u21B5'),
+  SYMBOL_LEFT_DOUBLE_ARROW(8656, "lArr", '\u21D0'),
+  SYMBOL_UP_DOUBLE_ARROW(8657, "uArr", '\u21D1'),
+  SYMBOL_RIGHT_DOUBLE_ARROW(8658, "rArr", '\u21D2'),
+  SYMBOL_DOWN_DOUBLE_ARROW(8659, "dArr", '\u21D3'),
+  SYMBOL_LEFT_RIGHT_DOUBLE_ARROW(8660, "hArr", '\u21D4'),
   SYMBOL_FOR_ALL(8704, "forall", '\u2200'),
   SYMBOL_PART(8706, "part", '∂'),
   SYMBOL_EXISTS(8707, "exists", '\u2203'),
@@ -356,15 +357,15 @@ public enum HtmlCharacters {
   SYMBOL_CIRCLED_TIMES(8855, "otimes", '\u2297'),
   SYMBOL_PERPENDICULAR(8869, "perp", '\u22A5'),
   SYMBOL_DOT_OPERATOR(8901, "sdot", '\u22C5'),
-  LEFT_CEILING(8968, "lceil", '\u2308'),
-  RIGHT_CEILING(8969, "rceil", '\u2309'),
-  LEFT_FLOOR(8970, "lfloor", '\u230A'),
-  RIGHT_FLOOR(8971, "rfloor", '\u230B'),
-  LOZENGE(9674, "loz", '◊'),
-  SPADE(9824, "spades", '♠'),
-  CLUB(9827, "clubs", '♣'),
-  HEART(9829, "hearts", '♥'),
-  DIAMONG(9830, "diams", '♦');
+  SYMBOL_LEFT_CEILING(8968, "lceil", '\u2308'),
+  SYMBOL_RIGHT_CEILING(8969, "rceil", '\u2309'),
+  SYMBOL_LEFT_FLOOR(8970, "lfloor", '\u230A'),
+  SYMBOL_RIGHT_FLOOR(8971, "rfloor", '\u230B'),
+  SYMBOL_LOZENGE(9674, "loz", '◊'),
+  SYMBOL_SPADE(9824, "spades", '♠'),
+  SYMBOL_CLUB(9827, "clubs", '♣'),
+  SYMBOL_HEART(9829, "hearts", '♥'),
+  SYMBOL_DIAMONG(9830, "diams", '♦');
 
   /**
    * Entity number.
@@ -385,6 +386,11 @@ public enum HtmlCharacters {
    * Entity value.
    */
   private final char value;
+
+  /**
+   * True if numeric entities should be replaced.
+   */
+  private final boolean replaceNumeric;
 
   /**
    * True if named entities should be replaced.
@@ -419,6 +425,7 @@ public enum HtmlCharacters {
     this.alternativeNumber = number;
     this.name = name;
     this.value = value;
+    this.replaceNumeric = true;
     this.replaceName = true;
   }
 
@@ -433,6 +440,7 @@ public enum HtmlCharacters {
     this.alternativeNumber = alternativeNumber;
     this.name = name;
     this.value = value;
+    this.replaceNumeric = true;
     this.replaceName = true;
   }
 
@@ -442,11 +450,14 @@ public enum HtmlCharacters {
    * @param value Entity value.
    * @param replaceName True if named entities should be replaced.
    */
-  HtmlCharacters(int number, String name, char value, boolean replaceName) {
+  HtmlCharacters(
+      int number, String name, char value,
+      boolean replaceNumeric, boolean replaceName) {
     this.number = number;
     this.alternativeNumber = number;
     this.name = name;
     this.value = value;
+    this.replaceNumeric = replaceNumeric;
     this.replaceName = replaceName;
   }
 
@@ -476,6 +487,13 @@ public enum HtmlCharacters {
    */
   public char getValue() {
     return value;
+  }
+
+  /**
+   * @return True if numeric entities should be replaced.
+   */
+  public boolean shouldReplaceNumeric() {
+    return replaceNumeric;
   }
 
   /**

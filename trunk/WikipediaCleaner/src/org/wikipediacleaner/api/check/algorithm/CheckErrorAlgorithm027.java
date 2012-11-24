@@ -84,18 +84,28 @@ public class CheckErrorAlgorithm027 extends CheckErrorAlgorithmBase {
           (tmpIndex < maxLength) &&
           (contents.charAt(tmpIndex) == ';')) {
         int entityNumber = Integer.parseInt(contents.substring(startIndex, tmpIndex), radix);
-        if (errors == null) {
-          return true;
-        }
-        result = true;
         HtmlCharacters htmlCharacter = HtmlCharacters.getCharacterByEntityNumber(entityNumber);
-        CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(), ampersandIndex, tmpIndex + 1,
-            htmlCharacter != null ? ErrorLevel.ERROR : ErrorLevel.WARNING);
+        boolean shouldReplace = true;
         if (htmlCharacter != null) {
-          errorResult.addReplacement("" + htmlCharacter.getValue());
+          shouldReplace = htmlCharacter.shouldReplaceNumeric();
+          if (HtmlCharacters.SYMBOL_VERICAL_BAR.equals(htmlCharacter) &&
+              (pageAnalysis.isInTemplate(ampersandIndex) != null)) {
+            shouldReplace = false;
+          }
         }
-        errors.add(errorResult);
+        if (shouldReplace) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(), ampersandIndex, tmpIndex + 1,
+              htmlCharacter != null ? ErrorLevel.ERROR : ErrorLevel.WARNING);
+          if (htmlCharacter != null) {
+            errorResult.addReplacement("" + htmlCharacter.getValue());
+          }
+          errors.add(errorResult);
+        }
       }
       ampersandIndex = contents.indexOf('&', ampersandIndex + 1);
     }
