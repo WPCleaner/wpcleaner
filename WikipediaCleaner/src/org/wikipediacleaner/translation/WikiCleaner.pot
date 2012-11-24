@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-19 23:26+0100\n"
+"POT-Creation-Date: 2012-11-24 02:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,7 +79,6 @@ msgstr ""
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:126
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:95
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm027.java:88
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:95
 #, java-format
@@ -133,8 +132,9 @@ msgstr ""
 msgid "Unable to replace the characters [{0}]"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm011.java:39
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm011.java:40
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm020.java:39
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm027.java:41
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm050.java:39
 msgid "Replace all"
 msgstr ""
@@ -451,7 +451,7 @@ msgid "Namespace"
 msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:246
-#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:261
+#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:265
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:125
 msgid "Title"
 msgstr ""
@@ -518,13 +518,13 @@ msgstr ""
 msgid "Retrieving templates"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1449
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1469
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1456
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1476
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1729,11 +1729,11 @@ msgstr ""
 msgid "&Update"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:257
+#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:261
 msgid "Id"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:263
+#: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:267
 msgid "User"
 msgstr ""
 
@@ -2497,22 +2497,22 @@ msgstr ""
 msgid "Retrieving interwiki for {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:297
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:308
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:302
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:313
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:445
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:567
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:788
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:450
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:572
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:793
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:692
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:824
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:927
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:697
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:829
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:932
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr ""
