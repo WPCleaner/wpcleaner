@@ -237,13 +237,21 @@ public class Suggestion implements Comparable<Suggestion> {
    * @param initialText Initial text.
    * @return Possible replacements.
    */
-  public List<String> getReplacements(String initialText) {
+  public List<String> getReplacements(
+      String initialText, int begin, int end) {
     List<String> list = new ArrayList<String>();
     for (String replacement : replacements) {
       try {
         String newText = pattern.matcher(initialText).replaceFirst(replacement);
-        if (!list.contains(newText)) {
-          list.add(newText);
+        String initialPrefix = initialText.substring(0, Math.min(begin, initialText.length()));
+        String newPrefix = newText.substring(0, Math.min(begin, initialText.length()));
+        String initialSuffix = initialText.substring(end);
+        String newSuffix = newText.substring(Math.max(newText.length() - initialText.length() + end, 0));
+        if (initialPrefix.equals(newPrefix) && initialSuffix.equals(newSuffix)) {
+          newText = newText.substring(newPrefix.length(), newText.length() - newSuffix.length());
+          if (!list.contains(newText)) {
+            list.add(newText);
+          }
         }
       } catch (Exception e) {
         log.error("Unable to get replacement", e);
