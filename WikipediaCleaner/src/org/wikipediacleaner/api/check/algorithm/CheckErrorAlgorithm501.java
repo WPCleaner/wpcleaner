@@ -181,7 +181,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     boolean result = false;
 
     // Check every suggestion
-    List<ContentsChunck> chuncks = computeContentsChuncks(analysis, true);
+    List<ContentsChunk> chunks = computeContentsChunks(analysis, true);
     String contents = analysis.getContents();
     Iterator<Suggestion> itSuggestion = suggestions.iterator();
     while (itSuggestion.hasNext()) {
@@ -191,8 +191,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         perf.setThreshold(slowRegexp);
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
-        for (ContentsChunck chunck : chuncks) {
-          matcher.region(chunck.getBegin(), chunck.getEnd());
+        for (ContentsChunk chunk : chunks) {
+          matcher.region(chunk.getBegin(), chunk.getEnd());
+          int authorizedBegin = chunk.getBegin();
           while (matcher.find()) {
             int begin = matcher.start();
             int end = matcher.end();
@@ -223,8 +224,11 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
               shouldKeep = false;
             }
             if (shouldKeep) {
-              result |= addReplacements(begin, end, contents, suggestion, replacements);
+              result |= addReplacements(
+                  begin, end, contents, authorizedBegin, chunk.getEnd(),
+                  suggestion, replacements);
             }
+            authorizedBegin = end;
           }
         }
         perf.printEnd();
@@ -249,7 +253,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     boolean result = false;
 
     // Check every suggestion
-    List<ContentsChunck> chuncks = computeContentsChuncks(analysis, false);
+    List<ContentsChunk> chunks = computeContentsChunks(analysis, false);
     String contents = analysis.getContents();
     Iterator<Suggestion> itSuggestion = suggestions.iterator();
     while (itSuggestion.hasNext()) {
@@ -259,8 +263,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         perf.setThreshold(slowRegexp);
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
-        for (ContentsChunck chunck : chuncks) {
-          matcher.region(chunck.getBegin(), chunck.getEnd());
+        for (ContentsChunk chunk : chunks) {
+          matcher.region(chunk.getBegin(), chunk.getEnd());
+          int authorizedBegin = chunk.getBegin();
           while (matcher.find()) {
             int begin = matcher.start();
             int end = matcher.end();
@@ -275,8 +280,11 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
               shouldKeep = false;
             }
             if (shouldKeep) {
-              result |= addReplacements(begin, end, contents, suggestion, replacements);
+              result |= addReplacements(
+                  begin, end, contents, authorizedBegin, chunk.getEnd(),
+                  suggestion, replacements);
             }
+            authorizedBegin = end;
           }
         }
         perf.printEnd();
@@ -318,7 +326,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             if ((end >= contentsLength) ||
                 (!Character.isLetterOrDigit(contents.charAt(end))) ||
                 (!Character.isLetterOrDigit(contents.charAt(end - 1)))) {
-              result |= addReplacements(begin, end, contents, suggestion, replacements);
+              result |= addReplacements(
+                  begin, end, contents, begin, contentsLength,
+                  suggestion, replacements);
             }
           }
         }
@@ -360,7 +370,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             if ((end >= contentsLength) ||
                 (!Character.isLetterOrDigit(contents.charAt(end))) ||
                 (!Character.isLetterOrDigit(contents.charAt(end - 1)))) {
-              result |= addReplacements(begin, end, contents, suggestion, replacements);
+              result |= addReplacements(
+                  begin, end, contents, begin, contentsLength,
+                  suggestion, replacements);
             }
           }
         }
@@ -382,11 +394,14 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    */
   private boolean addReplacements(
       int begin, int end, String contents,
+      int authorizedBegin, int authorizedEnd,
       Suggestion suggestion, List<Replacement> replacements) {
     boolean result = false;
-    String text = contents.substring(begin, end);
-    List<String> possibles = suggestion.getReplacements(text);
+    String text = contents.substring(authorizedBegin, authorizedEnd);
+    List<String> possibles = suggestion.getReplacements(
+        text, begin - authorizedBegin, end - authorizedBegin);
     if (possibles != null) {
+      text = contents.substring(begin, end);
       for (String possible : possibles) {
         if (!text.equals(possible)) {
           Replacement replacement = new Replacement(
@@ -423,109 +438,109 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Split contents into analyzable chuncks.
+   * Split contents into analyzable chunks.
    * 
    * @param analysis Page analysis.
    * @param nativeRegexp True if creating chunks for WPCleaner regular expressions.
-   * @return List of contents chuncks.
+   * @return List of contents chunks.
    */
-  private List<ContentsChunck> computeContentsChuncks(
+  private List<ContentsChunk> computeContentsChunks(
       PageAnalysis analysis, boolean nativeRegexp) {
     String contents = analysis.getContents();
-    List<ContentsChunck> chuncks = new LinkedList<ContentsChunck>();
-    chuncks.add(new ContentsChunck(0, contents.length()));
+    List<ContentsChunk> chunks = new LinkedList<ContentsChunk>();
+    chunks.add(new ContentsChunk(0, contents.length()));
 
     // Remove templates
     if (!nativeRegexp) {
       List<PageElementTemplate> templates = analysis.getTemplates();
       for (PageElementTemplate template : templates) {
-        removeArea(chuncks, template.getBeginIndex(), template.getEndIndex());
+        removeArea(chunks, template.getBeginIndex(), template.getEndIndex());
       }
     }
 
     // Remove tags
     // TODO: Be more precise, analyze image descriptions in gallery
-    removeCompleteTags(chuncks, analysis, PageElementTag.TAG_WIKI_GALLERY);
-    removeCompleteTags(chuncks, analysis, PageElementTag.TAG_WIKI_MATH);
-    removeCompleteTags(chuncks, analysis, PageElementTag.TAG_WIKI_CODE);
-    removeCompleteTags(chuncks, analysis, PageElementTag.TAG_WIKI_TIMELINE);
+    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_GALLERY);
+    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_MATH);
+    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_CODE);
+    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_TIMELINE);
 
     // Remove areas
     if (!nativeRegexp) {
       PageElementAreas areas = analysis.getAreas();
       for (PageElementAreas.Area area : areas.getAreas()) {
-        removeArea(chuncks, area.getBeginIndex(), area.getEndIndex());
+        removeArea(chunks, area.getBeginIndex(), area.getEndIndex());
       }
     }
 
-    // Remove empty chuncks
-    Iterator<ContentsChunck> itChuncks = chuncks.iterator();
-    while (itChuncks.hasNext()) {
-      ContentsChunck chunck = itChuncks.next();
-      int begin = chunck.getBegin();
-      int end = chunck.getEnd();
-      String chunckContents = contents.substring(begin, end);
-      int length = chunckContents.length();
+    // Remove empty chunks
+    Iterator<ContentsChunk> itChunks = chunks.iterator();
+    while (itChunks.hasNext()) {
+      ContentsChunk chunk = itChunks.next();
+      int begin = chunk.getBegin();
+      int end = chunk.getEnd();
+      String chunkContents = contents.substring(begin, end);
+      int length = chunkContents.length();
       int currentIndex = 0;
       while ((currentIndex < length) &&
-             (Character.isWhitespace(chunckContents.charAt(currentIndex)))) {
+             (Character.isWhitespace(chunkContents.charAt(currentIndex)))) {
         currentIndex++;
       }
       if (currentIndex >= length) {
-        itChuncks.remove();
+        itChunks.remove();
       }
     }
 
-    return chuncks;
+    return chunks;
   }
 
   /**
-   * Remove complete tags from the list of chuncks of text.
+   * Remove complete tags from the list of chunks of text.
    * 
-   * @param chuncks List of chuncks of text.
+   * @param chunks List of chunks of text.
    * @param analysis Page analysis.
    * @param tagName Tag name to remove.
    */
-  private void removeCompleteTags(List<ContentsChunck> chuncks, PageAnalysis analysis, String tagName) {
+  private void removeCompleteTags(List<ContentsChunk> chunks, PageAnalysis analysis, String tagName) {
     List<PageElementTag> tags = analysis.getCompleteTags(tagName);
     for (PageElementTag tag : tags) {
-      removeArea(chuncks, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+      removeArea(chunks, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
     }
   }
 
   /**
-   * Remove an area from the list of chuncks of text.
+   * Remove an area from the list of chunks of text.
    * 
-   * @param chuncks List of chuncks of text.
+   * @param chunks List of chunks of text.
    * @param begin Begin of the area to remove.
    * @param end End of the area to remove.
    */
-  private void removeArea(List<ContentsChunck> chuncks, int begin, int end) {
-    ListIterator<ContentsChunck> itChuncks = chuncks.listIterator();
-    while (itChuncks.hasNext()) {
-      ContentsChunck chunck = itChuncks.next();
-      if ((begin >= chunck.getEnd()) || (end <= chunck.getBegin())) {
+  private void removeArea(List<ContentsChunk> chunks, int begin, int end) {
+    ListIterator<ContentsChunk> itChunks = chunks.listIterator();
+    while (itChunks.hasNext()) {
+      ContentsChunk chunk = itChunks.next();
+      if ((begin >= chunk.getEnd()) || (end <= chunk.getBegin())) {
         // Nothing to do
       } else {
-        itChuncks.remove();
-        if (begin > chunck.getBegin()) {
-          itChuncks.add(new ContentsChunck(chunck.getBegin(), begin));
+        itChunks.remove();
+        if (begin > chunk.getBegin()) {
+          itChunks.add(new ContentsChunk(chunk.getBegin(), begin));
         }
-        if (end < chunck.getEnd()) {
-          itChuncks.add(new ContentsChunck(end, chunck.getEnd()));
+        if (end < chunk.getEnd()) {
+          itChunks.add(new ContentsChunk(end, chunk.getEnd()));
         }
       }
     }
   }
 
   /**
-   * Utility class to manage chuncks of text.
+   * Utility class to manage chunks of text.
    */
-  private static class ContentsChunck {
+  private static class ContentsChunk {
     private final int begin;
     private final int end;
 
-    public ContentsChunck(int begin, int end) {
+    public ContentsChunk(int begin, int end) {
       this.begin = begin;
       this.end = end;
     }
