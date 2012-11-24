@@ -370,7 +370,7 @@ public interface API {
    * (<code>action=parse</code>).
    * 
    * @param wiki Wiki.
-   * @param Page page.
+   * @param page Page.
    * @return List of sections.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Parsing_wikitext#parse">API:Parsing wikitext</a>
