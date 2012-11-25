@@ -137,6 +137,14 @@ public interface CheckErrorAlgorithm {
   public String automaticFix(PageAnalysis analysis);
 
   /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  public String botFix(PageAnalysis analysis);
+
+  /**
    * @return List of possible global fixes.
    */
   public String[] getGlobalFixes();
