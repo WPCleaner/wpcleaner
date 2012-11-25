@@ -262,6 +262,16 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  public String botFix(PageAnalysis analysis) {
+    return automaticFix(analysis);
+  }
+
+  /**
    * @return List of possible global fixes.
    */
   public String[] getGlobalFixes() {

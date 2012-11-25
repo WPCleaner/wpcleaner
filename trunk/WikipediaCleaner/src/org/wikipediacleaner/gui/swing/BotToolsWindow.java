@@ -26,14 +26,29 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.ToolServer;
+import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.check.CheckErrorPage;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
@@ -52,8 +67,13 @@ public class BotToolsWindow
   public final static Integer WINDOW_VERSION = Integer.valueOf(2);
 
   private JButton buttonAutomaticFixing;
+  private JButton buttonCWAutomaticFixing;
   private JButton buttonMonitorRC;
   private JButton buttonUpdateDabWarning;
+
+  private JComboBox cmbCWAutomaticFixing;
+
+  private Vector<CheckErrorAlgorithm> algorithms;
 
   /**
    * Create and display a BotToolsWindow.
@@ -70,8 +90,8 @@ public class BotToolsWindow
         null);
   }
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.gui.swing.basic.BasicWindow#getTitle()
+  /**
+   * @return Window title.
    */
   @Override
   public String getTitle() {
@@ -145,6 +165,23 @@ public class BotToolsWindow
     panel.add(buttonMonitorRC, constraints);
     constraints.gridy++;
 
+    // Tools : automatic Check Wiki fixing
+    algorithms = new Vector<CheckErrorAlgorithm>();
+    addAlgorithm(18); // Category first letter small
+    addAlgorithm(22); // Category with space
+    addAlgorithm(64); // Link equal to link text
+    addAlgorithm(88); // DEFAULTSORT with blank at first position
+    cmbCWAutomaticFixing = new JComboBox(algorithms);
+    panel.add(cmbCWAutomaticFixing, constraints);
+    constraints.gridy++;
+    buttonCWAutomaticFixing = Utilities.createJButton(
+        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
+        GT._("Automatic fixing for Check Wiki"), true);
+    buttonCWAutomaticFixing.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionCWAutomaticFixing"));
+    panel.add(buttonCWAutomaticFixing, constraints);
+    constraints.gridy++;
+
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     JButton buttonClose = Utilities.createJButton(GT._("&Close"));
@@ -163,12 +200,27 @@ public class BotToolsWindow
   }
 
   /**
+   * Add an algorithm to the list of algorithms that can be fixed automatically.
+   * 
+   * @param errorNumber Error number.
+   */
+  private void addAlgorithm(int errorNumber) {
+    CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(getWikipedia(), errorNumber);
+    if ((algorithm != null) &&
+        (algorithm.isAvailable()) &&
+        CheckErrorAlgorithms.isAlgorithmActive(getWikipedia(), errorNumber)) {
+      algorithms.add(algorithm);
+    }
+  }
+
+  /**
    * Update components states.
    */
   @Override
   protected void updateComponentState() {
     super.updateComponentState();
     buttonAutomaticFixing.setEnabled(false);
+    buttonCWAutomaticFixing.setEnabled(cmbCWAutomaticFixing.getItemCount() > 0);
     buttonMonitorRC.setEnabled(true);
     buttonUpdateDabWarning.setEnabled(true);
   }
@@ -178,6 +230,89 @@ public class BotToolsWindow
    */
   public void actionAutomaticFixing() {
     // TODO
+  }
+
+  /**
+   * Action called when Automatic Check Wiki Fixing button is pressed.
+   */
+  public void actionCWAutomaticFixing() {
+    Object selection = cmbCWAutomaticFixing.getSelectedItem();
+    if ((selection == null) || !(selection instanceof CheckErrorAlgorithm)) {
+      return;
+    }
+    String message = "This function is experimental. Use at your own risk.\nDo you want to proceed ?";
+    if (displayYesNoWarning(message) != JOptionPane.YES_OPTION) {
+      return;
+    }
+    CheckErrorAlgorithm algorithm = (CheckErrorAlgorithm) selection;
+    List<CheckError> errors = new ArrayList<CheckError>();
+    int count = 0;
+    try {
+      API api = APIFactory.getAPI();
+      ToolServer toolServer = APIFactory.getToolServer();
+      toolServer.retrievePagesForError(algorithm, 100, getWikipedia(), errors);
+      for (CheckError error : errors) {
+        for (int numPage = 0;
+            (numPage < error.getPageCount()) && (getParentComponent().isDisplayable());
+            numPage++) {
+          Page page = error.getPage(numPage);
+          api.retrieveContents(getWikipedia(), Collections.singletonList(page), false);
+          PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
+          List<CheckErrorPage> errorPages = CheckError.analyzeErrors(algorithms, analysis);
+          boolean found = false;
+          if (errorPages != null) {
+            for (CheckErrorPage errorPage : errorPages) {
+              if (algorithm.equals(errorPage.getAlgorithm()) &&
+                  errorPage.getErrorFound()) {
+                found = true;
+              }
+            }
+          }
+          if (found) {
+            String newContents = page.getContents();
+            List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+            for (CheckErrorAlgorithm currentAlgorithm : algorithms) {
+              String tmpContents = newContents;
+              analysis = page.getAnalysis(tmpContents, true);
+              newContents = currentAlgorithm.botFix(analysis);
+              if (!newContents.equals(tmpContents)) {
+                usedAlgorithms.add(currentAlgorithm);
+              }
+            }
+            if (!newContents.equals(page.getContents())) {
+              StringBuilder comment = new StringBuilder();
+              comment.append(getWikipedia().getCWConfiguration().getComment());
+              for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
+                comment.append(" - ");
+                comment.append(usedAlgorithm.getShortDescriptionReplaced());
+              }
+              api.updatePage(
+                  getWikipedia(), page, newContents,
+                  getWikipedia().createUpdatePageComment(comment.toString(), null),
+                  false);
+              count++;
+              for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
+                toolServer.markPageAsFixed(page, usedAlgorithm.getErrorNumberString());
+              }
+            }
+          }
+        }
+      }
+    } catch (APIException e) {
+      getLog().error("Error fixing Check Wiki errors", e);
+    }
+    displayInformationMessage(GT._("{0} pages have been fixed", Integer.toString(count)));
+  }
+
+  /**
+   * Action called when Monitor Recent Changes button is pressed.
+   */
+  public void actionMonitorRC() {
+    String message = "This function is experimental. Use at your own risk.\nDo you want to proceed ?";
+    if (displayYesNoWarning(message) != JOptionPane.YES_OPTION) {
+      return;
+    }
+    Controller.runMonitorRC(getWikipedia());
   }
 
   /**
@@ -194,16 +329,5 @@ public class BotToolsWindow
     UpdateDabWarningWorker worker = new UpdateDabWarningWorker(
         getWikipedia(), this, start);
     worker.start();
-  }
-
-  /**
-   * Action called when Monitor Recent Changes button is pressed.
-   */
-  public void actionMonitorRC() {
-    String message = "This function is experimental. Use at your own risk.\nDo you want to proceed ?";
-    if (displayYesNoWarning(message) != JOptionPane.YES_OPTION) {
-      return;
-    }
-    Controller.runMonitorRC(getWikipedia());
   }
 }

@@ -21,6 +21,8 @@ package org.wikipediacleaner.api;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
@@ -31,6 +33,10 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.wikipediacleaner.api.check.CheckError;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.Page;
 
 
 /**
@@ -55,6 +61,64 @@ public class ToolServer {
   }
 
   /**
+   * Retrieve list of pages for a given error.
+   * 
+   * @param algorithm Algorithm.
+   * @param errorLimit Maximum number of pages.
+   * @param wiki Wiki.
+   * @param errors List of errors.
+   * @throws APIException
+   */
+  public void retrievePagesForError(
+      final CheckErrorAlgorithm algorithm, int errorLimit,
+      final EnumWikipedia wiki,
+      final List<CheckError> errors) throws APIException {
+    // Retrieving list of pages for the error number
+    String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
+    Map<String, String> properties = new HashMap<String, String>();
+    properties.put("id", algorithm.getErrorNumberString());
+    properties.put("limit", Integer.toString(errorLimit));
+    properties.put("offset", Integer.toString(0));
+    properties.put("project", code);
+    properties.put("view", "bots");
+    ResponseManager manager = new ResponseManager() {
+      
+      public void manageResponse(InputStream stream)
+          throws IOException, APIException {
+        CheckError.addCheckError(
+            errors, wiki,
+            Integer.valueOf(algorithm.getErrorNumberString()), stream);
+      }
+    };
+    sendPost(
+        "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, manager);
+  }
+
+  /**
+   * Mark a page as fixed.
+   * 
+   * @param page Page.
+   * @param errorNumber Error number.
+   * @return True if it has been done.
+   */
+  public boolean markPageAsFixed(Page page, String errorNumber) {
+    try {
+      Map<String, String> properties = new HashMap<String, String>();
+      properties.put("id", Integer.toString(Integer.parseInt(errorNumber)));
+      properties.put("pageid", Integer.toString(page.getPageId()));
+      properties.put("project", page.getWikipedia().getSettings().getCodeCheckWiki());
+      properties.put("view", "only");
+      sendPost(
+          "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, null);
+    } catch (NumberFormatException e) {
+      return false;
+    } catch (APIException e) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
    * Send a POST request to the Tool Server.
    * 
    * @param path Path on the tool server.
@@ -62,7 +126,7 @@ public class ToolServer {
    * @param manager Response manager.
    * @throws APIException
    */
-  public void sendPost(
+  private void sendPost(
       String              path,
       Map<String, String> properties,
       ResponseManager     manager) throws APIException {

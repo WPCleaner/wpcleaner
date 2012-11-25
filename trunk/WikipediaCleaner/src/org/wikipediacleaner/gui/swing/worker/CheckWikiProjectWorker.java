@@ -18,16 +18,11 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.ResponseManager;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorComparator;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -80,7 +75,6 @@ public class CheckWikiProjectWorker extends BasicWorker {
     // Retrieving errors
     boolean errorLoaded = false;
     APIException exception = null;
-    String code = getWikipedia().getSettings().getCodeCheckWiki().replace("-", "_");
     if (selectedAlgorithms != null) {
       for (final CheckErrorAlgorithm algorithm : selectedAlgorithms) {
         try {
@@ -89,26 +83,10 @@ public class CheckWikiProjectWorker extends BasicWorker {
               (algorithm.isAvailable()) &&
               (algorithm.getPriority() != CWConfigurationError.PRIORITY_BOT_ONLY)) {
             // Retrieving list of pages for the error number
-            Map<String, String> properties = new HashMap<String, String>();
-            properties.put("id", algorithm.getErrorNumberString());
-            properties.put("limit", Integer.toString(errorLimit));
-            properties.put("offset", Integer.toString(0));
-            properties.put("project", code);
-            properties.put("view", "bots");
             setText(
                 GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
                 " - " + algorithm.getShortDescriptionReplaced());
-            ResponseManager manager = new ResponseManager() {
-              
-              public void manageResponse(InputStream stream)
-                  throws IOException, APIException {
-                CheckError.addCheckError(
-                    errors, getWikipedia(),
-                    Integer.valueOf(algorithm.getErrorNumberString()), stream);
-              }
-            };
-            APIFactory.getToolServer().sendPost(
-                "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, manager);
+            APIFactory.getToolServer().retrievePagesForError(algorithm, errorLimit, getWikipedia(), errors);
             errorLoaded = true;
           }
         } catch (APIException e) {
