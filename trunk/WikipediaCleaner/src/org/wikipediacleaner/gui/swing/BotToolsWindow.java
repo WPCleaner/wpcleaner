@@ -107,15 +107,15 @@ public class BotToolsWindow
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
-    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.fill = GridBagConstraints.BOTH;
     constraints.gridheight = 1;
-    constraints.gridwidth = 1;
+    constraints.gridwidth = 2;
     constraints.gridx = 0;
     constraints.gridy = 0;
     constraints.insets = new Insets(0, 0, 0, 0);
     constraints.ipadx = 0;
     constraints.ipady = 0;
-    constraints.weightx = 0;
+    constraints.weightx = 1;
     constraints.weighty = 0;
 
     // Warning
@@ -130,9 +130,10 @@ public class BotToolsWindow
     lblWarning.setBackground(getParentComponent().getBackground());
     lblWarning.setForeground(Color.RED);
     constraints.gridx = 0;
-    constraints.weightx = 0;
+    constraints.weighty = 1;
     panel.add(lblWarning, constraints);
     constraints.gridy++;
+    constraints.weighty = 0;
 
     // Tools : automatic disambiguation fixing
     buttonAutomaticFixing = Utilities.createJButton(
@@ -141,9 +142,6 @@ public class BotToolsWindow
     buttonAutomaticFixing.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAutomaticFixing"));
     constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridx = 0;
-    constraints.weighty = 1;
-    constraints.weightx = 0;
     panel.add(buttonAutomaticFixing, constraints);
     constraints.gridy++;
 
@@ -172,15 +170,20 @@ public class BotToolsWindow
     addAlgorithm(64); // Link equal to link text
     addAlgorithm(88); // DEFAULTSORT with blank at first position
     cmbCWAutomaticFixing = new JComboBox(algorithms);
+    constraints.gridwidth = 1;
     panel.add(cmbCWAutomaticFixing, constraints);
-    constraints.gridy++;
+    constraints.gridx++;
     buttonCWAutomaticFixing = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Automatic fixing for Check Wiki"), true);
+        GT._("Automatic fixing for Check Wiki"), false);
     buttonCWAutomaticFixing.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCWAutomaticFixing"));
+    constraints.weightx = 0;
     panel.add(buttonCWAutomaticFixing, constraints);
+    constraints.gridwidth = 2;
+    constraints.gridx = 0;
     constraints.gridy++;
+    constraints.weightx = 1;
 
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
