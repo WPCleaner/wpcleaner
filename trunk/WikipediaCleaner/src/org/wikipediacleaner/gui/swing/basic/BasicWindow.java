@@ -53,6 +53,12 @@ public abstract class BasicWindow implements ActionListener {
   private Log log;
   private EnumWikipedia wikipedia;
 
+  /**
+   * A message to use for experimental features.
+   */
+  public final static String experimentalMessage =
+      "This function is experimental. Use at your own risk.\nDo you want to proceed ?";
+
   static {
     icon = Utilities.getImageIcon("commons-nuvola-web-broom.png", EnumImageSize.VERY_BIG);
   }

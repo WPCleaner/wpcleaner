@@ -26,9 +26,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -38,19 +35,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
-import org.wikipediacleaner.api.API;
-import org.wikipediacleaner.api.APIException;
-import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.ToolServer;
-import org.wikipediacleaner.api.check.CheckError;
-import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.worker.AutomaticCWWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
@@ -243,76 +233,32 @@ public class BotToolsWindow
     if ((selection == null) || !(selection instanceof CheckErrorAlgorithm)) {
       return;
     }
-    String message = "This function is experimental. Use at your own risk.\nDo you want to proceed ?";
-    if (displayYesNoWarning(message) != JOptionPane.YES_OPTION) {
+    if (displayYesNoWarning(experimentalMessage) != JOptionPane.YES_OPTION) {
+      return;
+    }
+    int max = 100;
+    String maxString = askForValue(
+        GT._("How many pages do you want to analyze"),
+        Integer.toString(max), null);
+    if (maxString == null) {
+      return;
+    }
+    try {
+      max = Integer.parseInt(maxString);
+    } catch (NumberFormatException e) {
       return;
     }
     CheckErrorAlgorithm algorithm = (CheckErrorAlgorithm) selection;
-    List<CheckError> errors = new ArrayList<CheckError>();
-    int count = 0;
-    try {
-      API api = APIFactory.getAPI();
-      ToolServer toolServer = APIFactory.getToolServer();
-      toolServer.retrievePagesForError(algorithm, 100, getWikipedia(), errors);
-      for (CheckError error : errors) {
-        for (int numPage = 0;
-            (numPage < error.getPageCount()) && (getParentComponent().isDisplayable());
-            numPage++) {
-          Page page = error.getPage(numPage);
-          api.retrieveContents(getWikipedia(), Collections.singletonList(page), false);
-          PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
-          List<CheckErrorPage> errorPages = CheckError.analyzeErrors(algorithms, analysis);
-          boolean found = false;
-          if (errorPages != null) {
-            for (CheckErrorPage errorPage : errorPages) {
-              if (algorithm.equals(errorPage.getAlgorithm()) &&
-                  errorPage.getErrorFound()) {
-                found = true;
-              }
-            }
-          }
-          if (found) {
-            String newContents = page.getContents();
-            List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-            for (CheckErrorAlgorithm currentAlgorithm : algorithms) {
-              String tmpContents = newContents;
-              analysis = page.getAnalysis(tmpContents, true);
-              newContents = currentAlgorithm.botFix(analysis);
-              if (!newContents.equals(tmpContents)) {
-                usedAlgorithms.add(currentAlgorithm);
-              }
-            }
-            if (!newContents.equals(page.getContents())) {
-              StringBuilder comment = new StringBuilder();
-              comment.append(getWikipedia().getCWConfiguration().getComment());
-              for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
-                comment.append(" - ");
-                comment.append(usedAlgorithm.getShortDescriptionReplaced());
-              }
-              api.updatePage(
-                  getWikipedia(), page, newContents,
-                  getWikipedia().createUpdatePageComment(comment.toString(), null),
-                  false);
-              count++;
-              for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
-                toolServer.markPageAsFixed(page, usedAlgorithm.getErrorNumberString());
-              }
-            }
-          }
-        }
-      }
-    } catch (APIException e) {
-      getLog().error("Error fixing Check Wiki errors", e);
-    }
-    displayInformationMessage(GT._("{0} pages have been fixed", Integer.toString(count)));
+    AutomaticCWWorker worker = new AutomaticCWWorker(
+        getWikipedia(), this, algorithm, max, algorithms);
+    worker.start();
   }
 
   /**
    * Action called when Monitor Recent Changes button is pressed.
    */
   public void actionMonitorRC() {
-    String message = "This function is experimental. Use at your own risk.\nDo you want to proceed ?";
-    if (displayYesNoWarning(message) != JOptionPane.YES_OPTION) {
+    if (displayYesNoWarning(experimentalMessage) != JOptionPane.YES_OPTION) {
       return;
     }
     Controller.runMonitorRC(getWikipedia());
