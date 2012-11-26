@@ -156,6 +156,7 @@ public class BotToolsWindow
     // Tools : automatic Check Wiki fixing
     algorithms = new Vector<CheckErrorAlgorithm>();
     addAlgorithm(2);  // Article with false <br/>
+    addAlgorithm(6);  // DEFAULTSORT with special letter
     addAlgorithm(18); // Category first letter small
     addAlgorithm(22); // Category with space
     addAlgorithm(64); // Link equal to link text
