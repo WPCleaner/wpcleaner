@@ -108,4 +108,15 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
 
     return result;
   }
+
+  /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String botFix(PageAnalysis analysis) {
+    return fixUsingFirstReplacement("Replace", analysis);
+  }
 }
