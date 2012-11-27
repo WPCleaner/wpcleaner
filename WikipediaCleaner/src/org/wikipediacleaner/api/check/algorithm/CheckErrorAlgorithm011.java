@@ -18,94 +18,40 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
-import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.gui.swing.component.MWPane;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
  * Algorithm for analyzing error 11 of check wikipedia project.
  * Error 11: HTML named entities
  */
-public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities {
 
   /**
-   * Possible global fixes.
+   * List of HTML characters managed by this error.
    */
-  private final static String[] globalFixes = new String[] {
-    GT._("Replace all"),
-  };
+  private final List<HtmlCharacters> htmlCharacters;
 
   public CheckErrorAlgorithm011() {
     super("HTML named entities");
-  }
-
-  /**
-   * Analyze a page to check if errors are present.
-   * 
-   * @param pageAnalysis Page analysis.
-   * @param errors Errors found in the page.
-   * @return Flag indicating if the error was found.
-   */
-  public boolean analyze(
-      PageAnalysis pageAnalysis,
-      Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
-      return false;
-    }
-
-    // Analyzing the text from the beginning
-    boolean result = false;
-    String contents = pageAnalysis.getContents();
-    int ampersandIndex = contents.indexOf('&');
-    int maxLength = contents.length();
-    while ((ampersandIndex >= 0) && (ampersandIndex + 2 < maxLength)) {
-      // TODO : Check if we should look for a match a this position
-      for (HtmlCharacters htmlCharacter : HtmlCharacters.values()) {
-        String name = htmlCharacter.getName();
-        if ((name != null) &&
-            contents.startsWith(name, ampersandIndex + 1) &&
-            htmlCharacter.shouldReplaceName()) {
-          int colonIndex = ampersandIndex + name.length() + 1;
-          if ((colonIndex < maxLength) && (contents.charAt(colonIndex) == ';')) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), ampersandIndex, colonIndex + 1);
-            errorResult.addReplacement("" + htmlCharacter.getValue());
-            errors.add(errorResult);
-          }
-        }
+    htmlCharacters = new ArrayList<HtmlCharacters>();
+    for (HtmlCharacters htmlCharacter : HtmlCharacters.values()) {
+      if (!HtmlCharacters.SYMBOL_DAGGER.equals(htmlCharacter) &&
+          !HtmlCharacters.SYMBOL_EM_DASH.equals(htmlCharacter) &&
+          !HtmlCharacters.SYMBOL_EN_DASH.equals(htmlCharacter)) {
+        htmlCharacters.add(htmlCharacter);
       }
-      ampersandIndex = contents.indexOf('&', ampersandIndex + 1);
     }
-    return result;
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return List of HTML characters managed by this error.
    */
   @Override
-  public String[] getGlobalFixes() {
-    return globalFixes;
-  }
-
-  /**
-   * Fix all the errors in the page.
-   * 
-   * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param analysis Page analysis.
-   * @param textPane Text pane.
-   * @return Page contents after fix.
-   */
-  @Override
-  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-    return fixUsingFirstReplacement(fixName, analysis);
+  protected List<HtmlCharacters> getHtmlCharacters() {
+    return htmlCharacters;
   }
 }
