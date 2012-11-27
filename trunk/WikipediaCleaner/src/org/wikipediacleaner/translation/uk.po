@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-26 18:33+0100\n"
+"POT-Creation-Date: 2012-11-27 23:45+0100\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -133,13 +133,6 @@ msgstr "Виправити DEFAULTSORT"
 msgid "Unable to replace the characters [{0}]"
 msgstr "Не вдалось замінити символи [{0}]"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm011.java:40
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm020.java:39
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm027.java:41
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm050.java:39
-msgid "Replace all"
-msgstr "Замінити все"
-
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:40
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:96
 msgid "Remove all control characters"
@@ -157,6 +150,11 @@ msgstr "Перевірити категорію"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm021.java:110
 msgid "Comment category out"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm027.java:41
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmHtmlNamedEntities.java:40
+msgid "Replace all"
+msgstr "Замінити все"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:100
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:109
@@ -539,7 +537,7 @@ msgid "About"
 msgstr "Про програму"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:278
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:180
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:183
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:173
 #: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:174
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:226
@@ -666,15 +664,15 @@ msgstr "Оновлення наявних повідомлень сторінк�
 msgid "Monitor recent changes"
 msgstr "Кількість перенаправлених сторінок"
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:168
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:171
 msgid "Automatic fixing for Check Wiki"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:241
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:244
 msgid "How many pages do you want to analyze"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:273
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:276
 msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 

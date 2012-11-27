@@ -18,71 +18,35 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.gui.swing.component.MWPane;
-import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.api.check.HtmlCharacters;
 
 
 /**
  * Algorithm for analyzing error 50 of check wikipedia project.
  * Error 50: en dash or em dash
  */
-public class CheckErrorAlgorithm050 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm050 extends CheckErrorAlgorithmHtmlNamedEntities {
 
   /**
-   * Possible global fixes.
+   * List of HTML characters managed by this error.
    */
-  private final static String[] globalFixes = new String[] {
-    GT._("Replace all"),
-  };
+  private final List<HtmlCharacters> htmlCharacters;
 
   public CheckErrorAlgorithm050() {
     super("en dash or em dash");
+    htmlCharacters = new ArrayList<HtmlCharacters>();
+    htmlCharacters.add(HtmlCharacters.SYMBOL_EM_DASH);
+    htmlCharacters.add(HtmlCharacters.SYMBOL_EN_DASH);
   }
 
   /**
-   * Analyze a page to check if errors are present.
-   * 
-   * @param pageAnalysis Page analysis.
-   * @param errors Errors found in the page.
-   * @return Flag indicating if the error was found.
-   */
-  public boolean analyze(
-      PageAnalysis pageAnalysis,
-      Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
-      return false;
-    }
-    boolean result = false;
-    result |= simpleTextSearch(pageAnalysis, errors, "&mdash;", "—");
-    result |= simpleTextSearch(pageAnalysis, errors, "&ndash;", "–");
-    return result;
-  }
-
-  /**
-   * @return List of possible global fixes.
+   * @return List of HTML characters managed by this error.
    */
   @Override
-  public String[] getGlobalFixes() {
-    return globalFixes;
-  }
-
-  /**
-   * Fix all the errors in the page.
-   * 
-   * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param analysis Page analysis.
-   * @param textPane Text pane.
-   * @return Page contents after fix.
-   */
-  @Override
-  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-    String result = analysis.getContents();
-    result = result.replaceAll("&mdash;", "—");
-    result = result.replaceAll("&ndash;", "–");
-    return result;
+  protected List<HtmlCharacters> getHtmlCharacters() {
+    return htmlCharacters;
   }
 }
