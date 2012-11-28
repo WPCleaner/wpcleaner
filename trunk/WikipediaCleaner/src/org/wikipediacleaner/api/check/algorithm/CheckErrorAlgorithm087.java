@@ -18,14 +18,44 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.wikipediacleaner.api.check.HtmlCharacters;
+
 
 /**
  * Algorithm for analyzing error 87 of check wikipedia project.
  * Error 87: HTML named entities without semicolon
  */
-public class CheckErrorAlgorithm087 extends CheckErrorAlgorithmUnavailable {
+public class CheckErrorAlgorithm087 extends CheckErrorAlgorithmHtmlNamedEntities {
+
+  /**
+   * List of HTML characters managed by this error.
+   */
+  private final List<HtmlCharacters> htmlCharacters;
 
   public CheckErrorAlgorithm087() {
     super("HTML named entities without semicolon");
+    htmlCharacters = new ArrayList<HtmlCharacters>();
+    for (HtmlCharacters htmlCharacter : HtmlCharacters.values()) {
+      htmlCharacters.add(htmlCharacter);
+    }
+  }
+
+  /**
+   * @return List of HTML characters managed by this error.
+   */
+  @Override
+  protected List<HtmlCharacters> getHtmlCharacters() {
+    return htmlCharacters;
+  }
+
+  /**
+   * @return True if full HTML named entities should be searched.
+   */
+  @Override
+  protected boolean useSemiColon() {
+    return false;
   }
 }
