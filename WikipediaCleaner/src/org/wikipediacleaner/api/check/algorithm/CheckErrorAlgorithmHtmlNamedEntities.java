@@ -79,7 +79,20 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
             contents.startsWith(name, ampersandIndex + 1) &&
             htmlCharacter.shouldReplaceName()) {
           int colonIndex = ampersandIndex + name.length() + 1;
-          if ((colonIndex < maxLength) && (contents.charAt(colonIndex) == ';')) {
+          boolean found = false;
+          if (useSemiColon()) {
+            if ((colonIndex < maxLength) && (contents.charAt(colonIndex) == ';')) {
+              found = true;
+            }
+          } else {
+            if ((colonIndex >= maxLength) ||
+                ((!Character.isLetterOrDigit(contents.charAt(colonIndex))) &&
+                 (contents.charAt(colonIndex) != ';'))) {
+              found = true;
+              colonIndex--;
+            }
+          }
+          if (found) {
             if (errors == null) {
               return true;
             }
@@ -94,6 +107,13 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
       ampersandIndex = contents.indexOf('&', ampersandIndex + 1);
     }
     return result;
+  }
+
+  /**
+   * @return True if full HTML named entities should be searched.
+   */
+  protected boolean useSemiColon() {
+    return true;
   }
 
   /**
