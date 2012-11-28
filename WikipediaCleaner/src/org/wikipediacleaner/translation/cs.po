@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-28 23:05+0100\n"
+"POT-Creation-Date: 2012-11-28 23:19+0100\n"
 "PO-Revision-Date: 2012-10-13 06:23+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -101,6 +101,7 @@ msgstr "Nahradit za {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:103
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:71
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:150
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:140
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:143
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:130
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:85
@@ -140,6 +141,7 @@ msgid "Remove all control characters"
 msgstr "Odstranit všechny řídící znaky"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:45
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:46
 #, fuzzy
 msgid "Delete all"
 msgstr "Smazat"
@@ -543,7 +545,7 @@ msgid "About"
 msgstr "O aplikaci"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:278
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:184
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:185
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:173
 #: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:174
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:226
@@ -668,16 +670,16 @@ msgstr "Aktualizovat existující rozcestníkové varování"
 msgid "Monitor recent changes"
 msgstr "Počet přesměrování"
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:172
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:173
 msgid "Automatic fixing for Check Wiki"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:245
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:246
 #, fuzzy
 msgid "How many pages do you want to analyze"
 msgstr "Kolik stránek chcete?"
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:277
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:278
 msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr "Na které stránce chcete zahájit aktualizaci rozcestníkového varování?"
 

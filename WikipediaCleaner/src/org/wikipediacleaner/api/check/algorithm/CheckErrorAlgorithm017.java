@@ -172,7 +172,7 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Automatic fixing of all the errors in the page.
+   * Bot fixing of all the errors in the page.
    * 
    * @param analysis Page analysis.
    * @return Page contents after fix.
