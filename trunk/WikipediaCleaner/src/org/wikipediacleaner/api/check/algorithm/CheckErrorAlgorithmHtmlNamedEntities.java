@@ -72,35 +72,44 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
     int ampersandIndex = contents.indexOf('&');
     int maxLength = contents.length();
     while ((ampersandIndex >= 0) && (ampersandIndex + 2 < maxLength)) {
-      // TODO : Check if we should look for a match a this position
-      for (HtmlCharacters htmlCharacter : getHtmlCharacters()) {
-        String name = htmlCharacter.getName();
-        if ((name != null) &&
-            contents.startsWith(name, ampersandIndex + 1) &&
-            htmlCharacter.shouldReplaceName()) {
-          int colonIndex = ampersandIndex + name.length() + 1;
-          boolean found = false;
-          if (useSemiColon()) {
-            if ((colonIndex < maxLength) && (contents.charAt(colonIndex) == ';')) {
-              found = true;
+
+      // Check if we should look for a match at this position
+      boolean shouldMatch = true;
+      if (shouldMatch &&
+          (pageAnalysis.isInExternalLink(ampersandIndex) != null)) {
+        shouldMatch = false;
+      }
+
+      if (shouldMatch) {
+        for (HtmlCharacters htmlCharacter : getHtmlCharacters()) {
+          String name = htmlCharacter.getName();
+          if ((name != null) &&
+              contents.startsWith(name, ampersandIndex + 1) &&
+              htmlCharacter.shouldReplaceName()) {
+            int colonIndex = ampersandIndex + name.length() + 1;
+            boolean found = false;
+            if (useSemiColon()) {
+              if ((colonIndex < maxLength) && (contents.charAt(colonIndex) == ';')) {
+                found = true;
+              }
+            } else {
+              if ((colonIndex >= maxLength) ||
+                  ((!Character.isLetterOrDigit(contents.charAt(colonIndex))) &&
+                   (contents.charAt(colonIndex) != ';'))) {
+                found = true;
+                colonIndex--;
+              }
             }
-          } else {
-            if ((colonIndex >= maxLength) ||
-                ((!Character.isLetterOrDigit(contents.charAt(colonIndex))) &&
-                 (contents.charAt(colonIndex) != ';'))) {
-              found = true;
-              colonIndex--;
+            if (found) {
+              if (errors == null) {
+                return true;
+              }
+              result = true;
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(), ampersandIndex, colonIndex + 1);
+              errorResult.addReplacement("" + htmlCharacter.getValue());
+              errors.add(errorResult);
             }
-          }
-          if (found) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), ampersandIndex, colonIndex + 1);
-            errorResult.addReplacement("" + htmlCharacter.getValue());
-            errors.add(errorResult);
           }
         }
       }
