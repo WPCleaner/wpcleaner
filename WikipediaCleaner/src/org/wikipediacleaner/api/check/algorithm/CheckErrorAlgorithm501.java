@@ -162,7 +162,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
   private final static String incorrectCharactersBefore = ".-";
 
   /**
-   * Characteres that are considered incorrect after a suggestion.
+   * Characters that are considered incorrect after a suggestion.
    */
   private final static String incorrectCharactersAfter = ".-";
 
@@ -459,10 +459,11 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     }
 
     // Remove tags
+    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_CODE);
     // TODO: Be more precise, analyze image descriptions in gallery
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_GALLERY);
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_MATH);
-    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_CODE);
+    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_SOURCE);
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_TIMELINE);
 
     // Remove areas
