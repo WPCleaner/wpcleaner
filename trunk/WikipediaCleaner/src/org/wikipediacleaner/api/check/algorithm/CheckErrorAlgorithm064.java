@@ -30,7 +30,7 @@ import org.wikipediacleaner.i18n.GT;
 
 /**
  * Algorithm for analyzing error 64 of check wikipedia project.
- * Error 64: Link equal to linktext
+ * Error 64: Link equal to link text
  */
 public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
 
@@ -87,13 +87,13 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Bot fixing of all the errors in the page.
+   * Automatic fixing of all the errors in the page.
    * 
    * @param analysis Page analysis.
    * @return Page contents after fix.
    */
   @Override
-  public String botFix(PageAnalysis analysis) {
+  public String automaticFix(PageAnalysis analysis) {
     return fix(globalFixes[0], analysis, null);
   }
 
