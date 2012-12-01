@@ -124,16 +124,9 @@ public class MWPaneDisambiguationFormatter extends
     boolean disambiguation = Boolean.TRUE.equals(link.isDisambiguationPage());
     String text = internalLink.getDisplayedText();
     int start = internalLink.getBeginIndex();
-    while ((start > 0) &&
-           (Character.isLetterOrDigit(contents.charAt(start - 1)))) {
-      start--;
-    }
-    if (start < internalLink.getBeginIndex()) {
-      text = contents.substring(start, internalLink.getBeginIndex()) + text;
-    }
     int end = internalLink.getEndIndex();
     while ((end < contents.length()) &&
-           (Character.isLetterOrDigit(contents.charAt(end)))) {
+           (Character.isLetter(contents.charAt(end)))) {
       end++;
     }
     if (end > internalLink.getEndIndex()) {
