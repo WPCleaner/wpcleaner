@@ -31,6 +31,7 @@ import java.util.regex.Matcher;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementAreas;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -460,11 +461,10 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
     // Remove tags
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_CODE);
-    // TODO: Be more precise, analyze image descriptions in gallery
-    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_GALLERY);
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_MATH);
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_SOURCE);
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_TIMELINE);
+    removeGalleryTags(chunks, analysis);
 
     // Remove areas
     if (!nativeRegexp) {
@@ -506,6 +506,46 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     List<PageElementTag> tags = analysis.getCompleteTags(tagName);
     for (PageElementTag tag : tags) {
       removeArea(chunks, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+    }
+  }
+
+  /**
+   * Remove gallery tags from the list of chunks of text.
+   * 
+   * @param chunks List of chunks of text.
+   * @param analysis Page analysis.
+   */
+  private void removeGalleryTags(List<ContentsChunk> chunks, PageAnalysis analysis) {
+    Namespace imageNamespace = analysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
+    String contents = analysis.getContents();
+    List<PageElementTag> tags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_GALLERY);
+    for (PageElementTag tag : tags) {
+      removeArea(chunks, tag.getBeginIndex(), tag.getEndIndex());
+      if (tag.isComplete() && !tag.isEndTag() && (tag.getMatchingTag() != null)) {
+        PageElementTag endTag = tag.getMatchingTag();
+        int beginIndex = tag.getEndIndex();
+        int tmpIndex = beginIndex;
+        while (tmpIndex <= endTag.getBeginIndex()) {
+          if ((tmpIndex == endTag.getBeginIndex()) ||
+              (contents.charAt(tmpIndex) == '\n')) {
+            String line = contents.substring(beginIndex, tmpIndex).trim();
+            int colonIndex = line.indexOf(':');
+            if ((colonIndex > 0) && (imageNamespace.isPossibleName(line.substring(0, colonIndex)))) {
+              int pipeIndex = line.indexOf('|', colonIndex);
+              if (pipeIndex < 0) {
+                removeArea(chunks, beginIndex, tmpIndex + 1);
+              } else {
+                removeArea(chunks, beginIndex, beginIndex + pipeIndex + 1);
+              }
+            } else {
+              removeArea(chunks, beginIndex, tmpIndex + 1);
+            }
+            beginIndex = tmpIndex + 1;
+          }
+          tmpIndex++;
+        }
+        removeArea(chunks, endTag.getBeginIndex(), endTag.getEndIndex());
+      }
     }
   }
 
