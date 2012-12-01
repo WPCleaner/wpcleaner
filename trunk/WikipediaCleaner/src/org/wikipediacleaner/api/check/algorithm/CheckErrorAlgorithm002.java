@@ -129,13 +129,13 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Bot fixing of all the errors in the page.
+   * Automatic fixing of all the errors in the page.
    * 
    * @param analysis Page analysis.
    * @return Page contents after fix.
    */
   @Override
-  public String botFix(PageAnalysis analysis) {
+  public String automaticFix(PageAnalysis analysis) {
     return fix(globalFixes[0], analysis, null);
   }
 
