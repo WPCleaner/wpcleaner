@@ -63,8 +63,8 @@ public class MWPaneDisambiguationPopupListener extends MWPanePopupListener {
     if (element == null) {
       return null;
     }
-    int startOffset = element.getStartOffset();
-    int endOffset = element.getEndOffset();
+    int startOffset = MWPaneFormatter.getUUIDStartOffset(textPane, element);
+    int endOffset = MWPaneFormatter.getUUIDEndOffet(textPane, element);
 
     // Retrieve main attributes
     AttributeSet attributes = element.getAttributes();
