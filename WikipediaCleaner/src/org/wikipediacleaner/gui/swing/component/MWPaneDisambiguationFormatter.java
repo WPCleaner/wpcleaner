@@ -120,16 +120,31 @@ public class MWPaneDisambiguationFormatter extends
     }
 
     // Format the link
+    String contents = pageAnalysis.getContents();
     boolean disambiguation = Boolean.TRUE.equals(link.isDisambiguationPage());
+    String text = internalLink.getDisplayedText();
     int start = internalLink.getBeginIndex();
+    while ((start > 0) &&
+           (Character.isLetterOrDigit(contents.charAt(start - 1)))) {
+      start--;
+    }
+    if (start < internalLink.getBeginIndex()) {
+      text = contents.substring(start, internalLink.getBeginIndex()) + text;
+    }
     int end = internalLink.getEndIndex();
+    while ((end < contents.length()) &&
+           (Character.isLetterOrDigit(contents.charAt(end)))) {
+      end++;
+    }
+    if (end > internalLink.getEndIndex()) {
+      text = text + contents.substring(internalLink.getEndIndex(), end);
+    }
     ConfigurationValueStyle styleType = null;
     if (disambiguation) {
       styleType = ConfigurationValueStyle.INTERNAL_LINK_DAB;
       List<String> templatesAfter = wikipedia.getConfiguration().getStringList(
           WPCConfigurationStringList.TEMPLATES_AFTER_HELP_ASKED);
       if ((templatesAfter != null) && (templatesAfter.size() > 0)) {
-        String contents = pageAnalysis.getContents();
         int maxSize = contents.length();
         int currentPos = end;
         while ((currentPos < maxSize) && (contents.charAt(currentPos) == ' ')) {
@@ -160,7 +175,7 @@ public class MWPaneDisambiguationFormatter extends
     }
     attr = (Style) attr.copyAttributes();
     attr.addAttribute(ATTRIBUTE_PAGE, link);
-    attr.addAttribute(ATTRIBUTE_TEXT, internalLink.getDisplayedText());
+    attr.addAttribute(ATTRIBUTE_TEXT, text);
     attr.addAttribute(ATTRIBUTE_UUID, UUID.randomUUID());
     doc.setCharacterAttributes(start, end - start, attr, true);
     if (start < startPosition) {
