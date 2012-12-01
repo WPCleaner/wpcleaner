@@ -84,13 +84,13 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
           prefixFull.append(":");
           prefixFull.append(image.getImage());
           StringBuilder prefixShort = new StringBuilder(prefixFull);
-          if (image.getMagicWords() != null) {
-            for (String magicWord : image.getMagicWords()) {
+          if (image.getParameters() != null) {
+            for (PageElementImage.Parameter param : image.getParameters()) {
               prefixFull.append("|");
-              prefixFull.append(magicWord);
-              if (!magicWordImgAlt.isPossibleAlias(magicWord)) {
+              prefixFull.append(param.getContents());
+              if (!magicWordImgAlt.isPossibleAlias(param.getContents())) {
                 prefixShort.append("|");
-                prefixShort.append(magicWord);
+                prefixShort.append(param.getContents());
               }
             }
           }

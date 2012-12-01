@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -240,6 +241,36 @@ public class MagicWord implements Comparable<MagicWord> {
   public final static String USER_TEST_WIKI              = "usertestwiki";
 
   /**
+   * List of magic words that can be used in images.
+   */
+  private final static String[] imgMagicWords = {
+    MagicWord.IMG_ALT,
+    MagicWord.IMG_BASELINE,
+    MagicWord.IMG_BORDER,
+    MagicWord.IMG_BOTTOM,
+    MagicWord.IMG_CENTER,
+    MagicWord.IMG_CLASS,
+    MagicWord.IMG_FRAMED,
+    MagicWord.IMG_FRAMELESS,
+    MagicWord.IMG_LEFT,
+    MagicWord.IMG_LINK,
+    MagicWord.IMG_LOSSY,
+    MagicWord.IMG_MANUAL_THUMB,
+    MagicWord.IMG_MIDDLE,
+    MagicWord.IMG_NONE,
+    MagicWord.IMG_PAGE,
+    MagicWord.IMG_RIGHT,
+    MagicWord.IMG_SUB,
+    MagicWord.IMG_SUPER,
+    MagicWord.IMG_TEXT_BOTTOM,
+    MagicWord.IMG_TEXT_TOP,
+    MagicWord.IMG_THUMBNAIL,
+    MagicWord.IMG_TOP,
+    MagicWord.IMG_UPRIGHT,
+    MagicWord.IMG_WIDTH,
+  };
+
+  /**
    * @param name Magic word name.
    * @param aliases Magic word aliases.
    */
@@ -289,6 +320,17 @@ public class MagicWord implements Comparable<MagicWord> {
       }
     }
     return false;
+  }
+
+  /**
+   * @return List of magic words that can be used in images.
+   */
+  public static List<String> getImgMagicWords() {
+    List<String> result = new ArrayList<String>(imgMagicWords.length);
+    for (String magicWord : imgMagicWords) {
+      result.add(magicWord);
+    }
+    return result;
   }
 
   /* (non-Javadoc)

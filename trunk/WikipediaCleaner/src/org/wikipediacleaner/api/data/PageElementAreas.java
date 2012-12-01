@@ -123,11 +123,31 @@ public class PageElementAreas {
       for (PageElementImage image : images) {
         int beginIndex = image.getBeginIndex();
         int endIndex = image.getEndIndex();
-        if (image.getDescription() != null) {
-          addArea(beginIndex, beginIndex + image.getDescriptionOffset());
-          addArea(endIndex - 2, endIndex);
-        } else {
+        if (image.getFirstPipeOffset() < 0) {
           addArea(beginIndex, endIndex);
+        } else {
+          addArea(beginIndex, beginIndex + image.getFirstPipeOffset() + 1);
+          for (PageElementImage.Parameter param : image.getParameters()) {
+            MagicWord magicWord = param.getMagicWord();
+            if (magicWord != null) {
+              if (MagicWord.IMG_ALT.equals(magicWord.getName())) {
+                int equalIndex = param.getContents().indexOf("=");
+                if (equalIndex < 0) {
+                  addArea(
+                      beginIndex + param.getBeginOffset(),
+                      beginIndex + param.getEndOffset() + 1);
+                } else {
+                  addArea(
+                      beginIndex + param.getBeginOffset(),
+                      beginIndex + equalIndex + 1);
+                }
+              } else {
+                addArea(
+                    beginIndex + param.getBeginOffset(),
+                    beginIndex + param.getEndOffset() + 1);
+              }
+            }
+          }
         }
       }
     }

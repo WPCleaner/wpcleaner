@@ -31,16 +31,13 @@ import org.wikipediacleaner.api.constants.WikiConfiguration;
  */
 public class PageElementImage extends PageElement {
 
-  private final EnumWikipedia wikipedia;
+  private final EnumWikipedia wiki;
   private final String namespaceNotTrimmed;
   private final String namespace;
   private final String imageNotTrimmed;
   private final String image;
-  private final int pipeOffset;
-  private final List<String> magicWords;
-  private final String descriptionNotTrimmed;
-  private final String description;
-  private final int descriptionOffset;
+  private final int firstPipeOffset;
+  private final List<Parameter> parameters;
 
   /**
    * Analyze contents to check if it matches an image.
@@ -66,7 +63,7 @@ public class PageElementImage extends PageElement {
     tmpIndex += 2;
     int beginIndex = tmpIndex;
 
-    // Possible whitespaces characters
+    // Possible whitespace characters
     while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
       tmpIndex++;
     }
@@ -110,7 +107,7 @@ public class PageElementImage extends PageElement {
           wikipedia, index, tmpIndex + 2,
           contents.substring(beginIndex, colonIndex),
           contents.substring(colonIndex + 1, tmpIndex),
-          firstPipeIndex - index, null, null, -1);
+          firstPipeIndex - index, null);
     }
 
     // Find elements of image
@@ -118,28 +115,30 @@ public class PageElementImage extends PageElement {
     tmpIndex++;
     int linkCount = 0;
     int templateCount = 0;
-    List<String> magicWords = new ArrayList<String>();
+    List<Parameter> parameters = new ArrayList<Parameter>();
     WikiConfiguration wikiConfiguration = wikipedia.getWikiConfiguration();
     while (tmpIndex < contents.length()) {
       if ((templateCount <= 0) && (linkCount <= 0) && (contents.startsWith("]]", tmpIndex))) {
-        String element = contents.substring(pipeIndex + 1, tmpIndex);
-        if (wikiConfiguration.isPossibleAliasForImgMagicWord(element.trim())) {
-          magicWords.add(element);
-          pipeIndex = tmpIndex;
-        }
+        String element = contents.substring(pipeIndex + 1, tmpIndex).trim();
+        MagicWord magicWord = wikiConfiguration.getPossibleAliasForImgMagicWord(element);
+        Parameter param = new Parameter(
+            pipeIndex + 1 - beginIndex, tmpIndex - beginIndex,
+            element, magicWord);
+        parameters.add(param);
+        pipeIndex = tmpIndex;
         return new PageElementImage(
             wikipedia, index, tmpIndex + 2,
             contents.substring(beginIndex, colonIndex),
             contents.substring(colonIndex + 1, firstPipeIndex),
-            firstPipeIndex - index, magicWords,
-            (pipeIndex < tmpIndex) ? contents.substring(pipeIndex + 1, tmpIndex) : null,
-            pipeIndex + 1 - index);
+            firstPipeIndex - index, parameters);
       } else if ((templateCount <= 0) && (linkCount <= 0) && (contents.charAt(tmpIndex) == '|')) {
-        String element = contents.substring(pipeIndex + 1, tmpIndex);
-        if (wikiConfiguration.isPossibleAliasForImgMagicWord(element.trim())) {
-          magicWords.add(element);
-          pipeIndex = tmpIndex;
-        }
+        String element = contents.substring(pipeIndex + 1, tmpIndex).trim();
+        MagicWord magicWord = wikiConfiguration.getPossibleAliasForImgMagicWord(element);
+        Parameter param = new Parameter(
+            pipeIndex + 1 - beginIndex, tmpIndex - beginIndex,
+            element, magicWord);
+        parameters.add(param);
+        pipeIndex = tmpIndex;
       } else if (contents.startsWith("[[", tmpIndex)) {
         linkCount++;
         tmpIndex++;
@@ -160,10 +159,10 @@ public class PageElementImage extends PageElement {
   }
 
   /**
-   * @return Wikipedia.
+   * @return Wiki.
    */
-  public EnumWikipedia getWikipedia() {
-    return wikipedia;
+  public EnumWikipedia getWiki() {
+    return wiki;
   }
 
   /**
@@ -183,36 +182,64 @@ public class PageElementImage extends PageElement {
   /**
    * @return Offset of the first |
    */
-  public int getPipeOffset() {
-    return pipeOffset;
+  public int getFirstPipeOffset() {
+    return firstPipeOffset;
+  }
+
+  /**
+   * @return Parameter for the description.
+   */
+  public Parameter getDescriptionParameter() {
+    if (parameters == null) {
+      return null;
+    }
+    for (Parameter param : parameters) {
+      if (param.getMagicWord() == null) {
+        return param;
+      }
+    }
+    return null;
   }
 
   /**
    * @return Image description.
    */
   public String getDescription() {
-    return description;
+    Parameter param = getDescriptionParameter();
+    if (param == null) {
+      return null;
+    }
+    return param.getContents();
   }
 
   /**
    * @return Offset of image description.
    */
   public int getDescriptionOffset() {
-    return descriptionOffset;
+    Parameter param = getDescriptionParameter();
+    if (param == null) {
+      return -1;
+    }
+    return param.getBeginOffset();
   }
 
   /**
    * @return Image alternate description.
    */
   public String getAlternateDescription() {
-    if (magicWords != null) {
-      WikiConfiguration wikiConfiguration = wikipedia.getWikiConfiguration();
-      for (String magicWord : magicWords) {
-        if (wikiConfiguration.getMagicWord(MagicWord.IMG_ALT).isPossibleAlias(magicWord)) {
-          int equalIndex = magicWord.indexOf("=");
-          if (equalIndex >= 0) {
-            return magicWord.substring(equalIndex + 1).trim();
-          }
+    if (parameters == null) {
+      return null;
+    }
+    WikiConfiguration wikiConfiguration = wiki.getWikiConfiguration();
+    for (Parameter param : parameters) {
+      String contents = param.getContents();
+      if ((contents != null) &&
+          (param.getMagicWord() != null) &&
+          (wikiConfiguration.getMagicWord(MagicWord.IMG_ALT).isPossibleAlias(contents))) {
+        // TODO: Don't rely on "="
+        int equalIndex = contents.indexOf("=");
+        if (equalIndex >= 0) {
+          return contents.substring(equalIndex + 1).trim();
         }
       }
     }
@@ -220,31 +247,41 @@ public class PageElementImage extends PageElement {
   }
 
   /**
-   * @return Magic words.
+   * @return Parameters.
    */
-  public Collection<String> getMagicWords() {
-    return magicWords;
+  public Collection<Parameter> getParameters() {
+    return parameters;
   }
 
+  /**
+   * @param wiki Wiki.
+   * @param beginIndex Image begin index.
+   * @param endIndex Image end index.
+   * @param namespace Namespace.
+   * @param image Image name.
+   * @param firstPipeOffset Offset of the first "|"
+   * @param parameters Parameters.
+   */
   private PageElementImage(
-      EnumWikipedia wikipedia, int beginIndex, int endIndex,
+      EnumWikipedia wiki, int beginIndex, int endIndex,
       String namespace, String image,
-      int pipeOffset,
-      List<String> magicWords,
-      String description, int descriptionOffset) {
+      int firstPipeOffset, List<Parameter> parameters) {
     super(beginIndex, endIndex);
-    this.wikipedia = wikipedia;
+    this.wiki = wiki;
     this.namespaceNotTrimmed = namespace;
     this.namespace = (namespace != null) ? namespace.trim() : null;
     this.imageNotTrimmed = image;
     this.image = (image != null) ? image.trim() : null;
-    this.pipeOffset = pipeOffset;
-    this.magicWords = magicWords;
-    this.descriptionNotTrimmed = description;
-    this.description = (description != null) ? description.trim() : null;
-    this.descriptionOffset = descriptionOffset;
+    this.firstPipeOffset = firstPipeOffset;
+    this.parameters = parameters;
   }
 
+  /**
+   * Change image to have a different description.
+   * 
+   * @param newDescription New description.
+   * @return String representing the image with the new description.
+   */
   public String getDescriptionReplacement(String newDescription) {
     StringBuilder sb = new StringBuilder();
     sb.append("[[");
@@ -253,11 +290,19 @@ public class PageElementImage extends PageElement {
       sb.append(':');
       sb.append(imageNotTrimmed);
     }
-    for (String magicWord : magicWords) {
-      sb.append('|');
-      sb.append(magicWord);
+    boolean descriptionAdded = false;
+    for (Parameter param : parameters) {
+      if (param.getMagicWord() != null) {
+        sb.append('|');
+        sb.append(param.getContents());
+      } else {
+        if (newDescription != null) {
+          sb.append(newDescription);
+        }
+        descriptionAdded = true;
+      }
     }
-    if (newDescription != null) {
+    if (!descriptionAdded && (newDescription != null)) {
       sb.append('|');
       sb.append(newDescription);
     }
@@ -270,6 +315,69 @@ public class PageElementImage extends PageElement {
    */
   @Override
   public String toString() {
-    return getDescriptionReplacement(descriptionNotTrimmed);
+    Parameter param = getDescriptionParameter();
+    return getDescriptionReplacement(param != null ? param.getContents() : null);
+  }
+
+  /**
+   * Bean for holding informations about a parameter.
+   */
+  public static class Parameter {
+    /**
+     * Begin offset.
+     */
+    private final int beginOffset;
+
+    /**
+     * End offset.
+     */
+    private final int endOffset;
+
+    /**
+     * Contents.
+     */
+    private final String contents;
+
+    /**
+     * Magic word.
+     */
+    private final MagicWord magicWord;
+
+    public Parameter(
+        int beginOffset, int endOffset,
+        String contents, MagicWord magicWord) {
+      this.beginOffset = beginOffset;
+      this.endOffset = endOffset;
+      this.contents = contents;
+      this.magicWord = magicWord;
+    }
+
+    /**
+     * @return Begin offset.
+     */
+    public int getBeginOffset() {
+      return beginOffset;
+    }
+
+    /**
+     * @return End offset.
+     */
+    public int getEndOffset() {
+      return endOffset;
+    }
+
+    /**
+     * @return Contents.
+     */
+    public String getContents() {
+      return contents;
+    }
+
+    /**
+     * @return Magic word.
+     */
+    public MagicWord getMagicWord() {
+      return magicWord;
+    }
   }
 }
