@@ -61,11 +61,11 @@ public class TextProviderImageDescription implements TextProvider {
 
         // Retrieve image descriptions
         Page imagePage = DataManager.getPage(
-            image.getWikipedia(),
+            image.getWiki(),
             image.getNamespace() + ":" + image.getImage(),
             null, null);
         api.retrieveContents(
-            image.getWikipedia(),
+            image.getWiki(),
             Collections.singletonList(imagePage), false);
 
         // Use image description on the wiki
@@ -97,7 +97,7 @@ public class TextProviderImageDescription implements TextProvider {
               if ((global != null) && (global.trim().length() > 0)) {
                 PageAnalysis descAnalysis = commonsPage.getAnalysis(global, true);
                 for (PageElementTemplate template2 : descAnalysis.getTemplates()) {
-                  if (Page.areSameTitle(image.getWikipedia().getSettings().getCode(), template2.getTemplateName())) {
+                  if (Page.areSameTitle(image.getWiki().getSettings().getCode(), template2.getTemplateName())) {
                     String description = template2.getParameterValue("1");
                     if ((description != null) && (description.trim().length() > 0)) {
                       result.add(description.trim());
