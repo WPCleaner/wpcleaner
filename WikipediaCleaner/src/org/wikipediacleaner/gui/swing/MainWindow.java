@@ -934,7 +934,7 @@ public class MainWindow
    */
   public void actionLogout() {
     API api = APIFactory.getAPI();
-    api.logout();
+    api.logout(getWikipedia());
     logged = false;
     userLogged = false;
     updateComponentState();

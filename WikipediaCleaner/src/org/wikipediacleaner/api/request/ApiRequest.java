@@ -71,6 +71,11 @@ public abstract class ApiRequest {
   public final static String ACTION_LOGIN  = "login";
 
   /**
+   * API action for logout.
+   */
+  public final static String ACTION_LOGOUT  = "logout";
+
+  /**
    * API action for parsing.
    */
   public final static String ACTION_PARSE  = "parse";
