@@ -44,6 +44,13 @@ public class ConnectionInformation {
   }
 
   /**
+   * @return True if connection is cleaned up.
+   */
+  public boolean isClean() {
+    return (lgToken == null) && (lgUserName == null) && (lgUserId == null);
+  }
+
+  /**
    * @return Parameter <code>lgtoken</code> for API calls.
    */
   public String getLgToken() {

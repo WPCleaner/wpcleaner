@@ -71,6 +71,8 @@ import org.wikipediacleaner.api.request.ApiLinksRequest;
 import org.wikipediacleaner.api.request.ApiLinksResult;
 import org.wikipediacleaner.api.request.ApiLoginRequest;
 import org.wikipediacleaner.api.request.ApiLoginResult;
+import org.wikipediacleaner.api.request.ApiLogoutRequest;
+import org.wikipediacleaner.api.request.ApiLogoutResult;
 import org.wikipediacleaner.api.request.ApiParseRequest;
 import org.wikipediacleaner.api.request.ApiParseResult;
 import org.wikipediacleaner.api.request.ApiPurgeRequest;
@@ -100,6 +102,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlExpandResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLanguageLinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLoginResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlLogoutResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlParseResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPropertiesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPurgeResult;
@@ -847,7 +850,7 @@ public class MediaWikiAPI implements API {
       String username,
       String password,
       boolean login) throws APIException {
-    logout();
+    logout(wiki);
     ApiLoginResult result = new ApiXmlLoginResult(wiki, httpClient, connection);
     ApiLoginRequest request = new ApiLoginRequest(wiki, result);
     if (login) {
@@ -860,10 +863,20 @@ public class MediaWikiAPI implements API {
    * Logout.
    * (<code>action=logout</code>).
    * 
+   * @param wiki Wiki.
    * @see <a href="http://www.mediawiki.org/wiki/API:Logout">API:Logout</a>
    */
-  public void logout() {
-    connection.clean();
+  public void logout(EnumWikipedia wiki) {
+    if (!connection.isClean()) {
+      connection.clean();
+      ApiLogoutResult result = new ApiXmlLogoutResult(wiki, httpClient, connection);
+      ApiLogoutRequest request = new ApiLogoutRequest(wiki, result);
+      try {
+        request.logout();
+      } catch (APIException e) {
+        // Nothing to do
+      }
+    }
   }
 
   // ==========================================================================

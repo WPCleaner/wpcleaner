@@ -166,9 +166,10 @@ public interface API {
    * Logout.
    * (<code>action=logout</code>).
    * 
+   * @param wiki Wiki.
    * @see <a href="http://www.mediawiki.org/wiki/API:Logout">API:Logout</a>
    */
-  public void logout();
+  public void logout(EnumWikipedia wiki);
 
   // ==========================================================================
   // API : Queries / Meta information
