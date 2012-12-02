@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-28 23:19+0100\n"
+"POT-Creation-Date: 2012-12-02 17:15+0100\n"
 "PO-Revision-Date: 2012-10-13 06:23+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -364,6 +364,15 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm502.java:83
 #, java-format
 msgid "Remove {0} namespace from template name"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm509.java:41
+#, fuzzy
+msgid "Compact links"
+msgstr "Obnovit odkazy"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm509.java:83
+msgid "Compact link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:248
