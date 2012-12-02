@@ -162,6 +162,7 @@ public class BotToolsWindow
     addAlgorithm(18); // Category first letter small
     addAlgorithm(22); // Category with space
     addAlgorithm(45); // Interwiki double
+    addAlgorithm(57); // Headlines end with colon
     addAlgorithm(64); // Link equal to link text
     addAlgorithm(88); // DEFAULTSORT with blank at first position
     cmbCWAutomaticFixing = new JComboBox(algorithms);
