@@ -123,7 +123,8 @@ public class PageElementAreas {
       for (PageElementImage image : images) {
         int beginIndex = image.getBeginIndex();
         int endIndex = image.getEndIndex();
-        if (image.getFirstPipeOffset() < 0) {
+        if ((image.getFirstPipeOffset() < 0) ||
+            (image.getParameters() == null)) {
           addArea(beginIndex, endIndex);
         } else {
           addArea(beginIndex, beginIndex + image.getFirstPipeOffset() + 1);
