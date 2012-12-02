@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-02 17:15+0100\n"
+"POT-Creation-Date: 2012-12-02 18:43+0100\n"
 "PO-Revision-Date: 2012-11-16 00:18+0000\n"
 "Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -91,7 +91,7 @@ msgid "Replace with {0}"
 msgstr "Αντικατάσταση με {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:159
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:160
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm013.java:69
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm014.java:69
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm015.java:69
@@ -104,10 +104,10 @@ msgstr "Αντικατάσταση με {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:97
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:103
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:71
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:150
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:151
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:140
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:143
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:130
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:144
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:131
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:85
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:73
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:122
@@ -204,6 +204,10 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:39
 msgid "Remove breaks in list"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm057.java:41
+msgid "Fix all titles"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:82
@@ -555,7 +559,7 @@ msgid "About"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:278
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:185
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:186
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:173
 #: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:174
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:226
@@ -677,15 +681,15 @@ msgstr ""
 msgid "Monitor recent changes"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:173
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:174
 msgid "Automatic fixing for Check Wiki"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:246
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:247
 msgid "How many pages do you want to analyze"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:278
+#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:279
 msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 
