@@ -400,6 +400,22 @@ public interface API {
   // ==========================================================================
 
   // ==========================================================================
+  // API : Changing wiki content / Create and edit pages.
+  // ==========================================================================
+
+  /**
+   * Delete the <code>page</code>.
+   * (<code>action=delete</code>).
+   * 
+   * @param wiki Wiki.
+   * @param page The page.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Delete">API:Delete</a>
+   */
+  public void deletePage(
+      EnumWikipedia wiki, Page page) throws APIException;
+
+  // ==========================================================================
   // Recent changes management.
   // ==========================================================================
 

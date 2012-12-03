@@ -56,6 +56,11 @@ public abstract class ApiRequest {
   public final static String ACTION = "action";
 
   /**
+   * API action for deleting.
+   */
+  public final static String ACTION_DELETE = "delete";
+
+  /**
    * API action for editing.
    */
   public final static String ACTION_EDIT = "edit";
@@ -68,27 +73,27 @@ public abstract class ApiRequest {
   /**
    * API action for login.
    */
-  public final static String ACTION_LOGIN  = "login";
+  public final static String ACTION_LOGIN = "login";
 
   /**
    * API action for logout.
    */
-  public final static String ACTION_LOGOUT  = "logout";
+  public final static String ACTION_LOGOUT = "logout";
 
   /**
    * API action for parsing.
    */
-  public final static String ACTION_PARSE  = "parse";
+  public final static String ACTION_PARSE = "parse";
 
   /**
    * API action for purging.
    */
-  public final static String ACTION_PURGE  = "purge";
+  public final static String ACTION_PURGE = "purge";
 
   /**
    * API action for querying.
    */
-  public final static String ACTION_QUERY  = "query";
+  public final static String ACTION_QUERY = "query";
 
   // ==========================================================================
   // API formats
