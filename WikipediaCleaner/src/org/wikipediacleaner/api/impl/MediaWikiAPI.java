@@ -61,6 +61,8 @@ import org.wikipediacleaner.api.request.ApiCategoriesRequest;
 import org.wikipediacleaner.api.request.ApiCategoriesResult;
 import org.wikipediacleaner.api.request.ApiCategoryMembersRequest;
 import org.wikipediacleaner.api.request.ApiCategoryMembersResult;
+import org.wikipediacleaner.api.request.ApiDeleteRequest;
+import org.wikipediacleaner.api.request.ApiDeleteResult;
 import org.wikipediacleaner.api.request.ApiEmbeddedInRequest;
 import org.wikipediacleaner.api.request.ApiEmbeddedInResult;
 import org.wikipediacleaner.api.request.ApiExpandRequest;
@@ -97,6 +99,7 @@ import org.wikipediacleaner.api.request.ApiTemplatesResult;
 import org.wikipediacleaner.api.request.ConnectionInformation;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoriesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoryMembersResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlDeleteResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlEmbeddedInResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlExpandResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLanguageLinksResult;
@@ -1217,6 +1220,22 @@ public class MediaWikiAPI implements API {
   // ==========================================================================
   // API : Changing wiki content / Create and edit pages.
   // ==========================================================================
+
+  /**
+   * Delete the <code>page</code>.
+   * (<code>action=delete</code>).
+   * 
+   * @param wiki Wiki.
+   * @param page The page.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Delete">API:Delete</a>
+   */
+  public void deletePage(EnumWikipedia wiki, Page page)
+      throws APIException {
+    ApiDeleteResult result = new ApiXmlDeleteResult(wiki, httpClient, connection);
+    ApiDeleteRequest request = new ApiDeleteRequest(wiki, result);
+    request.deletePage(page);
+  }
 
   // ==========================================================================
   // Recent changes management.
