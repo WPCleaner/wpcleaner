@@ -36,14 +36,26 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
     super("Arrow as ASCII art");
   }
 
-  private final static String[][] leftArrows = {
+  private final static String[][] allArrows = {
     { "<--->", "↔" },
     { "<-->" , "↔" },
     { "<->"  , "↔" },
+    { "<–––>", "↔" },
+    { "<––>" , "↔" },
+    { "<–>"  , "↔" },
+    { "<———>", "↔" },
+    { "<——>" , "↔" },
+    { "<—>"  , "↔" },
 
     { "<---" , "←" },
     { "<--"  , "←" },
     { "<-"   , "←" },
+    { "<–––" , "←" },
+    { "<––"  , "←" },
+    { "<–"   , "←" },
+    { "<———" , "←" },
+    { "<——"  , "←" },
+    { "<—"   , "←" },
 
     { "<===>", "⇔" },
     { "<==>" , "⇔" },
@@ -52,13 +64,17 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
     { "<===" , "⇐" },
     { "<=="  , "⇐" },
     { "<="   , "⇐", "≤" },
-  };
-  private final static String[][] simpleRightArrows = {
+
     { "--->", "→" },
     { "-->" , "→" },
     { "->"  , "→" },
-  };
-  private final static String[][] doubleRightArrows = {
+    { "–––>", "→" },
+    { "––>" , "→" },
+    { "–>"  , "→" },
+    { "———>", "→" },
+    { "——>" , "→" },
+    { "—>"  , "→" },
+
     { "===>", "⇒" },
     { "==>" , "⇒" },
     { "=>"  , "⇒", "≥" },
@@ -118,47 +134,17 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
         }
       }
       if (shouldCheck) {
+        // Check each kind of arrow
         int arrowLen = 0;
         String[] arrows = null;
-        switch (contents.charAt(currentIndex)) {
-        case '<':
-          // Check for bidirectional arrows or left arrows
-          for (int i = 0; (i < leftArrows.length) && (arrowLen == 0); i++) {
-            if ((leftArrows[i] != null) &&
-                (leftArrows[i].length > 0) &&
-                (leftArrows[i][0] != null) &&
-                (contents.startsWith(leftArrows[i][0], currentIndex))) {
-              arrowLen = leftArrows[i][0].length();
-              arrows = leftArrows[i];
-            }
+        for (int i = 0; (i < allArrows.length) && (arrowLen == 0); i++) {
+          if ((allArrows[i] != null) &&
+              (allArrows[i].length > 0) &&
+              (allArrows[i][0] != null) &&
+              (contents.startsWith(allArrows[i][0], currentIndex))) {
+            arrowLen = allArrows[i][0].length();
+            arrows = allArrows[i];
           }
-          break;
-  
-        case '-':
-          // Check for right simple arrows
-          for (int i = 0; (i < simpleRightArrows.length) && (arrowLen == 0); i++) {
-            if ((simpleRightArrows[i] != null) &&
-                (simpleRightArrows[i].length > 0) &&
-                (simpleRightArrows[i][0] != null) &&
-                (contents.startsWith(simpleRightArrows[i][0], currentIndex))) {
-              arrowLen = simpleRightArrows[i][0].length();
-              arrows = simpleRightArrows[i];
-            }
-          }
-          break;
-  
-        case '=':
-          // Check for right double arrows
-          for (int i = 0; (i < doubleRightArrows.length) && (arrowLen == 0); i++) {
-            if ((doubleRightArrows[i] != null) &&
-                (doubleRightArrows[i].length > 0) &&
-                (doubleRightArrows[i][0] != null) &&
-                (contents.startsWith(doubleRightArrows[i][0], currentIndex))) {
-              arrowLen = doubleRightArrows[i][0].length();
-              arrows = doubleRightArrows[i];
-            }
-          }
-          break;
         }
   
         // Check if a possible arrow has been found
