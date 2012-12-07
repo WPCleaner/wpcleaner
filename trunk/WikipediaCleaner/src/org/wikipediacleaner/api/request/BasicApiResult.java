@@ -25,6 +25,7 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.HttpUtils;
+import org.wikipediacleaner.api.constants.ConnectionInformation;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
@@ -49,22 +50,14 @@ public abstract class BasicApiResult implements ApiResult {
   private final HttpClient httpClient;
 
   /**
-   * Connection information.
-   */
-  private final ConnectionInformation connection;
-
-  /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
-   * @param connection Connection information.
    */
   protected BasicApiResult(
       EnumWikipedia wiki,
-      HttpClient httpClient,
-      ConnectionInformation connection) {
+      HttpClient httpClient) {
     this.wiki = wiki;
     this.httpClient = httpClient;
-    this.connection = connection;
   }
 
   /**
@@ -81,13 +74,6 @@ public abstract class BasicApiResult implements ApiResult {
     return httpClient;
   }
 
-  /**
-   * @return Connection information.
-   */
-  public ConnectionInformation getConnectionInformation() {
-    return connection;
-  }
-
   // ==========================================================================
   // HTTP management
   // ==========================================================================
@@ -101,6 +87,7 @@ public abstract class BasicApiResult implements ApiResult {
   protected HttpMethod createHttpMethod(
       Map<String, String> properties) {
     if (shouldSendIdentification()) {
+      ConnectionInformation connection = wiki.getConnection();
       if (connection.getLgToken() != null) {
         properties.put(
             ApiLoginRequest.PROPERTY_TOKEN,

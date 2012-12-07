@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.wikipediacleaner.api.request;
+package org.wikipediacleaner.api.constants;
 
 
 /**
@@ -51,6 +51,17 @@ public class ConnectionInformation {
   }
 
   /**
+   * @param token Parameter <code>lgtoken</code> for API calls.
+   * @param userName Parameter <code>lgusername</code> for API calls.
+   * @param userId Parameter <code>lguserid</code> for API calls.
+   */
+  public void setLgInformation(String token, String userName, String userId) {
+    setLgToken(token);
+    setLgUserName(userName);
+    setLgUserId(userId);
+  }
+
+  /**
    * @return Parameter <code>lgtoken</code> for API calls.
    */
   public String getLgToken() {
@@ -60,7 +71,7 @@ public class ConnectionInformation {
   /**
    * @param token Parameter <code>lgtoken</code> for API calls.
    */
-  public void setLgToken(String token) {
+  void setLgToken(String token) {
     lgToken = token;
   }
 
@@ -74,7 +85,7 @@ public class ConnectionInformation {
   /**
    * @param userName Parameter <code>lgUserName</code> for API calls.
    */
-  public void setLgUserName(String userName) {
+  void setLgUserName(String userName) {
     lgUserName = userName;
   }
 
@@ -88,7 +99,7 @@ public class ConnectionInformation {
   /**
    * @param userId Parameter <code>lgUserId</code> for API calls.
    */
-  public void setLgUserId(String userId) {
+  void setLgUserId(String userId) {
     lgUserId = userId;
   }
 }

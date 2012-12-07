@@ -41,9 +41,4 @@ public interface ApiResult {
    * @return HTTP client for making requests.
    */
   public HttpClient getHttpClient();
-
-  /**
-   * @return Connection information.
-   */
-  public ConnectionInformation getConnectionInformation();
 }

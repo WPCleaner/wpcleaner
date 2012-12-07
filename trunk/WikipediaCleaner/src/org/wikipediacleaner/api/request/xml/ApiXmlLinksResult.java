@@ -33,7 +33,6 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.request.ApiLinksResult;
 import org.wikipediacleaner.api.request.ApiRequest;
-import org.wikipediacleaner.api.request.ConnectionInformation;
 
 
 /**
@@ -44,13 +43,11 @@ public class ApiXmlLinksResult extends ApiXmlPropertiesResult implements ApiLink
   /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
-   * @param connection Connection information.
    */
   public ApiXmlLinksResult(
       EnumWikipedia wiki,
-      HttpClient httpClient,
-      ConnectionInformation connection) {
-    super(wiki, httpClient, connection);
+      HttpClient httpClient) {
+    super(wiki, httpClient);
   }
 
   /**

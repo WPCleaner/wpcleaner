@@ -96,7 +96,6 @@ import org.wikipediacleaner.api.request.ApiSiteInfoResult;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ApiTemplatesRequest;
 import org.wikipediacleaner.api.request.ApiTemplatesResult;
-import org.wikipediacleaner.api.request.ConnectionInformation;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoriesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoryMembersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlDeleteResult;
@@ -139,8 +138,6 @@ public class MediaWikiAPI implements API {
 
   private HttpClient httpClient;
 
-  private final ConnectionInformation connection;
-
   /**
    * Time of last edit.
    */
@@ -153,7 +150,6 @@ public class MediaWikiAPI implements API {
    * @param httpClient HTTP client.
    */
   public MediaWikiAPI(HttpClient httpClient) {
-    connection = new ConnectionInformation();
     this.httpClient = httpClient;
   }
 
@@ -244,7 +240,7 @@ public class MediaWikiAPI implements API {
     properties.put("titles", page.getTitle());
     properties.put("rvprop", "content|ids|timestamp");
     properties.put("rvsection", Integer.toString(section));
-    if (connection.getLgToken() != null) {
+    if (wikipedia.getConnection().getLgToken() != null) {
       properties.put("intoken", "edit");
     }
     try {
@@ -349,7 +345,7 @@ public class MediaWikiAPI implements API {
     if (comment == null) {
       throw new APIException("Comment is null");
     }
-    if (connection.getLgToken() == null) {
+    if (wikipedia.getConnection().getLgToken() == null) {
       throw new APIException("You must be logged in to update pages");
     }
     QueryResult result = null;
@@ -456,7 +452,7 @@ public class MediaWikiAPI implements API {
     if (contents == null) {
       throw new APIException("Contents is null");
     }
-    if (connection.getLgToken() == null) {
+    if (wikipedia.getConnection().getLgToken() == null) {
       throw new APIException("You must be logged in to update pages");
     }
     QueryResult result = null;
@@ -824,7 +820,7 @@ public class MediaWikiAPI implements API {
       Element root)
       throws APIException {
     try {
-      ApiXmlPropertiesResult result = new ApiXmlPropertiesResult(wiki, httpClient, connection);
+      ApiXmlPropertiesResult result = new ApiXmlPropertiesResult(wiki, httpClient);
       result.updateRedirect(root, pages);
     } catch (JDOMException e) {
       log.error("Error redirects", e);
@@ -854,7 +850,7 @@ public class MediaWikiAPI implements API {
       String password,
       boolean login) throws APIException {
     logout(wiki);
-    ApiLoginResult result = new ApiXmlLoginResult(wiki, httpClient, connection);
+    ApiLoginResult result = new ApiXmlLoginResult(wiki, httpClient);
     ApiLoginRequest request = new ApiLoginRequest(wiki, result);
     if (login) {
       return request.login(username, password);
@@ -870,9 +866,9 @@ public class MediaWikiAPI implements API {
    * @see <a href="http://www.mediawiki.org/wiki/API:Logout">API:Logout</a>
    */
   public void logout(EnumWikipedia wiki) {
-    if (!connection.isClean()) {
-      connection.clean();
-      ApiLogoutResult result = new ApiXmlLogoutResult(wiki, httpClient, connection);
+    if (!wiki.getConnection().isClean()) {
+      wiki.getConnection().clean();
+      ApiLogoutResult result = new ApiXmlLogoutResult(wiki, httpClient);
       ApiLogoutRequest request = new ApiLogoutRequest(wiki, result);
       try {
         request.logout();
@@ -895,7 +891,7 @@ public class MediaWikiAPI implements API {
    * @see <a href="http://www.mediawiki.org/wiki/API:Meta#siteinfo_.2F_si">API:Meta</a>
    */
   private void loadSiteInfo(EnumWikipedia wiki) throws APIException {
-    ApiSiteInfoResult result = new ApiXmlSiteInfoResult(wiki, httpClient, connection);
+    ApiSiteInfoResult result = new ApiXmlSiteInfoResult(wiki, httpClient);
     ApiSiteInfoRequest request = new ApiSiteInfoRequest(wiki, result);
     request.loadSiteInformation(true, true, true, true, true);
   }
@@ -918,7 +914,7 @@ public class MediaWikiAPI implements API {
       EnumWikipedia wiki,
       Collection<Page> pages, boolean withRedirects)
       throws APIException {
-    ApiRevisionsResult result = new ApiXmlRevisionsResult(wiki, httpClient, connection);
+    ApiRevisionsResult result = new ApiXmlRevisionsResult(wiki, httpClient);
     ApiRevisionsRequest request = new ApiRevisionsRequest(wiki, result);
     request.loadContent(pages, withRedirects);
   }
@@ -931,7 +927,7 @@ public class MediaWikiAPI implements API {
    */
   public void retrieveTemplates(EnumWikipedia wiki, Page page)
       throws APIException {
-    ApiTemplatesResult result = new ApiXmlTemplatesResult(wiki, httpClient, connection);
+    ApiTemplatesResult result = new ApiXmlTemplatesResult(wiki, httpClient);
     ApiTemplatesRequest request = new ApiTemplatesRequest(wiki, result);
     request.loadTemplates(page);
   }
@@ -964,11 +960,11 @@ public class MediaWikiAPI implements API {
     } else {
       List<Page> dabCategories = wiki.getConfiguration().getDisambiguationCategories();
       if ((dabCategories != null) && (dabCategories.size() > 0)) {
-        ApiCategoriesResult result = new ApiXmlCategoriesResult(wiki, httpClient, connection);
+        ApiCategoriesResult result = new ApiXmlCategoriesResult(wiki, httpClient);
         ApiCategoriesRequest request = new ApiCategoriesRequest(wiki, result);
         request.setDisambiguationStatus(pages);
       } else {
-        ApiTemplatesResult result = new ApiXmlTemplatesResult(wiki, httpClient, connection);
+        ApiTemplatesResult result = new ApiXmlTemplatesResult(wiki, httpClient);
         ApiTemplatesRequest request = new ApiTemplatesRequest(wiki, result);
         request.setDisambiguationStatus(pages);
       }
@@ -986,7 +982,7 @@ public class MediaWikiAPI implements API {
    */
   public void retrieveLinks(EnumWikipedia wiki, Collection<Page> pages)
       throws APIException {
-    ApiLinksResult result = new ApiXmlLinksResult(wiki, httpClient, connection);
+    ApiLinksResult result = new ApiXmlLinksResult(wiki, httpClient);
     ApiLinksRequest request = new ApiLinksRequest(wiki, result);
     request.loadLinks(pages);
   }
@@ -1004,7 +1000,7 @@ public class MediaWikiAPI implements API {
    */
   public String getLanguageLink(EnumWikipedia from, EnumWikipedia to, String title)
       throws APIException {
-    ApiLanguageLinksResult result = new ApiXmlLanguageLinksResult(from, httpClient, connection);
+    ApiLanguageLinksResult result = new ApiXmlLanguageLinksResult(from, httpClient);
     ApiLanguageLinksRequest request = new ApiLanguageLinksRequest(from, result);
     return request.getLanguageLink(DataManager.getPage(from, title, null, null), to);
   }
@@ -1027,7 +1023,7 @@ public class MediaWikiAPI implements API {
       EnumWikipedia wiki, Page page,
       boolean redirects)
       throws APIException {
-    ApiBacklinksResult result = new ApiXmlBacklinksResult(wiki, httpClient, connection);
+    ApiBacklinksResult result = new ApiXmlBacklinksResult(wiki, httpClient);
     ApiBacklinksRequest request = new ApiBacklinksRequest(wiki, result);
     request.loadBacklinks(page, redirects);
   }
@@ -1046,7 +1042,7 @@ public class MediaWikiAPI implements API {
   public List<Page> retrieveCategoryMembers(
       EnumWikipedia wiki, String category,
       int depth, boolean limit) throws APIException {
-    ApiCategoryMembersResult result = new ApiXmlCategoryMembersResult(wiki, httpClient, connection);
+    ApiCategoryMembersResult result = new ApiXmlCategoryMembersResult(wiki, httpClient);
     ApiCategoryMembersRequest request = new ApiCategoryMembersRequest(wiki, result);
     return request.loadCategoryMembers(category, depth, limit);
   }
@@ -1066,7 +1062,7 @@ public class MediaWikiAPI implements API {
   public List<Page> retrieveEmbeddedIn(
       EnumWikipedia wiki, Page page,
       List<Integer> namespaces, boolean limit) throws APIException {
-    ApiEmbeddedInResult result = new ApiXmlEmbeddedInResult(wiki, httpClient, connection);
+    ApiEmbeddedInResult result = new ApiXmlEmbeddedInResult(wiki, httpClient);
     ApiEmbeddedInRequest request = new ApiEmbeddedInRequest(wiki, result);
     return request.loadEmbeddedIn(page, namespaces, limit);
   }
@@ -1082,7 +1078,7 @@ public class MediaWikiAPI implements API {
    */
   public List<Page> getRandomPages(
       EnumWikipedia wiki, int count) throws APIException {
-    ApiRandomPagesResult result = new ApiXmlRandomPagesResult(wiki, httpClient, connection);
+    ApiRandomPagesResult result = new ApiXmlRandomPagesResult(wiki, httpClient);
     ApiRandomPagesRequest request = new ApiRandomPagesRequest(wiki, result);
     return request.loadRandomList(count);
   }
@@ -1101,7 +1097,7 @@ public class MediaWikiAPI implements API {
   public String getRecentChanges(
       EnumWikipedia wiki,
       String start, List<RecentChange> recentChanges) throws APIException {
-    ApiRecentChangesResult result = new ApiXmlRecentChangesResult(wiki, httpClient, connection);
+    ApiRecentChangesResult result = new ApiXmlRecentChangesResult(wiki, httpClient);
     ApiRecentChangesRequest request = new ApiRecentChangesRequest(wiki, result);
     return request.loadRecentChanges(start, recentChanges);
   }
@@ -1119,7 +1115,7 @@ public class MediaWikiAPI implements API {
   public void retrieveSimilarPages(
       EnumWikipedia wiki, Page page, boolean limit)
       throws APIException {
-    ApiSearchResult result = new ApiXmlSearchResult(wiki, httpClient, connection);
+    ApiSearchResult result = new ApiXmlSearchResult(wiki, httpClient);
     ApiSearchRequest request = new ApiSearchRequest(wiki, result);
     request.searchSimilarPages(page, limit);
   }
@@ -1134,7 +1130,7 @@ public class MediaWikiAPI implements API {
    */
   public List<Page> retrieveRawWatchlist(EnumWikipedia wiki) throws APIException {
     ApiRawWatchlistResult result =
-        new ApiXmlRawWatchlistResult(wiki, httpClient, connection);
+        new ApiXmlRawWatchlistResult(wiki, httpClient);
     ApiRawWatchlistRequest request =
         new ApiRawWatchlistRequest(wiki, result);
     return request.loadWatchlistRaw();
@@ -1157,7 +1153,7 @@ public class MediaWikiAPI implements API {
    */
   public String expandTemplates(
       EnumWikipedia wiki, String title, String text) throws APIException {
-    ApiExpandResult result = new ApiXmlExpandResult(wiki, httpClient, connection);
+    ApiExpandResult result = new ApiXmlExpandResult(wiki, httpClient);
     ApiExpandRequest request = new ApiExpandRequest(wiki, result);
     return request.expandTemplates(title, text);
   }
@@ -1175,7 +1171,7 @@ public class MediaWikiAPI implements API {
    */
   public String parseText(
       EnumWikipedia wiki, String title, String text) throws APIException {
-    ApiParseResult result = new ApiXmlParseResult(wiki, httpClient, connection);
+    ApiParseResult result = new ApiXmlParseResult(wiki, httpClient);
     ApiParseRequest request = new ApiParseRequest(wiki, result);
     return request.parseText(title, text);
   }
@@ -1192,7 +1188,7 @@ public class MediaWikiAPI implements API {
    */
   public List<Section> retrieveSections(
       EnumWikipedia wiki, Page page) throws APIException {
-    ApiParseResult result = new ApiXmlParseResult(wiki, httpClient, connection);
+    ApiParseResult result = new ApiXmlParseResult(wiki, httpClient);
     ApiParseRequest request = new ApiParseRequest(wiki, result);
     return request.retrieveSections(page);
   }
@@ -1212,7 +1208,7 @@ public class MediaWikiAPI implements API {
    */
   public void purgePageCache(EnumWikipedia wiki, Page page)
       throws APIException {
-    ApiPurgeResult result = new ApiXmlPurgeResult(wiki, httpClient, connection);
+    ApiPurgeResult result = new ApiXmlPurgeResult(wiki, httpClient);
     ApiPurgeRequest request = new ApiPurgeRequest(wiki, result);
     request.purgePage(page);
   }
@@ -1232,7 +1228,7 @@ public class MediaWikiAPI implements API {
    */
   public void deletePage(EnumWikipedia wiki, Page page)
       throws APIException {
-    ApiDeleteResult result = new ApiXmlDeleteResult(wiki, httpClient, connection);
+    ApiDeleteResult result = new ApiXmlDeleteResult(wiki, httpClient);
     ApiDeleteRequest request = new ApiDeleteRequest(wiki, result);
     request.deletePage(page);
   }

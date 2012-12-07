@@ -25,8 +25,6 @@ import org.jdom.input.JDOMParseException;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.request.ApiLogoutResult;
-import org.wikipediacleaner.api.request.ConnectionInformation;
-
 
 /**
  * MediaWiki API XML logout results.
@@ -36,13 +34,11 @@ public class ApiXmlLogoutResult extends ApiXmlResult implements ApiLogoutResult 
   /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
-   * @param connection Connection information.
    */
   public ApiXmlLogoutResult(
       EnumWikipedia wiki,
-      HttpClient httpClient,
-      ConnectionInformation connection) {
-    super(wiki, httpClient, connection);
+      HttpClient httpClient) {
+    super(wiki, httpClient);
   }
 
   /**
