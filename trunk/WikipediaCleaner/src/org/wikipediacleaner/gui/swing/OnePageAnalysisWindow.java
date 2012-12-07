@@ -59,6 +59,9 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.wikipediacleaner.api.API;
+import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -73,6 +76,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -112,6 +116,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   private JButton buttonNext;
   private JButton buttonLast;
   private JButton buttonToc;
+  private JButton buttonDelete;
   private JButton buttonValidate;
 
   JList listLinks;
@@ -241,6 +246,9 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     buttonLast.setEnabled(isPageLoaded());
     buttonToc.setEnabled(isPageLoaded());
     buttonValidate.setEnabled(isPageLoaded());
+    if (buttonDelete != null) {
+      buttonDelete.setEnabled(isPageLoaded());
+    }
     buttonDisambiguationWarning.setEnabled(article);
     buttonTranslation.setEnabled(isPageLoaded());
     super.updateComponentState();
@@ -377,6 +385,15 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     buttonValidate = createButtonValidate(this, true);
     toolbarButtons.add(buttonValidate);
     addButtonSend(toolbarButtons, true);
+    if ((getWikipedia().getConnection().getUser() != null) &&
+        (getWikipedia().getConnection().getUser().hasRight(User.RIGHT_DELETE))) {
+      buttonDelete = Utilities.createJButton(
+          "gnome-edit-delete.png", EnumImageSize.NORMAL,
+          GT._("Delete page"), false);
+      buttonDelete.addActionListener(EventHandler.create(
+          ActionListener.class, this, "actionDelete"));
+      toolbarButtons.add(buttonDelete);
+    }
     addButtonRedirect(toolbarButtons);
     buttonDisambiguationWarning = Utilities.createJButton(
         "gnome-dialog-warning.png", EnumImageSize.NORMAL,
@@ -1350,6 +1367,23 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   
       modelLinks.updateLinkCount();
       getTextContents().requestFocusInWindow();
+    }
+  }
+
+  /**
+   * Action called when Delete button is pressed.
+   */
+  public void actionDelete() {
+    int answer = displayYesNoWarning(GT._("Do you want to delete this page on Wikipedia ?"));
+    if (answer != JOptionPane.YES_OPTION) {
+      return;
+    }
+    API api = APIFactory.getAPI();
+    try {
+      api.deletePage(getWikipedia(), getPage());
+      dispose();
+    } catch (APIException e) {
+      displayError(e);
     }
   }
 
