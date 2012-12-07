@@ -259,13 +259,25 @@ public enum EnumWikipedia {
   }
 
   /* ========================================================================= */
-  /* Contributions management                                                  */
+  /* User management                                                           */
   /* ========================================================================= */
+
+  /**
+   * Connection information.
+   */
+  private final ConnectionInformation connection = new ConnectionInformation();
 
   /**
    * Contributions.
    */
   private final Contributions contributions = new Contributions(this);
+
+  /**
+   * @return Connection information.
+   */
+  public ConnectionInformation getConnection() {
+    return connection;
+  }
 
   /**
    * @return Contributions
@@ -441,7 +453,7 @@ public enum EnumWikipedia {
   }
 
   /**
-   * Load all disambigutation templates.
+   * Load all disambiguation templates.
    * 
    * @param api Wikipedia API.
    */
@@ -463,7 +475,7 @@ public enum EnumWikipedia {
   
   /**
    * @param pageName Page name.
-   * @param api Wikipédia API.
+   * @param api Wikipedia API.
    * @return Flag indicating if <code>page</code> is a disambiguation template.
    */
   public boolean isDisambiguationTemplate(String pageName, API api) {

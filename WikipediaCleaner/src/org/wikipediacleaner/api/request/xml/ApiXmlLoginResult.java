@@ -31,7 +31,6 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.request.ApiLoginRequest;
 import org.wikipediacleaner.api.request.ApiLoginResult;
-import org.wikipediacleaner.api.request.ConnectionInformation;
 
 
 /**
@@ -42,13 +41,11 @@ public class ApiXmlLoginResult extends ApiXmlResult implements ApiLoginResult {
   /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
-   * @param connection Connection information.
    */
   public ApiXmlLoginResult(
       EnumWikipedia wiki,
-      HttpClient httpClient,
-      ConnectionInformation connection) {
-    super(wiki, httpClient, connection);
+      HttpClient httpClient) {
+    super(wiki, httpClient);
   }
 
   /**
@@ -93,9 +90,10 @@ public class ApiXmlLoginResult extends ApiXmlResult implements ApiLoginResult {
           XPath xpaUserid = XPath.newInstance("./@lguserid");
           XPath xpaUsername = XPath.newInstance("./@lgusername");
           XPath xpaToken = XPath.newInstance("./@lgtoken");
-          getConnectionInformation().setLgUserId(xpaUserid.valueOf(node));
-          getConnectionInformation().setLgUserName(xpaUsername.valueOf(node));
-          getConnectionInformation().setLgToken(xpaToken.valueOf(node));
+          getWiki().getConnection().setLgInformation(
+              xpaToken.valueOf(node),
+              xpaUsername.valueOf(node),
+              xpaUserid.valueOf(node));
           return LoginResult.createCorrectLogin();
         } else if (EnumLoginResult.NEED_TOKEN.getCode().equalsIgnoreCase(result)) {
           XPath xpaToken = XPath.newInstance("./@token");

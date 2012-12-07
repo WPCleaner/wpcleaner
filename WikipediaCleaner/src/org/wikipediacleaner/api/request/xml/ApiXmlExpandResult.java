@@ -28,7 +28,6 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.request.ApiExpandResult;
 import org.wikipediacleaner.api.request.ApiRequest;
-import org.wikipediacleaner.api.request.ConnectionInformation;
 
 
 /**
@@ -39,13 +38,11 @@ public class ApiXmlExpandResult extends ApiXmlResult implements ApiExpandResult 
   /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
-   * @param connection Connection information.
    */
   public ApiXmlExpandResult(
       EnumWikipedia wiki,
-      HttpClient httpClient,
-      ConnectionInformation connection) {
-    super(wiki, httpClient, connection);
+      HttpClient httpClient) {
+    super(wiki, httpClient);
   }
 
   /**

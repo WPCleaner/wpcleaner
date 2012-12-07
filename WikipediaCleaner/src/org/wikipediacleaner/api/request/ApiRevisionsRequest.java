@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.constants.ConnectionInformation;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 
@@ -204,7 +205,7 @@ public class ApiRevisionsRequest extends ApiPropertiesRequest {
     properties.put(
         ApiInfoRequest.PROPERTY_PROPERTIES,
         ApiInfoRequest.PROPERTY_PROPERTIES_PROTECTION);
-    ConnectionInformation connection = result.getConnectionInformation();
+    ConnectionInformation connection = getWiki().getConnection();
     if ((connection != null) && (connection.getLgToken() != null)) {
       properties.put(
           ApiInfoRequest.PROPERTY_TOKEN,

@@ -34,7 +34,6 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.Section;
 import org.wikipediacleaner.api.request.ApiParseResult;
 import org.wikipediacleaner.api.request.ApiRequest;
-import org.wikipediacleaner.api.request.ConnectionInformation;
 
 
 /**
@@ -45,13 +44,11 @@ public class ApiXmlParseResult extends ApiXmlResult implements ApiParseResult {
   /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
-   * @param connection Connection information.
    */
   public ApiXmlParseResult(
       EnumWikipedia wiki,
-      HttpClient httpClient,
-      ConnectionInformation connection) {
-    super(wiki, httpClient, connection);
+      HttpClient httpClient) {
+    super(wiki, httpClient);
   }
 
   /**

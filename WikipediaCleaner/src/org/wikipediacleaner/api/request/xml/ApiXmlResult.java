@@ -43,7 +43,6 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.BasicApiResult;
-import org.wikipediacleaner.api.request.ConnectionInformation;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
@@ -78,13 +77,11 @@ public abstract class ApiXmlResult extends BasicApiResult {
   /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
-   * @param connection Connection information.
    */
   public ApiXmlResult(
       EnumWikipedia wiki,
-      HttpClient httpClient,
-      ConnectionInformation connection) {
-    super(wiki, httpClient, connection);
+      HttpClient httpClient) {
+    super(wiki, httpClient);
   }
 
   /**

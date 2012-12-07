@@ -31,7 +31,6 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.RecentChange;
 import org.wikipediacleaner.api.request.ApiRecentChangesResult;
 import org.wikipediacleaner.api.request.ApiRequest;
-import org.wikipediacleaner.api.request.ConnectionInformation;
 
 
 /**
@@ -42,13 +41,11 @@ public class ApiXmlRecentChangesResult extends ApiXmlResult implements ApiRecent
   /**
    * @param wiki Wiki on which requests are made.
    * @param httpClient HTTP client for making requests.
-   * @param connection Connection information.
    */
   public ApiXmlRecentChangesResult(
       EnumWikipedia wiki,
-      HttpClient httpClient,
-      ConnectionInformation connection) {
-    super(wiki, httpClient, connection);
+      HttpClient httpClient) {
+    super(wiki, httpClient);
   }
 
   /**
