@@ -1374,13 +1374,15 @@ public class OnePageAnalysisWindow extends OnePageWindow {
    * Action called when Delete button is pressed.
    */
   public void actionDelete() {
-    int answer = displayYesNoWarning(GT._("Do you want to delete this page on Wikipedia ?"));
-    if (answer != JOptionPane.YES_OPTION) {
+    String reason = askForValue(
+        GT._("Do you want to delete this page on Wikipedia ?\nPlease, enter the reason for deleting the page"),
+        "", null);
+    if ((reason == null) || (reason.trim().length() == 0)) {
       return;
     }
     API api = APIFactory.getAPI();
     try {
-      api.deletePage(getWikipedia(), getPage());
+      api.deletePage(getWikipedia(), getPage(), reason.trim());
       dispose();
     } catch (APIException e) {
       displayError(e);
