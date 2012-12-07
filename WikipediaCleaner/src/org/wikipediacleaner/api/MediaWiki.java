@@ -255,7 +255,6 @@ public class MediaWiki extends MediaWikiController {
                   attemptDone = false;
                   Page tmpPage = page.replicatePage();
                   api.retrieveContents(wikipedia, Collections.singletonList(tmpPage), false);
-                  page.setEditToken(tmpPage.getEditToken());
                 } else {
                   throw e;
                 }

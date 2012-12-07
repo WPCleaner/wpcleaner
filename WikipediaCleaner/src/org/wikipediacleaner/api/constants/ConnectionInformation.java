@@ -24,11 +24,25 @@ package org.wikipediacleaner.api.constants;
  */
 public class ConnectionInformation {
 
+  /**
+   * Parameter <code>lgToken</code> for API calls.
+   */
   private String lgToken;
 
+  /**
+   * Parameter <code>lgUserName</code> for API calls. 
+   */
   private String lgUserName;
 
+  /**
+   * Parameter <code>lgUserId</code> for API calls.
+   */
   private String lgUserId;
+
+  /**
+   * Edit token.
+   */
+  private String editToken;
 
   public ConnectionInformation() {
     clean();
@@ -41,6 +55,7 @@ public class ConnectionInformation {
     lgToken = null;
     lgUserName = null;
     lgUserId = null;
+    editToken = null;
   }
 
   /**
@@ -101,5 +116,19 @@ public class ConnectionInformation {
    */
   void setLgUserId(String userId) {
     lgUserId = userId;
+  }
+
+  /**
+   * @return Edit token.
+   */
+  public String getEditToken() {
+    return editToken;
+  }
+
+  /**
+   * @param token Edit token.
+   */
+  public void setEditToken(String token) {
+    this.editToken = token;
   }
 }

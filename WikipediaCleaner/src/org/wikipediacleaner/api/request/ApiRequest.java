@@ -95,6 +95,11 @@ public abstract class ApiRequest {
    */
   public final static String ACTION_QUERY = "query";
 
+  /**
+   * API action for retrieving tokens.
+   */
+  public final static String ACTION_TOKENS = "tokens";
+
   // ==========================================================================
   // API formats
   // ==========================================================================

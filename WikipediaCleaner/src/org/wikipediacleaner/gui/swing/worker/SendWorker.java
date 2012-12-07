@@ -19,7 +19,6 @@
 package org.wikipediacleaner.gui.swing.worker;
 
 import java.util.Collection;
-import java.util.Collections;
 
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
@@ -107,9 +106,7 @@ public class SendWorker extends BasicWorker {
               "Error {0} detected: Waiting and retrying",
               "'" + e.getErrorCode() + "'"));
           try {
-            Page tmpPage = page.replicatePage();
-            api.retrieveContents(getWikipedia(), Collections.singletonList(tmpPage), false);
-            page.setEditToken(tmpPage.getEditToken());
+            api.retrieveTokens(getWikipedia());
           } catch (APIException e2) {
             return e;
           }
