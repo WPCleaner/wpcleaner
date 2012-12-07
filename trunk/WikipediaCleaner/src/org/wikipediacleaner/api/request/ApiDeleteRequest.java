@@ -92,7 +92,7 @@ public class ApiDeleteRequest extends ApiRequest {
   public void deletePage(Page page) throws APIException {
     Map<String, String> properties = getProperties(ACTION_DELETE, result.getFormat());
     properties.put(PROPERTY_TITLE, page.getTitle());
-    properties.put(PROPERTY_TOKEN, page.getEditToken());
+    properties.put(PROPERTY_TOKEN, getWiki().getConnection().getEditToken());
     result.executeDelete(properties);
   }
 }

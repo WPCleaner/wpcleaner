@@ -1544,6 +1544,7 @@ public class MainWindow
               throw new APIException("Login unsuccessful: " + ((result != null) ? result.toString() : ""));
             }
           }
+          api.retrieveTokens(getWikipedia());
           logged = true;
           userLogged = login;
         }

@@ -96,6 +96,8 @@ import org.wikipediacleaner.api.request.ApiSiteInfoResult;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.ApiTemplatesRequest;
 import org.wikipediacleaner.api.request.ApiTemplatesResult;
+import org.wikipediacleaner.api.request.ApiTokensRequest;
+import org.wikipediacleaner.api.request.ApiTokensResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoriesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoryMembersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlDeleteResult;
@@ -117,6 +119,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlRevisionsResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlSearchResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlSiteInfoResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlTemplatesResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlTokensResult;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -240,9 +243,6 @@ public class MediaWikiAPI implements API {
     properties.put("titles", page.getTitle());
     properties.put("rvprop", "content|ids|timestamp");
     properties.put("rvsection", Integer.toString(section));
-    if (wikipedia.getConnection().getLgToken() != null) {
-      properties.put("intoken", "edit");
-    }
     try {
       constructContents(
           page,
@@ -362,7 +362,9 @@ public class MediaWikiAPI implements API {
     properties.put("summary", comment);
     properties.put("text", newContents);
     properties.put("title", page.getTitle());
-    properties.put("token", page.getEditToken());
+    if (wikipedia.getConnection().getEditToken() != null) {
+      properties.put("token", wikipedia.getConnection().getEditToken());
+    }
     properties.put("watchlist", forceWatch ? "watch" : "nochange");
     try {
       checkTimeForEdit();
@@ -470,7 +472,7 @@ public class MediaWikiAPI implements API {
     properties.put("summary", title);
     properties.put("text", contents);
     properties.put("title", page.getTitle());
-    properties.put("token", page.getEditToken());
+    properties.put("token", wikipedia.getConnection().getEditToken());
     properties.put("watchlist", forceWatch ? "watch" : "nochange");
     try {
       checkTimeForEdit();
@@ -739,8 +741,6 @@ public class MediaWikiAPI implements API {
         if (node.getAttribute("missing") != null) {
           page.setExisting(Boolean.FALSE);
         }
-        XPath xpaEditToken = XPath.newInstance("./@edittoken");
-        page.setEditToken(xpaEditToken.valueOf(node));
         XPath xpaPageId = XPath.newInstance("./@pageid");
         page.setPageId(xpaPageId.valueOf(node));
         XPath xpaStartTimestamp = XPath.newInstance("./@starttimestamp");
@@ -876,6 +876,19 @@ public class MediaWikiAPI implements API {
         // Nothing to do
       }
     }
+  }
+
+  /**
+   * Retrieve tokens.
+   * (<code>action=tokens</code>).
+   * 
+   * @param wiki Wiki.
+   * @throws APIException
+   */
+  public void retrieveTokens(EnumWikipedia wiki) throws APIException {
+    ApiTokensResult result = new ApiXmlTokensResult(wiki, httpClient);
+    ApiTokensRequest request = new ApiTokensRequest(wiki, result);
+    request.retrieveTokens();
   }
 
   // ==========================================================================

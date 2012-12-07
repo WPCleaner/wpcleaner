@@ -171,6 +171,15 @@ public interface API {
    */
   public void logout(EnumWikipedia wiki);
 
+  /**
+   * Retrieve tokens.
+   * (<code>action=tokens</code>).
+   * 
+   * @param wiki Wiki.
+   * @throws APIException
+   */
+  public void retrieveTokens(EnumWikipedia wiki) throws APIException;
+
   // ==========================================================================
   // API : Queries / Meta information
   // ==========================================================================

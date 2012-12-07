@@ -62,10 +62,6 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
   public void updatePageInformation(Element node, Page page) throws JDOMException {
 
     // Retrieve basic page information
-    Attribute attrEditToken = node.getAttribute("edittoken");
-    if (attrEditToken != null) {
-      page.setEditToken(attrEditToken.getValue());
-    }
     XPath xpaPageId = XPath.newInstance("./@pageid");
     page.setPageId(xpaPageId.valueOf(node));
     XPath xpaStartTimestamp = XPath.newInstance("./@starttimestamp");

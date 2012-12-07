@@ -47,7 +47,6 @@ public class Page implements Comparable<Page> {
   private String  contentsTimestamp;
   private String  startTimestamp;
   private String  editProtectionLevel;
-  private String  editToken;
   private Boolean disambiguation;
   private Boolean wiktionaryLink;
   private Boolean exist;
@@ -310,20 +309,6 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @return Edit token.
-   */
-  public String getEditToken() {
-    return editToken;
-  }
-
-  /**
-   * @param token Edit token.
-   */
-  public void setEditToken(String token) {
-    this.editToken = token;
-  }
-
-  /**
    * @return Flag indicating if this is a disambiguation page.
    *         (null means unknown).
    */
@@ -442,9 +427,6 @@ public class Page implements Comparable<Page> {
       return null;
     }
     Page articlePage = DataManager.getPage(getWikipedia(), articlePageName, null, null);
-    if (articlePage != null) {
-      articlePage.setEditToken(getEditToken());
-    }
     return articlePage;
   }
 
@@ -487,9 +469,6 @@ public class Page implements Comparable<Page> {
       return null;
     }
     Page talkPage = DataManager.getPage(getWikipedia(), talkPageName, null, null);
-    if (talkPage != null) {
-      talkPage.setEditToken(getEditToken());
-    }
     return talkPage;
   }
 
@@ -528,9 +507,6 @@ public class Page implements Comparable<Page> {
    */
   public Page getSubPage(String subpage) {
     Page subPage = DataManager.getPage(getWikipedia(), getTitle() + "/" + subpage, null, null);
-    if (subPage != null) {
-      subPage.setEditToken(getEditToken());
-    }
     return subPage;
   }
 
