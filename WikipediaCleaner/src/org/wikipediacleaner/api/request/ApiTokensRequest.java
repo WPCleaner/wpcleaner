@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.User;
 
 
 /**
@@ -113,7 +114,10 @@ public class ApiTokensRequest extends ApiRequest {
    */
   public void retrieveTokens() throws APIException {
     Map<String, String> properties = getProperties(ACTION_TOKENS, result.getFormat());
-    properties.put(PROPERTY_TYPE, PROPERTY_TYPE_EDIT);
+    User user = (getWiki().getConnection() != null) ? getWiki().getConnection().getUser() : null;
+    properties.put(PROPERTY_TYPE,
+        PROPERTY_TYPE_EDIT +
+        ((user != null) && (user.hasRight(User.RIGHT_DELETE)) ? "|" + PROPERTY_TYPE_DELETE : ""));
     result.executeTokens(properties);
   }
 }

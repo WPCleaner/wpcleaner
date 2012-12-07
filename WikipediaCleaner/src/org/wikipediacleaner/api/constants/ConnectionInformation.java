@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.constants;
 
+import org.wikipediacleaner.api.data.User;
+
 
 /**
  * Bean for storing connection informations.
@@ -38,6 +40,11 @@ public class ConnectionInformation {
    * Parameter <code>lgUserId</code> for API calls.
    */
   private String lgUserId;
+
+  /**
+   * User.
+   */
+  private User user;
 
   /**
    * Edit token.
@@ -116,6 +123,20 @@ public class ConnectionInformation {
    */
   void setLgUserId(String userId) {
     lgUserId = userId;
+  }
+
+  /**
+   * @return User.
+   */
+  public User getUser() {
+    return user;
+  }
+
+  /**
+   * @param user User.
+   */
+  public void setUser(User user) {
+    this.user = user;
   }
 
   /**

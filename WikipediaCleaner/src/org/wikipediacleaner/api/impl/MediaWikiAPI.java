@@ -57,6 +57,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.api.data.RecentChange;
 import org.wikipediacleaner.api.data.Section;
+import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.api.request.ApiCategoriesRequest;
 import org.wikipediacleaner.api.request.ApiCategoriesResult;
 import org.wikipediacleaner.api.request.ApiCategoryMembersRequest;
@@ -98,6 +99,8 @@ import org.wikipediacleaner.api.request.ApiTemplatesRequest;
 import org.wikipediacleaner.api.request.ApiTemplatesResult;
 import org.wikipediacleaner.api.request.ApiTokensRequest;
 import org.wikipediacleaner.api.request.ApiTokensResult;
+import org.wikipediacleaner.api.request.ApiUsersRequest;
+import org.wikipediacleaner.api.request.ApiUsersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoriesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoryMembersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlDeleteResult;
@@ -120,6 +123,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlSearchResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlSiteInfoResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlTemplatesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlTokensResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlUsersResult;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -1131,6 +1135,22 @@ public class MediaWikiAPI implements API {
     ApiSearchResult result = new ApiXmlSearchResult(wiki, httpClient);
     ApiSearchRequest request = new ApiSearchRequest(wiki, result);
     request.searchSimilarPages(page, limit);
+  }
+
+  /**
+   * Retrieve user information.
+   * (<code>action=query</code>, <code>list=users</code>).
+   * 
+   * @param wiki Wiki.
+   * @param name User name.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Users">API:Users</a>
+   */
+  public User retrieveUser(
+      EnumWikipedia wiki, String name) throws APIException {
+    ApiUsersResult result = new ApiXmlUsersResult(wiki, httpClient);
+    ApiUsersRequest request = new ApiUsersRequest(wiki, result);
+    return request.retrieveUser(name);
   }
 
   /**
