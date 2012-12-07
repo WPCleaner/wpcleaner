@@ -66,6 +66,11 @@ public class ApiListRequest extends ApiRequest {
   public final static String PROPERTY_LIST_SEARCH = "search";
 
   /**
+   * Property value for List / Users.
+   */
+  public final static String PROPERTY_LIST_USERS = "users";
+
+  /**
    * Property value for List / Raw watch list.
    */
   public final static String PROPERTY_LIST_WATCHLISTRAW = "watchlistraw";

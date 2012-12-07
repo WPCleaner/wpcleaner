@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.api.data.RecentChange;
 import org.wikipediacleaner.api.data.Section;
+import org.wikipediacleaner.api.data.User;
 
 
 /**
@@ -331,6 +332,18 @@ public interface API {
   public void retrieveSimilarPages(
       EnumWikipedia wiki, Page page,
       boolean limit) throws APIException;
+
+  /**
+   * Retrieve user information.
+   * (<code>action=query</code>, <code>list=users</code>).
+   * 
+   * @param wiki Wiki.
+   * @param name User name.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Users">API:Users</a>
+   */
+  public User retrieveUser(
+      EnumWikipedia wiki, String name) throws APIException;
 
   /**
    * Retrieve raw watch list.

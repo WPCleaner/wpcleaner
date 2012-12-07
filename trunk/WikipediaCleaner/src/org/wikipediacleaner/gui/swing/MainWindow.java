@@ -83,6 +83,7 @@ import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.Suggestion;
+import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.action.ActivateChapterAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindowListener;
@@ -1544,6 +1545,8 @@ public class MainWindow
               throw new APIException("Login unsuccessful: " + ((result != null) ? result.toString() : ""));
             }
           }
+          User user = api.retrieveUser(getWikipedia(), username);
+          getWikipedia().getConnection().setUser(user);
           api.retrieveTokens(getWikipedia());
           logged = true;
           userLogged = login;
