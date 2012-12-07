@@ -1256,10 +1256,11 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param page The page.
+   * @param reason Reason for deleting the page.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Delete">API:Delete</a>
    */
-  public void deletePage(EnumWikipedia wiki, Page page)
+  public void deletePage(EnumWikipedia wiki, Page page, String reason)
       throws APIException {
     ApiDeleteResult result = new ApiXmlDeleteResult(wiki, httpClient);
     ApiDeleteRequest request = new ApiDeleteRequest(wiki, result);
