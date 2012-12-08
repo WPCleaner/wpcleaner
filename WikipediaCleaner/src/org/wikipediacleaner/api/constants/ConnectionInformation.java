@@ -47,6 +47,11 @@ public class ConnectionInformation {
   private User user;
 
   /**
+   * Delete token.
+   */
+  private String deleteToken;
+
+  /**
    * Edit token.
    */
   private String editToken;
@@ -137,6 +142,20 @@ public class ConnectionInformation {
    */
   public void setUser(User user) {
     this.user = user;
+  }
+
+  /**
+   * @return Delete token.
+   */
+  public String getDeleteToken() {
+    return deleteToken;
+  }
+
+  /**
+   * @param token Delete token.
+   */
+  public void setDeleteToken(String token) {
+    this.deleteToken = token;
   }
 
   /**
