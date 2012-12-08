@@ -87,10 +87,14 @@ public class ApiDeleteRequest extends ApiRequest {
   /**
    * Delete one page.
    * 
-   * @param page Page to be purged.
+   * @param page Page to be deleted.
+   * @param reason Reason for deletion.
    */
-  public void deletePage(Page page) throws APIException {
+  public void deletePage(Page page, String reason) throws APIException {
     Map<String, String> properties = getProperties(ACTION_DELETE, result.getFormat());
+    if (reason != null) {
+      properties.put(PROPERTY_REASON, reason);
+    }
     properties.put(PROPERTY_TITLE, page.getTitle());
     properties.put(PROPERTY_TOKEN, getWiki().getConnection().getDeleteToken());
     result.executeDelete(properties);
