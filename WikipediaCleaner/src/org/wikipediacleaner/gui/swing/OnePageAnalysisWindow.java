@@ -1382,7 +1382,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     }
     API api = APIFactory.getAPI();
     try {
-      api.deletePage(getWikipedia(), getPage(), reason.trim());
+      api.deletePage(getWikipedia(), getPage(), getWikipedia().formatComment(reason.trim()));
       dispose();
     } catch (APIException e) {
       displayError(e);
