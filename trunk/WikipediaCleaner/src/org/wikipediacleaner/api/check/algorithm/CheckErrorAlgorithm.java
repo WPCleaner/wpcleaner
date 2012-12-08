@@ -32,6 +32,8 @@ import org.wikipediacleaner.gui.swing.component.MWPane;
  */
 public interface CheckErrorAlgorithm {
 
+  public final static int MAX_ERROR_NUMBER_WITH_LIST = 500;
+
   /**
    * @return Flag indicating if this algorithm is available.
    */

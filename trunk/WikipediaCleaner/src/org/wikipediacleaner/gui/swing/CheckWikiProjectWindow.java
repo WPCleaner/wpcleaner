@@ -271,6 +271,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     boolean noBotOnlyPrioritySelected = true;
     for (CheckErrorAlgorithm algorithm : allAlgorithms) {
       if (algorithm.isAvailable() &&
+          (algorithm.getErrorNumber() <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) &&
           CWConfigurationError.isPriorityFullyActive(algorithm.getPriority())) {
         if (!selectedAlgorithms.contains(algorithm)) {
           allErrorsSelected = false;
@@ -424,7 +425,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     for (CheckErrorAlgorithm algorithm : allAlgorithms) {
       if (algorithm != null) {
         int errorNumber = algorithm.getErrorNumber();
-        if (errorNumber > 0) {
+        if ((errorNumber > 0) && (errorNumber <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST)) {
           int part = (errorNumber - 1) / PART_SIZE;
           if ((subMenu == null) || (part > lastPart)) {
             int from = (part * PART_SIZE) + 1;
@@ -470,7 +471,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     for (CheckErrorAlgorithm algorithm : allAlgorithms) {
       if (algorithm != null) {
         int errorNumber = algorithm.getErrorNumber();
-        if (errorNumber > 0) {
+        if ((errorNumber > 0) && (errorNumber <= CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST)) {
           int part = (errorNumber - 1) / PART_SIZE;
           if ((subMenu == null) || (part > lastPart)) {
             int from = (part * PART_SIZE) + 1;
