@@ -73,6 +73,10 @@ public class ToolServer {
       final CheckErrorAlgorithm algorithm, int errorLimit,
       final EnumWikipedia wiki,
       final List<CheckError> errors) throws APIException {
+    if (algorithm.getErrorNumber() > CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
+      return;
+    }
+
     // Retrieving list of pages for the error number
     String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
     Map<String, String> properties = new HashMap<String, String>();
@@ -103,8 +107,12 @@ public class ToolServer {
    */
   public boolean markPageAsFixed(Page page, String errorNumber) {
     try {
+      int error = Integer.parseInt(errorNumber);
+      if (error > CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
+        return true;
+      }
       Map<String, String> properties = new HashMap<String, String>();
-      properties.put("id", Integer.toString(Integer.parseInt(errorNumber)));
+      properties.put("id", Integer.toString(error));
       properties.put("pageid", Integer.toString(page.getPageId()));
       properties.put("project", page.getWikipedia().getSettings().getCodeCheckWiki());
       properties.put("view", "only");
