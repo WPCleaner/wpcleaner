@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -48,31 +49,79 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
     if (pageAnalysis == null) {
       return false;
     }
-    String contents = pageAnalysis.getContents();
-    PageElementTitle firstTitle = pageAnalysis.getNextTitle(0);
-    if (firstTitle == null) {
+
+    // Check level of each title
+    List<PageElementTitle> titles = pageAnalysis.getTitles();
+    if ((titles == null) || (titles.size() == 0)) {
       return false;
     }
-    if (firstTitle.getFirstLevel() < 3) {
-      return false;
-    }
-    int startIndex = firstTitle.getEndIndex();
-    while (startIndex < contents.length()) {
-      PageElementTitle title = pageAnalysis.getNextTitle(startIndex);
-      if (title == null) {
-        startIndex = contents.length();
-      } else {
-        if (title.getFirstLevel() < 3) {
-          return false;
-        }
-        startIndex = title.getEndIndex();
+    for (PageElementTitle title : titles) {
+      if (title.getFirstLevel() < 3) {
+        return false;
       }
     }
+
     if (errors == null) {
       return true;
     }
     errors.add(createCheckErrorResult(
-        pageAnalysis.getPage(), firstTitle.getBeginIndex(), firstTitle.getEndIndex()));
+        pageAnalysis.getPage(),
+        titles.get(0).getBeginIndex(), titles.get(0).getEndIndex()));
     return true;
+  }
+
+  /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String botFix(PageAnalysis analysis) {
+    String contents = analysis.getContents();
+
+    // Compute minimum title level
+    List<PageElementTitle> titles = analysis.getTitles();
+    if ((titles == null) || (titles.size() == 0)) {
+      return contents;
+    }
+    int minTitle = Integer.MAX_VALUE;
+    for (PageElementTitle title : titles) {
+      if (title.getFirstLevel() < minTitle) {
+        minTitle = title.getFirstLevel();
+      }
+    }
+    if (minTitle < 3) {
+      return contents;
+    }
+
+    // Replace titles
+    StringBuilder tmp = new StringBuilder();
+    int lastIndex = 0;
+    int offset = minTitle - 2;
+    for (PageElementTitle title : titles) {
+      if (lastIndex < title.getBeginIndex()) {
+        tmp.append(contents.substring(lastIndex, title.getBeginIndex()));
+        lastIndex = title.getBeginIndex();
+      }
+      for (int i = 0; i < (title.getFirstLevel() - offset); i++) {
+        tmp.append('=');
+      }
+      tmp.append(' ');
+      tmp.append(title.getTitle());
+      tmp.append(' ');
+      for (int i = 0; i < (title.getFirstLevel() - offset); i++) {
+        tmp.append('=');
+      }
+      if (title.getAfterTitle() != null) {
+        tmp.append(title.getAfterTitle());
+      }
+      lastIndex = title.getEndIndex();
+    }
+    if (lastIndex < contents.length()) {
+      tmp.append(contents.substring(lastIndex));
+    }
+
+    return tmp.toString();
   }
 }

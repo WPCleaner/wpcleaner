@@ -135,6 +135,8 @@ public class AutomaticCWWorker extends BasicWorker {
                 toolServer.markPageAsFixed(page, usedAlgorithm.getErrorNumberString());
               }
             }
+          } else if (algorithm.isFullDetection()) {
+            toolServer.markPageAsFixed(page, algorithm.getErrorNumberString());
           }
         }
       }

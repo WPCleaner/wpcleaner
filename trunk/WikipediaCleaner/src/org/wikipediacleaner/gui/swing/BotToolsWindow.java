@@ -157,6 +157,7 @@ public class BotToolsWindow
     algorithms = new Vector<CheckErrorAlgorithm>();
     addAlgorithm(2);  // Article with false <br/>
     addAlgorithm(6);  // DEFAULTSORT with special letter
+    addAlgorithm(7);  // Headlines all start with three "="
     addAlgorithm(9);  // Categories more at one line
     addAlgorithm(17); // Category duplication
     addAlgorithm(18); // Category first letter small
