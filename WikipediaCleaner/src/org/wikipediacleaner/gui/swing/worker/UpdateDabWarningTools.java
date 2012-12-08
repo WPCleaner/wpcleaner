@@ -1092,7 +1092,6 @@ public class UpdateDabWarningTools {
             fullMessage.append(" ==\n");
           }
           fullMessage.append(message);
-          api.retrieveSectionContents(wikipedia, userTalkPage, 0); // TODO: Remove, just here for editToken
           api.addNewSection(wikipedia, userTalkPage, globalTitle, fullMessage.toString(), false);
         } else {
           // Add the message in the existing title
@@ -1112,7 +1111,6 @@ public class UpdateDabWarningTools {
         }
       } else {
         if (title != null) {
-          api.retrieveSectionContents(wikipedia, userTalkPage, 0); // TODO: Remove, just here for editToken
           api.addNewSection(wikipedia, userTalkPage, title, message, false);
         } else {
           // TODO: No global title, no title => Should append the message add the end
