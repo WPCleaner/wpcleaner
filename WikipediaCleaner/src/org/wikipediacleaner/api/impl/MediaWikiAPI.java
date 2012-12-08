@@ -1264,7 +1264,7 @@ public class MediaWikiAPI implements API {
       throws APIException {
     ApiDeleteResult result = new ApiXmlDeleteResult(wiki, httpClient);
     ApiDeleteRequest request = new ApiDeleteRequest(wiki, result);
-    request.deletePage(page);
+    request.deletePage(page, reason);
   }
 
   // ==========================================================================
