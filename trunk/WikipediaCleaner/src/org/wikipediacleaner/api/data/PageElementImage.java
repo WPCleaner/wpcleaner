@@ -120,11 +120,13 @@ public class PageElementImage extends PageElement {
     while (tmpIndex < contents.length()) {
       if ((templateCount <= 0) && (linkCount <= 0) && (contents.startsWith("]]", tmpIndex))) {
         String element = contents.substring(pipeIndex + 1, tmpIndex).trim();
-        MagicWord magicWord = wikiConfiguration.getPossibleAliasForImgMagicWord(element);
-        Parameter param = new Parameter(
-            pipeIndex + 1 - beginIndex, tmpIndex - beginIndex,
-            element, magicWord);
-        parameters.add(param);
+        if (element.length() > 0) {
+          MagicWord magicWord = wikiConfiguration.getPossibleAliasForImgMagicWord(element);
+          Parameter param = new Parameter(
+              pipeIndex + 1 - beginIndex, tmpIndex - beginIndex,
+              element, magicWord);
+          parameters.add(param);
+        }
         pipeIndex = tmpIndex;
         return new PageElementImage(
             wikipedia, index, tmpIndex + 2,
@@ -133,11 +135,13 @@ public class PageElementImage extends PageElement {
             firstPipeIndex - index, parameters);
       } else if ((templateCount <= 0) && (linkCount <= 0) && (contents.charAt(tmpIndex) == '|')) {
         String element = contents.substring(pipeIndex + 1, tmpIndex).trim();
-        MagicWord magicWord = wikiConfiguration.getPossibleAliasForImgMagicWord(element);
-        Parameter param = new Parameter(
-            pipeIndex + 1 - beginIndex, tmpIndex - beginIndex,
-            element, magicWord);
-        parameters.add(param);
+        if (element.length() > 0) {
+          MagicWord magicWord = wikiConfiguration.getPossibleAliasForImgMagicWord(element);
+          Parameter param = new Parameter(
+              pipeIndex + 1 - beginIndex, tmpIndex - beginIndex,
+              element, magicWord);
+          parameters.add(param);
+        }
         pipeIndex = tmpIndex;
       } else if (contents.startsWith("[[", tmpIndex)) {
         linkCount++;
