@@ -46,6 +46,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.api.data.Section;
+import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
@@ -679,7 +680,7 @@ public class UpdateDabWarningTools {
       return false;
     }
     String contents = todoSubpage.getContents();
-    if ((contents == null) || (contents.equals(""))) {
+    if ((contents == null) || (contents.trim().equals(""))) {
       return false;
     }
     PageAnalysis analysis = todoSubpage.getAnalysis(contents, true);
@@ -715,10 +716,17 @@ public class UpdateDabWarningTools {
     }
 
     // Remove the disambiguation warning
-    updatePage(
-        todoSubpage, tmp.toString(),
-        wikipedia.formatComment(configuration.getDisambiguationWarningCommentDone()),
-        false);
+    String newContents = tmp.toString();
+    String reason = wikipedia.formatComment(configuration.getDisambiguationWarningCommentDone());
+    if ((newContents.trim().length() == 0) &&
+        (wikipedia.getConnection().getUser() != null) &&
+        (wikipedia.getConnection().getUser().hasRight(User.RIGHT_DELETE))) {
+      api.deletePage(wikipedia, todoSubpage, reason);
+    } else {
+      updatePage(
+          todoSubpage, tmp.toString(),
+          reason, false);
+    }
 
     return true;
   }
