@@ -1458,10 +1458,9 @@ public class MediaWikiAPI implements API {
     if (action == null) {
       return false;
     }
-    // TODO: Enable this again when API bug 36839 is fixed.
-    //if (ACTION_API_QUERY.equals(action)) {
-    //  return true;
-    //}
+    if (ApiRequest.ACTION_QUERY.equals(action)) {
+      return true;
+    }
     return false;
   }
 

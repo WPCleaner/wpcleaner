@@ -129,10 +129,13 @@ public abstract class BasicApiResult implements ApiResult {
     if (action == null) {
       return false;
     }
-    // TODO: Enable this again when API bug 36839 is fixed.
-    //if (ACTION_API_QUERY.equals(action)) {
-    //  return true;
-    //}
+    if (ApiRequest.ACTION_EXPAND.equals(action) ||
+        ApiRequest.ACTION_PARSE.equals(action) ||
+        ApiRequest.ACTION_PURGE.equals(action) ||
+        ApiRequest.ACTION_QUERY.equals(action) ||
+        ApiRequest.ACTION_TOKENS.equals(action)) {
+      return true;
+    }
     return false;
   }
 }
