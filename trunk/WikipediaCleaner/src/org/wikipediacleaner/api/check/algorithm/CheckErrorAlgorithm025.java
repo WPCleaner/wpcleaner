@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -69,5 +70,74 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String botFix(PageAnalysis analysis) {
+    String contents = analysis.getContents();
+
+    // Replace titles
+    StringBuilder tmp = new StringBuilder();
+    int lastIndex = 0;
+    Vector<Integer> offsets = new Vector<Integer>();
+    List<PageElementTitle> titles = analysis.getTitles();
+    for (int index = 0; index < titles.size(); index++) {
+
+      // Compute current offset
+      PageElementTitle title = titles.get(index);
+      offsets.setSize(title.getFirstLevel());
+      int offset = 0;
+      for (Integer levelOffset : offsets) {
+        if (levelOffset != null) {
+          offset += levelOffset.intValue();
+        }
+      }
+
+      // Replace title if needed
+      if (offset > 0) {
+        if (lastIndex < title.getBeginIndex()) {
+          tmp.append(contents.substring(lastIndex, title.getBeginIndex()));
+          lastIndex = title.getBeginIndex();
+        }
+        for (int i = 0; i < (title.getFirstLevel() - offset); i++) {
+          tmp.append('=');
+        }
+        tmp.append(' ');
+        tmp.append(title.getTitle());
+        tmp.append(' ');
+        for (int i = 0; i < (title.getFirstLevel() - offset); i++) {
+          tmp.append('=');
+        }
+        if (title.getAfterTitle() != null) {
+          tmp.append(title.getAfterTitle());
+        }
+        lastIndex = title.getEndIndex();
+      }
+
+      // Compute level offset
+      int levelOffset = Integer.MAX_VALUE;
+      for (int index2 = index + 1;
+           (index2 < titles.size()) && (titles.get(index2).getFirstLevel() > title.getFirstLevel());
+           index2++) {
+        levelOffset = Math.min(
+            levelOffset,
+            titles.get(index2).getFirstLevel() - title.getFirstLevel() - 1);
+      }
+      offsets.add(Integer.valueOf(levelOffset));
+    }
+    if (lastIndex == 0) {
+      return contents;
+    }
+    if (lastIndex < contents.length()) {
+      tmp.append(contents.substring(lastIndex));
+    }
+
+    return tmp.toString();
   }
 }
