@@ -160,6 +160,7 @@ public class BotToolsWindow
     addAlgorithm(7);  // Headlines all start with three "="
     addAlgorithm(9);  // Categories more at one line
     addAlgorithm(17); // Category duplication
+    addAlgorithm(19); // Headlines start with one "="
     addAlgorithm(18); // Category first letter small
     addAlgorithm(22); // Category with space
     addAlgorithm(45); // Interwiki double

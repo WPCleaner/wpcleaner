@@ -65,4 +65,58 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
     }
     return result;
   }
+
+  /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String botFix(PageAnalysis analysis) {
+    String contents = analysis.getContents();
+
+    // Compute minimum title level
+    List<PageElementTitle> titles = analysis.getTitles();
+    if ((titles == null) || (titles.size() == 0)) {
+      return contents;
+    }
+    int minTitle = Integer.MAX_VALUE;
+    for (PageElementTitle title : titles) {
+      if (title.getFirstLevel() < minTitle) {
+        minTitle = title.getFirstLevel();
+      }
+    }
+    if (minTitle > 1) {
+      return contents;
+    }
+
+    // Replace titles
+    StringBuilder tmp = new StringBuilder();
+    int lastIndex = 0;
+    for (PageElementTitle title : titles) {
+      if (lastIndex < title.getBeginIndex()) {
+        tmp.append(contents.substring(lastIndex, title.getBeginIndex()));
+        lastIndex = title.getBeginIndex();
+      }
+      for (int i = 0; i < (title.getFirstLevel() + 1); i++) {
+        tmp.append('=');
+      }
+      tmp.append(' ');
+      tmp.append(title.getTitle());
+      tmp.append(' ');
+      for (int i = 0; i < (title.getFirstLevel() + 1); i++) {
+        tmp.append('=');
+      }
+      if (title.getAfterTitle() != null) {
+        tmp.append(title.getAfterTitle());
+      }
+      lastIndex = title.getEndIndex();
+    }
+    if (lastIndex < contents.length()) {
+      tmp.append(contents.substring(lastIndex));
+    }
+
+    return tmp.toString();
+  }
 }
