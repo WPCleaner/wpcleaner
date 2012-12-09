@@ -165,6 +165,7 @@ public class BotToolsWindow
     addAlgorithm(22); // Category with space
     addAlgorithm(25); // Headline hierarchy
     addAlgorithm(45); // Interwiki double
+    addAlgorithm(54); // Break in list
     addAlgorithm(57); // Headlines end with colon
     addAlgorithm(64); // Link equal to link text
     addAlgorithm(88); // DEFAULTSORT with blank at first position

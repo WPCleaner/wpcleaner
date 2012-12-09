@@ -124,6 +124,17 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String botFix(PageAnalysis analysis) {
+    return fixUsingRemove(globalFixes[0], analysis);
+  }
+
+  /**
    * @return List of possible global fixes.
    */
   @Override
