@@ -550,9 +550,11 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     for (CheckErrorAlgorithm algorithm : allAlgorithms) {
       if (algorithm != null) {
         int errorNumber = algorithm.getErrorNumber();
-        JMenuItem menuItem = menuItemAlgorithms.get(errorNumber);
-        if (menuItem != null) {
-          menuItem.setSelected(selectedAlgorithms.contains(algorithm));
+        if (errorNumber < menuItemAlgorithms.size()) {
+          JMenuItem menuItem = menuItemAlgorithms.get(errorNumber);
+          if (menuItem != null) {
+            menuItem.setSelected(selectedAlgorithms.contains(algorithm));
+          }
         }
       }
     }

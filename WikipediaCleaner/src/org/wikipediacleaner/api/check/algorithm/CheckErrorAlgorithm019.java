@@ -94,24 +94,30 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
     // Replace titles
     StringBuilder tmp = new StringBuilder();
     int lastIndex = 0;
+    boolean found = false;
     for (PageElementTitle title : titles) {
-      if (lastIndex < title.getBeginIndex()) {
-        tmp.append(contents.substring(lastIndex, title.getBeginIndex()));
-        lastIndex = title.getBeginIndex();
+      if (!found && title.getFirstLevel() == 1) {
+        found = true;
       }
-      for (int i = 0; i < (title.getFirstLevel() + 1); i++) {
-        tmp.append('=');
+      if (found) {
+        if (lastIndex < title.getBeginIndex()) {
+          tmp.append(contents.substring(lastIndex, title.getBeginIndex()));
+          lastIndex = title.getBeginIndex();
+        }
+        for (int i = 0; i < (title.getFirstLevel() + 1); i++) {
+          tmp.append('=');
+        }
+        tmp.append(' ');
+        tmp.append(title.getTitle());
+        tmp.append(' ');
+        for (int i = 0; i < (title.getFirstLevel() + 1); i++) {
+          tmp.append('=');
+        }
+        if (title.getAfterTitle() != null) {
+          tmp.append(title.getAfterTitle());
+        }
+        lastIndex = title.getEndIndex();
       }
-      tmp.append(' ');
-      tmp.append(title.getTitle());
-      tmp.append(' ');
-      for (int i = 0; i < (title.getFirstLevel() + 1); i++) {
-        tmp.append('=');
-      }
-      if (title.getAfterTitle() != null) {
-        tmp.append(title.getAfterTitle());
-      }
-      lastIndex = title.getEndIndex();
     }
     if (lastIndex < contents.length()) {
       tmp.append(contents.substring(lastIndex));

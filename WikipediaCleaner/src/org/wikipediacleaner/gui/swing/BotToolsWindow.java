@@ -163,6 +163,7 @@ public class BotToolsWindow
     addAlgorithm(19); // Headlines start with one "="
     addAlgorithm(18); // Category first letter small
     addAlgorithm(22); // Category with space
+    addAlgorithm(25); // Headline hierarchy
     addAlgorithm(45); // Interwiki double
     addAlgorithm(57); // Headlines end with colon
     addAlgorithm(64); // Link equal to link text
