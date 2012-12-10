@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-12-08 00:52+0100\n"
-"PO-Revision-Date: 2012-12-08 18:55+0000\n"
+"PO-Revision-Date: 2012-12-09 21:06+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-08 21:12+0000\n"
+"X-Launchpad-Export-Date: 2012-12-10 05:40+0000\n"
 "X-Generator: Launchpad (build 16341)\n"
 
 #: org/wikipediacleaner/Version.java:39
@@ -678,7 +678,7 @@ msgstr "Do automatycznej naprawy wymaga się komentarza."
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:88
 #: org/wikipediacleaner/gui/swing/MainWindow.java:783
 msgid "Bot tools"
-msgstr "Dla botów"
+msgstr "Tylko dla botów"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:114
 msgid "Functions available here are considered as bot tools."
@@ -698,11 +698,11 @@ msgstr "Aktualizacja istniejących komunikatów o disambigach"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:150
 msgid "Monitor recent changes"
-msgstr ""
+msgstr "Patrolowanie Ozetów"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:174
 msgid "Automatic fixing for Check Wiki"
-msgstr ""
+msgstr "Automatyczna naprawa błędów Check Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/BotToolsWindow.java:247
 msgid "How many pages do you want to analyze"
@@ -822,7 +822,7 @@ msgstr "Skasuj zapisany wybór"
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:607
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:115
 msgid "Maximum number of errors for Check Wiki :"
-msgstr "Maksymalna liczba błędów:"
+msgstr "Maksymalna liczba błędów"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:629
 msgid "Right click to select errors"
@@ -1395,7 +1395,7 @@ msgstr "Pobieranie konfiguracji Check Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:121
 msgid "Recent changes monitoring"
-msgstr ""
+msgstr "Ozety"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:116
 #, java-format
@@ -1428,7 +1428,7 @@ msgstr "Zawartość artykułu"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:651
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:135
 msgid "&Validate"
-msgstr "Validate"
+msgstr "Zapisz"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:217
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:302
@@ -1847,7 +1847,7 @@ msgstr "Uaktualnij"
 
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:261
 msgid "Id"
-msgstr "Id"
+msgstr "ID"
 
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:267
 msgid "User"
@@ -2491,19 +2491,19 @@ msgstr "Limity"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:80
 msgid "Maximum number of items in a menu :"
-msgstr "Maksymalna liczba elementów w menu:"
+msgstr "Maksymalna liczba elementów w menu"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:97
 msgid "Maximum number of simultaneous analysis :"
-msgstr "Maksymalna liczba równoczesnych analiz:"
+msgstr "Maksymalna liczba równoczesnych analiz"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:132
 msgid "Minimum time between consecutive edits :"
-msgstr "Minimalny czas pomiędzy edycjami następującymi po sobie"
+msgstr "Minimalny czas pomiędzy edycjami po sobie"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:149
 msgid "Maximum number of interrogation threads :"
-msgstr "Maksymalna liczba wątków badających:"
+msgstr "Maksymalna liczba wątków badających"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:166
 msgid "Size limit for syntax highlighting"
@@ -2511,19 +2511,19 @@ msgstr "Ograniczenie rozmiaru dla kolorowania kodu"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:183
 msgid "Threshold for slow regular expressions (ms)"
-msgstr ""
+msgstr "Próg dla powolnych wyrażeń regularnych (milisekund)"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:200
 msgid "Maximum number of category members :"
-msgstr "Maksymalna liczba stron w kategorii:"
+msgstr "Maksymalna liczba stron w kategorii"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:217
 msgid "Maximum number of embedding pages :"
-msgstr "Maksymalna liczba stron osadzonych:"
+msgstr "Maksymalna liczba stron osadzonych"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:234
 msgid "Maximum number of search results :"
-msgstr "Maksymalna liczba wyników przeszukiwania:"
+msgstr "Maksymalna liczba wyników przeszukiwania"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:73
 msgid "Options"
@@ -2739,12 +2739,3 @@ msgstr "Nazwa przypisu nie może zawierać żadnego z tych znaków: {0}"
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr "Wartość nie może zawierać żadnego z tych znaków: {0}"
-
-#~ msgid "Formatting options"
-#~ msgstr "Opcje formatu"
-
-#~ msgid "Occurrence"
-#~ msgstr "Wystąpienia"
-
-#~ msgid "Using '{{'{0}'}}'"
-#~ msgstr "Użycie '{{'{0}'}}'"
