@@ -44,9 +44,9 @@ import org.wikipediacleaner.i18n.GT;
 public class AutomaticCWWorker extends BasicWorker {
 
   /**
-   * Algorithm for which to fix pages.
+   * Algorithms for which to fix pages.
    */
-  private final CheckErrorAlgorithm algorithm;
+  private final List<CheckErrorAlgorithm> selectedAlgorithms;
 
   /**
    * Maximum number of pages.
@@ -56,21 +56,28 @@ public class AutomaticCWWorker extends BasicWorker {
   /**
    * List of potential algorithms to fix.
    */
-  private final List<CheckErrorAlgorithm> algorithms;
+  private final List<CheckErrorAlgorithm> allAlgorithms;
 
   /**
    * Count of pages fixed.
    */
   private int count;
 
+  /**
+   * @param wiki Wiki.
+   * @param window Window.
+   * @param selectedAlgorithms List of selected algorithms.
+   * @param max Maximum number of pages for each algorithm.
+   * @param allAlgorithms List of possible algorithms.
+   */
   public AutomaticCWWorker(
       EnumWikipedia wiki, BasicWindow window,
-      CheckErrorAlgorithm algorithm, int max,
-      List<CheckErrorAlgorithm> algorithms) {
+      List<CheckErrorAlgorithm> selectedAlgorithms, int max,
+      List<CheckErrorAlgorithm> allAlgorithms) {
     super(wiki, window);
-    this.algorithm = algorithm;
+    this.selectedAlgorithms = selectedAlgorithms;
     this.max = max;
-    this.algorithms = algorithms;
+    this.allAlgorithms = allAlgorithms;
     this.count = 0;
   }
 
@@ -86,57 +93,59 @@ public class AutomaticCWWorker extends BasicWorker {
     try {
       API api = APIFactory.getAPI();
       ToolServer toolServer = APIFactory.getToolServer();
-      setText(
-          GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
-          " - " + algorithm.getShortDescriptionReplaced());
-      toolServer.retrievePagesForError(algorithm, max, getWikipedia(), errors);
-      for (CheckError error : errors) {
-        for (int numPage = 0;
-            (numPage < error.getPageCount()) && shouldContinue();
-            numPage++) {
-          Page page = error.getPage(numPage);
-          api.retrieveContents(getWikipedia(), Collections.singletonList(page), false);
-          PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
-          List<CheckErrorPage> errorPages = CheckError.analyzeErrors(algorithms, analysis);
-          boolean found = false;
-          if (errorPages != null) {
-            for (CheckErrorPage errorPage : errorPages) {
-              if (algorithm.equals(errorPage.getAlgorithm()) &&
-                  errorPage.getErrorFound()) {
-                found = true;
+      for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
+        setText(
+            GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
+            " - " + algorithm.getShortDescriptionReplaced());
+        toolServer.retrievePagesForError(algorithm, max, getWikipedia(), errors);
+        for (CheckError error : errors) {
+          for (int numPage = 0;
+              (numPage < error.getPageCount()) && shouldContinue();
+              numPage++) {
+            Page page = error.getPage(numPage);
+            api.retrieveContents(getWikipedia(), Collections.singletonList(page), false);
+            PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
+            List<CheckErrorPage> errorPages = CheckError.analyzeErrors(allAlgorithms, analysis);
+            boolean found = false;
+            if (errorPages != null) {
+              for (CheckErrorPage errorPage : errorPages) {
+                if (algorithm.equals(errorPage.getAlgorithm()) &&
+                    errorPage.getErrorFound()) {
+                  found = true;
+                }
               }
             }
-          }
-          if (found) {
-            String newContents = page.getContents();
-            List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-            for (CheckErrorAlgorithm currentAlgorithm : algorithms) {
-              String tmpContents = newContents;
-              analysis = page.getAnalysis(tmpContents, true);
-              newContents = currentAlgorithm.botFix(analysis);
-              if (!newContents.equals(tmpContents)) {
-                usedAlgorithms.add(currentAlgorithm);
+            if (found) {
+              String newContents = page.getContents();
+              List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+              for (CheckErrorAlgorithm currentAlgorithm : allAlgorithms) {
+                String tmpContents = newContents;
+                analysis = page.getAnalysis(tmpContents, true);
+                newContents = currentAlgorithm.botFix(analysis);
+                if (!newContents.equals(tmpContents)) {
+                  usedAlgorithms.add(currentAlgorithm);
+                }
               }
+              if (!newContents.equals(page.getContents())) {
+                StringBuilder comment = new StringBuilder();
+                comment.append(getWikipedia().getCWConfiguration().getComment());
+                for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
+                  comment.append(" - ");
+                  comment.append(usedAlgorithm.getShortDescriptionReplaced());
+                }
+                setText(GT._("Fixing page {0}", page.getTitle()));
+                api.updatePage(
+                    getWikipedia(), page, newContents,
+                    getWikipedia().createUpdatePageComment(comment.toString(), null),
+                    false);
+                count++;
+                for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
+                  toolServer.markPageAsFixed(page, usedAlgorithm.getErrorNumberString());
+                }
+              }
+            } else if (algorithm.isFullDetection()) {
+              toolServer.markPageAsFixed(page, algorithm.getErrorNumberString());
             }
-            if (!newContents.equals(page.getContents())) {
-              StringBuilder comment = new StringBuilder();
-              comment.append(getWikipedia().getCWConfiguration().getComment());
-              for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
-                comment.append(" - ");
-                comment.append(usedAlgorithm.getShortDescriptionReplaced());
-              }
-              setText(GT._("Fixing page {0}", page.getTitle()));
-              api.updatePage(
-                  getWikipedia(), page, newContents,
-                  getWikipedia().createUpdatePageComment(comment.toString(), null),
-                  false);
-              count++;
-              for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
-                toolServer.markPageAsFixed(page, usedAlgorithm.getErrorNumberString());
-              }
-            }
-          } else if (algorithm.isFullDetection()) {
-            toolServer.markPageAsFixed(page, algorithm.getErrorNumberString());
           }
         }
       }
