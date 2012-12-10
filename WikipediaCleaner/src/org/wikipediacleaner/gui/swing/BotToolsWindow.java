@@ -20,19 +20,25 @@ package org.wikipediacleaner.gui.swing;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -61,7 +67,7 @@ public class BotToolsWindow
   private JButton buttonMonitorRC;
   private JButton buttonUpdateDabWarning;
 
-  private JComboBox cmbCWAutomaticFixing;
+  private JList lstCWAutomaticFixing;
 
   private Vector<CheckErrorAlgorithm> algorithms;
 
@@ -169,9 +175,14 @@ public class BotToolsWindow
     addAlgorithm(57); // Headlines end with colon
     addAlgorithm(64); // Link equal to link text
     addAlgorithm(88); // DEFAULTSORT with blank at first position
-    cmbCWAutomaticFixing = new JComboBox(algorithms);
+    lstCWAutomaticFixing = new JList(algorithms);
+    lstCWAutomaticFixing.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    JScrollPane paneCWAutomaticFixing = new JScrollPane(lstCWAutomaticFixing);
+    paneCWAutomaticFixing.setMinimumSize(new Dimension(100, 100));
+    paneCWAutomaticFixing.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    paneCWAutomaticFixing.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     constraints.gridwidth = 1;
-    panel.add(cmbCWAutomaticFixing, constraints);
+    panel.add(paneCWAutomaticFixing, constraints);
     constraints.gridx++;
     buttonCWAutomaticFixing = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
@@ -223,7 +234,7 @@ public class BotToolsWindow
   protected void updateComponentState() {
     super.updateComponentState();
     buttonAutomaticFixing.setEnabled(false);
-    buttonCWAutomaticFixing.setEnabled(cmbCWAutomaticFixing.getItemCount() > 0);
+    buttonCWAutomaticFixing.setEnabled(true);
     buttonMonitorRC.setEnabled(true);
     buttonUpdateDabWarning.setEnabled(true);
   }
@@ -239,9 +250,15 @@ public class BotToolsWindow
    * Action called when Automatic Check Wiki Fixing button is pressed.
    */
   public void actionCWAutomaticFixing() {
-    Object selection = cmbCWAutomaticFixing.getSelectedItem();
-    if ((selection == null) || !(selection instanceof CheckErrorAlgorithm)) {
+    Object[] selection = lstCWAutomaticFixing.getSelectedValues();
+    if ((selection == null) || (selection.length == 0)) {
       return;
+    }
+    List<CheckErrorAlgorithm> selectedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    for (int i = 0; i < selection.length; i++) {
+      if (selection[i] instanceof CheckErrorAlgorithm) {
+        selectedAlgorithms.add((CheckErrorAlgorithm) selection[i]);
+      }
     }
     if (displayYesNoWarning(experimentalMessage) != JOptionPane.YES_OPTION) {
       return;
@@ -258,9 +275,8 @@ public class BotToolsWindow
     } catch (NumberFormatException e) {
       return;
     }
-    CheckErrorAlgorithm algorithm = (CheckErrorAlgorithm) selection;
     AutomaticCWWorker worker = new AutomaticCWWorker(
-        getWikipedia(), this, algorithm, max, algorithms);
+        getWikipedia(), this, selectedAlgorithms, max, algorithms);
     worker.start();
   }
 
