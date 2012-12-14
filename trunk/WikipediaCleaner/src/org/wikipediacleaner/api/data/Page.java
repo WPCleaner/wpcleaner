@@ -92,6 +92,8 @@ public class Page implements Comparable<Page> {
     if ((title1 == null) || (title2 == null)) {
       return false;
     }
+    title1 = title1.trim();
+    title2 = title2.trim();
     if ((title1.length() == 0) || (title2.length() == 0)) {
       return false;
     }

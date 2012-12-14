@@ -261,12 +261,12 @@ public class PageElementInternalLink extends PageElement {
     sb.append("[[");
     if (text != null) {
       if ((link != null) && (!Page.areSameTitle(link, text))) {
-        sb.append(link);
+        sb.append(link.trim());
         sb.append("|");
       }
-      sb.append(text);
+      sb.append(text.trim());
     } else {
-      sb.append(link);
+      sb.append(link.trim());
     }
     sb.append("]]");
     return sb.toString();
