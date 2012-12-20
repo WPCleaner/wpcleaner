@@ -813,13 +813,17 @@ public class PageAnalysis {
    */
   public PageElementImage isInImage(int currentIndex) {
     List<PageElementImage> tmpImages = getImages();
+    PageElementImage result = null;
     for (PageElementImage image : tmpImages) {
       if ((image.getBeginIndex() <= currentIndex) &&
           (image.getEndIndex() > currentIndex)) {
-        return image;
+        if ((result == null) ||
+            (image.getBeginIndex() > result.getBeginIndex())) {
+          result = image;
+        }
       }
     }
-    return null;
+    return result;
   }
 
   // ==========================================================================
