@@ -1201,6 +1201,11 @@ public class UpdateDabWarningTools {
         if ((e.getQueryResult() != EnumQueryResult.BAD_TOKEN) || (attemptNumber > 1)) {
           throw e;
         }
+        try {
+          api.retrieveTokens(wikipedia);
+        } catch (APIException e2) {
+          throw e;
+        }
       }
     }
   }
@@ -1226,6 +1231,11 @@ public class UpdateDabWarningTools {
         return api.updateSection(wikipedia, page, title, section, contents, forceWatch);
       } catch (APIException e) {
         if ((e.getQueryResult() != EnumQueryResult.BAD_TOKEN) || (attemptNumber > 1)) {
+          throw e;
+        }
+        try {
+          api.retrieveTokens(wikipedia);
+        } catch (APIException e2) {
           throw e;
         }
       }
