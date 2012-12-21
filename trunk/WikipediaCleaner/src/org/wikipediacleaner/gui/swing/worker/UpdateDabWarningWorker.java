@@ -151,9 +151,11 @@ public class UpdateDabWarningWorker extends BasicWorker {
                 if (namespace != Namespace.MAIN_TALK) {
                   tmpTitle = wikiConfiguration.getPageTitle(namespace - 1, tmpTitle);
                 }
-                Page page = DataManager.getPage(wikipedia, tmpTitle, null, null);
-                if (!tmpWarningPages.contains(page)) {
-                  tmpWarningPages.add(page);
+                if ((start.length() == 0) || (start.compareTo(tmpTitle) < 0)) {
+                  Page page = DataManager.getPage(wikipedia, tmpTitle, null, null);
+                  if (!tmpWarningPages.contains(page)) {
+                    tmpWarningPages.add(page);
+                  }
                 }
               }
             }
@@ -164,11 +166,6 @@ public class UpdateDabWarningWorker extends BasicWorker {
 
         // Sort the list of articles
         Collections.sort(dabWarningPages, PageComparator.getTitleFirstComparator());
-        for (int pos = dabWarningPages.size() - 1; pos >= 0; pos--) {
-          if ((start.length() != 0) && (start.compareTo(dabWarningPages.get(pos).getTitle()) >= 0)) {
-            dabWarningPages.remove(pos);
-          }
-        }
         if (dabWarningPages.isEmpty()) {
           return Integer.valueOf(0);
         }
