@@ -175,6 +175,7 @@ public class BotToolsWindow
     addAlgorithm(57); // Headlines end with colon
     addAlgorithm(64); // Link equal to link text
     addAlgorithm(88); // DEFAULTSORT with blank at first position
+    addAlgorithm(92); // Headline double
     lstCWAutomaticFixing = new JList(algorithms);
     lstCWAutomaticFixing.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     JScrollPane paneCWAutomaticFixing = new JScrollPane(lstCWAutomaticFixing);
