@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
@@ -98,5 +99,45 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String automaticFix(PageAnalysis analysis) {
+    String contents = analysis.getContents();
+    List<PageElementTitle> titles = analysis.getTitles();
+    if ((titles == null) || (titles.size() < 2)) {
+      return contents;
+    }
+    int lastIndex = 0;
+    StringBuilder buffer = new StringBuilder();
+    for (int i = 1; i < titles.size(); i++) {
+      PageElementTitle previousTitle = titles.get(i - 1);
+      PageElementTitle currentTitle = titles.get(i);
+      if ((previousTitle.getFirstLevel() == currentTitle.getFirstLevel()) &&
+          (previousTitle.getTitle().equals(currentTitle.getTitle()))) {
+        String betweenTitles = contents.substring(
+            previousTitle.getEndIndex(), currentTitle.getBeginIndex()).trim();
+        if (betweenTitles.length() == 0) {
+          if (previousTitle.getBeginIndex() > lastIndex) {
+            buffer.append(contents.substring(lastIndex, previousTitle.getBeginIndex()));
+            lastIndex = previousTitle.getBeginIndex();
+          }
+          lastIndex = currentTitle.getBeginIndex();
+        }
+      }
+    }
+    if (lastIndex == 0) {
+      return contents;
+    }
+    if (lastIndex < contents.length()) {
+      buffer.append(contents.substring(lastIndex));
+    }
+    return buffer.toString();
   }
 }
