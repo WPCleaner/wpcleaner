@@ -123,7 +123,21 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
           (previousTitle.getTitle().equals(currentTitle.getTitle()))) {
         String betweenTitles = contents.substring(
             previousTitle.getEndIndex(), currentTitle.getBeginIndex()).trim();
+        boolean shouldRemove = false;
         if (betweenTitles.length() == 0) {
+          shouldRemove = true;
+        } else {
+          int tmpIndex = currentTitle.getEndIndex();
+          while ((tmpIndex < contents.length()) &&
+                 (Character.isWhitespace(contents.charAt(tmpIndex)))) {
+            tmpIndex++;
+          }
+          if ((tmpIndex < contents.length()) &&
+              (contents.startsWith(betweenTitles, tmpIndex))) {
+            shouldRemove = true;
+          }
+        }
+        if (shouldRemove) {
           if (previousTitle.getBeginIndex() > lastIndex) {
             buffer.append(contents.substring(lastIndex, previousTitle.getBeginIndex()));
             lastIndex = previousTitle.getBeginIndex();
