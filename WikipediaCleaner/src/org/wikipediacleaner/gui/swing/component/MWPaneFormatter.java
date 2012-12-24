@@ -37,6 +37,7 @@ import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
+import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
@@ -166,6 +167,8 @@ public abstract class MWPaneFormatter {
         ConfigurationValueStyle.INTERNAL_LINK);
     ConfigurationValueStyle.StyleProperties styleLanguageLink = config.getStyle(
         ConfigurationValueStyle.LANGUAGE_LINK);
+    ConfigurationValueStyle.StyleProperties styleParameter = config.getStyle(
+        ConfigurationValueStyle.PROGRAMMING);
     ConfigurationValueStyle.StyleProperties styleTag = config.getStyle(
         ConfigurationValueStyle.TAG);
     ConfigurationValueStyle.StyleProperties styleTemplate = config.getStyle(
@@ -183,6 +186,7 @@ public abstract class MWPaneFormatter {
         styleInternalLink.getEnabled(),
         false,
         styleLanguageLink.getEnabled(),
+        styleParameter.getEnabled(),
         styleTag.getEnabled(),
         styleTemplate.getEnabled(),
         styleTitle.getEnabled());
@@ -243,6 +247,8 @@ public abstract class MWPaneFormatter {
         style = doc.getStyle(ConfigurationValueStyle.INTERNAL_LINK.getName());
       } else if (element instanceof PageElementLanguageLink) {
         style = doc.getStyle(ConfigurationValueStyle.LANGUAGE_LINK.getName());
+      } else if (element instanceof PageElementParameter) {
+        style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
       } else if (element instanceof PageElementTag) {
         style = doc.getStyle(ConfigurationValueStyle.TAG.getName());
       } else if (element instanceof PageElementTemplate) {
@@ -417,6 +423,11 @@ public abstract class MWPaneFormatter {
         Style languageLinkStyle = addStyle(
             ConfigurationValueStyle.LANGUAGE_LINK, rootStyle);
         languageLinkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+
+        // Style for parameter
+        Style parameterStyle = addStyle(
+            ConfigurationValueStyle.PROGRAMMING, rootStyle);
+        parameterStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for tag
         Style tagStyle = addStyle(ConfigurationValueStyle.TAG, rootStyle);

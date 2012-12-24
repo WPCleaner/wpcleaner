@@ -182,7 +182,8 @@ public class PageAnalysis {
       boolean withDefaultsorts, boolean withExternalLinks,
       boolean withImages, boolean withInternalLinks,
       boolean withInterwikiLinks, boolean withLanguageLinks,
-      boolean withTags, boolean withTemplates, boolean withTitles) {
+      boolean withParameters, boolean withTags,
+      boolean withTemplates, boolean withTitles) {
     List<PageElement> elements = new ArrayList<PageElement>();
     if (withCategories) {
       elements.addAll(getCategories());
@@ -207,6 +208,9 @@ public class PageAnalysis {
     }
     if (withLanguageLinks) {
       elements.addAll(getLanguageLinks());
+    }
+    if (withParameters) {
+      elements.addAll(getParameters());
     }
     if (withTags) {
       elements.addAll(getTags());
@@ -425,6 +429,7 @@ public class PageAnalysis {
       defaultSorts = new ArrayList<PageElementDefaultsort>();
       titles = new ArrayList<PageElementTitle>();
       externalLinks = new ArrayList<PageElementExternalLink>();
+      parameters = new ArrayList<PageElementParameter>();
 
       // Go through all the text of the page
       int maxIndex = contents.length();
@@ -440,6 +445,8 @@ public class PageAnalysis {
             currentIndex = analyze2SquareBrackets(currentIndex);
           } else if (contents.startsWith("[", currentIndex)) {
             currentIndex = analyze1SquareBracket(currentIndex);
+          } else if (contents.startsWith("{{{", currentIndex)) {
+            currentIndex = analyze3CurlyBrackets(currentIndex);
           } else if (contents.startsWith("{{", currentIndex)) {
             currentIndex = analyze2CurlyBrackets(currentIndex);
           } else if (contents.startsWith("=", currentIndex)) {
@@ -559,6 +566,25 @@ public class PageAnalysis {
         externalLinks.add(link);
         return link.getEndIndex();
       }
+    }
+
+    return currentIndex + 1;
+  }
+
+  /**
+   * Part of the third level of analysis when text is beginning with "{{{".
+   * 
+   * @param currentIndex Current index in the text.
+   * @return Next index.
+   */
+  private int analyze3CurlyBrackets(int currentIndex) {
+
+    // Check if this is a parameter
+    PageElementParameter parameter = PageElementParameter.analyzeBlock(
+        getWikipedia(), contents, currentIndex, comments, tags);
+    if (parameter != null) {
+      parameters.add(parameter);
+      return currentIndex + 3;
     }
 
     return currentIndex + 1;
@@ -934,6 +960,73 @@ public class PageAnalysis {
       if ((template.getBeginIndex() <= currentIndex) &&
           (template.getEndIndex() > currentIndex)) {
         result = template;
+      }
+    }
+    return result;
+  }
+
+  // ==========================================================================
+  // Parameters management
+  // ==========================================================================
+
+  /**
+   * All parameters in the page.
+   */
+  private List<PageElementParameter> parameters;
+
+  /**
+   * @return All parameters in the page.
+   */
+  public List<PageElementParameter> getParameters() {
+    thirdLevelAnalysis();
+    return parameters;
+  }
+
+  /**
+   * @param name Parameter name.
+   * @return All parameters with this name in the page analysis.
+   */
+  public List<PageElementParameter> getParameters(String name) {
+    if (name == null) {
+      return null;
+    }
+    List<PageElementParameter> tmpParameters = getParameters();
+    List<PageElementParameter> result = new ArrayList<PageElementParameter>();
+    if (tmpParameters != null) {
+      for (PageElementParameter parameter : tmpParameters) {
+        if (name.equals(parameter.getParameterName())) {
+          result.add(parameter);
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Next parameter.
+   */
+  public PageElementParameter getNextParameter(int currentIndex) {
+    List<PageElementParameter> tmpParameters = getParameters();
+    for (PageElementParameter parameter : tmpParameters) {
+      if (parameter.getBeginIndex() >= currentIndex) {
+        return parameter;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Parameter if the current index is inside a parameter.
+   */
+  public PageElementParameter isInParameter(int currentIndex) {
+    List<PageElementParameter> tmpParameters = getParameters();
+    PageElementParameter result = null;
+    for (PageElementParameter parameter : tmpParameters) {
+      if ((parameter.getBeginIndex() <= currentIndex) &&
+          (parameter.getEndIndex() > currentIndex)) {
+        result = parameter;
       }
     }
     return result;
