@@ -76,6 +76,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
   private int lineInternalLinkNormal;
   private int lineInternalLinkRedirect;
   private int lineLanguageLink;
+  private int lineProgrammingElements;
   private int lineTag;
   private int lineTemplate;
   private int lineTemplateDab;
@@ -162,7 +163,13 @@ public class FormattingOptionsPanel extends OptionsPanel {
         true, true, true, true, true, true);
     setStyle(lineTag, ConfigurationValueStyle.TAG);
 
-    // Add line for dab link style
+    // Add line for programming elements style
+    lineProgrammingElements = addLine(
+        constraints, true, GT._("Programming elements"), 
+        true, true, true, true, true, true);
+    setStyle(lineProgrammingElements, ConfigurationValueStyle.PROGRAMMING);
+
+    // Add line for disambiguation link style
     lineInternalLinkDab = addLine(
         constraints, false, GT._("Disambiguation link"),
         true, true, true, true, true, true);
@@ -254,6 +261,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
     setStyle(lineInternalLinkNormal, ConfigurationValueStyle.INTERNAL_LINK_NORMAL);
     setStyle(lineInternalLinkRedirect, ConfigurationValueStyle.INTERNAL_LINK_REDIRECT);
     setStyle(lineLanguageLink, ConfigurationValueStyle.LANGUAGE_LINK);
+    setStyle(lineProgrammingElements, ConfigurationValueStyle.PROGRAMMING);
     setStyle(lineTag, ConfigurationValueStyle.TAG);
     setStyle(lineTemplate, ConfigurationValueStyle.TEMPLATE);
     setStyle(lineTemplateDab, ConfigurationValueStyle.TEMPLATE_DAB);
@@ -300,6 +308,8 @@ public class FormattingOptionsPanel extends OptionsPanel {
     config.setStyle(ConfigurationValueStyle.INTERNAL_LINK_REDIRECT, configStyle);
     configStyle = getStyle(lineLanguageLink);
     config.setStyle(ConfigurationValueStyle.LANGUAGE_LINK, configStyle);
+    configStyle = getStyle(lineProgrammingElements);
+    config.setStyle(ConfigurationValueStyle.PROGRAMMING, configStyle);
     configStyle = getStyle(lineTag);
     config.setStyle(ConfigurationValueStyle.TAG, configStyle);
     configStyle = getStyle(lineTemplate);

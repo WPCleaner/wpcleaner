@@ -103,6 +103,11 @@ public enum ConfigurationValueStyle {
       false, Color.BLACK,
       true, new Color(214, 214, 214),
       false, false, false, false)),
+  PROGRAMMING("Programming", new StyleProperties(
+      true,
+      false, Color.BLACK,
+      true, Color.ORANGE,
+      false, false, false, false)),
   TAG("Tag", new StyleProperties(
       true,
       true, new Color(154, 0, 154),
