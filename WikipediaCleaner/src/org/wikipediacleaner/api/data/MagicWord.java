@@ -275,13 +275,13 @@ public class MagicWord implements Comparable<MagicWord> {
     MagicWord.CURRENT_VERSION,
     MagicWord.CURRENT_WEEK,
     MagicWord.CURRENT_YEAR,
-    MagicWord.FORMAT_DATE,
     MagicWord.DEFAULT_SORT,
     MagicWord.DIRECTION_MARK,
     MagicWord.DISPLAY_TITLE,
     MagicWord.EXPLODE,
     MagicWord.EXPR,
     MagicWord.FILE_PATH,
+    MagicWord.FORMAT_DATE,
     MagicWord.FORMAT_NUM,
     MagicWord.FULL_PAGE_NAME,
     MagicWord.FULL_PAGE_NAME_E,
@@ -407,6 +407,33 @@ public class MagicWord implements Comparable<MagicWord> {
   };
 
   /**
+   * List of magic words that need a # to be used.
+   */
+  private final static String[] sharpMagicWords = {
+    MagicWord.EXPLODE,
+    MagicWord.EXPR,
+    MagicWord.FORMAT_DATE,
+    MagicWord.IF,
+    MagicWord.IF_EQ,
+    MagicWord.IF_ERROR,
+    MagicWord.IF_EXIST,
+    MagicWord.IF_EXPR,
+    MagicWord.LANGUAGE,
+    MagicWord.LEN,
+    MagicWord.POS,
+    MagicWord.REL_2_ABS,
+    MagicWord.REPLACE,
+    MagicWord.RPOS,
+    MagicWord.SPECIAL,
+    MagicWord.SPECIAL_E,
+    MagicWord.SUB,
+    MagicWord.SWITCH,
+    MagicWord.TAG,
+    MagicWord.TIME,
+    MagicWord.TITLE_PARTS,
+  };
+
+  /**
    * @param name Magic word name.
    * @param aliases Magic word aliases.
    */
@@ -446,6 +473,17 @@ public class MagicWord implements Comparable<MagicWord> {
   public boolean isPossibleAlias(String text, String pattern) {
     if (text == null) {
       return false;
+    }
+    if ((text.length() > 0) && (text.charAt(0) == '#')) {
+      boolean sharp = false;
+      for (String magicWord : sharpMagicWords) {
+        if (magicWord.equals(name)) {
+          sharp = true;
+        }
+      }
+      if (sharp) {
+        text = text.substring(1);
+      }
     }
     for (String alias : aliases) {
       if (alias.contains("$1")) {

@@ -21,10 +21,13 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementParameter;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 
 
@@ -74,7 +77,7 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
           if ((nextTemplate != null) &&
               (currentIndex + 1 == nextTemplate.getBeginIndex()) &&
               ((currentTemplate == null) ||
-               (currentTemplate.getBeginIndex() == currentIndex - 1))) {
+               (currentTemplate.getBeginIndex() < currentIndex - 1))) {
             result = true;
             done = true;
             if (errors == null) {
@@ -104,19 +107,44 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
             nextIndex = parameter.getEndIndex();
           }
         }
+
+        // Check for functions
+        if (!done) {
+          PageElementFunction function = pageAnalysis.isInFunction(currentIndex);
+          if ((function != null) &&
+              (function.getBeginIndex() == currentIndex)) {
+            MagicWord magicWord = function.getMagicWord();
+            String magicWordName = magicWord.getName();
+            boolean isOk = false;
+            if (MagicWord.DEFAULT_SORT.equals(magicWordName) ||
+                MagicWord.FORMAT_NUM.equals(magicWordName)) {
+              isOk = true;
+            }
+            if (!isOk &&
+                MagicWord.TAG.equals(magicWordName) &&
+                (function.getParameterCount() > 0) &&
+                (PageElementTag.TAG_WIKI_REF.equals(function.getParameterValue(0)))) {
+              isOk = true;
+            }
+            if (!isOk) {
+              result = true;
+              done = true;
+              if (errors == null) {
+                return true;
+              }
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  page, function.getBeginIndex(), function.getEndIndex());
+              errors.add(errorResult);
+              nextIndex = function.getEndIndex();
+            } else {
+              nextIndex = currentIndex + 2;
+            }
+          }
+        }
       }
       currentIndex = Math.max(nextIndex, currentIndex  + 1);
     }
 
-    // TODO: cleaner way
-    result |= simpleTextSearch(pageAnalysis, errors, "#if:");
-    result |= simpleTextSearch(pageAnalysis, errors, "#ifeq:");
-    result |= simpleTextSearch(pageAnalysis, errors, "#switch:");
-    result |= simpleTextSearch(pageAnalysis, errors, "#tag:");
-    result |= simpleTextSearch(pageAnalysis, errors, "{{NAMESPACE}}");
-    result |= simpleTextSearch(pageAnalysis, errors, "{{SITENAME}}");
-    result |= simpleTextSearch(pageAnalysis, errors, "{{PAGENAME}}", pageAnalysis.getPage().getMagicPAGENAME());
-    result |= simpleTextSearch(pageAnalysis, errors, "{{FULLPAGENAME}}");
     return result;
   }
 }

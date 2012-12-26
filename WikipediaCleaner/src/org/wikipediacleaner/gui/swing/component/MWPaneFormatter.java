@@ -32,8 +32,8 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementComment;
-import org.wikipediacleaner.api.data.PageElementDefaultsort;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
@@ -157,8 +157,6 @@ public abstract class MWPaneFormatter {
         ConfigurationValueStyle.CATEGORY);
     ConfigurationValueStyle.StyleProperties styleComments = config.getStyle(
         ConfigurationValueStyle.COMMENTS);
-    ConfigurationValueStyle.StyleProperties styleDefaultsort = config.getStyle(
-        ConfigurationValueStyle.DEFAULTSORT);
     ConfigurationValueStyle.StyleProperties styleExternalLink = config.getStyle(
         ConfigurationValueStyle.EXTERNAL_LINK);
     ConfigurationValueStyle.StyleProperties styleImage = config.getStyle(
@@ -167,7 +165,7 @@ public abstract class MWPaneFormatter {
         ConfigurationValueStyle.INTERNAL_LINK);
     ConfigurationValueStyle.StyleProperties styleLanguageLink = config.getStyle(
         ConfigurationValueStyle.LANGUAGE_LINK);
-    ConfigurationValueStyle.StyleProperties styleParameter = config.getStyle(
+    ConfigurationValueStyle.StyleProperties styleProgramming = config.getStyle(
         ConfigurationValueStyle.PROGRAMMING);
     ConfigurationValueStyle.StyleProperties styleTag = config.getStyle(
         ConfigurationValueStyle.TAG);
@@ -180,13 +178,13 @@ public abstract class MWPaneFormatter {
     List<PageElement> elements = pageAnalysis.getElements(
         styleCategory.getEnabled(),
         styleComments.getEnabled(),
-        styleDefaultsort.getEnabled(),
         styleExternalLink.getEnabled(),
+        styleProgramming.getEnabled(),
         styleImage.getEnabled(),
         styleInternalLink.getEnabled(),
         false,
         styleLanguageLink.getEnabled(),
-        styleParameter.getEnabled(),
+        styleProgramming.getEnabled(),
         styleTag.getEnabled(),
         styleTemplate.getEnabled(),
         styleTitle.getEnabled());
@@ -237,10 +235,10 @@ public abstract class MWPaneFormatter {
         style = doc.getStyle(ConfigurationValueStyle.CATEGORY.getName());
       } else if (element instanceof PageElementComment) {
         style = doc.getStyle(ConfigurationValueStyle.COMMENTS.getName());
-      } else if (element instanceof PageElementDefaultsort) {
-        style = doc.getStyle(ConfigurationValueStyle.DEFAULTSORT.getName());
       } else if (element instanceof PageElementExternalLink) {
         style = doc.getStyle(ConfigurationValueStyle.EXTERNAL_LINK.getName());
+      } else if (element instanceof PageElementFunction) {
+        style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
       } else if (element instanceof PageElementImage) {
         style = doc.getStyle(ConfigurationValueStyle.IMAGE.getName());
       } else if (element instanceof PageElementInternalLink) {

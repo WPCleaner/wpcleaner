@@ -229,12 +229,36 @@ public class PageElementAreas {
   }
 
   /**
-   * Add DEFAULTSORT to non wiki text areas.
+   * Add functions to non wiki text areas.
    * 
-   * @param defaultSorts List of DEFAULTSORT.
+   * @param functions List of functions.
    */
-  public void addDefaultSorts(List<PageElementDefaultsort> defaultSorts) {
-    addPageElements(defaultSorts);
+  public void addFunctions(List<PageElementFunction> functions) {
+    if (functions != null) {
+      for (PageElementFunction function : functions) {
+        int beginIndex = function.getBeginIndex();
+        int endIndex = function.getEndIndex();
+        if (function.getParameterCount() > 1) {
+          addArea(beginIndex, function.getParameterSeparatorOffset(0) + 1);
+          for (int numParam = 1; numParam < function.getParameterCount(); numParam++) {
+            int separatorIndex = function.getParameterSeparatorOffset(numParam);
+            addArea(separatorIndex, separatorIndex + 1);
+          }
+          addArea(endIndex - 2, endIndex);
+        } else {
+          addArea(beginIndex, endIndex);
+        }
+      }
+    }
+  }
+
+  /**
+   * Add parameters to non wiki text areas.
+   * 
+   * @param parameters List of parameters.
+   */
+  public void addParameters(List<PageElementParameter> parameters) {
+    addPageElements(parameters);
   }
 
   /**

@@ -179,7 +179,7 @@ public class PageAnalysis {
 
   public List<PageElement> getElements(
       boolean withCategories, boolean withComments,
-      boolean withDefaultsorts, boolean withExternalLinks,
+      boolean withExternalLinks, boolean withFunctions,
       boolean withImages, boolean withInternalLinks,
       boolean withInterwikiLinks, boolean withLanguageLinks,
       boolean withParameters, boolean withTags,
@@ -191,11 +191,11 @@ public class PageAnalysis {
     if (withComments) {
       elements.addAll(getComments());
     }
-    if (withDefaultsorts) {
-      elements.addAll(getDefaultSorts());
-    }
     if (withExternalLinks) {
       elements.addAll(getExternalLinks());
+    }
+    if (withFunctions) {
+      elements.addAll(getFunctions());
     }
     if (withImages) {
       elements.addAll(getImages());
@@ -425,11 +425,11 @@ public class PageAnalysis {
       categories = new ArrayList<PageElementCategory>();
       interwikiLinks = new ArrayList<PageElementInterwikiLink>();
       languageLinks = new ArrayList<PageElementLanguageLink>();
+      functions = new ArrayList<PageElementFunction>();
       templates = new ArrayList<PageElementTemplate>();
-      defaultSorts = new ArrayList<PageElementDefaultsort>();
+      parameters = new ArrayList<PageElementParameter>();
       titles = new ArrayList<PageElementTitle>();
       externalLinks = new ArrayList<PageElementExternalLink>();
-      parameters = new ArrayList<PageElementParameter>();
 
       // Go through all the text of the page
       int maxIndex = contents.length();
@@ -464,7 +464,8 @@ public class PageAnalysis {
       areas.addInterwikiLinks(interwikiLinks);
       areas.addLanguageLinks(languageLinks);
       areas.addTemplates(templates);
-      areas.addDefaultSorts(defaultSorts);
+      areas.addFunctions(functions);
+      areas.addParameters(parameters);
       areas.addTitles(titles);
       areas.addExternalLinks(externalLinks);
     }
@@ -598,21 +599,26 @@ public class PageAnalysis {
    */
   private int analyze2CurlyBrackets(int currentIndex) {
 
-    // Check if this is a template
-    PageElementTemplate template = PageElementTemplate.analyzeBlock(
-        getWikipedia(), contents, currentIndex,
-        comments, tags);
-    if (template != null) {
-      templates.add(template);
+    // Check if this is a function
+    PageElementFunction function = PageElementFunction.analyzeBlock(
+        getWikipedia(), contents, currentIndex, comments, tags);
+    if (function != null) {
+      functions.add(function);
+      if (function.getParameterCount() == 0) {
+        return function.getEndIndex();
+      }
       return currentIndex + 2;
     }
 
-    // Check if this is a DEFAULTSORT
-    PageElementDefaultsort defaultSort = PageElementDefaultsort.analyzeBlock(
-        getWikipedia(), contents, currentIndex);
-    if (defaultSort != null) {
-      defaultSorts.add(defaultSort);
-      return defaultSort.getEndIndex();
+    // Check if this is a template
+    PageElementTemplate template = PageElementTemplate.analyzeBlock(
+        getWikipedia(), contents, currentIndex, comments, tags);
+    if (template != null) {
+      templates.add(template);
+      if (template.getParameterCount() == 0) {
+        return template.getEndIndex();
+      }
+      return currentIndex + 2;
     }
 
     return currentIndex + 1;
@@ -983,40 +989,6 @@ public class PageAnalysis {
   }
 
   /**
-   * @param name Parameter name.
-   * @return All parameters with this name in the page analysis.
-   */
-  public List<PageElementParameter> getParameters(String name) {
-    if (name == null) {
-      return null;
-    }
-    List<PageElementParameter> tmpParameters = getParameters();
-    List<PageElementParameter> result = new ArrayList<PageElementParameter>();
-    if (tmpParameters != null) {
-      for (PageElementParameter parameter : tmpParameters) {
-        if (name.equals(parameter.getParameterName())) {
-          result.add(parameter);
-        }
-      }
-    }
-    return result;
-  }
-
-  /**
-   * @param currentIndex Current index.
-   * @return Next parameter.
-   */
-  public PageElementParameter getNextParameter(int currentIndex) {
-    List<PageElementParameter> tmpParameters = getParameters();
-    for (PageElementParameter parameter : tmpParameters) {
-      if (parameter.getBeginIndex() >= currentIndex) {
-        return parameter;
-      }
-    }
-    return null;
-  }
-
-  /**
    * @param currentIndex Current index.
    * @return Parameter if the current index is inside a parameter.
    */
@@ -1027,6 +999,39 @@ public class PageAnalysis {
       if ((parameter.getBeginIndex() <= currentIndex) &&
           (parameter.getEndIndex() > currentIndex)) {
         result = parameter;
+      }
+    }
+    return result;
+  }
+
+  // ==========================================================================
+  // Functions management
+  // ==========================================================================
+
+  /**
+   * All functions in the page.
+   */
+  private List<PageElementFunction> functions;
+
+  /**
+   * @return All functions in the page.
+   */
+  public List<PageElementFunction> getFunctions() {
+    thirdLevelAnalysis();
+    return functions;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Function if the current index is inside a function.
+   */
+  public PageElementFunction isInFunction(int currentIndex) {
+    List<PageElementFunction> tmpFunctions = getFunctions();
+    PageElementFunction result = null;
+    for (PageElementFunction function : tmpFunctions) {
+      if ((function.getBeginIndex() <= currentIndex) &&
+          (function.getEndIndex() > currentIndex)) {
+        result = function;
       }
     }
     return result;
@@ -1181,39 +1186,29 @@ public class PageAnalysis {
   // ==========================================================================
 
   /**
-   * All DEFAULTSORT in the page.
-   */
-  private List<PageElementDefaultsort> defaultSorts;
-
-  /**
    * @return All DEFAULTSORT in the page.
    */
-  public List<PageElementDefaultsort> getDefaultSorts() {
-    thirdLevelAnalysis();
-    return defaultSorts;
-  }
-
-  /**
-   * @param currentIndex Current index.
-   * @return Next DEFAULTSORT.
-   */
-  public PageElementDefaultsort getNextDefaultSort(int currentIndex) {
-    List<PageElementDefaultsort> tmpDefaultSorts = getDefaultSorts();
-    for (PageElementDefaultsort defaultSort : tmpDefaultSorts) {
-      if (defaultSort.getBeginIndex() >= currentIndex) {
-        return defaultSort;
+  public List<PageElementFunction> getDefaultSorts() {
+    List<PageElementFunction> tmpFunctions = getFunctions();
+    if (tmpFunctions == null) {
+      return null;
+    }
+    List<PageElementFunction> defaultSorts = new ArrayList<PageElementFunction>();
+    for (PageElementFunction function : tmpFunctions) {
+      if (MagicWord.DEFAULT_SORT.equals(function.getMagicWord().getName())) {
+        defaultSorts.add(function);
       }
     }
-    return null;
+    return defaultSorts;
   }
 
   /**
    * @param currentIndex Current index.
    * @return DefaultSort if the current index is inside a DEFAULTSORT.
    */
-  public PageElementDefaultsort isInDefaultSort(int currentIndex) {
-    List<PageElementDefaultsort> tmpDefaultSorts = getDefaultSorts();
-    for (PageElementDefaultsort defaultSort : tmpDefaultSorts) {
+  public PageElementFunction isInDefaultSort(int currentIndex) {
+    List<PageElementFunction> tmpDefaultSorts = getDefaultSorts();
+    for (PageElementFunction defaultSort : tmpDefaultSorts) {
       if ((defaultSort.getBeginIndex() <= currentIndex) &&
           (defaultSort.getEndIndex() > currentIndex)) {
         return defaultSort;

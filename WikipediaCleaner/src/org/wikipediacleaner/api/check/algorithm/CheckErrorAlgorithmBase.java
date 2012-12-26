@@ -38,7 +38,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
-import org.wikipediacleaner.api.data.PageElementDefaultsort;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -502,8 +502,8 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     }
 
     // Check that DEFAULTSORT is missing
-    PageElementDefaultsort defaultSort = pageAnalysis.getNextDefaultSort(0);
-    if (defaultSort != null) {
+    List<PageElementFunction> defaultSorts = pageAnalysis.getDefaultSorts();
+    if ((defaultSorts != null) && (defaultSorts.size() > 0)) {
       return contents;
     }
 

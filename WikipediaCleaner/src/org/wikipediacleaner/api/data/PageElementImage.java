@@ -121,7 +121,7 @@ public class PageElementImage extends PageElement {
       if ((templateCount <= 0) && (linkCount <= 0) && (contents.startsWith("]]", tmpIndex))) {
         String element = contents.substring(pipeIndex + 1, tmpIndex).trim();
         if (element.length() > 0) {
-          MagicWord magicWord = wikiConfiguration.getPossibleAliasForImgMagicWord(element);
+          MagicWord magicWord = wikiConfiguration.getImgMagicWord(element);
           Parameter param = new Parameter(
               pipeIndex + 1 - beginIndex, tmpIndex - beginIndex,
               element, magicWord);
@@ -136,7 +136,7 @@ public class PageElementImage extends PageElement {
       } else if ((templateCount <= 0) && (linkCount <= 0) && (contents.charAt(tmpIndex) == '|')) {
         String element = contents.substring(pipeIndex + 1, tmpIndex).trim();
         if (element.length() > 0) {
-          MagicWord magicWord = wikiConfiguration.getPossibleAliasForImgMagicWord(element);
+          MagicWord magicWord = wikiConfiguration.getImgMagicWord(element);
           Parameter param = new Parameter(
               pipeIndex + 1 - beginIndex, tmpIndex - beginIndex,
               element, magicWord);

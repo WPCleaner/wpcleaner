@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementDefaultsort;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -60,10 +60,10 @@ public class CheckErrorAlgorithm088 extends CheckErrorAlgorithmBase {
     }
 
     // Check every DEFAULTSORT
-    List<PageElementDefaultsort> defaultSorts = pageAnalysis.getDefaultSorts();
+    List<PageElementFunction> defaultSorts = pageAnalysis.getDefaultSorts();
     boolean result = false;
-    for (PageElementDefaultsort defaultSort : defaultSorts) {
-      String text = defaultSort.getValueNotTrimmed();
+    for (PageElementFunction defaultSort : defaultSorts) {
+      String text = (defaultSort.getParameterCount() > 0) ? defaultSort.getParameterValue(0) : "";
       if ((text != null) && (text.startsWith(" "))) {
         if (errors == null) {
           return true;
@@ -72,8 +72,8 @@ public class CheckErrorAlgorithm088 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(
             pageAnalysis.getPage(),
             defaultSort.getBeginIndex(), defaultSort.getEndIndex());
-        errorResult.addReplacement(PageElementDefaultsort.createDefaultsort(
-            defaultSort.getTag(), text));
+        errorResult.addReplacement(PageElementFunction.createFunction(
+            defaultSort.getFunctionName(), text));
         errors.add(errorResult);
       }
     }

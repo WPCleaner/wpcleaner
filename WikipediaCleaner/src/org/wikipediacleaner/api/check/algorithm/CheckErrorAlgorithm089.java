@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementDefaultsort;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -60,14 +60,14 @@ public class CheckErrorAlgorithm089 extends CheckErrorAlgorithmBase {
     }
 
     // Check every DEFAULTSORT
-    List<PageElementDefaultsort> defaultSorts = pageAnalysis.getDefaultSorts();
+    List<PageElementFunction> defaultSorts = pageAnalysis.getDefaultSorts();
     boolean result = false;
-    for (PageElementDefaultsort defaultSort : defaultSorts) {
+    for (PageElementFunction defaultSort : defaultSorts) {
 
       // Check if an upper case character is in the middle of a word
       boolean firstLetter = true;
       StringBuilder newText = null;
-      String text = defaultSort.getValue();
+      String text = (defaultSort.getParameterCount() > 0) ? defaultSort.getParameterValue(0) : "";
       for (int index = 0; index < text.length(); index++) {
         char currentChar = text.charAt(index);
         if (Character.isUpperCase(currentChar)) {
@@ -97,8 +97,8 @@ public class CheckErrorAlgorithm089 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(
             pageAnalysis.getPage(),
             defaultSort.getBeginIndex(), defaultSort.getEndIndex());
-        errorResult.addReplacement(PageElementDefaultsort.createDefaultsort(
-            defaultSort.getTag(), newText.toString()));
+        errorResult.addReplacement(PageElementFunction.createFunction(
+            defaultSort.getFunctionName(), newText.toString()));
         errors.add(errorResult);
       }
     }

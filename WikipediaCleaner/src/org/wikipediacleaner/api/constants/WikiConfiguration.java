@@ -155,9 +155,31 @@ public class WikiConfiguration {
 
   /**
    * @param text Text
-   * @return Flag indicating if the text is an alias for a Image Magic Word.
+   * @param colon True if a colon can be added to the text.
+   * @return Matching Magic Word if the text is an alias for a Function Magic Word.
    */
-  public MagicWord getPossibleAliasForImgMagicWord(String text) {
+  public MagicWord getFunctionMagicWord(String text, boolean colon) {
+    List<String> functionMagicWords = MagicWord.getFunctionMagicWords();
+    String colonText = text + ":";
+    for (String functionMagicWord : functionMagicWords) {
+      MagicWord magicWord = getMagicWord(functionMagicWord);
+      if (magicWord != null) {
+        if (magicWord.isPossibleAlias(text)) {
+          return magicWord;
+        }
+        if (colon && magicWord.isPossibleAlias(colonText)) {
+          return magicWord;
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @param text Text
+   * @return Matching Magic Word if the text is an alias for a Image Magic Word.
+   */
+  public MagicWord getImgMagicWord(String text) {
     List<String> imgMagicWords = MagicWord.getImgMagicWords();
     for (String imgMagicWord : imgMagicWords) {
       MagicWord magicWord = getMagicWord(imgMagicWord);
