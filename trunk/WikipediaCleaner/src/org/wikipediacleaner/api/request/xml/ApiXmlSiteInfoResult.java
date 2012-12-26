@@ -154,7 +154,10 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
           String alias = xpaAliasValue.valueOf(currentAlias);
           aliases.add(alias);
         }
-        magicWords.put(magicWord, new MagicWord(magicWord, aliases));
+        boolean caseSensitive = (currentNode.getAttribute("case-sensitive") != null);
+        magicWords.put(
+            magicWord,
+            new MagicWord(magicWord, aliases, caseSensitive));
       }
       wikiConfiguration.setMagicWords(magicWords);
     } catch (JDOMException e) {

@@ -27,8 +27,20 @@ import java.util.List;
  */
 public class MagicWord implements Comparable<MagicWord> {
 
+  /**
+   * Magic word name.
+   */
   private final String name;
+
+  /**
+   * List of magic word aliases.
+   */
   private final List<String> aliases;
+
+  /**
+   * Flag indicating if the name is case sensitive.
+   */
+  private boolean caseSensitive;
 
   public final static String ABBREVIATE                  = "abbreviate";
   public final static String ARTICLE_PATH                = "articlepath";
@@ -200,7 +212,7 @@ public class MagicWord implements Comparable<MagicWord> {
   public final static String SITE_NAME                   = "sitename";
   public final static String SOURCE_UNIT                 = "sourceunit";
   public final static String SPECIAL                     = "special";
-  public final static String SPECIALE                    = "speciale";
+  public final static String SPECIAL_E                   = "speciale";
   public final static String STATIC_REDIRECT             = "staticredirect";
   public final static String STYLE_PATH                  = "stylepath";
   public final static String SUB                         = "sub";
@@ -241,6 +253,130 @@ public class MagicWord implements Comparable<MagicWord> {
   public final static String USER_TEST_WIKI              = "usertestwiki";
 
   /**
+   * List of magic words that can be used as variables / functions.
+   */
+  private final static String[] functionMagicWords = {
+    MagicWord.ANCHOR_ENCODE,
+    MagicWord.BASE_PAGE_NAME,
+    MagicWord.BASE_PAGE_NAME_E,
+    MagicWord.CANONICAL_URL,
+    MagicWord.CONTENT_LANGUAGE,
+    MagicWord.CURRENT_DAY,
+    MagicWord.CURRENT_DAY_2,
+    MagicWord.CURRENT_DAY_NAME,
+    MagicWord.CURRENT_DOW,
+    MagicWord.CURRENT_HOUR,
+    MagicWord.CURRENT_MONTH,
+    MagicWord.CURRENT_MONTH_ABBREV,
+    MagicWord.CURRENT_MONTH_NAME,
+    MagicWord.CURRENT_MONTH_NAME_GEN,
+    MagicWord.CURRENT_TIME,
+    MagicWord.CURRENT_TIMESTAMP,
+    MagicWord.CURRENT_VERSION,
+    MagicWord.CURRENT_WEEK,
+    MagicWord.CURRENT_YEAR,
+    MagicWord.FORMAT_DATE,
+    MagicWord.DEFAULT_SORT,
+    MagicWord.DIRECTION_MARK,
+    MagicWord.DISPLAY_TITLE,
+    MagicWord.EXPLODE,
+    MagicWord.EXPR,
+    MagicWord.FILE_PATH,
+    MagicWord.FORMAT_NUM,
+    MagicWord.FULL_PAGE_NAME,
+    MagicWord.FULL_PAGE_NAME_E,
+    MagicWord.FULL_URL,
+    MagicWord.GENDER,
+    MagicWord.GRAMMAR,
+    MagicWord.IF,
+    MagicWord.IF_EQ,
+    MagicWord.IF_ERROR,
+    MagicWord.IF_EXIST,
+    MagicWord.IF_EXPR,
+    MagicWord.INT,
+    MagicWord.LANGUAGE,
+    MagicWord.LC,
+    MagicWord.LC_FIRST,
+    MagicWord.LEN,
+    MagicWord.LOCAL_DAY,
+    MagicWord.LOCAL_DAY_2,
+    MagicWord.LOCAL_DAY_NAME,
+    MagicWord.LOCAL_DOW,
+    MagicWord.LOCAL_HOUR,
+    MagicWord.LOCAL_MONTH,
+    MagicWord.LOCAL_MONTH_ABBREV,
+    MagicWord.LOCAL_MONTH_NAME,
+    MagicWord.LOCAL_MONTH_NAME_GEN,
+    MagicWord.LOCAL_TIME,
+    MagicWord.LOCAL_TIMESTAMP,
+    MagicWord.LOCAL_URL,
+    MagicWord.LOCAL_WEEK,
+    MagicWord.LOCAL_YEAR,
+    MagicWord.NAMESPACE,
+    MagicWord.NAMESPACE_E,
+    MagicWord.NAMESPACE_NUMBER,
+    MagicWord.NS,
+    MagicWord.NUMBER_IN_GROUP,
+    MagicWord.NUMBER_OF_ACTIVE_USERS,
+    MagicWord.NUMBER_OF_ADMINS,
+    MagicWord.NUMBER_OF_ARTICLES,
+    MagicWord.NUMBER_OF_EDITS,
+    MagicWord.NUMBER_OF_FILES,
+    MagicWord.NUMBER_OF_PAGES,
+    MagicWord.NUMBER_OF_USERS,
+    MagicWord.NUMBER_OF_VIEWS,
+    MagicWord.PAD_LEFT,
+    MagicWord.PAD_RIGHT,
+    MagicWord.PAGE_ID,
+    MagicWord.PAGE_NAME,
+    MagicWord.PAGE_NAME_E,
+    MagicWord.PAGE_SIZE,
+    MagicWord.PAGES_IN_CATEGORY,
+    MagicWord.PAGES_IN_NAMESPACE,
+    MagicWord.PLURAL,
+    MagicWord.POS,
+    MagicWord.PROTECTION_LEVEL,
+    MagicWord.REL_2_ABS,
+    MagicWord.REPLACE,
+    MagicWord.REVISION_DAY,
+    MagicWord.REVISION_DAY_2,
+    MagicWord.REVISION_ID,
+    MagicWord.REVISION_MONTH,
+    MagicWord.REVISION_MONTH_1,
+    MagicWord.REVISION_TIMESTAMP,
+    MagicWord.REVISION_USER,
+    MagicWord.REVISION_YEAR,
+    MagicWord.RPOS,
+    MagicWord.SCRIPT_PATH,
+    MagicWord.SERVER,
+    MagicWord.SERVER_NAME,
+    MagicWord.SITE_NAME,
+    MagicWord.SPECIAL,
+    MagicWord.SPECIAL_E,
+    MagicWord.STYLE_PATH,
+    MagicWord.SUB,
+    MagicWord.SUB_PAGE_NAME,
+    MagicWord.SUB_PAGE_NAME_E,
+    MagicWord.SUBJECT_PAGE_NAME,
+    MagicWord.SUBJECT_PAGE_NAME_E,
+    MagicWord.SUBJECT_SPACE,
+    MagicWord.SUBJECT_SPACE_E,
+    MagicWord.SWITCH,
+    MagicWord.TAG,
+    MagicWord.TALK_PAGE_NAME,
+    MagicWord.TALK_PAGE_NAME_E,
+    MagicWord.TALK_SPACE,
+    MagicWord.TALK_SPACE_E,
+    MagicWord.TIME,
+    MagicWord.TIME_L,
+    MagicWord.TITLE_PARTS,
+    MagicWord.UC,
+    MagicWord.UC_FIRST,
+    MagicWord.URL_DECODE,
+    MagicWord.URL_ENCODE,
+  };
+
+  /**
    * List of magic words that can be used in images.
    */
   private final static String[] imgMagicWords = {
@@ -274,9 +410,10 @@ public class MagicWord implements Comparable<MagicWord> {
    * @param name Magic word name.
    * @param aliases Magic word aliases.
    */
-  public MagicWord(String name, List<String> aliases) {
+  public MagicWord(String name, List<String> aliases, boolean caseSensitive) {
     this.name = name;
     this.aliases = aliases;
+    this.caseSensitive = caseSensitive;
   }
 
   /**
@@ -317,9 +454,22 @@ public class MagicWord implements Comparable<MagicWord> {
         }
       } else if (alias.equals(text)) {
         return true;
+      } else if (!caseSensitive && alias.equalsIgnoreCase(text)) {
+        return true;
       }
     }
     return false;
+  }
+
+  /**
+   * @return List of magic words that can be used as functions.
+   */
+  public static List<String> getFunctionMagicWords() {
+    List<String> result = new ArrayList<String>(functionMagicWords.length);
+    for (String magicWord : functionMagicWords) {
+      result.add(magicWord);
+    }
+    return result;
   }
 
   /**
