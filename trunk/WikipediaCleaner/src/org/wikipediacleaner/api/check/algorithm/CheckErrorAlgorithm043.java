@@ -23,8 +23,8 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementDefaultsort;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
@@ -78,10 +78,10 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
         }
       }
       if (shouldCount) {
-        PageElementDefaultsort sort = pageAnalysis.isInDefaultSort(currentIndex + 2);
-        if ((sort != null) &&
-            ((sort.getBeginIndex() == currentIndex) ||
-             (sort.getBeginIndex() == currentIndex + 1))) {
+        PageElementFunction function = pageAnalysis.isInFunction(currentIndex + 2);
+        if ((function != null) &&
+            ((function.getBeginIndex() == currentIndex) ||
+             (function.getBeginIndex() == currentIndex + 1))) {
           shouldCount = false;
         }
       }

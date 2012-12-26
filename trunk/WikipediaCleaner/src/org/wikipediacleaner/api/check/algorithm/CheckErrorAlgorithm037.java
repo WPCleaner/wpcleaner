@@ -19,12 +19,13 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
-import org.wikipediacleaner.api.data.PageElementDefaultsort;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -78,8 +79,8 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     }
 
     // Searching a DEFAULTSORT tag
-    PageElementDefaultsort tag = pageAnalysis.getNextDefaultSort(0);
-    if (tag != null) {
+    List<PageElementFunction> defaultSorts = pageAnalysis.getDefaultSorts();
+    if ((defaultSorts != null) && (defaultSorts.size() > 0)) {
       return false;
     }
 

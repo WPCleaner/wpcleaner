@@ -24,7 +24,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
-import org.wikipediacleaner.api.data.PageElementDefaultsort;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -81,7 +81,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
     }
 
     // Searching a DEFAULTSORT tag
-    List<PageElementDefaultsort> defaultSorts = pageAnalysis.getDefaultSorts();
+    List<PageElementFunction> defaultSorts = pageAnalysis.getDefaultSorts();
     if (defaultSorts.size() > 0) {
       return false;
     }

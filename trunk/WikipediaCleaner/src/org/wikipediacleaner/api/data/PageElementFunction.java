@@ -26,44 +26,41 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
 /**
- * Class containing information about a complete template ({{<i>template</i>|...}}). 
+ * Class containing information about a complete function ({{<i>function</i>:...}}). 
  */
-public class PageElementTemplate extends PageElement {
+public class PageElementFunction extends PageElement {
 
-  private final String templateName;
-  private final String templateNameNotTrimmed;
+  private final MagicWord magicWord;
+  private final String functionName;
+  private final String functionNameNotTrimmed;
   private final List<Parameter> parameters;
 
-  private final static String templateNameUnauthorizedCharacters = "{}[]|<>";
+  private final static String functionNameUnauthorizedCharacters = "{}[]|<>:";
 
   /**
-   * Class containing information about a template parameter.
+   * Class containing information about a function parameter.
    */
   private static class Parameter {
-    final int pipeIndex;
+    final int separatorIndex;
     final String name;
-    final String nameNotTrimmed;
     final int nameStartIndex;
     final String value;
-    final String valueNotTrimmed;
     final int valueStartIndex;
 
     /**
-     * @param pipeIndex Index of the pipe "|" in page contents.
+     * @param separatorIndex Index of the separator in page contents.
      * @param name Parameter name.
      * @param nameStartIndex Index of parameter name in page contents.
      * @param value Parameter value.
      * @param valueStartIndex Index of parameter value in page contents.
      */
     public Parameter(
-        int pipeIndex,
+        int separatorIndex,
         String name, int nameStartIndex,
         String value, int valueStartIndex) {
-      this.pipeIndex = pipeIndex;
-      this.nameNotTrimmed = name;
+      this.separatorIndex = separatorIndex;
       this.name = (name != null) ? name.trim() : null;
       this.nameStartIndex = nameStartIndex;
-      this.valueNotTrimmed = value;
       this.value = (value != null) ? value.trim() : null;
       this.valueStartIndex = valueStartIndex;
     }
@@ -90,7 +87,7 @@ public class PageElementTemplate extends PageElement {
    * @param tags Tags in the page.
    * @return Block details it there's a block.
    */
-  public static PageElementTemplate analyzeBlock(
+  public static PageElementFunction analyzeBlock(
       EnumWikipedia wiki,
       String contents, int index,
       List<PageElementComment> comments,
@@ -140,12 +137,12 @@ public class PageElementTemplate extends PageElement {
       }
     } while (moved);
 
-    int startTemplateName = tmpIndex;
+    int startFunctionName = tmpIndex;
 
-    // Retrieve template name
+    // Retrieve function name
     while (tmpIndex < contents.length()) {
       char currentChar = contents.charAt(tmpIndex);
-      if (templateNameUnauthorizedCharacters.indexOf(currentChar) >= 0) {
+      if (functionNameUnauthorizedCharacters.indexOf(currentChar) >= 0) {
         break;
       }
       tmpIndex++;
@@ -153,19 +150,15 @@ public class PageElementTemplate extends PageElement {
     if (tmpIndex >= contents.length()) {
       return null;
     }
-    String templateName = contents.substring(startTemplateName, tmpIndex).trim();
-    if (templateName.length() == 0) {
+    String functionName = contents.substring(startFunctionName, tmpIndex).trim();
+    if (functionName.length() == 0) {
       return null;
     }
 
-    // Check that it's not a function
-    String firstPart = templateName;
-    int colonIndex = templateName.indexOf(':');
-    if (colonIndex > 0) {
-      firstPart = templateName.substring(0, colonIndex);
-    }
-    MagicWord magicWord = wiki.getWikiConfiguration().getFunctionMagicWord(firstPart, colonIndex > 0);
-    if (magicWord != null) {
+    // Check that it's a function
+    MagicWord magicWord = wiki.getWikiConfiguration().getFunctionMagicWord(
+        functionName, contents.charAt(tmpIndex) == ':');
+    if (magicWord == null) {
       return null;
     }
 
@@ -198,48 +191,48 @@ public class PageElementTemplate extends PageElement {
       }
     } while (moved);
 
-    // Check if it's a template without parameters
+    // Check if it's a function without parameters
     if (contents.startsWith("}}", tmpIndex)) {
-      return new PageElementTemplate(
-          templateName,
+      return new PageElementFunction(
+          magicWord, functionName,
           beginIndex, tmpIndex + 2, null);
     }
 
-    // Check if it's a template
-    if (contents.charAt(tmpIndex) != '|') {
+    // Check if it's a function
+    if (contents.charAt(tmpIndex) != ':') {
       return null;
     }
 
     // Analyze parameters
     tmpIndex++;
     List<Parameter> parameters = new ArrayList<Parameter>();
-    int endIndex = analyzeTemplateParameters(
+    int endIndex = analyzeFunctionParameters(
         wiki, contents, beginIndex, tmpIndex - 1, tmpIndex, parameters,
         comments, tags);
     if (endIndex < 0) {
       return null;
     }
-    return new PageElementTemplate(
-        templateName,
+    return new PageElementFunction(
+        magicWord, functionName,
         beginIndex, endIndex, parameters);
   }
 
   /**
-   * Analyze the parameters of template.
+   * Analyze the parameters of function.
    * 
    * @param wiki Wiki.
    * @param contents Contents of the page.
-   * @param templateBeginIndex Start index of the template in the page.
-   * @param pipeIndex Index of the previous pipe.
+   * @param functionBeginIndex Start index of the function in the page.
+   * @param separatorIndex Index of the previous separator.
    * @param parametersBeginIndex Start index of the parameters in the page.
    * @param parameters Parameters.
    * @param comments Comments in the page.
    * @param tags Tags in the page.
-   * @return Position of the end of the template, or -1 if no template was found.
+   * @return Position of the end of the function, or -1 if no function was found.
    */
-  private static int analyzeTemplateParameters(
+  private static int analyzeFunctionParameters(
       EnumWikipedia wiki, String contents,
-      int templateBeginIndex, int pipeIndex, int parametersBeginIndex,
+      int functionBeginIndex, int separatorIndex, int parametersBeginIndex,
       List<Parameter> parameters,
       List<PageElementComment> comments,
       List<PageElementTag> tags) {
@@ -248,46 +241,62 @@ public class PageElementTemplate extends PageElement {
     }
     int tmpIndex = parametersBeginIndex;
     int maxLength = contents.length();
-    int depthCurlyBrackets = 0;
-    int depthSquareBrackets = 0;
+    int depth2CurlyBrackets = 0;
+    int depth3CurlyBrackets = 0;
+    int depth2SquareBrackets = 0;
     int depthTagNoWiki = 0;
     int depthTagRef = 0;
     int parameterBeginIndex = parametersBeginIndex;
     int equalIndex = -1;
     while (tmpIndex < maxLength) {
-      if (contents.startsWith("{{", tmpIndex)) {
+      if (contents.startsWith("{{{", tmpIndex)) {
+        // Possible start of a parameter
+        tmpIndex += 3;
+        if (depthTagNoWiki == 0) {
+          depth3CurlyBrackets++;
+        }
+      } else if (contents.startsWith("{{", tmpIndex)) {
         // Possible start of nested template
         tmpIndex += 2;
         if (depthTagNoWiki == 0) {
-          depthCurlyBrackets++;
+          depth2CurlyBrackets++;
         }
       } else if (contents.startsWith("}}", tmpIndex)) {
-        // Possible end of template
-        tmpIndex += 2;
-        if (depthTagNoWiki == 0) {
-          if (depthCurlyBrackets > 0) {
-            depthCurlyBrackets--;
-          } else {
-            addParameter(
-                parameters, pipeIndex,
-                contents.substring(parameterBeginIndex, tmpIndex - 2),
-                equalIndex - parameterBeginIndex,
-                parameterBeginIndex);
-            return tmpIndex;
+        if (contents.startsWith("}}}", tmpIndex) &&
+            (depth3CurlyBrackets > 0)) {
+          // Possible end of parameter
+          tmpIndex += 3;
+          if (depthTagNoWiki == 0) {
+            depth3CurlyBrackets--;
+          }
+        } else {
+          // Possible end of function
+          tmpIndex += 2;
+          if (depthTagNoWiki == 0) {
+            if (depth2CurlyBrackets > 0) {
+              depth2CurlyBrackets--;
+            } else {
+              addParameter(
+                  parameters, separatorIndex,
+                  contents.substring(parameterBeginIndex, tmpIndex - 2),
+                  equalIndex - parameterBeginIndex,
+                  parameterBeginIndex);
+              return tmpIndex;
+            }
           }
         }
       } else if (contents.startsWith("[[", tmpIndex)) {
         // Possible start of nested internal links
         tmpIndex += 2;
         if (depthTagNoWiki == 0) {
-          depthSquareBrackets++;
+          depth2SquareBrackets++;
         }
       } else if (contents.startsWith("]]", tmpIndex)) {
         // Possible end of nested internal link
         tmpIndex += 2;
         if (depthTagNoWiki == 0) {
-          if (depthSquareBrackets > 0) {
-            depthSquareBrackets--;
+          if (depth2SquareBrackets > 0) {
+            depth2SquareBrackets--;
           } else {
             return -1;
           }
@@ -342,21 +351,21 @@ public class PageElementTemplate extends PageElement {
           }
         }
       } else {
-        if ((depthCurlyBrackets <= 0) &&
-            (depthSquareBrackets <= 0) &&
+        if ((depth2CurlyBrackets <= 0) &&
+            (depth2SquareBrackets <= 0) &&
             (depthTagNoWiki <= 0) &&
             (depthTagRef <= 0)) {
           char currentChar = contents.charAt(tmpIndex);
           if (currentChar == '|') {
             // Separation with next parameter
-            depthCurlyBrackets = 0;
-            depthSquareBrackets = 0;
+            depth2CurlyBrackets = 0;
+            depth2SquareBrackets = 0;
             addParameter(
-                parameters, pipeIndex,
+                parameters, separatorIndex,
                 contents.substring(parameterBeginIndex, tmpIndex),
                 equalIndex - parameterBeginIndex,
                 parameterBeginIndex);
-            pipeIndex = tmpIndex;
+            separatorIndex = tmpIndex;
             tmpIndex++;
             parameterBeginIndex = tmpIndex;
             equalIndex = -1;
@@ -376,14 +385,14 @@ public class PageElementTemplate extends PageElement {
 
   /**
    * @param parameters List of parameters.
-   * @param pipeIndex Index of "|".
+   * @param separatorIndex Index of separator.
    * @param parameter New parameter (name=value or value).
    * @param equalIndex Index of "=" in the parameter or < 0 if doesn't exist.
    * @param offset Offset of parameter start index in page contents.
    */
   private static void addParameter(
       List<Parameter> parameters,
-      int pipeIndex, String parameter,
+      int separatorIndex, String parameter,
       int equalIndex, int offset) {
     if (equalIndex < 0) {
       int spaces = 0;
@@ -391,7 +400,7 @@ public class PageElementTemplate extends PageElement {
         spaces++;
       }
       parameters.add(new Parameter(
-          pipeIndex, "", offset + spaces, parameter, offset + spaces));
+          separatorIndex, "", offset + spaces, parameter, offset + spaces));
     } else {
       int spacesName = 0;
       while ((spacesName < equalIndex) && (Character.isWhitespace(parameter.charAt(spacesName)))) {
@@ -402,17 +411,24 @@ public class PageElementTemplate extends PageElement {
         spacesValue++;
       }
       parameters.add(new Parameter(
-          pipeIndex,
+          separatorIndex,
           parameter.substring(0, equalIndex), offset + spacesName,
           parameter.substring(equalIndex + 1), offset + spacesValue));
     }
   }
 
   /**
-   * @return Template name.
+   * @return Magic word.
    */
-  public String getTemplateName() {
-    return templateName;
+  public MagicWord getMagicWord() {
+    return magicWord;
+  }
+
+  /**
+   * @return Function name.
+   */
+  public String getFunctionName() {
+    return functionName;
   }
 
   /**
@@ -428,14 +444,14 @@ public class PageElementTemplate extends PageElement {
   }
 
   /**
-   * Retrieve pipe offset.
+   * Retrieve separator offset.
    * 
    * @param index Parameter index.
-   * @return Pipe offset.
+   * @return Separator offset.
    */
-  public int getParameterPipeOffset(int index) {
+  public int getParameterSeparatorOffset(int index) {
     if ((index >= 0) && (index < parameters.size())) {
-      return parameters.get(index).pipeIndex;
+      return parameters.get(index).separatorIndex;
     }
     return 0;
   }
@@ -520,19 +536,20 @@ public class PageElementTemplate extends PageElement {
     return null;
   }
 
-  private PageElementTemplate(
-      String templateName,
+  private PageElementFunction(
+      MagicWord magicWord, String functionName,
       int beginIndex, int endIndex,
       List<Parameter> parameters) {
     super(beginIndex, endIndex);
-    this.templateNameNotTrimmed = templateName;
-    this.templateName = (templateName != null) ? Page.getStringUcFirst(templateName.trim()) : null;
+    this.magicWord = magicWord;
+    this.functionNameNotTrimmed = functionName;
+    this.functionName = (functionName != null) ? functionName.trim() : null;
     this.parameters = parameters;
   }
 
   private void addPartBeforeParameters(StringBuilder sb) {
     sb.append("{{");
-    sb.append(templateNameNotTrimmed);
+    sb.append(functionNameNotTrimmed);
   }
 
   private void addPartFromParameters(StringBuilder sb) {
@@ -551,242 +568,6 @@ public class PageElementTemplate extends PageElement {
     sb.append(parameterValue);
   }
 
-  /**
-   * Create a template with a parameter value modified.
-   * 
-   * @param parameterName Parameter name that needs to be modified.
-   * @param parameterValue New parameter value.
-   * @param previousParameter Previous parameter.
-   * @return Complete template with parameter value replaced.
-   */
-  public String getParameterReplacement(
-      String parameterName, String parameterValue, String previousParameter) {
-    boolean parameterExist = false;
-    if (parameters != null) {
-      for (Parameter parameter : parameters) {
-        if (parameter.name.equals(parameterName)) {
-          parameterExist = true;
-        }
-      }
-    }
-    StringBuilder sb = new StringBuilder();
-    addPartBeforeParameters(sb);
-    boolean parameterAdded = false;
-    String tmpParameterName = parameterName;
-    String tmpParameterValue = parameterValue;
-    int paramNum = 1;
-    if (parameters != null) {
-      for (Parameter parameter : parameters) {
-  
-        // Managing unnamed
-        String currentParameterName = parameter.name;
-        if ((currentParameterName == null) || (currentParameterName.length() == 0)) {
-          currentParameterName = Integer.toString(paramNum);
-        }
-        int tmpParamNum = paramNum;
-        if (currentParameterName.equals(Integer.toString(paramNum))) {
-          tmpParamNum++;
-        }
-  
-        // Manage whitespace characters before/after name/value
-        tmpParameterName = parameterName;
-        tmpParameterValue = parameterValue;
-        if ((parameter.name != null) && (parameter.name.length() > 0)) {
-          // Whitespace characters before name
-          int spaces = 0;
-          while ((spaces < parameter.nameNotTrimmed.length()) &&
-                 (Character.isWhitespace(parameter.nameNotTrimmed.charAt(spaces)))) {
-            spaces++;
-          }
-          if (spaces > 0) {
-            tmpParameterName = parameter.nameNotTrimmed.substring(0, spaces) + parameterName;
-          }
-  
-          // Whitespace characters after name
-          spaces = parameter.nameNotTrimmed.length();
-          while ((spaces > 0) &&
-                 (Character.isWhitespace(parameter.nameNotTrimmed.charAt(spaces - 1)))) {
-            spaces--;
-          }
-          if (spaces < parameter.nameNotTrimmed.length()) {
-            tmpParameterName += parameter.nameNotTrimmed.substring(spaces);
-          }
-        }
-  
-        if (parameter.value != null) {
-          // Whitespace characters before value
-          int spaces = 0;
-          while ((spaces < parameter.valueNotTrimmed.length()) &&
-                 (Character.isWhitespace(parameter.valueNotTrimmed.charAt(spaces)))) {
-            spaces++;
-          }
-          if ((spaces > 0) && (tmpParameterValue != null)) {
-            tmpParameterValue = parameter.valueNotTrimmed.substring(0, spaces) + parameterValue;
-          }
-  
-          // Whitespace characters after value
-          spaces = parameter.valueNotTrimmed.length();
-          while ((spaces > 0) &&
-                 (Character.isWhitespace(parameter.valueNotTrimmed.charAt(spaces - 1)))) {
-            spaces--;
-          }
-          if ((spaces < parameter.valueNotTrimmed.length()) && (tmpParameterValue != null)) {
-            tmpParameterValue += parameter.valueNotTrimmed.substring(spaces);
-          }
-        }
-  
-        // Add parameter
-        if (currentParameterName.equals(parameterName)) {
-          if (tmpParameterValue != null) {
-            addParameter(sb, parameter.nameNotTrimmed, tmpParameterValue);
-            paramNum = tmpParamNum;
-          }
-          parameterAdded = true;
-        } else if ((!parameterExist) &&
-                   (currentParameterName.equals(previousParameter))) {
-          addParameter(sb, parameter.nameNotTrimmed, parameter.valueNotTrimmed);
-          addParameter(sb, tmpParameterName, tmpParameterValue);
-          paramNum = tmpParamNum;
-          parameterAdded = true;
-        } else {
-          addParameter(sb, parameter.nameNotTrimmed, parameter.valueNotTrimmed);
-          paramNum = tmpParamNum;
-        }
-      }
-    }
-    if (!parameterAdded) {
-      if (tmpParameterName.equals(Integer.toString(paramNum))) {
-        addParameter(sb, null, tmpParameterValue);
-      } else {
-        addParameter(sb, tmpParameterName, tmpParameterValue);
-      }
-    }
-    sb.append("}}");
-    return sb.toString();
-  }
-
-  /**
-   * Create a template with 2 parameter values modified.
-   * 
-   * @param parameterName1 Parameter name that needs to be modified.
-   * @param parameterValue1 New parameter value.
-   * @param parameterName2 Parameter name that needs to be modified.
-   * @param parameterValue2 New parameter value.
-   * @return Complete template with parameter value replaced.
-   */
-  public String getParameterReplacement(
-      String parameterName1, String parameterValue1,
-      String parameterName2, String parameterValue2) {
-    boolean parameterExist1 = false;
-    boolean parameterExist2 = false;
-    for (Parameter parameter : parameters) {
-      if (parameter.name.equals(parameterName1)) {
-        parameterExist1 = true;
-      }
-      if (parameter.name.equals(parameterName2)) {
-        parameterExist2 = true;
-      }
-    }
-    StringBuilder sb = new StringBuilder();
-    addPartBeforeParameters(sb);
-    boolean parameterAdded1 = false;
-    boolean parameterAdded2 = false;
-    String tmpParameterName1 = parameterName1;
-    String tmpParameterValue1 = parameterValue1;
-    String tmpParameterName2 = parameterName2;
-    String tmpParameterValue2 = parameterValue2;
-    int paramNum = 1;
-    for (Parameter parameter : parameters) {
-
-      // Managing unname
-      String currentParameterName = parameter.name;
-      if ((currentParameterName == null) || (currentParameterName.length() == 0)) {
-        currentParameterName = Integer.toString(paramNum);
-      }
-      if (currentParameterName.equals(Integer.toString(paramNum))) {
-        paramNum++;
-      }
-
-      // Manage whitespace characters before/after name/value
-      tmpParameterName1 = parameterName1;
-      tmpParameterValue1 = parameterValue1;
-      if ((parameter.name != null) && (parameter.name.length() > 0)) {
-        // Whitespace characters before name
-        int spaces = 0;
-        while ((spaces < parameter.nameNotTrimmed.length()) &&
-               (Character.isWhitespace(parameter.nameNotTrimmed.charAt(spaces)))) {
-          spaces++;
-        }
-        if (spaces > 0) {
-          tmpParameterName1 = parameter.nameNotTrimmed.substring(0, spaces) + parameterName1;
-          tmpParameterName2 = parameter.nameNotTrimmed.substring(0, spaces) + parameterName2;
-        }
-
-        // Whitespace characters after name
-        spaces = parameter.nameNotTrimmed.length();
-        while ((spaces > 0) &&
-               (Character.isWhitespace(parameter.nameNotTrimmed.charAt(spaces - 1)))) {
-          spaces--;
-        }
-        if (spaces < parameter.nameNotTrimmed.length()) {
-          tmpParameterName1 += parameter.nameNotTrimmed.substring(spaces);
-          tmpParameterName2 += parameter.nameNotTrimmed.substring(spaces);
-        }
-      }
-
-      if (parameter.value != null) {
-        // Whitespace characters before value
-        int spaces = 0;
-        while ((spaces < parameter.valueNotTrimmed.length()) &&
-               (Character.isWhitespace(parameter.valueNotTrimmed.charAt(spaces)))) {
-          spaces++;
-        }
-        if (spaces > 0) {
-          tmpParameterValue1 = parameter.valueNotTrimmed.substring(0, spaces) + parameterValue1;
-          tmpParameterValue2 = parameter.valueNotTrimmed.substring(0, spaces) + parameterValue2;
-        }
-
-        // Whitespace characters after value
-        spaces = parameter.valueNotTrimmed.length();
-        while ((spaces > 0) &&
-               (Character.isWhitespace(parameter.valueNotTrimmed.charAt(spaces - 1)))) {
-          spaces--;
-        }
-        if (spaces < parameter.valueNotTrimmed.length()) {
-          tmpParameterValue1 += parameter.valueNotTrimmed.substring(spaces);
-          tmpParameterValue2 += parameter.valueNotTrimmed.substring(spaces);
-        }
-      }
-
-      // Add parameter
-      if (currentParameterName.equals(parameterName1)) {
-        addParameter(sb, parameter.nameNotTrimmed, tmpParameterValue1);
-        parameterAdded1 = true;
-        if (!parameterExist2) {
-          addParameter(sb, tmpParameterName2, tmpParameterValue2);
-          parameterAdded2 = true;
-        }
-      } else if (currentParameterName.equals(parameterName2)) {
-        if (!parameterExist1) {
-          addParameter(sb, tmpParameterName1, tmpParameterValue1);
-          parameterAdded1 = true;
-        }
-        addParameter(sb, parameter.nameNotTrimmed, tmpParameterValue2);
-        parameterAdded2 = true;
-      } else {
-        addParameter(sb, parameter.nameNotTrimmed, parameter.valueNotTrimmed);
-      }
-    }
-    if (!parameterAdded1) {
-      addParameter(sb, tmpParameterName1, tmpParameterValue1);
-    }
-    if (!parameterAdded2) {
-      addParameter(sb, tmpParameterName2, tmpParameterValue2);
-    }
-    sb.append("}}");
-    return sb.toString();
-  }
-
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */
@@ -795,6 +576,25 @@ public class PageElementTemplate extends PageElement {
     StringBuilder sb = new StringBuilder();
     addPartBeforeParameters(sb);
     addPartFromParameters(sb);
+    return sb.toString();
+  }
+
+  /**
+   * @param name Function name.
+   * @param value Value of the function.
+   * @return Textual representation of the function.
+   */
+  public static String createFunction(String name, String value) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("{{");
+    sb.append(name);
+    if (value != null) {
+      if ((name.length() > 0) && (name.charAt(name.length() - 1) != ':')) {
+        sb.append(':');
+      }
+      sb.append(value.trim());
+    }
+    sb.append("}}");
     return sb.toString();
   }
 }

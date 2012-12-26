@@ -19,13 +19,14 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementDefaultsort;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -61,20 +62,20 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
     }
 
     // Analyzing the text from the beginning
-    Collection<PageElementDefaultsort> tags = pageAnalysis.getDefaultSorts();
+    List<PageElementFunction> tags = pageAnalysis.getDefaultSorts();
     if ((tags == null) || (tags.isEmpty())) {
       return false;
     }
     boolean result = false;
     EnumWikipedia wiki = pageAnalysis.getWikipedia();
-    for (PageElementDefaultsort tag : tags) {
+    for (PageElementFunction tag : tags) {
       if (tag != null) {
         boolean characterFound = false;
         boolean characterReplaced = false;
         String unknownCharacters = "";
         String text = "";
         int currentPos = 0;
-        String value = tag.getValue();
+        String value = (tag.getParameterCount() > 0) ? tag.getParameterValue(0) : "";
         while (currentPos < value.length()) {
           boolean error = false;
           char character = value.charAt(currentPos);
@@ -103,7 +104,7 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = createCheckErrorResult(
               pageAnalysis.getPage(), tag.getBeginIndex(), tag.getEndIndex());
           if (characterReplaced) {
-            errorResult.addReplacement("{{" + tag.getTag() + text + "}}");
+            errorResult.addReplacement(PageElementFunction.createFunction(tag.getFunctionName(), text));
           } else {
             errorResult.addPossibleAction(
                 GT._("Unable to replace the characters [{0}]", unknownCharacters),
