@@ -461,6 +461,7 @@ public class WPCConfiguration {
    * @param value Encyclopedic name spaces.
    */
   private void setEncyclopedicNamespaces(String value) {
+    encyclopedicNamespaces.clear();
     if ((value != null) && (value.trim().length() > 0)) {
       List<String> tmpList = convertPropertyToStringList(value);
       if (tmpList != null) {
