@@ -22,7 +22,10 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementParameter;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 
 
 /**
@@ -51,7 +54,61 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
     if (pageAnalysis.isInNamespace(Namespace.TEMPLATE)) {
       return false;
     }
+
+    // Check every position
+    Page page = pageAnalysis.getPage();
+    String contents = pageAnalysis.getContents();
+    int maxLen = contents.length();
     boolean result = false;
+    int currentIndex = 0;
+    while (currentIndex < maxLen) {
+      int nextIndex = currentIndex;
+      if (contents.startsWith("{{", currentIndex)) {
+        boolean done = false;
+
+        // Check for templates beginning with '{{{' instead of '{{'
+        if (!done &&
+            contents.startsWith("{{{", currentIndex)) {
+          PageElementTemplate currentTemplate = pageAnalysis.isInTemplate(currentIndex);
+          PageElementTemplate nextTemplate = pageAnalysis.isInTemplate(currentIndex + 1);
+          if ((nextTemplate != null) &&
+              (currentIndex + 1 == nextTemplate.getBeginIndex()) &&
+              ((currentTemplate == null) ||
+               (currentTemplate.getBeginIndex() == currentIndex - 1))) {
+            result = true;
+            done = true;
+            if (errors == null) {
+              return true;
+            }
+            CheckErrorResult errorResult = createCheckErrorResult(
+                page, currentIndex, currentIndex + 3);
+            errorResult.addReplacement("{{");
+            errors.add(errorResult);
+            nextIndex = currentIndex + 3;
+          }
+        }
+
+        // Check for parameters
+        if (!done) {
+          PageElementParameter parameter = pageAnalysis.isInParameter(currentIndex);
+          if ((parameter != null) &&
+              (parameter.getBeginIndex() == currentIndex)) {
+            result = true;
+            done = true;
+            if (errors == null) {
+              return true;
+            }
+            CheckErrorResult errorResult = createCheckErrorResult(
+                page, parameter.getBeginIndex(), parameter.getEndIndex());
+            errors.add(errorResult);
+            nextIndex = parameter.getEndIndex();
+          }
+        }
+      }
+      currentIndex = Math.max(nextIndex, currentIndex  + 1);
+    }
+
+    // TODO: cleaner way
     result |= simpleTextSearch(pageAnalysis, errors, "#if:");
     result |= simpleTextSearch(pageAnalysis, errors, "#ifeq:");
     result |= simpleTextSearch(pageAnalysis, errors, "#switch:");
