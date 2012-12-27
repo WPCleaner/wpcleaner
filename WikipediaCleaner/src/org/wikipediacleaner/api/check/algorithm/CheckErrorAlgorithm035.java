@@ -70,7 +70,13 @@ public class CheckErrorAlgorithm035 extends CheckErrorAlgorithmBase {
             int colonIndex = line.indexOf(':');
             if ((colonIndex > 0) && (imageNamespace.isPossibleName(line.substring(0, colonIndex)))) {
               int pipeIndex = line.indexOf('|', colonIndex);
-              if (pipeIndex < 0) {
+              boolean description = false;
+              if ((pipeIndex >= 0) && (pipeIndex + 1 < line.length())) {
+                if (line.substring(pipeIndex + 1).trim().length() > 0) {
+                  description = true;
+                }
+              }
+              if (!description) {
                 if (errors == null) {
                   return true;
                 }
