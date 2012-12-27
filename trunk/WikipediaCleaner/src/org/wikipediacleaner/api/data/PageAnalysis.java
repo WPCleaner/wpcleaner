@@ -290,6 +290,20 @@ public class PageAnalysis {
       element = tag;
     }
 
+    // Check if in parameter
+    PageElementParameter parameter = isInParameter(currentIndex);
+    if ((parameter != null) &&
+        ((element == null) || (element.getBeginIndex() < parameter.getBeginIndex()))) {
+      element = parameter;
+    }
+
+    // Check if in function
+    PageElementFunction function = isInFunction(currentIndex);
+    if ((function != null) &&
+        ((element == null) || (element.getBeginIndex() < function.getBeginIndex()))) {
+      element = function;
+    }
+
     return element;
   }
 

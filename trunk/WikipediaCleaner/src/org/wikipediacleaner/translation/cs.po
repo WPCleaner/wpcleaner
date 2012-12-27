@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-24 19:14+0100\n"
+"POT-Creation-Date: 2012-12-27 15:21+0100\n"
 "PO-Revision-Date: 2012-12-13 13:52+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -124,14 +124,14 @@ msgstr "Opravit všechna zalomení"
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr "Seznam šablon s vloženou {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:42
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:43
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:41
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089.java:41
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:41
 msgid "Fix DEFAULTSORT"
 msgstr "Opravit DEFAULTSORT"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:109
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:110
 #, java-format
 msgid "Unable to replace the characters [{0}]"
 msgstr "Nelze nahradit znaky [{0}]"
@@ -185,7 +185,7 @@ msgstr "Jaký alternativní popisek chcete obrázku přiřadit?"
 msgid "View image"
 msgstr "Zobrazit obrázek"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:42
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:43
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:42
 msgid "Add DEFAULTSORT"
 msgstr "Přidat DEFAULTSORT"
@@ -2015,36 +2015,46 @@ msgstr "Chyba číslo {0}"
 msgid "Close this tab"
 msgstr "Zavřít tuto kartu"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:232
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:265
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:246
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:279
 #, java-format
 msgid "Page: {0}"
 msgstr "Stránka: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:302
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:316
 #, java-format
 msgid "Interwiki: {0}"
 msgstr "Interwiki: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:377
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:391
 #, java-format
 msgid "Image: {0}"
 msgstr "Obrázek: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:416
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:430
 #, java-format
 msgid "Category: {0}"
 msgstr "Kategorie: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:447
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:461
 #, java-format
 msgid "External link: {0}"
 msgstr "Externí odkaz: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:483
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:496
 #, java-format
 msgid "Template: {0}"
 msgstr "Šablona: {0}"
+
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:526
+#, fuzzy, java-format
+msgid "Parameter: {0}"
+msgstr "Stránka: {0}"
+
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:553
+#, java-format
+msgid "Function: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:99
 msgid "Decrement title level"
