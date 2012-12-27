@@ -38,10 +38,12 @@ import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
+import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.i18n.GT;
@@ -224,6 +226,18 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
     if (element instanceof PageElementLanguageLink) {
       PageElementLanguageLink language = (PageElementLanguageLink) element;
       return createDefaultPopupLanguageLink(textPane, position, pageAnalysis, language);
+    }
+
+    // Menu for parameter
+    if (element instanceof PageElementParameter) {
+      PageElementParameter parameter = (PageElementParameter) element;
+      return createDefaultPopupParameter(pageAnalysis, position, parameter);
+    }
+
+    // Menu for function
+    if (element instanceof PageElementFunction) {
+      PageElementFunction function = (PageElementFunction) element;
+      return createDefaultPopupFunction(pageAnalysis, position, function);
     }
 
     // Default menu
@@ -455,7 +469,6 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
     return popup;
   }
 
-
   /**
    * Create a default popup menu for a template.
    * 
@@ -488,6 +501,60 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
     popup.add(new JSeparator());
     MenuCreator.addViewToMenu(wikipedia, popup, page, false);
     MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
+
+    return popup;
+  }
+
+  /**
+   * Create a default popup menu for a parameter.
+   * 
+   * @param pageAnalysis Page analysis.
+   * @param position Position in the text.
+   * @param parameter Parameter.
+   * @return Popup menu.
+   */
+  protected JPopupMenu createDefaultPopupParameter(
+      PageAnalysis pageAnalysis, int position,
+      PageElementParameter parameter) {
+    if (parameter == null) {
+      return null;
+    }
+
+    // Menu creation
+    JPopupMenu popup = new JPopupMenu();
+    JMenuItem menuItem = new JMenuItem(GT._(
+        "Parameter: {0}",
+        limitTextLength(parameter.getParameterName(), 50)));
+    menuItem.setEnabled(false);
+    popup.add(menuItem);
+    MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
+
+    return popup;
+  }
+
+  /**
+   * Create a default popup menu for a function.
+   * 
+   * @param pageAnalysis Page analysis.
+   * @param position Position in the text.
+   * @param function Function.
+   * @return Popup menu.
+   */
+  protected JPopupMenu createDefaultPopupFunction(
+      PageAnalysis pageAnalysis, int position,
+      PageElementFunction function) {
+    if (function == null) {
+      return null;
+    }
+
+    // Menu creation
+    JPopupMenu popup = new JPopupMenu();
+    JMenuItem menuItem = new JMenuItem(GT._(
+        "Function: {0}",
+        limitTextLength(function.getFunctionName(), 50)));
+    menuItem.setEnabled(false);
+    popup.add(menuItem);
+    MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
 
     return popup;
   }
