@@ -535,7 +535,8 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     EnumWikipedia wiki = pageAnalysis.getWikipedia();
     for (int i = 0; i < title.length(); i++) {
       char character = title.charAt(i);
-      if (SpecialCharacters.isAuthorized(character, wiki)) {
+      if (!CheckErrorAlgorithms.isAlgorithmActive(wiki, 6) ||
+          SpecialCharacters.isAuthorized(character, wiki)) {
         currentTitle.append(character);
       } else {
         currentTitle.append(SpecialCharacters.proposeReplacement(character, wiki));
@@ -550,13 +551,15 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
     for (int i = 0; i < title.length(); i++) {
       char character = title.charAt(i);
       if (previousSpace) {
-        if (Character.isLowerCase(character)) {
+        if (Character.isLowerCase(character) &&
+            ((i == 0) || (CheckErrorAlgorithms.isAlgorithmActive(wiki, 90)))) {
           currentTitle.append(Character.toUpperCase(character));
         } else {
           currentTitle.append(character);
         }
       } else if (previousLetter) {
-        if (Character.isUpperCase(character)) {
+        if (Character.isUpperCase(character) &&
+            CheckErrorAlgorithms.isAlgorithmActive(wiki, 89)) {
           currentTitle.append(Character.toLowerCase(character));
         } else {
           currentTitle.append(character);
