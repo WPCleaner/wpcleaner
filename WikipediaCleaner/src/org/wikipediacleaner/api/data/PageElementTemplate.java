@@ -251,6 +251,7 @@ public class PageElementTemplate extends PageElement {
     int depthCurlyBrackets = 0;
     int depthSquareBrackets = 0;
     int depthTagNoWiki = 0;
+    int depthTagMath = 0;
     int depthTagRef = 0;
     int parameterBeginIndex = parametersBeginIndex;
     int equalIndex = -1;
@@ -258,13 +259,13 @@ public class PageElementTemplate extends PageElement {
       if (contents.startsWith("{{", tmpIndex)) {
         // Possible start of nested template
         tmpIndex += 2;
-        if (depthTagNoWiki == 0) {
+        if ((depthTagNoWiki == 0) && (depthTagMath == 0)) {
           depthCurlyBrackets++;
         }
       } else if (contents.startsWith("}}", tmpIndex)) {
         // Possible end of template
         tmpIndex += 2;
-        if (depthTagNoWiki == 0) {
+        if ((depthTagNoWiki == 0) && (depthTagMath == 0)) {
           if (depthCurlyBrackets > 0) {
             depthCurlyBrackets--;
           } else {
@@ -279,13 +280,13 @@ public class PageElementTemplate extends PageElement {
       } else if (contents.startsWith("[[", tmpIndex)) {
         // Possible start of nested internal links
         tmpIndex += 2;
-        if (depthTagNoWiki == 0) {
+        if ((depthTagNoWiki == 0) && (depthTagMath == 0)) {
           depthSquareBrackets++;
         }
       } else if (contents.startsWith("]]", tmpIndex)) {
         // Possible end of nested internal link
         tmpIndex += 2;
-        if (depthTagNoWiki == 0) {
+        if ((depthTagNoWiki == 0) && (depthTagMath == 0)) {
           if (depthSquareBrackets > 0) {
             depthSquareBrackets--;
           } else {
@@ -316,6 +317,11 @@ public class PageElementTemplate extends PageElement {
             if (depthTagNoWiki < 0) {
               depthTagNoWiki = 0;
             }
+          } else if (PageElementTag.TAG_WIKI_MATH.equals(tag.getName())) {
+            depthTagMath += count;
+            if (depthTagMath < 0) {
+              depthTagMath = 0;
+            }
           } else if (PageElementTag.TAG_WIKI_REF.equals(tag.getName())) {
             if (depthTagNoWiki == 0) {
               depthTagRef += count;
@@ -345,6 +351,7 @@ public class PageElementTemplate extends PageElement {
         if ((depthCurlyBrackets <= 0) &&
             (depthSquareBrackets <= 0) &&
             (depthTagNoWiki <= 0) &&
+            (depthTagMath <= 0) &&
             (depthTagRef <= 0)) {
           char currentChar = contents.charAt(tmpIndex);
           if (currentChar == '|') {
