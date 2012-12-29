@@ -85,7 +85,7 @@ public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRe
     if (value instanceof CheckErrorPage) {
       CheckErrorPage errorPage = (CheckErrorPage) value;
       whiteList = errorPage.isInWhiteList();
-      if (forPage) {
+      if (forPage && (errorPage.getPage() != null)) {
         text = errorPage.getPage().getTitle();
       } else {
         text = errorPage.getAlgorithm().toString();
