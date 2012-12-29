@@ -56,7 +56,7 @@ public class PageElementTitle extends PageElement {
     // Check that the line is ending properly
     int endIndex = contents.indexOf('\n', index);
     if (endIndex < 0) {
-      return null;
+      endIndex = contents.length();
     }
 
     // Compute first title level
