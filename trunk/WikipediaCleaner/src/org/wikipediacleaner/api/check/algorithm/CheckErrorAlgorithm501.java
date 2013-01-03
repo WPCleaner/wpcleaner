@@ -34,6 +34,7 @@ import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementAreas;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -310,6 +311,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
     // Check every suggestion
     List<PageElementTemplate> templates = analysis.getTemplates();
+    List<PageElementFunction> functions = analysis.getFunctions();
     String contents = analysis.getContents();
     int contentsLength = contents.length();
     Iterator<Suggestion> itSuggestion = suggestions.iterator();
@@ -322,6 +324,21 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         // Check suggestion on every template
         for (PageElementTemplate template : templates) {
           int begin = template.getBeginIndex();
+          if (matcher.region(begin, contentsLength).lookingAt()) {
+            int end = matcher.end();
+            if ((end >= contentsLength) ||
+                (!Character.isLetterOrDigit(contents.charAt(end))) ||
+                (!Character.isLetterOrDigit(contents.charAt(end - 1)))) {
+              result |= addReplacements(
+                  begin, end, contents, begin, contentsLength,
+                  suggestion, replacements);
+            }
+          }
+        }
+
+        // Check suggestion on every function
+        for (PageElementFunction function : functions) {
+          int begin = function.getBeginIndex();
           if (matcher.region(begin, contentsLength).lookingAt()) {
             int end = matcher.end();
             if ((end >= contentsLength) ||
