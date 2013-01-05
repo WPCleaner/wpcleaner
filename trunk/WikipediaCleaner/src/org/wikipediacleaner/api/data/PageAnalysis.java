@@ -509,7 +509,7 @@ public class PageAnalysis {
         getWikipedia(), contents, currentIndex);
     if (image != null) {
       images.add(image);
-      return image.getBeginIndex() + image.getFirstPipeOffset();
+      return image.getBeginIndex() + 2 + image.getNamespace().length() + 1;
     }
 
     // Check if this is a category
