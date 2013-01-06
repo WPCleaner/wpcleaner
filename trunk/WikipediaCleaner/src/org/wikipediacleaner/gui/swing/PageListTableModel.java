@@ -23,9 +23,11 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.ProgressionValue;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.Configuration;
 
 
 /**
@@ -37,7 +39,10 @@ public class PageListTableModel extends AbstractTableModel {
 
   private List<Page> pages;
 
-  public final static int COLUMN_PAGE = 0;
+  private List<String> watchedPages;
+
+  public final static int COLUMN_WATCHED = 0;
+  public final static int COLUMN_PAGE = COLUMN_WATCHED + 1;
   public final static int COLUMN_DISAMBIGUATION = COLUMN_PAGE + 1;
   public final static int COLUMN_REDIRECT = COLUMN_DISAMBIGUATION + 1;
   public final static int COLUMN_BACKLINKS_MAIN = COLUMN_REDIRECT + 1;
@@ -46,8 +51,10 @@ public class PageListTableModel extends AbstractTableModel {
   public final static int COLUMN_COMMENTS_TEXT = COLUMN_BACKLINKS_OTHER + 1;
   public final static int NB_COLUMNS = COLUMN_COMMENTS_TEXT + 1;
 
-  public PageListTableModel(List<Page> pages) {
+  public PageListTableModel(EnumWikipedia wiki, List<Page> pages) {
     this.pages = pages;
+    Configuration config = Configuration.getConfiguration();
+    watchedPages = config.getStringList(wiki, Configuration.ARRAY_WATCH_PAGES);
   }
 
   /**
@@ -139,6 +146,8 @@ public class PageListTableModel extends AbstractTableModel {
         return page.getTitle();
       case COLUMN_REDIRECT:
         return page.isRedirect();
+      case COLUMN_WATCHED:
+        return watchedPages.contains(page.getTitle());
       }
     }
     return null;
@@ -164,6 +173,8 @@ public class PageListTableModel extends AbstractTableModel {
       return GT._("Page");
     case COLUMN_REDIRECT:
       return "R";
+    case COLUMN_WATCHED:
+      return "";
     }
     return super.getColumnName(column);
   }
@@ -187,6 +198,8 @@ public class PageListTableModel extends AbstractTableModel {
     case COLUMN_PAGE:
       return String.class;
     case COLUMN_REDIRECT:
+      return Boolean.class;
+    case COLUMN_WATCHED:
       return Boolean.class;
     }
     return super.getColumnClass(columnIndex);
