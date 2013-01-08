@@ -529,7 +529,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         ActionListener.class, this, "actionDisambiguationLink"));
     toolbar.add(buttonDisambiguationLink);
     buttonRemoveLinks = Utilities.createJButton(
-        "WPCleaner-remove-link.png", EnumImageSize.NORMAL,
+        "wpc-remove-link.png", EnumImageSize.NORMAL,
         GT._("Remove all links"), false);
     buttonRemoveLinks.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRemoveAllLinks"));
