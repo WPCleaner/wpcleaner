@@ -188,6 +188,8 @@ public class PageListWindow extends BasicWindow {
     columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setMinWidth(20);
     columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setPreferredWidth(20);
     columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setMaxWidth(20);
+    columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setCellRenderer(
+        new BooleanIconCellRenderer("commons-redirect-arrow-without-text.png", null));
     columnModel.getColumn(PageListTableModel.COLUMN_PAGE).setMinWidth(100);
     columnModel.getColumn(PageListTableModel.COLUMN_PAGE).setPreferredWidth(200);
     columnModel.getColumn(PageListTableModel.COLUMN_WATCHED).setMinWidth(20);
