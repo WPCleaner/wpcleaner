@@ -81,6 +81,9 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
     if ((titles == null) || (titles.size() == 0)) {
       return contents;
     }
+    if (titles.get(0).getFirstLevel() > 1) {
+      return contents;
+    }
     int minTitle = Integer.MAX_VALUE;
     for (PageElementTitle title : titles) {
       if (title.getFirstLevel() < minTitle) {
