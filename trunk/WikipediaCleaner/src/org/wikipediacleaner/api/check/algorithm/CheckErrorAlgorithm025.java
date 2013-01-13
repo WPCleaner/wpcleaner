@@ -130,6 +130,11 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
             titles.get(index2).getFirstLevel() - title.getFirstLevel() - 1);
       }
       offsets.add(Integer.valueOf(levelOffset));
+      if ((levelOffset == 0) &&
+          (index + 1 < titles.size()) &&
+          (titles.get(index + 1).getFirstLevel() > title.getFirstLevel() + 1)) {
+        offsets.add(Integer.valueOf(titles.get(index + 1).getFirstLevel() - title.getFirstLevel() - 1));
+      }
     }
     if (lastIndex == 0) {
       return contents;
