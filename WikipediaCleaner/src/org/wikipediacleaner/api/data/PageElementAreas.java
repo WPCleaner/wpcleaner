@@ -141,7 +141,7 @@ public class PageElementAreas {
                 } else {
                   addArea(
                       beginIndex + param.getBeginOffset(),
-                      beginIndex + equalIndex + 1);
+                      beginIndex + param.getBeginOffset() + equalIndex + 1);
                 }
               } else {
                 addArea(
@@ -312,7 +312,6 @@ public class PageElementAreas {
         addArea(element.getBeginIndex(), element.getEndIndex());
       }
     }
-    checkAreas();
   }
 
   /**
@@ -328,6 +327,7 @@ public class PageElementAreas {
       if (beginIndex <= area.endIndex) {
         if (endIndex < area.beginIndex) {
           areas.add(currentIndex, new Area(beginIndex, endIndex));
+          checkAreas();
           return;
         }
         area.beginIndex = Math.min(area.beginIndex, beginIndex);
@@ -342,12 +342,14 @@ public class PageElementAreas {
           }
           area.endIndex = Math.max(area.endIndex, tmpArea.endIndex);
           itArea.remove();
+          checkAreas();
         }
         return;
       }
       currentIndex++;
     }
     areas.add(new Area(beginIndex, endIndex));
+    checkAreas();
   }
 
   /**
