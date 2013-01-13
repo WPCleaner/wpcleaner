@@ -646,6 +646,31 @@ public class PageAnalysis {
    */
   private int analyze1Equal(int currentIndex) {
 
+    // Check that it's a beginning of a line
+    if ((currentIndex > 0) && (contents.charAt(currentIndex - 1) != '\n')) {
+      return currentIndex + 1;
+    }
+
+    // Check that it's not a template value
+    if (templates != null) {
+      PageElementTemplate template = null;
+      for (PageElementTemplate tmp : templates) {
+        if ((tmp.getBeginIndex() <= currentIndex) &&
+            (tmp.getEndIndex() > currentIndex)) {
+          template = tmp;
+        }
+      }
+      if (template != null) {
+        for (int i = 0; i < template.getParameterCount(); i++) {
+          int beginParam = template.getParameterPipeOffset(i);
+          int endParam = template.getParameterValueOffset(i);
+          if ((currentIndex >= beginParam) && (currentIndex < endParam)) {
+            return currentIndex + 1;
+          }
+        }
+      }
+    }
+
     // Check if this is a title
     PageElementTitle title = PageElementTitle.analyzeBlock(
         getWikipedia(), contents, currentIndex);
