@@ -91,7 +91,6 @@ public class PageElementAreas {
         }
       }
     }
-    checkAreas();
   }
 
   /**
@@ -338,12 +337,13 @@ public class PageElementAreas {
         while (itArea.hasNext()) {
           Area tmpArea = itArea.next();
           if (tmpArea.beginIndex > endIndex) {
+            checkAreas();
             return;
           }
           area.endIndex = Math.max(area.endIndex, tmpArea.endIndex);
           itArea.remove();
-          checkAreas();
         }
+        checkAreas();
         return;
       }
       currentIndex++;
