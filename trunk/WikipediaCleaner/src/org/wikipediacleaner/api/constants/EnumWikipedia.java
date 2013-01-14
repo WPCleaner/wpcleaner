@@ -319,19 +319,16 @@ public enum EnumWikipedia {
         formattedComment.append(link);
         formattedComment.append("|");
         formattedComment.append(Version.PROGRAM);
-        if (automatic) {
-          formattedComment.append("b");
-        }
         formattedComment.append("]] ");
       } else {
         formattedComment.append(Version.PROGRAM);
-        if (automatic) {
-          formattedComment.append("b");
-        }
         formattedComment.append(" ");
       }
       formattedComment.append("v");
       formattedComment.append(Version.VERSION);
+      if (automatic) {
+        formattedComment.append("b");
+      }
     }
     if (comment != null) {
       if (formattedComment.length() > 0) {
@@ -345,6 +342,9 @@ public enum EnumWikipedia {
       }
       formattedComment.append("(v");
       formattedComment.append(Version.VERSION);
+      if (automatic) {
+        formattedComment.append("b");
+      }
       formattedComment.append(")");
     }
     return formattedComment.toString();
