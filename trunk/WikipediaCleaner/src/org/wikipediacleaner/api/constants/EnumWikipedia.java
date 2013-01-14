@@ -289,21 +289,24 @@ public enum EnumWikipedia {
   /**
    * @param text Comment.
    * @param details Details about the update.
+   * @param automatic True if this an automatic edit.
    * @return Full comment.
    */
-  public String createUpdatePageComment(String text, String details) {
+  public String createUpdatePageComment(String text, String details, boolean automatic) {
     return formatComment(
            (((text != null) && (text.length() > 0)) ? text : "") +
-           (((details != null) && (details.length() > 0)) ? " - " + details : ""));
+           (((details != null) && (details.length() > 0)) ? " - " + details : ""),
+           automatic);
   }
 
   /**
    * Format a comment.
    * 
    * @param comment Original comment.
-   * @return Formatted comment (with WikiCleaner version).
+   * @param automatic True if this an automatic edit.
+   * @return Formatted comment (with WPCleaner version).
    */
-  public String formatComment(String comment) {
+  public String formatComment(String comment, boolean automatic) {
     Configuration config = Configuration.getConfiguration();
     boolean showWikiCleaner = config.getBoolean(
         null,
@@ -316,9 +319,15 @@ public enum EnumWikipedia {
         formattedComment.append(link);
         formattedComment.append("|");
         formattedComment.append(Version.PROGRAM);
+        if (automatic) {
+          formattedComment.append("b");
+        }
         formattedComment.append("]] ");
       } else {
         formattedComment.append(Version.PROGRAM);
+        if (automatic) {
+          formattedComment.append("b");
+        }
         formattedComment.append(" ");
       }
       formattedComment.append("v");

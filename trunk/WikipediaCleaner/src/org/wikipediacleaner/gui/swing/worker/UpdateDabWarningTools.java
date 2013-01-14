@@ -66,6 +66,7 @@ public class UpdateDabWarningTools {
   private final BasicWorker worker;
   private final BasicWindow window;
   private final boolean createWarning;
+  private final boolean automaticEdit;
   private final Map<String, Page> dabPages;
   private final Map<String, Page> nonDabPages;
   private final API api;
@@ -75,16 +76,19 @@ public class UpdateDabWarningTools {
    * @param worker Worker.
    */
   public UpdateDabWarningTools(EnumWikipedia wikipedia, BasicWorker worker) {
-    this(wikipedia, worker, true);
+    this(wikipedia, worker, true, false);
   }
 
   /**
    * @param wikipedia Wikipedia.
    * @param worker Worker.
    * @param createWarning Create warning if necessary.
+   * @param automaticEdit True if the edits are automatic.
    */
-  public UpdateDabWarningTools(EnumWikipedia wikipedia, BasicWorker worker, boolean createWarning) {
-    this(wikipedia, worker, (worker != null) ? worker.getWindow() : null, createWarning);
+  public UpdateDabWarningTools(
+      EnumWikipedia wikipedia, BasicWorker worker,
+      boolean createWarning, boolean automaticEdit) {
+    this(wikipedia, worker, (worker != null) ? worker.getWindow() : null, createWarning, automaticEdit);
   }
 
   /**
@@ -92,7 +96,7 @@ public class UpdateDabWarningTools {
    * @param window Window.
    */
   public UpdateDabWarningTools(EnumWikipedia wikipedia, BasicWindow window) {
-    this(wikipedia, null, window, true);
+    this(wikipedia, null, window, true, false);
   }
 
   /**
@@ -101,7 +105,7 @@ public class UpdateDabWarningTools {
    * @param createWarning Create warning if necessary.
    */
   public UpdateDabWarningTools(EnumWikipedia wikipedia, BasicWindow window, boolean createWarning) {
-    this(wikipedia, null, window, createWarning);
+    this(wikipedia, null, window, createWarning, false);
   }
 
   /**
@@ -109,16 +113,18 @@ public class UpdateDabWarningTools {
    * @param worker Worker.
    * @param window Window.
    * @param createWarning Create warning if necessary.
+   * @param automaticEdit True if the edits are automatic.
    */
   private UpdateDabWarningTools(
       EnumWikipedia wikipedia,
       BasicWorker worker, BasicWindow window,
-      boolean createWarning) {
+      boolean createWarning, boolean automaticEdit) {
     this.wikipedia = wikipedia;
     this.configuration = wikipedia.getConfiguration();
     this.worker = worker;
     this.window = window;
     this.createWarning = createWarning;
+    this.automaticEdit = automaticEdit;
     this.dabPages = new HashMap<String, Page>();
     this.nonDabPages = new HashMap<String, Page>();
     this.api = APIFactory.getAPI();
@@ -458,7 +464,7 @@ public class UpdateDabWarningTools {
       tmp.append('\n');
       updatePage(
           todoSubpage, tmp.toString(),
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
           false);
 
       // Inform creator and modifiers of the page
@@ -491,7 +497,7 @@ public class UpdateDabWarningTools {
       }
       api.updatePage(
           wikipedia, todoSubpage, tmp.toString(),
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
           false);
 
       return true;
@@ -591,7 +597,7 @@ public class UpdateDabWarningTools {
       }
       updateSection(
           talkPage,
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
           0, tmp.toString(), false);
 
       // Inform creator and modifiers of the page
@@ -635,7 +641,7 @@ public class UpdateDabWarningTools {
       }
       updateSection(
           talkPage,
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
           0, tmp.toString(), false);
       return true;
     }
@@ -659,7 +665,7 @@ public class UpdateDabWarningTools {
       }
       updateSection(
           talkPage,
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
           0, tmp.toString(), false);
       return true;
     }
@@ -717,7 +723,7 @@ public class UpdateDabWarningTools {
 
     // Remove the disambiguation warning
     String newContents = tmp.toString();
-    String reason = wikipedia.formatComment(configuration.getDisambiguationWarningCommentDone());
+    String reason = wikipedia.formatComment(configuration.getDisambiguationWarningCommentDone(), automaticEdit);
     if ((newContents.trim().length() == 0) &&
         (wikipedia.getConnection().getUser() != null) &&
         (wikipedia.getConnection().getUser().hasRight(User.RIGHT_DELETE))) {
@@ -752,7 +758,7 @@ public class UpdateDabWarningTools {
     if (Boolean.FALSE.equals(talkPage.isExisting())) {
       updateSection(
           talkPage,
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
           0, "{{" + todoTemplates.get(0) + "}}", false);
       return true;
     }
@@ -818,7 +824,7 @@ public class UpdateDabWarningTools {
       }
       updateSection(
           talkPage,
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
           0, tmp.toString(), false);
       return true;
     }
@@ -891,7 +897,7 @@ public class UpdateDabWarningTools {
       }
       updateSection(
           talkPage,
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks)),
+          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
           0, tmp.toString(), false);
       return true;
     }
@@ -970,7 +976,7 @@ public class UpdateDabWarningTools {
         }
         updateSection(
             talkPage,
-            wikipedia.formatComment(configuration.getDisambiguationWarningCommentDone()),
+            wikipedia.formatComment(configuration.getDisambiguationWarningCommentDone(), automaticEdit),
             0, tmp.toString(), false);
         return true;
       }
