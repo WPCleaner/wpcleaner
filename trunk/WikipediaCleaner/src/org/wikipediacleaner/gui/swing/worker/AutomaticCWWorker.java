@@ -32,6 +32,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -59,6 +60,11 @@ public class AutomaticCWWorker extends BasicWorker {
   private final List<CheckErrorAlgorithm> allAlgorithms;
 
   /**
+   * True if pages that couldn't be fixed should be analyzed.
+   */
+  private final boolean analyzeNonFixed;
+
+  /**
    * Count of pages fixed.
    */
   private int count;
@@ -69,15 +75,18 @@ public class AutomaticCWWorker extends BasicWorker {
    * @param selectedAlgorithms List of selected algorithms.
    * @param max Maximum number of pages for each algorithm.
    * @param allAlgorithms List of possible algorithms.
+   * @param analyzeNonFixed True if pages that couldn't be fixed should be analyzed.
    */
   public AutomaticCWWorker(
       EnumWikipedia wiki, BasicWindow window,
       List<CheckErrorAlgorithm> selectedAlgorithms, int max,
-      List<CheckErrorAlgorithm> allAlgorithms) {
+      List<CheckErrorAlgorithm> allAlgorithms,
+      boolean analyzeNonFixed) {
     super(wiki, window);
     this.selectedAlgorithms = selectedAlgorithms;
     this.max = max;
     this.allAlgorithms = allAlgorithms;
+    this.analyzeNonFixed = analyzeNonFixed;
     this.count = 0;
   }
 
@@ -140,8 +149,13 @@ public class AutomaticCWWorker extends BasicWorker {
                     false);
                 count++;
                 for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
-                  toolServer.markPageAsFixed(page, usedAlgorithm.getErrorNumberString());
+                  CheckErrorPage errorPage = CheckError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
+                  if ((errorPage != null) && (!errorPage.getErrorFound())) {
+                    toolServer.markPageAsFixed(page, usedAlgorithm.getErrorNumberString());
+                  }
                 }
+              } else if (analyzeNonFixed) {
+                Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
               }
             } else if (algorithm.isFullDetection()) {
               toolServer.markPageAsFixed(page, algorithm.getErrorNumberString());

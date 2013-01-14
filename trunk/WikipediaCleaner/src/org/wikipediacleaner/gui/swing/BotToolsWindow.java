@@ -31,7 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -60,12 +62,14 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 public class BotToolsWindow
   extends BasicWindow {
 
-  public final static Integer WINDOW_VERSION = Integer.valueOf(2);
+  public final static Integer WINDOW_VERSION = Integer.valueOf(3);
 
   private JButton buttonAutomaticFixing;
   private JButton buttonCWAutomaticFixing;
   private JButton buttonMonitorRC;
   private JButton buttonUpdateDabWarning;
+
+  private JCheckBox chkCWAnalyze;
 
   private JList lstCWAutomaticFixing;
 
@@ -105,7 +109,7 @@ public class BotToolsWindow
     GridBagConstraints constraints = new GridBagConstraints();
     constraints.fill = GridBagConstraints.BOTH;
     constraints.gridheight = 1;
-    constraints.gridwidth = 2;
+    constraints.gridwidth = 1;
     constraints.gridx = 0;
     constraints.gridy = 0;
     constraints.insets = new Insets(0, 0, 0, 0);
@@ -176,26 +180,44 @@ public class BotToolsWindow
     addAlgorithm(64); // Link equal to link text
     addAlgorithm(88); // DEFAULTSORT with blank at first position
     addAlgorithm(92); // Headline double
+    JPanel panelCW = new JPanel(new GridBagLayout());
+    panelCW.setBorder(BorderFactory.createTitledBorder(
+        BorderFactory.createEtchedBorder(),
+        GT._("Automatic fixing for Check Wiki")));
+    GridBagConstraints constraintsCW = new GridBagConstraints();
+    constraintsCW.fill = GridBagConstraints.BOTH;
+    constraintsCW.gridheight = 1;
+    constraintsCW.gridwidth = 1;
+    constraintsCW.gridx = 0;
+    constraintsCW.gridy = 0;
+    constraintsCW.insets = new Insets(0, 0, 0, 0);
+    constraintsCW.ipadx = 0;
+    constraintsCW.ipady = 0;
+    constraintsCW.weightx = 1;
+    constraintsCW.weighty = 1;
     lstCWAutomaticFixing = new JList(algorithms);
     lstCWAutomaticFixing.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     JScrollPane paneCWAutomaticFixing = new JScrollPane(lstCWAutomaticFixing);
     paneCWAutomaticFixing.setMinimumSize(new Dimension(100, 100));
     paneCWAutomaticFixing.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     paneCWAutomaticFixing.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-    constraints.gridwidth = 1;
-    panel.add(paneCWAutomaticFixing, constraints);
-    constraints.gridx++;
+    panelCW.add(paneCWAutomaticFixing, constraintsCW);
+    constraintsCW.gridy++;
     buttonCWAutomaticFixing = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
         GT._("Automatic fixing for Check Wiki"), false);
     buttonCWAutomaticFixing.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCWAutomaticFixing"));
-    constraints.weightx = 0;
-    panel.add(buttonCWAutomaticFixing, constraints);
-    constraints.gridwidth = 2;
-    constraints.gridx = 0;
+    constraintsCW.weighty = 0;
+    panelCW.add(buttonCWAutomaticFixing, constraintsCW);
+    constraintsCW.gridy++;
+    chkCWAnalyze = Utilities.createJCheckBox(
+        GT._("Analyze pages that couldn't be fixed by bot"), true);
+    panelCW.add(chkCWAnalyze, constraintsCW);
+    constraintsCW.gridy++;
+    // TODO: Add check box for analyzing pages that couldn't be fixed
+    panel.add(panelCW, constraints);
     constraints.gridy++;
-    constraints.weightx = 1;
 
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -277,7 +299,7 @@ public class BotToolsWindow
       return;
     }
     AutomaticCWWorker worker = new AutomaticCWWorker(
-        getWikipedia(), this, selectedAlgorithms, max, algorithms);
+        getWikipedia(), this, selectedAlgorithms, max, algorithms, chkCWAnalyze.isSelected());
     worker.start();
   }
 
