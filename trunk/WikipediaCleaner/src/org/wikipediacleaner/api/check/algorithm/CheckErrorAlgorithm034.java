@@ -134,6 +134,9 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
               }
               CheckErrorResult errorResult = createCheckErrorResult(
                   page, function.getBeginIndex(), function.getEndIndex());
+              if (MagicWord.PAGE_NAME.equals(magicWordName)) {
+                errorResult.addReplacement(page.getTitle());
+              }
               errors.add(errorResult);
               nextIndex = function.getEndIndex();
             } else {
