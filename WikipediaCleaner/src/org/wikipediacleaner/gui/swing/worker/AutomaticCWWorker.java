@@ -136,7 +136,7 @@ public class AutomaticCWWorker extends BasicWorker {
                 setText(GT._("Fixing page {0}", page.getTitle()));
                 api.updatePage(
                     getWikipedia(), page, newContents,
-                    getWikipedia().createUpdatePageComment(comment.toString(), null),
+                    getWikipedia().createUpdatePageComment(comment.toString(), null, true),
                     false);
                 count++;
                 for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {

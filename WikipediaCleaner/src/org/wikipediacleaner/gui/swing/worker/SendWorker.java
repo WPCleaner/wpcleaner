@@ -97,7 +97,7 @@ public class SendWorker extends BasicWorker {
         attemptNumber++;
         queryResult = api.updatePage(
             getWikipedia(), page, text,
-            getWikipedia().createUpdatePageComment(comment, null),
+            getWikipedia().createUpdatePageComment(comment, null, false),
             forceWatch);
       } catch (APIException e) {
         if ((e.getQueryResult() == EnumQueryResult.BAD_TOKEN) && (attemptNumber < 2)) {
@@ -126,7 +126,7 @@ public class SendWorker extends BasicWorker {
     if (updateWarning) {
       try {
         UpdateDabWarningTools dabWarningTools = new UpdateDabWarningTools(
-            getWikipedia(), this, createWarning);
+            getWikipedia(), this, createWarning, false);
         PageAnalysis pageAnalysis = page.getAnalysis(text, true);
         dabWarningTools.updateDabWarning(
             pageAnalysis, queryResult.getPageNewRevId(),

@@ -244,7 +244,7 @@ public class MediaWiki extends MediaWikiController {
                 attemptNumber++;
                 api.updatePage(
                     wikipedia, page, newContents,
-                    wikipedia.createUpdatePageComment(comment, details.toString()),
+                    wikipedia.createUpdatePageComment(comment, details.toString(), false),
                     false);
               } catch (APIException e) {
                 if ((e.getQueryResult() == EnumQueryResult.BAD_TOKEN) && (attemptNumber < 2)) {
