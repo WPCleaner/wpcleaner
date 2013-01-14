@@ -121,6 +121,8 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
       PageElementTitle currentTitle = titles.get(i);
       if ((previousTitle.getFirstLevel() == currentTitle.getFirstLevel()) &&
           (previousTitle.getTitle().equals(currentTitle.getTitle()))) {
+
+        // Analyze if first title can be removed
         String betweenTitles = contents.substring(
             previousTitle.getEndIndex(), currentTitle.getBeginIndex()).trim();
         boolean shouldRemove = false;
@@ -143,6 +145,33 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
             lastIndex = previousTitle.getBeginIndex();
           }
           lastIndex = currentTitle.getBeginIndex();
+        } else {
+
+          // Analyze if second title can be removed
+          PageElementTitle nextTitle = (i + 1 < titles.size()) ? titles.get(i + 1) : null;
+          String afterTitle = contents.substring(
+              currentTitle.getEndIndex(),
+              (nextTitle != null) ? nextTitle.getBeginIndex() : contents.length()).trim();
+          if (afterTitle.length() == 0) {
+            shouldRemove = true;
+          } else {
+            int tmpIndex = previousTitle.getEndIndex();
+            while ((tmpIndex < contents.length()) &&
+                   (Character.isWhitespace(contents.charAt(tmpIndex)))) {
+              tmpIndex++;
+            }
+            if ((tmpIndex < contents.length()) &&
+                (contents.startsWith(afterTitle, tmpIndex))) {
+              shouldRemove = true;
+            }
+          }
+          if (shouldRemove) {
+            if (currentTitle.getBeginIndex() > lastIndex) {
+              buffer.append(contents.substring(lastIndex, currentTitle.getBeginIndex()));
+              lastIndex = currentTitle.getBeginIndex();
+            }
+            lastIndex = (nextTitle != null) ? nextTitle.getBeginIndex() : contents.length();
+          }
         }
       }
     }
