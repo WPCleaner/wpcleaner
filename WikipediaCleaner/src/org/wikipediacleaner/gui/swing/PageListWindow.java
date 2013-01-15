@@ -53,6 +53,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.component.IconCellRenderer;
 import org.wikipediacleaner.gui.swing.component.ProgressionValueCellRenderer;
 import org.wikipediacleaner.gui.swing.component.BooleanIconCellRenderer;
 import org.wikipediacleaner.gui.swing.worker.PageListWorker;
@@ -185,11 +186,15 @@ public class PageListWindow extends BasicWindow {
     columnModel.getColumn(PageListTableModel.COLUMN_DISAMBIGUATION).setMaxWidth(20);
     columnModel.getColumn(PageListTableModel.COLUMN_DISAMBIGUATION).setCellRenderer(
         new BooleanIconCellRenderer("commons-disambig-colour.png", null));
+    columnModel.getColumn(PageListTableModel.COLUMN_DISAMBIGUATION).setHeaderRenderer(
+        new IconCellRenderer("commons-disambig-colour.png"));
     columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setMinWidth(20);
     columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setPreferredWidth(20);
     columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setMaxWidth(20);
     columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setCellRenderer(
         new BooleanIconCellRenderer("commons-redirect-arrow-without-text.png", null));
+    columnModel.getColumn(PageListTableModel.COLUMN_REDIRECT).setHeaderRenderer(
+        new IconCellRenderer("commons-redirect-arrow-without-text.png"));
     columnModel.getColumn(PageListTableModel.COLUMN_PAGE).setMinWidth(100);
     columnModel.getColumn(PageListTableModel.COLUMN_PAGE).setPreferredWidth(200);
     columnModel.getColumn(PageListTableModel.COLUMN_WATCHED).setMinWidth(20);
@@ -197,6 +202,8 @@ public class PageListWindow extends BasicWindow {
     columnModel.getColumn(PageListTableModel.COLUMN_WATCHED).setMaxWidth(20);
     columnModel.getColumn(PageListTableModel.COLUMN_WATCHED).setCellRenderer(
         new BooleanIconCellRenderer("gnome-logviewer.png", null));
+    columnModel.getColumn(PageListTableModel.COLUMN_WATCHED).setHeaderRenderer(
+        new IconCellRenderer("gnome-logviewer.png"));
     Utilities.addRowSorter(tablePages, modelPages);
     tablePages.addMouseListener(new PageListMouseListener());
     JScrollPane scrollPages = new JScrollPane(tablePages);
