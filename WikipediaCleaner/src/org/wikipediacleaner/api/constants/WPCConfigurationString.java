@@ -46,6 +46,8 @@ public enum WPCConfigurationString {
   HELP_PAGE("help_page", null, false, true, false),
   // URL of the help page
   HELP_URL("help_url", "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner", false, true, false),
+  // Template used to mark a text as being in a foreign language
+  LANG_TEMPLATE("lang_template", null, false, true, false),
   // Template used to group all messages on a user talk page
   MSG__GLOBAL_LIST_TEMPLATE("rc_msg_global_list_template", null, false, true, true),
   // Template used to group all messages on a user talk page

@@ -137,6 +137,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   private JButton buttonRemoveLinks;
   private JButton buttonWatchLink;
   private JButton buttonDisambiguationWarning;
+  private JButton buttonOtherLanguage;
   private JButton buttonTranslation;
 
   List<CheckErrorAlgorithm> allAlgorithms;
@@ -250,6 +251,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       buttonDelete.setEnabled(isPageLoaded());
     }
     buttonDisambiguationWarning.setEnabled(article);
+    buttonOtherLanguage.setEnabled(isPageLoaded());
     buttonTranslation.setEnabled(isPageLoaded());
     super.updateComponentState();
   }
@@ -410,6 +412,15 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     addButtonWatch(toolbarButtons, true);
     addButtonDisambiguation(toolbarButtons, true);
     toolbarButtons.addSeparator();
+    String langTemplate = getConfiguration().getString(WPCConfigurationString.LANG_TEMPLATE);
+    if ((langTemplate != null) && (langTemplate.trim().length() > 0)) {
+      String[] elements = langTemplate.split("\\|");
+      buttonOtherLanguage = Utilities.createJButton("<html><b>{{" + elements[0] + "}}</b></html>");
+      buttonOtherLanguage.setToolTipText(GT._("Mark the selected text as being in a foreign language"));
+      buttonOtherLanguage.addActionListener(EventHandler.create(
+          ActionListener.class, this, "actionOtherLanguage"));
+      toolbarButtons.add(buttonOtherLanguage);
+    }
     buttonTranslation = Utilities.createJButton(
         "<html><b>(??)</b> \u21d2 <b>(" + getWikipedia().getSettings().getLanguage() + ")</b></html>");
     buttonTranslation.setToolTipText(GT._("Translation of an article copied from an other wiki"));
@@ -1057,6 +1068,13 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         Collections.singletonList(getPage()),
         true, true, true);
     worker.start();
+  }
+
+  /**
+   * Action called when Other language button is pressed.
+   */
+  public void actionOtherLanguage() {
+    // TODO
   }
 
   /**
