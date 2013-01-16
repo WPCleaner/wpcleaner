@@ -411,7 +411,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     addButtonDisambiguation(toolbarButtons, true);
     toolbarButtons.addSeparator();
     buttonTranslation = Utilities.createJButton(
-        "(??) \u21d2 (" + getWikipedia().getSettings().getLanguage() + ")");
+        "<html><b>(??)</b> \u21d2 <b>(" + getWikipedia().getSettings().getLanguage() + ")</b></html>");
+    buttonTranslation.setToolTipText(GT._("Translation of an article copied from an other wiki"));
     buttonTranslation.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionTranslate"));
     toolbarButtons.add(buttonTranslation);
