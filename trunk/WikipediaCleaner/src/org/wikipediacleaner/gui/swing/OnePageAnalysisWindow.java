@@ -1078,7 +1078,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     LanguageRegistry registry = new LanguageRegistry();
     List<LanguageRegistry.Language> languages = registry.getLanguages();
     for (LanguageRegistry.Language language : languages) {
-      getLog().info(language.getCode());
+      System.err.println(language);
     }
   }
 
