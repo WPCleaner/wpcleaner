@@ -90,7 +90,23 @@ public class LanguageRegistry {
             if ("language".equals(type)) {
               if ("Subtag".equals(getElementName(1, lines))) {
                 Language language = new Language(getElementValue(1, lines));
-                tmpLanguages.add(language);
+                boolean shouldKeep = true;
+                for (int lineNum = 2; lineNum < lines.size(); lineNum++) {
+                  String name = getElementName(lineNum, lines);
+                  String value = getElementValue(lineNum, lines);
+                  if ("Description".equals(name)) {
+                    language.addDescription(value);
+                  } else if ("Scope".equals(name)) {
+                    if ("special".equals(value)) {
+                      shouldKeep = false;
+                    }
+                  } else if ("Deprecated".equals(name)) {
+                    shouldKeep = false;
+                  }
+                }
+                if (shouldKeep) {
+                  tmpLanguages.add(language);
+                }
               }
             }
           }
@@ -152,11 +168,16 @@ public class LanguageRegistry {
      * Language code.
      */
     private final String code;
-    
+
+    /**
+     * Description.
+     */
+    private String description;
+
     /**
      * @param code Language code.
      */
-    public Language(String code) {
+    Language(String code) {
       this.code = code;
     }
 
@@ -168,12 +189,43 @@ public class LanguageRegistry {
     }
 
     /**
+     * @param desc Description.
+     */
+    void addDescription(String desc) {
+      if (this.description == null) {
+        this.description = desc;
+      } else {
+        this.description += ", " + desc;
+      }
+    }
+
+    /**
+     * @return Description.
+     */
+    public String getDescription() {
+      return description;
+    }
+
+    /**
      * @param o Other language.
-     * @return
+     * @return  a negative integer, zero, or a positive integer as the language code
+     *    is less than, equal to, or greater than the code of the specified language.
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     public int compareTo(Language o) {
       return code.compareTo(o.code);
+    }
+
+    /**
+     * @return String representation of the object.
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+      if (description != null) {
+        return code + " - " + description;
+      }
+      return code;
     }
   }
 }
