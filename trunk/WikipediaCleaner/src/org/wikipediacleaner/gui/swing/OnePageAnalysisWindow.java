@@ -72,6 +72,7 @@ import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.InternalLinkCount;
+import org.wikipediacleaner.api.data.LanguageRegistry;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageComparator;
@@ -1074,7 +1075,11 @@ public class OnePageAnalysisWindow extends OnePageWindow {
    * Action called when Other language button is pressed.
    */
   public void actionOtherLanguage() {
-    // TODO
+    LanguageRegistry registry = new LanguageRegistry();
+    List<LanguageRegistry.Language> languages = registry.getLanguages();
+    for (LanguageRegistry.Language language : languages) {
+      getLog().info(language.getCode());
+    }
   }
 
   /**
