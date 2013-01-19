@@ -414,14 +414,19 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     addButtonDisambiguation(toolbarButtons, true);
     toolbarButtons.addSeparator();
     String langTemplate = getConfiguration().getString(WPCConfigurationString.LANG_TEMPLATE);
+    boolean langTemplateEnabled = false;
+    String langTemplateName = "lang";
     if ((langTemplate != null) && (langTemplate.trim().length() > 0)) {
       String[] elements = langTemplate.split("\\|");
-      buttonOtherLanguage = Utilities.createJButton("<html><b>{{" + elements[0] + "}}</b></html>");
-      buttonOtherLanguage.setToolTipText(GT._("Mark the selected text as being in a foreign language"));
-      buttonOtherLanguage.addActionListener(EventHandler.create(
-          ActionListener.class, this, "actionOtherLanguage"));
-      toolbarButtons.add(buttonOtherLanguage);
+      langTemplateName = elements[0];
+      langTemplateEnabled = true;
     }
+    buttonOtherLanguage = Utilities.createJButton("<html><b>{{" + langTemplateName + "}}</b></html>");
+    buttonOtherLanguage.setToolTipText(GT._("Mark the selected text as being in a foreign language"));
+    buttonOtherLanguage.setEnabled(langTemplateEnabled);
+    buttonOtherLanguage.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionOtherLanguage"));
+    toolbarButtons.add(buttonOtherLanguage);
     buttonTranslation = Utilities.createJButton(
         "<html><b>(??)</b> \u21d2 <b>(" + getWikipedia().getSettings().getLanguage() + ")</b></html>");
     buttonTranslation.setToolTipText(GT._("Translation of an article copied from an other wiki"));
