@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-01-20 22:29+0100\n"
+"POT-Creation-Date: 2013-01-20 22:53+0100\n"
 "PO-Revision-Date: 2012-10-13 06:23+0000\n"
 "Last-Translator: simone.sandri <lexluxsox@hotmail.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -971,10 +971,15 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:103
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:123
 #, fuzzy
 msgid "Language"
 msgstr "Lin&gua"
+
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:136
+#, fuzzy
+msgid "Script"
+msgstr "Ordina"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:205
 #, java-format
