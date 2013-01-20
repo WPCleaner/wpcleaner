@@ -59,6 +59,7 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
@@ -72,7 +73,6 @@ import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.InternalLinkCount;
-import org.wikipediacleaner.api.data.LanguageRegistry;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageComparator;
@@ -414,16 +414,13 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     addButtonDisambiguation(toolbarButtons, true);
     toolbarButtons.addSeparator();
     String langTemplate = getConfiguration().getString(WPCConfigurationString.LANG_TEMPLATE);
-    boolean langTemplateEnabled = false;
     String langTemplateName = "lang";
     if ((langTemplate != null) && (langTemplate.trim().length() > 0)) {
       String[] elements = langTemplate.split("\\|");
       langTemplateName = elements[0];
-      langTemplateEnabled = true;
     }
     buttonOtherLanguage = Utilities.createJButton("<html><b>{{" + langTemplateName + "}}</b></html>");
     buttonOtherLanguage.setToolTipText(GT._("Mark the selected text as being in a foreign language"));
-    buttonOtherLanguage.setEnabled(langTemplateEnabled);
     buttonOtherLanguage.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOtherLanguage"));
     toolbarButtons.add(buttonOtherLanguage);
@@ -1080,11 +1077,68 @@ public class OnePageAnalysisWindow extends OnePageWindow {
    * Action called when Other language button is pressed.
    */
   public void actionOtherLanguage() {
-    LanguageRegistry registry = new LanguageRegistry();
-    List<LanguageRegistry.Language> languages = registry.getLanguages();
-    for (LanguageRegistry.Language language : languages) {
-      System.err.println(language);
+    // Check configuration
+    String langTemplate = getConfiguration().getString(WPCConfigurationString.LANG_TEMPLATE);
+    if ((langTemplate == null) || (langTemplate.trim().length() == 0)) {
+      return;
     }
+    String[] elements = langTemplate.split("\\|");
+
+    // Check selection
+    String text = getTextContents().getText();
+    int start = getTextContents().getSelectionStart();
+    int end = getTextContents().getSelectionEnd();
+    while ((start < end) && (Character.isWhitespace(text.charAt(start)))) {
+      start++;
+    }
+    while ((end > start) && (Character.isWhitespace(text.charAt(end - 1)))) {
+      end--;
+    }
+    if (end <= start) {
+      JOptionPane.showMessageDialog(
+          getParentComponent(),
+          GT._("You must select the text that is written in a foreign language"),
+          Version.PROGRAM, JOptionPane.WARNING_MESSAGE);
+      return;
+    }
+
+    // Ask for language
+    LanguageSelectionPanel panel = new LanguageSelectionPanel();
+    int result = JOptionPane.showConfirmDialog(
+        getParentComponent(), panel, GT._("Foreign language"),
+        JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+    if (result != JOptionPane.OK_OPTION) {
+      return;
+    }
+    String language = panel.getLanguage();
+    if ((language == null) || (language.length() == 0)) {
+      return;
+    }
+
+    // Mark text
+    StringBuilder newText = new StringBuilder();
+    newText.append("{{");
+    newText.append(elements[0]);
+    newText.append("|");
+    if ((elements.length > 1) && (elements[1] != null) && (elements[1].trim().length() > 0)) {
+      newText.append(elements[1]);
+      newText.append("=");
+    }
+    newText.append(language);
+    newText.append("|");
+    if ((elements.length > 2) && (elements[2] != null) && (elements[2].trim().length() > 0)) {
+      newText.append(elements[2]);
+      newText.append("=");
+    }
+    if (start > getTextContents().getSelectionStart()) {
+      newText.append(text.substring(getTextContents().getSelectionStart(), start));
+    }
+    newText.append(text.substring(start, end));
+    if (getTextContents().getSelectionEnd() > end) {
+      newText.append(text.substring(end, getTextContents().getSelectionEnd()));
+    }
+    newText.append("}}");
+    getTextContents().replaceSelection(newText.toString());
   }
 
   /**

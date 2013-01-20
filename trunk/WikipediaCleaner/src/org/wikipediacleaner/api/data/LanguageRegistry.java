@@ -80,6 +80,15 @@ public class LanguageRegistry {
     return languages;
   }
 
+  public LanguageRegistry.Language getLanguage(String code) {
+    for (LanguageRegistry.Language language : languages) {
+      if (code.equalsIgnoreCase(language.getCode())) {
+        return language;
+      }
+    }
+    return null;
+  }
+
   /**
    * @return List of all scripts.
    */
@@ -115,7 +124,7 @@ public class LanguageRegistry {
           return;
         }
         BufferedReader reader = new BufferedReader(new InputStreamReader(
-            new GZIPInputStream(url.openStream())));
+            new GZIPInputStream(url.openStream()), "UTF8"));
 
         List<LanguageRegistry.Language> tmpLanguages = new ArrayList<LanguageRegistry.Language>();
         List<LanguageRegistry.Script> tmpScripts = new ArrayList<LanguageRegistry.Script>();
