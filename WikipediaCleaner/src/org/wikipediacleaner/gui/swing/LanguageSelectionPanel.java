@@ -48,6 +48,11 @@ public class LanguageSelectionPanel extends JPanel {
   private static final long serialVersionUID = -3237387577277476620L;
 
   /**
+   * Language registry.
+   */
+  private LanguageRegistry registry;
+
+  /**
    * Button for selecting the language.
    */
   private JButton buttonLanguage;
@@ -58,14 +63,24 @@ public class LanguageSelectionPanel extends JPanel {
   private JTextField txtLanguage;
 
   /**
-   * Language registry.
-   */
-  private LanguageRegistry registry;
-
-  /**
    * Selected language.
    */
   private LanguageRegistry.Language language;
+
+  /**
+   * Button for selecting the script.
+   */
+  private JButton buttonScript;
+
+  /**
+   * Text for the selected script.
+   */
+  private JTextField txtScript;
+
+  /**
+   * Selected script.
+   */
+  private LanguageRegistry.Script script;
 
   /**
    * Create a language selection panel.
@@ -86,6 +101,11 @@ public class LanguageSelectionPanel extends JPanel {
       return null;
     }
     String result = language.getCode();
+
+    // Script component
+    if (script != null) {
+      result += "-" + script.getCode();
+    }
 
     return result;
   }
@@ -108,7 +128,22 @@ public class LanguageSelectionPanel extends JPanel {
     txtLanguage = new JTextField("", 40);
     txtLanguage.setEditable(false);
     constraints.gridx++;
+    constraints.weightx = 1;
     add(txtLanguage, constraints);
+    constraints.gridy++;
+
+    // Script
+    buttonScript = Utilities.createJButton(GT._("Script"));
+    buttonScript.addActionListener(EventHandler.create(ActionListener.class, this, "actionScript"));
+    buttonScript.setEnabled(false);
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(buttonScript, constraints);
+    txtScript = new JTextField("", 40);
+    txtScript.setEditable(false);
+    constraints.gridx++;
+    constraints.weightx = 1;
+    add(txtScript, constraints);
     constraints.gridy++;
   }
 
@@ -151,5 +186,32 @@ public class LanguageSelectionPanel extends JPanel {
   public void selectLanguage(String languageCode) {
     language = registry.getLanguage(languageCode);
     txtLanguage.setText(language != null ? language.toString() : "");
+    buttonScript.setEnabled(language != null);
+    selectScript(null);
+  }
+
+  /**
+   * Action called when the Script button is clicked.
+   */
+  public void actionScript() {
+    JPopupMenu menu = new JPopupMenu();
+    List<LanguageRegistry.Script> scripts = registry.getScripts(language);
+    for (LanguageRegistry.Script tmpScript : scripts) {
+      JMenuItem item = new JMenuItem(tmpScript.toString());
+      item.setActionCommand(tmpScript.getCode());
+      item.addActionListener(EventHandler.create(ActionListener.class, this, "selectScript", "actionCommand"));
+      menu.add(item);
+    }
+    menu.show(buttonScript, 0, buttonScript.getHeight());
+  }
+
+  /**
+   * Action called when a script is selected.
+   * 
+   * @param scriptCode Script code.
+   */
+  public void selectScript(String scriptCode) {
+    script = registry.getScript(scriptCode);
+    txtScript.setText(script != null ? script.toString() : "");
   }
 }

@@ -32,7 +32,7 @@ import java.util.zip.GZIPInputStream;
  * A registry for languages.
  * 
  * This is based on the data file <code>language-subtag-registry.txt.tgz</code>.
- * This file is retrieved from http://www.iana.org/assignments/language-subtag-registry
+ * This file is retrieved from {@link http://www.iana.org/assignments/language-subtag-registry}
  * and compressed with gzip.
  */
 public class LanguageRegistry {
@@ -80,7 +80,14 @@ public class LanguageRegistry {
     return languages;
   }
 
+  /**
+   * @param code Language code.
+   * @return Language with the specified code.
+   */
   public LanguageRegistry.Language getLanguage(String code) {
+    if (code == null) {
+      return null;
+    }
     for (LanguageRegistry.Language language : languages) {
       if (code.equalsIgnoreCase(language.getCode())) {
         return language;
@@ -90,10 +97,35 @@ public class LanguageRegistry {
   }
 
   /**
-   * @return List of all scripts.
+   * @param language Language.
+   * @return List of all scripts available for the specified language.
    */
-  public List<LanguageRegistry.Script> getScripts() {
-    return scripts;
+  public List<LanguageRegistry.Script> getScripts(LanguageRegistry.Language language) {
+    List<LanguageRegistry.Script> tmpScripts = new ArrayList<LanguageRegistry.Script>(scripts.size());
+    for (LanguageRegistry.Script script : scripts) {
+      if ((language == null) ||
+          (language.getSuppressScript() == null) ||
+          (!language.getSuppressScript().equalsIgnoreCase(script.getCode()))) {
+        tmpScripts.add(script);
+      }
+    }
+    return tmpScripts;
+  }
+
+  /**
+   * @param code Script code.
+   * @return Script with the specified code.
+   */
+  public LanguageRegistry.Script getScript(String code) {
+    if (code == null) {
+      return null;
+    }
+    for (LanguageRegistry.Script script : scripts) {
+      if (code.equalsIgnoreCase(script.getCode())) {
+        return script;
+      }
+    }
+    return null;
   }
 
   /**
