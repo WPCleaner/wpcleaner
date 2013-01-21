@@ -1103,7 +1103,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     }
 
     // Ask for language
-    LanguageSelectionPanel panel = new LanguageSelectionPanel(getWikipedia());
+    LanguageSelectionPanel panel = new LanguageSelectionPanel(
+        getWikipedia(), text.substring(start, end));
     int result = JOptionPane.showConfirmDialog(
         getParentComponent(), panel, GT._("Foreign language"),
         JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
