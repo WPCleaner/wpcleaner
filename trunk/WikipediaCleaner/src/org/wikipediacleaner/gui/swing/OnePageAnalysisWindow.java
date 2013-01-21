@@ -1103,7 +1103,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     }
 
     // Ask for language
-    LanguageSelectionPanel panel = new LanguageSelectionPanel();
+    LanguageSelectionPanel panel = new LanguageSelectionPanel(getWikipedia());
     int result = JOptionPane.showConfirmDialog(
         getParentComponent(), panel, GT._("Foreign language"),
         JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -1117,6 +1117,9 @@ public class OnePageAnalysisWindow extends OnePageWindow {
 
     // Mark text
     StringBuilder newText = new StringBuilder();
+    if (start > getTextContents().getSelectionStart()) {
+      newText.append(text.substring(getTextContents().getSelectionStart(), start));
+    }
     newText.append("{{");
     newText.append(elements[0]);
     newText.append("|");
@@ -1130,14 +1133,11 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       newText.append(elements[2]);
       newText.append("=");
     }
-    if (start > getTextContents().getSelectionStart()) {
-      newText.append(text.substring(getTextContents().getSelectionStart(), start));
-    }
     newText.append(text.substring(start, end));
+    newText.append("}}");
     if (getTextContents().getSelectionEnd() > end) {
       newText.append(text.substring(end, getTextContents().getSelectionEnd()));
     }
-    newText.append("}}");
     getTextContents().replaceSelection(newText.toString());
   }
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-01-20 22:53+0100\n"
+"POT-Creation-Date: 2013-01-21 11:49+0100\n"
 "PO-Revision-Date: 2012-12-16 12:29+0000\n"
 "Last-Translator: Dennis Baudys <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -964,15 +964,25 @@ msgstr ""
 msgid "Information"
 msgstr "Informationen"
 
-#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:123
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:172
 #, fuzzy
 msgid "Language"
 msgstr "Spr&ache"
 
-#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:136
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:185
 #, fuzzy
 msgid "Script"
 msgstr "Sortieren"
+
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:199
+#, fuzzy
+msgid "Region"
+msgstr "Wiederherstellen"
+
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:217
+#, fuzzy, java-format
+msgid "Variant n°{0}"
+msgstr "Fehler n°{0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:205
 #, java-format

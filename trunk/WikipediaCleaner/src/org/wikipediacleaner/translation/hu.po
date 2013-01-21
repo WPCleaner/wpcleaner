@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-01-20 22:53+0100\n"
+"POT-Creation-Date: 2013-01-21 11:49+0100\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Krasznecz Zoltán <zoltan.krasznecz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -961,15 +961,25 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:123
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:172
 #, fuzzy
 msgid "Language"
 msgstr "Nyelv"
 
-#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:136
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:185
 #, fuzzy
 msgid "Script"
 msgstr "Rendezés"
+
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:199
+#, fuzzy
+msgid "Region"
+msgstr "Ismét"
+
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:217
+#, fuzzy, java-format
+msgid "Variant n°{0}"
+msgstr "Hiba n°{0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:205
 #, java-format

@@ -24,6 +24,7 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JMenu;
@@ -32,6 +33,9 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.LanguageRegistry;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
@@ -46,6 +50,11 @@ public class LanguageSelectionPanel extends JPanel {
    * Serialization.
    */
   private static final long serialVersionUID = -3237387577277476620L;
+
+  /**
+   * Wiki.
+   */
+  private final EnumWikipedia wiki;
 
   /**
    * Language registry.
@@ -83,10 +92,45 @@ public class LanguageSelectionPanel extends JPanel {
   private LanguageRegistry.Script script;
 
   /**
-   * Create a language selection panel.
+   * Button for selecting the region.
    */
-  public LanguageSelectionPanel() {
+  private JButton buttonRegion;
+
+  /**
+   * Text for the selected region.
+   */
+  private JTextField txtRegion;
+
+  /**
+   * Selected region.
+   */
+  private LanguageRegistry.Region region;
+
+  private final static int NB_VARIANTS = 4;
+
+  /**
+   * Buttons for selecting the variants.
+   */
+  private Vector<JButton> buttonVariant;
+
+  /**
+   * Texts for the selected variants.
+   */
+  private Vector<JTextField> txtVariant;
+
+  /**
+   * Selected variants.
+   */
+  private Vector<LanguageRegistry.Variant> variant;
+
+  /**
+   * Create a language selection panel.
+   * 
+   * @param wiki Wiki.
+   */
+  public LanguageSelectionPanel(EnumWikipedia wiki) {
     super(new GridBagLayout(), true);
+    this.wiki = wiki;
     registry = new LanguageRegistry();
     constructContents();
   }
@@ -105,6 +149,11 @@ public class LanguageSelectionPanel extends JPanel {
     // Script component
     if (script != null) {
       result += "-" + script.getCode();
+    }
+
+    // Region component
+    if (region != null) {
+      result += "-" + region.getCode();
     }
 
     return result;
@@ -145,6 +194,43 @@ public class LanguageSelectionPanel extends JPanel {
     constraints.weightx = 1;
     add(txtScript, constraints);
     constraints.gridy++;
+
+    // Region
+    buttonRegion = Utilities.createJButton(GT._("Region"));
+    buttonRegion.addActionListener(EventHandler.create(ActionListener.class, this, "actionRegion"));
+    buttonRegion.setEnabled(false);
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(buttonRegion, constraints);
+    txtRegion = new JTextField("", 40);
+    txtRegion.setEditable(false);
+    constraints.gridx++;
+    constraints.weightx = 1;
+    add(txtRegion, constraints);
+    constraints.gridy++;
+
+    // Variants
+    buttonVariant = new Vector<JButton>(NB_VARIANTS);
+    txtVariant = new Vector<JTextField>(NB_VARIANTS);
+    variant = new Vector<LanguageRegistry.Variant>(NB_VARIANTS);
+    for (int i = 0; i < NB_VARIANTS; i++) {
+      JButton tmpButton = Utilities.createJButton(GT._("Variant n°{0}", Integer.toString(i + 1)));
+      tmpButton.setActionCommand(Integer.toString(i));
+      tmpButton.addActionListener(EventHandler.create(ActionListener.class, this, "actionVariant", "actionCommand"));
+      tmpButton.setEnabled(false);
+      buttonVariant.add(tmpButton);
+      constraints.gridx = 0;
+      constraints.weightx = 0;
+      add(tmpButton, constraints);
+      JTextField tmpText = new JTextField("", 40);
+      tmpText.setEditable(false);
+      txtVariant.add(tmpText);
+      constraints.gridx++;
+      constraints.weightx = 1;
+      add(tmpText, constraints);
+      constraints.gridy++;
+      variant.add(null);
+    }
   }
 
   /**
@@ -152,6 +238,23 @@ public class LanguageSelectionPanel extends JPanel {
    */
   public void actionLanguage() {
     JPopupMenu menu = new JPopupMenu();
+
+    // Common languages
+    WPCConfiguration config = wiki.getConfiguration();
+    List<String> commonLanguages = config.getStringList(WPCConfigurationStringList.COMMON_LANGUAGES);
+    if ((commonLanguages != null) && (commonLanguages.size() > 0)) {
+      for (String commonLanguage : commonLanguages) {
+        LanguageRegistry.Language tmpLanguage = registry.getLanguage(commonLanguage);
+        if (tmpLanguage != null) {
+          JMenuItem item = new JMenuItem(tmpLanguage.toString());
+          item.setActionCommand(tmpLanguage.getCode());
+          item.addActionListener(EventHandler.create(ActionListener.class, this, "selectLanguage", "actionCommand"));
+          menu.add(item);
+        }
+      }
+    }
+
+    // All languages
     List<LanguageRegistry.Language> languages = registry.getLanguages();
     char firstLetter = '\0';
     JMenu firstMenu = null;
@@ -188,6 +291,11 @@ public class LanguageSelectionPanel extends JPanel {
     txtLanguage.setText(language != null ? language.toString() : "");
     buttonScript.setEnabled(language != null);
     selectScript(null);
+    buttonRegion.setEnabled(language != null);
+    buttonVariant.get(0).setEnabled(language != null);
+    for (int i = 1; i < NB_VARIANTS; i++) {
+      buttonVariant.get(i).setEnabled(false);
+    }
   }
 
   /**
@@ -196,11 +304,19 @@ public class LanguageSelectionPanel extends JPanel {
   public void actionScript() {
     JPopupMenu menu = new JPopupMenu();
     List<LanguageRegistry.Script> scripts = registry.getScripts(language);
+    JMenu firstMenu = null;
+    int count = 0;
     for (LanguageRegistry.Script tmpScript : scripts) {
+      if ((firstMenu == null) || (count >= 20)) {
+        firstMenu = new JMenu(tmpScript.getCode() + "...");
+        menu.add(firstMenu);
+        count = 0;
+      }
       JMenuItem item = new JMenuItem(tmpScript.toString());
       item.setActionCommand(tmpScript.getCode());
       item.addActionListener(EventHandler.create(ActionListener.class, this, "selectScript", "actionCommand"));
-      menu.add(item);
+      firstMenu.add(item);
+      count++;
     }
     menu.show(buttonScript, 0, buttonScript.getHeight());
   }
@@ -213,5 +329,100 @@ public class LanguageSelectionPanel extends JPanel {
   public void selectScript(String scriptCode) {
     script = registry.getScript(scriptCode);
     txtScript.setText(script != null ? script.toString() : "");
+    selectRegion(null);
+  }
+
+  /**
+   * Action called when the Region button is clicked.
+   */
+  public void actionRegion() {
+    JPopupMenu menu = new JPopupMenu();
+    List<LanguageRegistry.Region> regions = registry.getRegions();
+    JMenu firstMenu = null;
+    int count = 0;
+    for (LanguageRegistry.Region tmpRegion : regions) {
+      if ((firstMenu == null) || (count >= 20)) {
+        firstMenu = new JMenu(tmpRegion.getCode() + "...");
+        menu.add(firstMenu);
+        count = 0;
+      }
+      JMenuItem item = new JMenuItem(tmpRegion.toString());
+      item.setActionCommand(tmpRegion.getCode());
+      item.addActionListener(EventHandler.create(ActionListener.class, this, "selectRegion", "actionCommand"));
+      firstMenu.add(item);
+      count++;
+    }
+    menu.show(buttonRegion, 0, buttonRegion.getHeight());
+  }
+
+  /**
+   * Action called when a region is selected.
+   * 
+   * @param regionCode Region code.
+   */
+  public void selectRegion(String regionCode) {
+    region = registry.getRegion(regionCode);
+    txtRegion.setText(region != null ? region.toString() : "");
+    selectVariant("0");
+  }
+
+  /**
+   * Action called when a Variant button is clicked.
+   * 
+   * @param number Variant number.
+   */
+  public void actionVariant(String number) {
+    JPopupMenu menu = new JPopupMenu();
+    int variantNumber = Integer.parseInt(number);
+    String prefix = language.getCode();
+    if (script != null) {
+      prefix += "-" + script.getCode();
+    }
+    if (region != null) {
+      prefix += "-" + region.getCode();
+    }
+    for (int i = 0; i < variantNumber; i++) {
+      if (variant.get(i) != null) {
+        prefix += "-" + variant.get(i).getCode();
+      }
+    }
+    List<LanguageRegistry.Variant> variants = registry.getVariants(prefix);
+    for (LanguageRegistry.Variant tmpVariant : variants) {
+      JMenuItem item = new JMenuItem(tmpVariant.toString());
+      item.setActionCommand(number + ";" + tmpVariant.getCode());
+      item.addActionListener(EventHandler.create(ActionListener.class, this, "selectVariant", "actionCommand"));
+      menu.add(item);
+    }
+    menu.show(buttonVariant.get(variantNumber), 0, buttonVariant.get(variantNumber).getHeight());
+  }
+
+  /**
+   * Action called when a variant is selected.
+   * 
+   * @param variantCode Variant number and variant code.
+   */
+  public void selectVariant(String variantCode) {
+    if (variantCode == null) {
+      return;
+    }
+    String[] variantElements = variantCode.split(";");
+    int variantNumber = Integer.parseInt(variantElements[0]);
+    if ((variantNumber < 0) || (variantNumber >= NB_VARIANTS)) {
+      return;
+    }
+    String code = (variantElements.length > 1) ? variantElements[1] : null;
+    variant.set(variantNumber, registry.getVariant(code));
+    txtVariant.get(variantNumber).setText(variant.get(variantNumber) != null ? variant.get(variantNumber).toString() : "");
+    for (int i = 0; i < NB_VARIANTS; i++) {
+      if (i == 0) {
+        buttonVariant.get(0).setEnabled(language != null);
+      } else {
+        buttonVariant.get(i).setEnabled(variant.get(i - 1) != null);
+        if (variant.get(i - 1) == null) {
+          variant.set(i, null);
+          txtVariant.get(i).setText("");
+        }
+      }
+    }
   }
 }
