@@ -24,6 +24,8 @@ package org.wikipediacleaner.api.constants;
  */
 public enum WPCConfigurationStringList {
 
+  // Common languages.
+  COMMON_LANGUAGES("common_languages", true, true, true),
   // Pages containing the current list of disambiguation pages.
   CURRENT_DAB_LIST("dab_list", false, true, false),
   // List of templates that should be before the disambiguation warning.

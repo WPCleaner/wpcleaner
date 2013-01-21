@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-01-20 22:53+0100\n"
+"POT-Creation-Date: 2013-01-21 11:49+0100\n"
 "PO-Revision-Date: 2013-01-18 19:03+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -994,15 +994,25 @@ msgstr "Musíte vybrat stránky, na kterých se mají provést automatické opra
 msgid "Information"
 msgstr "Informace"
 
-#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:123
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:172
 #, fuzzy
 msgid "Language"
 msgstr "Jazyk"
 
-#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:136
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:185
 #, fuzzy
 msgid "Script"
 msgstr "Řadit"
+
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:199
+#, fuzzy
+msgid "Region"
+msgstr "Znovu"
+
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:217
+#, fuzzy, java-format
+msgid "Variant n°{0}"
+msgstr "Chyba číslo {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:205
 #, java-format

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-01-20 22:53+0100\n"
+"POT-Creation-Date: 2013-01-21 11:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -957,12 +957,21 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:123
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:172
 msgid "Language"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:136
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:185
 msgid "Script"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:199
+msgid "Region"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:217
+#, java-format
+msgid "Variant n°{0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:205

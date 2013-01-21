@@ -136,10 +136,49 @@ public class LanguageRegistry {
   }
 
   /**
+   * @param code Region code.
+   * @return Region with the specified code.
+   */
+  public LanguageRegistry.Region getRegion(String code) {
+    if (code == null) {
+      return null;
+    }
+    for (LanguageRegistry.Region region : regions) {
+      if (code.equalsIgnoreCase(region.getCode())) {
+        return region;
+      }
+    }
+    return null;
+  }
+
+  /**
    * @return List of all variants.
    */
-  public List<LanguageRegistry.Variant> getVariants() {
-    return variants;
+  public List<LanguageRegistry.Variant> getVariants(String prefix) {
+    List<LanguageRegistry.Variant> tmpVariants = new ArrayList<LanguageRegistry.Variant>();
+    for (LanguageRegistry.Variant variant : variants) {
+      if ((prefix == null) ||
+          (variant.isPossibleForPrefix(prefix))) {
+        tmpVariants.add(variant);
+      }
+    }
+    return tmpVariants;
+  }
+
+  /**
+   * @param code Variant code.
+   * @return Variant with the specified code.
+   */
+  public LanguageRegistry.Variant getVariant(String code) {
+    if (code == null) {
+      return null;
+    }
+    for (LanguageRegistry.Variant variant : variants) {
+      if (code.equalsIgnoreCase(variant.getCode())) {
+        return variant;
+      }
+    }
+    return null;
   }
 
   /**
@@ -316,10 +355,10 @@ public class LanguageRegistry {
   }
 
   /**
-   * Bean for holding information about a language.
+   * Base class for holding information.
    */
-  public static class Language implements Comparable<Language> {
-
+  public static abstract class Element implements Comparable<Element> {
+    
     /**
      * Language code.
      */
@@ -336,14 +375,9 @@ public class LanguageRegistry {
     private String comments;
 
     /**
-     * Implicit script, non necessary.
+     * @param code Code.
      */
-    private String suppressScript;
-
-    /**
-     * @param code Language code.
-     */
-    Language(String code) {
+    Element(String code) {
       this.code = code;
     }
 
@@ -391,26 +425,12 @@ public class LanguageRegistry {
     }
 
     /**
-     * @param script Implicit script.
-     */
-    void setSuppressScript(String script) {
-      this.suppressScript = script;
-    }
-
-    /**
-     * @return Implicit script.
-     */
-    String getSuppressScript() {
-      return this.suppressScript;
-    }
-
-    /**
-     * @param o Other language.
-     * @return  a negative integer, zero, or a positive integer as the language code
-     *    is less than, equal to, or greater than the code of the specified language.
+     * @param o Other element.
+     * @return  a negative integer, zero, or a positive integer as the code
+     *    is less than, equal to, or greater than the code of the specified element.
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compareTo(Language o) {
+    public int compareTo(Element o) {
       return code.compareTo(o.code);
     }
 
@@ -430,198 +450,65 @@ public class LanguageRegistry {
   /**
    * Bean for holding information about a language.
    */
-  public static class Script implements Comparable<Script> {
+  public static class Language extends Element {
 
     /**
-     * Script code.
+     * Implicit script, non necessary.
      */
-    private final String code;
+    private String suppressScript;
 
     /**
-     * Description.
+     * @param code Language code.
      */
-    private String description;
+    Language(String code) {
+      super(code);
+    }
 
     /**
-     * Comments.
+     * @param script Implicit script.
      */
-    private String comments;
+    void setSuppressScript(String script) {
+      this.suppressScript = script;
+    }
+
+    /**
+     * @return Implicit script.
+     */
+    String getSuppressScript() {
+      return this.suppressScript;
+    }
+  }
+
+  /**
+   * Bean for holding information about a script.
+   */
+  public static class Script extends Element {
 
     /**
      * @param code Script code.
      */
     Script(String code) {
-      this.code = code;
-    }
-
-    /**
-     * @return Script code.
-     */
-    public String getCode() {
-      return code;
-    }
-
-    /**
-     * @param desc Description.
-     */
-    void addDescription(String desc) {
-      if (this.description == null) {
-        this.description = desc;
-      } else {
-        this.description += ", " + desc;
-      }
-    }
-
-    /**
-     * @return Description.
-     */
-    public String getDescription() {
-      return description;
-    }
-
-    /**
-     * @param commentary Comments.
-     * @return
-     */
-    void addComments(String commentary) {
-      if (this.comments == null) {
-        this.comments = commentary;
-      } else {
-        this.comments += ", " + commentary;
-      }
-    }
-
-    /**
-     * @return Comments.
-     */
-    public String getComments() {
-      return comments;
-    }
-    /**
-     * @param o Other script.
-     * @return  a negative integer, zero, or a positive integer as the script code
-     *    is less than, equal to, or greater than the code of the specified script.
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
-    public int compareTo(Script o) {
-      return code.compareTo(o.code);
-    }
-
-    /**
-     * @return String representation of the script.
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-      if (description != null) {
-        return code + " - " + description;
-      }
-      return code;
+      super(code);
     }
   }
 
   /**
    * Bean for holding information about a region.
    */
-  public static class Region implements Comparable<Region> {
-
-    /**
-     * Region code.
-     */
-    private final String code;
-
-    /**
-     * Description.
-     */
-    private String description;
-
-    /**
-     * Comments.
-     */
-    private String comments;
+  public static class Region extends Element {
 
     /**
      * @param code Region code.
      */
     Region(String code) {
-      this.code = code;
-    }
-
-    /**
-     * @return Region code.
-     */
-    public String getCode() {
-      return code;
-    }
-
-    /**
-     * @param desc Description.
-     */
-    void addDescription(String desc) {
-      if (this.description == null) {
-        this.description = desc;
-      } else {
-        this.description += ", " + desc;
-      }
-    }
-
-    /**
-     * @return Description.
-     */
-    public String getDescription() {
-      return description;
-    }
-
-    /**
-     * @param commentary Comments.
-     */
-    void addComments(String commentary) {
-      if (this.comments == null) {
-        this.comments = commentary;
-      } else {
-        this.comments += ", " + commentary;
-      }
-    }
-
-    /**
-     * @return Comments.
-     */
-    public String getComments() {
-      return comments;
-    }
-
-    /**
-     * @param o Other region.
-     * @return  a negative integer, zero, or a positive integer as the region code
-     *    is less than, equal to, or greater than the code of the specified region.
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
-    public int compareTo(Region o) {
-      return code.compareTo(o.code);
-    }
-
-    /**
-     * @return String representation of the region.
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-      if (description != null) {
-        return code + " - " + description;
-      }
-      return code;
+      super(code);
     }
   }
 
   /**
    * Bean for holding information about a variant.
    */
-  public static class Variant implements Comparable<Variant> {
-
-    /**
-     * Variant code.
-     */
-    private final String code;
+  public static class Variant extends Element {
 
     /**
      * List of possible prefixes.
@@ -629,28 +516,11 @@ public class LanguageRegistry {
     private final List<String> prefixes;
 
     /**
-     * Description.
-     */
-    private String description;
-
-    /**
-     * Comments.
-     */
-    private String comments;
-
-    /**
      * @param code Variant code.
      */
     Variant(String code) {
-      this.code = code;
+      super(code);
       this.prefixes = new ArrayList<String>();
-    }
-
-    /**
-     * @return Variant code.
-     */
-    public String getCode() {
-      return code;
     }
 
     /**
@@ -661,62 +531,13 @@ public class LanguageRegistry {
         prefixes.add(prefix);
       }
     }
-    /**
-     * @param desc Description.
-     */
-    void addDescription(String desc) {
-      if (this.description == null) {
-        this.description = desc;
-      } else {
-        this.description += ", " + desc;
-      }
-    }
 
     /**
-     * @return Description.
+     * @param prefix Prefix.
+     * @return True if the variant is possible for the prefix.
      */
-    public String getDescription() {
-      return description;
-    }
-
-    /**
-     * @param commentary Comments.
-     */
-    void addComments(String commentary) {
-      if (this.comments == null) {
-        this.comments = commentary;
-      } else {
-        this.comments += ", " + commentary;
-      }
-    }
-
-    /**
-     * @return Comments.
-     */
-    public String getComments() {
-      return comments;
-    }
-
-    /**
-     * @param o Other variant.
-     * @return  a negative integer, zero, or a positive integer as the variant code
-     *    is less than, equal to, or greater than the code of the specified variant.
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
-    public int compareTo(Variant o) {
-      return code.compareTo(o.code);
-    }
-
-    /**
-     * @return String representation of the variant.
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-      if (description != null) {
-        return code + " - " + description;
-      }
-      return code;
+    boolean isPossibleForPrefix(String prefix) {
+      return prefixes.contains(prefix);
     }
   }
 }
