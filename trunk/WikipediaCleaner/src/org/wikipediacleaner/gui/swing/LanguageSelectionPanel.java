@@ -27,11 +27,13 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -55,6 +57,11 @@ public class LanguageSelectionPanel extends JPanel {
    * Wiki.
    */
   private final EnumWikipedia wiki;
+
+  /**
+   * Text in foreign language.
+   */
+  private final String text;
 
   /**
    * Language registry.
@@ -127,10 +134,12 @@ public class LanguageSelectionPanel extends JPanel {
    * Create a language selection panel.
    * 
    * @param wiki Wiki.
+   * @param text Text in foreign language.
    */
-  public LanguageSelectionPanel(EnumWikipedia wiki) {
+  public LanguageSelectionPanel(EnumWikipedia wiki, String text) {
     super(new GridBagLayout(), true);
     this.wiki = wiki;
+    this.text = text;
     registry = new LanguageRegistry();
     constructContents();
   }
@@ -167,6 +176,16 @@ public class LanguageSelectionPanel extends JPanel {
         0, 0, 1, 1, 1, 0,
         GridBagConstraints.LINE_START, GridBagConstraints.BOTH,
         new Insets(0, 0, 0, 0), 0, 0);
+
+    // Text
+    if ((text != null) && (text.trim().length() > 0)) {
+      JLabel label = new JLabel(text, SwingConstants.LEFT);
+      constraints.gridwidth = 2;
+      add(label, constraints);
+      constraints.weightx = 1;
+      constraints.gridwidth = 1;
+      constraints.gridy++;
+    }
 
     // Language
     buttonLanguage = Utilities.createJButton(GT._("Language"));
