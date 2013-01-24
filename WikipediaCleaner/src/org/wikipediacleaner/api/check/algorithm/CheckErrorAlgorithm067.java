@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -101,6 +102,20 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         punctuation = contents.charAt(tmpIndex);
         if (SpecialCharacters.isPunctuation(punctuation)) {
           punctuationFound = true;
+          if (punctuation == ';') {
+            int testIndex = tmpIndex - 1;
+            while ((testIndex >= 0) && (Character.isLetterOrDigit(contents.charAt(testIndex)))) {
+              testIndex--;
+            }
+            if ((testIndex >= 0) && (contents.charAt(testIndex) == '&')) {
+              String name = contents.substring(testIndex + 1, tmpIndex);
+              for (HtmlCharacters htmlCharacter: HtmlCharacters.values()) {
+                if (name.equals(htmlCharacter.getName())) {
+                  punctuationFound = false;
+                }
+              }
+            }
+          }
         }
       }
       int beginIndex = tmpIndex;
