@@ -79,7 +79,7 @@ public class CheckErrorAlgorithm509 extends CheckErrorAlgorithmBase {
               pageAnalysis.getPage(), link.getBeginIndex(), endIndex);
           String replacement = PageElementInternalLink.createInternalLink(
               link.getFullLink(),
-              link.getDisplayedText() + contents.substring(link.getEndIndex(), endIndex));
+              link.getDisplayedTextNotTrimmed() + contents.substring(link.getEndIndex(), endIndex));
           errorResult.addReplacement(replacement, GT._("Compact link"));
           errors.add(errorResult);
         }
