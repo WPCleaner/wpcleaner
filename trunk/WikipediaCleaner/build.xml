@@ -113,7 +113,7 @@
     <copy todir="${WPCleaner.classes.dir}">
       <fileset dir="${WPCleaner.src.dir}">
         <include name="**/*.png"/>
-        <include name="**/*.txt.tgz"/>
+        <include name="**/*.txt.gz"/>
       </fileset>
     </copy>
 
