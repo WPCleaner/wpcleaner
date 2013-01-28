@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
 import org.wikipediacleaner.api.constants.wiki.WikipediaAf;
+import org.wikipediacleaner.api.constants.wiki.WikipediaAls;
 import org.wikipediacleaner.api.constants.wiki.WikipediaAr;
 import org.wikipediacleaner.api.constants.wiki.WikipediaBar;
 import org.wikipediacleaner.api.constants.wiki.WikipediaCa;
@@ -74,6 +75,8 @@ import org.wikipediacleaner.api.constants.wiki.WikipediaYi;
 import org.wikipediacleaner.api.constants.wiki.WikipediaZh;
 import org.wikipediacleaner.api.constants.wiki.WikisourceFr;
 import org.wikipediacleaner.api.constants.wiki.WikiversityFr;
+import org.wikipediacleaner.api.constants.wiki.WiktionaryEn;
+import org.wikipediacleaner.api.constants.wiki.WiktionarySv;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
@@ -93,6 +96,7 @@ public enum EnumWikipedia {
    */
 
   AF(new WikipediaAf()),
+  ALS(new WikipediaAls()),
   AR(new WikipediaAr()),
   BAR(new WikipediaBar()),
   CA(new WikipediaCa()),
@@ -135,6 +139,9 @@ public enum EnumWikipedia {
   YI(new WikipediaYi()),
   ZH(new WikipediaZh()),
   COMMONS(new WikipediaCommons()),
+
+  WIKTIONARY_EN(new WiktionaryEn()),
+  WIKTIONARY_SV(new WiktionarySv()),
 
   WIKISOURCE_FR(new WikisourceFr()),
 

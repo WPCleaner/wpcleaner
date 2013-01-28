@@ -20,14 +20,14 @@ package org.wikipediacleaner.api.constants.wiki;
 
 
 /**
- * Configuration for <a href="http://fr.wikiversity.org/">Wikiversity FR</a>.
+ * Configuration for <a href="http://fr.wikiversity.org/">Wiktionary EN</a>.
  */
-public final class WikiversityFr extends AbstractWikiversitySettings {
+public final class WiktionaryEn extends AbstractWiktionarySettings {
 
   /**
    * Constructor.
    */
-  public WikiversityFr() {
-    super("fr", "Wikiversité Français");
+  public WiktionaryEn() {
+    super("en", "English Wiktionary");
   }
 }
