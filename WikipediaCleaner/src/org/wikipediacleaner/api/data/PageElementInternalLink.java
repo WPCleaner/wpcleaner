@@ -58,7 +58,7 @@ public class PageElementInternalLink extends PageElement {
     tmpIndex += 2;
     int beginIndex = tmpIndex;
 
-    // Possible whitespaces characters
+    // Possible whitespace characters
     while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
       tmpIndex++;
     }
@@ -207,6 +207,16 @@ public class PageElementInternalLink extends PageElement {
   public String getDisplayedText() {
     if (text != null) {
       return text;
+    }
+    if (anchor == null) {
+      return linkNotTrimmed;
+    }
+    return linkNotTrimmed + "#" + anchorNotTrimmed;
+  }
+
+  public String getDisplayedTextNotTrimmed() {
+    if (textNotTrimmed != null) {
+      return textNotTrimmed;
     }
     if (anchor == null) {
       return linkNotTrimmed;
