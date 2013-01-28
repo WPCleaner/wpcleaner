@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="WikipediaCleaner" default="main" basedir=".">
+<project name="WPCleaner" default="main" basedir=".">
 
   <!-- Properties -->
-  <property name="WikiCleaner.src.dir"     value="src" />
-  <property name="WikiCleaner.build.dir"   value="build" />
-  <property name="WikiCleaner.classes.dir" value="${WikiCleaner.build.dir}/classes" />
-  <property name="WikiCleaner.dist.dir"    value="${WikiCleaner.build.dir}/dist" />
-  <property name="WikiCleaner.jnlp.dir"    value="${WikiCleaner.dist.dir}/jnlp" />
-  <property name="WikiCleaner.full.dir"    value="${WikiCleaner.dist.dir}/full" />
-  <property name="WikiCleaner.javadoc.dir" value="${WikiCleaner.dist.dir}/javadoc" />
-  <property name="WikiCleaner.libs.dir"    value="libs" />
-  <property name="WikiCleaner.res.dir"     value="resources" />
-  <property name="WikiCleaner.po.dir"      value="${WikiCleaner.src.dir}/org/wikipediacleaner/translation" />
+  <property name="WPCleaner.src.dir"     value="src" />
+  <property name="WPCleaner.build.dir"   value="build" />
+  <property name="WPCleaner.classes.dir" value="${WPCleaner.build.dir}/classes" />
+  <property name="WPCleaner.dist.dir"    value="${WPCleaner.build.dir}/dist" />
+  <property name="WPCleaner.jnlp.dir"    value="${WPCleaner.dist.dir}/jnlp" />
+  <property name="WPCleaner.full.dir"    value="${WPCleaner.dist.dir}/full" />
+  <property name="WPCleaner.javadoc.dir" value="${WPCleaner.dist.dir}/javadoc" />
+  <property name="WPCleaner.libs.dir"    value="libs" />
+  <property name="WPCleaner.res.dir"     value="resources" />
+  <property name="WPCleaner.po.dir"      value="${WPCleaner.src.dir}/org/wikipediacleaner/translation" />
 
-  <property name="WikiCleaner.libs.cobra.dir"      value="libs/cobra-0.98.2" />
-  <property name="WikiCleaner.libs.cobra.jar"      value="cobra.jar" />
-  <property name="WikiCleaner.libs.cobra-js.jar"   value="js.jar" />
-  <property name="WikiCleaner.libs.cobra.lic"      value="LICENSE_cobra.txt" />
-  <property name="WikiCleaner.libs.codec.dir"      value="libs/commons-codec-1.3" />
-  <property name="WikiCleaner.libs.codec.jar"      value="commons-codec-1.3.jar" />
-  <property name="WikiCleaner.libs.codec.lic"      value="LICENSE_commons-codec.txt" />
-  <property name="WikiCleaner.libs.httpclient.dir" value="libs/commons-httpclient-3.1" />
-  <property name="WikiCleaner.libs.httpclient.jar" value="commons-httpclient-3.1.jar" />
-  <property name="WikiCleaner.libs.httpclient.lic" value="LICENSE_commons-httpclient.txt" />
-  <property name="WikiCleaner.libs.jaxen-core.jar" value="jaxen-core.jar" />
-  <property name="WikiCleaner.libs.jaxen-jdom.jar" value="jaxen-jdom.jar" />
-  <property name="WikiCleaner.libs.jaxen.lic"      value="LICENSE_jaxen.txt" />
-  <property name="WikiCleaner.libs.jdom.dir"       value="libs/jdom-1.0" />
-  <property name="WikiCleaner.libs.jdom.jar"       value="jdom.jar" />
-  <property name="WikiCleaner.libs.jdom.lic"       value="LICENSE_jdom.txt" />
-  <property name="WikiCleaner.libs.logging.dir"    value="libs/commons-logging-1.1" />
-  <property name="WikiCleaner.libs.logging.jar"    value="commons-logging-1.1.jar" />
-  <property name="WikiCleaner.libs.logging.lic"    value="LICENSE_commons-logging.txt" />
-  <property name="WikiCleaner.libs.saxpath.jar"    value="saxpath.jar" />
+  <property name="WPCleaner.libs.cobra.dir"      value="libs/cobra-0.98.2" />
+  <property name="WPCleaner.libs.cobra.jar"      value="cobra.jar" />
+  <property name="WPCleaner.libs.cobra-js.jar"   value="js.jar" />
+  <property name="WPCleaner.libs.cobra.lic"      value="LICENSE_cobra.txt" />
+  <property name="WPCleaner.libs.codec.dir"      value="libs/commons-codec-1.3" />
+  <property name="WPCleaner.libs.codec.jar"      value="commons-codec-1.3.jar" />
+  <property name="WPCleaner.libs.codec.lic"      value="LICENSE_commons-codec.txt" />
+  <property name="WPCleaner.libs.httpclient.dir" value="libs/commons-httpclient-3.1" />
+  <property name="WPCleaner.libs.httpclient.jar" value="commons-httpclient-3.1.jar" />
+  <property name="WPCleaner.libs.httpclient.lic" value="LICENSE_commons-httpclient.txt" />
+  <property name="WPCleaner.libs.jaxen-core.jar" value="jaxen-core.jar" />
+  <property name="WPCleaner.libs.jaxen-jdom.jar" value="jaxen-jdom.jar" />
+  <property name="WPCleaner.libs.jaxen.lic"      value="LICENSE_jaxen.txt" />
+  <property name="WPCleaner.libs.jdom.dir"       value="libs/jdom-1.0" />
+  <property name="WPCleaner.libs.jdom.jar"       value="jdom.jar" />
+  <property name="WPCleaner.libs.jdom.lic"       value="LICENSE_jdom.txt" />
+  <property name="WPCleaner.libs.logging.dir"    value="libs/commons-logging-1.1" />
+  <property name="WPCleaner.libs.logging.jar"    value="commons-logging-1.1.jar" />
+  <property name="WPCleaner.libs.logging.lic"    value="LICENSE_commons-logging.txt" />
+  <property name="WPCleaner.libs.saxpath.jar"    value="saxpath.jar" />
 
   <property name="all.languages" value="cs,da,de,el,eo,es,fr,he,hu,id,is,it,ja,ko,nb,nl,oc,pl,pt_BR,ru,sv,tr,uk" />
 
@@ -53,163 +53,164 @@
   <property name="do.create.po"  value="true" />
 
   <!-- Paths and FileSets -->
-  <path id="WikiCleaner.class.path">
-    <fileset dir="${WikiCleaner.libs.dir}">
+  <path id="WPCleaner.class.path">
+    <fileset dir="${WPCleaner.libs.dir}">
       <include name="**/*.jar" />
       <exclude name="**/ant-contrib*/*.jar" />
     </fileset>
   </path>
-  <fileset id="WikiCleaner.java.files" dir="${basedir}/${WikiCleaner.src.dir}">
+  <fileset id="WPCleaner.java.files" dir="${basedir}/${WPCleaner.src.dir}">
     <include name="**/*.java"/>
   </fileset>
 
   <!-- <for list ...> construct needs ant-contrib.jar -->
   <taskdef resource="net/sf/antcontrib/antlib.xml">
     <classpath>
-      <pathelement location="${WikiCleaner.libs.dir}/ant-contrib-1.0b3/ant-contrib-1.0b3.jar"/>
+      <pathelement location="${WPCleaner.libs.dir}/ant-contrib-1.0b3/ant-contrib-1.0b3.jar"/>
     </classpath>
   </taskdef>
 
-  <!-- Build WikipediaCleaner -->
-  <target name="main" description="Build WikipediaCleaner" depends="init,clean,main-i18n,javadoc">
+  <!-- Build WPCleaner -->
+  <target name="main" description="Build WPCleaner" depends="init,clean,main-i18n,javadoc">
 
     <!-- Initialize -->
-    <input message="Please enter Password for keystore:" addproperty="WikiCleaner.keystore.password" />
-    <mkdir dir="${WikiCleaner.build.dir}" />
-    <mkdir dir="${WikiCleaner.classes.dir}" />
-    <mkdir dir="${WikiCleaner.dist.dir}" />
-    <mkdir dir="${WikiCleaner.jnlp.dir}" />
-    <mkdir dir="${WikiCleaner.full.dir}" />
+    <input message="Please enter Password for keystore:" addproperty="WPCleaner.keystore.password" />
+    <mkdir dir="${WPCleaner.build.dir}" />
+    <mkdir dir="${WPCleaner.classes.dir}" />
+    <mkdir dir="${WPCleaner.dist.dir}" />
+    <mkdir dir="${WPCleaner.jnlp.dir}" />
+    <mkdir dir="${WPCleaner.full.dir}" />
 
     <!-- Java compilation -->
-  	<javac srcdir="${WikiCleaner.src.dir}"
-           destdir="${WikiCleaner.classes.dir}"
+  	<javac srcdir="${WPCleaner.src.dir}"
+           destdir="${WPCleaner.classes.dir}"
            optimize="on" encoding="UTF-8" target="1.5" source="1.5">
-      <classpath refid="WikiCleaner.class.path" />
+      <classpath refid="WPCleaner.class.path" />
     </javac>
 
     <!-- Copy various files for JNLP release -->
-    <copy file="${WikiCleaner.res.dir}/.htaccess"
-          todir="${WikiCleaner.jnlp.dir}" />
-    <copy file="${WikiCleaner.res.dir}/WikiCleaner.jnlp"
-          todir="${WikiCleaner.jnlp.dir}" />
-    <copy file="${WikiCleaner.res.dir}/commons-nuvola-web-broom.png"
-          todir="${WikiCleaner.jnlp.dir}" />
-    <copy file="${WikiCleaner.libs.cobra.dir}/${WikiCleaner.libs.cobra.lic}"
-          tofile="${WikiCleaner.classes.dir}/cobra.license" />
-    <copy file="${WikiCleaner.libs.codec.dir}/${WikiCleaner.libs.codec.lic}"
-          tofile="${WikiCleaner.classes.dir}/commons-codec.license" />
-    <copy file="${WikiCleaner.libs.httpclient.dir}/${WikiCleaner.libs.httpclient.lic}"
-          tofile="${WikiCleaner.classes.dir}/commons-httpclient.license" />
-    <copy file="${WikiCleaner.libs.logging.dir}/${WikiCleaner.libs.logging.lic}"
-  	      tofile="${WikiCleaner.classes.dir}/commons-logging.license" />
-    <copy file="${WikiCleaner.libs.jdom.dir}/${WikiCleaner.libs.jdom.lic}"
-          tofile="${WikiCleaner.classes.dir}/jdom.license" />
-    <copy file="${WikiCleaner.libs.jdom.dir}/${WikiCleaner.libs.jaxen.lic}"
-          tofile="${WikiCleaner.classes.dir}/jaxen.license" />
-    <copy file="LICENSE.txt" todir="${WikiCleaner.classes.dir}" />
+    <copy file="${WPCleaner.res.dir}/.htaccess"
+          todir="${WPCleaner.jnlp.dir}" />
+    <copy file="${WPCleaner.res.dir}/WikiCleaner.jnlp"
+          todir="${WPCleaner.jnlp.dir}" />
+    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom.png"
+          todir="${WPCleaner.jnlp.dir}" />
+    <copy file="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra.lic}"
+          tofile="${WPCleaner.classes.dir}/cobra.license" />
+    <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.lic}"
+          tofile="${WPCleaner.classes.dir}/commons-codec.license" />
+    <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.lic}"
+          tofile="${WPCleaner.classes.dir}/commons-httpclient.license" />
+    <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.lic}"
+  	      tofile="${WPCleaner.classes.dir}/commons-logging.license" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.lic}"
+          tofile="${WPCleaner.classes.dir}/jdom.license" />
+    <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.lic}"
+          tofile="${WPCleaner.classes.dir}/jaxen.license" />
+    <copy file="LICENSE.txt" todir="${WPCleaner.classes.dir}" />
 
-  	<!-- Copy images -->
-    <copy todir="${WikiCleaner.classes.dir}">
-      <fileset dir="${WikiCleaner.src.dir}">
+  	<!-- Copy images and other files -->
+    <copy todir="${WPCleaner.classes.dir}">
+      <fileset dir="${WPCleaner.src.dir}">
         <include name="**/*.png"/>
+        <include name="**/*.tgz"/>
       </fileset>
     </copy>
 
     <!-- Create jar for JNLP release -->
-    <jar destfile="${WikiCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
-         manifest="${WikiCleaner.res.dir}/manifest.txt">
-      <fileset dir="${WikiCleaner.classes.dir}">
+    <jar destfile="${WPCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
+         manifest="${WPCleaner.res.dir}/manifest.txt">
+      <fileset dir="${WPCleaner.classes.dir}">
         <include name="**/*" />
       </fileset>
     </jar>
 
     <!-- Sign jars for JNLP -->
-    <signjar jar="${WikiCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
-             signedjar="${WikiCleaner.jnlp.dir}/WikipediaCleaner.jar"
-             keystore="${WikiCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
-             storepass="${WikiCleaner.keystore.password}" alias="WikipediaCleaner">
+    <signjar jar="${WPCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
+             signedjar="${WPCleaner.jnlp.dir}/WikipediaCleaner.jar"
+             keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
+             storepass="${WPCleaner.keystore.password}" alias="WikipediaCleaner">
     </signjar>
-    <signjar jar="${WikiCleaner.libs.cobra.dir}/${WikiCleaner.libs.cobra.jar}"
-             signedjar="${WikiCleaner.jnlp.dir}/${WikiCleaner.libs.cobra.jar}"
-             keystore="${WikiCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
-             storepass="${WikiCleaner.keystore.password}" alias="WikipediaCleaner">
+    <signjar jar="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra.jar}"
+             signedjar="${WPCleaner.jnlp.dir}/${WPCleaner.libs.cobra.jar}"
+             keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
+             storepass="${WPCleaner.keystore.password}" alias="WikipediaCleaner">
     </signjar>
-    <signjar jar="${WikiCleaner.libs.cobra.dir}/${WikiCleaner.libs.cobra-js.jar}"
-             signedjar="${WikiCleaner.jnlp.dir}/${WikiCleaner.libs.cobra-js.jar}"
-             keystore="${WikiCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
-             storepass="${WikiCleaner.keystore.password}" alias="WikipediaCleaner">
+    <signjar jar="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra-js.jar}"
+             signedjar="${WPCleaner.jnlp.dir}/${WPCleaner.libs.cobra-js.jar}"
+             keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
+             storepass="${WPCleaner.keystore.password}" alias="WikipediaCleaner">
     </signjar>
-    <signjar jar="${WikiCleaner.libs.codec.dir}/${WikiCleaner.libs.codec.jar}"
-             signedjar="${WikiCleaner.jnlp.dir}/${WikiCleaner.libs.codec.jar}"
-             keystore="${WikiCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
-             storepass="${WikiCleaner.keystore.password}" alias="WikipediaCleaner">
+    <signjar jar="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.jar}"
+             signedjar="${WPCleaner.jnlp.dir}/${WPCleaner.libs.codec.jar}"
+             keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
+             storepass="${WPCleaner.keystore.password}" alias="WikipediaCleaner">
     </signjar>
-    <signjar jar="${WikiCleaner.libs.httpclient.dir}/${WikiCleaner.libs.httpclient.jar}"
-             signedjar="${WikiCleaner.jnlp.dir}/${WikiCleaner.libs.httpclient.jar}"
-             keystore="${WikiCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
-             storepass="${WikiCleaner.keystore.password}" alias="WikipediaCleaner">
+    <signjar jar="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.jar}"
+             signedjar="${WPCleaner.jnlp.dir}/${WPCleaner.libs.httpclient.jar}"
+             keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
+             storepass="${WPCleaner.keystore.password}" alias="WikipediaCleaner">
     </signjar>
-    <signjar jar="${WikiCleaner.libs.logging.dir}/${WikiCleaner.libs.logging.jar}"
-             signedjar="${WikiCleaner.jnlp.dir}/${WikiCleaner.libs.logging.jar}"
-             keystore="${WikiCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
-             storepass="${WikiCleaner.keystore.password}" alias="WikipediaCleaner">
+    <signjar jar="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.jar}"
+             signedjar="${WPCleaner.jnlp.dir}/${WPCleaner.libs.logging.jar}"
+             keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
+             storepass="${WPCleaner.keystore.password}" alias="WikipediaCleaner">
     </signjar>
-    <signjar jar="${WikiCleaner.libs.jdom.dir}/${WikiCleaner.libs.jaxen-core.jar}"
-             signedjar="${WikiCleaner.jnlp.dir}/${WikiCleaner.libs.jaxen-core.jar}"
-             keystore="${WikiCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
-             storepass="${WikiCleaner.keystore.password}" alias="WikipediaCleaner">
+    <signjar jar="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen-core.jar}"
+             signedjar="${WPCleaner.jnlp.dir}/${WPCleaner.libs.jaxen-core.jar}"
+             keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
+             storepass="${WPCleaner.keystore.password}" alias="WikipediaCleaner">
     </signjar>
-    <signjar jar="${WikiCleaner.libs.jdom.dir}/${WikiCleaner.libs.jaxen-jdom.jar}"
-             signedjar="${WikiCleaner.jnlp.dir}/${WikiCleaner.libs.jaxen-jdom.jar}"
-             keystore="${WikiCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
-             storepass="${WikiCleaner.keystore.password}" alias="WikipediaCleaner">
+    <signjar jar="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen-jdom.jar}"
+             signedjar="${WPCleaner.jnlp.dir}/${WPCleaner.libs.jaxen-jdom.jar}"
+             keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
+             storepass="${WPCleaner.keystore.password}" alias="WikipediaCleaner">
     </signjar>
-    <signjar jar="${WikiCleaner.libs.jdom.dir}/${WikiCleaner.libs.jdom.jar}"
-             signedjar="${WikiCleaner.jnlp.dir}/${WikiCleaner.libs.jdom.jar}"
-             keystore="${WikiCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
-             storepass="${WikiCleaner.keystore.password}" alias="WikipediaCleaner">
+    <signjar jar="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.jar}"
+             signedjar="${WPCleaner.jnlp.dir}/${WPCleaner.libs.jdom.jar}"
+             keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
+             storepass="${WPCleaner.keystore.password}" alias="WikipediaCleaner">
     </signjar>
-    <signjar jar="${WikiCleaner.libs.jdom.dir}/${WikiCleaner.libs.saxpath.jar}"
-             signedjar="${WikiCleaner.jnlp.dir}/${WikiCleaner.libs.saxpath.jar}"
-             keystore="${WikiCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
-             storepass="${WikiCleaner.keystore.password}" alias="WikipediaCleaner">
+    <signjar jar="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.saxpath.jar}"
+             signedjar="${WPCleaner.jnlp.dir}/${WPCleaner.libs.saxpath.jar}"
+             keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
+             storepass="${WPCleaner.keystore.password}" alias="WikipediaCleaner">
     </signjar>
 
     <!-- Extract extra files for full release -->
-    <unjar src="${WikiCleaner.libs.cobra.dir}/${WikiCleaner.libs.cobra.jar}"
-           dest="${WikiCleaner.classes.dir}"
+    <unjar src="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra.jar}"
+           dest="${WPCleaner.classes.dir}"
            overwrite="false" />
-    <unjar src="${WikiCleaner.libs.cobra.dir}/${WikiCleaner.libs.cobra-js.jar}"
-           dest="${WikiCleaner.classes.dir}"
+    <unjar src="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra-js.jar}"
+           dest="${WPCleaner.classes.dir}"
            overwrite="false" />
-    <unjar src="${WikiCleaner.libs.codec.dir}/${WikiCleaner.libs.codec.jar}"
-           dest="${WikiCleaner.classes.dir}"
+    <unjar src="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.jar}"
+           dest="${WPCleaner.classes.dir}"
            overwrite="false" />
-    <unjar src="${WikiCleaner.libs.httpclient.dir}/${WikiCleaner.libs.httpclient.jar}"
-           dest="${WikiCleaner.classes.dir}"
+    <unjar src="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.jar}"
+           dest="${WPCleaner.classes.dir}"
            overwrite="false" />
-    <unjar src="${WikiCleaner.libs.logging.dir}/${WikiCleaner.libs.logging.jar}"
-           dest="${WikiCleaner.classes.dir}"
+    <unjar src="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.jar}"
+           dest="${WPCleaner.classes.dir}"
            overwrite="false" />
-    <unjar src="${WikiCleaner.libs.jdom.dir}/${WikiCleaner.libs.jaxen-core.jar}"
-           dest="${WikiCleaner.classes.dir}"
+    <unjar src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen-core.jar}"
+           dest="${WPCleaner.classes.dir}"
            overwrite="false" />
-    <unjar src="${WikiCleaner.libs.jdom.dir}/${WikiCleaner.libs.jaxen-jdom.jar}"
-           dest="${WikiCleaner.classes.dir}"
+    <unjar src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen-jdom.jar}"
+           dest="${WPCleaner.classes.dir}"
            overwrite="false" />
-    <unjar src="${WikiCleaner.libs.jdom.dir}/${WikiCleaner.libs.jdom.jar}"
-           dest="${WikiCleaner.classes.dir}"
+    <unjar src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.jar}"
+           dest="${WPCleaner.classes.dir}"
            overwrite="false" />
-    <unjar src="${WikiCleaner.libs.jdom.dir}/${WikiCleaner.libs.saxpath.jar}"
-           dest="${WikiCleaner.classes.dir}"
+    <unjar src="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.saxpath.jar}"
+           dest="${WPCleaner.classes.dir}"
            overwrite="false" />
-    <delete dir="${WikiCleaner.classes.dir}/META-INF" />
+    <delete dir="${WPCleaner.classes.dir}/META-INF" />
 
     <!-- Create jar for JNLP release -->
-    <jar destfile="${WikiCleaner.full.dir}/WikipediaCleanerFull.jar"
-         manifest="${WikiCleaner.res.dir}/manifest.txt">
-      <fileset dir="${WikiCleaner.classes.dir}">
+    <jar destfile="${WPCleaner.full.dir}/WikipediaCleanerFull.jar"
+         manifest="${WPCleaner.res.dir}/manifest.txt">
+      <fileset dir="${WPCleaner.classes.dir}">
         <include name="**/*" />
       </fileset>
     </jar>
@@ -222,16 +223,16 @@
 
   <!-- Clean -->
   <target name="clean">
-    <delete dir="${WikiCleaner.build.dir}"/>
+    <delete dir="${WPCleaner.build.dir}"/>
   </target>
 
   <!-- Documentation -->
   <target name="javadoc">
-    <mkdir dir="${WikiCleaner.javadoc.dir}" />
-    <javadoc destdir="${WikiCleaner.javadoc.dir}"
-             sourcepath="${WikiCleaner.src.dir}"
+    <mkdir dir="${WPCleaner.javadoc.dir}" />
+    <javadoc destdir="${WPCleaner.javadoc.dir}"
+             sourcepath="${WPCleaner.src.dir}"
              packagenames="org.wikipediacleaner.*" encoding="UTF-8">
-      <classpath refid="WikiCleaner.class.path" />
+      <classpath refid="WPCleaner.class.path" />
       <link href="http://java.sun.com/javase/6/docs/api/" />
     </javadoc>
   </target>
@@ -245,9 +246,9 @@
 
   <target name="check-uptodate-pot">
     <condition property="uptodate-pot">
-      <uptodate targetfile="${WikiCleaner.po.dir}/tstamp.WikiCleaner.pot_">
-        <srcfiles refid="WikiCleaner.java.files"/>
-        <srcfiles file="${WikiCleaner.po.dir}/WikiCleaner.pot"/>
+      <uptodate targetfile="${WPCleaner.po.dir}/tstamp.WikiCleaner.pot_">
+        <srcfiles refid="WPCleaner.java.files"/>
+        <srcfiles file="${WPCleaner.po.dir}/WikiCleaner.pot"/>
       </uptodate>
     </condition>
   </target>
@@ -258,60 +259,60 @@
     <if>
       <istrue value="${do.create.pot}" />
       <then>
-        <echo message="Generating WikiCleaner.pot (gettext PO-template) file in ${WikiCleaner.po.dir} ..." level="info"/>
-        <delete file="${WikiCleaner.po.dir}/tstamp.WikiCleaner.pot_"/>
+        <echo message="Generating WPCleaner.pot (gettext PO-template) file in ${WPCleaner.po.dir} ..." level="info"/>
+        <delete file="${WPCleaner.po.dir}/tstamp.WikiCleaner.pot_"/>
         <!-- generate new WikiCleaner.pot -->
-        <mkdir dir="${WikiCleaner.po.dir}/tmp"/>
-        <apply executable="${gettext.xgettext}" dir="${basedir}/${WikiCleaner.src.dir}" parallel="true"
+        <mkdir dir="${WPCleaner.po.dir}/tmp"/>
+        <apply executable="${gettext.xgettext}" dir="${basedir}/${WPCleaner.src.dir}" parallel="true"
                verbose="true" relative="true" forwardslash="true">
           <arg value="-kGT._" />
           <arg value="--from-code=utf-8" />
           <arg value="--language=Java" />
           <arg value="--msgid-bugs-address=nicove@users.sourceforge.net"/>
-          <arg value="--output-dir=${basedir}/${WikiCleaner.po.dir}/tmp" />
+          <arg value="--output-dir=${basedir}/${WPCleaner.po.dir}/tmp" />
           <arg value="--output=WikiCleaner.pot" />
-          <fileset refid="WikiCleaner.java.files" />
+          <fileset refid="WPCleaner.java.files" />
         </apply>
         <if>
           <and>
-            <available file="${WikiCleaner.po.dir}/WikiCleaner.pot"/>
-            <available file="${WikiCleaner.po.dir}/tmp/WikiCleaner.pot"/>
+            <available file="${WPCleaner.po.dir}/WikiCleaner.pot"/>
+            <available file="${WPCleaner.po.dir}/tmp/WikiCleaner.pot"/>
           </and>
           <then>
             <!-- compare both WikiCleaner.pot files -->
-            <copy file="${WikiCleaner.po.dir}/WikiCleaner.pot"
-                  tofile="${WikiCleaner.po.dir}/tmp/WikiCleaner.old.pot"/>
+            <copy file="${WPCleaner.po.dir}/WikiCleaner.pot"
+                  tofile="${WPCleaner.po.dir}/tmp/WikiCleaner.old.pot"/>
             <antcall target="shrink-pot-file">
-              <param name="remove_pot_file" value="${WikiCleaner.po.dir}/tmp/WikiCleaner.old.pot"/>
+              <param name="remove_pot_file" value="${WPCleaner.po.dir}/tmp/WikiCleaner.old.pot"/>
             </antcall>
-            <copy file="${WikiCleaner.po.dir}/tmp/WikiCleaner.pot"
-                  tofile="${WikiCleaner.po.dir}/tmp/WikiCleaner.new.pot"/>
+            <copy file="${WPCleaner.po.dir}/tmp/WikiCleaner.pot"
+                  tofile="${WPCleaner.po.dir}/tmp/WikiCleaner.new.pot"/>
             <antcall target="shrink-pot-file">
-              <param name="remove_pot_file" value="${WikiCleaner.po.dir}/tmp/WikiCleaner.new.pot"/>
+              <param name="remove_pot_file" value="${WPCleaner.po.dir}/tmp/WikiCleaner.new.pot"/>
             </antcall>
             <if>
               <not>
-                <filesmatch file1="${WikiCleaner.po.dir}/tmp/WikiCleaner.old.pot"
-                            file2="${WikiCleaner.po.dir}/tmp/WikiCleaner.new.pot"/>
+                <filesmatch file1="${WPCleaner.po.dir}/tmp/WikiCleaner.old.pot"
+                            file2="${WPCleaner.po.dir}/tmp/WikiCleaner.new.pot"/>
               </not>
               <then>
-                <copy file="${WikiCleaner.po.dir}/tmp/WikiCleaner.pot"
-                      tofile="${WikiCleaner.po.dir}/WikiCleaner.pot"/>
+                <copy file="${WPCleaner.po.dir}/tmp/WikiCleaner.pot"
+                      tofile="${WPCleaner.po.dir}/WikiCleaner.pot"/>
               </then>
             </if>
           </then>
           <else>
             <if>
-              <available file="${WikiCleaner.po.dir}/tmp/WikiCleaner.pot"/>
+              <available file="${WPCleaner.po.dir}/tmp/WikiCleaner.pot"/>
               <then>
-                <copy file="${WikiCleaner.po.dir}/tmp/WikiCleaner.pot"
-                      tofile="${WikiCleaner.po.dir}/WikiCleaner.pot"/>
+                <copy file="${WPCleaner.po.dir}/tmp/WikiCleaner.pot"
+                      tofile="${WPCleaner.po.dir}/WikiCleaner.pot"/>
               </then>
             </if>
           </else>
         </if>
-        <touch file="${WikiCleaner.po.dir}/tstamp.WikiCleaner.pot_"/>
-        <delete dir="${WikiCleaner.po.dir}/tmp"/>
+        <touch file="${WPCleaner.po.dir}/tstamp.WikiCleaner.pot_"/>
+        <delete dir="${WPCleaner.po.dir}/tmp"/>
       </then>
       <else>
         <echo message="Skipping generation of WikiCleaner.pot (gettext PO-template)" />
@@ -330,36 +331,36 @@
              param="current.language">
           <sequential>
             <antcall target="update-po-lang">
-              <param name="WikiCleaner_lang_value" value="@{current.language}"/>
+              <param name="WPCleaner_lang_value" value="@{current.language}"/>
             </antcall>
           </sequential>
         </for>
       </then>
       <else>
-        <echo message="Skipping generation of .po gettext files for WikiCleaner" />
+        <echo message="Skipping generation of .po gettext files for WPCleaner" />
       </else>
     </if>
   </target>  
 
   <target name="check-uptodate-po">
-    <condition property="uptodate-po-${WikiCleaner_lang_value}">
-      <uptodate targetfile="${WikiCleaner.po.dir}/tstamp.${WikiCleaner_lang_value}.po_">
-        <srcfiles file="${WikiCleaner.po.dir}/WikiCleaner.pot"/>
-        <srcfiles file="${WikiCleaner.po.dir}/${WikiCleaner_lang_value}.po"/>
+    <condition property="uptodate-po-${WPCleaner_lang_value}">
+      <uptodate targetfile="${WPCleaner.po.dir}/tstamp.${WPCleaner_lang_value}.po_">
+        <srcfiles file="${WPCleaner.po.dir}/WikiCleaner.pot"/>
+        <srcfiles file="${WPCleaner.po.dir}/${WPCleaner_lang_value}.po"/>
       </uptodate>
     </condition>
   </target>
 
   <target name="update-po-lang"
           depends="check-uptodate-po"
-          if="exist_msgmerge" unless="uptodate-po-${WikiCleaner_lang_value}">
-    <echo message="Updating wikicleaner-${WikiCleaner_lang_value}.po gettext file for WikiCleaner ..." level="info"/>
-    <delete file="${WikiCleaner.po.dir}/tstamp.${WikiCleaner_lang_value}.po_"/>
-    <exec executable="${gettext.msgmerge}" dir="${basedir}/${WikiCleaner.po.dir}">
-      <arg line="-U ${WikiCleaner_lang_value}.po WikiCleaner.pot"/>
+          if="exist_msgmerge" unless="uptodate-po-${WPCleaner_lang_value}">
+    <echo message="Updating wikicleaner-${WPCleaner_lang_value}.po gettext file for WPCleaner ..." level="info"/>
+    <delete file="${WPCleaner.po.dir}/tstamp.${WPCleaner_lang_value}.po_"/>
+    <exec executable="${gettext.msgmerge}" dir="${basedir}/${WPCleaner.po.dir}">
+      <arg line="-U ${WPCleaner_lang_value}.po WikiCleaner.pot"/>
     </exec>
-    <touch file="${WikiCleaner.po.dir}/tstamp.${WikiCleaner_lang_value}.po_"/>
-    <delete file="${WikiCleaner.po.dir}/${WikiCleaner_lang_value}.po~"/>
+    <touch file="${WPCleaner.po.dir}/tstamp.${WPCleaner_lang_value}.po_"/>
+    <delete file="${WPCleaner.po.dir}/${WPCleaner_lang_value}.po~"/>
   </target>
 
   <!-- Manage catalog files -->
@@ -372,42 +373,42 @@
          param="current.language">
       <sequential>
         <antcall target="update-catalog-lang">
-          <param name="WikiCleaner_lang_value" value="@{current.language}"/>
+          <param name="WPCleaner_lang_value" value="@{current.language}"/>
         </antcall>
       </sequential>
     </for>
   </target>  
 
   <target name="check-uptodate-catalog">
-    <mkdir dir="${WikiCleaner.classes.dir}/org/wikipediacleaner/i18n"/>
-    <condition property="uptodate-catalog-${WikiCleaner_lang_value}">
-      <uptodate srcfile="${WikiCleaner.po.dir}/${WikiCleaner_lang_value}.po"
-                targetfile="${WikiCleaner.classes.dir}/org/wikipediacleaner/i18n/Messages_${WikiCleaner_lang_value}.class"/>
+    <mkdir dir="${WPCleaner.classes.dir}/org/wikipediacleaner/i18n"/>
+    <condition property="uptodate-catalog-${WPCleaner_lang_value}">
+      <uptodate srcfile="${WPCleaner.po.dir}/${WPCleaner_lang_value}.po"
+                targetfile="${WPCleaner.classes.dir}/org/wikipediacleaner/i18n/Messages_${WPCleaner_lang_value}.class"/>
     </condition>
   </target>
 
   <target name="update-catalog-lang"
           depends="check-uptodate-catalog"
-          if="exist_msgfmt" unless="uptodate-catalog-${WikiCleaner_lang_value}">
-    <echo message="Updating messages_${WikiCleaner_lang_value}.class file for Wiki Cleaner ..." level="info"/>
-    <exec executable="${gettext.msgfmt}" dir="${basedir}/${WikiCleaner.po.dir}">
+          if="exist_msgfmt" unless="uptodate-catalog-${WPCleaner_lang_value}">
+    <echo message="Updating messages_${WPCleaner_lang_value}.class file for WPCleaner ..." level="info"/>
+    <exec executable="${gettext.msgfmt}" dir="${basedir}/${WPCleaner.po.dir}">
       <arg value="--statistics"/>
       <arg value="--java2"/>
       <arg value="-l"/>
-      <arg value="${WikiCleaner_lang_value}"/>
+      <arg value="${WPCleaner_lang_value}"/>
       <arg value="-d"/>
-      <arg value="${basedir}/${WikiCleaner.classes.dir}"/>
+      <arg value="${basedir}/${WPCleaner.classes.dir}"/>
       <arg value="-r"/>
       <arg value="org.wikipediacleaner.i18n.Messages"/>
-      <arg value="${WikiCleaner_lang_value}.po"/>
+      <arg value="${WPCleaner_lang_value}.po"/>
     </exec>
   </target>
 
   <!-- Manage catalog files -->
   <target name="tar-i18n">
-    <delete file="${WikiCleaner.po.dir}/WikiCleaner.tgz"/>
-    <tar tarfile="${WikiCleaner.po.dir}/WikiCleaner.tgz" compression="gzip">
-      <tarfileset dir="${WikiCleaner.po.dir}" includes="**/*.pot,**/*.po"/>
+    <delete file="${WPCleaner.po.dir}/WikiCleaner.tgz"/>
+    <tar tarfile="${WPCleaner.po.dir}/WikiCleaner.tgz" compression="gzip">
+      <tarfileset dir="${WPCleaner.po.dir}" includes="**/*.pot,**/*.po"/>
     </tar>
   </target>
 
@@ -415,7 +416,7 @@
   <target name="check-executables" unless="exist_executable">
 
     <!-- checking for xgettext -->
-    <exec executable="${gettext.xgettext}" dir="${WikiCleaner.src.dir}"
+    <exec executable="${gettext.xgettext}" dir="${WPCleaner.src.dir}"
           failonerror="false" failifexecutionfails="false"
           outputproperty="ouput_xgettext"
           resultproperty="result_xgettext">
@@ -429,7 +430,7 @@
     </if>
 
     <!-- checking for msgmerge -->
-    <exec executable="${gettext.msgmerge}" dir="${WikiCleaner.src.dir}"
+    <exec executable="${gettext.msgmerge}" dir="${WPCleaner.src.dir}"
           failonerror="false" failifexecutionfails="false"
           outputproperty="ouput_msgmerge"
           resultproperty="result_msgmerge">
@@ -443,7 +444,7 @@
     </if>
 
     <!-- checking for msgfmt -->
-    <exec executable="${gettext.msgfmt}" dir="${WikiCleaner.src.dir}"
+    <exec executable="${gettext.msgfmt}" dir="${WPCleaner.src.dir}"
           failonerror="false" failifexecutionfails="false"
           outputproperty="ouput_msgfmt"
           resultproperty="result_msgfmt">
