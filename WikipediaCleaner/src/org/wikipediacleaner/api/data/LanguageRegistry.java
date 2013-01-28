@@ -32,7 +32,7 @@ import java.util.zip.GZIPInputStream;
  * A registry for languages.
  * 
  * This is based on the data file <code>language-subtag-registry.txt.tgz</code>.
- * This file is retrieved from {@link http://www.iana.org/assignments/language-subtag-registry}
+ * This file is retrieved from <a href="http://www.iana.org/assignments/language-subtag-registry">IANA</a>
  * and compressed with gzip.
  */
 public class LanguageRegistry {
