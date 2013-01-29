@@ -181,7 +181,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
       }
 
       // Working with sublists
-      UpdateDabWarningTools tools = new UpdateDabWarningTools(wikipedia, this, true, false);
+      UpdateDabWarningTools tools = new UpdateDabWarningTools(wikipedia, this, true, true);
       if (!useList) {
         setText(GT._("Retrieving disambiguation pages"));
         tools.preloadDabPages();
