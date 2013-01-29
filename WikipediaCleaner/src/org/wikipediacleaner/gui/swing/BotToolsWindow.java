@@ -169,15 +169,20 @@ public class BotToolsWindow
     addAlgorithm(6);  // DEFAULTSORT with special letter
     addAlgorithm(7);  // Headlines all start with three "="
     addAlgorithm(9);  // Categories more at one line
+    addAlgorithm(11); // HTML named entities
     addAlgorithm(17); // Category duplication
-    addAlgorithm(19); // Headlines start with one "="
     addAlgorithm(18); // Category first letter small
+    addAlgorithm(19); // Headlines start with one "="
+    addAlgorithm(20); // Symbol for dead
     addAlgorithm(22); // Category with space
     addAlgorithm(25); // Headline hierarchy
+    addAlgorithm(27); // Unicode syntax
     addAlgorithm(45); // Interwiki double
+    addAlgorithm(50); // en dash or em dash
     addAlgorithm(54); // Break in list
     addAlgorithm(57); // Headlines end with colon
     addAlgorithm(64); // Link equal to link text
+    addAlgorithm(87); // HTML named entities without semicolon
     addAlgorithm(88); // DEFAULTSORT with blank at first position
     addAlgorithm(92); // Headline double
     JPanel panelCW = new JPanel(new GridBagLayout());
