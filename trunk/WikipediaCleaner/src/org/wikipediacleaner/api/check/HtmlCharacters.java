@@ -116,7 +116,7 @@ public enum HtmlCharacters {
   LETTER_SMALL_Y(121, null, 'y'),
   LETTER_SMALL_Z(122, null, 'z'),
   SYMBOL_LEFT_CURLY_BRACE(123, null, '{', false, false),
-  SYMBOL_VERICAL_BAR(124, null, '|', false, false),
+  SYMBOL_VERTICAL_BAR(124, null, '|', false, false),
   SYMBOL_RIGHT_CURLY_BRACE(125, null, '}', false, false),
   SYMBOL_TILDE(126, null, '~', false, false),
   SYMBOL_NON_BREAKING_SPACE(160, "nbsp", '\u00A0', false, false),

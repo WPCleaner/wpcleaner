@@ -88,7 +88,7 @@ public class CheckErrorAlgorithm027 extends CheckErrorAlgorithmBase {
         boolean shouldReplace = true;
         if (htmlCharacter != null) {
           shouldReplace = htmlCharacter.shouldReplaceNumeric();
-          if (HtmlCharacters.SYMBOL_VERICAL_BAR.equals(htmlCharacter) &&
+          if (HtmlCharacters.SYMBOL_VERTICAL_BAR.equals(htmlCharacter) &&
               (pageAnalysis.isInTemplate(ampersandIndex) != null)) {
             shouldReplace = false;
           }
@@ -111,6 +111,17 @@ public class CheckErrorAlgorithm027 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String botFix(PageAnalysis analysis) {
+    return fix(globalFixes[0], analysis, null);
   }
 
   /**
