@@ -126,6 +126,17 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
   }
 
   /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String botFix(PageAnalysis analysis) {
+    return fix(globalFixes[0], analysis, null);
+  }
+
+  /**
    * @return List of possible global fixes.
    */
   @Override
