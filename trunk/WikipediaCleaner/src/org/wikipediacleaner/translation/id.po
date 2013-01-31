@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-01-21 11:49+0100\n"
+"POT-Creation-Date: 2013-01-31 19:08+0100\n"
 "PO-Revision-Date: 2012-11-20 08:24+0000\n"
 "Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -219,7 +219,7 @@ msgid "Remove"
 msgstr "Buang"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:184
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:190
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:205
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
 msgstr ""
@@ -232,7 +232,7 @@ msgstr ""
 msgid "Remove <small> tag"
 msgstr "Buang <small> tag"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:187
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:202
 #, java-format
 msgid ""
 "A list of abbreviations that generate false positives when placed before {0}"
@@ -563,11 +563,11 @@ msgid "About"
 msgstr "Keterangan"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:278
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:224
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:173
 #: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:174
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:226
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:212
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:213
 msgid "&Close"
 msgstr "&Tutup"
 
@@ -624,7 +624,7 @@ msgid "You must input the initial and destination texts."
 msgstr "Anda harus memasukkan teks awal dantujuan."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:474
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:123
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:120
 msgid "!!! WARNING !!!"
 msgstr "!!! PERINGATAN !!!"
 
@@ -638,13 +638,13 @@ msgid "It may modify a lot of pages in a short period of time."
 msgstr "Ini akan merubah banyak halaman dalam waktu singkat."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:477
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:126
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:123
 msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Pada beberapa ProyekWiki, anda memerlukan status bot guna melakukan hal ini."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:478
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:127
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:124
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
 msgstr ""
@@ -661,48 +661,6 @@ msgstr "Anda ingin lanjutkan ?"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:509
 msgid "A comment is required for automatix fixing."
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:98
-#: org/wikipediacleaner/gui/swing/MainWindow.java:783
-msgid "Bot tools"
-msgstr "Program bot"
-
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:124
-msgid "Functions available here are considered as bot tools."
-msgstr "Fungsi yang tersedia dipertimbangkan menjadi bot."
-
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:125
-msgid "They may modify a lot of pages in a short period of time."
-msgstr "Dapat melakukan perubahan pada banyak halaman dalam waktu singkat."
-
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:141
-msgid "Semi-automatic disambiguation fixing"
-msgstr "Semi-otomatis perbaikan disambiguasi"
-
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:151
-msgid "Update existing disambiguation warning messages"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:160
-msgid "Monitor recent changes"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:186
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:208
-msgid "Automatic fixing for Check Wiki"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:215
-msgid "Analyze pages that couldn't be fixed by bot"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:291
-msgid "How many pages do you want to analyze"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/BotToolsWindow.java:322
-msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:179
@@ -931,7 +889,7 @@ msgid ""
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/Controller.java:268
+#: org/wikipediacleaner/gui/swing/Controller.java:269
 #, java-format
 msgid ""
 "You have selected {0} pages.\n"
@@ -976,22 +934,22 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:172
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:191
 #, fuzzy
 msgid "Language"
 msgstr "Ba&hasa"
 
-#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:185
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:204
 #, fuzzy
 msgid "Script"
 msgstr "Urutkan"
 
-#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:199
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:218
 #, fuzzy
 msgid "Region"
 msgstr "Ulangi"
 
-#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:217
+#: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:236
 #, fuzzy, java-format
 msgid "Variant n°{0}"
 msgstr "Galat n°{0}"
@@ -1162,6 +1120,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1479
 msgid "Random pages"
 msgstr ""
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:783
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:95
+msgid "Bot tools"
+msgstr "Program bot"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:827
 msgid ""
@@ -1510,21 +1473,21 @@ msgstr ""
 msgid "You must select the text that is written in a foreign language"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1108
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1109
 #, fuzzy
 msgid "Foreign language"
 msgstr "&Pantau halaman ini"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1150
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1151
 msgid "From which Wikipedia is this text coming ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1258
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1259
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:115
 msgid "Translation"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1461
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1462
 msgid ""
 "Do you want to delete this page on Wikipedia ?\n"
 "Please, enter the reason for deleting the page"
@@ -2010,6 +1973,68 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:339
 msgid "No to all"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:107
+#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:87
+#, java-format
+msgid "Checking for errors n°{0}"
+msgstr "Periksa galat n°{0}"
+
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:145
+#, fuzzy, java-format
+msgid "Fixing page {0}"
+msgstr "Pembaharuan halaman {0}"
+
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:184
+#, java-format
+msgid "{0} pages have been fixed"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:208
+#, fuzzy
+msgid "Description"
+msgstr "Tambahkan deskripsi"
+
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:210
+msgid "N°"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:121
+msgid "Functions available here are considered as bot tools."
+msgstr "Fungsi yang tersedia dipertimbangkan menjadi bot."
+
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:122
+msgid "They may modify a lot of pages in a short period of time."
+msgstr "Dapat melakukan perubahan pada banyak halaman dalam waktu singkat."
+
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:138
+msgid "Semi-automatic disambiguation fixing"
+msgstr "Semi-otomatis perbaikan disambiguasi"
+
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:148
+msgid "Update existing disambiguation warning messages"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:157
+msgid "Monitor recent changes"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:167
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:191
+msgid "Automatic fixing for Check Wiki"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:198
+msgid "Analyze pages that couldn't be fixed by bot"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:264
+msgid "How many pages do you want to analyze"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:298
+msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:108
@@ -2584,22 +2609,6 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:105
 msgid "Translate templates without parameters"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/AutomaticCWWorker.java:107
-#: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:87
-#, java-format
-msgid "Checking for errors n°{0}"
-msgstr "Periksa galat n°{0}"
-
-#: org/wikipediacleaner/gui/swing/worker/AutomaticCWWorker.java:145
-#, fuzzy, java-format
-msgid "Fixing page {0}"
-msgstr "Pembaharuan halaman {0}"
-
-#: org/wikipediacleaner/gui/swing/worker/AutomaticCWWorker.java:184
-#, java-format
-msgid "{0} pages have been fixed"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/AutomaticDisambiguationWorker.java:67
