@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.wikipediacleaner.gui.swing;
+package org.wikipediacleaner.gui.swing.bot;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -29,26 +29,24 @@ import java.awt.event.ActionListener;
 import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.worker.AutomaticCWWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
@@ -62,7 +60,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 public class BotToolsWindow
   extends BasicWindow {
 
-  public final static Integer WINDOW_VERSION = Integer.valueOf(3);
+  public final static Integer WINDOW_VERSION = Integer.valueOf(4);
 
   private JButton buttonAutomaticFixing;
   private JButton buttonCWAutomaticFixing;
@@ -71,9 +69,8 @@ public class BotToolsWindow
 
   private JCheckBox chkCWAnalyze;
 
-  private JList lstCWAutomaticFixing;
-
-  private Vector<CheckErrorAlgorithm> algorithms;
+  BotCWTableModel modelCWAutomaticFixing;
+  private JTable tableCWAutomaticFixing;
 
   /**
    * Create and display a BotToolsWindow.
@@ -164,27 +161,6 @@ public class BotToolsWindow
     constraints.gridy++;
 
     // Tools : automatic Check Wiki fixing
-    algorithms = new Vector<CheckErrorAlgorithm>();
-    addAlgorithm(2);  // Article with false <br/>
-    addAlgorithm(6);  // DEFAULTSORT with special letter
-    addAlgorithm(7);  // Headlines all start with three "="
-    addAlgorithm(9);  // Categories more at one line
-    addAlgorithm(11); // HTML named entities
-    addAlgorithm(17); // Category duplication
-    addAlgorithm(18); // Category first letter small
-    addAlgorithm(19); // Headlines start with one "="
-    addAlgorithm(20); // Symbol for dead
-    addAlgorithm(22); // Category with space
-    addAlgorithm(25); // Headline hierarchy
-    addAlgorithm(27); // Unicode syntax
-    addAlgorithm(45); // Interwiki double
-    addAlgorithm(50); // en dash or em dash
-    addAlgorithm(54); // Break in list
-    addAlgorithm(57); // Headlines end with colon
-    addAlgorithm(64); // Link equal to link text
-    addAlgorithm(87); // HTML named entities without semicolon
-    addAlgorithm(88); // DEFAULTSORT with blank at first position
-    addAlgorithm(92); // Headline double
     JPanel panelCW = new JPanel(new GridBagLayout());
     panelCW.setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(),
@@ -200,10 +176,12 @@ public class BotToolsWindow
     constraintsCW.ipady = 0;
     constraintsCW.weightx = 1;
     constraintsCW.weighty = 1;
-    lstCWAutomaticFixing = new JList(algorithms);
-    lstCWAutomaticFixing.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-    JScrollPane paneCWAutomaticFixing = new JScrollPane(lstCWAutomaticFixing);
-    paneCWAutomaticFixing.setMinimumSize(new Dimension(100, 100));
+    modelCWAutomaticFixing = new BotCWTableModel(getWikipedia());
+    tableCWAutomaticFixing = new JTable(modelCWAutomaticFixing);
+    modelCWAutomaticFixing.configureColumnModel(tableCWAutomaticFixing.getColumnModel());
+    Utilities.addRowSorter(tableCWAutomaticFixing, modelCWAutomaticFixing);
+    JScrollPane paneCWAutomaticFixing = new JScrollPane(tableCWAutomaticFixing);
+    paneCWAutomaticFixing.setMinimumSize(new Dimension(200, 200));
     paneCWAutomaticFixing.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     paneCWAutomaticFixing.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     panelCW.add(paneCWAutomaticFixing, constraintsCW);
@@ -220,9 +198,15 @@ public class BotToolsWindow
         GT._("Analyze pages that couldn't be fixed by bot"), true);
     panelCW.add(chkCWAnalyze, constraintsCW);
     constraintsCW.gridy++;
-    // TODO: Add check box for analyzing pages that couldn't be fixed
     panel.add(panelCW, constraints);
     constraints.gridy++;
+    ListSelectionModel selectionModel = tableCWAutomaticFixing.getSelectionModel();
+    selectionModel.clearSelection();
+    for (int i = 0; i < modelCWAutomaticFixing.getRowCount(); i++) {
+      if (modelCWAutomaticFixing.isBotAlgorithm(i)) {
+        selectionModel.addSelectionInterval(i, i);
+      }
+    }
 
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -239,20 +223,6 @@ public class BotToolsWindow
 
     updateComponentState();
     return panel;
-  }
-
-  /**
-   * Add an algorithm to the list of algorithms that can be fixed automatically.
-   * 
-   * @param errorNumber Error number.
-   */
-  private void addAlgorithm(int errorNumber) {
-    CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(getWikipedia(), errorNumber);
-    if ((algorithm != null) &&
-        (algorithm.isAvailable()) &&
-        CheckErrorAlgorithms.isAlgorithmActive(getWikipedia(), errorNumber)) {
-      algorithms.add(algorithm);
-    }
   }
 
   /**
@@ -278,15 +248,13 @@ public class BotToolsWindow
    * Action called when Automatic Check Wiki Fixing button is pressed.
    */
   public void actionCWAutomaticFixing() {
-    Object[] selection = lstCWAutomaticFixing.getSelectedValues();
+    int[] selection = tableCWAutomaticFixing.getSelectedRows();
     if ((selection == null) || (selection.length == 0)) {
       return;
     }
     List<CheckErrorAlgorithm> selectedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
     for (int i = 0; i < selection.length; i++) {
-      if (selection[i] instanceof CheckErrorAlgorithm) {
-        selectedAlgorithms.add((CheckErrorAlgorithm) selection[i]);
-      }
+      selectedAlgorithms.add(modelCWAutomaticFixing.getAlgorithm(selection[i]));
     }
     if (displayYesNoWarning(experimentalMessage) != JOptionPane.YES_OPTION) {
       return;
@@ -304,7 +272,10 @@ public class BotToolsWindow
       return;
     }
     AutomaticCWWorker worker = new AutomaticCWWorker(
-        getWikipedia(), this, selectedAlgorithms, max, algorithms, chkCWAnalyze.isSelected());
+        getWikipedia(), this,
+        selectedAlgorithms, max,
+        modelCWAutomaticFixing.getAlgorithms(),
+        chkCWAnalyze.isSelected());
     worker.start();
   }
 

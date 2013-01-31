@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.bot.BotToolsWindow;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.gui.swing.options.OptionsWindow;
 import org.wikipediacleaner.i18n.GT;

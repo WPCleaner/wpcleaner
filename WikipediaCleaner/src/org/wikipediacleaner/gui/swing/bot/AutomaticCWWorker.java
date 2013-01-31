@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.wikipediacleaner.gui.swing.worker;
+package org.wikipediacleaner.gui.swing.bot;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,7 +42,7 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * SwingWorker for automatic Check Wiki fixing.
  */
-public class AutomaticCWWorker extends BasicWorker {
+class AutomaticCWWorker extends BasicWorker {
 
   /**
    * Algorithms for which to fix pages.
