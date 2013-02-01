@@ -117,7 +117,8 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
             String magicWordName = magicWord.getName();
             boolean isOk = false;
             if (MagicWord.DEFAULT_SORT.equals(magicWordName) ||
-                MagicWord.FORMAT_NUM.equals(magicWordName)) {
+                MagicWord.FORMAT_NUM.equals(magicWordName) ||
+                MagicWord.DISPLAY_TITLE.equals(magicWordName)) {
               isOk = true;
             }
             if (!isOk &&
