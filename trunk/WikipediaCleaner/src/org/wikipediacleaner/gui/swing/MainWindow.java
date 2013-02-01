@@ -25,7 +25,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.EventHandler;
 import java.io.IOException;
@@ -108,7 +107,7 @@ import org.xml.sax.SAXException;
  */
 public class MainWindow
   extends BasicWindow
-  implements ActionListener, ItemListener {
+  implements ActionListener {
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(3);
 
@@ -344,7 +343,8 @@ public class MainWindow
     comboWikipedia = new JComboBox(EnumWikipedia.getList().toArray());
     comboWikipedia.setEditable(false);
     comboWikipedia.setSelectedItem(defaultWikipedia);
-    comboWikipedia.addItemListener(this);
+    comboWikipedia.addItemListener(EventHandler.create(
+        ItemListener.class, this, "actionChangeWiki"));
     JLabel labelWikipedia = Utilities.createJLabel(GT._("&Wikipedia"));
     labelWikipedia.setLabelFor(comboWikipedia);
     labelWikipedia.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -371,7 +371,8 @@ public class MainWindow
     comboLanguage = new JComboBox(EnumLanguage.getList().toArray());
     comboLanguage.setEditable(false);
     comboLanguage.setSelectedItem(configuration.getLanguage());
-    comboLanguage.addItemListener(this);
+    comboLanguage.addItemListener(EventHandler.create(
+        ItemListener.class, this, "actionChangeLanguage"));
     JLabel labelLanguage = Utilities.createJLabel(GT._("Lan&guage"));
     labelLanguage.setLabelFor(comboLanguage);
     labelLanguage.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -397,7 +398,8 @@ public class MainWindow
     // User name
     comboUser = new JComboBox();
     comboUser.setEditable(true);
-    comboUser.addItemListener(this);
+    comboUser.addItemListener(EventHandler.create(
+        ItemListener.class, this, "actionChangeUser"));
     JLabel labelUsername = Utilities.createJLabel(GT._("&User name :"));
     labelUsername.setLabelFor(comboUser);
     labelUsername.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -548,7 +550,7 @@ public class MainWindow
     panel.add(emptyPanel, constraints);
     constraints.gridy++;
 
-    resetUsersList();
+    actionChangeWiki();
 
     return panel;
   }
@@ -1653,40 +1655,22 @@ public class MainWindow
     }
   }
 
-  /* (non-Javadoc)
-   * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
+  /**
+   * Action called when Language is changed.
    */
-  public void itemStateChanged(ItemEvent e) {
-    if ((e == null) || (e.getSource() == null)) {
-      return;
-    }
-
-    // New wikipedia selected: change wikipedia
-    if (e.getSource() == comboWikipedia) {
-      resetUsersList();
-      return;
-    }
-
-    // New language selected: change current language
-    if (e.getSource() == comboLanguage) {
-      if (comboLanguage.getSelectedItem() instanceof EnumLanguage) {
-        EnumLanguage language = (EnumLanguage) comboLanguage.getSelectedItem();
-        GT.setCurrentLanguage(language);
-      }
-      return;
-    }
-
-    // New user selected: change password
-    if (e.getSource() == comboUser) {
-      resetPassword();
-      return;
+  public void actionChangeLanguage() {
+    if (comboLanguage.getSelectedItem() instanceof EnumLanguage) {
+      EnumLanguage language = (EnumLanguage) comboLanguage.getSelectedItem();
+      GT.setCurrentLanguage(language);
     }
   }
 
   /**
+   * Action called when Wiki is changed.
+   * 
    * Reset users list based on current wikipedia.
    */
-  private void resetUsersList() {
+  public void actionChangeWiki() {
     comboUser.removeAllItems();
     comboUser.setSelectedItem("");
     if (comboWikipedia.getSelectedItem() instanceof EnumWikipedia) {
@@ -1704,13 +1688,15 @@ public class MainWindow
         comboUser.setSelectedItem(lastUser);
       }
     }
-    resetPassword();
+    actionChangeUser();
   }
 
   /**
+   * Action called when User is changed.
+   * 
    * Reset password based on current wikipedia and user.
    */
-  private void resetPassword() {
+  public void actionChangeUser() {
     textPassword.setText("");
     if ((comboWikipedia.getSelectedItem() instanceof EnumWikipedia) &&
         (comboUser.getSelectedItem() instanceof String)) {
