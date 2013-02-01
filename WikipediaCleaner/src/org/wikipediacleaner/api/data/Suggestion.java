@@ -30,6 +30,7 @@ import java.util.regex.PatternSyntaxException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.wikipediacleaner.utils.Configuration;
 
 
 /**
@@ -78,22 +79,6 @@ public class Suggestion implements Comparable<Suggestion> {
       return null;
     }
     
-    // Remove possible \b at the beginning and the end
-    /*while (patternText.startsWith("\\b")) {
-      patternText = patternText.substring(2);
-    }
-    while (patternText.endsWith("\\b")) {
-      patternText = patternText.substring(0, patternText.length() - 2);
-    }*/
-
-    // Check for problematic constructions
-    /*if (patternText.contains("\\b") || patternText.contains("\\B")) {
-      return null;
-    }*/
-    /*if (patternText.contains("(?<")) {
-      return null;
-    }*/
-
     // Check for {{ or }}
     int lastIndex = 0;
     int currentIndex = 0;
@@ -267,13 +252,28 @@ public class Suggestion implements Comparable<Suggestion> {
   /**
    * List of inactive chapters.
    */
-  private final static List<String> inactiveChapters = new ArrayList<String>();
+  private static List<String> inactiveChapters;
+
+  private final static Object lockClass = new Object();
+
+  /**
+   * Initialize list of inactive chapters.
+   */
+  private static void initializeInactiveChapters() {
+    synchronized (lockClass) {
+      if (inactiveChapters == null) {
+        Configuration config = Configuration.getConfiguration();
+        inactiveChapters = config.getStringList(null, Configuration.ARRAY_SPELLING_INACTIVE);
+      }
+    }
+  }
 
   /**
    * @param chapter Chapter.
    * @return True if the chapter is active.
    */
   public static boolean isChapterActive(String chapter) {
+    initializeInactiveChapters();
     return !inactiveChapters.contains(chapter);
   }
 
@@ -283,6 +283,7 @@ public class Suggestion implements Comparable<Suggestion> {
    * @return True if the chapter is active.
    */
   public static boolean isChapterActive(String page, String title) {
+    initializeInactiveChapters();
     return !inactiveChapters.contains(page + "#" + title);
   }
 
@@ -290,6 +291,7 @@ public class Suggestion implements Comparable<Suggestion> {
    * @return True if the suggestion is active.
    */
   public boolean isActive() {
+    initializeInactiveChapters();
     return isChapterActive(chapter);
   }
 
@@ -300,12 +302,15 @@ public class Suggestion implements Comparable<Suggestion> {
    * @param activate True to activate, false to deactivate.
    */
   public static void activateChapter(String chapter, boolean activate) {
+    initializeInactiveChapters();
     if (activate) {
       inactiveChapters.remove(chapter);
     } else if (!inactiveChapters.contains(chapter)) {
       inactiveChapters.add(chapter);
       Collections.sort(inactiveChapters);
     }
+    Configuration config = Configuration.getConfiguration();
+    config.setStringList(null, Configuration.ARRAY_SPELLING_INACTIVE, inactiveChapters);
   }
 
   /**
