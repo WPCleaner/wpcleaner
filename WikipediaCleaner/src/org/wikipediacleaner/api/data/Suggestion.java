@@ -296,18 +296,25 @@ public class Suggestion implements Comparable<Suggestion> {
   }
 
   /**
-   * Activate or deactivate a chapter.
+   * Activate or deactivate a list of chapters.
    * 
-   * @param chapter Chapter.
+   * @param page Page.
+   * @param chapters Chapters.
    * @param activate True to activate, false to deactivate.
    */
-  public static void activateChapter(String chapter, boolean activate) {
+  public static void activateChapters(String page, List<String> chapters, boolean activate) {
     initializeInactiveChapters();
-    if (activate) {
-      inactiveChapters.remove(chapter);
-    } else if (!inactiveChapters.contains(chapter)) {
-      inactiveChapters.add(chapter);
-      Collections.sort(inactiveChapters);
+    if ((chapters == null) || (chapters.isEmpty())) {
+      return;
+    }
+    for (String chapter : chapters) {
+      String chapterName = (page != null ? page + "#" : "") + chapter;
+      if (activate) {
+        inactiveChapters.remove(chapterName);
+      } else if (!inactiveChapters.contains(chapterName)) {
+        inactiveChapters.add(chapterName);
+        Collections.sort(inactiveChapters);
+      }
     }
     Configuration config = Configuration.getConfiguration();
     config.setStringList(null, Configuration.ARRAY_SPELLING_INACTIVE, inactiveChapters);
