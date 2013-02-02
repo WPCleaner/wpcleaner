@@ -166,7 +166,7 @@ public class BotCWTableModel extends AbstractTableModel {
   }
 
   /**
-   * @return
+   * @return Number of columns.
    * @see javax.swing.table.TableModel#getColumnCount()
    */
   public int getColumnCount() {
