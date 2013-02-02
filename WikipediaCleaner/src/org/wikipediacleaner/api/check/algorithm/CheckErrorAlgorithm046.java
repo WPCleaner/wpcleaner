@@ -19,10 +19,12 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
@@ -117,6 +119,19 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
           } else if (tmpChar == '[') {
             CheckErrorResult errorResult = createCheckErrorResult(
                 pageAnalysis.getPage(), tmpIndex, currentIndex + 2);
+
+            // Check if the situation is something like [http://....]] (replacement: [http://....])
+            List<String> protocols = PageElementExternalLink.getProtocols();
+            boolean protocolFound = false;
+            for (String protocol : protocols) {
+              if (contents.startsWith(protocol, tmpIndex + 1)) {
+                protocolFound = true;
+              }
+            }
+            if (protocolFound) {
+              errorResult.addReplacement(contents.substring(tmpIndex, currentIndex + 1));
+            }
+
             errorResult.addReplacement("[" + contents.substring(tmpIndex, currentIndex + 2));
             errors.add(errorResult);
             errorReported = true;

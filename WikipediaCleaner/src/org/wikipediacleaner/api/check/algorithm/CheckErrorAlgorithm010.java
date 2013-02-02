@@ -120,7 +120,6 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
           } else if (tmpChar == ']') {
             CheckErrorResult errorResult = createCheckErrorResult(
                 pageAnalysis.getPage(), currentIndex, tmpIndex + 1);
-            errorResult.addReplacement(contents.substring(currentIndex, tmpIndex + 1) + "]");
 
             // Check if the situation is something like [[http://....] (replacement: [http://....])
             List<String> protocols = PageElementExternalLink.getProtocols();
@@ -134,6 +133,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
               errorResult.addReplacement(contents.substring(currentIndex + 1, tmpIndex + 1));
             }
 
+            errorResult.addReplacement(contents.substring(currentIndex, tmpIndex + 1) + "]");
             errors.add(errorResult);
             errorReported = true;
             finished = true;

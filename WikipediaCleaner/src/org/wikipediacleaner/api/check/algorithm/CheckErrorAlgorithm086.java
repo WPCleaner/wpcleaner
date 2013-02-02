@@ -58,7 +58,7 @@ public class CheckErrorAlgorithm086 extends CheckErrorAlgorithmBase {
       startIndex = contents.indexOf("[[", startIndex);
       if (startIndex >= 0) {
         int linkIndex = startIndex + 2;
-        // Removing possible whitespaces before link
+        // Removing possible white spaces before link
         while ((linkIndex < contents.length()) && (contents.charAt(linkIndex) == ' ')) {
           linkIndex++;
         }
