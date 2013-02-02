@@ -638,7 +638,9 @@ public class MainWindow
     constraints.gridy++;
 
     // Links button
-    buttonInternalLinks = Utilities.createJButton(GT._("Internal links"));
+    buttonInternalLinks = Utilities.createJButton(
+        "wpc-internal-link.png", EnumImageSize.NORMAL,
+        GT._("Internal links"), true);
     buttonInternalLinks.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionInternalLinks"));
     panel.add(buttonInternalLinks, constraints);
