@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -83,7 +82,6 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.Suggestion;
 import org.wikipediacleaner.api.data.User;
-import org.wikipediacleaner.gui.swing.action.ActivateChapterAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -166,14 +164,20 @@ public class MainWindow
       //
     }
 
-    /* (non-Javadoc)
+    /**
+     * Called just after BasicWindow constructor has been called.
+     * 
+     * @param window BasicWindow.
      * @see org.wikipediacleaner.gui.swing.basic.BasicWindowListener#initializeWindow(org.wikipediacleaner.gui.swing.basic.BasicWindow)
      */
-    public void initializeWindow(@SuppressWarnings("unused") BasicWindow window) {
+    public void initializeWindow(BasicWindow window) {
       // Nothing to do
     }
 
-    /* (non-Javadoc)
+    /**
+     * Called just after BasicWindow has been displayed.
+     * 
+     * @param window BasicWindow.
      * @see org.wikipediacleaner.gui.swing.basic.BasicWindowListener#displayWindow(org.wikipediacleaner.gui.swing.basic.BasicWindow)
      */
     public void displayWindow(BasicWindow window) {
@@ -195,7 +199,8 @@ public class MainWindow
         new MainWindowListener());
   }
 
-  /* (non-Javadoc)
+  /**
+   * @return Window title.
    * @see org.wikipediacleaner.gui.swing.basic.BasicWindow#getTitle()
    */
   @Override
@@ -1001,24 +1006,38 @@ public class MainWindow
       List<String> pageChapters = chapters.get(page);
       if (pageChapters.size() > 1) {
         JMenu pageMenu = new JMenu(page);
-        Action action = new ActivateChapterAction(GT._("Activate all"), true, page, pageChapters);
-        JMenuItem item = new JMenuItem(action);
+        JMenuItem item = new JMenuItem(GT._("Activate all"));
+        item.setActionCommand(page);
+        item.addActionListener(EventHandler.create(
+            ActionListener.class, this, "actionCheckSpellingActivatePage", "actionCommand"));
         pageMenu.add(item);
-        action = new ActivateChapterAction(GT._("Deactivate all"), false, page, pageChapters);
-        item = new JMenuItem(action);
+        item = new JMenuItem(GT._("Deactivate all"));
+        item.setActionCommand(page);
+        item.addActionListener(EventHandler.create(
+            ActionListener.class, this, "actionCheckSpellingDeactivatePage", "actionCommand"));
         pageMenu.add(item);
         pageMenu.addSeparator();
         for (String chapter : pageChapters) {
           boolean active = Suggestion.isChapterActive(page, chapter);
-          action = new ActivateChapterAction(chapter, active, page + "#" + chapter);
-          JMenuItem chapterItem = new JCheckBoxMenuItem(action);
+          JMenuItem chapterItem = new JCheckBoxMenuItem(chapter);
+          chapterItem.setSelected(active);
+          chapterItem.setActionCommand(page + "#" + chapter);
+          chapterItem.addActionListener(EventHandler.create(
+              ActionListener.class, this,
+              active ? "actionCheckSpellingDeactivateChapter" : "actionCheckSpellingActivateChapter",
+              "actionCommand"));
           pageMenu.add(chapterItem);
         }
         menu.add(pageMenu);
       } else {
         boolean active = Suggestion.isChapterActive(page, pageChapters.get(0));
-        Action action = new ActivateChapterAction(page, active, page + "#" + pageChapters.get(0));
-        JMenuItem pageItem = new JCheckBoxMenuItem(action);
+        JMenuItem pageItem = new JCheckBoxMenuItem(page);
+        pageItem.setSelected(active);
+        pageItem.setActionCommand(page + "#" + pageChapters.get(0));
+        pageItem.addActionListener(EventHandler.create(
+            ActionListener.class, this,
+            active ? "actionCheckSpellingDeactivateChapter" : "actionCheckSpellingActivateChapter",
+                "actionCommand"));
         menu.add(pageItem);
       }
     }
@@ -1026,6 +1045,58 @@ public class MainWindow
         buttonCheckSpelling,
         0,
         buttonCheckSpelling.getY() + buttonCheckSpelling.getHeight());
+  }
+
+  /**
+   * Action called to activate spell checking suggestions of a page.
+   * 
+   * @param page Page.
+   */
+  public void actionCheckSpellingActivatePage(String page) {
+    actionCheckSpellingPage(page, true);
+  }
+
+  /**
+   * Action called to deactivate spell checking suggestions of a page.
+   * 
+   * @param page Page.
+   */
+  public void actionCheckSpellingDeactivatePage(String page) {
+    actionCheckSpellingPage(page, false);
+  }
+
+  /**
+   * Action called to activate/deactivate spell checking suggestions of a page.
+   * 
+   * @param page Page.
+   * @param activate True to activate spell checking.
+   */
+  private void actionCheckSpellingPage(String page, boolean activate) {
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia == null) {
+      return;
+    }
+    Map<String, Suggestion> suggestions = wikipedia.getConfiguration().getSuggestions();
+    Map<String, List<String>> chapters = Suggestion.getChapters(suggestions.values());
+    Suggestion.activateChapters(page, chapters.get(page), activate);
+  }
+
+  /**
+   * Action called to activate spell checking suggestions of a chapter.
+   * 
+   * @param chapter Chapter.
+   */
+  public void actionCheckSpellingActivateChapter(String chapter) {
+    Suggestion.activateChapters(null, Collections.singletonList(chapter), true);
+  }
+
+  /**
+   * Action called to deactivate spell checking suggestions of a chapter.
+   * 
+   * @param chapter Chapter.
+   */
+  public void actionCheckSpellingDeactivateChapter(String chapter) {
+    Suggestion.activateChapters(null, Collections.singletonList(chapter), false);
   }
 
   /**
