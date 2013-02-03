@@ -33,6 +33,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -164,6 +165,35 @@ public class Utilities {
         parent,
         GT._("This function requires some configuration.") + "\n" +
         GT._("You need to define the ''{0}'' property in WPCleaner configuration.", parameterName));
+  }
+
+  /**
+   * Display a warning message about a missing parameters in configuration.
+   * 
+   * @param parent Parent component.
+   * @param parametersName Missing parameters.
+   */
+  public static void displayWarningForMissingConfiguration(Component parent, List<String> parametersName) {
+    if ((parametersName == null) || (parametersName.isEmpty())) {
+      return;
+    }
+    if (parametersName.size() == 1) {
+      displayWarning(parent, parametersName.get(0));
+      return;
+    }
+    StringBuilder sb = new StringBuilder();
+    for (String parameterName : parametersName) {
+      if (sb.length() > 0) {
+        sb.append(", ");
+      }
+      sb.append("'");
+      sb.append(parameterName);
+      sb.append("'");
+    }
+    displayWarning(
+        parent,
+        GT._("This function requires some configuration.") + "\n" +
+        GT._("You need to define the {0} properties in WPCleaner configuration.", sb.toString()));
   }
 
   /**
