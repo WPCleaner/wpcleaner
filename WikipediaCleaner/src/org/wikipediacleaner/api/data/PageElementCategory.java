@@ -173,4 +173,29 @@ public class PageElementCategory extends PageElement {
     sb.append("]]");
     return sb.toString();
   }
+
+  /**
+   * Create a category.
+   * 
+   * @param wiki Wiki.
+   * @param category Category name.
+   * @param sortKey Sort key.
+   * @return Category.
+   */
+  public static String createCategory(
+      EnumWikipedia wiki,
+      String category, String sortKey) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("[[");
+    Namespace categoryNamespace = wiki.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
+    sb.append(categoryNamespace.getTitle());
+    sb.append(":");
+    sb.append(category);
+    if (sortKey != null) {
+      sb.append("|");
+      sb.append(sortKey.trim());
+    }
+    sb.append("]]");
+    return sb.toString();
+  }
 }

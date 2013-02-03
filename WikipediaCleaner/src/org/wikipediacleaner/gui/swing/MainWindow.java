@@ -1221,9 +1221,10 @@ public class MainWindow
     }
     String template = getConfiguration().getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
     if ((template == null) || (template.trim().length() == 0)) {
-      Utilities.displayWarning(
+      Utilities.displayWarningForMissingConfiguration(
           getParentComponent(),
-          GT._("You need to define the 'dab_warning_template' property in WikiCleaner configuration."));
+          WPCConfigurationString.DAB_WARNING_TEMPLATE.getAttributeName());
+      return;
     }
     int answer = Utilities.displayYesNoWarning(
         getParentComponent(),

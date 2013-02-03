@@ -32,6 +32,8 @@ public enum WPCConfigurationStringList {
   DAB_WARNING_AFTER_TEMPLATES("dab_warning_after_templates", false, true, false),
   // Pages containing the list of pages with many disambiguation links.
   MOST_DAB_LINKS("most_dab_links", false, true, false),
+  // Categories that can be applied to redirect page.
+  REDIRECT_CATEGORIES("redirect_categories", true, true, true),
   // Chapters to be ignored for suggestions.
   SUGGESTION_IGNORE("general_suggestions_ignore", true, true, true),
   // Pages containing spelling suggestions.

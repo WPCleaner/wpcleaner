@@ -154,6 +154,19 @@ public class Utilities {
   }
 
   /**
+   * Display a warning message about a missing parameter in configuration.
+   * 
+   * @param parent Parent component.
+   * @param parameterName Missing parameter.
+   */
+  public static void displayWarningForMissingConfiguration(Component parent, String parameterName) {
+    displayWarning(
+        parent,
+        GT._("This function requires some configuration.") + "\n" +
+        GT._("You need to define the ''{0}'' property in WPCleaner configuration.", parameterName));
+  }
+
+  /**
    * Display a message.
    * 
    * @param parent Parent component.
