@@ -34,6 +34,8 @@ public enum WPCConfigurationStringList {
   MOST_DAB_LINKS("most_dab_links", false, true, false),
   // Categories that can be applied to redirect page.
   REDIRECT_CATEGORIES("redirect_categories", true, true, true),
+  // Templates that can be applied to redirect page.
+  REDIRECT_TEMPLATES("redirect_templates", true, true, true),
   // Chapters to be ignored for suggestions.
   SUGGESTION_IGNORE("general_suggestions_ignore", true, true, true),
   // Pages containing spelling suggestions.

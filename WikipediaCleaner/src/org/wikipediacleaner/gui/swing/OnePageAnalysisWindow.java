@@ -81,6 +81,7 @@ import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -142,7 +143,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   private JButton buttonRemoveLinks;
   private JButton buttonWatchLink;
   private JButton buttonDisambiguationWarning;
-  private JButton buttonRedirectCategories;
+  private JButton buttonRedirectElements;
   private JButton buttonOtherLanguage;
   private JButton buttonTranslation;
 
@@ -258,8 +259,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       buttonDelete.setEnabled(isPageLoaded());
     }
     buttonDisambiguationWarning.setEnabled(article);
-    buttonRedirectCategories.setEnabled(redirect);
-    buttonRedirectCategories.setVisible(redirect);
+    buttonRedirectElements.setEnabled(redirect);
+    buttonRedirectElements.setVisible(redirect);
     buttonOtherLanguage.setEnabled(isPageLoaded());
     buttonTranslation.setEnabled(isPageLoaded());
     super.updateComponentState();
@@ -393,12 +394,12 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     buttonToc = createButtonToc(this, true);
     toolbarButtons.add(buttonToc);
     addChkOrthograph(toolbarButtons, true);
-    buttonRedirectCategories = Utilities.createJButton(
+    buttonRedirectElements = Utilities.createJButton(
         "commons-nuvola-apps-kpager.png", EnumImageSize.NORMAL,
-        GT._("Add categories"), false);
-    buttonRedirectCategories.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionRedirectCategories"));
-    toolbarButtons.add(buttonRedirectCategories);
+        GT._("Add categories or templates"), false);
+    buttonRedirectElements.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionRedirectElements"));
+    toolbarButtons.add(buttonRedirectElements);
     buttonValidate = createButtonValidate(this, true);
     toolbarButtons.add(buttonValidate);
     addButtonSend(toolbarButtons, true);
@@ -1091,29 +1092,45 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   }
 
   /**
-   * Action called when when Add redirect categories button is pressed.
+   * Action called when when Add redirect categories or templates button is pressed.
    */
-  public void actionRedirectCategories() {
+  public void actionRedirectElements() {
     // Check configuration
     List<String> redirectCategories = getConfiguration().getStringList(
         WPCConfigurationStringList.REDIRECT_CATEGORIES);
-    if ((redirectCategories == null) || (redirectCategories.isEmpty())) {
+    List<String> redirectTemplates = getConfiguration().getStringList(
+        WPCConfigurationStringList.REDIRECT_TEMPLATES);
+    if (((redirectCategories == null) || (redirectCategories.isEmpty())) &&
+        ((redirectTemplates == null) || (redirectTemplates.isEmpty()))) {
+      List<String> params = new ArrayList<String>();
+      params.add(WPCConfigurationStringList.REDIRECT_CATEGORIES.getAttributeName());
+      params.add(WPCConfigurationStringList.REDIRECT_TEMPLATES.getAttributeName());
       Utilities.displayWarningForMissingConfiguration(
-          getParentComponent(),
-          WPCConfigurationStringList.REDIRECT_CATEGORIES.getAttributeName());
+          getParentComponent(), params);
       return;
     }
 
     // Create menu
     JPopupMenu menu = new JPopupMenu();
-    for (String category : redirectCategories) {
-      JMenuItem item = new JMenuItem(category);
-      item.setActionCommand(category);
-      item.addActionListener(EventHandler.create(
-          ActionListener.class, this, "actionAddCategory", "actionCommand"));
-      menu.add(item);
+    if (redirectCategories != null) {
+      for (String category : redirectCategories) {
+        JMenuItem item = new JMenuItem(category);
+        item.setActionCommand(category);
+        item.addActionListener(EventHandler.create(
+            ActionListener.class, this, "actionAddCategory", "actionCommand"));
+        menu.add(item);
+      }
     }
-    menu.show(buttonRedirectCategories, 0, buttonRedirectCategories.getHeight());
+    if (redirectTemplates != null) {
+      for (String template : redirectTemplates) {
+        JMenuItem item = new JMenuItem("{{" + template + "}}");
+        item.setActionCommand(template);
+        item.addActionListener(EventHandler.create(
+            ActionListener.class, this, "actionAddTemplate", "actionCommand"));
+        menu.add(item);
+      }
+    }
+    menu.show(buttonRedirectElements, 0, buttonRedirectElements.getHeight());
   }
 
   /**
@@ -1143,7 +1160,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     } else {
       List<PageElementLanguageLink> langLinks = analysis.getLanguageLinks();
       if ((langLinks != null) && (!langLinks.isEmpty())) {
-        index = langLinks.get(langLinks.size() - 1).getEndIndex();
+        index = langLinks.get(0).getBeginIndex();
       }
     }
 
@@ -1154,6 +1171,54 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     }
     newContents.append("\n");
     newContents.append(PageElementCategory.createCategory(getWikipedia(), categoryName, null));
+    if (index < contents.length()) {
+      if (contents.charAt(index) != '\n') {
+        newContents.append('\n');
+      }
+      newContents.append(contents.substring(index));
+    }
+    getTextContents().changeText(newContents.toString());
+    actionValidate(true);
+  }
+
+  /**
+   * Action called when a template is selected to be added.
+   * 
+   * @param templateName Template name.
+   */
+  public void actionAddTemplate(String templateName) {
+    if ((templateName == null) || (getPage() == null)) {
+      return;
+    }
+    String contents = getTextContents().getText();
+    PageAnalysis analysis = getPage().getAnalysis(contents, false);
+
+    // Check that the template isn't already applied
+    List<PageElementTemplate> templates = analysis.getTemplates(templateName);
+    if ((templates != null) && (!templates.isEmpty())) {
+      return;
+    }
+
+    // Find where to add the template
+    int index = contents.length();
+    List<PageElementCategory> categories = analysis.getCategories();
+    if (!categories.isEmpty()) {
+      index = categories.get(0).getBeginIndex();
+    } else {
+      List<PageElementLanguageLink> langLinks = analysis.getLanguageLinks();
+      if ((langLinks != null) && (!langLinks.isEmpty())) {
+        index = langLinks.get(0).getBeginIndex();
+      }
+    }
+
+    // Add the template
+    StringBuilder newContents = new StringBuilder();
+    if (index > 0) {
+      newContents.append(contents.substring(0, index));
+    }
+    newContents.append("\n{{");
+    newContents.append(templateName);
+    newContents.append("}}");
     if (index < contents.length()) {
       if (contents.charAt(index) != '\n') {
         newContents.append('\n');
