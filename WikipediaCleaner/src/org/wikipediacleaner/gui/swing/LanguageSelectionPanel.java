@@ -189,7 +189,8 @@ public class LanguageSelectionPanel extends JPanel {
 
     // Language
     buttonLanguage = Utilities.createJButton(GT._("Language"));
-    buttonLanguage.addActionListener(EventHandler.create(ActionListener.class, this, "actionLanguage"));
+    buttonLanguage.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionLanguage"));
     constraints.gridx = 0;
     constraints.weightx = 0;
     add(buttonLanguage, constraints);
@@ -202,7 +203,8 @@ public class LanguageSelectionPanel extends JPanel {
 
     // Script
     buttonScript = Utilities.createJButton(GT._("Script"));
-    buttonScript.addActionListener(EventHandler.create(ActionListener.class, this, "actionScript"));
+    buttonScript.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionScript"));
     buttonScript.setEnabled(false);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -216,7 +218,8 @@ public class LanguageSelectionPanel extends JPanel {
 
     // Region
     buttonRegion = Utilities.createJButton(GT._("Region"));
-    buttonRegion.addActionListener(EventHandler.create(ActionListener.class, this, "actionRegion"));
+    buttonRegion.addActionListener(
+        EventHandler.create(ActionListener.class, this, "actionRegion"));
     buttonRegion.setEnabled(false);
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -235,7 +238,8 @@ public class LanguageSelectionPanel extends JPanel {
     for (int i = 0; i < NB_VARIANTS; i++) {
       JButton tmpButton = Utilities.createJButton(GT._("Variant n°{0}", Integer.toString(i + 1)));
       tmpButton.setActionCommand(Integer.toString(i));
-      tmpButton.addActionListener(EventHandler.create(ActionListener.class, this, "actionVariant", "actionCommand"));
+      tmpButton.addActionListener(EventHandler.create(
+          ActionListener.class, this, "actionVariant", "actionCommand"));
       tmpButton.setEnabled(false);
       buttonVariant.add(tmpButton);
       constraints.gridx = 0;
@@ -267,7 +271,8 @@ public class LanguageSelectionPanel extends JPanel {
         if (tmpLanguage != null) {
           JMenuItem item = new JMenuItem(tmpLanguage.toString());
           item.setActionCommand(tmpLanguage.getCode());
-          item.addActionListener(EventHandler.create(ActionListener.class, this, "selectLanguage", "actionCommand"));
+          item.addActionListener(EventHandler.create(
+              ActionListener.class, this, "selectLanguage", "actionCommand"));
           menu.add(item);
         }
       }
@@ -294,7 +299,8 @@ public class LanguageSelectionPanel extends JPanel {
       }
       JMenuItem item = new JMenuItem(lang.toString());
       item.setActionCommand(lang.getCode());
-      item.addActionListener(EventHandler.create(ActionListener.class, this, "selectLanguage", "actionCommand"));
+      item.addActionListener(EventHandler.create(
+          ActionListener.class, this, "selectLanguage", "actionCommand"));
       secondMenu.add(item);
     }
     menu.show(buttonLanguage, 0, buttonLanguage.getHeight());
@@ -333,7 +339,8 @@ public class LanguageSelectionPanel extends JPanel {
       }
       JMenuItem item = new JMenuItem(tmpScript.toString());
       item.setActionCommand(tmpScript.getCode());
-      item.addActionListener(EventHandler.create(ActionListener.class, this, "selectScript", "actionCommand"));
+      item.addActionListener(EventHandler.create(
+          ActionListener.class, this, "selectScript", "actionCommand"));
       firstMenu.add(item);
       count++;
     }
@@ -367,7 +374,8 @@ public class LanguageSelectionPanel extends JPanel {
       }
       JMenuItem item = new JMenuItem(tmpRegion.toString());
       item.setActionCommand(tmpRegion.getCode());
-      item.addActionListener(EventHandler.create(ActionListener.class, this, "selectRegion", "actionCommand"));
+      item.addActionListener(EventHandler.create(
+          ActionListener.class, this, "selectRegion", "actionCommand"));
       firstMenu.add(item);
       count++;
     }
@@ -409,7 +417,8 @@ public class LanguageSelectionPanel extends JPanel {
     for (LanguageRegistry.Variant tmpVariant : variants) {
       JMenuItem item = new JMenuItem(tmpVariant.toString());
       item.setActionCommand(number + ";" + tmpVariant.getCode());
-      item.addActionListener(EventHandler.create(ActionListener.class, this, "selectVariant", "actionCommand"));
+      item.addActionListener(EventHandler.create(
+          ActionListener.class, this, "selectVariant", "actionCommand"));
       menu.add(item);
     }
     menu.show(buttonVariant.get(variantNumber), 0, buttonVariant.get(variantNumber).getHeight());
