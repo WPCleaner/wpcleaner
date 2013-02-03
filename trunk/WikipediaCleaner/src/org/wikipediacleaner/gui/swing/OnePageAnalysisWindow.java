@@ -48,6 +48,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
@@ -71,12 +72,15 @@ import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.InternalLinkCount;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageComparator;
+import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -138,6 +142,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   private JButton buttonRemoveLinks;
   private JButton buttonWatchLink;
   private JButton buttonDisambiguationWarning;
+  private JButton buttonRedirectCategories;
   private JButton buttonOtherLanguage;
   private JButton buttonTranslation;
 
@@ -242,6 +247,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   @Override
   protected void updateComponentState() {
     boolean article = (isPageLoaded()) && (getPage() != null) && (getPage().isArticle());
+    boolean redirect = article && getPage().isRedirect();
     buttonFirst.setEnabled(isPageLoaded());
     buttonPrevious.setEnabled(isPageLoaded());
     buttonNext.setEnabled(isPageLoaded());
@@ -252,6 +258,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       buttonDelete.setEnabled(isPageLoaded());
     }
     buttonDisambiguationWarning.setEnabled(article);
+    buttonRedirectCategories.setEnabled(redirect);
+    buttonRedirectCategories.setVisible(redirect);
     buttonOtherLanguage.setEnabled(isPageLoaded());
     buttonTranslation.setEnabled(isPageLoaded());
     super.updateComponentState();
@@ -385,6 +393,12 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     buttonToc = createButtonToc(this, true);
     toolbarButtons.add(buttonToc);
     addChkOrthograph(toolbarButtons, true);
+    buttonRedirectCategories = Utilities.createJButton(
+        "commons-nuvola-apps-kpager.png", EnumImageSize.NORMAL,
+        GT._("Add categories"), false);
+    buttonRedirectCategories.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionRedirectCategories"));
+    toolbarButtons.add(buttonRedirectCategories);
     buttonValidate = createButtonValidate(this, true);
     toolbarButtons.add(buttonValidate);
     addButtonSend(toolbarButtons, true);
@@ -1054,12 +1068,15 @@ public class OnePageAnalysisWindow extends OnePageWindow {
    * Action called when Disambiguation warning button is pressed.  
    */
   public void actionDisambiguationWarning() {
+    // Check configuration
     String template = getConfiguration().getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
     if ((template == null) || (template.trim().length() == 0)) {
-      Utilities.displayWarning(
+      Utilities.displayWarningForMissingConfiguration(
           getParentComponent(),
-          GT._("You need to define the 'dab_warning_template' property in WikiCleaner configuration."));
+          WPCConfigurationString.DAB_WARNING_TEMPLATE.getAttributeName());
+      return;
     }
+
     int answer = Utilities.displayYesNoWarning(
         getParentComponent(),
         GT._("Do you want to update the disambiguation warning in talk page ?"));
@@ -1074,12 +1091,89 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   }
 
   /**
+   * Action called when when Add redirect categories button is pressed.
+   */
+  public void actionRedirectCategories() {
+    // Check configuration
+    List<String> redirectCategories = getConfiguration().getStringList(
+        WPCConfigurationStringList.REDIRECT_CATEGORIES);
+    if ((redirectCategories == null) || (redirectCategories.isEmpty())) {
+      Utilities.displayWarningForMissingConfiguration(
+          getParentComponent(),
+          WPCConfigurationStringList.REDIRECT_CATEGORIES.getAttributeName());
+      return;
+    }
+
+    // Create menu
+    JPopupMenu menu = new JPopupMenu();
+    for (String category : redirectCategories) {
+      JMenuItem item = new JMenuItem(category);
+      item.setActionCommand(category);
+      item.addActionListener(EventHandler.create(
+          ActionListener.class, this, "actionAddCategory", "actionCommand"));
+      menu.add(item);
+    }
+    menu.show(buttonRedirectCategories, 0, buttonRedirectCategories.getHeight());
+  }
+
+  /**
+   * Action called when a category is selected to be added.
+   * 
+   * @param categoryName Category name.
+   */
+  public void actionAddCategory(String categoryName) {
+    if ((categoryName == null) || (getPage() == null)) {
+      return;
+    }
+    String contents = getTextContents().getText();
+    PageAnalysis analysis = getPage().getAnalysis(contents, false);
+
+    // Check that the category isn't already applied
+    List<PageElementCategory> categories = analysis.getCategories();
+    for (PageElementCategory category : categories) {
+      if (Page.areSameTitle(categoryName, category.getCategory())) {
+        return;
+      }
+    }
+
+    // Find where to add the category
+    int index = contents.length();
+    if (!categories.isEmpty()) {
+      index = categories.get(categories.size() - 1).getEndIndex();
+    } else {
+      List<PageElementLanguageLink> langLinks = analysis.getLanguageLinks();
+      if ((langLinks != null) && (!langLinks.isEmpty())) {
+        index = langLinks.get(langLinks.size() - 1).getEndIndex();
+      }
+    }
+
+    // Add the category
+    StringBuilder newContents = new StringBuilder();
+    if (index > 0) {
+      newContents.append(contents.substring(0, index));
+    }
+    newContents.append("\n");
+    newContents.append(PageElementCategory.createCategory(getWikipedia(), categoryName, null));
+    if (index < contents.length()) {
+      if (contents.charAt(index) != '\n') {
+        newContents.append('\n');
+      }
+      newContents.append(contents.substring(index));
+    }
+    getTextContents().setText(newContents.toString());
+    actionValidate(true);
+  }
+
+  /**
    * Action called when Other language button is pressed.
    */
   public void actionOtherLanguage() {
     // Check configuration
     String langTemplate = getConfiguration().getString(WPCConfigurationString.LANG_TEMPLATE);
     if ((langTemplate == null) || (langTemplate.trim().length() == 0)) {
+      Utilities.displayWarningForMissingConfiguration(
+          getParentComponent(),
+          WPCConfigurationString.LANG_TEMPLATE.getAttributeName());
       return;
     }
     String[] elements = langTemplate.split("\\|");
