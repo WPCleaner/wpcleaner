@@ -1160,7 +1160,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       }
       newContents.append(contents.substring(index));
     }
-    getTextContents().setText(newContents.toString());
+    getTextContents().changeText(newContents.toString());
     actionValidate(true);
   }
 
