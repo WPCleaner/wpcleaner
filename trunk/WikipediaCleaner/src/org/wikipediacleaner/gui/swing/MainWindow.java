@@ -107,7 +107,7 @@ public class MainWindow
   extends BasicWindow
   implements ActionListener {
 
-  public final static Integer WINDOW_VERSION = Integer.valueOf(3);
+  public final static Integer WINDOW_VERSION = Integer.valueOf(4);
 
   private final static String URL_OTHER_LANGUAGE  = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner#Other_Language";
   private final static String URL_OTHER_WIKIPEDIA = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner#Other_Wikipedia";
@@ -135,6 +135,7 @@ public class MainWindow
   private JButton buttonWatchlistLocal;
   private JButton buttonWatchlist;
   private JButton buttonRandomPages;
+  private JButton buttonRandomRedirects;
   private JButton buttonBotTools;
 
   JTextField textPagename;
@@ -279,6 +280,7 @@ public class MainWindow
     buttonWatchlistLocal.setEnabled(logged);
     buttonWatchlist.setEnabled(logged);
     buttonRandomPages.setEnabled(logged);
+    buttonRandomRedirects.setEnabled(logged);
     buttonBotTools.setEnabled(userLogged);
 
     textPagename.setEnabled(logged);
@@ -786,6 +788,15 @@ public class MainWindow
     panel.add(buttonRandomPages, constraints);
     constraints.gridy++;
 
+    // Random redirects button
+    buttonRandomRedirects = Utilities.createJButton(
+        "commons-nuvola-apps-atlantik.png", EnumImageSize.NORMAL,
+        GT._("Random redirect pages"), true);
+    buttonRandomRedirects.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionRandomRedirects"));
+    panel.add(buttonRandomRedirects, constraints);
+    constraints.gridy++;
+
     // Bot tools button
     buttonBotTools = Utilities.createJButton(
         "commons-nuvola-apps-kcmsystem.png", EnumImageSize.NORMAL,
@@ -1208,7 +1219,7 @@ public class MainWindow
   }
 
   /**
-   * Action called when Update Dab Warning button is pressed.
+   * Action called when Update Disambiguation Warning button is pressed.
    */
   public void actionUpdateDabWarning() {
     if ((textPagename == null) ||
@@ -1516,9 +1527,23 @@ public class MainWindow
   }
 
   /**
-   * Action called when Random Pages is pressed.
+   * Action called when Random Pages button is pressed.
    */
   public void actionRandomPages() {
+    actionRandomArticles(false);
+  }
+
+  /**
+   * Action called when Random Redirects button is pressed.
+   */
+  public void actionRandomRedirects() {
+    actionRandomArticles(true);
+  }
+
+  /**
+   * @param redirects True if redirects are requested.
+   */
+  public void actionRandomArticles(boolean redirects) {
     final int maxPages = 50;
     int count = 0;
     while ((count < 1) || (count > maxPages)) {
@@ -1543,7 +1568,7 @@ public class MainWindow
     try {
       List<String> pageNames = new ArrayList<String>(count);
       while (pageNames.size() < count) {
-        List<Page> pages = api.getRandomPages(getWikipedia(), count - pageNames.size());
+        List<Page> pages = api.getRandomPages(getWikipedia(), count - pageNames.size(), redirects);
         for (int i = 0; i < pages.size(); i++) {
           pageNames.add(pages.get(i).getTitle());
         }

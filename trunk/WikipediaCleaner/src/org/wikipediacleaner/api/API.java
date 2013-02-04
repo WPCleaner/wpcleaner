@@ -298,11 +298,13 @@ public interface API {
    * 
    * @param wiki Wiki.
    * @param count Number of random pages.
+   * @param redirects True if redirect pages are requested.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Random">API:Random</a>
    */
   public List<Page> getRandomPages(
-      EnumWikipedia wiki, int count) throws APIException;
+      EnumWikipedia wiki, int count,
+      boolean redirects) throws APIException;
 
   /**
    * Retrieves recent changes.
