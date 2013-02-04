@@ -57,7 +57,7 @@ public class RandomPageWorker extends BasicWorker {
       setText(GT._("Retrieving MediaWiki API"));
       API api = APIFactory.getAPI();
       setText(GT._("Getting random page"));
-      List<Page> pages = api.getRandomPages(getWikipedia(), 1);
+      List<Page> pages = api.getRandomPages(getWikipedia(), 1, false);
       if (pages.size() > 0) {
         text.setText(pages.get(0).getTitle());
       } else {

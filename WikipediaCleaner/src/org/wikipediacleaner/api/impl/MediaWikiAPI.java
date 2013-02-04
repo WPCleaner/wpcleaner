@@ -1090,14 +1090,16 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param count Number of random pages.
+   * @param redirects True if redirect pages are requested.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Random">API:Random</a>
    */
   public List<Page> getRandomPages(
-      EnumWikipedia wiki, int count) throws APIException {
+      EnumWikipedia wiki, int count,
+      boolean redirects) throws APIException {
     ApiRandomPagesResult result = new ApiXmlRandomPagesResult(wiki, httpClient);
     ApiRandomPagesRequest request = new ApiRandomPagesRequest(wiki, result);
-    return request.loadRandomList(count);
+    return request.loadRandomList(count, redirects);
   }
 
   /**
