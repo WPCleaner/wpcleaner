@@ -98,6 +98,7 @@ import org.wikipediacleaner.gui.swing.component.MWPaneCheckWikiPopupListener;
 import org.wikipediacleaner.gui.swing.component.MWPaneDisambiguationFormatter;
 import org.wikipediacleaner.gui.swing.component.MWPaneDisambiguationPopupListener;
 import org.wikipediacleaner.gui.swing.component.MWPanePopupListener;
+import org.wikipediacleaner.gui.swing.component.MenuCreator;
 import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
@@ -1095,6 +1096,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
    * Action called when when Add redirect categories or templates button is pressed.
    */
   public void actionRedirectElements() {
+
     // Check configuration
     List<String> redirectCategories = getConfiguration().getStringList(
         WPCConfigurationStringList.REDIRECT_CATEGORIES);
@@ -1110,26 +1112,59 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       return;
     }
 
+    // Group by theme if available
+    Map<String, JMenu> themeMenus = new HashMap<String, JMenu>();
+
     // Create menu
-    JPopupMenu menu = new JPopupMenu();
+    List<JMenuItem> items = new ArrayList<JMenuItem>();
     if (redirectCategories != null) {
       for (String category : redirectCategories) {
+        int colonIndex = category.indexOf(':');
+        JMenu themeMenu = null;
+        if (colonIndex > 0) {
+          String theme = category.substring(0, colonIndex);
+          category = category.substring(colonIndex + 1);
+          themeMenu = themeMenus.get(theme);
+          if (themeMenu == null) {
+            themeMenu = new JMenu(theme);
+            themeMenus.put(theme, themeMenu);
+            items.add(themeMenu);
+          }
+        }
         JMenuItem item = new JMenuItem(category);
         item.setActionCommand(category);
         item.addActionListener(EventHandler.create(
             ActionListener.class, this, "actionAddCategory", "actionCommand"));
-        menu.add(item);
+        if (themeMenu == null) {
+          items.add(item);
+        }
       }
     }
     if (redirectTemplates != null) {
       for (String template : redirectTemplates) {
+        int colonIndex = template.indexOf(':');
+        JMenu themeMenu = null;
+        if (colonIndex > 0) {
+          String theme = template.substring(0, colonIndex);
+          template = template.substring(colonIndex + 1);
+          themeMenu = themeMenus.get(theme);
+          if (themeMenu == null) {
+            themeMenu = new JMenu(theme);
+            themeMenus.put(theme, themeMenu);
+            items.add(themeMenu);
+          }
+        }
         JMenuItem item = new JMenuItem("{{" + template + "}}");
         item.setActionCommand(template);
         item.addActionListener(EventHandler.create(
             ActionListener.class, this, "actionAddTemplate", "actionCommand"));
-        menu.add(item);
+        if (themeMenu == null) {
+          items.add(item);
+        }
       }
     }
+    JPopupMenu menu = new JPopupMenu();
+    MenuCreator.addSubmenus(menu, items);
     menu.show(buttonRedirectElements, 0, buttonRedirectElements.getHeight());
   }
 

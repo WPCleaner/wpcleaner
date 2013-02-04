@@ -1533,6 +1533,32 @@ public class MenuCreator {
   }
 
   /**
+   * Add submenus to a menu.
+   * 
+   * @param menu Menu.
+   * @param items Submenus.
+   */
+  public static void addSubmenus(JPopupMenu menu, List<JMenuItem> items) {
+    Configuration config = Configuration.getConfiguration();
+    final int maxElements = Math.max(config.getInt(null, ConfigurationValueInteger.MENU_SIZE), 10);
+    if (items.size() <= maxElements) {
+      for (JMenuItem item : items) {
+        menu.add(item);
+      }
+      return;
+    }
+    int i = 0;
+    while (i < items.size()) {
+      JMenu currentMenu = new JMenu(items.get(i).getText());
+      menu.add(currentMenu);
+      while ((i < items.size()) && (currentMenu.getItemCount() < maxElements)) {
+        currentMenu.add(items.get(i));
+        i++;
+      }
+    }
+  }
+
+  /**
    * Update menuItem style depending on the page attributes.
    * 
    * @param menuItem Menu item.
