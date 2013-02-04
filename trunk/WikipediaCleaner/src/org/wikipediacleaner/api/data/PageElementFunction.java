@@ -44,6 +44,7 @@ public class PageElementFunction extends PageElement {
     final int separatorIndex;
     final String name;
     final int nameStartIndex;
+    final String valueNotTrimmed;
     final String value;
     final int valueStartIndex;
 
@@ -61,6 +62,7 @@ public class PageElementFunction extends PageElement {
       this.separatorIndex = separatorIndex;
       this.name = (name != null) ? name.trim() : null;
       this.nameStartIndex = nameStartIndex;
+      this.valueNotTrimmed = value;
       this.value = (value != null) ? value.trim() : null;
       this.valueStartIndex = valueStartIndex;
     }
@@ -491,6 +493,19 @@ public class PageElementFunction extends PageElement {
   public String getParameterValue(int index) {
     if ((index >= 0) && (index < parameters.size())) {
       return parameters.get(index).value;
+    }
+    return null;
+  }
+
+  /**
+   * Retrieve parameter value not trimmed.
+   * 
+   * @param index Parameter index.
+   * @return Parameter value not trimmed.
+   */
+  public String getParameterValueNotTrimmed(int index) {
+    if ((index >= 0) && (index < parameters.size())) {
+      return parameters.get(index).valueNotTrimmed;
     }
     return null;
   }
