@@ -68,6 +68,10 @@ public enum WPCConfigurationString {
   MSG_NEW_ARTICLE_WITH_DAB_TITLE("rc_msg_new_article_with_dab_title", null, false, true, true),
   // Template creating a "|"
   PIPE_TEMPLATE("general_pipe_template", null, false, true, false),
+  // Comment when adding categories to a redirect page
+  REDIRECT_CATEGORIES_COMMENT("redirect_categories_comment", null, false, true, true),
+  // Comment when adding templates to a redirect page
+  REDIRECT_TEMPLATES_COMMENT("redirect_templates_comment", null, false, true, true),
   // "To do" sub-page
   TODO_SUBPAGE("general_todo_subpage", null, false, true, false),
   // Comment used when translating

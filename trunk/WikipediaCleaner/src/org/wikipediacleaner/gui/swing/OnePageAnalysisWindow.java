@@ -156,6 +156,9 @@ public class OnePageAnalysisWindow extends OnePageWindow {
 
   boolean translated;
 
+  private List<String> addedCategories;
+  private List<String> addedTemplates;
+
   /**
    * Create and display a AnalysisWindow.
    * 
@@ -1137,6 +1140,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
             ActionListener.class, this, "actionAddCategory", "actionCommand"));
         if (themeMenu == null) {
           items.add(item);
+        } else {
+          themeMenu.add(item);
         }
       }
     }
@@ -1160,6 +1165,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
             ActionListener.class, this, "actionAddTemplate", "actionCommand"));
         if (themeMenu == null) {
           items.add(item);
+        } else {
+          themeMenu.add(item);
         }
       }
     }
@@ -1213,6 +1220,10 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       newContents.append(contents.substring(index));
     }
     getTextContents().changeText(newContents.toString());
+    if (addedCategories == null) {
+      addedCategories = new ArrayList<String>();
+    }
+    addedCategories.add(categoryName);
     actionValidate(true);
   }
 
@@ -1266,6 +1277,10 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       newContents.append(contents.substring(index));
     }
     getTextContents().changeText(newContents.toString());
+    if (addedTemplates == null) {
+      addedTemplates = new ArrayList<String>();
+    }
+    addedTemplates.add(templateName);
     actionValidate(true);
   }
 
@@ -1444,11 +1459,13 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   }
 
   /**
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @return Default comment.
    */
   @Override
-  protected String getAutomaticComment(PageAnalysis pageAnalysis) {
+  protected String getAutomaticComment(PageAnalysis analysis) {
+
+    // Comment for translation
     WPCConfiguration configuration = getConfiguration();
     if (translated) {
       String text = configuration.getString(WPCConfigurationString.TRANSLATION_COMMENT);
@@ -1457,11 +1474,13 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       }
       return GT._("Translation");
     }
+
     contributions = new Contributions(getWikipedia());
     contributions.increasePages(1);
+
+    // Comment for fixed links to disambiguation pages
     StringBuilder comment = new StringBuilder();
     if ((mapLinksCount != null) && (mapLinksCount.size() > 0)) {
-      // Comment for fixed links to disambiguation pages
       List<String> fixed = new ArrayList<String>();
       for (Entry<String, Integer> p : mapLinksCount.entrySet()) {
         if ((p != null) && (p.getKey() != null) && (p.getValue() != null)) {
@@ -1470,7 +1489,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
           if ((page != null) && (page.getLinks() != null)) {
             for (Page link : page.getLinks()) {
               if (Page.areSameTitle(p.getKey(), link.getTitle())) {
-                InternalLinkCount count = pageAnalysis.getLinkCount(link);
+                InternalLinkCount count = analysis.getLinkCount(link);
                 if (count != null) {
                   currentCount = count.getTotalLinkCount();
                 }
@@ -1498,12 +1517,12 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         }
 
         List<String> dabLinks = new ArrayList<String>();
-        List<Page> links = pageAnalysis.getPage().getLinks();
+        List<Page> links = analysis.getPage().getLinks();
         if (links != null) {
-          pageAnalysis.countLinks(links);
+          analysis.countLinks(links);
           for (Page link : links) {
             if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
-              InternalLinkCount linkCount = pageAnalysis.getLinkCount(link);
+              InternalLinkCount linkCount = analysis.getLinkCount(link);
               if (linkCount != null) {
                 if ((linkCount.getInternalLinkCount() > 0) ||
                     (linkCount.getIncorrectTemplateCount() > 0) ||
@@ -1530,8 +1549,9 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         }
       }
     }
+
+    // Comment for fixed Check Wiki errors
     if ((getInitialErrors() != null) && (getInitialErrors().size() > 0)) {
-      // Comment for fixed Check Wiki errors
       List<CheckErrorAlgorithm> errorsFixed = computeErrorsFixed();
       if ((errorsFixed != null) && (errorsFixed.size() > 0)) {
         if (comment.length() > 0) {
@@ -1559,6 +1579,49 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         }
       }
     }
+
+    // Comments for added categories / templates
+    boolean isCategoryAdded = false;
+    if (addedCategories != null) {
+      for (PageElementCategory category : analysis.getCategories()) {
+        for (String category2 : addedCategories) {
+          if (Page.areSameTitle(category.getName(), category2)) {
+            isCategoryAdded = true;
+          }
+        }
+      }
+    }
+    boolean isTemplateAdded = false;
+    if (addedTemplates != null) {
+      for (PageElementTemplate template : analysis.getTemplates()) {
+        for (String template2 : addedTemplates) {
+          if (Page.areSameTitle(template.getTemplateName(), template2)) {
+            isTemplateAdded = true;
+          }
+        }
+      }
+    }
+    String strCategoryAdded = configuration.getString(WPCConfigurationString.REDIRECT_CATEGORIES_COMMENT);
+    String strTemplateAdded = configuration.getString(WPCConfigurationString.REDIRECT_TEMPLATES_COMMENT);
+    if (strTemplateAdded == null) {
+      strTemplateAdded = strCategoryAdded;
+    }
+    if ((isCategoryAdded && (strCategoryAdded != null)) ||
+        (isTemplateAdded && (strTemplateAdded != null))) {
+      if (comment.length() > 0) {
+        comment.append(" / ");
+      }
+      if (isCategoryAdded && (strCategoryAdded != null)) {
+        comment.append(strCategoryAdded);
+        if (isTemplateAdded && !strCategoryAdded.equals(strTemplateAdded)) {
+          comment.append(" - ");
+          comment.append(strCategoryAdded);
+        }
+      } else {
+        comment.append(strTemplateAdded);
+      }
+    }
+
     return comment.toString();
   }
 
