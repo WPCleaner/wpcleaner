@@ -1236,13 +1236,18 @@ public class OnePageAnalysisWindow extends OnePageWindow {
 
     // Find where to add the template
     int index = contents.length();
-    List<PageElementCategory> categories = analysis.getCategories();
-    if (!categories.isEmpty()) {
-      index = categories.get(0).getBeginIndex();
+    int indexNewLine = contents.indexOf('\n');
+    if (indexNewLine > 0) {
+      index = indexNewLine;
     } else {
-      List<PageElementLanguageLink> langLinks = analysis.getLanguageLinks();
-      if ((langLinks != null) && (!langLinks.isEmpty())) {
-        index = langLinks.get(0).getBeginIndex();
+      List<PageElementCategory> categories = analysis.getCategories();
+      if (!categories.isEmpty()) {
+        index = categories.get(0).getBeginIndex();
+      } else {
+        List<PageElementLanguageLink> langLinks = analysis.getLanguageLinks();
+        if ((langLinks != null) && (!langLinks.isEmpty())) {
+          index = langLinks.get(0).getBeginIndex();
+        }
       }
     }
 
@@ -1251,7 +1256,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     if (index > 0) {
       newContents.append(contents.substring(0, index));
     }
-    newContents.append("\n{{");
+    newContents.append(" {{");
     newContents.append(templateName);
     newContents.append("}}");
     if (index < contents.length()) {
