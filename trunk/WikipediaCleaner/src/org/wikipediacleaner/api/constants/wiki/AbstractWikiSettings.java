@@ -62,9 +62,10 @@ public abstract class AbstractWikiSettings {
   public abstract String getHostURL(boolean secured);
 
   /**
+   * @param secured True if secured connection is requested.
    * @return API URL (URL to api.php).
    */
-  public abstract String getApiURL();
+  public abstract String getApiURL(boolean secured);
 
   /**
    * @param secured True if secured connection is requested.

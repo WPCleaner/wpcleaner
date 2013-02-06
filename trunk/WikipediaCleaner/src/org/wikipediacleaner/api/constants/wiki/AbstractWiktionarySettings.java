@@ -38,6 +38,7 @@ public abstract class AbstractWiktionarySettings
     this.hostUrl = "http://" + language + ".wiktionary.org";
     this.securedHostUrl = "https://" + language + ".wiktionary.org";
     this.apiUrl = hostUrl + "/w/api.php";
+    this.securedApiUrl = securedHostUrl + "/w/api.php";
     this.indexUrl = hostUrl + "/w/index.php";
     this.securedIndexUrl = securedHostUrl + "/w/index.php";
   }
@@ -122,10 +123,19 @@ public abstract class AbstractWiktionarySettings
   private final String apiUrl;
 
   /**
+   * Secured API URL (URL to api.php).
+   */
+  private final String securedApiUrl;
+
+  /**
+   * @param secured True if secured connection is requested.
    * @return API URL (URL to api.php).
    */
   @Override
-  public String getApiURL() {
+  public String getApiURL(boolean secured) {
+    if (secured) {
+      return securedApiUrl;
+    }
     return apiUrl;
   }
 

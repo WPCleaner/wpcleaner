@@ -104,10 +104,11 @@ public abstract class BasicApiResult implements ApiResult {
             connection.getLgUserId());
       }
     }
+    boolean getMethod = canUseGetMethod(properties);
     return HttpUtils.createHttpMethod(
-        getWiki().getSettings().getApiURL(),
+        getWiki().getSettings().getApiURL(!getMethod),
         properties,
-        canUseGetMethod(properties));
+        getMethod);
   }
 
   /**
@@ -132,8 +133,7 @@ public abstract class BasicApiResult implements ApiResult {
     if (ApiRequest.ACTION_EXPAND.equals(action) ||
         ApiRequest.ACTION_PARSE.equals(action) ||
         ApiRequest.ACTION_PURGE.equals(action) ||
-        ApiRequest.ACTION_QUERY.equals(action) ||
-        ApiRequest.ACTION_TOKENS.equals(action)) {
+        ApiRequest.ACTION_QUERY.equals(action)) {
       return true;
     }
     return false;
