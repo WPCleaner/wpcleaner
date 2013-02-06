@@ -488,12 +488,6 @@ public class CheckWikiProjectWindow extends OnePageWindow {
           String label =
             algorithm.getErrorNumberString() + " - " +
             algorithm.getShortDescriptionReplaced();
-
-          while (menuItemAlgorithms.size() <= errorNumber) {
-            menuItemAlgorithms.add(null);
-          }
-          menuItemAlgorithms.set(errorNumber, menuItem);
-
           menuItem = new JMenuItem(label);
           if (!CWConfigurationError.isPriorityActive(algorithm.getPriority())) {
             menuItem.setEnabled(false);
