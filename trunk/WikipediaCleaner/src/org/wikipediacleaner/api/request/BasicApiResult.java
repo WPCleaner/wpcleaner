@@ -106,7 +106,7 @@ public abstract class BasicApiResult implements ApiResult {
     }
     boolean getMethod = canUseGetMethod(properties);
     return HttpUtils.createHttpMethod(
-        getWiki().getSettings().getApiURL(!getMethod),
+        getWiki().getSettings().getApiURL(true),
         properties,
         getMethod);
   }

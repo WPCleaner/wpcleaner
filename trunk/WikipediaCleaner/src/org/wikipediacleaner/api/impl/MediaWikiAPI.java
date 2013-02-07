@@ -1444,7 +1444,7 @@ public class MediaWikiAPI implements API {
       Map<String, String> properties) {
     boolean getMethod = canUseGetMethod(properties);
     return HttpUtils.createHttpMethod(
-        wikipedia.getSettings().getApiURL(!getMethod),
+        wikipedia.getSettings().getApiURL(true),
         properties,
         getMethod);
   }
