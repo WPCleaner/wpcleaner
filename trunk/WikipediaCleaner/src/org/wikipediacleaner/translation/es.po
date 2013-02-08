@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-02-04 22:17+0100\n"
+"POT-Creation-Date: 2013-02-08 16:27+0100\n"
 "PO-Revision-Date: 2013-02-04 10:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -484,7 +484,7 @@ msgstr "Espacio de nombres"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:246
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:265
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:126
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:127
 msgid "Title"
 msgstr "Título"
 
@@ -497,7 +497,7 @@ msgid "Page Id"
 msgstr "Id de página"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:378
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:120
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:121
 msgid "Template"
 msgstr "Plantilla"
 
@@ -550,7 +550,7 @@ msgstr "Analizando sintácticamente el texto"
 msgid "Retrieving templates"
 msgstr "Recuperando plantillas"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1532
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1533
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -558,7 +558,7 @@ msgstr ""
 "Esta acción está protegida por un CAPTCHA\n"
 "¿Cuál es la respuesta a la siguiente pregunta?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1539
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1540
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -610,16 +610,16 @@ msgid "Fix selected pages"
 msgstr "Reparar páginas seleccionadas"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:299
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:757
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:751
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:286
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:552
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:555
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:230
 msgid "Full analysis (Alt + &F)"
 msgstr "Análisis completo (Alt + &F)"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:305
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:292
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:558
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:561
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:237
 msgid "Disambiguation (Alt + &D)"
 msgstr "Desambiguación (Alt + &D)"
@@ -675,7 +675,7 @@ msgid "A comment is required for automatix fixing."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:179
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:630
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:633
 msgid "Check Wikipedia"
 msgstr "Comprobar Wikipedia"
 
@@ -729,7 +729,7 @@ msgid "Load errors {0}"
 msgstr "Cargar errores {0}"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:383
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:620
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:614
 msgid "Select errors"
 msgstr "Seleccionar errores"
 
@@ -767,68 +767,68 @@ msgstr "Errores de {0} a {1}"
 msgid "Select only"
 msgstr "Seleccionar solo"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:513
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:507
 msgid "Save current selection"
 msgstr "Guardar la selección actual"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:517
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:511
 msgid "Use selection"
 msgstr "Usar selección"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:519
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:513
 msgid "Delete selection"
 msgstr "Borrar selección"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:610
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:604
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:115
 msgid "Maximum number of errors for Check Wiki :"
 msgstr "Número máximo de errores para Check Wikipedia:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:632
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:626
 msgid "Right click to select errors"
 msgstr "Botón secundario para seleccionar errores"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:644
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:638
 msgid "List of errors detected :"
 msgstr "Lista de errores detectados"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:665
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:659
 msgid "Reload error"
 msgstr "Recargar error"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:671
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:665
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:127
 msgid "Detail"
 msgstr "Detalle"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:678
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:672
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:133
 msgid "List on toolserver"
 msgstr "Listado en toolserver"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:685
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:679
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:134
 msgid "View or edit white list"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:733
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:727
 msgid "Pages"
 msgstr "Páginas"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:751
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:745
 msgid "&Load pages"
 msgstr "Cargar &páginas"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:913
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:907
 msgid "Mark as Fixed"
 msgstr "Marcar como reparada"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1017
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1011
 #, java-format
 msgid "The page {0} doesn't exist on Wikipedia"
 msgstr "La página {0} no existe en Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1061
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1055
 #, java-format
 msgid ""
 "The error n°{0} hasn''t been found in the page {1}.\n"
@@ -837,12 +837,12 @@ msgstr ""
 "El error nº{0} no ha sido encontrado en la página {1}.\n"
 "¿Desea marcarlo como reparado?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1185
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1179
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr "¿Desea marcar {0} como reparada para el error nº{1}?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1197
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1191
 #, java-format
 msgid ""
 "The error n°{0} is still found {1} times in the page.\n"
@@ -851,7 +851,7 @@ msgstr ""
 "El error n°{0} aún se encuentra {1} veces en la página.\n"
 "¿Está seguro que desea marcarlo como reparado?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1204
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1198
 #, java-format
 msgid ""
 "The error n°{0} is still found in the page.\n"
@@ -860,7 +860,7 @@ msgstr ""
 "El error n°{0} aún se encuentra en la página\n"
 "¿Está seguro que desea marcarlo como reparado?"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1216
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1210
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
@@ -868,16 +868,16 @@ msgstr ""
 "Ya ha reparado el error modificando esta página.\n"
 "Debe enviar sus modificaciones para marcar la página como reparada."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1342
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1336
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1267
 msgid "A comment is required for sending the page."
 msgstr "Se requiere de un comentario para enviar la página"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1544
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1538
 msgid "Pages with several errors"
 msgstr "Página con varios errores"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1695
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1689
 #, java-format
 msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
@@ -886,7 +886,7 @@ msgstr ""
 "El error nº{0} puede ser configurado con los siguiente parámetros en el <a "
 "href=\"{1}\">archivo de traducción</a> :"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1887
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1881
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
@@ -895,7 +895,7 @@ msgid ""
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1931
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1925
 #, java-format
 msgid ""
 "There''s no white list defined for this error type.\n"
@@ -933,12 +933,12 @@ msgid "Mark backlink as needing help"
 msgstr "Marcar retroenlace como necesitando ayuda"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:315
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:240
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:243
 msgid "Link count"
 msgstr "Número de enlaces"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:352
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:477
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:480
 msgid "Sort"
 msgstr "Ordenar"
 
@@ -1231,7 +1231,7 @@ msgstr ""
 "desambiguación"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1242
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1084
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1087
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:399
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr ""
@@ -1408,115 +1408,115 @@ msgstr "&Validar"
 msgid "&Cancel"
 msgstr "&Cancelar"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:227
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:230
 #, java-format
 msgid "Analysis - {0}"
 msgstr "Análisis - {0}"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:400
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:403
 msgid "Add categories or templates"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:411
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:414
 msgid "Delete page"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:419
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:422
 msgid "Add a warning on the talk page about the links to disambiguation pages"
 msgstr ""
 "Añadir una advertencia en la discusión acerca de los enlaces a páginas de "
 "desambiguación"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:439
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:442
 msgid "Mark the selected text as being in a foreign language"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:445
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:448
 msgid "Translation of an article copied from an other wiki"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:491
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:494
 msgid "&Options"
 msgstr "&Opciones"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:493
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:496
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:132
 msgid "Show &disambiguation pages"
 msgstr "Mostrar páginas de &desambiguación"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:497
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:500
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:139
 msgid "Show &missing pages"
 msgstr "&Mostrar páginas solicitadas"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:501
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:504
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:146
 msgid "Show &redirect pages"
 msgstr "Mostrar &redirecciones"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:505
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:508
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:153
 msgid "Show &other pages"
 msgstr "Mostrar &otras páginas"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:510
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:513
 msgid "Count disambiguation pages"
 msgstr "Contar páginas de desambiguación"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:514
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:517
 msgid "Count missing pages"
 msgstr "Contar páginas inexistentes"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:518
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:521
 msgid "Count redirect pages"
 msgstr "Contar redirecciones"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:522
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:525
 msgid "Count other pages"
 msgstr "Contar otras páginas"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:564
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:567
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:906
 msgid "Remove all links"
 msgstr "Remover todos los enlaces"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:570
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:573
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:751
 msgid "Add to Watch list (Alt + &W)"
 msgstr "Añadir a la lista de seguimiento (Alt + &W)"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:878
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:881
 #, java-format
 msgid "Page {0} doesn''t exist, do you want to load a similar page ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:891
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:894
 #, java-format
 msgid "Page {0} doesn''t exist, do you still want to analyze it ?"
 msgstr "La página {0} no existe, ¿aún desea analizarla?"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:999
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1002
 msgid "Would you like to add these pages on your local Watch list ?"
 msgstr "¿Desea añadir esas páginas a su lista de seguimiento local?"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1294
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1314
 msgid "You must select the text that is written in a foreign language"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1303
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1323
 msgid "Foreign language"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1345
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1365
 msgid "From which Wikipedia is this text coming ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1453
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1475
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:115
 msgid "Translation"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1656
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1724
 msgid ""
 "Do you want to delete this page on Wikipedia ?\n"
 "Please, enter the reason for deleting the page"
@@ -1726,7 +1726,7 @@ msgstr "Página de comentarios - {0}"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:126
 #: org/wikipediacleaner/gui/swing/PageListTableModel.java:169
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:108
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:109
 msgid "Comments"
 msgstr "Comentarios"
 
@@ -2394,113 +2394,117 @@ msgstr "Auditar todas las respuestas a las llamadas de la API de MediaWiki"
 msgid "Add a timestamp to logs"
 msgstr "Añadir fecha y hora a los registros"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:91
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:92
 msgid "Formatting options (restart needed)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:114
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:115
 msgid "Internal link"
 msgstr "Enlace interno"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:132
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:133
 msgid "Image"
 msgstr "Imagen"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:138
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:139
 msgid "Category"
 msgstr "Categoría"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:144
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:145
 msgid "Default sort"
 msgstr "Ordenación predeterminada"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:150
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:151
 msgid "Language link"
 msgstr "Enlace idiomático"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:156
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:157
 msgid "External link"
 msgstr "Enlace externo"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:162
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:163
 msgid "Tag"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:168
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:169
+msgid "Reference"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:175
 msgid "Programming elements"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:174
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:181
 msgid "Disambiguation link"
 msgstr "Enlace de desambiguación"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:180
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:187
 msgid "Normal internal link"
 msgstr "Enlace interno normal"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:186
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:193
 msgid "Redirect link"
 msgstr "Enlace a redirección"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:192
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:199
 msgid "Missing link"
 msgstr "Enlace faltante"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:198
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:205
 msgid "Disambiguation template"
 msgstr "Plantilla de desambiguación"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:204
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:211
 msgid "Normal template"
 msgstr "Plantilla normal"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:210
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:217
 msgid "Help requested"
 msgstr "Ayuda requerida"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:216
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:223
 msgid "Check wiki error"
 msgstr "Verificar error en el wiki"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:222
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:229
 msgid "Check wiki warning"
 msgstr "Verificar advertencia en el wiki"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:228
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:235
 msgid "Check wiki OK"
 msgstr "Verificar  wiki aprobada"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:395
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:405
 msgid "Italic"
 msgstr "Itálica"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:403
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:413
 msgid "Bold"
 msgstr "Negrita"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:411
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:421
 msgid "Underline"
 msgstr "Subrayado"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:419
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:429
 msgid "Strike through"
 msgstr "Tachar"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:427
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:432
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:437
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:442
 msgid "Foreground color"
 msgstr "Color de primer plano"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:431
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:441
 msgid "Choose foreground color"
 msgstr "Elija el color de primer plano"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:440
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:445
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:450
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:455
 msgid "Background color"
 msgstr "Color de fondo"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:444
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:454
 msgid "Choose background color"
 msgstr "Elija el color de fondo"
 

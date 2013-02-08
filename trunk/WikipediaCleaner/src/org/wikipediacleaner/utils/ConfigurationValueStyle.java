@@ -108,6 +108,11 @@ public enum ConfigurationValueStyle {
       false, Color.BLACK,
       true, Color.ORANGE,
       false, false, false, false)),
+  REFERENCE("Reference", new StyleProperties(
+      true,
+      false, Color.BLACK,
+      true, Color.LIGHT_GRAY,
+      false, false, false, false)),
   TAG("Tag", new StyleProperties(
       true,
       true, new Color(154, 0, 154),

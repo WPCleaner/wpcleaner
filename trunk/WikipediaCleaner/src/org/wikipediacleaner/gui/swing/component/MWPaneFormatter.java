@@ -230,6 +230,8 @@ public abstract class MWPaneFormatter {
       int begin, int end) {
     for (int i = begin; i < end; i++) {
       PageElement element = elements.get(i);
+      int beginIndex = element.getBeginIndex();
+      int endIndex = element.getEndIndex();
       Style style = null;
       if (element instanceof PageElementCategory) {
         style = doc.getStyle(ConfigurationValueStyle.CATEGORY.getName());
@@ -248,7 +250,17 @@ public abstract class MWPaneFormatter {
       } else if (element instanceof PageElementParameter) {
         style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
       } else if (element instanceof PageElementTag) {
-        style = doc.getStyle(ConfigurationValueStyle.TAG.getName());
+        PageElementTag tag = (PageElementTag) element;
+        if (PageElementTag.TAG_WIKI_REF.equals(tag.getName()) ||
+            PageElementTag.TAG_WIKI_REFERENCES.equals(tag.getName())) {
+          style = doc.getStyle(ConfigurationValueStyle.REFERENCE.getName());
+          if (style != null) {
+            endIndex = tag.getCompleteEndIndex();
+          }
+        }
+        if (style == null) {
+          style = doc.getStyle(ConfigurationValueStyle.TAG.getName());
+        }
       } else if (element instanceof PageElementTemplate) {
         style = doc.getStyle(ConfigurationValueStyle.TEMPLATE.getName());
       } else if (element instanceof PageElementTitle) {
@@ -256,8 +268,7 @@ public abstract class MWPaneFormatter {
       }
       if (style != null) {
         doc.setCharacterAttributes(
-            element.getBeginIndex(),
-            element.getEndIndex() - element.getBeginIndex(),
+            beginIndex, endIndex - beginIndex,
             style, true);
       }
     }
@@ -426,6 +437,10 @@ public abstract class MWPaneFormatter {
         Style parameterStyle = addStyle(
             ConfigurationValueStyle.PROGRAMMING, rootStyle);
         parameterStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+
+        // Style for reference contents
+        Style refStyle = addStyle(ConfigurationValueStyle.REFERENCE, rootStyle);
+        refStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for tag
         Style tagStyle = addStyle(ConfigurationValueStyle.TAG, rootStyle);

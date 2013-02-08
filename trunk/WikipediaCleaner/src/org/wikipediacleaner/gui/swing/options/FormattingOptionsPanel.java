@@ -77,6 +77,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
   private int lineInternalLinkRedirect;
   private int lineLanguageLink;
   private int lineProgrammingElements;
+  private int lineReference;
   private int lineTag;
   private int lineTemplate;
   private int lineTemplateDab;
@@ -162,6 +163,12 @@ public class FormattingOptionsPanel extends OptionsPanel {
         constraints, true, GT._("Tag"),
         true, true, true, true, true, true);
     setStyle(lineTag, ConfigurationValueStyle.TAG);
+
+    // Add line for reference style
+    lineReference = addLine(
+        constraints, true, GT._("Reference"),
+        true, true, true, true, true, true);
+    setStyle(lineReference, ConfigurationValueStyle.REFERENCE);
 
     // Add line for programming elements style
     lineProgrammingElements = addLine(
@@ -262,6 +269,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
     setStyle(lineInternalLinkRedirect, ConfigurationValueStyle.INTERNAL_LINK_REDIRECT);
     setStyle(lineLanguageLink, ConfigurationValueStyle.LANGUAGE_LINK);
     setStyle(lineProgrammingElements, ConfigurationValueStyle.PROGRAMMING);
+    setStyle(lineReference, ConfigurationValueStyle.REFERENCE);
     setStyle(lineTag, ConfigurationValueStyle.TAG);
     setStyle(lineTemplate, ConfigurationValueStyle.TEMPLATE);
     setStyle(lineTemplateDab, ConfigurationValueStyle.TEMPLATE_DAB);
@@ -310,6 +318,8 @@ public class FormattingOptionsPanel extends OptionsPanel {
     config.setStyle(ConfigurationValueStyle.LANGUAGE_LINK, configStyle);
     configStyle = getStyle(lineProgrammingElements);
     config.setStyle(ConfigurationValueStyle.PROGRAMMING, configStyle);
+    configStyle = getStyle(lineReference);
+    config.setStyle(ConfigurationValueStyle.REFERENCE, configStyle);
     configStyle = getStyle(lineTag);
     config.setStyle(ConfigurationValueStyle.TAG, configStyle);
     configStyle = getStyle(lineTemplate);
