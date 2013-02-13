@@ -19,6 +19,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
@@ -52,17 +53,22 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     }
 
     // Analyzing the text from the beginning
-    Collection<PageElementTag> tags = pageAnalysis.getTags(PageElementTag.TAG_HTML_SMALL);
+    List<PageElementTag> tags = pageAnalysis.getTags(PageElementTag.TAG_HTML_SMALL);
     if (tags == null) {
       return false;
     }
+    String contents = pageAnalysis.getContents();
     int level = 0;
     boolean result = false;
     PageElementTag level0Tag = null;
-    for (PageElementTag tag : tags) {
+    int tagIndex = 0;
+    while (tagIndex < tags.size()) {
+      PageElementTag tag = tags.get(tagIndex);
+      tagIndex++;
+
       if (tag.isFullTag()) {
         // Full tag
-        if (level == 1) {
+        if (level > 0) {
           if (errors == null) {
             return true;
           }
@@ -82,11 +88,23 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
       } else {
         if (level == 0) {
           level0Tag = tag;
-        } else if (level == 1) {
+        } else if (level > 0) {
           if (errors == null) {
             return true;
           }
           result = true;
+
+          // Manage double small tags on the same text
+          boolean doubleSmall = false;
+          if ((tag.getMatchingTag() != null) &&
+              (level0Tag != null) &&
+              (level0Tag.getMatchingTag() != null)) {
+            if ((level0Tag.getEndIndex() == tag.getBeginIndex()) &&
+                (tag.getMatchingTag().getEndIndex() == level0Tag.getMatchingTag().getBeginIndex())) {
+              doubleSmall = true;
+            }
+          }
+
           if (level0Tag != null) {
             CheckErrorResult errorResult = createCheckErrorResult(
                 pageAnalysis.getPage(),
@@ -104,11 +122,20 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
             }
             level0Tag = null;
           }
+
           CheckErrorResult errorResult = createCheckErrorResult(
               pageAnalysis.getPage(),
               tag.getCompleteBeginIndex(),
               tag.getCompleteEndIndex());
+          if (doubleSmall) {
+            errorResult.addReplacement(
+                contents.substring(tag.getEndIndex(), tag.getMatchingTag().getBeginIndex()),
+                GT._("Remove <small> tags"));
+          }
           errors.add(errorResult);
+          if (tag.isComplete()) {
+            tagIndex = PageElementTag.getMatchingTagIndex(tags, tagIndex);
+          }
         }
         level++;
       }
