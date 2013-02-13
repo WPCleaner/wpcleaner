@@ -22,6 +22,8 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
@@ -57,8 +59,25 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
         String paramValue = template.getParameterValue(paramNum);
         if (paramValue != null) {
           int squareBracketsCount = 0;
+          int paramValueOffset = template.getParameterValueOffset(paramNum);
           for (int currentPos = 0; currentPos < paramValue.length(); currentPos++) {
             switch (paramValue.charAt(currentPos)) {
+            case '<':
+              int tmpIndex = paramValueOffset + currentPos;
+              PageElementComment comment = pageAnalysis.isInComment(tmpIndex);
+              if (comment != null) {
+                currentPos = comment.getEndIndex() - 1 - paramValueOffset;
+              } else {
+                PageElementTag tag = pageAnalysis.isInTag(tmpIndex);
+                if ((tag != null) &&
+                    (tag.getBeginIndex() == tmpIndex) &&
+                    ((PageElementTag.TAG_WIKI_MATH.equals(tag.getNormalizedName())) ||
+                     (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName())) ||
+                     (PageElementTag.TAG_WIKI_SOURCE.equals(tag.getNormalizedName())))) {
+                  currentPos = tag.getCompleteEndIndex() - 1 - paramValueOffset;
+                }
+              }
+              break;
             case '[':
               squareBracketsCount++;
               break;
@@ -77,8 +96,8 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
                 }
                 CheckErrorResult errorResult = createCheckErrorResult(
                     pageAnalysis.getPage(),
-                    template.getParameterValueOffset(paramNum) + currentPos,
-                    template.getParameterValueOffset(paramNum) + currentIndex);
+                    paramValueOffset + currentPos,
+                    paramValueOffset + currentIndex);
                 errorResult.addReplacement("", GT._("Remove"));
                 errors.add(errorResult);
               }
