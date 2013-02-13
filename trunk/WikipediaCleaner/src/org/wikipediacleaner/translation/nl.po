@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-02-08 16:27+0100\n"
+"POT-Creation-Date: 2013-02-13 23:47+0100\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -105,7 +105,7 @@ msgstr "Vervang met {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:159
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:131
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:85
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:73
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:79
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:122
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:96
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:103
@@ -201,6 +201,11 @@ msgstr "Verplaats alle links naar de titel"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:39
 msgid "Remove breaks in list"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:133
+#, fuzzy
+msgid "Remove <small> tags"
+msgstr "Verwijder <small> tag"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm057.java:41
 #, fuzzy
