@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-02-13 23:47+0100\n"
+"POT-Creation-Date: 2013-02-14 15:29+0100\n"
 "PO-Revision-Date: 2012-10-13 06:23+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -212,7 +212,7 @@ msgstr "Удалить тег <small>"
 msgid "Fix all titles"
 msgstr "Исправить категории"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:82
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:101
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:218
 msgid "Remove"
 msgstr "Удалить"
@@ -450,6 +450,148 @@ msgstr ""
 #, java-format
 msgid "You haven''t done any contribution on \"{0}\""
 msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:29
+#, fuzzy
+msgid "Dormant pages"
+msgstr "&Загрузить страницы"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:30
+#, fuzzy
+msgid "Broken redirects"
+msgstr "Исправить &перенаправления"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
+#, fuzzy
+msgid "Dead-end pages"
+msgstr "Случайные статьи"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
+#, fuzzy
+msgid "Pages linking to disambiguation pages"
+msgstr "Анализ ссылок на страницы значений"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
+#, fuzzy
+msgid "Double redirects"
+msgstr "Исправить &перенаправления"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
+#, fuzzy
+msgid "Pages with the fewest revisions"
+msgstr "Страницы с несколькими ошибками"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
+#, fuzzy
+msgid "Redirects"
+msgstr "Перенаправление"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
+#, fuzzy
+msgid "Orphaned pages"
+msgstr "Случайные статьи"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:37
+#, fuzzy
+msgid "Long pages"
+msgstr "&Загрузить страницы"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:38
+#, fuzzy
+msgid "Pages with the most categories"
+msgstr "Страницы с несколькими ошибками"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:39
+#, fuzzy
+msgid "Pages with the most files"
+msgstr "Страницы с несколькими ошибками"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
+#, fuzzy
+msgid "Most linked-to pages"
+msgstr "Считать страницы перенаправлений"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
+#, fuzzy
+msgid "Most linked-to categories"
+msgstr "Исправить категории"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:42
+#, fuzzy
+msgid "Most linked-to templates"
+msgstr "Поиск в шаблонах"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:43
+msgid "Pages with the most revisions"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:44
+#, fuzzy
+msgid "Short pages"
+msgstr "Показать &другие страницы"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:45
+#, fuzzy
+msgid "Uncategorized categories"
+msgstr "Исправить категории"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
+#, fuzzy
+msgid "Uncategorized files"
+msgstr "Исправить категории"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:47
+#, fuzzy
+msgid "Uncategorized pages"
+msgstr "Исправить категории"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:48
+#, fuzzy
+msgid "Uncategorized templates"
+msgstr "Исправить категории"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:49
+#, fuzzy
+msgid "Unused categories"
+msgstr "Исправить категории"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:50
+msgid "Unused files"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:51
+#, fuzzy
+msgid "Unused templates"
+msgstr "&Раскрыть шаблоны"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:52
+#, fuzzy
+msgid "Wanted categories"
+msgstr "Исправить категории"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:53
+msgid "Wanted files"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:54
+#, fuzzy
+msgid "Wanted pages"
+msgstr "Случайные статьи"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:55
+#, fuzzy
+msgid "Wanted templates"
+msgstr "&Раскрыть шаблоны"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:56
+#, fuzzy
+msgid "Unwatched pages"
+msgstr "Следить за всеми отредактированными страницами"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:57
+#, fuzzy
+msgid "Pages without language links"
+msgstr "Проверить языковые ссылки"
 
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:326
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:345

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-02-13 23:47+0100\n"
+"POT-Creation-Date: 2013-02-14 15:29+0100\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Michael Moroni <michael.moroni@mailoo.org>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
@@ -210,7 +210,7 @@ msgstr ""
 msgid "Fix all titles"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:82
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:101
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:218
 msgid "Remove"
 msgstr ""
@@ -445,6 +445,133 @@ msgstr ""
 #, java-format
 msgid "You haven''t done any contribution on \"{0}\""
 msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:29
+msgid "Dormant pages"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:30
+#, fuzzy
+msgid "Broken redirects"
+msgstr "Montru alidirektojn"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
+#, fuzzy
+msgid "Dead-end pages"
+msgstr "Forigu"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
+msgid "Pages linking to disambiguation pages"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
+#, fuzzy
+msgid "Double redirects"
+msgstr "Montru alidirektojn"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
+msgid "Pages with the fewest revisions"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
+#, fuzzy
+msgid "Redirects"
+msgstr "Alidirekto"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
+msgid "Orphaned pages"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:37
+#, fuzzy
+msgid "Long pages"
+msgstr "Montru &mankantajn paĝojn"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:38
+msgid "Pages with the most categories"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:39
+msgid "Pages with the most files"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
+msgid "Most linked-to pages"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
+msgid "Most linked-to categories"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:42
+msgid "Most linked-to templates"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:43
+msgid "Pages with the most revisions"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:44
+#, fuzzy
+msgid "Short pages"
+msgstr "Montru aliajn paĝ&ojn"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:45
+msgid "Uncategorized categories"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
+msgid "Uncategorized files"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:47
+msgid "Uncategorized pages"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:48
+msgid "Uncategorized templates"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:49
+msgid "Unused categories"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:50
+msgid "Unused files"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:51
+#, fuzzy
+msgid "Unused templates"
+msgstr "Malfaldanta ŝablonojn"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:52
+msgid "Wanted categories"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:53
+msgid "Wanted files"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:54
+#, fuzzy
+msgid "Wanted pages"
+msgstr "Forigu"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:55
+#, fuzzy
+msgid "Wanted templates"
+msgstr "Malfaldanta ŝablonojn"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:56
+#, fuzzy
+msgid "Unwatched pages"
+msgstr "Montru aliajn paĝ&ojn"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:57
+#, fuzzy
+msgid "Pages without language links"
+msgstr "Kontrolu interlingvajn ligilojn"
 
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:326
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:345
