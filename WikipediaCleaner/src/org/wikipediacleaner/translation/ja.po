@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-02-13 23:47+0100\n"
+"POT-Creation-Date: 2013-02-14 15:29+0100\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Shushi Kurose <md81bird@hitaki.net>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -212,7 +212,7 @@ msgstr "<small> タグを除去"
 msgid "Fix all titles"
 msgstr "カテゴリを修正"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:82
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:101
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:218
 msgid "Remove"
 msgstr "除去"
@@ -448,6 +448,145 @@ msgstr ""
 #, java-format
 msgid "You haven''t done any contribution on \"{0}\""
 msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:29
+#, fuzzy
+msgid "Dormant pages"
+msgstr "ページを読み込み(&L)"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:30
+#, fuzzy
+msgid "Broken redirects"
+msgstr "リダイレクトの数をカウント"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
+#, fuzzy
+msgid "Dead-end pages"
+msgstr "ページを読み込み(&L)"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
+#, fuzzy
+msgid "Pages linking to disambiguation pages"
+msgstr "曖昧さ回避へのリンク数をカウント"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
+#, fuzzy
+msgid "Double redirects"
+msgstr "リダイレクトの数をカウント"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
+msgid "Pages with the fewest revisions"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
+#, fuzzy
+msgid "Redirects"
+msgstr "リダイレクト"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
+#, fuzzy
+msgid "Orphaned pages"
+msgstr "ページを読み込み(&L)"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:37
+#, fuzzy
+msgid "Long pages"
+msgstr "ページを読み込み(&L)"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:38
+msgid "Pages with the most categories"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:39
+msgid "Pages with the most files"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
+#, fuzzy
+msgid "Most linked-to pages"
+msgstr "リダイレクトの数をカウント"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
+#, fuzzy
+msgid "Most linked-to categories"
+msgstr "カテゴリを修正"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:42
+#, fuzzy
+msgid "Most linked-to templates"
+msgstr "テンプレート内を検索"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:43
+msgid "Pages with the most revisions"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:44
+#, fuzzy
+msgid "Short pages"
+msgstr "その他のページを表示(&O)"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:45
+#, fuzzy
+msgid "Uncategorized categories"
+msgstr "カテゴリを修正"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
+#, fuzzy
+msgid "Uncategorized files"
+msgstr "カテゴリを修正"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:47
+#, fuzzy
+msgid "Uncategorized pages"
+msgstr "カテゴリを修正"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:48
+#, fuzzy
+msgid "Uncategorized templates"
+msgstr "カテゴリを修正"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:49
+#, fuzzy
+msgid "Unused categories"
+msgstr "カテゴリを修正"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:50
+msgid "Unused files"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:51
+#, fuzzy
+msgid "Unused templates"
+msgstr "テンプレートを展開(&E)"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:52
+#, fuzzy
+msgid "Wanted categories"
+msgstr "カテゴリを修正"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:53
+msgid "Wanted files"
+msgstr ""
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:54
+#, fuzzy
+msgid "Wanted pages"
+msgstr "ページを読み込み(&L)"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:55
+#, fuzzy
+msgid "Wanted templates"
+msgstr "テンプレートを展開(&E)"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:56
+#, fuzzy
+msgid "Unwatched pages"
+msgstr "その他のページを表示(&O)"
+
+#: org/wikipediacleaner/api/constants/EnumQueryPage.java:57
+#, fuzzy
+msgid "Pages without language links"
+msgstr "言語間リンクをチェック"
 
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:326
 #: org/wikipediacleaner/api/constants/WPCConfiguration.java:345

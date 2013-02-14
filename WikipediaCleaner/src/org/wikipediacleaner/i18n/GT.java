@@ -27,7 +27,7 @@ import org.wikipediacleaner.api.constants.EnumLanguage;
 
 
 /**
- * Internationalisation management.
+ * Internationalization management.
  */
 public class GT {
 
@@ -58,7 +58,7 @@ public class GT {
   }
 
   /**
-   * @param msg Original text (with variables placeholders).
+   * @param msg Original text (with variables place holders).
    * @param variable Variable value.
    * @return Translated text.
    */
@@ -67,12 +67,22 @@ public class GT {
   }
 
   /**
-   * @param msg Original text (with variables placeholders).
+   * @param msg Original text (with variables place holders).
    * @param objects Variables values.
    * @return Translated text.
    */
   public static String _(String msg, Object[] objects) {
     return getTextWrapper().getString(msg, objects);
+  }
+
+  /**
+   * Utility function to mark a string as translatable without translating it.
+   * 
+   * @param msg Original text.
+   * @return Original text.
+   */
+  public static String _No(String msg) {
+    return msg;
   }
 
   /**

@@ -266,6 +266,7 @@
         <apply executable="${gettext.xgettext}" dir="${basedir}/${WPCleaner.src.dir}" parallel="true"
                verbose="true" relative="true" forwardslash="true">
           <arg value="-kGT._" />
+          <arg value="-kGT._No" />
           <arg value="--from-code=utf-8" />
           <arg value="--language=Java" />
           <arg value="--msgid-bugs-address=nicove@users.sourceforge.net"/>
