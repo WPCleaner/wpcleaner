@@ -21,6 +21,7 @@ package org.wikipediacleaner.api;
 import java.util.Collection;
 import java.util.List;
 
+import org.wikipediacleaner.api.constants.EnumQueryPage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Page;
@@ -291,6 +292,19 @@ public interface API {
   public List<Page> retrieveEmbeddedIn(
       EnumWikipedia wiki, Page page,
       List<Integer> namespaces, boolean limit) throws APIException;
+
+  /**
+   * Retrieves a special list of pages.
+   * (<code>action=query</code>, <code>list=querypage</code>).
+   * 
+   * @param wiki Wiki.
+   * @param query Type of list.
+   * @return List of pages depending on the query.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Querypage">API:Querypage</a>
+   */
+  public List<Page> getQueryPages(
+      EnumWikipedia wiki, EnumQueryPage query) throws APIException;
 
   /**
    * Retrieves random pages.

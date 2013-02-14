@@ -50,6 +50,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.CaptchaException;
 import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.RecentChangesListener;
+import org.wikipediacleaner.api.constants.EnumQueryPage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
@@ -82,6 +83,8 @@ import org.wikipediacleaner.api.request.ApiPurgeRequest;
 import org.wikipediacleaner.api.request.ApiPurgeResult;
 import org.wikipediacleaner.api.request.ApiBacklinksRequest;
 import org.wikipediacleaner.api.request.ApiBacklinksResult;
+import org.wikipediacleaner.api.request.ApiQueryPageRequest;
+import org.wikipediacleaner.api.request.ApiQueryPageResult;
 import org.wikipediacleaner.api.request.ApiRandomPagesRequest;
 import org.wikipediacleaner.api.request.ApiRandomPagesResult;
 import org.wikipediacleaner.api.request.ApiRawWatchlistRequest;
@@ -114,6 +117,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlParseResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPropertiesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPurgeResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlBacklinksResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlQueryPageResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlRandomPagesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlRawWatchlistResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlRecentChangesResult;
@@ -1082,6 +1086,23 @@ public class MediaWikiAPI implements API {
     ApiEmbeddedInResult result = new ApiXmlEmbeddedInResult(wiki, httpClient);
     ApiEmbeddedInRequest request = new ApiEmbeddedInRequest(wiki, result);
     return request.loadEmbeddedIn(page, namespaces, limit);
+  }
+
+  /**
+   * Retrieves a special list of pages.
+   * (<code>action=query</code>, <code>list=querypage</code>).
+   * 
+   * @param wiki Wiki.
+   * @param query Type of list.
+   * @return List of pages depending on the query.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Querypage">API:Querypage</a>
+   */
+  public List<Page> getQueryPages(
+      EnumWikipedia wiki, EnumQueryPage query) throws APIException {
+    ApiQueryPageResult result = new ApiXmlQueryPageResult(wiki, httpClient);
+    ApiQueryPageRequest request = new ApiQueryPageRequest(wiki, result);
+    return request.loadQueryPage(query);
   }
 
   /**

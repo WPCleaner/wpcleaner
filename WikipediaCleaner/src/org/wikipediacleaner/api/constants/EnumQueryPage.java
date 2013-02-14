@@ -76,6 +76,19 @@ public enum EnumQueryPage {
   }
 
   /**
+   * @param code Code for the special page.
+   * @return Type of special page requested.
+   */
+  public static EnumQueryPage findByCode(String code) {
+    for (EnumQueryPage query : values()) {
+      if (query.code.equals(code)) {
+        return query;
+      }
+    }
+    return null;
+  }
+
+  /**
    * @return Code for the special page.
    */
   public String getCode() {

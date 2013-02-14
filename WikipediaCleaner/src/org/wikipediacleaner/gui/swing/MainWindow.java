@@ -72,6 +72,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfiguration;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumLanguage;
+import org.wikipediacleaner.api.constants.EnumQueryPage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
@@ -107,7 +108,7 @@ public class MainWindow
   extends BasicWindow
   implements ActionListener {
 
-  public final static Integer WINDOW_VERSION = Integer.valueOf(4);
+  public final static Integer WINDOW_VERSION = Integer.valueOf(5);
 
   private final static String URL_OTHER_LANGUAGE  = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner#Other_Language";
   private final static String URL_OTHER_WIKIPEDIA = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner#Other_Wikipedia";
@@ -132,6 +133,7 @@ public class MainWindow
   private JButton buttonCheckWiki;
   private JButton buttonHelpRequested;
   private JButton buttonAllDab;
+  private JButton buttonSpecialLists;
   private JButton buttonWatchlistLocal;
   private JButton buttonWatchlist;
   private JButton buttonRandomPages;
@@ -277,6 +279,7 @@ public class MainWindow
     buttonCheckWiki.setEnabled(logged);
     buttonHelpRequested.setEnabled(logged);
     buttonAllDab.setEnabled(logged);
+    buttonSpecialLists.setEnabled(logged);
     buttonWatchlistLocal.setEnabled(logged);
     buttonWatchlist.setEnabled(logged);
     buttonRandomPages.setEnabled(logged);
@@ -755,10 +758,21 @@ public class MainWindow
     constraints.gridy++;
 
     // Help requested button
-    buttonHelpRequested = Utilities.createJButton(GT._("Help requested on..."));
+    buttonHelpRequested = Utilities.createJButton(
+        "gnome-dialog-question.png", EnumImageSize.NORMAL,
+        GT._("Help requested on..."), true);
     buttonHelpRequested.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionHelpRequestedOn"));
     panel.add(buttonHelpRequested, constraints);
+    constraints.gridy++;
+
+    // Special lists
+    buttonSpecialLists = Utilities.createJButton(
+        "gnome-colors-applications-office.png", EnumImageSize.NORMAL,
+        GT._("Special lists"), true);
+    buttonSpecialLists.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSpecialLists"));
+    panel.add(buttonSpecialLists, constraints);
     constraints.gridy++;
 
     // Local watch list button
@@ -1057,7 +1071,7 @@ public class MainWindow
     menu.show(
         buttonCheckSpelling,
         0,
-        buttonCheckSpelling.getY() + buttonCheckSpelling.getHeight());
+        buttonCheckSpelling.getHeight());
   }
 
   /**
@@ -1443,6 +1457,46 @@ public class MainWindow
           pageNames, PageListWorker.Mode.EMBEDDED_IN, false,
           GT._("Help requested on...")).start();
     }
+  }
+
+  /**
+   * Action called when Special Lists button is pressed.
+   */
+  public void actionSpecialLists() {
+    // Create menu for special lists
+    JPopupMenu menu = new JPopupMenu();
+    for (EnumQueryPage query : EnumQueryPage.values()) {
+      JMenuItem item = new JMenuItem(query.getName());
+      item.setActionCommand(query.getCode());
+      item.addActionListener(EventHandler.create(
+          ActionListener.class, this, "actionSpecialList", "actionCommand"));
+      menu.add(item);
+    }
+    menu.show(
+        buttonSpecialLists,
+        0,
+        buttonSpecialLists.getHeight());
+  }
+
+  /**
+   * Action called to get a special list.
+   * 
+   * @param code Query code.
+   */
+  public void actionSpecialList(String code) {
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia == null) {
+      return;
+    }
+    EnumQueryPage query = EnumQueryPage.findByCode(code);
+    if (query == null) {
+      return;
+    }
+    new PageListWorker(
+        wikipedia, this, null,
+        Collections.singletonList(code),
+        PageListWorker.Mode.QUERY_PAGE, false,
+        query.getName()).start();
   }
 
   /**
