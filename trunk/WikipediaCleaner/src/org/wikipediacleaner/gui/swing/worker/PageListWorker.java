@@ -31,6 +31,7 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWiki;
+import org.wikipediacleaner.api.constants.EnumQueryPage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
@@ -79,12 +80,13 @@ public class PageListWorker extends BasicWorker {
     DIRECT,
     EMBEDDED_IN,
     INTERNAL_LINKS,
+    QUERY_PAGE,
     SEARCH_TITLES,
     WATCH_LIST,
   }
 
   private final Page referencePage;
-  private final List<String> pageNames;
+  private final List<String> elementNames;
   private final Mode mode;
   private final boolean watchList;
   private final List<Page> pageList;
@@ -93,19 +95,19 @@ public class PageListWorker extends BasicWorker {
   /**
    * @param wikipedia Wikipedia.
    * @param window Window.
-   * @param pageNames List of pages.
+   * @param elementNames List of elements (page names, ...).
    * @param mode Mode for determining the list of pages.
    * @param message Window title.
    */
   public PageListWorker(
       EnumWikipedia wikipedia, BasicWindow window,
       Page referencePage,
-      List<String> pageNames, Mode mode,
+      List<String> elementNames, Mode mode,
       boolean watchList, String message) {
     super(wikipedia, window);
     this.referencePage = referencePage;
     this.pageList = new ArrayList<Page>();
-    this.pageNames = pageNames;
+    this.elementNames = elementNames;
     this.mode = mode;
     this.watchList = watchList;
     this.message = message;
@@ -180,6 +182,10 @@ public class PageListWorker extends BasicWorker {
         constructInternalLinks(pages);
         break;
 
+      case QUERY_PAGE:
+        constructQueryPage(pages);
+        break;
+
       // Search similar pages
       case SEARCH_TITLES:
         constructSearchTitles(pages);
@@ -215,11 +221,11 @@ public class PageListWorker extends BasicWorker {
    * @return Internal list of pages.
    */
   private List<Page> constructInternalPageList() {
-    if (pageNames == null) {
+    if (elementNames == null) {
       return new ArrayList<Page>();
     }
-    List<Page> pages = new ArrayList<Page>(pageNames.size());
-    for (String pageName : pageNames) {
+    List<Page> pages = new ArrayList<Page>(elementNames.size());
+    for (String pageName : elementNames) {
       pages.add(DataManager.getPage(getWikipedia(), pageName, null, null));
     }
     return pages;
@@ -248,7 +254,7 @@ public class PageListWorker extends BasicWorker {
    */
   private void constructCategoryMembers(List<Page> pages) throws APIException {
     final API api = APIFactory.getAPI();
-    for (String pageName : pageNames) {
+    for (String pageName : elementNames) {
       List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0, true);
       if (tmpPages != null) {
         for (Page tmpPage : tmpPages) {
@@ -268,7 +274,7 @@ public class PageListWorker extends BasicWorker {
    */
   private void constructCategoryMembersArticles(List<Page> pages) throws APIException {
     final API api = APIFactory.getAPI();
-    for (String pageName : pageNames) {
+    for (String pageName : elementNames) {
       List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0, true);
       if (tmpPages != null) {
         WPCConfiguration configuration = getWikipedia().getConfiguration();
@@ -298,7 +304,7 @@ public class PageListWorker extends BasicWorker {
    * @throws APIException
    */
   private void constructDabWatch(List<Page> pages) throws APIException {
-    if (pageNames != null) {
+    if (elementNames != null) {
       List<Page> tmpPages = constructInternalPageList();
       Page[] tmpPages2 = new Page[tmpPages.size()];
       tmpPages2 = tmpPages.toArray(tmpPages2);
@@ -335,7 +341,7 @@ public class PageListWorker extends BasicWorker {
    * @throws APIException
    */
   private void constructEmbeddedIn(List<Page> pages) throws APIException {
-    if (pageNames != null) {
+    if (elementNames != null) {
       List<Page> tmpPages = constructInternalPageList();
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       pages.addAll(mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages, true));
@@ -349,7 +355,7 @@ public class PageListWorker extends BasicWorker {
    * @throws APIException
    */
   private void constructInternalLinks(List<Page> pages) throws APIException {
-    for (String dabList : pageNames) {
+    for (String dabList : elementNames) {
       Page page = DataManager.getPage(getWikipedia(), dabList, null, null);
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       mw.retrieveAllLinks(getWikipedia(), page, null, null, true);
@@ -366,15 +372,31 @@ public class PageListWorker extends BasicWorker {
   }
 
   /**
+   * Construct special list of pages.
+   * 
+   * @param pages List of pages.
+   * @throws APIException
+   */
+  private void constructQueryPage(List<Page> pages) throws APIException {
+    final API api = APIFactory.getAPI();
+    EnumWikipedia wiki = getWikipedia();
+    EnumQueryPage query = EnumQueryPage.findByCode(elementNames.get(0));
+    List<Page> tmpPages = api.getQueryPages(wiki, query);
+    if (tmpPages != null) {
+      pages.addAll(tmpPages);
+    }
+  }
+
+  /**
    * Construct list of search results.
    * 
    * @param pages List of search results.
    * @throws APIException
    */
   private void constructSearchTitles(List<Page> pages) throws APIException {
-    if (pageNames != null) {
+    if (elementNames != null) {
       final API api = APIFactory.getAPI();
-      for (String pageName : pageNames) {
+      for (String pageName : elementNames) {
         Page page = DataManager.getPage(getWikipedia(), pageName, null, null);
         api.retrieveSimilarPages(getWikipedia(), page, true);
         pages.addAll(page.getSimilarPages());
