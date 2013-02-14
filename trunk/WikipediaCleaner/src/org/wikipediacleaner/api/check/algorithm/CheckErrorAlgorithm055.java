@@ -24,7 +24,9 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -106,35 +108,59 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
           }
 
           if (level0Tag != null) {
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(),
-                level0Tag.getBeginIndex(),
-                level0Tag.getEndIndex(),
-                ErrorLevel.CORRECT);
-            errors.add(errorResult);
-            if (level0Tag.getMatchingTag() != null) {
-              errorResult = createCheckErrorResult(
+            int possibleEnd = getPossibleEnd(pageAnalysis, level0Tag);
+            if (possibleEnd > 0) {
+              CheckErrorResult errorResult = createCheckErrorResult(
                   pageAnalysis.getPage(),
-                  level0Tag.getMatchingTag().getBeginIndex(),
-                  level0Tag.getMatchingTag().getEndIndex(),
+                  level0Tag.getBeginIndex(), possibleEnd,
+                  ErrorLevel.WARNING);
+              errorResult.addReplacement(
+                  contents.substring(level0Tag.getBeginIndex(), possibleEnd) + "</small>",
+                  "<small>...</small>");
+              errors.add(errorResult);
+            } else {
+              CheckErrorResult errorResult = createCheckErrorResult(
+                  pageAnalysis.getPage(),
+                  level0Tag.getBeginIndex(),
+                  level0Tag.getEndIndex(),
                   ErrorLevel.CORRECT);
               errors.add(errorResult);
+              if (level0Tag.getMatchingTag() != null) {
+                errorResult = createCheckErrorResult(
+                    pageAnalysis.getPage(),
+                    level0Tag.getMatchingTag().getBeginIndex(),
+                    level0Tag.getMatchingTag().getEndIndex(),
+                    ErrorLevel.CORRECT);
+                errors.add(errorResult);
+              }
             }
             level0Tag = null;
           }
 
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
-              tag.getCompleteBeginIndex(),
-              tag.getCompleteEndIndex());
-          if (doubleSmall) {
+          int possibleEnd = getPossibleEnd(pageAnalysis, tag);
+          if (possibleEnd > 0) {
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(),
+                tag.getBeginIndex(),
+                possibleEnd);
             errorResult.addReplacement(
-                contents.substring(tag.getEndIndex(), tag.getMatchingTag().getBeginIndex()),
-                GT._("Remove <small> tags"));
-          }
-          errors.add(errorResult);
-          if (tag.isComplete()) {
-            tagIndex = PageElementTag.getMatchingTagIndex(tags, tagIndex);
+                contents.substring(tag.getBeginIndex(), possibleEnd) + "</small>",
+                "<small>...</small>");
+            errors.add(errorResult);
+          } else {
+            CheckErrorResult errorResult = createCheckErrorResult(
+                pageAnalysis.getPage(),
+                tag.getCompleteBeginIndex(),
+                tag.getCompleteEndIndex());
+            if (doubleSmall) {
+              errorResult.addReplacement(
+                  contents.substring(tag.getEndIndex(), tag.getMatchingTag().getBeginIndex()),
+                  GT._("Remove <small> tags"));
+            }
+            errors.add(errorResult);
+            if (tag.isComplete()) {
+              tagIndex = PageElementTag.getMatchingTagIndex(tags, tagIndex);
+            }
           }
         }
         level++;
@@ -142,5 +168,73 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * Find a possible end for a single small tag.
+   * 
+   * @param analysis Page analysis.
+   * @param tag Current small tag.
+   * @return Possible end if found, -1 otherwise.
+   */
+  private int getPossibleEnd(
+      PageAnalysis analysis,
+      PageElementTag tag) {
+    // Check arguments
+    if ((analysis == null) || (analysis.getContents() == null)) {
+      return -1;
+    }
+    String contents = analysis.getContents();
+    if ((tag == null) || tag.isComplete() || tag.isEndTag()) {
+      return -1;
+    }
+
+    // Check the beginning of the line
+    int tmpIndex = tag.getBeginIndex();
+    while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) != '\n')) {
+      tmpIndex--;
+    }
+    if (contents.charAt(tmpIndex) != '|') {
+      return -1;
+    }
+
+    // Check the following characters
+    tmpIndex = tag.getEndIndex();
+    boolean finished = false;
+    while ((tmpIndex < contents.length()) && !finished) {
+      int nextIndex = tmpIndex + 1;
+      if ((contents.charAt(tmpIndex) == '\n') ||
+          (contents.startsWith("||", tmpIndex))) {
+        finished = true;
+      }
+      if (contents.charAt(tmpIndex) == '<') {
+        List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_SMALL);
+        for (PageElementTag tmpTag : tags) {
+          if (tmpTag.getBeginIndex() == tmpIndex) {
+            return -1;
+          }
+        }
+      }
+      if (contents.charAt(tmpIndex) == '{') {
+        PageElementTemplate template = analysis.isInTemplate(tmpIndex);
+        if ((template != null) && (template.getBeginIndex() == tmpIndex)) {
+          nextIndex = template.getEndIndex();
+        } else {
+          PageElementFunction function = analysis.isInFunction(tmpIndex);
+          if ((function != null) && (function.getBeginIndex() == tmpIndex)) {
+            nextIndex = function.getEndIndex();
+          }
+        }
+      }
+      if (!finished) {
+        tmpIndex = nextIndex;
+      }
+    }
+    if ((contents.charAt(tmpIndex) != '\n') &&
+        (!contents.startsWith("||", tmpIndex))) {
+      return -1;
+    }
+
+    return tmpIndex;
   }
 }
