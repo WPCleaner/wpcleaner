@@ -45,7 +45,7 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
- * Centralisation of access to MediaWiki.
+ * Centralization of access to MediaWiki.
  */
 public class MediaWiki extends MediaWikiController {
 
@@ -421,19 +421,21 @@ public class MediaWiki extends MediaWikiController {
    * 
    * @param wikipedia Wikipedia.
    * @param pageList List of pages.
+   * @param namespaces List of name spaces to look into.
    * @param limit Flag indicating if the number of results should be limited.
    * @throws APIException
    */
   @SuppressWarnings("unchecked")
   public List<Page> retrieveAllEmbeddedIn(
       EnumWikipedia wikipedia, List<Page> pageList,
+      List<Integer> namespaces,
       boolean limit) throws APIException {
     if ((pageList == null) || (pageList.size() == 0)) {
       return null;
     }
     final API api = APIFactory.getAPI();
     for (final Page page : pageList) {
-      addTask(new EmbeddedInCallable(wikipedia, this, api, page, limit));
+      addTask(new EmbeddedInCallable(wikipedia, this, api, page, namespaces, limit));
     }
     List<Page> resultList = new ArrayList<Page>();
     while (hasRemainingTask() && !shouldStop()) {

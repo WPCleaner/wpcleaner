@@ -69,6 +69,8 @@ import org.wikipediacleaner.api.request.ApiEmbeddedInRequest;
 import org.wikipediacleaner.api.request.ApiEmbeddedInResult;
 import org.wikipediacleaner.api.request.ApiExpandRequest;
 import org.wikipediacleaner.api.request.ApiExpandResult;
+import org.wikipediacleaner.api.request.ApiInfoRequest;
+import org.wikipediacleaner.api.request.ApiInfoResult;
 import org.wikipediacleaner.api.request.ApiLanguageLinksRequest;
 import org.wikipediacleaner.api.request.ApiLanguageLinksResult;
 import org.wikipediacleaner.api.request.ApiLinksRequest;
@@ -109,6 +111,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlCategoryMembersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlDeleteResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlEmbeddedInResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlExpandResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlInfoResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLanguageLinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLoginResult;
@@ -922,11 +925,28 @@ public class MediaWikiAPI implements API {
   // ==========================================================================
 
   /**
-   * Retrieves the contents of <code>page</code>.
+   * Retrieves the informations of a list of pages.
+   * (<code>action=query</code>, <code>prop=info</code>).
+   * 
+   * @param wiki Wiki.
+   * @param pages List of pages.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Properties#info_.2F_in">API:Properties#info</a>
+   */
+  public void retrieveInfo(
+      EnumWikipedia wiki,
+      Collection<Page> pages) throws APIException {
+    ApiInfoResult result = new ApiXmlInfoResult(wiki, httpClient);
+    ApiInfoRequest request = new ApiInfoRequest(wiki, result);
+    request.loadInformations(pages);
+  }
+
+  /**
+   * Retrieves the contents of a list of pages.
    * (<code>action=query</code>, <code>prop=revisions</code>).
    * 
    * @param wiki Wiki.
-   * @param pages The pages.
+   * @param pages List of pages.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#revisions_.2F_rv">API:Properties#revisions</a>

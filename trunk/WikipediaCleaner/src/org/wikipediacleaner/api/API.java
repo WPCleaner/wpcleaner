@@ -191,11 +191,24 @@ public interface API {
   // ==========================================================================
 
   /**
-   * Retrieves the contents of <code>page</code>.
+   * Retrieves the informations of a list of pages.
+   * (<code>action=query</code>, <code>prop=info</code>).
+   * 
+   * @param wiki Wiki.
+   * @param pages List of pages.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Properties#info_.2F_in">API:Properties#info</a>
+   */
+  public void retrieveInfo(
+      EnumWikipedia wiki,
+      Collection<Page> pages) throws APIException;
+
+  /**
+   * Retrieves the contents of a list of pages.
    * (<code>action=query</code>, <code>prop=revisions</code>).
    * 
    * @param wiki Wiki.
-   * @param pages The pages.
+   * @param pages List of pages.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#revisions_.2F_rv">API:Properties#revisions</a>

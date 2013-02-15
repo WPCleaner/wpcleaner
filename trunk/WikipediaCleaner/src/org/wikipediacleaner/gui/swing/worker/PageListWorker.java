@@ -19,6 +19,7 @@
 package org.wikipediacleaner.gui.swing.worker;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +39,7 @@ import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.PageListWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -52,7 +54,7 @@ public class PageListWorker extends BasicWorker {
 
   /**
    * The <code>Mode</code> allows to specify how the PageListWorker
-   * will use the list of pages provided to it:
+   * will use the list of elements provided to it:
    * <ul>
    * <li>ALL_DAB_PAGES: Not used.
    *     Retrieve list of all disambiguation pages.</li>
@@ -68,6 +70,12 @@ public class PageListWorker extends BasicWorker {
    *     Retrieve list of pages embedding the templates.</li>
    * <li>INTERNAL_LINKS: List of pages.
    *     Retrieve list of internal links in the pages.</li>
+   * <li>MISSING_TEMPLATES: Not used.
+   *     Retrieve list of pages with missing templates.</li>
+   * <li>QUERY_PAGE: Code of the special list to retrieve.
+   *     Retrieve list of pages of a special list.</li>
+   * <li>SEARCH_TITLES: List of keywords.
+   *     Retrieve list of pages matching keywords.</li>
    * <li>WATCH_LIST: Not used.
    *     Retrieve list of pages in the watch list.</li>
    * </ul>
@@ -80,6 +88,7 @@ public class PageListWorker extends BasicWorker {
     DIRECT,
     EMBEDDED_IN,
     INTERNAL_LINKS,
+    MISSING_TEMPLATES,
     QUERY_PAGE,
     SEARCH_TITLES,
     WATCH_LIST,
@@ -182,6 +191,12 @@ public class PageListWorker extends BasicWorker {
         constructInternalLinks(pages);
         break;
 
+      // Retrieve list of pages with missing templates
+      case MISSING_TEMPLATES:
+        constructMissingTemplates(pages);
+        break;
+
+      // Retrieve a special list
       case QUERY_PAGE:
         constructQueryPage(pages);
         break;
@@ -344,7 +359,7 @@ public class PageListWorker extends BasicWorker {
     if (elementNames != null) {
       List<Page> tmpPages = constructInternalPageList();
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      pages.addAll(mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages, true));
+      pages.addAll(mw.retrieveAllEmbeddedIn(getWikipedia(), tmpPages, null, true));
     }
   }
 
@@ -369,6 +384,37 @@ public class PageListWorker extends BasicWorker {
         }
       }
     }
+  }
+
+  /**
+   * Construct list of pages with missing templates.
+   * 
+   * @param pages List of pages with missing templates.
+   * @throws APIException
+   */
+  private void constructMissingTemplates(List<Page> pages) throws APIException {
+    final API api = APIFactory.getAPI();
+    EnumWikipedia wiki = getWikipedia();
+    setText(GT._("Retrieving list of missing templates"));
+    List<Page> tmpPages = api.getQueryPages(wiki, EnumQueryPage.WANTED_TEMPLATES);
+    if (tmpPages == null) {
+      return;
+    }
+    setText(GT._("Checking that the templates are still missing"));
+    api.retrieveInfo(wiki, tmpPages);
+    List<Page> tmpPages2 = new ArrayList<Page>();
+    for (Page tmpPage : tmpPages) {
+      Boolean exists = tmpPage.isExisting();
+      if (!Boolean.TRUE.equals(exists)) {
+        tmpPages2.add(tmpPage);
+      }
+    }
+    MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
+    List<Page> tmpPages3 = mw.retrieveAllEmbeddedIn(
+        wiki, tmpPages2,
+        wiki.getConfiguration().getEncyclopedicNamespaces(), true);
+    pages.addAll(tmpPages3);
+    Collections.sort(pages, PageComparator.getNamespaceFirstComparator());
   }
 
   /**

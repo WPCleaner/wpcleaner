@@ -520,6 +520,13 @@ public class WPCConfiguration {
   }
 
   /**
+   * @return Encyclopedic name spaces.
+   */
+  public List<Integer> getEncyclopedicNamespaces() {
+    return encyclopedicNamespaces;
+  }
+
+  /**
    * @return Encyclopedic talk name spaces.
    */
   public List<Integer> getEncyclopedicTalkNamespaces() {
