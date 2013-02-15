@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-02-15 18:59+0100\n"
+"POT-Creation-Date: 2013-02-15 20:39+0100\n"
 "PO-Revision-Date: 2013-02-14 17:50+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -712,7 +712,7 @@ msgstr "&Fermer"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:142
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:192
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:275
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:291
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:305
 msgid "Automatic fixing"
 msgstr "Correction automatique"
 
@@ -741,14 +741,14 @@ msgstr "Corriger les pages sélectionnées"
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:751
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:286
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:555
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:230
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:237
 msgid "Full analysis (Alt + &F)"
 msgstr "Analyse complète (Alt + &F)"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:305
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:292
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:561
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:237
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:244
 msgid "Disambiguation (Alt + &D)"
 msgstr "Homonymie (Alt + &D)"
 
@@ -1084,7 +1084,7 @@ msgid "Sort"
 msgstr "Trier"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:436
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:510
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:558
 msgid "You must select pages on which running automatic fixing."
 msgstr ""
 "Vous devez sélectionner les pages sur lesquelles exécuter la correction "
@@ -1231,7 +1231,7 @@ msgid "Embedded in"
 msgstr "Inclus dans"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:677
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:258
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:265
 msgid "Update disambiguation warning"
 msgstr "Mettre à jour le message d’avertissement"
 
@@ -1382,7 +1382,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1267
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1087
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:399
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:413
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr ""
 "Voulez-vous mettre à jour le message d’avertissement en page de discussion ?"
@@ -1778,7 +1778,7 @@ msgid "Validate (Alt + &V)"
 msgstr "Valider (Alt + &V)"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:683
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:279
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:286
 #: org/wikipediacleaner/gui/swing/PagePanel.java:485
 msgid "External Viewer (Alt + &E)"
 msgstr "Navigateur externe (Alt + &W)"
@@ -1788,7 +1788,7 @@ msgid "&External Viewer"
 msgstr "Affichage externe"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:717
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:286
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:293
 #: org/wikipediacleaner/gui/swing/PagePanel.java:500
 msgid "History (Alt + &H)"
 msgstr "Historique (Alt + &H)"
@@ -1921,39 +1921,45 @@ msgstr "Principal"
 msgid "Other"
 msgstr "Autre"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:217
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:224
 msgid "Backlinks"
 msgstr "Pages liées"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:244
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:251
 msgid "Select disambiguation pages with too many backlinks"
 msgstr "Sélectionner les pages d’homonymie ayant trop de pages liées"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:251
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:258
 msgid "Analyze pages with links to disambiguation pages"
 msgstr "Analyser les pages avec des liens vers les pages d’homonymie"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:265
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:272
 msgid "Update page information (Alt + &U)"
 msgstr "Mettre à jour les informations de la page (Alt + &U)"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:272
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:279
 msgid "Set page comments (Alt + &C)"
 msgstr "Ajouter un commentaire pour la page (Alt + &C)"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:299
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:300
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:522
+#, fuzzy
+msgid "Save list"
+msgstr "Listes spéciales"
+
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:313
 msgid "Remove page (Alt + &R)"
 msgstr "Enlever la page (Alt + &R)"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:305
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:319
 msgid "Add page (Alt + &A)"
 msgstr "Ajouter une page (Alt + &A)"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:377
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:391
 msgid "Articles with links to disambiguation pages"
 msgstr "Articles avec des liens vers les pages d’homonymie"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:395
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:409
 msgid ""
 "You need to define the 'dab_warning_template' property in WikiCleaner "
 "configuration."
@@ -1961,25 +1967,25 @@ msgstr ""
 "Vous devez définir la propriété « dab_warning_template » dans la "
 "configuration WikiCleaner."
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:412
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:426
 msgid ""
 "You are about to remove the pages from your local Watch list.\n"
 "Are you sure ?"
 msgstr ""
 "Êtes-vous sûr de vouloir supprimer ces pages de votre liste de suivi locale ?"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:432
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:446
 msgid "Enter the page title you want to add to your local watch list"
 msgstr ""
 "Entrer le titre de l’article que vous souhaitez ajouter à votre liste de "
 "suivi locale."
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:554
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:602
 #, java-format
 msgid "{0} pages"
 msgstr "{0} pages"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:556
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:604
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr "Pages liées : espace de nom principal {0}, tous les espaces de nom {1}"

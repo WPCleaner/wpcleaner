@@ -25,12 +25,18 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -81,18 +87,19 @@ public class PageListWindow extends BasicWindow {
 
   JLabel  labelLinksCount;
   
-  private JButton buttonFullAnalysis;
-  private JButton buttonDisambiguation;
-  private JButton buttonSelectDab;
-  private JButton buttonDisambiguationWatch;
-  private JButton buttonUpdateDabWarning;
-  private JButton buttonUpdateInfo;
-  private JButton buttonComments;
-  private JButton buttonView;
-  private JButton buttonViewHistory;
-  private JButton buttonRemove;
   private JButton buttonAdd;
   private JButton buttonAutomaticFixing;
+  private JButton buttonComments;
+  private JButton buttonDisambiguation;
+  private JButton buttonDisambiguationWatch;
+  private JButton buttonFullAnalysis;
+  private JButton buttonRemove;
+  private JButton buttonSave;
+  private JButton buttonSelectDab;
+  private JButton buttonUpdateDabWarning;
+  private JButton buttonUpdateInfo;
+  private JButton buttonView;
+  private JButton buttonViewHistory;
 
   /**
    * Create and display a PageListWindow.
@@ -287,6 +294,13 @@ public class PageListWindow extends BasicWindow {
     buttonViewHistory.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionViewHistory"));
     toolbar.add(buttonViewHistory);
+
+    buttonSave = Utilities.createJButton(
+        "gnome-document-save.png", EnumImageSize.NORMAL,
+        GT._("Save list"), false);
+    buttonSave.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionSave"));
+    toolbar.add(buttonSave);
 
     buttonAutomaticFixing = Utilities.createJButton(GT._("Automatic fixing"));
     buttonAutomaticFixing.addActionListener(EventHandler.create(
@@ -495,6 +509,40 @@ public class PageListWindow extends BasicWindow {
     if (tmpPages != null) {
       for (Page page : tmpPages) {
         Utilities.browseURL(getWikipedia(), page.getTitle(), "history");
+      }
+    }
+  }
+
+  /**
+   * Action called when Save button is pressed.
+   */
+  public void actionSave() {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setCurrentDirectory(new File("."));
+    fileChooser.setDialogTitle(GT._("Save list"));
+    int answer = fileChooser.showSaveDialog(this.getParentComponent());
+    if (answer != JFileChooser.APPROVE_OPTION) {
+      return;
+    }
+    File file = fileChooser.getSelectedFile();
+    if (file == null) {
+      return;
+    }
+    BufferedWriter buffer = null;
+    try {
+      buffer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF8"));
+      for (Page page : pages) {
+        buffer.append("* [[:" + page.getTitle() + "]]\n");
+      }
+    } catch (IOException e) {
+      // Nothing to do
+    } finally {
+      if (buffer != null) {
+        try {
+          buffer.close();
+        } catch (IOException e) {
+          // Nothing to do
+        }
       }
     }
   }
