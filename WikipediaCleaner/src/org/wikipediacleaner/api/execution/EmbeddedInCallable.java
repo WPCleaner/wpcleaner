@@ -35,6 +35,8 @@ public class EmbeddedInCallable extends MediaWikiCallable<List<Page>> {
 
   private final Page page;
 
+  private final List<Integer> namespaces;
+
   private final boolean limit;
 
   /**
@@ -42,13 +44,15 @@ public class EmbeddedInCallable extends MediaWikiCallable<List<Page>> {
    * @param listener Listener of MediaWiki events.
    * @param api MediaWiki API.
    * @param page Page.
+   * @param namespaces List of name spaces to look into.
    * @param limit Flag indicating if the number of results should be limited.
    */
   public EmbeddedInCallable(
       EnumWikipedia wikipedia, MediaWikiListener listener, API api,
-      Page page, boolean limit) {
+      Page page, List<Integer> namespaces, boolean limit) {
     super(wikipedia, listener, api);
     this.page = page;
+    this.namespaces = namespaces;
     this.limit = limit;
   }
 
@@ -57,7 +61,7 @@ public class EmbeddedInCallable extends MediaWikiCallable<List<Page>> {
    */
   public List<Page> call() throws APIException {
     setText(GT._("Retrieving page usage") + " - " + page.getTitle());
-    return api.retrieveEmbeddedIn(getWikipedia(), page, null, limit);
+    return api.retrieveEmbeddedIn(getWikipedia(), page, namespaces, limit);
   }
 
 }

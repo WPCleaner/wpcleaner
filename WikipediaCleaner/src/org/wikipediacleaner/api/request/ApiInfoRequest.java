@@ -18,7 +18,13 @@
 
 package org.wikipediacleaner.api.request;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.Page;
 
 
 /**
@@ -89,10 +95,34 @@ public class ApiInfoRequest extends ApiPropertiesRequest {
   // Request management
   // ==========================================================================
 
+  private final ApiInfoResult result;
+
   /**
    * @param wiki Wiki.
+   * @param result Parser for result depending on chosen format.
    */
-  public ApiInfoRequest(EnumWikipedia wiki) {
+  public ApiInfoRequest(EnumWikipedia wiki, ApiInfoResult result) {
     super(wiki);
+    this.result = result;
+  }
+
+  /**
+   * Load informations of a list of pages.
+   * 
+   * @param pages List of pages.
+   * @throws APIException
+   */
+  public void loadInformations(Collection<Page> pages) throws APIException {
+    Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
+    properties.put(
+        PROPERTY_PROP,
+        PROPERTY_PROP_REVISIONS + "|" + PROPERTY_PROP_INFO);
+    List<Collection<Page>> tmpPages = splitListPages(pages, MAX_PAGES_PER_QUERY);
+    for (Collection<Page> tmpPages2 : tmpPages) {
+      properties.put(PROPERTY_TITLES, constructListPages(tmpPages2));
+      while (result.executeInformations(properties, tmpPages2)) {
+        //
+      }
+    }
   }
 }

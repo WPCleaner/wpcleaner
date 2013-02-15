@@ -108,7 +108,7 @@ public class MainWindow
   extends BasicWindow
   implements ActionListener {
 
-  public final static Integer WINDOW_VERSION = Integer.valueOf(5);
+  public final static Integer WINDOW_VERSION = Integer.valueOf(6);
 
   private final static String URL_OTHER_LANGUAGE  = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner#Other_Language";
   private final static String URL_OTHER_WIKIPEDIA = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner#Other_Wikipedia";
@@ -128,17 +128,18 @@ public class MainWindow
   private JButton buttonLogout;
   private JButton buttonHelp;
 
-  private JButton buttonCurrentDabList;
-  private JButton buttonMostDabLinks;
-  private JButton buttonCheckWiki;
-  private JButton buttonHelpRequested;
   private JButton buttonAllDab;
+  private JButton buttonBotTools;
+  private JButton buttonCheckWiki;
+  private JButton buttonCurrentDabList;
+  private JButton buttonHelpRequested;
+  private JButton buttonMissingTemplates;
+  private JButton buttonMostDabLinks;
+  private JButton buttonRandomPages;
+  private JButton buttonRandomRedirects;
   private JButton buttonSpecialLists;
   private JButton buttonWatchlistLocal;
   private JButton buttonWatchlist;
-  private JButton buttonRandomPages;
-  private JButton buttonRandomRedirects;
-  private JButton buttonBotTools;
 
   JTextField textPagename;
   private JButton buttonFullAnalysis;
@@ -274,17 +275,18 @@ public class MainWindow
     buttonReloadOptions.setEnabled(logged);
     buttonCheckSpelling.setEnabled(logged);
 
-    buttonCurrentDabList.setEnabled(logged);
-    buttonMostDabLinks.setEnabled(logged);
-    buttonCheckWiki.setEnabled(logged);
-    buttonHelpRequested.setEnabled(logged);
     buttonAllDab.setEnabled(logged);
+    buttonBotTools.setEnabled(userLogged);
+    buttonCheckWiki.setEnabled(logged);
+    buttonCurrentDabList.setEnabled(logged);
+    buttonHelpRequested.setEnabled(logged);
+    buttonMissingTemplates.setEnabled(logged);
+    buttonMostDabLinks.setEnabled(logged);
+    buttonRandomPages.setEnabled(logged);
+    buttonRandomRedirects.setEnabled(logged);
     buttonSpecialLists.setEnabled(logged);
     buttonWatchlistLocal.setEnabled(logged);
     buttonWatchlist.setEnabled(logged);
-    buttonRandomPages.setEnabled(logged);
-    buttonRandomRedirects.setEnabled(logged);
-    buttonBotTools.setEnabled(userLogged);
 
     textPagename.setEnabled(logged);
     buttonFullAnalysis.setEnabled(logged);
@@ -773,6 +775,15 @@ public class MainWindow
     buttonSpecialLists.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSpecialLists"));
     panel.add(buttonSpecialLists, constraints);
+    constraints.gridy++;
+
+    // Missing templates
+    buttonMissingTemplates = Utilities.createJButton(
+        "commons-curly-brackets.png", EnumImageSize.NORMAL,
+        GT._("Missing templates"), true);
+    buttonMissingTemplates.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionMissingTemplates"));
+    panel.add(buttonMissingTemplates, constraints);
     constraints.gridy++;
 
     // Local watch list button
@@ -1548,6 +1559,20 @@ public class MainWindow
    */
   public void actionRandomPage() {
     new RandomPageWorker(getWikipedia(), this, textPagename).start();
+  }
+
+  /**
+   * Action called when Missing Templates button is pressed.
+   */
+  public void actionMissingTemplates() {
+    EnumWikipedia wikipedia = getWikipedia();
+    if (wikipedia == null) {
+      return;
+    }
+    new PageListWorker(
+        wikipedia, this, null,
+        null, PageListWorker.Mode.MISSING_TEMPLATES, true,
+        GT._("Pages with missing templates")).start();
   }
 
   /**
