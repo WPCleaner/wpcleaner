@@ -1257,7 +1257,7 @@ public class MainWindow
     }
     String template = getConfiguration().getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
     if ((template == null) || (template.trim().length() == 0)) {
-      Utilities.displayWarningForMissingConfiguration(
+      Utilities.displayMessageForMissingConfiguration(
           getParentComponent(),
           WPCConfigurationString.DAB_WARNING_TEMPLATE.getAttributeName());
       return;
@@ -1390,7 +1390,7 @@ public class MainWindow
     List<String> currentDabList = configuration.getStringList(WPCConfigurationStringList.CURRENT_DAB_LIST);
     if ((currentDabList == null) ||
         (currentDabList.isEmpty())) {
-      Utilities.displayWarningForMissingConfiguration(
+      Utilities.displayMessageForMissingConfiguration(
           getParentComponent(),
           WPCConfigurationStringList.CURRENT_DAB_LIST.getAttributeName());
       return;
@@ -1414,7 +1414,7 @@ public class MainWindow
     List<String> mostDabLinks = configuration.getStringList(WPCConfigurationStringList.MOST_DAB_LINKS);
     if ((mostDabLinks == null) ||
         (mostDabLinks.isEmpty())) {
-      Utilities.displayWarningForMissingConfiguration(
+      Utilities.displayMessageForMissingConfiguration(
           getParentComponent(),
           WPCConfigurationStringList.MOST_DAB_LINKS.getAttributeName());
       return;
@@ -1439,7 +1439,7 @@ public class MainWindow
     List<Page> templates = configuration.getTemplatesForHelpRequested();
     if ((templates == null) ||
         (templates.isEmpty())) {
-      Utilities.displayWarningForMissingConfiguration(
+      Utilities.displayMessageForMissingConfiguration(
           getParentComponent(),
           WPCConfigurationStringList.TEMPLATES_FOR_HELP_REQUESTED.getAttributeName());
       return;
@@ -1518,15 +1518,7 @@ public class MainWindow
       return;
     }
     if (!wikipedia.getCWConfiguration().isProjectAvailable()) {
-      String url = URL_OTHER_WIKIPEDIA;
-      displayUrlMessage(
-          GT._(
-              "There's no known Check Wikipedia Project for this Wikipedia.\n" +
-              "You can learn how to configure WikiCleaner at the following URL:"),
-          url);
-      if (Utilities.isDesktopSupported()) {
-        Utilities.browseURL(url);
-      }
+      Utilities.displayMissingConfiguration(getParentComponent(), null);
       return;
     }
     Controller.runCheckWikiProject(getWikipedia());

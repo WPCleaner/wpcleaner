@@ -44,6 +44,7 @@ import javax.swing.WindowConstants;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -248,6 +249,10 @@ public class BotToolsWindow
    * Action called when Automatic Check Wiki Fixing button is pressed.
    */
   public void actionCWAutomaticFixing() {
+    if (!getWikipedia().getCWConfiguration().isProjectAvailable()) {
+      Utilities.displayMissingConfiguration(getParentComponent(), null);
+      return;
+    }
     int[] selection = tableCWAutomaticFixing.getSelectedRows();
     if ((selection == null) || (selection.length == 0)) {
       return;
@@ -294,6 +299,13 @@ public class BotToolsWindow
    */
   public void actionUpdateDabWarning() {
     Configuration config = Configuration.getConfiguration();
+    String template = getConfiguration().getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
+    if ((template == null) || (template.trim().length() == 0)) {
+      Utilities.displayMessageForMissingConfiguration(
+          getParentComponent(),
+          WPCConfigurationString.DAB_WARNING_TEMPLATE.getAttributeName());
+      return;
+    }
     String start = askForValue(
         GT._("At what page do you wish to start updating the disambiguation warning ?"),
         config.getString(null, ConfigurationValueString.LAST_DAB_WARNING), null);

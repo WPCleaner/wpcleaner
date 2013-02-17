@@ -937,41 +937,94 @@ public class WPCConfiguration {
 
   /**
    * @param count Number of disambiguation links that have been fixed.
+   * @param links Links that have been fixed.
    * @return Comment for disambiguation links that have been fixed.
    */
-  public String getDisambiguationComment(int count) {
+  public String getDisambiguationComment(int count, List<String> links) {
+    String comment = null;
     if (count == 1) {
-      String comment1 = getString(WPCConfigurationString.DAB_COMMENT_1);
-      if (comment1 != null) {
-        return comment1;
-      }
+      comment = getString(WPCConfigurationString.DAB_COMMENT_1);
     }
-    String comment = getString(WPCConfigurationString.DAB_COMMENT);
-    if (comment != null) {
-      try {
-        return MessageFormat.format(comment, Integer.valueOf(count));
-      } catch (IllegalArgumentException e) {
-        //
-      }
-      return comment;
+    if (comment == null) {
+      comment = getString(WPCConfigurationString.DAB_COMMENT);
     }
-    return "";
+    if (comment == null) {
+      return "";
+    }
+    try {
+      comment = MessageFormat.format(comment, Integer.valueOf(count));
+      if (links != null) {
+        StringBuilder sb = new StringBuilder();
+        for (String link : links) {
+          sb.append(sb.length() > 0 ? ", " : " - ");
+          sb.append("[[" + link + "]]");
+        }
+        comment += sb.toString();
+      }
+    } catch (IllegalArgumentException e) {
+      //
+    }
+    return comment;
+  }
+
+  /**
+   * @param count Number of disambiguation links for which help has been requested.
+   * @param links Links for which help has been requested.
+   * @return Comment for disambiguation links for which help has been requested.
+   */
+  public String getDisambiguationCommentHelp(int count, List<String> links) {
+    String comment = null;
+    if (count == 1) {
+      comment = getString(WPCConfigurationString.DAB_COMMENT_HELP_1);
+    }
+    if (comment == null) {
+      comment = getString(WPCConfigurationString.DAB_COMMENT_HELP);
+    }
+    if (comment == null) {
+      return "";
+    }
+    try {
+      comment = MessageFormat.format(comment, Integer.valueOf(count));
+      if (links != null) {
+        StringBuilder sb = new StringBuilder();
+        for (String link : links) {
+          sb.append(sb.length() > 0 ? ", " : " - ");
+          sb.append("[[" + link + "]]");
+        }
+        comment += sb.toString();
+      }
+    } catch (IllegalArgumentException e) {
+      //
+    }
+    return comment;
   }
 
   /**
    * @param count Number of disambiguation links that still need to be fixed.
+   * @param links Links that still need to be fixed.
    * @return Comment for disambiguation links that still need to be fixed.
    */
-  public String getDisambiguationCommentTodo(int count) {
+  public String getDisambiguationCommentTodo(int count, List<String> links) {
+    String comment = null;
     if (count == 1) {
-      String comment1 = getString(WPCConfigurationString.DAB_COMMENT_TODO_1);
-      if (comment1 != null) {
-        return comment1;
-      }
+      comment = getString(WPCConfigurationString.DAB_COMMENT_TODO_1);
     }
-    String comment = getString(WPCConfigurationString.DAB_COMMENT_TODO);
+    if (comment == null) {
+      comment = getString(WPCConfigurationString.DAB_COMMENT_TODO);
+    }
+    if (comment == null) {
+      return "";
+    }
     try {
-      return MessageFormat.format(comment, Integer.valueOf(count));
+      comment = MessageFormat.format(comment, Integer.valueOf(count));
+      if (links != null) {
+        StringBuilder sb = new StringBuilder();
+        for (String link : links) {
+          sb.append(sb.length() > 0 ? ", " : " - ");
+          sb.append("[[" + link + "]]");
+        }
+        comment += sb.toString();
+      }
     } catch (IllegalArgumentException e) {
       //
     }

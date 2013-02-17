@@ -28,6 +28,10 @@ public enum WPCConfigurationString {
   DAB_COMMENT("dab_comment", null, false, true, true),
   // Comment for one disambiguation link that has been fixed
   DAB_COMMENT_1("dab_comment_1", null, false, true, true),
+  // Comment for disambiguation links for which help has been requested
+  DAB_COMMENT_HELP("dab_comment_help", null, false, true, true),
+  // Comment for one disambiguation link for which help has been requested
+  DAB_COMMENT_HELP_1("dab_comment_help_1", null, false, true, true),
   // Comment for disambiguation links that still need to be fixed
   DAB_COMMENT_TODO("dab_comment_todo", ", {0} to be fixed", false, true, true),
   // Comment for one disambiguation link that still need to be fixed
