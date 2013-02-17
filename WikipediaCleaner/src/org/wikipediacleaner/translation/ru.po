@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-02-15 20:39+0100\n"
+"POT-Creation-Date: 2013-02-17 11:42+0100\n"
 "PO-Revision-Date: 2012-10-13 06:23+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1114,7 +1114,7 @@ msgid "Message"
 msgstr "Сообщение"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:337
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1721
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1706
 msgid "Login"
 msgstr "Войти"
 
@@ -1253,7 +1253,7 @@ msgid "Project check wikipedia"
 msgstr "Проект проверки Википедии"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:765
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1469
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1455
 msgid "Help requested on..."
 msgstr "Запрос помощи..."
 
@@ -1271,12 +1271,12 @@ msgid "Local &Watch list"
 msgstr "Локальный список &наблюдения"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:801
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1605
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1590
 msgid "Watch list"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:810
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1659
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1644
 msgid "Random pages"
 msgstr "Случайные статьи"
 
@@ -1409,42 +1409,19 @@ msgstr ""
 msgid "Template {0} embedded in"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1396
-msgid ""
-"There's no known list of disambiguation pages for this Wikipedia.\n"
-"You can learn how to configure WikiCleaner at the following URL:"
-msgstr ""
-"Список страниц значений для этой Википедии неизвестен.\n"
-"Вы можете узнать, как настроить WikiCleaner по следующему адресу:"
-
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1408
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1402
 msgid "Current disambiguation list"
 msgstr "Текущий список страниц значений"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1426
-msgid ""
-"There's no known list of pages containing many disambiguation links for this "
-"Wikipedia.\n"
-"You can learn how to configure WikiCleaner at the following URL:"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1439
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1427
 msgid "Pages with many disambiguation links"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1455
-msgid ""
-"There's no known template for requesting help for the Wikipedia.\n"
-"You can learn how to configure WikiCleaner at the following URL:"
-msgstr ""
-"Шаблона для запроса помощи по Википедии неизвестен.\n"
-"Вы можете узнать, как настроить WikiCleaner по следующему адресу:"
-
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1524
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1509
 msgid "All disambiguations pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1539
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1524
 msgid ""
 "There's no known Check Wikipedia Project for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -1452,25 +1429,25 @@ msgstr ""
 "Проект Check Wikipedia для этой Википедии неизвестен.\n"
 "Вы можете узнать, как настроить WikiCleaner по следующему адресу:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1575
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1560
 #, fuzzy
 msgid "Pages with missing templates"
 msgstr "Получение шаблонов"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1591
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1576
 msgid "Local watch list"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1630
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1615
 msgid "How many pages do you want?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1642
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1627
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1716
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1701
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:67
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:70
@@ -1481,20 +1458,20 @@ msgstr ""
 msgid "Retrieving MediaWiki API"
 msgstr "Получение MediaWiki API"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1736
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1721
 msgid "Loading configuration"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1763
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1748
 msgid "Retrieving disambiguation templates"
 msgstr "Получение шаблонов страниц значений"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1767
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1752
 msgid "Retrieving suggestions for text replacements"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1774
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1793
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1759
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1778
 msgid "Retrieving Check Wiki configuration"
 msgstr "Получение настроек Check Wiki"
 
@@ -1956,12 +1933,12 @@ msgstr ""
 msgid "Enter the page title you want to add to your local watch list"
 msgstr "Введите заголовок страницы для добавления в локаьный список наблюдения"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:602
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:608
 #, java-format
 msgid "{0} pages"
 msgstr "{0} страниц"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:604
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:610
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
@@ -2129,52 +2106,52 @@ msgstr "Получение возможных значений {0}"
 msgid "{0} is working..."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:96
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:101
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:98
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:103
 #, java-format
 msgid "An error occured: {0}"
 msgstr "Произошла ошибка: {0}"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:106
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:108
 msgid "An unknown error occured"
 msgstr "Произошла неизвестная ошибка"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:166
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:195
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:168
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:200
 msgid "This function requires some configuration."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:167
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:169
 #, fuzzy, java-format
 msgid "You need to define the ''{0}'' property in WPCleaner configuration."
 msgstr ""
 "Вам необходимо определить свойство 'dab_warning_template' в параметрах "
 "WikiCleaner."
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:196
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:201
 #, fuzzy, java-format
 msgid "You need to define the {0} properties in WPCleaner configuration."
 msgstr ""
 "Вам необходимо определить свойство 'dab_warning_template' в параметрах "
 "WikiCleaner."
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:287
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:295
 msgid "Other..."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:379
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:387
 msgid "Yes"
 msgstr "Да"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:380
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:388
 msgid "Yes to all"
 msgstr "Да для всех"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:381
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:389
 msgid "No"
 msgstr "Нет"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:382
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:390
 msgid "No to all"
 msgstr "Нет для всех"
 
@@ -2950,6 +2927,20 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
+
+#~ msgid ""
+#~ "There's no known list of disambiguation pages for this Wikipedia.\n"
+#~ "You can learn how to configure WikiCleaner at the following URL:"
+#~ msgstr ""
+#~ "Список страниц значений для этой Википедии неизвестен.\n"
+#~ "Вы можете узнать, как настроить WikiCleaner по следующему адресу:"
+
+#~ msgid ""
+#~ "There's no known template for requesting help for the Wikipedia.\n"
+#~ "You can learn how to configure WikiCleaner at the following URL:"
+#~ msgstr ""
+#~ "Шаблона для запроса помощи по Википедии неизвестен.\n"
+#~ "Вы можете узнать, как настроить WikiCleaner по следующему адресу:"
 
 #~ msgid "Occurrence"
 #~ msgstr "Вхождение"

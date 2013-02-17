@@ -74,6 +74,8 @@ public class Utilities {
 
   public final static int NO_ALL_OPTION = 102;
 
+  private final static String URL_CONFIGURATION_HELP = "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Configuration/Help";
+
   /* ========================================================================== */
   /* Display message box                                                        */
   /* ========================================================================== */
@@ -165,6 +167,9 @@ public class Utilities {
         parent,
         GT._("This function requires some configuration.") + "\n" +
         GT._("You need to define the ''{0}'' property in WPCleaner configuration.", parameterName));
+    if (Utilities.isDesktopSupported()) {
+      Utilities.browseURL(URL_CONFIGURATION_HELP);
+    }
   }
 
   /**
@@ -194,6 +199,9 @@ public class Utilities {
         parent,
         GT._("This function requires some configuration.") + "\n" +
         GT._("You need to define the {0} properties in WPCleaner configuration.", sb.toString()));
+    if (Utilities.isDesktopSupported()) {
+      Utilities.browseURL(URL_CONFIGURATION_HELP);
+    }
   }
 
   /**

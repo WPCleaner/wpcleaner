@@ -110,9 +110,9 @@ public class MainWindow
 
   public final static Integer WINDOW_VERSION = Integer.valueOf(6);
 
-  private final static String URL_OTHER_LANGUAGE  = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner#Other_Language";
-  private final static String URL_OTHER_WIKIPEDIA = "http://fr.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner#Other_Wikipedia";
-  private final static String URL_TALK_PAGE       = "http://fr.wikipedia.org/wiki/Discussion_Utilisateur:NicoV/Wikipedia_Cleaner";
+  private final static String URL_OTHER_LANGUAGE  = "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Languages";
+  private final static String URL_OTHER_WIKIPEDIA = "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Wikis";
+  private final static String URL_TALK_PAGE       = "http://fr.wikipedia.org/wiki/Discussion_Wikipédia:WPCleaner";
 
   private JComboBox comboWikipedia;
   private JComboBox comboLanguage;
@@ -1390,15 +1390,9 @@ public class MainWindow
     List<String> currentDabList = configuration.getStringList(WPCConfigurationStringList.CURRENT_DAB_LIST);
     if ((currentDabList == null) ||
         (currentDabList.isEmpty())) {
-      String url = URL_OTHER_WIKIPEDIA;
-      displayUrlMessage(
-          GT._(
-              "There's no known list of disambiguation pages for this Wikipedia.\n" +
-              "You can learn how to configure WikiCleaner at the following URL:"),
-          url);
-      if (Utilities.isDesktopSupported()) {
-        Utilities.browseURL(url);
-      }
+      Utilities.displayWarningForMissingConfiguration(
+          getParentComponent(),
+          WPCConfigurationStringList.CURRENT_DAB_LIST.getAttributeName());
       return;
     }
     new PageListWorker(
@@ -1420,15 +1414,9 @@ public class MainWindow
     List<String> mostDabLinks = configuration.getStringList(WPCConfigurationStringList.MOST_DAB_LINKS);
     if ((mostDabLinks == null) ||
         (mostDabLinks.isEmpty())) {
-      String url = URL_OTHER_WIKIPEDIA;
-      displayUrlMessage(
-          GT._(
-              "There's no known list of pages containing many disambiguation links for this Wikipedia.\n" +
-              "You can learn how to configure WikiCleaner at the following URL:"),
-          url);
-      if (Utilities.isDesktopSupported()) {
-        Utilities.browseURL(url);
-      }
+      Utilities.displayWarningForMissingConfiguration(
+          getParentComponent(),
+          WPCConfigurationStringList.MOST_DAB_LINKS.getAttributeName());
       return;
     }
     new PageListWorker(
@@ -1448,26 +1436,23 @@ public class MainWindow
       return;
     }
     WPCConfiguration configuration = wikipedia.getConfiguration();
-    if (configuration.getTemplatesForHelpRequested() == null) {
-      String url = URL_OTHER_WIKIPEDIA;
-      displayUrlMessage(
-          GT._(
-              "There's no known template for requesting help for the Wikipedia.\n" +
-              "You can learn how to configure WikiCleaner at the following URL:"),
-          url);
-      if (Utilities.isDesktopSupported()) {
-        Utilities.browseURL(url);
-      }
-    } else {
-      List<String> pageNames = new ArrayList<String>();
-      for (Page template : configuration.getTemplatesForHelpRequested()) {
-        pageNames.add(template.getTitle());
-      }
-      new PageListWorker(
-          wikipedia, this, null,
-          pageNames, PageListWorker.Mode.EMBEDDED_IN, false,
-          GT._("Help requested on...")).start();
+    List<Page> templates = configuration.getTemplatesForHelpRequested();
+    if ((templates == null) ||
+        (templates.isEmpty())) {
+      Utilities.displayWarningForMissingConfiguration(
+          getParentComponent(),
+          WPCConfigurationStringList.TEMPLATES_FOR_HELP_REQUESTED.getAttributeName());
+      return;
     }
+
+    List<String> pageNames = new ArrayList<String>();
+    for (Page template : templates) {
+      pageNames.add(template.getTitle());
+    }
+    new PageListWorker(
+        wikipedia, this, null,
+        pageNames, PageListWorker.Mode.EMBEDDED_IN, false,
+        GT._("Help requested on...")).start();
   }
 
   /**

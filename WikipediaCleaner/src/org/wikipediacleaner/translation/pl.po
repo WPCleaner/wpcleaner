@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-02-15 20:39+0100\n"
+"POT-Creation-Date: 2013-02-17 11:42+0100\n"
 "PO-Revision-Date: 2013-01-28 03:26+0000\n"
 "Last-Translator: Wojciech Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -1130,7 +1130,7 @@ msgid "Message"
 msgstr "Wiadomość"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:337
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1721
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1706
 msgid "Login"
 msgstr "Logowanie"
 
@@ -1269,7 +1269,7 @@ msgid "Project check wikipedia"
 msgstr "Projekt Check Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:765
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1469
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1455
 msgid "Help requested on..."
 msgstr "Wymagana pomoc"
 
@@ -1287,12 +1287,12 @@ msgid "Local &Watch list"
 msgstr "Lokalna lista o&bserwowanych"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:801
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1605
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1590
 msgid "Watch list"
 msgstr "Lista obserwowanych"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:810
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1659
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1644
 msgid "Random pages"
 msgstr "Losuj strony"
 
@@ -1433,45 +1433,19 @@ msgstr ""
 msgid "Template {0} embedded in"
 msgstr "Szablon {0} osadzony w"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1396
-msgid ""
-"There's no known list of disambiguation pages for this Wikipedia.\n"
-"You can learn how to configure WikiCleaner at the following URL:"
-msgstr ""
-"Brak listy stron ujednoznaczniających na tej wersji Wikipedii.\n"
-"Informacje o konfiguracji programu WikiCleaner znajdują się pod adresem:"
-
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1408
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1402
 msgid "Current disambiguation list"
 msgstr "Obecna lista stron ujednoznaczniających"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1426
-msgid ""
-"There's no known list of pages containing many disambiguation links for this "
-"Wikipedia.\n"
-"You can learn how to configure WikiCleaner at the following URL:"
-msgstr ""
-"Brak listy pojedynczych stron z wieloma linkami do ujednoznacznień na tej "
-"wersji Wikipedii.\n"
-"Informacje o konfiguracji programu WikiCleaner znajdują się pod adresem:"
-
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1439
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1427
 msgid "Pages with many disambiguation links"
 msgstr "Z wieloma linkami do ujednoznacznień"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1455
-msgid ""
-"There's no known template for requesting help for the Wikipedia.\n"
-"You can learn how to configure WikiCleaner at the following URL:"
-msgstr ""
-"Brak szablonu wymaganej pomocy na tej wersji Wikipedii.\n"
-"Informacje o konfiguracji programu WikiCleaner znajdują się pod adresem:"
-
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1524
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1509
 msgid "All disambiguations pages"
 msgstr "Wszystkie strony ujednoznaczniające"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1539
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1524
 msgid ""
 "There's no known Check Wikipedia Project for this Wikipedia.\n"
 "You can learn how to configure WikiCleaner at the following URL:"
@@ -1479,25 +1453,25 @@ msgstr ""
 "Brak projektu Check Wikipedia na tej wersji Wikipedii.\n"
 "Informacje o konfiguracji programu WikiCleaner znajdują się pod adresem:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1575
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1560
 #, fuzzy
 msgid "Pages with missing templates"
 msgstr "Pobieranie szablonów"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1591
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1576
 msgid "Local watch list"
 msgstr "Lokalna lista obserwowanych"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1630
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1615
 msgid "How many pages do you want?"
 msgstr "Ile stron pobrać losowo?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1642
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1627
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr "Liczba stron musi się zawierać w przedziale między {0} a {1}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1716
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1701
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:67
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:70
@@ -1508,20 +1482,20 @@ msgstr "Liczba stron musi się zawierać w przedziale między {0} a {1}"
 msgid "Retrieving MediaWiki API"
 msgstr "Pobieranie API MediaWiki"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1736
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1721
 msgid "Loading configuration"
 msgstr "Ładowanie konfiguracji"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1763
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1748
 msgid "Retrieving disambiguation templates"
 msgstr "Pobieranie szablonów przekierowań"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1767
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1752
 msgid "Retrieving suggestions for text replacements"
 msgstr "Pobieranie sugestii zamiany tekstu"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1774
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1793
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1759
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1778
 msgid "Retrieving Check Wiki configuration"
 msgstr "Pobieranie konfiguracji Check Wikipedia"
 
@@ -1981,12 +1955,12 @@ msgstr ""
 msgid "Enter the page title you want to add to your local watch list"
 msgstr "Wpisz tytuł strony, którą chcesz dodać do lokalnej listy obserwowanych"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:602
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:608
 #, java-format
 msgid "{0} pages"
 msgstr "{0} stron"
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:604
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:610
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr "Linkujące - z przestrzeni głównej: {0}, ze wszystkich: {1}"
@@ -2159,52 +2133,52 @@ msgstr "Pobieranie możliwych znaczeń dla {0}"
 msgid "{0} is working..."
 msgstr "{0} pracuje..."
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:96
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:101
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:98
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:103
 #, java-format
 msgid "An error occured: {0}"
 msgstr "Wystąpił błąd: {0}"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:106
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:108
 msgid "An unknown error occured"
 msgstr "Wystąpił nieznany błąd"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:166
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:195
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:168
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:200
 msgid "This function requires some configuration."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:167
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:169
 #, fuzzy, java-format
 msgid "You need to define the ''{0}'' property in WPCleaner configuration."
 msgstr ""
 "Musisz najpierw zdefiniować 'dab_warning_template' w konfiguracji programu "
 "WikiCleaner"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:196
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:201
 #, fuzzy, java-format
 msgid "You need to define the {0} properties in WPCleaner configuration."
 msgstr ""
 "Musisz najpierw zdefiniować 'dab_warning_template' w konfiguracji programu "
 "WikiCleaner"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:287
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:295
 msgid "Other..."
 msgstr "Inaczej..."
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:379
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:387
 msgid "Yes"
 msgstr "Tak"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:380
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:388
 msgid "Yes to all"
 msgstr "Tak dla wszystkich"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:381
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:389
 msgid "No"
 msgstr "Nie"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:382
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:390
 msgid "No to all"
 msgstr "Nie dla wszystkich"
 
@@ -2992,3 +2966,26 @@ msgstr "Nazwa przypisu nie może zawierać żadnego z tych znaków: {0}"
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr "Wartość nie może zawierać żadnego z tych znaków: {0}"
+
+#~ msgid ""
+#~ "There's no known list of disambiguation pages for this Wikipedia.\n"
+#~ "You can learn how to configure WikiCleaner at the following URL:"
+#~ msgstr ""
+#~ "Brak listy stron ujednoznaczniających na tej wersji Wikipedii.\n"
+#~ "Informacje o konfiguracji programu WikiCleaner znajdują się pod adresem:"
+
+#~ msgid ""
+#~ "There's no known list of pages containing many disambiguation links for "
+#~ "this Wikipedia.\n"
+#~ "You can learn how to configure WikiCleaner at the following URL:"
+#~ msgstr ""
+#~ "Brak listy pojedynczych stron z wieloma linkami do ujednoznacznień na tej "
+#~ "wersji Wikipedii.\n"
+#~ "Informacje o konfiguracji programu WikiCleaner znajdują się pod adresem:"
+
+#~ msgid ""
+#~ "There's no known template for requesting help for the Wikipedia.\n"
+#~ "You can learn how to configure WikiCleaner at the following URL:"
+#~ msgstr ""
+#~ "Brak szablonu wymaganej pomocy na tej wersji Wikipedii.\n"
+#~ "Informacje o konfiguracji programu WikiCleaner znajdują się pod adresem:"
