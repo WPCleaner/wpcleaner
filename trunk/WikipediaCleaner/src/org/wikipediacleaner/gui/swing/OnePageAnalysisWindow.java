@@ -129,7 +129,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   JList listLinks;
   PageListCellRenderer listCellRenderer;
   PageListModel modelLinks;
-  Map<String, Integer> mapLinksCount;
+  Map<String, Integer> mapLinksTotalCount;
+  Map<String, Integer> mapLinksHelpNeededCount;
   private AbstractPageListPopupListener popupListenerLinks;
   JCheckBoxMenuItem menuItemShowDisambiguation;
   JCheckBoxMenuItem menuItemShowMissing;
@@ -835,7 +836,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     // Update links information
     Page page = getPage();
     PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
-    mapLinksCount = new HashMap<String, Integer>();
+    mapLinksTotalCount = new HashMap<String, Integer>();
+    mapLinksHelpNeededCount = new HashMap<String, Integer>();
     if (page.getLinks() != null) {
       List<Page> links = page.getLinks();
       modelLinks.setElements(links);
@@ -845,7 +847,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
             (Boolean.TRUE.equals(p.isDisambiguationPage()))) {
           InternalLinkCount count = analysis.getLinkCount(p);
           if ((count != null) && (count.getTotalLinkCount() > 0)) {
-            mapLinksCount.put(p.getTitle(), Integer.valueOf(count.getTotalLinkCount()));
+            mapLinksTotalCount.put(p.getTitle(), Integer.valueOf(count.getTotalLinkCount()));
+            mapLinksHelpNeededCount.put(p.getTitle(), Integer.valueOf(count.getHelpNeededTemplateCount()));
           }
         }
       }
@@ -1076,7 +1079,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     // Check configuration
     String template = getConfiguration().getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
     if ((template == null) || (template.trim().length() == 0)) {
-      Utilities.displayWarningForMissingConfiguration(
+      Utilities.displayMessageForMissingConfiguration(
           getParentComponent(),
           WPCConfigurationString.DAB_WARNING_TEMPLATE.getAttributeName());
       return;
@@ -1110,7 +1113,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       List<String> params = new ArrayList<String>();
       params.add(WPCConfigurationStringList.REDIRECT_CATEGORIES.getAttributeName());
       params.add(WPCConfigurationStringList.REDIRECT_TEMPLATES.getAttributeName());
-      Utilities.displayWarningForMissingConfiguration(
+      Utilities.displayMessageForMissingConfiguration(
           getParentComponent(), params);
       return;
     }
@@ -1291,7 +1294,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     // Check configuration
     String langTemplate = getConfiguration().getString(WPCConfigurationString.LANG_TEMPLATE);
     if ((langTemplate == null) || (langTemplate.trim().length() == 0)) {
-      Utilities.displayWarningForMissingConfiguration(
+      Utilities.displayMessageForMissingConfiguration(
           getParentComponent(),
           WPCConfigurationString.LANG_TEMPLATE.getAttributeName());
       return;
@@ -1480,41 +1483,41 @@ public class OnePageAnalysisWindow extends OnePageWindow {
 
     // Comment for fixed links to disambiguation pages
     StringBuilder comment = new StringBuilder();
-    if ((mapLinksCount != null) && (mapLinksCount.size() > 0)) {
+    if ((mapLinksTotalCount != null) && (mapLinksTotalCount.size() > 0)) {
       List<String> fixed = new ArrayList<String>();
-      for (Entry<String, Integer> p : mapLinksCount.entrySet()) {
+      List<String> helpRequested = new ArrayList<String>();
+      for (Entry<String, Integer> p : mapLinksTotalCount.entrySet()) {
         if ((p != null) && (p.getKey() != null) && (p.getValue() != null)) {
           Integer currentCount = null;
+          Integer currentHelpCount = null;
           Page page = getPage();
           if ((page != null) && (page.getLinks() != null)) {
             for (Page link : page.getLinks()) {
               if (Page.areSameTitle(p.getKey(), link.getTitle())) {
                 InternalLinkCount count = analysis.getLinkCount(link);
                 if (count != null) {
-                  currentCount = count.getTotalLinkCount();
+                  currentCount = Integer.valueOf(count.getTotalLinkCount());
+                  currentHelpCount = Integer.valueOf(count.getHelpNeededTemplateCount());
                 }
               }
             }
           }
           if ((currentCount == null) || (currentCount < p.getValue().intValue())) {
             fixed.add(p.getKey());
+          } else {
+            Integer helpCount = mapLinksHelpNeededCount.get(p.getKey());
+            if ((helpCount != null) &&
+                ((currentHelpCount == null) || (currentHelpCount > helpCount.intValue()))) {
+              helpRequested.add(p.getKey());
+            }
           }
         }
       }
       if (fixed.size() > 0) {
         Collections.sort(fixed);
         contributions.increaseDabLinks(fixed.size());
-        comment.append(configuration.getDisambiguationComment(fixed.size()));
-        int linksFixed = 0;
-        for (String fix : fixed) {
-          if (linksFixed > 0) {
-            comment.append(", ");
-          } else {
-            comment.append(" - ");
-          }
-          linksFixed++;
-          comment.append("[[" + fix + "]]");
-        }
+        comment.append(configuration.getDisambiguationComment(
+            fixed.size(), fixed));
 
         List<String> dabLinks = new ArrayList<String>();
         List<Page> links = analysis.getPage().getLinks();
@@ -1533,20 +1536,15 @@ public class OnePageAnalysisWindow extends OnePageWindow {
             }
           }
         }
-        Collections.sort(dabLinks);
         if (dabLinks.size() > 0) {
-          comment.append(configuration.getDisambiguationCommentTodo(dabLinks.size()));
-          int linksTodo = 0;
-          for (String todo : dabLinks) {
-            if (linksTodo > 0) {
-              comment.append(", ");
-            } else {
-              comment.append(" - ");
-            }
-            linksTodo++;
-            comment.append("[[" + todo + "]]");
-          }
+          Collections.sort(dabLinks);
+          comment.append(configuration.getDisambiguationCommentTodo(
+              dabLinks.size(), dabLinks));
         }
+      } else if (helpRequested.size() > 0) {
+        Collections.sort(helpRequested);
+        comment.append(configuration.getDisambiguationCommentHelp(
+            helpRequested.size(), helpRequested));
       }
     }
 

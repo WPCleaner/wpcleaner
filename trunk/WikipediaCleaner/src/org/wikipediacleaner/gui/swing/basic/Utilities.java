@@ -157,28 +157,24 @@ public class Utilities {
   }
 
   /**
-   * Display a warning message about a missing parameter in configuration.
+   * Display a message about a missing parameter in configuration.
    * 
    * @param parent Parent component.
    * @param parameterName Missing parameter.
    */
-  public static void displayWarningForMissingConfiguration(Component parent, String parameterName) {
-    displayWarning(
+  public static void displayMessageForMissingConfiguration(Component parent, String parameterName) {
+    displayMissingConfiguration(
         parent,
-        GT._("This function requires some configuration.") + "\n" +
         GT._("You need to define the ''{0}'' property in WPCleaner configuration.", parameterName));
-    if (Utilities.isDesktopSupported()) {
-      Utilities.browseURL(URL_CONFIGURATION_HELP);
-    }
   }
 
   /**
-   * Display a warning message about a missing parameters in configuration.
+   * Display a message about a missing parameters in configuration.
    * 
    * @param parent Parent component.
    * @param parametersName Missing parameters.
    */
-  public static void displayWarningForMissingConfiguration(Component parent, List<String> parametersName) {
+  public static void displayMessageForMissingConfiguration(Component parent, List<String> parametersName) {
     if ((parametersName == null) || (parametersName.isEmpty())) {
       return;
     }
@@ -195,12 +191,31 @@ public class Utilities {
       sb.append(parameterName);
       sb.append("'");
     }
-    displayWarning(
+    displayMissingConfiguration(
         parent,
-        GT._("This function requires some configuration.") + "\n" +
         GT._("You need to define the {0} properties in WPCleaner configuration.", sb.toString()));
+  }
+
+  /**
+   * Display a message about missing elements in configuration.
+   * 
+   * @param parent Parent component.
+   * @param message Message.
+   */
+  public static void displayMissingConfiguration(Component parent, String message) {
+    String fullMessage = GT._("This function requires some configuration.");
+    if ((message != null) && (message.trim().length() > 0)) {
+      fullMessage += "\n" + message;
+    }
     if (Utilities.isDesktopSupported()) {
-      Utilities.browseURL(URL_CONFIGURATION_HELP);
+      int answer = displayYesNoWarning(
+          parent,
+          fullMessage + "\n" + GT._("Do you want to display help on configuring WPCleaner ?"));
+      if (answer == JOptionPane.YES_OPTION) {
+        Utilities.browseURL(URL_CONFIGURATION_HELP);
+      }
+    } else {
+      displayWarning(parent, message);
     }
   }
 
