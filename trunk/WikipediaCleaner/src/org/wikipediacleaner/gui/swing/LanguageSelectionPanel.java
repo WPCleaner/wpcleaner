@@ -41,6 +41,8 @@ import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.LanguageRegistry;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
@@ -146,6 +148,16 @@ public class LanguageSelectionPanel extends JPanel {
 
   /**
    * @return Language string selected by the user.
+   */
+  public String getLang() {
+    if (language == null) {
+      return null;
+    }
+    return language.getCode();
+  }
+
+  /**
+   * @return Full language string selected by the user.
    */
   public String getLanguage() {
 
@@ -253,6 +265,13 @@ public class LanguageSelectionPanel extends JPanel {
       add(tmpText, constraints);
       constraints.gridy++;
       variant.add(null);
+    }
+
+    // Default language
+    Configuration config = Configuration.getConfiguration();
+    String defaultLanguage = config.getString(null, ConfigurationValueString.LAST_LANGUAGE);
+    if (defaultLanguage != null) {
+      selectLanguage(defaultLanguage);
     }
   }
 
