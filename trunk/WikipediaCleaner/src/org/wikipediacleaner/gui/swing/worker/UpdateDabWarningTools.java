@@ -1268,7 +1268,7 @@ public class UpdateDabWarningTools {
           if (linkCount != null) {
             if ((linkCount.getInternalLinkCount() > 0) ||
                 (linkCount.getIncorrectTemplateCount() > 0) ||
-                (linkCount.getHelpNeededTemplateCount() > 0)) {
+                (linkCount.getHelpNeededCount() > 0)) {
               dabLinks.add(link.getTitle());
             }
           }

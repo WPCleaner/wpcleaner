@@ -46,11 +46,17 @@ public class InternalLinkCounter implements InternalLinkNotification {
    * 
    * @param link Link found.
    * @param internalLink Internal link in which the link is found.
+   * @param helpNeeded True if help is needed.
    */
   public void linkFound(
-      Page link, PageElementInternalLink internalLink) {
+      Page link, PageElementInternalLink internalLink,
+      boolean helpNeeded) {
     InternalLinkCount linkCount = getLinkCount(link);
-    linkCount.addInternalLink();
+    if (helpNeeded) {
+      linkCount.addHelpNeededInternalLink();
+    } else {
+      linkCount.addInternalLink();
+    }
   }
 
   /**
