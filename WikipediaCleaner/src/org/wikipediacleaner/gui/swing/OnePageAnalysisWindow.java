@@ -111,6 +111,7 @@ import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
@@ -1332,6 +1333,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     if ((language == null) || (language.length() == 0)) {
       return;
     }
+    Configuration config = Configuration.getConfiguration();
+    config.setString(null, ConfigurationValueString.LAST_LANGUAGE, panel.getLang());
 
     // Mark text
     StringBuilder newText = new StringBuilder();
