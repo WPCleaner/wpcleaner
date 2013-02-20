@@ -35,6 +35,11 @@ public class InternalLinkCount {
   private int internalLinkCount;
 
   /**
+   * Count of internal links where help is requested.
+   */
+  private int helpNeededInternalLinkCount;
+
+  /**
    * Count of good links through templates.
    */
   private int goodTemplateCount;
@@ -68,6 +73,7 @@ public class InternalLinkCount {
    */
   public int getTotalLinkCount() {
     return internalLinkCount +
+        helpNeededInternalLinkCount +
         goodTemplateCount +
         helpNeededTemplateCount +
         incorrectTemplateCount;
@@ -102,6 +108,13 @@ public class InternalLinkCount {
   }
 
   /**
+   * Increase the count of internal links with help needed.
+   */
+  public void addHelpNeededInternalLink() {
+    helpNeededInternalLinkCount++;
+  }
+
+  /**
    * Increase the count of help needed links through templates.
    */
   public void addHelpNeededTemplateLink() {
@@ -109,10 +122,10 @@ public class InternalLinkCount {
   }
 
   /**
-   * @return Count of help needed links through templates.
+   * @return Count of links with help needed.
    */
-  public int getHelpNeededTemplateCount() {
-    return helpNeededTemplateCount;
+  public int getHelpNeededCount() {
+    return helpNeededTemplateCount + helpNeededInternalLinkCount;
   }
 
   /**

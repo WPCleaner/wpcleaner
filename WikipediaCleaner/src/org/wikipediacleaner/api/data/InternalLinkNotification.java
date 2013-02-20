@@ -29,9 +29,11 @@ public interface InternalLinkNotification {
    * 
    * @param link Link found.
    * @param internalLink Internal link in which the link is found.
+   * @param helpNeeded True if help is needed.
    */
   public void linkFound(
-      Page link, PageElementInternalLink internalLink);
+      Page link, PageElementInternalLink internalLink,
+      boolean helpNeeded);
 
   /**
    * Notification of a link found in a template.

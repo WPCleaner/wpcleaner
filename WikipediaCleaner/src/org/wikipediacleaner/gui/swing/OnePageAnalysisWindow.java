@@ -848,7 +848,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
           InternalLinkCount count = analysis.getLinkCount(p);
           if ((count != null) && (count.getTotalLinkCount() > 0)) {
             mapLinksTotalCount.put(p.getTitle(), Integer.valueOf(count.getTotalLinkCount()));
-            mapLinksHelpNeededCount.put(p.getTitle(), Integer.valueOf(count.getHelpNeededTemplateCount()));
+            mapLinksHelpNeededCount.put(p.getTitle(), Integer.valueOf(count.getHelpNeededCount()));
           }
         }
       }
@@ -1497,7 +1497,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
                 InternalLinkCount count = analysis.getLinkCount(link);
                 if (count != null) {
                   currentCount = Integer.valueOf(count.getTotalLinkCount());
-                  currentHelpCount = Integer.valueOf(count.getHelpNeededTemplateCount());
+                  currentHelpCount = Integer.valueOf(count.getHelpNeededCount());
                 }
               }
             }
@@ -1529,7 +1529,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
               if (linkCount != null) {
                 if ((linkCount.getInternalLinkCount() > 0) ||
                     (linkCount.getIncorrectTemplateCount() > 0) ||
-                    (linkCount.getHelpNeededTemplateCount() > 0)) {
+                    (linkCount.getHelpNeededCount() > 0)) {
                   dabLinks.add(link.getTitle());
                 }
               }

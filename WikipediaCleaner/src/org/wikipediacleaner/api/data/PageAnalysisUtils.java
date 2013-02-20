@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 
 
 /**
@@ -79,10 +80,29 @@ public class PageAnalysisUtils {
 
     // Search for simple internal links [[link]], [[link|text]], [[link#anchor|text]], ...
     List<PageElementInternalLink> internalLinks = pageAnalysis.getInternalLinks();
+    List<String> templatesAfter = pageAnalysis.getWPCConfiguration().getStringList(
+        WPCConfigurationStringList.TEMPLATES_AFTER_HELP_ASKED);
+    String contents = pageAnalysis.getContents();
+    int maxSize = contents.length();
     for (PageElementInternalLink internalLink : internalLinks) {
       for (Page link : links) {
         if (Page.areSameTitle(link.getTitle(), internalLink.getLink())) {
-          notification.linkFound(link, internalLink);
+          int currentPos = internalLink.getEndIndex();
+          while ((currentPos < maxSize) && (contents.charAt(currentPos) == ' ')) {
+            currentPos++;
+          }
+          boolean helpNeeded = false;
+          if ((currentPos < maxSize) && (contents.charAt(currentPos) == '{')) {
+            PageElementTemplate nextTemplate = pageAnalysis.isInTemplate(currentPos);
+            if (nextTemplate != null) {
+              for (String templateAfter : templatesAfter) {
+                if (Page.areSameTitle(templateAfter, nextTemplate.getTemplateName())) {
+                  helpNeeded = true;
+                }
+              }
+            }
+          }
+          notification.linkFound(link, internalLink, helpNeeded);
         }
       }
     }

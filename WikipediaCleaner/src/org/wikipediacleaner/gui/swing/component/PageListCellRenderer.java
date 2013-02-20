@@ -157,7 +157,7 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
           foreground = Color.RED;
         } else if ((count.getInternalLinkCount() > 0) || (count.getIncorrectTemplateCount() > 0)) {
           foreground = Color.RED;
-        } else if ((count.getHelpNeededTemplateCount() > 0)) {
+        } else if ((count.getHelpNeededCount() > 0)) {
           foreground = Color.ORANGE;
         } else {
           foreground = Color.BLUE;
