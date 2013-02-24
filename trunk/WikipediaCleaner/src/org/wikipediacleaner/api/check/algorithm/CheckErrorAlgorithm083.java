@@ -55,7 +55,7 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
     if (titles.size() == 0) {
       return false;
     }
-    int firstTitle = titles.get(0).getFirstLevel();
+    int firstTitle = titles.get(0).getLevel();
     if (firstTitle < 3) {
       return false;
     }
@@ -63,7 +63,7 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
     // Check every title
     boolean result = false;
     for (PageElementTitle title : titles) {
-      if (title.getFirstLevel() < firstTitle) {
+      if (title.getLevel() < firstTitle) {
         if (errors == null) {
           return true;
         }

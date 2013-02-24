@@ -52,7 +52,7 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
     boolean result = false;
     List<PageElementTitle> titles = pageAnalysis.getTitles();
     for (PageElementTitle title : titles) {
-      if (title.getFirstLevel() == 1) {
+      if (title.getLevel() == 1) {
         if (errors == null) {
           return true;
         }
@@ -81,14 +81,17 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
     if ((titles == null) || (titles.size() == 0)) {
       return contents;
     }
-    if ((titles.get(0).getFirstLevel() > 1) ||
-        (titles.get(0).getSecondLevel() > 1)) {
+    if ((titles.get(0).getLevel() > 1) ||
+        (!titles.get(0).isCoherent())) {
       return contents;
     }
     int minTitle = Integer.MAX_VALUE;
     for (PageElementTitle title : titles) {
-      if (title.getFirstLevel() < minTitle) {
-        minTitle = title.getFirstLevel();
+      if (title.getLevel() < minTitle) {
+        minTitle = title.getLevel();
+      }
+      if (!title.isCoherent()) {
+        return contents;
       }
     }
     if (minTitle > 1) {
@@ -100,7 +103,7 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
     int lastIndex = 0;
     boolean found = false;
     for (PageElementTitle title : titles) {
-      if (!found && title.getFirstLevel() == 1) {
+      if (!found && title.getLevel() == 1) {
         found = true;
       }
       if (found) {
@@ -108,15 +111,7 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
           tmp.append(contents.substring(lastIndex, title.getBeginIndex()));
           lastIndex = title.getBeginIndex();
         }
-        for (int i = 0; i < (title.getFirstLevel() + 1); i++) {
-          tmp.append('=');
-        }
-        tmp.append(' ');
-        tmp.append(title.getTitle());
-        tmp.append(' ');
-        for (int i = 0; i < (title.getFirstLevel() + 1); i++) {
-          tmp.append('=');
-        }
+        tmp.append(PageElementTitle.createTitle(title.getLevel() + 1, title.getTitle()));
         if (title.getAfterTitle() != null) {
           tmp.append(title.getAfterTitle());
         }

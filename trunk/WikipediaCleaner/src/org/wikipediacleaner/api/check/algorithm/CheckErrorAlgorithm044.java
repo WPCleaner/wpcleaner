@@ -80,7 +80,7 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = createCheckErrorResult(
               pageAnalysis.getPage(),
               title.getBeginIndex(), title.getEndIndex());
-          errorResult.addReplacement(PageElementTitle.createTitle(title.getFirstLevel(), text));
+          errorResult.addReplacement(PageElementTitle.createTitle(title.getLevel(), text));
           errors.add(errorResult);
         }
       }

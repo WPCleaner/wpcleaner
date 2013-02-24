@@ -64,13 +64,13 @@ public class CheckErrorAlgorithm062 extends CheckErrorAlgorithmBase {
     int previousLevel = 0;
     for (int i = 0; i < titles.size(); i++) {
       PageElementTitle title = titles.get(i);
-      if ((title.getFirstLevel() > previousLevel) &&
-          (title.getFirstLevel() > 2)) {
+      if ((title.getLevel() > previousLevel) &&
+          (title.getLevel() > 2)) {
         int j = i + 1;
         int count = 0;
         while ((j < titles.size()) &&
-               (titles.get(j).getFirstLevel() >= title.getFirstLevel())) {
-          if (titles.get(j).getFirstLevel() == title.getFirstLevel()) {
+               (titles.get(j).getLevel() >= title.getLevel())) {
+          if (titles.get(j).getLevel() == title.getLevel()) {
             count++;
           }
           j++;
@@ -85,7 +85,7 @@ public class CheckErrorAlgorithm062 extends CheckErrorAlgorithmBase {
           errors.add(errorResult);
         }
       }
-      previousLevel = title.getFirstLevel();
+      previousLevel = title.getLevel();
     }
     return result;
   }

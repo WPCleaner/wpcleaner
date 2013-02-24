@@ -192,7 +192,7 @@ public class PageAnalysisUtils {
     for (PageElementTitle title : titles) {
       if (title.getBeginIndex() < position) {
         while ((!currentTitles.isEmpty()) &&
-               (currentTitles.get(currentTitles.size() - 1).getFirstLevel() >= title.getFirstLevel())) {
+               (currentTitles.get(currentTitles.size() - 1).getLevel() >= title.getLevel())) {
           currentTitles.remove(currentTitles.size() - 1);
         }
         currentTitles.add(title);

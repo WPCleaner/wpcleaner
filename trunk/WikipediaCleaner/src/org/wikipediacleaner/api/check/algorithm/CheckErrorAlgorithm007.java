@@ -56,7 +56,7 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
       return false;
     }
     for (PageElementTitle title : titles) {
-      if (title.getFirstLevel() < 3) {
+      if (title.getLevel() < 3) {
         return false;
       }
     }
@@ -87,8 +87,11 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
     }
     int minTitle = Integer.MAX_VALUE;
     for (PageElementTitle title : titles) {
-      if (title.getFirstLevel() < minTitle) {
-        minTitle = title.getFirstLevel();
+      if (title.getLevel() < minTitle) {
+        minTitle = title.getLevel();
+      }
+      if (!title.isCoherent()) {
+        return contents;
       }
     }
     if (minTitle < 3) {
@@ -104,15 +107,7 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
         tmp.append(contents.substring(lastIndex, title.getBeginIndex()));
         lastIndex = title.getBeginIndex();
       }
-      for (int i = 0; i < (title.getFirstLevel() - offset); i++) {
-        tmp.append('=');
-      }
-      tmp.append(' ');
-      tmp.append(title.getTitle());
-      tmp.append(' ');
-      for (int i = 0; i < (title.getFirstLevel() - offset); i++) {
-        tmp.append('=');
-      }
+      tmp.append(PageElementTitle.createTitle(title.getLevel() - offset, title.getTitle()));
       if (title.getAfterTitle() != null) {
         tmp.append(title.getAfterTitle());
       }

@@ -290,7 +290,7 @@ public class MWPaneTitleTreeManager {
     List<PageElementTitle> titles = pageAnalysis.getTitles();
     for (PageElementTitle title : titles) {
       while ((lastNode != null) &&
-             (lastNode.getInitialTitleLevel() >= title.getFirstLevel())) {
+             (lastNode.getInitialTitleLevel() >= title.getLevel())) {
         if (lastNode.getParent() != null) {
           lastNode = (MWPaneTitleTreeNode) lastNode.getParent();
         } else {
@@ -460,7 +460,7 @@ class MWPaneTitleTreeNode extends DefaultMutableTreeNode {
   public MWPaneTitleTreeNode(PageElementTitle title) {
     super((title != null) ? title : "Page");
     this.title = title;
-    this.level = (title != null) ? title.getFirstLevel() : 0;
+    this.level = (title != null) ? title.getLevel() : 0;
   }
 
   /**
@@ -468,7 +468,7 @@ class MWPaneTitleTreeNode extends DefaultMutableTreeNode {
    */
   public int getInitialTitleLevel() {
     if (title != null) {
-      return title.getFirstLevel();
+      return title.getLevel();
     }
     return 0;
   }
@@ -504,8 +504,8 @@ class MWPaneTitleTreeNode extends DefaultMutableTreeNode {
     }
     StringBuilder buffer = new StringBuilder();
     buffer.append("(");
-    buffer.append(title.getFirstLevel() - 1);
-    if (title.getFirstLevel() != level) {
+    buffer.append(title.getLevel() - 1);
+    if (title.getLevel() != level) {
       buffer.append(" -> ");
       buffer.append(level - 1);
     }

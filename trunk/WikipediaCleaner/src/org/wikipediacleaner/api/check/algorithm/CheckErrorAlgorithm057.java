@@ -75,7 +75,7 @@ public class CheckErrorAlgorithm057 extends CheckErrorAlgorithmBase {
               pageAnalysis.getPage(),
               title.getBeginIndex(), title.getEndIndex());
           errorResult.addReplacement(PageElementTitle.createTitle(
-              title.getFirstLevel(),
+              title.getLevel(),
               text.substring(0, text.length() - 1)));
           errors.add(errorResult);
         }
