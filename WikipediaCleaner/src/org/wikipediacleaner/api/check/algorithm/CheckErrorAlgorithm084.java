@@ -73,7 +73,7 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
       PageElementTitle title = titles.get(i);
       PageElementTitle nextTitle = (i + 1 < titles.size()) ? titles.get(i + 1) : null;
       if ((nextTitle == null) ||
-          (nextTitle.getFirstLevel() <= title.getFirstLevel())) {
+          (nextTitle.getLevel() <= title.getLevel())) {
         boolean textFound = false;
         int lastPos = (nextTitle != null) ? nextTitle.getBeginIndex() : contents.length(); 
         int pos = title.getEndIndex();

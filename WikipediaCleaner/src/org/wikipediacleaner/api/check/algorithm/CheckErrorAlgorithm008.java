@@ -52,6 +52,7 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
     }
 
     // Check every title
+    // TODO: Change completely as titles not ending with "=" are not considered as titles
     List<PageElementTitle> titles = pageAnalysis.getTitles();
     String contents = pageAnalysis.getContents();
     boolean result = false;
@@ -86,13 +87,13 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
             title.getBeginIndex(), title.getEndIndex());
 
         // Replacement : truncate if there's text after end title
-        if (equalIndex > title.getBeginIndex() + title.getFirstLevel()) {
+        if (equalIndex > title.getBeginIndex() + title.getLevel()) {
           errorResult.addReplacement(contents.substring(title.getBeginIndex(), equalIndex + 1));
         }
 
         // Replacement : complete line
         String replacement = contents.substring(title.getBeginIndex(), title.getEndIndex());
-        for (int i = 0; i < title.getFirstLevel(); i++) {
+        for (int i = 0; i < title.getLevel(); i++) {
           replacement += "=";
         }
         errorResult.addReplacement(replacement);

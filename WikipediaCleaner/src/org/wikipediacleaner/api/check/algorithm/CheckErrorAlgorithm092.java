@@ -59,7 +59,7 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
     for (PageElementTitle title : pageAnalysis.getTitles()) {
 
       // Clean up titles with a lower level
-      int titleLevel = title.getFirstLevel();
+      int titleLevel = title.getLevel();
       if (titleLevel < previousTitleLevel) {
         for (int i = previousTitleLevel; i > titleLevel; i--) {
           titles.remove(Integer.valueOf(i));
@@ -111,7 +111,9 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
   public String automaticFix(PageAnalysis analysis) {
     String contents = analysis.getContents();
     List<PageElementTitle> titles = analysis.getTitles();
-    if ((titles == null) || (titles.size() < 2)) {
+    if ((titles == null) ||
+        (titles.size() < 2) ||
+        (!PageElementTitle.areCoherent(titles))) {
       return contents;
     }
     int lastIndex = 0;
@@ -119,7 +121,7 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
     for (int i = 1; i < titles.size(); i++) {
       PageElementTitle previousTitle = titles.get(i - 1);
       PageElementTitle currentTitle = titles.get(i);
-      if ((previousTitle.getFirstLevel() == currentTitle.getFirstLevel()) &&
+      if ((previousTitle.getLevel() == currentTitle.getLevel()) &&
           (previousTitle.getTitle().equals(currentTitle.getTitle()))) {
 
         // Analyze if first title can be removed

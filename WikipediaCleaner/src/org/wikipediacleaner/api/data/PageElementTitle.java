@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.Collection;
+
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
@@ -96,18 +98,44 @@ public class PageElementTitle extends PageElement {
         contents.substring(afterTitleIndex, endIndex));
   }
 
+  /**
+   * @return Title level.
+   */
+  public int getLevel() {
+    return Math.min(firstLevel, secondLevel);
+  }
+
+  /**
+   * @return True if there's nothing questionable about this title.
+   */
+  public boolean isCoherent() {
+    return (firstLevel == secondLevel);
+  }
+
+  /**
+   * @return Number of "=" before the title.
+   */
   public int getFirstLevel() {
     return firstLevel;
   }
 
+  /**
+   * @return Number of "=" after the title.
+   */
   public int getSecondLevel() {
     return secondLevel;
   }
 
+  /**
+   * @return Title itself.
+   */
   public String getTitle() {
     return title;
   }
 
+  /**
+   * @return Text after title.
+   */
   public String getAfterTitle() {
     return afterTitleNotTrimmed;
   }
@@ -141,6 +169,22 @@ public class PageElementTitle extends PageElement {
       sb.append(afterTitleNotTrimmed);
     }
     return sb.toString();
+  }
+
+  /**
+   * @param titles Titles.
+   * @return True if all titles are coherent.
+   */
+  public static boolean areCoherent(Collection<PageElementTitle> titles) {
+    if (titles == null) {
+      return true;
+    }
+    for (PageElementTitle title : titles) {
+      if (!title.isCoherent()) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**
