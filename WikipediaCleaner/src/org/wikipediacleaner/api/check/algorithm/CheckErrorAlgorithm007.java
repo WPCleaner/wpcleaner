@@ -79,6 +79,9 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
   @Override
   public String botFix(PageAnalysis analysis) {
     String contents = analysis.getContents();
+    if (!analysis.areTitlesReliable()) {
+      return contents;
+    }
 
     // Compute minimum title level
     List<PageElementTitle> titles = analysis.getTitles();
@@ -89,9 +92,6 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
     for (PageElementTitle title : titles) {
       if (title.getLevel() < minTitle) {
         minTitle = title.getLevel();
-      }
-      if (!title.isCoherent()) {
-        return contents;
       }
     }
     if (minTitle < 3) {
