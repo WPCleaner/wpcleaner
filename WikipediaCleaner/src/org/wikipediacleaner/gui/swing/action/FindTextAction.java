@@ -68,7 +68,7 @@ public class FindTextAction extends TextAction {
     if ((currentSearch == null) || ("".equals(currentSearch.trim()))) {
       return;
     }
-    lastSearch = currentSearch.trim();
+    lastSearch = currentSearch;
     String textPattern =
       "[" + Character.toUpperCase(lastSearch.charAt(0)) + Character.toLowerCase(lastSearch.charAt(0)) + "]" +
      Pattern.quote(lastSearch.substring(1));
