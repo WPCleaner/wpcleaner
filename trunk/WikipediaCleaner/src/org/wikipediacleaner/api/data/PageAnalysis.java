@@ -760,6 +760,22 @@ public class PageAnalysis {
     return null;
   }
 
+  /**
+   * @return True if titles seem to be reliable.
+   */
+  public boolean areTitlesReliable() {
+    List<PageElementTitle> tmpTitles = getTitles();
+    for (PageElementTitle title : tmpTitles) {
+      if (!title.isCoherent()) {
+        return false;
+      }
+      if (isInTemplate(title.getBeginIndex()) != null) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   // ==========================================================================
   // Internal links management
   // ==========================================================================

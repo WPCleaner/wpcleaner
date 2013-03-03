@@ -110,12 +110,15 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
   @Override
   public String automaticFix(PageAnalysis analysis) {
     String contents = analysis.getContents();
-    List<PageElementTitle> titles = analysis.getTitles();
-    if ((titles == null) ||
-        (titles.size() < 2) ||
-        (!PageElementTitle.areCoherent(titles))) {
+    if (!analysis.areTitlesReliable()) {
       return contents;
     }
+    List<PageElementTitle> titles = analysis.getTitles();
+    if ((titles == null) || (titles.size() < 2)) {
+      return contents;
+    }
+
+    // Fix double headlines
     int lastIndex = 0;
     StringBuilder buffer = new StringBuilder();
     for (int i = 1; i < titles.size(); i++) {

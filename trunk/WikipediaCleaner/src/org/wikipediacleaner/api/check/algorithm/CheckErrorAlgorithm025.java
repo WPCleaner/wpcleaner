@@ -81,15 +81,15 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
   @Override
   public String botFix(PageAnalysis analysis) {
     String contents = analysis.getContents();
+    if (!analysis.areTitlesReliable()) {
+      return contents;
+    }
 
     // Replace titles
     StringBuilder tmp = new StringBuilder();
     int lastIndex = 0;
     Vector<Integer> offsets = new Vector<Integer>();
     List<PageElementTitle> titles = analysis.getTitles();
-    if (!PageElementTitle.areCoherent(titles)) {
-      return contents;
-    }
     for (int index = 0; index < titles.size(); index++) {
 
       // Compute current offset
