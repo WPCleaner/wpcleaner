@@ -18,8 +18,6 @@
 
 package org.wikipediacleaner.api.data;
 
-import java.util.Collection;
-
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
@@ -169,22 +167,6 @@ public class PageElementTitle extends PageElement {
       sb.append(afterTitleNotTrimmed);
     }
     return sb.toString();
-  }
-
-  /**
-   * @param titles Titles.
-   * @return True if all titles are coherent.
-   */
-  public static boolean areCoherent(Collection<PageElementTitle> titles) {
-    if (titles == null) {
-      return true;
-    }
-    for (PageElementTitle title : titles) {
-      if (!title.isCoherent()) {
-        return false;
-      }
-    }
-    return true;
   }
 
   /**

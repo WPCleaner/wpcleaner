@@ -19,11 +19,10 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementComment;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTitle;
 
 
@@ -51,54 +50,71 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Check every title
-    // TODO: Change completely as titles not ending with "=" are not considered as titles
-    List<PageElementTitle> titles = pageAnalysis.getTitles();
-    String contents = pageAnalysis.getContents();
+    // Check every "=" at the beginning of a line
     boolean result = false;
-    for (PageElementTitle title : titles) {
+    String contents = pageAnalysis.getContents();
+    int maxLen = contents.length();
+    for (int currentIndex = 0; currentIndex < maxLen; currentIndex++) {
+      if ((contents.charAt(currentIndex) == '=') &&
+          ((currentIndex == 0) || (contents.charAt(currentIndex - 1) == '\n'))) {
 
-      // Check if text is present after title
-      int equalIndex = title.getEndIndex() - 1;
-      boolean textFound = false;
-      while ((equalIndex > title.getBeginIndex()) &&
-             (contents.charAt(equalIndex) != '=')) {
-        if (!Character.isWhitespace(contents.charAt(equalIndex))) {
-          PageElementComment comment = pageAnalysis.isInComment(equalIndex);
-          if (comment != null) {
-            equalIndex = comment.getBeginIndex();
-          } else {
-            textFound = true;
+        // Check that it is indeed an error
+        boolean errorFound = true;
+        if ((pageAnalysis.isInComment(currentIndex) != null) ||
+            (pageAnalysis.isInTitle(currentIndex) != null)) {
+          errorFound = false;
+        } else {
+          PageElementTag tag = pageAnalysis.isInTag(currentIndex);
+          if (tag != null) {
+            String tagName = tag.getNormalizedName();
+            if ((PageElementTag.TAG_WIKI_CODE.equals(tagName)) ||
+                (PageElementTag.TAG_WIKI_MATH.equals(tagName)) ||
+                (PageElementTag.TAG_WIKI_NOWIKI.equals(tagName)) ||
+                (PageElementTag.TAG_WIKI_SOURCE.equals(tagName))) {
+              errorFound = false;
+            }
           }
         }
-        equalIndex--;
-      }
 
-      // Create error
-      if (textFound) {
-        if (errors == null) {
-          return true;
+        // Signal error
+        if (errorFound) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+
+          // Find end of a line and potential "=" sign
+          int equalIndex = -1;
+          int endLineIndex = currentIndex;
+          int equalsCount = 0;
+          while ((endLineIndex < maxLen) && (contents.charAt(endLineIndex) == '=')) {
+            equalsCount++;
+          }
+          while ((endLineIndex < maxLen) && (contents.charAt(endLineIndex) != '\n')) {
+            if ((equalIndex < 0) && (contents.charAt(endLineIndex) == '=')) {
+              equalIndex = endLineIndex;
+            }
+            endLineIndex++;
+          }
+
+          // Create error
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(), currentIndex, endLineIndex);
+          errorResult.addReplacement(PageElementTitle.createTitle(
+              equalsCount,
+              contents.substring(currentIndex + equalsCount, endLineIndex)));
+          if (equalIndex > 0) {
+            String firstPart = contents.substring(currentIndex + equalsCount, equalIndex); 
+            errorResult.addReplacement(PageElementTitle.createTitle(equalsCount, firstPart));
+            while ((equalIndex < endLineIndex) && (contents.charAt(equalIndex) == '=')) {
+              equalIndex++;
+            }
+            errorResult.addReplacement(
+                PageElementTitle.createTitle(equalsCount, firstPart) + "\n" +
+                contents.substring(equalIndex, endLineIndex));
+          }
+          errors.add(errorResult);
         }
-        result = true;
-
-        // Report detailed result
-        CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(),
-            title.getBeginIndex(), title.getEndIndex());
-
-        // Replacement : truncate if there's text after end title
-        if (equalIndex > title.getBeginIndex() + title.getLevel()) {
-          errorResult.addReplacement(contents.substring(title.getBeginIndex(), equalIndex + 1));
-        }
-
-        // Replacement : complete line
-        String replacement = contents.substring(title.getBeginIndex(), title.getEndIndex());
-        for (int i = 0; i < title.getLevel(); i++) {
-          replacement += "=";
-        }
-        errorResult.addReplacement(replacement);
-
-        errors.add(errorResult);
       }
     }
 
