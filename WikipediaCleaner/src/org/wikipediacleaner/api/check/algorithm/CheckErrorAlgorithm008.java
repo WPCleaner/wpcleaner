@@ -88,6 +88,7 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
           int endLineIndex = currentIndex;
           int equalsCount = 0;
           while ((endLineIndex < maxLen) && (contents.charAt(endLineIndex) == '=')) {
+            endLineIndex++;
             equalsCount++;
           }
           while ((endLineIndex < maxLen) && (contents.charAt(endLineIndex) != '\n')) {
