@@ -82,6 +82,13 @@ public class WikiConfiguration {
     }
     Namespace namespace = getNamespace(namespaceId);
     if (namespace != null) {
+      int colonIndex = title.indexOf(':');
+      if (colonIndex > 0) {
+        String possibleNamespace = title.substring(0, colonIndex);
+        if (namespace.isPossibleName(possibleNamespace)) {
+          title = title.substring(colonIndex + 1);
+        }
+      }
       return namespace.getTitle() + ":" + namespace.getCaseSensitiveness().normalize(title);
     }
     return title;

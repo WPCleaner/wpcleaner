@@ -1343,9 +1343,9 @@ public class MainWindow
         getWikipedia(), title, null, null);
     new PageListWorker(
         getWikipedia(), this, page,
-        Collections.singletonList(pageName),
+        Collections.singletonList(title),
         PageListWorker.Mode.CATEGORY_MEMBERS, false,
-        GT._("Category members of {0}", pageName)).start();
+        GT._("Category members of {0}", title)).start();
   }
 
   /**
@@ -1373,9 +1373,9 @@ public class MainWindow
         getWikipedia(), title, null, null);
     new PageListWorker(
         getWikipedia(), this, page,
-        Collections.singletonList(pageName),
+        Collections.singletonList(title),
         PageListWorker.Mode.EMBEDDED_IN, false,
-        GT._("Template {0} embedded in", pageName)).start();
+        GT._("Template {0} embedded in", title)).start();
   }
 
   /**
