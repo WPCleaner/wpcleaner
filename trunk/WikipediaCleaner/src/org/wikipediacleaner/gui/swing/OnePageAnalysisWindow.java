@@ -399,7 +399,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     addButtonUndoRedo(toolbarButtons, true);
     buttonToc = createButtonToc(this, true);
     toolbarButtons.add(buttonToc);
-    addChkOrthograph(toolbarButtons, true);
+    addChkSpelling(toolbarButtons, true);
     buttonRedirectElements = Utilities.createJButton(
         "commons-nuvola-apps-kpager.png", EnumImageSize.NORMAL,
         GT._("Add categories or templates"), false);
@@ -1637,7 +1637,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     listLinks.repaint();
 
     // Check for new errors
-    analysis.shouldCheckSpelling(shouldCheckOrthograph());
+    analysis.shouldCheckSpelling(shouldCheckSpelling());
     List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
         allAlgorithms, analysis);
     if (errorsFound != null) {

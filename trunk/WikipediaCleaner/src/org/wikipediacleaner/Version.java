@@ -46,7 +46,7 @@ public final class Version {
     "<ul>" +
     "<li>" + GT._("Leaving a note on talk pages with the list of links to disambiguation pages.") + "</li>" +
     "<li>" + GT._("Fixing errors detected by the Check Wiki project, in the full analysis window.") + "</li>" +
-    "<li>" + GT._("Fixing orthograph or typography based on a list of suggestions.") + "</li>" +
+    "<li>" + GT._("Fixing speling or typography based on a list of suggestions.") + "</li>" +
     "</ul>" +
     "<br>" +
     GT._("Please, report any other problem you find to me.");
