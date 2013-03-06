@@ -271,7 +271,7 @@ public abstract class OnePageWindow
   private JCheckBox chkEditTalkPage;
   JCheckBox chkUpdateDabWarning;
   JCheckBox chkCreateDabWarning;
-  private JToggleButton chkOrthograph;
+  private JToggleButton chkSpelling;
   private JLabel lblLastModified;
   private JLabel lblEditProtectionLevel;
 
@@ -332,8 +332,8 @@ public abstract class OnePageWindow
           (chkUpdateDabWarning != null) &&
           (chkUpdateDabWarning.isSelected()));
     }
-    if (chkOrthograph != null) {
-      chkOrthograph.setEnabled(pageLoaded);
+    if (chkSpelling != null) {
+      chkSpelling.setEnabled(pageLoaded);
     }
     if ((textComment != null) && (chkAutomaticComment != null)) {
       textComment.setEnabled(!chkAutomaticComment.isSelected());
@@ -862,30 +862,30 @@ public abstract class OnePageWindow
   }
 
   /**
-   * Add a button for checking orthograph.
+   * Add a button for checking spelling.
    * 
-   * @param panel Contail.
+   * @param panel Container.
    * @param icon Flag indicating if an icon should be used.
    */
-  public void addChkOrthograph(JComponent panel, boolean icon) {
-    boolean checked = shouldCheckOrthograph();
+  public void addChkSpelling(JComponent panel, boolean icon) {
+    boolean checked = shouldCheckSpelling();
     if (icon) {
-      chkOrthograph = Utilities.createJToggleButton(
+      chkSpelling = Utilities.createJToggleButton(
           "gnome-tools-check-spelling.png", EnumImageSize.NORMAL,
-          GT._("Check orthograph and typography"), false);
+          GT._("Check spelling and typography"), false);
     } else {
-      chkOrthograph = Utilities.createJToggleButton(GT._("Orthograph"));
+      chkSpelling = Utilities.createJToggleButton(GT._("Spelling"));
     }
-    chkOrthograph.setSelected(checked);
-    panel.add(chkOrthograph);
+    chkSpelling.setSelected(checked);
+    panel.add(chkSpelling);
   }
 
   /**
-   * @return True if orthograph should be checked.
+   * @return True if spelling should be checked.
    */
-  public boolean shouldCheckOrthograph() {
-    if (chkOrthograph != null) {
-      return chkOrthograph.isSelected();
+  public boolean shouldCheckSpelling() {
+    if (chkSpelling != null) {
+      return chkSpelling.isSelected();
     }
     Configuration config = Configuration.getConfiguration();
     return config.getBoolean(
@@ -1386,7 +1386,7 @@ public abstract class OnePageWindow
       Collection<CheckErrorAlgorithm> algorithms) {
     if (page != null) {
       PageAnalysis pageAnalysis = page.getAnalysis(page.getContents(), false);
-      pageAnalysis.shouldCheckSpelling(shouldCheckOrthograph());
+      pageAnalysis.shouldCheckSpelling(shouldCheckSpelling());
       List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
           algorithms, pageAnalysis);
       initialErrors = new ArrayList<CheckErrorPage>();
@@ -1440,7 +1440,7 @@ public abstract class OnePageWindow
       for (CheckErrorPage initialError : initialErrors) {
         if (pageAnalysis == null) {
           pageAnalysis = initialError.getPage().getAnalysis(contents, true);
-          pageAnalysis.shouldCheckSpelling(shouldCheckOrthograph());
+          pageAnalysis.shouldCheckSpelling(shouldCheckSpelling());
         }
         CheckErrorPage errorPage = CheckError.analyzeError(
             initialError.getAlgorithm(), pageAnalysis);
