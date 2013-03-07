@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.List;
+
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
@@ -38,62 +40,82 @@ public class PageElementTitle extends PageElement {
    * @param wikipedia Wikipedia.
    * @param contents Contents.
    * @param index Block start index.
+   * @param comments Comments in the page.
    * @return Block details it there's a block.
    */
   public static PageElementTitle analyzeBlock(
-      EnumWikipedia wikipedia, String contents, int index) {
+      EnumWikipedia wikipedia, String contents, int index,
+      List<PageElementComment> comments) {
     // Verify arguments
     if (contents == null) {
       return null;
     }
+    int maxLength = contents.length();
 
-    // Check that this the beginning of a line
+    // Check that this is an equal sign at the beginning of a line
     if ((index > 0) && (contents.charAt(index - 1) != '\n')) {
       return null;
     }
     int beginIndex = index;
 
-    // Check that the line is ending properly
-    int endIndex = contents.indexOf('\n', index);
-    if (endIndex < 0) {
-      endIndex = contents.length();
-    }
-
     // Compute first title level
     int firstLevel = 0;
-    while ((index < endIndex) && (contents.charAt(index) == '=')) {
+    while ((index < maxLength) && (contents.charAt(index) == '=')) {
       index++;
       firstLevel++;
     }
-    if (index >=  endIndex) {
+    if (index >=  maxLength) {
       return null;
     }
+    int beginTitleIndex = index;
 
-    // Analyze possible text after title
-    int tmpIndex = endIndex - 1;
-    while ((tmpIndex > index) && (contents.charAt(tmpIndex) != '=')) {
-      tmpIndex--;
-    }
-    if (tmpIndex <= index) {
-      return null;
-    }
-    int afterTitleIndex = tmpIndex + 1;
-
-    // Compute second title level
+    // Analyze title
+    boolean endFound = false;
     int secondLevel = 0;
-    while ((tmpIndex > index) && (contents.charAt(tmpIndex) == '=')) {
-      tmpIndex--;
-      secondLevel++;
+    int lastEqualIndex = index;
+    int endTitleIndex = index;
+    while ((index < maxLength) && (contents.charAt(index) != '\n')) {
+      char currentChar = contents.charAt(index);
+      int nextIndex = index + 1;
+      if (Character.isWhitespace(currentChar)) {
+        // Nothing to do, continue
+      } else if (currentChar == '=') {
+        // Equal sign, possible end of title
+        if (!endFound) {
+          endTitleIndex = index;
+          endFound = true;
+          secondLevel = 0;
+        }
+        secondLevel++;
+        lastEqualIndex = index;
+      } else if (currentChar == '<') {
+        PageElementComment comment = null;
+        for (PageElementComment tmpComment : comments) {
+          if (tmpComment.getBeginIndex() == index) {
+            comment = tmpComment;
+          }
+        }
+        if (comment == null) {
+          endFound = false;
+        } else {
+          nextIndex = comment.getEndIndex();
+        }
+      } else {
+        endFound = false;
+      }
+      index = nextIndex;
     }
-    if (tmpIndex < index) {
+    int endIndex = index;
+
+    if (!endFound) {
       return null;
     }
 
     return new PageElementTitle(
         beginIndex, endIndex,
         firstLevel, secondLevel,
-        contents.substring(index, tmpIndex + 1),
-        contents.substring(afterTitleIndex, endIndex));
+        contents.substring(beginTitleIndex, endTitleIndex),
+        contents.substring(lastEqualIndex + 1, endIndex));
   }
 
   /**
