@@ -91,7 +91,7 @@ public class MWPaneDisambiguationPopupListener extends MWPanePopupListener {
       if ((matcher != null) &&
           (matcher.getExplanation() != null) &&
           (matcher.getExplanation().length() > 0)) {
-        menuItem = new JMenuItem("=> " + matcher.getExplanation() + " <=");
+        menuItem = new JMenuItem("→ " + matcher.getExplanation() + " ←");
         menuItem.setEnabled(false);
         popup.add(menuItem);
       }

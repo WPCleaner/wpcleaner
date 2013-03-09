@@ -136,7 +136,7 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
       if (showCountOccurence &&
           (count != null) &&
           (count.getTotalLinkCount() > 0)) {
-        text += " => " + count.getTotalLinkCount(); 
+        text += " → " + count.getTotalLinkCount(); 
       }
       redirect = pageElement.isRedirect();
     }

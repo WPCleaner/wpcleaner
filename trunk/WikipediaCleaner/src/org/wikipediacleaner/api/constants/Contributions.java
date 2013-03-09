@@ -54,13 +54,13 @@ public class Contributions {
     buffer.append("\n");
     if (pages > 0) {
       contributions = true;
-      buffer.append("    => ");
+      buffer.append("    → ");
       buffer.append(GT._("You have edited {0} page(s).", Integer.toString(pages)));
       buffer.append("\n");
     }
     if (dabLinks > 0) {
       contributions = true;
-      buffer.append("    => ");
+      buffer.append("    → ");
       buffer.append(GT._("You have fixed {0} link(s) to disambiguation pages.", Integer.toString(dabLinks)));
       buffer.append("\n");
     }
@@ -69,7 +69,7 @@ public class Contributions {
         contributions = true;
         CWConfiguration configuration = wikipedia.getCWConfiguration();
         CWConfigurationError errorConfiguration = configuration.getErrorConfiguration(errorNumber);
-        buffer.append("    => ");
+        buffer.append("    → ");
         buffer.append(GT._(
             "You have fixed {0} error(s) \"{1}\".",
             new Object[] {
