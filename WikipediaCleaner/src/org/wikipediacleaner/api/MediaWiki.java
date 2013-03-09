@@ -215,7 +215,7 @@ public class MediaWiki extends MediaWikiController {
                   }
                   description.append("<li>");
                   description.append(from);
-                  description.append(" => ");
+                  description.append(" → ");
                   description.append(to);
                   description.append("</li>\n");
                 }
