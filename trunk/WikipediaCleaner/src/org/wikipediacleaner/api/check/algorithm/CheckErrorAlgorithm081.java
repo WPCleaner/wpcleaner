@@ -162,7 +162,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       result.append(value.trim());
       result.append("</ref>");
     } else {
-      result.append("/>");
+      result.append(" />");
     }
     return result.toString();
   }
@@ -257,7 +257,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                   GT._("Give a name to the <ref> tag"),
                   new AddTextActionProvider(
                       prefix + " name=\"",
-                      "\"" + suffix,
+                      "\" " + suffix,
                       provider,
                       GT._("What name would like to use for the <ref> tag ?"),
                       nameChecker));
