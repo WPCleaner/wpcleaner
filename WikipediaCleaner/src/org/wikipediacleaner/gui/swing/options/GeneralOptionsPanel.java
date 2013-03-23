@@ -50,7 +50,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 public class GeneralOptionsPanel extends OptionsPanel {
 
   /**
-   * Serialisation.
+   * Serialization.
    */
   private static final long serialVersionUID = -7125394212316622303L;
 
@@ -85,6 +85,15 @@ public class GeneralOptionsPanel extends OptionsPanel {
     constraints.weighty = 0;
 
     constraints.gridwidth = 3;
+
+    // Use HTTP for API instead of HTTPS
+    chk = createJCheckBox(
+        GT._("Use HTTP for MediaWiki API calls (less secure)"),
+        ConfigurationValueBoolean.FORCE_HTTP_API);
+    constraints.gridx = 0;
+    constraints.weightx = 0;
+    add(chk, constraints);
+    constraints.gridy++;
 
     // Use secure URL in external viewer
     chk = createJCheckBox(

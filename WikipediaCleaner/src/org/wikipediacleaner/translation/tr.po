@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-03-06 08:24+0100\n"
+"POT-Creation-Date: 2013-03-23 08:01+0100\n"
 "PO-Revision-Date: 2012-10-13 06:21+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -663,13 +663,13 @@ msgstr ""
 msgid "Retrieving templates"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1574
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1576
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1581
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1583
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1713,7 +1713,7 @@ msgid "Create disambiguation warning on talk page"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:875
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:190
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:199
 msgid "Check spelling and typography"
 msgstr ""
 
@@ -2542,68 +2542,72 @@ msgid "General options"
 msgstr "Genel seçenekler"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:91
-msgid "Use secure URL in external viewer (https)"
+msgid "Use HTTP for MediaWiki API calls (less secure)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:100
-msgid "Close disambiguation window after sending"
+msgid "Use secure URL in external viewer (https)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:109
-msgid "Ignore disambiguation links from User namespace"
+msgid "Close disambiguation window after sending"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:118
-msgid "Restore window position"
+msgid "Ignore disambiguation links from User namespace"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:127
-msgid "Save window position"
+msgid "Restore window position"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:136
-msgid "Use short notation [[Xxxxx (yyy)|]]"
+msgid "Save window position"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:145
-msgid "Use advanced features (experimental)"
+msgid "Use short notation [[Xxxxx (yyy)|]]"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:154
+msgid "Use advanced features (experimental)"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:163
 #, java-format
 msgid "Display {0} link in update comments"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:163
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:172
 msgid "Show errors with no detection found"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:172
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:181
 msgid "Add link to error description in comments"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:181
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:190
 msgid "Watch all edited pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:199
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:208
 msgid "Signature :"
 msgstr "İmza :"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:215
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:224
 msgid "Look & Feel"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:219
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:228
 #, java-format
 msgid "Let {0} choose the Look && Feel"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:224
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:233
 msgid "Use System Look && Feel"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:229
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:238
 msgid "Choose Look && Feel"
 msgstr ""
 

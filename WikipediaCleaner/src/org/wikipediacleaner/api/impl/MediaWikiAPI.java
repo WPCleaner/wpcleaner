@@ -1484,8 +1484,10 @@ public class MediaWikiAPI implements API {
       EnumWikipedia       wikipedia,
       Map<String, String> properties) {
     boolean getMethod = canUseGetMethod(properties);
+    Configuration config = Configuration.getConfiguration();
+    boolean useHttps = !config.getBoolean(null, ConfigurationValueBoolean.FORCE_HTTP_API);
     return HttpUtils.createHttpMethod(
-        wikipedia.getSettings().getApiURL(true),
+        wikipedia.getSettings().getApiURL(useHttps),
         properties,
         getMethod);
   }

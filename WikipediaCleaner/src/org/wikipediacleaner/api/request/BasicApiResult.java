@@ -27,6 +27,8 @@ import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.constants.ConnectionInformation;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
@@ -105,8 +107,10 @@ public abstract class BasicApiResult implements ApiResult {
       }
     }
     boolean getMethod = canUseGetMethod(properties);
+    Configuration config = Configuration.getConfiguration();
+    boolean useHttps = !config.getBoolean(null, ConfigurationValueBoolean.FORCE_HTTP_API);
     return HttpUtils.createHttpMethod(
-        getWiki().getSettings().getApiURL(true),
+        getWiki().getSettings().getApiURL(useHttps),
         properties,
         getMethod);
   }
