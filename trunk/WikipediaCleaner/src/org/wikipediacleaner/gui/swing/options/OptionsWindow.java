@@ -44,7 +44,7 @@ import org.wikipediacleaner.utils.Configuration;
 public class OptionsWindow
   extends BasicWindow {
 
-  public final static Integer WINDOW_VERSION = Integer.valueOf(3);
+  public final static Integer WINDOW_VERSION = Integer.valueOf(4);
 
   public final List<OptionsPanel> panels = new ArrayList<OptionsPanel>();
 

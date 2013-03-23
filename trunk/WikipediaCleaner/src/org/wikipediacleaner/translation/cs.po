@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-03-06 08:24+0100\n"
+"POT-Creation-Date: 2013-03-23 08:01+0100\n"
 "PO-Revision-Date: 2013-02-22 17:40+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -667,7 +667,7 @@ msgstr "Převádím text"
 msgid "Retrieving templates"
 msgstr "Přijímám šablony"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1574
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1576
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -675,7 +675,7 @@ msgstr ""
 "Tato akce je chráněna funkcí CAPTCHA.\n"
 "Jaká je odpověď na následující otázku?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1581
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1583
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1752,7 +1752,7 @@ msgid "Create disambiguation warning on talk page"
 msgstr "Vytvořit rozcestníkové varování na diskuzní stránce"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:875
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:190
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:199
 msgid "Check spelling and typography"
 msgstr "Zkontrolovat překlepy a typografii"
 
@@ -2609,68 +2609,72 @@ msgid "General options"
 msgstr "Obecné možnosti"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:91
+msgid "Use HTTP for MediaWiki API calls (less secure)"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:100
 msgid "Use secure URL in external viewer (https)"
 msgstr "Používat šifrované URL adresy v externím prohlížeči (https:)"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:100
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:109
 msgid "Close disambiguation window after sending"
 msgstr "Zavřít okno s rozcestníky po odeslání"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:109
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:118
 msgid "Ignore disambiguation links from User namespace"
 msgstr "Ignorovat odkazy na rozcestníky z uživatelského jmenného prostoru"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:118
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:127
 msgid "Restore window position"
 msgstr "Obnovit pozici okna"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:127
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:136
 msgid "Save window position"
 msgstr "Zapamatovat si pozici okna"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:136
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:145
 msgid "Use short notation [[Xxxxx (yyy)|]]"
 msgstr "Použít zkrácený zápis [[Xxxxx (yyy)|]]"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:145
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:154
 msgid "Use advanced features (experimental)"
 msgstr "Použít pokročilé možnosti (experimentální)"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:154
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:163
 #, java-format
 msgid "Display {0} link in update comments"
 msgstr "Zobrazuj {0} odkazů v shrnutí editace"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:163
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:172
 msgid "Show errors with no detection found"
 msgstr "Zobrazit nedetekované chyby"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:172
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:181
 msgid "Add link to error description in comments"
 msgstr "Přidat do shrnutí popis chyby"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:181
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:190
 msgid "Watch all edited pages"
 msgstr "Sledovat všechny editované stránky"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:199
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:208
 msgid "Signature :"
 msgstr "Podpis:"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:215
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:224
 msgid "Look & Feel"
 msgstr "Vzhled"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:219
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:228
 #, java-format
 msgid "Let {0} choose the Look && Feel"
 msgstr "Nechat {0} vybrat vzhled"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:224
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:233
 msgid "Use System Look && Feel"
 msgstr "Použít systémový vzhled"
 
-#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:229
+#: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:238
 msgid "Choose Look && Feel"
 msgstr "Vybrat vzhled"
 
