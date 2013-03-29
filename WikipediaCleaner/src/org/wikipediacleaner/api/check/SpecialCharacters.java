@@ -146,6 +146,8 @@ public class SpecialCharacters {
     addReplacements("ŹẐŻŽẒ", "Z");
     addReplacements("źẑżẓž", "z");
 
+    addReplacements("–—", "-");
+
     // Specific configuration for CS
     localAuthorizedCharacters.put(EnumWikipedia.CS, "čďěňřšťžČĎŇŘŠŤŽ");
 
