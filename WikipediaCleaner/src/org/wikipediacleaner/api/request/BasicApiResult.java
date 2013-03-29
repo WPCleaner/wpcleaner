@@ -134,9 +134,7 @@ public abstract class BasicApiResult implements ApiResult {
     if (action == null) {
       return false;
     }
-    if (ApiRequest.ACTION_EXPAND.equals(action) ||
-        ApiRequest.ACTION_PARSE.equals(action) ||
-        ApiRequest.ACTION_PURGE.equals(action) ||
+    if (ApiRequest.ACTION_PURGE.equals(action) ||
         ApiRequest.ACTION_QUERY.equals(action)) {
       return true;
     }
