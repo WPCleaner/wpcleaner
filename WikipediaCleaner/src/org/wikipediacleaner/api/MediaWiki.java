@@ -469,13 +469,15 @@ public class MediaWiki extends MediaWikiController {
    * @param pageList List of page.
    * @param knownPages Already known pages.
    * @param disambiguations Flag indicating if possible disambiguations should be retrieved.
+   * @param forceApiCall True if API call should be forced even if the list of disambiguation pages is loaded.
    * @param block Flag indicating if the call should block until completed.
    * @throws APIException
    */
   public void retrieveDisambiguationInformation(
       EnumWikipedia wikipedia,
       List<Page> pageList, List<Page> knownPages,
-      boolean disambiguations, boolean block) throws APIException {
+      boolean disambiguations, boolean forceApiCall, boolean block)
+          throws APIException {
     if ((pageList == null) || (pageList.isEmpty())) {
       return;
     }
@@ -489,7 +491,7 @@ public class MediaWiki extends MediaWikiController {
       filteredList.removeAll(knownPages);
     }
     if (filteredList.size() <= maxPages) {
-      addTask(new DisambiguationStatusCallable(wikipedia, this, api, filteredList));
+      addTask(new DisambiguationStatusCallable(wikipedia, this, api, filteredList, forceApiCall));
     } else {
       int index = 0;
       while (index < filteredList.size()) {
@@ -497,7 +499,7 @@ public class MediaWiki extends MediaWikiController {
         for (int i = 0; (i < maxPages) && (index < filteredList.size()); i++, index++) {
           tmpList.add(filteredList.get(index));
         }
-        addTask(new DisambiguationStatusCallable(wikipedia, this, api, tmpList));
+        addTask(new DisambiguationStatusCallable(wikipedia, this, api, tmpList, forceApiCall));
       }
     }
     block(true);

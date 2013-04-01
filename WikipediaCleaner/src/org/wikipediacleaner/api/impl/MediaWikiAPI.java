@@ -980,16 +980,19 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param pages List of pages.
+   * @param forceApiCall True if API call should be forced even if the list of disambiguation pages is loaded.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#categories_.2F_cl">API:Properties#categories</a>
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#templates_.2F_tl">API:Properties#templates</a>
    */
-  public void initializeDisambiguationStatus(EnumWikipedia wiki, List<Page> pages)
+  public void initializeDisambiguationStatus(
+      EnumWikipedia wiki, List<Page> pages,
+      boolean forceApiCall)
       throws APIException {
     if ((pages == null) || (pages.isEmpty())) {
       return;
     }
-    if (wiki.isDisambiguationPagesLoaded()) {
+    if (wiki.isDisambiguationPagesLoaded() && !forceApiCall) {
       for (Page page : pages) {
         page.setDisambiguationPage(wiki.isDisambiguationPage(page));
         if (page.isRedirect()) {

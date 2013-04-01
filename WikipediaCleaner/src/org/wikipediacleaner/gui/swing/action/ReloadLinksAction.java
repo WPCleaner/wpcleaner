@@ -79,7 +79,7 @@ public class ReloadLinksAction implements ActionListener {
       if (progressPanel != null) {
         progressPanel.setText(GT._("Analyzing links for disambiguation pages"));
       }
-      api.initializeDisambiguationStatus(wikipedia, pages);
+      api.initializeDisambiguationStatus(wikipedia, pages, false);
       Iterator<Page> iter = page.getRedirectIteratorWithPage();
       while (iter.hasNext()) {
         Page tmp = iter.next();

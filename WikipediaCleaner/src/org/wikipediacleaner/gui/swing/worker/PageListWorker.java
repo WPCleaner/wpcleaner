@@ -218,7 +218,7 @@ public class PageListWorker extends BasicWorker {
 
       if (retrieveDisambiguationInformation) {
         MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-        mw.retrieveDisambiguationInformation(getWikipedia(), pages, null, false, true);
+        mw.retrieveDisambiguationInformation(getWikipedia(), pages, null, false, true, true);
       }
       if (!shouldContinue()) {
         return null;
