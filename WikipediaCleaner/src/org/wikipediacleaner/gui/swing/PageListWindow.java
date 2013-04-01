@@ -593,7 +593,11 @@ public class PageListWindow extends BasicWindow {
     String txtMain = null;
     if ((actualMain > 0) || (maxMain > 0)) {
       if (backlinksMain != actualMain) {
-        txtMain = "" + backlinksMain + " (" + actualMain + "/" + maxMain + ")";
+        if (actualMain != maxMain) {
+          txtMain = "" + backlinksMain + " (" + actualMain + "/" + maxMain + ")";
+        } else {
+          txtMain = "" + backlinksMain + " (" + actualMain + ")";
+        }
       } else if (actualMain != maxMain) {
         txtMain = "" + actualMain + "/" + maxMain;
       } else {
