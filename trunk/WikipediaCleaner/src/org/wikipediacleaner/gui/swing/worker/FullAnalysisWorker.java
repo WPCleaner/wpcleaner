@@ -67,7 +67,7 @@ public class FullAnalysisWorker extends BasicWorker {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       mw.retrieveContents(getWikipedia(), page, false, false, true);
       mw.retrieveAllLinks(getWikipedia(), page, Namespace.MAIN, knownPages, true);
-      mw.retrieveDisambiguationInformation(getWikipedia(), page.getLinks(), knownPages, true, true);
+      mw.retrieveDisambiguationInformation(getWikipedia(), page.getLinks(), knownPages, true, false, true);
       for (Page link : page.getLinks()) {
         if (Boolean.TRUE.equals(link.isDisambiguationPage()) &&
             link.hasWiktionaryTemplate() &&

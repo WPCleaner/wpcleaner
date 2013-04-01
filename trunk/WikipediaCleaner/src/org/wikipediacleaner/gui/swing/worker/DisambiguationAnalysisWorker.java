@@ -61,7 +61,7 @@ public class DisambiguationAnalysisWorker extends BasicWorker {
           mw.retrieveContents(getWikipedia(), backlink, false, false, false);
         }
       }
-      mw.retrieveDisambiguationInformation(getWikipedia(), pageAndRedirects, null, false, false);
+      mw.retrieveDisambiguationInformation(getWikipedia(), pageAndRedirects, null, false, false, false);
       mw.retrieveAllLinks(getWikipedia(), page, null, null, true);
     } catch (APIException e) {
       return e;

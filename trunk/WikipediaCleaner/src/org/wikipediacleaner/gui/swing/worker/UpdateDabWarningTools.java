@@ -195,7 +195,7 @@ public class UpdateDabWarningTools {
           }
         }
         if (!tmpPages.isEmpty()) {
-          mw.retrieveDisambiguationInformation(wikipedia, tmpPages, null, false, true);
+          mw.retrieveDisambiguationInformation(wikipedia, tmpPages, null, false, false, true);
         }
         for (Page page : tmpPages) {
           if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
