@@ -37,7 +37,7 @@ import org.wikipediacleaner.utils.Configuration;
 
 
 /**
- * 
+ * A list cell renderer for Page. 
  */
 public class PageListCellRenderer extends JLabel implements ListCellRenderer {
 
@@ -45,7 +45,7 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
 
   private PageAnalysis analysis;
 
-  private boolean showCountOccurence;
+  private boolean showCountOccurrence;
   private boolean showDisambiguation;
   private boolean showMissing;
   private boolean showRedirect;
@@ -77,10 +77,10 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
   }
 
   /**
-   * @param show Flag indicating if the occurence count is shown.
+   * @param show Flag indicating if the occurrence count is shown.
    */
-  public void showCountOccurence(boolean show) {
-    showCountOccurence = show;
+  public void showCountOccurrence(boolean show) {
+    showCountOccurrence = show;
   }
 
   /**
@@ -130,18 +130,20 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
       @SuppressWarnings("unused") boolean cellHasFocus) {
 
     // Retrieve data
-    String text = (value != null) ? value.toString() : "";
+    String pageName = (value != null) ? value.toString() : "";
+    String text = pageName;
     Boolean disambiguation = null;
     Boolean exist = null;
     boolean redirect = false;
     InternalLinkCount count = null;
     if (value instanceof Page) {
       Page pageElement = (Page) value;
-      text = pageElement.getTitle();
+      pageName = pageElement.getTitle();
+      text = pageName;
       disambiguation = pageElement.isDisambiguationPage();
       exist = pageElement.isExisting();
       count = (analysis != null) ? analysis.getLinkCount(pageElement) : null;
-      if (showCountOccurence &&
+      if (showCountOccurrence &&
           (count != null) &&
           (count.getTotalLinkCount() > 0)) {
         text += " → " + count.getTotalLinkCount(); 
@@ -150,7 +152,7 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
       if (redirect && showRedirectBacklinks) {
         Integer backlinks = pageElement.getBacklinksCountInMainNamespace();
         if ((backlinks != null) && (backlinks.intValue() > 0)) {
-          text += " → " + backlinks;
+          text += " ← " + backlinks;
         }
       }
     }
@@ -178,7 +180,7 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
         }
       }
     } else if (pageProperties != null) {
-      String property = pageProperties.getProperty(text);
+      String property = pageProperties.getProperty(pageName);
       if (Configuration.VALUE_PAGE_NORMAL.equals(property)) {
         foreground = Color.GREEN;
       } else if (Configuration.VALUE_PAGE_HELP_NEEDED.equals(property)) {

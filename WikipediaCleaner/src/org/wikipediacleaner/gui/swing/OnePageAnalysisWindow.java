@@ -586,7 +586,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     constraints.weighty = 1;
     listLinks = new JList(modelLinks);
     listCellRenderer = new PageListCellRenderer();
-    listCellRenderer.showCountOccurence(true);
+    listCellRenderer.showCountOccurrence(true);
     listCellRenderer.showDisambiguation(true);
     listCellRenderer.showMissing(true);
     listCellRenderer.showRedirect(true);
