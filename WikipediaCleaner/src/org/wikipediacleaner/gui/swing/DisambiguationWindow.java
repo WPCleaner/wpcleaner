@@ -324,6 +324,7 @@ public class DisambiguationWindow extends OnePageWindow {
     listLinks = new JList(modelLinks);
     listCellRenderer = new PageListCellRenderer();
     listCellRenderer.showRedirect(true);
+    listCellRenderer.showRedirectBacklinks(true);
     if (getPage() != null) {
       listCellRenderer.setPageProperties(configuration.getSubProperties(
           getWikipedia(), Configuration.PROPERTIES_BACKLINKS, getPage().getTitle()));

@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.api.request.xml;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -90,17 +91,22 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
         // Links through redirects
         List listRedirLinks = xpaRedirLinks.selectNodes(currentBacklink);
         if (listRedirLinks != null) {
+          List<Page> linkList = new ArrayList<Page>();
           Iterator itRedirLink = listRedirLinks.iterator();
           while (itRedirLink.hasNext()) {
             currentBacklink = (Element) itRedirLink.next();
-            link = DataManager.getPage(
+            Page link2 = DataManager.getPage(
                 getWiki(), xpaTitle.valueOf(currentBacklink), null, null);
-            link.setNamespace(xpaNs.valueOf(currentBacklink));
-            link.setPageId(xpaPageId.valueOf(currentBacklink));
-            if (!list.contains(link)) {
-              list.add(link);
+            link2.setNamespace(xpaNs.valueOf(currentBacklink));
+            link2.setPageId(xpaPageId.valueOf(currentBacklink));
+            if (!list.contains(link2)) {
+              list.add(link2);
+            }
+            if (!linkList.contains(link2)) {
+              linkList.add(link2);
             }
           }
+          link.setBackLinks(linkList);
         }
       }
 

@@ -49,6 +49,7 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
   private boolean showDisambiguation;
   private boolean showMissing;
   private boolean showRedirect;
+  private boolean showRedirectBacklinks;
   private Properties pageProperties;
 
   private final Font missingFont;
@@ -90,24 +91,31 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
   }
 
   /**
-   * @param analysis Page analyis.
+   * @param analysis Page analysis.
    */
   public void setPageAnalysis(PageAnalysis analysis) {
     this.analysis = analysis;
   }
 
   /**
-   * @param show Flag indicating if the missing flag is shown.
+   * @param show Flag indicating if missing pages are highlighted.
    */
   public void showMissing(boolean show) {
     showMissing = show;
   }
 
   /**
-   * @param show Flag indicating if the redirecte flag is shown.
+   * @param show Flag indicating if redirect pages are highlighted.
    */
   public void showRedirect(boolean show) {
     showRedirect = show;
+  }
+
+  /**
+   * @param show Flag indicating if numbers of pages linking to redirect pages are displayed.
+   */
+  public void showRedirectBacklinks(boolean show) {
+    showRedirectBacklinks = show;
   }
 
   /* (non-Javadoc)
@@ -139,6 +147,12 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer {
         text += " → " + count.getTotalLinkCount(); 
       }
       redirect = pageElement.isRedirect();
+      if (redirect && showRedirectBacklinks) {
+        Integer backlinks = pageElement.getBacklinksCountInMainNamespace();
+        if ((backlinks != null) && (backlinks.intValue() > 0)) {
+          text += " → " + backlinks;
+        }
+      }
     }
 
     // Text
