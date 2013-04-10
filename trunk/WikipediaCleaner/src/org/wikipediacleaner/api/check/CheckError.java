@@ -136,11 +136,11 @@ public class CheckError {
    * @param errorNumber Error number.
    * @param stream Stream containing list of pages for the error number.
    */
-  public static void addCheckError(
+  public static void addCheckErrorClassic(
       List<CheckError> errors,
       EnumWikipedia wikipedia, int errorNumber, InputStream stream) {
 
-    // Analyze properties to find infos about error number
+    // Analyze properties to find informations about error number
     if (!CheckErrorAlgorithms.isAlgorithmActive(wikipedia, errorNumber)) {
       return;
     }
@@ -162,6 +162,80 @@ public class CheckError {
           line = line.replaceAll(Pattern.quote("&quot;"), "\"");
           line = line.replaceAll(Pattern.quote("&amp;"), "&");
           error.addPage(line);
+        }
+      } catch (UnsupportedEncodingException e) {
+        //
+      } catch (IOException e) {
+        //
+      } finally {
+        if (reader != null) {
+          try {
+            reader.close();
+          } catch (IOException e) {
+            //
+          }
+        }
+      }
+    }
+
+    // Add / Replace error
+    for (int i = errors.size(); i > 0; i--) {
+      if (errors.get(i - 1).getErrorNumber() == errorNumber) {
+        errors.remove(i - 1);
+      }
+    }
+    errors.add(error);
+  }
+
+  /**
+   * @param errors Errors list.
+   * @param wikipedia Wikipedia.
+   * @param errorNumber Error number.
+   * @param stream Stream containing list of pages for the error number.
+   */
+  public static void addCheckErrorBots(
+      List<CheckError> errors,
+      EnumWikipedia wikipedia, int errorNumber, InputStream stream) {
+
+    // Analyze properties to find informations about error number
+    if (!CheckErrorAlgorithms.isAlgorithmActive(wikipedia, errorNumber)) {
+      return;
+    }
+
+    // Create error
+    CheckError error = new CheckError(wikipedia, errorNumber);
+    if (stream != null) {
+      BufferedReader reader = null;
+      try {
+        // Read all lines
+        reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        ArrayList<String> lines = new ArrayList<String>();
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+          lines.add(line);
+        }
+
+        if ((lines.size() == 1) && (lines.get(0).indexOf("\\n") > 0)) {
+          String[] splittedLines = lines.get(0).split("\\\\n");
+          lines.clear();
+          for (String splittedLine : splittedLines) {
+            lines.add(splittedLine);
+          }
+        }
+        for (String tmpLine : lines) {
+          String[] elements = tmpLine.split("\\|");
+          if (elements.length > 1) {
+            int equalIndex = elements[0].indexOf("=");
+            Integer pageId = (equalIndex > 0) ? Integer.valueOf(elements[0].substring(equalIndex + 1)) : null;
+            equalIndex = elements[1].indexOf("=");
+            String pageName = (equalIndex > 0) ? elements[1].substring(equalIndex + 1) : null;
+            if ((pageId != null) && (pageName != null)) {
+              pageName = pageName.replaceAll(Pattern.quote("&#039;"), "'");
+              pageName = pageName.replaceAll(Pattern.quote("&quot;"), "\"");
+              pageName = pageName.replaceAll(Pattern.quote("&amp;"), "&");
+              error.addPage(pageName);
+            }
+          }
         }
       } catch (UnsupportedEncodingException e) {
         //
