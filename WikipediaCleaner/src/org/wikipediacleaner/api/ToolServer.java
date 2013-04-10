@@ -51,6 +51,8 @@ public class ToolServer {
    */
   private final HttpClient httpClient;
 
+  private final static boolean useBotList = true;
+
   /**
    * Create a ToolServer object.
    * 
@@ -84,18 +86,33 @@ public class ToolServer {
     properties.put("limit", Integer.toString(errorLimit));
     properties.put("offset", Integer.toString(0));
     properties.put("project", code);
-    properties.put("view", "bots");
-    ResponseManager manager = new ResponseManager() {
-      
-      public void manageResponse(InputStream stream)
-          throws IOException, APIException {
-        CheckError.addCheckError(
-            errors, wiki,
-            Integer.valueOf(algorithm.getErrorNumberString()), stream);
-      }
-    };
-    sendPost(
-        "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, manager);
+    if (!useBotList) {
+      properties.put("view", "bots");
+      ResponseManager manager = new ResponseManager() {
+        
+        public void manageResponse(InputStream stream)
+            throws IOException, APIException {
+          CheckError.addCheckErrorClassic(
+              errors, wiki,
+              Integer.valueOf(algorithm.getErrorNumberString()), stream);
+        }
+      };
+      sendPost(
+          "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, manager);
+    } else {
+      properties.put("action", "list");
+      ResponseManager manager = new ResponseManager() {
+        
+        public void manageResponse(InputStream stream)
+            throws IOException, APIException {
+          CheckError.addCheckErrorBots(
+              errors, wiki,
+              Integer.valueOf(algorithm.getErrorNumberString()), stream);
+        }
+      };
+      sendPost(
+          "~sk/cgi-bin/checkwiki/checkwiki_bots.cgi", properties, manager);
+    }
   }
 
   /**
@@ -115,9 +132,15 @@ public class ToolServer {
       properties.put("id", Integer.toString(error));
       properties.put("pageid", Integer.toString(page.getPageId()));
       properties.put("project", page.getWikipedia().getSettings().getCodeCheckWiki());
-      properties.put("view", "only");
-      sendPost(
-          "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, null);
+      if (!useBotList) {
+        properties.put("view", "only");
+        sendPost(
+            "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, null);
+      } else {
+        properties.put("action", "mark");
+        sendPost(
+            "~sk/cgi-bin/checkwiki/checkwiki_bots.cgi", properties, null);
+      }
     } catch (NumberFormatException e) {
       return false;
     } catch (APIException e) {
