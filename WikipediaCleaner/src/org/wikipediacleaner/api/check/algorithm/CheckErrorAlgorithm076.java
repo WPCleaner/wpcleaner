@@ -59,23 +59,28 @@ public class CheckErrorAlgorithm076 extends CheckErrorAlgorithmBase {
           return true;
         }
         result = true;
-        StringBuilder sb = new StringBuilder();
-        sb.append("[[");
-        sb.append(link.getFullLink().replaceAll("\\%20", " "));
-        if (link.getText() != null) {
-          sb.append("|");
-          sb.append(link.getText());
-        }
-        sb.append("]]");
         CheckErrorResult errorResult = createCheckErrorResult(
             pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
         errorResult.addReplacement(
-            sb.toString(),
+            PageElementInternalLink.createInternalLink(
+                link.getFullLink().replaceAll("\\%20", " "),
+                link.getText()),
             GT._("Replace %20 by space character"));
         errors.add(errorResult);
       }
     }
 
     return result;
+  }
+
+  /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String botFix(PageAnalysis analysis) {
+    return fixUsingFirstReplacement("Replace all %20", analysis);
   }
 }
