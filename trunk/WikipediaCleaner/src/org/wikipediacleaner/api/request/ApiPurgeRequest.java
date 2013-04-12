@@ -73,7 +73,7 @@ public class ApiPurgeRequest extends ApiRequest {
    */
   public void purgePages(Collection<Page> pages) throws APIException {
     Map<String, String> properties = getProperties(ACTION_PURGE, result.getFormat());
-    properties.put(PROPERTY_TITLES, constructListPages(pages));
+    properties.put(PROPERTY_TITLES, constructListTitles(pages));
     result.executePurge(properties);
   }
 }

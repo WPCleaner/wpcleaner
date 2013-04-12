@@ -138,8 +138,8 @@ public class ApiCategoriesRequest extends ApiPropertiesRequest {
         properties.put(PROPERTY_REDIRECTS, "");
         properties.put(
             PROPERTY_CATEGORIES,
-            constructListPages(categories));
-        properties.put(PROPERTY_TITLES, constructListPages(splitPages));
+            constructListTitles(categories));
+        properties.put(PROPERTY_TITLES, constructListTitles(splitPages));
         while (result.setDiambiguationStatus(properties, splitPages)) {
           //
         }
