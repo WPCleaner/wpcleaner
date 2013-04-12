@@ -88,12 +88,14 @@ public class MediaWiki extends MediaWikiController {
    * @param page Page.
    * @param block Flag indicating if the call should block until completed.
    * @param returnPage Flag indicating if the page should be returned once task is finished.
+   * @param usePageId True if page identifiers should be used.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
    * @throws APIException
    */
   public void retrieveContents(
       EnumWikipedia wikipedia, Page page,
-      boolean block, boolean returnPage, boolean withRedirects) throws APIException {
+      boolean block, boolean returnPage,
+      boolean usePageId, boolean withRedirects) throws APIException {
     if (page == null) {
       return;
     }
@@ -101,7 +103,7 @@ public class MediaWiki extends MediaWikiController {
     addTask(new ContentsCallable(
         wikipedia, this, api,
         page, returnPage ? page : null,
-        false, withRedirects, null));
+        usePageId, withRedirects, null));
     block(block);
   }
 
@@ -111,12 +113,13 @@ public class MediaWiki extends MediaWikiController {
    * @param wikipedia Wikipedia.
    * @param pages Pages.
    * @param block Flag indicating if the call should block until completed.
+   * @param usePageId True if page identifiers should be used.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
    * @throws APIException
    */
   public void retrieveContents(
       EnumWikipedia wikipedia, Collection<Page> pages,
-      boolean block, boolean withRedirects) throws APIException {
+      boolean block, boolean usePageId, boolean withRedirects) throws APIException {
     if (pages == null) {
       return;
     }
@@ -125,7 +128,7 @@ public class MediaWiki extends MediaWikiController {
       addTask(new ContentsCallable(
           wikipedia, this, api,
           page, null,
-          false, withRedirects, null));
+          usePageId, withRedirects, null));
     }
     block(block);
   }
@@ -175,7 +178,7 @@ public class MediaWiki extends MediaWikiController {
       return 0;
     }
     for (Page page : pages) {
-      retrieveContents(wikipedia, page, false, true, true); // TODO: withRedirects=false ?
+      retrieveContents(wikipedia, page, false, true, false, true); // TODO: withRedirects=false ?
     }
     int count = 0;
     final API api = APIFactory.getAPI();

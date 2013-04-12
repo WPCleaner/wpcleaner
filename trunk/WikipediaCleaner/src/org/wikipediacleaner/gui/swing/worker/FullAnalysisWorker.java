@@ -65,14 +65,14 @@ public class FullAnalysisWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveContents(getWikipedia(), page, false, false, true);
+      mw.retrieveContents(getWikipedia(), page, false, false, false, true);
       mw.retrieveAllLinks(getWikipedia(), page, Namespace.MAIN, knownPages, true);
       mw.retrieveDisambiguationInformation(getWikipedia(), page.getLinks(), knownPages, true, false, true);
       for (Page link : page.getLinks()) {
         if (Boolean.TRUE.equals(link.isDisambiguationPage()) &&
             link.hasWiktionaryTemplate() &&
             (link.getContents() == null)) {
-          mw.retrieveContents(getWikipedia(), link, false, false, true);
+          mw.retrieveContents(getWikipedia(), link, false, false, false, true);
         }
       }
       if (CheckErrorAlgorithms.isAlgorithmActive(getWikipedia(), 508)) {

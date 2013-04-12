@@ -239,7 +239,7 @@ public class UpdateDabWarningTools {
         }
       }
       if (!tmpPages.isEmpty()) {
-        mw.retrieveContents(wikipedia, tmpPages, true, false);
+        mw.retrieveContents(wikipedia, tmpPages, true, false, false);
       }
     }
 
@@ -256,7 +256,7 @@ public class UpdateDabWarningTools {
       }
     }
     mw.retrieveSectionContents(wikipedia, mapTalkPages.values(), 0, false);
-    mw.retrieveContents(wikipedia, mapTodoSubpages.values(), true, false);
+    mw.retrieveContents(wikipedia, mapTodoSubpages.values(), true, false, false);
     if (mw.shouldStop()) {
       return Collections.emptyList();
     }

@@ -1775,7 +1775,7 @@ public class MainWindow
                 getWikipedia(),
                 cwConfiguration.getTranslationPage(),
                 null, null, null);
-            mw.retrieveContents(getWikipedia(), page, true, false, false);
+            mw.retrieveContents(getWikipedia(), page, true, false, false, false);
             if (Boolean.TRUE.equals(page.isExisting())) {
               cwConfiguration.setWikiConfiguration(new StringReader(page.getContents()));
             }
