@@ -203,7 +203,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
             if (!listTo.isEmpty()) {
               Element to = (Element) listTo.get(0);
               Page pageTo = DataManager.getPage(
-                  p.getWikipedia(), xpaTitle.valueOf(to), null, null);
+                  p.getWikipedia(), xpaTitle.valueOf(to), null, null, null);
               pageTo.setNamespace(xpaNamespace.valueOf(to));
               pageTo.setPageId(xpaPageId.valueOf(to));
               p.addRedirect(pageTo);

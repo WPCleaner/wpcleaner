@@ -85,6 +85,8 @@ public class PreviewWindow
    * 
    * @param page Page name.
    * @param text Page text.
+   * @param showExpand True if text with expanded templates should be displayed.
+   * @param showPreview True if preview should be displayed.
    */
   public static void createExpandTemplatesWindow(
       final String page,
@@ -103,7 +105,7 @@ public class PreviewWindow
             if (window instanceof PreviewWindow) {
               PreviewWindow expand = (PreviewWindow) window;
               expand.pageTitle = page;
-              expand.page = DataManager.getPage(wikipedia, page, null, null);
+              expand.page = DataManager.getPage(wikipedia, page, null, null, null);
               expand.showExpand = showExpand;
               expand.showPreview = showPreview;
             }

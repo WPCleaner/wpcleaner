@@ -1604,7 +1604,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
           }
         }
         for (String page : listErrorPages) {
-          CheckErrorPage errorPage = new CheckErrorPage(DataManager.getPage(getWikipedia(), page, null, null), null);
+          CheckErrorPage errorPage = new CheckErrorPage(DataManager.getPage(getWikipedia(), page, null, null, null), null);
           modelPages.addElement(errorPage);
         }
       }

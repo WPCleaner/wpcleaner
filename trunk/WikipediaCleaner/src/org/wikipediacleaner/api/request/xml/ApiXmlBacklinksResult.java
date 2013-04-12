@@ -78,7 +78,7 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
       while (itBacklink.hasNext()) {
         Element currentBacklink = (Element) itBacklink.next();
         Page link = DataManager.getPage(
-            getWiki(), xpaTitle.valueOf(currentBacklink), null, null);
+            getWiki(), xpaTitle.valueOf(currentBacklink), null, null, null);
         link.setNamespace(xpaNs.valueOf(currentBacklink));
         link.setPageId(xpaPageId.valueOf(currentBacklink));
         if (currentBacklink.getAttribute("redirect") != null) {
@@ -96,7 +96,7 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
           while (itRedirLink.hasNext()) {
             currentBacklink = (Element) itRedirLink.next();
             Page link2 = DataManager.getPage(
-                getWiki(), xpaTitle.valueOf(currentBacklink), null, null);
+                getWiki(), xpaTitle.valueOf(currentBacklink), null, null, null);
             link2.setNamespace(xpaNs.valueOf(currentBacklink));
             link2.setPageId(xpaPageId.valueOf(currentBacklink));
             if (!list.contains(link2)) {

@@ -190,7 +190,7 @@ public abstract class OnePageWindow
     if (getTextContents() != null) {
       getTextContents().setText(null);
     }
-    page = DataManager.getPage(getWikipedia(), getTextPageName(), null, null);
+    page = DataManager.getPage(getWikipedia(), getTextPageName(), null, null, null);
     updateComponentState();
   }
 

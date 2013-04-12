@@ -241,7 +241,7 @@ public class PageListWorker extends BasicWorker {
     }
     List<Page> pages = new ArrayList<Page>(elementNames.size());
     for (String pageName : elementNames) {
-      pages.add(DataManager.getPage(getWikipedia(), pageName, null, null));
+      pages.add(DataManager.getPage(getWikipedia(), pageName, null, null, null));
     }
     return pages;
   }
@@ -302,7 +302,7 @@ public class PageListWorker extends BasicWorker {
                 (title.endsWith("/" + todoSubpage))) {
               title = title.substring(0, title.length() - 1 - todoSubpage.length());
             }
-            tmpPage = DataManager.getPage(getWikipedia(), title, null, null);
+            tmpPage = DataManager.getPage(getWikipedia(), title, null, null, null);
           }
           if (!pages.contains(tmpPage)) {
             pages.add(tmpPage);
@@ -371,7 +371,7 @@ public class PageListWorker extends BasicWorker {
    */
   private void constructInternalLinks(List<Page> pages) throws APIException {
     for (String dabList : elementNames) {
-      Page page = DataManager.getPage(getWikipedia(), dabList, null, null);
+      Page page = DataManager.getPage(getWikipedia(), dabList, null, null, null);
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       mw.retrieveAllLinks(getWikipedia(), page, null, null, true);
       Iterator<Page> iter = page.getLinks().iterator();
@@ -443,7 +443,7 @@ public class PageListWorker extends BasicWorker {
     if (elementNames != null) {
       final API api = APIFactory.getAPI();
       for (String pageName : elementNames) {
-        Page page = DataManager.getPage(getWikipedia(), pageName, null, null);
+        Page page = DataManager.getPage(getWikipedia(), pageName, null, null, null);
         api.retrieveSimilarPages(getWikipedia(), page, true);
         pages.addAll(page.getSimilarPages());
       }

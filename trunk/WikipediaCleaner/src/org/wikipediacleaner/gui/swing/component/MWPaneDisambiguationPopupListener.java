@@ -98,7 +98,7 @@ public class MWPaneDisambiguationPopupListener extends MWPanePopupListener {
       MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
 
       popup.addSeparator();
-      Page templatePage = DataManager.getPage(getWikipedia(), templateTitle, null, null);
+      Page templatePage = DataManager.getPage(getWikipedia(), templateTitle, null, null, null);
 
       MenuCreator.addReplaceTemplateToMenu(
           getWikipedia(), popup, template, matcher,

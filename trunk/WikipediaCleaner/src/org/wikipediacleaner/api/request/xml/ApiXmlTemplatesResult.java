@@ -79,7 +79,7 @@ public class ApiXmlTemplatesResult extends ApiXmlPropertiesResult implements Api
         String ns = currentTemplate.getAttributeValue("ns");
         String title = currentTemplate.getAttributeValue("title");
         Page template = DataManager.getPage(
-            getWiki(), title, null, null);
+            getWiki(), title, null, null, null);
         template.setNamespace(ns);
         template.setPageId(pageId);
         if (currentTemplate.getAttribute("missing") != null) {

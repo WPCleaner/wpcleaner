@@ -89,7 +89,7 @@ public class ApiXmlLinksResult extends ApiXmlPropertiesResult implements ApiLink
         while (itLinks.hasNext()) {
           Element linkNode = (Element) itLinks.next();
           Page link = DataManager.getPage(
-              getWiki(), xpaTitle.valueOf(linkNode), null, null);
+              getWiki(), xpaTitle.valueOf(linkNode), null, null, null);
           link.setNamespace(xpaNs.valueOf(linkNode));
           links.add(link);
         }

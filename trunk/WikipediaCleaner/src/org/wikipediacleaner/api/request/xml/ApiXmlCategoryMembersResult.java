@@ -77,7 +77,7 @@ public class ApiXmlCategoryMembersResult extends ApiXmlResult implements ApiCate
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
         Page page = DataManager.getPage(
-            getWiki(), xpaTitle.valueOf(currentNode), null, null);
+            getWiki(), xpaTitle.valueOf(currentNode), null, null, null);
         page.setNamespace(xpaNs.valueOf(currentNode));
         page.setPageId(xpaPageId.valueOf(currentNode));
         if ((page.getNamespace() != null) &&

@@ -70,7 +70,7 @@ public class ApiXmlQueryPageResult extends ApiXmlResult implements ApiQueryPageR
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
         Page page = DataManager.getPage(
-            getWiki(), currentNode.getAttributeValue("title"), null, null);
+            getWiki(), currentNode.getAttributeValue("title"), null, null, null);
         page.setNamespace(currentNode.getAttributeValue("ns"));
         list.add(page);
       }

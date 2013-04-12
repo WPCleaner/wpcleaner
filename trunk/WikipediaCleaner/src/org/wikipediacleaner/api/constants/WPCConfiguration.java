@@ -560,7 +560,7 @@ public class WPCConfiguration {
             if (elements.length >= 4) {
               String pageName = elements[0];
               if (!pages.containsKey(pageName)) {
-                pages.put(pageName, DataManager.getPage(wiki, pageName, null, null));
+                pages.put(pageName, DataManager.getPage(wiki, pageName, null, null, null));
               }
             }
           }
@@ -569,7 +569,7 @@ public class WPCConfiguration {
         if (suggestionTypoPages != null) {
           for (String suggestionPage : suggestionTypoPages) {
             if (!pages.containsKey(suggestionPage)) {
-              pages.put(suggestionPage, DataManager.getPage(wiki, suggestionPage, null, null));
+              pages.put(suggestionPage, DataManager.getPage(wiki, suggestionPage, null, null, null));
             }
           }
         }
@@ -921,7 +921,7 @@ public class WPCConfiguration {
       this.disambiguationCategories = new ArrayList<Page>(tmp.size());
       for (String category : tmp) {
         this.disambiguationCategories.add(
-            DataManager.getPage(wiki, category, null, null));
+            DataManager.getPage(wiki, category, null, null, null));
       }
     } else {
       this.disambiguationCategories = null;
@@ -1127,7 +1127,7 @@ public class WPCConfiguration {
       for (String template : templatesForHelpRequested) {
         String title = wiki.getWikiConfiguration().getPageTitle(
             Namespace.TEMPLATE, template);
-        tmp.add(DataManager.getPage(wiki, title, null, null));
+        tmp.add(DataManager.getPage(wiki, title, null, null, null));
       }
       return tmp;
     }

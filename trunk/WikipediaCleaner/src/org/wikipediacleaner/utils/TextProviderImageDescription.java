@@ -63,7 +63,7 @@ public class TextProviderImageDescription implements TextProvider {
         Page imagePage = DataManager.getPage(
             image.getWiki(),
             image.getNamespace() + ":" + image.getImage(),
-            null, null);
+            null, null, null);
         api.retrieveContents(
             image.getWiki(),
             Collections.singletonList(imagePage), false);
@@ -85,7 +85,7 @@ public class TextProviderImageDescription implements TextProvider {
         Page commonsPage = DataManager.getPage(
             EnumWikipedia.COMMONS,
             "File:" + image.getImage(),
-            null, null);
+            null, null, null);
         api.retrieveContents(
             EnumWikipedia.COMMONS,
             Collections.singletonList(commonsPage), false);
