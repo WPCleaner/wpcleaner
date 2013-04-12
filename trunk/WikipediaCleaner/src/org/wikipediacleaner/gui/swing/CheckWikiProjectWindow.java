@@ -1008,7 +1008,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         return;
       }
       if (Boolean.FALSE.equals(page.isExisting())) {
-        displayWarning(GT._("The page {0} doesn't exist on Wikipedia", page.getTitle()));
+        displayWarning(GT._("The page {0} doesn''t exist on Wikipedia", page.getTitle()));
         if (error != null) {
           error.remove(page);
         }

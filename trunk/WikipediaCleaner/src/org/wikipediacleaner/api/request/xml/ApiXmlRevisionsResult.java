@@ -70,31 +70,43 @@ public class ApiXmlRevisionsResult extends ApiXmlPropertiesResult implements Api
       XPath xpa = XPath.newInstance("/api/query/pages/page");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
-      XPath xpaNs = XPath.newInstance("./@ns");
-      XPath xpaTitle = XPath.newInstance("./@title");
       while (iter.hasNext()) {
         Element pageNode = (Element) iter.next();
-        String title = xpaTitle.valueOf(pageNode);
-        String namespace = xpaNs.valueOf(pageNode);
+        String title = pageNode.getAttributeValue("title");
+        Integer pageId = null;
+        try {
+          String pageIdValue = pageNode.getAttributeValue("pageid");
+          if (pageIdValue != null) {
+            pageId = Integer.valueOf(pageIdValue);
+          }
+        } catch (NumberFormatException e) {
+          System.err.println("Incorrect page id");
+        }
+        String namespace = pageNode.getAttributeValue("ns");
         for (Page tmpPage : pages) {
           Iterator<Page> itPage = tmpPage.getRedirectIteratorWithPage();
           while (itPage.hasNext()) {
             Page page = itPage.next();
-            if (Page.areSameTitle(page.getTitle(), title)) {
+            boolean samePage = false;
+            if ((pageId != null) && (page.getPageId() != null)) {
+              samePage = pageId.equals(page.getPageId());
+            } else {
+              samePage = Page.areSameTitle(page.getTitle(), title);
+            }
+            if (samePage) {
               page.setNamespace(namespace);
               updatePageInformation(pageNode, page);
   
               // Retrieve revisions
-              XPath xpaRevisions = XPath.newInstance("revisions/rev");
-              Element revNode = (Element) xpaRevisions.selectSingleNode(pageNode);
-              if (revNode != null) {
-                XPath xpaContents = XPath.newInstance(".");
-                XPath xpaRevision = XPath.newInstance("./@revid");
-                XPath xpaTimestamp = XPath.newInstance("./@timestamp");
-                page.setContents(xpaContents.valueOf(revNode));
-                page.setExisting(Boolean.TRUE);
-                page.setRevisionId(xpaRevision.valueOf(revNode));
-                page.setContentsTimestamp(xpaTimestamp.valueOf(revNode));
+              if (!Boolean.FALSE.equals(page.isExisting())) {
+                XPath xpaRevisions = XPath.newInstance("revisions/rev");
+                Element revNode = (Element) xpaRevisions.selectSingleNode(pageNode);
+                if (revNode != null) {
+                  page.setContents(revNode.getText());
+                  page.setExisting(Boolean.TRUE);
+                  page.setRevisionId(revNode.getAttributeValue("revid"));
+                  page.setContentsTimestamp(revNode.getAttributeValue("timestamp"));
+                }
               }
             }
           }

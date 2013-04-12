@@ -62,13 +62,22 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
   public void updatePageInformation(Element node, Page page) throws JDOMException {
 
     // Retrieve basic page information
-    XPath xpaPageId = XPath.newInstance("./@pageid");
-    page.setPageId(xpaPageId.valueOf(node));
-    XPath xpaStartTimestamp = XPath.newInstance("./@starttimestamp");
-    page.setStartTimestamp(xpaStartTimestamp.valueOf(node));
+    Attribute attrPageId = node.getAttribute("pageid");
+    if (attrPageId != null) {
+      page.setPageId(attrPageId.getValue());
+    }
+    Attribute attrTitle = node.getAttribute("title");
+    if (attrTitle != null) {
+      page.setTitle(attrTitle.getValue());
+    }
+    page.setStartTimestamp(node.getAttributeValue("starttimestamp"));
     Attribute attrRedirect = node.getAttribute("redirect");
     if (attrRedirect != null) {
       page.isRedirect(true);
+    }
+    Attribute attrMissing = node.getAttribute("missing");
+    if (attrMissing != null) {
+      page.setExisting(Boolean.FALSE);
     }
 
     // Retrieve protection information
