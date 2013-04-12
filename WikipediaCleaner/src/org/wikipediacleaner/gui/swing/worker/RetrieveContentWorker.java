@@ -65,9 +65,9 @@ public class RetrieveContentWorker extends BasicWorker {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       if (page != null) {
-        mw.retrieveContents(getWikipedia(), page, true, false, true);
+        mw.retrieveContents(getWikipedia(), page, true, false, true, false);
       } else {
-        mw.retrieveContents(getWikipedia(), pages, true, true);
+        mw.retrieveContents(getWikipedia(), pages, true, true, false);
       }
       setText("Analyzing data");
     } catch (APIException e) {
