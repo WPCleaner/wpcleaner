@@ -1067,7 +1067,7 @@ public class UpdateDabWarningTools {
     // Retrieve user talk page name
     Namespace userTalkNS = wikipedia.getWikiConfiguration().getNamespace(Namespace.USER_TALK);
     String userTalk = userTalkNS.getTitle() + ":" + user;
-    Page userTalkPage = DataManager.getPage(analysis.getWikipedia(), userTalk, null, null);
+    Page userTalkPage = DataManager.getPage(analysis.getWikipedia(), userTalk, null, null, null);
 
     // Add message
     try {

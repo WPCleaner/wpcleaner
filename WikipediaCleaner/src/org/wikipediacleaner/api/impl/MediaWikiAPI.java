@@ -208,7 +208,7 @@ public class MediaWikiAPI implements API {
       // Decide which pages to be retrieved
       String configPageName = wiki.getConfigurationPage();
       Page page = DataManager.getPage(
-          wiki, configPageName, null, null);
+          wiki, configPageName, null, null, null);
       Page userConfigPage = null;
       if ((userName != null) && (userName.trim().length() > 0) &&
           (wiki.getUserConfigurationPage(userName) != null) &&
@@ -216,7 +216,7 @@ public class MediaWikiAPI implements API {
         userConfigPage = DataManager.getPage(
             wiki,
             wiki.getUserConfigurationPage(userName),
-            null, null);
+            null, null, null);
       }
 
       // Retrieve contents
@@ -704,6 +704,7 @@ public class MediaWikiAPI implements API {
         Page link = DataManager.getPage(
             page.getWikipedia(),
             xpaTitle.valueOf(currentNode),
+            null,
             xpaRevisionId.valueOf(currentNode),
             knownPages);
         link.setNamespace(xpaNs.valueOf(currentNode));
@@ -1046,7 +1047,7 @@ public class MediaWikiAPI implements API {
       throws APIException {
     ApiLanguageLinksResult result = new ApiXmlLanguageLinksResult(from, httpClient);
     ApiLanguageLinksRequest request = new ApiLanguageLinksRequest(from, result);
-    return request.getLanguageLink(DataManager.getPage(from, title, null, null), to);
+    return request.getLanguageLink(DataManager.getPage(from, title, null, null, null), to);
   }
 
   // ==========================================================================

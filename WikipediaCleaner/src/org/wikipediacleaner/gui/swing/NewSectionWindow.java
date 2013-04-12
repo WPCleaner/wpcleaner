@@ -101,7 +101,7 @@ public class NewSectionWindow extends BasicWindow {
               NewSectionWindow newSection = (NewSectionWindow) window;
               newSection.page = page;
               newSection.articleText = articleText;
-              newSection.articlePage = DataManager.getPage(wikipedia, articleTitle, null, null);
+              newSection.articlePage = DataManager.getPage(wikipedia, articleTitle, null, null, null);
               newSection.articlePage.setContents(articleText);
             }
           }

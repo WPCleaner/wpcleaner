@@ -480,7 +480,7 @@ public enum EnumWikipedia {
       synchronized (api) {
         Page page = DataManager.getPage(
             this, "Mediawiki:Disambiguationspage",
-            null, null);
+            null, null, null);
         try {
           api.retrieveLinks(this, Collections.singletonList(page));
         } catch (APIException e) {

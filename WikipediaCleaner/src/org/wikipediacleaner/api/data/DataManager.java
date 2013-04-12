@@ -35,13 +35,14 @@ public class DataManager {
   /**
    * @param wikipedia Wikipedia.
    * @param title Page title.
+   * @param pageId Page id.
    * @param revisionId Revision id.
    * @param knownPages Already known pages.
    * @return The requested page.
    */
   public static Page getPage(
       EnumWikipedia wikipedia,
-      String title, String revisionId,
+      String title, Integer pageId, String revisionId,
       List<Page> knownPages) {
 
     // Check in the known pages
@@ -58,6 +59,7 @@ public class DataManager {
 
     // Retrieve page
     Page page = new Page(wikipedia, title);
+    page.setPageId(pageId);
     page.setRevisionId(revisionId);
 
     // Manage namespace

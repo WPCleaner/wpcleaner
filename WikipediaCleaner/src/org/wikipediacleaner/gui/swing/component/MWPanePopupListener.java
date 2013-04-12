@@ -271,7 +271,7 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
     }
 
     // Initialization
-    Page page = DataManager.getPage(wikipedia, link.getLink(), null, null);
+    Page page = DataManager.getPage(wikipedia, link.getLink(), null, null, null);
 
     // Menu creation
     JPopupMenu popup = new JPopupMenu();
@@ -343,7 +343,7 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
     EnumWikipedia otherWikipedia = EnumWikipedia.getWikipedia(link.getLanguage());
     Page otherPage = null;
     if (otherWikipedia != null) {
-      otherPage = DataManager.getPage(otherWikipedia, link.getLink(), null, null);
+      otherPage = DataManager.getPage(otherWikipedia, link.getLink(), null, null, null);
     }
 
     // Menu creation
@@ -383,7 +383,7 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
     String fullName = wikipedia.getWikiConfiguration().getPageTitle(
         Namespace.IMAGE,
         image.getImage());
-    Page page = DataManager.getPage(wikipedia, fullName, null, null);
+    Page page = DataManager.getPage(wikipedia, fullName, null, null, null);
 
     // Menu creation
     JPopupMenu popup = new JPopupMenu();
@@ -422,7 +422,7 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
     String fullName = wikipedia.getWikiConfiguration().getPageTitle(
         Namespace.CATEGORY,
         category.getName());
-    Page page = DataManager.getPage(wikipedia, fullName, null, null);
+    Page page = DataManager.getPage(wikipedia, fullName, null, null, null);
 
     // Menu creation
     JPopupMenu popup = new JPopupMenu();
@@ -488,7 +488,7 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
     String fullName = wikipedia.getWikiConfiguration().getPageTitle(
         Namespace.TEMPLATE,
         template.getTemplateName());
-    Page page = DataManager.getPage(wikipedia, fullName, null, null);
+    Page page = DataManager.getPage(wikipedia, fullName, null, null, null);
 
     // Menu creation
     JPopupMenu popup = new JPopupMenu();

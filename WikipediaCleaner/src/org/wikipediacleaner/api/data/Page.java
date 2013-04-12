@@ -111,6 +111,13 @@ public class Page implements Comparable<Page> {
   }
 
   /**
+   * @param pageId Page id.
+   */
+  public void setPageId(Integer pageId) {
+    this.pageId = pageId;
+  }
+
+  /**
    * @param pageId Page id. 
    */
   public void setPageId(String pageId) {
@@ -428,7 +435,8 @@ public class Page implements Comparable<Page> {
     if (articlePageName == null) {
       return null;
     }
-    Page articlePage = DataManager.getPage(getWikipedia(), articlePageName, null, null);
+    Page articlePage = DataManager.getPage(
+        getWikipedia(), articlePageName, null, null, null);
     return articlePage;
   }
 
@@ -470,7 +478,8 @@ public class Page implements Comparable<Page> {
     if (talkPageName == null) {
       return null;
     }
-    Page talkPage = DataManager.getPage(getWikipedia(), talkPageName, null, null);
+    Page talkPage = DataManager.getPage(
+        getWikipedia(), talkPageName, null, null, null);
     return talkPage;
   }
 
@@ -508,7 +517,8 @@ public class Page implements Comparable<Page> {
    * @return Subpage.
    */
   public Page getSubPage(String subpage) {
-    Page subPage = DataManager.getPage(getWikipedia(), getTitle() + "/" + subpage, null, null);
+    Page subPage = DataManager.getPage(
+        getWikipedia(), getTitle() + "/" + subpage, null, null, null);
     return subPage;
   }
 

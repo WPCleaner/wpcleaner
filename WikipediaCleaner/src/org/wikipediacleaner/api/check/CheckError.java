@@ -152,16 +152,14 @@ public class CheckError {
       try {
         reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
         String line = null;
-        // TODO: Correctly parse HTML ?
         while (((line = reader.readLine()) != null) && !line.endsWith("<pre>")) {
           // Waiting for <pre>
         }
         while (((line = reader.readLine()) != null) && !line.startsWith("</pre>")) {
-          // TODO: Use something like Apache Commons Lang StringEscapeUtils ?
           line = line.replaceAll(Pattern.quote("&#039;"), "'");
           line = line.replaceAll(Pattern.quote("&quot;"), "\"");
           line = line.replaceAll(Pattern.quote("&amp;"), "&");
-          error.addPage(line);
+          error.addPage(line, null);
         }
       } catch (UnsupportedEncodingException e) {
         //
@@ -233,7 +231,7 @@ public class CheckError {
               pageName = pageName.replaceAll(Pattern.quote("&#039;"), "'");
               pageName = pageName.replaceAll(Pattern.quote("&quot;"), "\"");
               pageName = pageName.replaceAll(Pattern.quote("&amp;"), "&");
-              error.addPage(pageName);
+              error.addPage(pageName, pageId);
             }
           }
         }
@@ -316,9 +314,10 @@ public class CheckError {
    * Add a page to the list of errors.
    * 
    * @param page Page.
+   * @param pageId Page id.
    */
-  private void addPage(String page) {
-    Page tmpPage = DataManager.getPage(wikipedia, page, null, null);
+  private void addPage(String page, Integer pageId) {
+    Page tmpPage = DataManager.getPage(wikipedia, page, pageId, null, null);
     if (!errors.contains(tmpPage)) {
       errors.add(tmpPage);
     }

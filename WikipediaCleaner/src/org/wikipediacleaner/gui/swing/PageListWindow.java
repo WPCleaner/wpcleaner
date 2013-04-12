@@ -452,7 +452,7 @@ public class PageListWindow extends BasicWindow {
         watchedPages.add(value);
         Collections.sort(watchedPages);
         config.setStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES, watchedPages);
-        modelPages.addPage(DataManager.getPage(getWikipedia(), value, null, null));
+        modelPages.addPage(DataManager.getPage(getWikipedia(), value, null, null, null));
       }
     }
   }

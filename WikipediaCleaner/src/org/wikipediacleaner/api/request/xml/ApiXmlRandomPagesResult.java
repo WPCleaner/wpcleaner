@@ -73,7 +73,7 @@ public class ApiXmlRandomPagesResult extends ApiXmlResult implements ApiRandomPa
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
         Page page = DataManager.getPage(
-            getWiki(), xpaTitle.valueOf(currentNode), null, null);
+            getWiki(), xpaTitle.valueOf(currentNode), null, null, null);
         page.setNamespace(xpaNs.valueOf(currentNode));
         page.setPageId(xpaPageId.valueOf(currentNode));
         list.add(page);

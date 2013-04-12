@@ -126,7 +126,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
             Namespace.TEMPLATE,
             dabWarningTemplateName);
         Page dabWarningTemplate = DataManager.getPage(
-            wikipedia, templateTitle, null, null);
+            wikipedia, templateTitle, null, null, null);
         List<Page> dabWarningTalkPages = api.retrieveEmbeddedIn(
             wikipedia, dabWarningTemplate,
             configuration.getEncyclopedicTalkNamespaces(),
@@ -152,7 +152,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
                   tmpTitle = wikiConfiguration.getPageTitle(namespace - 1, tmpTitle);
                 }
                 if ((start.length() == 0) || (start.compareTo(tmpTitle) < 0)) {
-                  Page page = DataManager.getPage(wikipedia, tmpTitle, null, null);
+                  Page page = DataManager.getPage(wikipedia, tmpTitle, null, null, null);
                   if (!tmpWarningPages.contains(page)) {
                     tmpWarningPages.add(page);
                   }

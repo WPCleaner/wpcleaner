@@ -73,7 +73,7 @@ public class ApiXmlSearchResult extends ApiXmlResult implements ApiSearchResult 
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
         Page similarPage = DataManager.getPage(
-            getWiki(), xpaTitle.valueOf(currentNode), null, null);
+            getWiki(), xpaTitle.valueOf(currentNode), null, null, null);
         similarPage.setNamespace(xpaNs.valueOf(currentNode));
         list.add(similarPage);
       }

@@ -1270,7 +1270,8 @@ public class MainWindow
     }
     UpdateDabWarningWorker worker = new UpdateDabWarningWorker(
         getWikipedia(), this,
-        Collections.singletonList(DataManager.getPage(getWikipedia(), textPagename.getText(), null, null)));
+        Collections.singletonList(DataManager.getPage(
+            getWikipedia(), textPagename.getText(), null, null, null)));
     worker.start();
   }
 
@@ -1340,7 +1341,7 @@ public class MainWindow
     String title = getWikipedia().getWikiConfiguration().getPageTitle(
         Namespace.CATEGORY, pageName); 
     Page page = DataManager.getPage(
-        getWikipedia(), title, null, null);
+        getWikipedia(), title, null, null, null);
     new PageListWorker(
         getWikipedia(), this, page,
         Collections.singletonList(title),
@@ -1370,7 +1371,7 @@ public class MainWindow
     String title = getWikipedia().getWikiConfiguration().getPageTitle(
         Namespace.TEMPLATE, pageName);
     Page page = DataManager.getPage(
-        getWikipedia(), title, null, null);
+        getWikipedia(), title, null, null, null);
     new PageListWorker(
         getWikipedia(), this, page,
         Collections.singletonList(title),
@@ -1773,7 +1774,7 @@ public class MainWindow
             Page page = DataManager.getPage(
                 getWikipedia(),
                 cwConfiguration.getTranslationPage(),
-                null, null);
+                null, null, null);
             mw.retrieveContents(getWikipedia(), page, true, false, false);
             if (Boolean.TRUE.equals(page.isExisting())) {
               cwConfiguration.setWikiConfiguration(new StringReader(page.getContents()));
@@ -1788,7 +1789,8 @@ public class MainWindow
         for (int i = 0; i < CWConfiguration.MAX_ERROR_NUMBER; i++) {
           CWConfigurationError error = cwConfiguration.getErrorConfiguration(i);
           if ((error != null) && (error.getWhiteListPageName() != null)) {
-            Page page = DataManager.getPage(getWikipedia(), error.getWhiteListPageName(), null, null);
+            Page page = DataManager.getPage(
+                getWikipedia(), error.getWhiteListPageName(), null, null, null);
             whiteListPages.put(error.getWhiteListPageName(), page);
           }
         }

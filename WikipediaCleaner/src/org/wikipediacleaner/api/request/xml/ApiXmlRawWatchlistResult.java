@@ -72,7 +72,7 @@ public class ApiXmlRawWatchlistResult extends ApiXmlResult implements ApiRawWatc
       while (iter.hasNext()) {
         Element currentNode = (Element) iter.next();
         Page page = DataManager.getPage(
-            getWiki(), xpaTitle.valueOf(currentNode), null, null);
+            getWiki(), xpaTitle.valueOf(currentNode), null, null, null);
         if (page.isArticle()) {
           watchlist.add(page);
         }
