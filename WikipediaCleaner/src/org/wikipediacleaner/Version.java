@@ -30,8 +30,8 @@ import org.wikipediacleaner.i18n.GT;
  */
 public final class Version {
 
-  public final static String VERSION = "1.26";
-  public final static Date   DATE = new GregorianCalendar(2013, Calendar.FEBRUARY, 15).getTime();
+  public final static String VERSION = "1.27";
+  public final static Date   DATE = new GregorianCalendar(2013, Calendar.APRIL, 13).getTime();
 
   public final static String PROGRAM = "WPCleaner";
 
