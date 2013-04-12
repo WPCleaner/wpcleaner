@@ -119,7 +119,7 @@ public class ApiInfoRequest extends ApiPropertiesRequest {
         PROPERTY_PROP_REVISIONS + "|" + PROPERTY_PROP_INFO);
     List<Collection<Page>> tmpPages = splitListPages(pages, MAX_PAGES_PER_QUERY);
     for (Collection<Page> tmpPages2 : tmpPages) {
-      properties.put(PROPERTY_TITLES, constructListPages(tmpPages2));
+      properties.put(PROPERTY_TITLES, constructListTitles(tmpPages2));
       while (result.executeInformations(properties, tmpPages2)) {
         //
       }

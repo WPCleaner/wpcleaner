@@ -197,13 +197,32 @@ public abstract class ApiRequest {
    * @param pages List of pages.
    * @return Textual representation of the list.
    */
-  protected String constructListPages(Collection<Page> pages) {
+  protected String constructListTitles(Collection<Page> pages) {
     StringBuilder buffer = new StringBuilder();
     for (Page page : pages) {
       if (buffer.length() > 0) {
         buffer.append("|");
       }
       buffer.append(page.getTitle());
+    }
+    return buffer.toString();
+  }
+
+  /**
+   * Construct a textual representation of a list of pages.
+   * 
+   * @param pages List of pages.
+   * @return Textual representation of the list.
+   */
+  protected String constructListIds(Collection<Page> pages) {
+    StringBuilder buffer = new StringBuilder();
+    for (Page page : pages) {
+      if (page.getPageId() != null) {
+        if (buffer.length() > 0) {
+          buffer.append("|");
+        }
+        buffer.append(page.getPageId());
+      }
     }
     return buffer.toString();
   }

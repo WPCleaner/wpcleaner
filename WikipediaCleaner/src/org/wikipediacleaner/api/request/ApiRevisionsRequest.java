@@ -204,7 +204,7 @@ public class ApiRevisionsRequest extends ApiPropertiesRequest {
     properties.put(
         ApiInfoRequest.PROPERTY_PROPERTIES,
         ApiInfoRequest.PROPERTY_PROPERTIES_PROTECTION);
-    properties.put(PROPERTY_TITLES, constructListPages(pages));
+    properties.put(PROPERTY_TITLES, constructListTitles(pages));
     while (result.executeLastRevision(properties, pages)) {
       //
     }
@@ -220,7 +220,7 @@ public class ApiRevisionsRequest extends ApiPropertiesRequest {
       if (!redirectPages.isEmpty()) {
         properties = getProperties(ACTION_QUERY, result.getFormat());
         properties.put(PROPERTY_REDIRECTS, "");
-        properties.put(PROPERTY_TITLES, constructListPages(redirectPages));
+        properties.put(PROPERTY_TITLES, constructListTitles(redirectPages));
         result.executeRedirect(properties, redirectPages);
       }
     }
