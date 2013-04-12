@@ -112,7 +112,7 @@ class AutomaticCWWorker extends BasicWorker {
               (numPage < error.getPageCount()) && shouldContinue();
               numPage++) {
             Page page = error.getPage(numPage);
-            api.retrieveContents(getWikipedia(), Collections.singletonList(page), false);
+            api.retrieveContents(getWikipedia(), Collections.singletonList(page), true, false);
             PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
             List<CheckErrorPage> errorPages = CheckError.analyzeErrors(allAlgorithms, analysis);
             boolean found = false;

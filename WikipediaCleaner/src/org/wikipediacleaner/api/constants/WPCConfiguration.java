@@ -574,7 +574,7 @@ public class WPCConfiguration {
           }
         }
         try {
-          api.retrieveContents(wiki, pages.values(), false);
+          api.retrieveContents(wiki, pages.values(), false, false);
         } catch (APIException e) {
           System.err.println("Exception retrieving contents for suggestions");
         }

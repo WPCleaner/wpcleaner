@@ -101,7 +101,7 @@ public class MediaWiki extends MediaWikiController {
     addTask(new ContentsCallable(
         wikipedia, this, api,
         page, returnPage ? page : null,
-        withRedirects, null));
+        false, withRedirects, null));
     block(block);
   }
 
@@ -125,7 +125,7 @@ public class MediaWiki extends MediaWikiController {
       addTask(new ContentsCallable(
           wikipedia, this, api,
           page, null,
-          withRedirects, null));
+          false, withRedirects, null));
     }
     block(block);
   }
@@ -150,7 +150,7 @@ public class MediaWiki extends MediaWikiController {
       addTask(new ContentsCallable(
           wikipedia, this, api,
           page, null,
-          false, Integer.valueOf(section)));
+          false, false, Integer.valueOf(section)));
     }
     block(block);
   }
@@ -254,7 +254,7 @@ public class MediaWiki extends MediaWikiController {
                       "'" + e.getErrorCode() + "'"));
                   attemptDone = false;
                   Page tmpPage = page.replicatePage();
-                  api.retrieveContents(wikipedia, Collections.singletonList(tmpPage), false);
+                  api.retrieveContents(wikipedia, Collections.singletonList(tmpPage), false, false);
                 } else {
                   throw e;
                 }

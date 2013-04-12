@@ -209,13 +209,15 @@ public interface API {
    * 
    * @param wiki Wiki.
    * @param pages List of pages.
+   * @param usePageId True if page identifiers should be used.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#revisions_.2F_rv">API:Properties#revisions</a>
    */
   public void retrieveContents(
       EnumWikipedia wiki,
-      Collection<Page> pages, boolean withRedirects) throws APIException;
+      Collection<Page> pages, boolean usePageId,
+      boolean withRedirects) throws APIException;
 
   /**
    * Initialize the disambiguation flags of a list of <code>pages</code>.

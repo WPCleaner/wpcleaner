@@ -225,7 +225,7 @@ public class MediaWikiAPI implements API {
       if (userConfigPage != null) {
         pages.add(userConfigPage);
       }
-      retrieveContents(wiki, pages, false);
+      retrieveContents(wiki, pages, false, false);
 
       // Set configuration
       wiki.getConfiguration().setGeneralConfiguration(
@@ -948,17 +948,19 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @param pages List of pages.
+   * @param usePageId True if page identifiers should be used.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Properties#revisions_.2F_rv">API:Properties#revisions</a>
    */
   public void retrieveContents(
       EnumWikipedia wiki,
-      Collection<Page> pages, boolean withRedirects)
+      Collection<Page> pages, boolean usePageId,
+      boolean withRedirects)
       throws APIException {
     ApiRevisionsResult result = new ApiXmlRevisionsResult(wiki, httpClient);
     ApiRevisionsRequest request = new ApiRevisionsRequest(wiki, result);
-    request.loadContent(pages, withRedirects);
+    request.loadContent(pages, usePageId, withRedirects);
   }
 
   /**

@@ -91,7 +91,7 @@ public class CheckCategoryLinkAction extends TextAction {
 
       API api = APIFactory.getAPI();
       Page category = DataManager.getPage(toWikipedia, "Category:" + title, null, null, null); 
-      api.retrieveContents(toWikipedia, Collections.singletonList(category), false);
+      api.retrieveContents(toWikipedia, Collections.singletonList(category), false, false);
       if (category.isExisting() == null) {
         Utilities.displayWarning(
             textPane.getParent(),
