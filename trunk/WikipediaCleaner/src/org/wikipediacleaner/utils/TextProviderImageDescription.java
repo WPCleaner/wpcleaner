@@ -66,7 +66,7 @@ public class TextProviderImageDescription implements TextProvider {
             null, null, null);
         api.retrieveContents(
             image.getWiki(),
-            Collections.singletonList(imagePage), false);
+            Collections.singletonList(imagePage), false, false);
 
         // Use image description on the wiki
         if (Boolean.TRUE.equals(imagePage.isExisting())) {
@@ -88,7 +88,7 @@ public class TextProviderImageDescription implements TextProvider {
             null, null, null);
         api.retrieveContents(
             EnumWikipedia.COMMONS,
-            Collections.singletonList(commonsPage), false);
+            Collections.singletonList(commonsPage), false, false);
         if (Boolean.TRUE.equals(commonsPage.isExisting())) {
           PageAnalysis pageAnalysis = commonsPage.getAnalysis(commonsPage.getContents(), true);
           for (PageElementTemplate template : pageAnalysis.getTemplates()) {

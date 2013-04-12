@@ -191,9 +191,22 @@ public class ApiRevisionsRequest extends ApiPropertiesRequest {
    * Load content of a page.
    * 
    * @param pages Pages for which content is requested.
+   * @param usePageId True if page identifiers should be used.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
    */
-  public void loadContent(Collection<Page> pages, boolean withRedirects) throws APIException {
+  public void loadContent(
+      Collection<Page> pages, boolean usePageId,
+      boolean withRedirects) throws APIException {
+
+    // Check page identifiers
+    if (usePageId) {
+      for (Page page : pages) {
+        if (page.getPageId() == null) {
+          usePageId = false;
+        }
+      }
+    }
+
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
         PROPERTY_PROP,
@@ -204,7 +217,11 @@ public class ApiRevisionsRequest extends ApiPropertiesRequest {
     properties.put(
         ApiInfoRequest.PROPERTY_PROPERTIES,
         ApiInfoRequest.PROPERTY_PROPERTIES_PROTECTION);
-    properties.put(PROPERTY_TITLES, constructListTitles(pages));
+    if (usePageId) {
+      properties.put(PROPERTY_PAGEIDS, constructListIds(pages));
+    } else {
+      properties.put(PROPERTY_TITLES, constructListTitles(pages));
+    }
     while (result.executeLastRevision(properties, pages)) {
       //
     }

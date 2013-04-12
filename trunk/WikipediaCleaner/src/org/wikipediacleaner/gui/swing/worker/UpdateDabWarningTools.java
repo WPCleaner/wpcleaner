@@ -318,7 +318,7 @@ public class UpdateDabWarningTools {
       if (todoSubpage == null) {
         todoSubpage = talkPage.getSubPage(todoSubpageAttr);
         setText(GT._("Retrieving page contents - {0}", todoSubpage.getTitle()));
-        api.retrieveContents(wikipedia, Collections.singletonList(todoSubpage), false);
+        api.retrieveContents(wikipedia, Collections.singletonList(todoSubpage), false, false);
       }
 
       // If we force the use of "To do" sub-page, the disambiguation warning must be on it
