@@ -27,10 +27,10 @@ import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.TextAction;
 
+import org.wikipediacleaner.api.data.LinkReplacement;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.TemplateParameter;
 import org.wikipediacleaner.api.data.TemplateReplacement;
-import org.wikipediacleaner.gui.swing.component.MenuCreator;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 
 
@@ -94,7 +94,7 @@ public class ReplaceTemplateAction extends TextAction {
     }
     String localNewTitle = newTitle;
     if ((localOldTitle != null) && (localNewTitle == null)) {
-      localNewTitle = MenuCreator.getLastReplacement(localOldTitle);
+      localNewTitle = LinkReplacement.getLastReplacement(localOldTitle);
     }
     replace(localOldTitle, localNewTitle, localElement, localTextPane);
   }
@@ -166,7 +166,7 @@ public class ReplaceTemplateAction extends TextAction {
       }
       newText.append("}}");
       localTextPane.replaceSelection(newText.toString());
-      MenuCreator.addLastReplacement(localOldTitle, localNewTitle);
+      LinkReplacement.addLastReplacement(localOldTitle, localNewTitle);
     }
   }
 }

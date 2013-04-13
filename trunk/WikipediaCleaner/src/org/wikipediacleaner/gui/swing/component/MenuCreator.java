@@ -45,6 +45,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.LinkReplacement;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -74,95 +75,21 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
-import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
 
 
 /**
- * A helper class to create menus.
+ * A helper class to manage link replacements.
  */
 public class MenuCreator {
-
-  private final static Map<String, String> lastReplacement = new HashMap<String, String>();
-  private static String lastSuffix = null;
 
   final private static Map<TextAttribute, Color> disambiguationAttributes = new HashMap<TextAttribute, Color>();
   final private static Map<TextAttribute, Boolean> missingAttributes = new HashMap<TextAttribute, Boolean>();
 
-  final private static Configuration configuration = Configuration.getConfiguration();
-
   static {
-    Properties tmp = configuration.getProperties(
-        null, Configuration.PROPERTIES_LAST_REPLACEMENT);
-    if (tmp != null) {
-      for (Object object : tmp.keySet()) {
-        if (object instanceof String) {
-          lastReplacement.put((String) object, tmp.getProperty((String) object, "")); 
-        }
-      }
-    }
     disambiguationAttributes.put(TextAttribute.FOREGROUND, Color.RED);
     missingAttributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
-  }
-
-  /**
-   * Memorize a replacement.
-   * 
-   * @param from From.
-   * @param to To.
-   */
-  public static void addLastReplacement(String from, String to) {
-    if ((from != null) && (to != null)) {
-      if (to.startsWith(from)) {
-        lastSuffix = to.substring(from.length());
-      } else {
-        lastSuffix = null;
-      }
-      lastReplacement.put(from, to);
-      if (configuration.getBoolean(
-          null,
-          ConfigurationValueBoolean.SAVE_LAST_REPLACEMENT)) {
-        configuration.setSubString(
-            null,
-            Configuration.PROPERTIES_LAST_REPLACEMENT,
-            from, to);
-      }
-    }
-  }
-
-  /**
-   * Get a replacement.
-   * 
-   * @param from From.
-   * @return Replacement.
-   */
-  public static String getLastReplacement(String from) {
-    if (from != null) {
-      return lastReplacement.get(from);
-    }
-    return null;
-  }
-
-  /**
-   * Return a link matching the last suffix replacement.
-   * 
-   * @param from Initial link.
-   * @param links Possible links.
-   * @return Link matching the last suffix replacement if it exists. 
-   */
-  private static String getPossibleLastSuffix(String from, Collection<Page> links) {
-    if ((lastSuffix == null) ||
-        (lastSuffix.length() == 0) ||
-        (links == null)) {
-      return null;
-    }
-    for (Page link : links) {
-      if (link.getTitle().startsWith(from) && link.getTitle().endsWith(lastSuffix)) {
-        return link.getTitle();
-      }
-    }
-    return null;
   }
 
   /**
@@ -221,9 +148,9 @@ public class MenuCreator {
   }
 
   /**
-   * Add submenus for showing current chapter organization.
+   * Add sub menus for showing current chapter organization.
    * 
-   * @param popup Popup menu.
+   * @param popup Pop up menu.
    * @param position Current position in text.
    * @param pageAnalysis Page analysis.
    */
@@ -247,10 +174,10 @@ public class MenuCreator {
   }
 
   /**
-   * Add submenus for replacing templates.
+   * Add sub menus for replacing templates.
    * 
    * @param wikipedia Wikipedia.
-   * @param popup Popup menu.
+   * @param popup Pop up menu.
    * @param template Template.
    * @param matcher Template matcher.
    * @param disambigPage Disambiguation page.
@@ -316,7 +243,7 @@ public class MenuCreator {
           }
         } else {
           // Last replacement
-          String title = getLastReplacement(disambigPage.getTitle());
+          String title = LinkReplacement.getLastReplacement(disambigPage.getTitle());
           if (title != null) {
             menuItem = new JMenuItem(title);
             action = new ReplaceTextAction(
@@ -429,7 +356,7 @@ public class MenuCreator {
             }
           } else {
             // Last replacement
-            String title = getLastReplacement(disambigPage.getTitle());
+            String title = LinkReplacement.getLastReplacement(disambigPage.getTitle());
             if (title != null) {
               submenu.addSeparator();
               fixedEnd++;
@@ -493,8 +420,8 @@ public class MenuCreator {
       int fixedEndLink = 0;
       int fixedBeginReplace = 0;
       int fixedEndReplace = 0;
-      String withLastSuffix = getPossibleLastSuffix(page.getTitle(), links);
-      String last = getLastReplacement(page.getTitle());
+      String withLastSuffix = LinkReplacement.getPossibleLastSuffix(page.getTitle(), links);
+      String last = LinkReplacement.getLastReplacement(page.getTitle());
       if (withLastSuffix != null) {
         preferredDabs.remove(withLastSuffix);
 
@@ -764,7 +691,7 @@ public class MenuCreator {
   }
 
   /**
-   * Add submenus for analysing missing page.
+   * Add submenus for analyzing missing page.
    * 
    * @param wikipedia Wikipedia.
    * @param popup Popup menu.
@@ -798,7 +725,7 @@ public class MenuCreator {
 
       int fixedBeginLink = 0;
       int fixedEndLink = 0;
-      String title = getLastReplacement(page.getTitle());
+      String title = LinkReplacement.getLastReplacement(page.getTitle());
       if (title != null) {
         menuItem = new JMenuItem(title);
         action = new ReplaceAllLinksAction(textPane, page, title);
@@ -852,7 +779,7 @@ public class MenuCreator {
         }
       }
 
-      title = getLastReplacement(page.getTitle());
+      title = LinkReplacement.getLastReplacement(page.getTitle());
       if (title != null) {
         fixedEndLink += addSeparator(submenuLink);
         menuItem = new JMenuItem(title);

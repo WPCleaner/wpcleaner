@@ -27,8 +27,8 @@ import javax.swing.text.JTextComponent;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.TextAction;
 
+import org.wikipediacleaner.api.data.LinkReplacement;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.gui.swing.component.MenuCreator;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
@@ -99,7 +99,7 @@ public class ReplaceLinkAction extends TextAction {
     }
     String localNewTitle = newTitle;
     if ((localOldTitle != null) && (localNewTitle == null)) {
-      localNewTitle = MenuCreator.getLastReplacement(localOldTitle);
+      localNewTitle = LinkReplacement.getLastReplacement(localOldTitle);
     }
     if (fullReplacement) {
       fullyReplace(localOldTitle, localNewTitle, localText, localElement, localTextPane);
@@ -134,7 +134,7 @@ public class ReplaceLinkAction extends TextAction {
         newText = "[[" + localNewTitle + "]]";
       }
       localTextPane.replaceSelection(newText);
-      MenuCreator.addLastReplacement(localOldTitle, localNewTitle);
+      LinkReplacement.addLastReplacement(localOldTitle, localNewTitle);
     }
   }
 
@@ -248,7 +248,7 @@ public class ReplaceLinkAction extends TextAction {
       }
       localTextPane.setCaretPosition(startOffset - offsetBefore);
       localTextPane.moveCaretPosition(startOffset - offsetBefore + newText.length());
-      MenuCreator.addLastReplacement(localOldTitle, originalNewTitle);
+      LinkReplacement.addLastReplacement(localOldTitle, originalNewTitle);
     } catch (BadLocationException e1) {
       // Nothing to be done
     }
