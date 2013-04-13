@@ -1095,7 +1095,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     UpdateDabWarningWorker worker = new UpdateDabWarningWorker(
         getWikipedia(), this,
         Collections.singletonList(getPage()),
-        true, true, true);
+        true, true, true, false);
     worker.start();
   }
 

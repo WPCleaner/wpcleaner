@@ -1271,7 +1271,8 @@ public class MainWindow
     UpdateDabWarningWorker worker = new UpdateDabWarningWorker(
         getWikipedia(), this,
         Collections.singletonList(DataManager.getPage(
-            getWikipedia(), textPagename.getText(), null, null, null)));
+            getWikipedia(), textPagename.getText(), null, null, null)),
+        false);
     worker.start();
   }
 
