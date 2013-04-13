@@ -668,7 +668,8 @@ public class MenuCreator {
       }
 
       if (!Page.areSameTitle(text, page.getTitle())) {
-        menuItem = new JMenuItem(GT._("Reverse to [[{0}|{1}]]", new Object[]{text, page.getTitle()}));
+        String newLink = PageElementInternalLink.createInternalLink(text, page.getTitle());
+        menuItem = new JMenuItem(GT._("Replace with {0}", newLink));
         action = new RevertLinkAction(page.getTitle(), text, element, textPane);
         menuItem.addActionListener(action);
         popup.add(menuItem);
@@ -687,6 +688,24 @@ public class MenuCreator {
       action = new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true);
       menuItem.addActionListener(action);
       popup.add(menuItem);
+
+      if (!Page.areSameTitle(text, page.getTitle())) {
+        String newLink = PageElementInternalLink.createInternalLink(text, page.getTitle());
+        menuItem = new JMenuItem(GT._("Replace with {0}", newLink));
+        action = new RevertLinkAction(page.getTitle(), text, element, textPane);
+        menuItem.addActionListener(action);
+        popup.add(menuItem);
+      }
+
+    // Missing page
+    } else if (Boolean.FALSE.equals(page.isExisting())) {
+      if (!Page.areSameTitle(text, page.getTitle())) {
+        String newLink = PageElementInternalLink.createInternalLink(text, page.getTitle());
+        menuItem = new JMenuItem(GT._("Replace with {0}", newLink));
+        action = new RevertLinkAction(page.getTitle(), text, element, textPane);
+        menuItem.addActionListener(action);
+        popup.add(menuItem);
+      }
     }
   }
 
