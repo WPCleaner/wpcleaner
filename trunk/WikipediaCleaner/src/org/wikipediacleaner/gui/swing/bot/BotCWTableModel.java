@@ -95,6 +95,7 @@ public class BotCWTableModel extends AbstractTableModel {
     addAlgorithm(64); // Link equal to link text
     addAlgorithm(66); // Image description with full <small>
     addAlgorithm(76); // Link with no space
+    addAlgorithm(85); // Tag without content
     addAlgorithm(87); // HTML named entities without semicolon
     addAlgorithm(88); // DEFAULTSORT with blank at first position
     addAlgorithm(92); // Headline double
