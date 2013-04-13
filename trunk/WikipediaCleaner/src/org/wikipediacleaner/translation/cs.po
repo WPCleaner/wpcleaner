@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-13 16:15+0200\n"
+"POT-Creation-Date: 2013-04-13 16:24+0200\n"
 "PO-Revision-Date: 2013-02-22 17:40+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -84,9 +84,6 @@ msgstr "Neznámá chyba z WikiCleaneru"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:95
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:95
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:672
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:694
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:704
 #, java-format
 msgid "Replace with {0}"
 msgstr "Nahradit za {0}"
@@ -2320,6 +2317,13 @@ msgstr "Jaký odkaz chcete přidat k oblíbeným rozcestníkům?"
 msgid "Remove from preferred disambiguations"
 msgstr "Odebrat z oblíbených rozcestníků"
 
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:672
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:694
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:704
+#, fuzzy, java-format
+msgid "Reverse to {0}"
+msgstr "Prohodit na [[{0}|{1}]]"
+
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:722
 msgid "Red links analysis"
 msgstr "Analýza červených odkazů"
@@ -2938,9 +2942,6 @@ msgstr "Název reference nemůže obsahovat tyto znaky: {0}"
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
-
-#~ msgid "Reverse to [[{0}|{1}]]"
-#~ msgstr "Prohodit na [[{0}|{1}]]"
 
 #~ msgid "Check orthograph and typography"
 #~ msgstr "Ověřit pravopis a typografii"

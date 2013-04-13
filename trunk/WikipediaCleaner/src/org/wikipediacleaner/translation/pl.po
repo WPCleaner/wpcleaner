@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-13 16:15+0200\n"
+"POT-Creation-Date: 2013-04-13 16:24+0200\n"
 "PO-Revision-Date: 2013-04-08 17:53+0000\n"
 "Last-Translator: Piotr Strębski <strebski@o2.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -82,9 +82,6 @@ msgstr "Nieznany błąd z WikiCleanera"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:95
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:95
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:672
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:694
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:704
 #, java-format
 msgid "Replace with {0}"
 msgstr "Zastąp przez {0}"
@@ -2326,6 +2323,13 @@ msgstr "Jaki link chcesz dodać do ulubionych znaczeń?"
 msgid "Remove from preferred disambiguations"
 msgstr "Skasuj z ulubionych znaczeń"
 
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:672
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:694
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:704
+#, fuzzy, java-format
+msgid "Reverse to {0}"
+msgstr "Odwróć do [[{0}|{1}]]"
+
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:722
 msgid "Red links analysis"
 msgstr "Analiza czerwonych linków"
@@ -2937,9 +2941,6 @@ msgstr "Nazwa przypisu nie może zawierać żadnego z tych znaków: {0}"
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr "Wartość nie może zawierać żadnego z tych znaków: {0}"
-
-#~ msgid "Reverse to [[{0}|{1}]]"
-#~ msgstr "Odwróć do [[{0}|{1}]]"
 
 #~ msgid ""
 #~ "There's no known Check Wikipedia Project for this Wikipedia.\n"

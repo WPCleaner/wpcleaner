@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-13 16:15+0200\n"
+"POT-Creation-Date: 2013-04-13 16:24+0200\n"
 "PO-Revision-Date: 2012-10-13 06:23+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
@@ -82,9 +82,6 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:95
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:95
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:672
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:694
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:704
 #, java-format
 msgid "Replace with {0}"
 msgstr ""
@@ -2281,6 +2278,13 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:659
 msgid "Remove from preferred disambiguations"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:672
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:694
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:704
+#, java-format
+msgid "Reverse to {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:722
