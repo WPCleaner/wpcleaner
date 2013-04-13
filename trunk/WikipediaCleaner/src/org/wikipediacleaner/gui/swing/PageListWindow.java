@@ -414,7 +414,7 @@ public class PageListWindow extends BasicWindow {
     if (answer != JOptionPane.YES_OPTION) {
       return;
     }
-    UpdateDabWarningWorker worker = new UpdateDabWarningWorker(getWikipedia(), this, tmpPages);
+    UpdateDabWarningWorker worker = new UpdateDabWarningWorker(getWikipedia(), this, tmpPages, false);
     worker.start();
   }
 

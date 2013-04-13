@@ -55,6 +55,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
   private final boolean contentsAvailable;
   private final boolean linksAvailable;
   private final boolean dabInformationAvailable;
+  private final boolean automaticEdit;
 
   /**
    * @param wikipedia Wikipedia.
@@ -69,16 +70,19 @@ public class UpdateDabWarningWorker extends BasicWorker {
     this.contentsAvailable = false;
     this.linksAvailable = false;
     this.dabInformationAvailable = false;
+    this.automaticEdit = true;
   }
 
   /**
    * @param wikipedia Wikipedia.
    * @param window Window.
    * @param pages Pages to analyze.
+   * @param automaticEdit True if the edit should be considered automatic.
    */
   public UpdateDabWarningWorker(
-      EnumWikipedia wikipedia, BasicWindow window, List<Page> pages) {
-    this(wikipedia, window, pages, false, false, false);
+      EnumWikipedia wikipedia, BasicWindow window,
+      List<Page> pages, boolean automaticEdit) {
+    this(wikipedia, window, pages, false, false, false, automaticEdit);
   }
 
   /**
@@ -87,11 +91,13 @@ public class UpdateDabWarningWorker extends BasicWorker {
    * @param pages Pages to analyze.
    * @param contentsAvailable True if contents is already available in pages.
    * @param linksAvailable True if links are already available in pages.
-   * @param dabInformationAvailable True if dab information is already available in pages.
+   * @param dabInformationAvailable True if disambiguation information is already available in pages.
+   * @param automaticEdit True if the edit should be considered automatic.
    */
   public UpdateDabWarningWorker(
       EnumWikipedia wikipedia, BasicWindow window, List<Page> pages,
-      boolean contentsAvailable, boolean linksAvailable, boolean dabInformationAvailable) {
+      boolean contentsAvailable, boolean linksAvailable,
+      boolean dabInformationAvailable, boolean automaticEdit) {
     super(wikipedia, window);
     this.start = "";
     this.dabWarningPages = new ArrayList<Page>(pages);
@@ -99,6 +105,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
     this.contentsAvailable = contentsAvailable;
     this.linksAvailable = linksAvailable;
     this.dabInformationAvailable = dabInformationAvailable;
+    this.automaticEdit = automaticEdit;
   }
 
   /* (non-Javadoc)
@@ -181,7 +188,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
       }
 
       // Working with sublists
-      UpdateDabWarningTools tools = new UpdateDabWarningTools(wikipedia, this, true, true);
+      UpdateDabWarningTools tools = new UpdateDabWarningTools(wikipedia, this, true, automaticEdit);
       if (!useList) {
         setText(GT._("Retrieving disambiguation pages"));
         tools.preloadDabPages();
