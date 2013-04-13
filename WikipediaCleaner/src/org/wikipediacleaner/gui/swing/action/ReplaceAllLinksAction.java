@@ -22,11 +22,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 
+import org.wikipediacleaner.api.data.LinkReplacement;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.gui.swing.component.MWPane;
-import org.wikipediacleaner.gui.swing.component.MenuCreator;
 
 
 /**
@@ -69,6 +69,6 @@ public class ReplaceAllLinksAction implements ActionListener {
       buffer.append(originalText.substring(lastPosition));
       textPane.changeText(buffer.toString());
     }
-    MenuCreator.addLastReplacement(from.getTitle(), to);
+    LinkReplacement.addLastReplacement(from.getTitle(), to);
   }
 }
