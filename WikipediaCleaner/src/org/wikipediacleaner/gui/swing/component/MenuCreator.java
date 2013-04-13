@@ -669,7 +669,7 @@ public class MenuCreator {
 
       if (!Page.areSameTitle(text, page.getTitle())) {
         String newLink = PageElementInternalLink.createInternalLink(text, page.getTitle());
-        menuItem = new JMenuItem(GT._("Replace with {0}", newLink));
+        menuItem = new JMenuItem(GT._("Reverse to {0}", newLink));
         action = new RevertLinkAction(page.getTitle(), text, element, textPane);
         menuItem.addActionListener(action);
         popup.add(menuItem);
@@ -691,7 +691,7 @@ public class MenuCreator {
 
       if (!Page.areSameTitle(text, page.getTitle())) {
         String newLink = PageElementInternalLink.createInternalLink(text, page.getTitle());
-        menuItem = new JMenuItem(GT._("Replace with {0}", newLink));
+        menuItem = new JMenuItem(GT._("Reverse to {0}", newLink));
         action = new RevertLinkAction(page.getTitle(), text, element, textPane);
         menuItem.addActionListener(action);
         popup.add(menuItem);
@@ -701,7 +701,7 @@ public class MenuCreator {
     } else if (Boolean.FALSE.equals(page.isExisting())) {
       if (!Page.areSameTitle(text, page.getTitle())) {
         String newLink = PageElementInternalLink.createInternalLink(text, page.getTitle());
-        menuItem = new JMenuItem(GT._("Replace with {0}", newLink));
+        menuItem = new JMenuItem(GT._("Reverse to {0}", newLink));
         action = new RevertLinkAction(page.getTitle(), text, element, textPane);
         menuItem.addActionListener(action);
         popup.add(menuItem);

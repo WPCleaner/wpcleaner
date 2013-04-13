@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-13 16:15+0200\n"
+"POT-Creation-Date: 2013-04-13 16:24+0200\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Shushi Kurose <md81bird@hitaki.net>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -82,9 +82,6 @@ msgstr "ウィキクリーナーで未知のエラー"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:95
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:95
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:672
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:694
-#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:704
 #, java-format
 msgid "Replace with {0}"
 msgstr "{0} を置換"
@@ -2295,6 +2292,13 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:659
 msgid "Remove from preferred disambiguations"
 msgstr ""
+
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:672
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:694
+#: org/wikipediacleaner/gui/swing/component/MenuCreator.java:704
+#, fuzzy, java-format
+msgid "Reverse to {0}"
+msgstr "{0} を置換"
 
 #: org/wikipediacleaner/gui/swing/component/MenuCreator.java:722
 msgid "Red links analysis"
