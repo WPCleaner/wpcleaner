@@ -20,9 +20,7 @@ package org.wikipediacleaner.gui.swing.component;
 
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -52,7 +50,7 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * A popup menu listener for MediaWikiPane. 
  */
-public abstract class MWPanePopupListener implements MouseListener, KeyListener {
+public abstract class MWPanePopupListener extends AbstractPopupListener {
 
   private final EnumWikipedia wikipedia;
   private BasicWindow window;
@@ -77,16 +75,14 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
   }
 
   /**
-   * Construct and show popup menu if necessary.
+   * Show popup menu in response to a mouse event.
    * 
    * @param e Event.
    */
-  private void maybeShowPopup(MouseEvent e) {
+  @Override
+  protected void showPopup(MouseEvent e) {
 
     // Retrieve information
-    if (!e.isPopupTrigger()) {
-      return;
-    }
     if (!(e.getComponent() instanceof MWPane)) {
       return;
     }
@@ -95,16 +91,14 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
   }
 
   /**
-   * Construct and show popup menu if necessary.
+   * Show popup menu in response to a key event.
    * 
    * @param e Event.
    */
-  private void maybeShowPopup(KeyEvent e) {
+  @Override
+  protected void showPopup(KeyEvent e) {
 
     // Retrieve information
-    if (e.getKeyCode() != KeyEvent.VK_CONTEXT_MENU) {
-      return;
-    }
     if (!(e.getComponent() instanceof MWPane)) {
       return;
     }
@@ -581,69 +575,5 @@ public abstract class MWPanePopupListener implements MouseListener, KeyListener 
            "..." +
            text.substring(text.length() - middle);
     return text;
-  }
-
-  /* ===================================================================== */
-  /* MouseListener implementation                                          */
-  /* ===================================================================== */
-
-  /* (non-Javadoc)
-   * @see java.awt.event.MouseAdapter#mouseClicked(java.awt.event.MouseEvent)
-   */
-  public void mouseClicked(MouseEvent e) {
-    maybeShowPopup(e);
-  }
-
-  /* (non-Javadoc)
-   * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
-   */
-  public void mousePressed(MouseEvent e) {
-    maybeShowPopup(e);
-  }
-
-  /* (non-Javadoc)
-   * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
-   */
-  public void mouseReleased(MouseEvent e) {
-    maybeShowPopup(e);
-  }
-
-  /* (non-Javadoc)
-   * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
-   */
-  public void mouseEntered(@SuppressWarnings("unused") MouseEvent e) {
-    //
-  }
-
-  /* (non-Javadoc)
-   * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
-   */
-  public void mouseExited(@SuppressWarnings("unused") MouseEvent e) {
-    //
-  }
-
-  /* --------------------------------------------------------------------- */
-  /* KeyListener implementation                                            */
-  /* --------------------------------------------------------------------- */
-
-  /* (non-Javadoc)
-   * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
-   */
-  public void keyPressed(@SuppressWarnings("unused") KeyEvent e) {
-    //
-  }
-
-  /* (non-Javadoc)
-   * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
-   */
-  public void keyReleased(KeyEvent e) {
-    maybeShowPopup(e);
-  }
-
-  /* (non-Javadoc)
-   * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
-   */
-  public void keyTyped(@SuppressWarnings("unused") KeyEvent e) {
-    //
   }
 }

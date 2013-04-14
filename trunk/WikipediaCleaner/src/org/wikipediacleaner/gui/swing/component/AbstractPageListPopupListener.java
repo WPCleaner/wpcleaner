@@ -18,7 +18,9 @@
 
 package org.wikipediacleaner.gui.swing.component;
 
-import java.awt.event.MouseAdapter;
+import java.awt.Component;
+import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JList;
@@ -35,7 +37,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 /**
  * An abstract popup menu listener for Page list. 
  */
-public abstract class AbstractPageListPopupListener extends MouseAdapter implements PopupMenuListener {
+public abstract class AbstractPageListPopupListener extends AbstractPopupListener implements PopupMenuListener {
 
   protected Page page;
   protected final EnumWikipedia wikipedia;
@@ -66,41 +68,15 @@ public abstract class AbstractPageListPopupListener extends MouseAdapter impleme
     this.page = page;
   }
 
-  /* (non-Javadoc)
-   * @see java.awt.event.MouseAdapter#mouseClicked(java.awt.event.MouseEvent)
-   */
-  @Override
-  public void mouseClicked(MouseEvent e) {
-    maybeShowPopup(e);
-  }
-
-  /* (non-Javadoc)
-   * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
-   */
-  @Override
-  public void mousePressed(MouseEvent e) {
-    maybeShowPopup(e);
-  }
-
-  /* (non-Javadoc)
-   * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
-   */
-  @Override
-  public void mouseReleased(MouseEvent e) {
-    maybeShowPopup(e);
-  }
-
   /**
-   * Construct and show popup menu if necessary.
+   * Show popup menu in response to a mouse event.
    * 
    * @param e Event.
    */
-  private void maybeShowPopup(MouseEvent e) {
+  @Override
+  protected void showPopup(MouseEvent e) {
 
     // Retrieve information
-    if (!e.isPopupTrigger()) {
-      return;
-    }
     if (!(e.getComponent() instanceof JList)) {
       return;
     }
@@ -114,6 +90,44 @@ public abstract class AbstractPageListPopupListener extends MouseAdapter impleme
       return;
     }
     Page link = (Page) object;
+    showPopup(tmpList, link, e.getX(), e.getY());
+  }
+
+  /**
+   * Show popup menu in response to a key event.
+   * 
+   * @param e Event.
+   */
+  @Override
+  protected void showPopup(KeyEvent e) {
+
+    // Retrieve information
+    if (!(e.getComponent() instanceof JList)) {
+      return;
+    }
+    JList tmpList = (JList) e.getComponent();
+    int position = tmpList.getSelectedIndex();
+    if (position < 0) {
+      return;
+    }
+    Object object = tmpList.getModel().getElementAt(position);
+    if (!(object instanceof Page)) {
+      return;
+    }
+    Page link = (Page) object;
+    Rectangle rect = tmpList.getCellBounds(position, position);
+    showPopup(tmpList, link, (int) rect.getMinX(), (int) rect.getMaxY());
+  }
+
+  /**
+   * Construct and show popup menu.
+   * 
+   * @param component Component.
+   * @param link Selected page.
+   * @param x Position.
+   * @param y Position.
+   */
+  private void showPopup(Component component, Page link, int x, int y) {
 
     // Menu name
     JPopupMenu popup = new JPopupMenu();
@@ -124,7 +138,7 @@ public abstract class AbstractPageListPopupListener extends MouseAdapter impleme
     // Create sub menus
     createPopup(popup, link);
 
-    popup.show(e.getComponent(), e.getX(), e.getY());
+    popup.show(component, x, y);
     popup.addPopupMenuListener(this);
   }
 
