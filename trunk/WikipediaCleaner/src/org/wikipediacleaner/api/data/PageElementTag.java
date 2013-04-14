@@ -498,13 +498,15 @@ public class PageElementTag extends PageElement {
    * @param tags List of tags.
    * @param firstTagIndex Index of first tag in the list.
    * @param contents Page contents.
+   * @param punctuation Possible punctuation elements between tags.
    * @param separator Possible separator between tags.
    * @return Index of last tag in the group of consecutive tags.
    */
   public static int groupTags(
       List<PageElementTag> tags,
       int firstTagIndex,
-      String contents, String separator) {
+      String contents,
+      String punctuation, String separator) {
     if (tags == null) {
       return firstTagIndex;
     }
@@ -531,10 +533,8 @@ public class PageElementTag extends PageElement {
         } else if (contents.startsWith("&nbsp;", currentIndex)) {
           currentIndex += "&nbsp;".length();
         } else if (!Character.isWhitespace(contents.charAt(currentIndex)) &&
-            (contents.charAt(currentIndex) != ',') &&
-            (contents.charAt(currentIndex) != ';') &&
-            (contents.charAt(currentIndex) != '.') &&
-            (contents.charAt(currentIndex) != '\'')) {
+            ((punctuation == null) ||
+             (punctuation.indexOf(contents.charAt(currentIndex)) < 0))) {
           return lastTagIndex;
         } else {
           currentIndex++;

@@ -84,7 +84,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       // Group tags separated only by punctuation characters
       int firstTagIndex = tagIndex;
       PageElementTag firstTag = tags.get(firstTagIndex);
-      int lastTagIndex = PageElementTag.groupTags(tags, firstTagIndex, contents, separator);
+      int lastTagIndex = PageElementTag.groupTags(tags, firstTagIndex, contents, ",;.\'", separator);
       PageElementTag lastTag = tags.get(lastTagIndex);
       tagIndex = lastTagIndex + 1;
 
