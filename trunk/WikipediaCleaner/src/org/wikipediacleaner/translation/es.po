@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-13 16:24+0200\n"
+"POT-Creation-Date: 2013-04-14 17:50+0200\n"
 "PO-Revision-Date: 2013-02-04 10:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -114,7 +114,7 @@ msgstr "Reemplazar con {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:131
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:85
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:81
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:130
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:136
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:96
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:103
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:102
@@ -197,6 +197,11 @@ msgstr "Ver imagen"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:42
 msgid "Add DEFAULTSORT"
 msgstr "Agregar DEFAULTSORT"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm044.java:41
+#, fuzzy
+msgid "Fix all bold headlines"
+msgstr "Reparar todo los títulos"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:43
 msgid "Remove all links to title (first in bold)"
@@ -2205,11 +2210,11 @@ msgstr ""
 msgid "{0} pages have been fixed"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:211
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:213
 msgid "Description"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:213
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:215
 msgid "N°"
 msgstr ""
 
@@ -2263,43 +2268,43 @@ msgstr "Error nº{0}"
 msgid "Close this tab"
 msgstr "Cerrar esta solapa"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:246
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:279
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:240
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:273
 #, java-format
 msgid "Page: {0}"
 msgstr "Página: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:316
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:310
 #, java-format
 msgid "Interwiki: {0}"
 msgstr "Interwiki: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:391
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:385
 #, java-format
 msgid "Image: {0}"
 msgstr "Imagen: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:430
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:424
 #, java-format
 msgid "Category: {0}"
 msgstr "Categoría: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:461
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:455
 #, java-format
 msgid "External link: {0}"
 msgstr "Enlace externo: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:496
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:490
 #, java-format
 msgid "Template: {0}"
 msgstr "Plantilla: {0}"
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:526
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:520
 #, java-format
 msgid "Parameter: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:553
+#: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:547
 #, java-format
 msgid "Function: {0}"
 msgstr ""
