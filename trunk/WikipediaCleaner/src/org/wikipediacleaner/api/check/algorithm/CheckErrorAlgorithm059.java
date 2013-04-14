@@ -123,9 +123,15 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                   return true;
                 }
                 errorFound = true;
+                int firstBrTagIndex = currentBrTag - 1;
+                while ((firstBrTagIndex > 0) &&
+                       (PageElementTag.groupTags(brTags, firstBrTagIndex, contents, null, null) >= currentBrTag - 1)) {
+                  firstBrTagIndex--;
+                }
+                PageElementTag firstBrTag = brTags.get(firstBrTagIndex);
                 CheckErrorResult errorResult = createCheckErrorResult(
                     pageAnalysis.getPage(),
-                    lastBrTag.getBeginIndex(),
+                    firstBrTag.getBeginIndex(),
                     lastBrTag.getEndIndex());
                 errorResult.addReplacement("", GT._("Delete"));
                 errors.add(errorResult);
