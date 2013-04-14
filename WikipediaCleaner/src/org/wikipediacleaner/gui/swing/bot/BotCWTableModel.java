@@ -88,6 +88,7 @@ public class BotCWTableModel extends AbstractTableModel {
     addAlgorithm(22); // Category with space
     addAlgorithm(25); // Headline hierarchy
     addAlgorithm(27); // Unicode syntax
+    addAlgorithm(44); // Headlines with bold
     addAlgorithm(45); // Interwiki double
     addAlgorithm(50); // en dash or em dash
     addAlgorithm(54); // Break in list
