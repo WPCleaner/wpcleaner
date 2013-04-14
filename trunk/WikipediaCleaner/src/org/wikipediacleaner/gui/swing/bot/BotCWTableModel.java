@@ -92,6 +92,7 @@ public class BotCWTableModel extends AbstractTableModel {
     addAlgorithm(50); // en dash or em dash
     addAlgorithm(54); // Break in list
     addAlgorithm(57); // Headlines end with colon
+    addAlgorithm(59); // Template value end with break
     addAlgorithm(64); // Link equal to link text
     addAlgorithm(66); // Image description with full <small>
     addAlgorithm(76); // Link with no space
