@@ -71,35 +71,37 @@ public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
     List<Interwiki> interwikis = wiki.getWikiConfiguration().getInterwikis();
     String contents = analysis.getContents();
     for (PageElementExternalLink link : links) {
-      String article = null;
-      String prefix = null;
-      for (Interwiki interwiki : interwikis) {
-        String tmp = interwiki.isArticleUrl(link.getLink());
-        if (tmp != null) {
-          if ((article == null) || (interwiki.getLanguage() != null)) {
-            article = tmp;
-            prefix = interwiki.getPrefix();
+      if (link.hasSquare()) {
+        String article = null;
+        String prefix = null;
+        for (Interwiki interwiki : interwikis) {
+          String tmp = interwiki.isArticleUrl(link.getLink());
+          if (tmp != null) {
+            if ((article == null) || (interwiki.getLanguage() != null)) {
+              article = tmp;
+              prefix = interwiki.getPrefix();
+            }
           }
         }
-      }
-      if ((article != null) && (article.length() > 0) &&
-          (prefix != null) && (prefix.length() > 0)) {
-        if (errors == null) {
-          return true;
+        if ((article != null) && (article.length() > 0) &&
+            (prefix != null) && (prefix.length() > 0)) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          int beginIndex = link.getBeginIndex();
+          int endIndex = link.getEndIndex();
+          if ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '[') &&
+              (endIndex < contents.length()) && (contents.charAt(endIndex) == ']')) {
+            beginIndex--;
+            endIndex++;
+          }
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis.getPage(), beginIndex, endIndex);
+          errorResult.addReplacement(
+              "[[:" + prefix + ":" + article + "|" + (link.getText() != null ? link.getText() : article) + "]]");
+          errors.add(errorResult);
         }
-        result = true;
-        int beginIndex = link.getBeginIndex();
-        int endIndex = link.getEndIndex();
-        if ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '[') &&
-            (endIndex < contents.length()) && (contents.charAt(endIndex) == ']')) {
-          beginIndex--;
-          endIndex++;
-        }
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), beginIndex, endIndex);
-        errorResult.addReplacement(
-            "[[:" + prefix + ":" + article + "|" + (link.getText() != null ? link.getText() : article) + "]]");
-        errors.add(errorResult);
       }
     }
 
