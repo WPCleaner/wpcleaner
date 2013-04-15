@@ -33,6 +33,111 @@ import org.wikipediacleaner.api.data.Namespace;
 public class WikiConfiguration {
 
   // ==========================================================================
+  // General information
+  // ==========================================================================
+
+  /**
+   * Server URL (without protocol).
+   */
+  private String server;
+
+  /**
+   * Article path.
+   */
+  private String articlePath;
+
+  /**
+   * Script.
+   */
+  private String script;
+
+  /**
+   * Test if an URL matches an article.
+   * 
+   * @param url URL to be tested.
+   * @return Article if the URL matches an article.
+   */
+  public String isArticleUrl(String url) {
+    if ((url == null) || (server == null)) {
+      return null;
+    }
+
+    // Check protocol
+    if (url.startsWith("http:")) {
+      url = url.substring(5);
+    } else if (url.startsWith("https:")) {
+      url = url.substring(6);
+    } else {
+      return null;
+    }
+
+    // Check server URL
+    if (!url.startsWith(server)) {
+      return null;
+    }
+    url = url.substring(server.length());
+
+    // Check with article path
+    if (articlePath != null) {
+      int paramIndex = articlePath.indexOf("$1");
+      if (paramIndex >= 0) {
+        if (url.startsWith(articlePath.substring(0, paramIndex))) {
+          String tmp = url.substring(paramIndex);
+          String articleName = null;
+          if (paramIndex + 2 >= articlePath.length()) {
+            articleName = tmp;
+          } else if (url.endsWith(articlePath.substring(paramIndex + 2))) {
+            articleName = tmp.substring(0, tmp.length() - articlePath.length() + paramIndex + 2);
+          }
+          if ((articleName != null) &&
+              (articleName.length() > 0) &&
+              (!articleName.contains("&"))) {
+            return articleName;
+          }
+        }
+      }
+    }
+
+    // Check with script
+    if (script != null) {
+      if (url.startsWith(script)) {
+        String tmp = url.substring(script.length());
+        if (url.startsWith("?title=")) {
+          tmp = tmp.substring(0, 7);
+          if ((tmp != null) &&
+              (tmp.length() > 0) &&
+              (!tmp.contains("&"))) {
+            return tmp;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * @param server Server URL (without protocol).
+   */
+  public void setServer(String server) {
+    this.server = server;
+  }
+
+  /**
+   * @param path Article path.
+   */
+  public void setArticlePath(String path) {
+    this.articlePath = path;
+  }
+
+  /**
+   * @param script Script.
+   */
+  public void setScript(String script) {
+    this.script = script;
+  }
+
+  // ==========================================================================
   // Name spaces
   // ==========================================================================
 
