@@ -232,14 +232,14 @@ public class WikiConfiguration {
   private List<Interwiki> interwikis;
 
   /**
-   * @return List of inter-wikis
+   * @return List of interwikis
    */
   public List<Interwiki> getInterwikis() {
     return interwikis;
   }
 
   /**
-   * @param interwikis List of inter-wikis
+   * @param interwikis List of interwikis
    */
   public void setInterwikis(List<Interwiki> interwikis) {
     this.interwikis = interwikis;
