@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-14 17:50+0200\n"
+"POT-Creation-Date: 2013-04-15 20:51+0200\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -398,6 +398,10 @@ msgstr "טען קישורים מחדש"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm509.java:83
 msgid "Compact link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm511.java:44
+msgid "Convert them to internal links"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:248

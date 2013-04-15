@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-14 17:50+0200\n"
+"POT-Creation-Date: 2013-04-15 20:51+0200\n"
 "PO-Revision-Date: 2012-11-20 08:24+0000\n"
 "Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -408,6 +408,10 @@ msgstr "Muat ulang pranala"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm509.java:83
 msgid "Compact link"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm511.java:44
+msgid "Convert them to internal links"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:248
