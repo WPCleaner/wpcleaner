@@ -61,16 +61,25 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Retrieve configuration
+    int limit = 3;
+    String firstCharaters = getSpecificProperty("first_characters", true, false, false);
+    if (firstCharaters != null) {
+      try {
+        limit = Integer.valueOf(firstCharaters);
+      } catch (NumberFormatException e) {
+        //
+      }
+    }
+
     // Analyzing title to find special characters
     String title = pageAnalysis.getPage().getTitle();
     boolean characterFound = false;
     int currentPos = 0;
-    while (currentPos < title.length()) {
+    while ((currentPos < title.length()) && (currentPos < limit)) {
       char character = title.charAt(currentPos);
       if (!SpecialCharacters.isAuthorized(character, pageAnalysis.getWikipedia())) {
-        if (currentPos < 3) { // TODO : Parameter
-          characterFound = true;
-        }
+        characterFound = true;
       }
       currentPos++;
     }
