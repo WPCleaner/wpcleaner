@@ -69,9 +69,18 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
       WikiConfiguration wikiConfiguration = getWiki().getWikiConfiguration();
 
+      // Retrieve general information
+      XPath xpa = XPath.newInstance("/api/query/general");
+      Element generalNode = (Element) xpa.selectSingleNode(root);
+      if (generalNode != null) {
+        wikiConfiguration.setArticlePath(generalNode.getAttributeValue("articlepath"));
+        wikiConfiguration.setScript(generalNode.getAttributeValue("script"));
+        wikiConfiguration.setServer(generalNode.getAttributeValue("server"));
+      }
+
       // Retrieve name spaces
       HashMap<Integer, Namespace> namespaces = null;
-      XPath xpa = XPath.newInstance("/api/query/namespaces/ns");
+      xpa = XPath.newInstance("/api/query/namespaces/ns");
       List results = xpa.selectNodes(root);
       Iterator iter = results.iterator();
       namespaces = new HashMap<Integer, Namespace>();

@@ -41,19 +41,9 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
   public final static String PROPERTY_PROP = "siprop";
 
   /**
-   * Property for Properties / Name spaces.
+   * Property for Properties / General.
    */
-  public final static String PROPERTY_PROP_NAMESPACES = "namespaces";
-
-  /**
-   * Property for Properties / Name space aliases.
-   */
-  public final static String PROPERTY_PROP_NAMESPACE_ALIASES = "namespacealiases";
-
-  /**
-   * Property for Properties / Languages.
-   */
-  public final static String PROPERTY_PROP_LANGUAGES = "languages";
+  public final static String PROPERTY_PROP_GENERAL = "general";
 
   /**
    * Property for Properties / Interwiki map.
@@ -61,9 +51,29 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
   public final static String PROPERTY_PROP_INTERWIKI_MAP = "interwikimap";
 
   /**
+   * Property for Properties / Languages.
+   */
+  public final static String PROPERTY_PROP_LANGUAGES = "languages";
+
+  /**
    * Property for Properties / Magic words.
    */
   public final static String PROPERTY_PROP_MAGIC_WORDS = "magicwords";
+
+  /**
+   * Property for Properties / Name space aliases.
+   */
+  public final static String PROPERTY_PROP_NAMESPACE_ALIASES = "namespacealiases";
+
+  /**
+   * Property for Properties / Name spaces.
+   */
+  public final static String PROPERTY_PROP_NAMESPACES = "namespaces";
+
+  /**
+   * Property for Properties / Statistics.
+   */
+  public final static String PROPERTY_PROP_STATISTICS = "statistics";
 
   // ==========================================================================
   // Request management
@@ -83,6 +93,7 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
   /**
    * Load site information.
    * 
+   * @param general True if general information are requested.
    * @param namespaces True if information about name spaces are requested.
    * @param namespaceAliases True if information about name spaces aliases are requested.
    * @param languages True if information about languages are requested.
@@ -90,6 +101,7 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
    * @param magicWords True if information about magic words are requested.
    */
   public void loadSiteInformation(
+      boolean general,
       boolean namespaces, boolean namespaceAliases,
       boolean languages, boolean interwikiMap,
       boolean magicWords) throws APIException {
@@ -98,6 +110,9 @@ public class ApiSiteInfoRequest extends ApiMetaRequest {
         PROPERTY_META,
         PROPERTY_META_SITEINFO);
     Collection<String> information = new ArrayList<String>();
+    if (general) {
+      information.add(PROPERTY_PROP_GENERAL);
+    }
     if (namespaces) {
       information.add(PROPERTY_PROP_NAMESPACES);
     }
