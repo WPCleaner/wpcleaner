@@ -72,23 +72,25 @@ public class CheckErrorAlgorithm511 extends CheckErrorAlgorithmBase {
     WikiConfiguration wikiConf = wiki.getWikiConfiguration();
     String contents = analysis.getContents();
     for (PageElementExternalLink link : links) {
-      String article = wikiConf.isArticleUrl(link.getLink());
-      if ((article != null) && (article.length() > 0)) {
-        if (errors == null) {
-          return true;
+      if (link.hasSquare()) {
+        String article = wikiConf.isArticleUrl(link.getLink());
+        if ((article != null) && (article.length() > 0)) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          int beginIndex = link.getBeginIndex();
+          int endIndex = link.getEndIndex();
+          if ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '[') &&
+              (endIndex < contents.length()) && (contents.charAt(endIndex) == ']')) {
+            beginIndex--;
+            endIndex++;
+          }
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis.getPage(), beginIndex, endIndex);
+          errorResult.addReplacement(PageElementInternalLink.createInternalLink(article, link.getText()));
+          errors.add(errorResult);
         }
-        result = true;
-        int beginIndex = link.getBeginIndex();
-        int endIndex = link.getEndIndex();
-        if ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '[') &&
-            (endIndex < contents.length()) && (contents.charAt(endIndex) == ']')) {
-          beginIndex--;
-          endIndex++;
-        }
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), beginIndex, endIndex);
-        errorResult.addReplacement(PageElementInternalLink.createInternalLink(article, link.getText()));
-        errors.add(errorResult);
       }
     }
 
