@@ -101,6 +101,12 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
         }
       }
       if (shouldCount) {
+        PageElementExternalLink link = pageAnalysis.isInExternalLink(currentIndex);
+        if ((link != null) && (link.getEndIndex() == currentIndex + 1)) {
+          shouldCount = false;
+        }
+      }
+      if (shouldCount) {
         if (errors == null) {
           return true;
         }
