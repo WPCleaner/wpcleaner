@@ -18,6 +18,9 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+
 
 /**
  * Information about interwiki.
@@ -81,6 +84,37 @@ public class Interwiki implements Comparable<Interwiki> {
         if ((articleName != null) &&
             (articleName.length() > 0) &&
             (!articleName.contains("&"))) {
+          articleName = articleName.replaceAll("\\_", " ");
+          if (articleName.indexOf('%') >= 0) {
+            // URL Decoding
+            try {
+              byte[] original = articleName.getBytes("UTF8");
+              byte[] converted = new byte[original.length];
+              int currentOriginal = 0;
+              int currentConverted = 0;
+              while (currentOriginal < original.length) {
+                if ((original[currentOriginal] == '%') && (currentOriginal + 2 < original.length)) {
+                  byte[] hexa = new byte[2];
+                  hexa[0] = original[currentOriginal + 1];
+                  hexa[1] = original[currentOriginal + 2];
+                  String hexaString = new String(hexa, "UTF8");
+                  converted[currentConverted] = Integer.valueOf(hexaString, 16).byteValue();
+                  currentOriginal += 3;
+                  currentConverted++;
+                } else {
+                  converted[currentConverted] = original[currentOriginal];
+                  currentOriginal++;
+                  currentConverted++;
+                }
+              }
+              converted = Arrays.copyOf(converted, currentConverted);
+              articleName = new String(converted, "UTF8");
+            } catch (UnsupportedEncodingException e) {
+              // Nothing to do
+            } catch (NumberFormatException e) {
+              // Nothing to do
+            }
+          }
           return articleName;
         }
       }
