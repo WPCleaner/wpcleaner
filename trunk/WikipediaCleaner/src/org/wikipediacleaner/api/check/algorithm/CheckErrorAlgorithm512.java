@@ -21,13 +21,19 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 import java.util.List;
 
+import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
+import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.StringChecker;
+import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
 
 
 /**
@@ -35,6 +41,11 @@ import org.wikipediacleaner.i18n.GT;
  * Error 511: Interwiki link written as external link
  */
 public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
+
+  /**
+   * String checker for text inputed by user.
+   */
+  private final StringChecker checker;
 
   /**
    * Possible global fixes.
@@ -45,6 +56,7 @@ public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm512() {
     super("Interwiki link written as external link");
+    checker = new StringCheckerUnauthorizedCharacters("[]\"");
   }
 
   /**
@@ -61,17 +73,29 @@ public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Retrieve configuration
+    EnumWikipedia wiki = analysis.getWikipedia();
+    CWConfigurationError error68 = wiki.getCWConfiguration().getErrorConfiguration(68);
+    List<String> templatesList = null;
+    if (error68 != null) {
+      String templatesParam = error68.getSpecificProperty("template", true, false, false);
+      if (templatesParam != null) {
+        templatesList = WPCConfiguration.convertPropertyToStringList(templatesParam);
+      }
+    }
+
     // Analyze each external link
     boolean result = false;
     List<PageElementExternalLink> links = analysis.getExternalLinks();
     if (links == null) {
       return result;
     }
-    EnumWikipedia wiki = analysis.getWikipedia();
     List<Interwiki> interwikis = wiki.getWikiConfiguration().getInterwikis();
     String contents = analysis.getContents();
     for (PageElementExternalLink link : links) {
       if (link.hasSquare()) {
+
+        // Check if this is a external link to an other wiki
         String article = null;
         String prefix = null;
         for (Interwiki interwiki : interwikis) {
@@ -83,6 +107,15 @@ public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
             }
           }
         }
+        EnumWikipedia fromWiki = null;
+        if (prefix != null) {
+          fromWiki = EnumWikipedia.getWikipedia(prefix);
+          if (!prefix.equals(fromWiki.getSettings().getCode())) {
+            fromWiki = null;
+          }
+        }
+
+        // Mark error
         if ((article != null) && (article.length() > 0) &&
             (prefix != null) && (prefix.length() > 0)) {
           if (errors == null) {
@@ -96,8 +129,50 @@ public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
             beginIndex--;
             endIndex++;
           }
+
+          // Check language link
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis.getPage(), beginIndex, endIndex);
+          if (fromWiki != null) {
+            errorResult.addPossibleAction(
+                GT._("Check language links"),
+                new CheckLanguageLinkActionProvider(
+                    fromWiki, analysis.getWikipedia(),
+                    article));
+          }
+
+          // Use templates
+          if ((templatesList != null) && (templatesList.size() > 0)) {
+            for (String template : templatesList) {
+              String[] templateArgs = template.split("\\|");
+              if (templateArgs.length >= 5) {
+                String textPrefix =
+                  "{{" + templateArgs[0] + "|" + templateArgs[1] + "=";
+                String textSuffix =
+                  "|" + templateArgs[2] + "=" + prefix +
+                  "|" + templateArgs[3] + "=" + article +
+                  "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : article) +
+                  "}}";
+                String question = GT._("What is the title of the page on this wiki ?");
+                AddTextActionProvider action = null;
+                if ((link.getText() != null) && (!link.getText().equals(article))) {
+                  String[] possibleValues = { null, article, link.getText() };
+                  action = new AddTextActionProvider(
+                      textPrefix, textSuffix, null, question,
+                      possibleValues, false, null, checker);
+                } else {
+                  action = new AddTextActionProvider(
+                      textPrefix, textSuffix, null, question,
+                      article, checker);
+                }
+                errorResult.addPossibleAction(
+                    GT._("Replace using template {0}", "{{" + templateArgs[0] + "}}"),
+                    action);
+              }
+            }
+          }
+
+          // Create internal link
           errorResult.addReplacement(
               "[[:" + prefix + ":" + article + "|" + (link.getText() != null ? link.getText() : article) + "]]");
           errors.add(errorResult);

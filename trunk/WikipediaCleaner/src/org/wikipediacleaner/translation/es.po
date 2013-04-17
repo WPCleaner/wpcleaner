@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-15 21:41+0200\n"
+"POT-Creation-Date: 2013-04-17 20:58+0200\n"
 "PO-Revision-Date: 2013-02-04 10:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -95,7 +95,7 @@ msgid "Replace with {0}"
 msgstr "Reemplazar con {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:160
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:166
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm013.java:69
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm014.java:69
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm015.java:69
@@ -110,7 +110,7 @@ msgstr "Reemplazar con {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:71
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:151
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:140
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:159
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:165
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:131
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:85
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:81
@@ -261,15 +261,18 @@ msgid "Check all links to other language"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:171
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:138
 msgid "Check language links"
 msgstr "Comprobar los enlaces de idiomas"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:186
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:329
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:156
 msgid "What is the title of the page on this wiki ?"
 msgstr "¿Cuál es el título de la página en esta wiki?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:199
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:169
 #, java-format
 msgid "Replace using template {0}"
 msgstr "Reemplazar usando plantilla {0}"
@@ -416,7 +419,7 @@ msgid "Compact link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm511.java:44
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:43
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:54
 #, fuzzy
 msgid "Convert them to internal links"
 msgstr "Enlace interno normal"
@@ -2114,17 +2117,30 @@ msgstr ""
 "En la {1} Wikipedia, tiene un enlace a la {2} Wikipedia: {3}.\n"
 "¿Desea reemplazar la categoría por [[{3}]] ?"
 
-#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:73
+#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:92
+#, fuzzy, java-format
+msgid "The page {0} in \"{1}\" has a language link to \"{2}\": {3}."
+msgstr "La página {0} en \"{1}\" no posee un interwiki a \"{2}\"."
+
+#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:100
 #, java-format
 msgid "The page {0} in \"{1}\" doesn''t have a language link to \"{2}\"."
 msgstr "La página {0} en \"{1}\" no posee un interwiki a \"{2}\"."
 
-#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:79
-#, java-format
-msgid ""
-"The page {0} in \"{1}\" has a language link to \"{2}\": {3}.\n"
-"Do you want to replace the link by [[{3}]] ?"
-msgstr ""
+#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:114
+#, fuzzy, java-format
+msgid "The page {0} doesn''t exist in \"{1}\"."
+msgstr "La página {0} no existe en Wikipedia"
+
+#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:118
+#, fuzzy, java-format
+msgid "The page {0} exists in \"{1}\"."
+msgstr "La página {0} no existe en Wikipedia"
+
+#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:133
+#, fuzzy
+msgid "What replacement do you want to use?"
+msgstr "¿Cuántas páginas quieres analizar?"
 
 #: org/wikipediacleaner/gui/swing/action/FindTextAction.java:66
 msgid "String to find"

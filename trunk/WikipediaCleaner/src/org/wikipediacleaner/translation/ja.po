@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-15 21:41+0200\n"
+"POT-Creation-Date: 2013-04-17 20:58+0200\n"
 "PO-Revision-Date: 2013-04-16 07:42+0000\n"
 "Last-Translator: Shushi Kurose <md81bird@hitaki.net>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -87,7 +87,7 @@ msgid "Replace with {0}"
 msgstr "{0} を置換"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:160
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:166
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm013.java:69
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm014.java:69
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm015.java:69
@@ -102,7 +102,7 @@ msgstr "{0} を置換"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:71
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:151
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:140
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:159
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:165
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:131
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:85
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:81
@@ -248,15 +248,18 @@ msgid "Check all links to other language"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:171
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:138
 msgid "Check language links"
 msgstr "言語間リンクをチェック"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:186
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:329
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:156
 msgid "What is the title of the page on this wiki ?"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:199
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:169
 #, java-format
 msgid "Replace using template {0}"
 msgstr ""
@@ -274,9 +277,9 @@ msgstr "外部ブラウザ"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:224
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page "
-"name>|<param name for code of other language>|<param name for page name in "
-"other language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page name>|"
+"<param name for code of other language>|<param name for page name in other "
+"language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:307
@@ -397,7 +400,7 @@ msgid "Compact link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm511.java:44
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:43
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:54
 msgid "Convert them to internal links"
 msgstr ""
 
@@ -771,15 +774,16 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:477
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:124
-msgid ""
-"On some Wikipedia projects, you may need the bot status for doing this."
+msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr "プロジェクトごとに事前にボットフラグの取得が必要です。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:478
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:125
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
-msgstr "各プロジェクトのルールをチェックし、ボットフラグが必要かどうか確認してください。"
+msgstr ""
+"各プロジェクトのルールをチェックし、ボットフラグが必要かどうか確認してくださ"
+"い。"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:479
 msgid ""
@@ -1355,8 +1359,7 @@ msgid "Search results for {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1331
-msgid ""
-"You must input a page name for retrieving the list of category members"
+msgid "You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1350
@@ -1488,8 +1491,7 @@ msgid "Delete page"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:424
-msgid ""
-"Add a warning on the talk page about the links to disambiguation pages"
+msgid "Add a warning on the talk page about the links to disambiguation pages"
 msgstr "曖昧さ回避ページへのリンクについて、会話ページに案内を貼り付け"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:444
@@ -2010,16 +2012,28 @@ msgid ""
 "Do you want to replace the category by [[{3}]] ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:73
+#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:92
+#, java-format
+msgid "The page {0} in \"{1}\" has a language link to \"{2}\": {3}."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:100
 #, java-format
 msgid "The page {0} in \"{1}\" doesn''t have a language link to \"{2}\"."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:79
-#, java-format
-msgid ""
-"The page {0} in \"{1}\" has a language link to \"{2}\": {3}.\n"
-"Do you want to replace the link by [[{3}]] ?"
+#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:114
+#, fuzzy, java-format
+msgid "The page {0} doesn''t exist in \"{1}\"."
+msgstr "ウィキペディアに {0} というページは存在しません"
+
+#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:118
+#, fuzzy, java-format
+msgid "The page {0} exists in \"{1}\"."
+msgstr "ウィキペディアに {0} というページは存在しません"
+
+#: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:133
+msgid "What replacement do you want to use?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/FindTextAction.java:66
@@ -2154,8 +2168,7 @@ msgid "How many pages do you want to analyze"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:310
-msgid ""
-"At what page do you wish to start updating the disambiguation warning ?"
+msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:108
@@ -2369,8 +2382,7 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:97
-msgid ""
-"Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:104
@@ -2382,8 +2394,7 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:118
-msgid ""
-"Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:125
@@ -2862,10 +2873,6 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
-
-#, java-format
-#~ msgid "The page {0} doesn't exist on Wikipedia"
-#~ msgstr "ウィキペディアに {0} というページは存在しません"
 
 #~ msgid "Occurrence"
 #~ msgstr "頻度"
