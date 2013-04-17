@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-04-17 20:58+0200\n"
-"PO-Revision-Date: 2013-04-14 07:52+0000\n"
+"PO-Revision-Date: 2013-04-17 18:17+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-04-15 05:24+0000\n"
-"X-Generator: Launchpad (build 16564)\n"
+"X-Launchpad-Export-Date: 2013-04-17 19:08+0000\n"
+"X-Generator: Launchpad (build 16567)\n"
 
 #: org/wikipediacleaner/Version.java:39
 #, java-format
@@ -193,7 +193,7 @@ msgstr "Přidat DEFAULTSORT"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm044.java:41
 msgid "Fix all bold headlines"
-msgstr ""
+msgstr "Opravit všechny ztučněné nadpisy"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:43
 msgid "Remove all links to title (first in bold)"
@@ -410,9 +410,8 @@ msgstr "Uspořádat odkaz"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm511.java:44
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:54
-#, fuzzy
 msgid "Convert them to internal links"
-msgstr "Normální interní odkaz"
+msgstr "Změnit je na interní odkazy"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:248
 msgid "Title of the article describing this type of error"
