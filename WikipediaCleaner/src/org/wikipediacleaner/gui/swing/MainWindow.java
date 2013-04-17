@@ -1272,7 +1272,7 @@ public class MainWindow
         getWikipedia(), this,
         Collections.singletonList(DataManager.getPage(
             getWikipedia(), textPagename.getText(), null, null, null)),
-        false);
+        true);
     worker.start();
   }
 
