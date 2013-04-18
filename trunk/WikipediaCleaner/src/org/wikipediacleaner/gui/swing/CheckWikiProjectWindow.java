@@ -442,7 +442,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
             algorithm.getShortDescriptionReplaced();
 
           menuItem = new JCheckBoxMenuItem(label, selectedAlgorithms.contains(algorithm));
-          if (!CWConfigurationError.isPriorityFullyActive(algorithm.getPriority())) {
+          if (!CWConfigurationError.isPriorityActive(algorithm.getPriority())) {
             menuItem.setEnabled(false);
             menuItem.setFont(menuItem.getFont().deriveFont(inactiveAttributes));
           } else if (!algorithm.isAvailable()) {
@@ -494,6 +494,9 @@ public class CheckWikiProjectWindow extends OnePageWindow {
             menuItem.setFont(menuItem.getFont().deriveFont(inactiveAttributes));
           } else if (!algorithm.isAvailable()) {
             menuItem.setEnabled(false);
+          } else if (CWConfigurationError.PRIORITY_BOT_ONLY == algorithm.getPriority()) {
+            menuItem.setEnabled(false);
+            menuItem.setFont(menuItem.getFont().deriveFont(Font.ITALIC));
           }
           menuItem.setActionCommand(ACTION_SELECT_ERRORS + algorithm.getErrorNumberString());
           menuItem.addActionListener(this);
