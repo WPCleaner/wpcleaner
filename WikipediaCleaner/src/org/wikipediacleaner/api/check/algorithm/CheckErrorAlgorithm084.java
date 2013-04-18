@@ -25,6 +25,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.i18n.GT;
 
@@ -78,10 +79,19 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
         int lastPos = (nextTitle != null) ? nextTitle.getBeginIndex() : contents.length(); 
         int pos = title.getEndIndex();
         while (!textFound && (pos < lastPos)) {
-          if (!Character.isWhitespace(contents.charAt(pos))) {
+          char currentChar = contents.charAt(pos);
+          if (Character.isWhitespace(currentChar)) {
+            pos++;
+          } else if (currentChar == '<') {
+            PageElementComment comment = pageAnalysis.isInComment(pos);
+            if (comment != null) {
+              pos = comment.getEndIndex();
+            } else {
+              textFound = true;
+            }
+          } else {
             textFound = true;
           }
-          pos++;
         }
         if (!textFound) {
           if (errors == null) {
