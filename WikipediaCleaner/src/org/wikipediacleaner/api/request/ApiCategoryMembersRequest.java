@@ -197,24 +197,23 @@ public class ApiCategoryMembersRequest extends ApiListRequest {
    * @param category Category for which members are requested.
    * @param depth Depth of lookup for sub-categories.
    * @param limit Flag indicating if the number of results should be limited.
-   * @return List of category members.
    */
-  public List<Page> loadCategoryMembers(
-      String category,
+  public void loadCategoryMembers(
+      Page category,
       int depth, boolean limit) throws APIException {
 
-    List<Page> list = new ArrayList<Page>();
     List<String> categoriesAnalyzed = new ArrayList<String>();
-    Map<String, Integer> categories = new HashMap<String, Integer>();
+    Map<Page, Integer> categories = new HashMap<Page, Integer>();
     categories.put(category, Integer.valueOf(0));
     int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_CATEGORY_MEMBERS);
-    while (!categories.isEmpty() && (list.size() < maxSize)) {
+    while (!categories.isEmpty()) {
 
       // Find which category to analyze
-      Entry<String, Integer> entry = categories.entrySet().iterator().next();
-      String categoryName = entry.getKey();
-      categories.remove(categoryName);
+      Entry<Page, Integer> entry = categories.entrySet().iterator().next();
+      Page currentCategory = entry.getKey();
+      categories.remove(currentCategory);
       int currentDepth = entry.getValue().intValue();
+      String categoryName = currentCategory.getTitle();
       int colonIndex = categoryName.indexOf(':');
       if (colonIndex < 0) {
         categoryName = getWiki().getWikiConfiguration().getPageTitle(
@@ -242,14 +241,15 @@ public class ApiCategoryMembersRequest extends ApiListRequest {
             PROPERTY_LIST_CATEGORYMEMBERS);
         properties.put(PROPERTY_LIMIT, LIMIT_MAX);
         properties.put(PROPERTY_TITLE, categoryName);
+        List<Page> list = new ArrayList<Page>();
         while (result.executeCategoryMembers(
             properties, list, categories, currentDepth) &&
             (list.size() < maxSize)) {
           //
         }
+        Collections.sort(list);
+        currentCategory.setRelatedPages(Page.RelatedPages.CATEGORY_MEMBERS, list);
       }
     }
-    Collections.sort(list);
-    return list;
   }
 }

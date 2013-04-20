@@ -270,7 +270,9 @@ public class PageListWorker extends BasicWorker {
   private void constructCategoryMembers(List<Page> pages) throws APIException {
     final API api = APIFactory.getAPI();
     for (String pageName : elementNames) {
-      List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0, true);
+      Page page = DataManager.getPage(getWikipedia(), pageName, null, null, null);
+      api.retrieveCategoryMembers(getWikipedia(), page, 0, true);
+      List<Page> tmpPages = page.getRelatedPages(Page.RelatedPages.CATEGORY_MEMBERS);
       if (tmpPages != null) {
         for (Page tmpPage : tmpPages) {
           if (!pages.contains(tmpPage)) {
@@ -290,7 +292,9 @@ public class PageListWorker extends BasicWorker {
   private void constructCategoryMembersArticles(List<Page> pages) throws APIException {
     final API api = APIFactory.getAPI();
     for (String pageName : elementNames) {
-      List<Page> tmpPages = api.retrieveCategoryMembers(getWikipedia(), pageName, 0, true);
+      Page page = DataManager.getPage(getWikipedia(), pageName, null, null, null);
+      api.retrieveCategoryMembers(getWikipedia(), page, 0, true);
+      List<Page> tmpPages = page.getRelatedPages(Page.RelatedPages.CATEGORY_MEMBERS);
       if (tmpPages != null) {
         WPCConfiguration configuration = getWikipedia().getConfiguration();
         for (Page tmpPage : tmpPages) {

@@ -63,7 +63,7 @@ public class ApiXmlCategoryMembersResult extends ApiXmlResult implements ApiCate
   public boolean executeCategoryMembers(
       Map<String, String> properties,
       List<Page> list,
-      Map<String, Integer> categories, int depth) throws APIException {
+      Map<Page, Integer> categories, int depth) throws APIException {
     try {
       Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
@@ -82,7 +82,7 @@ public class ApiXmlCategoryMembersResult extends ApiXmlResult implements ApiCate
         page.setPageId(xpaPageId.valueOf(currentNode));
         if ((page.getNamespace() != null) &&
             (page.getNamespace().intValue() == Namespace.CATEGORY)) {
-          categories.put(page.getTitle(), depth + 1);
+          categories.put(page, depth + 1);
         } else {
           if (!list.contains(page)) {
             list.add(page);
