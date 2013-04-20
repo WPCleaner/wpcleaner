@@ -34,17 +34,30 @@ public class CheckLanguageLinkActionProvider implements ActionProvider {
   private final EnumWikipedia fromWikipedia;
   private final EnumWikipedia toWikipedia;
   private final String title;
+  private final String text;
 
-  public CheckLanguageLinkActionProvider(EnumWikipedia from, EnumWikipedia to, String title) {
+  /**
+   * @param from Wiki on which we need to check the language link.
+   * @param to Wiki to which we need to check the language link.
+   * @param title Article's title.
+   * @param text Text of the link.
+   */
+  public CheckLanguageLinkActionProvider(
+      EnumWikipedia from, EnumWikipedia to,
+      String title, String text) {
     this.fromWikipedia = from;
     this.toWikipedia = to;
     this.title = title;
+    this.text = text;
   }
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.SimpleAction#getAction(javax.swing.text.Element, javax.swing.JTextPane)
+  /**
+   * @param element Text element.
+   * @param textPane Text component.
+   * @return Action.
    */
   public Action getAction(Element element, JTextPane textPane) {
-    return new CheckLanguageLinkAction(fromWikipedia, toWikipedia, title, element, textPane);
+    return new CheckLanguageLinkAction(
+        fromWikipedia, toWikipedia, title, text, element, textPane);
   }
 }

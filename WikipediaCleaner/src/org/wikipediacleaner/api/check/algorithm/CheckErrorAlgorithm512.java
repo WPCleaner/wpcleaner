@@ -138,7 +138,7 @@ public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
                 GT._("Check language links"),
                 new CheckLanguageLinkActionProvider(
                     fromWiki, analysis.getWikipedia(),
-                    article));
+                    article, link.getText()));
           }
 
           // Use templates
