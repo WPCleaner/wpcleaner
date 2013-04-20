@@ -22,6 +22,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,14 @@ import org.wikipediacleaner.api.constants.WikiConfiguration;
  */
 public class Page implements Comparable<Page> {
 
+  /**
+   * Kinds of related pages.
+   */
+  public static enum RelatedPages {
+    BACKLINKS,
+    SIMILAR_PAGES;
+  }
+
   private EnumWikipedia wikipedia;
   private Integer pageId;
   private Integer namespace;
@@ -52,9 +61,9 @@ public class Page implements Comparable<Page> {
   private Boolean exist;
 
   private List<Page> links;
-  private List<Page> backLinks;
   private List<Page> templates;
-  private List<Page> similarPages;
+
+  private final Map<RelatedPages, List<Page>> relatedPages;
 
   private PageComment comment;
 
@@ -69,6 +78,7 @@ public class Page implements Comparable<Page> {
   Page(EnumWikipedia wikipedia, String title) {
     this.wikipedia = wikipedia;
     this.title = title;
+    this.relatedPages = new Hashtable<Page.RelatedPages, List<Page>>();
     setContents("");
   }
 
@@ -523,17 +533,25 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @return Similar pages.
+   * @param type Type of related pages.
+   * @return Related pages.
    */
-  public List<Page> getSimilarPages() {
-    return similarPages;
+  public List<Page> getRelatedPages(RelatedPages type) {
+    if (relatedPages == null) {
+      return null;
+    }
+    return relatedPages.get(type);
   }
 
   /**
    * @param pages Similar pages.
    */
-  public void setSimilarPages(List<Page> pages) {
-    this.similarPages = pages;
+  public void setRelatedPages(RelatedPages type, List<Page> pages) {
+    if (pages == null) {
+      relatedPages.remove(type);
+    } else {
+      relatedPages.put(type, pages);
+    }
   }
 
   /**
@@ -606,23 +624,10 @@ public class Page implements Comparable<Page> {
   }
 
   /**
-   * @return Back links of the page.
-   */
-  public List<Page> getBackLinks() {
-    return backLinks;
-  }
-
-  /**
-   * @param links Back links of the page.
-   */
-  public void setBackLinks(List<Page> links) {
-    this.backLinks = links;
-  }
-
-  /**
    * @return Back links of the page (including redirects).
    */
   public List<Page> getBackLinksWithRedirects() {
+    List<Page> backLinks = getRelatedPages(RelatedPages.BACKLINKS);
     List<Page> result = backLinks;
     boolean originalList = true;
     if (backLinks != null) {

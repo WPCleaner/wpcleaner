@@ -877,7 +877,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       Page pageLoaded = getPage();
       if ((pageLoaded != null) &&
           (Boolean.FALSE.equals(pageLoaded.isExisting()))) {
-        List<Page> similarPages = pageLoaded.getSimilarPages();
+        List<Page> similarPages = pageLoaded.getRelatedPages(Page.RelatedPages.SIMILAR_PAGES);
         if ((similarPages != null) && (similarPages.size() > 0)) {
           String answer = Utilities.askForValue(
               getParentComponent(),

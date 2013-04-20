@@ -190,6 +190,6 @@ public class ApiSearchRequest extends ApiListRequest {
       //
     }
     Collections.sort(list);
-    page.setSimilarPages(list);
+    page.setRelatedPages(Page.RelatedPages.SIMILAR_PAGES, list);
   }
 }

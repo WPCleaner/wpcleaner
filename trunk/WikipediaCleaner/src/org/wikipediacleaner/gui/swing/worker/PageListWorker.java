@@ -445,7 +445,7 @@ public class PageListWorker extends BasicWorker {
       for (String pageName : elementNames) {
         Page page = DataManager.getPage(getWikipedia(), pageName, null, null, null);
         api.retrieveSimilarPages(getWikipedia(), page, true);
-        pages.addAll(page.getSimilarPages());
+        pages.addAll(page.getRelatedPages(Page.RelatedPages.SIMILAR_PAGES));
       }
     }
   }
