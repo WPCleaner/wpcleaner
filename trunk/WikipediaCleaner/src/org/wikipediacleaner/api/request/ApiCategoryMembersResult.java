@@ -43,5 +43,5 @@ public interface ApiCategoryMembersResult extends ApiResult {
   public boolean executeCategoryMembers(
       Map<String, String> properties,
       List<Page> list,
-      Map<String, Integer> categories, int depth) throws APIException;
+      Map<Page, Integer> categories, int depth) throws APIException;
 }

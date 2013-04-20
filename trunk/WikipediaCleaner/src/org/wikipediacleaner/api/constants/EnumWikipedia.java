@@ -371,8 +371,9 @@ public enum EnumWikipedia {
     List<Page> dabCategories = getConfiguration().getDisambiguationCategories();
     if ((dabCategories != null) && (dabCategories.size() > 0)) {
       for (Page dabCategory : dabCategories) {
-        List<Page> tmpPages = api.retrieveCategoryMembers(
-            this, dabCategory.getTitle(), 0, false);
+        api.retrieveCategoryMembers(
+            this, dabCategory, 0, false);
+        List<Page> tmpPages = dabCategory.getRelatedPages(Page.RelatedPages.CATEGORY_MEMBERS);
         if (tmpPages != null) {
           tmpResult.ensureCapacity(tmpResult.size() + tmpPages.size());
           for (Page page : tmpPages) {

@@ -289,8 +289,8 @@ public interface API {
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Categorymembers">API:Categorymembers</a>
    */
-  public List<Page> retrieveCategoryMembers(
-      EnumWikipedia wiki, String category,
+  public void retrieveCategoryMembers(
+      EnumWikipedia wiki, Page category,
       int depth, boolean limit) throws APIException;
 
   /**
