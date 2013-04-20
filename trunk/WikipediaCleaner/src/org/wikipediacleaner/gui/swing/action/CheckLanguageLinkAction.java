@@ -48,26 +48,29 @@ public class CheckLanguageLinkAction extends TextAction {
   private final EnumWikipedia fromWiki;
   private final EnumWikipedia toWiki;
   private final String title;
+  private final String text;
   private final Element element;
   private final JTextPane textPane;
 
   /**
    * @param fromWiki Wiki on which to check the language link existence.
    * @param toWiki Wiki to which the check has to be made.
-   * @param title
+   * @param title Title of the article.
+   * @param text Text of the link.
    * @param element
    * @param textPane
    */
   public CheckLanguageLinkAction(
       EnumWikipedia fromWiki,
       EnumWikipedia toWiki,
-      String title,
+      String title, String text,
       Element element,
       JTextPane textPane) {
     super("CheckLanguageLink");
     this.fromWiki = fromWiki;
     this.toWiki = toWiki;
     this.title = title;
+    this.text = text;
     this.element = element;
     this.textPane = textPane;
   }
@@ -91,7 +94,15 @@ public class CheckLanguageLinkAction extends TextAction {
           message.append(GT._(
               "The page {0} in \"{1}\" has a language link to \"{2}\": {3}.",
               new Object[] { title, fromWiki.toString(), toWiki.toString(), languageLink } ));
-          String value = PageElementInternalLink.createInternalLink(languageLink, null);
+          String value = PageElementInternalLink.createInternalLink(languageLink, text);
+          if (!values.contains(value)) {
+            values.add(value);
+          }
+          value = PageElementInternalLink.createInternalLink(languageLink, null);
+          if (!values.contains(value)) {
+            values.add(value);
+          }
+          value = PageElementInternalLink.createInternalLink(languageLink, title);
           if (!values.contains(value)) {
             values.add(value);
           }
@@ -117,7 +128,11 @@ public class CheckLanguageLinkAction extends TextAction {
           message.append(GT._(
               "The page {0} exists in \"{1}\".",
               new Object[] { title, toWiki.toString() } ));
-          String value = PageElementInternalLink.createInternalLink(title, null);
+          String value = PageElementInternalLink.createInternalLink(title, text);
+          if (!values.contains(value)) {
+            values.add(value);
+          }
+          value = PageElementInternalLink.createInternalLink(title, null);
           if (!values.contains(value)) {
             values.add(value);
           }

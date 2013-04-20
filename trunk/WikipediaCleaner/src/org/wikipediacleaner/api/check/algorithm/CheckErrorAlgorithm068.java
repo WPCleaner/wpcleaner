@@ -171,7 +171,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
               GT._("Check language links"),
               new CheckLanguageLinkActionProvider(
                   fromWikipedia, pageAnalysis.getWikipedia(),
-                  pageTitle));
+                  pageTitle, link.getText()));
           if ((templatesList != null) && (templatesList.size() > 0)) {
             for (String template : templatesList) {
               String[] templateArgs = template.split("\\|");
