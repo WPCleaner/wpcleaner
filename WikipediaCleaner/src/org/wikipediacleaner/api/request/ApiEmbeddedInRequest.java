@@ -94,9 +94,8 @@ public class ApiEmbeddedInRequest extends ApiListRequest {
    * @param page Page for list of embedding pages is requested.
    * @param namespaces List of name spaces to restrict result.
    * @param limit Flag indicating if the number of results should be limited.
-   * @return List of pages embedding the page.
    */
-  public List<Page> loadEmbeddedIn(
+  public void loadEmbeddedIn(
       Page page, List<Integer> namespaces,
       boolean limit) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
@@ -115,6 +114,6 @@ public class ApiEmbeddedInRequest extends ApiListRequest {
       //
     }
     Collections.sort(list);
-    return list;
+    page.setRelatedPages(Page.RelatedPages.EMBEDDED_IN, list);
   }
 }

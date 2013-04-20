@@ -61,7 +61,8 @@ public class EmbeddedInCallable extends MediaWikiCallable<List<Page>> {
    */
   public List<Page> call() throws APIException {
     setText(GT._("Retrieving page usage") + " - " + page.getTitle());
-    return api.retrieveEmbeddedIn(getWikipedia(), page, namespaces, limit);
+    api.retrieveEmbeddedIn(getWikipedia(), page, namespaces, limit);
+    return page.getRelatedPages(Page.RelatedPages.EMBEDDED_IN);
   }
 
 }
