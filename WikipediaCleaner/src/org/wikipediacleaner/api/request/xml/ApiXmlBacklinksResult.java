@@ -106,7 +106,7 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
               linkList.add(link2);
             }
           }
-          link.setBackLinks(linkList);
+          link.setRelatedPages(Page.RelatedPages.BACKLINKS, linkList);
         }
       }
 

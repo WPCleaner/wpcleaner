@@ -113,6 +113,6 @@ public class ApiBacklinksRequest extends ApiListRequest {
       //
     }
     Collections.sort(list);
-    page.setBackLinks(list);
+    page.setRelatedPages(Page.RelatedPages.BACKLINKS, list);
   }
 }
