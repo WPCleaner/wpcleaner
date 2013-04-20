@@ -388,10 +388,11 @@ public enum EnumWikipedia {
         return null;
       }
       for (Page dabTemplate : disambiguationTemplates) {
-        List<Page> tmpPages = api.retrieveEmbeddedIn(
+        api.retrieveEmbeddedIn(
             this, dabTemplate,
             Collections.singletonList(Namespace.MAIN),
             false);
+        List<Page> tmpPages = dabTemplate.getRelatedPages(Page.RelatedPages.EMBEDDED_IN);
         if (tmpPages != null) {
           tmpResult.ensureCapacity(tmpResult.size() + tmpPages.size());
           for (Page page : tmpPages) {

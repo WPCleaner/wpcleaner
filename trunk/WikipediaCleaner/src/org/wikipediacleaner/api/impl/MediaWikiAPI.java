@@ -1102,16 +1102,15 @@ public class MediaWikiAPI implements API {
    * @param page Page.
    * @param namespaces Limit to some name spaces.
    * @param limit Flag indicating if the number of results should be limited.
-   * @return List of pages where <code>page</code> is embedded.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Embeddedin">API:Embeddedin</a>
    */
-  public List<Page> retrieveEmbeddedIn(
+  public void retrieveEmbeddedIn(
       EnumWikipedia wiki, Page page,
       List<Integer> namespaces, boolean limit) throws APIException {
     ApiEmbeddedInResult result = new ApiXmlEmbeddedInResult(wiki, httpClient);
     ApiEmbeddedInRequest request = new ApiEmbeddedInRequest(wiki, result);
-    return request.loadEmbeddedIn(page, namespaces, limit);
+    request.loadEmbeddedIn(page, namespaces, limit);
   }
 
   /**
