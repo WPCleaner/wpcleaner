@@ -26,12 +26,12 @@ import javax.swing.AbstractButton;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
 
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.action.CheckErrorGlobalFixAction;
+import org.wikipediacleaner.gui.swing.menu.BasicMenuCreator;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -104,15 +104,14 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
     CheckErrorAlgorithm algorithm = error.getAlgorithm();
 
     // Menu name
-    JPopupMenu popup = new JPopupMenu();
-    JMenuItem menuItem = new JMenuItem(GT._("Error n°{0}", algorithm.getErrorNumberString()));
-    menuItem.setEnabled(false);
-    popup.add(menuItem);
+    BasicMenuCreator menu = new BasicMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(GT._("Error n°{0}", algorithm.getErrorNumberString()));
 
     // Global fixes
+    JMenuItem menuItem = null;
     String[] fixes = algorithm.getGlobalFixes();
     if ((fixes != null) && (fixes.length > 0)) {
-      popup.add(new JSeparator());
+      menu.addSeparator(popup);
       for (int i = 0; i < fixes.length; i++) {
         menuItem = new JMenuItem(fixes[i]);
         ActionListener action = new CheckErrorGlobalFixAction(
@@ -123,15 +122,15 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
     }
 
     // Create sub menus
-    popup.add(new JSeparator());
-    MenuCreator.addViewToMenu(wikipedia, popup, algorithm.getLink(), GT._("Detail"));
+    menu.addSeparator(popup);
+    menu.addItemView(wikipedia, popup, algorithm.getLink(), GT._("Detail"));
     String toolserverUrl =
       "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi" +
       "?id=" + algorithm.getErrorNumberString() +
       "&project=" + wikipedia.getSettings().getCodeCheckWiki() +
       "&view=only";
-    MenuCreator.addViewToMenu(null, popup, toolserverUrl, GT._("List on toolserver"));
-    MenuCreator.addViewToMenu(wikipedia, popup, algorithm.getWhiteListPageName(), GT._("View or edit white list"));
+    menu.addItemView(null, popup, toolserverUrl, GT._("List on toolserver"));
+    menu.addItemView(wikipedia, popup, algorithm.getWhiteListPageName(), GT._("View or edit white list"));
 
     popup.show(e.getComponent(), e.getX(), e.getY());
   }

@@ -19,9 +19,7 @@
 package org.wikipediacleaner.gui.swing.component;
 
 import javax.swing.JCheckBox;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.Element;
 
@@ -33,6 +31,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.gui.swing.menu.MWPaneDisambiguationMenuCreator;
 
 
 /**
@@ -76,39 +75,35 @@ public class MWPaneDisambiguationPopupListener extends MWPanePopupListener {
     Page page = (attrPage instanceof Page) ? (Page) attrPage : null;
     TemplateMatcher matcher = (attrTemplateMatcher instanceof TemplateMatcher) ?
         (TemplateMatcher) attrTemplateMatcher : null;
+    MWPaneDisambiguationMenuCreator menu = new MWPaneDisambiguationMenuCreator();
 
     // Manage TemplateMatcher
     if (attrPageElement instanceof PageElementTemplate) {
       PageElementTemplate template = (PageElementTemplate) attrPageElement;
-      JPopupMenu popup = new JPopupMenu();
 
       String templateTitle = getWikipedia().getWikiConfiguration().getPageTitle(
           Namespace.TEMPLATE,
           template.getTemplateName());
-      JMenuItem menuItem = new JMenuItem(templateTitle);
-      menuItem.setEnabled(false);
-      popup.add(menuItem);
+      JPopupMenu popup = menu.createPopupMenu(templateTitle);
       if ((matcher != null) &&
           (matcher.getExplanation() != null) &&
           (matcher.getExplanation().length() > 0)) {
-        menuItem = new JMenuItem("→ " + matcher.getExplanation() + " ←");
-        menuItem.setEnabled(false);
-        popup.add(menuItem);
+        menu.addDisabledText(popup, "→ " + matcher.getExplanation() + " ←");
       }
-      MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
+      menu.addCurrentChapter(popup, position, pageAnalysis);
 
-      popup.addSeparator();
+      menu.addSeparator(popup);
       Page templatePage = DataManager.getPage(getWikipedia(), templateTitle, null, null, null);
 
-      MenuCreator.addReplaceTemplateToMenu(
+      menu.addReplaceTemplate(
           getWikipedia(), popup, template, matcher,
           page, pageAnalysis.getPage(), element, textPane);
-      MenuCreator.addAnalyzeToMenu(getWikipedia(), popup, page);
-      MenuCreator.addAnalyzeToMenu(getWikipedia(), popup, templatePage);
-      MenuCreator.addViewToMenu(getWikipedia(), popup, page, true);
-      MenuCreator.addViewToMenu(getWikipedia(), popup, templatePage, true);
-      MenuCreator.addDisambiguationToMenu(getWikipedia(), popup, page);
-      MenuCreator.addReloadLinksToMenu(getWikipedia(), popup, page, getWindow());
+      menu.addAnalyze(getWikipedia(), popup, page);
+      menu.addAnalyze(getWikipedia(), popup, templatePage);
+      menu.addView(getWikipedia(), popup, page, true);
+      menu.addView(getWikipedia(), popup, templatePage, true);
+      menu.addDisambiguation(getWikipedia(), popup, page);
+      menu.addItemReloadLinks(getWikipedia(), popup, page, getWindow());
 
       return popup;
     }
@@ -119,7 +114,7 @@ public class MWPaneDisambiguationPopupListener extends MWPanePopupListener {
 
     // Menu name
     String text = (String) attrText;
-    JPopupMenu popup = new JPopupMenu();
+    JPopupMenu popup = menu.createPopupMenu(null);
 
     // Create sub menus
     JCheckBox chk = null;
@@ -133,23 +128,21 @@ public class MWPaneDisambiguationPopupListener extends MWPanePopupListener {
     } else if ((addNote != null) && (addNote.isEnabled())) {
       chk = addNote;
     }
-    MenuCreator.addReplaceLinkToMenu(popup, page, text, element, textPane);
-    MenuCreator.addRemoveLinkToMenu(popup, text, textPane, startOffset, endOffset);
-    MenuCreator.addMarkAsNormalToMenu(getWikipedia(), popup, page, text, element, textPane);
-    MenuCreator.addMarkAsNeedingHelpToMenu(getWikipedia(), popup, page, text, element, textPane, chk);
-    MenuCreator.addLinkTextToMenu(getWikipedia(), popup, page, text, element, textPane);
-    popup.add(new JSeparator());
+    menu.addReplaceLink(popup, page, text, element, textPane);
+    menu.addItemRemoveLink(popup, text, textPane, startOffset, endOffset);
+    menu.addMarkAsNormal(getWikipedia(), popup, page, text, element, textPane);
+    menu.addMarkAsNeedingHelp(getWikipedia(), popup, page, text, element, textPane, chk);
+    menu.addLinkText(getWikipedia(), popup, page, text, element, textPane);
+    menu.addSeparator(popup);
     if (page != null) {
-      JMenuItem menuItem = new JMenuItem(page.getTitle());
-      menuItem.setEnabled(false);
-      popup.add(menuItem);
+      menu.addDisabledText(popup, page.getTitle());
     }
-    MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
-    popup.add(new JSeparator());
-    MenuCreator.addAnalyzeToMenu(getWikipedia(), popup, page);
-    MenuCreator.addViewToMenu(getWikipedia(), popup, page, true);
-    MenuCreator.addDisambiguationToMenu(getWikipedia(), popup, page);
-    MenuCreator.addReloadLinksToMenu(getWikipedia(), popup, page, getWindow());
+    menu.addCurrentChapter(popup, position, pageAnalysis);
+    menu.addSeparator(popup);
+    menu.addAnalyze(getWikipedia(), popup, page);
+    menu.addView(getWikipedia(), popup, page, true);
+    menu.addDisambiguation(getWikipedia(), popup, page);
+    menu.addItemReloadLinks(getWikipedia(), popup, page, getWindow());
 
     return popup;
   }

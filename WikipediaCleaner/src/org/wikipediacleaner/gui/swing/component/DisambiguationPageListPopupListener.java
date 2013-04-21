@@ -22,11 +22,11 @@ import java.util.Properties;
 
 import javax.swing.JList;
 import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.gui.swing.menu.DisambiguationPageListMenuCreator;
 
 
 /**
@@ -62,14 +62,15 @@ public class DisambiguationPageListPopupListener extends
    */
   @Override
   protected void createPopup(JPopupMenu popup, Page link) {
+    DisambiguationPageListMenuCreator menu = new DisambiguationPageListMenuCreator();
     if (backlinksProperties != null) {
-      popup.add(new JSeparator());
-      MenuCreator.addMarkBacklinkToMenu(wikipedia, popup, page, link, backlinksProperties);
+      menu.addSeparator(popup);
+      menu.addItemsMarkBacklink(wikipedia, popup, page, link, backlinksProperties);
     }
-    popup.add(new JSeparator());
-    MenuCreator.addAnalyzeToMenu(wikipedia, popup, link);
-    MenuCreator.addViewToMenu(wikipedia, popup, link, true);
-    MenuCreator.addDisambiguationToMenu(wikipedia, popup, link);
+    menu.addSeparator(popup);
+    menu.addAnalyze(wikipedia, popup, link);
+    menu.addView(wikipedia, popup, link, true);
+    menu.addDisambiguation(wikipedia, popup, link);
   }
 
 }

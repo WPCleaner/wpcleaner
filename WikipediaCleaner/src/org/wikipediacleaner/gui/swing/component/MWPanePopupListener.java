@@ -22,9 +22,7 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
 import javax.swing.text.BadLocationException;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -44,6 +42,7 @@ import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.gui.swing.menu.BasicMenuCreator;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -235,15 +234,13 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     }
 
     // Default menu
-    JPopupMenu popup = new JPopupMenu();
-    JMenuItem menuItem = new JMenuItem(GT._(
+    BasicMenuCreator menu = new BasicMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(GT._(
         "Page: {0}",
         limitTextLength(pageAnalysis.getPage().getTitle(), 50)));
-    menuItem.setEnabled(false);
-    popup.add(menuItem);
-    MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
-    popup.add(new JSeparator());
-    MenuCreator.addViewToMenu(wikipedia, popup, pageAnalysis.getPage(), false);
+    menu.addCurrentChapter(popup, position, pageAnalysis);
+    menu.addSeparator(popup);
+    menu.addView(wikipedia, popup, pageAnalysis.getPage(), false);
     return popup;
   }
 
@@ -268,19 +265,17 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     Page page = DataManager.getPage(wikipedia, link.getLink(), null, null, null);
 
     // Menu creation
-    JPopupMenu popup = new JPopupMenu();
-    JMenuItem menuItem = new JMenuItem(GT._(
+    BasicMenuCreator menu = new BasicMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(GT._(
         "Page: {0}",
         limitTextLength(page.getTitle(), 50)));
-    menuItem.setEnabled(false);
-    popup.add(menuItem);
-    MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
-    popup.add(new JSeparator());
-    MenuCreator.addViewToMenu(wikipedia, popup, page, false);
-    MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
-    MenuCreator.addDisambiguationToMenu(wikipedia, popup, page);
-    popup.add(new JSeparator());
-    MenuCreator.addRemoveLinkToMenu(
+    menu.addCurrentChapter(popup, position, pageAnalysis);
+    menu.addSeparator(popup);
+    menu.addView(wikipedia, popup, page, false);
+    menu.addAnalyze(wikipedia, popup, page);
+    menu.addDisambiguation(wikipedia, popup, page);
+    menu.addSeparator(popup);
+    menu.addItemRemoveLink(
         popup, link.getDisplayedText(),
         textPane, link.getBeginIndex(), link.getEndIndex());
 
@@ -305,13 +300,11 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     }
 
     // Menu creation
-    JPopupMenu popup = new JPopupMenu();
-    JMenuItem menuItem = new JMenuItem(GT._(
+    BasicMenuCreator menu = new BasicMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(GT._(
         "Interwiki: {0}",
         limitTextLength(link.getInterwiki() + ":" + link.getLink(), 50)));
-    menuItem.setEnabled(false);
-    popup.add(menuItem);
-    MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
+    menu.addCurrentChapter(popup, position, pageAnalysis);
 
     return popup;
   }
@@ -341,16 +334,14 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     }
 
     // Menu creation
-    JPopupMenu popup = new JPopupMenu();
-    JMenuItem menuItem = new JMenuItem(
+    BasicMenuCreator menu = new BasicMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(
         link.getLanguage() + ":" +
         limitTextLength(link.getLink(), 50));
-    menuItem.setEnabled(false);
-    popup.add(menuItem);
-    MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
+    menu.addCurrentChapter(popup, position, pageAnalysis);
     if (otherWikipedia != null) {
-      popup.add(new JSeparator());
-      MenuCreator.addViewToMenu(otherWikipedia, popup, otherPage, false);
+      menu.addSeparator(popup);
+      menu.addView(otherWikipedia, popup, otherPage, false);
     }
 
     return popup;
@@ -380,17 +371,14 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     Page page = DataManager.getPage(wikipedia, fullName, null, null, null);
 
     // Menu creation
-    JPopupMenu popup = new JPopupMenu();
-    JMenuItem menuItem = new JMenuItem(GT._(
+    BasicMenuCreator menu = new BasicMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(GT._(
         "Image: {0}",
         limitTextLength(image.getImage(), 50)));
-    menuItem.setEnabled(false);
-    popup.add(menuItem);
-    MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
-    popup.add(new JSeparator());
-    MenuCreator.addViewToMenu(wikipedia, popup, page, false);
-    MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
-    popup.add(new JSeparator());
+    menu.addCurrentChapter(popup, position, pageAnalysis);
+    menu.addSeparator(popup);
+    menu.addView(wikipedia, popup, page, false);
+    menu.addAnalyze(wikipedia, popup, page);
 
     return popup;
   }
@@ -419,17 +407,14 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     Page page = DataManager.getPage(wikipedia, fullName, null, null, null);
 
     // Menu creation
-    JPopupMenu popup = new JPopupMenu();
-    JMenuItem menuItem = new JMenuItem(GT._(
+    BasicMenuCreator menu = new BasicMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(GT._(
         "Category: {0}",
         limitTextLength(category.getName(), 50)));
-    menuItem.setEnabled(false);
-    popup.add(menuItem);
-    MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
-    popup.add(new JSeparator());
-    MenuCreator.addViewToMenu(wikipedia, popup, page, false);
-    MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
-    popup.add(new JSeparator());
+    menu.addCurrentChapter(popup, position, pageAnalysis);
+    menu.addSeparator(popup);
+    menu.addView(wikipedia, popup, page, false);
+    menu.addAnalyze(wikipedia, popup, page);
 
     return popup;
   }
@@ -450,15 +435,13 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     }
 
     // Menu creation
-    JPopupMenu popup = new JPopupMenu();
-    JMenuItem menuItem = new JMenuItem(GT._(
+    BasicMenuCreator menu = new BasicMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(GT._(
         "External link: {0}",
         limitTextLength(link.getLink(), 50)));
-    menuItem.setEnabled(false);
-    popup.add(menuItem);
-    MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
-    popup.add(new JSeparator());
-    MenuCreator.addViewToMenu(null, popup, link.getLink());
+    menu.addCurrentChapter(popup, position, pageAnalysis);
+    menu.addSeparator(popup);
+    menu.addItemView(null, popup, link.getLink());
 
     return popup;
   }
@@ -485,16 +468,14 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     Page page = DataManager.getPage(wikipedia, fullName, null, null, null);
 
     // Menu creation
-    JPopupMenu popup = new JPopupMenu();
-    JMenuItem menuItem = new JMenuItem(GT._(
+    BasicMenuCreator menu = new BasicMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(GT._(
         "Template: {0}",
         limitTextLength(template.getTemplateName(), 50)));
-    menuItem.setEnabled(false);
-    popup.add(menuItem);
-    MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
-    popup.add(new JSeparator());
-    MenuCreator.addViewToMenu(wikipedia, popup, page, false);
-    MenuCreator.addAnalyzeToMenu(wikipedia, popup, page);
+    menu.addCurrentChapter(popup, position, pageAnalysis);
+    menu.addSeparator(popup);
+    menu.addView(wikipedia, popup, page, false);
+    menu.addAnalyze(wikipedia, popup, page);
 
     return popup;
   }
@@ -515,13 +496,11 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     }
 
     // Menu creation
-    JPopupMenu popup = new JPopupMenu();
-    JMenuItem menuItem = new JMenuItem(GT._(
+    BasicMenuCreator menu = new BasicMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(GT._(
         "Parameter: {0}",
         limitTextLength(parameter.getParameterName(), 50)));
-    menuItem.setEnabled(false);
-    popup.add(menuItem);
-    MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
+    menu.addCurrentChapter(popup, position, pageAnalysis);
 
     return popup;
   }
@@ -542,13 +521,11 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     }
 
     // Menu creation
-    JPopupMenu popup = new JPopupMenu();
-    JMenuItem menuItem = new JMenuItem(GT._(
+    BasicMenuCreator menu = new BasicMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(GT._(
         "Function: {0}",
         limitTextLength(function.getFunctionName(), 50)));
-    menuItem.setEnabled(false);
-    popup.add(menuItem);
-    MenuCreator.addCurrentChapterToMenu(popup, position, pageAnalysis);
+    menu.addCurrentChapter(popup, position, pageAnalysis);
 
     return popup;
   }

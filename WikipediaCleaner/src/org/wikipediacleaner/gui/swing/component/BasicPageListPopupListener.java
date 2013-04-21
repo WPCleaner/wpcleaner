@@ -20,11 +20,11 @@ package org.wikipediacleaner.gui.swing.component;
 
 import javax.swing.JList;
 import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.gui.swing.menu.BasicMenuCreator;
 
 
 /**
@@ -51,10 +51,11 @@ public class BasicPageListPopupListener extends
    */
   @Override
   protected void createPopup(JPopupMenu popup, Page link) {
-    popup.add(new JSeparator());
-    MenuCreator.addAnalyzeToMenu(wikipedia, popup, link);
-    MenuCreator.addViewToMenu(wikipedia, popup, link, true);
-    MenuCreator.addDisambiguationToMenu(wikipedia, popup, link);
+    BasicMenuCreator menu = new BasicMenuCreator();
+    menu.addSeparator(popup);
+    menu.addAnalyze(wikipedia, popup, link);
+    menu.addView(wikipedia, popup, link, true);
+    menu.addDisambiguation(wikipedia, popup, link);
   }
 
 }

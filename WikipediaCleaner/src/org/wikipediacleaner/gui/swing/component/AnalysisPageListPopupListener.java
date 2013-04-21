@@ -25,6 +25,7 @@ import javax.swing.JSeparator;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.gui.swing.menu.AnalysisPageListMenuCreator;
 
 
 /**
@@ -51,24 +52,25 @@ public class AnalysisPageListPopupListener extends
    */
   @Override
   protected void createPopup(JPopupMenu popup, Page link) {
-    popup.add(new JSeparator());
+    AnalysisPageListMenuCreator menu = new AnalysisPageListMenuCreator();
+    menu.addSeparator(popup);
     if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
-      MenuCreator.addReplaceAllLinksToMenu(popup, link, textPane);
+      menu.addReplaceAllLinks(popup, link, textPane);
     }
-    MenuCreator.addRemoveAllLinksToMenu(popup, link, textPane);
-    popup.add(new JSeparator());
+    menu.addItemRemoveAllLinks(popup, link, textPane);
+    menu.addSeparator(popup);
     if (Boolean.FALSE.equals(link.isExisting())) {
-      MenuCreator.addRedLinksAnalysisMenu(wikipedia, popup, link, textPane);
+      menu.addItemRedLinksAnalysis(wikipedia, popup, link, textPane);
       popup.add(new JSeparator());
     }
-    MenuCreator.addAnalyzeToMenu(wikipedia, popup, link);
-    MenuCreator.addViewToMenu(wikipedia, popup, link, true);
-    MenuCreator.addDisambiguationToMenu(wikipedia, popup, link);
-    MenuCreator.addReloadLinksToMenu(wikipedia, popup, link, window);
-    //MenuCreator.addPurgeCacheToMenu(popup, link, window);
-    popup.add(new JSeparator());
-    MenuCreator.addFindTextToMenu(popup, link, textPane);
-    MenuCreator.addAnalyzeTemplatesToMenu(wikipedia, popup, page, link);
+    menu.addAnalyze(wikipedia, popup, link);
+    menu.addView(wikipedia, popup, link, true);
+    menu.addDisambiguation(wikipedia, popup, link);
+    menu.addItemReloadLinks(wikipedia, popup, link, window);
+    //menu.addItemPurgeCache(popup, link, window);
+    menu.addSeparator(popup);
+    menu.addItemFindText(popup, link, textPane);
+    menu.addItemAnalyzeTemplates(wikipedia, popup, page, link);
   }
 
 }
