@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-21 15:08+0200\n"
+"POT-Creation-Date: 2013-04-21 17:52+0200\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -1453,6 +1453,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1695
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:67
+#: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:67
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:70
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:57
@@ -2092,6 +2093,10 @@ msgstr ""
 msgid "Purging page cache"
 msgstr ""
 
+#: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:71
+msgid "Retrieving members of a category"
+msgstr ""
+
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:74
 msgid "Analyzing links for redirect pages"
 msgstr ""
@@ -2300,7 +2305,7 @@ msgid "Search in templates"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:105
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:238
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:242
 msgid "Link to"
 msgstr ""
 
@@ -2358,66 +2363,71 @@ msgstr ""
 msgid "Remove mark on backlink"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:81
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:93
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:83
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:95
 msgid "Mark as normal link"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:84
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:139
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:150
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:201
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:86
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:141
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:152
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:203
 #, java-format
 msgid "Using {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:135
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:167
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:137
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:169
 msgid "Mark as needing help"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:198
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:210
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:200
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:212
 msgid "Link text"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:239
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:243
 msgid "Replace with"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:240
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:244
 msgid "Add to preferred disambiguations"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:267
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:280
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:473
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:271
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:284
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:518
 #, java-format
 msgid "&Link to {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:272
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:285
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:477
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:276
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:289
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:522
 #, java-format
 msgid "&Replace with {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:439
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:395
+#, fuzzy
+msgid "Reload category members"
+msgstr "Repareer categorieën"
+
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:484
 msgid "Add other preferred disambiguation..."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:443
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:488
 msgid "What link do you want to add to the preferred disambiguations?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:450
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:495
 msgid "Remove from preferred disambiguations"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:464
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:483
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:492
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:509
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:528
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:537
 #, fuzzy, java-format
 msgid "Reverse to {0}"
 msgstr "Vervang met {0}"

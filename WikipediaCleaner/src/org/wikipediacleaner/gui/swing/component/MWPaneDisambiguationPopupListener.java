@@ -128,7 +128,7 @@ public class MWPaneDisambiguationPopupListener extends MWPanePopupListener {
     } else if ((addNote != null) && (addNote.isEnabled())) {
       chk = addNote;
     }
-    menu.addReplaceLink(popup, page, text, element, textPane);
+    menu.addReplaceLink(getWikipedia(), popup, page, text, element, textPane);
     menu.addItemRemoveLink(popup, text, textPane, startOffset, endOffset);
     menu.addMarkAsNormal(getWikipedia(), popup, page, text, element, textPane);
     menu.addMarkAsNeedingHelp(getWikipedia(), popup, page, text, element, textPane, chk);

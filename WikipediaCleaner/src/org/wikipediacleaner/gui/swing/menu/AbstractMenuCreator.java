@@ -223,6 +223,19 @@ public abstract class AbstractMenuCreator {
    * @param begin Number of items kept at the beginning.
    * @param end Number of items kept at the end.
    */
+  public void addSubmenu(JMenu menu, JMenu submenu, int begin, int end) {
+    addSubmenu(menu.getPopupMenu(), submenu, begin, end);
+  }
+
+  /**
+   * Add a submenu to a menu.
+   * If the submenu contains to much elements, it is split into several submenus.
+   * 
+   * @param menu Menu.
+   * @param submenu Submenu.
+   * @param begin Number of items kept at the beginning.
+   * @param end Number of items kept at the end.
+   */
   public void addSubmenu(JPopupMenu menu, JMenu submenu, int begin, int end) {
     Configuration config = Configuration.getConfiguration();
     final int maxElements = Math.max(
