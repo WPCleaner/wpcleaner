@@ -34,12 +34,14 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.LinkReplacement;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.TemplateMatcher;
 import org.wikipediacleaner.gui.swing.action.ChangePreferredDisambiguationAction;
 import org.wikipediacleaner.gui.swing.action.MarkLinkAction;
+import org.wikipediacleaner.gui.swing.action.ReloadCategoryMembersAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceLinkAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceTextAction;
 import org.wikipediacleaner.gui.swing.action.RevertLinkAction;
@@ -219,6 +221,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
   /**
    * Add submenus for replacing links.
    * 
+   * @param wiki Wiki.
    * @param popup Popup menu.
    * @param page Page.
    * @param text Text.
@@ -226,7 +229,8 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
    * @param textPane Text pane.
    */
   public void addReplaceLink(
-      JPopupMenu popup, Page page, String text, Element element, JTextPane textPane) {
+      EnumWikipedia wiki, JPopupMenu popup, Page page, String text,
+      Element element, JTextPane textPane) {
     if (text == null) {
       return;
     }
@@ -370,6 +374,47 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             submenuLink.add(submenu1);
             submenuReplace.add(submenu2);
             submenuAddPreferred.add(submenu3);
+          } else if ((p.getNamespace() != null) &&
+                     (p.getNamespace().intValue() == Namespace.CATEGORY)) {
+            JMenu submenu1 = new JMenu(p.getTitle());
+            JMenu submenu2 = new JMenu(p.getTitle());
+
+            addItem(
+                submenu1, p, null,
+                new ReplaceLinkAction(page.getTitle(), p.getTitle(), text, element, textPane, false));
+            addItem(
+                submenu2, p, null,
+                new ReplaceLinkAction(page.getTitle(), p.getTitle(), text, element, textPane, true));
+
+            addSeparator(submenu1);
+            addSeparator(submenu2);
+
+            List<Page> categoryMembers = p.getRelatedPages(Page.RelatedPages.CATEGORY_MEMBERS);
+            if (categoryMembers == null) {
+              addItem(
+                  submenu1, null, GT._("Reload category members"),
+                  new ReloadCategoryMembersAction(wiki, p, null));
+            } else {
+              for (Page p2 : categoryMembers) {
+                boolean already = false;
+                for (Page p3 : links) {
+                  if (Page.areSameTitle(p2.getTitle(), p3.getTitle())) {
+                    already = true;
+                  }
+                }
+                if (!already) {
+                  addItem(
+                      submenu1, p2, null,
+                      new ReplaceLinkAction(page.getTitle(), p2.getTitle(), text, element, textPane, false));
+                  addItem(
+                      submenu2, p2, null,
+                      new ReplaceLinkAction(page.getTitle(), p2.getTitle(), text, element, textPane, true));
+                }
+              }
+            }
+
+            addSubmenu(submenuLink, submenu1, 2, 0);
+            addSubmenu(submenuReplace, submenu2, 2, 0);
           } else {
             addItem(
                 submenuLink, p, null,
