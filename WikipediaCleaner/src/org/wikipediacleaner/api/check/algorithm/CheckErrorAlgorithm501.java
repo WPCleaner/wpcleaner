@@ -107,52 +107,41 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       result |= analyzeNativeText(pageAnalysis, activeSuggestions, replacements, slowRegexp);
     }
 
+    if (errors == null) {
+      return result;
+    }
+
+    // Group replacements
+    String contents = pageAnalysis.getContents();
+    List<ReplacementGroup> groups = new ArrayList<ReplacementGroup>();
+    ReplacementComparator comparator = new ReplacementComparator();
+    Collections.sort(replacements);
+    while (!replacements.isEmpty()) {
+      List<Replacement> group = getFirstGroup(replacements);
+      Collections.sort(group, comparator);
+      groups.add(new ReplacementGroup(group, contents));
+    }
+    
     // Analyze replacements
-    if (errors != null) {
-      String contents = pageAnalysis.getContents();
-      Collections.sort(replacements);
-      ReplacementComparator comparator = new ReplacementComparator();
-      while (!replacements.isEmpty()) {
-        // Analyze group of replacements
-        List<Replacement> group = getFirstGroup(replacements);
-        Collections.sort(group, comparator);
-        int minBegin = Integer.MAX_VALUE;
-        int maxEnd = 0;
-        for (Replacement replacement : group) {
-          minBegin = Math.min(minBegin, replacement.getBegin());
-          maxEnd = Math.max(maxEnd, replacement.getEnd());
+    for (ReplacementGroup group : groups) {
+
+      // Create error
+      CheckErrorResult error = createCheckErrorResult(
+          pageAnalysis.getPage(), group.getBegin(), group.getEnd());
+      String previousComment = null;
+      for (Replacement replacement : group.getReplacements()) {
+
+        // Manage comment
+        String comment = replacement.getComment();
+        if ((comment != null) &&
+            (!comment.equals(previousComment))) {
+          error.addPossibleAction(comment, new NullActionProvider());
         }
-  
-        // Create error
-        CheckErrorResult error = createCheckErrorResult(
-            pageAnalysis.getPage(), minBegin, maxEnd);
-        String previousComment = null;
-        List<String> alreadyAdded = new ArrayList<String>();
-        for (Replacement replacement : group) {
+        previousComment = comment;
 
-          // Construct replacement
-          int begin = replacement.getBegin();
-          int end = replacement.getEnd();
-          String newText =
-              contents.substring(minBegin, begin) +
-              replacement.getReplacement() +
-              contents.substring(end, maxEnd);
-
-          if (!alreadyAdded.contains(newText)) {
-            // Manage comment
-            String comment = replacement.getComment();
-            if ((comment != null) &&
-                (!comment.equals(previousComment))) {
-              error.addPossibleAction(comment, new NullActionProvider());
-            }
-            previousComment = comment;
-
-            error.addReplacement(newText);
-            alreadyAdded.add(newText);
-          }
-        }
-        errors.add(error);
+        error.addReplacement(replacement.getReplacement());
       }
+      errors.add(error);
     }
 
     return result;
@@ -718,6 +707,90 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       }
 
       return 0;
+    }
+  }
+
+  /**
+   * Utility class to group possible replacements.
+   */
+  private static class ReplacementGroup {
+
+    /**
+     * Minimum index for the group of replacements.
+     */
+    private final int begin;
+
+    /**
+     * Maximum index for the group of replacements.
+     */
+    private final int end;
+
+    /**
+     * Group of replacements.
+     */
+    private final List<Replacement> group;
+
+    /**
+     * Create a group of replacements.
+     * 
+     * @param replacements Ordered list of replacements.
+     * @param contents Page contents.
+     */
+    public ReplacementGroup(List<Replacement> replacements, String contents) {
+
+      // Compute minimum/maximum indexes for the group of replacements.
+      int minBegin = Integer.MAX_VALUE;
+      int maxEnd = 0;
+      for (Replacement replacement : replacements) {
+        minBegin = Math.min(minBegin, replacement.getBegin());
+        maxEnd = Math.max(maxEnd, replacement.getEnd());
+      }
+      begin = minBegin;
+      end = maxEnd;
+
+      // Compute new replacements using the full expand of the group.
+      List<String> alreadyAdded = new ArrayList<String>();
+      group = new ArrayList<Replacement>();
+      for (Replacement replacement : replacements) {
+        if ((replacement.getBegin() == begin) &&
+            (replacement.getEnd() == end)) {
+          String newText = replacement.getReplacement();
+          if (!alreadyAdded.contains(newText)) {
+            group.add(replacement);
+            alreadyAdded.add(newText);
+          }
+        } else {
+          String newText =
+              contents.substring(begin, replacement.getBegin()) +
+              replacement.getReplacement() +
+              contents.substring(replacement.getEnd(), end);
+          if (!alreadyAdded.contains(newText)) {
+            group.add(new Replacement(begin, end, replacement.getComment(), replacement.isOtherPattern(), newText));
+            alreadyAdded.add(newText);
+          }
+        }
+      }
+    }
+
+    /**
+     * @return Minimum index for the group of replacements.
+     */
+    public int getBegin() {
+      return begin;
+    }
+
+    /**
+     * @return Maximum index for the group of replacements.
+     */
+    public int getEnd() {
+      return end;
+    }
+
+    /**
+     * @return List of possible replacements.
+     */
+    public List<Replacement> getReplacements() {
+      return group;
     }
   }
 }
