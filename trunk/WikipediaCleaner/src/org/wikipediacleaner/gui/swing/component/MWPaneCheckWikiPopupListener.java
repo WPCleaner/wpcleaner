@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
+import org.wikipediacleaner.gui.swing.menu.MWPaneCheckWikiMenuCreator;
 
 
 /**
@@ -65,8 +66,9 @@ public class MWPaneCheckWikiPopupListener extends MWPanePopupListener {
     }
 
     CheckErrorResult info = (CheckErrorResult) attrInfo;
-    JPopupMenu popup = new JPopupMenu();
-    MenuCreator.addInfoToMenu(popup, element, textPane, info);
+    MWPaneCheckWikiMenuCreator menu = new MWPaneCheckWikiMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(null);
+    menu.addInfo(popup, element, textPane, info);
     return popup;
   }
 }

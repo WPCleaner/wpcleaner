@@ -98,11 +98,11 @@ import org.wikipediacleaner.gui.swing.component.MWPaneCheckWikiPopupListener;
 import org.wikipediacleaner.gui.swing.component.MWPaneDisambiguationFormatter;
 import org.wikipediacleaner.gui.swing.component.MWPaneDisambiguationPopupListener;
 import org.wikipediacleaner.gui.swing.component.MWPanePopupListener;
-import org.wikipediacleaner.gui.swing.component.MenuCreator;
 import org.wikipediacleaner.gui.swing.component.PageListAnalyzeListener;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
 import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
+import org.wikipediacleaner.gui.swing.menu.BasicMenuCreator;
 import org.wikipediacleaner.gui.swing.worker.FullAnalysisWorker;
 import org.wikipediacleaner.gui.swing.worker.TranslateWorker;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningWorker;
@@ -1174,9 +1174,10 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         }
       }
     }
-    JPopupMenu menu = new JPopupMenu();
-    MenuCreator.addSubmenus(menu, items);
-    menu.show(buttonRedirectElements, 0, buttonRedirectElements.getHeight());
+    BasicMenuCreator menu = new BasicMenuCreator();
+    JPopupMenu popup = menu.createPopupMenu(null);
+    menu.addSubmenus(popup, items);
+    popup.show(buttonRedirectElements, 0, buttonRedirectElements.getHeight());
   }
 
   /**
