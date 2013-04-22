@@ -140,7 +140,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         }
         previousComment = comment;
 
-        error.addReplacement(replacement.getReplacement());
+        error.addReplacement(replacement.getReplacement(), replacement.isAutomatic());
       }
       errors.add(error);
     }
@@ -580,6 +580,17 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         }
       }
     }
+  }
+
+  /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String automaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement("Automatic", analysis);
   }
 
   /**
