@@ -44,7 +44,7 @@ public class ReloadCategoryMembersAction implements ActionListener {
    * Constructor.
    * 
    * @param wiki Wiki.
-   * @param categiry Category.
+   * @param category Category.
    * @param window Window on which the action is done.
    */
   public ReloadCategoryMembersAction(
