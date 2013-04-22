@@ -317,6 +317,32 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
+   * Fix all the errors in the page by using automatic replacement proposed.
+   * 
+   * @param fixName Fix name (extracted from getGlobalFixes()).
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  public String fixUsingAutomaticReplacement(String fixName, PageAnalysis analysis) {
+    String result = analysis.getContents();
+    List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
+    if (analyze(analysis, errors)) {
+      for (int i = errors.size(); i > 0; i--) {
+        CheckErrorResult errorResult = errors.get(i - 1);
+        String newText = errorResult.getAutomaticReplacement();
+        if (newText != null) {
+          String tmp =
+            result.substring(0, errorResult.getStartPosition()) +
+            newText +
+            result.substring(errorResult.getEndPosition());
+          result = tmp;
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
    * Fix all the errors in the page by removing.
    * 
    * @param fixName Fix name (extracted from getGlobalFixes()).

@@ -120,11 +120,22 @@ public class CheckErrorResult {
    * @param replacement Possible replacement.
    */
   public void addReplacement(String replacement) {
+    addReplacement(replacement, false);
+  }
+
+  /**
+   * Add a possible replacement for the error.
+   * 
+   * @param replacement Possible replacement.
+   * @param automatic True if replacement can be done automatically.
+   */
+  public void addReplacement(String replacement, boolean automatic) {
     addReplacement(
         replacement,
         (replacement.length() > 0) ?
             GT._("Replace with {0}", replacement) :
-            GT._("Delete"));
+            GT._("Delete"),
+        automatic);
   }
 
   /**
@@ -134,6 +145,17 @@ public class CheckErrorResult {
    * @param text Text explaining the replacement.
    */
   public void addReplacement(String replacement, String text) {
+    addReplacement(replacement, text, false);
+  }
+
+  /**
+   * Add a possible replacement for the error.
+   * 
+   * @param replacement Possible replacement.
+   * @param text Text explaining the replacement.
+   * @param automatic True if replacement can be done automatically.
+   */
+  public void addReplacement(String replacement, String text, boolean automatic) {
     if (replacement == null) {
       return;
     }
@@ -148,7 +170,7 @@ public class CheckErrorResult {
     }
     SimpleAction action = new SimpleAction(
         text,
-        new ReplaceTextActionProvider(replacement));
+        new ReplaceTextActionProvider(replacement, automatic));
     possibleActions.add(action);
     possibleReplacements.add(action);
   }
@@ -172,6 +194,27 @@ public class CheckErrorResult {
       return null;
     }
     return ((ReplaceTextActionProvider) provider).getNewText();
+  }
+
+  /**
+   * @return Automatic replacement.
+   */
+  public String getAutomaticReplacement() {
+    if (possibleReplacements == null) {
+      return null;
+    }
+    for (Actionnable action : possibleReplacements) {
+      if (action instanceof SimpleAction) {
+        ActionProvider provider = ((SimpleAction) action).getActionProvider();
+        if (provider instanceof ReplaceTextActionProvider) {
+          ReplaceTextActionProvider textProvider = (ReplaceTextActionProvider) provider;
+          if (textProvider.isAutomatic()) {
+            return textProvider.getNewText();
+          }
+        }
+      }
+    }
+    return null;
   }
 
   /**
