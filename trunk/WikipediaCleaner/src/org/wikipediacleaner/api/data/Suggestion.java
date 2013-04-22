@@ -61,7 +61,7 @@ public class Suggestion implements Comparable<Suggestion> {
   /**
    * List of possible replacements.
    */
-  private final List<String> replacements;
+  private final List<ElementarySuggestion> suggestions;
 
   /**
    * Comment for the replacements.
@@ -149,7 +149,7 @@ public class Suggestion implements Comparable<Suggestion> {
     this.chapter = chapter;
     this.pattern = pattern;
     this.other = other;
-    this.replacements = new ArrayList<String>();
+    this.suggestions = new ArrayList<ElementarySuggestion>();
     this.comment = null;
   }
 
@@ -178,8 +178,9 @@ public class Suggestion implements Comparable<Suggestion> {
    * Add a possible replacement.
    * 
    * @param replacement Replacement.
+   * @param automatic True if replacement can be done automatically.
    */
-  public void addReplacement(String replacement) {
+  public void addReplacement(String replacement, boolean automatic) {
     if (replacement != null) {
       if ((replacement.startsWith(TAG_NOWIKI_1)) &&
           (replacement.endsWith(TAG_NOWIKI_2))) {
@@ -187,8 +188,17 @@ public class Suggestion implements Comparable<Suggestion> {
             TAG_NOWIKI_1.length(),
             replacement.length() - TAG_NOWIKI_2.length());
       }
-      if (!replacements.contains(replacement)) {
-        replacements.add(replacement);
+      boolean added = false;
+      for (ElementarySuggestion suggestion : suggestions) {
+        if (replacement.equals(suggestion.getReplacement())) {
+          added = true;
+          if (automatic) {
+            suggestion.setAutomatic();
+          }
+        }
+      }
+      if (!added) {
+        suggestions.add(new ElementarySuggestion(replacement, automatic));
       }
     }
   }
@@ -222,10 +232,11 @@ public class Suggestion implements Comparable<Suggestion> {
    * @param initialText Initial text.
    * @return Possible replacements.
    */
-  public List<String> getReplacements(
+  public List<ElementarySuggestion> getReplacements(
       String initialText, int begin, int end) {
-    List<String> list = new ArrayList<String>();
-    for (String replacement : replacements) {
+    List<ElementarySuggestion> list = new ArrayList<ElementarySuggestion>();
+    for (ElementarySuggestion suggestion : suggestions) {
+      String replacement = suggestion.getReplacement();
       try {
         String newText = pattern.matcher(initialText).replaceFirst(replacement);
         String initialPrefix = initialText.substring(0, Math.min(begin, initialText.length()));
@@ -234,8 +245,14 @@ public class Suggestion implements Comparable<Suggestion> {
         String newSuffix = newText.substring(Math.max(newText.length() - initialText.length() + end, 0));
         if (initialPrefix.equals(newPrefix) && initialSuffix.equals(newSuffix)) {
           newText = newText.substring(newPrefix.length(), newText.length() - newSuffix.length());
-          if (!list.contains(newText)) {
-            list.add(newText);
+          boolean added = false;
+          for (ElementarySuggestion element : list) {
+            if (newText.equals(element.getReplacement())) {
+              added = true;
+            }
+          }
+          if (!added) {
+            list.add(new ElementarySuggestion(newText, suggestion.isAutomatic()));
           }
         }
       } catch (Exception e) {
@@ -373,5 +390,51 @@ public class Suggestion implements Comparable<Suggestion> {
       return 1;
     }
     return 0;
+  }
+
+  /**
+   * Bean for holding an elementary suggestion.
+   */
+  public static class ElementarySuggestion {
+
+    /**
+     * Replacement string.
+     */
+    private final String replacement;
+
+    /**
+     * True if the replacement can be done automatically.
+     */
+    private boolean automatic;
+
+    /**
+     * @param replacement Replacement string.
+     * @param automatic True if the replacement can be done automatically.
+     */
+    public ElementarySuggestion(String replacement, boolean automatic) {
+      this.replacement = replacement;
+      this.automatic = automatic;
+    }
+
+    /**
+     * @return Replacement string.
+     */
+    public String getReplacement() {
+      return replacement;
+    }
+
+    /**
+     * @return True if the replacement can be done automatically.
+     */
+    public boolean isAutomatic() {
+      return automatic;
+    }
+
+    /**
+     * Call to mark the replacement to be done automatically.
+     */
+    public void setAutomatic() {
+      this.automatic = true;
+    }
   }
 }
