@@ -606,14 +606,20 @@ public class WPCConfiguration {
                       }
                     }
                     if (suggestion != null) {
+                      boolean automatic = false;
                       if (elements.length > 4) {
                         suggestion.setComment(template.getParameterValue(elements[4]));
+                        if (elements.length > 6) {
+                          if (elements[6].equalsIgnoreCase(template.getParameterValue(elements[5]))) {
+                            automatic = true;
+                          }
+                        }
                       }
                       for (String elementReplacement : elementsReplacement) {
                         String replacementText = template.getParameterValue(elementReplacement);
                         if ((replacementText != null) &&
                             (replacementText.length() > 0)) {
-                          suggestion.addReplacement(replacementText);
+                          suggestion.addReplacement(replacementText, automatic);
                         }
                       }
                     }
@@ -659,7 +665,7 @@ public class WPCConfiguration {
                         }
                         if (suggestion != null) {
                           suggestion.setComment("Typo AWB " + wordValue);
-                          suggestion.addReplacement(replaceValue);
+                          suggestion.addReplacement(replaceValue, false);
                         }
                       }
                     }

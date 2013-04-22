@@ -39,6 +39,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
+import org.wikipediacleaner.api.data.Suggestion.ElementarySuggestion;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.Performance;
@@ -405,16 +406,17 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       Suggestion suggestion, List<Replacement> replacements) {
     boolean result = false;
     String text = contents.substring(authorizedBegin, authorizedEnd);
-    List<String> possibles = suggestion.getReplacements(
+    List<ElementarySuggestion> possibles = suggestion.getReplacements(
         text, begin - authorizedBegin, end - authorizedBegin);
     if (possibles != null) {
       text = contents.substring(begin, end);
-      for (String possible : possibles) {
+      for (ElementarySuggestion element : possibles) {
+        String possible = element.getReplacement();
         if (!text.equals(possible)) {
           Replacement replacement = new Replacement(
               begin, end,
               suggestion.getComment(), suggestion.isOtherPattern(),
-              possible);
+              possible, element.isAutomatic());
           replacements.add(replacement);
           result = true;
         }
@@ -610,16 +612,18 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     private final String comment;
     private final boolean otherPattern;
     private final String replacement;
+    private final boolean automatic;
 
     public Replacement(
         int begin, int end,
         String comment, boolean otherPattern,
-        String replacement) {
+        String replacement, boolean automatic) {
       this.begin = begin;
       this.end = end;
       this.otherPattern = otherPattern;
       this.comment = comment;
       this.replacement = replacement;
+      this.automatic = automatic;
     }
 
     public int getBegin() {
@@ -640,6 +644,10 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
     public String getReplacement() {
       return replacement;
+    }
+
+    public boolean isAutomatic() {
+      return automatic;
     }
 
     /**
@@ -765,7 +773,10 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
               replacement.getReplacement() +
               contents.substring(replacement.getEnd(), end);
           if (!alreadyAdded.contains(newText)) {
-            group.add(new Replacement(begin, end, replacement.getComment(), replacement.isOtherPattern(), newText));
+            group.add(
+                new Replacement(
+                    begin, end, replacement.getComment(),replacement.isOtherPattern(),
+                    newText, replacement.isAutomatic()));
             alreadyAdded.add(newText);
           }
         }
