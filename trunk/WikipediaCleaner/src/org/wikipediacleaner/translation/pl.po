@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-21 17:52+0200\n"
+"POT-Creation-Date: 2013-04-24 00:05+0200\n"
 "PO-Revision-Date: 2013-04-21 00:48+0000\n"
 "Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -77,7 +77,7 @@ msgstr "Błąd nr {0} ({1} - {2}) - {3}"
 msgid "Error unkown from WikiCleaner"
 msgstr "Nieznany błąd z WikiCleanera"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:126
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:136
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:95
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:92
@@ -86,7 +86,7 @@ msgstr "Nieznany błąd z WikiCleanera"
 msgid "Replace with {0}"
 msgstr "Zastąp przez {0}"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:127
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:137
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:166
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm013.java:69
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm014.java:69
@@ -395,6 +395,10 @@ msgstr "Wykaz tekstów, które mogą być wstawione do sekcji bez zawartości"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:46
 msgid "Delete all tags without content"
 msgstr "Skasuj wszystkie znaczniki bez zawartości"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:146
+msgid "Restore original text"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm502.java:83
 #, java-format

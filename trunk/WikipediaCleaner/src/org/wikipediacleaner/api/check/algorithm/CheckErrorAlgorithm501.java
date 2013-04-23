@@ -40,6 +40,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
 import org.wikipediacleaner.api.data.Suggestion.ElementarySuggestion;
+import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.Performance;
@@ -142,6 +143,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
         error.addReplacement(replacement.getReplacement(), replacement.isAutomatic());
       }
+      error.addReplacement(group.getText(), GT._("Restore original text"));
       errors.add(error);
     }
 
@@ -745,6 +747,11 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     private final int end;
 
     /**
+     * Original text.
+     */
+    private final String text;
+
+    /**
      * Group of replacements.
      */
     private final List<Replacement> group;
@@ -766,6 +773,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       }
       begin = minBegin;
       end = maxEnd;
+      text = contents.substring(begin, end);
 
       // Compute new replacements using the full expand of the group.
       List<String> alreadyAdded = new ArrayList<String>();
@@ -806,6 +814,13 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
      */
     public int getEnd() {
       return end;
+    }
+
+    /**
+     * @return Original text.
+     */
+    public String getText() {
+      return text;
     }
 
     /**
