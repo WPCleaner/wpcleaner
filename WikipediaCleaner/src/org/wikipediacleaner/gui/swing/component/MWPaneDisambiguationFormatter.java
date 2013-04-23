@@ -126,7 +126,8 @@ public class MWPaneDisambiguationFormatter extends
     int start = internalLink.getBeginIndex();
     int end = internalLink.getEndIndex();
     while ((end < contents.length()) &&
-           (Character.isLetter(contents.charAt(end)))) {
+           (Character.isLetter(contents.charAt(end))) &&
+           (Character.getType(contents.charAt(end)) != Character.OTHER_LETTER)) {
       end++;
     }
     if (end > internalLink.getEndIndex()) {
