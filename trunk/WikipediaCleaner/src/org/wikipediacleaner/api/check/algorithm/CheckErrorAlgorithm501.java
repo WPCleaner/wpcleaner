@@ -123,14 +123,39 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       Collections.sort(group, comparator);
       groups.add(new ReplacementGroup(group, contents));
     }
-    
+
+    // Check for multiple replacements
+    for (int numGroup1 = 0; numGroup1 < groups.size(); numGroup1++) {
+      ReplacementGroup group1 = groups.get(numGroup1);
+      List<Replacement> replacements1 = group1.getReplacements();
+      int numGroup2 = numGroup1 + 1;
+      for (numGroup2 = numGroup1 + 1; numGroup2 < groups.size(); numGroup2++) {
+        ReplacementGroup group2 = groups.get(numGroup2);
+        if (group1.getText().equals(group2.getText())) {
+          List<Replacement> replacements2 = group2.getReplacements();
+          for (Replacement replacement1 : replacements1) {
+            if (!Boolean.TRUE.equals(replacement1.isMultiple())) {
+              for (Replacement replacement2 : replacements2) {
+                if (replacement1.getReplacement().equals(replacement2.getReplacement())) {
+                  replacement1.setMultiple();
+                  replacement2.setMultiple();
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
     // Analyze replacements
+    List<String> multiples = new ArrayList<String>();
     for (ReplacementGroup group : groups) {
 
       // Create error
       CheckErrorResult error = createCheckErrorResult(
           pageAnalysis.getPage(), group.getBegin(), group.getEnd());
       String previousComment = null;
+      multiples.clear();
       for (Replacement replacement : group.getReplacements()) {
 
         // Manage comment
@@ -142,8 +167,19 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         previousComment = comment;
 
         error.addReplacement(replacement.getReplacement(), replacement.isAutomatic());
+        if (Boolean.TRUE.equals(replacement.isMultiple())) {
+          multiples.add(replacement.getReplacement());
+        }
       }
       error.addReplacement(group.getText(), GT._("Restore original text"));
+
+      // TODO: Multiple replacements
+      /*if (!multiples.isEmpty()) {
+        error.addPossibleAction(GT._("Replace each time with"), new NullActionProvider());
+        for (String multiple : multiples) {
+          error.addReplacement(multiple, multiple);
+        }
+      }*/
       errors.add(error);
     }
 
@@ -626,6 +662,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     private final boolean otherPattern;
     private final String replacement;
     private final boolean automatic;
+    private Boolean multiple;
 
     public Replacement(
         int begin, int end,
@@ -637,6 +674,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       this.comment = comment;
       this.replacement = replacement;
       this.automatic = automatic;
+      this.multiple = null;
     }
 
     public int getBegin() {
@@ -663,6 +701,13 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       return automatic;
     }
 
+    public Boolean isMultiple() {
+      return multiple;
+    }
+
+    public void setMultiple() {
+      multiple = Boolean.TRUE;
+    }
     /**
      * @param o
      * @return
