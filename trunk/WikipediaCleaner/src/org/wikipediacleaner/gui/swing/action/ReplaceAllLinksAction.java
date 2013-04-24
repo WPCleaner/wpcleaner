@@ -57,11 +57,7 @@ public class ReplaceAllLinksAction implements ActionListener {
       if (Page.areSameTitle(from.getTitle(), link.getLink())) {
         buffer.append(originalText.substring(lastPosition, link.getBeginIndex()));
         lastPosition = link.getBeginIndex();
-        buffer.append("[[");
-        buffer.append(to);
-        buffer.append("|");
-        buffer.append(link.getDisplayedText());
-        buffer.append("]]");
+        buffer.append(PageElementInternalLink.createInternalLink(to, link.getDisplayedText()));
         lastPosition = link.getEndIndex();
       }
     }
