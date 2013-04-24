@@ -43,7 +43,7 @@ public class ReplaceTextAction extends TextAction {
       String newText,
       Element element,
       JTextPane textPane) {
-    super("ReplaceLink");
+    super("ReplaceText");
     this.newText = newText;
     this.element = element;
     this.textPane = textPane;
