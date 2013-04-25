@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-25 18:48+0200\n"
+"POT-Creation-Date: 2013-04-25 20:19+0200\n"
 "PO-Revision-Date: 2013-04-16 07:42+0000\n"
 "Last-Translator: Shushi Kurose <md81bird@hitaki.net>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -77,7 +77,7 @@ msgstr "エラー n°{0} ({1} - {2}) - {3}"
 msgid "Error unkown from WikiCleaner"
 msgstr "ウィキクリーナーで未知のエラー"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:136
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:137
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:95
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:92
@@ -86,7 +86,7 @@ msgstr "ウィキクリーナーで未知のエラー"
 msgid "Replace with {0}"
 msgstr "{0} を置換"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:137
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:138
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:166
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm013.java:69
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm014.java:69
@@ -113,6 +113,11 @@ msgstr "{0} を置換"
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:126
 msgid "Delete"
 msgstr "除去"
+
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:226
+#, fuzzy
+msgid "Edit table of contents"
+msgstr "ページの内容を更新"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:40
 msgid "Fix all <br/> tags"

@@ -21,6 +21,7 @@ package org.wikipediacleaner.api.check;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wikipediacleaner.gui.swing.component.MWPaneEditTocAction;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -215,6 +216,15 @@ public class CheckErrorResult {
       }
     }
     return null;
+  }
+
+  /**
+   * Add an action for editing the table of contents.
+   */
+  public void addEditTocAction() {
+    addPossibleAction(
+        new SimpleAction(GT._("Edit table of contents"),
+        new MWPaneEditTocAction()));
   }
 
   /**
