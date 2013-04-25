@@ -106,4 +106,12 @@ public class AddTextActionProvider implements ActionProvider {
         element, textPane);
   }
 
+  /**
+   * @param text New text.
+   * @return True if this action can give this new text.
+   */
+  public boolean isPossibleReplacement(String text) {
+    return false;
+  }
+
 }

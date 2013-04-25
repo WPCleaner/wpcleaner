@@ -29,8 +29,11 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.regex.Matcher;
 
+import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CompositeAction;
 import org.wikipediacleaner.api.check.NullActionProvider;
+import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementAreas;
@@ -40,6 +43,7 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.Suggestion;
 import org.wikipediacleaner.api.data.Suggestion.ElementarySuggestion;
+import org.wikipediacleaner.gui.swing.component.MWPaneReplaceAllAction;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
@@ -173,13 +177,21 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       }
       error.addReplacement(group.getText(), GT._("Restore original text"));
 
-      // TODO: Multiple replacements
-      /*if (!multiples.isEmpty()) {
-        error.addPossibleAction(GT._("Replace each time with"), new NullActionProvider());
-        for (String multiple : multiples) {
-          error.addReplacement(multiple, multiple);
+      // Multiple replacements
+      if (!multiples.isEmpty()) {
+        if (multiples.size() == 1) {
+          error.addPossibleAction(new SimpleAction(
+              GT._("Replace each time with {0}", multiples.get(0)),
+              new MWPaneReplaceAllAction(group.getText(), multiples.get(0))));
+        } else {
+          List<Actionnable> actions = new ArrayList<Actionnable>();
+          error.addPossibleAction(GT._("Replace each time with"), new NullActionProvider());
+          for (String multiple : multiples) {
+            actions.add(new SimpleAction(multiple, new MWPaneReplaceAllAction(group.getText(), multiple)));
+          }
+          error.addPossibleAction(new CompositeAction(GT._("Replace each time with"), actions));
         }
-      }*/
+      }
       errors.add(error);
     }
 

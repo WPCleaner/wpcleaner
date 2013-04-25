@@ -90,4 +90,20 @@ public class CompositeAction implements Actionnable {
   public boolean isCompositeAction() {
     return true;
   }
+
+  /**
+   * @param newText New text.
+   * @return True if this action can give this new text.
+   */
+  public boolean isPossibleReplacement(String newText) {
+    if (actions == null) {
+      return false;
+    }
+    for (Actionnable action : actions) {
+      if (action.isPossibleReplacement(newText)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

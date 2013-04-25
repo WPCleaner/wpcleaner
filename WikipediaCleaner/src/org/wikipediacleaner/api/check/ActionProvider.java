@@ -34,4 +34,10 @@ interface ActionProvider {
    * @return Action.
    */
   Action getAction(Element element, JTextPane textPane);
+
+  /**
+   * @param text New text.
+   * @return True if this action can give this new text.
+   */
+  public boolean isPossibleReplacement(String text);
 }
