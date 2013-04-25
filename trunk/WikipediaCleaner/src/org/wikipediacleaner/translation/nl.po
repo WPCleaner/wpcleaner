@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-24 00:05+0200\n"
+"POT-Creation-Date: 2013-04-25 18:48+0200\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -394,9 +394,20 @@ msgstr ""
 msgid "Delete all tags without content"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:146
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:178
 msgid "Restore original text"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:184
+#, fuzzy, java-format
+msgid "Replace each time with {0}"
+msgstr "Vervang met {0}"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:188
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:192
+#, fuzzy
+msgid "Replace each time with"
+msgstr "Vervang met {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm502.java:83
 #, java-format

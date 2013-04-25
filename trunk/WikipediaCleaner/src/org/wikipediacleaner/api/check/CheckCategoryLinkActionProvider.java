@@ -56,4 +56,12 @@ public class CheckCategoryLinkActionProvider implements ActionProvider {
   public Action getAction(Element element, JTextPane textPane) {
     return new CheckCategoryLinkAction(fromWikipedia, toWikipedia, title, order, element, textPane);
   }
+
+  /**
+   * @param text New text.
+   * @return True if this action can give this new text.
+   */
+  public boolean isPossibleReplacement(String text) {
+    return false;
+  }
 }

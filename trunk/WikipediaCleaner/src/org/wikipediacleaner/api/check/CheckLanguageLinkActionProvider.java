@@ -60,4 +60,12 @@ public class CheckLanguageLinkActionProvider implements ActionProvider {
     return new CheckLanguageLinkAction(
         fromWikipedia, toWikipedia, title, text, element, textPane);
   }
+
+  /**
+   * @param newText New text.
+   * @return True if this action can give this new text.
+   */
+  public boolean isPossibleReplacement(String newText) {
+    return false;
+  }
 }

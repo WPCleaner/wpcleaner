@@ -91,4 +91,15 @@ public class SimpleAction implements Actionnable {
   public boolean isCompositeAction() {
     return false;
   }
+
+  /**
+   * @param newText New text.
+   * @return True if this action can give this new text.
+   */
+  public boolean isPossibleReplacement(String newText) {
+    if (actionProvider == null) {
+      return false;
+    }
+    return actionProvider.isPossibleReplacement(newText);
+  }
 }

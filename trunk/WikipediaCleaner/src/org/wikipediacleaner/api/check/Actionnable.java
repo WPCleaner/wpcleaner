@@ -41,6 +41,12 @@ public interface Actionnable {
   public boolean isCompositeAction();
 
   /**
+   * @param newText New text.
+   * @return True if this action can give this new text.
+   */
+  public boolean isPossibleReplacement(String newText);
+
+  /**
    * @param element Text element.
    * @param textPane Text component.
    * @return Action.

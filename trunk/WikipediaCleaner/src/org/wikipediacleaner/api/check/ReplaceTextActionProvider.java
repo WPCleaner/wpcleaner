@@ -71,4 +71,11 @@ class ReplaceTextActionProvider implements ActionProvider {
     return new ReplaceTextAction(newText, element, textPane);
   }
 
+  /**
+   * @param text New text.
+   * @return True if this action can give this new text.
+   */
+  public boolean isPossibleReplacement(String text) {
+    return (text != null) && (text.equals(newText));
+  }
 }
