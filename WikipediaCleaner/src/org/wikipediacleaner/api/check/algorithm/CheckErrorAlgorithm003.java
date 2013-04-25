@@ -54,61 +54,67 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyzing the text for <ref>
+    // Analyzing text for <ref> tags
     boolean refFound = false;
+    List<PageElementTag> refTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REF);
+    if ((refTags != null) && (refTags.size() > 0)) {
+      Iterator<PageElementTag> itRefTags = refTags.iterator();
+      while (!refFound && itRefTags.hasNext()) {
+        boolean usefulRef = true;
+        PageElementTag refTag = itRefTags.next();
+        if (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, refTag.getBeginIndex()) != null) {
+          usefulRef =  false;
+        }
+        if (usefulRef) {
+          refFound = true;
+        }
+      }
+    }
     if (!refFound) {
-      // Search for <ref>
-      List<PageElementTag> refTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REF);
-      if ((refTags != null) && (refTags.size() > 0)) {
-        Iterator<PageElementTag> itRefTags = refTags.iterator();
-        while (!refFound && itRefTags.hasNext()) {
-          boolean usefulRef = true;
-          PageElementTag refTag = itRefTags.next();
-          if (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, refTag.getBeginIndex()) != null) {
-            usefulRef =  false;
-          }
-          if (usefulRef) {
-            refFound = true;
-          }
+      return false;
+    }
+
+    // Search for templates like {{References}}
+    String templates = getSpecificProperty(
+        "references_templates", true, true, false);
+    List<String> referencesTemplates = null;
+    if (templates != null) {
+      referencesTemplates = WPCConfiguration.convertPropertyToStringList(templates);
+    }
+    if (referencesTemplates != null) {
+      for (String referencesTemplate : referencesTemplates) {
+        Collection<PageElementTemplate> foundTemplates = pageAnalysis.getTemplates(referencesTemplate);
+        if ((foundTemplates != null) && (foundTemplates.size() > 0)) {
+          return false;
         }
       }
     }
 
-    // Analyzing the text for <references>
-    boolean referencesFound = false;
-    if (refFound) {
-      // Search for <references>
-      if (!referencesFound) {
-        List<PageElementTag> referencesTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REFERENCES);
-        if ((referencesTags != null) && (referencesTags.size() > 0)) {
-          referencesFound = true;
-        }
-      }
-
-      // Search for templates like {{References}}
-      String templates = getSpecificProperty(
-          "references_templates", true, true, false);
-      List<String> referencesTemplates = null;
-      if (templates != null) {
-        referencesTemplates = WPCConfiguration.convertPropertyToStringList(templates);
-      }
-      if (referencesTemplates != null) {
-        for (String referencesTemplate : referencesTemplates) {
-          if (!referencesFound) {
-            Collection<PageElementTemplate> foundTemplates = pageAnalysis.getTemplates(referencesTemplate);
-            if ((foundTemplates != null) && (foundTemplates.size() > 0)) {
-              referencesFound = true;
-            }
-          }
-        }
-      }
-    }
-
-    // Result
-    if (refFound && !referencesFound) {
+    // Analyzing text for <references> tags
+    List<PageElementTag> referencesTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REFERENCES);
+    if ((referencesTags == null) || (referencesTags.isEmpty())) {
       return true;
     }
-    return false;
+    for (PageElementTag referencesTag : referencesTags) {
+      if (referencesTag.isComplete()) {
+        return false;
+      }
+    }
+    if (errors == null) {
+      return true;
+    }
+
+    // Try to make some suggestions
+    for (PageElementTag referencesTag : referencesTags) {
+      CheckErrorResult errorResult = createCheckErrorResult(
+          pageAnalysis.getPage(), referencesTag.getBeginIndex(), referencesTag.getEndIndex());
+      if (referencesTags.size() == 1) {
+        errorResult.addReplacement("<references />", GT._("Close tag"));
+      }
+      errors.add(errorResult);
+    }
+
+    return true;
   }
 
   /**

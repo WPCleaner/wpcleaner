@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-25 20:19+0200\n"
+"POT-Creation-Date: 2013-04-26 00:02+0200\n"
 "PO-Revision-Date: 2013-04-17 18:17+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -124,7 +124,12 @@ msgstr "Obsah"
 msgid "Fix all <br/> tags"
 msgstr "Opravit všechna zalomení"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:121
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:112
+#, fuzzy
+msgid "Close tag"
+msgstr "Zavřít tuto kartu"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:127
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr "Seznam šablon s vloženou {0}"

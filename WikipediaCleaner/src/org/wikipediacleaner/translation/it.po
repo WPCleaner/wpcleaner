@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-25 20:19+0200\n"
+"POT-Creation-Date: 2013-04-26 00:02+0200\n"
 "PO-Revision-Date: 2012-10-13 06:23+0000\n"
 "Last-Translator: simone.sandri <lexluxsox@hotmail.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -131,7 +131,12 @@ msgstr "Aggiornamento contenuti pagina"
 msgid "Fix all <br/> tags"
 msgstr "Correggi tutti i tag <br/>"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:121
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:112
+#, fuzzy
+msgid "Close tag"
+msgstr "&Chiudi"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:127
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr ""
