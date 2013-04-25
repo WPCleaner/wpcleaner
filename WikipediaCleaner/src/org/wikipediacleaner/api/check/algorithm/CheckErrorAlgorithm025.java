@@ -64,6 +64,7 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
             pageAnalysis.getPage(), title.getBeginIndex(), title.getEndIndex());
+        errorResult.addEditTocAction();
         errors.add(errorResult);
       }
       previousTitleLevel = title.getLevel();

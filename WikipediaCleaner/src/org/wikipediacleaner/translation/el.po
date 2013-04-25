@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-25 18:48+0200\n"
+"POT-Creation-Date: 2013-04-25 20:19+0200\n"
 "PO-Revision-Date: 2012-11-16 00:18+0000\n"
 "Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -82,7 +82,7 @@ msgstr "Σφάλμα #{0} ({1} - {2}) - {3}"
 msgid "Error unkown from WikiCleaner"
 msgstr "Αγνωστο σφάλμα του WikiCleaner"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:136
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:137
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:95
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:92
@@ -91,7 +91,7 @@ msgstr "Αγνωστο σφάλμα του WikiCleaner"
 msgid "Replace with {0}"
 msgstr "Αντικατάσταση με {0}"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:137
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:138
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:166
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm013.java:69
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm014.java:69
@@ -118,6 +118,10 @@ msgstr "Αντικατάσταση με {0}"
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:126
 msgid "Delete"
 msgstr "Διαγραφή"
+
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:226
+msgid "Edit table of contents"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:40
 msgid "Fix all <br/> tags"
