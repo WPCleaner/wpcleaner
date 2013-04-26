@@ -53,11 +53,11 @@ public enum WPCConfigurationString {
   // Template used to mark a text as being in a foreign language
   LANG_TEMPLATE("lang_template", null, false, true, false),
   // Template used to group all messages on a user talk page
-  MSG__GLOBAL_LIST_TEMPLATE("rc_msg_global_list_template", null, false, true, true),
+  MSG_GLOBAL_LIST_TEMPLATE("rc_msg_global_list_template", null, false, true, true),
   // Template used to group all messages on a user talk page
-  MSG__GLOBAL_TEMPLATE("rc_msg_global_template", null, false, true, true),
+  MSG_GLOBAL_TEMPLATE("rc_msg_global_template", null, false, true, true),
   // Title used to group all messages on a user talk page
-  MSG__GLOBAL_TITLE("rc_msg_global_title", null, false, true, true),
+  MSG_GLOBAL_TITLE("rc_msg_global_title", null, false, true, true),
   // Template used to warn a user who has created a new article with disambiguation links
   MSG_NEW_ARTICLE_MODIFIED_WITH_DAB_TEMPLATE("rc_msg_new_article_modified_with_dab_template", null, false, true, true),
   // Title used to warn a user who has created a new article with disambiguation links
@@ -76,6 +76,8 @@ public enum WPCConfigurationString {
   REDIRECT_CATEGORIES_COMMENT("redirect_categories_comment", null, false, true, true),
   // Comment when adding templates to a redirect page
   REDIRECT_TEMPLATES_COMMENT("redirect_templates_comment", null, false, true, true),
+  // Warning when replacing links to redirect pages by direct links
+  REDIRECT_WARNING_BEFORE_REPLACEMENT("redirect_warning_before_replacement", null, false, true, true),
   // "To do" sub-page
   TODO_SUBPAGE("general_todo_subpage", null, false, true, false),
   // Comment used when translating

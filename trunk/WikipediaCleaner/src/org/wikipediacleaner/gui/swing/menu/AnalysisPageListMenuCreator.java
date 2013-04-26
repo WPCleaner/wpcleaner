@@ -110,7 +110,7 @@ public class AnalysisPageListMenuCreator extends BasicMenuCreator {
       if (title != null) {
         fixedBeginLink += addItem(
             submenuLink, null, title,
-            new ReplaceAllLinksAction(textPane, page, title));
+            new ReplaceAllLinksAction(textPane, page, title, null));
         fixedBeginLink += addSeparator(submenuLink);
       }
 
@@ -123,14 +123,14 @@ public class AnalysisPageListMenuCreator extends BasicMenuCreator {
             Page pageTmp = iter.next();
             addItem(
                 submenu1, pageTmp, null,
-                new ReplaceAllLinksAction(textPane, page, pageTmp.getTitle()));
+                new ReplaceAllLinksAction(textPane, page, pageTmp.getTitle(), null));
           }
           
           submenuLink.add(submenu1);
         } else {
           addItem(
               submenuLink, p, null,
-              new ReplaceAllLinksAction(textPane, page, p.getTitle()));
+              new ReplaceAllLinksAction(textPane, page, p.getTitle(), null));
         }
       }
 
@@ -139,7 +139,7 @@ public class AnalysisPageListMenuCreator extends BasicMenuCreator {
         fixedEndLink += addSeparator(submenuLink);
         fixedEndLink += addItem(
             submenuLink, null, title,
-            new ReplaceAllLinksAction(textPane, page, title));
+            new ReplaceAllLinksAction(textPane, page, title, null));
       }
 
       addSubmenu(popup, submenuLink, fixedBeginLink, fixedEndLink);

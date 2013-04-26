@@ -1059,7 +1059,10 @@ public abstract class OnePageWindow
           String text = GT._(
               "Link \"{0}\" to \"{1}\"", new Object[] { p.getTitle(), newTitle });
           JMenuItem menuItem = new JMenuItem(text);
-          menuItem.addActionListener(new ReplaceAllLinksAction(getTextContents(), p, newTitle));
+          String warning = getConfiguration().getString(
+              WPCConfigurationString.REDIRECT_WARNING_BEFORE_REPLACEMENT);
+          menuItem.addActionListener(new ReplaceAllLinksAction(
+              getTextContents(), p, newTitle, warning));
           menuFixRedirects.add(menuItem);
         }
       }
