@@ -464,7 +464,9 @@ public class UpdateDabWarningTools {
       tmp.append('\n');
       updatePage(
           todoSubpage, tmp.toString(),
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
+          wikipedia.formatComment(
+              configuration.getDisambiguationWarningComment(dabLinks),
+              automaticEdit),
           false);
 
       // Inform creator and modifiers of the page
@@ -497,7 +499,9 @@ public class UpdateDabWarningTools {
       }
       api.updatePage(
           wikipedia, todoSubpage, tmp.toString(),
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
+          wikipedia.formatComment(
+              configuration.getDisambiguationWarningComment(dabLinks),
+              automaticEdit),
           false);
 
       return true;
@@ -597,7 +601,9 @@ public class UpdateDabWarningTools {
       }
       updateSection(
           talkPage,
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
+          wikipedia.formatComment(
+              configuration.getDisambiguationWarningComment(dabLinks),
+              automaticEdit),
           0, tmp.toString(), false);
 
       // Inform creator and modifiers of the page
@@ -641,7 +647,9 @@ public class UpdateDabWarningTools {
       }
       updateSection(
           talkPage,
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
+          wikipedia.formatComment(
+              configuration.getDisambiguationWarningComment(dabLinks),
+              automaticEdit),
           0, tmp.toString(), false);
       return true;
     }
@@ -665,7 +673,9 @@ public class UpdateDabWarningTools {
       }
       updateSection(
           talkPage,
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
+          wikipedia.formatComment(
+              configuration.getDisambiguationWarningComment(dabLinks),
+              automaticEdit),
           0, tmp.toString(), false);
       return true;
     }
@@ -758,7 +768,9 @@ public class UpdateDabWarningTools {
     if (Boolean.FALSE.equals(talkPage.isExisting())) {
       updateSection(
           talkPage,
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
+          wikipedia.formatComment(
+              configuration.getDisambiguationWarningComment(dabLinks),
+              automaticEdit),
           0, "{{" + todoTemplates.get(0) + "}}", false);
       return true;
     }
@@ -824,7 +836,9 @@ public class UpdateDabWarningTools {
       }
       updateSection(
           talkPage,
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
+          wikipedia.formatComment(
+              configuration.getDisambiguationWarningComment(dabLinks),
+              automaticEdit),
           0, tmp.toString(), false);
       return true;
     }
@@ -897,7 +911,9 @@ public class UpdateDabWarningTools {
       }
       updateSection(
           talkPage,
-          wikipedia.formatComment(getDisambiguationWarningComment(dabLinks), automaticEdit),
+          wikipedia.formatComment(
+              configuration.getDisambiguationWarningComment(dabLinks),
+              automaticEdit),
           0, tmp.toString(), false);
       return true;
     }
@@ -1297,30 +1313,6 @@ public class UpdateDabWarningTools {
       }
     }
     return templateTodoLink;
-  }
-  /**
-   * @param dabLinks Links to disambiguation pages.
-   * @return Comment.
-   */
-  private String getDisambiguationWarningComment(Collection<String> dabLinks) {
-    if ((dabLinks == null) || (dabLinks.isEmpty())) {
-      return configuration.getDisambiguationWarningComment(0);
-    }
-    StringBuilder result = new StringBuilder(
-        configuration.getDisambiguationWarningComment(dabLinks.size()));
-    boolean first = true;
-    for (String dabLink : dabLinks) {
-      if (first) {
-        result.append(" - ");
-        first = false;
-      } else {
-        result.append(", ");
-      }
-      result.append("[[");
-      result.append(dabLink);
-      result.append("]]");
-    }
-    return result.toString();
   }
 
   /**

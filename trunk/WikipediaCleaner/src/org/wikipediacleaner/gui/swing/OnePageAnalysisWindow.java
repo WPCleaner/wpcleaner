@@ -1486,6 +1486,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     contributions.increasePages(1);
 
     // Comment for fixed links to disambiguation pages
+    List<String> dabLinks = new ArrayList<String>();
     StringBuilder comment = new StringBuilder();
     if ((mapLinksTotalCount != null) && (mapLinksTotalCount.size() > 0)) {
       List<String> fixed = new ArrayList<String>();
@@ -1517,38 +1518,46 @@ public class OnePageAnalysisWindow extends OnePageWindow {
           }
         }
       }
+
+      // Compute list of disambiguation links that still need to be fixed
+      List<Page> links = analysis.getPage().getLinks();
+      if (links != null) {
+        analysis.countLinks(links);
+        for (Page link : links) {
+          if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
+            InternalLinkCount linkCount = analysis.getLinkCount(link);
+            if (linkCount != null) {
+              if ((linkCount.getInternalLinkCount() > 0) ||
+                  (linkCount.getIncorrectTemplateCount() > 0) ||
+                  (linkCount.getHelpNeededCount() > 0)) {
+                dabLinks.add(link.getTitle());
+              }
+            }
+          }
+        }
+      }
+
+      // Add comment
+      boolean showDabLinks = false;
       if (fixed.size() > 0) {
         Collections.sort(fixed);
         contributions.increaseDabLinks(fixed.size());
         comment.append(configuration.getDisambiguationComment(
             fixed.size(), fixed));
-
-        List<String> dabLinks = new ArrayList<String>();
-        List<Page> links = analysis.getPage().getLinks();
-        if (links != null) {
-          analysis.countLinks(links);
-          for (Page link : links) {
-            if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
-              InternalLinkCount linkCount = analysis.getLinkCount(link);
-              if (linkCount != null) {
-                if ((linkCount.getInternalLinkCount() > 0) ||
-                    (linkCount.getIncorrectTemplateCount() > 0) ||
-                    (linkCount.getHelpNeededCount() > 0)) {
-                  dabLinks.add(link.getTitle());
-                }
-              }
-            }
-          }
-        }
-        if (dabLinks.size() > 0) {
-          Collections.sort(dabLinks);
-          comment.append(configuration.getDisambiguationCommentTodo(
-              dabLinks.size(), dabLinks));
-        }
+        showDabLinks = true;
       } else if (helpRequested.size() > 0) {
         Collections.sort(helpRequested);
         comment.append(configuration.getDisambiguationCommentHelp(
             helpRequested.size(), helpRequested));
+        showDabLinks = true;
+      }
+      if (showDabLinks) {
+        if (dabLinks.size() > 0) {
+          Collections.sort(dabLinks);
+          comment.append(configuration.getDisambiguationCommentTodo(
+              dabLinks.size(), dabLinks));
+          dabLinks.clear();
+        }
       }
     }
 
@@ -1622,6 +1631,16 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       } else {
         comment.append(strTemplateAdded);
       }
+    }
+
+    // Comment for disambiguation links
+    if (dabLinks.size() > 0) {
+      if (comment.length() > 0) {
+        comment.append(" / ");
+      }
+      Collections.sort(dabLinks);
+      comment.append(configuration.getDisambiguationWarningComment(dabLinks));
+      dabLinks.clear();
     }
 
     return comment.toString();
