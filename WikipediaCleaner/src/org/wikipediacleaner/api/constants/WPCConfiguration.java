@@ -1049,26 +1049,36 @@ public class WPCConfiguration {
   /* ================================================================================= */
 
   /**
-   * @param count Number of disambiguation links.
+   * @param links Links that still need to be fixed.
    * @return Comment for warning about disambiguation links in a page.
    */
-  public String getDisambiguationWarningComment(int count) {
+  public String getDisambiguationWarningComment(Collection<String> links) {
+    int count = (links != null) ? links.size() : 0;
+    String comment = null;
     if (count == 1) {
-      String comment1 = getString(WPCConfigurationString.DAB_WARNING_COMMENT_1);
-      if ((comment1 != null) && (comment1.length() > 0)) {
-        return comment1;
-      }
+      comment = getString(WPCConfigurationString.DAB_WARNING_COMMENT_1);
     }
-    String comment = getString(WPCConfigurationString.DAB_WARNING_COMMENT);
-    if (comment != null) {
+    if (comment == null) {
+      comment = getString(WPCConfigurationString.DAB_WARNING_COMMENT);
+    }
+    if (comment == null) {
+      comment = getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
+    } else {
       try {
-        return MessageFormat.format(comment, Integer.valueOf(count));
+        comment = MessageFormat.format(comment, Integer.valueOf(count));
       } catch (IllegalArgumentException e) {
         //
       }
-      return comment;
     }
-    return getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
+    if (links != null) {
+      StringBuilder sb = new StringBuilder();
+      for (String link : links) {
+        sb.append(sb.length() > 0 ? ", " : " - ");
+        sb.append("[[" + link + "]]");
+      }
+      comment += sb.toString();
+    }
+    return comment;
   }
 
   /**
