@@ -22,11 +22,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 
+import javax.swing.JOptionPane;
+
 import org.wikipediacleaner.api.data.LinkReplacement;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -34,20 +38,35 @@ import org.wikipediacleaner.gui.swing.component.MWPane;
  */
 public class ReplaceAllLinksAction implements ActionListener {
 
-  private MWPane textPane;
-  private Page from;
-  private String to;
+  private final MWPane textPane;
+  private final Page from;
+  private final String to;
+  private final String warning;
 
-  public ReplaceAllLinksAction(MWPane textPane, Page from, String to) {
+  /**
+   * @param textPane MWPane on which the edition has to be done.
+   * @param from Page on which links are currently pointing to.
+   * @param to New destination.
+   * @param warning Potential warning message.
+   */
+  public ReplaceAllLinksAction(MWPane textPane, Page from, String to, String warning) {
     this.textPane = textPane;
     this.from = from;
     this.to = to;
+    this.warning = warning;
   }
 
   /* (non-Javadoc)
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
+    if (warning != null) {
+      String message = warning + "\n" + GT._("Do you want to proceed with the replacement ?");
+      int answer = Utilities.displayYesNoWarning(textPane, message);
+      if (answer != JOptionPane.YES_OPTION) {
+        return;
+      }
+    }
     String originalText = textPane.getText();
     PageAnalysis analysis = textPane.getWikiPage().getAnalysis(originalText, true);
     StringBuilder buffer = new StringBuilder();

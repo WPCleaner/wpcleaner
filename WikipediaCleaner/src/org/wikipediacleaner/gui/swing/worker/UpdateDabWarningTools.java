@@ -1066,9 +1066,9 @@ public class UpdateDabWarningTools {
     if ((message == null) || (message.trim().length() == 0)) {
       return;
     }
-    String globalListTemplate = wpcConfig.getString(WPCConfigurationString.MSG__GLOBAL_LIST_TEMPLATE);
-    String globalTemplate = wpcConfig.getString(WPCConfigurationString.MSG__GLOBAL_TEMPLATE);
-    String globalTitle = wpcConfig.getString(WPCConfigurationString.MSG__GLOBAL_TITLE);
+    String globalListTemplate = wpcConfig.getString(WPCConfigurationString.MSG_GLOBAL_LIST_TEMPLATE);
+    String globalTemplate = wpcConfig.getString(WPCConfigurationString.MSG_GLOBAL_TEMPLATE);
+    String globalTitle = wpcConfig.getString(WPCConfigurationString.MSG_GLOBAL_TITLE);
     String title = wpcConfig.getString(titleParam);
     if (title != null) {
       try {

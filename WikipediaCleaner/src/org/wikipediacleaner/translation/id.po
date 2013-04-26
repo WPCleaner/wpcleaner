@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-26 00:02+0200\n"
+"POT-Creation-Date: 2013-04-26 19:09+0200\n"
 "PO-Revision-Date: 2012-11-20 08:24+0000\n"
 "Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -1054,7 +1054,7 @@ msgstr ""
 "Kirim perubahan artikel, yang akan ditandai sudah diperbaiki."
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1339
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1267
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1270
 msgid "A comment is required for sending the page."
 msgstr "Perlu ringkasan untuk mengirim perubahan artikel."
 
@@ -1671,7 +1671,7 @@ msgstr ""
 msgid "Translation"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1726
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1745
 msgid ""
 "Do you want to delete this page on Wikipedia ?\n"
 "Please, enter the reason for deleting the page"
@@ -1850,28 +1850,28 @@ msgstr "Perbaiki &pengalihan"
 msgid "Link \"{0}\" to \"{1}\""
 msgstr "Pranala \"{0}\" pada \"{1}\""
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1074
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1077
 msgid "&Tools"
 msgstr "&Peralatan"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1078
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1081
 msgid "&Preview"
 msgstr "&Pratayang"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1083
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1086
 msgid "&Expand templates"
 msgstr "&Kembangkan templat"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1088
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1091
 msgid "Expand templates &and Preview"
 msgstr "Kembangkan templat &dan Pratayang"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1292
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1295
 #, java-format
 msgid "Sending {0}"
 msgstr "Kirim {0}"
 
-#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1361
+#: org/wikipediacleaner/gui/swing/OnePageWindow.java:1364
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr "Tambahkan halaman ini pada daftar pantauan lokal anda ?"
 
@@ -2153,6 +2153,10 @@ msgstr "Analisa pranala untuk halaman disambiguasi"
 #, java-format
 msgid "Retrieving possible disambiguations for {0}"
 msgstr "Kembalikan kemungkinan disambiguasi untuk {0}"
+
+#: org/wikipediacleaner/gui/swing/action/ReplaceAllLinksAction.java:64
+msgid "Do you want to proceed with the replacement ?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/BasicWindow.java:70
 #, java-format
@@ -2905,15 +2909,15 @@ msgid "Retrieving page contents - {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:457
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:579
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:807
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:583
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:819
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:704
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:843
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:946
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:714
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:857
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:962
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr ""
