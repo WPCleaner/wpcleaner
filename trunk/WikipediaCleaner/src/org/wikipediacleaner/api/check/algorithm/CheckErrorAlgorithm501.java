@@ -185,7 +185,6 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
               new MWPaneReplaceAllAction(group.getText(), multiples.get(0))));
         } else {
           List<Actionnable> actions = new ArrayList<Actionnable>();
-          error.addPossibleAction(GT._("Replace each time with"), new NullActionProvider());
           for (String multiple : multiples) {
             actions.add(new SimpleAction(multiple, new MWPaneReplaceAllAction(group.getText(), multiple)));
           }

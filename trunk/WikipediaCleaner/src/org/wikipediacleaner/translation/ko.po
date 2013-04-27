@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-26 19:09+0200\n"
+"POT-Creation-Date: 2013-04-27 14:01+0200\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Bundo <bundo@bundo.biz>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -405,8 +405,7 @@ msgstr ""
 msgid "Replace each time with {0}"
 msgstr "다음으로 바꾸기"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:188
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:192
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:191
 #, fuzzy
 msgid "Replace each time with"
 msgstr "다음으로 바꾸기"
