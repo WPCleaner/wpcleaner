@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-26 19:09+0200\n"
+"POT-Creation-Date: 2013-04-27 14:01+0200\n"
 "PO-Revision-Date: 2013-04-26 15:46+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -412,8 +412,7 @@ msgstr "Navrátit původní text"
 msgid "Replace each time with {0}"
 msgstr "Pokaždé nahradit {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:188
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:192
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:191
 msgid "Replace each time with"
 msgstr "Pokaždé nahradit"
 
