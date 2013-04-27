@@ -1634,12 +1634,10 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     }
 
     // Comment for disambiguation links
-    if (dabLinks.size() > 0) {
+    if ((dabLinks.size() > 0) && (comment.length() > 0)) {
       String newComment = configuration.getDisambiguationWarningComment(dabLinks);
       if ((newComment != null) && (newComment.length() > 0)) {
-        if (comment.length() > 0) {
-          comment.append(" / ");
-        }
+        comment.append(" / ");
         Collections.sort(dabLinks);
         comment.append(newComment);
         dabLinks.clear();
