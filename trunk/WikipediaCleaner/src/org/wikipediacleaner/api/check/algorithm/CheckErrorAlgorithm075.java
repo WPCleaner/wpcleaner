@@ -52,6 +52,8 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
     boolean result = false;
     int startIndex = -1;
     String contents = pageAnalysis.getContents();
+    String previousLine = "";
+    String incorrectLine = null;
     while (startIndex < contents.length()) {
       if (startIndex < 0) {
         startIndex = 0;
@@ -64,24 +66,41 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
       if (startIndex < 0) {
         startIndex = contents.length();
       } else {
-        if ((startIndex + 1 < contents.length()) &&
-            (contents.charAt(startIndex) == ':')) {
-          char nextChar = contents.charAt(startIndex + 1);
-          if ((nextChar == '-') ||
-              (nextChar == '*') ||
-              (nextChar == '#')) {
+        if (contents.charAt(startIndex) == ':') {
+          int endIndex = startIndex;
+          while ((startIndex < contents.length()) &&
+                 (":-*#".indexOf(contents.charAt(endIndex)) >= 0)) {
+            endIndex++;
+          }
+          String newLine = contents.substring(startIndex, endIndex);
+          int newLength = newLine.length();
+          if ((newLength > 1) &&
+              ((newLength > previousLine.length() + 1)) ||
+               (!previousLine.startsWith(newLine.substring(0, newLength - 1)))) {
             if (errors == null) {
               return true;
             }
             result = true;
-            int nextLine = contents.indexOf('\n', startIndex);
-            if (nextLine < 0) {
-              nextLine = contents.length();
-            }
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), startIndex, nextLine);
+                pageAnalysis.getPage(), startIndex, endIndex);
+            char lastChar = newLine.charAt(newLine.length() - 1);
+            if (incorrectLine == null) {
+              incorrectLine = newLine;
+            }
+            if (newLine.equals(incorrectLine)) {
+              if (newLine.length() > previousLine.length() + 1) {
+                errorResult.addReplacement(previousLine + lastChar);
+              } else {
+                errorResult.addReplacement(previousLine.substring(0, newLength - 1) + lastChar);
+              }
+            }
             errors.add(errorResult);
+          } else {
+            previousLine = newLine;
+            incorrectLine = null;
           }
+        } else {
+          previousLine = "";
         }
       }
     }
