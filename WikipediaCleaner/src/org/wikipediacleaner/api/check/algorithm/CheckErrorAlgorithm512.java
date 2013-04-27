@@ -38,7 +38,7 @@ import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
 
 /**
  * Algorithm for analyzing error 511 of check wikipedia project.
- * Error 511: Interwiki link written as external link
+ * Error 512: Interwiki link written as external link
  */
 public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
 

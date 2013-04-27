@@ -36,6 +36,7 @@ public class PageElementExternalLink extends PageElement {
   private final String text;
   private final int    textOffset;
   private final boolean hasSquare;
+  private final boolean hasSecondSquare;
 
   private final static String END_CHARACTERS = " \n\t<>|";
 
@@ -70,6 +71,7 @@ public class PageElementExternalLink extends PageElement {
       return null;
     }
     boolean hasSquare = false;
+    boolean hasSecondSquare = false;
     if (contents.startsWith("[", tmpIndex)) {
       hasSquare = true;
       tmpIndex++;
@@ -101,7 +103,33 @@ public class PageElementExternalLink extends PageElement {
     // Find end of external link
     int endIndex = -1;
     if (hasSquare) {
-      endIndex = contents.indexOf(']', tmpIndex);
+      int doubleSquare = 0;
+      int tmpIndex2 = tmpIndex;
+      int prematureEnd = -1;
+      while (endIndex < 0) {
+        if (tmpIndex2 >= contents.length()) {
+          return null;
+        }
+        if (contents.startsWith("[[", tmpIndex2)) {
+          if (prematureEnd < 0) {
+            prematureEnd = tmpIndex2;
+          }
+          doubleSquare++;
+          tmpIndex2 += 2;
+        } else if ((doubleSquare > 0) && contents.startsWith("]]", tmpIndex2)) {
+          doubleSquare--;
+          tmpIndex2 += 2;
+        } else if (contents.startsWith("]", tmpIndex2)) {
+          if (prematureEnd < 0) {
+            endIndex = tmpIndex2;
+            hasSecondSquare = true;
+          } else {
+            endIndex = prematureEnd;
+          }
+        } else {
+          tmpIndex2++;
+        }
+      }
     } else {
       endIndex = tmpIndex;
       while ((endIndex < maxLength) &&
@@ -111,7 +139,7 @@ public class PageElementExternalLink extends PageElement {
       return new PageElementExternalLink(
           index, endIndex,
           contents.substring(beginIndex, endIndex),
-          null, -1, hasSquare);
+          null, -1, hasSquare, hasSecondSquare);
     }
     if (endIndex < 0) {
       return null;
@@ -121,17 +149,17 @@ public class PageElementExternalLink extends PageElement {
     int spaceIndex = contents.indexOf(' ', tmpIndex);
     if ((spaceIndex < 0) || (spaceIndex >= endIndex)) {
       return new PageElementExternalLink(
-          index, endIndex + 1,
+          index, endIndex + (hasSecondSquare ? 1 : 0),
           contents.substring(beginIndex, endIndex),
-          null, -1, hasSquare);
+          null, -1, hasSquare, hasSecondSquare);
     }
 
     return new PageElementExternalLink(
-        index, endIndex + 1,
+        index, endIndex + (hasSecondSquare ? 1 : 0),
         contents.substring(beginIndex, spaceIndex),
         contents.substring(spaceIndex + 1, endIndex),
         spaceIndex + 1 - index,
-        hasSquare);
+        hasSquare, hasSecondSquare);
   }
 
   /**
@@ -186,10 +214,17 @@ public class PageElementExternalLink extends PageElement {
     return hasSquare;
   }
 
+  /**
+   * @return True if the link is in [...] and not in ([...[[...]]...])
+   */
+  public boolean hasSecondSquare() {
+    return hasSecondSquare;
+  }
+
   private PageElementExternalLink(
       int beginIndex, int endIndex,
       String link, String text, int textOffset,
-      boolean hasSquare) {
+      boolean hasSquare, boolean hasSecondSquare) {
     super(beginIndex, endIndex);
     this.linkNotTrimmed = link;
     this.link = (link != null) ? link.trim() : null;
@@ -197,6 +232,7 @@ public class PageElementExternalLink extends PageElement {
     this.text = (text != null) ? text.trim() : null;
     this.textOffset = textOffset;
     this.hasSquare = hasSquare;
+    this.hasSecondSquare = hasSecondSquare;
   }
 
   /* (non-Javadoc)
