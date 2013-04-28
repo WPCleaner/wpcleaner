@@ -56,27 +56,27 @@ public class PageListWorker extends BasicWorker {
    * The <code>Mode</code> allows to specify how the PageListWorker
    * will use the list of elements provided to it:
    * <ul>
-   * <li>ALL_DAB_PAGES: Not used.
+   * <li>ALL_DAB_PAGES (list not used):
    *     Retrieve list of all disambiguation pages.</li>
-   * <li>CATEGORY_MEMBERS: List of categories.
+   * <li>CATEGORY_MEMBERS (list of categories):
    *     Retrieve list of articles in the categories.</li>
-   * <li>CATEGORY_MEMBERS_ARTICLES: List of categories.
+   * <li>CATEGORY_MEMBERS_ARTICLES (list of categories):
    *     Retrieve list of articles in the categories.
    *     If talk pages are found, the related article is used instead.</li>
-   * <li>DAB_WATCH: List of disambiguation pages.
+   * <li>DAB_WATCH (list of disambiguation pages):
    *     Retrieve list of pages linking to the disambiguation pages and needing attention.</li>
-   * <li>DIRECT: Direct list</li>
-   * <li>EMBEDDED_IN: List of templates.
+   * <li>DIRECT (direct list)</li>
+   * <li>EMBEDDED_IN (list of templates):
    *     Retrieve list of pages embedding the templates.</li>
-   * <li>INTERNAL_LINKS: List of pages.
+   * <li>INTERNAL_LINKS (list of pages):
    *     Retrieve list of internal links in the pages.</li>
-   * <li>MISSING_TEMPLATES: Not used.
+   * <li>MISSING_TEMPLATES (list not used):
    *     Retrieve list of pages with missing templates.</li>
-   * <li>QUERY_PAGE: Code of the special list to retrieve.
+   * <li>QUERY_PAGE (code of the special list to retrieve)
    *     Retrieve list of pages of a special list.</li>
-   * <li>SEARCH_TITLES: List of keywords.
+   * <li>SEARCH_TITLES (list of keywords)
    *     Retrieve list of pages matching keywords.</li>
-   * <li>WATCH_LIST: Not used.
+   * <li>WATCH_LIST (list not used)
    *     Retrieve list of pages in the watch list.</li>
    * </ul>
    */
