@@ -56,6 +56,6 @@ public class AutomaticFixing {
    */
   @Override
   public String toString() {
-    return "[" + originalText + "] -> [" + replacementText + "]";
+    return "[" + originalText + "] → [" + replacementText + "]";
   }
 }
