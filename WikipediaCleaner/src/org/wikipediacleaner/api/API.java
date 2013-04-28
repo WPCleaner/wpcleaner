@@ -299,13 +299,27 @@ public interface API {
    * 
    * @param wiki Wiki.
    * @param page Page.
-   * @param namespaces Limit to some name spaces.
+   * @param namespaces Limit to some namespaces.
    * @param limit Flag indicating if the number of results should be limited.
    * @throws APIException
    * @see <a href="http://www.mediawiki.org/wiki/API:Embeddedin">API:Embeddedin</a>
    */
   public void retrieveEmbeddedIn(
       EnumWikipedia wiki, Page page,
+      List<Integer> namespaces, boolean limit) throws APIException;
+
+  /**
+   * Retrieves the pages which are protected in creation indefinitely.
+   * (<code>action=query</code>, <code>list=protectedtitles</code>).
+   * 
+   * @param wiki Wiki.
+   * @param namespaces Limit to some namespaces.
+   * @param limit Flag indicating if the number of results should be limited.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Protectedtitles">API:Protectedtitles</a>
+   */
+  public List<Page> getProtectedTitles(
+      EnumWikipedia wiki,
       List<Integer> namespaces, boolean limit) throws APIException;
 
   /**

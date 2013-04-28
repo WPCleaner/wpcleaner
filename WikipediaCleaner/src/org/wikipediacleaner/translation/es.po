@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-28 20:00+0200\n"
+"POT-Creation-Date: 2013-04-28 23:25+0200\n"
 "PO-Revision-Date: 2013-02-04 10:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -751,7 +751,7 @@ msgstr "Analizando sintácticamente el texto"
 msgid "Retrieving templates"
 msgstr "Recuperando plantillas"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1581
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1602
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -759,7 +759,7 @@ msgstr ""
 "Esta acción está protegida por un CAPTCHA\n"
 "¿Cuál es la respuesta a la siguiente pregunta?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1588
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1609
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -2925,7 +2925,11 @@ msgstr "Agregar comentario"
 msgid "Pages with missing templates"
 msgstr "Recuperando plantillas"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:168
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:92
+msgid "Protected titles with links from articles"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:169
 msgid ""
 "You have loaded the list of all disambiguation pages to speed up page "
 "analysis.\n"
@@ -2935,13 +2939,22 @@ msgstr ""
 "análisis.\n"
 "¿Desea ver la lista completa de todas las páginas de desambiguación?"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:428
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:434
 #, fuzzy
 msgid "Retrieving list of missing templates"
 msgstr "Recuperando enlaces en plantillas"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:433
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:439
 msgid "Checking that the templates are still missing"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:465
+#, fuzzy
+msgid "Retrieving list of protected titles"
+msgstr "Recuperando enlaces en plantillas"
+
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:471
+msgid "Checking that protected titles have backlinks"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:59

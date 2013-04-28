@@ -51,6 +51,11 @@ public class ApiListRequest extends ApiRequest {
   public final static String PROPERTY_LIST_EMBEDDEDIN = "embeddedin";
 
   /**
+   * Property value for List / Protected titles.
+   */
+  public final static String PROPERTY_LIST_PROTECTEDTITLES = "protectedtitles";
+
+  /**
    * Property value for List / Query page.
    */
   public final static String PROPERTY_LIST_QUERYPAGE = "querypage";

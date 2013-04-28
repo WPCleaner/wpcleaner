@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-28 20:00+0200\n"
+"POT-Creation-Date: 2013-04-28 23:25+0200\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -737,13 +737,13 @@ msgstr "Аналіз тексту"
 msgid "Retrieving templates"
 msgstr "Отримання шаблонів"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1581
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1602
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1588
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1609
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -2894,20 +2894,33 @@ msgstr "Додавання коментаря"
 msgid "Pages with missing templates"
 msgstr "Отримання шаблонів"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:168
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:92
+msgid "Protected titles with links from articles"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:169
 msgid ""
 "You have loaded the list of all disambiguation pages to speed up page "
 "analysis.\n"
 "Do you want to display the list of all disambiguation pages ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:428
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:434
 #, fuzzy
 msgid "Retrieving list of missing templates"
 msgstr "Отримання посилань в шаблонах"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:433
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:439
 msgid "Checking that the templates are still missing"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:465
+#, fuzzy
+msgid "Retrieving list of protected titles"
+msgstr "Отримання посилань в шаблонах"
+
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:471
+msgid "Checking that protected titles have backlinks"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:59

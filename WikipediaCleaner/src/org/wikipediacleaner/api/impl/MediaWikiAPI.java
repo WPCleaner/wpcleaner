@@ -81,6 +81,8 @@ import org.wikipediacleaner.api.request.ApiLogoutRequest;
 import org.wikipediacleaner.api.request.ApiLogoutResult;
 import org.wikipediacleaner.api.request.ApiParseRequest;
 import org.wikipediacleaner.api.request.ApiParseResult;
+import org.wikipediacleaner.api.request.ApiProtectedTitlesRequest;
+import org.wikipediacleaner.api.request.ApiProtectedTitlesResult;
 import org.wikipediacleaner.api.request.ApiPurgeRequest;
 import org.wikipediacleaner.api.request.ApiPurgeResult;
 import org.wikipediacleaner.api.request.ApiBacklinksRequest;
@@ -118,6 +120,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlLoginResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLogoutResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlParseResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPropertiesResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlProtectedTitlesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPurgeResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlBacklinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlQueryPageResult;
@@ -1111,6 +1114,24 @@ public class MediaWikiAPI implements API {
     ApiEmbeddedInResult result = new ApiXmlEmbeddedInResult(wiki, httpClient);
     ApiEmbeddedInRequest request = new ApiEmbeddedInRequest(wiki, result);
     request.loadEmbeddedIn(page, namespaces, limit);
+  }
+
+  /**
+   * Retrieves the pages which are protected in creation indefinitely.
+   * (<code>action=query</code>, <code>list=protectedtitles</code>).
+   * 
+   * @param wiki Wiki.
+   * @param namespaces Limit to some namespaces.
+   * @param limit Flag indicating if the number of results should be limited.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Protectedtitles">API:Protectedtitles</a>
+   */
+  public List<Page> getProtectedTitles(
+      EnumWikipedia wiki,
+      List<Integer> namespaces, boolean limit) throws APIException {
+    ApiProtectedTitlesResult result = new ApiXmlProtectedTitlesResult(wiki, httpClient);
+    ApiProtectedTitlesRequest request = new ApiProtectedTitlesRequest(wiki, result);
+    return request.loadProtecedTitles(namespaces, limit);
   }
 
   /**
