@@ -63,7 +63,7 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
           startIndex++;
         }
       }
-      if (startIndex < 0) {
+      if ((startIndex < 0) || startIndex >= contents.length()) {
         startIndex = contents.length();
       } else {
         if (contents.charAt(startIndex) == ':') {
