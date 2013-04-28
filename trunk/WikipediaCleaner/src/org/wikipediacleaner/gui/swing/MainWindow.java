@@ -133,7 +133,7 @@ public class MainWindow
   private JButton buttonCheckWiki;
   private JButton buttonCurrentDabList;
   private JButton buttonHelpRequested;
-  private JButton buttonMissingTemplates;
+  private JButton buttonGenerateLists;
   private JButton buttonMostDabLinks;
   private JButton buttonRandomPages;
   private JButton buttonRandomRedirects;
@@ -280,7 +280,7 @@ public class MainWindow
     buttonCheckWiki.setEnabled(logged);
     buttonCurrentDabList.setEnabled(logged);
     buttonHelpRequested.setEnabled(logged);
-    buttonMissingTemplates.setEnabled(logged);
+    buttonGenerateLists.setEnabled(logged);
     buttonMostDabLinks.setEnabled(logged);
     buttonRandomPages.setEnabled(logged);
     buttonRandomRedirects.setEnabled(logged);
@@ -778,12 +778,12 @@ public class MainWindow
     constraints.gridy++;
 
     // Missing templates
-    buttonMissingTemplates = Utilities.createJButton(
-        "commons-curly-brackets.png", EnumImageSize.NORMAL,
-        GT._("Missing templates"), true);
-    buttonMissingTemplates.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionMissingTemplates"));
-    panel.add(buttonMissingTemplates, constraints);
+    buttonGenerateLists = Utilities.createJButton(
+        "gnome-colors-applications-office.png", EnumImageSize.NORMAL,
+        GT._("Generate lists"), true);
+    buttonGenerateLists.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionGenerateLists"));
+    panel.add(buttonGenerateLists, constraints);
     constraints.gridy++;
 
     // Local watch list button
@@ -1541,17 +1541,50 @@ public class MainWindow
   }
 
   /**
-   * Action called when Missing Templates button is pressed.
+   * Action called when Generate List button is pressed.
    */
-  public void actionMissingTemplates() {
-    EnumWikipedia wikipedia = getWikipedia();
-    if (wikipedia == null) {
+  public void actionGenerateLists() {
+    // Create menu for generating lists
+    JPopupMenu menu = new JPopupMenu();
+    addItemInGenerateLists(menu, PageListWorker.Mode.MISSING_TEMPLATES);
+    // TODO: add list of pages that are fully protected in creation and that still have backlinks in main namespace
+    menu.show(
+        buttonGenerateLists,
+        0,
+        buttonGenerateLists.getHeight());
+  }
+
+  /**
+   * Add an item to the generate lists menu.
+   * 
+   * @param menu Menu.
+   * @param mode List to be generated.
+   */
+  private void addItemInGenerateLists(JPopupMenu menu, PageListWorker.Mode mode) {
+    JMenuItem item = Utilities.createJMenuItem(mode.getTitle());
+    item.setActionCommand(mode.name());
+    item.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionGenerateList", "actionCommand"));
+    menu.add(item);
+  }
+
+  /**
+   * Action called to generate a list.
+   * 
+   * @param name List name.
+   */
+  public void actionGenerateList(String name) {
+    EnumWikipedia wiki = getWikipedia();
+    if (wiki == null) {
+      return;
+    }
+    PageListWorker.Mode mode = PageListWorker.Mode.valueOf(name);
+    if (mode == null) {
       return;
     }
     new PageListWorker(
-        wikipedia, this, null,
-        null, PageListWorker.Mode.MISSING_TEMPLATES, true,
-        GT._("Pages with missing templates")).start();
+        wiki, this, null, null,
+        mode, false, mode.getTitle()).start();
   }
 
   /**

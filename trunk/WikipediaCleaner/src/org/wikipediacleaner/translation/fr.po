@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-27 14:01+0200\n"
+"POT-Creation-Date: 2013-04-28 20:00+0200\n"
 "PO-Revision-Date: 2013-04-26 21:45+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -1167,7 +1167,7 @@ msgid "Message"
 msgstr "Message"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:337
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1700
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1733
 msgid "Login"
 msgstr "Connexion"
 
@@ -1315,20 +1315,21 @@ msgid "Special lists"
 msgstr "Listes spéciales"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:783
-msgid "Missing templates"
-msgstr "Modèles demandés"
+#, fuzzy
+msgid "Generate lists"
+msgstr "Général"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:792
 msgid "Local &Watch list"
 msgstr "Liste de suivi locale"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:801
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1584
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1617
 msgid "Watch list"
 msgstr "Liste de suivi"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:810
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1638
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1671
 msgid "Random pages"
 msgstr "Pages aléatoires"
 
@@ -1486,24 +1487,20 @@ msgstr "Pages avec beaucoup de liens d’homonymies"
 msgid "All disambiguations pages"
 msgstr "Toutes les pages d’homonymie"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1554
-msgid "Pages with missing templates"
-msgstr "Pages avec des modèles demandés"
-
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1570
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1603
 msgid "Local watch list"
 msgstr "Liste de suivi locale"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1609
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1642
 msgid "How many pages do you want?"
 msgstr "Combien de pages voulez-vous ?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1621
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1654
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr "Le nombre de pages doit être compris entre {0} et {1}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1695
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1728
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:67
 #: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:67
@@ -1515,20 +1512,20 @@ msgstr "Le nombre de pages doit être compris entre {0} et {1}"
 msgid "Retrieving MediaWiki API"
 msgstr "Récupération de l’API MediaWiki"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1715
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1748
 msgid "Loading configuration"
 msgstr "Chargement de la configuration"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1742
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1775
 msgid "Retrieving disambiguation templates"
 msgstr "Récupération des modèles d'homonymie"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1746
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1779
 msgid "Retrieving suggestions for text replacements"
 msgstr "Récupération des suggestions pour les remplacements de texte"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1753
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1772
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1786
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1805
 msgid "Retrieving Check Wiki configuration"
 msgstr "Récupération de la configuration du projet de correction syntaxique"
 
@@ -1683,7 +1680,7 @@ msgstr "De quel Wikipédia provient ce texte ?"
 msgid "Translation"
 msgstr "Traduction"
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1745
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1779
 msgid ""
 "Do you want to delete this page on Wikipedia ?\n"
 "Please, enter the reason for deleting the page"
@@ -2907,7 +2904,11 @@ msgstr "Tri des erreurs par priorité"
 msgid "Adding comment"
 msgstr "Ajout d’un commentaire"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:142
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:91
+msgid "Pages with missing templates"
+msgstr "Pages avec des modèles demandés"
+
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:168
 msgid ""
 "You have loaded the list of all disambiguation pages to speed up page "
 "analysis.\n"
@@ -2917,11 +2918,11 @@ msgstr ""
 "d’accélérer l’analyse d’articles.\n"
 "Voulez-vous afficher la liste de toutes les pages d’homonymie ?"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:402
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:428
 msgid "Retrieving list of missing templates"
 msgstr "Récupération de la liste des modèles demandés"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:407
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:433
 msgid "Checking that the templates are still missing"
 msgstr "Vérification que les modèles sont toujours demandés"
 
@@ -3034,6 +3035,9 @@ msgstr "Un nom de référence ne peut pas contenir les caractères suivants : {0
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr "Une valeur ne peut pas contenir les caractères suivants : {0}"
+
+#~ msgid "Missing templates"
+#~ msgstr "Modèles demandés"
 
 #~ msgid "Reverse to [[{0}|{1}]]"
 #~ msgstr "Remplacer par [[{0}|{1}]]"

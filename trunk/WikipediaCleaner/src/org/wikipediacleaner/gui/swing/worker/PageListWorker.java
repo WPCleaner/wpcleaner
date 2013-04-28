@@ -88,10 +88,36 @@ public class PageListWorker extends BasicWorker {
     DIRECT,
     EMBEDDED_IN,
     INTERNAL_LINKS,
-    MISSING_TEMPLATES,
+    MISSING_TEMPLATES(GT._("Pages with missing templates")),
     QUERY_PAGE,
     SEARCH_TITLES,
-    WATCH_LIST,
+    WATCH_LIST;
+
+    /**
+     * Optional title for the associated list.
+     */
+    final private String title;
+
+    /**
+     * Constructor.
+     */
+    private Mode() {
+      this(null);
+    }
+
+    /**
+     * @param title Title for the associated list.
+     */
+    private Mode(String title) {
+      this.title = title;
+    }
+
+    /**
+     * @return Title for the associated list.
+     */
+    public String getTitle() {
+      return title;
+    }
   }
 
   private final Page referencePage;
