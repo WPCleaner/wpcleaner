@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-28 20:00+0200\n"
+"POT-Creation-Date: 2013-04-28 23:25+0200\n"
 "PO-Revision-Date: 2013-04-26 15:46+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -712,7 +712,7 @@ msgstr "Převádím text"
 msgid "Retrieving templates"
 msgstr "Přijímám šablony"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1581
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1602
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -720,7 +720,7 @@ msgstr ""
 "Tato akce je chráněna funkcí CAPTCHA.\n"
 "Jaká je odpověď na následující otázku?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1588
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1609
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -2873,7 +2873,11 @@ msgstr "Přidávám komentář"
 msgid "Pages with missing templates"
 msgstr "Stránky s chybějícími šablonami"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:168
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:92
+msgid "Protected titles with links from articles"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:169
 msgid ""
 "You have loaded the list of all disambiguation pages to speed up page "
 "analysis.\n"
@@ -2882,12 +2886,22 @@ msgstr ""
 "Byl nahrán seznam všech rozcestníků pro urychlení analyzování stránek.\n"
 "Chcete tento seznam zobrazit?"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:428
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:434
 msgid "Retrieving list of missing templates"
 msgstr "Nahrávám seznam chybějících šablon"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:433
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:439
 msgid "Checking that the templates are still missing"
+msgstr "Ověřuji, zda dané šablony stále neexistují"
+
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:465
+#, fuzzy
+msgid "Retrieving list of protected titles"
+msgstr "Nahrávám seznam chybějících šablon"
+
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:471
+#, fuzzy
+msgid "Checking that protected titles have backlinks"
 msgstr "Ověřuji, zda dané šablony stále neexistují"
 
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:59

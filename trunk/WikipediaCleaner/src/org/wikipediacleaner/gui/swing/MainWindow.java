@@ -1547,7 +1547,7 @@ public class MainWindow
     // Create menu for generating lists
     JPopupMenu menu = new JPopupMenu();
     addItemInGenerateLists(menu, PageListWorker.Mode.MISSING_TEMPLATES);
-    // TODO: add list of pages that are fully protected in creation and that still have backlinks in main namespace
+    addItemInGenerateLists(menu, PageListWorker.Mode.PROTECTED_TITLES);
     menu.show(
         buttonGenerateLists,
         0,

@@ -89,6 +89,7 @@ public class PageListWorker extends BasicWorker {
     EMBEDDED_IN,
     INTERNAL_LINKS,
     MISSING_TEMPLATES(GT._("Pages with missing templates")),
+    PROTECTED_TITLES(GT._("Protected titles with links from articles")),
     QUERY_PAGE,
     SEARCH_TITLES,
     WATCH_LIST;
@@ -220,6 +221,11 @@ public class PageListWorker extends BasicWorker {
       // Retrieve list of pages with missing templates
       case MISSING_TEMPLATES:
         constructMissingTemplates(pages);
+        break;
+
+      // Retrieve list of protected titles with backlinks
+      case PROTECTED_TITLES:
+        constructProtectedTitles(pages);
         break;
 
       // Retrieve a special list
@@ -444,6 +450,33 @@ public class PageListWorker extends BasicWorker {
         wiki, tmpPages2,
         wiki.getConfiguration().getEncyclopedicNamespaces(), true);
     pages.addAll(tmpPages3);
+    Collections.sort(pages, PageComparator.getNamespaceFirstComparator());
+  }
+
+  /**
+   * Construct list of protected titles with backlinks.
+   * 
+   * @param pages List of protected titles with backlinks.
+   * @throws APIException
+   */
+  private void constructProtectedTitles(List<Page> pages) throws APIException {
+    final API api = APIFactory.getAPI();
+    EnumWikipedia wiki = getWikipedia();
+    setText(GT._("Retrieving list of protected titles"));
+    List<Page> tmpPages = api.getProtectedTitles(
+        wiki, Collections.singletonList(Namespace.MAIN), false);
+    if ((tmpPages == null) || (tmpPages.isEmpty())) {
+      return;
+    }
+    setText(GT._("Checking that protected titles have backlinks"));
+    MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
+    mw.retrieveAllBacklinks(wiki, tmpPages.toArray(new Page[0]), true);
+    for (Page page : tmpPages) {
+      Integer backlinks = page.getBacklinksCountInMainNamespace();
+      if ((backlinks != null) && (backlinks.intValue() > 0)) {
+        pages.add(page);
+      }
+    }
     Collections.sort(pages, PageComparator.getNamespaceFirstComparator());
   }
 

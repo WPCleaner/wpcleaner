@@ -34,6 +34,7 @@ public enum ConfigurationValueInteger {
   MAXIMUM_PAGES("MaximumPages", 20),
   MAX_CATEGORY_MEMBERS("MaxCategoryMembers", 1000),
   MAX_EMBEDDED_IN("MaxEmbeddedIn", 1000),
+  MAX_PROTECTED_TITLES("MaxProtectedTitles", 1000),
   MAX_QUERY_PAGE("MaxQueryPage", 1000),
   MAX_SEARCH("MaxSearch", 1000),
   MENU_SIZE("MenuSize", 30),
