@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-27 14:01+0200\n"
+"POT-Creation-Date: 2013-04-28 20:00+0200\n"
 "PO-Revision-Date: 2012-11-16 00:18+0000\n"
 "Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -1119,7 +1119,7 @@ msgid "Message"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:337
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1700
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1733
 msgid "Login"
 msgstr ""
 
@@ -1267,7 +1267,7 @@ msgid "Special lists"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:783
-msgid "Missing templates"
+msgid "Generate lists"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:792
@@ -1275,12 +1275,12 @@ msgid "Local &Watch list"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:801
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1584
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1617
 msgid "Watch list"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:810
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1638
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1671
 msgid "Random pages"
 msgstr ""
 
@@ -1418,24 +1418,20 @@ msgstr ""
 msgid "All disambiguations pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1554
-msgid "Pages with missing templates"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1570
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1603
 msgid "Local watch list"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1609
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1642
 msgid "How many pages do you want?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1621
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1654
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1695
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1728
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:67
 #: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:67
@@ -1447,20 +1443,20 @@ msgstr ""
 msgid "Retrieving MediaWiki API"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1715
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1748
 msgid "Loading configuration"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1742
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1775
 msgid "Retrieving disambiguation templates"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1746
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1779
 msgid "Retrieving suggestions for text replacements"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1753
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1772
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1786
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1805
 msgid "Retrieving Check Wiki configuration"
 msgstr ""
 
@@ -1614,7 +1610,7 @@ msgstr ""
 msgid "Translation"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1745
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1779
 msgid ""
 "Do you want to delete this page on Wikipedia ?\n"
 "Please, enter the reason for deleting the page"
@@ -2807,18 +2803,22 @@ msgstr ""
 msgid "Adding comment"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:142
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:91
+msgid "Pages with missing templates"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:168
 msgid ""
 "You have loaded the list of all disambiguation pages to speed up page "
 "analysis.\n"
 "Do you want to display the list of all disambiguation pages ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:402
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:428
 msgid "Retrieving list of missing templates"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:407
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:433
 msgid "Checking that the templates are still missing"
 msgstr ""
 
