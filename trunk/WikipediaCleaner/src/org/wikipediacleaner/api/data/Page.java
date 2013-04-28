@@ -1007,6 +1007,13 @@ public class Page implements Comparable<Page> {
     return result;
   }
 
+  /**
+   * @return Last page analysis.
+   */
+  public PageAnalysis getLastAnalysis() {
+    return analysis;
+  }
+
   // ==========================================================================
   // General methods
   // ==========================================================================

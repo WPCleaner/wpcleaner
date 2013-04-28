@@ -1652,6 +1652,10 @@ public class OnePageAnalysisWindow extends OnePageWindow {
    */
   @Override
   protected void actionValidate(boolean fullValidate) {
+
+    // Count previous selected errors
+    int previousCount = countSelectedErrors(getPage().getLastAnalysis());
+
     getTextContents().resetAttributes();
     PageAnalysis analysis = getPage().getAnalysis(getTextContents().getText(), true);
     countOccurrences(analysis, false);
@@ -1692,50 +1696,79 @@ public class OnePageAnalysisWindow extends OnePageWindow {
 
     // Update selection
     if (fullValidate) {
+      int currentCount = countSelectedErrors(analysis);
 
-      // If the selected links are fixed, select the next one
       if (listErrors.getSelectedValue() != null) {
+        // The previous selection was in the check wiki errors
         CheckErrorPage errorPage = (CheckErrorPage) listErrors.getSelectedValue();
-        if (!errorPage.getErrorFound()) {
+        if (!errorPage.getErrorFound() || (currentCount == previousCount)) {
           int selected = listErrors.getSelectedIndex();
           selected++;
           if (selected < modelErrors.getSize()) {
             listErrors.setSelectedIndex(selected);
           } else {
-            listErrors.setSelectedIndex(0);
+            if (modelLinks.getSize() > 0) {
+              selectLinks(0);
+            } else {
+              listErrors.setSelectedIndex(0);
+            }
           }
         } else {
           getTextContents().resetAttributes();
         }
-      } else {
-        Object[] values = listLinks.getSelectedValues();
-        int count = 0;
-        int countElement = 0;
-        if (values != null) {
-          for (Object value : values) {
-            if (value instanceof Page) {
-              countElement++;
-              InternalLinkCount tmpCount = analysis.getLinkCount((Page) value);
-              if (tmpCount != null) {
-                count += tmpCount.getTotalLinkCount();
-              }
-            }
-          }
-        }
-        if ((countElement > 0) && (count == 0)) {
-          int selected = listLinks.getMaxSelectionIndex();
-          selected++;
+      } else if (listLinks.getSelectedValue() != null) {
+        // The previous selection was in the links
+        if ((currentCount == 0) || (currentCount == previousCount)) {
+          int selected = listLinks.getMaxSelectionIndex() + 1;
           if (selected < modelLinks.getSize()) {
             selectLinks(selected);
           } else if (modelErrors.getSize() > 0) {
             listErrors.setSelectedIndex(0);
+          } else {
+            selectLinks(0);
           }
+        }
+      } else {
+        // No previous selection
+        if (modelLinks.getSize() > 0) {
+          selectLinks(0);
+        } else if (modelErrors.getSize() > 0) {
+          listErrors.setSelectedIndex(0);
         }
       }
   
       modelLinks.updateLinkCount();
       getTextContents().requestFocusInWindow();
     }
+  }
+
+  /**
+   * @return Number of errors in the selection.
+   */
+  private int countSelectedErrors(PageAnalysis analysis) {
+    // Count check wiki errors
+    if (listErrors.getSelectedValue() != null) {
+      CheckErrorPage errorPage = (CheckErrorPage) listErrors.getSelectedValue();
+      return errorPage.getResultsCount();
+    }
+
+    // Count disambiguation links
+    if (listLinks.getSelectedValue() != null) {
+      Object[] values = listLinks.getSelectedValues();
+      if (values != null) {
+        int count = 0;
+        for (Object value : values) {
+          if (value instanceof Page) {
+            InternalLinkCount tmpCount = analysis.getLinkCount((Page) value);
+            if (tmpCount != null) {
+              count += tmpCount.getTotalLinkCount();
+            }
+          }
+        }
+        return count;
+      }
+    }
+    return 0;
   }
 
   /**
