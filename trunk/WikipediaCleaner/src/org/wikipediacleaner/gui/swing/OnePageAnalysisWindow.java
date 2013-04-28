@@ -945,7 +945,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       }
       if (!contents.equals(initialContents)) {
         getTextContents().changeText(contents);
-        actionValidate(true);
+        actionValidate(false);
       }
     }
   }
