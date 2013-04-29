@@ -48,7 +48,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 abstract class OptionsPanel extends JPanel {
 
   /**
-   * Serialisation.
+   * Serialization.
    */
   private static final long serialVersionUID = -6581007549837818171L;
 
