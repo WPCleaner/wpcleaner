@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-28 23:25+0200\n"
+"POT-Creation-Date: 2013-04-29 22:26+0200\n"
 "PO-Revision-Date: 2013-04-26 15:46+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -738,7 +738,7 @@ msgstr "O aplikaci"
 #: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:174
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:228
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:212
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:214
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:125
 msgid "&Close"
 msgstr "&Zavři"
 
@@ -795,7 +795,7 @@ msgid "You must input the initial and destination texts."
 msgstr "Musíte vložit úvodní a cílový text"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:474
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:121
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:99
 msgid "!!! WARNING !!!"
 msgstr "!!! VAROVÁNÍ !!!"
 
@@ -808,13 +808,13 @@ msgid "It may modify a lot of pages in a short period of time."
 msgstr "Může změnit množství stránek v krátkém čase."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:477
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:124
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:102
 msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Na některých projektech Wikimedia potřebuješ pro tyto funkce příznak Bot."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:478
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:125
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:103
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
 msgstr ""
@@ -1316,7 +1316,7 @@ msgid "Random redirect pages"
 msgstr "Náhodná přesměrování"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:828
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:96
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:74
 msgid "Bot tools"
 msgstr "Nástroje botů"
 
@@ -2221,40 +2221,50 @@ msgstr "Popis"
 msgid "N°"
 msgstr "Č."
 
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:122
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:100
 msgid "Functions available here are considered as bot tools."
 msgstr "Zde dostupné funkce by měli užívat boti."
 
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:123
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:101
 msgid "They may modify a lot of pages in a short period of time."
 msgstr "Můžou změnit množství stránek v krátkém čase."
 
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:139
-msgid "Semi-automatic disambiguation fixing"
-msgstr "Poloautomatické řešení odkazů na rozcestníky"
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:114
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:97
+msgid "General"
+msgstr "Obecné"
 
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:149
-msgid "Update existing disambiguation warning messages"
-msgstr "Aktualizovat existující rozcestníkové varování"
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:117
+#, fuzzy
+msgid "Check Wiki"
+msgstr "Check Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:158
-msgid "Monitor recent changes"
-msgstr "Sledovat poslední změny"
-
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:168
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:192
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:106
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:127
 msgid "Automatic fixing for Check Wiki"
 msgstr "Automatické opravy chyb Check Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:199
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:135
 msgid "Analyze pages that couldn't be fixed by bot"
 msgstr "Analyzovat stránky, které nemohly být botem opraveny"
 
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:269
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:181
 msgid "How many pages do you want to analyze"
 msgstr "Kolik stránek chcete analyzovat?"
 
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:310
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:100
+msgid "Semi-automatic disambiguation fixing"
+msgstr "Poloautomatické řešení odkazů na rozcestníky"
+
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:109
+msgid "Update existing disambiguation warning messages"
+msgstr "Aktualizovat existující rozcestníkové varování"
+
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:118
+msgid "Monitor recent changes"
+msgstr "Sledovat poslední změny"
+
+#: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:163
 msgid "At what page do you wish to start updating the disambiguation warning ?"
 msgstr "Na které stránce chcete zahájit aktualizaci rozcestníkového varování?"
 
@@ -2789,10 +2799,6 @@ msgstr "Maximální počet výsledků hledání:"
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:73
 msgid "Options"
 msgstr "Možnosti"
-
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:97
-msgid "General"
-msgstr "Obecné"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:106
 msgid "Sorting"

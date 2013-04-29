@@ -374,7 +374,7 @@ public abstract class BasicWindow implements ActionListener {
    * @param checker String checker to verify the value.
    * @return Value provided by the user.
    */
-  protected String askForValue(String message, String value, StringChecker checker) {
+  public String askForValue(String message, String value, StringChecker checker) {
     return Utilities.askForValue(parentComponent, message, value, checker);
   }
 
