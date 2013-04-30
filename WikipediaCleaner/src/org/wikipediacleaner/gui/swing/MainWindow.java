@@ -145,6 +145,7 @@ public class MainWindow
   private JButton buttonFullAnalysis;
   private JButton buttonDisambiguation;
   private JButton buttonSearchTitles;
+  private JButton buttonBackLinks;
   private JButton buttonEmbeddedIn;
   private JButton buttonInternalLinks;
   private JButton buttonCategoryMembers;
@@ -293,6 +294,7 @@ public class MainWindow
     buttonDisambiguation.setEnabled(logged);
     buttonSearchTitles.setEnabled(logged);
     buttonInternalLinks.setEnabled(logged);
+    buttonBackLinks.setEnabled(logged);
     buttonCategoryMembers.setEnabled(logged);
     buttonEmbeddedIn.setEnabled(logged);
     buttonUpdateDabWarning.setEnabled(logged);
@@ -651,6 +653,15 @@ public class MainWindow
     buttonInternalLinks.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionInternalLinks"));
     panel.add(buttonInternalLinks, constraints);
+    constraints.gridy++;
+
+    // Backlinks
+    buttonBackLinks = Utilities.createJButton(
+        "wpc-internal-link.png", EnumImageSize.NORMAL,
+        GT._("What links here"), true);
+    buttonBackLinks.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionBackLinks"));
+    panel.add(buttonBackLinks, constraints);
     constraints.gridy++;
 
     // Category members
@@ -1318,6 +1329,34 @@ public class MainWindow
         Collections.singletonList(textPagename.getText().trim()),
         PageListWorker.Mode.SEARCH_TITLES, false,
         GT._("Search results for {0}", textPagename.getText().trim())).start();
+  }
+
+  /**
+   * Action called when Back links button is pressed.
+   */
+  public void actionBackLinks() {
+    if ((textPagename == null) ||
+        (textPagename.getText() == null) ||
+        ("".equals(textPagename.getText().trim()))) {
+      displayWarning(
+          GT._("You must input a page name for retrieving the list of backlinks"),
+          textPagename);
+      return;
+    }
+    String pageName = textPagename.getText().trim();
+    Configuration config = Configuration.getConfiguration();
+    config.setString(
+        null,
+        ConfigurationValueString.PAGE_NAME,
+        pageName);
+    config.save();
+    Page page = DataManager.getPage(
+        getWikipedia(), pageName, null, null, null);
+    new PageListWorker(
+        getWikipedia(), this, page,
+        Collections.singletonList(pageName),
+        PageListWorker.Mode.BACKLINKS, false,
+        GT._("Links to {0}", pageName)).start();
   }
 
   /**

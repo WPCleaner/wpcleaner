@@ -58,6 +58,8 @@ public class PageListWorker extends BasicWorker {
    * <ul>
    * <li>ALL_DAB_PAGES (list not used):
    *     Retrieve list of all disambiguation pages.</li>
+   * <li>BACKLINKS (list of pages):
+   *     Retrieve list of backlinks.</li>
    * <li>CATEGORY_MEMBERS (list of categories):
    *     Retrieve list of articles in the categories.</li>
    * <li>CATEGORY_MEMBERS_ARTICLES (list of categories):
@@ -82,6 +84,7 @@ public class PageListWorker extends BasicWorker {
    */
   public static enum Mode {
     ALL_DAB_PAGES,
+    BACKLINKS,
     CATEGORY_MEMBERS,
     CATEGORY_MEMBERS_ARTICLES,
     DAB_WATCH,
@@ -193,6 +196,11 @@ public class PageListWorker extends BasicWorker {
         retrieveDisambiguationInformation = false;
         break;
 
+      // List of page back links
+      case BACKLINKS:
+        constructBackLinks(pages);
+        break;
+
       // List members of a category
       case CATEGORY_MEMBERS:
         constructCategoryMembers(pages);
@@ -290,6 +298,28 @@ public class PageListWorker extends BasicWorker {
     List<Page> tmpPages = wiki.constuctDisambiguationPages(api);
     if (tmpPages != null) {
       pages.addAll(tmpPages);
+    }
+  }
+
+  /**
+   * Construct list of backlinks.
+   * 
+   * @param pages List of backlinks.
+   * @throws APIException
+   */
+  private void constructBackLinks(List<Page> pages) throws APIException {
+    final API api = APIFactory.getAPI();
+    for (String pageName : elementNames) {
+      Page page = DataManager.getPage(getWikipedia(), pageName, null, null, null);
+      api.retrieveBackLinks(getWikipedia(), page, true);
+      List<Page> tmpPages = page.getRelatedPages(Page.RelatedPages.BACKLINKS);
+      if (tmpPages != null) {
+        for (Page tmpPage : tmpPages) {
+          if (!pages.contains(tmpPage)) {
+            pages.add(tmpPage);
+          }
+        }
+      }
     }
   }
 
