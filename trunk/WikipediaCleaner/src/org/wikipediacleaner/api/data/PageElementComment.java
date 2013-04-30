@@ -81,10 +81,22 @@ public class PageElementComment extends PageElement {
    */
   @Override
   public String toString() {
+    return createComment(commentNotTrimmed);
+  }
+
+  /**
+   * Create a comment.
+   * 
+   * @param comment Comment.
+   * @return Comment.
+   */
+  public static String createComment(String comment) {
     StringBuilder sb = new StringBuilder();
-    sb.append("<!--");
-    sb.append(commentNotTrimmed);
-    sb.append("-->");
+    sb.append("<!-- ");
+    if (comment != null) {
+      sb.append(comment.trim());
+    }
+    sb.append(" -->");
     return sb.toString();
   }
 }

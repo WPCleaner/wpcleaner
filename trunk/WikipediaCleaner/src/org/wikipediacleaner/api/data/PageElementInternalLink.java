@@ -254,19 +254,7 @@ public class PageElementInternalLink extends PageElement {
    */
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("[[");
-    sb.append(linkNotTrimmed);
-    if (anchorNotTrimmed != null) {
-      sb.append('#');
-      sb.append(anchorNotTrimmed);
-    }
-    if (textNotTrimmed != null) {
-      sb.append('|');
-      sb.append(textNotTrimmed);
-    }
-    sb.append("]]");
-    return sb.toString();
+    return createInternalLink(linkNotTrimmed, anchorNotTrimmed, textNotTrimmed);
   }
 
   /**
@@ -277,16 +265,34 @@ public class PageElementInternalLink extends PageElement {
    * @return Internal link.
    */
   public static String createInternalLink(String link, String text) {
+    return createInternalLink(link, null, text);
+  }
+
+  /**
+   * Create an internal link.
+   * 
+   * @param link Link.
+   * @param anchor Anchor
+   * @param text Displayed text.
+   * @return Internal link.
+   */
+  public static String createInternalLink(String link, String anchor, String text) {
     StringBuilder sb = new StringBuilder();
     sb.append("[[");
+    String fullLink = null;
+    if ((link != null) || (anchor != null)) {
+      fullLink =
+          ((link != null) ? link.trim() : "") +
+          ((anchor != null) ? ("#" + anchor.trim()) : "");
+    }
     if (text != null) {
-      if ((link != null) && (!Page.areSameTitle(link, text))) {
-        sb.append(link.trim());
+      if ((fullLink != null) && (!Page.areSameTitle(fullLink, text))) {
+        sb.append(fullLink);
         sb.append("|");
       }
       sb.append(text.trim());
     } else {
-      sb.append(link.trim());
+      sb.append(fullLink);
     }
     sb.append("]]");
     return sb.toString();
