@@ -25,7 +25,7 @@ package org.wikipediacleaner.api.constants;
 public enum WPCConfigurationStringList {
 
   // Comment used for a normal link to a disambiguation page.
-  COMMENTS_FOR_DAB_LINK("dab_link_comments", false, true, true /* TODO: false */),
+  COMMENTS_FOR_DAB_LINK("dab_link_comments", false, true, true),
   // Common languages.
   COMMON_LANGUAGES("common_languages", true, true, true),
   // Pages containing the current list of disambiguation pages.
