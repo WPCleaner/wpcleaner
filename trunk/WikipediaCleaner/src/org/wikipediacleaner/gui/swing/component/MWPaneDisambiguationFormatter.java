@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.TemplateMatcher;
@@ -136,9 +137,11 @@ public class MWPaneDisambiguationFormatter extends
     ConfigurationValueStyle styleType = null;
     if (disambiguation) {
       styleType = ConfigurationValueStyle.INTERNAL_LINK_DAB;
+
+      // Check if a template is after the link to ask for help
       List<String> templatesAfter = wikipedia.getConfiguration().getStringList(
           WPCConfigurationStringList.TEMPLATES_AFTER_HELP_ASKED);
-      if ((templatesAfter != null) && (templatesAfter.size() > 0)) {
+      if ((templatesAfter != null) && !templatesAfter.isEmpty()) {
         int maxSize = contents.length();
         int currentPos = end;
         while ((currentPos < maxSize) && (contents.charAt(currentPos) == ' ')) {
@@ -151,6 +154,31 @@ public class MWPaneDisambiguationFormatter extends
               if (Page.areSameTitle(templateAfter, nextTemplate.getTemplateName())) {
                 styleType = ConfigurationValueStyle.HELP_REQUESTED;
                 end = nextTemplate.getEndIndex();
+              }
+            }
+          }
+        }
+      }
+
+      List<String> commentsAfter = wikipedia.getConfiguration().getStringList(
+          WPCConfigurationStringList.COMMENTS_FOR_DAB_LINK);
+      if ((commentsAfter != null) && !commentsAfter.isEmpty()) {
+        int maxSize = contents.length();
+        int currentPos = end;
+        while ((currentPos < maxSize) && (contents.charAt(currentPos) == ' ')) {
+          currentPos++;
+        }
+        if ((currentPos < maxSize) && (contents.charAt(currentPos) == '<')) {
+          PageElementComment comment = pageAnalysis.isInComment(currentPos);
+          if (comment != null) {
+            for (String commentAfter : commentsAfter) {
+              String comment2 = comment.getComment();
+              if ((comment2 != null) && (comment2.length() >= commentAfter.length())) {
+                comment2 = comment2.substring(0, commentAfter.length());
+                if (comment2.equalsIgnoreCase(commentAfter)) {
+                  styleType = ConfigurationValueStyle.INTERNAL_LINK_NORMAL;
+                  end = comment.getEndIndex();
+                }
               }
             }
           }
