@@ -36,6 +36,7 @@ import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.LinkReplacement;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.TemplateMatcher;
@@ -69,34 +70,55 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
   public void addMarkAsNormal(
       EnumWikipedia wiki, JPopupMenu popup, Page page, String text,
       Element element, JTextPane textPane) {
-    List<String> templates = null;
-    if (wiki != null) {
-      templates = wiki.getConfiguration().getStringList(
-          WPCConfigurationStringList.TEMPLATES_FOR_DAB_LINK);
-    }
     if ((text != null) &&
         (page != null) &&
         Boolean.TRUE.equals(page.isDisambiguationPage()) &&
-        (templates != null) &&
-        (templates.size() > 0)) {
-      if (templates.size() > 1) {
-        JMenu submenu = new JMenu(GT._("Mark as normal link"));
-        for (String template : templates) {
+        (wiki != null)) {
+
+      // Add a menu for marking as normal link using a template
+      List<String> templates = wiki.getConfiguration().getStringList(
+          WPCConfigurationStringList.TEMPLATES_FOR_DAB_LINK);
+      if ((templates != null) && !templates.isEmpty()) {
+        if (templates.size() > 1) {
+          JMenu submenu = new JMenu(GT._("Mark as normal link"));
+          for (String template : templates) {
+            String replacement = createTextForTemplate(template, page.getTitle(), text);
+            addItem(
+                submenu, null, GT._("Using {0}", "{{" + template + "}}"),
+                new ReplaceTextAction(replacement, element, textPane));
+          }
+          popup.add(submenu);
+        } else {
+          String replacement = createTextForTemplate(templates.get(0), page.getTitle(), text);
           addItem(
-              submenu, null, GT._("Using {0}", "{{" + template + "}}"),
-              new MarkLinkAction(
-                  element,
-                  createTextForTemplate(template, page.getTitle(), text),
-                  textPane, null));
+              popup, null, GT._("Mark as normal link using template"),
+              new ReplaceTextAction(replacement, element, textPane));
         }
-        popup.add(submenu);
-      } else {
-        addItem(
-            popup, null, GT._("Mark as normal link"),
-            new MarkLinkAction(
-                element,
-                createTextForTemplate(templates.get(0), page.getTitle(), text),
-                textPane, null));
+      }
+
+      // Add a menu for marking as normal links using a comment
+      List<String> comments = wiki.getConfiguration().getStringList(
+          WPCConfigurationStringList.COMMENTS_FOR_DAB_LINK);
+      if ((comments != null) && !comments.isEmpty()) {
+        if (comments.size() > 1) {
+          JMenu submenu = new JMenu(GT._("Mark as normal link"));
+          for (String comment : comments) {
+            String replacement =
+                PageElementInternalLink.createInternalLink(page.getTitle(), text) +
+                PageElementComment.createComment(comment);
+            addItem(
+                submenu, null, GT._("Using {0}", comment),
+                new ReplaceTextAction(replacement, element, textPane));
+          }
+          popup.add(submenu);
+        } else {
+          String replacement =
+              PageElementInternalLink.createInternalLink(page.getTitle(), text) +
+              PageElementComment.createComment(comments.get(0));
+          addItem(
+              popup, null, GT._("Mark as normal link using comment"),
+              new ReplaceTextAction(replacement, element, textPane));
+        }
       }
     }
   }

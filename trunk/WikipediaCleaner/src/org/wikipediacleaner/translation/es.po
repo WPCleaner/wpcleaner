@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-04-29 22:26+0200\n"
+"POT-Creation-Date: 2013-04-30 18:17+0200\n"
 "PO-Revision-Date: 2013-02-04 10:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
@@ -271,18 +271,18 @@ msgid "Check all links to other language"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:171
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:138
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:147
 msgid "Check language links"
 msgstr "Comprobar los enlaces de idiomas"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:186
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:329
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:156
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:165
 msgid "What is the title of the page on this wiki ?"
 msgstr "¿Cuál es el título de la página en esta wiki?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:199
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:169
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:178
 #, java-format
 msgid "Replace using template {0}"
 msgstr "Reemplazar usando plantilla {0}"
@@ -2396,7 +2396,7 @@ msgid "Search in templates"
 msgstr "Buscar en plantillas"
 
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:105
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:242
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:264
 msgid "Link to"
 msgstr "Enlaces a"
 
@@ -2455,70 +2455,81 @@ msgid "Remove mark on backlink"
 msgstr "Eliminar la marca del retroenlace"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:83
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:95
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:104
 msgid "Mark as normal link"
 msgstr "Marcar como un enlace normal"
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:86
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:141
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:152
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:203
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:87
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:110
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:163
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:174
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:225
 #, java-format
 msgid "Using {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:137
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:169
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:94
+#, fuzzy
+msgid "Mark as normal link using template"
+msgstr "Marcar como un enlace normal"
+
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:119
+#, fuzzy
+msgid "Mark as normal link using comment"
+msgstr "Marcar como un enlace normal"
+
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:159
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:191
 msgid "Mark as needing help"
 msgstr "Marcar como ayuda necesaria"
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:200
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:212
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:222
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:234
 msgid "Link text"
 msgstr "Enlazar texto"
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:243
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:265
 msgid "Replace with"
 msgstr "Reemplazar con"
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:244
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:266
 msgid "Add to preferred disambiguations"
 msgstr "Añadir a desambiguaciones preferidas."
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:271
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:284
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:518
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:293
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:306
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:540
 #, java-format
 msgid "&Link to {0}"
 msgstr "En&lace a {0}"
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:276
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:289
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:522
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:298
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:311
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:544
 #, java-format
 msgid "&Replace with {0}"
 msgstr "&Reemplazar con {0}"
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:395
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:417
 #, fuzzy
 msgid "Reload category members"
 msgstr "Miembros de la categoría"
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:484
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:506
 msgid "Add other preferred disambiguation..."
 msgstr "Añadir otra desambiguación preferida"
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:488
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:510
 msgid "What link do you want to add to the preferred disambiguations?"
 msgstr "¿Qué enlace desea añadir a las desambiguaciones preferidas?"
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:495
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:517
 msgid "Remove from preferred disambiguations"
 msgstr "Eliminar de desambiguaciones preferidas"
 
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:509
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:528
-#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:537
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:531
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:550
+#: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:559
 #, fuzzy, java-format
 msgid "Reverse to {0}"
 msgstr "Revertir a [[{0}|{1}]]"
