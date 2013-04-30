@@ -83,6 +83,8 @@ public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
         templatesList = WPCConfiguration.convertPropertyToStringList(templatesParam);
       }
     }
+    boolean onlyLanguage = Boolean.valueOf(getSpecificProperty("only_language", true, false, false));
+    boolean onlyLocal = Boolean.valueOf(getSpecificProperty("only_local", true, false, false));
 
     // Analyze each external link
     boolean result = false;
@@ -98,12 +100,16 @@ public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
         // Check if this is a external link to an other wiki
         String article = null;
         String prefix = null;
+        String language = null;
+        boolean local = false;
         for (Interwiki interwiki : interwikis) {
           String tmp = interwiki.isArticleUrl(link.getLink());
           if (tmp != null) {
             if ((article == null) || (interwiki.getLanguage() != null)) {
               article = tmp;
               prefix = interwiki.getPrefix();
+              language = interwiki.getLanguage();
+              local = interwiki.getLocal();
             }
           }
         }
@@ -117,7 +123,10 @@ public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
 
         // Mark error
         if ((article != null) && (article.length() > 0) &&
-            (prefix != null) && (prefix.length() > 0)) {
+            (prefix != null) && (prefix.length() > 0) &&
+            (fromWiki != wiki) &&
+            (!onlyLanguage || (language != null)) &&
+            (!onlyLocal || local)) {
           if (errors == null) {
             return true;
           }
