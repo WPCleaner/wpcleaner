@@ -77,7 +77,7 @@ public enum WPCConfigurationString {
   // Comment when adding templates to a redirect page
   REDIRECT_TEMPLATES_COMMENT("redirect_templates_comment", null, false, true, true),
   // Warning when replacing links to redirect pages by direct links
-  REDIRECT_WARNING_BEFORE_REPLACEMENT("redirect_warning_before_replacement", null, false, true, true),
+  REDIRECT_WARNING_BEFORE_REPLACEMENT("redirect_warning_before_replacement", null, true, true, true),
   // "To do" sub-page
   TODO_SUBPAGE("general_todo_subpage", null, false, true, false),
   // Comment used when translating
