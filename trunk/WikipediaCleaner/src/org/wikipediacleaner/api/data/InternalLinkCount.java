@@ -35,6 +35,11 @@ public class InternalLinkCount {
   private int internalLinkCount;
 
   /**
+   * Count of internal links marked as good.
+   */
+  private int goodInternalLinkCount;
+
+  /**
    * Count of internal links where help is requested.
    */
   private int helpNeededInternalLinkCount;
@@ -73,6 +78,7 @@ public class InternalLinkCount {
    */
   public int getTotalLinkCount() {
     return internalLinkCount +
+        goodInternalLinkCount +
         helpNeededInternalLinkCount +
         goodTemplateCount +
         helpNeededTemplateCount +
@@ -91,6 +97,20 @@ public class InternalLinkCount {
    */
   public int getInternalLinkCount() {
     return internalLinkCount;
+  }
+
+  /**
+   * Increase the count of good internal links.
+   */
+  public void addGoodInternalLink() {
+    goodInternalLinkCount++;
+  }
+
+  /**
+   * @return Count of good internal links.
+   */
+  public int getGoodInternalLinkCount() {
+    return goodInternalLinkCount;
   }
 
   /**

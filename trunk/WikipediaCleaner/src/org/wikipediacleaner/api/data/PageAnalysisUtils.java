@@ -82,6 +82,8 @@ public class PageAnalysisUtils {
     List<PageElementInternalLink> internalLinks = pageAnalysis.getInternalLinks();
     List<String> templatesAfter = pageAnalysis.getWPCConfiguration().getStringList(
         WPCConfigurationStringList.TEMPLATES_AFTER_HELP_ASKED);
+    List<String> commentsAfter = pageAnalysis.getWPCConfiguration().getStringList(
+        WPCConfigurationStringList.COMMENTS_FOR_DAB_LINK);
     String contents = pageAnalysis.getContents();
     int maxSize = contents.length();
     for (PageElementInternalLink internalLink : internalLinks) {
@@ -91,6 +93,8 @@ public class PageAnalysisUtils {
           while ((currentPos < maxSize) && (contents.charAt(currentPos) == ' ')) {
             currentPos++;
           }
+
+          // Check if link is marked as needing help
           boolean helpNeeded = false;
           if ((currentPos < maxSize) && (contents.charAt(currentPos) == '{')) {
             PageElementTemplate nextTemplate = pageAnalysis.isInTemplate(currentPos);
@@ -102,7 +106,24 @@ public class PageAnalysisUtils {
               }
             }
           }
-          notification.linkFound(link, internalLink, helpNeeded);
+
+          // Check if link is marked as normal
+          boolean good = false;
+          if ((currentPos < maxSize) && (contents.charAt(currentPos) == '<')) {
+            PageElementComment nextComment = pageAnalysis.isInComment(currentPos);
+            if ((nextComment != null) && (nextComment.getComment() != null)) {
+              for (String commentAfter : commentsAfter) {
+                if (nextComment.getComment().length() >= commentAfter.length()) {
+                  String comment = nextComment.getComment().substring(0, commentAfter.length());
+                  if (comment.equalsIgnoreCase(commentAfter)) {
+                    good = true;
+                  }
+                }
+              }
+            }
+          }
+
+          notification.linkFound(link, internalLink, good, helpNeeded);
         }
       }
     }
