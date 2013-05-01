@@ -71,6 +71,7 @@ public class DisambiguationPageListPopupListener extends
     menu.addAnalyze(wikipedia, popup, link);
     menu.addView(wikipedia, popup, link, true);
     menu.addDisambiguation(wikipedia, popup, link);
+    menu.addItemPurgeCache(wikipedia, popup, link, window);
   }
 
 }
