@@ -36,6 +36,8 @@ public enum WPCConfigurationString {
   DAB_COMMENT_TODO("dab_comment_todo", ", {0} to be fixed", false, true, true),
   // Comment for one disambiguation link that still need to be fixed
   DAB_COMMENT_TODO_1("dab_comment_todo_1", null, false, true, true),
+  // Template for listing disambiguation links in a page that are normal
+  DAB_OK_TEMPLATE("dab_ok_template", null, false, true, true),
   // Comment for warning about disambiguation links in a page
   DAB_WARNING_COMMENT("dab_warning_comment", null, false, true, true),
   // Comment for warning about one disambiguation link in a page
