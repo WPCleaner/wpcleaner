@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -380,7 +381,7 @@ public class UpdateDabWarningTools {
       PageAnalysis pageAnalysis, Integer pageRevId,
       Page todoSubpage, Page talkPage,
       String creator, List<String> modifiers) throws APIException {
-    Collection<String> dabLinks = findDabLinks(pageAnalysis);
+    Collection<String> dabLinks = findDabLinks(pageAnalysis, talkPage, todoSubpage);
     boolean result = false;
     if ((dabLinks == null) || (dabLinks.isEmpty())) {
       result |= removeDabWarningOnTodoSubpage(todoSubpage);
@@ -409,7 +410,7 @@ public class UpdateDabWarningTools {
   private boolean manageDabWarningOnTalkPage(
       PageAnalysis pageAnalysis, Integer pageRevId, Page talkPage,
       String creator, List<String> modifiers) throws APIException {
-    Collection<String> dabLinks = findDabLinks(pageAnalysis);
+    Collection<String> dabLinks = findDabLinks(pageAnalysis, talkPage, null);
     boolean result = false;
     if ((dabLinks == null) || (dabLinks.isEmpty())) {
       result = removeDabWarningOnTalkPage(talkPage);
@@ -1267,20 +1268,23 @@ public class UpdateDabWarningTools {
   /**
    * Extract links to disambiguation pages.
    * 
-   * @param pageAnalysis Page analysis (must have enough information to compute the list of disambiguation links).
+   * @param analysis Page analysis (must have enough information to compute the list of disambiguation links).
    * @return List of links to disambiguation pages.
    */
-  private Collection<String> findDabLinks(PageAnalysis pageAnalysis) {
-    if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
+  private Collection<String> findDabLinks(
+      PageAnalysis analysis, Page talkPage, Page todoSubpage) {
+    if ((analysis == null) || (analysis.getPage() == null)) {
       return null;
     }
     List<String> dabLinks = new ArrayList<String>();
-    List<Page> links = pageAnalysis.getPage().getLinks();
+    List<Page> links = analysis.getPage().getLinks();
     if (links != null) {
-      pageAnalysis.countLinks(links);
+
+      // List disambiguation links in the page
+      analysis.countLinks(links);
       for (Page link : links) {
         if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
-          InternalLinkCount linkCount = pageAnalysis.getLinkCount(link);
+          InternalLinkCount linkCount = analysis.getLinkCount(link);
           if (linkCount != null) {
             if ((linkCount.getInternalLinkCount() > 0) ||
                 (linkCount.getIncorrectTemplateCount() > 0) ||
@@ -1290,9 +1294,54 @@ public class UpdateDabWarningTools {
           }
         }
       }
+
+      // Remove links marked as normal
+      cleanDabList(dabLinks, talkPage);
+      cleanDabList(dabLinks, todoSubpage);
     }
     Collections.sort(dabLinks);
     return dabLinks;
+  }
+
+  /**
+   * Remove disambiguation links marked as normal from the list.
+   * 
+   * @param dabList List of disambiguation links.
+   * @param page Page containing the list of normal disambiguation links.
+   */
+  private void cleanDabList(Collection<String> dabList, Page page) {
+    if ((dabList == null) || (page == null)) {
+      return;
+    }
+    String okTemplate = configuration.getString(WPCConfigurationString.DAB_OK_TEMPLATE);
+    if ((okTemplate == null) || okTemplate.trim().isEmpty()) {
+      return;
+    }
+    okTemplate = okTemplate.trim();
+    PageAnalysis analysis = page.getAnalysis(page.getContents(), false);
+    List<PageElementTemplate> templates = analysis.getTemplates(okTemplate);
+    if ((templates == null) || templates.isEmpty()) {
+      return;
+    }
+    for (PageElementTemplate template : templates) {
+      boolean done = false;
+      int numParam = 1;
+      while (!done) {
+        String link = template.getParameterValue(Integer.toString(numParam));
+        if (link == null) {
+          done = true;
+        } else {
+          Iterator<String> itDab = dabList.iterator();
+          while (itDab.hasNext()) {
+            String dab = itDab.next();
+            if (Page.areSameTitle(dab, link)) {
+              itDab.remove();
+            }
+          }
+          numParam++;
+        }
+      }
+    }
   }
 
   /**
