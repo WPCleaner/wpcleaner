@@ -36,6 +36,11 @@ public class ApiPurgeRequest extends ApiRequest {
   // ==========================================================================
 
   /**
+   * Property for Forcing links update.
+   */
+  public final static String PROPERTY_FORCE_LINK_UPDATE = "forcelinkupdate";
+
+  /**
    * Property for Titles.
    */
   public final static String PROPERTY_TITLES = "titles";
@@ -63,6 +68,7 @@ public class ApiPurgeRequest extends ApiRequest {
   public void purgePage(Page page) throws APIException {
     Map<String, String> properties = getProperties(ACTION_PURGE, result.getFormat());
     properties.put(PROPERTY_TITLES, page.getTitle());
+    properties.put(PROPERTY_FORCE_LINK_UPDATE, "");
     result.executePurge(properties);
   }
 
@@ -74,6 +80,7 @@ public class ApiPurgeRequest extends ApiRequest {
   public void purgePages(Collection<Page> pages) throws APIException {
     Map<String, String> properties = getProperties(ACTION_PURGE, result.getFormat());
     properties.put(PROPERTY_TITLES, constructListTitles(pages));
+    properties.put(PROPERTY_FORCE_LINK_UPDATE, "");
     result.executePurge(properties);
   }
 }
