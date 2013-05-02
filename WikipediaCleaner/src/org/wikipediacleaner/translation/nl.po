@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-01 00:39+0200\n"
+"POT-Creation-Date: 2013-05-02 19:14+0200\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -228,7 +228,7 @@ msgid "Fix all titles"
 msgstr "Repareer categorieën"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:101
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:218
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:215
 msgid "Remove"
 msgstr "Verwijder"
 
@@ -282,7 +282,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:205
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:268
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:311
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:307
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:310
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:94
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:158
@@ -760,36 +760,46 @@ msgstr "Over"
 msgid "&Close"
 msgstr "&Sluiten"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:140
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:142
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:192
+#: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:184
+#, fuzzy
+msgid "Original text"
+msgstr "Teks samenpersen"
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:186
+#, fuzzy
+msgid "Replacement text"
+msgstr "Vervang met {0}"
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:137
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:139
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:189
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:275
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:305
 msgid "Automatic fixing"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:212
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:209
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:121
 msgid "Add"
 msgstr "Voeg toe"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:224
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:221
 msgid "Modify"
 msgstr "Bewerk"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:230
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:227
 msgid "Clear"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:236
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:233
 msgid "Save"
 msgstr "Opslaan"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:242
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:239
 msgid "Fix selected pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:299
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:295
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:754
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:286
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:557
@@ -797,42 +807,46 @@ msgstr ""
 msgid "Full analysis (Alt + &F)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:305
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:301
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:292
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:563
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:244
 msgid "Disambiguation (Alt + &D)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:463
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:478
 msgid "You must select the pages on which running automatic fixing."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:469
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:485
+msgid "A comment is required for automatix fixing."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:492
 msgid "You must input the initial and destination texts."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:474
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:499
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:99
 msgid "!!! WARNING !!!"
 msgstr "!!! WAARSCHUWING !!!"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:475
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:500
 msgid "This function will do all the replacements in all selected pages."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:476
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:501
 msgid "It may modify a lot of pages in a short period of time."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:477
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:502
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:102
 msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Op enkele Wikipedia-projecten moet u misschien de bot-status gebruiken om "
 "dit te doen."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:478
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:503
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:103
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
@@ -840,18 +854,14 @@ msgstr ""
 "Aanvinken als u de bot status nodig hebt met het lezen van de regels van "
 "Wikipedia."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:479
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:504
 msgid ""
 "Also, verify again the texts you have inputed before running this function."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:480
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:505
 msgid "Do you want to continue ?"
 msgstr "Verdergaan?"
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:509
-msgid "A comment is required for automatix fixing."
-msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:179
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:635
@@ -2926,22 +2936,22 @@ msgstr ""
 msgid "Retrieving interwiki for {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:309
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:320
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:310
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:321
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:457
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:583
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:819
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:458
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:584
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:820
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:714
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:857
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:962
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:715
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:858
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:963
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr ""

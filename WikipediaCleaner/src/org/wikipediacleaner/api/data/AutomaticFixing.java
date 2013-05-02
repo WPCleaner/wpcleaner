@@ -22,7 +22,7 @@ package org.wikipediacleaner.api.data;
 /**
  * Utility class to memorize automatic fixing parameters
  */
-public class AutomaticFixing {
+public class AutomaticFixing implements Comparable<AutomaticFixing> {
   private String originalText;
   private String replacementText;
 
@@ -51,7 +51,24 @@ public class AutomaticFixing {
     replacementText = text;
   }
 
-  /* (non-Javadoc)
+  /**
+   * @param af Other automatic fixing expression.
+   * @return Comparison of the two automatic fixing expressions.
+   * @see java.lang.Comparable#compareTo(java.lang.Object)
+   */
+  public int compareTo(AutomaticFixing af) {
+    if (af == null) {
+      return -1;
+    }
+    int compare = originalText.compareTo(af.getOriginalText());
+    if (compare != 0) {
+      return compare;
+    }
+    return replacementText.compareTo(af.getReplacementText());
+  }
+
+  /**
+   * @return String representation of the automatic fixing expression.
    * @see java.lang.Object#toString()
    */
   @Override
