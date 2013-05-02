@@ -45,7 +45,8 @@ class AutomaticFixingTableModel extends AbstractTableModel {
 
   public final static int COLUMN_FROM = 0;
   public final static int COLUMN_TO = COLUMN_FROM + 1;
-  public final static int NB_COLUMNS = COLUMN_TO + 1;
+  public final static int COLUMN_REGEX = COLUMN_TO + 1;
+  public final static int NB_COLUMNS = COLUMN_REGEX + 1;
 
   /**
    * @param data List of automatic fixing expressions.
@@ -168,6 +169,8 @@ class AutomaticFixingTableModel extends AbstractTableModel {
       return fixing.getOriginalText();
     case COLUMN_TO:
       return fixing.getReplacementText();
+    case COLUMN_REGEX:
+      return fixing.isRegex();
     }
     return null;
   }
@@ -184,6 +187,8 @@ class AutomaticFixingTableModel extends AbstractTableModel {
       return GT._("Original text");
     case COLUMN_TO:
       return GT._("Replacement text");
+    case COLUMN_REGEX:
+      return GT._("regex");
     }
     return super.getColumnName(column);
   }
@@ -200,6 +205,8 @@ class AutomaticFixingTableModel extends AbstractTableModel {
       return String.class;
     case COLUMN_TO:
       return String.class;
+    case COLUMN_REGEX:
+      return Boolean.class;
     }
     return super.getColumnClass(columnIndex);
   }

@@ -23,16 +23,30 @@ package org.wikipediacleaner.api.data;
  * Utility class to memorize automatic fixing parameters
  */
 public class AutomaticFixing implements Comparable<AutomaticFixing> {
+
+  /**
+   * Original text.
+   */
   private String originalText;
+
+  /**
+   * Replacement text.
+   */
   private String replacementText;
+
+  /**
+   * Regular expression or not.
+   */
+  private boolean regex;
 
   public AutomaticFixing() {
     //
   }
 
-  public AutomaticFixing(String from, String to) {
+  public AutomaticFixing(String from, String to, boolean regex) {
     originalText = from;
     replacementText = to;
+    this.regex = regex;
   }
 
   public String getOriginalText() {
@@ -49,6 +63,14 @@ public class AutomaticFixing implements Comparable<AutomaticFixing> {
 
   public void setReplacementText(String text) {
     replacementText = text;
+  }
+
+  public boolean isRegex() {
+    return regex;
+  }
+
+  public void setRegex(boolean flag) {
+    regex = flag;
   }
 
   /**
