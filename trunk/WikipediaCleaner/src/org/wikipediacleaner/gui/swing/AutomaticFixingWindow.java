@@ -26,24 +26,21 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.JToolBar;
-import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -72,8 +69,8 @@ public class AutomaticFixingWindow extends OnePageWindow {
 
   //public final static Integer WINDOW_VERSION = Integer.valueOf(2);
 
-  private JList listAutomaticFixing;
-  private DefaultListModel modelAutomaticFixing;
+  private JTable tableAutomaticFixing;
+  private AutomaticFixingTableModel modelAutomaticFixing;
   private JButton buttonAddAutomaticFixing;
   private JButton buttonMdfAutomaticFixing;
   private JButton buttonRmvAutomaticFixing;
@@ -256,10 +253,9 @@ public class AutomaticFixingWindow extends OnePageWindow {
     constraints.gridx = 0;
 
     // Automatic fixing list
-    modelAutomaticFixing = new DefaultListModel();
-    listAutomaticFixing = new JList(modelAutomaticFixing);
-    listAutomaticFixing.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    JScrollPane scrollAutomaticFixing = new JScrollPane(listAutomaticFixing);
+    modelAutomaticFixing = new AutomaticFixingTableModel(null);
+    tableAutomaticFixing = new JTable(modelAutomaticFixing);
+    JScrollPane scrollAutomaticFixing = new JScrollPane(tableAutomaticFixing);
     scrollAutomaticFixing.setMinimumSize(new Dimension(100, 100));
     scrollAutomaticFixing.setPreferredSize(new Dimension(400, 150));
     scrollAutomaticFixing.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -361,6 +357,18 @@ public class AutomaticFixingWindow extends OnePageWindow {
   }
 
   /**
+   * @return Currently selected automatic fixing expression.
+   */
+  protected AutomaticFixing getSelectedAutomaticFixing() {
+    int row = tableAutomaticFixing.getSelectedRow();
+    if (row < 0) {
+      return null;
+    }
+    return modelAutomaticFixing.getAutomaticFixing(
+        Utilities.convertRowIndexToModel(tableAutomaticFixing, row));
+  }
+
+  /**
    * Action called when Reload button is pressed. 
    */
   @Override
@@ -382,10 +390,15 @@ public class AutomaticFixingWindow extends OnePageWindow {
           page.getWikipedia(), Configuration.POJO_AUTOMATIC_FIXING,
           page.getTitle(), AutomaticFixing.class);
       if (automaticFixing != null) {
-        modelAutomaticFixing.clear();
+        List<AutomaticFixing> data = new ArrayList<AutomaticFixing>(automaticFixing.length);
         for (int i = 0; i < automaticFixing.length; i++) {
-          modelAutomaticFixing.addElement(automaticFixing[i]);
+          if (automaticFixing[i] instanceof AutomaticFixing) {
+            data.add((AutomaticFixing) automaticFixing[i]);
+          }
         }
+        modelAutomaticFixing.setData(data);
+      } else {
+        modelAutomaticFixing.setData(null);
       }
     }
 
@@ -407,41 +420,41 @@ public class AutomaticFixingWindow extends OnePageWindow {
     if ((replaceText == null) || (replaceText.length() == 0)) {
       return;
     }
-    modelAutomaticFixing.addElement(new AutomaticFixing(initialText, replaceText));
+    modelAutomaticFixing.addAutomaticFixing(new AutomaticFixing(initialText, replaceText));
   }
 
   /**
    * Action called when Modify Automatic Fixing button is pressed. 
    */
   public void actionMdfAutomaticFixing() {
-    Object selected = listAutomaticFixing.getSelectedValue();
-    if (selected instanceof AutomaticFixing) {
-      AutomaticFixing fixing = (AutomaticFixing) selected;
-      String initialText = Utilities.askForValue(
-          getParentComponent(), "Input the text that should be replaced",
-          fixing.getOriginalText(), null);
-      if ((initialText == null) || (initialText.length() == 0)) {
-        return;
-      }
-      fixing.setOriginalText(initialText);
-      String replaceText = Utilities.askForValue(
-          getParentComponent(), "Input the text that should be used as replacement",
-          fixing.getReplacementText(), null);
-      if ((replaceText == null) || (replaceText.length() == 0)) {
-        return;
-      }
-      fixing.setReplacementText(replaceText);
-      listAutomaticFixing.repaint();
+    AutomaticFixing fixing = getSelectedAutomaticFixing();
+    if (fixing == null) {
+      return;
     }
+    String initialText = Utilities.askForValue(
+        getParentComponent(), "Input the text that should be replaced",
+        fixing.getOriginalText(), null);
+    if ((initialText == null) || (initialText.length() == 0)) {
+      return;
+    }
+    fixing.setOriginalText(initialText);
+    String replaceText = Utilities.askForValue(
+        getParentComponent(), "Input the text that should be used as replacement",
+        fixing.getReplacementText(), null);
+    if ((replaceText == null) || (replaceText.length() == 0)) {
+      return;
+    }
+    fixing.setReplacementText(replaceText);
+    tableAutomaticFixing.repaint();
   }
 
   /**
    * Action called when Remove Automatic Fixing button is pressed.
    */
   public void ActionRmvAutomaticFixing() {
-    int selected = listAutomaticFixing.getSelectedIndex();
-    if (selected != - 1) {
-      modelAutomaticFixing.remove(selected);
+    AutomaticFixing fixing = getSelectedAutomaticFixing();
+    if (fixing != null) {
+      modelAutomaticFixing.removeAutomaticFixing(fixing);
     }
   }
 
@@ -449,13 +462,15 @@ public class AutomaticFixingWindow extends OnePageWindow {
    * Action called when Clear Automatic Fixing button is pressed. 
    */
   public void actionClrAutomaticFixing() {
-    modelAutomaticFixing.clear();
+    modelAutomaticFixing.setData(null);
   }
 
   /**
    * Action called when Run Automatic Fixing button is pressed. 
    */
   public void actionRunAutomaticFixing() {
+
+    // Check that information is set
     Object[] values = listPages.getSelectedValues();
     if ((values == null) || (values.length == 0)) {
       Utilities.displayWarning(
@@ -463,12 +478,22 @@ public class AutomaticFixingWindow extends OnePageWindow {
           GT._("You must select the pages on which running automatic fixing."));
       return;
     }
-    if (modelAutomaticFixing.isEmpty()) {
+    String comment = getComment();
+    if ((comment != null) &&
+        (comment.trim().length() == 0)) {
+      Utilities.displayWarning(getParentComponent(), GT._(
+          "A comment is required for automatix fixing."));
+      return;
+    }
+    List<AutomaticFixing> fixing = modelAutomaticFixing.getData();
+    if ((fixing == null) || (fixing.isEmpty())) {
       Utilities.displayWarning(
           getParentComponent(),
           GT._("You must input the initial and destination texts."));
       return;
     }
+
+    // Warn the user about what this function does
     int answer = Utilities.displayYesNoWarning(
         getParentComponent(),
         GT._("!!! WARNING !!!") + "\n" +
@@ -481,19 +506,17 @@ public class AutomaticFixingWindow extends OnePageWindow {
     if (answer != JOptionPane.YES_OPTION) {
       return;
     }
+
+    // Prepare the replacements
     Page[] tmpPages = new Page[values.length];
     for (int i = 0; i < values.length; i++) {
       tmpPages[i] = (Page) values[i];
     }
     Properties replacement = new Properties();
-    for (int i = 0; i < modelAutomaticFixing.getSize(); i++) {
-      Object value = modelAutomaticFixing.get(i);
-      if (value instanceof AutomaticFixing) {
-        AutomaticFixing replacementValue = (AutomaticFixing) value;
-        replacement.setProperty(
-            replacementValue.getOriginalText(),
-            replacementValue.getReplacementText());
-      }
+    for (AutomaticFixing automatic : fixing) {
+      replacement.setProperty(
+          automatic.getOriginalText(),
+          automatic.getReplacementText());
     }
     Map<String, Properties> replacements = new HashMap<String, Properties>();
     if (getPage() != null) {
@@ -501,14 +524,8 @@ public class AutomaticFixingWindow extends OnePageWindow {
     } else {
       replacements.put(null, replacement);
     }
-    // Check that a comment is available
-    String comment = getComment();
-    if ((comment != null) &&
-        (comment.trim().length() == 0)) {
-      Utilities.displayWarning(getParentComponent(), GT._(
-          "A comment is required for automatix fixing."));
-      return;
-    }
+
+    // Do the replacements
     AutomaticDisambiguationWorker dabWorker = new AutomaticDisambiguationWorker(
         getWikipedia(), this, tmpPages, replacements,
         comment, true);
@@ -537,25 +554,8 @@ public class AutomaticFixingWindow extends OnePageWindow {
    */
   public void actionSaveAutomaticFixing() {
     Configuration config = Configuration.getConfiguration();
-    Object[] replacements = modelAutomaticFixing.toArray();
-    Arrays.sort(replacements, new Comparator<Object>() {
-
-      public int compare(Object o1, Object o2) {
-        AutomaticFixing a1 = (o1 instanceof AutomaticFixing) ? (AutomaticFixing) o1 : null;
-        AutomaticFixing a2 = (o2 instanceof AutomaticFixing) ? (AutomaticFixing) o2 : null;
-        if (a2 == null) {
-          if (a1 == null) {
-            return 0;
-          }
-          return -1;
-        }
-        if (a1 == null) {
-          return 1;
-        }
-        return a1.getOriginalText().compareTo(a2.getOriginalText());
-      }
-      
-    });
+    List<AutomaticFixing> fixing = modelAutomaticFixing.getData();
+    Object[] replacements = (fixing != null) ? fixing.toArray() : null;
     config.addPojoArray(
         getPage().getWikipedia(), Configuration.POJO_AUTOMATIC_FIXING,
         replacements, getPage().getTitle());
