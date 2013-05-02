@@ -18,12 +18,13 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.AutomaticFixing;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.InformationWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -36,15 +37,15 @@ import org.wikipediacleaner.i18n.GT;
 public class AutomaticDisambiguationWorker extends BasicWorker {
 
   private final Page[] pages;
-  private final Map<String, Properties> replacements;
+  private final Map<String, List<AutomaticFixing>> replacements;
   private final String comment;
   private final StringBuilder description;
   private final boolean showDescription;
 
   public AutomaticDisambiguationWorker(
       EnumWikipedia wikipedia, BasicWindow window,
-      Page[] pages, Map<String, Properties> replacements, String comment,
-      boolean showDescription) {
+      Page[] pages, Map<String, List<AutomaticFixing>> replacements,
+      String comment, boolean showDescription) {
     super(wikipedia, window);
     this.pages = pages.clone();
     this.replacements = replacements;

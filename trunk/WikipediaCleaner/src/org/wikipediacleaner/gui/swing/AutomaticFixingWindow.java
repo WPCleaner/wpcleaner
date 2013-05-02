@@ -30,7 +30,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -512,17 +511,11 @@ public class AutomaticFixingWindow extends OnePageWindow {
     for (int i = 0; i < values.length; i++) {
       tmpPages[i] = (Page) values[i];
     }
-    Properties replacement = new Properties();
-    for (AutomaticFixing automatic : fixing) {
-      replacement.setProperty(
-          automatic.getOriginalText(),
-          automatic.getReplacementText());
-    }
-    Map<String, Properties> replacements = new HashMap<String, Properties>();
+    Map<String, List<AutomaticFixing>> replacements = new HashMap<String, List<AutomaticFixing>>();
     if (getPage() != null) {
-      replacements.put("[[" + getPage().getTitle() + "]]", replacement);
+      replacements.put("[[" + getPage().getTitle() + "]]", fixing);
     } else {
-      replacements.put(null, replacement);
+      replacements.put(null, fixing);
     }
 
     // Do the replacements
