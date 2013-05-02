@@ -24,12 +24,12 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.AutomaticFixing;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.execution.BacklinksWRCallable;
 import org.wikipediacleaner.api.execution.ContentsCallable;
@@ -171,7 +171,7 @@ public class MediaWiki extends MediaWikiController {
    * @throws APIException
    */
   public int replaceText(
-      Page[] pages, Map<String, Properties> replacements,
+      Page[] pages, Map<String, List<AutomaticFixing>> replacements,
       EnumWikipedia wikipedia, String comment,
       StringBuilder description) throws APIException {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
@@ -194,11 +194,11 @@ public class MediaWiki extends MediaWikiController {
         if (oldContents != null) {
           String newContents = oldContents;
           details.setLength(0);
-          for (Entry<String, Properties> replacement : replacements.entrySet()) {
+          for (Entry<String, List<AutomaticFixing>> replacement : replacements.entrySet()) {
             boolean replacementUsed = false;
-            for (Entry<Object, Object> replacementValue : replacement.getValue().entrySet()) {
-              String from = replacementValue.getKey().toString();
-              String to = replacementValue.getValue().toString();
+            for (AutomaticFixing fixing : replacement.getValue()) {
+              String from = fixing.getOriginalText();
+              String to = fixing.getReplacementText();
               String tmpContents = newContents;
               if (to.indexOf('$') >= 0) {
                 // Replacement: "$" -> "\$" to avoid interpretation by replaceAll
