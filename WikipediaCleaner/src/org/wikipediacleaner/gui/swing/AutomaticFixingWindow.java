@@ -33,16 +33,19 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import javax.swing.table.TableColumnModel;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
@@ -254,6 +257,12 @@ public class AutomaticFixingWindow extends OnePageWindow {
     // Automatic fixing list
     modelAutomaticFixing = new AutomaticFixingTableModel(null);
     tableAutomaticFixing = new JTable(modelAutomaticFixing);
+    TableColumnModel columnModel = tableAutomaticFixing.getColumnModel();
+    columnModel.getColumn(AutomaticFixingTableModel.COLUMN_FROM).setMinWidth(200);
+    columnModel.getColumn(AutomaticFixingTableModel.COLUMN_TO).setMinWidth(200);
+    columnModel.getColumn(AutomaticFixingTableModel.COLUMN_REGEX).setMinWidth(40);
+    columnModel.getColumn(AutomaticFixingTableModel.COLUMN_REGEX).setPreferredWidth(40);
+    columnModel.getColumn(AutomaticFixingTableModel.COLUMN_REGEX).setMaxWidth(40);
     JScrollPane scrollAutomaticFixing = new JScrollPane(tableAutomaticFixing);
     scrollAutomaticFixing.setMinimumSize(new Dimension(100, 100));
     scrollAutomaticFixing.setPreferredSize(new Dimension(400, 150));
@@ -409,17 +418,11 @@ public class AutomaticFixingWindow extends OnePageWindow {
    * Action called when Add Automatic Fixing button is pressed.
    */
   public void actionAddAutomaticFixing() {
-    String initialText = Utilities.askForValue(
-        getParentComponent(), "Input the text that should be replaced", "", null);
-    if ((initialText == null) || (initialText.length() == 0)) {
-      return;
+
+    AutomaticFixing fixing = new AutomaticFixing();
+    if (inputAutomaticFixing(fixing)) {
+      modelAutomaticFixing.addAutomaticFixing(fixing);
     }
-    String replaceText = Utilities.askForValue(
-        getParentComponent(), "Input the text that should be used as replacement", "", null);
-    if ((replaceText == null) || (replaceText.length() == 0)) {
-      return;
-    }
-    modelAutomaticFixing.addAutomaticFixing(new AutomaticFixing(initialText, replaceText));
   }
 
   /**
@@ -430,21 +433,72 @@ public class AutomaticFixingWindow extends OnePageWindow {
     if (fixing == null) {
       return;
     }
-    String initialText = Utilities.askForValue(
-        getParentComponent(), "Input the text that should be replaced",
-        fixing.getOriginalText(), null);
-    if ((initialText == null) || (initialText.length() == 0)) {
-      return;
+    if (inputAutomaticFixing(fixing)) {
+      tableAutomaticFixing.repaint();
     }
-    fixing.setOriginalText(initialText);
-    String replaceText = Utilities.askForValue(
-        getParentComponent(), "Input the text that should be used as replacement",
-        fixing.getReplacementText(), null);
-    if ((replaceText == null) || (replaceText.length() == 0)) {
-      return;
+  }
+
+  /**
+   * Display a dialog box to edit an automatic fixing expression.
+   * 
+   * @param fixing Automatic fixing expression.
+   * @return True if the edition has been done.
+   */
+  private boolean inputAutomaticFixing(AutomaticFixing fixing) {
+
+    // Create a panel for information about an automatic fixing expression.
+    JPanel panel = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridheight = 1;
+    constraints.gridwidth = 1;
+    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.insets = new Insets(0, 0, 0, 0);
+    constraints.ipadx = 0;
+    constraints.ipady = 0;
+    constraints.weightx = 1;
+    constraints.weighty = 0;
+
+    // Initial text
+    JLabel labelOriginal = Utilities.createJLabel(GT._("Text that should be replaced"));
+    constraints.weightx = 0;
+    panel.add(labelOriginal, constraints);
+    constraints.gridx++;
+    JTextField textOriginal = Utilities.createJTextField(fixing.getOriginalText(), 50);
+    constraints.weightx = 1;
+    panel.add(textOriginal, constraints);
+    constraints.gridy++;
+    constraints.gridx = 0;
+
+    // Replacement text
+    JLabel labelReplacement = Utilities.createJLabel(GT._("Text that should be used as replacement"));
+    constraints.weightx = 0;
+    panel.add(labelReplacement, constraints);
+    constraints.gridx++;
+    JTextField textReplacement = Utilities.createJTextField(fixing.getReplacementText(), 50);
+    constraints.weightx = 1;
+    panel.add(textReplacement, constraints);
+    constraints.gridy++;
+    constraints.gridx = 0;
+
+    int result = JOptionPane.showConfirmDialog(
+        getParentComponent(), panel, GT._("Automatic fixing"),
+        JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+    if (result != JOptionPane.OK_OPTION) {
+      return false;
     }
-    fixing.setReplacementText(replaceText);
-    tableAutomaticFixing.repaint();
+    String originalText = textOriginal.getText();
+    if ((originalText == null) || (originalText.length() == 0)) {
+      return false;
+    }
+    String replacementText = textReplacement.getText();
+    if (replacementText == null) {
+      return false;
+    }
+    fixing.setOriginalText(originalText);
+    fixing.setReplacementText(replacementText);
+    return true;
   }
 
   /**
