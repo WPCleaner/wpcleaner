@@ -639,7 +639,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String automaticFix(PageAnalysis analysis) {
-    return fixUsingAutomaticReplacement("Automatic", analysis);
+    return fixUsingAutomaticReplacement(analysis);
   }
 
   /**

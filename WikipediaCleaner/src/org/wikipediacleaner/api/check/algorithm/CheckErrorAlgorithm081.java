@@ -137,6 +137,53 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   }
 
   /**
+   * Find the main reference tag in a list of reference tags.
+   * 
+   * @param refs List of reference tags.
+   * @return Main reference tag in the list.
+   */
+  private PageElementTag getMainRef(List<PageElementTag> refs, List<PageElementTag> references) {
+    if (refs == null) {
+      return null;
+    }
+
+    // Search for a named reference tag
+    PageElementTag namedTag = null;
+    PageElementTag namedTagInReferences = null;
+    for (PageElementTag tag : refs) {
+      Parameter name = tag.getParameter("name");
+      if ((name != null) && (name.getValue() != null)) {
+        String nameValue = name.getValue().trim();
+        if (!nameValue.isEmpty()) {
+          if (namedTag == null) {
+            namedTag = tag;
+          }
+          for (PageElementTag reference : references) {
+            if ((tag.getCompleteBeginIndex() > reference.getCompleteBeginIndex()) &&
+                (tag.getCompleteEndIndex() < reference.getCompleteEndIndex())) {
+              if (namedTagInReferences == null) {
+                namedTagInReferences = tag;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Deal with named reference tag inside <references/>
+    if (namedTagInReferences != null) {
+      return namedTagInReferences;
+    }
+
+    // Deal with named references tag outside <references/>
+    if (namedTag != null) {
+      return namedTag;
+    }
+
+    return null;
+  }
+
+  /**
    * Construct a closed reference tag.
    * 
    * @param groupName Name of the group.
@@ -192,6 +239,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }
 
     // Second pass for managing with several tags having the same group and value
+    List<PageElementTag> completeReferencesTags =
+        pageAnalysis.getCompleteTags(PageElementTag.TAG_WIKI_REFERENCES);
     String contents = pageAnalysis.getContents();
     for (Entry<String, Map<String, List<PageElementTag>>> entryGroup : refs.entrySet()) {
       String groupName = entryGroup.getKey();
@@ -199,30 +248,33 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         List<PageElementTag> listTags = entryValue.getValue();
         if (listTags.size() > 1) {
 
-          // List possible names
-          List<String> possibleNames = getRefNames(listTags);
-          if (possibleNames.size() > 0) {
+          // Find main reference tag
+          PageElementTag mainTag = getMainRef(listTags, completeReferencesTags);
+          if (mainTag != null) {
 
-            // Create an error for each tag, except for the first with the name
-            String selectedName = possibleNames.get(0);
-            boolean first = true;
+            // Create an error for each tag, except for the main tag
+            String selectedName = mainTag.getParameter("name").getValue().trim();
             for (PageElementTag tag : listTags) {
-              Parameter name = tag.getParameter("name");
-              String nameValue = (name != null) ? name.getValue() : null;
-              if (nameValue != null) {
-                nameValue = nameValue.trim();
-              }
-              boolean ok = first && (selectedName.equals(nameValue));
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(),
-                  tag.getCompleteBeginIndex(), tag.getCompleteEndIndex(),
-                  ok ? CheckErrorResult.ErrorLevel.CORRECT : CheckErrorResult.ErrorLevel.ERROR);
-              if (!ok) {
-                errorResult.addReplacement(getClosedRefTag(groupName, selectedName, null));
+              if (tag == mainTag) {
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    pageAnalysis.getPage(),
+                    tag.getCompleteBeginIndex(), tag.getCompleteEndIndex(),
+                    CheckErrorResult.ErrorLevel.CORRECT);
+                errors.add(errorResult);
               } else {
-                first = false;
+                Parameter name = tag.getParameter("name");
+                String nameValue = (name != null) ? name.getValue() : null;
+                if (nameValue != null) {
+                  nameValue = nameValue.trim();
+                }
+                CheckErrorResult errorResult = createCheckErrorResult(
+                    pageAnalysis.getPage(),
+                    tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+                errorResult.addReplacement(
+                    getClosedRefTag(groupName, selectedName, null),
+                    selectedName.equals(nameValue));
+                errors.add(errorResult);
               }
-              errors.add(errorResult);
             }
           } else {
 
@@ -401,5 +453,16 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       tmpContents.append(contents.substring(currentIndex));
     }
     return tmpContents.toString();
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String automaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
