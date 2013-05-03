@@ -28,7 +28,7 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * A class for memorizing information about errors detected.
  */
-public class CheckErrorResult {
+public class CheckErrorResult implements Comparable<CheckErrorResult> {
 
   private final String errorType;
   private final int startPosition;
@@ -255,5 +255,23 @@ public class CheckErrorResult {
    */
   public List<Actionnable> getPossibleActions() {
     return possibleActions;
+  }
+
+  /**
+   * @param cer Other check error result.
+   * @return Comparison of the two check error results.
+   * @see java.lang.Comparable#compareTo(java.lang.Object)
+   */
+  public int compareTo(CheckErrorResult cer) {
+    if (cer == null) {
+      return -1;
+    }
+    if (startPosition != cer.startPosition) {
+      return startPosition - cer.startPosition;
+    }
+    if (endPosition != cer.endPosition) {
+      return endPosition - cer.endPosition;
+    }
+    return 0;
   }
 }

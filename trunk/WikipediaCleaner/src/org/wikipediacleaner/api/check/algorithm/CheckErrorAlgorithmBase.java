@@ -21,6 +21,7 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -319,14 +320,14 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * Fix all the errors in the page by using automatic replacement proposed.
    * 
-   * @param fixName Fix name (extracted from getGlobalFixes()).
    * @param analysis Page analysis.
    * @return Page contents after fix.
    */
-  public String fixUsingAutomaticReplacement(String fixName, PageAnalysis analysis) {
+  public String fixUsingAutomaticReplacement(PageAnalysis analysis) {
     String result = analysis.getContents();
     List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
     if (analyze(analysis, errors)) {
+      Collections.sort(errors);
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
         String newText = errorResult.getAutomaticReplacement();
