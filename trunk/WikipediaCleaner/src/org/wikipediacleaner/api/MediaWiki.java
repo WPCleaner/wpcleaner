@@ -25,7 +25,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.regex.Pattern;
 
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -197,14 +196,8 @@ public class MediaWiki extends MediaWikiController {
           for (Entry<String, List<AutomaticFixing>> replacement : replacements.entrySet()) {
             boolean replacementUsed = false;
             for (AutomaticFixing fixing : replacement.getValue()) {
-              String from = fixing.getOriginalText();
-              String to = fixing.getReplacementText();
               String tmpContents = newContents;
-              if (to.indexOf('$') >= 0) {
-                // Replacement: "$" -> "\$" to avoid interpretation by replaceAll
-                to = to.replaceAll(Pattern.quote("$"), "\\\\\\$");
-              }
-              newContents = tmpContents.replaceAll(Pattern.quote(from), to);
+              newContents = fixing.apply(tmpContents);
               if (!newContents.equals(tmpContents)) {
                 if (description != null) {
                   if (!changed) {
@@ -217,9 +210,7 @@ public class MediaWiki extends MediaWikiController {
                     changed = true;
                   }
                   description.append("<li>");
-                  description.append(from);
-                  description.append(" → ");
-                  description.append(to);
+                  description.append(fixing.toString());
                   description.append("</li>\n");
                 }
                 if (!replacementUsed) {

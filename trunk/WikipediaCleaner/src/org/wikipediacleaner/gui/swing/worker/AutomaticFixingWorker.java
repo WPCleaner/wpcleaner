@@ -34,7 +34,7 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * SwingWorker for automatic disambiguation. 
  */
-public class AutomaticDisambiguationWorker extends BasicWorker {
+public class AutomaticFixingWorker extends BasicWorker {
 
   private final Page[] pages;
   private final Map<String, List<AutomaticFixing>> replacements;
@@ -42,7 +42,7 @@ public class AutomaticDisambiguationWorker extends BasicWorker {
   private final StringBuilder description;
   private final boolean showDescription;
 
-  public AutomaticDisambiguationWorker(
+  public AutomaticFixingWorker(
       EnumWikipedia wikipedia, BasicWindow window,
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
       String comment, boolean showDescription) {

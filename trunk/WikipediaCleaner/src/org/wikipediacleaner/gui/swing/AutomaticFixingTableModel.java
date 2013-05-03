@@ -170,7 +170,7 @@ class AutomaticFixingTableModel extends AbstractTableModel {
     case COLUMN_TO:
       return fixing.getReplacementText();
     case COLUMN_REGEX:
-      return fixing.isRegex();
+      return fixing.getRegex();
     }
     return null;
   }

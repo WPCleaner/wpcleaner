@@ -22,6 +22,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
@@ -33,6 +34,7 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -41,6 +43,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
@@ -58,7 +61,7 @@ import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.PageListCellRenderer;
 import org.wikipediacleaner.gui.swing.component.PageListModel;
-import org.wikipediacleaner.gui.swing.worker.AutomaticDisambiguationWorker;
+import org.wikipediacleaner.gui.swing.worker.AutomaticFixingWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -73,12 +76,15 @@ public class AutomaticFixingWindow extends OnePageWindow {
 
   private JTable tableAutomaticFixing;
   private AutomaticFixingTableModel modelAutomaticFixing;
-  private JButton buttonAddAutomaticFixing;
-  private JButton buttonMdfAutomaticFixing;
-  private JButton buttonRmvAutomaticFixing;
-  private JButton buttonClrAutomaticFixing;
-  private JButton buttonRunAutomaticFixing;
-  private JButton buttonSaveAutomaticFixing;
+  private JButton buttonAdd;
+  private JButton buttonModify;
+  private JButton buttonRemove;
+  private JButton buttonClear;
+  private JButton buttonRun;
+  private JButton buttonSave;
+  private JButton buttonTest;
+  private JTextPane paneOriginal;
+  private JTextPane paneResult;
 
   JList listPages;
   PageListModel modelPages;
@@ -186,9 +192,6 @@ public class AutomaticFixingWindow extends OnePageWindow {
    */
   private Component createAutomaticFixingComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
-    panel.setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(),
-        GT._("Automatic fixing")));
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -206,42 +209,48 @@ public class AutomaticFixingWindow extends OnePageWindow {
     // Commands
     JToolBar toolBarButtons = new JToolBar(SwingConstants.HORIZONTAL);
     toolBarButtons.setFloatable(false);
-    buttonAddAutomaticFixing = Utilities.createJButton(
+    buttonAdd = Utilities.createJButton(
         "gnome-list-add.png", EnumImageSize.NORMAL,
         GT._("Add"), false);
-    buttonAddAutomaticFixing.addActionListener(EventHandler.create(
+    buttonAdd.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAddAutomaticFixing"));
-    toolBarButtons.add(buttonAddAutomaticFixing);
-    buttonRmvAutomaticFixing = Utilities.createJButton(
+    toolBarButtons.add(buttonAdd);
+    buttonRemove = Utilities.createJButton(
         "gnome-list-remove.png", EnumImageSize.NORMAL,
         GT._("Remove"), false);
-    buttonRmvAutomaticFixing.addActionListener(EventHandler.create(
+    buttonRemove.addActionListener(EventHandler.create(
         ActionListener.class, this, "ActionRmvAutomaticFixing"));
-    toolBarButtons.add(buttonRmvAutomaticFixing);
-    buttonMdfAutomaticFixing = Utilities.createJButton(
+    toolBarButtons.add(buttonRemove);
+    buttonModify = Utilities.createJButton(
         "gnome-accessories-text-editor.png", EnumImageSize.NORMAL,
         GT._("Modify"), false);
-    buttonMdfAutomaticFixing.addActionListener(EventHandler.create(
+    buttonModify.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionMdfAutomaticFixing"));
-    toolBarButtons.add(buttonMdfAutomaticFixing);
-    buttonClrAutomaticFixing = Utilities.createJButton(
+    toolBarButtons.add(buttonModify);
+    buttonClear = Utilities.createJButton(
         "gnome-edit-clear.png", EnumImageSize.NORMAL,
         GT._("Clear"), false);
-    buttonClrAutomaticFixing.addActionListener(EventHandler.create(
+    buttonClear.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionClrAutomaticFixing"));
-    toolBarButtons.add(buttonClrAutomaticFixing);
-    buttonSaveAutomaticFixing = Utilities.createJButton(
+    toolBarButtons.add(buttonClear);
+    buttonSave = Utilities.createJButton(
         "gnome-media-floppy.png", EnumImageSize.NORMAL,
         GT._("Save"), false);
-    buttonSaveAutomaticFixing.addActionListener(EventHandler.create(
+    buttonSave.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSaveAutomaticFixing"));
-    toolBarButtons.add(buttonSaveAutomaticFixing);
-    buttonRunAutomaticFixing = Utilities.createJButton(
+    toolBarButtons.add(buttonSave);
+    buttonRun = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
         GT._("Fix selected pages"), false);
-    buttonRunAutomaticFixing.addActionListener(EventHandler.create(
+    buttonRun.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRunAutomaticFixing"));
-    toolBarButtons.add(buttonRunAutomaticFixing);
+    toolBarButtons.add(buttonRun);
+    buttonTest = Utilities.createJButton(
+        "gnome-edit-find.png", EnumImageSize.NORMAL,
+        GT._("Test automatic replacements"), false);
+    buttonTest.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionTestAutomaticFixing"));
+    toolBarButtons.add(buttonTest);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridwidth = 2;
     constraints.weighty = 0;
@@ -271,6 +280,26 @@ public class AutomaticFixingWindow extends OnePageWindow {
     constraints.gridwidth = 2;
     constraints.weighty = 1;
     panel.add(scrollAutomaticFixing, constraints);
+    constraints.gridy++;
+
+    // Test panel
+    JPanel testPanel = new JPanel(new GridLayout(1, 0));
+    testPanel.setBorder(BorderFactory.createTitledBorder(
+        BorderFactory.createEtchedBorder(),
+        GT._("Test automatic replacements")));
+    paneOriginal = new JTextPane();
+    JScrollPane scrollOriginal = new JScrollPane(paneOriginal);
+    scrollOriginal.setMinimumSize(new Dimension(50, 50));
+    scrollOriginal.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    testPanel.add(scrollOriginal);
+    paneResult = new JTextPane();
+    paneResult.setEditable(false);
+    JScrollPane scrollResult = new JScrollPane(paneResult);
+    scrollResult.setMinimumSize(new Dimension(50, 50));
+    scrollResult.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    testPanel.add(scrollResult);
+    constraints.weighty = 0.5;
+    panel.add(testPanel, constraints);
     constraints.gridy++;
 
     return panel;
@@ -347,12 +376,13 @@ public class AutomaticFixingWindow extends OnePageWindow {
   protected void updateComponentState() {
     super.updateComponentState();
     boolean hasReference = (getPage() != null);
-    buttonAddAutomaticFixing.setEnabled(true);
-    buttonClrAutomaticFixing.setEnabled(true);
-    buttonMdfAutomaticFixing.setEnabled(true);
-    buttonRmvAutomaticFixing.setEnabled(true);
-    buttonRunAutomaticFixing.setEnabled(true);
-    buttonSaveAutomaticFixing.setEnabled(hasReference);
+    buttonAdd.setEnabled(true);
+    buttonClear.setEnabled(true);
+    buttonModify.setEnabled(true);
+    buttonRemove.setEnabled(true);
+    buttonRun.setEnabled(true);
+    buttonSave.setEnabled(hasReference);
+    buttonTest.setEnabled(true);
   }
 
   /**
@@ -482,6 +512,14 @@ public class AutomaticFixingWindow extends OnePageWindow {
     constraints.gridy++;
     constraints.gridx = 0;
 
+    // Regular expression
+    JCheckBox chkRegex = Utilities.createJCheckBox(GT._("Use regular expressions"), fixing.getRegex());
+    constraints.gridwidth = 2;
+    constraints.weightx = 1;
+    panel.add(chkRegex, constraints);
+    constraints.gridwidth = 1;
+    constraints.gridy++;
+
     int result = JOptionPane.showConfirmDialog(
         getParentComponent(), panel, GT._("Automatic fixing"),
         JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -498,6 +536,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     }
     fixing.setOriginalText(originalText);
     fixing.setReplacementText(replacementText);
+    fixing.setRegex(chkRegex.isSelected());
     return true;
   }
 
@@ -573,7 +612,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     }
 
     // Do the replacements
-    AutomaticDisambiguationWorker dabWorker = new AutomaticDisambiguationWorker(
+    AutomaticFixingWorker dabWorker = new AutomaticFixingWorker(
         getWikipedia(), this, tmpPages, replacements,
         comment, true);
     dabWorker.setListener(new DefaultBasicWorkerListener() {
@@ -594,6 +633,20 @@ public class AutomaticFixingWindow extends OnePageWindow {
       }
     });
     dabWorker.start();
+  }
+
+  /**
+   * Action called when Test Automatic Fixing button is pressed.
+   */
+  public void actionTestAutomaticFixing() {
+    String text = paneOriginal.getText();
+    List<AutomaticFixing> fixing = modelAutomaticFixing.getData();
+    if (fixing != null) {
+      for (AutomaticFixing replacement : fixing) {
+        text = replacement.apply(text);
+      }
+    }
+    paneResult.setText(text);
   }
 
   /**
