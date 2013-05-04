@@ -78,8 +78,8 @@ public class PageElementCategory extends PageElement {
 
     // Check that name space is a category
     int colonIndex = tmpIndex;
-    Namespace categoryNamespace = wikipedia.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
-    if (!categoryNamespace.isPossibleName(contents.substring(beginIndex, colonIndex).trim())) {
+    Namespace categoryNS = wikipedia.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
+    if (!categoryNS.isPossibleName(contents.substring(beginIndex, colonIndex).trim())) {
       return null;
     }
 
@@ -92,6 +92,8 @@ public class PageElementCategory extends PageElement {
     if (tmpIndex >= contents.length()) {
       return null;
     }
+    String categoryName = categoryNS.getCaseSensitiveness().normalize(
+        contents.substring(colonIndex + 1, tmpIndex));
 
     // Simple language tag [[lang:link]]
     if (contents.charAt(tmpIndex) == ']') {
@@ -101,8 +103,7 @@ public class PageElementCategory extends PageElement {
       return new PageElementCategory(
           index, tmpIndex + 2,
           contents.substring(beginIndex, colonIndex),
-          contents.substring(colonIndex + 1, tmpIndex),
-          null);
+          categoryName, null);
     }
 
     // Find elements of image
@@ -113,7 +114,7 @@ public class PageElementCategory extends PageElement {
     return new PageElementCategory(
         index, endIndex + 2,
         contents.substring(beginIndex, colonIndex),
-        contents.substring(colonIndex + 1, tmpIndex),
+        categoryName,
         contents.substring(tmpIndex + 1, endIndex));
   }
 
