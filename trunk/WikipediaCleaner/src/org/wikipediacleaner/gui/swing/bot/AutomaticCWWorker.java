@@ -181,7 +181,10 @@ class AutomaticCWWorker extends BasicWorker {
     if (getWindow() != null) {
       Utilities.displayInformationMessage(
           getWindow().getParentComponent(),
-          GT._("{0} pages have been fixed", Integer.toString(count)));
+          GT.__(
+              "{0} page has been fixed",
+              "{0} pages have been fixed",
+              count, Integer.toString(count)));
     }
   }
 
