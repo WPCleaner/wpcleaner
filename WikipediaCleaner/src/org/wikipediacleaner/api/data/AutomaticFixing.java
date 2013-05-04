@@ -18,6 +18,9 @@
 
 package org.wikipediacleaner.api.data;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -105,32 +108,88 @@ public class AutomaticFixing implements Comparable<AutomaticFixing> {
   }
 
   /**
-   * Apply replacement to text.
+   * Apply a list of automatic fixing expressions to a text.
    * 
-   * @param text Text.
-   * @return Text with replacement applied.
+   * @param fixing List of automatic fixing expressions.
+   * @param text Original text.
+   * @param replacements Optional list of replacements performed.
+   * @return Text with replacements done.
    */
-  public String apply(String text) {
-    if (text == null) {
-      return null;
-    }
-
-    try {
-      // Regular expression
-      if (regex) {
-        return text.replaceAll(originalText, replacementText);
-      }
-  
-      // Normal text
-      String to = replacementText;
-      if (to.indexOf('$') >= 0) {
-        to = to.replaceAll(Pattern.quote("$"), "\\\\\\$");
-      }
-      return text.replaceAll(Pattern.quote(originalText), to);
-    } catch (PatternSyntaxException e) {
-      System.err.println("Error with " + toString() + ": " + e.getMessage());
+  public static String apply(
+      Collection<AutomaticFixing> fixing, String text,
+      List<String> replacements) {
+    if ((text == null) || (fixing == null) || (fixing.isEmpty())) {
       return text;
     }
+
+    // Apply each automatic fixing expression to the text
+    StringBuffer tmpText = new StringBuffer();
+    for (AutomaticFixing replacement : fixing) {
+
+      // Initialize data
+      tmpText.setLength(0);
+      String originalText = replacement.getOriginalText();
+      String replacementText = replacement.getReplacementText();
+      if (replacementText == null) {
+        replacementText = "";
+      }
+
+      int currentIndex = 0;
+      if (replacement.regex) {
+        // Apply for a regular expression
+        try {
+          Pattern pattern = Pattern.compile(originalText);
+          Matcher matcher = pattern.matcher(text);
+          while (matcher.find()) {
+            String foundText = matcher.group();
+            int start = matcher.start();
+            int end = matcher.end();
+            int currentLength = tmpText.length();
+            matcher.appendReplacement(tmpText, replacementText);
+            if (replacements != null) {
+              String replacedBy = tmpText.substring(currentLength + start - currentIndex);
+              String comment = foundText + " → " + replacedBy;
+              if (!replacements.contains(comment)) {
+                replacements.add(comment);
+              }
+            }
+            currentIndex = end;
+          }
+        } catch (PatternSyntaxException e) {
+          System.err.println("Error with " + originalText + ": " + e.getMessage());
+        }
+      } else {
+        // Apply for a basic expression
+        boolean finished = false;
+        while (!finished) {
+          int newIndex = text.indexOf(originalText, currentIndex);
+          if (newIndex < 0) {
+            finished = true;
+          } else {
+            if (newIndex > currentIndex) {
+              tmpText.append(text.substring(currentIndex, newIndex));
+              currentIndex = newIndex;
+            }
+            tmpText.append(replacementText);
+            currentIndex += originalText.length();
+            if (replacements != null) {
+              String comment = originalText + " → " + replacementText;
+              if (!replacements.contains(comment)) {
+                replacements.add(comment);
+              }
+            }
+          }
+        }
+      }
+      if (currentIndex > 0) {
+        if (currentIndex < text.length()) {
+          tmpText.append(text.substring(currentIndex));
+        }
+        text = tmpText.toString();
+      }
+    }
+
+    return text;
   }
 
   /**

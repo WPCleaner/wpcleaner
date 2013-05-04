@@ -188,40 +188,41 @@ public class MediaWiki extends MediaWikiController {
       Object result = getNextResult();
       if ((result != null) && (result instanceof Page)) {
         boolean changed = false;
+        List<String> replacementsDone = new ArrayList<String>();
         Page page = (Page) result;
         String oldContents = page.getContents();
         if (oldContents != null) {
           String newContents = oldContents;
           details.setLength(0);
           for (Entry<String, List<AutomaticFixing>> replacement : replacements.entrySet()) {
-            boolean replacementUsed = false;
-            for (AutomaticFixing fixing : replacement.getValue()) {
-              String tmpContents = newContents;
-              newContents = fixing.apply(tmpContents);
-              if (!newContents.equals(tmpContents)) {
-                if (description != null) {
-                  if (!changed) {
-                    String title =
-                      "<a href=\"" + wikipedia.getSettings().getURL(page.getTitle(), false, secured) + "\">" +
-                      page.getTitle() + "</a>";
-                    description.append(GT._("Page {0}:", title));
-                    description.append("\n");
-                    description.append("<ul>\n");
-                    changed = true;
-                  }
+            replacementsDone.clear();
+            String tmpContents = AutomaticFixing.apply(replacement.getValue(), newContents, replacementsDone);
+            if (!newContents.equals(tmpContents)) {
+
+              // Update description
+              if (description != null) {
+                if (!changed) {
+                  String title =
+                    "<a href=\"" + wikipedia.getSettings().getURL(page.getTitle(), false, secured) + "\">" +
+                    page.getTitle() + "</a>";
+                  description.append(GT._("Page {0}:", title));
+                  description.append("\n");
+                  description.append("<ul>\n");
+                  changed = true;
+                }
+                for (String replacementDone : replacementsDone) {
                   description.append("<li>");
-                  description.append(fixing.toString());
+                  description.append(replacementDone);
                   description.append("</li>\n");
                 }
-                if (!replacementUsed) {
-                  replacementUsed = true;
-                  if ((replacement.getKey() != null) && (replacement.getKey().length() > 0)) {
-                    if (details.length() > 0) {
-                      details.append(", ");
-                    }
-                    details.append(replacement.getKey());
-                  }
+              }
+
+              // Memorize replacement
+              if ((replacement.getKey() != null) && (replacement.getKey().length() > 0)) {
+                if (details.length() > 0) {
+                  details.append(", ");
                 }
+                details.append(replacement.getKey());
               }
             }
           }
