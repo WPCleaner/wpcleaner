@@ -272,7 +272,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                     tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
                 errorResult.addReplacement(
                     getClosedRefTag(groupName, selectedName, null),
-                    selectedName.equals(nameValue));
+                    selectedName.equals(nameValue) || (name == null));
                 errors.add(errorResult);
               }
             }
