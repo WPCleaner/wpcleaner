@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 
 
 /**
- * Base class for managing internationalisation.
+ * Base class for managing internationalization.
  */
 public class Messages extends ResourceBundle {
 

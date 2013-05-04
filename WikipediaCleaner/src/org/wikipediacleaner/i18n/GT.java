@@ -118,7 +118,7 @@ public class GT {
   }
 
   /**
-   * @param msg Original text (with variables placeholders).
+   * @param msg Original text (with variables place holders).
    * @param objects Variables values.
    * @return Translated text.
    */
