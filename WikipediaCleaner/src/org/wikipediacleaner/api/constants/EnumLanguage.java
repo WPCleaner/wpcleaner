@@ -31,41 +31,43 @@ import org.wikipediacleaner.i18n.Messages;
  */
 public enum EnumLanguage {
 
-  CS   ("cs"   , "Czech"),
-  DA   ("da"   , "Danish"),
-  DE   ("de"   , "German"),
-  EL   ("el"   , "Greek"),
-  EN   ("en"   , "English"),
-  EO   ("eo"   , "Esperanto"),
-  ES   ("es"   , "Spanish"),
-  FR   ("fr"   , "Français"),
-  HE   ("he"   , "Hebrew"),
-  HU   ("hu"   , "Hungarian"),
-  ID   ("id"   , "Indonesian"),
-  IS   ("is"   , "Icelandic"),
-  IT   ("it"   , "Italian"),
-  JA   ("ja"   , "Japanese"),
-  KO   ("ko"   , "Korean"),
-  NB   ("nb"   , "Norwegian Bokmal"),
-  NL   ("nl"   , "Dutch"),
-  OC   ("oc"   , "Occitan"),
-  PL   ("pl"   , "Polish"),
-  PT_BR("pt_BR", "Brazilian Portuguese"),
-  RU   ("ru"   , "Russian"),
-  SV   ("sv"   , "Swedish"),
-  TR   ("tr"   , "Turkish"),
-  UK   ("uk"   , "Ukrainian");
+  CS   (new Locale("cs")      , "Czech"),
+  DA   (new Locale("da")      , "Danish"),
+  DE   (Locale.GERMAN         , "German"),
+  EL   (new Locale("el")      , "Greek"),
+  EN   (Locale.ENGLISH        , "English"),
+  EO   (new Locale("eo")      , "Esperanto"),
+  ES   (new Locale("es")      , "Spanish"),
+  FR   (Locale.FRENCH         , "Français"),
+  HE   (new Locale("he")      , "Hebrew"),
+  HU   (new Locale("hu")      , "Hungarian"),
+  ID   (new Locale("id")      , "Indonesian"),
+  IS   (new Locale("is")      , "Icelandic"),
+  IT   (Locale.ITALIAN        , "Italian"),
+  JA   (Locale.JAPANESE       , "Japanese"),
+  KO   (Locale.KOREAN         , "Korean"),
+  NB   (new Locale("nb")      , "Norwegian Bokmal"),
+  NL   (new Locale("nl")      , "Dutch"),
+  OC   (new Locale("oc")      , "Occitan"),
+  PL   (new Locale("pl")      , "Polish"),
+  PT_BR(new Locale("pt", "BR"), "Brazilian Portuguese"),
+  RU   (new Locale("ru")      , "Russian"),
+  SV   (new Locale("sv")      , "Swedish"),
+  TR   (new Locale("tr")      , "Turkish"),
+  UK   (new Locale("uk")      , "Ukrainian");
 
   private final String code;
+  private final Locale locale;
   private final String language;
   private final ResourceBundle bundle;
 
   /**
-   * @param code Code.
+   * @param locale Locale.
    * @param language Language.
    */
-  EnumLanguage(String code, String language) {
-    this.code = code;
+  EnumLanguage(Locale locale, String language) {
+    this.code = locale.toString();
+    this.locale = locale;
     this.language = language;
     ResourceBundle tmpBundle = null;
     try {
@@ -128,6 +130,13 @@ public enum EnumLanguage {
    */
   public String getCode() {
     return code;
+  }
+
+  /**
+   * @return Locale.
+   */
+  public Locale getLocale() {
+    return locale;
   }
 
   /**
