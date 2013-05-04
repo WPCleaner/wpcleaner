@@ -18,7 +18,9 @@
 
 package org.wikipediacleaner.i18n;
 
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -34,15 +36,21 @@ public class Messages extends ResourceBundle {
     super();
   }
 
-  /* (non-Javadoc)
+  /**
+   * @return Enumeration of keys in the bundle.
    * @see java.util.ResourceBundle#getKeys()
    */
   @Override
   public Enumeration<String> getKeys() {
-    return null;
+    List<String> list = Collections.emptyList();
+    return Collections.enumeration(list);
   }
 
-  /* (non-Javadoc)
+  /**
+   * Handle keys with an explanation inside (between square brackets)
+   * 
+   * @param key Key.
+   * @return key without the explanation.
    * @see java.util.ResourceBundle#handleGetObject(java.lang.String)
    */
   @Override

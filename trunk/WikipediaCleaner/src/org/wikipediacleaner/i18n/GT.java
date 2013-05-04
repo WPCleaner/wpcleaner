@@ -18,6 +18,8 @@
 
 package org.wikipediacleaner.i18n;
 
+import gnu.gettext.GettextResource;
+
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
@@ -102,7 +104,7 @@ public class GT {
   private String getString(String msg) {
     try {
       if ((language != null) && (language.getResourceBundle() != null)) {
-        String txt = language.getResourceBundle().getString(msg);
+        String txt = GettextResource.gettext(language.getResourceBundle(), msg);
         if (txt != null) {
           return txt;
         }
@@ -114,7 +116,7 @@ public class GT {
     } catch (ClassCastException e) {
       //
     }
-    return defaultResource.getString(msg);
+    return GettextResource.gettext(defaultResource, msg);
   }
 
   /**
