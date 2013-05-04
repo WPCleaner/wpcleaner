@@ -20,6 +20,8 @@
   <property name="WPCleaner.libs.codec.dir"      value="libs/commons-codec-1.3" />
   <property name="WPCleaner.libs.codec.jar"      value="commons-codec-1.3.jar" />
   <property name="WPCleaner.libs.codec.lic"      value="LICENSE_commons-codec.txt" />
+  <property name="WPCleaner.libs.gettext.dir"    value="libs/gettext-0.18.2" />
+  <property name="WPCleaner.libs.gettext.jar"    value="libintl-0.18.2.jar" />
   <property name="WPCleaner.libs.httpclient.dir" value="libs/commons-httpclient-3.1" />
   <property name="WPCleaner.libs.httpclient.jar" value="commons-httpclient-3.1.jar" />
   <property name="WPCleaner.libs.httpclient.lic" value="LICENSE_commons-httpclient.txt" />
@@ -36,7 +38,7 @@
 
   <property name="WPCleaner.libs.cobra.jars"     value="${WPCleaner.libs.cobra.jar} ${WPCleaner.libs.cobra-js.jar}" />
   <property name="WPCleaner.libs.jdom.jars"      value="${WPCleaner.libs.jaxen-core.jar} ${WPCleaner.libs.jaxen-jdom.jar} ${WPCleaner.libs.jdom.jar} ${WPCleaner.libs.saxpath.jar}" />
-  <property name="WPCleaner.libs.various.jars"   value="${WPCleaner.libs.codec.jar} ${WPCleaner.libs.httpclient.jar} ${WPCleaner.libs.logging.jar}" />
+  <property name="WPCleaner.libs.various.jars"   value="${WPCleaner.libs.codec.jar} ${WPCleaner.libs.httpclient.jar} ${WPCleaner.libs.logging.jar} ${WPCleaner.libs.gettext.jar}" />
   <property name="WPCleaner.libs.jars"           value="${WPCleaner.libs.cobra.jars} ${WPCleaner.libs.various.jars} ${WPCleaner.libs.jdom.jars}" />
 
   <property name="all.languages" value="cs,da,de,el,eo,es,fr,he,hu,id,is,it,ja,ko,nb,nl,oc,pl,pt_BR,ru,sv,tr,uk" />
@@ -135,6 +137,9 @@
       <fileset dir="${WPCleaner.classes.dir}">
         <include name="**/*" />
       </fileset>
+      <zipgroupfileset dir="${WPCleaner.libs.gettext.dir}">
+        <include name="**/*.jar" />
+      </zipgroupfileset>
     </jar>
 
     <!-- Sign jars for JNLP -->
@@ -208,6 +213,9 @@
         <include name="**/*.jar" />
       </zipgroupfileset>
       <zipgroupfileset dir="${WPCleaner.libs.jdom.dir}">
+        <include name="**/*.jar" />
+      </zipgroupfileset>
+      <zipgroupfileset dir="${WPCleaner.libs.gettext.dir}">
         <include name="**/*.jar" />
       </zipgroupfileset>
     </jar>
