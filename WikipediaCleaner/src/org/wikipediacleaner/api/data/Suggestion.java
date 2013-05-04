@@ -256,7 +256,10 @@ public class Suggestion implements Comparable<Suggestion> {
           }
         }
       } catch (Exception e) {
-        log.error("Unable to get replacement", e);
+        log.error(
+            "Error when trying to get replacement\n  " +
+            initialText.substring(begin, end) + " → " + replacement +
+            "\n  " + e.getMessage());
       }
     }
     return list;
