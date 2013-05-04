@@ -68,15 +68,19 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
       } else {
         if (contents.charAt(startIndex) == ':') {
           int endIndex = startIndex;
+          boolean otherThanColon = false;
           while ((startIndex < contents.length()) &&
                  (":-*#".indexOf(contents.charAt(endIndex)) >= 0)) {
+            if (contents.charAt(endIndex) != ':') {
+              otherThanColon = true;
+            }
             endIndex++;
           }
           String newLine = contents.substring(startIndex, endIndex);
           int newLength = newLine.length();
-          if ((newLength > 1) &&
-              ((newLength > previousLine.length() + 1)) ||
-               (!previousLine.startsWith(newLine.substring(0, newLength - 1)))) {
+          if ((newLength > 1) && otherThanColon &&
+              ((newLength > previousLine.length() + 1) ||
+               (!previousLine.startsWith(newLine.substring(0, newLength - 1))))) {
             if (errors == null) {
               return true;
             }
