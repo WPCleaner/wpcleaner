@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -353,29 +354,29 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     int currentIndex = 0;
 
     // Group tags by group and value for further analyze
-    Map<String, Map<String, List<PageElementTag>>> refs =
+    Map<String, Map<String, List<PageElementTag>>> refsByGroupAndValue =
         new HashMap<String, Map<String, List<PageElementTag>>>();
-    groupTags(analysis, refs);
+    groupTags(analysis, refsByGroupAndValue);
 
     // Memorize tag names by group and value
-    Map<String, Map<String, String>> refNames =
-        new HashMap<String, Map<String,String>>();
-    for (Entry<String, Map<String, List<PageElementTag>>> group : refs.entrySet()) {
-      String groupName = group.getKey();
-      Map<String, List<PageElementTag>> groupRefs = group.getValue();
-      Map<String, String> mapNames = new HashMap<String, String>();
-      refNames.put(groupName, mapNames);
-      for (Entry<String, List<PageElementTag>> valueRefs : groupRefs.entrySet()) {
-        String value = valueRefs.getKey();
-        List<PageElementTag> refTags = valueRefs.getValue();
+    Map<String, Map<String, List<String>>> refNamesByGroupAndValue =
+        new HashMap<String, Map<String, List<String>>>();
+    for (Entry<String, Map<String, List<PageElementTag>>> refsByValueForGroup : refsByGroupAndValue.entrySet()) {
+      String groupName = refsByValueForGroup.getKey();
+      Map<String, List<PageElementTag>> groupRefsByValue = refsByValueForGroup.getValue();
+      Map<String, List<String>> groupRefNamesByValue = new HashMap<String, List<String>>();
+      refNamesByGroupAndValue.put(groupName, groupRefNamesByValue);
+      for (Entry<String, List<PageElementTag>> refsForGroupAndValue : groupRefsByValue.entrySet()) {
+        String value = refsForGroupAndValue.getKey();
+        List<PageElementTag> refTags = refsForGroupAndValue.getValue();
         List<String> possibleNames = getRefNames(refTags);
-        if ((possibleNames != null) && (possibleNames.size() > 0)) {
-          mapNames.put(value, possibleNames.get(0));
-        }
+        groupRefNamesByValue.put(value, possibleNames);
       }
     }
 
     // Check all reference tags
+    List<PageElementTag> completeReferencesTags =
+        analysis.getCompleteTags(PageElementTag.TAG_WIKI_REFERENCES);
     List<PageElementTag> completeRefTags =
         analysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
     Object highlight = null;
@@ -385,7 +386,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       // Retrieve basic information
       PageElementTag.Parameter groupParameter = refTag.getParameter("group");
       String groupName = (groupParameter != null) ? groupParameter.getValue() : null;
-      Map<String, List<PageElementTag>> groupRefs = refs.get(groupName);
+      Map<String, List<PageElementTag>> groupRefs = refsByGroupAndValue.get(groupName);
       String valueRef = contents.substring(refTag.getValueBeginIndex(), refTag.getValueEndIndex());
       List<PageElementTag> valueRefs = groupRefs.get(valueRef);
 
@@ -399,15 +400,11 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   
         // Check if a name already exists
         String replacement = null;
-        String selectedName = refNames.get(groupName).get(valueRef);
-        if (selectedName != null) {
-          PageElementTag firstRef = null;
-          for (PageElementTag tmpRef : valueRefs) {
-            if ((firstRef == null) && (selectedName.equals(tmpRef.getName()))) {
-              firstRef = tmpRef;
-            }
-          }
-          if (firstRef != refTag) {
+        List<String> possibleNames = refNamesByGroupAndValue.get(groupName).get(valueRef);
+        if ((possibleNames != null) && (possibleNames.size() > 0)) {
+          String selectedName = possibleNames.get(0);
+          PageElementTag mainRef = getMainRef(valueRefs, completeReferencesTags);
+          if (mainRef != refTag) {
             String tmp = getClosedRefTag(groupName, selectedName, null);
             String message =
                 GT._("A <ref> tag shares the same content, and is named \"{0}\".", selectedName) + "\n" +
@@ -426,7 +423,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
           String newText = Utilities.askForValue(textPane.getParent(), message, (String) null, nameChecker);
           if (newText != null) {
             replacement = getClosedRefTag(groupName, newText, valueRef);
-            refNames.get(groupName).put(valueRef, newText);
+            possibleNames = Collections.singletonList(newText);
+            refNamesByGroupAndValue.get(groupName).put(valueRef, possibleNames);
           }
         }
 
