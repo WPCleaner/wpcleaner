@@ -641,12 +641,16 @@ public class AutomaticFixingWindow extends OnePageWindow {
   public void actionTestAutomaticFixing() {
     String text = paneOriginal.getText();
     List<AutomaticFixing> fixing = modelAutomaticFixing.getData();
-    if (fixing != null) {
-      for (AutomaticFixing replacement : fixing) {
-        text = replacement.apply(text);
-      }
-    }
+    List<String> replacements = new ArrayList<String>();
+    text = AutomaticFixing.apply(fixing, text, replacements);
     paneResult.setText(text);
+    StringBuilder tmp = new StringBuilder();
+    tmp.append(GT._("The following replacements have been made:"));
+    for (String replacement : replacements) {
+      tmp.append("\n - ");
+      tmp.append(replacement);
+    }
+    Utilities.displayInformationMessage(getParentComponent(), tmp.toString());
   }
 
   /**
