@@ -70,11 +70,33 @@ public class GT {
 
   /**
    * @param msg Original text (with variables place holders).
+   * @param msgPlural Original text in plural (with variables place holders).
+   * @param n Plural indicator.
+   * @param variable Variable value.
+   * @return Translated text.
+   */
+  public static String __(String msg, String msgPlural, long n, String variable) {
+    return getTextWrapper().getString(msg, msgPlural, n, new Object[] { variable });
+  }
+
+  /**
+   * @param msg Original text (with variables place holders).
    * @param objects Variables values.
    * @return Translated text.
    */
   public static String _(String msg, Object[] objects) {
     return getTextWrapper().getString(msg, objects);
+  }
+
+  /**
+   * @param msg Original text (with variables place holders).
+   * @param msgPlural Original text in plural (with variables place holders).
+   * @param n Plural indicator.
+   * @param objects Variables values.
+   * @return Translated text.
+   */
+  public static String __(String msg, String msgPlural, long n, Object[] objects) {
+    return getTextWrapper().getString(msg, msgPlural, n, objects);
   }
 
   /**
@@ -120,6 +142,30 @@ public class GT {
   }
 
   /**
+   * @param msg Original text.
+   * @param msgPlural Original text in plural.
+   * @param n Plural indicator.
+   * @return Translated text.
+   */
+  private String getString(String msg, String msgPlural, long n) {
+    try {
+      if ((language != null) && (language.getResourceBundle() != null)) {
+        String txt = GettextResource.ngettext(language.getResourceBundle(), msg, msgPlural, n);
+        if (txt != null) {
+          return txt;
+        }
+      }
+    } catch (NullPointerException e) {
+      //
+    } catch (MissingResourceException e) {
+      //
+    } catch (ClassCastException e) {
+      //
+    }
+    return GettextResource.ngettext(defaultResource, msg, msgPlural, n);
+  }
+
+  /**
    * @param msg Original text (with variables place holders).
    * @param objects Variables values.
    * @return Translated text.
@@ -129,6 +175,21 @@ public class GT {
       return null;
     }
     String txt = getString(msg);
+    return MessageFormat.format(txt, objects);
+  }
+
+  /**
+   * @param msg Original text (with variables place holders).
+   * @param msgPlural Original text in plural (with variables place holders).
+   * @param n Plural indicator.
+   * @param objects Variables values.
+   * @return Translated text.
+   */
+  private String getString(String msg, String msgPlural, long n, Object[] objects) {
+    if (msg == null) {
+      return null;
+    }
+    String txt = getString(msg, msgPlural, n);
     return MessageFormat.format(txt, objects);
   }
 

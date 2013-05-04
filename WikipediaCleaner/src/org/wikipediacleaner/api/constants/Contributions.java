@@ -55,13 +55,19 @@ public class Contributions {
     if (pages > 0) {
       contributions = true;
       buffer.append("    → ");
-      buffer.append(GT._("You have edited {0} page(s).", Integer.toString(pages)));
+      buffer.append(GT.__(
+          "You have edited {0} page.",
+          "You have edited {0} pages.",
+          pages, Integer.toString(pages)));
       buffer.append("\n");
     }
     if (dabLinks > 0) {
       contributions = true;
       buffer.append("    → ");
-      buffer.append(GT._("You have fixed {0} link(s) to disambiguation pages.", Integer.toString(dabLinks)));
+      buffer.append(GT.__(
+          "You have fixed {0} link to disambiguation pages.",
+          "You have fixed {0} links to disambiguation pages.",
+          dabLinks, Integer.toString(dabLinks)));
       buffer.append("\n");
     }
     for (int errorNumber = 0; errorNumber < checkWikiErrors.length; errorNumber++) {
@@ -70,8 +76,10 @@ public class Contributions {
         CWConfiguration configuration = wikipedia.getCWConfiguration();
         CWConfigurationError errorConfiguration = configuration.getErrorConfiguration(errorNumber);
         buffer.append("    → ");
-        buffer.append(GT._(
-            "You have fixed {0} error(s) \"{1}\".",
+        buffer.append(GT.__(
+            "You have fixed {0} error \"{1}\".",
+            "You have fixed {0} errors \"{1}\".",
+            checkWikiErrors[errorNumber],
             new Object[] {
                 Integer.toString(checkWikiErrors[errorNumber]),
                 errorConfiguration.getShortDescriptionReplaced() } ));

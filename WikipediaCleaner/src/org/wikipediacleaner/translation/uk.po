@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-04 09:38+0200\n"
+"POT-Creation-Date: 2013-05-04 17:09+0200\n"
 "PO-Revision-Date: 2012-10-13 06:22+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -483,22 +483,28 @@ msgstr "Пріоритет невідомий"
 msgid "You have done the following contributions on \"{0}\":"
 msgstr ""
 
-#: org/wikipediacleaner/api/constants/Contributions.java:58
+#: org/wikipediacleaner/api/constants/Contributions.java:59
 #, java-format
-msgid "You have edited {0} page(s)."
-msgstr ""
+msgid "You have edited {0} page."
+msgid_plural "You have edited {0} pages."
+msgstr[0] ""
+msgstr[1] ""
 
-#: org/wikipediacleaner/api/constants/Contributions.java:64
+#: org/wikipediacleaner/api/constants/Contributions.java:68
+#, fuzzy, java-format
+msgid "You have fixed {0} link to disambiguation pages."
+msgid_plural "You have fixed {0} links to disambiguation pages."
+msgstr[0] "Аналіз посилань на сторінки значень"
+msgstr[1] "Аналіз посилань на сторінки значень"
+
+#: org/wikipediacleaner/api/constants/Contributions.java:80
 #, java-format
-msgid "You have fixed {0} link(s) to disambiguation pages."
-msgstr ""
+msgid "You have fixed {0} error \"{1}\"."
+msgid_plural "You have fixed {0} errors \"{1}\"."
+msgstr[0] ""
+msgstr[1] ""
 
-#: org/wikipediacleaner/api/constants/Contributions.java:74
-#, java-format
-msgid "You have fixed {0} error(s) \"{1}\"."
-msgstr ""
-
-#: org/wikipediacleaner/api/constants/Contributions.java:85
+#: org/wikipediacleaner/api/constants/Contributions.java:93
 #, java-format
 msgid "You haven''t done any contribution on \"{0}\""
 msgstr ""
@@ -2283,10 +2289,12 @@ msgstr "Перевірка на помилки n°{0}"
 msgid "Fixing page {0}"
 msgstr "Поновлення сторінки {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:184
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:185
 #, java-format
-msgid "{0} pages have been fixed"
-msgstr ""
+msgid "{0} page has been fixed"
+msgid_plural "{0} pages have been fixed"
+msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:213
 #, fuzzy
