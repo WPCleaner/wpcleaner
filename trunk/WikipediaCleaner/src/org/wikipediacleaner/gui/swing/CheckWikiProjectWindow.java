@@ -1190,10 +1190,15 @@ public class CheckWikiProjectWindow extends OnePageWindow {
           error.getAlgorithm(), pageAnalysis);
       if ((errorPage.getResults() != null) &&
           (!errorPage.getResults().isEmpty())) {
-        if (displayYesNoWarning(GT._(
-            "The error n°{0} is still found {1} times in the page.\n" +
-            "Are you really sure that you want to mark it as fixed ?",
-            new Object[] { Integer.toString(error.getErrorNumber()), errorPage.getResults().size() } )) != JOptionPane.YES_OPTION) {
+        String message =
+            GT.__(
+                "The error n°{0} is still found {1} time in the page.",
+                "The error n°{0} is still found {1} times in the page.",
+                errorPage.getResults().size(),
+                new Object[] { Integer.toString(error.getErrorNumber()), errorPage.getResults().size() }) +
+            "\n" +
+            GT._("Are you really sure that you want to mark it as fixed ?");
+        if (displayYesNoWarning(message) != JOptionPane.YES_OPTION) {
           return;
         }
       } else if (errorPage.getErrorFound()) {

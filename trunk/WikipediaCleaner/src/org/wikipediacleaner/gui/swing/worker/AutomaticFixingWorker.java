@@ -65,7 +65,10 @@ public class AutomaticFixingWorker extends BasicWorker {
           pages, replacements, getWikipedia(), comment, description));
       if (showDescription && (count > 0)) {
         InformationWindow.createInformationWindow(
-            GT._("The following modifications have been done ({0} pages):", count.toString()),
+            GT.__(
+                "The following modifications have been done ({0} page):",
+                "The following modifications have been done ({0} pages):",
+                count, count.toString()),
             description.toString(), getWikipedia());
       }
       return count;
