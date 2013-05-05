@@ -19,10 +19,12 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTitle;
 
 
 /**
@@ -31,6 +33,9 @@ import org.wikipediacleaner.api.data.PageElementTag;
  */
 public class CheckErrorAlgorithm049 extends CheckErrorAlgorithmBase {
 
+  /**
+   * Tags that can be detected.
+   */
   private static final String[] titleTags = {
     PageElementTag.TAG_HTML_H1,
     PageElementTag.TAG_HTML_H2,
@@ -50,21 +55,40 @@ public class CheckErrorAlgorithm049 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
-    // Analyzing the text from the beginning
+    // Analyzing each possible tag
     boolean result = false;
-    for (String tagName : titleTags) {
-      result |= addTags(result, pageAnalysis, errors, tagName);
+    for (int level = 0; level < titleTags.length; level++) {
+      String tagName = titleTags[level];
+      List<PageElementTag> tags = analysis.getCompleteTags(tagName);
+      if (tags != null) {
+        for (PageElementTag tag : tags) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+
+          // Find possible replacement
+          String replacement = analysis.getContents().substring(
+              tag.getValueBeginIndex(), tag.getValueEndIndex());
+
+          // Create error
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis.getPage(), tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+          errorResult.addReplacement(PageElementTitle.createTitle(level + 1, replacement));
+          errors.add(errorResult);
+        }
+      }
     }
 
     return result;
