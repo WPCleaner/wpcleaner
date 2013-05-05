@@ -301,6 +301,7 @@ public class PageElementImage extends PageElement {
         sb.append(param.getContents());
       } else {
         if (newDescription != null) {
+          sb.append('|');
           sb.append(newDescription);
         }
         descriptionAdded = true;
