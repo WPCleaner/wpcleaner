@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-05 09:48+0200\n"
+"POT-Creation-Date: 2013-05-05 10:29+0200\n"
 "PO-Revision-Date: 2013-05-04 16:19+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -339,6 +339,11 @@ msgstr "Nahradit všechny řetězce „%20“ mezerou"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:76
 msgid "Replace %20 by space character"
 msgstr "Nahradit %20 mezerou"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm077.java:102
+#, fuzzy, java-format
+msgid "Remove {0} tags"
+msgstr "Odstranit všechny tagy <small>"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:113
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:124
