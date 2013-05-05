@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-05 10:29+0200\n"
+"POT-Creation-Date: 2013-05-05 16:38+0200\n"
 "PO-Revision-Date: 2013-05-04 17:00+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -114,6 +114,7 @@ msgstr "Substituir com {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:96
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:103
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:102
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:89
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:126
 msgid "Delete"
 msgstr "Remover"
