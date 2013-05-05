@@ -158,7 +158,9 @@ public class PageElementTag extends PageElement {
       return null;
     }
     while ((tmpIndex < maxLength) &&
-           (Character.isLetter(contents.charAt(tmpIndex)))) {
+           (Character.isLetterOrDigit(contents.charAt(tmpIndex))) &&
+           ((tmpIndex > beginIndex) ||
+            (Character.isLetter(contents.charAt(tmpIndex))))) {
       tmpIndex++;
     }
     if (tmpIndex == beginIndex) {
