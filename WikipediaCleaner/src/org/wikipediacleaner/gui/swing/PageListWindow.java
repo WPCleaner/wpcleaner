@@ -609,7 +609,8 @@ public class PageListWindow extends BasicWindow {
     String txtAll  = null;
     txtAll = "" + backlinks;
     labelLinksCount.setText(
-        GT._("{0} pages", Integer.toString(pages.size()) ) + ", " +
+        GT.__("{0} page", "{0} pages", pages.size(), Integer.toString(pages.size())) +
+        ", " +
         GT._(
             "Backlinks - Main namespace: {0}, All namespaces: {1}",
             new Object[] { txtMain, txtAll }));

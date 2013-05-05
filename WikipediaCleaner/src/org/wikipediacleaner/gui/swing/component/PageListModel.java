@@ -350,9 +350,15 @@ public class PageListModel extends AbstractListModel {
         }
       }
       if (totalCount > 0) {
-        linkCount.setText(GT._(
-            "{0} links in Main Namespace / {1} total links",
-            new Object[] { mainCount, totalCount }));
+        String message =
+            GT.__(
+                "{0} link in Main Namespace", "{0} links in Main Namespace",
+                mainCount, Integer.toString(mainCount)) +
+            " / " +
+            GT.__(
+                "{0} total link", "{0} total links",
+                totalCount, Integer.toString(totalCount));
+        linkCount.setText(message);
       } else {
         linkCount.setText("");
       }

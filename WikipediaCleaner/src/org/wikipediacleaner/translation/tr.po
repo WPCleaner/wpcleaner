@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-04 17:09+0200\n"
+"POT-Creation-Date: 2013-05-05 09:48+0200\n"
 "PO-Revision-Date: 2013-05-04 17:01+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -276,7 +276,7 @@ msgid "Replace using template {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:205
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:320
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:321
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:344
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:310
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:94
@@ -349,34 +349,34 @@ msgstr ""
 msgid "External viewer"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:62
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:63
 msgid "Fix reference duplication"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:309
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:310
 msgid "Give a name to the <ref> tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:314
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:315
 msgid "What name would like to use for the <ref> tag ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:413
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:410
 #, java-format
 msgid "A <ref> tag shares the same content, and is named \"{0}\"."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:414
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:411
 #, java-format
 msgid "Do you want to replace this <ref> tag by \"{0}\" ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:424
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:421
 msgid ""
 "Several <ref> tags share the same content, but none has been given a name."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:425
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:422
 msgid "What name do you want to use for this <ref> tag ?"
 msgstr ""
 
@@ -1032,43 +1032,47 @@ msgstr ""
 msgid "Do you want to mark {0} as fixed for error n°{1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1194
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1195
 #, java-format
-msgid ""
-"The error n°{0} is still found {1} times in the page.\n"
-"Are you really sure that you want to mark it as fixed ?"
+msgid "The error n°{0} is still found {1} time in the page."
+msgid_plural "The error n°{0} is still found {1} times in the page."
+msgstr[0] ""
+msgstr[1] ""
+
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1200
+msgid "Are you really sure that you want to mark it as fixed ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1201
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1206
 #, java-format
 msgid ""
 "The error n°{0} is still found in the page.\n"
 "Are you really sure that you want to mark it as fixed ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1213
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1218
 msgid ""
 "You have already fixed this error by modifying the page.\n"
 "You should send your modifications, the page will be marked as fixed."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1339
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1344
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1270
 msgid "A comment is required for sending the page."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1541
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1546
 msgid "Pages with several errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1692
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1697
 #, java-format
 msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1884
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1889
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
@@ -1077,7 +1081,7 @@ msgid ""
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1928
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1933
 #, java-format
 msgid ""
 "There''s no white list defined for this error type.\n"
@@ -1967,10 +1971,12 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:612
 #, java-format
-msgid "{0} pages"
-msgstr ""
+msgid "{0} page"
+msgid_plural "{0} pages"
+msgstr[0] ""
+msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:614
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:615
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
@@ -2334,10 +2340,19 @@ msgstr ""
 msgid "Validate the new table of contents"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/component/PageListModel.java:354
+#: org/wikipediacleaner/gui/swing/component/PageListModel.java:355
 #, java-format
-msgid "{0} links in Main Namespace / {1} total links"
-msgstr ""
+msgid "{0} link in Main Namespace"
+msgid_plural "{0} links in Main Namespace"
+msgstr[0] ""
+msgstr[1] ""
+
+#: org/wikipediacleaner/gui/swing/component/PageListModel.java:359
+#, java-format
+msgid "{0} total link"
+msgid_plural "{0} total links"
+msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:58
 msgid "Find text"
@@ -2861,10 +2876,12 @@ msgstr ""
 msgid "Translate templates without parameters"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/AutomaticFixingWorker.java:68
+#: org/wikipediacleaner/gui/swing/worker/AutomaticFixingWorker.java:69
 #, java-format
-msgid "The following modifications have been done ({0} pages):"
-msgstr ""
+msgid "The following modifications have been done ({0} page):"
+msgid_plural "The following modifications have been done ({0} pages):"
+msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:102
 msgid "Sorting errors by priority"
