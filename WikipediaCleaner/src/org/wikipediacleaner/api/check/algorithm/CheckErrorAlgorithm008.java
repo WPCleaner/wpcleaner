@@ -39,20 +39,20 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Check every "=" at the beginning of a line
     boolean result = false;
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     int maxLen = contents.length();
     for (int currentIndex = 0; currentIndex < maxLen; currentIndex++) {
       if ((contents.charAt(currentIndex) == '=') &&
@@ -60,19 +60,15 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
 
         // Check that it is indeed an error
         boolean errorFound = true;
-        if ((pageAnalysis.isInComment(currentIndex) != null) ||
-            (pageAnalysis.isInTitle(currentIndex) != null)) {
+        if ((analysis.isInComment(currentIndex) != null) ||
+            (analysis.isInTitle(currentIndex) != null)) {
           errorFound = false;
         } else {
-          PageElementTag tag = pageAnalysis.isInTag(currentIndex);
-          if (tag != null) {
-            String tagName = tag.getNormalizedName();
-            if ((PageElementTag.TAG_WIKI_CODE.equals(tagName)) ||
-                (PageElementTag.TAG_WIKI_MATH.equals(tagName)) ||
-                (PageElementTag.TAG_WIKI_NOWIKI.equals(tagName)) ||
-                (PageElementTag.TAG_WIKI_SOURCE.equals(tagName))) {
-              errorFound = false;
-            }
+          if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_CODE, currentIndex) != null) ||
+              (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
+              (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
+              (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null)) {
+            errorFound = false;
           }
         }
 
@@ -100,7 +96,7 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
 
           // Create error
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), currentIndex, endLineIndex);
+              analysis.getPage(), currentIndex, endLineIndex);
           errorResult.addReplacement(PageElementTitle.createTitle(
               equalsCount,
               contents.substring(currentIndex + equalsCount, endLineIndex)));
