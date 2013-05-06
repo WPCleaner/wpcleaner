@@ -42,27 +42,37 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if ((analysis == null) || (analysis.getPage() == null)) {
       return false;
     }
 
-    boolean result = false;
-    List<PageElementInternalLink> links = pageAnalysis.getInternalLinks();
-    Page page = pageAnalysis.getPage();
+    // Preliminary setup
+    Page page = analysis.getPage();
     String pageTitle = page.getTitle();
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
+    List<Page> linkedPages = page.getLinks();
+    if ((pageTitle == null) || (contents == null) || (linkedPages == null)) {
+      return false;
+    }
+    List<PageElementInternalLink> links = analysis.getInternalLinks();
+    if (links == null) {
+      return false;
+    }
+
+    // Test every internal link
+    boolean result = false;
     for (PageElementInternalLink link : links) {
 
       // Find page matching the link
       Page linkedPage = null;
-      for (Page tmpPage : page.getLinks()) {
+      for (Page tmpPage : linkedPages) {
         if (Page.areSameTitle(tmpPage.getTitle(), link.getFullLink())) {
           linkedPage = tmpPage;
         }
@@ -76,14 +86,14 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
           return true;
         }
         result = true;
-        PageElementTag tagImagemap = pageAnalysis.getSurroundingTag(
+        PageElementTag tagImagemap = analysis.getSurroundingTag(
             PageElementTag.TAG_WIKI_IMAGEMAP, link.getBeginIndex());
         if (tagImagemap != null) {
           int previousCR = getPreviousCR(contents, link.getBeginIndex());
           int nextCR = getNextCR(contents, link.getEndIndex());
           nextCR = Math.min(nextCR, tagImagemap.getMatchingTag().getBeginIndex());
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), previousCR, nextCR);
+              analysis.getPage(), previousCR, nextCR);
           if ((previousCR > tagImagemap.getEndIndex()) &&
               (contents.charAt(nextCR) == '\n')) {
             errorResult.addReplacement("", GT._("Delete"));
@@ -91,7 +101,7 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
           errors.add(errorResult);
         } else {
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
+              analysis.getPage(),
               link.getBeginIndex(),
               link.getEndIndex());
           errorResult.addReplacement(link.getDisplayedText());
