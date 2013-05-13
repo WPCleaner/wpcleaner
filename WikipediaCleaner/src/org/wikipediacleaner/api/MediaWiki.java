@@ -198,6 +198,7 @@ public class MediaWiki extends MediaWikiController {
             replacementsDone.clear();
             String tmpContents = AutomaticFixing.apply(replacement.getValue(), newContents, replacementsDone);
             if (!newContents.equals(tmpContents)) {
+              newContents = tmpContents;
 
               // Update description
               if (description != null) {
