@@ -60,64 +60,97 @@ public class PageElementInternalLink extends PageElement {
     tmpIndex += 2;
     int beginIndex = tmpIndex;
 
-    // Possible whitespace characters
-    while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
-      tmpIndex++;
-    }
-
-    // Find elements of internal link
-    int endIndex = -1;
+    // Retrieve link
     int anchorIndex = -1;
     int pipeIndex = -1;
-    int levelSquareBrackets = 0;
-    int levelCurlyBrackets = 0;
-    while ((tmpIndex < contents.length()) && (endIndex < 0)) {
+    int endIndex = -1;
+    int level3CurlyBrackets = 0;
+    while ((tmpIndex < contents.length()) &&
+           (endIndex < 0) &&
+           (pipeIndex < 0)) {
       switch (contents.charAt(tmpIndex)) {
-      case ']':
-        if (contents.startsWith("]]", tmpIndex)) {
-          if (levelSquareBrackets > 0) {
-            levelSquareBrackets--;
-          } else {
-            endIndex = tmpIndex;
-          }
-          tmpIndex++;
-        }
-        break;
       case '[':
-        if (contents.startsWith("[[", tmpIndex)) {
-          levelSquareBrackets++;
+        return null;
+      case ']':
+        if ((level3CurlyBrackets == 0) &&
+            (contents.startsWith("]]", tmpIndex))) {
+          endIndex = tmpIndex;
           tmpIndex++;
+        } else {
+          return null;
         }
         break;
       case '{':
-        if (contents.startsWith("{{", tmpIndex)) {
-          levelCurlyBrackets++;
-          tmpIndex++;
+        if (contents.startsWith("{{{", tmpIndex)) {
+          level3CurlyBrackets++;
+          tmpIndex += 2;
+        } else {
+          return null;
         }
         break;
       case '}':
-        if (contents.startsWith("}}", tmpIndex)) {
-          if (levelCurlyBrackets > 0) {
-            levelCurlyBrackets--;
-          }
-          tmpIndex++;
+        if ((contents.startsWith("}}}", tmpIndex)) &&
+            (level3CurlyBrackets > 0)) {
+          level3CurlyBrackets--;
+          tmpIndex += 2;
+        } else {
+          return null;
         }
         break;
       case '#':
-        if ((levelSquareBrackets == 0) &&
-            (levelCurlyBrackets == 0) &&
+        if ((level3CurlyBrackets == 0) &&
             (anchorIndex < 0)) {
           anchorIndex = tmpIndex;
         }
         break;
       case '|':
-        if ((levelSquareBrackets == 0) &&
-            (levelCurlyBrackets == 0) &&
-            (pipeIndex < 0)) {
+        if (level3CurlyBrackets == 0) {
           pipeIndex = tmpIndex;
         }
       }
       tmpIndex++;
+    }
+
+    // Retrieve link text
+    if (endIndex < 0) {
+      int level2CurlyBrackets = 0;
+      level3CurlyBrackets = 0;
+      while ((tmpIndex < contents.length()) && (endIndex < 0)) {
+        switch (contents.charAt(tmpIndex)) {
+        case '[':
+          if (contents.startsWith("[[", tmpIndex)) {
+            return null;
+          }
+          break;
+        case ']':
+          if (contents.startsWith("]]", tmpIndex)) {
+            endIndex = tmpIndex;
+            tmpIndex++;
+          }
+          break;
+        case '{':
+          if (contents.startsWith("{{{", tmpIndex)) {
+            level3CurlyBrackets++;
+            tmpIndex += 2;
+          } else if (contents.startsWith("{{", tmpIndex)) {
+            level2CurlyBrackets++;
+            tmpIndex++;
+          }
+          break;
+        case '}':
+          if ((contents.startsWith("}}}", tmpIndex)) &&
+              (level3CurlyBrackets > 0)) {
+            level3CurlyBrackets--;
+            tmpIndex += 2;
+          } else if ((contents.startsWith("}}", tmpIndex)) &&
+                     (level2CurlyBrackets > 0)) {
+            level2CurlyBrackets--;
+            tmpIndex++;
+          }
+          break;
+        }
+        tmpIndex++;
+      }
     }
     if (endIndex < 0) {
       return null;
