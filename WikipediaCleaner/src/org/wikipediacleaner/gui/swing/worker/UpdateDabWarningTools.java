@@ -1165,12 +1165,10 @@ public class UpdateDabWarningTools {
       String article, Collection<String> dabLinks,
       WPCConfiguration wpcConfig,
       WPCConfigurationString templateParam) {
-    String template = wpcConfig.getString(templateParam);
-    if ((template == null) || (template.trim().length() == 0)) {
-      return null;
-    }
-    String[] templateElements = template.split("\\|");
-    if (templateElements[0].trim().length() == 0) {
+    String[] templateElements = wpcConfig.getStringArray(templateParam);
+    if ((templateElements == null) ||
+        (templateElements.length == 0) ||
+        (templateElements[0].trim().length() == 0)) {
       return null;
     }
     StringBuilder message = new StringBuilder();
