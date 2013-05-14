@@ -260,6 +260,31 @@ public class WPCConfiguration {
   }
 
   /**
+   * Retrieve the value of a String attribute, divided into an array.
+   * 
+   * @param attribute Attribute.
+   * @return Attribute value divided into an array.
+   */
+  public String[] getStringArray(WPCConfigurationString attribute) {
+    String result = userStringValues.get(attribute);
+    if ((result == null) ||
+        ((!attribute.canBeEmpty()) && (result.trim().length() == 0))) {
+      result = generalStringValues.get(attribute);
+    }
+    if ((result == null) ||
+        ((!attribute.canBeEmpty()) && (result.trim().length() == 0))) {
+      result = attribute.getDefaultValue();
+    }
+    if ((result != null) && (!attribute.canBeEmpty()) && (result.trim().length() == 0)) {
+      result = null;
+    }
+    if (result == null) {
+      return null;
+    }
+    return result.split("\\|");
+  }
+
+  /**
    * Retrieve the value of a String list attribute.
    * 
    * @param attribute Attribute.
@@ -279,6 +304,32 @@ public class WPCConfiguration {
       result.addAll(userResult);
     }
     return result;
+  }
+
+  /**
+   * Retrieve the value of a String list attribute, each element divided into an array.
+   * 
+   * @param attribute Attribute.
+   * @return Attribute value.
+   */
+  public List<String[]> getStringArrayList(WPCConfigurationStringList attribute) {
+    List<String> userResult = userStringListValues.get(attribute);
+    List<String> generalResult = generalStringListValues.get(attribute);
+    if ((userResult == null) && (generalResult == null)) {
+      return null;
+    }
+    List<String> result = new ArrayList<String>();
+    if ((generalResult != null) && ((userResult == null) || (attribute.canCombine()))) {
+      result.addAll(generalResult);
+    }
+    if (userResult != null) {
+      result.addAll(userResult);
+    }
+    List<String[]> fullResult = new ArrayList<String[]>(result.size());
+    for (String element : result) {
+      fullResult.add(element.split("\\|"));
+    }
+    return fullResult;
   }
 
   /**
@@ -553,10 +604,9 @@ public class WPCConfiguration {
 
         // Load all pages contents
         Map<String, Page> pages = new HashMap<String, Page>();
-        List<String> suggestionPages = getStringList(WPCConfigurationStringList.SUGGESTION_PAGES);
+        List<String[]> suggestionPages = getStringArrayList(WPCConfigurationStringList.SUGGESTION_PAGES);
         if (suggestionPages != null) {
-          for (String suggestionPage : suggestionPages) {
-            String[] elements = suggestionPage.split("\\|");
+          for (String[] elements : suggestionPages) {
             if (elements.length >= 4) {
               String pageName = elements[0];
               if (!pages.containsKey(pageName)) {
@@ -583,8 +633,7 @@ public class WPCConfiguration {
         Map<String, Suggestion> tmpMap = new HashMap<String, Suggestion>();
         if (suggestionPages != null) {
           List<String> suggestionIgnore = getStringList(WPCConfigurationStringList.SUGGESTION_IGNORE);
-          for (String suggestionPage : suggestionPages) {
-            String[] elements = suggestionPage.split("\\|");
+          for (String[] elements : suggestionPages) {
             if (elements.length >= 4) {
               String pageName = elements[0];
               String[] elementsReplacement = elements[3].split(",");

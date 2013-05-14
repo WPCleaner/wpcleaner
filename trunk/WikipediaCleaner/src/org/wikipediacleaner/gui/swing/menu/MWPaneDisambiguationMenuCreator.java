@@ -76,20 +76,24 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         (wiki != null)) {
 
       // Add a menu for marking as normal link using a template
-      List<String> templates = wiki.getConfiguration().getStringList(
+      List<String[]> templates = wiki.getConfiguration().getStringArrayList(
           WPCConfigurationStringList.TEMPLATES_FOR_DAB_LINK);
       if ((templates != null) && !templates.isEmpty()) {
         if (templates.size() > 1) {
           JMenu submenu = new JMenu(GT._("Mark as normal link"));
-          for (String template : templates) {
-            String replacement = createTextForTemplate(template, page.getTitle(), text);
+          for (String[] template : templates) {
+            String replacement = createTextForTemplate(template[0], page.getTitle(), text);
+            String message = GT._("Using {0}", "{{" + template[0] + "}}");
+            if ((template.length > 1) && (template[1].trim().length() > 0)) {
+              message += " - " + template[1].trim();
+            }
             addItem(
-                submenu, null, GT._("Using {0}", "{{" + template + "}}"),
+                submenu, null, message,
                 new ReplaceTextAction(replacement, element, textPane));
           }
           popup.add(submenu);
         } else {
-          String replacement = createTextForTemplate(templates.get(0), page.getTitle(), text);
+          String replacement = createTextForTemplate(templates.get(0)[0], page.getTitle(), text);
           addItem(
               popup, null, GT._("Mark as normal link using template"),
               new ReplaceTextAction(replacement, element, textPane));

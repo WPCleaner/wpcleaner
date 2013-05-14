@@ -434,10 +434,9 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     addButtonWatch(toolbarButtons, true);
     addButtonDisambiguation(toolbarButtons, true);
     toolbarButtons.addSeparator();
-    String langTemplate = getConfiguration().getString(WPCConfigurationString.LANG_TEMPLATE);
+    String[] elements = getConfiguration().getStringArray(WPCConfigurationString.LANG_TEMPLATE);
     String langTemplateName = "lang";
-    if ((langTemplate != null) && (langTemplate.trim().length() > 0)) {
-      String[] elements = langTemplate.split("\\|");
+    if ((elements != null) && (elements.length > 0)) {
       langTemplateName = elements[0];
     }
     buttonOtherLanguage = Utilities.createJButton("<html><b>{{" + langTemplateName + "}}</b></html>");
@@ -1294,14 +1293,13 @@ public class OnePageAnalysisWindow extends OnePageWindow {
    */
   public void actionOtherLanguage() {
     // Check configuration
-    String langTemplate = getConfiguration().getString(WPCConfigurationString.LANG_TEMPLATE);
-    if ((langTemplate == null) || (langTemplate.trim().length() == 0)) {
+    String[] elements = getConfiguration().getStringArray(WPCConfigurationString.LANG_TEMPLATE);
+    if ((elements == null) || (elements.length == 0)) {
       Utilities.displayMessageForMissingConfiguration(
           getParentComponent(),
           WPCConfigurationString.LANG_TEMPLATE.getAttributeName());
       return;
     }
-    String[] elements = langTemplate.split("\\|");
 
     // Check selection
     String text = getTextContents().getText();
