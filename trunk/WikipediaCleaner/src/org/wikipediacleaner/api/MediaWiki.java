@@ -232,9 +232,6 @@ public class MediaWiki extends MediaWikiController {
               }
             }
           }
-          if ((description != null) && (changed)) {
-            description.append("</ul>\n");
-          }
 
           // Page contents has been modified
           if (!oldContents.equals(newContents)) {
@@ -263,8 +260,16 @@ public class MediaWiki extends MediaWikiController {
                 for (CheckErrorAlgorithm algorithm : usedAlgorithms) {
                   fullComment.append(" - ");
                   fullComment.append(algorithm.getShortDescriptionReplaced());
+                  if (description != null) {
+                    description.append("<li>");
+                    description.append(algorithm.getShortDescriptionReplaced());
+                    description.append("</li>\n");
+                  }
                 }
               }
+            }
+            if ((description != null) && (changed)) {
+              description.append("</ul>\n");
             }
 
             // Save page
