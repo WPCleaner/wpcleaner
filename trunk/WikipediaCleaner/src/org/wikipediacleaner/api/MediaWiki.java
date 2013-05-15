@@ -26,10 +26,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.execution.BacklinksWRCallable;
 import org.wikipediacleaner.api.execution.ContentsCallable;
 import org.wikipediacleaner.api.execution.DisambiguationStatusCallable;
@@ -164,20 +167,22 @@ public class MediaWiki extends MediaWikiController {
    * @param replacements List of text replacements
    *        Key: Additional comments used for the modification.
    *        Value: Text replacements.
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param comment Comment used for the modification.
-   * @param description Out: description of changes made.
+   * @param description (Out) description of changes made.
+   * @param automaticCW True if automatic Check Wiki fixing should be done also.
+   * @return Count of modified pages.
    * @throws APIException
    */
   public int replaceText(
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
-      EnumWikipedia wikipedia, String comment,
-      StringBuilder description) throws APIException {
+      EnumWikipedia wiki, String comment,
+      StringBuilder description, boolean automaticCW) throws APIException {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
       return 0;
     }
     for (Page page : pages) {
-      retrieveContents(wikipedia, page, false, true, false, true); // TODO: withRedirects=false ?
+      retrieveContents(wiki, page, false, true, false, true); // TODO: withRedirects=false ?
     }
     int count = 0;
     final API api = APIFactory.getAPI();
@@ -204,7 +209,7 @@ public class MediaWiki extends MediaWikiController {
               if (description != null) {
                 if (!changed) {
                   String title =
-                    "<a href=\"" + wikipedia.getSettings().getURL(page.getTitle(), false, secured) + "\">" +
+                    "<a href=\"" + wiki.getSettings().getURL(page.getTitle(), false, secured) + "\">" +
                     page.getTitle() + "</a>";
                   description.append(GT._("Page {0}:", title));
                   description.append("\n");
@@ -230,7 +235,39 @@ public class MediaWiki extends MediaWikiController {
           if ((description != null) && (changed)) {
             description.append("</ul>\n");
           }
+
+          // Page contents has been modified
           if (!oldContents.equals(newContents)) {
+            // Initialize comment
+            StringBuilder fullComment = new StringBuilder();
+            fullComment.append(wiki.createUpdatePageComment(comment, details.toString(), false));
+
+            // Apply automatic Check Wiki fixing
+            if (automaticCW) {
+              List<CheckErrorAlgorithm> algorithms = CheckErrorAlgorithms.getAlgorithms(wiki);
+              List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+              for (CheckErrorAlgorithm algorithm : algorithms) {
+                if (algorithm.isAvailable() &&
+                    CheckErrorAlgorithms.isAlgorithmActive(wiki, algorithm.getErrorNumber())) {
+                  PageAnalysis analysis = page.getAnalysis(newContents, true);
+                  String tmp = algorithm.automaticFix(analysis);
+                  if (!tmp.equals(newContents)) {
+                    newContents = tmp;
+                    usedAlgorithms.add(algorithm);
+                  }
+                }
+              }
+              if (!usedAlgorithms.isEmpty()) {
+                fullComment.append(" / ");
+                fullComment.append(wiki.getCWConfiguration().getComment());
+                for (CheckErrorAlgorithm algorithm : usedAlgorithms) {
+                  fullComment.append(" - ");
+                  fullComment.append(algorithm.getShortDescriptionReplaced());
+                }
+              }
+            }
+
+            // Save page
             setText(GT._("Updating page {0}", page.getTitle()));
             count++;
             int attemptNumber = 0;
@@ -238,10 +275,7 @@ public class MediaWiki extends MediaWikiController {
             do {
               try {
                 attemptNumber++;
-                api.updatePage(
-                    wikipedia, page, newContents,
-                    wikipedia.createUpdatePageComment(comment, details.toString(), false),
-                    false);
+                api.updatePage(wiki, page, newContents, fullComment.toString(), false);
               } catch (APIException e) {
                 if ((e.getQueryResult() == EnumQueryResult.BAD_TOKEN) && (attemptNumber < 2)) {
                   // Bad Token : Retrieve contents and try again
@@ -250,7 +284,7 @@ public class MediaWiki extends MediaWikiController {
                       "'" + e.getErrorCode() + "'"));
                   attemptDone = false;
                   Page tmpPage = page.replicatePage();
-                  api.retrieveContents(wikipedia, Collections.singletonList(tmpPage), false, false);
+                  api.retrieveContents(wiki, Collections.singletonList(tmpPage), false, false);
                 } else {
                   throw e;
                 }

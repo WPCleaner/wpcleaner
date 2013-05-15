@@ -44,6 +44,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
@@ -83,6 +84,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
   private JButton buttonRun;
   private JButton buttonSave;
   private JButton buttonTest;
+  private JToggleButton buttonAutomaticCW;
   private JTextPane paneOriginal;
   private JTextPane paneResult;
 
@@ -238,7 +240,14 @@ public class AutomaticFixingWindow extends OnePageWindow {
         GT._("Save"), false);
     buttonSave.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSaveAutomaticFixing"));
-    toolBarButtons.add(buttonSave);
+    toolBarButtons.add(buttonSave);    
+    toolBarButtons.addSeparator();
+    buttonAutomaticCW = Utilities.createJToggleButton(
+        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
+        GT._("Automatic fixing for Check Wiki"), false);
+    buttonAutomaticCW.setSelected(true);
+    toolBarButtons.add(buttonAutomaticCW);
+    toolBarButtons.addSeparator();
     buttonRun = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
         GT._("Fix selected pages"), false);
@@ -614,7 +623,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     // Do the replacements
     AutomaticFixingWorker dabWorker = new AutomaticFixingWorker(
         getWikipedia(), this, tmpPages, replacements,
-        comment, true);
+        comment, true, buttonAutomaticCW.isSelected());
     dabWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(

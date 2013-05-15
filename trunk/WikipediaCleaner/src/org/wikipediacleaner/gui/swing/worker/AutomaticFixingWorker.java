@@ -36,33 +36,72 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class AutomaticFixingWorker extends BasicWorker {
 
+  /**
+   * List of pages on which the automatic fixing is to be done.
+   */
   private final Page[] pages;
+
+  /**
+   * Replacements to be done.
+   */
   private final Map<String, List<AutomaticFixing>> replacements;
+
+  /**
+   * Comment to use for the replacements.
+   */
   private final String comment;
+
+  /**
+   * Description of the replacements done.
+   */
   private final StringBuilder description;
+
+  /**
+   * True if the description of the replacements should be displayed.
+   */
   private final boolean showDescription;
 
+  /**
+   * True if automatic Check Wiki fixing should be done also.
+   */
+  private final boolean automaticCW;
+
+  /**
+   * @param wiki Wiki.
+   * @param window Associated window.
+   * @param pages List of pages on which the automatic fixing is to be done.
+   * @param replacements Replacements to be done.
+   * @param comment Comment to use for the replacements.
+   * @param showDescription True if the description of the replacements should be displayed.
+   * @param automaticCW True if automatic Check Wiki fixing should be done also.
+   */
   public AutomaticFixingWorker(
-      EnumWikipedia wikipedia, BasicWindow window,
+      EnumWikipedia wiki, BasicWindow window,
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
-      String comment, boolean showDescription) {
-    super(wikipedia, window);
+      String comment, boolean showDescription, boolean automaticCW) {
+    super(wiki, window);
     this.pages = pages.clone();
     this.replacements = replacements;
     this.comment = comment;
     this.showDescription = showDescription;
     this.description = (showDescription ? new StringBuilder() : null);
+    this.automaticCW = automaticCW;
   }
 
   /* (non-Javadoc)
    * @see org.wikipediacleaner.gui.swing.utils.SwingWorker#construct()
+   */
+  /**
+   * @return Count of modified pages.
+   * @see org.wikipediacleaner.gui.swing.basic.BasicWorker#construct()
    */
   @Override
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       Integer count = Integer.valueOf(mw.replaceText(
-          pages, replacements, getWikipedia(), comment, description));
+          pages, replacements, getWikipedia(),
+          comment, description, automaticCW));
       if (showDescription && (count > 0)) {
         InformationWindow.createInformationWindow(
             GT.__(
