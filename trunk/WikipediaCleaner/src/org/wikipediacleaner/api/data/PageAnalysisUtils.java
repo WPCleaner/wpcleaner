@@ -84,8 +84,10 @@ public class PageAnalysisUtils {
         WPCConfigurationStringList.TEMPLATES_AFTER_HELP_ASKED);
     List<String> commentsAfter = pageAnalysis.getWPCConfiguration().getStringList(
         WPCConfigurationStringList.COMMENTS_FOR_DAB_LINK);
+    MagicWord redirect = pageAnalysis.getWikiConfiguration().getMagicWord(MagicWord.REDIRECT);
     String contents = pageAnalysis.getContents();
     int maxSize = contents.length();
+    boolean firstLink = true;
     for (PageElementInternalLink internalLink : internalLinks) {
       for (Page link : links) {
         if (Page.areSameTitle(link.getTitle(), internalLink.getLink())) {
@@ -123,9 +125,37 @@ public class PageAnalysisUtils {
             }
           }
 
+          // Check if link is in fact a redirection
+          if (firstLink && (redirect != null)) {
+            int tmpPos = 0;
+            while ((contents.charAt(tmpPos) == ' ') &&
+                   (tmpPos < internalLink.getBeginIndex())) {
+              tmpPos++;
+            }
+            String redirectTag = null;
+            for (String alias : redirect.getAliases()) {
+              if (contents.startsWith(alias, tmpPos)) {
+                char next = contents.charAt(tmpPos + alias.length());
+                if ((next == ' ') || (next == '[')) {
+                  redirectTag = alias;
+                }
+              }
+            }
+            if (redirectTag != null) {
+              tmpPos += redirectTag.length();
+              while (contents.charAt(tmpPos) == ' ') {
+                tmpPos++;
+              }
+              if (tmpPos == internalLink.getBeginIndex()) {
+                good = true;
+              }
+            }
+          }
+
           notification.linkFound(link, internalLink, good, helpNeeded);
         }
       }
+      firstLink = false;
     }
 
     // Search for internal links created by templates
