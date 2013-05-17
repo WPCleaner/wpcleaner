@@ -25,7 +25,6 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementFunction;
-import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -34,13 +33,6 @@ import org.wikipediacleaner.i18n.GT;
  * Error 91: DEFAULTSORT is missing and title with lower case letters
  */
 public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
-
-  /**
-   * Possible global fixes.
-   */
-  private final static String[] globalFixes = new String[] {
-    GT._("Add DEFAULTSORT"),
-  };
 
   public CheckErrorAlgorithm091() {
     super("DEFAULTSORT is missing and title with lowercase letters");
@@ -87,35 +79,33 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
     }
 
     // Searching for Categories without a sort key
+    boolean categoriesWithoutSort = false;
     List<PageElementCategory> categories = pageAnalysis.getCategories();
+    if ((categories == null) || (categories.isEmpty())) {
+      return false;
+    }
     for (PageElementCategory category : categories) {
       if ((category.getSort() == null) ||
           (category.getSort().trim().length() == 0)) {
-        return true;
+        categoriesWithoutSort = true;
       }
     }
+    if (!categoriesWithoutSort) {
+      return false;
+    }
 
-    return false;
-  }
-
-  /**
-   * @return List of possible global fixes.
-   */
-  @Override
-  public String[] getGlobalFixes() {
-    return globalFixes;
-  }
-
-  /**
-   * Fix all the errors in the page.
-   * 
-   * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param analysis Page analysis.
-   * @param textPane Text pane.
-   * @return Page contents after fix.
-   */
-  @Override
-  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-    return addDefaultSort(analysis);
+    // Reporting error
+    if (errors == null) {
+      return true;
+    }
+    PageElementCategory category = categories.get(0);
+    CheckErrorResult errorResult = createCheckErrorResult(
+        pageAnalysis.getPage(), category.getBeginIndex(), category.getEndIndex());
+    String replacement =
+        createDefaultSort(pageAnalysis) + "\n" +
+    pageAnalysis.getContents().substring(category.getBeginIndex(), category.getEndIndex());
+    errorResult.addReplacement(replacement, GT._("Add DEFAULTSORT"));
+    errors.add(errorResult);
+    return true;
   }
 }
