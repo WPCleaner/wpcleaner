@@ -18,7 +18,9 @@
 
 package org.wikipediacleaner.api;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -213,5 +215,57 @@ public class HttpUtils {
     } else {
       System.out.println(text);
     }
+  }
+
+  // ==========================================================================
+  // Configuration
+  // ==========================================================================
+
+  /**
+   * @param url URL
+   * @return Decoded URL
+   */
+  public static String decodeUrl(String url) {
+
+    // Basic cases
+    if ((url == null) ||
+        (url.length() == 0) ||
+        (url.contains("&"))) {
+      return null;
+    }
+    url = url.replaceAll("\\_", " ");
+    if (url.indexOf('%') < 0) {
+      return url;
+    }
+
+    // URL decoding
+    try {
+      byte[] original = url.getBytes("UTF8");
+      byte[] converted = new byte[original.length];
+      int currentOriginal = 0;
+      int currentConverted = 0;
+      while (currentOriginal < original.length) {
+        if ((original[currentOriginal] == '%') && (currentOriginal + 2 < original.length)) {
+          byte[] hexa = new byte[2];
+          hexa[0] = original[currentOriginal + 1];
+          hexa[1] = original[currentOriginal + 2];
+          String hexaString = new String(hexa, "UTF8");
+          converted[currentConverted] = Integer.valueOf(hexaString, 16).byteValue();
+          currentOriginal += 3;
+          currentConverted++;
+        } else {
+          converted[currentConverted] = original[currentOriginal];
+          currentOriginal++;
+          currentConverted++;
+        }
+      }
+      converted = Arrays.copyOf(converted, currentConverted);
+      url = new String(converted, "UTF8");
+    } catch (UnsupportedEncodingException e) {
+      // Nothing to do
+    } catch (NumberFormatException e) {
+      // Nothing to do
+    }
+    return url;
   }
 }
