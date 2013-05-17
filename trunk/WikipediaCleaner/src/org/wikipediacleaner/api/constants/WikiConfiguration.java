@@ -21,6 +21,7 @@ package org.wikipediacleaner.api.constants;
 import java.util.List;
 import java.util.Map;
 
+import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.data.Interwiki;
 import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.MagicWord;
@@ -89,9 +90,8 @@ public class WikiConfiguration {
           } else if (url.endsWith(articlePath.substring(paramIndex + 2))) {
             articleName = tmp.substring(0, tmp.length() - articlePath.length() + paramIndex + 2);
           }
-          if ((articleName != null) &&
-              (articleName.length() > 0) &&
-              (!articleName.contains("&"))) {
+          articleName = HttpUtils.decodeUrl(articleName);
+          if (articleName != null) {
             return articleName;
           }
         }
@@ -104,9 +104,8 @@ public class WikiConfiguration {
         String tmp = url.substring(script.length());
         if (url.startsWith("?title=")) {
           tmp = tmp.substring(0, 7);
-          if ((tmp != null) &&
-              (tmp.length() > 0) &&
-              (!tmp.contains("&"))) {
+          tmp = HttpUtils.decodeUrl(tmp);
+          if (tmp != null) {
             return tmp;
           }
         }
