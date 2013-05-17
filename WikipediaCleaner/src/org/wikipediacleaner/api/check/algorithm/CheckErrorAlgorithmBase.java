@@ -38,9 +38,6 @@ import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementCategory;
-import org.wikipediacleaner.api.data.PageElementFunction;
-import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -511,12 +508,12 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   }
 
   /**
-   * Add DEFAULTSORT if it's missing.
+   * Create a default DEFAULTSORT.
    * 
    * @param pageAnalysis Page analysis.
-   * @return Page contents with the DEFAULTSORT added.
+   * @return Default DEFAULTSORT.
    */
-  protected String addDefaultSort(PageAnalysis pageAnalysis) {
+  protected String createDefaultSort(PageAnalysis pageAnalysis) {
     // Basic check
     if ((pageAnalysis == null) ||
         (pageAnalysis.getContents() == null)) {
@@ -528,32 +525,8 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
       return contents;
     }
 
-    // Check that DEFAULTSORT is missing
-    List<PageElementFunction> defaultSorts = pageAnalysis.getDefaultSorts();
-    if ((defaultSorts != null) && (defaultSorts.size() > 0)) {
-      return contents;
-    }
-
-    // Find position to insert DEFAULTSORT
-    int index = contents.length();
-    PageElementCategory firstCategory = pageAnalysis.getNextCategory(0);
-    if (firstCategory != null) {
-      index = firstCategory.getBeginIndex();
-    } else {
-      PageElementLanguageLink firstLanguage = pageAnalysis.getNextLanguageLink(0);
-      if (firstLanguage != null) {
-        index = firstLanguage.getBeginIndex();
-      }
-    }
-
-    // Add DEFAULTSORT
+    // Create DEFAULTSORT
     StringBuilder buffer = new StringBuilder();
-    if (index > 0) {
-      buffer.append(contents.substring(0, index));
-      if (contents.charAt(index - 1) != '\n') {
-        buffer.append('\n');
-      }
-    }
     buffer.append("{{DEFAULTSORT:");
 
     // Remove special characters from title
@@ -601,10 +574,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
 
     // Finish
     buffer.append(currentTitle);
-    buffer.append("}}\n");
-    if (index < contents.length()) {
-      buffer.append(contents.substring(index));
-    }
+    buffer.append("}}");
 
     return buffer.toString();
   }
