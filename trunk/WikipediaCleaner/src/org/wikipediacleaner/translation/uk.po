@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-15 18:25+0200\n"
+"POT-Creation-Date: 2013-05-19 23:01+0200\n"
 "PO-Revision-Date: 2013-05-04 17:18+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -59,12 +59,12 @@ msgstr "Будь ласка, надішліть мені звіт про буд�
 msgid "Page {0}:"
 msgstr "Сторінка {0}:"
 
-#: org/wikipediacleaner/api/MediaWiki.java:271
+#: org/wikipediacleaner/api/MediaWiki.java:276
 #, java-format
 msgid "Updating page {0}"
 msgstr "Поновлення сторінки {0}"
 
-#: org/wikipediacleaner/api/MediaWiki.java:283
+#: org/wikipediacleaner/api/MediaWiki.java:288
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:106
 #, java-format
 msgid "Error {0} detected: Waiting and retrying"
@@ -199,8 +199,8 @@ msgstr ""
 msgid "View image"
 msgstr "Переглянути зображення"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:43
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:42
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:114
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:107
 msgid "Add DEFAULTSORT"
 msgstr "Додати ТИПОВЕ_СОРТУВАННЯ"
 
@@ -232,7 +232,7 @@ msgid "Fix all titles"
 msgstr "Виправити категорії"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:101
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:222
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:239
 msgid "Remove"
 msgstr "Вилучити"
 
@@ -285,7 +285,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:205
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:321
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:353
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:370
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:310
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:94
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:158
@@ -445,15 +445,15 @@ msgstr ""
 msgid "Convert them to internal links"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:249
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:246
 msgid "Title of the article describing this type of error"
 msgstr "Назва статті, що описує цей тип помилки"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:250
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:247
 msgid "List of false positives for this type of error"
 msgstr "Список помилкових спрацьовувань для такого типу помилки"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:251
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:248
 msgid "Page containing the list of false positives for this type of error"
 msgstr ""
 
@@ -791,107 +791,29 @@ msgstr "Замінити на"
 msgid "regex"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:147
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:149
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:533
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:151
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:550
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:275
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:305
 msgid "Automatic fixing"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:216
-#: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:121
-msgid "Add"
-msgstr "Додати"
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:228
-msgid "Modify"
-msgstr "Змінити"
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:234
-msgid "Clear"
-msgstr "Очистити"
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:240
-msgid "Save"
-msgstr "Зберегти"
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:247
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:106
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:127
-msgid "Automatic fixing for Check Wiki"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:253
-msgid "Fix selected pages"
-msgstr "Виправити вибрані сторінки"
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:259
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:298
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:215
 #, fuzzy
-msgid "Test automatic replacements"
-msgstr "Зберегти останню використану заміну"
+msgid "This feature may modify a lot of pages in a short period of time."
+msgstr "Вони можуть змінити багато сторінок за короткий проміжок часу."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:341
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:754
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:286
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:556
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:237
-msgid "Full analysis (Alt + &F)"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:347
-#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:292
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:562
-#: org/wikipediacleaner/gui/swing/PageListWindow.java:244
-msgid "Disambiguation (Alt + &D)"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:503
-msgid "Text that should be replaced"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:514
-msgid "Text that should be used as replacement"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:525
-msgid "Use regular expressions"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:579
-msgid "You must select the pages on which running automatic fixing."
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:586
-msgid "A comment is required for automatix fixing."
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:593
-msgid "You must input the initial and destination texts."
-msgstr "Потрібно ввести початковий текст та текст призначення."
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:600
-#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:99
-msgid "!!! WARNING !!!"
-msgstr "!!! ЗАСТЕРЕЖЕННЯ !!!"
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:601
-msgid "This function will do all the replacements in all selected pages."
-msgstr "Ця дія виконає всі заміни на вибраних сторінках."
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:602
-msgid "It may modify a lot of pages in a short period of time."
-msgstr "Вона може змінити багато сторінок протягом короткого проміжку часу."
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:603
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:216
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:620
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:102
 msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "В деяких проектах Вікіпедії потрібен статус бота, щоб виконувати такі "
 "функції."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:604
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:217
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:621
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:103
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
@@ -899,16 +821,101 @@ msgstr ""
 "Будь ласка, прочитайте правила Вікіпедії, щоб взнати чи потрібний вам статус "
 "бота."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:605
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:233
+#: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:121
+msgid "Add"
+msgstr "Додати"
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:245
+msgid "Modify"
+msgstr "Змінити"
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:251
+msgid "Clear"
+msgstr "Очистити"
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:257
+msgid "Save"
+msgstr "Зберегти"
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:264
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:106
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:127
+msgid "Automatic fixing for Check Wiki"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:270
+msgid "Fix selected pages"
+msgstr "Виправити вибрані сторінки"
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:276
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:315
+#, fuzzy
+msgid "Test automatic replacements"
+msgstr "Зберегти останню використану заміну"
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:358
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:754
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:286
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:556
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:237
+msgid "Full analysis (Alt + &F)"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:364
+#: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:292
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:562
+#: org/wikipediacleaner/gui/swing/PageListWindow.java:244
+msgid "Disambiguation (Alt + &D)"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:520
+msgid "Text that should be replaced"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:531
+msgid "Text that should be used as replacement"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:542
+msgid "Use regular expressions"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:596
+msgid "You must select the pages on which running automatic fixing."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:603
+msgid "A comment is required for automatix fixing."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:610
+msgid "You must input the initial and destination texts."
+msgstr "Потрібно ввести початковий текст та текст призначення."
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:617
+#: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:99
+msgid "!!! WARNING !!!"
+msgstr "!!! ЗАСТЕРЕЖЕННЯ !!!"
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:618
+msgid "This function will do all the replacements in all selected pages."
+msgstr "Ця дія виконає всі заміни на вибраних сторінках."
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:619
+msgid "It may modify a lot of pages in a short period of time."
+msgstr "Вона може змінити багато сторінок протягом короткого проміжку часу."
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:622
 msgid ""
 "Also, verify again the texts you have inputed before running this function."
 msgstr "Також ще раз перевірте вибрані тексти перед виконанням цієї дії."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:606
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:623
 msgid "Do you want to continue ?"
 msgstr "Хочете продовжити ?"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:657
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:674
 #, fuzzy
 msgid "The following replacements have been made:"
 msgstr "Були зроблені такі зміни ({0} сторінок):"
