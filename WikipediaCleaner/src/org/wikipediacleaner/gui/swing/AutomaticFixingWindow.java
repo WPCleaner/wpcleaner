@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.gui.swing;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -42,6 +43,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
@@ -207,6 +209,21 @@ public class AutomaticFixingWindow extends OnePageWindow {
     constraints.ipady = 0;
     constraints.weightx = 1;
     constraints.weighty = 0;
+
+    // Warning
+    String txtWarning =
+      GT._("This feature may modify a lot of pages in a short period of time.") + "\n" +
+      GT._("On some Wikipedia projects, you may need the bot status for doing this.") + "\n" +
+      GT._("Please, check if you need the bot status by reading the rules of Wikipedia.");
+    JTextArea lblWarning = new JTextArea(txtWarning);
+    lblWarning.setEditable(false);
+    lblWarning.setBackground(getParentComponent().getBackground());
+    lblWarning.setForeground(Color.RED);
+    constraints.fill = GridBagConstraints.BOTH;
+    constraints.gridwidth = 2;
+    constraints.weighty = 0;
+    panel.add(lblWarning, constraints);
+    constraints.gridy++;
 
     // Commands
     JToolBar toolBarButtons = new JToolBar(SwingConstants.HORIZONTAL);
