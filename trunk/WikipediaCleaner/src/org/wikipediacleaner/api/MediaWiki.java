@@ -171,13 +171,15 @@ public class MediaWiki extends MediaWikiController {
    * @param comment Comment used for the modification.
    * @param description (Out) description of changes made.
    * @param automaticCW True if automatic Check Wiki fixing should be done also.
+   * @param save True if modification should be saved.
    * @return Count of modified pages.
    * @throws APIException
    */
   public int replaceText(
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
       EnumWikipedia wiki, String comment,
-      StringBuilder description, boolean automaticCW) throws APIException {
+      StringBuilder description,
+      boolean automaticCW, boolean save) throws APIException {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
       return 0;
     }
@@ -275,26 +277,28 @@ public class MediaWiki extends MediaWikiController {
             // Save page
             setText(GT._("Updating page {0}", page.getTitle()));
             count++;
-            int attemptNumber = 0;
-            boolean attemptDone = true;
-            do {
-              try {
-                attemptNumber++;
-                api.updatePage(wiki, page, newContents, fullComment.toString(), false);
-              } catch (APIException e) {
-                if ((e.getQueryResult() == EnumQueryResult.BAD_TOKEN) && (attemptNumber < 2)) {
-                  // Bad Token : Retrieve contents and try again
-                  setText(GT._(
-                      "Error {0} detected: Waiting and retrying",
-                      "'" + e.getErrorCode() + "'"));
-                  attemptDone = false;
-                  Page tmpPage = page.replicatePage();
-                  api.retrieveContents(wiki, Collections.singletonList(tmpPage), false, false);
-                } else {
-                  throw e;
+            if (save) {
+              int attemptNumber = 0;
+              boolean attemptDone = true;
+              do {
+                try {
+                  attemptNumber++;
+                  api.updatePage(wiki, page, newContents, fullComment.toString(), false);
+                } catch (APIException e) {
+                  if ((e.getQueryResult() == EnumQueryResult.BAD_TOKEN) && (attemptNumber < 2)) {
+                    // Bad Token : Retrieve contents and try again
+                    setText(GT._(
+                        "Error {0} detected: Waiting and retrying",
+                        "'" + e.getErrorCode() + "'"));
+                    attemptDone = false;
+                    Page tmpPage = page.replicatePage();
+                    api.retrieveContents(wiki, Collections.singletonList(tmpPage), false, false);
+                  } else {
+                    throw e;
+                  }
                 }
-              }
-            } while (!attemptDone);
+              } while (!attemptDone);
+            }
           }
         }
       }

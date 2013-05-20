@@ -587,6 +587,15 @@ public class AutomaticFixingWindow extends OnePageWindow {
    * Action called when Run Automatic Fixing button is pressed. 
    */
   public void actionRunAutomaticFixing() {
+    runAutomaticFixing(true);
+  }
+
+  /**
+   * Action called when Run Automatic Fixing button is pressed.
+   * 
+   * @param save True if modifications should be saved.
+   */
+  private void runAutomaticFixing(boolean save) {
 
     // Check that information is set
     Object[] values = listPages.getSelectedValues();
@@ -599,9 +608,12 @@ public class AutomaticFixingWindow extends OnePageWindow {
     String comment = getComment();
     if ((comment != null) &&
         (comment.trim().length() == 0)) {
-      Utilities.displayWarning(getParentComponent(), GT._(
-          "A comment is required for automatix fixing."));
-      return;
+      if (save) {
+        Utilities.displayWarning(getParentComponent(), GT._(
+            "A comment is required for automatix fixing."));
+        return;
+      }
+      comment = "Test";
     }
     List<AutomaticFixing> fixing = modelAutomaticFixing.getData();
     if ((fixing == null) || (fixing.isEmpty())) {
@@ -612,17 +624,20 @@ public class AutomaticFixingWindow extends OnePageWindow {
     }
 
     // Warn the user about what this function does
-    int answer = Utilities.displayYesNoWarning(
-        getParentComponent(),
-        GT._("!!! WARNING !!!") + "\n" +
-        GT._("This function will do all the replacements in all selected pages.") + "\n" +
-        GT._("It may modify a lot of pages in a short period of time.") + "\n" +
-        GT._("On some Wikipedia projects, you may need the bot status for doing this.") + "\n" +
-        GT._("Please, check if you need the bot status by reading the rules of Wikipedia.") + "\n" +
-        GT._("Also, verify again the texts you have inputed before running this function.") + "\n" +
-        GT._("Do you want to continue ?"));
-    if (answer != JOptionPane.YES_OPTION) {
-      return;
+    if (save) {
+      int answer = Utilities.displayYesNoWarning(
+          getParentComponent(),
+          GT._("!!! WARNING !!!") + "\n" +
+          GT._("This function will do all the replacements in all selected pages.") + "\n" +
+          GT._("It may modify a lot of pages in a short period of time.") + "\n" +
+          GT._("On some Wikipedia projects, you may need the bot status for doing this.") + "\n" +
+          GT._("Please, check if you need the bot status by reading the rules of Wikipedia.") + "\n" +
+          GT._("Also, verify again the texts you have inputed before running this function.") + "\n" +
+          GT._("You can also test the modifications before actually doing them.") + "\n" +
+          GT._("Do you want to proceed with the modifications ?"));
+      if (answer != JOptionPane.YES_OPTION) {
+        return;
+      }
     }
 
     // Prepare the replacements
@@ -640,7 +655,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     // Do the replacements
     AutomaticFixingWorker dabWorker = new AutomaticFixingWorker(
         getWikipedia(), this, tmpPages, replacements,
-        comment, true, buttonAutomaticCW.isSelected());
+        comment, true, buttonAutomaticCW.isSelected(), save);
     dabWorker.setListener(new DefaultBasicWorkerListener() {
       @Override
       public void afterFinished(
@@ -665,18 +680,32 @@ public class AutomaticFixingWindow extends OnePageWindow {
    * Action called when Test Automatic Fixing button is pressed.
    */
   public void actionTestAutomaticFixing() {
+
+    // Test replacements in the test pane
     String text = paneOriginal.getText();
-    List<AutomaticFixing> fixing = modelAutomaticFixing.getData();
-    List<String> replacements = new ArrayList<String>();
-    text = AutomaticFixing.apply(fixing, text, replacements);
-    paneResult.setText(text);
-    StringBuilder tmp = new StringBuilder();
-    tmp.append(GT._("The following replacements have been made:"));
-    for (String replacement : replacements) {
-      tmp.append("\n - ");
-      tmp.append(replacement);
+    if ((text != null) && (text.trim().length() > 0)) {
+      List<AutomaticFixing> fixing = modelAutomaticFixing.getData();
+      List<String> replacements = new ArrayList<String>();
+      text = AutomaticFixing.apply(fixing, text, replacements);
+      paneResult.setText(text);
+      StringBuilder tmp = new StringBuilder();
+      tmp.append(GT._("The following replacements have been made:"));
+      for (String replacement : replacements) {
+        tmp.append("\n - ");
+        tmp.append(replacement);
+      }
+      Utilities.displayInformationMessage(getParentComponent(), tmp.toString());
     }
-    Utilities.displayInformationMessage(getParentComponent(), tmp.toString());
+
+    // Test replacements in the page list
+    Object[] values = listPages.getSelectedValues();
+    if ((values != null) && (values.length > 0)) {
+      String message = GT._("Do you want to test the replacements on the pages ?");
+      int answer = Utilities.displayYesNoWarning(getParentComponent(), message);
+      if (answer == JOptionPane.YES_OPTION) {
+        runAutomaticFixing(false);
+      }
+    }
   }
 
   /**

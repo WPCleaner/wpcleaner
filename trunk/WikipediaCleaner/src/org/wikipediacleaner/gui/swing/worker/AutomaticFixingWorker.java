@@ -67,6 +67,11 @@ public class AutomaticFixingWorker extends BasicWorker {
   private final boolean automaticCW;
 
   /**
+   * True if modifications should be saved.
+   */
+  private final boolean save;
+
+  /**
    * @param wiki Wiki.
    * @param window Associated window.
    * @param pages List of pages on which the automatic fixing is to be done.
@@ -74,11 +79,13 @@ public class AutomaticFixingWorker extends BasicWorker {
    * @param comment Comment to use for the replacements.
    * @param showDescription True if the description of the replacements should be displayed.
    * @param automaticCW True if automatic Check Wiki fixing should be done also.
+   * @param save True if modifications should be saved.
    */
   public AutomaticFixingWorker(
       EnumWikipedia wiki, BasicWindow window,
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
-      String comment, boolean showDescription, boolean automaticCW) {
+      String comment, boolean showDescription,
+      boolean automaticCW, boolean save) {
     super(wiki, window);
     this.pages = pages.clone();
     this.replacements = replacements;
@@ -86,6 +93,7 @@ public class AutomaticFixingWorker extends BasicWorker {
     this.showDescription = showDescription;
     this.description = (showDescription ? new StringBuilder() : null);
     this.automaticCW = automaticCW;
+    this.save = save;
   }
 
   /* (non-Javadoc)
@@ -101,7 +109,7 @@ public class AutomaticFixingWorker extends BasicWorker {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       Integer count = Integer.valueOf(mw.replaceText(
           pages, replacements, getWikipedia(),
-          comment, description, automaticCW));
+          comment, description, automaticCW, save));
       if (showDescription && (count > 0)) {
         InformationWindow.createInformationWindow(
             GT.__(
