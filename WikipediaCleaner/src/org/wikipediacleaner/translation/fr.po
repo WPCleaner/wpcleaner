@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-19 23:01+0200\n"
+"POT-Creation-Date: 2013-05-20 18:54+0200\n"
 "PO-Revision-Date: 2013-05-05 08:57+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -62,17 +62,17 @@ msgstr ""
 msgid "Please, report any other problem you find to me."
 msgstr "S’il vous plait, informez-moi des problèmes rencontrés."
 
-#: org/wikipediacleaner/api/MediaWiki.java:214
+#: org/wikipediacleaner/api/MediaWiki.java:216
 #, java-format
 msgid "Page {0}:"
 msgstr "Page {0} :"
 
-#: org/wikipediacleaner/api/MediaWiki.java:276
+#: org/wikipediacleaner/api/MediaWiki.java:278
 #, java-format
 msgid "Updating page {0}"
 msgstr "Mise à jour de {0}"
 
-#: org/wikipediacleaner/api/MediaWiki.java:288
+#: org/wikipediacleaner/api/MediaWiki.java:291
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:106
 #, java-format
 msgid "Error {0} detected: Waiting and retrying"
@@ -793,7 +793,7 @@ msgid "This feature may modify a lot of pages in a short period of time."
 msgstr "Elles peuvent modifier beaucoup de pages en peu de temps."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:216
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:620
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:633
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:102
 msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
@@ -801,7 +801,7 @@ msgstr ""
 "faire cela."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:217
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:621
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:634
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:103
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
@@ -868,49 +868,59 @@ msgstr "Texte à utiliser comme remplacement"
 msgid "Use regular expressions"
 msgstr "Utiliser des expressions régulières"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:596
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:605
 msgid "You must select the pages on which running automatic fixing."
 msgstr ""
 "Vous devez sélectionner les pages sur lesquelles exécuter la correction "
 "automatique"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:603
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:613
 msgid "A comment is required for automatix fixing."
 msgstr "Un commentaire est requis pour la correction automatique."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:610
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:622
 msgid "You must input the initial and destination texts."
 msgstr "Vous devez saisir le texte initial et le texte de remplacement"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:617
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:630
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:99
 msgid "!!! WARNING !!!"
 msgstr "!!! ATTENTION !!!"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:618
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:631
 msgid "This function will do all the replacements in all selected pages."
 msgstr ""
 "Cette fonction effectuera tous les remplacements dans toutes les pages "
 "sélectionnées"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:619
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:632
 msgid "It may modify a lot of pages in a short period of time."
 msgstr "Cela peut modifier rapidement beaucoup de pages"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:622
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:635
 msgid ""
 "Also, verify again the texts you have inputed before running this function."
 msgstr ""
 "Ainsi, vérifier à nouveau le texte que vous avez entré avant de lancer cette "
 "fonction."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:623
-msgid "Do you want to continue ?"
-msgstr "Voulez-vous continuer ?"
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:636
+msgid "You can also test the modifications before actually doing them."
+msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:674
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:637
+#, fuzzy
+msgid "Do you want to proceed with the modifications ?"
+msgstr "Voulez-vous quand-même effectuer la modification ?"
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:692
 msgid "The following replacements have been made:"
 msgstr "Les remplacements suivants ont été effectués"
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:703
+#, fuzzy
+msgid "Do you want to test the replacements on the pages ?"
+msgstr "Voulez-vous quand-même effectuer la modification ?"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:179
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:634
@@ -2986,7 +2996,7 @@ msgstr "Traduire le nom des modèles"
 msgid "Translate templates without parameters"
 msgstr "Traduire les modèles sans paramètres"
 
-#: org/wikipediacleaner/gui/swing/worker/AutomaticFixingWorker.java:108
+#: org/wikipediacleaner/gui/swing/worker/AutomaticFixingWorker.java:116
 #, java-format
 msgid "The following modifications have been done ({0} page):"
 msgid_plural "The following modifications have been done ({0} pages):"
@@ -3144,6 +3154,9 @@ msgstr "Un nom de référence ne peut pas contenir les caractères suivants : {0
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr "Une valeur ne peut pas contenir les caractères suivants : {0}"
+
+#~ msgid "Do you want to continue ?"
+#~ msgstr "Voulez-vous continuer ?"
 
 #~ msgid "Reverse to [[{0}|{1}]]"
 #~ msgstr "Remplacer par [[{0}|{1}]]"
