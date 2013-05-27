@@ -73,7 +73,8 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
                     (tag.getBeginIndex() == tmpIndex) &&
                     ((PageElementTag.TAG_WIKI_MATH.equals(tag.getNormalizedName())) ||
                      (PageElementTag.TAG_WIKI_NOWIKI.equals(tag.getNormalizedName())) ||
-                     (PageElementTag.TAG_WIKI_SOURCE.equals(tag.getNormalizedName())))) {
+                     (PageElementTag.TAG_WIKI_SOURCE.equals(tag.getNormalizedName())) ||
+                     (PageElementTag.TAG_WIKI_SCORE.equals(tag.getNormalizedName())))) {
                   currentPos = tag.getCompleteEndIndex() - 1 - paramValueOffset;
                 }
               }
