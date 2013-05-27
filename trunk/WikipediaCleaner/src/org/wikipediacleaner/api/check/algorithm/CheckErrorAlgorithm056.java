@@ -126,6 +126,14 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
         }
       }
       if (shouldCheck) {
+        PageElementTag tagScore = pageAnalysis.getSurroundingTag(
+            PageElementTag.TAG_WIKI_SCORE, currentIndex);
+        if (tagScore != null) {
+          nextIndex = tagScore.getCompleteEndIndex();
+          shouldCheck = false;
+        }
+      }
+      if (shouldCheck) {
         PageElementTag tagHiero = pageAnalysis.getSurroundingTag(
             PageElementTag.TAG_WIKI_HIERO, currentIndex);
         if (tagHiero != null) {
