@@ -100,7 +100,10 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
               endIndex++;
             }
             if (endIndex > link.getEndIndex()) {
-              suffix = contents.substring(link.getEndIndex(), endIndex);
+              String tmp = contents.substring(link.getEndIndex(), endIndex);
+              if (tmp.trim().length() > 0) {
+                suffix = tmp;
+              }
             }
           }
           CheckErrorResult errorResult = createCheckErrorResult(
@@ -126,7 +129,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
           } else {
             if (suffix.length() > 0) {
               if (link.hasSquare()) {
-                errorResult.addReplacement(contents.substring(link.getBeginIndex(), link.getEndIndex() - 1) + suffix + "]");
+                errorResult.addReplacement(PageElementExternalLink.createExternalLink(url, suffix.trim()));
               } else {
                 errorResult.addReplacement("[" + contents.substring(link.getBeginIndex(), endIndex) + "]");
               }

@@ -250,4 +250,25 @@ public class PageElementExternalLink extends PageElement {
     sb.append("]");
     return sb.toString();
   }
+
+  /**
+   * Create an external link.
+   * 
+   * @param link Link.
+   * @param text Displayed text.
+   * @return External link.
+   */
+  public static String createExternalLink(String link, String text) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("[");
+    if (link != null) {
+      sb.append(link);
+    }
+    if (text != null) {
+      sb.append(" ");
+      sb.append(text);
+    }
+    sb.append("]");
+    return sb.toString();
+  }
 }
