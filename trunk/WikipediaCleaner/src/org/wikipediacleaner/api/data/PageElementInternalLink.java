@@ -228,6 +228,10 @@ public class PageElementInternalLink extends PageElement {
     return link;
   }
 
+  public String getLinkNotNormalized() {
+    return (linkNotTrimmed != null) ? linkNotTrimmed.trim() : null;
+  }
+
   public String getAnchor() {
     return anchor;
   }
