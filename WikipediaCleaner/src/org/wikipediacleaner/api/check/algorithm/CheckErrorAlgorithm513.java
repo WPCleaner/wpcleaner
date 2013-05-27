@@ -57,6 +57,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
     if (links == null) {
       return result;
     }
+    String contents = analysis.getContents();
     for (PageElementExternalLink link : links) {
       if ((link.hasSquare()) &&
           (link.getText() != null) &&
@@ -70,6 +71,9 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis.getPage(), link.getBeginIndex(), internalLink.getEndIndex());
+          errorResult.addReplacement(
+              contents.substring(link.getBeginIndex(), internalLink.getBeginIndex()) +
+              internalLink.getDisplayedTextNotTrimmed());
           errors.add(errorResult);
         }
       }
