@@ -176,9 +176,19 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         // Create error
         CheckErrorResult errorResult = createCheckErrorResult(
             pageAnalysis.getPage(), beginIndex, endIndex);
+        boolean automatic = false;
+        if (allPunctuations.equals(".") && !punctuationFoundAfter) {
+          tmpIndex = endIndex;
+          while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
+            tmpIndex++;
+          }
+          if (contents.startsWith("\n\n", tmpIndex)) {
+            automatic = true;
+          }
+        }
         errorResult.addReplacement(
             replace + allPunctuations,
-            textReplace + allPunctuations);
+            textReplace + allPunctuations, automatic);
         if (punctuationFoundAfter &&
             !allPunctuations.equals(punctuationAfter)) {
           errorResult.addReplacement(
@@ -191,8 +201,10 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     return result;
   }
 
-  /* (non-Javadoc)
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (Name -> description).
    */
   @Override
   public Map<String, String> getParameters() {
@@ -204,5 +216,16 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
         "separator",
         GT._("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"));
     return parameters;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String automaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
