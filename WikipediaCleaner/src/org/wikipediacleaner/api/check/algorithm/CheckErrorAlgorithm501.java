@@ -780,8 +780,8 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
       }
 
       // Comparison on end
-      if (o2.getEnd() != o2.getEnd()) {
-        return (o1.getEnd() < o2.getEnd() ? -1 : 1);
+      if (o1.getEnd() != o2.getEnd()) {
+        return (o1.getEnd() > o2.getEnd() ? -1 : 1);
       }
 
       return 0;
