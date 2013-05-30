@@ -198,16 +198,6 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Characters that are considered incorrect before a suggestion.
-   */
-  private final static String incorrectCharactersBefore = ".-";
-
-  /**
-   * Characters that are considered incorrect after a suggestion.
-   */
-  private final static String incorrectCharactersAfter = ".-";
-
-  /**
    * Check spelling in normal text with native regular expressions.
    * 
    * @param analysis Page analysis.
@@ -255,14 +245,8 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             if (shouldKeep && (analysis.isInTemplate(begin) != null)) {
               shouldKeep = false;
             }
-            // Remove texts between dots (potential URL)
-            if ((begin > 1) &&
-                (incorrectCharactersBefore.indexOf(contents.charAt(begin - 1)) >= 0) &&
-                (Character.isLetterOrDigit(contents.charAt(begin - 2))) &&
-                (end + 1 < contents.length()) &&
-                (incorrectCharactersAfter.indexOf(contents.charAt(end)) >= 0) &&
-                (Character.isLetterOrDigit(contents.charAt(end + 1)))) {
-              shouldKeep = false;
+            if (shouldKeep) {
+              shouldKeep = shouldKeep(contents, begin, end);
             }
             if (shouldKeep) {
               result |= addReplacements(
@@ -311,14 +295,8 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             int begin = matcher.start();
             int end = matcher.end();
             boolean shouldKeep = true;
-            // Remove texts between dots (potential URL)
-            if ((begin > 1) &&
-                (incorrectCharactersBefore.indexOf(contents.charAt(begin - 1)) >= 0) &&
-                (Character.isLetterOrDigit(contents.charAt(begin - 2))) &&
-                (end + 1 < contents.length()) &&
-                (incorrectCharactersAfter.indexOf(contents.charAt(end)) >= 0) &&
-                (Character.isLetterOrDigit(contents.charAt(end + 1)))) {
-              shouldKeep = false;
+            if (shouldKeep) {
+              shouldKeep = shouldKeep(contents, begin, end);
             }
             if (shouldKeep) {
               result |= addReplacements(
@@ -333,6 +311,55 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * Decide if a potential spelling error should be kept as error.
+   * 
+   * @param contents Text.
+   * @param begin Begin index of the potential spelling error.
+   * @param end End index of the potential spelling error.
+   * @return True if the potential error should be kept.
+   */
+  public boolean shouldKeep(String contents, int begin, int end) {
+    boolean shouldKeep = true;
+
+    // Check for potential URL
+    if (shouldKeep) {
+      int urlBegin = begin;
+      while (urlBegin > 0) {
+        char previousChar = contents.charAt(urlBegin - 1);
+        if (!Character.isLetterOrDigit(previousChar) &&
+            (".-".indexOf(previousChar) < 0)) {
+          break;
+        }
+        urlBegin--;
+      }
+      int urlEnd = begin;
+      int lastDot = -1;
+      boolean onlyChars = true;
+      while (urlEnd < contents.length()) {
+        char currentChar = contents.charAt(urlEnd);
+        if (!Character.isLetterOrDigit(currentChar) &&
+            (".-".indexOf(currentChar) < 0)) {
+          break;
+        }
+        if (!Character.isLetter(currentChar)) {
+          onlyChars = false;
+        }
+        if (currentChar == '.') {
+          lastDot = urlEnd;
+          onlyChars = true;
+        }
+        urlEnd++;
+      }
+      if ((urlEnd >= end) && (lastDot > 0) && onlyChars &&
+          (urlEnd <= lastDot + 3) && (urlEnd > lastDot + 1)) {
+        shouldKeep = false;
+      }
+    }
+    
+    return shouldKeep;
   }
 
   /**
