@@ -20,6 +20,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
@@ -121,24 +122,48 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
-          if ((link.getFullLink() == null) || (link.getFullLink().trim().length() == 0)) {
-            errorResult.addReplacement("[[" + link.getText() + "]]");
-          }
+
+          // List replacements
+          List<String> replacements = new ArrayList<String>();
           for (int i = 0; i <= pipeIndex.size(); i++) {
             int beginText = (i > 0) ? (pipeIndex.get(i - 1).intValue() + 1) : 0;
             int endText = (i < pipeIndex.size()) ? pipeIndex.get(i).intValue() : text.length();
-            if ((beginText + 1 < endText) &&
-                (text.substring(beginText + 1, endText).trim().length() > 0)) {
-              errorResult.addReplacement(
-                  "[[" + link.getLink() + "|" + text.substring(beginText, endText) + "]]");
+            if ((beginText < endText) &&
+                (text.substring(beginText, endText).trim().length() > 0)) {
+              String replacement = PageElementInternalLink.createInternalLink(
+                  link.getLink(), link.getAnchor(), text.substring(beginText, endText));
+              if (!replacements.contains(replacement)) {
+                replacements.add(replacement);
+              }
             }
+          }
+
+          // Create error
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+          boolean emptyLink = false;
+          if ((link.getFullLink() == null) || (link.getFullLink().trim().length() == 0)) {
+            errorResult.addReplacement(PageElementInternalLink.createInternalLink(link.getText(), null));
+            emptyLink = true;
+          }
+          for (String replacement : replacements) {
+            errorResult.addReplacement(replacement, !emptyLink && (replacements.size() == 1));
           }
           errors.add(errorResult);
         }
       }
     }
     return result;
+  }
+
+  /**
+   * Automatic fixing of some errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String automaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
