@@ -85,6 +85,17 @@ public class Interwiki implements Comparable<Interwiki> {
       }
     }
 
+    // Check general URL
+    final String possibleEnd = "/wiki/$1";
+    if (local && tmpUrl.endsWith(possibleEnd)) {
+      if ((test.length() == tmpUrl.length() - possibleEnd.length()) ||
+          (test.length() == tmpUrl.length() - possibleEnd.length() + 1)) {
+        if (tmpUrl.startsWith(test)) {
+          return "";
+        }
+      }
+    }
+
     return null;
   }
 

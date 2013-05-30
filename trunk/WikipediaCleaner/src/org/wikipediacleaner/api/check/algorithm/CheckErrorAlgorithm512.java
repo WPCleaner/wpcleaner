@@ -122,7 +122,8 @@ public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
         }
 
         // Mark error
-        if ((article != null) && (article.length() > 0) &&
+        if ((article != null) &&
+            ((article.length() > 0) || (local && (link.getText() != null))) &&
             (prefix != null) && (prefix.length() > 0) &&
             (fromWiki != wiki) &&
             (!onlyLanguage || (language != null)) &&
@@ -142,7 +143,7 @@ public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
           // Check language link
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis.getPage(), beginIndex, endIndex);
-          if (fromWiki != null) {
+          if ((fromWiki != null) && (article.length() >0)) {
             errorResult.addPossibleAction(
                 GT._("Check language links"),
                 new CheckLanguageLinkActionProvider(
@@ -151,7 +152,9 @@ public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
           }
 
           // Use templates
-          if ((templatesList != null) && (templatesList.size() > 0)) {
+          if ((templatesList != null) &&
+              (templatesList.size() > 0) &&
+              (article.length() > 0)) {
             for (String template : templatesList) {
               String[] templateArgs = template.split("\\|");
               if (templateArgs.length >= 5) {
