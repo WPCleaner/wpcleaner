@@ -77,7 +77,7 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
               set = new HashSet<String>();
               names.put(groupValue, set);
             }
-            String nameValue = nameParam.getValue();
+            String nameValue = nameParam.getTrimmedValue();
             set.add(nameValue);
           }
         }
@@ -96,7 +96,7 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
       if (withoutContent) {
         PageElementTag.Parameter nameParam = tag.getParameter("name");
         if (nameParam != null) {
-          String nameValue = nameParam.getValue();
+          String nameValue = nameParam.getTrimmedValue();
           PageElementTag.Parameter groupParam = tag.getParameter("group");
           String groupValue = (groupParam != null) ? groupParam.getValue() : null;
           if ((groupValue != null) && (groupValue.length() == 0)) {

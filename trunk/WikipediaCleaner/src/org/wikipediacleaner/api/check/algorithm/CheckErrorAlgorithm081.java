@@ -127,8 +127,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     List<String> possibleNames = new ArrayList<String>();
     for (PageElementTag tag : refs) {
       Parameter name = tag.getParameter("name");
-      if ((name != null) && (name.getValue() != null)) {
-        String nameValue = name.getValue().trim();
+      if ((name != null) && (name.getTrimmedValue() != null)) {
+        String nameValue = name.getTrimmedValue();
         if ((nameValue.length() > 0) && (!possibleNames.contains(nameValue))) {
           possibleNames.add(nameValue);
         }
@@ -153,8 +153,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     PageElementTag namedTagInReferences = null;
     for (PageElementTag tag : refs) {
       Parameter name = tag.getParameter("name");
-      if ((name != null) && (name.getValue() != null)) {
-        String nameValue = name.getValue().trim();
+      if ((name != null) && (name.getTrimmedValue() != null)) {
+        String nameValue = name.getTrimmedValue();
         if (!nameValue.isEmpty()) {
           if (namedTag == null) {
             namedTag = tag;
@@ -254,7 +254,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
           if (mainTag != null) {
 
             // Create an error for each tag, except for the main tag
-            String selectedName = mainTag.getParameter("name").getValue().trim();
+            String selectedName = mainTag.getParameter("name").getTrimmedValue();
             for (PageElementTag tag : listTags) {
               if (tag == mainTag) {
                 CheckErrorResult errorResult = createCheckErrorResult(
@@ -264,7 +264,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                 errors.add(errorResult);
               } else {
                 Parameter name = tag.getParameter("name");
-                String nameValue = (name != null) ? name.getValue() : null;
+                String nameValue = (name != null) ? name.getTrimmedValue() : null;
                 if (nameValue != null) {
                   nameValue = nameValue.trim();
                 }

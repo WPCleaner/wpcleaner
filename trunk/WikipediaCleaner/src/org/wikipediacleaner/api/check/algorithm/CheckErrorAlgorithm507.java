@@ -58,8 +58,8 @@ public class CheckErrorAlgorithm507 extends CheckErrorAlgorithmBase {
       if (!galleryTag.isFullTag() && !galleryTag.isEndTag()) {
         Parameter description = galleryTag.getParameter("caption");
         if ((description == null) ||
-            (description.getValue() == null) ||
-            (description.getValue().trim().length() == 0)) {
+            (description.getTrimmedValue() == null) ||
+            (description.getTrimmedValue().length() == 0)) {
           if (errors == null) {
             return true;
           }

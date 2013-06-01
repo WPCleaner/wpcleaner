@@ -646,6 +646,16 @@ public class PageElementTag extends PageElement {
     }
 
     /**
+     * @return Parameter value.
+     */
+    public String getTrimmedValue() {
+      if (value == null) {
+        return null;
+      }
+      return value.trim();
+    }
+
+    /**
      * @return Text equivalent to the parameter.
      * @see java.lang.Object#toString()
      */
