@@ -36,6 +36,11 @@ public class ApiLanguageLinksRequest extends ApiPropertiesRequest {
   // ==========================================================================
 
   /**
+   * Property for Language.
+   */
+  public final static String PROPERTY_LANG = "lllang";
+
+  /**
    * Property for Limit.
    */
   public final static String PROPERTY_LIMIT = "lllimit";
@@ -67,10 +72,12 @@ public class ApiLanguageLinksRequest extends ApiPropertiesRequest {
     properties.put(
         PROPERTY_PROP,
         PROPERTY_PROP_LANGLINKS);
+    String toWikiCode = toWiki.getSettings().getCode();
+    properties.put(PROPERTY_LANG, toWikiCode);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
+    properties.put(PROPERTY_REDIRECTS, "");
     properties.put(PROPERTY_TITLES, page.getTitle());
     Map<String, String> languageLinks = new HashMap<String, String>();
-    String toWikiCode = toWiki.getSettings().getCode();
     while (result.getLanguageLinks(properties, languageLinks) &&
            !languageLinks.containsKey(toWikiCode)) {
       //
