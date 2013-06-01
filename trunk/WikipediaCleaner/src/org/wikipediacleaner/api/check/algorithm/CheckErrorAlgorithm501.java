@@ -215,6 +215,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     List<ContentsChunk> chunks = computeContentsChunks(analysis, true);
     String contents = analysis.getContents();
     Iterator<Suggestion> itSuggestion = suggestions.iterator();
+    List<Replacement> tmpReplacements = new ArrayList<CheckErrorAlgorithm501.Replacement>();
     while (itSuggestion.hasNext()) {
       Suggestion suggestion = itSuggestion.next();
       if (!suggestion.isOtherPattern()) {
@@ -228,7 +229,10 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
           while (matcher.find()) {
             int begin = matcher.start();
             int end = matcher.end();
-            boolean shouldKeep = true;
+            tmpReplacements.clear();
+            boolean shouldKeep = addReplacements(
+                begin, end, contents, authorizedBegin, chunk.getEnd(),
+                suggestion, tmpReplacements);
             if (shouldKeep && (begin > 0) &&
                 (Character.isLetterOrDigit(contents.charAt(begin))) &&
                 (Character.isLetterOrDigit(contents.charAt(begin - 1)))) {
@@ -249,9 +253,8 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
               shouldKeep = shouldKeep(contents, begin, end);
             }
             if (shouldKeep) {
-              result |= addReplacements(
-                  begin, end, contents, authorizedBegin, chunk.getEnd(),
-                  suggestion, replacements);
+              result = true;
+              replacements.addAll(tmpReplacements);
             }
             authorizedBegin = end;
           }
@@ -281,6 +284,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     List<ContentsChunk> chunks = computeContentsChunks(analysis, false);
     String contents = analysis.getContents();
     Iterator<Suggestion> itSuggestion = suggestions.iterator();
+    List<Replacement> tmpReplacements = new ArrayList<CheckErrorAlgorithm501.Replacement>();
     while (itSuggestion.hasNext()) {
       Suggestion suggestion = itSuggestion.next();
       if (suggestion.isOtherPattern()) {
@@ -294,14 +298,16 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
           while (matcher.find()) {
             int begin = matcher.start();
             int end = matcher.end();
-            boolean shouldKeep = true;
+            tmpReplacements.clear();
+            boolean shouldKeep = addReplacements(
+                begin, end, contents, authorizedBegin, chunk.getEnd(),
+                suggestion, tmpReplacements);
             if (shouldKeep) {
               shouldKeep = shouldKeep(contents, begin, end);
             }
             if (shouldKeep) {
-              result |= addReplacements(
-                  begin, end, contents, authorizedBegin, chunk.getEnd(),
-                  suggestion, replacements);
+              result = true;
+              replacements.addAll(tmpReplacements);
             }
             authorizedBegin = end;
           }
@@ -353,8 +359,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         }
         urlEnd++;
       }
+      //System.err.println(contents.substring(urlBegin, urlEnd));
       if ((urlEnd >= end) && (lastDot > 0) && onlyChars &&
-          (urlEnd <= lastDot + 3) && (urlEnd > lastDot + 1)) {
+          (urlEnd <= lastDot + 4) && (urlEnd > lastDot + 1)) {
         shouldKeep = false;
       }
     }
