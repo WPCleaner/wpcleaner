@@ -58,9 +58,9 @@ public class CheckErrorAlgorithm506 extends CheckErrorAlgorithmBase {
     for (PageElementTag refTag : refTags) {
       PageElementTag.Parameter paramName = refTag.getParameter("name");
       if ((paramName != null) &&
-          (paramName.getValue() != null) &&
-          (paramName.getValue().trim().length() > 0)) {
-        String name = paramName.getValue().trim();
+          (paramName.getTrimmedValue() != null) &&
+          (paramName.getTrimmedValue().length() > 0)) {
+        String name = paramName.getTrimmedValue();
         boolean hasNonNumericCharacter = false;
         int index = name.length();
         while ((!hasNonNumericCharacter) && (index > 0)) {
