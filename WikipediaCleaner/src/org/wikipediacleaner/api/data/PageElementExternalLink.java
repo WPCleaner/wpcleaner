@@ -55,10 +55,12 @@ public class PageElementExternalLink extends PageElement {
    * @param wikipedia Wikipedia.
    * @param contents Contents.
    * @param index Block start index.
+   * @param analysis Page analysis.
    * @return Block details it there's a block.
    */
   public static PageElementExternalLink analyzeBlock(
-      EnumWikipedia wikipedia, String contents, int index) {
+      EnumWikipedia wikipedia, String contents, int index,
+      PageAnalysis analysis) {
     // Verify arguments
     if (contents == null) {
       return null;
@@ -106,6 +108,13 @@ public class PageElementExternalLink extends PageElement {
       int doubleSquare = 0;
       int tmpIndex2 = tmpIndex;
       int prematureEnd = -1;
+      int maxEndIndex = Integer.MAX_VALUE;
+      if (analysis != null) {
+        PageElementTag refTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, index);
+        if ((refTag != null) && !refTag.isFullTag() && refTag.isComplete()) {
+          maxEndIndex = refTag.getValueEndIndex();
+        }
+      }
       while (endIndex < 0) {
         if (tmpIndex2 >= contents.length()) {
           return null;
@@ -126,6 +135,8 @@ public class PageElementExternalLink extends PageElement {
           } else {
             endIndex = prematureEnd;
           }
+        } else if (tmpIndex2 == maxEndIndex) {
+          endIndex = tmpIndex2;
         } else {
           tmpIndex2++;
         }
