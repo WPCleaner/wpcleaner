@@ -63,14 +63,6 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
     boolean result = false;
     while (currentIndex > 0) {
       boolean shouldCount = true;
-      if ((pageAnalysis.isInComment(currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
-          (pageAnalysis.isInTag(currentIndex) != null)) {
-        shouldCount = false;
-      }
       if (shouldCount) {
         PageElementInternalLink link = pageAnalysis.isInInternalLink(currentIndex);
         if ((link != null) && (link.getEndIndex() == currentIndex + 2)) {
@@ -106,6 +98,15 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
         if ((link != null) && (link.getEndIndex() == currentIndex + 1)) {
           shouldCount = false;
         }
+      }
+      if (shouldCount &&
+          (pageAnalysis.isInComment(currentIndex) != null) ||
+          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
+          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
+          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
+          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
+          (pageAnalysis.isInTag(currentIndex) != null)) {
+        shouldCount = false;
       }
       if (shouldCount) {
         if (errors == null) {
