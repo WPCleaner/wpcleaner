@@ -229,10 +229,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
           while (matcher.find()) {
             int begin = matcher.start();
             int end = matcher.end();
-            tmpReplacements.clear();
-            boolean shouldKeep = addReplacements(
-                begin, end, contents, authorizedBegin, chunk.getEnd(),
-                suggestion, tmpReplacements);
+            boolean shouldKeep = true;
             if (shouldKeep && (begin > 0) &&
                 (Character.isLetterOrDigit(contents.charAt(begin))) &&
                 (Character.isLetterOrDigit(contents.charAt(begin - 1)))) {
@@ -242,6 +239,12 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
                 (Character.isLetterOrDigit(contents.charAt(end))) &&
                 (Character.isLetterOrDigit(contents.charAt(end - 1)))) {
               shouldKeep = false;
+            }
+            if (shouldKeep) {
+              tmpReplacements.clear();
+              shouldKeep = addReplacements(
+                  begin, end, contents, authorizedBegin, chunk.getEnd(),
+                  suggestion, tmpReplacements);
             }
             if (shouldKeep && (analysis.getAreas().getEndArea(begin) > begin)) {
               shouldKeep = false;
