@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -74,6 +75,16 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Analyzing text for <references> tags
+    List<PageElementTag> referencesTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REFERENCES);
+    if (referencesTags != null) {
+      for (PageElementTag referencesTag : referencesTags) {
+        if (referencesTag.isComplete()) {
+          return false;
+        }
+      }
+    }
+
     // Search for templates like {{References}}
     String templates = getSpecificProperty(
         "references_templates", true, true, false);
@@ -82,36 +93,32 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       referencesTemplates = WPCConfiguration.convertPropertyToStringList(templates);
     }
     if (referencesTemplates != null) {
-      for (String referencesTemplate : referencesTemplates) {
-        Collection<PageElementTemplate> foundTemplates = pageAnalysis.getTemplates(referencesTemplate);
-        if ((foundTemplates != null) && (foundTemplates.size() > 0)) {
-          return false;
+      List<PageElementTemplate> allTemplates = pageAnalysis.getTemplates();
+      int templateNum = allTemplates.size();
+      while (templateNum > 0) {
+        templateNum--;
+        PageElementTemplate template = allTemplates.get(templateNum);
+        for (String referencesTemplate : referencesTemplates) {
+          if (Page.areSameTitle(template.getTemplateName(), referencesTemplate)) {
+            return false;
+          }
         }
       }
     }
 
-    // Analyzing text for <references> tags
-    List<PageElementTag> referencesTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REFERENCES);
-    if ((referencesTags == null) || (referencesTags.isEmpty())) {
-      return true;
-    }
-    for (PageElementTag referencesTag : referencesTags) {
-      if (referencesTag.isComplete()) {
-        return false;
-      }
-    }
+    // Try to make some suggestions
     if (errors == null) {
       return true;
     }
-
-    // Try to make some suggestions
-    for (PageElementTag referencesTag : referencesTags) {
-      CheckErrorResult errorResult = createCheckErrorResult(
-          pageAnalysis.getPage(), referencesTag.getBeginIndex(), referencesTag.getEndIndex());
-      if (referencesTags.size() == 1) {
-        errorResult.addReplacement("<references />", GT._("Close tag"));
+    if (referencesTags != null) {
+      for (PageElementTag referencesTag : referencesTags) {
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(), referencesTag.getBeginIndex(), referencesTag.getEndIndex());
+        if (referencesTags.size() == 1) {
+          errorResult.addReplacement("<references />", GT._("Close tag"));
+        }
+        errors.add(errorResult);
       }
-      errors.add(errorResult);
     }
 
     return true;
