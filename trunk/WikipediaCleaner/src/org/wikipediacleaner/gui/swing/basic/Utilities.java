@@ -694,13 +694,16 @@ public class Utilities {
   * Create a JMenuItem.
   * 
   * @param message Label text with optional mnemonic inside.
+  * @param asIs True if the message should be used as is (no mnemonic).
   * @return Menu item initialized with text and mnemonic.
   */
-  public static JMenuItem createJMenuItem(String message) {
-    JMenuItem menuItem = new JMenuItem(getLabelWithoutMnemonic(message));
-    char mnemonic = getMnemonic(message);
-    if (mnemonic != ' ') {
-      menuItem.setMnemonic(mnemonic);
+  public static JMenuItem createJMenuItem(String message, boolean asIs) {
+    JMenuItem menuItem = new JMenuItem(asIs ? message : getLabelWithoutMnemonic(message));
+    if (!asIs) {
+      char mnemonic = getMnemonic(message);
+      if (mnemonic != ' ') {
+        menuItem.setMnemonic(mnemonic);
+      }
     }
     return menuItem;
   }

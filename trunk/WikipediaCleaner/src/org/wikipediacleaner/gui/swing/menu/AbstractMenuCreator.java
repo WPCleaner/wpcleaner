@@ -124,13 +124,14 @@ public abstract class AbstractMenuCreator {
    * @param menu Menu.
    * @param page Page.
    * @param title Element title (if null, the page title will be used).
+   * @param asIs True if the message should be used as is (no mnemonic).
    * @param action Action.
    * @return Number of items added.
    */
   public int addItem(
-      JMenu menu, Page page, String title,
+      JMenu menu, Page page, String title, boolean asIs,
       ActionListener action) {
-    return addItem(menu, page, title, action, null);
+    return addItem(menu, page, title, asIs, action, null);
   }
 
   /**
@@ -139,12 +140,13 @@ public abstract class AbstractMenuCreator {
    * @param menu Menu.
    * @param page Page.
    * @param title Element title (if null, the page title will be used).
+   * @param asIs True if the message should be used as is (no mnemonic).
    * @param action Action.
    * @param accelerator Accelerator.
    * @return Number of items added.
    */
   public int addItem(
-      JMenu menu, Page page, String title,
+      JMenu menu, Page page, String title, boolean asIs,
       ActionListener action, KeyStroke accelerator) {
     if (menu == null) {
       return 0;
@@ -152,7 +154,7 @@ public abstract class AbstractMenuCreator {
     if ((title == null) && ((page == null) || (page.getTitle() == null))) {
       return 0;
     }
-    JMenuItem menuItem = Utilities.createJMenuItem(title != null ? title : page.getTitle());
+    JMenuItem menuItem = Utilities.createJMenuItem(title != null ? title : page.getTitle(), asIs);
     if (page != null) {
       updateFont(menuItem, page);
     }
@@ -172,13 +174,14 @@ public abstract class AbstractMenuCreator {
    * @param menu Menu.
    * @param page Page.
    * @param title Element title (if null, the page title will be used).
+  * @param asIs True if the message should be used as is (no mnemonic).
    * @param action Action.
    * @return Number of items added.
    */
   public int addItem(
-      JPopupMenu menu, Page page, String title,
+      JPopupMenu menu, Page page, String title, boolean asIs,
       ActionListener action) {
-    return addItem(menu, page, title, action, null);
+    return addItem(menu, page, title, asIs, action, null);
   }
 
   /**
@@ -187,12 +190,13 @@ public abstract class AbstractMenuCreator {
    * @param menu Menu.
    * @param page Page.
    * @param title Element title (if null, the page title will be used).
+   * @param asIs True if the message should be used as is (no mnemonic).
    * @param action Action.
    * @param accelerator Accelerator.
    * @return Number of items added.
    */
   public int addItem(
-      JPopupMenu menu, Page page, String title,
+      JPopupMenu menu, Page page, String title, boolean asIs,
       ActionListener action, KeyStroke accelerator) {
     if (menu == null) {
       return 0;
@@ -200,7 +204,7 @@ public abstract class AbstractMenuCreator {
     if ((title == null) && ((page == null) || (page.getTitle() == null))) {
       return 0;
     }
-    JMenuItem menuItem = Utilities.createJMenuItem(title != null ? title : page.getTitle());
+    JMenuItem menuItem = Utilities.createJMenuItem(title != null ? title : page.getTitle(), asIs);
     if (page != null) {
       updateFont(menuItem, page);
     }

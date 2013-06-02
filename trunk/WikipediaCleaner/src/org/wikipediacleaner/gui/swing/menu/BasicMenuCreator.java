@@ -97,10 +97,10 @@ public class BasicMenuCreator extends AbstractMenuCreator {
         while (iter.hasNext()) {
           Page pageTmp = iter.next();
           fixedBeginView += addItem(
-              submenuView, pageTmp, null,
+              submenuView, pageTmp, null, true,
               new PageViewAction(pageTmp.getTitle(), wiki));
           fixedBeginHistory += addItem(
-              submenuHistory, pageTmp, null,
+              submenuHistory, pageTmp, null, true,
               new PageViewAction(pageTmp.getTitle(), wiki, "history"));
         }
         if ((links != null) && (links.size() > 0) && showLinks) {
@@ -115,20 +115,20 @@ public class BasicMenuCreator extends AbstractMenuCreator {
               while (itPage.hasNext()) {
                 Page redirect = itPage.next();
                 addItem(
-                    submenuRedirectView, redirect, null,
+                    submenuRedirectView, redirect, null, true,
                     new PageViewAction(redirect.getTitle(), wiki));
                 addItem(
-                    submenuRedirectHistory, redirect, null,
+                    submenuRedirectHistory, redirect, null, true,
                     new PageViewAction(redirect.getTitle(), wiki, "history"));
               }
               submenuView.add(submenuRedirectView);
               submenuHistory.add(submenuRedirectHistory);
             } else {
               addItem(
-                  submenuView, p, null,
+                  submenuView, p, null, true,
                   new PageViewAction(p.getTitle(), wiki));
               addItem(
-                  submenuHistory, p, null,
+                  submenuHistory, p, null, true,
                   new PageViewAction(p.getTitle(), wiki, "history"));
             }
           }
@@ -140,10 +140,10 @@ public class BasicMenuCreator extends AbstractMenuCreator {
           while (iter.hasNext()) {
             Page pageTmp = iter.next();
             fixedEndView += addItem(
-                submenuView, pageTmp, null,
+                submenuView, pageTmp, null, true,
                 new PageViewAction(pageTmp.getTitle(), wiki));
             fixedEndHistory += addItem(
-                submenuHistory, pageTmp, null,
+                submenuHistory, pageTmp, null, true,
                 new PageViewAction(pageTmp.getTitle(), wiki, "history"));
           }
         }
@@ -158,7 +158,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
           title = GT._("External Viewer");
         }
         addItem(
-            popup, page, title,
+            popup, page, title, true,
             new PageViewAction(page.getTitle(), wiki));
         if ((page.getNamespace() != null) &&
             (page.getNamespace().intValue() == Namespace.TEMPLATE)) {
@@ -167,7 +167,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
           title = GT._("History");
         }
         addItem(
-            popup, page, title,
+            popup, page, title, true,
             new PageViewAction(page.getTitle(), wiki, "history"));
       }
     }
@@ -328,7 +328,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
       MWPane textPane, int startOffset, int endOffset) {
     if (text != null) {
       addItem(
-          popup, null, GT._("Remove link"),
+          popup, null, GT._("Remove link"), true,
           new RemoveLinkAction(text, textPane, startOffset, endOffset));
     }
   }
@@ -356,7 +356,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
   public void addItemView(
       EnumWikipedia wiki, JPopupMenu popup, String url, String label) {
     if ((url != null) && (Utilities.isDesktopSupported())) {
-      addItem(popup, null, label, new PageViewAction(url, wiki));
+      addItem(popup, null, label, true, new PageViewAction(url, wiki));
     }
   }
 
@@ -372,7 +372,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
       EnumWikipedia wikipedia, JPopupMenu popup, Page page, BasicWindow window) {
     if (page != null) {
       addItem(
-          popup, null, GT._("Purge cache"),
+          popup, null, GT._("Purge cache"), true,
           new PurgeCacheAction(wikipedia, page, window));
     }
   }
@@ -391,7 +391,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
       return;
     }
     addItem(
-        popup, null, GT._("Reload links"),
+        popup, null, GT._("Reload links"), true,
         new ReloadLinksAction(wikipedia, page, window));
   }
 }

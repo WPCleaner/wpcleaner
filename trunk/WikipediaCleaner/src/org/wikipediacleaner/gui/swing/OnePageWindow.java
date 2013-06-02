@@ -1078,17 +1078,17 @@ public abstract class OnePageWindow
     JMenuItem menuItem = null;
     menu.add(createFixRedirectsMenu());
 
-    menuItem = Utilities.createJMenuItem(GT._("&Preview"));
+    menuItem = Utilities.createJMenuItem(GT._("&Preview"), false);
     menuItem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionPreview"));
     menu.add(menuItem);
 
-    menuItem = Utilities.createJMenuItem(GT._("&Expand templates"));
+    menuItem = Utilities.createJMenuItem(GT._("&Expand templates"), false);
     menuItem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionExpandTemplates"));
     menu.add(menuItem);
 
-    menuItem = Utilities.createJMenuItem(GT._("Expand templates &and Preview"));
+    menuItem = Utilities.createJMenuItem(GT._("Expand templates &and Preview"), false);
     menuItem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionExpandTemplatesPreview"));
     menu.add(menuItem);
