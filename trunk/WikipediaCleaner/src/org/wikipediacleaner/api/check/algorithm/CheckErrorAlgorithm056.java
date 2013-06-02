@@ -36,6 +36,9 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
     super("Arrow as ASCII art");
   }
 
+  /**
+   * Detected arrows and their replacement.
+   */
   private final static String[][] allArrows = {
     { "<--->", "↔" },
     { "<-->" , "↔" },
@@ -81,6 +84,16 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
   };
 
   /**
+   * Tags in which arrows should not be detected. 
+   */
+  private final static String[] exceptTags = {
+    PageElementTag.TAG_WIKI_HIERO,
+    PageElementTag.TAG_WIKI_NOWIKI,
+    PageElementTag.TAG_WIKI_SCORE,
+    PageElementTag.TAG_WIKI_SOURCE,
+  };
+
+  /**
    * Analyze a page to check if errors are present.
    * 
    * @param pageAnalysis Page analysis.
@@ -102,49 +115,10 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
       boolean shouldCheck = true;
       int nextIndex = currentIndex + 1;
 
+      // Check each kind of arrow
+      int arrowLen = 0;
+      String[] arrows = null;
       if (shouldCheck) {
-        PageElementComment comment = pageAnalysis.isInComment(currentIndex);
-        if (comment != null) {
-          nextIndex = comment.getEndIndex();
-          shouldCheck = false;
-        }
-      }
-      if (shouldCheck) {
-        PageElementTag tagNoWiki = pageAnalysis.getSurroundingTag(
-            PageElementTag.TAG_WIKI_NOWIKI, currentIndex);
-        if (tagNoWiki != null) {
-          nextIndex = tagNoWiki.getCompleteEndIndex();
-          shouldCheck = false;
-        }
-      }
-      if (shouldCheck) {
-        PageElementTag tagSource = pageAnalysis.getSurroundingTag(
-            PageElementTag.TAG_WIKI_SOURCE, currentIndex);
-        if (tagSource != null) {
-          nextIndex = tagSource.getCompleteEndIndex();
-          shouldCheck = false;
-        }
-      }
-      if (shouldCheck) {
-        PageElementTag tagScore = pageAnalysis.getSurroundingTag(
-            PageElementTag.TAG_WIKI_SCORE, currentIndex);
-        if (tagScore != null) {
-          nextIndex = tagScore.getCompleteEndIndex();
-          shouldCheck = false;
-        }
-      }
-      if (shouldCheck) {
-        PageElementTag tagHiero = pageAnalysis.getSurroundingTag(
-            PageElementTag.TAG_WIKI_HIERO, currentIndex);
-        if (tagHiero != null) {
-          nextIndex = tagHiero.getCompleteEndIndex();
-          shouldCheck = false;
-        }
-      }
-      if (shouldCheck) {
-        // Check each kind of arrow
-        int arrowLen = 0;
-        String[] arrows = null;
         for (int i = 0; (i < allArrows.length) && (arrowLen == 0); i++) {
           if ((allArrows[i] != null) &&
               (allArrows[i].length > 0) &&
@@ -154,23 +128,46 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
             arrows = allArrows[i];
           }
         }
-  
-        // Check if a possible arrow has been found
-        if (arrowLen > 0) {
-          if (arrows != null) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), currentIndex, currentIndex + arrowLen);
-            for (int i = 1; i < arrows.length; i++) {
-              errorResult.addReplacement(arrows[i]);
-            }
-            errors.add(errorResult);
-          }
-          nextIndex = currentIndex + arrowLen;
+        if (arrowLen == 0) {
+          shouldCheck = false;
         }
+      }
+
+      // Check if inside a comment
+      if (shouldCheck) {
+        PageElementComment comment = pageAnalysis.isInComment(currentIndex);
+        if (comment != null) {
+          nextIndex = comment.getEndIndex();
+          shouldCheck = false;
+        }
+      }
+
+      // Check if inside a specific tag
+      if (shouldCheck) {
+        for (String tagName : exceptTags) {
+          if (shouldCheck) {
+            PageElementTag tag = pageAnalysis.getSurroundingTag(tagName, currentIndex);
+            if (tag != null) {
+              nextIndex = tag.getCompleteEndIndex();
+              shouldCheck  = false;
+            }
+          }
+        }
+      }
+      if (shouldCheck) {
+        if (arrows != null) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(), currentIndex, currentIndex + arrowLen);
+          for (int i = 1; i < arrows.length; i++) {
+            errorResult.addReplacement(arrows[i]);
+          }
+          errors.add(errorResult);
+        }
+        nextIndex = currentIndex + arrowLen;
       }
       currentIndex = nextIndex;
     }
