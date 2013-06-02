@@ -94,8 +94,21 @@ public class PageElementExternalLink extends PageElement {
     }
     boolean protocolOk = false;
     for (String protocol : privateProtocols) {
-      if ((!protocolOk) && (contents.startsWith(protocol, tmpIndex))) {
-        protocolOk = true;
+      if (!protocolOk) {
+        int pos = 0;
+        boolean same = true;
+        while (same && (pos < protocol.length())) {
+          if (tmpIndex + pos >= contents.length()) {
+            same = false;
+          } else if (protocol.charAt(pos) != Character.toLowerCase(contents.charAt(tmpIndex + pos))) {
+            same = false;
+          } else {
+            pos++;
+          }
+        }
+        if (same) {
+          protocolOk = true;
+        }
       }
     }
     if (!protocolOk) {
