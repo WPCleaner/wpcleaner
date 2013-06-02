@@ -552,7 +552,7 @@ public class PageAnalysis {
 
     // Check if this an external link
     PageElementExternalLink link = PageElementExternalLink.analyzeBlock(
-        getWikipedia(), contents, currentIndex);
+        getWikipedia(), contents, currentIndex, this);
     if (link != null) {
       externalLinks.add(link);
       if (link.getText() == null) {
@@ -576,7 +576,7 @@ public class PageAnalysis {
     if ((externalLinks.size() == 0) ||
         (externalLinks.get(externalLinks.size() - 1).getEndIndex() <= currentIndex)) {
       PageElementExternalLink link = PageElementExternalLink.analyzeBlock(
-          getWikipedia(), contents, currentIndex);
+          getWikipedia(), contents, currentIndex, this);
       if (link != null) {
         externalLinks.add(link);
         return link.getEndIndex();
