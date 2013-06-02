@@ -481,7 +481,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     JMenu menu = Utilities.createJMenu(GT._("Sort"));
     List<CompositeComparator<Page>> comparators = PageComparator.getComparators();
     for (CompositeComparator<Page> comparator : comparators) {
-      JMenuItem menuItem = Utilities.createJMenuItem(comparator.getName());
+      JMenuItem menuItem = Utilities.createJMenuItem(comparator.getName(), true);
       menuItem.addActionListener(new SetComparatorAction(modelLinks, comparator));
       menu.add(menuItem);
     }

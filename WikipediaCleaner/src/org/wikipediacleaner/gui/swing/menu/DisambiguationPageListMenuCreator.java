@@ -53,18 +53,18 @@ public class DisambiguationPageListMenuCreator extends BasicMenuCreator {
       String property = backlinks.getProperty(link.getTitle());
       if (!Configuration.VALUE_PAGE_NORMAL.equals(property)) {
         addItem(
-            popup, null, GT._("Mark backlink as normal"),
+            popup, null, GT._("Mark backlink as normal"), true,
             new MarkBacklinkAction(wiki, page, link, Configuration.VALUE_PAGE_NORMAL, backlinks));
       }
       if (!Configuration.VALUE_PAGE_HELP_NEEDED.equals(property)) {
         addItem(
-            popup, null, GT._("Mark backlink as needing help"),
+            popup, null, GT._("Mark backlink as needing help"), true,
             new MarkBacklinkAction(wiki, page, link, Configuration.VALUE_PAGE_HELP_NEEDED, backlinks));
       }
       if ((Configuration.VALUE_PAGE_NORMAL.equals(property)) ||
           (Configuration.VALUE_PAGE_HELP_NEEDED.equals(property))) {
         addItem(
-            popup, null, GT._("Remove mark on backlink"),
+            popup, null, GT._("Remove mark on backlink"), true,
             new MarkBacklinkAction(wiki, page, link, null, backlinks));
       }
     }

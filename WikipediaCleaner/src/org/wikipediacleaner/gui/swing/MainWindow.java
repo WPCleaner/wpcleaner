@@ -1600,7 +1600,7 @@ public class MainWindow
    * @param mode List to be generated.
    */
   private void addItemInGenerateLists(JPopupMenu menu, PageListWorker.Mode mode) {
-    JMenuItem item = Utilities.createJMenuItem(mode.getTitle());
+    JMenuItem item = Utilities.createJMenuItem(mode.getTitle(), true);
     item.setActionCommand(mode.name());
     item.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionGenerateList", "actionCommand"));

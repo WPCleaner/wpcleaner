@@ -55,7 +55,7 @@ public class AnalysisPageListMenuCreator extends BasicMenuCreator {
       JPopupMenu popup, Page page, JTextPane textPane) {
     if ((page != null) && (textPane != null)) {
       addItem(
-          popup, null, GT._("Find text"),
+          popup, null, GT._("Find text"), true,
           new FindTextAction(page.getTitle(), textPane));
     }
   }
@@ -72,7 +72,7 @@ public class AnalysisPageListMenuCreator extends BasicMenuCreator {
       EnumWikipedia wiki, JPopupMenu popup, Page page, Page link) {
     if ((page != null) && (wiki != null)) {
       addItem(
-          popup, null, GT._("Search in templates"),
+          popup, null, GT._("Search in templates"), true,
           new TemplatesAnalysisAction(page, link, wiki));
     }
   }
@@ -87,7 +87,7 @@ public class AnalysisPageListMenuCreator extends BasicMenuCreator {
   public void addItemRemoveAllLinks(
       JPopupMenu popup, Page page, MWPane textPane) {
     addItem(
-        popup, null, GT._("Remove all links"),
+        popup, null, GT._("Remove all links"), true,
         new RemoveAllLinksAction(textPane, page));
   }
 
@@ -109,7 +109,7 @@ public class AnalysisPageListMenuCreator extends BasicMenuCreator {
       String title = LinkReplacement.getLastReplacement(page.getTitle());
       if (title != null) {
         fixedBeginLink += addItem(
-            submenuLink, null, title,
+            submenuLink, null, title, true,
             new ReplaceAllLinksAction(textPane, page, title, null));
         fixedBeginLink += addSeparator(submenuLink);
       }
@@ -122,14 +122,14 @@ public class AnalysisPageListMenuCreator extends BasicMenuCreator {
           while (iter.hasNext()) {
             Page pageTmp = iter.next();
             addItem(
-                submenu1, pageTmp, null,
+                submenu1, pageTmp, null, true,
                 new ReplaceAllLinksAction(textPane, page, pageTmp.getTitle(), null));
           }
           
           submenuLink.add(submenu1);
         } else {
           addItem(
-              submenuLink, p, null,
+              submenuLink, p, null, true,
               new ReplaceAllLinksAction(textPane, page, p.getTitle(), null));
         }
       }
@@ -138,7 +138,7 @@ public class AnalysisPageListMenuCreator extends BasicMenuCreator {
       if (title != null) {
         fixedEndLink += addSeparator(submenuLink);
         fixedEndLink += addItem(
-            submenuLink, null, title,
+            submenuLink, null, title, true,
             new ReplaceAllLinksAction(textPane, page, title, null));
       }
 

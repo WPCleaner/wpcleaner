@@ -88,14 +88,14 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
               message += " - " + template[1].trim();
             }
             addItem(
-                submenu, null, message,
+                submenu, null, message, true,
                 new ReplaceTextAction(replacement, element, textPane));
           }
           popup.add(submenu);
         } else {
           String replacement = createTextForTemplate(templates.get(0)[0], page.getTitle(), text);
           addItem(
-              popup, null, GT._("Mark as normal link using template"),
+              popup, null, GT._("Mark as normal link using template"), true,
               new ReplaceTextAction(replacement, element, textPane));
         }
       }
@@ -111,7 +111,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
                 PageElementInternalLink.createInternalLink(page.getTitle(), text) +
                 PageElementComment.createComment(comment);
             addItem(
-                submenu, null, GT._("Using {0}", comment),
+                submenu, null, GT._("Using {0}", comment), true,
                 new ReplaceTextAction(replacement, element, textPane));
           }
           popup.add(submenu);
@@ -120,7 +120,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
               PageElementInternalLink.createInternalLink(page.getTitle(), text) +
               PageElementComment.createComment(comments.get(0));
           addItem(
-              popup, null, GT._("Mark as normal link using comment"),
+              popup, null, GT._("Mark as normal link using comment"), true,
               new ReplaceTextAction(replacement, element, textPane));
         }
       }
@@ -164,7 +164,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         if (templates != null) {
           for (String template : templates) {
             addItem(
-                submenu, null, GT._("Using {0}", "{{" + template + "}}"),
+                submenu, null, GT._("Using {0}", "{{" + template + "}}"), true,
                 new MarkLinkAction(
                     element,
                     createTextForTemplate(template, page.getTitle(), text),
@@ -175,7 +175,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           for (List<String> template : templatesAfter) {
             String templateName = template.get(0);
             addItem(
-                submenu, null, GT._("Using {0}", "[[…]]{{" + templateName + "}}"),
+                submenu, null, GT._("Using {0}", "[[…]]{{" + templateName + "}}"), true,
                 new MarkLinkAction(
                     element,
                     createTextForTemplateAfterLink(template, page.getTitle(), text),
@@ -192,7 +192,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         }
         if (newText != null) {
           addItem(
-              popup, null, GT._("Mark as needing help"),
+              popup, null, GT._("Mark as needing help"), true,
               new MarkLinkAction(element, newText.toString(), textPane, checkBox));
         }
       }
@@ -226,7 +226,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         JMenu submenu = new JMenu(GT._("Link text"));
         for (String template : templates) {
           addItem(
-              submenu, null, GT._("Using {0}", "{{" + template + "}}"),
+              submenu, null, GT._("Using {0}", "{{" + template + "}}"), true,
               new MarkLinkAction(
                   element,
                   createTextForTemplate(template, page.getTitle(), text),
@@ -235,7 +235,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         popup.add(submenu);
       } else {
         addItem(
-            popup, null, GT._("Link text"),
+            popup, null, GT._("Link text"), true,
             new MarkLinkAction(
                 element,
                 createTextForTemplate(templates.get(0), page.getTitle(), text),
@@ -294,12 +294,12 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
       if (withLastSuffix != null) {
         preferredDabs.remove(withLastSuffix);
         addItem(
-            popup, null, GT._("&Link to {0}", withLastSuffix),
+            popup, null, GT._("&Link to {0}", withLastSuffix), false,
             new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, false),
             lastLinkKeyStroke);
         lastLinkKeyStroke = null;
         addItem(
-            popup, null, GT._("&Replace with {0}", withLastSuffix),
+            popup, null, GT._("&Replace with {0}", withLastSuffix), false,
             new ReplaceLinkAction(page.getTitle(), withLastSuffix, text, element, textPane, true),
             lastReplaceKeyStroke);
         lastReplaceKeyStroke = null;
@@ -307,12 +307,12 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         if ((last != null) && (!last.equals(withLastSuffix))) {
           preferredDabs.remove(last);
           addItem(
-              popup, null, GT._("&Link to {0}", last),
+              popup, null, GT._("&Link to {0}", last), false,
               new ReplaceLinkAction(page.getTitle(), last, text, element, textPane, false),
               lastLinkKeyStroke);
           lastLinkKeyStroke = null;
           addItem(
-              popup, null, GT._("&Replace with {0}", last),
+              popup, null, GT._("&Replace with {0}", last), false,
               new ReplaceLinkAction(page.getTitle(), last, text, element, textPane, true),
               lastReplaceKeyStroke);
           lastReplaceKeyStroke = null;
@@ -321,12 +321,12 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
       if (!preferredDabs.isEmpty()) {
         for (String title : preferredDabs) {
           fixedBeginLink += addItem(
-              submenuLink, null, title,
+              submenuLink, null, title, true,
               new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false),
               lastLinkKeyStroke);
           lastLinkKeyStroke = null;
           fixedBeginReplace += addItem(
-              submenuReplace, null, title,
+              submenuReplace, null, title, true,
               new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true),
               lastReplaceKeyStroke);
           lastReplaceKeyStroke = null;
@@ -344,7 +344,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         for (String wikt : wiktionary) {
           String name = "wikt:" + wikt;
           addItem(
-              submenuLink, null, name,
+              submenuLink, null, name, true,
               new ReplaceLinkAction(page.getTitle(), ":" + name, text, element, textPane, false));
         }
       }
@@ -365,31 +365,31 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
               List<String> anchors = anchorsRedirectMap.get(pageTmp);
 
               addItem(
-                  submenu1, pageTmp, null,
+                  submenu1, pageTmp, null, true,
                   new ReplaceLinkAction(page.getTitle(), pageTmp.getTitle(), text, element, textPane, false));
 
               addItem(
-                  submenu2, pageTmp, null,
+                  submenu2, pageTmp, null, true,
                   new ReplaceLinkAction(page.getTitle(), pageTmp.getTitle(), text, element, textPane, true));
 
               addItem(
-                  submenu3, pageTmp, null,
+                  submenu3, pageTmp, null, true,
                   new ChangePreferredDisambiguationAction(
                       page.getWikipedia(), page.getTitle(), pageTmp.getTitle(), true));
 
               if ((anchors != null) && (anchors.size() > 0)) {
                 for (String anchor : anchors) {
                   addItem(
-                      submenu1, pageTmp, anchor,
+                      submenu1, pageTmp, anchor, true,
                       new ReplaceLinkAction(page.getTitle(), anchor, text, element, textPane, false));
 
                   addItem(
-                      submenu2, pageTmp, anchor,
+                      submenu2, pageTmp, anchor, true,
                       new ReplaceLinkAction(page.getTitle(), anchor, text, element, textPane, true));
 
                   if (!preferredDabs.contains(anchor)) {
                     addItem(
-                        submenu3, pageTmp, anchor,
+                        submenu3, pageTmp, anchor, true,
                         new ChangePreferredDisambiguationAction(
                             page.getWikipedia(), page.getTitle(), anchor, true));
                   }
@@ -406,10 +406,10 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             JMenu submenu2 = new JMenu(p.getTitle());
 
             addItem(
-                submenu1, p, null,
+                submenu1, p, null, true,
                 new ReplaceLinkAction(page.getTitle(), p.getTitle(), text, element, textPane, false));
             addItem(
-                submenu2, p, null,
+                submenu2, p, null, true,
                 new ReplaceLinkAction(page.getTitle(), p.getTitle(), text, element, textPane, true));
 
             addSeparator(submenu1);
@@ -418,7 +418,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             List<Page> categoryMembers = p.getRelatedPages(Page.RelatedPages.CATEGORY_MEMBERS);
             if (categoryMembers == null) {
               addItem(
-                  submenu1, null, GT._("Reload category members"),
+                  submenu1, null, GT._("Reload category members"), true,
                   new ReloadCategoryMembersAction(wiki, p, null));
             } else {
               for (Page p2 : categoryMembers) {
@@ -430,10 +430,10 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
                 }
                 if (!already) {
                   addItem(
-                      submenu1, p2, null,
+                      submenu1, p2, null, true,
                       new ReplaceLinkAction(page.getTitle(), p2.getTitle(), text, element, textPane, false));
                   addItem(
-                      submenu2, p2, null,
+                      submenu2, p2, null, true,
                       new ReplaceLinkAction(page.getTitle(), p2.getTitle(), text, element, textPane, true));
                 }
               }
@@ -443,16 +443,16 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             addSubmenu(submenuReplace, submenu2, 2, 0);
           } else {
             addItem(
-                submenuLink, p, null,
+                submenuLink, p, null, true,
                 new ReplaceLinkAction(page.getTitle(), p.getTitle(), text, element, textPane, false));
 
             addItem(
-                submenuReplace, p, null,
+                submenuReplace, p, null, true,
                 new ReplaceLinkAction(page.getTitle(), p.getTitle(), text, element, textPane, true));
 
             if (!preferredDabs.contains(p.getTitle())) {
               addItem(
-                  submenuAddPreferred, p, null,
+                  submenuAddPreferred, p, null, true,
                   new ChangePreferredDisambiguationAction(
                       page.getWikipedia(), page.getTitle(), p.getTitle(), true));
             }
@@ -462,16 +462,16 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             if (anchors != null) {
               for (String anchor : anchors) {
                 addItem(
-                    submenuLink, p, anchor,
+                    submenuLink, p, anchor, true,
                     new ReplaceLinkAction(page.getTitle(), anchor, text, element, textPane, false));
 
                 addItem(
-                    submenuReplace, p, anchor,
+                    submenuReplace, p, anchor, true,
                     new ReplaceLinkAction(page.getTitle(), anchor, text, element, textPane, true));
 
                 if (!preferredDabs.contains(anchor)) {
                   addItem(
-                      submenuAddPreferred, p, anchor,
+                      submenuAddPreferred, p, anchor, true,
                       new ChangePreferredDisambiguationAction(
                           page.getWikipedia(), page.getTitle(), anchor, true));
                 }
@@ -491,11 +491,11 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
               withLastSuffix = null;
             }
             fixedEndLink += addItem(
-                submenuLink, null, title,
+                submenuLink, null, title, true,
                 new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false),
                 (preferredDabs.size() == 1) ? lastLinkKeyStroke : null);
             fixedEndReplace += addItem(
-                submenuReplace, null, title,
+                submenuReplace, null, title, true,
                 new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true),
                 (preferredDabs.size() == 1) ? lastReplaceKeyStroke : null);
           }
@@ -507,7 +507,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
 
       submenuAddPreferred.addSeparator();
       addItem(
-          submenuAddPreferred, null, GT._("Add other preferred disambiguation..."),
+          submenuAddPreferred, null, GT._("Add other preferred disambiguation..."), true,
           new ChangePreferredDisambiguationAction(
               page.getWikipedia(),
               page.getTitle(), textPane,
@@ -521,7 +521,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         JMenu submenuRemove = new JMenu(GT._("Remove from preferred disambiguations"));
         for (String title : preferredDabs) {
           addItem(
-              submenuRemove, null, title,
+              submenuRemove, null, title, true,
               new ChangePreferredDisambiguationAction(
                   page.getWikipedia(), page.getTitle(), title, false),
               null);
@@ -532,7 +532,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
       if (!Page.areSameTitle(text, page.getTitle())) {
         String newLink = PageElementInternalLink.createInternalLink(text, page.getTitle());
         addItem(
-            popup, null, GT._("Reverse to {0}", newLink),
+            popup, null, GT._("Reverse to {0}", newLink), true,
             new RevertLinkAction(page.getTitle(), text, element, textPane), null);
       }
 
@@ -541,17 +541,17 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
       String title = page.getRedirectTitle();
 
       addItem(
-          popup, null, GT._("&Link to {0}", title),
+          popup, null, GT._("&Link to {0}", title), false,
           new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, false));
 
       addItem(
-          popup, null, GT._("&Replace with {0}", title),
+          popup, null, GT._("&Replace with {0}", title), false,
           new ReplaceLinkAction(page.getTitle(), title, text, element, textPane, true));
 
       if (!Page.areSameTitle(text, page.getTitle())) {
         String newLink = PageElementInternalLink.createInternalLink(text, page.getTitle());
         addItem(
-            popup, null, GT._("Reverse to {0}", newLink),
+            popup, null, GT._("Reverse to {0}", newLink), true,
             new RevertLinkAction(page.getTitle(), text, element, textPane));
       }
 
@@ -560,7 +560,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
       if (!Page.areSameTitle(text, page.getTitle())) {
         String newLink = PageElementInternalLink.createInternalLink(text, page.getTitle());
         addItem(
-            popup, null, GT._("Reverse to {0}", newLink),
+            popup, null, GT._("Reverse to {0}", newLink), true,
             new RevertLinkAction(page.getTitle(), text, element, textPane));
       }
     }
@@ -625,7 +625,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           // Preferred disambiguations
           for (String preferredDab : preferredDabs) {
             fixedBegin += addItem(
-                submenu, null, preferredDab,
+                submenu, null, preferredDab, true,
                 new ReplaceTextAction(
                     matcher.getReplacement(page, template, indexReplacement, preferredDab),
                     element, textPane));
@@ -635,7 +635,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           String title = LinkReplacement.getLastReplacement(disambigPage.getTitle());
           if (title != null) {
             fixedBegin += addItem(
-                submenu, null, title,
+                submenu, null, title, true,
                 new ReplaceTextAction(
                     matcher.getReplacement(page, template, indexReplacement, title),
                     element, textPane));
@@ -651,7 +651,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           for (String wikt : wiktionary) {
             String name = "wikt:" + wikt;
             addItem(
-                submenu, null, name,
+                submenu, null, name, true,
                 new ReplaceTextAction(
                     matcher.getReplacement(page, template, indexReplacement, name),
                     element, textPane));
@@ -676,7 +676,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
                 List<String> anchors = anchorsRedirectMap.get(pageTmp);
 
                 addItem(
-                    submenu1, pageTmp, null,
+                    submenu1, pageTmp, null, true,
                     new ReplaceTextAction(
                         matcher.getReplacement(page, template, indexReplacement, pageTmp.getTitle()),
                         element, textPane));
@@ -684,7 +684,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
                 if ((anchors != null) && (anchors.size() > 0)) {
                   for (String anchor : anchors) {
                     addItem(
-                        submenu1, pageTmp, anchor,
+                        submenu1, pageTmp, anchor, true,
                         new ReplaceTextAction(
                             matcher.getReplacement(page, template, indexReplacement, anchor),
                             element, textPane));
@@ -695,7 +695,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
               submenu.add(submenu1);
             } else {
               addItem(
-                  submenu, p, null,
+                  submenu, p, null, true,
                   new ReplaceTextAction(
                       matcher.getReplacement(page, template, indexReplacement, p.getTitle()),
                       element, textPane));
@@ -705,7 +705,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
               if (anchors != null) {
                 for (String anchor : anchors) {
                   addItem(
-                      submenu, p, anchor,
+                      submenu, p, anchor, true,
                       new ReplaceTextAction(
                           matcher.getReplacement(page, template, indexReplacement, anchor),
                           element, textPane));
@@ -721,7 +721,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             fixedEnd += addSeparator(submenu);
             for (String preferredDab : preferredDabs) {
               fixedEnd += addItem(
-                  submenu, null, preferredDab,
+                  submenu, null, preferredDab, true,
                   new ReplaceTextAction(
                       matcher.getReplacement(page, template, indexReplacement, preferredDab),
                       element, textPane));
@@ -732,7 +732,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             if (title != null) {
               fixedEnd += addSeparator(submenu);
               fixedEnd += addItem(
-                  submenu, null, title,
+                  submenu, null, title, true,
                   new ReplaceTextAction(
                       matcher.getReplacement(page, template, indexReplacement, title),
                       element, textPane));
