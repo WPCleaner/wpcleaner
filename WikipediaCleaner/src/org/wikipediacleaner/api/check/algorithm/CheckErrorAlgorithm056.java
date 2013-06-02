@@ -120,10 +120,7 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
       String[] arrows = null;
       if (shouldCheck) {
         for (int i = 0; (i < allArrows.length) && (arrowLen == 0); i++) {
-          if ((allArrows[i] != null) &&
-              (allArrows[i].length > 0) &&
-              (allArrows[i][0] != null) &&
-              (contents.startsWith(allArrows[i][0], currentIndex))) {
+          if (contents.startsWith(allArrows[i][0], currentIndex)) {
             arrowLen = allArrows[i][0].length();
             arrows = allArrows[i];
           }
