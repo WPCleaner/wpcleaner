@@ -670,7 +670,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Bot fixing of all the errors in the page.
+   * Automatic fixing of some errors in the page.
    * 
    * @param analysis Page analysis.
    * @return Page contents after fix.
