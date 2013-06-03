@@ -21,6 +21,8 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.WikiConfiguration;
+import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -51,40 +53,68 @@ public class CheckErrorAlgorithm502 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve template namespace
-    Namespace templateNamespace = pageAnalysis.getWikiConfiguration().getNamespace(Namespace.TEMPLATE);
+    // Retrieve informations
+    WikiConfiguration config = pageAnalysis.getWikiConfiguration();
+    Namespace templateNamespace = config.getNamespace(Namespace.TEMPLATE);
 
-    // Check every template
+    // Check every template to if template name contains template namespace
     Collection<PageElementTemplate> templates = pageAnalysis.getTemplates();
     if ((templates == null) || (templates.isEmpty())) {
       return false;
     }
     boolean result = false;
     for (PageElementTemplate template : templates) {
-      // Check if template name contains template namespace
       String templateName = template.getTemplateName();
       int colonIndex = templateName.indexOf(':');
+      String namespace = (colonIndex > 0) ? templateName.substring(0, colonIndex) : null;
       if ((colonIndex > 0) &&
-          (templateNamespace.isPossibleName(templateName.substring(0, colonIndex)))) {
-        if (errors == null) {
-          return true;
+          (templateNamespace.isPossibleName(namespace))) {
+
+        // Test for special situations (functions)
+        MagicWord magicWord = null;
+        if (templateName.length() > colonIndex + 1) {
+          String afterColon = templateName.substring(colonIndex + 1);
+          colonIndex = afterColon.indexOf(':');
+          if (colonIndex < 0) {
+            magicWord = config.getFunctionMagicWord(afterColon, false);
+          } else {
+            magicWord = config.getFunctionMagicWord(afterColon.substring(0, colonIndex), true);
+          }
         }
-        result = true;
-        String namespace = templateName.substring(0, colonIndex);
-        CheckErrorResult error = createCheckErrorResult(
-            pageAnalysis.getPage(),
-            template.getBeginIndex(),
-            template.getEndIndex());
-        String fullTemplate = pageAnalysis.getContents().substring(
-            template.getBeginIndex(), template.getEndIndex());
-        colonIndex = fullTemplate.indexOf(':');
-        error.addReplacement(
-            "{{" + fullTemplate.substring(colonIndex + 1).trim(),
-            GT._("Remove {0} namespace from template name", namespace));
-        errors.add(error);
+
+        // Raise error
+        if (magicWord == null) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult error = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              template.getBeginIndex(),
+              template.getEndIndex());
+          String fullTemplate = pageAnalysis.getContents().substring(
+              template.getBeginIndex(), template.getEndIndex());
+          colonIndex = fullTemplate.indexOf(':');
+          error.addReplacement(
+              "{{" + fullTemplate.substring(colonIndex + 1).trim(),
+              GT._("Remove {0} namespace from template name", namespace),
+              true);
+          errors.add(error);
+        }
       }
     }
 
     return result;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String automaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
