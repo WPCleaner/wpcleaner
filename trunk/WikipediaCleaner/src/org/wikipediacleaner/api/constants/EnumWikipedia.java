@@ -54,6 +54,7 @@ import org.wikipediacleaner.api.constants.wiki.WikipediaId;
 import org.wikipediacleaner.api.constants.wiki.WikipediaIs;
 import org.wikipediacleaner.api.constants.wiki.WikipediaIt;
 import org.wikipediacleaner.api.constants.wiki.WikipediaJa;
+import org.wikipediacleaner.api.constants.wiki.WikipediaKo;
 import org.wikipediacleaner.api.constants.wiki.WikipediaLa;
 import org.wikipediacleaner.api.constants.wiki.WikipediaNds;
 import org.wikipediacleaner.api.constants.wiki.WikipediaNdsNl;
@@ -120,6 +121,7 @@ public enum EnumWikipedia {
   IS(new WikipediaIs()),
   IT(new WikipediaIt()),
   JA(new WikipediaJa()),
+  Ko(new WikipediaKo()),
   LA(new WikipediaLa()),
   NDS(new WikipediaNds()),
   NDS_NL(new WikipediaNdsNl()),
