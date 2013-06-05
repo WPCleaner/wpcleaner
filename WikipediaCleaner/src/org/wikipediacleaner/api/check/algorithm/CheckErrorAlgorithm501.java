@@ -164,8 +164,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
         // Manage comment
         String comment = replacement.getComment();
-        if ((comment != null) &&
-            (!comment.equals(previousComment))) {
+        if (comment == null) {
+          error.addPossibleAction(null, new NullActionProvider());
+        } else if (!comment.equals(previousComment)) {
           error.addPossibleAction(comment, new NullActionProvider());
         }
         previousComment = comment;
@@ -797,9 +798,19 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         return (o1.isOtherPattern() ? 1 : -1);
       }
 
+      // Comparison on automatic
+      if (o1.isAutomatic() != o2.isAutomatic()) {
+        return o1.isAutomatic() ? -1 : 1;
+      }
+
       // Comparison on begin
       if (o1.getBegin() != o2.getBegin()) {
         return (o1.getBegin() < o2.getBegin() ? -1 : 1);
+      }
+
+      // Comparison on end
+      if (o1.getEnd() != o2.getEnd()) {
+        return (o1.getEnd() > o2.getEnd() ? -1 : 1);
       }
 
       // Comparison on comments
@@ -814,11 +825,6 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
         if (compare != 0) {
           return compare;
         }
-      }
-
-      // Comparison on end
-      if (o1.getEnd() != o2.getEnd()) {
-        return (o1.getEnd() > o2.getEnd() ? -1 : 1);
       }
 
       return 0;
