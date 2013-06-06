@@ -98,12 +98,14 @@ public class PageAnalysisUtils {
 
           // Check if link is marked as needing help
           boolean helpNeeded = false;
-          if ((currentPos < maxSize) && (contents.charAt(currentPos) == '{')) {
-            PageElementTemplate nextTemplate = pageAnalysis.isInTemplate(currentPos);
-            if (nextTemplate != null) {
-              for (String templateAfter : templatesAfter) {
-                if (Page.areSameTitle(templateAfter, nextTemplate.getTemplateName())) {
-                  helpNeeded = true;
+          if (templatesAfter != null) {
+            if ((currentPos < maxSize) && (contents.charAt(currentPos) == '{')) {
+              PageElementTemplate nextTemplate = pageAnalysis.isInTemplate(currentPos);
+              if (nextTemplate != null) {
+                for (String templateAfter : templatesAfter) {
+                  if (Page.areSameTitle(templateAfter, nextTemplate.getTemplateName())) {
+                    helpNeeded = true;
+                  }
                 }
               }
             }
