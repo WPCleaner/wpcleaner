@@ -1250,18 +1250,32 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     }
 
     // Find where to add the template
+    int crBefore = 0;
+    int crAfter = 2;
     int index = contents.length();
-    int indexNewLine = contents.indexOf('\n');
-    if (indexNewLine > 0) {
-      index = indexNewLine;
+    templates = analysis.getTemplates();
+    if ((templates != null) && (!templates.isEmpty())) {
+      index = templates.get(0).getBeginIndex();
+      crAfter = 1;
+      int indexNewLine = contents.indexOf('\n');
+      if ((indexNewLine > 0) && (indexNewLine > index)) {
+        crBefore = 2;
+      }
     } else {
       List<PageElementCategory> categories = analysis.getCategories();
-      if (!categories.isEmpty()) {
+      if ((categories != null) && (!categories.isEmpty())) {
         index = categories.get(0).getBeginIndex();
       } else {
         List<PageElementLanguageLink> langLinks = analysis.getLanguageLinks();
         if ((langLinks != null) && (!langLinks.isEmpty())) {
           index = langLinks.get(0).getBeginIndex();
+        } else {
+          int indexNewLine = contents.indexOf('\n');
+          if (indexNewLine > 0) {
+            index = indexNewLine;
+          }
+          crBefore = 2;
+          crAfter = 0;
         }
       }
     }
@@ -1271,13 +1285,16 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     if (index > 0) {
       newContents.append(contents.substring(0, index));
     }
-    newContents.append(" {{");
+    for (int i = 0; i < crBefore; i++) {
+      newContents.append("\n");
+    }
+    newContents.append("{{");
     newContents.append(templateName);
     newContents.append("}}");
+    for (int i = 0; i < crAfter; i++) {
+      newContents.append("\n");
+    }
     if (index < contents.length()) {
-      if (contents.charAt(index) != '\n') {
-        newContents.append('\n');
-      }
       newContents.append(contents.substring(index));
     }
     getTextContents().changeText(newContents.toString());
