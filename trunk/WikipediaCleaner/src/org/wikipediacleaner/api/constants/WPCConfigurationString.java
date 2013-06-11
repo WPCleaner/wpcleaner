@@ -82,6 +82,8 @@ public enum WPCConfigurationString {
   REDIRECT_WARNING_BEFORE_REPLACEMENT("redirect_warning_before_replacement", null, true, true, true),
   // "To do" sub-page
   TODO_SUBPAGE("general_todo_subpage", null, false, true, false),
+  // Text to use in the "To do" sub-page for requesting its deletion
+  TODO_SUBPAGE_DELETE("general_todo_subpage_delete", null, false, true, true),
   // Comment used when translating
   TRANSLATION_COMMENT("translation_comment", null, false, true, true),
   // User

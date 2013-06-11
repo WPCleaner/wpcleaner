@@ -740,9 +740,13 @@ public class UpdateDabWarningTools {
         (wikipedia.getConnection().getUser().hasRight(User.RIGHT_DELETE))) {
       api.deletePage(wikipedia, todoSubpage, reason);
     } else {
-      updatePage(
-          todoSubpage, tmp.toString(),
-          reason, false);
+      if (newContents.trim().length() == 0) {
+        String delete = configuration.getString(WPCConfigurationString.TODO_SUBPAGE_DELETE);
+        if ((delete != null) && (delete.trim().length() > 0)) {
+          newContents = delete;
+        }
+      }
+      updatePage(todoSubpage, newContents, reason, false);
     }
 
     return true;
