@@ -67,11 +67,7 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
         if ((value != null) && (value.trim().length() > 0)) {
           PageElementTag.Parameter nameParam = tag.getParameter("name");
           if (nameParam != null) {
-            PageElementTag.Parameter groupParam = tag.getParameter("group");
-            String groupValue = (groupParam != null) ? groupParam.getValue() : null;
-            if ((groupValue != null) && (groupValue.length() == 0)) {
-              groupValue = null;
-            }
+            String groupValue = tag.getGroupOfRef(analysis);
             Set<String> set = names.get(groupValue);
             if (set == null) {
               set = new HashSet<String>();

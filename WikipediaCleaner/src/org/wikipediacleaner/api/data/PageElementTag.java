@@ -21,6 +21,9 @@ package org.wikipediacleaner.api.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+
 
 /**
  * Class containing information about a tag (&lt;<i>tag</i>&gt;).
@@ -475,6 +478,62 @@ public class PageElementTag extends PageElement {
     this.parameters = parameters;
     this.endTag = endTag;
     this.fullTag = fullTag;
+  }
+
+  /**
+   * Retrieve the group name of a ref tag.
+   * 
+   * @param analysis Page analysis.
+   * @param ref Ref tag.
+   * @return Group of the ref tag.
+   */
+  public String getGroupOfRef(PageAnalysis analysis) {
+    String result = null;
+
+    // Check for a group parameter in the tag
+    Parameter group = getParameter("group");
+    if (group != null) {
+      result = group.getValue();
+    } else {
+
+      // Check for a group parameter in the references tag
+      PageElementTag references = analysis.getSurroundingTag(
+          PageElementTag.TAG_WIKI_REFERENCES, getBeginIndex());
+      if (references != null) {
+        group = references.getParameter("group");
+        if (group != null) {
+          result = group.getValue();
+        }
+      } else {
+  
+        // Check for a group parameter in the references templates
+        WPCConfiguration config = analysis.getWPCConfiguration();
+        List<String[]> templates = config.getStringArrayList(WPCConfigurationStringList.REFERENCES_TEMPLATES);
+        if (templates != null) {
+          PageElementTemplate template = analysis.isInTemplate(getBeginIndex());
+          if (template != null) {
+            for (String[] elements : templates) {
+              if (elements.length > 1) {
+                if (Page.areSameTitle(template.getTemplateName(), elements[0])) {
+                  String[] argNames = elements[1].split(",");
+                  for (String argName : argNames) {
+                    String tmp = template.getParameterValue(argName);
+                    if ((result == null) && (tmp != null)) {
+                      result = tmp;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    if ((result == null) || (result.trim().length() == 0)) {
+      return null;
+    }
+    return result.trim();
   }
 
   /**
