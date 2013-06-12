@@ -91,7 +91,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
           (valueBeginIndex < valueEndIndex)) {
 
         // Retrieve references with the same group name
-        String groupName = getGroup(analysis, tag);
+        String groupName = tag.getGroupOfRef(analysis);
         Map<String, List<PageElementTag>> groupRefs = refs.get(groupName);
         if (groupRefs == null) {
           groupRefs = new HashMap<String, List<PageElementTag>>();
@@ -114,38 +114,6 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       }
     }
     return result;
-  }
-
-  /**
-   * @param analysis Page analysis.
-   * @param ref Tag.
-   * @return Group of the reference tag.
-   */
-  private String getGroup(PageAnalysis analysis, PageElementTag ref) {
-    if (ref == null) {
-      return null;
-    }
-
-    // Check for a group parameter in the tag
-    Parameter group = ref.getParameter("group");
-    if (group != null) {
-      return group.getValue();
-    }
-
-    // Check for a group parameter in the references tag
-    PageElementTag references = analysis.getSurroundingTag(
-        PageElementTag.TAG_WIKI_REFERENCES, ref.getBeginIndex());
-    if (references != null) {
-      group = references.getParameter("group");
-      if (group != null) {
-        return group.getValue();
-      }
-    }
-
-    // Check for a group parameter in the references template
-    // TODO
-
-    return null;
   }
 
   /**
@@ -492,7 +460,6 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String automaticFix(PageAnalysis analysis) {
-    return analysis.getContents();
-    // TODO: return fixUsingAutomaticReplacement(analysis);
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
