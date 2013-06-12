@@ -71,16 +71,16 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   /**
    * Group tags by group and value.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param refs Tags (out).
    * @return True if there are several tags with the same text.
    */
   private boolean groupTags(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Map<String, Map<String, List<PageElementTag>>> refs) {
     List<PageElementTag> completeRefTags =
-        pageAnalysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
-    String contents = pageAnalysis.getContents();
+        analysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
+    String contents = analysis.getContents();
     boolean result = false;
     for (PageElementTag tag : completeRefTags) {
       int valueBeginIndex = tag.getValueBeginIndex();
@@ -91,8 +91,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
           (valueBeginIndex < valueEndIndex)) {
 
         // Retrieve references with the same group name
-        Parameter group = tag.getParameter("group");
-        String groupName = (group != null) ? group.getValue() : null;
+        String groupName = getGroup(analysis, tag);
         Map<String, List<PageElementTag>> groupRefs = refs.get(groupName);
         if (groupRefs == null) {
           groupRefs = new HashMap<String, List<PageElementTag>>();
@@ -115,6 +114,38 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
       }
     }
     return result;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param ref Tag.
+   * @return Group of the reference tag.
+   */
+  private String getGroup(PageAnalysis analysis, PageElementTag ref) {
+    if (ref == null) {
+      return null;
+    }
+
+    // Check for a group parameter in the tag
+    Parameter group = ref.getParameter("group");
+    if (group != null) {
+      return group.getValue();
+    }
+
+    // Check for a group parameter in the references tag
+    PageElementTag references = analysis.getSurroundingTag(
+        PageElementTag.TAG_WIKI_REFERENCES, ref.getBeginIndex());
+    if (references != null) {
+      group = references.getParameter("group");
+      if (group != null) {
+        return group.getValue();
+      }
+    }
+
+    // Check for a group parameter in the references template
+    // TODO
+
+    return null;
   }
 
   /**
@@ -461,6 +492,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String automaticFix(PageAnalysis analysis) {
-    return fixUsingAutomaticReplacement(analysis);
+    return analysis.getContents();
+    // TODO: return fixUsingAutomaticReplacement(analysis);
   }
 }
