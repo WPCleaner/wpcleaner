@@ -24,6 +24,8 @@ package org.wikipediacleaner.api.constants;
  */
 public enum WPCConfigurationBoolean {
 
+  // Allow disambiguation warning outside section 0 of talk page.
+  DAB_WARNING_SECTION_0("dab_warning_section_0", true, true, false),
   // Force usage of "to do" sub-page in main name space.
   TODO_SUBPAGE_FORCE("general_todo_subpage_force", false, true, false),
   // Force usage of "to do" sub-page in other name spaces.

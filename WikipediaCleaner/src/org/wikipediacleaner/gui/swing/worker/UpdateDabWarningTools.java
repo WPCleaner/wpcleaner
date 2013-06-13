@@ -62,70 +62,72 @@ public class UpdateDabWarningTools {
 
   private final static Log log = LogFactory.getLog(UpdateDabWarningTools.class);
 
-  private final EnumWikipedia wikipedia;
+  private final EnumWikipedia wiki;
   private final WPCConfiguration configuration;
   private final BasicWorker worker;
   private final BasicWindow window;
   private final boolean createWarning;
   private final boolean automaticEdit;
+  private final boolean section0;
   private final Map<String, Page> dabPages;
   private final Map<String, Page> nonDabPages;
   private final API api;
 
   /**
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param worker Worker.
    */
-  public UpdateDabWarningTools(EnumWikipedia wikipedia, BasicWorker worker) {
-    this(wikipedia, worker, true, false);
+  public UpdateDabWarningTools(EnumWikipedia wiki, BasicWorker worker) {
+    this(wiki, worker, true, false);
   }
 
   /**
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param worker Worker.
    * @param createWarning Create warning if necessary.
    * @param automaticEdit True if the edits are automatic.
    */
   public UpdateDabWarningTools(
-      EnumWikipedia wikipedia, BasicWorker worker,
+      EnumWikipedia wiki, BasicWorker worker,
       boolean createWarning, boolean automaticEdit) {
-    this(wikipedia, worker, (worker != null) ? worker.getWindow() : null, createWarning, automaticEdit);
+    this(wiki, worker, (worker != null) ? worker.getWindow() : null, createWarning, automaticEdit);
   }
 
   /**
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param window Window.
    */
-  public UpdateDabWarningTools(EnumWikipedia wikipedia, BasicWindow window) {
-    this(wikipedia, null, window, true, false);
+  public UpdateDabWarningTools(EnumWikipedia wiki, BasicWindow window) {
+    this(wiki, null, window, true, false);
   }
 
   /**
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param window Window.
    * @param createWarning Create warning if necessary.
    */
-  public UpdateDabWarningTools(EnumWikipedia wikipedia, BasicWindow window, boolean createWarning) {
-    this(wikipedia, null, window, createWarning, false);
+  public UpdateDabWarningTools(EnumWikipedia wiki, BasicWindow window, boolean createWarning) {
+    this(wiki, null, window, createWarning, false);
   }
 
   /**
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param worker Worker.
    * @param window Window.
    * @param createWarning Create warning if necessary.
    * @param automaticEdit True if the edits are automatic.
    */
   private UpdateDabWarningTools(
-      EnumWikipedia wikipedia,
+      EnumWikipedia wiki,
       BasicWorker worker, BasicWindow window,
       boolean createWarning, boolean automaticEdit) {
-    this.wikipedia = wikipedia;
-    this.configuration = wikipedia.getConfiguration();
+    this.wiki = wiki;
+    this.configuration = wiki.getConfiguration();
     this.worker = worker;
     this.window = window;
     this.createWarning = createWarning;
     this.automaticEdit = automaticEdit;
+    this.section0 = configuration.getBoolean(WPCConfigurationBoolean.DAB_WARNING_SECTION_0);
     this.dabPages = new HashMap<String, Page>();
     this.nonDabPages = new HashMap<String, Page>();
     this.api = APIFactory.getAPI();
@@ -138,7 +140,7 @@ public class UpdateDabWarningTools {
     dabPages.clear();
     nonDabPages.clear();
     try {
-      wikipedia.loadDisambiguationPages(api);
+      wiki.loadDisambiguationPages(api);
     } catch (APIException e) {
       log.error("Error preloading disambiguation pages", e);
     }
@@ -169,7 +171,7 @@ public class UpdateDabWarningTools {
     // Retrieving links in each page
     if (!linksAvailable) {
       for (Page page : pages) {
-        mw.retrieveAllLinks(wikipedia, page, Namespace.MAIN, null, false);
+        mw.retrieveAllLinks(wiki, page, Namespace.MAIN, null, false);
       }
       mw.block(true);
       if (shouldStop()) {
@@ -180,7 +182,7 @@ public class UpdateDabWarningTools {
     // Retrieving disambiguation information in each page
     boolean hasDisambiguationLink = false;
     if (!dabInformationAvailable) {
-      if (!wikipedia.isDisambiguationPagesLoaded()) {
+      if (!wiki.isDisambiguationPagesLoaded()) {
         List<Page> tmpPages = new ArrayList<Page>();
         for (Page page : pages) {
           for (int numLink = 0; numLink < page.getLinks().size(); numLink++) {
@@ -196,7 +198,7 @@ public class UpdateDabWarningTools {
           }
         }
         if (!tmpPages.isEmpty()) {
-          mw.retrieveDisambiguationInformation(wikipedia, tmpPages, null, false, false, true);
+          mw.retrieveDisambiguationInformation(wiki, tmpPages, null, false, false, true);
         }
         for (Page page : tmpPages) {
           if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
@@ -211,7 +213,7 @@ public class UpdateDabWarningTools {
           List<Page> links = page.getLinksWithRedirect();
           for (int numLink = 0; numLink < links.size(); numLink++) {
             Page link = links.get(numLink);
-            if (Boolean.TRUE.equals(wikipedia.isDisambiguationPage(link))) {
+            if (Boolean.TRUE.equals(wiki.isDisambiguationPage(link))) {
               link.setDisambiguationPage(Boolean.TRUE);
               hasDisambiguationLink = true;
             } else {
@@ -240,7 +242,7 @@ public class UpdateDabWarningTools {
         }
       }
       if (!tmpPages.isEmpty()) {
-        mw.retrieveContents(wikipedia, tmpPages, true, false, false);
+        mw.retrieveContents(wiki, tmpPages, true, false, false);
       }
     }
 
@@ -256,8 +258,12 @@ public class UpdateDabWarningTools {
         mapTodoSubpages.put(page, todoSubpage);
       }
     }
-    mw.retrieveSectionContents(wikipedia, mapTalkPages.values(), 0, false);
-    mw.retrieveContents(wikipedia, mapTodoSubpages.values(), true, false, false);
+    if (section0) {
+      mw.retrieveSectionContents(wiki, mapTalkPages.values(), 0, false);
+    } else {
+      mw.retrieveContents(wiki, mapTalkPages.values(), false, false, false);
+    }
+    mw.retrieveContents(wiki, mapTodoSubpages.values(), true, false, false);
     if (mw.shouldStop()) {
       return Collections.emptyList();
     }
@@ -308,7 +314,11 @@ public class UpdateDabWarningTools {
     if (talkPage == null) {
       talkPage = page.getTalkPage();
       setText(GT._("Retrieving page contents - {0}", talkPage.getTitle()));
-      api.retrieveSectionContents(wikipedia, talkPage, 0);
+      if (section0) {
+        api.retrieveSectionContents(wiki, talkPage, 0);
+      } else {
+        api.retrieveContents(wiki, Collections.singletonList(talkPage), false, false);
+      }
     }
 
     // "To do" sub-page
@@ -319,7 +329,7 @@ public class UpdateDabWarningTools {
       if (todoSubpage == null) {
         todoSubpage = talkPage.getSubPage(todoSubpageAttr);
         setText(GT._("Retrieving page contents - {0}", todoSubpage.getTitle()));
-        api.retrieveContents(wikipedia, Collections.singletonList(todoSubpage), false, false);
+        api.retrieveContents(wiki, Collections.singletonList(todoSubpage), false, false);
       }
 
       // If we force the use of "To do" sub-page, the disambiguation warning must be on it
@@ -465,7 +475,7 @@ public class UpdateDabWarningTools {
       tmp.append('\n');
       updatePage(
           todoSubpage, tmp.toString(),
-          wikipedia.formatComment(
+          wiki.formatComment(
               configuration.getDisambiguationWarningComment(dabLinks),
               automaticEdit),
           false);
@@ -499,8 +509,8 @@ public class UpdateDabWarningTools {
         tmp.append(contents.substring(index));
       }
       api.updatePage(
-          wikipedia, todoSubpage, tmp.toString(),
-          wikipedia.formatComment(
+          wiki, todoSubpage, tmp.toString(),
+          wiki.formatComment(
               configuration.getDisambiguationWarningComment(dabLinks),
               automaticEdit),
           false);
@@ -600,12 +610,10 @@ public class UpdateDabWarningTools {
         }
         tmp.append(contents.substring(indexStart));
       }
-      updateSection(
-          talkPage,
-          wikipedia.formatComment(
-              configuration.getDisambiguationWarningComment(dabLinks),
-              automaticEdit),
-          0, tmp.toString(), false);
+      String comment = wiki.formatComment(
+          configuration.getDisambiguationWarningComment(dabLinks),
+          automaticEdit);
+      updateTalkPage(talkPage, tmp.toString(), comment);
 
       // Inform creator and modifiers of the page
       informContributors(analysis, dabLinks, creator, modifiers);
@@ -646,12 +654,10 @@ public class UpdateDabWarningTools {
         }
         tmp.append(contents.substring(indexEnd));
       }
-      updateSection(
-          talkPage,
-          wikipedia.formatComment(
-              configuration.getDisambiguationWarningComment(dabLinks),
-              automaticEdit),
-          0, tmp.toString(), false);
+      String comment = wiki.formatComment(
+          configuration.getDisambiguationWarningComment(dabLinks),
+          automaticEdit);
+      updateTalkPage(talkPage, tmp.toString(), comment);
       return true;
     }
 
@@ -672,12 +678,10 @@ public class UpdateDabWarningTools {
       if (templateTodo.getEndIndex() < contents.length()) {
         tmp.append(contents.substring(templateTodo.getEndIndex()));
       }
-      updateSection(
-          talkPage,
-          wikipedia.formatComment(
-              configuration.getDisambiguationWarningComment(dabLinks),
-              automaticEdit),
-          0, tmp.toString(), false);
+      String comment = wiki.formatComment(
+          configuration.getDisambiguationWarningComment(dabLinks),
+          automaticEdit);
+      updateTalkPage(talkPage, tmp.toString(), comment);
       return true;
     }
 
@@ -734,11 +738,11 @@ public class UpdateDabWarningTools {
 
     // Remove the disambiguation warning
     String newContents = tmp.toString();
-    String reason = wikipedia.formatComment(configuration.getDisambiguationWarningCommentDone(), automaticEdit);
+    String reason = wiki.formatComment(configuration.getDisambiguationWarningCommentDone(), automaticEdit);
     if ((newContents.trim().length() == 0) &&
-        (wikipedia.getConnection().getUser() != null) &&
-        (wikipedia.getConnection().getUser().hasRight(User.RIGHT_DELETE))) {
-      api.deletePage(wikipedia, todoSubpage, reason);
+        (wiki.getConnection().getUser() != null) &&
+        (wiki.getConnection().getUser().hasRight(User.RIGHT_DELETE))) {
+      api.deletePage(wiki, todoSubpage, reason);
     } else {
       if (newContents.trim().length() == 0) {
         String delete = configuration.getString(WPCConfigurationString.TODO_SUBPAGE_DELETE);
@@ -771,12 +775,11 @@ public class UpdateDabWarningTools {
       return false;
     }
     if (Boolean.FALSE.equals(talkPage.isExisting())) {
-      updateSection(
-          talkPage,
-          wikipedia.formatComment(
-              configuration.getDisambiguationWarningComment(dabLinks),
-              automaticEdit),
-          0, "{{" + todoTemplates.get(0) + "}}", false);
+      String comment = wiki.formatComment(
+          configuration.getDisambiguationWarningComment(dabLinks),
+          automaticEdit);
+      String newContents = "{{" + todoTemplates.get(0) + "}}";
+      updateTalkPage(talkPage, newContents, comment);
       return true;
     }
 
@@ -839,12 +842,10 @@ public class UpdateDabWarningTools {
         }
         tmp.append(contents.substring(indexStart));
       }
-      updateSection(
-          talkPage,
-          wikipedia.formatComment(
-              configuration.getDisambiguationWarningComment(dabLinks),
-              automaticEdit),
-          0, tmp.toString(), false);
+      String comment = wiki.formatComment(
+          configuration.getDisambiguationWarningComment(dabLinks),
+          automaticEdit);
+      updateTalkPage(talkPage, tmp.toString(), comment);
       return true;
     }
     if (templateTodo.getParameterValue("1") == null) {
@@ -914,12 +915,10 @@ public class UpdateDabWarningTools {
         }
         tmp.append(contents.substring(templateTodo.getEndIndex()));
       }
-      updateSection(
-          talkPage,
-          wikipedia.formatComment(
-              configuration.getDisambiguationWarningComment(dabLinks),
-              automaticEdit),
-          0, tmp.toString(), false);
+      String comment = wiki.formatComment(
+          configuration.getDisambiguationWarningComment(dabLinks),
+          automaticEdit);
+      updateTalkPage(talkPage, tmp.toString(), comment);
       return true;
     }
 
@@ -995,10 +994,9 @@ public class UpdateDabWarningTools {
         if (templateTodo.getEndIndex() < contents.length()) {
           tmp.append(contents.substring(templateTodo.getEndIndex()));
         }
-        updateSection(
-            talkPage,
-            wikipedia.formatComment(configuration.getDisambiguationWarningCommentDone(), automaticEdit),
-            0, tmp.toString(), false);
+        String comment = wiki.formatComment(
+            configuration.getDisambiguationWarningCommentDone(), automaticEdit);
+        updateTalkPage(talkPage, tmp.toString(), comment);
         return true;
       }
     }
@@ -1086,7 +1084,7 @@ public class UpdateDabWarningTools {
     String signature = config.getString(null, ConfigurationValueString.SIGNATURE);
 
     // Retrieve user talk page name
-    Namespace userTalkNS = wikipedia.getWikiConfiguration().getNamespace(Namespace.USER_TALK);
+    Namespace userTalkNS = wiki.getWikiConfiguration().getNamespace(Namespace.USER_TALK);
     String userTalk = userTalkNS.getTitle() + ":" + user;
     Page userTalkPage = DataManager.getPage(analysis.getWikipedia(), userTalk, null, null, null);
 
@@ -1094,7 +1092,7 @@ public class UpdateDabWarningTools {
     try {
       if (globalTitle != null) {
         // Check if global title already exists in the talk page
-        List<Section> sections = api.retrieveSections(wikipedia, userTalkPage);
+        List<Section> sections = api.retrieveSections(wiki, userTalkPage);
         Section section = null;
         if (sections != null) {
           for (Section tmpSection : sections) {
@@ -1127,11 +1125,11 @@ public class UpdateDabWarningTools {
             fullMessage.append(" ==\n");
           }
           fullMessage.append(message);
-          api.addNewSection(wikipedia, userTalkPage, globalTitle, fullMessage.toString(), false);
+          api.addNewSection(wiki, userTalkPage, globalTitle, fullMessage.toString(), false);
         } else {
           // Add the message in the existing title
           Integer revisionId = userTalkPage.getRevisionId();
-          api.retrieveSectionContents(wikipedia, userTalkPage, section.getIndex());
+          api.retrieveSectionContents(wiki, userTalkPage, section.getIndex());
           if (revisionId.equals(userTalkPage.getRevisionId())) {
             StringBuilder fullMessage = new StringBuilder();
             fullMessage.append(userTalkPage.getContents());
@@ -1139,14 +1137,14 @@ public class UpdateDabWarningTools {
               fullMessage.append("\n");
             }
             fullMessage.append(message);
-            api.updateSection(wikipedia, userTalkPage, globalTitle, section.getIndex(), fullMessage.toString(), false);
+            api.updateSection(wiki, userTalkPage, globalTitle, section.getIndex(), fullMessage.toString(), false);
           } else {
             System.err.println("Page " + userTalk + " has been modified between two requests");
           }
         }
       } else {
         if (title != null) {
-          api.addNewSection(wikipedia, userTalkPage, title, message, false);
+          api.addNewSection(wiki, userTalkPage, title, message, false);
         } else {
           // TODO: No global title, no title => Should append the message add the end
           log.warn("Should add " + message + " in " + userTalk);
@@ -1204,6 +1202,24 @@ public class UpdateDabWarningTools {
   }
 
   /**
+   * Update a talk page on Wiki.
+   * 
+   * @param page Page.
+   * @param newContents New contents to use.
+   * @param comment Comment.
+   * @return Result of the command.
+   * @throws APIException
+   */
+  private QueryResult updateTalkPage(
+      Page page, String newContents,
+      String comment) throws APIException {
+    if (section0) {
+      return updateSection(page, comment, 0, newContents, false);
+    }
+    return updatePage(page, newContents, comment, false);
+  }
+
+  /**
    * Update a page on Wiki.
    * 
    * @param page Page.
@@ -1221,13 +1237,13 @@ public class UpdateDabWarningTools {
     for (;;) {
       try {
         attemptNumber++;
-        return api.updatePage(wikipedia, page, newContents, comment, forceWatch);
+        return api.updatePage(wiki, page, newContents, comment, forceWatch);
       } catch (APIException e) {
         if ((e.getQueryResult() != EnumQueryResult.BAD_TOKEN) || (attemptNumber > 1)) {
           throw e;
         }
         try {
-          api.retrieveTokens(wikipedia);
+          api.retrieveTokens(wiki);
         } catch (APIException e2) {
           throw e;
         }
@@ -1253,13 +1269,13 @@ public class UpdateDabWarningTools {
     for (;;) {
       try {
         attemptNumber++;
-        return api.updateSection(wikipedia, page, title, section, contents, forceWatch);
+        return api.updateSection(wiki, page, title, section, contents, forceWatch);
       } catch (APIException e) {
         if ((e.getQueryResult() != EnumQueryResult.BAD_TOKEN) || (attemptNumber > 1)) {
           throw e;
         }
         try {
-          api.retrieveTokens(wikipedia);
+          api.retrieveTokens(wiki);
         } catch (APIException e2) {
           throw e;
         }
