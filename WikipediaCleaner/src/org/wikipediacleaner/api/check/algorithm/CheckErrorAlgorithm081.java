@@ -31,6 +31,7 @@ import javax.swing.JOptionPane;
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -460,6 +461,11 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String automaticFix(PageAnalysis analysis) {
+    List<String[]> refTemplates = analysis.getWPCConfiguration().getStringArrayList(
+        WPCConfigurationStringList.REFERENCES_TEMPLATES);
+    if ((refTemplates == null) || (refTemplates.isEmpty())) {
+      return analysis.getContents();
+    }
     return fixUsingAutomaticReplacement(analysis);
   }
 }
