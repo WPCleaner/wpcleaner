@@ -484,7 +484,6 @@ public class PageElementTag extends PageElement {
    * Retrieve the group name of a ref tag.
    * 
    * @param analysis Page analysis.
-   * @param ref Ref tag.
    * @return Group of the ref tag.
    */
   public String getGroupOfRef(PageAnalysis analysis) {
