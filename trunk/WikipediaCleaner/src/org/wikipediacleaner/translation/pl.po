@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-05-20 18:54+0200\n"
-"PO-Revision-Date: 2013-05-28 16:11+0000\n"
-"Last-Translator: Wojciech T. Mężyk <Unknown>\n"
+"PO-Revision-Date: 2013-06-14 17:46+0000\n"
+"Last-Translator: Mike08 <micou8@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2013-05-29 18:08+0000\n"
-"X-Generator: Launchpad (build 16652)\n"
+"X-Launchpad-Export-Date: 2013-06-15 09:41+0000\n"
+"X-Generator: Launchpad (build 16667)\n"
 
 #: org/wikipediacleaner/Version.java:39
 #, java-format
@@ -330,7 +330,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:327
 #, java-format
 msgid "You can replace the link using template {0}."
-msgstr ""
+msgstr "Możesz zastąpić link używając szablonu {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:132
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:154

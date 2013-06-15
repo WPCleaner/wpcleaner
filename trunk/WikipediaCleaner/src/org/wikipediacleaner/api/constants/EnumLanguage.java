@@ -31,11 +31,14 @@ import org.wikipediacleaner.i18n.Messages;
  */
 public enum EnumLanguage {
 
+  AST  (new Locale("ast")     , "Asturian"),
+  AZ   (new Locale("az")      , "Azerbaijani"),
   CS   (new Locale("cs")      , "Czech"),
   DA   (new Locale("da")      , "Danish"),
   DE   (Locale.GERMAN         , "German"),
   EL   (new Locale("el")      , "Greek"),
   EN   (Locale.ENGLISH        , "English"),
+  EN_GB(new Locale("en_GB")   , "English (United Kingdom)"),
   EO   (new Locale("eo")      , "Esperanto"),
   ES   (new Locale("es")      , "Spanish"),
   FR   (Locale.FRENCH         , "Français"),
@@ -46,6 +49,7 @@ public enum EnumLanguage {
   IT   (Locale.ITALIAN        , "Italian"),
   JA   (Locale.JAPANESE       , "Japanese"),
   KO   (Locale.KOREAN         , "Korean"),
+  MS   (new Locale("ms")      , "Malay"),
   NB   (new Locale("nb")      , "Norwegian Bokmal"),
   NL   (new Locale("nl")      , "Dutch"),
   OC   (new Locale("oc")      , "Occitan"),
