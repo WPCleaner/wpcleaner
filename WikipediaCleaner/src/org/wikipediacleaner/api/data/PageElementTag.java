@@ -519,6 +519,11 @@ public class PageElementTag extends PageElement {
                     String tmp = template.getParameterValue(argName);
                     if ((result == null) && (tmp != null)) {
                       result = tmp;
+                      if ((result.length() > 2) &&
+                          (result.charAt(0) == '"') &&
+                          (result.charAt(result.length() - 1) == '"')) {
+                        result = result.substring(1, result.length() - 2);
+                      }
                     }
                   }
                 }
