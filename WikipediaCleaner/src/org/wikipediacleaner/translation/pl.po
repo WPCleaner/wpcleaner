@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-05-20 18:54+0200\n"
-"PO-Revision-Date: 2013-06-14 17:46+0000\n"
-"Last-Translator: Mike08 <micou8@gmail.com>\n"
+"PO-Revision-Date: 2013-06-19 20:53+0000\n"
+"Last-Translator: Wojciech T. Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2013-06-15 09:41+0000\n"
-"X-Generator: Launchpad (build 16667)\n"
+"X-Launchpad-Export-Date: 2013-06-20 12:56+0000\n"
+"X-Generator: Launchpad (build 16673)\n"
 
 #: org/wikipediacleaner/Version.java:39
 #, java-format
@@ -123,7 +123,7 @@ msgstr "Skasuj"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:226
 msgid "Edit table of contents"
-msgstr ""
+msgstr "Edytuj spis treści"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:40
 msgid "Fix all <br/> tags"
@@ -840,7 +840,7 @@ msgstr "Napraw we wszystkich zaznaczonych stronach"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:276
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:315
 msgid "Test automatic replacements"
-msgstr ""
+msgstr "Testuj automatyczne zamienniki"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:358
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:754
@@ -859,7 +859,7 @@ msgstr "Ujednoznacznianie"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:520
 msgid "Text that should be replaced"
-msgstr ""
+msgstr "Tekst do zamiany"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:531
 msgid "Text that should be used as replacement"
@@ -906,11 +906,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:637
 msgid "Do you want to proceed with the modifications ?"
-msgstr ""
+msgstr "Czy chcesz zatwierdzić zmiany?"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:692
 msgid "The following replacements have been made:"
-msgstr ""
+msgstr "Następujące zamienniki zostały stworzone:"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:703
 msgid "Do you want to test the replacements on the pages ?"
@@ -2213,7 +2213,7 @@ msgstr "Strona {0} na \"{1}\" nie zawiera odnośnika interwiki do \"{2}\"."
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:125
 #, java-format
 msgid "The page {0} doesn''t exist in \"{1}\"."
-msgstr "Strona {0} nie isnieje w \"{1}\"."
+msgstr "Strona {0} nie istnieje w \"{1}\"."
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:129
 #, java-format
