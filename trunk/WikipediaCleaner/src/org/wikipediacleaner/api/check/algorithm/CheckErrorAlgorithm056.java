@@ -91,6 +91,7 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
     PageElementTag.TAG_WIKI_NOWIKI,
     PageElementTag.TAG_WIKI_SCORE,
     PageElementTag.TAG_WIKI_SOURCE,
+    PageElementTag.TAG_WIKI_TIMELINE,
   };
 
   /**
