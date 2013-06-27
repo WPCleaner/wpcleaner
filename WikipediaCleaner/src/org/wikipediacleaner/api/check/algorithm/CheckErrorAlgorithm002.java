@@ -29,7 +29,7 @@ import org.wikipediacleaner.i18n.GT;
 
 /**
  * Algorithm for analyzing error 2 of check wikipedia project.
- * Error 2: Article with false <br/>
+ * Error 2: Article with false &lt;br&gt;
  */
 public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
 
@@ -37,11 +37,11 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Fix all <br/> tags"),
+    GT._("Fix all <br> tags"),
   };
 
   public CheckErrorAlgorithm002() {
-    super("Article with false <br/>");
+    super("Article with false <br>");
   }
 
   /**
@@ -115,7 +115,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               tmpIndex++;
               CheckErrorResult errorResult = createCheckErrorResult(
                   pageAnalysis.getPage(), currentIndex, tmpIndex);
-              errorResult.addReplacement("<br />");
+              errorResult.addReplacement(PageElementTag.createTag(PageElementTag.TAG_HTML_BR, false, false));
               errors.add(errorResult);
               nextIndex = tmpIndex;
             }
