@@ -50,7 +50,9 @@ public class PageElementTag extends PageElement {
   public final static String TAG_HTML_LI          = "li";
   public final static String TAG_HTML_OL          = "ol";
   public final static String TAG_HTML_P           = "p";
+  public final static String TAG_HTML_S           = "s";
   public final static String TAG_HTML_SMALL       = "small";
+  public final static String TAG_HTML_STRIKE      = "strike";
   public final static String TAG_HTML_SUB         = "sub";
   public final static String TAG_HTML_SUP         = "sup";
   public final static String TAG_HTML_TABLE       = "table";
@@ -478,6 +480,30 @@ public class PageElementTag extends PageElement {
     this.parameters = parameters;
     this.endTag = endTag;
     this.fullTag = fullTag;
+  }
+
+  /**
+   * Create a tag.
+   * 
+   * @param name Tag name.
+   * @param closing True if it's a closing tag.
+   * @param full True if it's a full tag.
+   * @return Tag.
+   */
+  public static String createTag(String name, boolean closing, boolean full) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<");
+    if (closing && !full) {
+      sb.append("/");
+    }
+    if (name != null) {
+      sb.append(name);
+    }
+    if (full) {
+      sb.append("/");
+    }
+    sb.append(">");
+    return sb.toString();
   }
 
   /**
