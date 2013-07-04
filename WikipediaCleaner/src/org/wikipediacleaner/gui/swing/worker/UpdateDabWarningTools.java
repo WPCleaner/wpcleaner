@@ -957,7 +957,9 @@ public class UpdateDabWarningTools {
     }
     if ((templateTodo != null) && (templateTodo.getParameterValue("1") != null)) {
       // Search disambiguation warning in the "To do" parameter
-      String parameter = templateTodo.getParameterValue("1");
+      int parameterIndex = templateTodo.getParameterIndex("1");
+      String parameter = templateTodo.getParameterValue(parameterIndex);
+      int parameterOffset = templateTodo.getParameterValueOffset(parameterIndex);
       List<PageElementTemplate> templates = analysis.getTemplates(
           configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE));
       PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
@@ -969,14 +971,14 @@ public class UpdateDabWarningTools {
           tmp.append(contents.substring(0, templateTodo.getBeginIndex()));
         }
         String tmpParameter = "";
-        int index = templateWarning.getBeginIndex();
+        int index = templateWarning.getBeginIndex() - parameterOffset;
         while ((index > 0) && (parameter.charAt(index) != '\n')) {
           index--;
         }
         if (index > 0) {
           tmpParameter += parameter.substring(0, index);
         }
-        index = templateWarning.getEndIndex();
+        index = templateWarning.getEndIndex() - parameterOffset;
         while ((index < parameter.length()) && (parameter.charAt(index) != '\n')) {
           index++;
         }

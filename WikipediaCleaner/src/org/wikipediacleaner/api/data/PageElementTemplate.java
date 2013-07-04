@@ -453,6 +453,32 @@ public class PageElementTemplate extends PageElement {
   }
 
   /**
+   * @param name Parameter name.
+   * @return Parameter index.
+   */
+  public int getParameterIndex(String name) {
+    if (parameters == null) {
+      return -1;
+    }
+    int index = 0;
+    int paramNum = 1;
+    while (index < parameters.size()) {
+      String parameterName = parameters.get(index).name;
+      if ((parameterName == null) || (parameterName.length() == 0)) {
+        parameterName = Integer.toString(paramNum);
+      }
+      if (parameterName.equals(Integer.toString(paramNum))) {
+        paramNum++;
+      }
+      if (name.equals(parameterName)) {
+        return index;
+      }
+      index++;
+    }
+    return -1;
+  }
+
+  /**
    * Retrieve pipe offset.
    * 
    * @param index Parameter index.
@@ -527,20 +553,9 @@ public class PageElementTemplate extends PageElement {
     if (parameters == null) {
       return null;
     }
-    int index = 0;
-    int paramNum = 1;
-    while (index < parameters.size()) {
-      String parameterName = parameters.get(index).name;
-      if ((parameterName == null) || (parameterName.length() == 0)) {
-        parameterName = Integer.toString(paramNum);
-      }
-      if (parameterName.equals(Integer.toString(paramNum))) {
-        paramNum++;
-      }
-      if (name.equals(parameterName)) {
-        return parameters.get(index).value;
-      }
-      index++;
+    int index = getParameterIndex(name);
+    if ((index >= 0) && (index < parameters.size())) {
+      return parameters.get(index).value;
     }
     return null;
   }
