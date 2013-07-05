@@ -39,6 +39,7 @@ import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
+import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueString;
@@ -119,11 +120,10 @@ public class UpdateDabWarningWorker extends BasicWorker {
 
     setText(GT._("Retrieving MediaWiki API"));
     API api = APIFactory.getAPI();
-    int countAnalyzed = 0;
-    int countUpdated = 0;
-    int lastCount = countUpdated;
+    int lastCount = 0;
     WikiConfiguration wikiConfiguration = wikipedia.getWikiConfiguration();
 
+    Stats stats = new Stats();
     try {
       if (!useList) {
         // Retrieve talk pages including a disambiguation warning
@@ -206,7 +206,8 @@ public class UpdateDabWarningWorker extends BasicWorker {
           }
         }
         if (sublist.isEmpty()) {
-          return Integer.valueOf(countUpdated);
+          displayResult(stats, startTime);
+          return Integer.valueOf(stats.getUpdatedPagesCount());
         }
 
         // Update disambiguation warning
@@ -214,11 +215,9 @@ public class UpdateDabWarningWorker extends BasicWorker {
         while (!finish) {
           finish = true;
           try {
-            List<Page> updated = tools.updateDabWarning(
+            tools.updateDabWarning(
                 sublist, contentsAvailable, linksAvailable, dabInformationAvailable,
-                null, null);
-            countUpdated += (updated != null) ? updated.size() : 0;
-            countAnalyzed += sublist.size();
+                null, null, stats);
             lastTitle = sublist.get(sublist.size() - 1).getTitle();
           } catch (APIException e) {
             if (getWindow() != null) {
@@ -234,12 +233,13 @@ public class UpdateDabWarningWorker extends BasicWorker {
           if (shouldStop()) {
             Configuration config = Configuration.getConfiguration();
             config.setString(null, ConfigurationValueString.LAST_DAB_WARNING, lastTitle);
-            return Integer.valueOf(countUpdated);
+            displayResult(stats, startTime);
+            return Integer.valueOf(stats.getUpdatedPagesCount());
           }
         }
 
-        if (countUpdated > lastCount) {
-          lastCount = countUpdated;
+        if (stats.getUpdatedPagesCount() > lastCount) {
+          lastCount = stats.getUpdatedPagesCount();
           /*if (getWindow() != null) {
             int answer = getWindow().displayYesNoWarning(
                 "This feature is currently under development, please check the modification.\n" +
@@ -260,8 +260,17 @@ public class UpdateDabWarningWorker extends BasicWorker {
       return e;
     }
 
-    long endTime = System.currentTimeMillis();
+    displayResult(stats, startTime);
+    return Integer.valueOf(stats.getUpdatedPagesCount());
+  }
+
+  /**
+   * @param stats Statistics.
+   * @param startTime Start time.
+   */
+  private void displayResult(Stats stats, long startTime) {
     if ((!useList) && (getWindow() != null)) {
+      long endTime = System.currentTimeMillis();
       Utilities.displayInformationMessage(
           getWindow().getParentComponent(),
           GT._(
@@ -269,10 +278,9 @@ public class UpdateDabWarningWorker extends BasicWorker {
               "The disambiguation warning has been updated in {1} pages.\n" +
               "It took {2} seconds.",
               new Object[] {
-                  Integer.valueOf(countAnalyzed),
-                  Integer.valueOf(countUpdated),
+                  Integer.valueOf(stats.getAnalyedPagesCount()),
+                  Integer.valueOf(stats.getUpdatedPagesCount()),
                   Long.valueOf((endTime - startTime) / 1000) } ));
     }
-    return Integer.valueOf(countUpdated);
   }
 }
