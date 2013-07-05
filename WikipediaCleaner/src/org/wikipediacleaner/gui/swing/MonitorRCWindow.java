@@ -56,6 +56,7 @@ import org.wikipediacleaner.api.data.RecentChange;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningTools;
+import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -233,7 +234,9 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
       if (monitoredPages.containsKey(rc.getTitle())) {
         Page page = DataManager.getPage(getWikipedia(), rc.getTitle(), null, null, null);
         try {
-          updateDabWarning.updateDabWarning(Collections.singletonList(page), false, false, false, null, null);
+          updateDabWarning.updateDabWarning(
+              Collections.singletonList(page), false, false, false,
+              null, null, null);
         } catch (APIException e) {
           // Nothing to do
         }
@@ -318,9 +321,11 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
     // Update disambiguation warnings
     if (!pages.isEmpty()) {
       try {
-        List<Page> updatedPages = createDabWarning.updateDabWarning(
+        Stats stats = new Stats();
+        createDabWarning.updateDabWarning(
             pages, false, false, false,
-            creators, modifiers);
+            creators, modifiers, stats);
+        List<Page> updatedPages = stats.getUpdatedPages();
         if (updatedPages != null) {
           for (Page page : updatedPages) {
             monitoredPages.put(page.getTitle(), Long.valueOf(currentTime.getTime()));

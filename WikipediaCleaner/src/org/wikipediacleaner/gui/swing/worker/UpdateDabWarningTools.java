@@ -155,16 +155,17 @@ public class UpdateDabWarningTools {
    * @param dabInformationAvailable True if disambiguation information is already available in pages.
    * @param creators For each page title, user who has created the page.
    * @param modifiers For each page title, users who have modified the page.
-   * @return Number of pages updated
+   * @return Updated pages.
    * @throws APIException
    */
-  public List<Page> updateDabWarning(
+  public void updateDabWarning(
       List<Page> pages, boolean contentsAvailable,
       boolean linksAvailable, boolean dabInformationAvailable,
       Map<String, String> creators,
-      Map<String, List<String>> modifiers) throws APIException {
+      Map<String, List<String>> modifiers,
+      Stats stats) throws APIException {
     if ((pages == null) || (pages.isEmpty())) {
-      return Collections.emptyList();
+      return;
     }
     MediaWiki mw = MediaWiki.getMediaWikiAccess(worker);
 
@@ -175,7 +176,7 @@ public class UpdateDabWarningTools {
       }
       mw.block(true);
       if (shouldStop()) {
-        return Collections.emptyList();
+        return;
       }
     }
 
@@ -223,7 +224,7 @@ public class UpdateDabWarningTools {
         }
       }
       if (shouldStop()) {
-        return Collections.emptyList();
+        return;
       }
     }
 
@@ -265,23 +266,26 @@ public class UpdateDabWarningTools {
     }
     mw.retrieveContents(wiki, mapTodoSubpages.values(), true, false, false);
     if (mw.shouldStop()) {
-      return Collections.emptyList();
+      return;
     }
 
     // Update disambiguation warning
-    List<Page> result = new ArrayList<Page>();
     for (Page page : pages) {
       PageAnalysis pageAnalysis = page.getAnalysis(page.getContents(), true);
-      if (updateDabWarning(
+      boolean updated = updateDabWarning(
           pageAnalysis, page.getRevisionId(),
           mapTalkPages.get(page),
           mapTodoSubpages.get(page),
           (creators != null) ? creators.get(page.getTitle()) : null,
-          (modifiers != null) ? modifiers.get(page.getTitle()) : null)) {
-        result.add(page);
+          (modifiers != null) ? modifiers.get(page.getTitle()) : null);
+      if (stats != null) {
+        stats.addAnalyzedPage(page);
+        if (updated) {
+          stats.addUpdatedPage(page);
+        }
       }
     }
-    return result;
+    return;
   }
 
   /**
@@ -1469,6 +1473,44 @@ public class UpdateDabWarningTools {
   private void setText(String text) {
     if (worker != null) {
       worker.setText(text);
+    }
+  }
+
+  /**
+   * Bean for holding statistics.
+   */
+  public static class Stats {
+
+    private int analyzedPagesCount;
+    private List<Page> updatedPages;
+
+    public Stats() {
+      analyzedPagesCount = 0;
+      updatedPages = new ArrayList<Page>();
+    }
+
+    void addAnalyzedPage(Page page) {
+      if (page != null) {
+        analyzedPagesCount++;
+      }
+    }
+
+    public int getAnalyedPagesCount() {
+      return analyzedPagesCount;
+    }
+
+    void addUpdatedPage(Page page) {
+      if (page != null) {
+        updatedPages.add(page);
+      }
+    }
+
+    public List<Page> getUpdatedPages() {
+      return updatedPages;
+    }
+
+    public int getUpdatedPagesCount() {
+      return (updatedPages != null) ? updatedPages.size() : 0;
     }
   }
 }
