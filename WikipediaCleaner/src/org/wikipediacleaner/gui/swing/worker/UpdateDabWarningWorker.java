@@ -271,16 +271,27 @@ public class UpdateDabWarningWorker extends BasicWorker {
   private void displayResult(Stats stats, long startTime) {
     if ((!useList) && (getWindow() != null)) {
       long endTime = System.currentTimeMillis();
+      StringBuilder message = new StringBuilder();
+      message.append(GT.__(
+          "{0} page has been analyzed.",
+          "{0} pages have been analyzed.",
+          stats.getAnalyedPagesCount(), Integer.toString(stats.getAnalyedPagesCount())));
+      message.append("\n");
+      message.append(GT.__(
+          "Disambiguation warning has been updated in {0} page.",
+          "Disambiguation warnings have been updated in {0} pages.",
+          stats.getUpdatedPagesCount(), Integer.toString(stats.getUpdatedPagesCount())));
+      message.append("\n");
+      message.append(GT.__(
+          "Disambiguation warning has been removed in {0} page.",
+          "Disambiguation wanings have been removed in {0} pages.",
+          stats.getRemovedWarningsCount(), Integer.toString(stats.getRemovedWarningsCount())));
+      message.append("\n");
+      long time = (endTime - startTime) / 1000;
+      message.append(GT.__(
+          "It took {0} second", "It took {0} seconds", time, Long.toString(time)));
       Utilities.displayInformationMessage(
-          getWindow().getParentComponent(),
-          GT._(
-              "Disambiguation links have been analyzed in {0} pages.\n" +
-              "The disambiguation warning has been updated in {1} pages.\n" +
-              "It took {2} seconds.",
-              new Object[] {
-                  Integer.valueOf(stats.getAnalyedPagesCount()),
-                  Integer.valueOf(stats.getUpdatedPagesCount()),
-                  Long.valueOf((endTime - startTime) / 1000) } ));
+          getWindow().getParentComponent(), message.toString());
     }
   }
 }

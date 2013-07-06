@@ -155,7 +155,7 @@ public class UpdateDabWarningTools {
    * @param dabInformationAvailable True if disambiguation information is already available in pages.
    * @param creators For each page title, user who has created the page.
    * @param modifiers For each page title, users who have modified the page.
-   * @return Updated pages.
+   * @param stats Statistics.
    * @throws APIException
    */
   public void updateDabWarning(
@@ -277,7 +277,8 @@ public class UpdateDabWarningTools {
           mapTalkPages.get(page),
           mapTodoSubpages.get(page),
           (creators != null) ? creators.get(page.getTitle()) : null,
-          (modifiers != null) ? modifiers.get(page.getTitle()) : null);
+          (modifiers != null) ? modifiers.get(page.getTitle()) : null,
+          stats);
       if (stats != null) {
         stats.addAnalyzedPage(page);
         if (updated) {
@@ -297,13 +298,15 @@ public class UpdateDabWarningTools {
    * @param todoSubpage (Optional) Todo sub page with contents.
    * @param creator User who has created the page.
    * @param modifiers Users who have modified the page.
+   * @param stats Statistics.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
   public boolean updateDabWarning(
       PageAnalysis pageAnalysis, Integer pageRevId,
       Page talkPage, Page todoSubpage,
-      String creator, List<String> modifiers) throws APIException {
+      String creator, List<String> modifiers,
+      Stats stats) throws APIException {
     if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
       return false;
     }
@@ -341,17 +344,20 @@ public class UpdateDabWarningTools {
           (page.getNamespace().intValue() == Namespace.MAIN)) {
         if (configuration.getBoolean(WPCConfigurationBoolean.TODO_SUBPAGE_FORCE)) {
           return manageDabWarningOnTodoSubpage(
-              pageAnalysis, pageRevId, todoSubpage, talkPage, creator, modifiers);
+              pageAnalysis, pageRevId, todoSubpage, talkPage,
+              creator, modifiers, stats);
         }
       } else if (configuration.getBoolean(WPCConfigurationBoolean.TODO_SUBPAGE_FORCE_OTHER)) {
         return manageDabWarningOnTodoSubpage(
-            pageAnalysis, pageRevId, todoSubpage, talkPage, creator, modifiers);
+            pageAnalysis, pageRevId, todoSubpage, talkPage,
+            creator, modifiers, stats);
       }
 
       // If "To do" sub-page exists, the disambiguation warning must be on it
       if (Boolean.TRUE.equals(todoSubpage.isExisting())) {
         return manageDabWarningOnTodoSubpage(
-            pageAnalysis, pageRevId, todoSubpage, talkPage, creator, modifiers);
+            pageAnalysis, pageRevId, todoSubpage, talkPage,
+            creator, modifiers, stats);
       }
 
       // If talk page has a template linking to the "To do" sub-page,
@@ -359,7 +365,8 @@ public class UpdateDabWarningTools {
       PageElementTemplate templateTodoLink = getExistingTemplateTodoLink(talkPage, talkPage.getContents());
       if (templateTodoLink != null) {
         return manageDabWarningOnTodoSubpage(
-            pageAnalysis, pageRevId, todoSubpage, talkPage, creator, modifiers);
+            pageAnalysis, pageRevId, todoSubpage, talkPage,
+            creator, modifiers, stats);
       }
 
       // If talk page has a link to the "To do" sub-page,
@@ -376,7 +383,7 @@ public class UpdateDabWarningTools {
 
     return manageDabWarningOnTalkPage(
         pageAnalysis, pageRevId, talkPage,
-        creator, modifiers);
+        creator, modifiers, stats);
   }
 
   /**
@@ -388,18 +395,23 @@ public class UpdateDabWarningTools {
    * @param talkPage Talk page.
    * @param creator User who has created the page.
    * @param modifiers Users who have modified the page.
+   * @param stats Statistics.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
   private boolean manageDabWarningOnTodoSubpage(
       PageAnalysis pageAnalysis, Integer pageRevId,
       Page todoSubpage, Page talkPage,
-      String creator, List<String> modifiers) throws APIException {
+      String creator, List<String> modifiers,
+      Stats stats) throws APIException {
     Collection<String> dabLinks = findDabLinks(pageAnalysis, talkPage, todoSubpage);
     boolean result = false;
     if ((dabLinks == null) || (dabLinks.isEmpty())) {
       result |= removeDabWarningOnTodoSubpage(todoSubpage);
       result |= removeDabWarningOnTalkPage(talkPage);
+      if (stats != null) {
+        stats.addRemovedWarning(pageAnalysis.getPage());
+      }
     } else {
       result |= updateDabWarningOnTodoSubpage(
           pageRevId, todoSubpage, dabLinks, creator, modifiers);
@@ -418,16 +430,21 @@ public class UpdateDabWarningTools {
    * @param talkPage Talk page.
    * @param creator User who has created the page.
    * @param modifiers Users who have modified the page.
+   * @param stats Statistics.
    * @return True if the disambiguation warning has been updated.
    * @throws APIException
    */
   private boolean manageDabWarningOnTalkPage(
       PageAnalysis pageAnalysis, Integer pageRevId, Page talkPage,
-      String creator, List<String> modifiers) throws APIException {
+      String creator, List<String> modifiers,
+      Stats stats) throws APIException {
     Collection<String> dabLinks = findDabLinks(pageAnalysis, talkPage, null);
     boolean result = false;
     if ((dabLinks == null) || (dabLinks.isEmpty())) {
       result = removeDabWarningOnTalkPage(talkPage);
+      if (stats != null) {
+        stats.addRemovedWarning(pageAnalysis.getPage());
+      }
     } else {
       result |= updateDabWarningOnTalkPage(
           pageAnalysis, pageRevId, talkPage, dabLinks, creator, modifiers);
@@ -1481,8 +1498,20 @@ public class UpdateDabWarningTools {
    */
   public static class Stats {
 
+    /**
+     * Count of analyzed pages.
+     */
     private int analyzedPagesCount;
+
+    /**
+     * List of updated pages.
+     */
     private List<Page> updatedPages;
+
+    /**
+     * Count of disambiguation warning that have been removed.
+     */
+    private int removedWarningsCount;
 
     public Stats() {
       analyzedPagesCount = 0;
@@ -1511,6 +1540,16 @@ public class UpdateDabWarningTools {
 
     public int getUpdatedPagesCount() {
       return (updatedPages != null) ? updatedPages.size() : 0;
+    }
+
+    public int getRemovedWarningsCount() {
+      return removedWarningsCount;
+    }
+
+    void addRemovedWarning(Page page) {
+      if (page != null) {
+        removedWarningsCount++;
+      }
     }
   }
 }

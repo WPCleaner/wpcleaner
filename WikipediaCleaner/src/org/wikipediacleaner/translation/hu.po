@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-06-27 22:27+0200\n"
+"POT-Creation-Date: 2013-07-06 13:30+0200\n"
 "PO-Revision-Date: 2013-05-04 16:56+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -758,7 +758,7 @@ msgstr "Névjegy"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:278
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:173
-#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:174
+#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:175
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:228
 #: org/wikipediacleaner/gui/swing/RedLinksWindow.java:212
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:125
@@ -1558,7 +1558,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:73
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:57
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:88
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:120
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:121
 msgid "Retrieving MediaWiki API"
 msgstr "MediaWiki API letöltése"
 
@@ -1579,7 +1579,7 @@ msgstr ""
 msgid "Retrieving Check Wiki configuration"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:121
+#: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:122
 msgid "Recent changes monitoring"
 msgstr ""
 
@@ -3004,22 +3004,22 @@ msgstr "Oldal frissítése"
 msgid "Retrieving interwiki for {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:316
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:331
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:323
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:338
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:468
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:594
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:827
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:489
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:615
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:848
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:719
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:863
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:966
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:740
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:884
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:989
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr ""
@@ -3044,7 +3044,7 @@ msgstr ""
 msgid "Retrieving disambiguation pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:226
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:225
 #, java-format
 msgid ""
 "An error occured when updating disambiguation warnings. Do you want to "
@@ -3053,13 +3053,33 @@ msgid ""
 "Error: {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:268
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:276
 #, java-format
-msgid ""
-"Disambiguation links have been analyzed in {0} pages.\n"
-"The disambiguation warning has been updated in {1} pages.\n"
-"It took {2} seconds."
-msgstr ""
+msgid "{0} page has been analyzed."
+msgid_plural "{0} pages have been analyzed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:281
+#, java-format
+msgid "Disambiguation warning has been updated in {0} page."
+msgid_plural "Disambiguation warnings have been updated in {0} pages."
+msgstr[0] ""
+msgstr[1] ""
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:286
+#, java-format
+msgid "Disambiguation warning has been removed in {0} page."
+msgid_plural "Disambiguation wanings have been removed in {0} pages."
+msgstr[0] ""
+msgstr[1] ""
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:292
+#, java-format
+msgid "It took {0} second"
+msgid_plural "It took {0} seconds"
+msgstr[0] ""
+msgstr[1] ""
 
 #: org/wikipediacleaner/utils/Configuration.java:287
 msgid ""
