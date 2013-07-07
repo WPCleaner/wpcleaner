@@ -183,7 +183,8 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
           while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
             tmpIndex++;
           }
-          if (contents.startsWith("\n\n", tmpIndex)) {
+          if (contents.startsWith("\n\n", tmpIndex) ||
+              contents.startsWith("\n*", tmpIndex)) {
             automatic = true;
           }
         }
