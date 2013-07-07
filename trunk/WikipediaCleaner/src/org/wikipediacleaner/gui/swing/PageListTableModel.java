@@ -31,11 +31,13 @@ import org.wikipediacleaner.utils.Configuration;
 
 
 /**
- * 
+ * A table model for a list of pages.
  */
 public class PageListTableModel extends AbstractTableModel {
 
   private static final long serialVersionUID = 6219036518582006787L;
+
+  private EnumWikipedia wiki;
 
   private List<Page> pages;
 
@@ -52,7 +54,12 @@ public class PageListTableModel extends AbstractTableModel {
   public final static int NB_COLUMNS = COLUMN_COMMENTS_TEXT + 1;
 
   public PageListTableModel(EnumWikipedia wiki, List<Page> pages) {
+    this.wiki = wiki;
     this.pages = pages;
+    updateWatchedPages();
+  }
+
+  public void updateWatchedPages() {
     Configuration config = Configuration.getConfiguration();
     watchedPages = config.getStringList(wiki, Configuration.ARRAY_WATCH_PAGES);
   }

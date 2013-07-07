@@ -481,6 +481,7 @@ public class PageListWindow extends BasicWindow {
        */
       @Override
       public void afterFinished(BasicWorker worker, boolean ok) {
+        modelPages.updateWatchedPages();
         super.afterFinished(worker, ok);
         updateBacklinksCount();
       }
