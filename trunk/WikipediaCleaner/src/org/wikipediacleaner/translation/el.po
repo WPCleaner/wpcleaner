@@ -8,20 +8,20 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-07-06 13:30+0200\n"
-"PO-Revision-Date: 2013-05-04 16:54+0100\n"
-"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
+"PO-Revision-Date: 2013-05-03 02:21+0000\n"
+"Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-11-17 07:32+0000\n"
-"X-Generator: Poedit 1.5.5\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2013-07-07 10:01+0000\n"
+"X-Generator: Launchpad (build 16696)\n"
 
 #: org/wikipediacleaner/Version.java:39
 #, java-format
 msgid "I hope you''ll like {0}."
-msgstr ""
+msgstr "Ελπίζω να σας αρέσει το {0}."
 
 #: org/wikipediacleaner/Version.java:42
 #, java-format
@@ -29,10 +29,12 @@ msgid ""
 "WPCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
+"Οι ρυθμίσεις του WPCleaner είναι διαθέσιμες στο διαδίκτυο, ελέγξτε {0}System "
+"configuration{1}."
 
 #: org/wikipediacleaner/Version.java:45
 msgid "Many new features were added recently : try them !"
-msgstr ""
+msgstr "Πολλές νέες λειτουργίες προστέθηκαν πρόσφατα. Δοκιμάστε τες!"
 
 #: org/wikipediacleaner/Version.java:47
 msgid ""
@@ -48,11 +50,9 @@ msgstr ""
 "πλήρους ανάλυσης."
 
 #: org/wikipediacleaner/Version.java:49
-#, fuzzy
 msgid "Fixing speling or typography based on a list of suggestions."
 msgstr ""
-"Διόρθωση ορθογραφικών και τυπογραφικών σφαλμάτων βασισμένη σε λίστα "
-"προτάσεων."
+"Διόρθωση ορθογραφικών και τυπογραφικώ λαθών βασισμένη σε λίστα προτάσεων."
 
 #: org/wikipediacleaner/Version.java:52
 msgid "Please, report any other problem you find to me."
@@ -131,19 +131,19 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:118
 msgid "Close tag"
-msgstr ""
+msgstr "Κλείσιμο ετικέτας"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:134
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
-msgstr ""
+msgstr "Λίστα προτύπων που περιλαμβάνουν το {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:43
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:41
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089.java:41
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:41
 msgid "Fix DEFAULTSORT"
-msgstr ""
+msgstr "Διότθωση της DEFAULTSORT"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:110
 #, java-format
@@ -158,9 +158,8 @@ msgstr "Αφαίρεση όλων των χαρακτήρων ελέγχου"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:45
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:46
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:43
-#, fuzzy
 msgid "Delete all"
-msgstr "Διαγραφή"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm018.java:41
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm022.java:43
@@ -293,9 +292,9 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:224
 msgid ""
 "A template that can be used instead of the link to an other language. It "
-"must be specified as: <template name>|<param name for local page name>|"
-"<param name for code of other language>|<param name for page name in other "
-"language>|<param name for displayed text>"
+"must be specified as: <template name>|<param name for local page "
+"name>|<param name for code of other language>|<param name for page name in "
+"other language>|<param name for displayed text>"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:307
@@ -330,9 +329,8 @@ msgid "The checksum is {0} instead of {1}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:40
-#, fuzzy
 msgid "Replace all %20 by space character"
-msgstr "Αφαίρεση όλων των χαρακτήρων ελέγχου"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:76
 msgid "Replace %20 by space character"
@@ -413,14 +411,13 @@ msgid "Restore original text"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:185
-#, fuzzy, java-format
+#, java-format
 msgid "Replace each time with {0}"
-msgstr "Αντικατάσταση με {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:192
-#, fuzzy
 msgid "Replace each time with"
-msgstr "Αντικατάσταση με {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm502.java:100
 #, java-format
@@ -521,9 +518,8 @@ msgid "Broken redirects"
 msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
-#, fuzzy
 msgid "Dead-end pages"
-msgstr "Διαγραφή"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
 msgid "Pages linking to disambiguation pages"
@@ -614,9 +610,8 @@ msgid "Wanted files"
 msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:54
-#, fuzzy
 msgid "Wanted pages"
-msgstr "Διαγραφή"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:55
 msgid "Wanted templates"
@@ -756,9 +751,8 @@ msgid "Original text"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:189
-#, fuzzy
 msgid "Replacement text"
-msgstr "Αντικατάσταση με {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:191
 msgid "regex"
@@ -779,7 +773,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:216
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:633
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:102
-msgid "On some Wikipedia projects, you may need the bot status for doing this."
+msgid ""
+"On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:217
@@ -1467,12 +1462,13 @@ msgid "You must input a page name for retrieving the list of backlinks"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1359
-#, fuzzy, java-format
+#, java-format
 msgid "Links to {0}"
-msgstr "Αντικατάσταση με {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1370
-msgid "You must input a page name for retrieving the list of category members"
+msgid ""
+"You must input a page name for retrieving the list of category members"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1389
@@ -1597,12 +1593,12 @@ msgid "Add categories or templates"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:416
-#, fuzzy
 msgid "Delete page"
-msgstr "Διαγραφή"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:424
-msgid "Add a warning on the talk page about the links to disambiguation pages"
+msgid ""
+"Add a warning on the talk page about the links to disambiguation pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:443
@@ -2238,9 +2234,9 @@ msgid "Checking for errors n°{0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:145
-#, fuzzy, java-format
+#, java-format
 msgid "Fixing page {0}"
-msgstr "Η σελίδα ανανεώνεται {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:185
 #, java-format
@@ -2295,7 +2291,8 @@ msgid "Monitor recent changes"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:163
-msgid "At what page do you wish to start updating the disambiguation warning ?"
+msgid ""
+"At what page do you wish to start updating the disambiguation warning ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:108
@@ -2339,9 +2336,9 @@ msgid "Template: {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:501
-#, fuzzy, java-format
+#, java-format
 msgid "Parameter: {0}"
-msgstr "Σελίδα {0}:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:526
 #, java-format
@@ -2514,9 +2511,9 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:535
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:554
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:563
-#, fuzzy, java-format
+#, java-format
 msgid "Reverse to {0}"
-msgstr "Αντικατάσταση με {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:62
 msgid "Full Analysis window options"
@@ -2531,7 +2528,8 @@ msgid "Create disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:97
-msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Create disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:104
@@ -2543,7 +2541,8 @@ msgid "Update disambiguation warning on talk page (in main namespace)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:118
-msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
+msgid ""
+"Update disambiguation warning on talk page (in encyclopedic namespaces)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:125
@@ -3056,3 +3055,11 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
+
+#~ msgid "Fixing orthograph or typography based on a list of suggestions."
+#~ msgstr ""
+#~ "Διόρθωση ορθογραφικών και τυπογραφικών σφαλμάτων βασισμένη σε λίστα "
+#~ "προτάσεων."
+
+#~ msgid "Fix all <br/> tags"
+#~ msgstr "Διόρθωση όλων των ετικετών <br/>"
