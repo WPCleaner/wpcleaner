@@ -287,6 +287,10 @@ public class UpdateDabWarningWorker extends BasicWorker {
           "Disambiguation wanings have been removed in {0} pages.",
           stats.getRemovedWarningsCount(), Integer.toString(stats.getRemovedWarningsCount())));
       message.append("\n");
+      message.append(GT.__(
+          "{0} link still needs to be fixed.",
+          "{0} links still need to be fixed.",
+          stats.getLinksCount(), Integer.toString(stats.getLinksCount())));
       long time = (endTime - startTime) / 1000;
       message.append(GT.__(
           "It took {0} second", "It took {0} seconds", time, Long.toString(time)));

@@ -418,6 +418,9 @@ public class UpdateDabWarningTools {
       if (createWarning) {
         result |= cleanDabWarningOnTalkPage(talkPage, dabLinks);
       }
+      if (stats != null) {
+        stats.addLinks(pageAnalysis.getPage(), dabLinks.size());
+      }
     }
     return result;
   }
@@ -448,6 +451,9 @@ public class UpdateDabWarningTools {
     } else {
       result |= updateDabWarningOnTalkPage(
           pageAnalysis, pageRevId, talkPage, dabLinks, creator, modifiers);
+      if (stats != null) {
+        stats.addLinks(pageAnalysis.getPage(), dabLinks.size());
+      }
     }
     return result;
   }
@@ -1513,6 +1519,11 @@ public class UpdateDabWarningTools {
      */
     private int removedWarningsCount;
 
+    /**
+     * Count of links to disambiguation pages.
+     */
+    private int linksCount;
+
     public Stats() {
       analyzedPagesCount = 0;
       updatedPages = new ArrayList<Page>();
@@ -1549,6 +1560,16 @@ public class UpdateDabWarningTools {
     void addRemovedWarning(Page page) {
       if (page != null) {
         removedWarningsCount++;
+      }
+    }
+
+    public int getLinksCount() {
+      return linksCount;
+    }
+
+    void addLinks(Page page, int count) {
+      if (page != null) {
+        linksCount += count;
       }
     }
   }
