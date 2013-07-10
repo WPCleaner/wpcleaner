@@ -37,19 +37,30 @@ public final class Version {
 
   public final static String MESSAGE =
     GT._("I hope you''ll like {0}.", PROGRAM) +
-    "<br><br>" +
+    "<br><br><b>" +
+    GT._("Disambiguation extension has been deployed to all WMF wikis.") + " " +
+    GT._("It defines the new magic word __DISAMBIG__.") + "<br>" +
+    GT._("This magic word should be added in every disambiguation pages (either through templates or directly).") + "<br>" +
+    GT._("WPCleaner future release (v1.28) will also use this as the default system.") + "<br>" +
+    GT._("An action is required on your wiki before this release. Either:") + "<br>" +
+    "<ul>" +
+    "<li>" + GT._("Add __DISAMBIG__ in every disambiguation pages.") + "</li>" +
+    "<li>" + GT._("Configure dab_templates_list in WPCleaner System configuration.") + "</li>" +
+    "</ul>" +
+    "</b><br><br>" +
     GT._(
         "WPCleaner configuration is available online, check the {0}System configuration{1}.",
         new Object[] { "<a href=\"http://fr.wikipedia.org/wiki/Utilisateur:NicoV/WikiCleanerConfigurationDocumentation\">", "</a>" }) +
     "<br>" +
-    GT._("Many new features were added recently : try them !") +
-    "<ul>" +
-    "<li>" + GT._("Leaving a note on talk pages with the list of links to disambiguation pages.") + "</li>" +
-    "<li>" + GT._("Fixing errors detected by the Check Wiki project, in the full analysis window.") + "</li>" +
-    "<li>" + GT._("Fixing speling or typography based on a list of suggestions.") + "</li>" +
-    "</ul>" +
-    "<br>" +
     GT._("Please, report any other problem you find to me.");
 
-  public final static boolean HIGHLIGHT = false;
+  public final static boolean HIGHLIGHT = true;
+
+  public final static String OLD_MESSAGES =
+      GT._("Many new features were added recently : try them !") +
+      "<ul>" +
+      "<li>" + GT._("Leaving a note on talk pages with the list of links to disambiguation pages.") + "</li>" +
+      "<li>" + GT._("Fixing errors detected by the Check Wiki project, in the full analysis window.") + "</li>" +
+      "<li>" + GT._("Fixing speling or typography based on a list of suggestions.") + "</li>" +
+      "</ul>";
 }

@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.gui.swing;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -56,6 +57,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
 
 import org.lobobrowser.html.HtmlRendererContext;
 import org.lobobrowser.html.UserAgentContext;
@@ -308,7 +310,12 @@ public class MainWindow
   private Component createMessageComponents() {
     JPanel panel = new JPanel(new GridLayout(1, 0));
     panel.setBorder(BorderFactory.createTitledBorder(
-        BorderFactory.createEtchedBorder(), GT._("Message")));
+        BorderFactory.createEtchedBorder(
+            Version.HIGHLIGHT ? Color.RED : null,
+            Version.HIGHLIGHT ? Color.RED : null),
+        GT._("Message"),
+        TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION,
+        null, Version.HIGHLIGHT ? Color.RED : null));
     HtmlPanel textMessage = new HtmlPanel();
     UserAgentContext ucontextMessage = new SimpleUserAgentContext();
     HtmlRendererContext rcontextMessage = new MWHtmlRendererContext(
