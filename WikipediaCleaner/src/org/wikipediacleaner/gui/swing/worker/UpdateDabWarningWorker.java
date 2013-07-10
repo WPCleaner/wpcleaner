@@ -291,6 +291,7 @@ public class UpdateDabWarningWorker extends BasicWorker {
           "{0} link still needs to be fixed.",
           "{0} links still need to be fixed.",
           stats.getLinksCount(), Integer.toString(stats.getLinksCount())));
+      message.append("\n");
       long time = (endTime - startTime) / 1000;
       message.append(GT.__(
           "It took {0} second", "It took {0} seconds", time, Long.toString(time)));
