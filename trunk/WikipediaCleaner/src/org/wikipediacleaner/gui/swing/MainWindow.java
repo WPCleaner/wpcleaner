@@ -314,8 +314,10 @@ public class MainWindow
             Version.HIGHLIGHT ? Color.RED : null,
             Version.HIGHLIGHT ? Color.RED : null),
         GT._("Message"),
-        TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION,
-        null, Version.HIGHLIGHT ? Color.RED : null));
+        TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
+    if (Version.HIGHLIGHT) {
+      panel.setBackground(Color.RED);
+    }
     HtmlPanel textMessage = new HtmlPanel();
     UserAgentContext ucontextMessage = new SimpleUserAgentContext();
     HtmlRendererContext rcontextMessage = new MWHtmlRendererContext(
