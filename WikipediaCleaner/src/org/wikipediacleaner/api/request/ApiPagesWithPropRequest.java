@@ -30,9 +30,9 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
- * MediaWiki protected titles requests.
+ * MediaWiki pages with properties requests.
  */
-public class ApiProtectedTitlesRequest extends ApiListRequest {
+public class ApiPagesWithPropRequest extends ApiListRequest {
 
   // ==========================================================================
   // API properties
@@ -41,111 +41,82 @@ public class ApiProtectedTitlesRequest extends ApiListRequest {
   /**
    * Property for Direction.
    */
-  public final static String PROPERTY_DIR = "ptdir";
+  public final static String PROPERTY_DIR = "pwpdir";
 
   /**
-   * Property value for Direction / Newer.
+   * Property value for Direction / Ascending.
    */
-  public final static String PROPERTY_DIR_NEWER = "newer";
+  public final static String PROPERTY_DIR_ASC = "ascending";
 
   /**
-   * Property value for Direction / Older.
+   * Property value for Direction / Descending.
    */
-  public final static String PROPERTY_DIR_OLDER = "older";
-
-  /**
-   * Property for End.
-   */
-  public final static String PROPERTY_END = "ptend";
-
-  /**
-   * Property for Level.
-   */
-  public final static String PROPERTY_LEVEL = "ptlevel";
+  public final static String PROPERTY_DIR_DESC = "descending";
 
   /**
    * Property for Limit.
    */
-  public final static String PROPERTY_LIMIT = "ptlimit";
-
-  /**
-   * Property for Namespace.
-   */
-  public final static String PROPERTY_NAMESPACE = "ptnamespace";
+  public final static String PROPERTY_LIMIT = "pwplimit";
 
   /**
    * Property for Properties.
    */
-  public final static String PROPERTY_PROPERTIES = "ptprop";
+  public final static String PROPERTY_PROPERTIES = "pwpprop";
 
   /**
-   * Property value for Properties / Comment.
+   * Property value for Properties / Identifiers.
    */
-  public final static String PROPERTY_PROPERTIES_COMMENT = "comment";
+  public final static String PROPERTY_PROPERTIES_IDS = "ids";
 
   /**
-   * Property value for Properties / Expiry.
+   * Property value for Properties / Title.
    */
-  public final static String PROPERTY_PROPERTIES_EXPIRY = "expiry";
+  public final static String PROPERTY_PROPERTIES_TITLE = "title";
 
   /**
-   * Property value for Properties / LEVEL.
+   * Property value for Properties / Value.
    */
-  public final static String PROPERTY_PROPERTIES_LEVEL = "level";
+  public final static String PROPERTY_PROPERTIES_VALUE = "value";
 
   /**
-   * Property value for Properties / Timestamp.
+   * Property for Property Name.
    */
-  public final static String PROPERTY_PROPERTIES_TIMESTAMP = "timestamp";
-
-  /**
-   * Property value for Properties / User.
-   */
-  public final static String PROPERTY_PROPERTIES_USER = "user";
-
-  /**
-   * Property for Start.
-   */
-  public final static String PROPERTY_START = "ptnamespace";
+  public final static String PROPERTY_PROPERTY_NAME = "pwppropname";
 
   // ==========================================================================
   // Request management
   // ==========================================================================
 
-  private final ApiProtectedTitlesResult result;
+  private final ApiPagesWithPropResult result;
 
   /**
    * @param wiki Wiki.
    * @param result Parser for result depending on chosen format.
    */
-  public ApiProtectedTitlesRequest(EnumWikipedia wiki, ApiProtectedTitlesResult result) {
+  public ApiPagesWithPropRequest(EnumWikipedia wiki, ApiPagesWithPropResult result) {
     super(wiki);
     this.result = result;
   }
 
   /**
-   * Load list of protected titles.
+   * Load list of pages with a given property.
    * 
-   * @param namespaces List of name spaces to restrict result.
+   * @param property Property name.
    * @param limit Flag indicating if the number of results should be limited.
    * @return List of protected titles.
    */
-  public List<Page> loadProtectedTitles(
-      List<Integer> namespaces,
+  public List<Page> loadPagesWithProp(
+      String property,
       boolean limit) throws APIException {
     Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
     properties.put(
         PROPERTY_LIST,
-        PROPERTY_LIST_PROTECTEDTITLES);
+        PROPERTY_LIST_PAGESWITHPROP);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
-    if ((namespaces != null) && (namespaces.size() > 0)) {
-      properties.put(PROPERTY_NAMESPACE, constructList(namespaces));
-    }
-    properties.put(PROPERTY_LEVEL, "sysop");
-    properties.put(PROPERTY_PROPERTIES, PROPERTY_PROPERTIES_EXPIRY);
+    properties.put(PROPERTY_PROPERTY_NAME, property);
     List<Page> list = new ArrayList<Page>();
-    int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_PROTECTED_TITLES);
-    while (result.executeProtectedTitles(properties, list) &&
+    int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_PAGES_WITH_PROP);
+    while (result.executePagesWithProp(properties, list) &&
            (list.size() < maxSize)) {
       //
     }

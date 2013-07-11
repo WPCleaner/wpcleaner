@@ -309,6 +309,20 @@ public interface API {
       List<Integer> namespaces, boolean limit) throws APIException;
 
   /**
+   * Retrieves the pages which have a given property.
+   * (<code>action=query</code>, <code>list=pageswithprop</code>).
+   * 
+   * @param wiki Wiki.
+   * @param property Property name.
+   * @param limit Flag indicating if the number of results should be limited.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Pageswithprop">API:Pageswithprop</a>
+   */
+  public List<Page> retrievePagesWithProp(
+      EnumWikipedia wiki,
+      String property, boolean limit) throws APIException;
+
+  /**
    * Retrieves the pages which are protected in creation indefinitely.
    * (<code>action=query</code>, <code>list=protectedtitles</code>).
    * 
