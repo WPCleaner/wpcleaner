@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-07-10 22:43+0200\n"
+"POT-Creation-Date: 2013-07-11 20:16+0200\n"
 "PO-Revision-Date: 2012-12-16 12:29+0000\n"
 "Last-Translator: Dennis Baudys <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -18,46 +18,47 @@ msgstr ""
 "X-Launchpad-Export-Date: 2013-07-07 10:01+0000\n"
 "X-Generator: Launchpad (build 16696)\n"
 
-#: org/wikipediacleaner/Version.java:40
+#: org/wikipediacleaner/Version.java:41
 msgid "Disambiguator extension has been deployed to all WMF wikis."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:41
+#: org/wikipediacleaner/Version.java:42
 msgid "It defines the new magic word __DISAMBIG__."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:42
+#: org/wikipediacleaner/Version.java:43
 msgid ""
 "This magic word should be added in every disambiguation pages (either "
 "through templates or directly)."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:43
+#: org/wikipediacleaner/Version.java:44
 msgid ""
 "WPCleaner future release (v1.28) will also use this as the default system."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:44
+#: org/wikipediacleaner/Version.java:45
 msgid "An action is required on your wiki before this release. Either:"
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:46
+#: org/wikipediacleaner/Version.java:47
 #, fuzzy
 msgid ""
 "Add __DISAMBIG__ in every disambiguation pages (preferably through an "
 "existing template)."
 msgstr "Begriffsklärungseiten zählen"
 
-#: org/wikipediacleaner/Version.java:47
-msgid "Configure dab_templates_list in WPCleaner System configuration."
+#: org/wikipediacleaner/Version.java:48
+#, java-format
+msgid "Configure {0} in WPCleaner System configuration."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:50
+#: org/wikipediacleaner/Version.java:52
 #, java-format
 msgid "I hope you''ll like {0}."
 msgstr "Hoffentlich gefällt Ihnen {0}."
 
-#: org/wikipediacleaner/Version.java:53
+#: org/wikipediacleaner/Version.java:55
 #, java-format
 msgid ""
 "WPCleaner configuration is available online, check the {0}System "
@@ -66,27 +67,27 @@ msgstr ""
 "Eine Erklärung der WPCleaner-Einstellungen ist online, siehe {0}System "
 "configuration{1}."
 
-#: org/wikipediacleaner/Version.java:56
+#: org/wikipediacleaner/Version.java:58
 msgid "Please, report any other problem you find to me."
 msgstr "Bitte melden Sie mir alle Probleme die Sie finden."
 
-#: org/wikipediacleaner/Version.java:61
+#: org/wikipediacleaner/Version.java:63
 msgid "Many new features were added recently : try them !"
 msgstr ""
 "Vor kurzem wurden viele neue Funktionen hinzugefügt: Probieren Sie sie aus!"
 
-#: org/wikipediacleaner/Version.java:63
+#: org/wikipediacleaner/Version.java:65
 msgid ""
 "Leaving a note on talk pages with the list of links to disambiguation pages."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:64
+#: org/wikipediacleaner/Version.java:66
 msgid ""
 "Fixing errors detected by the Check Wiki project, in the full analysis "
 "window."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:65
+#: org/wikipediacleaner/Version.java:67
 msgid "Fixing speling or typography based on a list of suggestions."
 msgstr ""
 
@@ -752,13 +753,13 @@ msgstr "Parse Text"
 msgid "Retrieving templates"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1602
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1623
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1609
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1630
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"

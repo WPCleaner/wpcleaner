@@ -79,6 +79,8 @@ import org.wikipediacleaner.api.request.ApiLoginRequest;
 import org.wikipediacleaner.api.request.ApiLoginResult;
 import org.wikipediacleaner.api.request.ApiLogoutRequest;
 import org.wikipediacleaner.api.request.ApiLogoutResult;
+import org.wikipediacleaner.api.request.ApiPagesWithPropRequest;
+import org.wikipediacleaner.api.request.ApiPagesWithPropResult;
 import org.wikipediacleaner.api.request.ApiParseRequest;
 import org.wikipediacleaner.api.request.ApiParseResult;
 import org.wikipediacleaner.api.request.ApiProtectedTitlesRequest;
@@ -118,6 +120,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlLanguageLinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLoginResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLogoutResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlPagesWithPropResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlParseResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPropertiesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlProtectedTitlesResult;
@@ -1117,6 +1120,24 @@ public class MediaWikiAPI implements API {
   }
 
   /**
+   * Retrieves the pages which have a given property.
+   * (<code>action=query</code>, <code>list=pageswithprop</code>).
+   * 
+   * @param wiki Wiki.
+   * @param property Property name.
+   * @param limit Flag indicating if the number of results should be limited.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Pageswithprop">API:Pageswithprop</a>
+   */
+  public List<Page> retrievePagesWithProp(
+      EnumWikipedia wiki,
+      String property, boolean limit) throws APIException {
+    ApiPagesWithPropResult result = new ApiXmlPagesWithPropResult(wiki, httpClient);
+    ApiPagesWithPropRequest request = new ApiPagesWithPropRequest(wiki, result);
+    return request.loadPagesWithProp(property, limit);
+  }
+
+  /**
    * Retrieves the pages which are protected in creation indefinitely.
    * (<code>action=query</code>, <code>list=protectedtitles</code>).
    * 
@@ -1131,7 +1152,7 @@ public class MediaWikiAPI implements API {
       List<Integer> namespaces, boolean limit) throws APIException {
     ApiProtectedTitlesResult result = new ApiXmlProtectedTitlesResult(wiki, httpClient);
     ApiProtectedTitlesRequest request = new ApiProtectedTitlesRequest(wiki, result);
-    return request.loadProtecedTitles(namespaces, limit);
+    return request.loadProtectedTitles(namespaces, limit);
   }
 
   /**

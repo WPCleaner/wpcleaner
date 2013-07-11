@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -44,7 +45,8 @@ public final class Version {
     GT._("An action is required on your wiki before this release. Either:") + "<br>" +
     "<ul>" +
     "<li>" + GT._("Add __DISAMBIG__ in every disambiguation pages (preferably through an existing template).") + "</li>" +
-    "<li>" + GT._("Configure dab_templates_list in WPCleaner System configuration.") + "</li>" +
+    "<li>" + GT._("Configure {0} in WPCleaner System configuration.",
+                  WPCConfigurationBoolean.DAB_USE_TEMPLATES_LIST.getAttributeName()) + "</li>" +
     "</ul>" +
     "</b><br><br>" +
     GT._("I hope you''ll like {0}.", PROGRAM) +

@@ -369,9 +369,13 @@ public enum EnumWikipedia {
    * @throws APIException
    */
   public List<Page> constuctDisambiguationPages(API api) throws APIException {
-    ArrayList<Page> tmpResult = new ArrayList<Page>();
-    List<Page> dabCategories = getConfiguration().getDisambiguationCategories();
+
+    WPCConfiguration config = getConfiguration();
+
+    // Use categories if they are defined
+    List<Page> dabCategories = config.getDisambiguationCategories();
     if ((dabCategories != null) && (dabCategories.size() > 0)) {
+      ArrayList<Page> tmpResult = new ArrayList<Page>();
       for (Page dabCategory : dabCategories) {
         api.retrieveCategoryMembers(
             this, dabCategory, 0, false);
@@ -385,10 +389,18 @@ public enum EnumWikipedia {
           }
         }
       }
-    } else {
-      if (disambiguationTemplates == null) {
-        return null;
-      }
+      return tmpResult;
+    }
+
+    // Use __DISAMBIG__ magic word if disambiguation templates is not forced
+    boolean useTemplates = config.getBoolean(WPCConfigurationBoolean.DAB_USE_TEMPLATES_LIST);
+    if (!useTemplates) {
+      return api.retrievePagesWithProp(this, "disambiguation", false);
+    }
+
+    // Use disambiguation templates
+    if (disambiguationTemplates != null) {
+      ArrayList<Page> tmpResult = new ArrayList<Page>();
       for (Page dabTemplate : disambiguationTemplates) {
         api.retrieveEmbeddedIn(
             this, dabTemplate,
@@ -404,8 +416,10 @@ public enum EnumWikipedia {
           }
         }
       }
+      return tmpResult;
     }
-    return tmpResult;
+
+    return null;
   }
 
   /**
