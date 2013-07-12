@@ -46,7 +46,7 @@ public final class Version {
     "<ul>" +
     "<li>" + GT._("Add __DISAMBIG__ in every disambiguation pages (preferably through an existing template).") + "</li>" +
     "<li>" + GT._("Configure {0} in WPCleaner System configuration.",
-                  WPCConfigurationBoolean.DAB_USE_TEMPLATES_LIST.getAttributeName()) + "</li>" +
+                  WPCConfigurationBoolean.DAB_USE_DISAMBIG_MAGIC_WORD.getAttributeName()) + "</li>" +
     "</ul>" +
     "</b><br><br>" +
     GT._("I hope you''ll like {0}.", PROGRAM) +

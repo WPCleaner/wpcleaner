@@ -372,6 +372,12 @@ public enum EnumWikipedia {
 
     WPCConfiguration config = getConfiguration();
 
+    // Use __DISAMBIG__ magic word if set
+    boolean useDisambig = config.getBoolean(WPCConfigurationBoolean.DAB_USE_DISAMBIG_MAGIC_WORD);
+    if (useDisambig) {
+      return api.retrievePagesWithProp(this, "disambiguation", false);
+    }
+
     // Use categories if they are defined
     List<Page> dabCategories = config.getDisambiguationCategories();
     if ((dabCategories != null) && (dabCategories.size() > 0)) {
@@ -390,12 +396,6 @@ public enum EnumWikipedia {
         }
       }
       return tmpResult;
-    }
-
-    // Use __DISAMBIG__ magic word if disambiguation templates is not forced
-    boolean useTemplates = config.getBoolean(WPCConfigurationBoolean.DAB_USE_TEMPLATES_LIST);
-    if (!useTemplates) {
-      return api.retrievePagesWithProp(this, "disambiguation", false);
     }
 
     // Use disambiguation templates
