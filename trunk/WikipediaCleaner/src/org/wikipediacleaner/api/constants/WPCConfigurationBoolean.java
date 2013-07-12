@@ -24,8 +24,8 @@ package org.wikipediacleaner.api.constants;
  */
 public enum WPCConfigurationBoolean {
 
-  // Force use of disambiguation templates list in MediaWiki:Disambiguationspage.
-  DAB_USE_TEMPLATES_LIST("dab_use_templates_list", false, true, false),
+  // Allow use of __DISAMBIG__ magic word.
+  DAB_USE_DISAMBIG_MAGIC_WORD("dab_use_disambig", false, true, false), // TODO: default to true
   // Allow disambiguation warning outside section 0 of talk page.
   DAB_WARNING_SECTION_0("dab_warning_section_0", true, true, false),
   // Force usage of "to do" sub-page in main name space.
