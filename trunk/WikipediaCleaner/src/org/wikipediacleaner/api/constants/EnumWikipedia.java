@@ -21,6 +21,7 @@ package org.wikipediacleaner.api.constants;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -375,7 +376,17 @@ public enum EnumWikipedia {
     // Use __DISAMBIG__ magic word if set
     boolean useDisambig = config.getBoolean(WPCConfigurationBoolean.DAB_USE_DISAMBIG_MAGIC_WORD);
     if (useDisambig) {
-      return api.retrievePagesWithProp(this, "disambiguation", false);
+      List<Page> tmpResult = api.retrievePagesWithProp(this, "disambiguation", false);
+      Iterator<Page> itPage = tmpResult.iterator();
+      while (itPage.hasNext()) {
+        Page page = itPage.next();
+        if (!page.isInMainNamespace()) {
+          itPage.remove();
+        } else {
+          page.setDisambiguationPage(Boolean.TRUE);
+        }
+      }
+      return tmpResult;
     }
 
     // Use categories if they are defined
