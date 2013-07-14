@@ -25,7 +25,7 @@ package org.wikipediacleaner.api.constants;
 public enum WPCConfigurationBoolean {
 
   // Allow use of __DISAMBIG__ magic word.
-  DAB_USE_DISAMBIG_MAGIC_WORD("dab_use_disambig", true, true, false),
+  DAB_USE_DISAMBIG_MAGIC_WORD("dab_use_disambig", false, true, false),
   // Allow disambiguation warning outside section 0 of talk page.
   DAB_WARNING_SECTION_0("dab_warning_section_0", true, true, false),
   // Force usage of "to do" sub-page in main name space.
