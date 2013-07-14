@@ -120,6 +120,9 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
   public void retrieveNormalization(
       Element root,
       Map<String, String> normalization) throws JDOMException {
+    if (normalization == null) {
+      return;
+    }
     XPath xpaNormalized = XPath.newInstance("/api/query/normalized/n");
     List listNormalized = xpaNormalized.selectNodes(root);
     if ((listNormalized == null) || (listNormalized.isEmpty())) {

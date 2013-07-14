@@ -31,6 +31,11 @@ public class ApiPropertiesRequest extends ApiRequest {
   // ==========================================================================
 
   /**
+   * Generator prefix for properties.
+   */
+  public final static String GENERATOR_PREFIX = "g";
+
+  /**
    * Property for Generator.
    */
   public final static String PROPERTY_GENERATOR = "generator";
@@ -66,6 +71,11 @@ public class ApiPropertiesRequest extends ApiRequest {
   public final static String PROPERTY_PROP_LINKS = "links";
 
   /**
+   * Property value for Properties / Page properties.
+   */
+  public final static String PROPERTY_PROP_PAGEPROPS = "pageprops";
+
+  /**
    * Property value for Properties / Revisions.
    */
   public final static String PROPERTY_PROP_REVISIONS = "revisions";
@@ -89,12 +99,6 @@ public class ApiPropertiesRequest extends ApiRequest {
    * Property for Titles.
    */
   public final static String PROPERTY_TITLES = "titles";
-
-  // ==========================================================================
-  // Configuration
-  // ==========================================================================
-
-  public final static int MAX_PAGES_PER_QUERY = 50;
 
   // ==========================================================================
   // Wiki management

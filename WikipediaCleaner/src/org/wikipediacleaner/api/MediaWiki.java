@@ -381,6 +381,7 @@ public class MediaWiki extends MediaWikiController {
    * @param page Page.
    * @param namespace If set, retrieve only links in this namespace.
    * @param knownPages Already known pages.
+   * @param disambigNeeded True if disambiguation information is needed.
    * @param block Flag indicating if the call should block until completed.
    * @throws APIException
    */
@@ -388,12 +389,13 @@ public class MediaWiki extends MediaWikiController {
       EnumWikipedia wikipedia,
       Page page, Integer namespace,
       List<Page> knownPages,
+      boolean disambigNeeded,
       boolean block) throws APIException {
     if (page == null) {
       return;
     }
     final API api = APIFactory.getAPI();
-    addTask(new LinksWRCallable(wikipedia, this, api, page, namespace, knownPages));
+    addTask(new LinksWRCallable(wikipedia, this, api, page, namespace, knownPages, disambigNeeded));
     block(block);
   }
 
@@ -553,7 +555,7 @@ public class MediaWiki extends MediaWikiController {
               (!p.isRedirect())) {
             List<Page> links = p.getLinks();
             if ((links == null) || (links.size() == 0)) {
-              addTask(new LinksWRCallable(wikipedia, this, api, p, null, null));
+              addTask(new LinksWRCallable(wikipedia, this, api, p, null, null, false));
             }
           }
         }

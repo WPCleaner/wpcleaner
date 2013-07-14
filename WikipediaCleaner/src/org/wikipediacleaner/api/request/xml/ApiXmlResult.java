@@ -41,6 +41,8 @@ import org.jdom.output.XMLOutputter;
 import org.jdom.xpath.XPath;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.request.ApiRequest;
 import org.wikipediacleaner.api.request.BasicApiResult;
 import org.wikipediacleaner.utils.Configuration;
@@ -284,6 +286,52 @@ public abstract class ApiXmlResult extends BasicApiResult {
       return false;
     }
     return result;
+  }
+
+  /**
+   * Get a page corresponding to a page node.
+   * 
+   * @param wiki Wiki.
+   * @param pageNode Page node.
+   * @param knownPages Already known pages.
+   * @param useDisambig True if disambiguation property should be used.
+   * @return Page.
+   */
+  protected static Page getPage(
+      EnumWikipedia wiki,
+      Element pageNode, List<Page> knownPages,
+      boolean useDisambig) {
+    if (pageNode == null) {
+      return null;
+    }
+    String title = pageNode.getAttributeValue("title");
+    Attribute pageIdAttr = pageNode.getAttribute("pageid");
+    Integer pageId = null;
+    if (pageIdAttr != null) {
+      try {
+        String tmp = pageIdAttr.getValue();
+        pageId = Integer.valueOf(tmp);
+      } catch (NumberFormatException e) {
+        //
+      }
+    }
+    String revisionId = pageNode.getAttributeValue("lastrevid");
+    Page page = DataManager.getPage(wiki, title, pageId, revisionId, knownPages);
+    page.setNamespace(pageNode.getAttributeValue("ns"));
+    if (pageNode.getAttribute("missing") != null) {
+      page.setExisting(Boolean.FALSE);
+    } else if (pageId != null) {
+      page.setExisting(Boolean.TRUE);
+    }
+    if (pageNode.getAttribute("redirect") != null) {
+      page.isRedirect(true);
+    }
+    if (useDisambig) {
+      Element pageProps = pageNode.getChild("pageprops");
+      boolean dabPage = (pageProps != null) && (pageProps.getAttribute("disambiguation") != null);
+      page.setDisambiguationPage(Boolean.valueOf(dabPage));
+    }
+    return page;
   }
 
   /**

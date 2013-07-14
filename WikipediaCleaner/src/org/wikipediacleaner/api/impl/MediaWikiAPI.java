@@ -52,6 +52,8 @@ import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.RecentChangesListener;
 import org.wikipediacleaner.api.constants.EnumQueryPage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Page;
@@ -79,6 +81,8 @@ import org.wikipediacleaner.api.request.ApiLoginRequest;
 import org.wikipediacleaner.api.request.ApiLoginResult;
 import org.wikipediacleaner.api.request.ApiLogoutRequest;
 import org.wikipediacleaner.api.request.ApiLogoutResult;
+import org.wikipediacleaner.api.request.ApiPagePropsRequest;
+import org.wikipediacleaner.api.request.ApiPagePropsResult;
 import org.wikipediacleaner.api.request.ApiPagesWithPropRequest;
 import org.wikipediacleaner.api.request.ApiPagesWithPropResult;
 import org.wikipediacleaner.api.request.ApiParseRequest;
@@ -120,6 +124,7 @@ import org.wikipediacleaner.api.request.xml.ApiXmlLanguageLinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLinksResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLoginResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlLogoutResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlPagePropsResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPagesWithPropResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlParseResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlPropertiesResult;
@@ -519,66 +524,14 @@ public class MediaWikiAPI implements API {
   }
 
   /**
-   * Retrieves the links of <code>page</code>.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param page The page.
-   * @param namespace If set, retrieve only links in this namespace.
-   * @param knownPages Already known pages.
-   */
-  public void retrieveLinksWithRedirects(
-      EnumWikipedia wikipedia,
-      Page page, Integer namespace, List<Page> knownPages)
-      throws APIException {
-    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
-    properties.put("generator", "links");
-    properties.put("gpllimit", "max");
-    if (namespace != null) {
-      properties.put("gplnamespace", namespace.toString());
-    }
-    properties.put("prop", "info");
-    properties.put("titles", page.getTitle());
-    boolean keepLinks = false;
-    boolean gplcontinue = false;
-    List<Page> redirects = new ArrayList<Page>();
-    do {
-      try {
-        Element root = getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS);
-        constructLinksWithRedirects(
-            page, root,
-            "/api/query/pages/page",
-            knownPages,
-            redirects, keepLinks);
-        XPath xpaContinue = XPath.newInstance("/api/query-continue/links");
-        XPath xpaGplContinue = XPath.newInstance("./@gplcontinue");
-        List results = xpaContinue.selectNodes(root);
-        Iterator iter = results.iterator();
-        keepLinks = true;
-        gplcontinue = false;
-        while (iter.hasNext()) {
-          Element currentNode = (Element) iter.next();
-          gplcontinue = true;
-          properties.put("gplcontinue", xpaGplContinue.valueOf(currentNode));
-        }
-      } catch (JDOMException e) {
-        log.error("Error retrieving page content", e);
-        throw new APIException("Error parsing XML", e);
-      }
-    } while (gplcontinue);
-    if (!redirects.isEmpty()) {
-      initializeRedirect(wikipedia, redirects);
-      retrieveContentsWithoutRedirects(wikipedia, redirects);
-    }
-  }
-
-  /**
    * Initialize the information concerning redirects.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param pages List of pages.
    * @throws APIException
    */
-  public void initializeRedirect(EnumWikipedia wikipedia, List<Page> pages) throws APIException {
+  public void initializeRedirect(
+      EnumWikipedia wiki, List<Page> pages) throws APIException {
     if ((pages == null) || (pages.isEmpty())) {
       return;
     }
@@ -597,8 +550,8 @@ public class MediaWikiAPI implements API {
       properties.put("titles", titles.toString());
       try {
         updateRedirectStatus(
-            wikipedia, pages,
-            getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS));
+            wiki, pages,
+            getRoot(wiki, properties, ApiRequest.MAX_ATTEMPTS));
       } catch (JDOMParseException e) {
         log.error("Error retrieving redirects", e);
         throw new APIException("Error parsing XML", e);
@@ -672,66 +625,6 @@ public class MediaWikiAPI implements API {
       throw new APIException("Error parsing XML result", e);
     }
     return QueryResult.createErrorQuery(null, null, null);
-  }
-
-  /**
-   * @param page Page.
-   * @param root Root element.
-   * @param query XPath query to retrieve the links.
-   * @param knownPages Already known pages.
-   * @param redirects List of redirects filled by the method.
-   * @param Flag indicating if links of the page should be kept.
-   * @throws APIException
-   */
-  private void constructLinksWithRedirects(
-      Page page, Element root, String query,
-      List<Page> knownPages,
-      List<Page> redirects,
-      boolean keepExistingLinks)
-      throws APIException {
-    if (page == null) {
-      throw new APIException("Page is null");
-    }
-    List<Page> links = null;
-    try {
-      XPath xpa = XPath.newInstance(query);
-      List results = xpa.selectNodes(root);
-      Iterator iter = results.iterator();
-      if (keepExistingLinks) {
-        links = page.getLinks();
-      } else {
-        links = new ArrayList<Page>(results.size());
-      }
-      XPath xpaNs = XPath.newInstance("./@ns");
-      XPath xpaTitle = XPath.newInstance("./@title");
-      XPath xpaRevisionId = XPath.newInstance("./@lastrevid");
-      while (iter.hasNext()) {
-        Element currentNode = (Element) iter.next();
-        Page link = DataManager.getPage(
-            page.getWikipedia(),
-            xpaTitle.valueOf(currentNode),
-            null,
-            xpaRevisionId.valueOf(currentNode),
-            knownPages);
-        link.setNamespace(xpaNs.valueOf(currentNode));
-        if (currentNode.getAttribute("pageid") != null) {
-          link.setExisting(Boolean.TRUE);
-        } else if (currentNode.getAttribute("missing") != null) {
-          link.setExisting(Boolean.FALSE);
-        }
-        if ((currentNode.getAttribute("redirect") != null) && (redirects != null)) {
-          // If the link is not already a redirect, add it to the list for more processing
-          if (!link.isRedirect()) {
-            redirects.add(link);
-          }
-        }
-        links.add(link);
-      }
-    } catch (JDOMException e) {
-      log.error("Error links for page " + page.getTitle(), e);
-      throw new APIException("Error parsing XML result", e);
-    }
-    page.setLinks(links);
   }
 
   /**
@@ -1011,16 +904,30 @@ public class MediaWikiAPI implements API {
         }
       }
     } else {
+      // Use __DISAMBIG__ magic word if possible
+      WPCConfiguration config = wiki.getConfiguration();
+      boolean useDisambig = config.getBoolean(
+          WPCConfigurationBoolean.DAB_USE_DISAMBIG_MAGIC_WORD);
+      if (useDisambig) {
+        ApiPagePropsResult result = new ApiXmlPagePropsResult(wiki, httpClient);
+        ApiPagePropsRequest request = new ApiPagePropsRequest(wiki, result);
+        request.setDisambiguationStatus(pages);
+        return;
+      }
+
+      // Use categories if possible
       List<Page> dabCategories = wiki.getConfiguration().getDisambiguationCategories();
       if ((dabCategories != null) && (dabCategories.size() > 0)) {
         ApiCategoriesResult result = new ApiXmlCategoriesResult(wiki, httpClient);
         ApiCategoriesRequest request = new ApiCategoriesRequest(wiki, result);
         request.setDisambiguationStatus(pages);
-      } else {
-        ApiTemplatesResult result = new ApiXmlTemplatesResult(wiki, httpClient);
-        ApiTemplatesRequest request = new ApiTemplatesRequest(wiki, result);
-        request.setDisambiguationStatus(pages);
+        return;
       }
+
+      // Use templates otherwise
+      ApiTemplatesResult result = new ApiXmlTemplatesResult(wiki, httpClient);
+      ApiTemplatesRequest request = new ApiTemplatesRequest(wiki, result);
+      request.setDisambiguationStatus(pages);
     }
   }
 
@@ -1038,6 +945,43 @@ public class MediaWikiAPI implements API {
     ApiLinksResult result = new ApiXmlLinksResult(wiki, httpClient);
     ApiLinksRequest request = new ApiLinksRequest(wiki, result);
     request.loadLinks(pages);
+  }
+
+  /**
+   * Retrieves internal links of one page.
+   * (<code>action=query</code>, <code>prop=links</code>).
+   * 
+   * @param wiki Wiki.
+   * @param page Page.
+   * @param namespace Restrict the list to a given namespace.
+   * @param knownPages Already known pages.
+   * @param redirects True if redirects are requested.
+   * @param disambigNeeded True if disambiguation information is needed.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Properties#links_.2F_pl">API:Properties#links</a>
+   */
+  public void retrieveLinks(
+      EnumWikipedia wiki, Page page, Integer namespace,
+      List<Page> knownPages,
+      boolean redirects, boolean disambigNeeded)
+      throws APIException {
+    ApiLinksResult result = new ApiXmlLinksResult(wiki, httpClient);
+    ApiLinksRequest request = new ApiLinksRequest(wiki, result);
+    boolean useDisambig = wiki.getConfiguration().getBoolean(
+        WPCConfigurationBoolean.DAB_USE_DISAMBIG_MAGIC_WORD);
+    List<Page> redirections = redirects ? new ArrayList<Page>() : null;
+    request.loadLinks(page, namespace, knownPages, redirections, useDisambig);
+
+    // TODO: Better management of redirections (class)
+    if ((redirections != null) && !redirections.isEmpty()) {
+      initializeDisambiguationStatus(wiki, redirections, true);
+      retrieveContentsWithoutRedirects(wiki, redirections);
+    }
+
+    // Retrieve disambiguation information if needed
+    if (disambigNeeded && !useDisambig) {
+      initializeDisambiguationStatus(wiki, page.getLinks(), false);
+    }
   }
 
   /**

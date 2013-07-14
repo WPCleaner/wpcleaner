@@ -73,12 +73,10 @@ public class ApiXmlLinksResult extends ApiXmlPropertiesResult implements ApiLink
       XPath xpaPages = XPath.newInstance("/api/query/pages/page");
       List listPages = xpaPages.selectNodes(root);
       Iterator itPage = listPages.iterator();
-      XPath xpaNs = XPath.newInstance("./@ns");
-      XPath xpaTitle = XPath.newInstance("./@title");
       XPath xpaLinks = XPath.newInstance("links/pl");
       while (itPage.hasNext()) {
         Element pageNode = (Element) itPage.next();
-        String pageTitle = xpaTitle.valueOf(pageNode);
+        String pageTitle = pageNode.getAttributeValue("title");
         List<Page> links = lists.get(pageTitle);
         if (links == null) {
           links = new ArrayList<Page>();
@@ -89,10 +87,54 @@ public class ApiXmlLinksResult extends ApiXmlPropertiesResult implements ApiLink
         while (itLinks.hasNext()) {
           Element linkNode = (Element) itLinks.next();
           Page link = DataManager.getPage(
-              getWiki(), xpaTitle.valueOf(linkNode), null, null, null);
-          link.setNamespace(xpaNs.valueOf(linkNode));
+              getWiki(), linkNode.getAttributeValue("title"), null, null, null);
+          link.setNamespace(linkNode.getAttributeValue("ns"));
           links.add(link);
         }
+      }
+
+      // Retrieve continue
+      return shouldContinue(
+          root, "/api/query-continue/links",
+          properties);
+    } catch (JDOMException e) {
+      log.error("Error loading links", e);
+      throw new APIException("Error parsing XML", e);
+    }
+  }
+
+  /**
+   * Execute links request.
+   * 
+   * @param properties Properties defining request.
+   * @param links List to be filled with links.
+   * @param knownPages Already known pages.
+   * @param normalization Map containing information about title normalization (From => To).
+   * @param redirects List of redirects filled by the method.
+   * @param useDisambig Flag indicating if disambiguation property should be used.
+   * @return True if request should be continued.
+   * @throws APIException
+   */
+  public boolean executeLinks(
+      Map<String, String> properties,
+      List<Page> links,
+      List<Page> knownPages,
+      Map<String, String> normalization,
+      List<Page> redirects, boolean useDisambig) throws APIException {
+    try {
+      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+
+      // Retrieve normalization information
+      retrieveNormalization(root, normalization);
+
+      // Retrieve back links
+      XPath xpaPages = XPath.newInstance("/api/query/pages/page");
+      List listLinks = xpaPages.selectNodes(root);
+      Iterator itLinks = listLinks.iterator();
+      while (itLinks.hasNext()) {
+        Element linkNode = (Element) itLinks.next();
+        Page link = getPage(getWiki(), linkNode, knownPages, useDisambig);
+        links.add(link);
       }
 
       // Retrieve continue

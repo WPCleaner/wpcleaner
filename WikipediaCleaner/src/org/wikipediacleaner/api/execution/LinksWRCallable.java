@@ -36,6 +36,7 @@ public class LinksWRCallable extends MediaWikiCallable<Page> {
   private final Page page;
   private final Integer namespace;
   private final List<Page> knownPages;
+  private final boolean disambigNeeded;
 
   /**
    * @param wikipedia Wikipedia.
@@ -44,14 +45,17 @@ public class LinksWRCallable extends MediaWikiCallable<Page> {
    * @param page Page.
    * @param namespace If set, retrieve only links in this namespace.
    * @param knownPages Already known pages.
+   * @param disambigNeeded True if disambiguation information is needed.
    */
   public LinksWRCallable(
       EnumWikipedia wikipedia, MediaWikiListener listener, API api,
-      Page page, Integer namespace, List<Page> knownPages) {
+      Page page, Integer namespace, List<Page> knownPages,
+      boolean disambigNeeded) {
     super(wikipedia, listener, api);
     this.page = page;
     this.namespace = namespace;
     this.knownPages = knownPages;
+    this.disambigNeeded = disambigNeeded;
   }
 
   /* (non-Javadoc)
@@ -59,7 +63,7 @@ public class LinksWRCallable extends MediaWikiCallable<Page> {
    */
   public Page call() throws APIException {
     setText(GT._("Retrieving page links") + " - " + page.getTitle());
-    api.retrieveLinksWithRedirects(getWikipedia(), page, namespace, knownPages);
+    api.retrieveLinks(getWikipedia(), page, namespace, knownPages, true, disambigNeeded);
     return page;
   }
 

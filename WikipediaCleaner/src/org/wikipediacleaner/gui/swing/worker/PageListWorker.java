@@ -258,7 +258,15 @@ public class PageListWorker extends BasicWorker {
 
       if (retrieveDisambiguationInformation) {
         MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-        mw.retrieveDisambiguationInformation(getWikipedia(), pages, null, false, true, true);
+        List<Page> tmpPages = new ArrayList<Page>();
+        for (Page tmpPage : pages) {
+          if (tmpPage.isDisambiguationPage() == null) {
+            tmpPages.add(tmpPage);
+          }
+        }
+        if (!tmpPages.isEmpty()) {
+          mw.retrieveDisambiguationInformation(getWikipedia(), tmpPages, null, false, true, true);
+        }
       }
       if (!shouldContinue()) {
         return null;
@@ -439,7 +447,7 @@ public class PageListWorker extends BasicWorker {
     for (String dabList : elementNames) {
       Page page = DataManager.getPage(getWikipedia(), dabList, null, null, null);
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveAllLinks(getWikipedia(), page, null, null, true);
+      mw.retrieveAllLinks(getWikipedia(), page, null, null, true, true);
       Iterator<Page> iter = page.getLinks().iterator();
       while (iter.hasNext()) {
         Page link = iter.next();
