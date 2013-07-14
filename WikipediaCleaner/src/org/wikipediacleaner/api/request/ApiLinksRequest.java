@@ -116,6 +116,9 @@ public class ApiLinksRequest extends ApiPropertiesRequest {
       properties.put(
           PROPERTY_PROP,
           PROPERTY_PROP_PAGEPROPS + "|" + PROPERTY_PROP_INFO);
+      properties.put(
+          ApiPagePropsRequest.PROPERTY_PROPERTIES,
+          ApiPagePropsRequest.PROPERTY_PROPERTIES_DISAMBIGUATION);
     } else {
       properties.put(
           PROPERTY_PROP,
