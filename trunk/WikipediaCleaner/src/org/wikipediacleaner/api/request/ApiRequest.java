@@ -123,6 +123,11 @@ public abstract class ApiRequest {
    */
   public final static String LIMIT_MAX = "max";
 
+  /**
+   * Maximum number of pages in a request.
+   */
+  public final static int MAX_PAGES_PER_QUERY = 50;
+
   // ==========================================================================
   // Wiki management
   // ==========================================================================

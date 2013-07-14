@@ -172,7 +172,7 @@ public class UpdateDabWarningTools {
     // Retrieving links in each page
     if (!linksAvailable) {
       for (Page page : pages) {
-        mw.retrieveAllLinks(wiki, page, Namespace.MAIN, null, false);
+        mw.retrieveAllLinks(wiki, page, Namespace.MAIN, null, false, false);
       }
       mw.block(true);
       if (shouldStop()) {

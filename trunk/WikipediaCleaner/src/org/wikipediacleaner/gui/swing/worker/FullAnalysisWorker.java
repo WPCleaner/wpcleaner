@@ -18,10 +18,14 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
+import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -65,22 +69,45 @@ public class FullAnalysisWorker extends BasicWorker {
   public Object construct() {
     try {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      mw.retrieveContents(getWikipedia(), page, false, false, false, true);
-      mw.retrieveAllLinks(getWikipedia(), page, Namespace.MAIN, knownPages, true);
-      mw.retrieveDisambiguationInformation(getWikipedia(), page.getLinks(), knownPages, true, false, true);
+      final API api = APIFactory.getAPI();
+      EnumWikipedia wiki = getWikipedia();
+      mw.retrieveContents(wiki, page, false, false, false, true);
+      api.retrieveLinks(wiki, page, Namespace.MAIN, knownPages, true, true);
+
+      // Retrieve disambiguation information if not already retrieved
+      List<Page> links = new ArrayList<Page>();
       for (Page link : page.getLinks()) {
-        if (Boolean.TRUE.equals(link.isDisambiguationPage()) &&
-            link.hasWiktionaryTemplate() &&
-            (link.getContents() == null)) {
-          mw.retrieveContents(getWikipedia(), link, false, false, false, true);
+        if (link.isDisambiguationPage() == null) {
+          links.add(link);
         }
       }
-      if (CheckErrorAlgorithms.isAlgorithmActive(getWikipedia(), 508)) {
-        mw.retrieveAllTemplates(getWikipedia(), page, false);
+      if (!links.isEmpty()) {
+        mw.retrieveDisambiguationInformation(wiki, links, knownPages, true, false, true);
+      }
+
+      // Retrieve more information on disambiguation pages
+      for (Page link : page.getLinks()) {
+        if (Boolean.TRUE.equals(link.isDisambiguationPage())) {
+          Iterator<Page> itLink = link.getRedirectIteratorWithPage();
+          while (itLink.hasNext()) {
+            Page link2 = itLink.next();
+            if (!link2.isRedirect()) {
+              mw.retrieveAllLinks(wiki, link2, null, knownPages, false, false);
+            }
+            if (link.hasWiktionaryTemplate() &&
+                (link.getContents() == null)) {
+              mw.retrieveContents(wiki, link2, false, false, false, true);
+            }
+          }
+        }
+      }
+
+      if (CheckErrorAlgorithms.isAlgorithmActive(wiki, 508)) {
+        mw.retrieveAllTemplates(wiki, page, false);
       }
       mw.block(true);
       if (Boolean.FALSE.equals(page.isExisting())) {
-        mw.retrieveSimilarPages(getWikipedia(), page);
+        mw.retrieveSimilarPages(wiki, page);
       }
       setText("Analyzing data");
       PageAnalysis analysis = page.getAnalysis(page.getContents(), true);

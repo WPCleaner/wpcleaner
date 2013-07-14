@@ -20,7 +20,6 @@ package org.wikipediacleaner.api.request;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -31,67 +30,37 @@ import org.wikipediacleaner.api.data.Page;
 
 
 /**
- * MediaWiki API templates requests.
+ * MediaWiki API page properties requests.
  */
-public class ApiTemplatesRequest extends ApiPropertiesRequest {
+public class ApiPagePropsRequest extends ApiPropertiesRequest {
 
   // ==========================================================================
   // API properties
   // ==========================================================================
 
   /**
-   * Property for Name space.
+   * Property for Properties.
    */
-  public final static String PROPERTY_NAMESPACE = "tlnamespace";
+  public final static String PROPERTY_PROPERTIES = "ppprop";
 
   /**
-   * Property for Limit.
+   * Property value for Properties / Disambiguation.
    */
-  public final static String PROPERTY_LIMIT = "tllimit";
-
-  /**
-   * Property for Templates.
-   */
-  public final static String PROPERTY_TEMPLATES = "tltemplates";
-
-  /**
-   * Maximum templates in a query.
-   */
-  public final static int MAX_TEMPLATES_PER_QUERY = 50;
+  public final static String PROPERTY_PROPERTIES_DISAMBIGUATION = "disambiguation";
 
   // ==========================================================================
   // Request management
   // ==========================================================================
 
-  private final ApiTemplatesResult result;
+  private final ApiPagePropsResult result;
 
   /**
    * @param wiki Wiki.
    * @param result Parser for result depending on chosen format.
    */
-  public ApiTemplatesRequest(EnumWikipedia wiki, ApiTemplatesResult result) {
+  public ApiPagePropsRequest(EnumWikipedia wiki, ApiPagePropsResult result) {
     super(wiki);
     this.result = result;
-  }
-
-  /**
-   * Load list of templates.
-   * 
-   * @param page Page for which templates are requested.
-   * @throws APIException
-   */
-  public void loadTemplates(Page page) throws APIException {
-    Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
-    properties.put(PROPERTY_PROP, PROPERTY_PROP_INFO);
-    properties.put(PROPERTY_GENERATOR, PROPERTY_PROP_TEMPLATES);
-    properties.put(GENERATOR_PREFIX + PROPERTY_LIMIT, LIMIT_MAX);
-    properties.put(PROPERTY_TITLES, page.getTitle());
-    List<Page> list = new ArrayList<Page>();
-    while (result.executeTemplates(properties, page, list)) {
-      //
-    }
-    Collections.sort(list);
-    page.setTemplates(list);
   }
 
   /**
@@ -113,7 +82,7 @@ public class ApiTemplatesRequest extends ApiPropertiesRequest {
       }
     }
 
-    // Search disambiguation templates for pages in the main name space
+    // Search disambiguation categories for pages in the main name space
     List<Collection<Page>> splitPagesList = splitListPages(pages, MAX_PAGES_PER_QUERY);
     for (Collection<Page> splitPages : splitPagesList) {
       for (Page page : splitPages) {
@@ -122,22 +91,13 @@ public class ApiTemplatesRequest extends ApiPropertiesRequest {
           itPage.next().setDisambiguationPage(null);
         }
       }
-      List<Collection<Page>> splitTemplatesList = splitListPages(
-          getWiki().getDisambiguationTemplates(), MAX_TEMPLATES_PER_QUERY);
-      for (Collection<Page> templates : splitTemplatesList) {
-        Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
-        properties.put(
-            PROPERTY_PROP,
-            PROPERTY_PROP_TEMPLATES);
-        properties.put(PROPERTY_LIMIT, LIMIT_MAX);
-        properties.put(PROPERTY_REDIRECTS, "");
-        properties.put(
-            PROPERTY_TEMPLATES,
-            constructListTitles(templates));
-        properties.put(PROPERTY_TITLES, constructListTitles(splitPages));
-        while (result.setDiambiguationStatus(properties, splitPages)) {
-          //
-        }
+      Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
+      properties.put(PROPERTY_PROP, PROPERTY_PROP_PAGEPROPS);
+      properties.put(PROPERTY_PROPERTIES, PROPERTY_PROPERTIES_DISAMBIGUATION);
+      properties.put(PROPERTY_REDIRECTS, "");
+      properties.put(PROPERTY_TITLES, constructListTitles(splitPages));
+      while (result.setDiambiguationStatus(properties, splitPages)) {
+        //
       }
       for (Page page : splitPages) {
         Iterator<Page> itPage = page.getRedirectIteratorWithPage();

@@ -43,4 +43,23 @@ public interface ApiLinksResult extends ApiPropertiesResult {
       Map<String, String> properties,
       Map<String, List<Page>> lists,
       Map<String, String> normalization) throws APIException;
+
+  /**
+   * Execute links request.
+   * 
+   * @param properties Properties defining request.
+   * @param links List to be filled with links.
+   * @param knownPages Already known pages.
+   * @param normalization Map containing information about title normalization (From => To).
+   * @param redirects List of redirects filled by the method.
+   * @param useDisambig Flag indicating if disambiguation property should be used.
+   * @return True if request should be continued.
+   * @throws APIException
+   */
+  public boolean executeLinks(
+      Map<String, String> properties,
+      List<Page> links,
+      List<Page> knownPages,
+      Map<String, String> normalization,
+      List<Page> redirects, boolean useDisambig) throws APIException;
 }

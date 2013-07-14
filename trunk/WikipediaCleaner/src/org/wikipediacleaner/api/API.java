@@ -111,20 +111,6 @@ public interface API {
       String contents, boolean forceWatch) throws APIException;
 
   /**
-   * Retrieves the links of <code>page</code> and initialize redirect status.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param page Page.
-   * @param namespace If set, retrieve only links in this namespace.
-   * @param knownPages Already known pages.
-   * @throws APIException
-   */
-  public void retrieveLinksWithRedirects(
-      EnumWikipedia wikipedia,
-      Page page, Integer namespace,
-      List<Page> knownPages) throws APIException;
-
-  /**
    * Retrieves the templates of <code>page</code>.
    * 
    * @param wikipedia Wikipedia.
@@ -136,11 +122,11 @@ public interface API {
   /**
    * Initialize the information concerning redirects.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param pages List of pages.
    * @throws APIException
    */
-  public void initializeRedirect(EnumWikipedia wikipedia, List<Page> pages) throws APIException;
+  public void initializeRedirect(EnumWikipedia wiki, List<Page> pages) throws APIException;
 
   // ==========================================================================
   // API : Authentication
@@ -245,6 +231,24 @@ public interface API {
    */
   public void retrieveLinks(
       EnumWikipedia wiki, Collection<Page> pages) throws APIException;
+
+  /**
+   * Retrieves internal links of one page.
+   * (<code>action=query</code>, <code>prop=links</code>).
+   * 
+   * @param wiki Wiki.
+   * @param page Page.
+   * @param namespace Restrict the list to a given namespace.
+   * @param knownPages Already known pages.
+   * @param redirects True if redirects are requested.
+   * @param disambigNeeded True if disambiguation information is needed.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Properties#links_.2F_pl">API:Properties#links</a>
+   */
+  public void retrieveLinks(
+      EnumWikipedia wiki, Page page, Integer namespace,
+      List<Page> knownPages,
+      boolean redirects, boolean disambigNeeded) throws APIException;
 
   /**
    * Retrieve a specific language link in a page.

@@ -18,6 +18,7 @@
 
 package org.wikipediacleaner.api.request;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -94,5 +95,41 @@ public class ApiLinksRequest extends ApiPropertiesRequest {
         page.setLinks(list);
       }
     }
+  }
+
+  /**
+   * Load list of links.
+   * 
+   * @param page Page for which links are requested.
+   * @param namespace Restrict the list to a given namespace.
+   * @param knownPages Already known pages.
+   * @param redirects List of redirects filled by the method.
+   * @param disambig True if disambiguation information is requested.
+   */
+  public void loadLinks(
+      Page page, Integer namespace,
+      List<Page> knownPages,
+      List<Page> redirects, boolean disambig) throws APIException {
+    Map<String, String> properties = getProperties(ACTION_QUERY, result.getFormat());
+    properties.put(PROPERTY_GENERATOR, PROPERTY_PROP_LINKS);
+    if (disambig) {
+      properties.put(
+          PROPERTY_PROP,
+          PROPERTY_PROP_PAGEPROPS + "|" + PROPERTY_PROP_INFO);
+    } else {
+      properties.put(
+          PROPERTY_PROP,
+          PROPERTY_PROP_INFO);
+    }
+    if (namespace != null) {
+      properties.put(GENERATOR_PREFIX + PROPERTY_NAMESPACE, namespace.toString());
+    }
+    properties.put(PROPERTY_TITLES, page.getTitle());
+    properties.put(GENERATOR_PREFIX + PROPERTY_LIMIT, LIMIT_MAX);
+    List<Page> links = new ArrayList<Page>();
+    while (result.executeLinks(properties, links, knownPages, null, redirects, disambig)) {
+      //
+    }
+    page.setLinks(links);
   }
 }
