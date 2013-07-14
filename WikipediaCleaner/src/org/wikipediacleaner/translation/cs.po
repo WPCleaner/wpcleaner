@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-07-11 20:16+0200\n"
+"POT-Creation-Date: 2013-07-14 23:47+0200\n"
 "PO-Revision-Date: 2013-06-06 18:15+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -18,48 +18,50 @@ msgstr ""
 "X-Launchpad-Export-Date: 2013-07-07 10:01+0000\n"
 "X-Generator: Launchpad (build 16696)\n"
 
-#: org/wikipediacleaner/Version.java:41
+#: org/wikipediacleaner/Version.java:40
 msgid "Disambiguator extension has been deployed to all WMF wikis."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:42
+#: org/wikipediacleaner/Version.java:41
 msgid "It defines the new magic word __DISAMBIG__."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:43
+#: org/wikipediacleaner/Version.java:42
 msgid ""
 "This magic word should be added in every disambiguation pages (either "
 "through templates or directly)."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:44
+#: org/wikipediacleaner/Version.java:43
 msgid ""
 "WPCleaner future release (v1.28) will also use this as the default system."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:45
-msgid "An action is required on your wiki before this release. Either:"
+#: org/wikipediacleaner/Version.java:44
+msgid "An action may be required on your wiki before this release:"
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:47
-#, fuzzy
+#: org/wikipediacleaner/Version.java:46
+#, java-format
 msgid ""
-"Add __DISAMBIG__ in every disambiguation pages (preferably through an "
-"existing template)."
-msgstr "Analyzuji odkazy pro rozcestníkové stránky"
-
-#: org/wikipediacleaner/Version.java:48
-#, fuzzy, java-format
-msgid "Configure {0} in WPCleaner System configuration."
+"You can check if {0} is used on your wiki by opening an existing "
+"disambiguation page. Then, click on \"Page information\" in the menu on the "
+"left. Finally, search for {0} in the information page."
 msgstr ""
-"Musíte definovat vlastnost 'dab_warning_template' v konfiguraci WikiCleaneru."
 
-#: org/wikipediacleaner/Version.java:52
+#: org/wikipediacleaner/Version.java:50
+#, java-format
+msgid ""
+"If {0} is not used on your wiki, you should add {1} to your wiki "
+"WikiCleanerConfiguration."
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:54
 #, java-format
 msgid "I hope you''ll like {0}."
 msgstr "Doufám, že se vám {0} líbí."
 
-#: org/wikipediacleaner/Version.java:55
+#: org/wikipediacleaner/Version.java:57
 #, java-format
 msgid ""
 "WPCleaner configuration is available online, check the {0}System "
@@ -67,26 +69,26 @@ msgid ""
 msgstr ""
 "Konfigurace WPCleaneru je dostupná online, viz {0}Konfigurace systému{1}."
 
-#: org/wikipediacleaner/Version.java:58
+#: org/wikipediacleaner/Version.java:60
 msgid "Please, report any other problem you find to me."
 msgstr "Prosím, hlaste mi všechny nalezené problémy."
 
-#: org/wikipediacleaner/Version.java:63
+#: org/wikipediacleaner/Version.java:65
 msgid "Many new features were added recently : try them !"
 msgstr "Nedávno byla přidána nová vylepšení: vyzkoušejte si je!"
 
-#: org/wikipediacleaner/Version.java:65
+#: org/wikipediacleaner/Version.java:67
 msgid ""
 "Leaving a note on talk pages with the list of links to disambiguation pages."
 msgstr "Zanechání poznámky se seznamem odkazů na rozcestníky v diskusi."
 
-#: org/wikipediacleaner/Version.java:66
+#: org/wikipediacleaner/Version.java:68
 msgid ""
 "Fixing errors detected by the Check Wiki project, in the full analysis "
 "window."
 msgstr "Opravy chyb zjištených projektem Check Wikipedia v okně analýzy."
 
-#: org/wikipediacleaner/Version.java:67
+#: org/wikipediacleaner/Version.java:69
 msgid "Fixing speling or typography based on a list of suggestions."
 msgstr "Opravy překlepů a typografie založené na seznamu návrhů."
 
@@ -752,7 +754,7 @@ msgstr "Zjišťuji užití stránky"
 msgid "Expanding templates"
 msgstr "Rozbaluji šablony"
 
-#: org/wikipediacleaner/api/execution/LinksWRCallable.java:61
+#: org/wikipediacleaner/api/execution/LinksWRCallable.java:65
 msgid "Retrieving page links"
 msgstr "Získávám odkazy stránky"
 
@@ -765,7 +767,7 @@ msgstr "Převádím text"
 msgid "Retrieving templates"
 msgstr "Přijímám šablony"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1623
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1567
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -773,7 +775,7 @@ msgstr ""
 "Tato akce je chráněna funkcí CAPTCHA.\n"
 "Jaká je odpověď na následující otázku?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1630
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1574
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -3037,19 +3039,19 @@ msgstr ""
 "Byl nahrán seznam všech rozcestníků pro urychlení analyzování stránek.\n"
 "Chcete tento seznam zobrazit?"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:464
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:472
 msgid "Retrieving list of missing templates"
 msgstr "Nahrávám seznam chybějících šablon"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:469
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:477
 msgid "Checking that the templates are still missing"
 msgstr "Ověřuji, zda dané šablony stále neexistují"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:495
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:503
 msgid "Retrieving list of protected titles"
 msgstr "Nahrávám seznam zamčených názvů"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:501
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:509
 msgid "Checking that protected titles have backlinks"
 msgstr "Ověřuji, zda na zamčené názvy něco odkazuje"
 
@@ -3184,6 +3186,18 @@ msgstr "Název reference nemůže obsahovat tyto znaky: {0}"
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
+
+#, fuzzy
+#~ msgid ""
+#~ "Add __DISAMBIG__ in every disambiguation pages (preferably through an "
+#~ "existing template)."
+#~ msgstr "Analyzuji odkazy pro rozcestníkové stránky"
+
+#, fuzzy
+#~ msgid "Configure {0} in WPCleaner System configuration."
+#~ msgstr ""
+#~ "Musíte definovat vlastnost 'dab_warning_template' v konfiguraci "
+#~ "WikiCleaneru."
 
 #~ msgid "The page {0} doesn't exist on Wikipedia"
 #~ msgstr "Stránka {0} na Wikipedii neexistuje"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-07-11 20:16+0200\n"
+"POT-Creation-Date: 2013-07-14 23:47+0200\n"
 "PO-Revision-Date: 2013-06-14 18:30+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -19,49 +19,50 @@ msgstr ""
 "X-Generator: Launchpad (build 16696)\n"
 "Language: es\n"
 
-#: org/wikipediacleaner/Version.java:41
+#: org/wikipediacleaner/Version.java:40
 msgid "Disambiguator extension has been deployed to all WMF wikis."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:42
+#: org/wikipediacleaner/Version.java:41
 msgid "It defines the new magic word __DISAMBIG__."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:43
+#: org/wikipediacleaner/Version.java:42
 msgid ""
 "This magic word should be added in every disambiguation pages (either "
 "through templates or directly)."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:44
+#: org/wikipediacleaner/Version.java:43
 msgid ""
 "WPCleaner future release (v1.28) will also use this as the default system."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:45
-msgid "An action is required on your wiki before this release. Either:"
+#: org/wikipediacleaner/Version.java:44
+msgid "An action may be required on your wiki before this release:"
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:47
-#, fuzzy
+#: org/wikipediacleaner/Version.java:46
+#, java-format
 msgid ""
-"Add __DISAMBIG__ in every disambiguation pages (preferably through an "
-"existing template)."
-msgstr "Analizando enlaces para las páginas de desambiguación"
-
-#: org/wikipediacleaner/Version.java:48
-#, fuzzy, java-format
-msgid "Configure {0} in WPCleaner System configuration."
+"You can check if {0} is used on your wiki by opening an existing "
+"disambiguation page. Then, click on \"Page information\" in the menu on the "
+"left. Finally, search for {0} in the information page."
 msgstr ""
-"Necesita definir la propiedad 'plantilla_de_advertencia' en la configuración "
-"de WikiCleaner."
 
-#: org/wikipediacleaner/Version.java:52
+#: org/wikipediacleaner/Version.java:50
+#, java-format
+msgid ""
+"If {0} is not used on your wiki, you should add {1} to your wiki "
+"WikiCleanerConfiguration."
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:54
 #, java-format
 msgid "I hope you''ll like {0}."
 msgstr "Espero que le guste {0}."
 
-#: org/wikipediacleaner/Version.java:55
+#: org/wikipediacleaner/Version.java:57
 #, java-format
 msgid ""
 "WPCleaner configuration is available online, check the {0}System "
@@ -70,22 +71,22 @@ msgstr ""
 "La configuración de WPCleaner está disponible en línea. Chequee la {0}"
 "configuración de sistema{1}."
 
-#: org/wikipediacleaner/Version.java:58
+#: org/wikipediacleaner/Version.java:60
 msgid "Please, report any other problem you find to me."
 msgstr "Por favor, informe de cualquier otro problema que encuentre."
 
-#: org/wikipediacleaner/Version.java:63
+#: org/wikipediacleaner/Version.java:65
 msgid "Many new features were added recently : try them !"
 msgstr "Algunas características han sido añadidas recientemente: ¡pruébelas!"
 
-#: org/wikipediacleaner/Version.java:65
+#: org/wikipediacleaner/Version.java:67
 msgid ""
 "Leaving a note on talk pages with the list of links to disambiguation pages."
 msgstr ""
 "Dejando una nota en las páginas de discusión con una lista de enlaces a "
 "páginas de desambiguación."
 
-#: org/wikipediacleaner/Version.java:66
+#: org/wikipediacleaner/Version.java:68
 msgid ""
 "Fixing errors detected by the Check Wiki project, in the full analysis "
 "window."
@@ -93,7 +94,7 @@ msgstr ""
 "Reparando errores detectados por el proyecto CheckWikipedia, en la ventana "
 "de análisis completo."
 
-#: org/wikipediacleaner/Version.java:67
+#: org/wikipediacleaner/Version.java:69
 msgid "Fixing speling or typography based on a list of suggestions."
 msgstr ""
 
@@ -755,7 +756,7 @@ msgstr "Obtener uso de página"
 msgid "Expanding templates"
 msgstr "Expansión de plantillas"
 
-#: org/wikipediacleaner/api/execution/LinksWRCallable.java:61
+#: org/wikipediacleaner/api/execution/LinksWRCallable.java:65
 msgid "Retrieving page links"
 msgstr "Recuperando los enlaces de la página"
 
@@ -768,7 +769,7 @@ msgstr "Analizando sintácticamente el texto"
 msgid "Retrieving templates"
 msgstr "Recuperando plantillas"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1623
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1567
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -776,7 +777,7 @@ msgstr ""
 "Esta acción está protegida por un CAPTCHA\n"
 "¿Cuál es la respuesta a la siguiente pregunta?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1630
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1574
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -3044,19 +3045,19 @@ msgstr ""
 "análisis.\n"
 "¿Desea ver la lista completa de todas las páginas de desambiguación?"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:464
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:472
 msgid "Retrieving list of missing templates"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:469
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:477
 msgid "Checking that the templates are still missing"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:495
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:503
 msgid "Retrieving list of protected titles"
 msgstr "Obteniendo la lista de títulos protegidos"
 
-#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:501
+#: org/wikipediacleaner/gui/swing/worker/PageListWorker.java:509
 msgid "Checking that protected titles have backlinks"
 msgstr ""
 
@@ -3194,6 +3195,18 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:64
 msgid "The value can't contain any of these characters: {0}"
 msgstr "El valor no contiene ninguno de estos caractéres: {0}"
+
+#, fuzzy
+#~ msgid ""
+#~ "Add __DISAMBIG__ in every disambiguation pages (preferably through an "
+#~ "existing template)."
+#~ msgstr "Analizando enlaces para las páginas de desambiguación"
+
+#, fuzzy
+#~ msgid "Configure {0} in WPCleaner System configuration."
+#~ msgstr ""
+#~ "Necesita definir la propiedad 'plantilla_de_advertencia' en la "
+#~ "configuración de WikiCleaner."
 
 #~ msgid ""
 #~ "The error n°{0} is still found {1} times in the page.\n"

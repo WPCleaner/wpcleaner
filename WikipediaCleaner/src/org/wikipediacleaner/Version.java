@@ -22,7 +22,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -42,11 +41,14 @@ public final class Version {
     GT._("It defines the new magic word __DISAMBIG__.") + "<br>" +
     GT._("This magic word should be added in every disambiguation pages (either through templates or directly).") + "<br>" +
     GT._("WPCleaner future release (v1.28) will also use this as the default system.") + "<br>" +
-    GT._("An action is required on your wiki before this release. Either:") + "<br>" +
+    GT._("An action may be required on your wiki before this release:") + "<br>" +
     "<ul>" +
-    "<li>" + GT._("Add __DISAMBIG__ in every disambiguation pages (preferably through an existing template).") + "</li>" +
-    "<li>" + GT._("Configure {0} in WPCleaner System configuration.",
-                  WPCConfigurationBoolean.DAB_USE_DISAMBIG_MAGIC_WORD.getAttributeName()) + "</li>" +
+    "<li>" + GT._("You can check if {0} is used on your wiki by opening an existing disambiguation page. " +
+                  "Then, click on \"Page information\" in the menu on the left. " +
+                  "Finally, search for {0} in the information page.",
+                  "<tt>__DISAMBIG__</tt>") + "</li>" +
+    "<li>" + GT._("If {0} is not used on your wiki, you should add {1} to your wiki WikiCleanerConfiguration.",
+                  new Object[] { "<tt>__DISAMBIG__</tt>", "<i><tt>dab_use_disambig=false END</tt></i>" }) + "</li>" +
     "</ul>" +
     "</b><br><br>" +
     GT._("I hope you''ll like {0}.", PROGRAM) +
