@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-07-14 23:47+0200\n"
+"POT-Creation-Date: 2013-07-15 22:22+0200\n"
 "PO-Revision-Date: 2013-06-06 18:15+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -33,35 +33,32 @@ msgid ""
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:43
-msgid ""
-"WPCleaner future release (v1.28) will also use this as the default system."
+msgid "WPCleaner v1.28 also uses this as the default system."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:44
-msgid "An action may be required on your wiki before this release:"
+msgid "An action may be required on your wiki:"
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:46
 #, java-format
 msgid ""
 "You can check if {0} is used on your wiki by opening an existing "
-"disambiguation page. Then, click on \"Page information\" in the menu on the "
-"left. Finally, search for {0} in the information page."
+"disambiguation page (like \"Smith\"). Then, click on \"Page information\" in "
+"the menu on the left. Finally, search for {0} in the information page."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:50
 #, java-format
-msgid ""
-"If {0} is not used on your wiki, you should add {1} to your wiki "
-"WikiCleanerConfiguration."
+msgid "If {0} is not used on your wiki, you should add {1} to the page {2}."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:54
+#: org/wikipediacleaner/Version.java:57
 #, java-format
 msgid "I hope you''ll like {0}."
 msgstr "Doufám, že se vám {0} líbí."
 
-#: org/wikipediacleaner/Version.java:57
+#: org/wikipediacleaner/Version.java:60
 #, java-format
 msgid ""
 "WPCleaner configuration is available online, check the {0}System "
@@ -69,26 +66,26 @@ msgid ""
 msgstr ""
 "Konfigurace WPCleaneru je dostupná online, viz {0}Konfigurace systému{1}."
 
-#: org/wikipediacleaner/Version.java:60
+#: org/wikipediacleaner/Version.java:63
 msgid "Please, report any other problem you find to me."
 msgstr "Prosím, hlaste mi všechny nalezené problémy."
 
-#: org/wikipediacleaner/Version.java:65
+#: org/wikipediacleaner/Version.java:68
 msgid "Many new features were added recently : try them !"
 msgstr "Nedávno byla přidána nová vylepšení: vyzkoušejte si je!"
 
-#: org/wikipediacleaner/Version.java:67
+#: org/wikipediacleaner/Version.java:70
 msgid ""
 "Leaving a note on talk pages with the list of links to disambiguation pages."
 msgstr "Zanechání poznámky se seznamem odkazů na rozcestníky v diskusi."
 
-#: org/wikipediacleaner/Version.java:68
+#: org/wikipediacleaner/Version.java:71
 msgid ""
 "Fixing errors detected by the Check Wiki project, in the full analysis "
 "window."
 msgstr "Opravy chyb zjištených projektem Check Wikipedia v okně analýzy."
 
-#: org/wikipediacleaner/Version.java:69
+#: org/wikipediacleaner/Version.java:72
 msgid "Fixing speling or typography based on a list of suggestions."
 msgstr "Opravy překlepů a typografie založené na seznamu návrhů."
 

@@ -489,10 +489,13 @@ public enum EnumWikipedia {
       return Boolean.TRUE;
     }
     if (page.isRedirect()) {
-      for (Page redirect : page.getRedirects()) {
-        if ((redirect != null) &&
-            (disambiguationPages.contains(redirect.getTitle()))) {
-          return Boolean.TRUE;
+      List<Page> redirects = page.getRedirects();
+      if (redirects != null) {
+        for (Page redirect : redirects) {
+          if ((redirect != null) &&
+              (disambiguationPages.contains(redirect.getTitle()))) {
+            return Boolean.TRUE;
+          }
         }
       }
     }
