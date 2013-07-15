@@ -30,8 +30,8 @@ import org.wikipediacleaner.i18n.GT;
  */
 public final class Version {
 
-  public final static String VERSION = "1.27";
-  public final static Date   DATE = new GregorianCalendar(2013, Calendar.APRIL, 13).getTime();
+  public final static String VERSION = "1.28";
+  public final static Date   DATE = new GregorianCalendar(2013, Calendar.JULY, 15).getTime();
 
   public final static String PROGRAM = "WPCleaner";
 
@@ -40,15 +40,18 @@ public final class Version {
     GT._("Disambiguator extension has been deployed to all WMF wikis.") + " " +
     GT._("It defines the new magic word __DISAMBIG__.") + "<br>" +
     GT._("This magic word should be added in every disambiguation pages (either through templates or directly).") + "<br>" +
-    GT._("WPCleaner future release (v1.28) will also use this as the default system.") + "<br>" +
-    GT._("An action may be required on your wiki before this release:") + "<br>" +
+    GT._("WPCleaner v1.28 also uses this as the default system.") + "<br>" +
+    GT._("An action may be required on your wiki:") + "<br>" +
     "<ul>" +
-    "<li>" + GT._("You can check if {0} is used on your wiki by opening an existing disambiguation page. " +
+    "<li>" + GT._("You can check if {0} is used on your wiki by opening an existing disambiguation page (like \"Smith\"). " +
                   "Then, click on \"Page information\" in the menu on the left. " +
                   "Finally, search for {0} in the information page.",
                   "<tt>__DISAMBIG__</tt>") + "</li>" +
-    "<li>" + GT._("If {0} is not used on your wiki, you should add {1} to your wiki WikiCleanerConfiguration.",
-                  new Object[] { "<tt>__DISAMBIG__</tt>", "<i><tt>dab_use_disambig=false END</tt></i>" }) + "</li>" +
+    "<li>" + GT._("If {0} is not used on your wiki, you should add {1} to the page {2}.",
+                  new Object[] {
+                    "<tt>__DISAMBIG__</tt>",
+                    "<i><tt>dab_use_disambig=false END</tt></i>",
+                    "<i>User:NicoV/WikiCleanerConfiguration</i>" }) + "</li>" +
     "</ul>" +
     "</b><br><br>" +
     GT._("I hope you''ll like {0}.", PROGRAM) +
