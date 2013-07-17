@@ -54,6 +54,7 @@ import org.wikipediacleaner.api.constants.EnumQueryPage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
+import org.wikipediacleaner.api.data.AbuseFilter;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Page;
@@ -61,6 +62,8 @@ import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.api.data.RecentChange;
 import org.wikipediacleaner.api.data.Section;
 import org.wikipediacleaner.api.data.User;
+import org.wikipediacleaner.api.request.ApiAbuseFiltersRequest;
+import org.wikipediacleaner.api.request.ApiAbuseFiltersResult;
 import org.wikipediacleaner.api.request.ApiCategoriesRequest;
 import org.wikipediacleaner.api.request.ApiCategoriesResult;
 import org.wikipediacleaner.api.request.ApiCategoryMembersRequest;
@@ -114,6 +117,7 @@ import org.wikipediacleaner.api.request.ApiTokensRequest;
 import org.wikipediacleaner.api.request.ApiTokensResult;
 import org.wikipediacleaner.api.request.ApiUsersRequest;
 import org.wikipediacleaner.api.request.ApiUsersResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlAbuseFiltersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoriesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoryMembersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlDeleteResult;
@@ -1005,6 +1009,21 @@ public class MediaWikiAPI implements API {
   // ==========================================================================
   // API : Queries / Lists
   // ==========================================================================
+
+  /**
+   * Retrieves the list of abuse filters.
+   * (<code>action=query</code>, <code>list=abusefilters</code>).
+   * 
+   * @param wiki Wiki.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Backlinks">API:Backlinks</a>
+   */
+  public List<AbuseFilter> retrieveAbuseFilters(EnumWikipedia wiki)
+      throws APIException {
+    ApiAbuseFiltersResult result = new ApiXmlAbuseFiltersResult(wiki, httpClient);
+    ApiAbuseFiltersRequest request = new ApiAbuseFiltersRequest(wiki, result);
+    return request.loadAbuseFilters();
+  }
 
   /**
    * Retrieves the back links of <code>page</code> and initialize redirect status.
