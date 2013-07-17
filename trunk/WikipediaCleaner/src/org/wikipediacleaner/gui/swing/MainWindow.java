@@ -1514,10 +1514,25 @@ public class MainWindow
       API api = APIFactory.getAPI();
       List<AbuseFilter> abuseFilters = api.retrieveAbuseFilters(getWikipedia());
       if ((abuseFilters != null) && (abuseFilters.size() > 0)) {
-        Utilities.askForValue(
+        Object filter = Utilities.askForValue(
             getParentComponent(),
             GT._("What abuse filter are you interested in?"),
             abuseFilters.toArray(), abuseFilters.get(0));
+        if ((filter != null) && (filter instanceof AbuseFilter)) {
+          List<Page> pages = api.retrieveAbuseLog(getWikipedia(), (AbuseFilter) filter);
+          if ((pages != null) && (!pages.isEmpty())) {
+            List<String> pageNames = new ArrayList<String>(pages.size());
+            for (Page page : pages) {
+              if (!pageNames.contains(page.getTitle())) {
+                pageNames.add(page.getTitle());
+              }
+            }
+            new PageListWorker(
+                getWikipedia(), this, null,
+                pageNames, PageListWorker.Mode.DIRECT, false,
+                GT._("Hits for filter {0}", filter.toString())).start();
+          }
+        }
       }
     } catch (APIException e) {
       displayError(e);

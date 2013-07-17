@@ -281,6 +281,17 @@ public interface API {
       EnumWikipedia wiki) throws APIException;
 
   /**
+   * Retrieves the abuse log for a filter.
+   * (<code>action=query</code>, <code>list=abuselog</code>).
+   * 
+   * @param wiki Wiki.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Abuselog">API:Abuselog</a>
+   */
+  public List<Page> retrieveAbuseLog(
+      EnumWikipedia wiki, AbuseFilter filter) throws APIException;
+
+  /**
    * Retrieves the back links of <code>page</code> and initialize redirect status.
    * (<code>action=query</code>, <code>list=backlinks</code>).
    * 
