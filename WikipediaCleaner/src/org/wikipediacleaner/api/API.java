@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumQueryPage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.AbuseFilter;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.QueryResult;
@@ -267,6 +268,17 @@ public interface API {
   // ==========================================================================
   // API : Queries / Lists
   // ==========================================================================
+
+  /**
+   * Retrieves the list of abuse filters.
+   * (<code>action=query</code>, <code>list=abusefilters</code>).
+   * 
+   * @param wiki Wiki.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Backlinks">API:Backlinks</a>
+   */
+  public List<AbuseFilter> retrieveAbuseFilters(
+      EnumWikipedia wiki) throws APIException;
 
   /**
    * Retrieves the back links of <code>page</code> and initialize redirect status.

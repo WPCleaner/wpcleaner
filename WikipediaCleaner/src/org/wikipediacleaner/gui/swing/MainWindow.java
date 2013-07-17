@@ -79,6 +79,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.AbuseFilter;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.Namespace;
@@ -130,15 +131,15 @@ public class MainWindow
   private JButton buttonLogout;
   private JButton buttonHelp;
 
+  private JButton buttonAbuseFilters;
   private JButton buttonAllDab;
   private JButton buttonBotTools;
   private JButton buttonCheckWiki;
   private JButton buttonCurrentDabList;
-  private JButton buttonHelpRequested;
   private JButton buttonGenerateLists;
+  private JButton buttonHelpRequested;
   private JButton buttonMostDabLinks;
   private JButton buttonRandomPages;
-  private JButton buttonRandomRedirects;
   private JButton buttonSpecialLists;
   private JButton buttonWatchlistLocal;
   private JButton buttonWatchlist;
@@ -278,15 +279,15 @@ public class MainWindow
     buttonReloadOptions.setEnabled(logged);
     buttonCheckSpelling.setEnabled(logged);
 
+    buttonAbuseFilters.setEnabled(logged);
     buttonAllDab.setEnabled(logged);
     buttonBotTools.setEnabled(userLogged);
     buttonCheckWiki.setEnabled(logged);
     buttonCurrentDabList.setEnabled(logged);
-    buttonHelpRequested.setEnabled(logged);
     buttonGenerateLists.setEnabled(logged);
+    buttonHelpRequested.setEnabled(logged);
     buttonMostDabLinks.setEnabled(logged);
     buttonRandomPages.setEnabled(logged);
-    buttonRandomRedirects.setEnabled(logged);
     buttonSpecialLists.setEnabled(logged);
     buttonWatchlistLocal.setEnabled(logged);
     buttonWatchlist.setEnabled(logged);
@@ -788,6 +789,15 @@ public class MainWindow
     panel.add(buttonHelpRequested, constraints);
     constraints.gridy++;
 
+    // Abuse filters
+    buttonAbuseFilters = Utilities.createJButton(
+        null, EnumImageSize.NORMAL,
+        GT._("Abuse filters"), true);
+    buttonAbuseFilters.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionAbuseFilters"));
+    panel.add(buttonAbuseFilters, constraints);
+    constraints.gridy++;
+
     // Special lists
     buttonSpecialLists = Utilities.createJButton(
         "gnome-colors-applications-office.png", EnumImageSize.NORMAL,
@@ -797,7 +807,7 @@ public class MainWindow
     panel.add(buttonSpecialLists, constraints);
     constraints.gridy++;
 
-    // Missing templates
+    // Generate lists
     buttonGenerateLists = Utilities.createJButton(
         "gnome-colors-applications-office.png", EnumImageSize.NORMAL,
         GT._("Generate lists"), true);
@@ -829,17 +839,8 @@ public class MainWindow
         "commons-nuvola-apps-atlantik.png", EnumImageSize.NORMAL,
         GT._("Random pages"), true);
     buttonRandomPages.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionRandomPages"));
+        ActionListener.class, this, "actionRandom"));
     panel.add(buttonRandomPages, constraints);
-    constraints.gridy++;
-
-    // Random redirects button
-    buttonRandomRedirects = Utilities.createJButton(
-        "commons-nuvola-apps-atlantik.png", EnumImageSize.NORMAL,
-        GT._("Random redirect pages"), true);
-    buttonRandomRedirects.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionRandomRedirects"));
-    panel.add(buttonRandomRedirects, constraints);
     constraints.gridy++;
 
     // Bot tools button
@@ -1506,6 +1507,24 @@ public class MainWindow
   }
 
   /**
+   * Action called when Abuse Filters button is pressed.
+   */
+  public void actionAbuseFilters() {
+    try {
+      API api = APIFactory.getAPI();
+      List<AbuseFilter> abuseFilters = api.retrieveAbuseFilters(getWikipedia());
+      if ((abuseFilters != null) && (abuseFilters.size() > 0)) {
+        Utilities.askForValue(
+            getParentComponent(),
+            GT._("What abuse filter are you interested in?"),
+            abuseFilters.toArray(), abuseFilters.get(0));
+      }
+    } catch (APIException e) {
+      displayError(e);
+    }
+  }
+
+  /**
    * Action called when Special Lists button is pressed.
    */
   public void actionSpecialLists() {
@@ -1666,6 +1685,25 @@ public class MainWindow
   }
 
   /**
+   * Action called when Random pages button is pressed.
+   */
+  public void actionRandom() {
+    JPopupMenu menu = new JPopupMenu();
+    JMenuItem item = new JMenuItem(GT._("Random pages"));
+    item.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionRandomPages"));
+    menu.add(item);
+    item = new JMenuItem(GT._("Random redirect pages"));
+    item.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionRandomRedirects"));
+    menu.add(item);
+    menu.show(
+        buttonRandomPages,
+        0,
+        buttonRandomPages.getHeight());
+  }
+
+  /**
    * Action called when Random Pages button is pressed.
    */
   public void actionRandomPages() {
@@ -1682,7 +1720,7 @@ public class MainWindow
   /**
    * @param redirects True if redirects are requested.
    */
-  public void actionRandomArticles(boolean redirects) {
+  private void actionRandomArticles(boolean redirects) {
     final int maxPages = 50;
     int count = 0;
     while ((count < 1) || (count > maxPages)) {
