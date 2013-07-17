@@ -64,6 +64,8 @@ import org.wikipediacleaner.api.data.Section;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.api.request.ApiAbuseFiltersRequest;
 import org.wikipediacleaner.api.request.ApiAbuseFiltersResult;
+import org.wikipediacleaner.api.request.ApiAbuseLogRequest;
+import org.wikipediacleaner.api.request.ApiAbuseLogResult;
 import org.wikipediacleaner.api.request.ApiCategoriesRequest;
 import org.wikipediacleaner.api.request.ApiCategoriesResult;
 import org.wikipediacleaner.api.request.ApiCategoryMembersRequest;
@@ -118,6 +120,7 @@ import org.wikipediacleaner.api.request.ApiTokensResult;
 import org.wikipediacleaner.api.request.ApiUsersRequest;
 import org.wikipediacleaner.api.request.ApiUsersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlAbuseFiltersResult;
+import org.wikipediacleaner.api.request.xml.ApiXmlAbuseLogResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoriesResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlCategoryMembersResult;
 import org.wikipediacleaner.api.request.xml.ApiXmlDeleteResult;
@@ -1016,13 +1019,28 @@ public class MediaWikiAPI implements API {
    * 
    * @param wiki Wiki.
    * @throws APIException
-   * @see <a href="http://www.mediawiki.org/wiki/API:Backlinks">API:Backlinks</a>
+   * @see <a href="http://www.mediawiki.org/wiki/API:Abusefilters">API:Abusefilters</a>
    */
   public List<AbuseFilter> retrieveAbuseFilters(EnumWikipedia wiki)
       throws APIException {
     ApiAbuseFiltersResult result = new ApiXmlAbuseFiltersResult(wiki, httpClient);
     ApiAbuseFiltersRequest request = new ApiAbuseFiltersRequest(wiki, result);
     return request.loadAbuseFilters();
+  }
+
+  /**
+   * Retrieves the abuse log for a filter.
+   * (<code>action=query</code>, <code>list=abuselog</code>).
+   * 
+   * @param wiki Wiki.
+   * @throws APIException
+   * @see <a href="http://www.mediawiki.org/wiki/API:Abuselog">API:Abuselog</a>
+   */
+  public List<Page> retrieveAbuseLog(EnumWikipedia wiki, AbuseFilter filter)
+      throws APIException {
+    ApiAbuseLogResult result = new ApiXmlAbuseLogResult(wiki, httpClient);
+    ApiAbuseLogRequest request = new ApiAbuseLogRequest(wiki, result);
+    return request.loadAbuseLog(filter);
   }
 
   /**

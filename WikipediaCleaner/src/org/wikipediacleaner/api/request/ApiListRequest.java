@@ -41,6 +41,11 @@ public class ApiListRequest extends ApiRequest {
   public final static String PROPERTY_LIST_ABUSEFILTERS = "abusefilters";
 
   /**
+   * Property value for List / Abuse log.
+   */
+  public final static String PROPERTY_LIST_ABUSELOG = "abuselog";
+
+  /**
    * Property value for List / Back links.
    */
   public final static String PROPERTY_LIST_BACKLINKS = "backlinks";

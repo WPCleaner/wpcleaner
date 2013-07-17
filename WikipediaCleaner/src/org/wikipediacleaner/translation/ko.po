@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-07-17 21:34+0200\n"
+"POT-Creation-Date: 2013-07-17 23:11+0200\n"
 "PO-Revision-Date: 2013-07-06 19:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -750,13 +750,13 @@ msgstr ""
 msgid "Retrieving templates"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1586
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1604
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1593
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1611
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1216,7 +1216,7 @@ msgid "Message"
 msgstr "메시지"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:349
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1819
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1834
 msgid "Login"
 msgstr "로그인"
 
@@ -1380,13 +1380,13 @@ msgid "Local &Watch list"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:831
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1684
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1699
 msgid "Watch list"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:840
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1692
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1757
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1707
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1772
 msgid "Random pages"
 msgstr ""
 
@@ -1529,28 +1529,33 @@ msgstr ""
 msgid "What abuse filter are you interested in?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1578
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1533
+#, java-format
+msgid "Hits for filter {0}"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1593
 msgid "All disambiguations pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1670
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1685
 msgid "Local watch list"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1696
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1711
 msgid "Random redirect pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1728
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1743
 msgid "How many pages do you want?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1740
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1755
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1814
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1829
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:67
 #: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:67
@@ -1562,20 +1567,20 @@ msgstr ""
 msgid "Retrieving MediaWiki API"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1834
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1849
 msgid "Loading configuration"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1861
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1876
 msgid "Retrieving disambiguation templates"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1865
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1880
 msgid "Retrieving suggestions for text replacements"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1872
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1891
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1887
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1906
 msgid "Retrieving Check Wiki configuration"
 msgstr ""
 

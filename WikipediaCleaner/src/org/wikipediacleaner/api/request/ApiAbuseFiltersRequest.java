@@ -110,7 +110,7 @@ public class ApiAbuseFiltersRequest extends ApiListRequest {
   /**
    * Property value for Properties / Private.
    */
-  public final static String PROPERTY_PROP_PRIVATE = "id";
+  public final static String PROPERTY_PROP_PRIVATE = "private";
 
   /**
    * Property value for Properties / Status.
