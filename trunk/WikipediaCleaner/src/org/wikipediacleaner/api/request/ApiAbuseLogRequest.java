@@ -19,7 +19,6 @@
 package org.wikipediacleaner.api.request;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -169,7 +168,6 @@ public class ApiAbuseLogRequest extends ApiListRequest {
     while (result.executeAbuseLog(properties, list)) {
       //
     }
-    Collections.sort(list);
     return list;
   }
 }
