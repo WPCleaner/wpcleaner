@@ -98,7 +98,7 @@ public class AbuseFilter implements Comparable<AbuseFilter> {
   }
 
   /**
-   * @return
+   * @return String description.
    * @see java.lang.Object#toString()
    */
   @Override
