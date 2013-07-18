@@ -67,6 +67,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
       CheckErrorResult errorResult = createCheckErrorResult(
           analysis.getPage(), tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
       if (tag.isFullTag()) {
+        errorResult.addReplacement(" ");
         errorResult.addReplacement("");
       } else if (tag.isComplete()) {
         String internalText = analysis.getContents().substring(
