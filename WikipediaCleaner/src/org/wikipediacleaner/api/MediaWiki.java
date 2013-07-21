@@ -41,6 +41,7 @@ import org.wikipediacleaner.api.execution.ExpandTemplatesCallable;
 import org.wikipediacleaner.api.execution.LinksWRCallable;
 import org.wikipediacleaner.api.execution.ParseTextCallable;
 import org.wikipediacleaner.api.execution.TemplatesCallable;
+import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningTools;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
@@ -179,10 +180,12 @@ public class MediaWiki extends MediaWikiController {
       Page[] pages, Map<String, List<AutomaticFixing>> replacements,
       EnumWikipedia wiki, String comment,
       StringBuilder description,
-      boolean automaticCW, boolean save) throws APIException {
+      boolean automaticCW, boolean save,
+      boolean updateDabWarning) throws APIException {
     if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
       return 0;
     }
+    UpdateDabWarningTools dabWarnings = new UpdateDabWarningTools(wiki, null, false, false);
     for (Page page : pages) {
       retrieveContents(wiki, page, false, true, false, true); // TODO: withRedirects=false ?
     }
@@ -298,6 +301,11 @@ public class MediaWiki extends MediaWikiController {
                   }
                 }
               } while (!attemptDone);
+
+              if (updateDabWarning) {
+                dabWarnings.updateDabWarning(
+                    Collections.singletonList(page), false, false, false, null, null, null);
+              }
             }
           }
         }

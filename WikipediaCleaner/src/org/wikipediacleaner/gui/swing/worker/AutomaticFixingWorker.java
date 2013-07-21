@@ -109,7 +109,7 @@ public class AutomaticFixingWorker extends BasicWorker {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       Integer count = Integer.valueOf(mw.replaceText(
           pages, replacements, getWikipedia(),
-          comment, description, automaticCW, save));
+          comment, description, automaticCW, save, true));
       if (showDescription && (count > 0)) {
         InformationWindow.createInformationWindow(
             GT.__(
