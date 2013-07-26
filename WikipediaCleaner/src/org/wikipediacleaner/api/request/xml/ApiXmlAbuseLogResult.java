@@ -1,6 +1,6 @@
 /*
  *  WikipediaCleaner: A tool to help on Wikipedia maintenance tasks.
- *  Copyright (C) 2012  Nicolas Vervelle
+ *  Copyright (C) 2013  Nicolas Vervelle
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
