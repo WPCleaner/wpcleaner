@@ -18,14 +18,12 @@
 
 package org.wikipediacleaner.i18n;
 
-import gnu.gettext.GettextResource;
-
 import java.text.MessageFormat;
 import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 import org.wikipediacleaner.api.constants.EnumLanguage;
+import org.xnap.commons.i18n.I18n;
+import org.xnap.commons.i18n.I18nFactory;
 
 
 /**
@@ -35,20 +33,13 @@ public class GT {
 
   private static GT getTextWrapper;
 
-  private final ResourceBundle defaultResource;
-  private EnumLanguage language;
+  private final I18n i18n;
 
   /**
    * Constructor.
    */
   private GT() {
-    defaultResource = new Messages();
-    Locale locale = Locale.getDefault();
-    if ((locale != null) && (locale.getLanguage() != null)) {
-      language = EnumLanguage.getLanguage(locale.getLanguage());
-    } else {
-      language = EnumLanguage.EN;
-    }
+    i18n = I18nFactory.getI18n(getClass(), "org.wikipediacleaner.i18n.Messages", Locale.getDefault());
   }
 
   /**
@@ -124,21 +115,7 @@ public class GT {
    * @return Translated text.
    */
   private String getString(String msg) {
-    try {
-      if ((language != null) && (language.getResourceBundle() != null)) {
-        String txt = GettextResource.gettext(language.getResourceBundle(), msg);
-        if (txt != null) {
-          return txt;
-        }
-      }
-    } catch (NullPointerException e) {
-      //
-    } catch (MissingResourceException e) {
-      //
-    } catch (ClassCastException e) {
-      //
-    }
-    return GettextResource.gettext(defaultResource, msg);
+    return i18n.tr(msg);
   }
 
   /**
@@ -148,21 +125,7 @@ public class GT {
    * @return Translated text.
    */
   private String getString(String msg, String msgPlural, long n) {
-    try {
-      if ((language != null) && (language.getResourceBundle() != null)) {
-        String txt = GettextResource.ngettext(language.getResourceBundle(), msg, msgPlural, n);
-        if (txt != null) {
-          return txt;
-        }
-      }
-    } catch (NullPointerException e) {
-      //
-    } catch (MissingResourceException e) {
-      //
-    } catch (ClassCastException e) {
-      //
-    }
-    return GettextResource.ngettext(defaultResource, msg, msgPlural, n);
+    return i18n.trn(msg, msgPlural, n);
   }
 
   /**
@@ -171,11 +134,7 @@ public class GT {
    * @return Translated text.
    */
   private String getString(String msg, Object[] objects) {
-    if (msg == null) {
-      return null;
-    }
-    String txt = getString(msg);
-    return MessageFormat.format(txt, objects);
+    return i18n.tr(msg, objects);
   }
 
   /**
@@ -199,6 +158,7 @@ public class GT {
    * @param language Current language.
    */
   public static void setCurrentLanguage(EnumLanguage language) {
-    getTextWrapper().language = language;
+    Locale locale = (language != null) ? language.getLocale() : Locale.getDefault();
+    getTextWrapper().i18n.setLocale(locale);
   }
 }
