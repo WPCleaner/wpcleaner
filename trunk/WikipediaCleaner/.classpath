@@ -13,6 +13,6 @@
 	<classpathentry kind="lib" path="libs/cobra-0.98.2/cobra.jar"/>
 	<classpathentry kind="lib" path="libs/cobra-0.98.2/js.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="libs/gettext-0.18.2/libintl-0.18.2.jar"/>
+	<classpathentry kind="lib" path="libs/gettext-commons-0.9.6/gettext-commons-0.9.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -20,8 +20,9 @@
   <property name="WPCleaner.libs.codec.dir"      value="libs/commons-codec-1.3" />
   <property name="WPCleaner.libs.codec.jar"      value="commons-codec-1.3.jar" />
   <property name="WPCleaner.libs.codec.lic"      value="LICENSE_commons-codec.txt" />
-  <property name="WPCleaner.libs.gettext.dir"    value="libs/gettext-0.18.2" />
-  <property name="WPCleaner.libs.gettext.jar"    value="libintl-0.18.2.jar" />
+  <property name="WPCleaner.libs.gettext.dir"    value="libs/gettext-commons-0.9.6" />
+  <property name="WPCleaner.libs.gettext.jar"    value="gettext-commons-0.9.6.jar" />
+  <property name="WPCleaner.libs.gettext.lic"    value="LICENSE_gettext-commons.txt" />
   <property name="WPCleaner.libs.httpclient.dir" value="libs/commons-httpclient-3.1" />
   <property name="WPCleaner.libs.httpclient.jar" value="commons-httpclient-3.1.jar" />
   <property name="WPCleaner.libs.httpclient.lic" value="LICENSE_commons-httpclient.txt" />
@@ -110,6 +111,8 @@
           tofile="${WPCleaner.classes.dir}/commons-httpclient.license" />
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.lic}"
   	      tofile="${WPCleaner.classes.dir}/commons-logging.license" />
+    <copy file="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.lic}"
+          tofile="${WPCleaner.classes.dir}/gettext-commons.license" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.lic}"
           tofile="${WPCleaner.classes.dir}/jdom.license" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jaxen.lic}"
