@@ -22,57 +22,58 @@ public class PageElementTag extends PageElement {
   // =========================================================================
   // HTML tags
   // =========================================================================
-  public final static String TAG_HTML_B           = "b";
-  public final static String TAG_HTML_BIG         = "big";
-  public final static String TAG_HTML_BR          = "br";
-  public final static String TAG_HTML_FONT        = "font";
-  public final static String TAG_HTML_H1          = "h1";
-  public final static String TAG_HTML_H2          = "h2";
-  public final static String TAG_HTML_H3          = "h3";
-  public final static String TAG_HTML_H4          = "h4";
-  public final static String TAG_HTML_H5          = "h5";
-  public final static String TAG_HTML_H6          = "h6";
-  public final static String TAG_HTML_H7          = "h7";
-  public final static String TAG_HTML_H8          = "h8";
-  public final static String TAG_HTML_H9          = "h9";
-  public final static String TAG_HTML_I           = "i";
-  public final static String TAG_HTML_LI          = "li";
-  public final static String TAG_HTML_OL          = "ol";
-  public final static String TAG_HTML_P           = "p";
-  public final static String TAG_HTML_S           = "s";
-  public final static String TAG_HTML_SMALL       = "small";
-  public final static String TAG_HTML_STRIKE      = "strike";
-  public final static String TAG_HTML_SUB         = "sub";
-  public final static String TAG_HTML_SUP         = "sup";
-  public final static String TAG_HTML_TABLE       = "table";
-  public final static String TAG_HTML_TD          = "td";
-  public final static String TAG_HTML_TH          = "th";
-  public final static String TAG_HTML_TR          = "tr";
-  public final static String TAG_HTML_U           = "u";
-  public final static String TAG_HTML_UL          = "ul";
+  public final static String TAG_HTML_B            = "b";
+  public final static String TAG_HTML_BIG          = "big";
+  public final static String TAG_HTML_BR           = "br";
+  public final static String TAG_HTML_FONT         = "font";
+  public final static String TAG_HTML_H1           = "h1";
+  public final static String TAG_HTML_H2           = "h2";
+  public final static String TAG_HTML_H3           = "h3";
+  public final static String TAG_HTML_H4           = "h4";
+  public final static String TAG_HTML_H5           = "h5";
+  public final static String TAG_HTML_H6           = "h6";
+  public final static String TAG_HTML_H7           = "h7";
+  public final static String TAG_HTML_H8           = "h8";
+  public final static String TAG_HTML_H9           = "h9";
+  public final static String TAG_HTML_I            = "i";
+  public final static String TAG_HTML_LI           = "li";
+  public final static String TAG_HTML_OL           = "ol";
+  public final static String TAG_HTML_P            = "p";
+  public final static String TAG_HTML_S            = "s";
+  public final static String TAG_HTML_SMALL        = "small";
+  public final static String TAG_HTML_STRIKE       = "strike";
+  public final static String TAG_HTML_SUB          = "sub";
+  public final static String TAG_HTML_SUP          = "sup";
+  public final static String TAG_HTML_TABLE        = "table";
+  public final static String TAG_HTML_TD           = "td";
+  public final static String TAG_HTML_TH           = "th";
+  public final static String TAG_HTML_TR           = "tr";
+  public final static String TAG_HTML_U            = "u";
+  public final static String TAG_HTML_UL           = "ul";
 
   // =========================================================================
   // Wiki tags
   // =========================================================================
-  public final static String TAG_WIKI_CODE        = "code";
-  public final static String TAG_WIKI_GALLERY     = "gallery";
-  public final static String TAG_WIKI_HIERO       = "hiero";
-  public final static String TAG_WIKI_IMAGEMAP    = "imagemap";
-  public final static String TAG_WIKI_INCLUDEONLY = "includeonly";
-  public final static String TAG_WIKI_MATH        = "math";
-  public final static String TAG_WIKI_NOINCLUDE   = "noinclude";
-  public final static String TAG_WIKI_NOWIKI      = "nowiki";
-  public final static String TAG_WIKI_PRE         = "pre";
-  public final static String TAG_WIKI_REF         = "ref";
-  public final static String TAG_WIKI_REFERENCES  = "references";
-  public final static String TAG_WIKI_SCORE       = "score";
-  public final static String TAG_WIKI_SOURCE      = "source";
-  public final static String TAG_WIKI_TIMELINE    = "timeline";
+  public final static String TAG_WIKI_CODE         = "code";
+  public final static String TAG_WIKI_GALLERY      = "gallery";
+  public final static String TAG_WIKI_HIERO        = "hiero";
+  public final static String TAG_WIKI_IMAGEMAP     = "imagemap";
+  public final static String TAG_WIKI_INCLUDEONLY  = "includeonly";
+  public final static String TAG_WIKI_MATH         = "math";
+  public final static String TAG_WIKI_NOINCLUDE    = "noinclude";
+  public final static String TAG_WIKI_NOWIKI       = "nowiki";
+  public final static String TAG_WIKI_PRE          = "pre";
+  public final static String TAG_WIKI_REF          = "ref";
+  public final static String TAG_WIKI_REFERENCES   = "references";
+  public final static String TAG_WIKI_SCORE        = "score";
+  public final static String TAG_WIKI_SOURCE       = "source";
+  public final static String TAG_WIKI_TEMPLATEDATA = "templatedata";
+  public final static String TAG_WIKI_TIMELINE     = "timeline";
 
   // =========================================================================
   // Other tags
   // =========================================================================
-  public final static String TAG_OTHER_TYPO       = "typo";
+  public final static String TAG_OTHER_TYPO        = "typo";
 
   /**
    * Tag name.
