@@ -11,6 +11,7 @@ import java.text.MessageFormat;
 import java.util.Locale;
 
 import org.wikipediacleaner.api.constants.EnumLanguage;
+import org.wikipediacleaner.utils.Configuration;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
@@ -28,7 +29,9 @@ public class GT {
    * Constructor.
    */
   private GT() {
-    i18n = I18nFactory.getI18n(getClass(), "org.wikipediacleaner.i18n.Messages", Locale.getDefault());
+    Configuration config = Configuration.getConfiguration();
+    EnumLanguage language = config.getLanguage();
+    i18n = I18nFactory.getI18n(getClass(), "org.wikipediacleaner.i18n.Messages", language.getLocale());
   }
 
   /**
@@ -148,6 +151,7 @@ public class GT {
    */
   public static void setCurrentLanguage(EnumLanguage language) {
     Locale locale = (language != null) ? language.getLocale() : Locale.getDefault();
+    Locale.setDefault(locale);
     getTextWrapper().i18n.setLocale(locale);
   }
 }

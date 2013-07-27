@@ -98,8 +98,9 @@ public class AboutWindow extends BasicWindow {
     pane.addTab("Commons Logging", createCommonsLoggingTab());
     pane.addTab("Commons Codec", createCommonsCodecTab());
     pane.addTab("Commons HttpClient", createCommonsHttpClientTab());
+    pane.addTab("Gettext Commons", createGettextCommonsTab());
     pane.addTab("JDOM", createJDomTab());
-    pane.addTab("Saxen", createSaxenTab());
+    pane.addTab("Jaxen", createJaxenTab());
     pane.addTab("Cobra", createCobraTab());
     return pane;
   }
@@ -227,6 +228,16 @@ public class AboutWindow extends BasicWindow {
   }
 
   /**
+   * @return Gettext Commons tab.
+   */
+  private Component createGettextCommonsTab() {
+    JPanel panel = new JPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    //TODO
+    return panel;
+  }
+
+  /**
    * @return JDOM tab.
    */
   private Component createJDomTab() {
@@ -237,9 +248,9 @@ public class AboutWindow extends BasicWindow {
   }
 
   /**
-   * @return Saxen tab.
+   * @return Jaxen tab.
    */
-  private Component createSaxenTab() {
+  private Component createJaxenTab() {
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     //TODO

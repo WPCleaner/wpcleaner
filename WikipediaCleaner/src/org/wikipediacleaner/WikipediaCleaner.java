@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner;
 
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +16,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.gui.swing.MainWindow;
 import org.wikipediacleaner.gui.swing.component.CheckThreadViolationRepaintManager;
 import org.wikipediacleaner.i18n.GT;
@@ -36,11 +38,14 @@ public class WikipediaCleaner {
    * @param args
    */
   public static void main(String[] args) {
+
     // Log levels
     Logger.getLogger("org.lobobrowser").setLevel(Level.WARNING);
     Logger.getLogger("").setLevel(Level.WARNING);
 
     Configuration config = Configuration.getConfiguration();
+    EnumLanguage language = EnumLanguage.getDefaultLanguage();
+    Locale.setDefault(language.getLocale());
 
     // Check that calls are made in the Event Dispatch Thread
     if (CHECK_EDT) {
