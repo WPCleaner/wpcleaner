@@ -15,7 +15,7 @@ import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
-import org.wikipediacleaner.gui.swing.action.PageViewAction;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
 import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
@@ -103,9 +103,9 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
           // Action: view image
           errorResult.addPossibleAction(new SimpleAction(
               GT._("View image"),
-              new PageViewAction(
-                  image.getNamespace() + ":" + image.getImage(),
+              new ActionExternalViewer(
                   pageAnalysis.getWikipedia(),
+                  image.getNamespace() + ":" + image.getImage(),
                   true)));
           errors.add(errorResult);
         }

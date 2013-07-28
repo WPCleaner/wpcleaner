@@ -20,7 +20,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -30,7 +29,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
@@ -47,6 +45,8 @@ import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
+import org.wikipediacleaner.gui.swing.action.ActionWatchPage;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -652,30 +652,10 @@ public abstract class OnePageWindow
    */
   protected void addButtonView(JComponent panel, boolean icon) {
     if (Utilities.isDesktopSupported() && (buttonView == null)) {
-      buttonView = createButtonView(this, icon);
+      buttonView = ActionExternalViewer.createButton(
+          getWikipedia(), getPageName(), false, icon);
       panel.add(buttonView);
     }
-  }
-
-  /**
-   * Create a External Viewer button.
-   * 
-   * @param listener Action listener.
-   * @param icon Flag indicating if an icon should be used.
-   * @return External Viewer button.
-   */
-  public JButton createButtonView(ActionListener listener, boolean icon) {
-    JButton button = null;
-    if (icon) {
-      button = Utilities.createJButton(
-          "gnome-emblem-web.png", EnumImageSize.NORMAL,
-          GT._("External Viewer (Alt + &E)"), false);
-    } else {
-      button = Utilities.createJButton(GT._("&External Viewer"));
-    }
-    button.setActionCommand(ACTION_VIEW);
-    button.addActionListener(listener);
-    return button;
   }
 
   /**
@@ -686,30 +666,10 @@ public abstract class OnePageWindow
    */
   protected void addButtonViewHistory(JComponent panel, boolean icon) {
     if (Utilities.isDesktopSupported() && (buttonViewHistory == null)) {
-      buttonViewHistory = createButtonViewHistory(this, icon);
+      buttonViewHistory = ActionExternalViewer.createButton(
+          getWikipedia(), getPageName(), ActionExternalViewer.ACTION_HISTORY, icon);
       panel.add(buttonViewHistory);
     }
-  }
-
-  /**
-   * Create a External Viewer button for the page history.
-   * 
-   * @param listener Action listener.
-   * @param icon Flag indicating if an icon should be used.
-   * @return External Viewer button.
-   */
-  public JButton createButtonViewHistory(ActionListener listener, boolean icon) {
-    JButton button = null;
-    if (icon) {
-      button = Utilities.createJButton(
-          "gnome-emblem-documents.png", EnumImageSize.NORMAL,
-          GT._("History (Alt + &H)"), false);
-    } else {
-      button = Utilities.createJButton(GT._("&History"));
-    }
-    button.setActionCommand(ACTION_VIEW_HISTORY);
-    button.addActionListener(listener);
-    return button;
   }
 
   /**
@@ -720,30 +680,9 @@ public abstract class OnePageWindow
    */
   protected void addButtonWatch(JComponent panel, boolean icon) {
     if (buttonWatch == null) {
-      buttonWatch = createButtonWatch(this, icon);
+      buttonWatch = ActionWatchPage.createButton(getParentComponent(), getWikipedia(), getPageName(), icon);
       panel.add(buttonWatch);
     }
-  }
-
-  /**
-   * Create a Watch button.
-   * 
-   * @param listener Action listener.
-   * @param icon Flag indicating if an icon should be used.
-   * @return Watch button.
-   */
-  public JButton createButtonWatch(ActionListener listener, boolean icon) {
-    JButton button;
-    if (icon) {
-      button = Utilities.createJButton(
-          "gnome-logviewer-add.png", EnumImageSize.NORMAL,
-          GT._("Add to Watch list (Alt + &W)"), false);
-    } else {
-      button = Utilities.createJButton(GT._("Add to &Watch list"));
-    }
-    button.setActionCommand(ACTION_WATCH);
-    button.addActionListener(listener);
-    return button;
   }
 
   /**
@@ -1137,9 +1076,6 @@ public abstract class OnePageWindow
   public final static String ACTION_SEND                 = "SEND";
   public final static String ACTION_TOC                  = "TOC";
   public final static String ACTION_VALIDATE             = "VALIDATE";
-  public final static String ACTION_VIEW                 = "VIEW";
-  public final static String ACTION_VIEW_HISTORY         = "VIEW_HISTORY";
-  public final static String ACTION_WATCH                = "WATCH";
 
   /**
    * Invoked when an action occurs.
@@ -1164,12 +1100,6 @@ public abstract class OnePageWindow
       actionToc();
     } else if (ACTION_VALIDATE.equals(e.getActionCommand())) {
       actionValidate(true);
-    } else if (ACTION_VIEW.equals(e.getActionCommand())) {
-      actionView();
-    } else if (ACTION_VIEW_HISTORY.equals(e.getActionCommand())) {
-      actionViewHistory();
-    } else if (ACTION_WATCH.equals(e.getActionCommand())) {
-      actionWatch();
     }
   }
 
@@ -1330,37 +1260,6 @@ public abstract class OnePageWindow
    */
   protected void actionValidate(boolean fullValidate) {
     // Implement in sub-classes
-  }
-
-  /**
-   * Action called when View button is pressed. 
-   */
-  private void actionView() {
-    Utilities.browseURL(getWikipedia(), getPageName(), false);
-  }
-
-  /**
-   * Action called when View History button is pressed. 
-   */
-  private void actionViewHistory() {
-    Utilities.browseURL(getWikipedia(), getPageName(), "history");
-  }
-
-  /**
-   * Action called when Watch button is pressed. 
-   */
-  private void actionWatch() {
-    String message = GT._("Would you like to add this page on your local Watch list ?"); 
-    if (displayYesNoWarning(message) == JOptionPane.YES_OPTION) {
-      Configuration config = Configuration.getConfiguration();
-      List<String> watch = config.getStringList(
-          getWikipedia(), Configuration.ARRAY_WATCH_PAGES);
-      if (!watch.contains(page.getTitle())) {
-        watch.add(page.getTitle());
-        Collections.sort(watch);
-        config.setStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES, watch);
-      }
-    }
   }
 
   // =========================================================================

@@ -25,7 +25,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
-import org.wikipediacleaner.gui.swing.action.PageViewAction;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -308,7 +308,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
               for (PageElementExternalLink link : links) {
                 errorResult.addPossibleAction(new SimpleAction(
                     GT._("External Viewer"),
-                    new PageViewAction(link.getLink())));
+                    new ActionExternalViewer(link.getLink())));
               }
               errors.add(errorResult);
             }

@@ -82,6 +82,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -903,11 +904,13 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       toolbarButtons.add(buttonMarkAsFixed);
       toolbarButtons.addSeparator();
       if (Utilities.isDesktopSupported()) { // External Viewer
-        JButton buttonView = createButtonView(this, true);
+        JButton buttonView = ActionExternalViewer.createButton(
+            getWikipedia(), page.getTitle(), false, true);
         toolbarButtons.add(buttonView);
       }
       if (Utilities.isDesktopSupported()) { // History
-        JButton buttonHistory = createButtonViewHistory(this, true);
+        JButton buttonHistory = ActionExternalViewer.createButton(
+            getWikipedia(), page.getTitle(), ActionExternalViewer.ACTION_HISTORY, true);
         toolbarButtons.add(buttonHistory);
         toolbarButtons.addSeparator();
       }
@@ -1154,10 +1157,6 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         actionToc();
       } else if (ACTION_VALIDATE.equals(e.getActionCommand())) {
         actionValidate();
-      } else if (ACTION_VIEW.equals(e.getActionCommand())) {
-        actionView();
-      } else if (ACTION_VIEW_HISTORY.equals(e.getActionCommand())) {
-        actionViewHistory();
       }
     }
 
@@ -1442,20 +1441,6 @@ public class CheckWikiProjectWindow extends OnePageWindow {
           }
         }
       }
-    }
-
-    /**
-     * View page in external viewer.
-     */
-    private void actionView() {
-      Utilities.browseURL(getWikipedia(), page.getTitle(), false);
-    }
-
-    /**
-     * View page history in external viewer.
-     */
-    private void actionViewHistory() {
-      Utilities.browseURL(getWikipedia(), page.getTitle(), "history");
     }
 
     /**

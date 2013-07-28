@@ -72,6 +72,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.User;
+import org.wikipediacleaner.gui.swing.action.ActionWatchPage;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -524,6 +525,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   private Component createLinksComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
 
+    listLinks = new JList(modelLinks);
+
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
     constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -558,11 +561,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     buttonRemoveLinks.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRemoveAllLinks"));
     toolbar.add(buttonRemoveLinks);
-    buttonWatchLink = Utilities.createJButton(
-        "gnome-logviewer-add.png", EnumImageSize.NORMAL,
-        GT._("Add to Watch list (Alt + &W)"), false);
-    buttonWatchLink.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionWatchLink"));
+    buttonWatchLink = ActionWatchPage.createButton(
+        getParentComponent(), getWikipedia(), listLinks, true);
     toolbar.add(buttonWatchLink);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weightx = 1;
@@ -572,7 +572,6 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     // Links
     constraints.fill = GridBagConstraints.BOTH;
     constraints.weighty = 1;
-    listLinks = new JList(modelLinks);
     listCellRenderer = new PageListCellRenderer();
     listCellRenderer.showCountOccurrence(true);
     listCellRenderer.showDisambiguation(true);
@@ -980,32 +979,6 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     listLinks.getSelectionModel().setSelectionInterval(startIndex, startIndex + nbSelections - 1);
     listLinks.ensureIndexIsVisible(startIndex);
     listLinks.ensureIndexIsVisible(startIndex + nbSelections - 1);
-  }
-
-  /**
-   * Action called when Watch link button is pressed. 
-   */
-  public void actionWatchLink() {
-    Object[] links = listLinks.getSelectedValues();
-    if ((links == null) || (links.length == 0)) {
-      return;
-    }
-    if (displayYesNoWarning(
-        GT._("Would you like to add these pages on your local Watch list ?")) == JOptionPane.YES_OPTION) {
-      Configuration config = Configuration.getConfiguration();
-      List<String> watch = config.getStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES);
-      boolean added = false;
-      for (Object link : links) {
-        if (!watch.contains(link.toString())) {
-          added = true;
-          watch.add(link.toString());
-        }
-      }
-      if (added) {
-        Collections.sort(watch);
-        config.setStringList(getWikipedia(), Configuration.ARRAY_WATCH_PAGES, watch);
-      }
-    }
   }
 
   /**
