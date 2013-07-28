@@ -45,6 +45,7 @@ import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionFullPageAnalysis;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -362,30 +363,10 @@ public abstract class OnePageWindow
    */
   protected void addButtonFullAnalysis(JComponent panel, boolean icon) {
     if (buttonFullAnalysis == null) {
-      buttonFullAnalysis = createButtonFullAnalysis(this, icon);
+      buttonFullAnalysis = ActionFullPageAnalysis.createButton(
+          getWikipedia(), getPageName(), true);
       panel.add(buttonFullAnalysis);
     }
-  }
-
-  /**
-   * Create a Full Analysis button.
-   * 
-   * @param listener Action listener.
-   * @param icon Flag indicating if an icon should be used.
-   * @return Full Analysis button.
-   */
-  public JButton createButtonFullAnalysis(ActionListener listener, boolean icon) {
-    JButton button = null;
-    if (icon) {
-      button = Utilities.createJButton(
-          "gnome-system-run.png", EnumImageSize.NORMAL,
-          GT._("Full analysis"), false);
-    } else {
-      button = Utilities.createJButton(GT._("Full analysis"));
-    }
-    button.setActionCommand(ACTION_FULL_ANALYSIS_PAGE);
-    button.addActionListener(listener);
-    return button;
   }
 
   /**
