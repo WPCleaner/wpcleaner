@@ -17,6 +17,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -51,6 +52,26 @@ public class ActionWatchPage implements ActionListener {
       button = Utilities.createJButton(GT._("Add to &Watch list"));
     }
     button.addActionListener(new ActionWatchPage(parent, wiki, title));
+    return button;
+  }
+
+  /**
+   * Add a button for adding a page to the Watch list.
+   * 
+   * @param parent Parent component.
+   * @param toolbar Tool bar.
+   * @param wiki Wiki.
+   * @param title Page title.
+   * @param icon True if the button should use an icon.
+   * @return Button.
+   */
+  public static JButton addButton(
+      Component parent, JToolBar toolbar,
+      EnumWikipedia wiki, String title, boolean icon) {
+    JButton button = createButton(parent, wiki, title, icon);
+    if ((button != null) && (toolbar != null)) {
+      toolbar.add(button);
+    }
     return button;
   }
 

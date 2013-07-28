@@ -13,8 +13,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JToolBar;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
@@ -51,6 +54,23 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
   }
 
   /**
+   * Add a button for viewing a page.
+   * 
+   * @param toolbar Tool bar.
+   * @param wiki Wiki.
+   * @param title Page title.
+   * @param redirect True if redirects should be followed.
+   * @param icon True if the button should use an icon.
+   * @return Button.
+   */
+  public static JButton addButton(
+      JToolBar toolbar,
+      EnumWikipedia wiki, String title,
+      boolean redirect, boolean icon) {
+    return addButton(toolbar, wiki, title, redirect, null, icon);
+  }
+
+  /**
    * Create a button for viewing a page.
    * 
    * @param wiki Wiki.
@@ -63,6 +83,87 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
       EnumWikipedia wiki, String title,
       String action, boolean icon) {
     return createButton(wiki, title, false, action, icon);
+  }
+
+  /**
+   * Add a button for viewing a page.
+   * 
+   * @param toolbar Tool bar.
+   * @param wiki Wiki.
+   * @param title Page title.
+   * @param action Action to perform.
+   * @param icon True if the button should use an icon.
+   * @return Button.
+   */
+  public static JButton addButton(
+      JToolBar toolbar,
+      EnumWikipedia wiki, String title,
+      String action, boolean icon) {
+    return addButton(toolbar, wiki, title, false, action, icon);
+  }
+
+  /**
+   * Create a button for viewing a list of selected pages.
+   * 
+   * @param wiki Wiki.
+   * @param list List.
+   * @param redirect True if redirects should be followed.
+   * @param icon True if the button should use an icon.
+   * @return Button.
+   */
+  public static JButton createButton(
+      EnumWikipedia wiki, JList list,
+      boolean redirect, boolean icon) {
+    return createButton(wiki, list, redirect, null, icon);
+  }
+
+  /**
+   * Add a button for viewing a list of selected pages.
+   * 
+   * @param toolbar Tool bar.
+   * @param wiki Wiki.
+   * @param list List.
+   * @param redirect True if redirects should be followed.
+   * @param icon True if the button should use an icon.
+   * @return Button.
+   */
+  public static JButton addButton(
+      JToolBar toolbar,
+      EnumWikipedia wiki, JList list,
+      boolean redirect, boolean icon) {
+    return addButton(toolbar, wiki, list, redirect, null, icon);
+  }
+
+  /**
+   * Create a button for viewing a list of selected pages.
+   * 
+   * @param wiki Wiki.
+   * @param list List.
+   * @param action Action to perform.
+   * @param icon True if the button should use an icon.
+   * @return Button.
+   */
+  public static JButton createButton(
+      EnumWikipedia wiki, JList list,
+      String action, boolean icon) {
+    return createButton(wiki, list, false, action, icon);
+  }
+
+  /**
+   * Add a button for viewing a list of selected pages.
+   * 
+   * @param toolbar Tool bar.
+   * @param wiki Wiki.
+   * @param list List.
+   * @param action Action to perform.
+   * @param icon True if the button should use an icon.
+   * @return Button.
+   */
+  public static JButton addButton(
+      JToolBar toolbar,
+      EnumWikipedia wiki, JList list,
+      String action, boolean icon) {
+    return addButton(toolbar, wiki, list, false, action, icon);
   }
 
   /**
@@ -101,6 +202,85 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
   }
 
   /**
+   * Add a button for viewing a page.
+   * 
+   * @param toolbar Tool bar.
+   * @param wiki Wiki.
+   * @param title Page title.
+   * @param redirect True if redirects should be followed.
+   * @param action Action to perform.
+   * @param icon True if the button should use an icon.
+   * @return Button.
+   */
+  private static JButton addButton(
+      JToolBar toolbar,
+      EnumWikipedia wiki, String title,
+      boolean redirect, String action, boolean icon) {
+    JButton button = createButton(wiki, title, redirect, action, icon);
+    if ((button != null) && (toolbar != null)) {
+      toolbar.add(button);
+    }
+    return button;
+  }
+
+  /**
+   * Create a button for viewing a list of selected pages.
+   * 
+   * @param wiki Wiki.
+   * @param list List.
+   * @param redirect True if redirects should be followed.
+   * @param action Action to perform.
+   * @param icon True if the button should use an icon.
+   * @return Button.
+   */
+  private static JButton createButton(
+      EnumWikipedia wiki, JList list,
+      boolean redirect, String action, boolean icon) {
+    JButton button;
+    if (icon) {
+      if ((action != null) && (ACTION_HISTORY.equals(action))) {
+        button = Utilities.createJButton(
+            "gnome-emblem-documents.png", EnumImageSize.NORMAL,
+            GT._("History (Alt + &H)"), false);
+      } else {
+        button = Utilities.createJButton(
+            "gnome-emblem-web.png", EnumImageSize.NORMAL,
+            GT._("External Viewer (Alt + &E)"), false);
+      }
+    } else {
+      if ((action != null) && (ACTION_HISTORY.equals(action))) {
+        button = Utilities.createJButton(GT._("&History"));
+      } else {
+        button = Utilities.createJButton(GT._("&External Viewer"));
+      }
+    }
+    button.addActionListener(new ActionExternalViewer(wiki, list, redirect, action));
+    return button;
+  }
+
+  /**
+   * Add a button for viewing a list of selected pages.
+   * 
+   * @param toolbar Tool bar.
+   * @param wiki Wiki.
+   * @param list List.
+   * @param redirect True if redirects should be followed.
+   * @param action Action to perform.
+   * @param icon True if the button should use an icon.
+   * @return Button.
+   */
+  private static JButton addButton(
+      JToolBar toolbar,
+      EnumWikipedia wiki, JList list,
+      boolean redirect, String action, boolean icon) {
+    JButton button = createButton(wiki, list, redirect, action, icon);
+    if ((button != null) && (toolbar != null)) {
+      toolbar.add(button);
+    }
+    return button;
+  }
+
+  /**
    * Wiki.
    */
   private final EnumWikipedia wiki;
@@ -109,6 +289,11 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
    * Page which is to be displayed.
    */
   private final String title;
+
+  /**
+   * Selected pages in the JList should be displayed.
+   */
+  private final JList list;
 
   /**
    * True if redirects should be followed.
@@ -168,6 +353,23 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
       boolean redirect, String action) {
     this.wiki = wiki;
     this.title = title;
+    this.list = null;
+    this.redirect = redirect;
+    this.action = action;
+  }
+
+  /**
+   * @param wiki Wiki.
+   * @param list Selected pages will be displayed.
+   * @param redirect True if redirects should be followed.
+   * @param action Action to perform.
+   */
+  private ActionExternalViewer(
+      EnumWikipedia wiki, JList list,
+      boolean redirect, String action) {
+    this.wiki = wiki;
+    this.title = null;
+    this.list = list;
     this.redirect = redirect;
     this.action = action;
   }
@@ -179,15 +381,29 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
    * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
    */
   public void actionPerformed(ActionEvent e) {
-    if (title == null) {
-      return;
+    if (list != null) {
+      for (Object selection : list.getSelectedValues()) {
+        if (selection instanceof Page) {
+          viewPage(((Page) selection).getTitle());
+        }
+      }
+    } else if (title != null) {
+      viewPage(title);
     }
+  }
+
+  /**
+   * View a page.
+   * 
+   * @param pageTitle Page title.
+   */
+  private void viewPage(String pageTitle) {
     if (action != null) {
-      Utilities.browseURL(wiki, title, action);
+      Utilities.browseURL(wiki, pageTitle, action);
     } else if (wiki != null) {
-      Utilities.browseURL(wiki, title, redirect);
+      Utilities.browseURL(wiki, pageTitle, redirect);
     } else {
-      Utilities.browseURL(title);
+      Utilities.browseURL(pageTitle);
     }
   }
 }

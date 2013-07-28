@@ -247,6 +247,30 @@ public abstract class BasicWindow implements ActionListener {
   }
 
   /**
+   * Enable or disable a component.
+   * 
+   * @param component Component.
+   * @param enabled True to enable the component.
+   */
+  protected void setEnabledStatus(Component component, boolean enabled) {
+    if (component != null) {
+      component.setEnabled(enabled);
+    }
+  }
+
+  /**
+   * Make a component visible or invisible.
+   * 
+   * @param component Component.
+   * @param enabled True to make the component visible.
+   */
+  protected void setVisibleStatus(Component component, boolean enabled) {
+    if (component != null) {
+      component.setVisible(enabled);
+    }
+  }
+
+  /**
    * @return Glass pane.
    */
   public ProgressPanel getGlassPane() {
