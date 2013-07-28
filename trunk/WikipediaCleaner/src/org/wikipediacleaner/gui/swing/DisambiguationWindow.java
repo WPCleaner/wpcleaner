@@ -40,6 +40,7 @@ import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
+import org.wikipediacleaner.gui.swing.action.ActionFullPageAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionWatchPage;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -83,6 +84,8 @@ public class DisambiguationWindow extends OnePageWindow {
   private JButton buttonViewLink;
   private JButton buttonWatch;
 
+  List<Page> knownPages;
+
   /**
    * Create and display a DisambiguationWindow.
    * 
@@ -107,6 +110,7 @@ public class DisambiguationWindow extends OnePageWindow {
               disambig.modelLinks.setComparator(PageComparator.getTemplateFirstComparator());
               disambig.modelLinks.setShowDisambiguation(true);
               disambig.modelLinks.setShowOther(true);
+              disambig.knownPages = new ArrayList<Page>();
             }
           }
           @Override
@@ -191,6 +195,7 @@ public class DisambiguationWindow extends OnePageWindow {
   @Override
   protected void updateComponentState() {
     super.updateComponentState();
+    setEnabledStatus(buttonFullAnalysisLink, isPageLoaded());
     setEnabledStatus(buttonView, isPageLoaded());
     setEnabledStatus(buttonViewHistory, isPageLoaded());
     setEnabledStatus(buttonViewLink, isPageLoaded());
@@ -294,12 +299,8 @@ public class DisambiguationWindow extends OnePageWindow {
     // Button toolbar
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
-    buttonFullAnalysisLink = Utilities.createJButton(
-        "gnome-system-run.png", EnumImageSize.NORMAL,
-        GT._("Full analysis (Alt + &F)"), false);
-    buttonFullAnalysisLink.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionFullAnalysisLink"));
-    toolbar.add(buttonFullAnalysisLink);
+    buttonFullAnalysisLink = ActionFullPageAnalysis.addButton(
+        getParentComponent(), toolbar, getWikipedia(), listLinks, knownPages, true);
     buttonDisambiguationLink = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Disambiguation (Alt + &D)"), false);
@@ -420,6 +421,20 @@ public class DisambiguationWindow extends OnePageWindow {
         " / " +
         ((countTotal != null) ? countTotal.toString() : "?"));
 
+    // Construct list of known pages
+    knownPages.clear();
+    if (getPage() != null) {
+      knownPages = new ArrayList<Page>(1);
+      knownPages.add(getPage());
+      for (Page backLink : getPage().getBackLinksWithRedirects()) {
+        if ((backLink != null) &&
+            (backLink.isRedirect()) &&
+            (Page.areSameTitle(getPage().getTitle(), backLink.getRedirectDestination()))) {
+          knownPages.add(backLink);
+        }
+      }
+    }
+
     // Select next links
     actionSelectNextLinks();
   }
@@ -450,26 +465,6 @@ public class DisambiguationWindow extends OnePageWindow {
       pages.add((Page) values[i]);
     }
     Controller.runAutomatixFixing(pages, getPage(), getWikipedia());
-  }
-
-  /**
-   * Action called when Full analysis button is pressed.
-   */
-  public void actionFullAnalysisLink() {
-    List<Page> knownPages = null;
-    if (getPage() != null) {
-      knownPages = new ArrayList<Page>(1);
-      knownPages.add(getPage());
-      for (Page backLink : getPage().getBackLinksWithRedirects()) {
-        if ((backLink != null) &&
-            (backLink.isRedirect()) &&
-            (Page.areSameTitle(getPage().getTitle(), backLink.getRedirectDestination()))) {
-          knownPages.add(backLink);
-        }
-      }
-    }
-    Controller.runFullAnalysis(
-        getParentComponent(), listLinks.getSelectedValues(), knownPages, getWikipedia());
   }
 
   /**
