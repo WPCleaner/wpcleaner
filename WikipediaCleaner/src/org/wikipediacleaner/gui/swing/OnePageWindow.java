@@ -45,8 +45,6 @@ import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
-import org.wikipediacleaner.gui.swing.action.ActionWatchPage;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -250,9 +248,6 @@ public abstract class OnePageWindow
   private JButton buttonUndo;
   private JButton buttonReload;
   private JButton buttonSend;
-  private JButton buttonView;
-  private JButton buttonViewHistory;
-  private JButton buttonWatch;
   private JButton buttonFullAnalysis;
   private JTextField textComment;
   private JCheckBox chkAutomaticComment;
@@ -273,63 +268,32 @@ public abstract class OnePageWindow
   protected void updateComponentState() {
     boolean redirect = (page != null) && (page.isRedirect());
     boolean article = (page != null) && (page.isArticle());
-    if (textContents != null) {
-      textContents.setEnabled(pageLoaded);
-    }
-    if (buttonView != null) {
-      buttonView.setEnabled(pageLoaded);
-    }
-    if (buttonViewHistory != null) {
-      buttonViewHistory.setEnabled(pageLoaded);
-    }
-    if ((buttonSend != null) && (textContents != null)) {
-      buttonSend.setEnabled(pageLoaded && textContents.isModified());
-    }
-    if (buttonDisambiguation != null) {
-      buttonDisambiguation.setEnabled(pageLoaded);
-    }
-    if (buttonFullAnalysis != null) {
-      buttonFullAnalysis.setEnabled(pageLoaded);
-    }
-    if (buttonWatch != null) {
-      buttonWatch.setEnabled(pageLoaded);
-    }
-    if (buttonFullAnalysisRedirect != null) {
-      buttonFullAnalysisRedirect.setEnabled(redirect);
-      buttonFullAnalysisRedirect.setVisible(redirect);
-    }
-    if (buttonDisambiguationRedirect != null) {
-      buttonDisambiguationRedirect.setEnabled(redirect);
-      buttonDisambiguationRedirect.setVisible(redirect);
-    }
-    if (chkCloseAfterSend != null) {
-      chkCloseAfterSend.setEnabled(pageLoaded);
-    }
-    if (chkEditTalkPage != null) {
-      chkEditTalkPage.setEnabled(pageLoaded && article);
-    }
     boolean dabWarning =
-      article &&
-      (getConfiguration().getString(WPCConfigurationString.DAB_WARNING_TEMPLATE) != null) &&
-      (getConfiguration().getStringList(WPCConfigurationStringList.TODO_TEMPLATES) != null);
-    if (chkUpdateDabWarning != null) {
-      chkUpdateDabWarning.setEnabled(pageLoaded && dabWarning);
-    }
-    if (chkCreateDabWarning != null) {
-      chkCreateDabWarning.setEnabled(
-          pageLoaded && dabWarning &&
-          (chkUpdateDabWarning != null) &&
-          (chkUpdateDabWarning.isSelected()));
-    }
-    if (chkSpelling != null) {
-      chkSpelling.setEnabled(pageLoaded);
-    }
-    if ((textComment != null) && (chkAutomaticComment != null)) {
-      textComment.setEnabled(!chkAutomaticComment.isSelected());
-    }
-    if (menuFixRedirects != null) {
-      menuFixRedirects.setEnabled(menuFixRedirects.getItemCount() > 0);
-    }
+        article &&
+        (getConfiguration().getString(WPCConfigurationString.DAB_WARNING_TEMPLATE) != null) &&
+        (getConfiguration().getStringList(WPCConfigurationStringList.TODO_TEMPLATES) != null);
+
+    setEnabledStatus(textComment, (chkAutomaticComment == null) || (!chkAutomaticComment.isSelected()));
+    setEnabledStatus(textContents, pageLoaded);
+
+    setEnabledStatus(buttonDisambiguation, pageLoaded);
+    setEnabledStatus(buttonDisambiguationRedirect, redirect);
+    setVisibleStatus(buttonDisambiguationRedirect, redirect);
+    setEnabledStatus(buttonFullAnalysis, pageLoaded);
+    setEnabledStatus(buttonFullAnalysisRedirect, redirect);
+    setVisibleStatus(buttonFullAnalysisRedirect, redirect);
+    setEnabledStatus(buttonSend, pageLoaded && (textContents != null) && textContents.isModified());
+
+    setEnabledStatus(chkCloseAfterSend, pageLoaded);
+    setEnabledStatus(chkCreateDabWarning,
+        pageLoaded && dabWarning &&
+        (chkUpdateDabWarning != null) &&
+        (chkUpdateDabWarning.isSelected()));
+    setEnabledStatus(chkEditTalkPage, pageLoaded && article);
+    setEnabledStatus(chkSpelling, pageLoaded);
+    setEnabledStatus(chkUpdateDabWarning, pageLoaded && dabWarning);
+
+    setEnabledStatus(menuFixRedirects, (menuFixRedirects != null) && (menuFixRedirects.getItemCount() > 0));
   }
 
   /**
@@ -642,47 +606,6 @@ public abstract class OnePageWindow
     button.setActionCommand(ACTION_VALIDATE);
     button.addActionListener(listener);
     return button;
-  }
-
-  /**
-   * Add a component for the External Viewer button.
-   * 
-   * @param panel Container.
-   * @param icon Flag indicating if an icon should be used.
-   */
-  protected void addButtonView(JComponent panel, boolean icon) {
-    if (Utilities.isDesktopSupported() && (buttonView == null)) {
-      buttonView = ActionExternalViewer.createButton(
-          getWikipedia(), getPageName(), false, icon);
-      panel.add(buttonView);
-    }
-  }
-
-  /**
-   * Add a component for the External Viewer button for the page history.
-   * 
-   * @param panel Container.
-   * @param icon Flag indicating if an icon should be used.
-   */
-  protected void addButtonViewHistory(JComponent panel, boolean icon) {
-    if (Utilities.isDesktopSupported() && (buttonViewHistory == null)) {
-      buttonViewHistory = ActionExternalViewer.createButton(
-          getWikipedia(), getPageName(), ActionExternalViewer.ACTION_HISTORY, icon);
-      panel.add(buttonViewHistory);
-    }
-  }
-
-  /**
-   * Add a component for the Watch button.
-   * 
-   * @param panel Container.
-   * @param icon Flag indicating if an icon should be used.
-   */
-  protected void addButtonWatch(JComponent panel, boolean icon) {
-    if (buttonWatch == null) {
-      buttonWatch = ActionWatchPage.createButton(getParentComponent(), getWikipedia(), getPageName(), icon);
-      panel.add(buttonWatch);
-    }
   }
 
   /**

@@ -39,6 +39,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
+import org.wikipediacleaner.gui.swing.action.ActionWatchPage;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
@@ -69,13 +71,17 @@ public class DisambiguationWindow extends OnePageWindow {
   private PageListCellRenderer listCellRenderer;
   private DisambiguationPageListPopupListener popupListenerLinks;
   JLabel linkCount;
-  private JButton buttonFullAnalysisLink;
+
+  private JButton buttonAutomaticFixing;
   private JButton buttonDisambiguationLink;
+  private JButton buttonFullAnalysisLink;
   private JButton buttonMarkNeedHelp;
   private JButton buttonMarkNormal;
-  private JButton buttonExternalViewerLink;
   private JButton buttonSelectNextLinks;
-  private JButton buttonAutomaticFixing;
+  private JButton buttonView;
+  private JButton buttonViewHistory;
+  private JButton buttonViewLink;
+  private JButton buttonWatch;
 
   /**
    * Create and display a DisambiguationWindow.
@@ -180,6 +186,18 @@ public class DisambiguationWindow extends OnePageWindow {
   }
 
   /**
+   * Update component state.
+   */
+  @Override
+  protected void updateComponentState() {
+    super.updateComponentState();
+    setEnabledStatus(buttonView, isPageLoaded());
+    setEnabledStatus(buttonViewHistory, isPageLoaded());
+    setEnabledStatus(buttonViewLink, isPageLoaded());
+    setEnabledStatus(buttonWatch, isPageLoaded());
+  }
+
+  /**
    * Creates internal elements. 
    */
   private void createElements() {
@@ -195,9 +213,13 @@ public class DisambiguationWindow extends OnePageWindow {
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
     addButtonReload(toolbar, true);
-    addButtonView(toolbar, true);
+    buttonView = ActionExternalViewer.addButton(
+        toolbar, getWikipedia(), getPageName(), false, true);
+    buttonViewHistory = ActionExternalViewer.addButton(
+        toolbar, getWikipedia(), getPageName(), ActionExternalViewer.ACTION_HISTORY, true);
     addButtonSend(toolbar, true);
-    addButtonWatch(toolbar, true);
+    buttonWatch = ActionWatchPage.addButton(
+        getParentComponent(), toolbar, getWikipedia(), getPageName(), true);
     addButtonFullAnalysis(toolbar, true);
     panel.add(toolbar);
     return panel;
@@ -237,6 +259,8 @@ public class DisambiguationWindow extends OnePageWindow {
   private Component createLinksComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
     Configuration configuration = Configuration.getConfiguration();
+
+    listLinks = new JList(modelLinks);
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -294,12 +318,8 @@ public class DisambiguationWindow extends OnePageWindow {
     buttonMarkNeedHelp.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionMarkBacklinkHelpNeeded"));
     toolbar.add(buttonMarkNeedHelp);
-    buttonExternalViewerLink = Utilities.createJButton(
-        "gnome-emblem-web.png", EnumImageSize.NORMAL,
-        GT._("External Viewer"), false);
-    buttonExternalViewerLink.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionExternalViewerLink"));
-    toolbar.add(buttonExternalViewerLink);
+    buttonViewLink = ActionExternalViewer.addButton(
+        toolbar, getWikipedia(), listLinks, false, true);
     toolbar.addSeparator();
     linkCount = new JLabel(GT._("Link count"));
     toolbar.add(linkCount);
@@ -310,7 +330,6 @@ public class DisambiguationWindow extends OnePageWindow {
     constraints.gridy++;
 
     // Links
-    listLinks = new JList(modelLinks);
     listCellRenderer = new PageListCellRenderer();
     listCellRenderer.showRedirect(true);
     listCellRenderer.showRedirectBacklinks(true);
@@ -491,17 +510,6 @@ public class DisambiguationWindow extends OnePageWindow {
         Configuration.PROPERTIES_BACKLINKS, getPageName(),
         backlinksProperties);
     listLinks.repaint();
-  }
-
-  /**
-   * Action called when External Viewer button is pressed.
-   */
-  public void actionExternalViewerLink() {
-    for (Object selection : listLinks.getSelectedValues()) {
-      if (selection instanceof Page) {
-        Utilities.browseURL(getWikipedia(), ((Page) selection).getTitle(), false);
-      }
-    }
   }
 
   /**

@@ -904,14 +904,10 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       toolbarButtons.add(buttonMarkAsFixed);
       toolbarButtons.addSeparator();
       if (Utilities.isDesktopSupported()) { // External Viewer
-        JButton buttonView = ActionExternalViewer.createButton(
-            getWikipedia(), page.getTitle(), false, true);
-        toolbarButtons.add(buttonView);
-      }
-      if (Utilities.isDesktopSupported()) { // History
-        JButton buttonHistory = ActionExternalViewer.createButton(
-            getWikipedia(), page.getTitle(), ActionExternalViewer.ACTION_HISTORY, true);
-        toolbarButtons.add(buttonHistory);
+        ActionExternalViewer.addButton(
+            toolbarButtons, getWikipedia(), page.getTitle(), false, true);
+        ActionExternalViewer.addButton(
+            toolbarButtons, getWikipedia(), page.getTitle(), ActionExternalViewer.ACTION_HISTORY, true);
         toolbarButtons.addSeparator();
       }
       JButton buttonFullAnalysis = createButtonFullAnalysis(this, true);

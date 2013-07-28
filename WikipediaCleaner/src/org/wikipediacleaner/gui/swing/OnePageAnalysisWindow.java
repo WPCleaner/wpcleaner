@@ -72,6 +72,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.User;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionWatchPage;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -116,6 +117,9 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   private JButton buttonToc;
   private JButton buttonDelete;
   private JButton buttonValidate;
+  private JButton buttonView;
+  private JButton buttonViewHistory;
+  private JButton buttonWatch;
 
   JList listLinks;
   PageListCellRenderer listCellRenderer;
@@ -245,20 +249,21 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   protected void updateComponentState() {
     boolean article = (isPageLoaded()) && (getPage() != null) && (getPage().isArticle());
     boolean redirect = article && getPage().isRedirect();
-    buttonFirst.setEnabled(isPageLoaded());
-    buttonPrevious.setEnabled(isPageLoaded());
-    buttonNext.setEnabled(isPageLoaded());
-    buttonLast.setEnabled(isPageLoaded());
-    buttonToc.setEnabled(isPageLoaded());
-    buttonValidate.setEnabled(isPageLoaded());
-    if (buttonDelete != null) {
-      buttonDelete.setEnabled(isPageLoaded());
-    }
-    buttonDisambiguationWarning.setEnabled(article);
-    buttonRedirectElements.setEnabled(redirect);
-    buttonRedirectElements.setVisible(redirect);
-    buttonOtherLanguage.setEnabled(isPageLoaded());
-    buttonTranslation.setEnabled(isPageLoaded());
+    setEnabledStatus(buttonDelete, isPageLoaded());
+    setEnabledStatus(buttonDisambiguationWarning, article);
+    setEnabledStatus(buttonFirst, isPageLoaded());
+    setEnabledStatus(buttonLast, isPageLoaded());
+    setEnabledStatus(buttonNext, isPageLoaded());
+    setEnabledStatus(buttonOtherLanguage, isPageLoaded());
+    setEnabledStatus(buttonPrevious, isPageLoaded());
+    setEnabledStatus(buttonRedirectElements, redirect);
+    setVisibleStatus(buttonRedirectElements, redirect);
+    setEnabledStatus(buttonToc, isPageLoaded());
+    setEnabledStatus(buttonTranslation, isPageLoaded());
+    setEnabledStatus(buttonValidate, isPageLoaded());
+    setEnabledStatus(buttonView, isPageLoaded());
+    setEnabledStatus(buttonViewHistory, isPageLoaded());
+    setEnabledStatus(buttonWatch, isPageLoaded());
     super.updateComponentState();
   }
 
@@ -418,10 +423,13 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     toolbarButtons.add(buttonDisambiguationWarning);
     toolbarButtons.addSeparator();
     addButtonReload(toolbarButtons, true);
-    addButtonView(toolbarButtons, true);
-    addButtonViewHistory(toolbarButtons, true);
+    buttonView = ActionExternalViewer.addButton(
+        toolbarButtons, getWikipedia(), getPageName(), false, true);
+    buttonViewHistory = ActionExternalViewer.addButton(
+        toolbarButtons, getWikipedia(), getPageName(), ActionExternalViewer.ACTION_HISTORY, true);
     toolbarButtons.addSeparator();
-    addButtonWatch(toolbarButtons, true);
+    buttonWatch = ActionWatchPage.addButton(
+        getParentComponent(), toolbarButtons, getWikipedia(), getPageName(), true);
     addButtonDisambiguation(toolbarButtons, true);
     toolbarButtons.addSeparator();
     String[] elements = getConfiguration().getStringArray(WPCConfigurationString.LANG_TEMPLATE);
