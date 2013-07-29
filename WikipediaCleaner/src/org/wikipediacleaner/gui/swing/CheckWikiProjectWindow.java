@@ -713,12 +713,14 @@ public class CheckWikiProjectWindow extends OnePageWindow {
   }
 
   /**
-   * @return Page liste components
+   * @return Page list components
    */
   private Component createPageListComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
     panel.setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), GT._("Pages")));
+
+    listPages = new JList(modelPages);
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -740,12 +742,8 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     buttonLoad.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSelectPage"));
     toolbarButtons.add(buttonLoad);
-    JButton buttonAnalysis = Utilities.createJButton(
-        "gnome-system-run.png", EnumImageSize.NORMAL,
-        GT._("Full analysis (Alt + &F)"), false);
-    buttonAnalysis.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionAnalyzePage"));
-    toolbarButtons.add(buttonAnalysis);
+    ActionFullAnalysis.addButton(
+        getParentComponent(), toolbarButtons, getWikipedia(), listPages, null, true);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -755,7 +753,6 @@ public class CheckWikiProjectWindow extends OnePageWindow {
 
     // Page List
     modelPages = new DefaultListModel();
-    listPages = new JList(modelPages);
     listPages.setCellRenderer(new CheckErrorPageListCellRenderer(true));
     listPages.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     listPages.addMouseListener(new MouseAdapter() {
@@ -912,7 +909,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         toolbarButtons.addSeparator();
       }
       ActionFullAnalysis.addButton(
-          toolbarButtons, getWikipedia(), page.getTitle(), true);
+          toolbarButtons, getWikipedia(), page.getTitle(), true, false);
       constraints.fill = GridBagConstraints.HORIZONTAL;
       constraints.gridwidth = 2;
       constraints.weightx = 1;
@@ -1969,19 +1966,6 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       contentWorker.start();
     } else {
       updateComponentState();
-    }
-  }
-
-  /**
-   * Action called when a page is analyzed.
-   */
-  public void actionAnalyzePage() {
-    Object[] selection = listPages.getSelectedValues();
-    if (selection != null) {
-      for (int i = 0; i < selection.length; i++) {
-        CheckErrorPage errorPage = (CheckErrorPage) selection[i];
-        Controller.runFullAnalysis(errorPage.getPage().getTitle(), null, getWikipedia());
-      }
     }
   }
 
