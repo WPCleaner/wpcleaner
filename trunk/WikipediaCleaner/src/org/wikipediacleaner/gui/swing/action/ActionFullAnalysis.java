@@ -28,7 +28,7 @@ import org.wikipediacleaner.images.EnumImageSize;
 /**
  * Manage actions for analyzing a page.
  */
-public class ActionFullPageAnalysis implements ActionListener {
+public class ActionFullAnalysis implements ActionListener {
 
   /**
    * Create a button for analyzing a page.
@@ -48,7 +48,7 @@ public class ActionFullPageAnalysis implements ActionListener {
     } else {
       button = Utilities.createJButton(GT._("Full analysis"));
     }
-    button.addActionListener(new ActionFullPageAnalysis(wiki, title));
+    button.addActionListener(new ActionFullAnalysis(wiki, title));
     return button;
   }
 
@@ -93,7 +93,7 @@ public class ActionFullPageAnalysis implements ActionListener {
     } else {
       button = Utilities.createJButton(GT._("Full analysis"));
     }
-    button.addActionListener(new ActionFullPageAnalysis(parent, wiki, list, knownPages));
+    button.addActionListener(new ActionFullAnalysis(parent, wiki, list, knownPages));
     return button;
   }
 
@@ -148,7 +148,7 @@ public class ActionFullPageAnalysis implements ActionListener {
    * @param wiki Wiki.
    * @param title Page to be analyzed.
    */
-  public ActionFullPageAnalysis(EnumWikipedia wiki, String title) {
+  public ActionFullAnalysis(EnumWikipedia wiki, String title) {
     this.parent = null;
     this.wiki = wiki;
     this.title = title;
@@ -162,7 +162,7 @@ public class ActionFullPageAnalysis implements ActionListener {
    * @param list Selected pages should be analyzed.
    * @param knownPages List of known pages.
    */
-  public ActionFullPageAnalysis(Component parent, EnumWikipedia wiki, JList list, List<Page> knownPages) {
+  public ActionFullAnalysis(Component parent, EnumWikipedia wiki, JList list, List<Page> knownPages) {
     this.parent = parent;
     this.wiki = wiki;
     this.title = null;

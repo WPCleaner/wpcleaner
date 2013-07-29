@@ -83,7 +83,7 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
-import org.wikipediacleaner.gui.swing.action.ActionFullPageAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -911,7 +911,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
             toolbarButtons, getWikipedia(), page.getTitle(), ActionExternalViewer.ACTION_HISTORY, true);
         toolbarButtons.addSeparator();
       }
-      ActionFullPageAnalysis.addButton(
+      ActionFullAnalysis.addButton(
           toolbarButtons, getWikipedia(), page.getTitle(), true);
       constraints.fill = GridBagConstraints.HORIZONTAL;
       constraints.gridwidth = 2;
