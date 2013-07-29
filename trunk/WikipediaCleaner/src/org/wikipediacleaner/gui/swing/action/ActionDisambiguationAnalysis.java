@@ -11,7 +11,6 @@ package org.wikipediacleaner.gui.swing.action;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -19,7 +18,6 @@ import javax.swing.JToolBar;
 import javax.swing.text.JTextComponent;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
@@ -31,7 +29,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 /**
  * Manage actions for analyzing a page.
  */
-public class ActionFullAnalysis implements ActionListener {
+public class ActionDisambiguationAnalysis implements ActionListener {
 
   /**
    * Create a button for analyzing a page.
@@ -48,13 +46,13 @@ public class ActionFullAnalysis implements ActionListener {
     JButton button;
     if (icon) {
       button = Utilities.createJButton(
-          "gnome-system-run.png", EnumImageSize.NORMAL,
-          showText ? GT._("&Full analysis") : GT._("Full analysis (Alt + &F)"),
+          "commons-disambig-colour.png", EnumImageSize.NORMAL,
+          showText ? GT._("&Disambiguation") : GT._("Disambiguation (Alt + &D)"),
           showText);
     } else {
-      button = Utilities.createJButton(GT._("Full analysis"));
+      button = Utilities.createJButton(GT._("Disambiguation"));
     }
-    button.addActionListener(new ActionFullAnalysis(wiki, title));
+    button.addActionListener(new ActionDisambiguationAnalysis(wiki, title));
     return button;
   }
 
@@ -65,14 +63,14 @@ public class ActionFullAnalysis implements ActionListener {
    * @param wiki Wiki.
    * @param title Page title.
    * @param icon True if the button should use an icon.
-   * @param text True if the button should display the text.
+   * @param showText True if the button should display the text.
    * @return Button.
    */
   public static JButton addButton(
       JToolBar toolbar,
       EnumWikipedia wiki, String title,
-      boolean icon, boolean text) {
-    JButton button = createButton(wiki, title, icon, text);
+      boolean icon, boolean showText) {
+    JButton button = createButton(wiki, title, icon, showText);
     if ((button != null) && (toolbar != null)) {
       toolbar.add(button);
     }
@@ -85,23 +83,22 @@ public class ActionFullAnalysis implements ActionListener {
    * @param parent Parent component.
    * @param wiki Wiki.
    * @param list List.
-   * @param knownPages List of knownPages.
    * @param icon True if the button should use an icon.
    * @return Button.
    */
   public static JButton createButton(
       Component parent,
       EnumWikipedia wiki, JList list,
-      List<Page> knownPages, boolean icon) {
+      boolean icon) {
     JButton button;
     if (icon) {
       button = Utilities.createJButton(
-          "gnome-system-run.png", EnumImageSize.NORMAL,
-          GT._("Full analysis"), false);
+          "commons-disambig-colour.png", EnumImageSize.NORMAL,
+          GT._("Disambiguation (Alt + &D)"), false);
     } else {
-      button = Utilities.createJButton(GT._("Full analysis"));
+      button = Utilities.createJButton(GT._("Disambiguation"));
     }
-    button.addActionListener(new ActionFullAnalysis(parent, wiki, list, knownPages));
+    button.addActionListener(new ActionDisambiguationAnalysis(parent, wiki, list));
     return button;
   }
 
@@ -112,15 +109,14 @@ public class ActionFullAnalysis implements ActionListener {
    * @param toolbar Tool bar.
    * @param wiki Wiki.
    * @param list List.
-   * @param knownPages List of knownPages.
    * @param icon True if the button should use an icon.
    * @return Button.
    */
   public static JButton addButton(
       Component parent, JToolBar toolbar,
       EnumWikipedia wiki, JList list,
-      List<Page> knownPages, boolean icon) {
-    JButton button = createButton(parent, wiki, list, knownPages, icon);
+      boolean icon) {
+    JButton button = createButton(parent, wiki, list, icon);
     if ((button != null) && (toolbar != null)) {
       toolbar.add(button);
     }
@@ -143,11 +139,6 @@ public class ActionFullAnalysis implements ActionListener {
   private final String title;
 
   /**
-   * List of known pages.
-   */
-  private final List<Page> knownPages;
-
-  /**
    * Selected pages in the JList should be analyzed.
    */
   private final JList list;
@@ -161,11 +152,10 @@ public class ActionFullAnalysis implements ActionListener {
    * @param wiki Wiki.
    * @param title Page to be analyzed.
    */
-  public ActionFullAnalysis(EnumWikipedia wiki, String title) {
+  public ActionDisambiguationAnalysis(EnumWikipedia wiki, String title) {
     this.parent = null;
     this.wiki = wiki;
     this.title = title;
-    this.knownPages = null;
     this.list = null;
     this.text = null;
   }
@@ -174,13 +164,11 @@ public class ActionFullAnalysis implements ActionListener {
    * @param parent Parent component.
    * @param wiki Wiki.
    * @param list Selected pages should be analyzed.
-   * @param knownPages List of known pages.
    */
-  public ActionFullAnalysis(Component parent, EnumWikipedia wiki, JList list, List<Page> knownPages) {
+  public ActionDisambiguationAnalysis(Component parent, EnumWikipedia wiki, JList list) {
     this.parent = parent;
     this.wiki = wiki;
     this.title = null;
-    this.knownPages = knownPages;
     this.list = list;
     this.text = null;
   }
@@ -190,11 +178,10 @@ public class ActionFullAnalysis implements ActionListener {
    * @param wiki Wiki.
    * @param text Text component containing the page name.
    */
-  public ActionFullAnalysis(Component parent, EnumWikipedia wiki, JTextComponent text) {
+  public ActionDisambiguationAnalysis(Component parent, EnumWikipedia wiki, JTextComponent text) {
     this.parent = parent;
     this.wiki = wiki;
     this.title = null;
-    this.knownPages = null;
     this.list = null;
     this.text = text;
   }
@@ -212,7 +199,7 @@ public class ActionFullAnalysis implements ActionListener {
 
     // Analyze a list of selected pages
     if (list != null) {
-      Controller.runFullAnalysis(parent, list.getSelectedValues(), knownPages, wiki);
+      Controller.runDisambiguationAnalysis(parent, list.getSelectedValues(), wiki);
       return;
     }
 
@@ -222,7 +209,7 @@ public class ActionFullAnalysis implements ActionListener {
       if ((tmp == null) || (tmp.trim().length() == 0)) {
         Utilities.displayWarning(
             parent,
-            GT._("You must input a page name for running a full analysis"),
+            GT._("You must input a page name for running a disambiguation analysis"),
             text);
         return;
       }
@@ -231,13 +218,13 @@ public class ActionFullAnalysis implements ActionListener {
       config.setString(
           null, ConfigurationValueString.PAGE_NAME, tmp);
       config.save();
-      Controller.runFullAnalysis(tmp, null, wiki);
+      Controller.runDisambiguationAnalysis(tmp, wiki);
       return;
     }
 
     // Analyze a single page
     if (title != null) {
-      Controller.runFullAnalysis(title, null, wiki);
+      Controller.runDisambiguationAnalysis(title, wiki);
       return;
     }
   }

@@ -39,6 +39,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
+import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionWatchPage;
@@ -74,7 +75,6 @@ public class DisambiguationWindow extends OnePageWindow {
   JLabel linkCount;
 
   private JButton buttonAutomaticFixing;
-  private JButton buttonDisambiguationLink;
   private JButton buttonFullAnalysisLink;
   private JButton buttonMarkNeedHelp;
   private JButton buttonMarkNormal;
@@ -301,12 +301,8 @@ public class DisambiguationWindow extends OnePageWindow {
     toolbar.setFloatable(false);
     buttonFullAnalysisLink = ActionFullAnalysis.addButton(
         getParentComponent(), toolbar, getWikipedia(), listLinks, knownPages, true);
-    buttonDisambiguationLink = Utilities.createJButton(
-        "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("Disambiguation (Alt + &D)"), false);
-    buttonDisambiguationLink.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionDisambiguationLink"));
-    toolbar.add(buttonDisambiguationLink);
+    ActionDisambiguationAnalysis.addButton(
+        getParentComponent(), toolbar, getWikipedia(), listLinks, true);
     buttonMarkNormal = Utilities.createJButton(
         "wpc-mark-normal.png", EnumImageSize.NORMAL,
         GT._("Mark backlink as normal"), false);
@@ -465,14 +461,6 @@ public class DisambiguationWindow extends OnePageWindow {
       pages.add((Page) values[i]);
     }
     Controller.runAutomatixFixing(pages, getPage(), getWikipedia());
-  }
-
-  /**
-   * Action called when Disambiguation button is pressed.
-   */
-  public void actionDisambiguationLink() {
-    Controller.runDisambiguationAnalysis(
-        getParentComponent(), listLinks.getSelectedValues(), getWikipedia());
   }
 
   /**

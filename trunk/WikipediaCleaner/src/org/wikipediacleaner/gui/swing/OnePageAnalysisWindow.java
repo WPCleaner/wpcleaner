@@ -72,6 +72,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.User;
+import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionWatchPage;
@@ -136,7 +137,6 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   JCheckBoxMenuItem menuItemCountMissing;
   JCheckBoxMenuItem menuItemCountOther;
   JCheckBoxMenuItem menuItemCountRedirect;
-  private JButton buttonDisambiguationLink;
   private JButton buttonRemoveLinks;
   private JButton buttonWatchLink;
   private JButton buttonDisambiguationWarning;
@@ -553,12 +553,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     toolbar.setFloatable(false);
     ActionFullAnalysis.addButton(
         getParentComponent(), toolbar, getWikipedia(), listLinks, knownPages, true);
-    buttonDisambiguationLink = Utilities.createJButton(
-        "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("Disambiguation (Alt + &D)"), false);
-    buttonDisambiguationLink.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionDisambiguationLink"));
-    toolbar.add(buttonDisambiguationLink);
+    ActionDisambiguationAnalysis.addButton(
+        getParentComponent(), toolbar, getWikipedia(), listLinks, true);
     buttonRemoveLinks = Utilities.createJButton(
         "wpc-remove-link.png", EnumImageSize.NORMAL,
         GT._("Remove all links"), false);
@@ -983,16 +979,6 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     listLinks.getSelectionModel().setSelectionInterval(startIndex, startIndex + nbSelections - 1);
     listLinks.ensureIndexIsVisible(startIndex);
     listLinks.ensureIndexIsVisible(startIndex + nbSelections - 1);
-  }
-
-  /**
-   * Action called when Disambiguation button is pressed.
-   */
-  public void actionDisambiguationLink() {
-    Controller.runDisambiguationAnalysis(
-        getParentComponent(),
-        listLinks.getSelectedValues(),
-        getWikipedia());
   }
 
   /**

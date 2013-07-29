@@ -75,6 +75,9 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.Suggestion;
 import org.wikipediacleaner.api.data.User;
+import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionUtilities;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -619,20 +622,12 @@ public class MainWindow
     constraints.weightx = 1;
 
     // Full analysis button
-    buttonFullAnalysis = Utilities.createJButton(
-        "gnome-system-run.png", EnumImageSize.NORMAL,
-        GT._("&Full analysis"), true);
-    buttonFullAnalysis.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionFullAnalysis"));
+    buttonFullAnalysis = ActionFullAnalysis.createButton(getWikipedia(), null, true, true);
     panel.add(buttonFullAnalysis, constraints);
     constraints.gridy++;
 
     // Disambiguation button
-    buttonDisambiguation = Utilities.createJButton(
-        "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("&Disambiguation"), true);
-    buttonDisambiguation.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionDisambiguation"));
+    buttonDisambiguation = ActionDisambiguationAnalysis.createButton(getWikipedia(), null, true, true);
     panel.add(buttonDisambiguation, constraints);
     constraints.gridy++;
 
@@ -971,6 +966,14 @@ public class MainWindow
       }
     }
 
+    // Update actions
+    ActionUtilities.removeActionListeners(buttonDisambiguation);
+    ActionUtilities.removeActionListeners(buttonFullAnalysis);
+    buttonDisambiguation.addActionListener(new ActionDisambiguationAnalysis(
+        getParentComponent(), getWikipedia(), textPagename));
+    buttonFullAnalysis.addActionListener(new ActionFullAnalysis(
+        getParentComponent(), getWikipedia(), textPagename));
+
     // Login
     new LoginWorker(
         getWikipedia(), this,
@@ -1205,52 +1208,6 @@ public class MainWindow
         radSaveUsername.setSelected(true);
       }
     }
-  }
-
-  /**
-   * Action called when Full analysis button is pressed.
-   */
-  public void actionFullAnalysis() {
-    if ((textPagename == null) ||
-        (textPagename.getText() == null) ||
-        ("".equals(textPagename.getText().trim()))) {
-      displayWarning(
-          GT._("You must input a page name for running a full analysis"),
-          textPagename);
-      return;
-    }
-    Configuration config = Configuration.getConfiguration();
-    config.setString(
-        null,
-        ConfigurationValueString.PAGE_NAME,
-        textPagename.getText().trim());
-    config.save();
-    Controller.runFullAnalysis(
-        textPagename.getText().trim(), null,
-        getWikipedia());
-  }
-
-  /**
-   * Action called when Disambiguation button is pressed.
-   */
-  public void actionDisambiguation() {
-    if ((textPagename == null) ||
-        (textPagename.getText() == null) ||
-        ("".equals(textPagename.getText().trim()))) {
-      displayWarning(
-          GT._("You must input a page name for running a disambiguation analysis"),
-          textPagename);
-      return;
-    }
-    Configuration config = Configuration.getConfiguration();
-    config.setString(
-        null,
-        ConfigurationValueString.PAGE_NAME,
-        textPagename.getText().trim());
-    config.save();
-    Controller.runDisambiguationAnalysis(
-        textPagename.getText().trim(),
-        getWikipedia());
   }
 
   /**

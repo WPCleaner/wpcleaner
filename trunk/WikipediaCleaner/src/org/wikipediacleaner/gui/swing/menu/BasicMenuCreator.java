@@ -22,9 +22,9 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageAnalysisUtils;
 import org.wikipediacleaner.api.data.PageElementTitle;
+import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
-import org.wikipediacleaner.gui.swing.action.DisambiguationAnalysisAction;
 import org.wikipediacleaner.gui.swing.action.PurgeCacheAction;
 import org.wikipediacleaner.gui.swing.action.ReloadLinksAction;
 import org.wikipediacleaner.gui.swing.action.RemoveLinkAction;
@@ -257,7 +257,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
     if (Boolean.TRUE.equals(page.isDisambiguationPage())) {
       if (!page.isRedirect()) {
         JMenuItem menuItem = new JMenuItem(GT._("Disambiguation analysis"));
-        ActionListener action = new DisambiguationAnalysisAction(page.getTitle(), wiki);
+        ActionListener action = new ActionDisambiguationAnalysis(wiki, page.getTitle());
         menuItem.addActionListener(action);
         popup.add(menuItem);
       } else {
@@ -267,7 +267,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
           Page pageTmp = iter.next();
           JMenuItem menuItem = new JMenuItem(pageTmp.getTitle());
           updateFont(menuItem, pageTmp);
-          ActionListener action = new DisambiguationAnalysisAction(pageTmp.getTitle(), wiki);
+          ActionListener action = new ActionDisambiguationAnalysis(wiki, pageTmp.getTitle());
           menuItem.addActionListener(action);
           submenuView.add(menuItem);
         }

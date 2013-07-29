@@ -364,17 +364,17 @@ public abstract class OnePageWindow
   protected void addButtonFullAnalysis(JComponent panel, boolean icon) {
     if (buttonFullAnalysis == null) {
       buttonFullAnalysis = ActionFullAnalysis.createButton(
-          getWikipedia(), getPageName(), true);
+          getWikipedia(), getPageName(), true, false);
       panel.add(buttonFullAnalysis);
     }
   }
 
   /**
-   * Create a Last Occurence button.
+   * Create a Last Occurrence button.
    * 
    * @param listener Action listener.
    * @param icon Flag indicating if an icon should be used.
-   * @return Last Occurence button.
+   * @return Last Occurrence button.
    */
   public JButton createButtonLastOccurence(ActionListener listener, boolean icon) {
     JButton button = null;
@@ -395,7 +395,7 @@ public abstract class OnePageWindow
    * 
    * @param listener Action listener.
    * @param icon Flag indicating if an icon should be used.
-   * @return Next Occurence button.
+   * @return Next Occurrence button.
    */
   public JButton createButtonNextOccurence(ActionListener listener, boolean icon) {
     JButton button = null;
@@ -412,11 +412,11 @@ public abstract class OnePageWindow
   }
 
   /**
-   * Create a Previous Occurence button.
+   * Create a Previous Occurrence button.
    * 
    * @param listener Action listener.
    * @param icon Flag indicating if an icon should be used.
-   * @return Previous Occurence button.
+   * @return Previous Occurrence button.
    */
   public JButton createButtonPreviousOccurence(ActionListener listener, boolean icon) {
     JButton button = null;
