@@ -73,6 +73,7 @@ import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
+import org.wikipediacleaner.gui.swing.action.ActionFullPageAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionWatchPage;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -135,7 +136,6 @@ public class OnePageAnalysisWindow extends OnePageWindow {
   JCheckBoxMenuItem menuItemCountMissing;
   JCheckBoxMenuItem menuItemCountOther;
   JCheckBoxMenuItem menuItemCountRedirect;
-  private JButton buttonFullAnalysisLink;
   private JButton buttonDisambiguationLink;
   private JButton buttonRemoveLinks;
   private JButton buttonWatchLink;
@@ -551,12 +551,8 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     // Button toolbar
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
-    buttonFullAnalysisLink = Utilities.createJButton(
-        "gnome-system-run.png", EnumImageSize.NORMAL,
-        GT._("Full analysis (Alt + &F)"), false);
-    buttonFullAnalysisLink.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionFullAnalysisLink"));
-    toolbar.add(buttonFullAnalysisLink);
+    ActionFullPageAnalysis.addButton(
+        getParentComponent(), toolbar, getWikipedia(), listLinks, knownPages, true);
     buttonDisambiguationLink = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Disambiguation (Alt + &D)"), false);
@@ -1383,17 +1379,6 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       
     });
     worker.start();
-  }
-
-  /**
-   * Action called when Full analysis button is pressed.
-   */
-  public void actionFullAnalysisLink() {
-    Controller.runFullAnalysis(
-        getParentComponent(),
-        listLinks.getSelectedValues(),
-        null,
-        getWikipedia());
   }
 
   /**

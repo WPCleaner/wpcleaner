@@ -46,6 +46,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
+import org.wikipediacleaner.gui.swing.action.ActionFullPageAnalysis;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
@@ -82,7 +83,6 @@ public class AutomaticFixingWindow extends OnePageWindow {
   JList listPages;
   PageListModel modelPages;
   private PageListCellRenderer listCellRenderer;
-  private JButton buttonFullAnalysisLink;
   private JButton buttonDisambiguationLink;
   private JButton buttonExternalViewerLink;
 
@@ -326,6 +326,8 @@ public class AutomaticFixingWindow extends OnePageWindow {
   private Component createLinksComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
 
+    listPages = new JList(modelPages);
+
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
     constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -342,12 +344,8 @@ public class AutomaticFixingWindow extends OnePageWindow {
     // Button toolbar
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
-    buttonFullAnalysisLink = Utilities.createJButton(
-        "gnome-system-run.png", EnumImageSize.NORMAL,
-        GT._("Full analysis (Alt + &F)"), false);
-    buttonFullAnalysisLink.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionFullAnalysisLink"));
-    toolbar.add(buttonFullAnalysisLink);
+    ActionFullPageAnalysis.addButton(
+        getParentComponent(), toolbar, getWikipedia(), listPages, null, true);
     buttonDisambiguationLink = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Disambiguation (Alt + &D)"), false);
@@ -366,7 +364,6 @@ public class AutomaticFixingWindow extends OnePageWindow {
     constraints.gridy++;
 
     // Pages
-    listPages = new JList(modelPages);
     listCellRenderer = new PageListCellRenderer();
     listCellRenderer.showRedirect(true);
     listPages.setCellRenderer(listCellRenderer);
@@ -707,26 +704,6 @@ public class AutomaticFixingWindow extends OnePageWindow {
     config.addPojoArray(
         getPage().getWikipedia(), Configuration.POJO_AUTOMATIC_FIXING,
         replacements, getPage().getTitle());
-  }
-
-  /**
-   * Action called when Full analysis button is pressed.
-   */
-  public void actionFullAnalysisLink() {
-    List<Page> knownPages = null;
-    if (getPage() != null) {
-      knownPages = new ArrayList<Page>(1);
-      knownPages.add(getPage());
-      for (Page backLink : getPage().getBackLinksWithRedirects()) {
-        if ((backLink != null) &&
-            (backLink.isRedirect()) &&
-            (Page.areSameTitle(getPage().getTitle(), backLink.getRedirectDestination()))) {
-          knownPages.add(backLink);
-        }
-      }
-    }
-    Controller.runFullAnalysis(
-        getParentComponent(), listPages.getSelectedValues(), knownPages, getWikipedia());
   }
 
   /**
