@@ -46,7 +46,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
-import org.wikipediacleaner.gui.swing.action.ActionFullPageAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
@@ -344,7 +344,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     // Button toolbar
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
-    ActionFullPageAnalysis.addButton(
+    ActionFullAnalysis.addButton(
         getParentComponent(), toolbar, getWikipedia(), listPages, null, true);
     buttonDisambiguationLink = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,

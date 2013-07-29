@@ -40,7 +40,7 @@ import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
-import org.wikipediacleaner.gui.swing.action.ActionFullPageAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionWatchPage;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -299,7 +299,7 @@ public class DisambiguationWindow extends OnePageWindow {
     // Button toolbar
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
-    buttonFullAnalysisLink = ActionFullPageAnalysis.addButton(
+    buttonFullAnalysisLink = ActionFullAnalysis.addButton(
         getParentComponent(), toolbar, getWikipedia(), listLinks, knownPages, true);
     buttonDisambiguationLink = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,

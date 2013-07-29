@@ -23,7 +23,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageAnalysisUtils;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
-import org.wikipediacleaner.gui.swing.action.ActionFullPageAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.action.DisambiguationAnalysisAction;
 import org.wikipediacleaner.gui.swing.action.PurgeCacheAction;
 import org.wikipediacleaner.gui.swing.action.ReloadLinksAction;
@@ -195,7 +195,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
         Page pageTmp = iter.next();
         menuItem = new JMenuItem(pageTmp.getTitle());
         updateFont(menuItem, pageTmp);
-        action = new ActionFullPageAnalysis(wiki, pageTmp.getTitle());
+        action = new ActionFullAnalysis(wiki, pageTmp.getTitle());
         menuItem.addActionListener(action);
         submenuAnalyze.add(menuItem);
         fixedBegin++;
@@ -206,7 +206,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
         for (Page p : links) {
           menuItem = new JMenuItem(p.getTitle());
           updateFont(menuItem, p);
-          action = new ActionFullPageAnalysis(wiki, p.getTitle());
+          action = new ActionFullAnalysis(wiki, p.getTitle());
           menuItem.addActionListener(action);
           submenuAnalyze.add(menuItem);
         }
@@ -218,7 +218,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
           Page pageTmp = iter.next();
           menuItem = new JMenuItem(pageTmp.getTitle());
           updateFont(menuItem, pageTmp);
-          action = new ActionFullPageAnalysis(wiki, pageTmp.getTitle());
+          action = new ActionFullAnalysis(wiki, pageTmp.getTitle());
           menuItem.addActionListener(action);
           submenuAnalyze.add(menuItem);
           fixedEnd++;
@@ -232,7 +232,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
       } else {
         menuItem = new JMenuItem(GT._("Analyze page"));
       }
-      action = new ActionFullPageAnalysis(wiki, page.getTitle());
+      action = new ActionFullAnalysis(wiki, page.getTitle());
       menuItem.addActionListener(action);
       popup.add(menuItem);
     }

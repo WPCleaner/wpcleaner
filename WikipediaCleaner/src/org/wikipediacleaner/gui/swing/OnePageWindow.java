@@ -45,7 +45,7 @@ import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.gui.swing.action.ActionFullPageAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -363,7 +363,7 @@ public abstract class OnePageWindow
    */
   protected void addButtonFullAnalysis(JComponent panel, boolean icon) {
     if (buttonFullAnalysis == null) {
-      buttonFullAnalysis = ActionFullPageAnalysis.createButton(
+      buttonFullAnalysis = ActionFullAnalysis.createButton(
           getWikipedia(), getPageName(), true);
       panel.add(buttonFullAnalysis);
     }
