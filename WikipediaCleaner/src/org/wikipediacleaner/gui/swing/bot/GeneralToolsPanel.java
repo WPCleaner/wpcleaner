@@ -86,7 +86,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     // Automatic disambiguation fixing
     buttonAutomaticFixing = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("Semi-automatic disambiguation fixing"), true);
+        GT._("Semi-automatic disambiguation fixing"), true, null);
     buttonAutomaticFixing.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAutomaticFixing"));
     add(buttonAutomaticFixing, constraints);
@@ -95,7 +95,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     // Update disambiguation warning
     buttonUpdateDabWarning = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("Update existing disambiguation warning messages"), true);
+        GT._("Update existing disambiguation warning messages"), true, null);
     buttonUpdateDabWarning.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdateDabWarning"));
     add(buttonUpdateDabWarning, constraints);
@@ -104,7 +104,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     // Monitor recent changes
     buttonMonitorRC = Utilities.createJButton(
         "commons-nuvola-apps-kcmsystem.png", EnumImageSize.NORMAL,
-        GT._("Monitor recent changes"), true);
+        GT._("Monitor recent changes"), true, null);
     buttonMonitorRC.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionMonitorRC"));
     add(buttonMonitorRC, constraints);

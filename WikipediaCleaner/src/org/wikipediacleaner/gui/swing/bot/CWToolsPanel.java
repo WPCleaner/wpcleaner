@@ -113,7 +113,7 @@ public class CWToolsPanel extends BotToolsPanel {
     // Button for running the automatic fixing
     buttonCWAutomaticFixing = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Automatic fixing for Check Wiki"), false);
+        GT._("Automatic fixing for Check Wiki"), false, null);
     buttonCWAutomaticFixing.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCWAutomaticFixing"));
     add(buttonCWAutomaticFixing, constraints);

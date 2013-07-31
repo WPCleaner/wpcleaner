@@ -368,7 +368,7 @@ public class MainWindow
     toolbarWikipedia.setFloatable(false);
     JButton buttonWikipediaInfo = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.SMALL,
-        GT._("Other Wikipedia"), false);
+        GT._("Other Wikipedia"), false, null);
     buttonWikipediaInfo.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOtherWikipedia"));
     toolbarWikipedia.add(buttonWikipediaInfo);
@@ -396,7 +396,7 @@ public class MainWindow
     toolbarLanguage.setFloatable(false);
     JButton buttonLanguageInfo = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.SMALL,
-        GT._("Other Language"), false);
+        GT._("Other Language"), false, null);
     buttonLanguageInfo.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOtherLanguage"));
     toolbarLanguage.add(buttonLanguageInfo);
@@ -445,17 +445,17 @@ public class MainWindow
     // Login/Demo/Logout buttons
     JToolBar buttonToolbar = new JToolBar(SwingConstants.HORIZONTAL);
     buttonToolbar.setFloatable(false);
-    buttonLogin = Utilities.createJButton(GT._("&Login"));
+    buttonLogin = Utilities.createJButton(GT._("&Login"), null);
     buttonLogin.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLogin"));
     buttonToolbar.add(buttonLogin);
     buttonToolbar.addSeparator();
-    buttonDemo = Utilities.createJButton(GT._("&Demo"));
+    buttonDemo = Utilities.createJButton(GT._("&Demo"), null);
     buttonDemo.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDemo"));
     buttonToolbar.add(buttonDemo);
     buttonToolbar.addSeparator();
-    buttonLogout = Utilities.createJButton(GT._("L&ogout"));
+    buttonLogout = Utilities.createJButton(GT._("L&ogout"), null);
     buttonLogout.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLogout"));
     buttonToolbar.add(buttonLogout);
@@ -471,41 +471,41 @@ public class MainWindow
     buttonToolbar.setFloatable(false);
     buttonHelp = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.NORMAL,
-        GT._("Help (Alt + &H)"), false);
+        GT._("Help (Alt + &H)"), false, null);
     buttonHelp.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionHelp"));
     buttonToolbar.add(buttonHelp);
     buttonOptions = Utilities.createJButton(
         "gnome-preferences-other.png", EnumImageSize.NORMAL,
-        GT._("Options (Alt + &O)"), false);
+        GT._("Options (Alt + &O)"), false, null);
     buttonOptions.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOptions"));
     buttonToolbar.add(buttonOptions);
     buttonOptionsSystem = Utilities.createJButton(
         "gnome-preferences-system.png", EnumImageSize.NORMAL,
-        GT._("System Options (Alt + &Y)"), false);
+        GT._("System Options (Alt + &Y)"), false, null);
     buttonOptionsSystem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOptionsSystem"));
     buttonToolbar.add(buttonOptionsSystem);
     buttonReloadOptions = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
-        GT._("Reload system options"), false);
+        GT._("Reload system options"), false, null);
     buttonReloadOptions.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionReloadOptions"));
     buttonToolbar.add(buttonReloadOptions);
     buttonCheckSpelling = Utilities.createJButton(
         "gnome-tools-check-spelling.png", EnumImageSize.NORMAL,
-        GT._("Check spelling options"), false);
+        GT._("Check spelling options"), false, null);
     buttonCheckSpelling.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCheckSpelling"));
     buttonToolbar.add(buttonCheckSpelling);
     buttonToolbar.addSeparator();
-    buttonIdea = Utilities.createJButton(GT._("&Idea ? Bug ?"));
+    buttonIdea = Utilities.createJButton(GT._("&Idea ? Bug ?"), null);
     buttonIdea.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionIdea"));
     buttonToolbar.add(buttonIdea);
     buttonToolbar.addSeparator();
-    buttonAbout = Utilities.createJButton(GT._("About"));
+    buttonAbout = Utilities.createJButton(GT._("About"), null);
     buttonAbout.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAbout"));
     buttonAbout.setEnabled(false);
@@ -609,7 +609,7 @@ public class MainWindow
     toolbarRandom.setFloatable(false);
     buttonRandomPage = Utilities.createJButton(
         "commons-nuvola-apps-atlantik.png", EnumImageSize.SMALL,
-        GT._("Random page (Alt + &R)"), false);
+        GT._("Random page (Alt + &R)"), false, null);
     buttonRandomPage.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRandomPage"));
     toolbarRandom.add(buttonRandomPage);
@@ -622,19 +622,19 @@ public class MainWindow
     constraints.weightx = 1;
 
     // Full analysis button
-    buttonFullAnalysis = ActionFullAnalysis.createButton(getWikipedia(), null, true, true);
+    buttonFullAnalysis = ActionFullAnalysis.createButton(getWikipedia(), null, true, true, true);
     panel.add(buttonFullAnalysis, constraints);
     constraints.gridy++;
 
     // Disambiguation button
-    buttonDisambiguation = ActionDisambiguationAnalysis.createButton(getWikipedia(), null, true, true);
+    buttonDisambiguation = ActionDisambiguationAnalysis.createButton(getWikipedia(), null, true, true, true);
     panel.add(buttonDisambiguation, constraints);
     constraints.gridy++;
 
     // Search button
     buttonSearchTitles = Utilities.createJButton(
         "gnome-system-search.png", EnumImageSize.NORMAL,
-        GT._("Search in titles"), true);
+        GT._("Search in titles"), true, null);
     buttonSearchTitles.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSearchTitles"));
     panel.add(buttonSearchTitles, constraints);
@@ -643,7 +643,7 @@ public class MainWindow
     // Links button
     buttonInternalLinks = Utilities.createJButton(
         "wpc-internal-link.png", EnumImageSize.NORMAL,
-        GT._("Internal links"), true);
+        GT._("Internal links"), true, null);
     buttonInternalLinks.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionInternalLinks"));
     panel.add(buttonInternalLinks, constraints);
@@ -652,7 +652,7 @@ public class MainWindow
     // Backlinks
     buttonBackLinks = Utilities.createJButton(
         "wpc-internal-link.png", EnumImageSize.NORMAL,
-        GT._("What links here"), true);
+        GT._("What links here"), true, null);
     buttonBackLinks.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionBackLinks"));
     panel.add(buttonBackLinks, constraints);
@@ -661,7 +661,7 @@ public class MainWindow
     // Category members
     buttonCategoryMembers = Utilities.createJButton(
         "commons-nuvola-apps-kpager.png", EnumImageSize.NORMAL,
-        GT._("Category members"), true);
+        GT._("Category members"), true, null);
     buttonCategoryMembers.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCategoryMembers"));
     panel.add(buttonCategoryMembers, constraints);
@@ -670,7 +670,7 @@ public class MainWindow
     // Embedded in
     buttonEmbeddedIn = Utilities.createJButton(
         "commons-curly-brackets.png", EnumImageSize.NORMAL,
-        GT._("Embedded in"), true);
+        GT._("Embedded in"), true, null);
     buttonEmbeddedIn.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionEmbeddedIn"));
     panel.add(buttonEmbeddedIn, constraints);
@@ -679,7 +679,7 @@ public class MainWindow
     // Update disambiguation warning
     buttonUpdateDabWarning = Utilities.createJButton(
         "gnome-dialog-warning.png", EnumImageSize.NORMAL,
-        GT._("Update disambiguation warning"), true);
+        GT._("Update disambiguation warning"), true, null);
     buttonUpdateDabWarning.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdateDabWarning"));
     panel.add(buttonUpdateDabWarning, constraints);
@@ -699,7 +699,7 @@ public class MainWindow
     // Contributions
     buttonContributions = Utilities.createJButton(
         "gnome-utilities-system-monitor.png", EnumImageSize.NORMAL,
-        GT._("Your contributions"), true);
+        GT._("Your contributions"), true, null);
     buttonContributions.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionContributions"));
     panel.add(buttonContributions, constraints);
@@ -731,7 +731,7 @@ public class MainWindow
     // All disambiguation pages button
     buttonAllDab = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("Preload disambiguations pages"), true);
+        GT._("Preload disambiguations pages"), true, null);
     buttonAllDab.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAllDab"));
     panel.add(buttonAllDab, constraints);
@@ -740,7 +740,7 @@ public class MainWindow
     // Current disambiguation list button
     buttonCurrentDabList = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("&Current Disambiguation List"), true);
+        GT._("&Current Disambiguation List"), true, null);
     buttonCurrentDabList.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCurrentDabList"));
     panel.add(buttonCurrentDabList, constraints);
@@ -749,7 +749,7 @@ public class MainWindow
     // Pages with most disambiguation links button
     buttonMostDabLinks = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("With many disambiguation links"), true);
+        GT._("With many disambiguation links"), true, null);
     buttonMostDabLinks.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionMostDabLinks"));
     panel.add(buttonMostDabLinks, constraints);
@@ -758,7 +758,7 @@ public class MainWindow
     // Check Wiki Project button
     buttonCheckWiki = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Project check wikipedia"), true);
+        GT._("Project check wikipedia"), true, null);
     buttonCheckWiki.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCheckWiki"));
     panel.add(buttonCheckWiki, constraints);
@@ -767,7 +767,7 @@ public class MainWindow
     // Help requested button
     buttonHelpRequested = Utilities.createJButton(
         "gnome-dialog-question.png", EnumImageSize.NORMAL,
-        GT._("Help requested on..."), true);
+        GT._("Help requested on..."), true, null);
     buttonHelpRequested.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionHelpRequestedOn"));
     panel.add(buttonHelpRequested, constraints);
@@ -776,7 +776,7 @@ public class MainWindow
     // Abuse filters
     buttonAbuseFilters = Utilities.createJButton(
         null, EnumImageSize.NORMAL,
-        GT._("Abuse filters"), true);
+        GT._("Abuse filters"), true, null);
     buttonAbuseFilters.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAbuseFilters"));
     panel.add(buttonAbuseFilters, constraints);
@@ -785,7 +785,7 @@ public class MainWindow
     // Special lists
     buttonSpecialLists = Utilities.createJButton(
         "gnome-colors-applications-office.png", EnumImageSize.NORMAL,
-        GT._("Special lists"), true);
+        GT._("Special lists"), true, null);
     buttonSpecialLists.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSpecialLists"));
     panel.add(buttonSpecialLists, constraints);
@@ -794,7 +794,7 @@ public class MainWindow
     // Generate lists
     buttonGenerateLists = Utilities.createJButton(
         "gnome-colors-applications-office.png", EnumImageSize.NORMAL,
-        GT._("Generate lists"), true);
+        GT._("Generate lists"), true, null);
     buttonGenerateLists.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionGenerateLists"));
     panel.add(buttonGenerateLists, constraints);
@@ -803,7 +803,7 @@ public class MainWindow
     // Local watch list button
     buttonWatchlistLocal = Utilities.createJButton(
         "gnome-logviewer.png", EnumImageSize.NORMAL,
-        GT._("Local &Watch list"), true);
+        GT._("Local &Watch list"), true, null);
     buttonWatchlistLocal.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionWatchlistLocal"));
     panel.add(buttonWatchlistLocal, constraints);
@@ -812,7 +812,7 @@ public class MainWindow
     // Watch list button
     buttonWatchlist = Utilities.createJButton(
         "gnome-logviewer.png", EnumImageSize.NORMAL,
-        GT._("Watch list"), true);
+        GT._("Watch list"), true, null);
     buttonWatchlist.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionWatchlist"));
     panel.add(buttonWatchlist, constraints);
@@ -821,7 +821,7 @@ public class MainWindow
     // Random pages button
     buttonRandomPages = Utilities.createJButton(
         "commons-nuvola-apps-atlantik.png", EnumImageSize.NORMAL,
-        GT._("Random pages"), true);
+        GT._("Random pages"), true, null);
     buttonRandomPages.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRandom"));
     panel.add(buttonRandomPages, constraints);
@@ -830,7 +830,7 @@ public class MainWindow
     // Bot tools button
     buttonBotTools = Utilities.createJButton(
         "commons-nuvola-apps-kcmsystem.png", EnumImageSize.NORMAL,
-        GT._("Bot tools"), true);
+        GT._("Bot tools"), true, null);
     buttonBotTools.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionBotTools"));
     panel.add(buttonBotTools, constraints);

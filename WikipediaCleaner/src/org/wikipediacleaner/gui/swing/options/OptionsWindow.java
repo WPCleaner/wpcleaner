@@ -115,25 +115,25 @@ public class OptionsWindow
     JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
     // Apply button
-    buttonApply = Utilities.createJButton(GT._("&Apply"));
+    buttonApply = Utilities.createJButton(GT._("&Apply"), null);
     buttonApply.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionApply"));
     panel.add(buttonApply);
 
     // Validate button
-    buttonValidate = Utilities.createJButton(GT._("&Validate"));
+    buttonValidate = Utilities.createJButton(GT._("&Validate"), null);
     buttonValidate.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionValidate"));
     panel.add(buttonValidate);
 
     // Cancel button
-    buttonCancel = Utilities.createJButton(GT._("&Cancel"));
+    buttonCancel = Utilities.createJButton(GT._("&Cancel"), null);
     buttonCancel.addActionListener(EventHandler.create(
         ActionListener.class, this, "dispose"));
     panel.add(buttonCancel);
 
     // Restore defaults button
-    buttonDefault = Utilities.createJButton(GT._("&Restore defaults"));
+    buttonDefault = Utilities.createJButton(GT._("&Restore defaults"), null);
     buttonDefault.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDefault"));
     panel.add(buttonDefault);

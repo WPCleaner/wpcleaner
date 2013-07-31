@@ -50,6 +50,7 @@ import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.StringChecker;
+import org.wikipediacleaner.utils.ConfigurationValueShortcut.ShortcutProperties;
 
 
 /**
@@ -432,13 +433,21 @@ public class Utilities {
    * Create a JButton.
    * 
    * @param message Label text with optional mnemonic inside.
+   * @param shortcut Shortcut information.
    * @return Button initialized with text and mnemonic.
    */
-  public static JButton createJButton(String message) {
-    JButton button = new JButton(getLabelWithoutMnemonic(message));
-    char mnemonic = getMnemonic(message);
-    if (mnemonic != ' ') {
-      button.setMnemonic(mnemonic);
+  public static JButton createJButton(String message, ShortcutProperties shortcut) {
+    String label = getLabelWithoutMnemonic(message);
+    String fullLabel = (shortcut != null) ? label + shortcut.getDescription() : label;
+    JButton button = new JButton(label);
+    button.setToolTipText(fullLabel);
+    if ((shortcut == null) || (shortcut.useMnemonic())) {
+      char mnemonic = getMnemonic(message);
+      if (mnemonic != ' ') {
+        button.setMnemonic(mnemonic);
+      }
+    } else {
+      // TODO
     }
     return button;
   }
@@ -484,26 +493,37 @@ public class Utilities {
    * @param size Icon size.
    * @param message Label text with optional mnemonic inside.
    * @param showMessage Use message for the button text or for tooltip.
+   * @param shortcut Shortcut information.
    * @return Button initialized with text and mnemonic.
    */
   public static JButton createJButton(
       String iconName, EnumImageSize size,
-      String message, boolean showMessage) {
+      String message, boolean showMessage,
+      ShortcutProperties shortcut) {
     ImageIcon icon = getImageIcon(iconName, size);
     JButton button = null;
+    String label = getLabelWithoutMnemonic(message);
+    String fullLabel = (shortcut != null) ? label + shortcut.getDescription() : label;
     if (icon != null) {
       if (showMessage) {
-        button = new JButton(getLabelWithoutMnemonic(message), icon);
+        button = new JButton(label, icon);
       } else {
         button = new JButton(icon);
-        button.setToolTipText(getLabelWithoutMnemonic(message));
       }
     } else {
-      button = new JButton(getLabelWithoutMnemonic(message));
+      button = new JButton(label);
     }
-    char mnemonic = getMnemonic(message);
-    if (mnemonic != ' ') {
-      button.setMnemonic(mnemonic);
+    button.setToolTipText(fullLabel);
+    if ((shortcut == null) || (shortcut.useMnemonic())) {
+      char mnemonic = getMnemonic(message);
+      if ((mnemonic == ' ') && (shortcut != null)) {
+        mnemonic = shortcut.getKey();
+      }
+      if (mnemonic != ' ') {
+        button.setMnemonic(mnemonic);
+      }
+    } else {
+      // TODO
     }
     return button;
   }

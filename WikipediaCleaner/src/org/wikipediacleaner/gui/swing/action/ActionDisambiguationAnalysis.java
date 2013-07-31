@@ -23,7 +23,9 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 import org.wikipediacleaner.utils.ConfigurationValueString;
+import org.wikipediacleaner.utils.ConfigurationValueShortcut.ShortcutProperties;
 
 
 /**
@@ -32,26 +34,43 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 public class ActionDisambiguationAnalysis implements ActionListener {
 
   /**
+   * @param showIcon True if the button should use an icon.
+   * @param showText True if the button should display the text.
+   * @param useShortcut True if shortcut should be used.
+   * @return Button
+   */
+  private static JButton createInternalButton(
+      boolean showIcon, boolean showText, boolean useShortcut) {
+    JButton button = null;
+    ShortcutProperties shortcut = null;
+    if (useShortcut) {
+      Configuration config = Configuration.getConfiguration();
+      shortcut = config.getShortcut(ConfigurationValueShortcut.DAB_ANALYSIS);
+    }
+    if (showIcon) {
+      button = Utilities.createJButton(
+          "commons-disambig-colour.png", EnumImageSize.NORMAL,
+          GT._("Disambiguation"), showText, shortcut);
+    } else {
+      button = Utilities.createJButton(GT._("Disambiguation"), shortcut);
+    }
+    return button;
+  }
+
+  /**
    * Create a button for analyzing a page.
    * 
    * @param wiki Wiki.
    * @param title Page title.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
    * @param showText True if the button should display the text.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton createButton(
       EnumWikipedia wiki, String title,
-      boolean icon, boolean showText) {
-    JButton button;
-    if (icon) {
-      button = Utilities.createJButton(
-          "commons-disambig-colour.png", EnumImageSize.NORMAL,
-          showText ? GT._("&Disambiguation") : GT._("Disambiguation (Alt + &D)"),
-          showText);
-    } else {
-      button = Utilities.createJButton(GT._("Disambiguation"));
-    }
+      boolean showIcon, boolean showText, boolean useShortcut) {
+    JButton button = createInternalButton(showIcon, showText, useShortcut);
     button.addActionListener(new ActionDisambiguationAnalysis(wiki, title));
     return button;
   }
@@ -62,15 +81,16 @@ public class ActionDisambiguationAnalysis implements ActionListener {
    * @param toolbar Tool bar.
    * @param wiki Wiki.
    * @param title Page title.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
    * @param showText True if the button should display the text.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton addButton(
       JToolBar toolbar,
       EnumWikipedia wiki, String title,
-      boolean icon, boolean showText) {
-    JButton button = createButton(wiki, title, icon, showText);
+      boolean showIcon, boolean showText, boolean useShortcut) {
+    JButton button = createButton(wiki, title, showIcon, showText, useShortcut);
     if ((button != null) && (toolbar != null)) {
       toolbar.add(button);
     }
@@ -83,21 +103,15 @@ public class ActionDisambiguationAnalysis implements ActionListener {
    * @param parent Parent component.
    * @param wiki Wiki.
    * @param list List.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton createButton(
       Component parent,
       EnumWikipedia wiki, JList list,
-      boolean icon) {
-    JButton button;
-    if (icon) {
-      button = Utilities.createJButton(
-          "commons-disambig-colour.png", EnumImageSize.NORMAL,
-          GT._("Disambiguation (Alt + &D)"), false);
-    } else {
-      button = Utilities.createJButton(GT._("Disambiguation"));
-    }
+      boolean showIcon, boolean useShortcut) {
+    JButton button = createInternalButton(showIcon, false, useShortcut);
     button.addActionListener(new ActionDisambiguationAnalysis(parent, wiki, list));
     return button;
   }
@@ -109,14 +123,15 @@ public class ActionDisambiguationAnalysis implements ActionListener {
    * @param toolbar Tool bar.
    * @param wiki Wiki.
    * @param list List.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton addButton(
       Component parent, JToolBar toolbar,
       EnumWikipedia wiki, JList list,
-      boolean icon) {
-    JButton button = createButton(parent, wiki, list, icon);
+      boolean showIcon, boolean useShortcut) {
+    JButton button = createButton(parent, wiki, list, showIcon, useShortcut);
     if ((button != null) && (toolbar != null)) {
       toolbar.add(button);
     }

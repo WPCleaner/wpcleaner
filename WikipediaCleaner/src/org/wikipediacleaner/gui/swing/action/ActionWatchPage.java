@@ -24,6 +24,8 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueShortcut;
+import org.wikipediacleaner.utils.ConfigurationValueShortcut.ShortcutProperties;
 
 
 /**
@@ -32,25 +34,43 @@ import org.wikipediacleaner.utils.Configuration;
 public class ActionWatchPage implements ActionListener {
 
   /**
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
+   * @return Button.
+   */
+  private static JButton createInternalButton(
+      boolean showIcon, boolean useShortcut) {
+    JButton button = null;
+    ShortcutProperties shortcut = null;
+    if (useShortcut) {
+      Configuration config = Configuration.getConfiguration();
+      shortcut = config.getShortcut(ConfigurationValueShortcut.ADD_TO_WATCH_LIST);
+    }
+    if (showIcon) {
+      button = Utilities.createJButton(
+          "gnome-logviewer-add.png", EnumImageSize.NORMAL,
+          GT._("Add to Watch list"), false, shortcut);
+    } else {
+      button = Utilities.createJButton(GT._("Add to Watch list"), shortcut);
+    }
+    return button;
+  }
+
+  /**
    * Create a button for adding a page to the Watch list.
    * 
    * @param parent Parent component.
    * @param wiki Wiki.
    * @param title Page title.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton createButton(
       Component parent,
-      EnumWikipedia wiki, String title, boolean icon) {
-    JButton button;
-    if (icon) {
-      button = Utilities.createJButton(
-          "gnome-logviewer-add.png", EnumImageSize.NORMAL,
-          GT._("Add to Watch list (Alt + &W)"), false);
-    } else {
-      button = Utilities.createJButton(GT._("Add to &Watch list"));
-    }
+      EnumWikipedia wiki, String title,
+      boolean showIcon, boolean useShortcut) {
+    JButton button = createInternalButton(showIcon, useShortcut);
     button.addActionListener(new ActionWatchPage(parent, wiki, title));
     return button;
   }
@@ -62,13 +82,15 @@ public class ActionWatchPage implements ActionListener {
    * @param toolbar Tool bar.
    * @param wiki Wiki.
    * @param title Page title.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton addButton(
       Component parent, JToolBar toolbar,
-      EnumWikipedia wiki, String title, boolean icon) {
-    JButton button = createButton(parent, wiki, title, icon);
+      EnumWikipedia wiki, String title,
+      boolean showIcon, boolean useShortcut) {
+    JButton button = createButton(parent, wiki, title, showIcon, useShortcut);
     if ((button != null) && (toolbar != null)) {
       toolbar.add(button);
     }
@@ -81,20 +103,15 @@ public class ActionWatchPage implements ActionListener {
    * @param parent Parent component.
    * @param wiki Wiki.
    * @param list List.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton createButton(
       Component parent,
-      EnumWikipedia wiki, JList list, boolean icon) {
-    JButton button;
-    if (icon) {
-      button = Utilities.createJButton(
-          "gnome-logviewer-add.png", EnumImageSize.NORMAL,
-          GT._("Add to Watch list (Alt + &W)"), false);
-    } else {
-      button = Utilities.createJButton(GT._("Add to &Watch list"));
-    }
+      EnumWikipedia wiki, JList list,
+      boolean showIcon, boolean useShortcut) {
+    JButton button = createInternalButton(showIcon, useShortcut);
     button.addActionListener(new ActionWatchPage(parent, wiki, list));
     return button;
   }

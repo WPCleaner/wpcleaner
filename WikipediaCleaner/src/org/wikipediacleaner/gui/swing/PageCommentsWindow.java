@@ -160,7 +160,7 @@ public class PageCommentsWindow extends BasicWindow {
     countMain = (page != null) ? page.getBacklinksCountInMainNamespace() : null;
     JLabel labelMain = new JLabel((countMain != null) ? "/ " + countMain.toString() : "");
     labelMain.setHorizontalAlignment(SwingConstants.LEADING);
-    buttonCopyMaxMain = Utilities.createJButton("\u21D0");
+    buttonCopyMaxMain = Utilities.createJButton("\u21D0", null);
     buttonCopyMaxMain.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCopyMain"));
     buttonCopyMaxMain.setEnabled(countMain != null);
@@ -192,7 +192,7 @@ public class PageCommentsWindow extends BasicWindow {
     countTemplate = (page != null) ? page.getBacklinksCountInTemplateNamespace() : null;
     JLabel labelTemplate = new JLabel((countTemplate != null) ? "/ " + countTemplate.toString() : "");
     labelTemplate.setHorizontalAlignment(SwingConstants.LEADING);
-    buttonCopyMaxTemplate = Utilities.createJButton("\u21D0");
+    buttonCopyMaxTemplate = Utilities.createJButton("\u21D0", null);
     buttonCopyMaxTemplate.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCopyTemplate"));
     buttonCopyMaxTemplate.setEnabled(countTemplate != null);
@@ -235,7 +235,7 @@ public class PageCommentsWindow extends BasicWindow {
     }
     JLabel labelOther = new JLabel((countOther != null) ? "/ " + countOther.toString() : "");
     labelOther.setHorizontalAlignment(SwingConstants.LEADING);
-    buttonCopyMaxOther = Utilities.createJButton("\u21D0");
+    buttonCopyMaxOther = Utilities.createJButton("\u21D0", null);
     buttonCopyMaxOther.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCopyOther"));
     buttonCopyMaxOther.setEnabled(countOther != null);
@@ -276,19 +276,19 @@ public class PageCommentsWindow extends BasicWindow {
     panel.setBorder(BorderFactory.createEtchedBorder());
 
     // Ok button
-    buttonOk = Utilities.createJButton(GT._("&OK"));
+    buttonOk = Utilities.createJButton(GT._("&OK"), null);
     buttonOk.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOk"));
     panel.add(buttonOk);
 
     // Validate button
-    buttonRemove = Utilities.createJButton(GT._("&Remove page comments"));
+    buttonRemove = Utilities.createJButton(GT._("&Remove page comments"), null);
     buttonRemove.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRemove"));
     panel.add(buttonRemove);
 
     // Cancel button
-    buttonCancel = Utilities.createJButton(GT._("&Cancel"));
+    buttonCancel = Utilities.createJButton(GT._("&Cancel"), null);
     buttonCancel.addActionListener(EventHandler.create(
         ActionListener.class, this, "dispose"));
     panel.add(buttonCancel);

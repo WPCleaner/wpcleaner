@@ -21,6 +21,9 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueShortcut;
+import org.wikipediacleaner.utils.ConfigurationValueShortcut.ShortcutProperties;
 
 
 /**
@@ -39,18 +42,58 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
   public static final String ACTION_HISTORY = "history";
 
   /**
+   * @param action Action to perform.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
+   * @return Button.
+   */
+  private static JButton createInternalButton(
+      String action,
+      boolean showIcon, boolean useShortcut) {
+    JButton button = null;
+    ShortcutProperties shortcut = null;
+    if (useShortcut) {
+      Configuration config = Configuration.getConfiguration();
+      if ((action != null) && (ACTION_HISTORY.equals(action))) {
+        shortcut = config.getShortcut(ConfigurationValueShortcut.HISTORY);
+      } else {
+        shortcut = config.getShortcut(ConfigurationValueShortcut.EXTERNAL_VIEWER);
+      }
+    }
+    if (showIcon) {
+      if ((action != null) && (ACTION_HISTORY.equals(action))) {
+        button = Utilities.createJButton(
+            "gnome-emblem-documents.png", EnumImageSize.NORMAL,
+            GT._("History"), false, shortcut);
+      } else {
+        button = Utilities.createJButton(
+            "gnome-emblem-web.png", EnumImageSize.NORMAL,
+            GT._("External Viewer"), false, shortcut);
+      }
+    } else {
+      if ((action != null) && (ACTION_HISTORY.equals(action))) {
+        button = Utilities.createJButton(GT._("History"), shortcut);
+      } else {
+        button = Utilities.createJButton(GT._("External Viewer"), shortcut);
+      }
+    }
+    return button;
+  }
+
+  /**
    * Create a button for viewing a page.
    * 
    * @param wiki Wiki.
    * @param title Page title.
    * @param redirect True if redirects should be followed.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton createButton(
       EnumWikipedia wiki, String title,
-      boolean redirect, boolean icon) {
-    return createButton(wiki, title, redirect, null, icon);
+      boolean redirect, boolean showIcon, boolean useShortcut) {
+    return createButton(wiki, title, redirect, null, showIcon, useShortcut);
   }
 
   /**
@@ -60,14 +103,15 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
    * @param wiki Wiki.
    * @param title Page title.
    * @param redirect True if redirects should be followed.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton addButton(
       JToolBar toolbar,
       EnumWikipedia wiki, String title,
-      boolean redirect, boolean icon) {
-    return addButton(toolbar, wiki, title, redirect, null, icon);
+      boolean redirect, boolean showIcon, boolean useShortcut) {
+    return addButton(toolbar, wiki, title, redirect, null, showIcon, useShortcut);
   }
 
   /**
@@ -76,13 +120,14 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
    * @param wiki Wiki.
    * @param title Page title.
    * @param action Action to perform.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton createButton(
       EnumWikipedia wiki, String title,
-      String action, boolean icon) {
-    return createButton(wiki, title, false, action, icon);
+      String action, boolean showIcon, boolean useShortcut) {
+    return createButton(wiki, title, false, action, showIcon, useShortcut);
   }
 
   /**
@@ -92,14 +137,15 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
    * @param wiki Wiki.
    * @param title Page title.
    * @param action Action to perform.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton addButton(
       JToolBar toolbar,
       EnumWikipedia wiki, String title,
-      String action, boolean icon) {
-    return addButton(toolbar, wiki, title, false, action, icon);
+      String action, boolean showIcon, boolean useShortcut) {
+    return addButton(toolbar, wiki, title, false, action, showIcon, useShortcut);
   }
 
   /**
@@ -108,13 +154,14 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
    * @param wiki Wiki.
    * @param list List.
    * @param redirect True if redirects should be followed.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton createButton(
       EnumWikipedia wiki, JList list,
-      boolean redirect, boolean icon) {
-    return createButton(wiki, list, redirect, null, icon);
+      boolean redirect, boolean showIcon, boolean useShortcut) {
+    return createButton(wiki, list, redirect, null, showIcon, useShortcut);
   }
 
   /**
@@ -124,14 +171,15 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
    * @param wiki Wiki.
    * @param list List.
    * @param redirect True if redirects should be followed.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton addButton(
       JToolBar toolbar,
       EnumWikipedia wiki, JList list,
-      boolean redirect, boolean icon) {
-    return addButton(toolbar, wiki, list, redirect, null, icon);
+      boolean redirect, boolean showIcon, boolean useShortcut) {
+    return addButton(toolbar, wiki, list, redirect, null, showIcon, useShortcut);
   }
 
   /**
@@ -140,13 +188,14 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
    * @param wiki Wiki.
    * @param list List.
    * @param action Action to perform.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton createButton(
       EnumWikipedia wiki, JList list,
-      String action, boolean icon) {
-    return createButton(wiki, list, false, action, icon);
+      String action, boolean showIcon, boolean useShortcut) {
+    return createButton(wiki, list, false, action, showIcon, useShortcut);
   }
 
   /**
@@ -156,14 +205,15 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
    * @param wiki Wiki.
    * @param list List.
    * @param action Action to perform.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton addButton(
       JToolBar toolbar,
       EnumWikipedia wiki, JList list,
-      String action, boolean icon) {
-    return addButton(toolbar, wiki, list, false, action, icon);
+      String action, boolean showIcon, boolean useShortcut) {
+    return addButton(toolbar, wiki, list, false, action, showIcon, useShortcut);
   }
 
   /**
@@ -173,30 +223,15 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
    * @param title Page title.
    * @param redirect True if redirects should be followed.
    * @param action Action to perform.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   private static JButton createButton(
       EnumWikipedia wiki, String title,
-      boolean redirect, String action, boolean icon) {
-    JButton button;
-    if (icon) {
-      if ((action != null) && (ACTION_HISTORY.equals(action))) {
-        button = Utilities.createJButton(
-            "gnome-emblem-documents.png", EnumImageSize.NORMAL,
-            GT._("History (Alt + &H)"), false);
-      } else {
-        button = Utilities.createJButton(
-            "gnome-emblem-web.png", EnumImageSize.NORMAL,
-            GT._("External Viewer (Alt + &E)"), false);
-      }
-    } else {
-      if ((action != null) && (ACTION_HISTORY.equals(action))) {
-        button = Utilities.createJButton(GT._("&History"));
-      } else {
-        button = Utilities.createJButton(GT._("&External Viewer"));
-      }
-    }
+      boolean redirect, String action,
+      boolean showIcon, boolean useShortcut) {
+    JButton button = createInternalButton(action, showIcon, useShortcut);
     button.addActionListener(new ActionExternalViewer(wiki, title, redirect, action));
     return button;
   }
@@ -209,14 +244,16 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
    * @param title Page title.
    * @param redirect True if redirects should be followed.
    * @param action Action to perform.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   private static JButton addButton(
       JToolBar toolbar,
       EnumWikipedia wiki, String title,
-      boolean redirect, String action, boolean icon) {
-    JButton button = createButton(wiki, title, redirect, action, icon);
+      boolean redirect, String action,
+      boolean showIcon, boolean useShortcut) {
+    JButton button = createButton(wiki, title, redirect, action, showIcon, useShortcut);
     if ((button != null) && (toolbar != null)) {
       toolbar.add(button);
     }
@@ -230,30 +267,15 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
    * @param list List.
    * @param redirect True if redirects should be followed.
    * @param action Action to perform.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   private static JButton createButton(
       EnumWikipedia wiki, JList list,
-      boolean redirect, String action, boolean icon) {
-    JButton button;
-    if (icon) {
-      if ((action != null) && (ACTION_HISTORY.equals(action))) {
-        button = Utilities.createJButton(
-            "gnome-emblem-documents.png", EnumImageSize.NORMAL,
-            GT._("History (Alt + &H)"), false);
-      } else {
-        button = Utilities.createJButton(
-            "gnome-emblem-web.png", EnumImageSize.NORMAL,
-            GT._("External Viewer (Alt + &E)"), false);
-      }
-    } else {
-      if ((action != null) && (ACTION_HISTORY.equals(action))) {
-        button = Utilities.createJButton(GT._("&History"));
-      } else {
-        button = Utilities.createJButton(GT._("&External Viewer"));
-      }
-    }
+      boolean redirect, String action,
+      boolean showIcon, boolean useShortcut) {
+    JButton button = createInternalButton(action, showIcon, useShortcut);
     button.addActionListener(new ActionExternalViewer(wiki, list, redirect, action));
     return button;
   }
@@ -266,14 +288,16 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
    * @param list List.
    * @param redirect True if redirects should be followed.
    * @param action Action to perform.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   private static JButton addButton(
       JToolBar toolbar,
       EnumWikipedia wiki, JList list,
-      boolean redirect, String action, boolean icon) {
-    JButton button = createButton(wiki, list, redirect, action, icon);
+      boolean redirect, String action,
+      boolean showIcon, boolean useShortcut) {
+    JButton button = createButton(wiki, list, redirect, action, showIcon, useShortcut);
     if ((button != null) && (toolbar != null)) {
       toolbar.add(button);
     }

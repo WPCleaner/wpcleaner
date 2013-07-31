@@ -275,7 +275,7 @@ public class AboutWindow extends BasicWindow {
     //panel.setBorder(BorderFactory.createEtchedBorder());
 
     // Close button
-    buttonClose = Utilities.createJButton(GT._("&Close"));
+    buttonClose = Utilities.createJButton(GT._("&Close"), null);
     buttonClose.addActionListener(EventHandler.create(
         ActionListener.class, this, "dispose"));
     panel.add(buttonClose);

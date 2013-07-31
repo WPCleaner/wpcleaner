@@ -397,7 +397,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     addChkSpelling(toolbarButtons, true);
     buttonRedirectElements = Utilities.createJButton(
         "commons-nuvola-apps-kpager.png", EnumImageSize.NORMAL,
-        GT._("Add categories or templates"), false);
+        GT._("Add categories or templates"), false, null);
     buttonRedirectElements.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRedirectElements"));
     toolbarButtons.add(buttonRedirectElements);
@@ -408,7 +408,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         (getWikipedia().getConnection().getUser().hasRight(User.RIGHT_DELETE))) {
       buttonDelete = Utilities.createJButton(
           "gnome-edit-delete.png", EnumImageSize.NORMAL,
-          GT._("Delete page"), false);
+          GT._("Delete page"), false, null);
       buttonDelete.addActionListener(EventHandler.create(
           ActionListener.class, this, "actionDelete"));
       toolbarButtons.add(buttonDelete);
@@ -417,19 +417,20 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     buttonDisambiguationWarning = Utilities.createJButton(
         "gnome-dialog-warning.png", EnumImageSize.NORMAL,
         GT._("Add a warning on the talk page about the links to disambiguation pages"),
-        false); 
+        false, null); 
     buttonDisambiguationWarning.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguationWarning"));
     toolbarButtons.add(buttonDisambiguationWarning);
     toolbarButtons.addSeparator();
     addButtonReload(toolbarButtons, true);
     buttonView = ActionExternalViewer.addButton(
-        toolbarButtons, getWikipedia(), getPageName(), false, true);
+        toolbarButtons, getWikipedia(), getPageName(), false, true, false);
     buttonViewHistory = ActionExternalViewer.addButton(
-        toolbarButtons, getWikipedia(), getPageName(), ActionExternalViewer.ACTION_HISTORY, true);
+        toolbarButtons, getWikipedia(), getPageName(),
+        ActionExternalViewer.ACTION_HISTORY, true, false);
     toolbarButtons.addSeparator();
     buttonWatch = ActionWatchPage.addButton(
-        getParentComponent(), toolbarButtons, getWikipedia(), getPageName(), true);
+        getParentComponent(), toolbarButtons, getWikipedia(), getPageName(), true, true);
     addButtonDisambiguation(toolbarButtons, true);
     toolbarButtons.addSeparator();
     String[] elements = getConfiguration().getStringArray(WPCConfigurationString.LANG_TEMPLATE);
@@ -437,13 +438,13 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     if ((elements != null) && (elements.length > 0)) {
       langTemplateName = elements[0];
     }
-    buttonOtherLanguage = Utilities.createJButton("<html><b>{{" + langTemplateName + "}}</b></html>");
+    buttonOtherLanguage = Utilities.createJButton("<html><b>{{" + langTemplateName + "}}</b></html>", null);
     buttonOtherLanguage.setToolTipText(GT._("Mark the selected text as being in a foreign language"));
     buttonOtherLanguage.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOtherLanguage"));
     toolbarButtons.add(buttonOtherLanguage);
     buttonTranslation = Utilities.createJButton(
-        "<html><b>(??)</b> \u21d2 <b>(" + getWikipedia().getSettings().getLanguage() + ")</b></html>");
+        "<html><b>(??)</b> \u21d2 <b>(" + getWikipedia().getSettings().getLanguage() + ")</b></html>", null);
     buttonTranslation.setToolTipText(GT._("Translation of an article copied from an other wiki"));
     buttonTranslation.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionTranslate"));
@@ -552,17 +553,17 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
     ActionFullAnalysis.addButton(
-        getParentComponent(), toolbar, getWikipedia(), listLinks, knownPages, true);
+        getParentComponent(), toolbar, getWikipedia(), listLinks, knownPages, true, true);
     ActionDisambiguationAnalysis.addButton(
-        getParentComponent(), toolbar, getWikipedia(), listLinks, true);
+        getParentComponent(), toolbar, getWikipedia(), listLinks, true, true);
     buttonRemoveLinks = Utilities.createJButton(
         "wpc-remove-link.png", EnumImageSize.NORMAL,
-        GT._("Remove all links"), false);
+        GT._("Remove all links"), false, null);
     buttonRemoveLinks.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRemoveAllLinks"));
     toolbar.add(buttonRemoveLinks);
     buttonWatchLink = ActionWatchPage.createButton(
-        getParentComponent(), getWikipedia(), listLinks, true);
+        getParentComponent(), getWikipedia(), listLinks, true, true);
     toolbar.add(buttonWatchLink);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weightx = 1;
