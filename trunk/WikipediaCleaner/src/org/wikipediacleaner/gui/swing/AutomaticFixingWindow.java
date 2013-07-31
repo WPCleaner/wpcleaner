@@ -219,31 +219,31 @@ public class AutomaticFixingWindow extends OnePageWindow {
     toolBarButtons.setFloatable(false);
     buttonAdd = Utilities.createJButton(
         "gnome-list-add.png", EnumImageSize.NORMAL,
-        GT._("Add"), false);
+        GT._("Add"), false, null);
     buttonAdd.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAddAutomaticFixing"));
     toolBarButtons.add(buttonAdd);
     buttonRemove = Utilities.createJButton(
         "gnome-list-remove.png", EnumImageSize.NORMAL,
-        GT._("Remove"), false);
+        GT._("Remove"), false, null);
     buttonRemove.addActionListener(EventHandler.create(
         ActionListener.class, this, "ActionRmvAutomaticFixing"));
     toolBarButtons.add(buttonRemove);
     buttonModify = Utilities.createJButton(
         "gnome-accessories-text-editor.png", EnumImageSize.NORMAL,
-        GT._("Modify"), false);
+        GT._("Modify"), false, null);
     buttonModify.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionMdfAutomaticFixing"));
     toolBarButtons.add(buttonModify);
     buttonClear = Utilities.createJButton(
         "gnome-edit-clear.png", EnumImageSize.NORMAL,
-        GT._("Clear"), false);
+        GT._("Clear"), false, null);
     buttonClear.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionClrAutomaticFixing"));
     toolBarButtons.add(buttonClear);
     buttonSave = Utilities.createJButton(
         "gnome-media-floppy.png", EnumImageSize.NORMAL,
-        GT._("Save"), false);
+        GT._("Save"), false, null);
     buttonSave.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSaveAutomaticFixing"));
     toolBarButtons.add(buttonSave);    
@@ -256,13 +256,13 @@ public class AutomaticFixingWindow extends OnePageWindow {
     toolBarButtons.addSeparator();
     buttonRun = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
-        GT._("Fix selected pages"), false);
+        GT._("Fix selected pages"), false, null);
     buttonRun.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRunAutomaticFixing"));
     toolBarButtons.add(buttonRun);
     buttonTest = Utilities.createJButton(
         "gnome-edit-find.png", EnumImageSize.NORMAL,
-        GT._("Test automatic replacements"), false);
+        GT._("Test automatic replacements"), false, null);
     buttonTest.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionTestAutomaticFixing"));
     toolBarButtons.add(buttonTest);
@@ -345,16 +345,16 @@ public class AutomaticFixingWindow extends OnePageWindow {
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
     ActionFullAnalysis.addButton(
-        getParentComponent(), toolbar, getWikipedia(), listPages, null, true);
+        getParentComponent(), toolbar, getWikipedia(), listPages, null, true, true);
     buttonDisambiguationLink = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("Disambiguation (Alt + &D)"), false);
+        GT._("Disambiguation (Alt + &D)"), false, null);
     buttonDisambiguationLink.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguationLink"));
     toolbar.add(buttonDisambiguationLink);
     buttonExternalViewerLink = Utilities.createJButton(
         "gnome-emblem-web.png", EnumImageSize.NORMAL,
-        GT._("External Viewer"), false);
+        GT._("External Viewer"), false, null);
     buttonExternalViewerLink.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionExternalViewerLink"));
     toolbar.add(buttonExternalViewerLink);

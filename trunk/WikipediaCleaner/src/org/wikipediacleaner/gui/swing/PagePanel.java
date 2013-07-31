@@ -324,7 +324,7 @@ public class PagePanel
     if (buttonFirstOccurrence == null) {
       JButton button = Utilities.createJButton(
           "gnome-go-first.png", EnumImageSize.NORMAL,
-          GT._("First occurrence (Alt + &F)"), false);
+          GT._("First occurrence (Alt + &F)"), false, null);
       button.setActionCommand(ACTION_FIRST_OCCURRENCE);
       button.addActionListener(this);
       buttonFirstOccurrence = button;
@@ -339,7 +339,7 @@ public class PagePanel
     if (buttonPreviousOccurrence == null) {
       JButton button = Utilities.createJButton(
           "gnome-go-previous.png", EnumImageSize.NORMAL,
-          GT._("Previous occurrence (Alt + &P)"), false);
+          GT._("Previous occurrence (Alt + &P)"), false, null);
       button.setActionCommand(ACTION_PREVIOUS_OCCURRENCE);
       button.addActionListener(this);
       buttonPreviousOccurrence = button;
@@ -354,7 +354,7 @@ public class PagePanel
     if (buttonNextOccurrence == null) {
       JButton button = Utilities.createJButton(
           "gnome-go-next.png", EnumImageSize.NORMAL,
-          GT._("Next occurrence (Alt + &N)"), false);
+          GT._("Next occurrence (Alt + &N)"), false, null);
       button.setActionCommand(ACTION_NEXT_OCCURRENCE);
       button.addActionListener(this);
       buttonNextOccurrence = button;
@@ -369,7 +369,7 @@ public class PagePanel
     if (buttonLastOccurrence == null) {
       JButton button = Utilities.createJButton(
           "gnome-go-last.png", EnumImageSize.NORMAL,
-          GT._("Last occurrence (Alt + &L)"), false);
+          GT._("Last occurrence (Alt + &L)"), false, null);
       button.setActionCommand(ACTION_LAST_OCCURRENCE);
       button.addActionListener(this);
       buttonLastOccurrence = button;
@@ -438,7 +438,7 @@ public class PagePanel
     if (buttonUndo == null) {
       JButton button = Utilities.createJButton(
           "gnome-edit-undo.png", EnumImageSize.NORMAL,
-          GT._("Undo"), false);
+          GT._("Undo"), false, null);
       buttonUndo = button;
     }
     return buttonUndo;
@@ -451,7 +451,7 @@ public class PagePanel
     if (buttonRedo == null) {
       JButton button = Utilities.createJButton(
           "gnome-edit-redo.png", EnumImageSize.NORMAL,
-          GT._("Redo"), false);
+          GT._("Redo"), false, null);
       buttonRedo = button;
     }
     return buttonRedo;
@@ -471,7 +471,7 @@ public class PagePanel
     if (buttonView == null) {
       JButton button = Utilities.createJButton(
           "gnome-emblem-web.png", EnumImageSize.NORMAL,
-          GT._("External Viewer (Alt + &E)"), false);
+          GT._("External Viewer (Alt + &E)"), false, null);
       button.setActionCommand(ACTION_VIEW);
       button.addActionListener(this);
       buttonView = button;
@@ -486,7 +486,7 @@ public class PagePanel
     if (buttonViewHistory == null) {
       JButton button = Utilities.createJButton(
           "gnome-emblem-documents.png", EnumImageSize.NORMAL,
-          GT._("History (Alt + &H)"), false);
+          GT._("History (Alt + &H)"), false, null);
       button.setActionCommand(ACTION_VIEW_HISTORY);
       button.addActionListener(this);
       buttonViewHistory = button;

@@ -25,7 +25,9 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 import org.wikipediacleaner.utils.ConfigurationValueString;
+import org.wikipediacleaner.utils.ConfigurationValueShortcut.ShortcutProperties;
 
 
 /**
@@ -34,26 +36,43 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 public class ActionFullAnalysis implements ActionListener {
 
   /**
+   * @param showIcon True if the button should use an icon.
+   * @param showText True if the button should display the text.
+   * @param useShortcut True if shortcut should be used.
+   * @return Button.
+   */
+  private static JButton createInternalButton(
+      boolean showIcon, boolean showText, boolean useShortcut) {
+    JButton button = null;
+    ShortcutProperties shortcut = null;
+    if (useShortcut) {
+      Configuration config = Configuration.getConfiguration();
+      shortcut = config.getShortcut(ConfigurationValueShortcut.FULL_ANALYSIS);
+    }
+    if (showIcon) {
+      button = Utilities.createJButton(
+          "gnome-system-run.png", EnumImageSize.NORMAL,
+          GT._("Full analysis"), showText, shortcut);
+    } else {
+      button = Utilities.createJButton(GT._("Full analysis"), shortcut);
+    }
+    return button;
+  }
+
+  /**
    * Create a button for analyzing a page.
    * 
    * @param wiki Wiki.
    * @param title Page title.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
    * @param showText True if the button should display the text.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton createButton(
       EnumWikipedia wiki, String title,
-      boolean icon, boolean showText) {
-    JButton button;
-    if (icon) {
-      button = Utilities.createJButton(
-          "gnome-system-run.png", EnumImageSize.NORMAL,
-          showText ? GT._("&Full analysis") : GT._("Full analysis (Alt + &F)"),
-          showText);
-    } else {
-      button = Utilities.createJButton(GT._("Full analysis"));
-    }
+      boolean showIcon, boolean showText, boolean useShortcut) {
+    JButton button = createInternalButton(showIcon, showText, useShortcut);
     button.addActionListener(new ActionFullAnalysis(wiki, title));
     return button;
   }
@@ -64,15 +83,16 @@ public class ActionFullAnalysis implements ActionListener {
    * @param toolbar Tool bar.
    * @param wiki Wiki.
    * @param title Page title.
-   * @param icon True if the button should use an icon.
-   * @param text True if the button should display the text.
+   * @param showIcon True if the button should use an icon.
+   * @param showText True if the button should display the text.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton addButton(
       JToolBar toolbar,
       EnumWikipedia wiki, String title,
-      boolean icon, boolean text) {
-    JButton button = createButton(wiki, title, icon, text);
+      boolean showIcon, boolean showText, boolean useShortcut) {
+    JButton button = createButton(wiki, title, showIcon, showText, useShortcut);
     if ((button != null) && (toolbar != null)) {
       toolbar.add(button);
     }
@@ -86,21 +106,15 @@ public class ActionFullAnalysis implements ActionListener {
    * @param wiki Wiki.
    * @param list List.
    * @param knownPages List of knownPages.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton createButton(
       Component parent,
       EnumWikipedia wiki, JList list,
-      List<Page> knownPages, boolean icon) {
-    JButton button;
-    if (icon) {
-      button = Utilities.createJButton(
-          "gnome-system-run.png", EnumImageSize.NORMAL,
-          GT._("Full analysis"), false);
-    } else {
-      button = Utilities.createJButton(GT._("Full analysis"));
-    }
+      List<Page> knownPages, boolean showIcon, boolean useShortcut) {
+    JButton button = createInternalButton(showIcon, false, useShortcut);
     button.addActionListener(new ActionFullAnalysis(parent, wiki, list, knownPages));
     return button;
   }
@@ -113,14 +127,15 @@ public class ActionFullAnalysis implements ActionListener {
    * @param wiki Wiki.
    * @param list List.
    * @param knownPages List of knownPages.
-   * @param icon True if the button should use an icon.
+   * @param showIcon True if the button should use an icon.
+   * @param useShortcut True if shortcut should be used.
    * @return Button.
    */
   public static JButton addButton(
       Component parent, JToolBar toolbar,
       EnumWikipedia wiki, JList list,
-      List<Page> knownPages, boolean icon) {
-    JButton button = createButton(parent, wiki, list, knownPages, icon);
+      List<Page> knownPages, boolean showIcon, boolean useShortcut) {
+    JButton button = createButton(parent, wiki, list, knownPages, showIcon, useShortcut);
     if ((button != null) && (toolbar != null)) {
       toolbar.add(button);
     }

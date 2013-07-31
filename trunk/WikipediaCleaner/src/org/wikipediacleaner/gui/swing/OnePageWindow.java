@@ -324,9 +324,9 @@ public abstract class OnePageWindow
       if (icon) {
         buttonDisambiguation = Utilities.createJButton(
             "commons-disambig-colour.png", EnumImageSize.NORMAL,
-            GT._("Disambiguation"), false);
+            GT._("Disambiguation"), false, null);
       } else {
-        buttonDisambiguation = Utilities.createJButton(GT._("Disambiguation"));
+        buttonDisambiguation = Utilities.createJButton(GT._("Disambiguation"), null);
       }
       buttonDisambiguation.addActionListener(EventHandler.create(
           ActionListener.class, this, "actionDisambiguation"));
@@ -335,20 +335,20 @@ public abstract class OnePageWindow
   }
 
   /**
-   * Create a First Occurence button.
+   * Create a First Occurrence button.
    * 
    * @param listener Action listener.
    * @param icon Flag indicating if an icon should be used.
-   * @return First Occurence button.
+   * @return First Occurrence button.
    */
   public JButton createButtonFirstOccurence(ActionListener listener, boolean icon) {
     JButton button = null;
     if (icon) {
       button = Utilities.createJButton(
           "gnome-go-first.png", EnumImageSize.NORMAL,
-          GT._("First occurrence (Alt + &F)"), false);
+          GT._("First occurrence (Alt + &F)"), false, null);
     } else {
-      button = Utilities.createJButton(GT._("&First occurrence"));
+      button = Utilities.createJButton(GT._("&First occurrence"), null);
     }
     button.setActionCommand(ACTION_FIRST_OCCURRENCE);
     button.addActionListener(listener);
@@ -364,7 +364,7 @@ public abstract class OnePageWindow
   protected void addButtonFullAnalysis(JComponent panel, boolean icon) {
     if (buttonFullAnalysis == null) {
       buttonFullAnalysis = ActionFullAnalysis.createButton(
-          getWikipedia(), getPageName(), true, false);
+          getWikipedia(), getPageName(), true, false, true);
       panel.add(buttonFullAnalysis);
     }
   }
@@ -381,9 +381,9 @@ public abstract class OnePageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-go-last.png", EnumImageSize.NORMAL,
-          GT._("Last occurrence (Alt + &L)"), false);
+          GT._("Last occurrence (Alt + &L)"), false, null);
     } else {
-      button = Utilities.createJButton(GT._("&Last occurrence"));
+      button = Utilities.createJButton(GT._("&Last occurrence"), null);
     }
     button.setActionCommand(ACTION_LAST_OCCURRENCE);
     button.addActionListener(listener);
@@ -402,9 +402,9 @@ public abstract class OnePageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-go-next.png", EnumImageSize.NORMAL,
-          GT._("Next occurrence (Alt + &N)"), false);
+          GT._("Next occurrence (Alt + &N)"), false, null);
     } else {
-      button = Utilities.createJButton(GT._("&Next occurrence"));
+      button = Utilities.createJButton(GT._("&Next occurrence"), null);
     }
     button.setActionCommand(ACTION_NEXT_OCCURRENCE);
     button.addActionListener(listener);
@@ -423,9 +423,9 @@ public abstract class OnePageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-go-previous.png", EnumImageSize.NORMAL,
-          GT._("Previous occurrence (Alt + &P)"), false);
+          GT._("Previous occurrence (Alt + &P)"), false, null);
     } else {
-      button = Utilities.createJButton(GT._("&Previous occurrence"));
+      button = Utilities.createJButton(GT._("&Previous occurrence"), null);
     }
     button.setActionCommand(ACTION_PREVIOUS_OCCURRENCE);
     button.addActionListener(listener);
@@ -439,12 +439,12 @@ public abstract class OnePageWindow
    */
   protected void addButtonRedirect(JComponent panel) {
     buttonFullAnalysisRedirect = Utilities.createJButton(GT._(
-        "Full analysis of redirect"));
+        "Full analysis of redirect"), null);
     buttonFullAnalysisRedirect.setActionCommand(ACTION_FULL_ANALYSIS_REDIR);
     buttonFullAnalysisRedirect.addActionListener(this);
     panel.add(buttonFullAnalysisRedirect);
     buttonDisambiguationRedirect = Utilities.createJButton(GT._(
-        "Disambiguation analysis of redirect"));
+        "Disambiguation analysis of redirect"), null);
     buttonDisambiguationRedirect.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguationRedir"));
     panel.add(buttonDisambiguationRedirect);
@@ -475,9 +475,9 @@ public abstract class OnePageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-view-refresh.png", EnumImageSize.NORMAL,
-          GT._("Reload (Alt + &R)"), false);
+          GT._("Reload (Alt + &R)"), false, null);
     } else {
-      button = Utilities.createJButton(GT._("&Reload"));
+      button = Utilities.createJButton(GT._("&Reload"), null);
     }
     button.setActionCommand(ACTION_RELOAD);
     button.addActionListener(listener);
@@ -509,9 +509,9 @@ public abstract class OnePageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-document-send.png", EnumImageSize.NORMAL,
-          GT._("Send (Alt + &S)"), false);
+          GT._("Send (Alt + &S)"), false, null);
     } else {
-      button = Utilities.createJButton(GT._("&Send"));
+      button = Utilities.createJButton(GT._("&Send"), null);
     }
     button.setActionCommand(ACTION_SEND);
     button.addActionListener(listener);
@@ -528,17 +528,17 @@ public abstract class OnePageWindow
     if (icon) {
       buttonUndo = Utilities.createJButton(
           "gnome-edit-undo.png", EnumImageSize.NORMAL,
-          GT._("Undo"), false);
+          GT._("Undo"), false, null);
     } else {
-      buttonUndo = Utilities.createJButton(GT._("Undo"));
+      buttonUndo = Utilities.createJButton(GT._("Undo"), null);
     }
     panel.add(buttonUndo);
     if (icon) {
       buttonRedo = Utilities.createJButton(
           "gnome-edit-redo.png", EnumImageSize.NORMAL,
-          GT._("Redo"), false);
+          GT._("Redo"), false, null);
     } else {
-      buttonRedo = Utilities.createJButton(GT._("Redo"));
+      buttonRedo = Utilities.createJButton(GT._("Redo"), null);
     }
     panel.add(buttonRedo);
     if (textContents != null) {
@@ -559,9 +559,9 @@ public abstract class OnePageWindow
     if (icon) {
       button = Utilities.createJButton(
           "gnome-format-indent-more.png", EnumImageSize.NORMAL,
-          GT._("Table of Contents"), false);
+          GT._("Table of Contents"), false, null);
     } else {
-      button = Utilities.createJButton(GT._("Table of Contents"));
+      button = Utilities.createJButton(GT._("Table of Contents"), null);
     }
     button.setActionCommand(ACTION_TOC);
     button.addActionListener(listener);
@@ -580,9 +580,9 @@ public abstract class OnePageWindow
     if (icon) {
       button = Utilities.createJButton(
           "commons-approve-icon.png", EnumImageSize.NORMAL,
-          GT._("Validate (Alt + &V)"), false);
+          GT._("Validate (Alt + &V)"), false, null);
     } else {
-      button = Utilities.createJButton(GT._("&Validate"));
+      button = Utilities.createJButton(GT._("&Validate"), null);
     }
     button.setActionCommand(ACTION_VALIDATE);
     button.addActionListener(listener);

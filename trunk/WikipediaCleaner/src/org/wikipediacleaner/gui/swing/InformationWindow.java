@@ -159,7 +159,7 @@ public class InformationWindow
 
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    buttonClose = Utilities.createJButton(GT._("&Close"));
+    buttonClose = Utilities.createJButton(GT._("&Close"), null);
     buttonClose.addActionListener(EventHandler.create(
         ActionListener.class, this, "dispose"));
     buttonPanel.add(buttonClose);

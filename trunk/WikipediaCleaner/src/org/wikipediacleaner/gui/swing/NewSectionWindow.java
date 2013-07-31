@@ -141,7 +141,7 @@ public class NewSectionWindow extends BasicWindow {
     constraints.gridy++;
 
     // Force watching and signature
-    buttonSignature = Utilities.createJButton(GT._("&Signature"));
+    buttonSignature = Utilities.createJButton(GT._("&Signature"), null);
     buttonSignature.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSignature"));
     constraints.gridx = 0;
@@ -199,11 +199,11 @@ public class NewSectionWindow extends BasicWindow {
 
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    buttonValidate = Utilities.createJButton(GT._("&Validate"));
+    buttonValidate = Utilities.createJButton(GT._("&Validate"), null);
     buttonValidate.addActionListener(
         EventHandler.create(ActionListener.class, this, "actionValidate"));
     buttonPanel.add(buttonValidate);
-    buttonCancel = Utilities.createJButton(GT._("&Cancel"));
+    buttonCancel = Utilities.createJButton(GT._("&Cancel"), null);
     buttonCancel.addActionListener(EventHandler.create(
         ActionListener.class, this, "dispose"));
     buttonPanel.add(buttonCancel);

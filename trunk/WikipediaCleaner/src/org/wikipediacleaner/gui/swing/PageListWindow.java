@@ -57,6 +57,7 @@ import org.wikipediacleaner.gui.swing.worker.UpdateInfoWorker;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 
 
 /**
@@ -146,6 +147,7 @@ public class PageListWindow extends BasicWindow {
   @Override
   protected Component createComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
+    Configuration config = Configuration.getConfiguration();
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -223,75 +225,84 @@ public class PageListWindow extends BasicWindow {
     toolbar.setFloatable(false);
     buttonFullAnalysis = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
-        GT._("Full analysis (Alt + &F)"), false);
+        GT._("Full analysis"), false,
+        config.getShortcut(ConfigurationValueShortcut.FULL_ANALYSIS));
     buttonFullAnalysis.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionFullAnalysis"));
     toolbar.add(buttonFullAnalysis);
 
     buttonDisambiguation = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("Disambiguation (Alt + &D)"), false);
+        GT._("Disambiguation"), false,
+        config.getShortcut(ConfigurationValueShortcut.DAB_ANALYSIS));
     buttonDisambiguation.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguation"));
     toolbar.add(buttonDisambiguation);
 
     buttonSelectDab = Utilities.createJButton(
         "wpc-select-disambig.png", EnumImageSize.NORMAL,
-        GT._("Select disambiguation pages with too many backlinks"), false);
+        GT._("Select disambiguation pages with too many backlinks"),
+        false, null);
     buttonSelectDab.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSelectDisambiguation"));
     toolbar.add(buttonSelectDab);
 
     buttonDisambiguationWatch = Utilities.createJButton(
         "commons-disambig-colour-plus.png", EnumImageSize.NORMAL,
-        GT._("Analyze pages with links to disambiguation pages"), false);
+        GT._("Analyze pages with links to disambiguation pages"),
+        false, null);
     buttonDisambiguationWatch.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguationWatch"));
     toolbar.add(buttonDisambiguationWatch);
 
     buttonUpdateDabWarning = Utilities.createJButton(
         "gnome-dialog-warning.png", EnumImageSize.NORMAL,
-        GT._("Update disambiguation warning"), false);
+        GT._("Update disambiguation warning"),
+        false, null);
     buttonUpdateDabWarning.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdateDabWarning"));
     toolbar.add(buttonUpdateDabWarning);
 
     buttonUpdateInfo = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
-        GT._("Update page information (Alt + &U)"), false);
+        GT._("Update page information (Alt + &U)"),
+        false, null);
     buttonUpdateInfo.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdateInfo"));
     toolbar.add(buttonUpdateInfo);
 
     buttonComments = Utilities.createJButton(
         "tango-internet-group-chat.png", EnumImageSize.NORMAL,
-        GT._("Set page comments (Alt + &C)"), false);
+        GT._("Set page comments (Alt + &C)"),
+        false, null);
     buttonComments.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSetComments"));
     toolbar.add(buttonComments);
 
     buttonView = Utilities.createJButton(
         "gnome-emblem-web.png", EnumImageSize.NORMAL,
-        GT._("External Viewer (Alt + &E)"), false);
+        GT._("External Viewer"),
+        false, config.getShortcut(ConfigurationValueShortcut.EXTERNAL_VIEWER));
     buttonView.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionView"));
     toolbar.add(buttonView);
 
     buttonViewHistory = Utilities.createJButton(
         "gnome-emblem-documents.png", EnumImageSize.NORMAL,
-        GT._("History (Alt + &H)"), false);
+        GT._("History"),
+        false, config.getShortcut(ConfigurationValueShortcut.HISTORY));
     buttonViewHistory.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionViewHistory"));
     toolbar.add(buttonViewHistory);
 
     buttonSave = Utilities.createJButton(
         "gnome-document-save.png", EnumImageSize.NORMAL,
-        GT._("Save list"), false);
+        GT._("Save list"), false, null);
     buttonSave.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSave"));
     toolbar.add(buttonSave);
 
-    buttonAutomaticFixing = Utilities.createJButton(GT._("Automatic fixing"));
+    buttonAutomaticFixing = Utilities.createJButton(GT._("Automatic fixing"), null);
     buttonAutomaticFixing.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRunAutomaticFixing"));
     toolbar.add(buttonAutomaticFixing);
@@ -299,13 +310,13 @@ public class PageListWindow extends BasicWindow {
     if (watchList) {
       buttonRemove = Utilities.createJButton(
           "gnome-list-remove.png", EnumImageSize.NORMAL,
-          GT._("Remove page (Alt + &R)"), false);
+          GT._("Remove page (Alt + &R)"), false, null);
       buttonRemove.addActionListener(EventHandler.create(
           ActionListener.class, this, "actionRemove"));
       toolbar.add(buttonRemove);
       buttonAdd = Utilities.createJButton(
           "gnome-list-add.png", EnumImageSize.NORMAL,
-          GT._("Add page (Alt + &A)"), false);
+          GT._("Add page (Alt + &A)"), false, null);
       buttonAdd.addActionListener(EventHandler.create(
           ActionListener.class, this, "actionAdd"));
       toolbar.add(buttonAdd);

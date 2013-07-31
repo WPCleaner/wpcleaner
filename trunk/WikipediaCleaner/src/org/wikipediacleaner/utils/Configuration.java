@@ -926,6 +926,29 @@ public class Configuration implements WindowListener {
   }
 
   // ==========================================================================
+  // Shortcut management
+  // ==========================================================================
+
+  /**
+   * @param shortcut Shortcut.
+   * @return Style value.
+   */
+  public ConfigurationValueShortcut.ShortcutProperties getShortcut(
+      ConfigurationValueShortcut shortcut) {
+    return ConfigurationValueShortcut.getValue(getPreferences(), shortcut);
+  }
+
+  /**
+   * @param shortcut Shortcut.
+   * @param value Shortcut value.
+   */
+  public void setShortcut(
+      ConfigurationValueShortcut shortcut,
+      ConfigurationValueShortcut.ShortcutProperties value) {
+    ConfigurationValueShortcut.setValue(getPreferences(), shortcut, value);
+  }
+
+  // ==========================================================================
   // Integer management
   // ==========================================================================
 

@@ -85,19 +85,19 @@ public class MWPaneTitleTreeManager {
     toolbarButtons.setFloatable(false);
     JButton buttonLess = Utilities.createJButton(
         "gnome-go-previous.png", EnumImageSize.NORMAL,
-        GT._("Decrement title level"), false);
+        GT._("Decrement title level"), false, null);
     buttonLess.addActionListener(EventHandler.create(
         ActionListener.class, this, "decreaseLevel"));
     toolbarButtons.add(buttonLess);
     JButton buttonMore = Utilities.createJButton(
         "gnome-go-next.png", EnumImageSize.NORMAL,
-        GT._("Increment title level"), false);
+        GT._("Increment title level"), false, null);
     buttonMore.addActionListener(EventHandler.create(
         ActionListener.class, this, "increaseLevel"));
     toolbarButtons.add(buttonMore);
     JButton buttonDone = Utilities.createJButton(
         "commons-approve-icon.png", EnumImageSize.NORMAL,
-        GT._("Validate the new table of contents"), false);
+        GT._("Validate the new table of contents"), false, null);
     buttonDone.addActionListener(EventHandler.create(
         ActionListener.class, this, "validate"));
     toolbarButtons.add(buttonDone);

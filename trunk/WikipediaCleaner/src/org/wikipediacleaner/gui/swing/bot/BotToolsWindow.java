@@ -111,7 +111,7 @@ public class BotToolsWindow
 
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    JButton buttonClose = Utilities.createJButton(GT._("&Close"));
+    JButton buttonClose = Utilities.createJButton(GT._("&Close"), null);
     buttonClose.addActionListener(EventHandler.create(
         ActionListener.class, this, "dispose"));
     buttonPanel.add(buttonClose);

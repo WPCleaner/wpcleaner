@@ -219,12 +219,12 @@ public class DisambiguationWindow extends OnePageWindow {
     toolbar.setFloatable(false);
     addButtonReload(toolbar, true);
     buttonView = ActionExternalViewer.addButton(
-        toolbar, getWikipedia(), getPageName(), false, true);
+        toolbar, getWikipedia(), getPageName(), false, true, false);
     buttonViewHistory = ActionExternalViewer.addButton(
-        toolbar, getWikipedia(), getPageName(), ActionExternalViewer.ACTION_HISTORY, true);
+        toolbar, getWikipedia(), getPageName(), ActionExternalViewer.ACTION_HISTORY, true, true);
     addButtonSend(toolbar, true);
     buttonWatch = ActionWatchPage.addButton(
-        getParentComponent(), toolbar, getWikipedia(), getPageName(), true);
+        getParentComponent(), toolbar, getWikipedia(), getPageName(), true, true);
     addButtonFullAnalysis(toolbar, true);
     panel.add(toolbar);
     return panel;
@@ -281,7 +281,7 @@ public class DisambiguationWindow extends OnePageWindow {
     constraints.weighty = 0;
 
     // Select next links button
-    buttonSelectNextLinks = Utilities.createJButton(GT._("Select &next links"));
+    buttonSelectNextLinks = Utilities.createJButton(GT._("Select &next links"), null);
     buttonSelectNextLinks.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSelectNextLinks"));
     constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -290,7 +290,7 @@ public class DisambiguationWindow extends OnePageWindow {
     constraints.gridy++;
 
     // Automatic fixing
-    buttonAutomaticFixing = Utilities.createJButton(GT._("Automatic fixing"));
+    buttonAutomaticFixing = Utilities.createJButton(GT._("Automatic fixing"), null);
     buttonAutomaticFixing.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRunAutomaticFixing"));
     panel.add(buttonAutomaticFixing, constraints);
@@ -300,23 +300,23 @@ public class DisambiguationWindow extends OnePageWindow {
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
     buttonFullAnalysisLink = ActionFullAnalysis.addButton(
-        getParentComponent(), toolbar, getWikipedia(), listLinks, knownPages, true);
+        getParentComponent(), toolbar, getWikipedia(), listLinks, knownPages, true, true);
     ActionDisambiguationAnalysis.addButton(
-        getParentComponent(), toolbar, getWikipedia(), listLinks, true);
+        getParentComponent(), toolbar, getWikipedia(), listLinks, true, true);
     buttonMarkNormal = Utilities.createJButton(
         "wpc-mark-normal.png", EnumImageSize.NORMAL,
-        GT._("Mark backlink as normal"), false);
+        GT._("Mark backlink as normal"), false, null);
     buttonMarkNormal.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionMarkBacklinkNormal"));
     toolbar.add(buttonMarkNormal);
     buttonMarkNeedHelp = Utilities.createJButton(
         "wpc-mark-need-help.png", EnumImageSize.NORMAL,
-        GT._("Mark backlink as needing help"), false);
+        GT._("Mark backlink as needing help"), false, null);
     buttonMarkNeedHelp.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionMarkBacklinkHelpNeeded"));
     toolbar.add(buttonMarkNeedHelp);
     buttonViewLink = ActionExternalViewer.addButton(
-        toolbar, getWikipedia(), listLinks, false, true);
+        toolbar, getWikipedia(), listLinks, false, true, true);
     toolbar.addSeparator();
     linkCount = new JLabel(GT._("Link count"));
     toolbar.add(linkCount);

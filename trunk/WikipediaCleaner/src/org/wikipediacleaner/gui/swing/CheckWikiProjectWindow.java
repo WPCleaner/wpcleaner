@@ -605,13 +605,13 @@ public class CheckWikiProjectWindow extends OnePageWindow {
 
     buttonSelectErrors = Utilities.createJButton(
         "gnome-preferences-desktop.png", EnumImageSize.NORMAL,
-        GT._("Select errors"), true);
+        GT._("Select errors"), true, null);
     buttonSelectErrors.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionChooseErrors"));
     toolbarLoad.add(buttonSelectErrors);
     buttonLoadErrors = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
-        getLoadMessage(), true);
+        getLoadMessage(), true, null);
     buttonLoadErrors.setActionCommand(ACTION_RELOAD);
     buttonLoadErrors.addActionListener(this);
     buttonLoadErrors.setPreferredSize(new Dimension(800, 20));
@@ -650,27 +650,27 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     toolbar.setFloatable(false);
     buttonReloadError = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
-        GT._("Reload error"), false);
+        GT._("Reload error"), false, null);
     buttonReloadError.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionReloadError"));
     toolbar.add(buttonReloadError);
     buttonErrorDetail = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.NORMAL,
-        GT._("Detail"), false);
+        GT._("Detail"), false, null);
     buttonErrorDetail.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionErrorDetail"));
     buttonErrorDetail.setEnabled(false);
     toolbar.add(buttonErrorDetail);
     buttonErrorList = Utilities.createJButton(
         "gnome-web-browser.png", EnumImageSize.NORMAL,
-        GT._("List on toolserver"), false);
+        GT._("List on toolserver"), false, null);
     buttonErrorList.addActionListener(
         EventHandler.create(ActionListener.class, this, "actionErrorList"));
     buttonErrorList.setEnabled(false);
     toolbar.add(buttonErrorList);
     buttonWhiteList = Utilities.createJButton(
         "gnome-accessories-text-editor.png", EnumImageSize.NORMAL,
-        GT._("View or edit white list"), false);
+        GT._("View or edit white list"), false, null);
     buttonWhiteList.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionErrorWhiteList"));
     buttonWhiteList.setEnabled(false);
@@ -738,12 +738,12 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     // Load pages
     JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarButtons.setFloatable(false);
-    JButton buttonLoad = Utilities.createJButton(GT._("&Load pages"));
+    JButton buttonLoad = Utilities.createJButton(GT._("&Load pages"), null);
     buttonLoad.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSelectPage"));
     toolbarButtons.add(buttonLoad);
     ActionFullAnalysis.addButton(
-        getParentComponent(), toolbarButtons, getWikipedia(), listPages, null, true);
+        getParentComponent(), toolbarButtons, getWikipedia(), listPages, null, true, true);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;
     constraints.weightx = 0;
@@ -895,7 +895,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       buttonSend = createButtonSend(this, true);
       buttonSend.setEnabled(false);
       toolbarButtons.add(buttonSend);
-      buttonMarkAsFixed = Utilities.createJButton(GT._("Mark as Fixed")); // Mark as fixed
+      buttonMarkAsFixed = Utilities.createJButton(GT._("Mark as Fixed"), null); // Mark as fixed
       buttonMarkAsFixed.setEnabled(true);
       buttonMarkAsFixed.setActionCommand(ACTION_MARK_AS_FIXED);
       buttonMarkAsFixed.addActionListener(this);
@@ -903,13 +903,13 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       toolbarButtons.addSeparator();
       if (Utilities.isDesktopSupported()) { // External Viewer
         ActionExternalViewer.addButton(
-            toolbarButtons, getWikipedia(), page.getTitle(), false, true);
+            toolbarButtons, getWikipedia(), page.getTitle(), false, true, true);
         ActionExternalViewer.addButton(
-            toolbarButtons, getWikipedia(), page.getTitle(), ActionExternalViewer.ACTION_HISTORY, true);
+            toolbarButtons, getWikipedia(), page.getTitle(), ActionExternalViewer.ACTION_HISTORY, true, true);
         toolbarButtons.addSeparator();
       }
       ActionFullAnalysis.addButton(
-          toolbarButtons, getWikipedia(), page.getTitle(), true, false);
+          toolbarButtons, getWikipedia(), page.getTitle(), true, false, false);
       constraints.fill = GridBagConstraints.HORIZONTAL;
       constraints.gridwidth = 2;
       constraints.weightx = 1;

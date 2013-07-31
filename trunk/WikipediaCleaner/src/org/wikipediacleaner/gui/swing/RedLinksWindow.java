@@ -192,13 +192,13 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
     JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
 
     // Replace button
-    buttonReplace = Utilities.createJButton(GT._("Re&place"));
+    buttonReplace = Utilities.createJButton(GT._("Re&place"), null);
     buttonReplace.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionReplace"));
     panel.add(buttonReplace);
 
     // Close button
-    buttonClose = Utilities.createJButton(GT._("&Close"));
+    buttonClose = Utilities.createJButton(GT._("&Close"), null);
     buttonClose.addActionListener(EventHandler.create(
         ActionListener.class, this, "dispose"));
     panel.add(buttonClose);
@@ -248,7 +248,7 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
     constraints.gridy++;
 
     // Reload button
-    buttonReload = Utilities.createJButton(GT._("&Reload page list"));
+    buttonReload = Utilities.createJButton(GT._("&Reload page list"), null);
     buttonReload.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionReload"));
     constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -379,7 +379,7 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
     constraints.gridy++;
 
     // Search
-    buttonSearch = Utilities.createJButton(GT._("&Search for possible pages"));
+    buttonSearch = Utilities.createJButton(GT._("&Search for possible pages"), null);
     constraints.gridwidth = 2;
     constraints.gridx = 0;
     panel.add(buttonSearch, constraints);

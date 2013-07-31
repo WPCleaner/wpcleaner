@@ -107,12 +107,12 @@ public class SortingOptionsPanel
     JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarButtons.setFloatable(false);
     buttonSortAdd = Utilities.createJButton(
-        "gnome-list-add.png", EnumImageSize.NORMAL, GT._("Add"), false);
+        "gnome-list-add.png", EnumImageSize.NORMAL, GT._("Add"), false, null);
     buttonSortAdd.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSortAdd"));
     toolbarButtons.add(buttonSortAdd);
     buttonSortDelete = Utilities.createJButton(
-        "gnome-list-remove.png", EnumImageSize.NORMAL, GT._("Delete"), false);
+        "gnome-list-remove.png", EnumImageSize.NORMAL, GT._("Delete"), false, null);
     buttonSortDelete.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSortDelete"));
     toolbarButtons.add(buttonSortDelete);
@@ -141,12 +141,12 @@ public class SortingOptionsPanel
     toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarButtons.setFloatable(false);
     buttonSortUp = Utilities.createJButton(
-        "gnome-go-up.png", EnumImageSize.NORMAL, GT._("Up"), false);
+        "gnome-go-up.png", EnumImageSize.NORMAL, GT._("Up"), false, null);
     buttonSortUp.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSortMoveUp"));
     toolbarButtons.add(buttonSortUp);
     buttonSortDown = Utilities.createJButton(
-        "gnome-go-down.png", EnumImageSize.NORMAL, GT._("Down"), false);
+        "gnome-go-down.png", EnumImageSize.NORMAL, GT._("Down"), false, null);
     buttonSortDown.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSortMoveDown"));
     toolbarButtons.add(buttonSortDown);
