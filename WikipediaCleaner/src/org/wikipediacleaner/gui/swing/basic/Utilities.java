@@ -25,9 +25,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -37,6 +39,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.KeyStroke;
 import javax.swing.table.TableModel;
 import javax.swing.text.JTextComponent;
 
@@ -442,8 +445,8 @@ public class Utilities {
     JButton button = new JButton(label);
     button.setToolTipText(fullLabel);
     if ((shortcut == null) || (shortcut.useMnemonic())) {
-      char mnemonic = getMnemonic(message);
-      if (mnemonic != ' ') {
+      int mnemonic = getMnemonic(message);
+      if (mnemonic != 0) {
         button.setMnemonic(mnemonic);
       }
     } else {
@@ -460,8 +463,8 @@ public class Utilities {
    */
   public static JToggleButton createJToggleButton(String message) {
     JToggleButton button = new JToggleButton(getLabelWithoutMnemonic(message));
-    char mnemonic = getMnemonic(message);
-    if (mnemonic != ' ') {
+    int mnemonic = getMnemonic(message);
+    if (mnemonic != 0) {
       button.setMnemonic(mnemonic);
     }
     return button;
@@ -515,7 +518,7 @@ public class Utilities {
     }
     button.setToolTipText(fullLabel);
     if ((shortcut == null) || (shortcut.useMnemonic())) {
-      char mnemonic = getMnemonic(message);
+      int mnemonic = getMnemonic(message);
       if ((mnemonic == ' ') && (shortcut != null)) {
         mnemonic = shortcut.getKey();
       }
@@ -523,7 +526,8 @@ public class Utilities {
         button.setMnemonic(mnemonic);
       }
     } else {
-      // TODO
+      InputMap inputMap = button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+      inputMap.put(KeyStroke.getKeyStroke(shortcut.getKey(), shortcut.getModifiers()), "pressed");
     }
     return button;
   }
@@ -552,8 +556,8 @@ public class Utilities {
     } else {
       button = new JToggleButton(getLabelWithoutMnemonic(message));
     }
-    char mnemonic = getMnemonic(message);
-    if (mnemonic != ' ') {
+    int mnemonic = getMnemonic(message);
+    if (mnemonic != 0) {
       button.setMnemonic(mnemonic);
     }
     return button;
@@ -568,8 +572,8 @@ public class Utilities {
    */
   public static JCheckBox createJCheckBox(String message, boolean selected) {
     JCheckBox checkbox = new JCheckBox(getLabelWithoutMnemonic(message), selected);
-    char mnemonic = getMnemonic(message);
-    if (mnemonic != ' ') {
+    int mnemonic = getMnemonic(message);
+    if (mnemonic != 0) {
       checkbox.setMnemonic(mnemonic);
     }
     return checkbox;
@@ -584,8 +588,8 @@ public class Utilities {
    */
   public static JRadioButton createJRadioButton(String message, boolean selected) {
     JRadioButton button = new JRadioButton(getLabelWithoutMnemonic(message), selected);
-    char mnemonic = getMnemonic(message);
-    if (mnemonic != ' ') {
+    int mnemonic = getMnemonic(message);
+    if (mnemonic != 0) {
       button.setMnemonic(mnemonic);
     }
     return button;
@@ -599,8 +603,8 @@ public class Utilities {
    */
   public static JLabel createJLabel(String message) {
     JLabel label = new JLabel(getLabelWithoutMnemonic(message));
-    char mnemonic = getMnemonic(message);
-    if (mnemonic != ' ') {
+    int mnemonic = getMnemonic(message);
+    if (mnemonic != 0) {
       label.setDisplayedMnemonic(mnemonic);
     }
     return label;
@@ -692,8 +696,8 @@ public class Utilities {
    */
   public static JMenu createJMenu(String message) {
     JMenu menu = new JMenu(getLabelWithoutMnemonic(message));
-    char mnemonic = getMnemonic(message);
-    if (mnemonic != ' ') {
+    int mnemonic = getMnemonic(message);
+    if (mnemonic != 0) {
       menu.setMnemonic(mnemonic);
     }
     return menu;
@@ -709,8 +713,8 @@ public class Utilities {
   public static JMenuItem createJMenuItem(String message, boolean asIs) {
     JMenuItem menuItem = new JMenuItem(asIs ? message : getLabelWithoutMnemonic(message));
     if (!asIs) {
-      char mnemonic = getMnemonic(message);
-      if (mnemonic != ' ') {
+      int mnemonic = getMnemonic(message);
+      if (mnemonic != 0) {
         menuItem.setMnemonic(mnemonic);
       }
     }
@@ -727,8 +731,8 @@ public class Utilities {
   public static JCheckBoxMenuItem createJCheckBoxMenuItm(String message, boolean checked) {
     JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(
         getLabelWithoutMnemonic(message), checked);
-    char mnemonic = getMnemonic(message);
-    if (mnemonic != ' ') {
+    int mnemonic = getMnemonic(message);
+    if (mnemonic != 0) {
       menuItem.setMnemonic(mnemonic);
     }
     return menuItem;
@@ -758,13 +762,13 @@ public class Utilities {
    * @param label Label with optional mnemonic (&).
    * @return Mnemonic.
    */
-  private static char getMnemonic(String label) {
+  private static int getMnemonic(String label) {
     if (label == null) {
-      return ' ';
+      return 0;
     }
     int index = label.indexOf('&');
     if ((index == -1) || (index == label.length() - 1)){
-      return ' ';
+      return 0;
     }
     return label.charAt(index + 1);
   }
