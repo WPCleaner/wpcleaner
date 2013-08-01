@@ -35,6 +35,7 @@ import javax.swing.border.TitledBorder;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.gui.swing.action.ActionDispose;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
@@ -198,9 +199,7 @@ public class RedLinksWindow extends BasicWindow implements ActionListener, ItemL
     panel.add(buttonReplace);
 
     // Close button
-    buttonClose = Utilities.createJButton(GT._("&Close"), null);
-    buttonClose.addActionListener(EventHandler.create(
-        ActionListener.class, this, "dispose"));
+    buttonClose = ActionDispose.createButton(getParentComponent(), true, false);
     panel.add(buttonClose);
 
     return panel;

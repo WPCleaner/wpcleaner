@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.utils;
 
+import java.awt.event.InputEvent;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -17,6 +18,7 @@ import java.util.prefs.Preferences;
 public enum ConfigurationValueShortcut {
 
   ADD_TO_WATCH_LIST("AddWatch", new ShortcutProperties(true, false, false, 'W')),
+  CLOSE("Close", new ShortcutProperties(true, false, false, 'C')),
   DAB_ANALYSIS("Disambiguation", new ShortcutProperties(true, false, false, 'D')),
   EXTERNAL_VIEWER("ExternalViewer", new ShortcutProperties(true, false, false, 'E')),
   FULL_ANALYSIS("Title", new ShortcutProperties(true, false, false, 'F')),
@@ -77,9 +79,8 @@ public enum ConfigurationValueShortcut {
     boolean alt = preferences.getBoolean(
         PROPERTY_ALT,
         defaultProperties.getAltKey());
-    String tmp = preferences.get(
-        PROPERTY_KEY, "" + defaultProperties.getKey());
-    char key = ((tmp != null) && (tmp.length() > 0)) ? tmp.charAt(0) : 0;
+    int key = preferences.getInt(
+        PROPERTY_KEY, defaultProperties.getKey());
     return new ShortcutProperties(enabled, ctrl, alt, key);
   }
 
@@ -107,7 +108,7 @@ public enum ConfigurationValueShortcut {
     preferences.putBoolean(PROPERTY_ENABLED, value.getEnabled());
     preferences.putBoolean(PROPERTY_CTRL, value.getCtrlKey());
     preferences.putBoolean(PROPERTY_ALT, value.getAltKey());
-    preferences.put(PROPERTY_KEY, "" + value.getKey());
+    preferences.putInt(PROPERTY_KEY, value.getKey());
   }
 
   /**
@@ -157,7 +158,7 @@ public enum ConfigurationValueShortcut {
     private final boolean ctrl;
     private final boolean alt;
 
-    private final char key;
+    private final int key;
 
     /**
      * @param enabled Is shortcut enabled ?
@@ -168,7 +169,7 @@ public enum ConfigurationValueShortcut {
     public ShortcutProperties(
         boolean enabled,
         boolean ctrl, boolean alt,
-        char key) {
+        int key) {
       this.enabled = enabled;
       this.ctrl = ctrl;
       this.alt = alt;
@@ -199,7 +200,7 @@ public enum ConfigurationValueShortcut {
     /**
      * @return Key.
      */
-    public char getKey() {
+    public int getKey() {
       return key;
     }
 
@@ -208,6 +209,20 @@ public enum ConfigurationValueShortcut {
      */
     public boolean useMnemonic() {
       return !ctrl && !alt;
+    }
+
+    /**
+     * @return Combination of InputEvent modifiers.
+     */
+    public int getModifiers() {
+      int modifiers = 0;
+      if (alt) {
+        modifiers = modifiers | InputEvent.ALT_DOWN_MASK;
+      }
+      if (ctrl) {
+        modifiers = modifiers | InputEvent.CTRL_DOWN_MASK;
+      }
+      return modifiers;
     }
 
     /**
