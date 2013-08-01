@@ -30,6 +30,7 @@ import javax.swing.WindowConstants;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComment;
+import org.wikipediacleaner.gui.swing.action.ActionDispose;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -288,9 +289,7 @@ public class PageCommentsWindow extends BasicWindow {
     panel.add(buttonRemove);
 
     // Cancel button
-    buttonCancel = Utilities.createJButton(GT._("&Cancel"), null);
-    buttonCancel.addActionListener(EventHandler.create(
-        ActionListener.class, this, "dispose"));
+    buttonCancel = ActionDispose.createButton(getParentComponent(), true, true);
     panel.add(buttonCancel);
 
     return panel;

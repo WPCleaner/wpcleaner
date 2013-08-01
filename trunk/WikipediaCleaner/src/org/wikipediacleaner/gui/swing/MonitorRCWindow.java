@@ -13,8 +13,6 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -42,8 +40,8 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.RecentChange;
+import org.wikipediacleaner.gui.swing.action.ActionDispose;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
-import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningTools;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
@@ -161,9 +159,7 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
 
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    JButton buttonClose = Utilities.createJButton(GT._("&Close"), null);
-    buttonClose.addActionListener(EventHandler.create(
-        ActionListener.class, this, "dispose"));
+    JButton buttonClose = ActionDispose.createButton(getParentComponent(), true, false);
     buttonPanel.add(buttonClose);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridx = 0;

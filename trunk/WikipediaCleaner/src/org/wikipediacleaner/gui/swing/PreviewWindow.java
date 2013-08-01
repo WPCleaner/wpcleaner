@@ -36,6 +36,7 @@ import org.w3c.dom.Document;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.gui.swing.action.ActionDispose;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -214,9 +215,7 @@ public class PreviewWindow
     buttonUpdate.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdate"));
     buttonPanel.add(buttonUpdate);
-    buttonClose = Utilities.createJButton(GT._("&Close"), null);
-    buttonClose.addActionListener(EventHandler.create(
-        ActionListener.class, this, "dispose"));
+    buttonClose = ActionDispose.createButton(getParentComponent(), true, false);
     buttonPanel.add(buttonClose);
     constraints.fill = GridBagConstraints.NONE;
     constraints.gridwidth = 2;

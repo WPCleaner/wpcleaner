@@ -12,8 +12,6 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.beans.EventHandler;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -23,8 +21,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
 import org.wikipediacleaner.Version;
+import org.wikipediacleaner.gui.swing.action.ActionDispose;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
-import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -275,9 +273,7 @@ public class AboutWindow extends BasicWindow {
     //panel.setBorder(BorderFactory.createEtchedBorder());
 
     // Close button
-    buttonClose = Utilities.createJButton(GT._("&Close"), null);
-    buttonClose.addActionListener(EventHandler.create(
-        ActionListener.class, this, "dispose"));
+    buttonClose = ActionDispose.createButton(getParentComponent(), true, false);
     panel.add(buttonClose);
 
     return panel;

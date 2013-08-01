@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
+import org.wikipediacleaner.gui.swing.action.ActionDispose;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
@@ -127,9 +128,7 @@ public class OptionsWindow
     panel.add(buttonValidate);
 
     // Cancel button
-    buttonCancel = Utilities.createJButton(GT._("&Cancel"), null);
-    buttonCancel.addActionListener(EventHandler.create(
-        ActionListener.class, this, "dispose"));
+    buttonCancel = ActionDispose.createButton(getParentComponent(), true, true);
     panel.add(buttonCancel);
 
     // Restore defaults button

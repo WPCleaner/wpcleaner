@@ -13,8 +13,6 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.beans.EventHandler;
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -30,6 +28,7 @@ import org.lobobrowser.html.gui.HtmlPanel;
 import org.lobobrowser.html.parser.DocumentBuilderImpl;
 import org.lobobrowser.html.test.SimpleUserAgentContext;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.gui.swing.action.ActionDispose;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -159,9 +158,7 @@ public class InformationWindow
 
     // Buttons
     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    buttonClose = Utilities.createJButton(GT._("&Close"), null);
-    buttonClose.addActionListener(EventHandler.create(
-        ActionListener.class, this, "dispose"));
+    buttonClose = ActionDispose.createButton(getParentComponent(), true, false);
     buttonPanel.add(buttonClose);
     constraints.fill = GridBagConstraints.NONE;
     constraints.gridx = 0;
