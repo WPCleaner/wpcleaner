@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-01 23:49+0200\n"
+"POT-Creation-Date: 2013-08-02 22:42+0200\n"
 "PO-Revision-Date: 2013-07-16 16:00+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -319,7 +319,6 @@ msgstr "Nahradit za použití šablony {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:194
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:310
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:357
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:284
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:71
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:77
@@ -807,7 +806,7 @@ msgstr "regulární výraz"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:138
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:140
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:536
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:528
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:293
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:305
 msgid "Automatic fixing"
@@ -818,14 +817,14 @@ msgid "This feature may modify a lot of pages in a short period of time."
 msgstr "Tato vlastnost může změnit mnoho stránek v krátkém čase."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:205
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:619
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:611
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
 msgid "On some Wikipedia projects, you may need the bot status for doing this."
 msgstr ""
 "Na některých projektech Wikimedia je pro tuto funkci nutný příznak Bot."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:206
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:620
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:612
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:90
 msgid ""
 "Please, check if you need the bot status by reading the rules of Wikipedia."
@@ -864,66 +863,62 @@ msgstr "Opravit vybrané stránky"
 msgid "Test automatic replacements"
 msgstr "Otestovat automatické nahrazování"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:351
-msgid "Disambiguation (Alt + &D)"
-msgstr "Rozcestník (Alt + &D)"
-
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:506
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:498
 msgid "Text that should be replaced"
 msgstr "Text, který by měl být nahrazen"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:517
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:509
 msgid "Text that should be used as replacement"
 msgstr "Text, který by měl být použit pro nahrazení"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:528
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:520
 msgid "Use regular expressions"
 msgstr "Použít regulární výrazy"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:591
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:583
 msgid "You must select the pages on which running automatic fixing."
 msgstr "Musí být vybrány stránky, na kterých poběží automatické opravy."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:599
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:591
 msgid "A comment is required for automatix fixing."
 msgstr "Pro automatické opravy je nutné zadat shrnutí."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:608
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:600
 msgid "You must input the initial and destination texts."
 msgstr "Musíte vložit úvodní a cílový text"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:616
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:608
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:86
 msgid "!!! WARNING !!!"
 msgstr "!!! VAROVÁNÍ !!!"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:617
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:609
 msgid "This function will do all the replacements in all selected pages."
 msgstr "Tato funkce provede všechna nahrazení na vybraných stranách."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:618
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:610
 msgid "It may modify a lot of pages in a short period of time."
 msgstr "Může změnit množství stránek v krátkém čase."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:621
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:613
 msgid ""
 "Also, verify again the texts you have inputed before running this function."
 msgstr ""
 "Také znovu zkontrolujte všechny zadané texty před spuštěním této funkce."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:622
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:614
 msgid "You can also test the modifications before actually doing them."
 msgstr "Změny můžete před jejich provedením otestovat."
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:623
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:615
 msgid "Do you want to proceed with the modifications ?"
 msgstr "Chcete provést náhrady?"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:678
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:670
 msgid "The following replacements have been made:"
 msgstr "Následující nahrazení byla provedena:"
 
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:689
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:681
 msgid "Do you want to test the replacements on the pages ?"
 msgstr "Chcete náhrady na stránkách otestovat?"
 
@@ -3177,6 +3172,9 @@ msgstr "Název reference nemůže obsahovat tyto znaky: {0}"
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:53
 msgid "The value can't contain any of these characters: {0}"
 msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
+
+#~ msgid "Disambiguation (Alt + &D)"
+#~ msgstr "Rozcestník (Alt + &D)"
 
 #~ msgid "Full analysis (Alt + &F)"
 #~ msgstr "Plná analýza (Alt + &F)"

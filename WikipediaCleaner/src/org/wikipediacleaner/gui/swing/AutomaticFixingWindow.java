@@ -46,6 +46,8 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
+import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -83,8 +85,6 @@ public class AutomaticFixingWindow extends OnePageWindow {
   JList listPages;
   PageListModel modelPages;
   private PageListCellRenderer listCellRenderer;
-  private JButton buttonDisambiguationLink;
-  private JButton buttonExternalViewerLink;
 
   Collection<Page> pages;
 
@@ -346,18 +346,10 @@ public class AutomaticFixingWindow extends OnePageWindow {
     toolbar.setFloatable(false);
     ActionFullAnalysis.addButton(
         getParentComponent(), toolbar, getWikipedia(), listPages, null, true, true);
-    buttonDisambiguationLink = Utilities.createJButton(
-        "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("Disambiguation (Alt + &D)"), false, null);
-    buttonDisambiguationLink.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionDisambiguationLink"));
-    toolbar.add(buttonDisambiguationLink);
-    buttonExternalViewerLink = Utilities.createJButton(
-        "gnome-emblem-web.png", EnumImageSize.NORMAL,
-        GT._("External Viewer"), false, null);
-    buttonExternalViewerLink.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionExternalViewerLink"));
-    toolbar.add(buttonExternalViewerLink);
+    ActionDisambiguationAnalysis.addButton(
+        getParentComponent(), toolbar, getWikipedia(), listPages, true, true);
+    ActionExternalViewer.addButton(
+        toolbar, getWikipedia(), listPages, false, true, true);
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weighty = 0;
     panel.add(toolbar, constraints);
@@ -704,24 +696,5 @@ public class AutomaticFixingWindow extends OnePageWindow {
     config.addPojoArray(
         getPage().getWikipedia(), Configuration.POJO_AUTOMATIC_FIXING,
         replacements, getPage().getTitle());
-  }
-
-  /**
-   * Action called when Disambiguation button is pressed.
-   */
-  public void actionDisambiguationLink() {
-    Controller.runDisambiguationAnalysis(
-        getParentComponent(), listPages.getSelectedValues(), getWikipedia());
-  }
-
-  /**
-   * Action called when External Viewer button is pressed.
-   */
-  public void actionExternalViewerLink() {
-    for (Object selection : listPages.getSelectedValues()) {
-      if (selection instanceof Page) {
-        Utilities.browseURL(getWikipedia(), ((Page) selection).getTitle(), false);
-      }
-    }
   }
 }
