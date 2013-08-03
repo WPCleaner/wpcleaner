@@ -89,7 +89,7 @@ public class TranslationOptionsPanel extends OptionsPanel {
     add(chk, constraints);
     constraints.gridy++;
 
-    // Templates without parameteres
+    // Templates without parameters
     chk = createJCheckBox(
         GT._("Translate templates without parameters"),
         ConfigurationValueBoolean.TRANSLATION_TEMPLATE_NO_PARAM);

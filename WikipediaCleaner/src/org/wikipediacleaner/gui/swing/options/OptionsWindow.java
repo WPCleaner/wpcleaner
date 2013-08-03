@@ -26,6 +26,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 
 
 /**
@@ -114,15 +115,20 @@ public class OptionsWindow
    */
   private Component createCommandComponents() {
     JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    Configuration config = Configuration.getConfiguration();
 
     // Apply button
-    buttonApply = Utilities.createJButton(GT._("&Apply"), null);
+    buttonApply = Utilities.createJButton(
+        GT._("Apply"),
+        config.getShortcut(ConfigurationValueShortcut.APPLY));
     buttonApply.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionApply"));
     panel.add(buttonApply);
 
     // Validate button
-    buttonValidate = Utilities.createJButton(GT._("&Validate"), null);
+    buttonValidate = Utilities.createJButton(
+        GT._("Validate"),
+        config.getShortcut(ConfigurationValueShortcut.VALIDATE));
     buttonValidate.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionValidate"));
     panel.add(buttonValidate);
@@ -132,7 +138,9 @@ public class OptionsWindow
     panel.add(buttonCancel);
 
     // Restore defaults button
-    buttonDefault = Utilities.createJButton(GT._("&Restore defaults"), null);
+    buttonDefault = Utilities.createJButton(
+        GT._("Restore defaults"),
+        config.getShortcut(ConfigurationValueShortcut.RESTORE_DEFAULTS));
     buttonDefault.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDefault"));
     panel.add(buttonDefault);

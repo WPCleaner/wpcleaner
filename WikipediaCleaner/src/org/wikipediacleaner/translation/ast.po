@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-02 22:42+0200\n"
+"POT-Creation-Date: 2013-08-03 15:36+0200\n"
 "PO-Revision-Date: 2013-06-14 19:23+0000\n"
 "Last-Translator: Xuacu Saturio <xuacusk8@gmail.com>\n"
 "Language-Team: Asturian <ast@li.org>\n"
@@ -1589,7 +1589,6 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:202
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:585
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:125
 msgid "&Validate"
 msgstr ""
 
@@ -1627,38 +1626,38 @@ msgid "&Options"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:496
-#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:121
 msgid "Show &disambiguation pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:500
-#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:128
 msgid "Show &missing pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:504
-#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:135
 msgid "Show &redirect pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:508
-#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:142
 msgid "Show &other pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:513
+#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:149
 msgid "Count disambiguation pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:517
+#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:156
 msgid "Count missing pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:521
+#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:163
 msgid "Count redirect pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:525
+#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:170
 msgid "Count other pages"
 msgstr ""
 
@@ -1690,7 +1689,7 @@ msgid "From which Wikipedia is this text coming ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1439
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:105
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:106
 msgid "Translation"
 msgstr ""
 
@@ -1917,7 +1916,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:228
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:55
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:57
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:93
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:94
 msgid "Full analysis"
 msgstr ""
 
@@ -2284,7 +2283,7 @@ msgid "They may modify a lot of pages in a short period of time."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:101
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:87
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:88
 msgid "General"
 msgstr ""
 
@@ -2563,24 +2562,24 @@ msgstr ""
 msgid "Update disambiguation warning on talk page (in other namespaces)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:149
-msgid "Count &disambiguation pages"
+#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:121
+msgid "Show disambiguation pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:156
-msgid "Count &missing pages"
+#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:128
+msgid "Show missing pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:163
-msgid "Count &redirect pages"
+#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:135
+msgid "Show redirect pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:170
-msgid "Count &other pages"
+#: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:142
+msgid "Show other pages"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:177
-msgid "&Hide window when sending"
+msgid "Hide window when sending"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:184
@@ -2805,7 +2804,7 @@ msgid "Choose Look && Feel"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:49
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:90
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:91
 msgid "Limits"
 msgstr ""
 
@@ -2845,28 +2844,32 @@ msgstr ""
 msgid "Maximum number of search results :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:63
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:64
 msgid "Options"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:96
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:97
 msgid "Sorting"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:99
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:100
 msgid "Formatting"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:102
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:103
 msgid "Debug"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:119
-msgid "&Apply"
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:122
+msgid "Apply"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:135
-msgid "&Restore defaults"
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:130
+msgid "Validate"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:142
+msgid "Restore defaults"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:91

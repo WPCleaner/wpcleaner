@@ -18,11 +18,14 @@ import java.util.prefs.Preferences;
 public enum ConfigurationValueShortcut {
 
   ADD_TO_WATCH_LIST("AddWatch", new ShortcutProperties(true, false, false, 'W')),
+  APPLY("Apply", new ShortcutProperties(true, false, false, 'A')),
   CLOSE("Close", new ShortcutProperties(true, false, false, 'C')),
   DAB_ANALYSIS("Disambiguation", new ShortcutProperties(true, false, false, 'D')),
   EXTERNAL_VIEWER("ExternalViewer", new ShortcutProperties(true, false, false, 'E')),
   FULL_ANALYSIS("Title", new ShortcutProperties(true, false, false, 'F')),
-  HISTORY("History", new ShortcutProperties(true, false, false, 'H'));
+  HISTORY("History", new ShortcutProperties(true, false, false, 'H')),
+  RESTORE_DEFAULTS("RestoreDefaults", new ShortcutProperties(true, false, false, 'R')),
+  VALIDATE("Validate", new ShortcutProperties(true, false, false, 'V'));
 
   private final static String PROPERTY_ENABLED = "Enabled";
   private final static String PROPERTY_CTRL = "Ctrl";
