@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-03 15:36+0200\n"
+"POT-Creation-Date: 2013-08-04 00:12+0200\n"
 "PO-Revision-Date: 2012-12-16 12:29+0000\n"
 "Last-Translator: Dennis Baudys <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -320,6 +320,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:83
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:151
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:339
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:96
 msgid "External Viewer"
 msgstr ""
 
@@ -1692,7 +1693,7 @@ msgid "From which Wikipedia is this text coming ?"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1439
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:106
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:109
 msgid "Translation"
 msgstr "Übersetzung"
 
@@ -1711,6 +1712,7 @@ msgstr "&Seite"
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:236
 #: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:53
 #: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:55
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:92
 msgid "Disambiguation"
 msgstr "Begriffsklärung"
 
@@ -1920,6 +1922,7 @@ msgstr "Backlinks"
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:55
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:57
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:94
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:100
 msgid "Full analysis"
 msgstr "Vollständige Analyse"
 
@@ -1944,6 +1947,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:75
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:84
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:160
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:104
 msgid "History"
 msgstr "Verlauf"
 
@@ -2098,6 +2102,7 @@ msgstr ""
 "lassen"
 
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:43
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:88
 #, fuzzy
 msgid "Close"
 msgstr "&Schließen"
@@ -2109,6 +2114,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:52
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:54
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:80
 #, fuzzy
 msgid "Add to Watch list"
 msgstr "Auf die &Beobachtungsliste setzen"
@@ -2869,21 +2875,33 @@ msgid "Formatting"
 msgstr "Formatierung"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:103
+#, fuzzy
+msgid "Shortcuts"
+msgstr "Sortieren"
+
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:106
 msgid "Debug"
 msgstr "Fehlerdiagnose"
 
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:122
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:125
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:84
 #, fuzzy
 msgid "Apply"
 msgstr "&Anwenden"
 
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:130
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:133
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:112
 #, fuzzy
 msgid "Validate"
 msgstr "Über&prüfen"
 
-#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:142
+#: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:145
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:108
 msgid "Restore defaults"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:64
+msgid "Shortcut options (restart needed)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:91

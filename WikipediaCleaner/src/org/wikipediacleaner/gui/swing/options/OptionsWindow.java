@@ -99,6 +99,9 @@ public class OptionsWindow
     FormattingOptionsPanel formattingOptions = new FormattingOptionsPanel();
     pane.addTab(GT._("Formatting"), formattingOptions);
     panels.add(formattingOptions);
+    ShortcutOptionsPanel shortcutOptions = new ShortcutOptionsPanel();
+    pane.addTab(GT._("Shortcuts"), shortcutOptions);
+    panels.add(shortcutOptions);
     DebugOptionsPanel debugOptions = new DebugOptionsPanel();
     pane.addTab(GT._("Debug"), debugOptions);
     panels.add(debugOptions);
