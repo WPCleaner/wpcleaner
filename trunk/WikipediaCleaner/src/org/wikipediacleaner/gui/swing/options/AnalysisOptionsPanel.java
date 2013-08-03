@@ -118,63 +118,63 @@ public class AnalysisOptionsPanel extends OptionsPanel {
 
     // Show Disambiguation pages
     chk = createJCheckBox(
-        GT._("Show &disambiguation pages"),
+        GT._("Show disambiguation pages"),
         ConfigurationValueBoolean.ANALYSIS_DISAMBIG_PAGES);
     add(chk, constraints);
     constraints.gridy++;
 
     // Show Missing pages
     chk = createJCheckBox(
-        GT._("Show &missing pages"),
+        GT._("Show missing pages"),
         ConfigurationValueBoolean.ANALYSIS_MISSING_PAGES);
     add(chk, constraints);
     constraints.gridy++;
 
     // Show Redirect pages
     chk = createJCheckBox(
-        GT._("Show &redirect pages"),
+        GT._("Show redirect pages"),
         ConfigurationValueBoolean.ANALYSIS_REDIRECT_PAGES);
     add(chk, constraints);
     constraints.gridy++;
 
     // Show Other pages
     chk = createJCheckBox(
-        GT._("Show &other pages"),
+        GT._("Show other pages"),
         ConfigurationValueBoolean.ANALYSIS_OTHER_PAGES);
     add(chk, constraints);
     constraints.gridy++;
 
     // Count Disambiguation pages
     chk = createJCheckBox(
-        GT._("Count &disambiguation pages"),
+        GT._("Count disambiguation pages"),
         ConfigurationValueBoolean.ANALYSIS_COUNT_DISAMBIG);
     add(chk, constraints);
     constraints.gridy++;
 
     // Count Missing pages
     chk = createJCheckBox(
-        GT._("Count &missing pages"),
+        GT._("Count missing pages"),
         ConfigurationValueBoolean.ANALYSIS_COUNT_MISSING);
     add(chk, constraints);
     constraints.gridy++;
 
     // Count Redirect pages
     chk = createJCheckBox(
-        GT._("Count &redirect pages"),
+        GT._("Count redirect pages"),
         ConfigurationValueBoolean.ANALYSIS_COUNT_REDIRECT);
     add(chk, constraints);
     constraints.gridy++;
 
     // Count Other pages
     chk = createJCheckBox(
-        GT._("Count &other pages"),
+        GT._("Count other pages"),
         ConfigurationValueBoolean.ANALYSIS_COUNT_OTHER);
     add(chk, constraints);
     constraints.gridy++;
 
     // Hide when sending
     chk = createJCheckBox(
-        GT._("&Hide window when sending"),
+        GT._("Hide window when sending"),
         ConfigurationValueBoolean.ANALYSIS_HIDE_SENDING);
     add(chk, constraints);
     constraints.gridy++;
