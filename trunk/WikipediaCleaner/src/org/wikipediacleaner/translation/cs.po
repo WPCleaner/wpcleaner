@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-04 00:12+0200\n"
+"POT-Creation-Date: 2013-08-04 17:05+0200\n"
 "PO-Revision-Date: 2013-07-16 16:00+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -325,7 +325,7 @@ msgstr "Nahradit za použití šablony {0}"
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:83
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:151
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:339
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:96
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:107
 msgid "External Viewer"
 msgstr "Externí prohlížeč"
 
@@ -1755,7 +1755,7 @@ msgstr "Stránka:"
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:236
 #: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:53
 #: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:55
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:92
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:103
 msgid "Disambiguation"
 msgstr "Rozcestníky"
 
@@ -1965,7 +1965,7 @@ msgstr "Zpětné odkazy"
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:55
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:57
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:94
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:100
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:111
 msgid "Full analysis"
 msgstr "Plná analýza"
 
@@ -1990,7 +1990,7 @@ msgstr "Nastavit komentář stránky  (Alt + &C)"
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:75
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:84
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:160
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:104
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:115
 msgid "History"
 msgstr "Historie"
 
@@ -2150,7 +2150,7 @@ msgid "You must input a page name for running a disambiguation analysis"
 msgstr "Musíte zadat název stránky pro analýzu rozcestníku"
 
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:43
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:88
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:99
 #, fuzzy
 msgid "Close"
 msgstr "Zavřít"
@@ -2161,7 +2161,7 @@ msgstr "Musíte zadat název stránky pro plnou analýzu"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:52
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:54
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:80
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:91
 #, fuzzy
 msgid "Add to Watch list"
 msgstr "Přidat do Sledovaných stránek"
@@ -2954,27 +2954,31 @@ msgid "Debug"
 msgstr "Ladění"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:125
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:84
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:95
 #, fuzzy
 msgid "Apply"
 msgstr "&Aplikovat"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:133
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:112
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:123
 #, fuzzy
 msgid "Validate"
 msgstr "O&věřit"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:145
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:108
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:119
 #, fuzzy
 msgid "Restore defaults"
 msgstr "Obnovit původní"
 
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:64
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:75
 #, fuzzy
 msgid "Shortcut options (restart needed)"
 msgstr "Možnosti formátování (vyžaduje restartování)"
+
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:127
+msgid "Press key for shortcut or ESC to cancel"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:91
 msgid "Sort orders"

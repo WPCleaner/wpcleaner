@@ -7,10 +7,15 @@
 
 package org.wikipediacleaner.gui.swing.options;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +26,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
 
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
@@ -39,7 +45,7 @@ public class ShortcutOptionsPanel extends OptionsPanel {
   private static final long serialVersionUID = 5269712919862161621L;
 
   /**
-   * Construct a Shortcut Options panel. 
+   * Construct a Shortcut Options panel.
    */
   public ShortcutOptionsPanel() {
     super(new GridBagLayout());
@@ -55,6 +61,11 @@ public class ShortcutOptionsPanel extends OptionsPanel {
   private int lineHistory;
   private int lineRestoreDefaults;
   private int lineValidate;
+
+  /**
+   * A notice to explain how to set up a shortcut.
+   */
+  private JLabel notice;
 
   /**
    * Initialize the panel.
@@ -112,12 +123,23 @@ public class ShortcutOptionsPanel extends OptionsPanel {
     lineValidate = addLine(constraints, GT._("Validate"));
     setShortcut(lineValidate, ConfigurationValueShortcut.VALIDATE);
 
+    // Add a notice
+    notice = new JLabel(GT._("Press key for shortcut or ESC to cancel"));
+    notice.setForeground(Color.RED);
+    notice.setVisible(false);
+    notice.setHorizontalAlignment(SwingConstants.CENTER);
+    constraints.gridx = 0;
+    constraints.gridwidth = columnCount;
+    add(notice, constraints);
+    constraints.gridy++;
+
     // Empty panel
     JPanel emptyPanel = new JPanel();
     emptyPanel.setMinimumSize(new Dimension(0, 0));
     emptyPanel.setPreferredSize(new Dimension(0, 0));
     constraints.fill = GridBagConstraints.BOTH;
     constraints.insets = new Insets(0, 0, 0, 0);
+    constraints.gridx = 0;
     constraints.gridwidth = columnCount;
     constraints.weighty = 1;
     add(emptyPanel, constraints);
@@ -359,9 +381,18 @@ public class ShortcutOptionsPanel extends OptionsPanel {
   }
 
   /**
+   * Display a notice.
+   * 
+   * @param display True to display the notice.
+   */
+  void showNotice(boolean display) {
+    notice.setVisible(display);
+  }
+
+  /**
    * Button for editing a key code.
    */
-  private static class KeyCodeButton extends JButton {
+  private class KeyCodeButton extends JButton implements ActionListener, KeyEventDispatcher {
 
     /**
      * Serialization.
@@ -379,6 +410,7 @@ public class ShortcutOptionsPanel extends OptionsPanel {
     KeyCodeButton(int keyCode) {
       super();
       setKeyCode(keyCode);
+      addActionListener(this);
     }
 
     /**
@@ -394,6 +426,33 @@ public class ShortcutOptionsPanel extends OptionsPanel {
      */
     public int getKeyCode() {
       return keyCode;
+    }
+
+    /**
+     * Action triggered when button is clicked.
+     * 
+     * @param e Event.
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e) {
+      showNotice(true);
+      KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(this);
+    }
+
+    /**
+     * Action triggered when keyboard is used.
+     * 
+     * @param e Event.
+     * @return True if processing should end.
+     * @see java.awt.KeyEventDispatcher#dispatchKeyEvent(java.awt.event.KeyEvent)
+     */
+    public boolean dispatchKeyEvent(KeyEvent e) {
+      if (e.getKeyCode() != KeyEvent.VK_ESCAPE) {
+        setKeyCode(e.getKeyCode());
+      }
+      showNotice(false);
+      KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(this);
+      return false;
     }
   }
 }
