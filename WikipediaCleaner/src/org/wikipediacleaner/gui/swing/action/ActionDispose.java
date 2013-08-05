@@ -14,11 +14,8 @@ import java.beans.EventHandler;
 
 import javax.swing.JButton;
 
-import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
-import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueShortcut;
-import org.wikipediacleaner.utils.ConfigurationValueShortcut.ShortcutProperties;
 
 
 /**
@@ -33,15 +30,10 @@ public class ActionDispose {
    */
   private static JButton createInternalButton(
       boolean useShortcut, boolean cancel) {
-    JButton button = null;
-    ShortcutProperties shortcut = null;
-    if (useShortcut) {
-      Configuration config = Configuration.getConfiguration();
-      shortcut = config.getShortcut(ConfigurationValueShortcut.CLOSE);
-    }
-    button = Utilities.createJButton(
-        cancel ? GT._("Cancel") : GT._("Close"), shortcut);
-    return button;
+    return ActionUtilities.createInternalButton(
+        null, false,
+        cancel ? GT._("Cancel") : GT._("Close"), true,
+        ConfigurationValueShortcut.CLOSE, useShortcut);
   }
 
   /**

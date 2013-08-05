@@ -430,7 +430,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         ActionExternalViewer.ACTION_HISTORY, true, false);
     toolbarButtons.addSeparator();
     buttonWatch = ActionWatchPage.addButton(
-        getParentComponent(), toolbarButtons, getWikipedia(), getPageName(), true, true);
+        getParentComponent(), toolbarButtons, getWikipedia(), getPageName(), true, false);
     addButtonDisambiguation(toolbarButtons, true);
     toolbarButtons.addSeparator();
     String[] elements = getConfiguration().getStringArray(WPCConfigurationString.LANG_TEMPLATE);
