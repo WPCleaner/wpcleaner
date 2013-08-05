@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-04 17:05+0200\n"
+"POT-Creation-Date: 2013-08-06 00:46+0200\n"
 "PO-Revision-Date: 2013-06-14 11:28+0000\n"
 "Last-Translator: Oleg Koptev <koptev.oleg@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -315,8 +315,7 @@ msgstr "Заменить с помощью шаблона {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:194
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:310
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:284
-#: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:71
-#: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:77
+#: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:58
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:83
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:151
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:339
@@ -337,7 +336,7 @@ msgid "Do not replace"
 msgstr "Не заменять"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:297
-#: org/wikipediacleaner/gui/swing/action/ActionDispose.java:43
+#: org/wikipediacleaner/gui/swing/action/ActionDispose.java:35
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -1719,8 +1718,7 @@ msgstr "&Страница :"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:327
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:329
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:236
-#: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:53
-#: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:55
+#: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:44
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:103
 msgid "Disambiguation"
 msgstr "Значения"
@@ -1929,8 +1927,7 @@ msgid "Backlinks"
 msgstr "Обратные ссылки"
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:228
-#: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:55
-#: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:57
+#: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:46
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:94
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:111
 msgid "Full analysis"
@@ -1953,8 +1950,7 @@ msgid "Set page comments (Alt + &C)"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:292
-#: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:67
-#: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:75
+#: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:53
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:84
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:160
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:115
@@ -2110,32 +2106,31 @@ msgstr "Получение ссылок в шаблонах"
 msgid "Displaying templates found"
 msgstr "Отображение найденных шаблонов"
 
-#: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:227
+#: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:215
 msgid "You must input a page name for running a disambiguation analysis"
 msgstr "Вы должны ввести имя страницы, чтобы запустить анализ на значения"
 
-#: org/wikipediacleaner/gui/swing/action/ActionDispose.java:43
+#: org/wikipediacleaner/gui/swing/action/ActionDispose.java:35
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:99
 #, fuzzy
 msgid "Close"
 msgstr "Закр&ыть"
 
-#: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:240
+#: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:228
 msgid "You must input a page name for running a full analysis"
 msgstr "Вы должны ввести название страницы, чтобы запустить полный анализ"
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:52
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:54
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:43
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:91
 #, fuzzy
 msgid "Add to Watch list"
 msgstr "Добавить в список &наблюдения"
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:176
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:164
 msgid "Would you like to add this page on your local Watch list ?"
 msgstr "Хотите добавить эту страницу в локальный список наблюдения ?"
 
-#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:196
+#: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:184
 msgid "Would you like to add these pages on your local Watch list ?"
 msgstr "Хотите добавить эти страницы в ваш локальный список наблюдения ?"
 
@@ -2230,51 +2225,51 @@ msgstr ""
 msgid "{0} is working..."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:91
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:96
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:92
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:97
 #, java-format
 msgid "An error occured: {0}"
 msgstr "Произошла ошибка: {0}"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:101
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:102
 msgid "An unknown error occured"
 msgstr "Произошла неизвестная ошибка"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:161
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:162
 #, java-format
 msgid "You need to define the ''{0}'' property in WPCleaner configuration."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:189
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:190
 #, java-format
 msgid "You need to define the {0} properties in WPCleaner configuration."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:199
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:200
 msgid "This function requires some configuration."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:206
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:207
 msgid "Do you want to display help on configuring WPCleaner ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:303
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:304
 msgid "Other..."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:395
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:396
 msgid "Yes"
 msgstr "Да"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:396
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:397
 msgid "Yes to all"
 msgstr "Да для всех"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:397
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:398
 msgid "No"
 msgstr "Нет"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:398
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:399
 msgid "No to all"
 msgstr "Нет для всех"
 

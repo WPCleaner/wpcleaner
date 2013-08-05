@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
@@ -432,6 +433,29 @@ public class Utilities {
   /* Component management                                                       */
   /* ========================================================================== */
 
+  private static void setShortcut(
+      AbstractButton button, ShortcutProperties shortcut, String message) {
+    if ((shortcut == null) || (shortcut.useMnemonic())) {
+      int mnemonic = getMnemonic(message);
+      if ((mnemonic == -1) && (shortcut != null)) {
+        mnemonic = shortcut.getKey();
+      }
+      if (mnemonic != -1) {
+        button.setMnemonic(mnemonic);
+      }
+    } else {
+      InputMap inputMap = button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+      inputMap.put(KeyStroke.getKeyStroke(shortcut.getKey(), shortcut.getModifiers(), false), "pressed");
+      inputMap.put(KeyStroke.getKeyStroke(shortcut.getKey(), shortcut.getModifiers(), true), "released");
+      if (message != null) {
+        int index = message.indexOf(shortcut.getKey());
+        if ((index >= 0) && (index < button.getText().length())) {
+          button.setDisplayedMnemonicIndex(index);
+        }
+      }
+    }
+  }
+
   /**
    * Create a JButton.
    * 
@@ -444,14 +468,7 @@ public class Utilities {
     String fullLabel = (shortcut != null) ? label + shortcut.getDescription() : label;
     JButton button = new JButton(label);
     button.setToolTipText(fullLabel);
-    if ((shortcut == null) || (shortcut.useMnemonic())) {
-      int mnemonic = getMnemonic(message);
-      if (mnemonic != 0) {
-        button.setMnemonic(mnemonic);
-      }
-    } else {
-      // TODO
-    }
+    setShortcut(button, shortcut, message);
     return button;
   }
 
@@ -464,7 +481,7 @@ public class Utilities {
   public static JToggleButton createJToggleButton(String message) {
     JToggleButton button = new JToggleButton(getLabelWithoutMnemonic(message));
     int mnemonic = getMnemonic(message);
-    if (mnemonic != 0) {
+    if (mnemonic != -1) {
       button.setMnemonic(mnemonic);
     }
     return button;
@@ -512,23 +529,13 @@ public class Utilities {
         button = new JButton(label, icon);
       } else {
         button = new JButton(icon);
+        label = null;
       }
     } else {
       button = new JButton(label);
     }
     button.setToolTipText(fullLabel);
-    if ((shortcut == null) || (shortcut.useMnemonic())) {
-      int mnemonic = getMnemonic(message);
-      if ((mnemonic == ' ') && (shortcut != null)) {
-        mnemonic = shortcut.getKey();
-      }
-      if (mnemonic != ' ') {
-        button.setMnemonic(mnemonic);
-      }
-    } else {
-      InputMap inputMap = button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-      inputMap.put(KeyStroke.getKeyStroke(shortcut.getKey(), shortcut.getModifiers()), "pressed");
-    }
+    setShortcut(button, shortcut, label);
     return button;
   }
 
@@ -556,10 +563,7 @@ public class Utilities {
     } else {
       button = new JToggleButton(getLabelWithoutMnemonic(message));
     }
-    int mnemonic = getMnemonic(message);
-    if (mnemonic != 0) {
-      button.setMnemonic(mnemonic);
-    }
+    setShortcut(button, null, message);
     return button;
   }
 
@@ -572,10 +576,7 @@ public class Utilities {
    */
   public static JCheckBox createJCheckBox(String message, boolean selected) {
     JCheckBox checkbox = new JCheckBox(getLabelWithoutMnemonic(message), selected);
-    int mnemonic = getMnemonic(message);
-    if (mnemonic != 0) {
-      checkbox.setMnemonic(mnemonic);
-    }
+    setShortcut(checkbox, null, message);
     return checkbox;
   }
 
@@ -588,10 +589,7 @@ public class Utilities {
    */
   public static JRadioButton createJRadioButton(String message, boolean selected) {
     JRadioButton button = new JRadioButton(getLabelWithoutMnemonic(message), selected);
-    int mnemonic = getMnemonic(message);
-    if (mnemonic != 0) {
-      button.setMnemonic(mnemonic);
-    }
+    setShortcut(button, null, message);
     return button;
   }
 
@@ -604,7 +602,7 @@ public class Utilities {
   public static JLabel createJLabel(String message) {
     JLabel label = new JLabel(getLabelWithoutMnemonic(message));
     int mnemonic = getMnemonic(message);
-    if (mnemonic != 0) {
+    if (mnemonic != -1) {
       label.setDisplayedMnemonic(mnemonic);
     }
     return label;
@@ -696,10 +694,7 @@ public class Utilities {
    */
   public static JMenu createJMenu(String message) {
     JMenu menu = new JMenu(getLabelWithoutMnemonic(message));
-    int mnemonic = getMnemonic(message);
-    if (mnemonic != 0) {
-      menu.setMnemonic(mnemonic);
-    }
+    setShortcut(menu, null, message);
     return menu;
   }
 
@@ -713,10 +708,7 @@ public class Utilities {
   public static JMenuItem createJMenuItem(String message, boolean asIs) {
     JMenuItem menuItem = new JMenuItem(asIs ? message : getLabelWithoutMnemonic(message));
     if (!asIs) {
-      int mnemonic = getMnemonic(message);
-      if (mnemonic != 0) {
-        menuItem.setMnemonic(mnemonic);
-      }
+      setShortcut(menuItem, null, message);
     }
     return menuItem;
   }
@@ -731,10 +723,7 @@ public class Utilities {
   public static JCheckBoxMenuItem createJCheckBoxMenuItm(String message, boolean checked) {
     JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(
         getLabelWithoutMnemonic(message), checked);
-    int mnemonic = getMnemonic(message);
-    if (mnemonic != 0) {
-      menuItem.setMnemonic(mnemonic);
-    }
+    setShortcut(menuItem, null, message);
     return menuItem;
   }
 
@@ -768,7 +757,7 @@ public class Utilities {
     }
     int index = label.indexOf('&');
     if ((index == -1) || (index == label.length() - 1)){
-      return 0;
+      return -1;
     }
     return label.charAt(index + 1);
   }

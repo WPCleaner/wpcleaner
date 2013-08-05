@@ -8,6 +8,7 @@
 package org.wikipediacleaner.utils;
 
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -17,19 +18,20 @@ import java.util.prefs.Preferences;
  */
 public enum ConfigurationValueShortcut {
 
-  ADD_TO_WATCH_LIST("AddWatch", new ShortcutProperties(true, false, false, 'W')),
-  APPLY("Apply", new ShortcutProperties(true, false, false, 'A')),
-  CLOSE("Close", new ShortcutProperties(true, false, false, 'C')),
-  DAB_ANALYSIS("Disambiguation", new ShortcutProperties(true, false, false, 'D')),
-  EXTERNAL_VIEWER("ExternalViewer", new ShortcutProperties(true, false, false, 'E')),
-  FULL_ANALYSIS("Title", new ShortcutProperties(true, false, false, 'F')),
-  HISTORY("History", new ShortcutProperties(true, false, false, 'H')),
-  RESTORE_DEFAULTS("RestoreDefaults", new ShortcutProperties(true, false, false, 'R')),
-  VALIDATE("Validate", new ShortcutProperties(true, false, false, 'V'));
+  ADD_TO_WATCH_LIST("AddWatch", new ShortcutProperties(true, false, true, false, 'W')),
+  APPLY("Apply", new ShortcutProperties(true, false, true, false, 'A')),
+  CLOSE("Close", new ShortcutProperties(true, false, true, false, 'C')),
+  DAB_ANALYSIS("Disambiguation", new ShortcutProperties(true, false, true, false, 'D')),
+  EXTERNAL_VIEWER("ExternalViewer", new ShortcutProperties(true, false, true, false, 'E')),
+  FULL_ANALYSIS("Title", new ShortcutProperties(true, false, true, false, 'F')),
+  HISTORY("History", new ShortcutProperties(true, false, true, false, 'H')),
+  RESTORE_DEFAULTS("RestoreDefaults", new ShortcutProperties(true, false, true, false, 'R')),
+  VALIDATE("Validate", new ShortcutProperties(true, false, true, false, 'V'));
 
   private final static String PROPERTY_ENABLED = "Enabled";
   private final static String PROPERTY_CTRL = "Ctrl";
   private final static String PROPERTY_ALT = "Alt";
+  private final static String PROPERTY_SHIFT = "Shift";
   private final static String PROPERTY_KEY = "KEY";
 
   /**
@@ -82,9 +84,11 @@ public enum ConfigurationValueShortcut {
     boolean alt = preferences.getBoolean(
         PROPERTY_ALT,
         defaultProperties.getAltKey());
+    boolean shift = preferences.getBoolean(
+        PROPERTY_SHIFT, defaultProperties.getShiftKey());
     int key = preferences.getInt(
         PROPERTY_KEY, defaultProperties.getKey());
-    return new ShortcutProperties(enabled, ctrl, alt, key);
+    return new ShortcutProperties(enabled, ctrl, alt, shift, key);
   }
 
   /**
@@ -111,6 +115,7 @@ public enum ConfigurationValueShortcut {
     preferences.putBoolean(PROPERTY_ENABLED, value.getEnabled());
     preferences.putBoolean(PROPERTY_CTRL, value.getCtrlKey());
     preferences.putBoolean(PROPERTY_ALT, value.getAltKey());
+    preferences.putBoolean(PROPERTY_SHIFT, value.getShiftKey());
     preferences.putInt(PROPERTY_KEY, value.getKey());
   }
 
@@ -160,6 +165,7 @@ public enum ConfigurationValueShortcut {
 
     private final boolean ctrl;
     private final boolean alt;
+    private final boolean shift;
 
     private final int key;
 
@@ -167,15 +173,17 @@ public enum ConfigurationValueShortcut {
      * @param enabled Is shortcut enabled ?
      * @param ctrl True if key Ctrl should be used.
      * @param alt True if key Alt should be used.
+     * @param shift True if key Shift should be used.
      * @param key Key.
      */
     public ShortcutProperties(
         boolean enabled,
-        boolean ctrl, boolean alt,
+        boolean ctrl, boolean alt, boolean shift,
         int key) {
       this.enabled = enabled;
       this.ctrl = ctrl;
       this.alt = alt;
+      this.shift = shift;
       this.key = key;
     }
 
@@ -198,6 +206,13 @@ public enum ConfigurationValueShortcut {
      */
     public boolean getAltKey() {
       return alt;
+    }
+
+    /**
+     * @return True if key Shift should be used.
+     */
+    public boolean getShiftKey() {
+      return shift;
     }
 
     /**
@@ -225,6 +240,9 @@ public enum ConfigurationValueShortcut {
       if (ctrl) {
         modifiers = modifiers | InputEvent.CTRL_DOWN_MASK;
       }
+      if (shift) {
+        modifiers = modifiers | InputEvent.SHIFT_DOWN_MASK;
+      }
       return modifiers;
     }
 
@@ -232,7 +250,7 @@ public enum ConfigurationValueShortcut {
      * @return Textual description of the shortcut.
      */
     public String getDescription() {
-      if (key == 0) {
+      if (key == -1) {
         return "";
       }
       StringBuilder buffer = new StringBuilder();
@@ -246,8 +264,11 @@ public enum ConfigurationValueShortcut {
         if (alt) {
           buffer.append("Atl + ");
         }
+        if (shift) {
+          buffer.append("Shift + ");
+        }
       }
-      buffer.append(key);
+      buffer.append(KeyEvent.getKeyText(key));
       buffer.append(")");
       return buffer.toString();
     }

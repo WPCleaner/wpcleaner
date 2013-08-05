@@ -20,10 +20,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
-import org.wikipediacleaner.images.EnumImageSize;
-import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueShortcut;
-import org.wikipediacleaner.utils.ConfigurationValueShortcut.ShortcutProperties;
 
 
 /**
@@ -50,34 +47,16 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
   private static JButton createInternalButton(
       String action,
       boolean showIcon, boolean useShortcut) {
-    JButton button = null;
-    ShortcutProperties shortcut = null;
-    if (useShortcut) {
-      Configuration config = Configuration.getConfiguration();
-      if ((action != null) && (ACTION_HISTORY.equals(action))) {
-        shortcut = config.getShortcut(ConfigurationValueShortcut.HISTORY);
-      } else {
-        shortcut = config.getShortcut(ConfigurationValueShortcut.EXTERNAL_VIEWER);
-      }
+    if ((action != null) && (ACTION_HISTORY.equals(action))) {
+      return ActionUtilities.createInternalButton(
+          "gnome-emblem-documents.png", showIcon,
+          GT._("History"), !showIcon,
+          ConfigurationValueShortcut.HISTORY, useShortcut);
     }
-    if (showIcon) {
-      if ((action != null) && (ACTION_HISTORY.equals(action))) {
-        button = Utilities.createJButton(
-            "gnome-emblem-documents.png", EnumImageSize.NORMAL,
-            GT._("History"), false, shortcut);
-      } else {
-        button = Utilities.createJButton(
-            "gnome-emblem-web.png", EnumImageSize.NORMAL,
-            GT._("External Viewer"), false, shortcut);
-      }
-    } else {
-      if ((action != null) && (ACTION_HISTORY.equals(action))) {
-        button = Utilities.createJButton(GT._("History"), shortcut);
-      } else {
-        button = Utilities.createJButton(GT._("External Viewer"), shortcut);
-      }
-    }
-    return button;
+    return ActionUtilities.createInternalButton(
+        "gnome-emblem-web.png", showIcon,
+        GT._("External Viewer"), !showIcon,
+        ConfigurationValueShortcut.EXTERNAL_VIEWER, useShortcut);
   }
 
   /**

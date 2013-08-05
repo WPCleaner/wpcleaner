@@ -199,6 +199,7 @@ public class ShortcutOptionsPanel extends OptionsPanel {
   private final List<JCheckBox> chkEnabled = new ArrayList<JCheckBox>();
   private final List<JToggleButton> chkCtrl = new ArrayList<JToggleButton>();
   private final List<JToggleButton> chkAlt = new ArrayList<JToggleButton>();
+  private final List<JToggleButton> chkShift = new ArrayList<JToggleButton>();
   private final List<KeyCodeButton> btnKey = new ArrayList<KeyCodeButton>();
 
   // Count columns
@@ -206,7 +207,8 @@ public class ShortcutOptionsPanel extends OptionsPanel {
   private final static int columnName = columnEnabled + 1;
   private final static int columnCtrl = columnName + 1;
   private final static int columnAlt = columnCtrl + 1;
-  private final static int columnKey = columnAlt + 1;
+  private final static int columnShift = columnAlt + 1;
+  private final static int columnKey = columnShift + 1;
   private final static int columnCount = columnKey + 1;
 
   /**
@@ -249,6 +251,13 @@ public class ShortcutOptionsPanel extends OptionsPanel {
     constraints.weightx = 0;
     add(toggle, constraints);
 
+    // Shift key
+    toggle = Utilities.createJToggleButton("SHIFT");
+    chkShift.add(toggle);
+    constraints.gridx = columnShift;
+    constraints.weightx = 0;
+    add(toggle, constraints);
+
     // Key
     KeyCodeButton button = new KeyCodeButton(0);
     btnKey.add(button);
@@ -278,6 +287,7 @@ public class ShortcutOptionsPanel extends OptionsPanel {
     setEnabled(line, properties.getEnabled());
     setCtrl(line, properties.getCtrlKey());
     setAlt(line, properties.getAltKey());
+    setShift(line, properties.getShiftKey());
     setKey(line, properties.getKey());
   }
 
@@ -301,12 +311,16 @@ public class ShortcutOptionsPanel extends OptionsPanel {
     if (chkAlt.get(line) != null) {
       alt = chkAlt.get(line).isSelected();
     }
+    boolean shift = false;
+    if (chkShift.get(line) != null) {
+      shift = chkShift.get(line).isSelected();
+    }
     int key = 0;
     if (btnKey.get(line) != null) {
       btnKey.get(line).getKeyCode();
     }
     return new ConfigurationValueShortcut.ShortcutProperties(
-        enabled, ctrl, alt, key);
+        enabled, ctrl, alt, shift, key);
   }
 
   /**
@@ -337,6 +351,16 @@ public class ShortcutOptionsPanel extends OptionsPanel {
    */
   private void setAlt(int line, boolean value) {
     setToggleButton(chkAlt, line, value);
+  }
+
+  /**
+   * Set the checkbox for the shift column.
+   * 
+   * @param line Line number.
+   * @param value Checkbox value.
+   */
+  private void setShift(int line, boolean value) {
+    setToggleButton(chkShift, line, value);
   }
 
   /**
