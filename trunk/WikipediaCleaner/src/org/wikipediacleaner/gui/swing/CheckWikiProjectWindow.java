@@ -720,6 +720,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     panel.setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), GT._("Pages")));
 
+    modelPages = new DefaultListModel();
     listPages = new JList(modelPages);
 
     // Initialize constraints
@@ -752,7 +753,6 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     constraints.gridy++;
 
     // Page List
-    modelPages = new DefaultListModel();
     listPages.setCellRenderer(new CheckErrorPageListCellRenderer(true));
     listPages.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     listPages.addMouseListener(new MouseAdapter() {
