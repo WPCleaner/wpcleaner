@@ -105,11 +105,13 @@ public class PageAnalysisUtils {
           if ((currentPos < maxSize) && (contents.charAt(currentPos) == '<')) {
             PageElementComment nextComment = pageAnalysis.isInComment(currentPos);
             if ((nextComment != null) && (nextComment.getComment() != null)) {
-              for (String commentAfter : commentsAfter) {
-                if (nextComment.getComment().length() >= commentAfter.length()) {
-                  String comment = nextComment.getComment().substring(0, commentAfter.length());
-                  if (comment.equalsIgnoreCase(commentAfter)) {
-                    good = true;
+              if (commentsAfter != null) {
+                for (String commentAfter : commentsAfter) {
+                  if (nextComment.getComment().length() >= commentAfter.length()) {
+                    String comment = nextComment.getComment().substring(0, commentAfter.length());
+                    if (comment.equalsIgnoreCase(commentAfter)) {
+                      good = true;
+                    }
                   }
                 }
               }
