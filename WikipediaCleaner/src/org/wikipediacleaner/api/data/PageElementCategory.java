@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.data;
 
+import org.wikipediacleaner.api.constants.EnumCaseSensitiveness;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
@@ -81,8 +82,7 @@ public class PageElementCategory extends PageElement {
     if (tmpIndex >= contents.length()) {
       return null;
     }
-    String categoryName = categoryNS.getCaseSensitiveness().normalize(
-        contents.substring(colonIndex + 1, tmpIndex));
+    String categoryName = contents.substring(colonIndex + 1, tmpIndex);
 
     // Simple language tag [[lang:link]]
     if (contents.charAt(tmpIndex) == ']') {
@@ -92,7 +92,7 @@ public class PageElementCategory extends PageElement {
       return new PageElementCategory(
           index, tmpIndex + 2,
           contents.substring(beginIndex, colonIndex),
-          categoryName, null);
+          categoryName, categoryNS.getCaseSensitiveness(), null);
     }
 
     // Find elements of image
@@ -103,7 +103,7 @@ public class PageElementCategory extends PageElement {
     return new PageElementCategory(
         index, endIndex + 2,
         contents.substring(beginIndex, colonIndex),
-        categoryName,
+        categoryName, categoryNS.getCaseSensitiveness(),
         contents.substring(tmpIndex + 1, endIndex));
   }
 
@@ -134,10 +134,11 @@ public class PageElementCategory extends PageElement {
   private PageElementCategory(
       int beginIndex, int endIndex,
       String category, String name,
+      EnumCaseSensitiveness caseSensitive,
       String sort) {
     super(beginIndex, endIndex);
     this.categoryNotTrimmed = category;
-    this.category = (category != null) ? category.trim() : null;
+    this.category = (category != null) ? caseSensitive.normalize(category.trim()) : null;
     this.nameNotTrimmed = name;
     this.name = (name != null) ? name.trim() : null;
     this.sortNotTrimmed = sort;

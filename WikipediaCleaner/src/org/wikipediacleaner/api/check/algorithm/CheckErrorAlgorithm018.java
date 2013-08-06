@@ -65,7 +65,10 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
         lowerCaseNamespace = true;
         namespace = "" + Character.toUpperCase(namespace.charAt(0)) + namespace.substring(1);
       }
-      String categoryName = category.getName();
+      String categoryName = category.getNameNotTrimmed();
+      if (categoryName != null) {
+        categoryName = categoryName.trim();
+      }
       boolean lowerCaseName = false;
       if ((categoryName != null) &&
           (categoryName.length() > 0) &&
