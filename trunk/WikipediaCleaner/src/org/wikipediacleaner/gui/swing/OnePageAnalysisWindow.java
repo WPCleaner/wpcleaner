@@ -923,8 +923,47 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     }
     updateComponentState();
 
+    // Edit warning if needed
+    boolean automaticFix = true;
+    WPCConfiguration wpcConfig = getWikipedia().getConfiguration();
+    List<String[]> warningTemplates = wpcConfig.getStringArrayList(
+        WPCConfigurationStringList.EDIT_WARNING_TEMPLATES);
+    if ((warningTemplates != null) && (!warningTemplates.isEmpty())) {
+      StringBuilder tmp = new StringBuilder(GT._(
+          "\"{0}\" has been tagged with the following templates, be careful when editing:",
+          getPage().getTitle()));
+      boolean found = false;
+      for (String[] warningTemplate : warningTemplates) {
+        if ((warningTemplate.length > 0) && (warningTemplate[0] != null)) {
+          List<PageElementTemplate> templates = analysis.getTemplates(warningTemplate[0]);
+          for (PageElementTemplate template : templates) {
+            tmp.append("\n* ");
+            tmp.append(template.getTemplateName());
+            if ((warningTemplate.length > 1) && (warningTemplate[1] != null)) {
+              String message = template.getParameterValue(warningTemplate[1]);
+              if (message != null) {
+                tmp.append(", ");
+                tmp.append(message);
+              }
+              found = true;
+            }
+          }
+        }
+      }
+      if (found) {
+        tmp.append("\n");
+        tmp.append(GT._("Do you want to apply the automatic modifications?"));
+        int answer = displayYesNoWarning(tmp.toString());
+        if (answer != JOptionPane.YES_OPTION) {
+          automaticFix = false;
+        }
+      }
+    }
+
     // Automatic fix of some errors
-    if ((getInitialErrors() != null) && (getTextContents() != null)) {
+    if (automaticFix &&
+        (getInitialErrors() != null) &&
+        (getTextContents() != null)) {
       String initialContents = getTextContents().getText();
       String contents = initialContents;
       for (CheckErrorPage error : getInitialErrors()) {

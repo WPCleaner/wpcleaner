@@ -21,6 +21,8 @@ public enum WPCConfigurationStringList {
   CURRENT_DAB_LIST("dab_list", false, true, false),
   // List of templates that should be before the disambiguation warning.
   DAB_WARNING_AFTER_TEMPLATES("dab_warning_after_templates", false, true, false),
+  // List of templates for displaying a warning when editing.
+  EDIT_WARNING_TEMPLATES("general_edit_warning_templates", true, true, true),
   // Pages containing the list of pages with many disambiguation links.
   MOST_DAB_LINKS("most_dab_links", false, true, false),
   // Categories that can be applied to redirect page.
