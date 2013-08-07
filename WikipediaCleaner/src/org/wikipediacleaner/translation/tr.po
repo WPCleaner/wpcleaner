@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-06 00:46+0200\n"
+"POT-Creation-Date: 2013-08-07 18:46+0200\n"
 "PO-Revision-Date: 2013-07-06 19:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -1037,7 +1037,7 @@ msgstr ""
 msgid "Pages"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:741
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:742
 msgid "&Load pages"
 msgstr ""
 
@@ -1426,7 +1426,7 @@ msgid "You must input a page name for updating the disambiguation warning"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1234
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1043
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1082
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:413
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr ""
@@ -1664,24 +1664,35 @@ msgstr ""
 msgid "Page {0} doesn''t exist, do you still want to analyze it ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1287
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:933
+#, java-format
+msgid ""
+"\"{0}\" has been tagged with the following templates, be careful when "
+"editing:"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:955
+msgid "Do you want to apply the automatic modifications?"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1326
 msgid "You must select the text that is written in a foreign language"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1296
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1335
 msgid "Foreign language"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1340
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1379
 msgid "From which Wikipedia is this text coming ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1439
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1478
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:109
 msgid "Translation"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1736
+#: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1775
 msgid ""
 "Do you want to delete this page on Wikipedia ?\n"
 "Please, enter the reason for deleting the page"
