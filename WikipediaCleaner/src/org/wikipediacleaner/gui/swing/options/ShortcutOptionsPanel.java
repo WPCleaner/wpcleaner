@@ -59,6 +59,10 @@ public class ShortcutOptionsPanel extends OptionsPanel {
   private int lineExternalViewer;
   private int lineFullAnalysis;
   private int lineHistory;
+  private int lineOccurrenceFirst;
+  private int lineOccurrenceLast;
+  private int lineOccurrenceNext;
+  private int lineOccurrencePrevious;
   private int lineRestoreDefaults;
   private int lineValidate;
 
@@ -123,6 +127,22 @@ public class ShortcutOptionsPanel extends OptionsPanel {
     lineValidate = addLine(constraints, GT._("Validate"));
     setShortcut(lineValidate, ConfigurationValueShortcut.VALIDATE);
 
+    // Add line for first occurrence
+    lineOccurrenceFirst = addLine(constraints, GT._("First occurrence"));
+    setShortcut(lineOccurrenceFirst, ConfigurationValueShortcut.OCCURRENCE_FIRST);
+
+    // Add line for previous occurrence
+    lineOccurrencePrevious = addLine(constraints, GT._("Previous occurrence"));
+    setShortcut(lineOccurrencePrevious, ConfigurationValueShortcut.OCCURRENCE_PREVIOUS);
+
+    // Add line for next occurrence
+    lineOccurrenceNext = addLine(constraints, GT._("Next occurrence"));
+    setShortcut(lineOccurrenceNext, ConfigurationValueShortcut.OCCURRENCE_NEXT);
+
+    // Add line for last occurrence
+    lineOccurrenceLast = addLine(constraints, GT._("Last occurrence"));
+    setShortcut(lineOccurrenceLast, ConfigurationValueShortcut.OCCURRENCE_LAST);
+
     // Add a notice
     notice = new JLabel(GT._("Press key for shortcut or ESC to cancel"));
     notice.setForeground(Color.RED);
@@ -158,6 +178,10 @@ public class ShortcutOptionsPanel extends OptionsPanel {
     setShortcut(lineExternalViewer, ConfigurationValueShortcut.EXTERNAL_VIEWER);
     setShortcut(lineFullAnalysis, ConfigurationValueShortcut.FULL_ANALYSIS);
     setShortcut(lineHistory, ConfigurationValueShortcut.HISTORY);
+    setShortcut(lineOccurrenceFirst, ConfigurationValueShortcut.OCCURRENCE_FIRST);
+    setShortcut(lineOccurrenceLast, ConfigurationValueShortcut.OCCURRENCE_LAST);
+    setShortcut(lineOccurrenceNext, ConfigurationValueShortcut.OCCURRENCE_NEXT);
+    setShortcut(lineOccurrencePrevious, ConfigurationValueShortcut.OCCURRENCE_PREVIOUS);
     setShortcut(lineRestoreDefaults, ConfigurationValueShortcut.RESTORE_DEFAULTS);
     setShortcut(lineValidate, ConfigurationValueShortcut.VALIDATE);
   }
@@ -185,6 +209,14 @@ public class ShortcutOptionsPanel extends OptionsPanel {
     config.setShortcut(ConfigurationValueShortcut.FULL_ANALYSIS, configShortcut);
     configShortcut = getShortcut(lineHistory);
     config.setShortcut(ConfigurationValueShortcut.HISTORY, configShortcut);
+    configShortcut = getShortcut(lineOccurrenceFirst);
+    config.setShortcut(ConfigurationValueShortcut.OCCURRENCE_FIRST, configShortcut);
+    configShortcut = getShortcut(lineOccurrenceLast);
+    config.setShortcut(ConfigurationValueShortcut.OCCURRENCE_LAST, configShortcut);
+    configShortcut = getShortcut(lineOccurrenceNext);
+    config.setShortcut(ConfigurationValueShortcut.OCCURRENCE_NEXT, configShortcut);
+    configShortcut = getShortcut(lineOccurrencePrevious);
+    config.setShortcut(ConfigurationValueShortcut.OCCURRENCE_PREVIOUS, configShortcut);
     configShortcut = getShortcut(lineRestoreDefaults);
     config.setShortcut(ConfigurationValueShortcut.RESTORE_DEFAULTS, configShortcut);
     configShortcut = getShortcut(lineValidate);

@@ -18,21 +18,25 @@ import java.util.prefs.Preferences;
  */
 public enum ConfigurationValueShortcut {
 
-  ADD_TO_WATCH_LIST("AddWatch", new ShortcutProperties(true, false, true, false, 'W')),
-  APPLY("Apply", new ShortcutProperties(true, false, true, false, 'A')),
-  CLOSE("Close", new ShortcutProperties(true, false, true, false, 'C')),
-  DAB_ANALYSIS("Disambiguation", new ShortcutProperties(true, false, true, false, 'D')),
-  EXTERNAL_VIEWER("ExternalViewer", new ShortcutProperties(true, false, true, false, 'E')),
-  FULL_ANALYSIS("Title", new ShortcutProperties(true, false, true, false, 'F')),
-  HISTORY("History", new ShortcutProperties(true, false, true, false, 'H')),
-  RESTORE_DEFAULTS("RestoreDefaults", new ShortcutProperties(true, false, true, false, 'R')),
-  VALIDATE("Validate", new ShortcutProperties(true, false, true, false, 'V'));
+  ADD_TO_WATCH_LIST("AddWatch", new ShortcutProperties(true, false, true, false, KeyEvent.VK_W)),
+  APPLY("Apply", new ShortcutProperties(true, false, true, false, KeyEvent.VK_A)),
+  CLOSE("Close", new ShortcutProperties(true, false, true, false, KeyEvent.VK_C)),
+  DAB_ANALYSIS("Disambiguation", new ShortcutProperties(true, false, true, false, KeyEvent.VK_D)),
+  EXTERNAL_VIEWER("ExternalViewer", new ShortcutProperties(true, false, true, false, KeyEvent.VK_E)),
+  FULL_ANALYSIS("Title", new ShortcutProperties(true, false, true, false, KeyEvent.VK_F)),
+  HISTORY("History", new ShortcutProperties(true, false, true, false, KeyEvent.VK_H)),
+  OCCURRENCE_FIRST("FirstOccurrence", new ShortcutProperties(true, true, false, false, KeyEvent.VK_F)),
+  OCCURRENCE_LAST("LastOccurrence", new ShortcutProperties(true, true, false, false, KeyEvent.VK_L)),
+  OCCURRENCE_NEXT("NextOccurrence", new ShortcutProperties(true, true, false, false, KeyEvent.VK_N)),
+  OCCURRENCE_PREVIOUS("PreviousOccurrence", new ShortcutProperties(true, true, false, false, KeyEvent.VK_P)),
+  RESTORE_DEFAULTS("RestoreDefaults", new ShortcutProperties(true, false, true, false, KeyEvent.VK_R)),
+  VALIDATE("Validate", new ShortcutProperties(true, false, true, false, KeyEvent.VK_V));
 
   private final static String PROPERTY_ENABLED = "Enabled";
-  private final static String PROPERTY_CTRL = "Ctrl";
-  private final static String PROPERTY_ALT = "Alt";
-  private final static String PROPERTY_SHIFT = "Shift";
-  private final static String PROPERTY_KEY = "KEY";
+  private final static String PROPERTY_CTRL    = "Ctrl";
+  private final static String PROPERTY_ALT     = "Alt";
+  private final static String PROPERTY_SHIFT   = "Shift";
+  private final static String PROPERTY_KEY     = "KEY";
 
   /**
    * Attribute name.
