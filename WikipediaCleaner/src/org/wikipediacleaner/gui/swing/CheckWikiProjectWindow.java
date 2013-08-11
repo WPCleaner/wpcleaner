@@ -84,6 +84,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionOccurrence;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.gui.swing.basic.DefaultBasicWorkerListener;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -848,6 +849,8 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       constraints.weightx = 1;
       constraints.weighty = 0;
 
+      textPage = new MWPane(getWikipedia(), page, CheckWikiProjectWindow.this);
+
       // Comment
       JPanel panelComment = new JPanel(new GridBagLayout());
       GridBagConstraints constraints2 = new GridBagConstraints();
@@ -879,14 +882,14 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       // Buttons
       JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
       toolbarButtons.setFloatable(false);
-      JButton buttonFirst = createButtonFirstOccurence(this, true);
-      toolbarButtons.add(buttonFirst);
-      JButton buttonPrev = createButtonPreviousOccurence(this, true);
-      toolbarButtons.add(buttonPrev);
-      JButton buttonNext = createButtonNextOccurence(this, true);
-      toolbarButtons.add(buttonNext);
-      JButton buttonLast = createButtonLastOccurence(this, true);
-      toolbarButtons.add(buttonLast);
+      ActionOccurrence.addButton(
+          toolbarButtons, textPage, ActionOccurrence.Occurrence.FIRST, true, true);
+      ActionOccurrence.addButton(
+          toolbarButtons, textPage, ActionOccurrence.Occurrence.PREVIOUS, true, true);
+      ActionOccurrence.addButton(
+          toolbarButtons, textPage, ActionOccurrence.Occurrence.NEXT, true, true);
+      ActionOccurrence.addButton(
+          toolbarButtons, textPage, ActionOccurrence.Occurrence.LAST, true, true);
       toolbarButtons.addSeparator();
       JButton buttonToc = createButtonToc(this, true);
       toolbarButtons.add(buttonToc);
@@ -947,7 +950,6 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       constraints.gridx++;
 
       // Page contents
-      textPage = new MWPane(getWikipedia(), page, CheckWikiProjectWindow.this);
       listErrors.addMouseListener(
           new CheckErrorPageListPopupListener(getWikipedia(), textPage, buttonValidate));
       textPage.setEditable(true);
@@ -1133,18 +1135,10 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         return;
       }
 
-      if (ACTION_FIRST_OCCURRENCE.equals(e.getActionCommand())) {
-        actionFirstOccurrence();
-      } else if (ACTION_FULL_ANALYSIS_PAGE.equals(e.getActionCommand())) {
+      if (ACTION_FULL_ANALYSIS_PAGE.equals(e.getActionCommand())) {
         Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
-      } else if (ACTION_LAST_OCCURRENCE.equals(e.getActionCommand())) {
-        actionLastOccurrence();
       } else if (ACTION_MARK_AS_FIXED.equals(e.getActionCommand())) {
         actionMarkAsFixed();
-      } else if (ACTION_NEXT_OCCURRENCE.equals(e.getActionCommand())) {
-        actionNextOccurrence();
-      } else if (ACTION_PREVIOUS_OCCURRENCE.equals(e.getActionCommand())) {
-        actionPreviousOccurrence();
       } else if (ACTION_SEND.equals(e.getActionCommand())) {
         actionSend();
       } else if (ACTION_TOC.equals(e.getActionCommand())) {
@@ -1218,38 +1212,6 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       }
       actionSelectErrorType();
       markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
-    }
-
-    /**
-     * Select first occurrence.
-     */
-    private void actionFirstOccurrence() {
-      textPage.getSelectionManager().selectFirstOccurrence();
-      textPage.requestFocusInWindow();
-    }
-
-    /**
-     * Select previous occurrence. 
-     */
-    private void actionPreviousOccurrence() {
-      textPage.getSelectionManager().selectPreviousOccurrence();
-      textPage.requestFocusInWindow();
-    }
-
-    /**
-     * Select next occurrence.
-     */
-    private void actionNextOccurrence() {
-      textPage.getSelectionManager().selectNextOccurrence();
-      textPage.requestFocusInWindow();
-    }
-
-    /**
-     * Select last occurrence.
-     */
-    private void actionLastOccurrence() {
-      textPage.getSelectionManager().selectLastOccurrence();
-      textPage.requestFocusInWindow();
     }
 
     /**

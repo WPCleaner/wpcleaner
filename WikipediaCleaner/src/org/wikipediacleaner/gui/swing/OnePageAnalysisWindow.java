@@ -13,7 +13,6 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.beans.EventHandler;
@@ -75,6 +74,7 @@ import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.gui.swing.action.ActionFullAnalysis;
+import org.wikipediacleaner.gui.swing.action.ActionOccurrence;
 import org.wikipediacleaner.gui.swing.action.ActionWatchPage;
 import org.wikipediacleaner.gui.swing.action.SetComparatorAction;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -382,14 +382,14 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     // Text buttons
     JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarButtons.setFloatable(false);
-    buttonFirst = createButtonFirstOccurence(this, true);
-    toolbarButtons.add(buttonFirst);
-    buttonPrevious = createButtonPreviousOccurence(this, true);
-    toolbarButtons.add(buttonPrevious);
-    buttonNext = createButtonNextOccurence(this, true);
-    toolbarButtons.add(buttonNext);
-    buttonLast = createButtonLastOccurence(this, true);
-    toolbarButtons.add(buttonLast);
+    buttonFirst = ActionOccurrence.addButton(
+        toolbarButtons, getTextContents(), ActionOccurrence.Occurrence.FIRST, true, true);
+    buttonPrevious = ActionOccurrence.addButton(
+        toolbarButtons, getTextContents(), ActionOccurrence.Occurrence.PREVIOUS, true, true);
+    buttonNext = ActionOccurrence.addButton(
+        toolbarButtons, getTextContents(), ActionOccurrence.Occurrence.NEXT, true, true);
+    buttonLast = ActionOccurrence.addButton(
+        toolbarButtons, getTextContents(), ActionOccurrence.Occurrence.LAST, true, true);
     toolbarButtons.addSeparator();
     addButtonUndoRedo(toolbarButtons, true);
     buttonToc = createButtonToc(this, true);
@@ -760,27 +760,6 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       modelLinks.setCountOther(selected);
     } else if (source == menuItemCountRedirect) {
       modelLinks.setCountRedirect(selected);
-    }
-  }
-
-  /* (non-Javadoc)
-   * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-   */
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if (e == null) {
-      return;
-    }
-
-    super.actionPerformed(e);
-    if (ACTION_FIRST_OCCURRENCE.equals(e.getActionCommand())) {
-      actionFirstOccurrence();
-    } else if (ACTION_PREVIOUS_OCCURRENCE.equals(e.getActionCommand())) {
-      actionPreviousOccurrence();
-    } else if (ACTION_NEXT_OCCURRENCE.equals(e.getActionCommand())) {
-      actionNextOccurrence();
-    } else if (ACTION_LAST_OCCURRENCE.equals(e.getActionCommand())) {
-      actionLastOccurrence();
     }
   }
 
@@ -1784,37 +1763,5 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     } catch (APIException e) {
       displayError(e);
     }
-  }
-
-  /**
-   * Action called when First Occurrence button is pressed. 
-   */
-  void actionFirstOccurrence() {
-    getTextContents().getSelectionManager().selectFirstOccurrence();
-    getTextContents().requestFocusInWindow();
-  }
-
-  /**
-   * Action called when Previous Occurrence button is pressed. 
-   */
-  private void actionPreviousOccurrence() {
-    getTextContents().getSelectionManager().selectPreviousOccurrence();
-    getTextContents().requestFocusInWindow();
-  }
-
-  /**
-   * Action called when Next Occurrence button is pressed. 
-   */
-  private void actionNextOccurrence() {
-    getTextContents().getSelectionManager().selectNextOccurrence();
-    getTextContents().requestFocusInWindow();
-  }
-
-  /**
-   * Action called when Last Occurrence button is pressed. 
-   */
-  private void actionLastOccurrence() {
-    getTextContents().getSelectionManager().selectLastOccurrence();
-    getTextContents().requestFocusInWindow();
   }
 }
