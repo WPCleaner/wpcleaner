@@ -103,6 +103,9 @@ public class CheckWiki {
     }
   }
 
+  /**
+   * Response manager for the list of pages.
+   */
   private static class PagesResponseManager implements ResponseManager {
 
     /**
@@ -179,18 +182,31 @@ public class CheckWiki {
       if (error > CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
         return true;
       }
+      EnumWikipedia wiki = page.getWikipedia();
+      boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
+      String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
       Map<String, String> properties = new HashMap<String, String>();
       properties.put("id", Integer.toString(error));
-      properties.put("pageid", Integer.toString(page.getPageId()));
-      properties.put("project", page.getWikipedia().getSettings().getCodeCheckWiki());
+      if (useLabs) {
+        properties.put("title", page.getTitle());
+      } else {
+        properties.put("pageid", Integer.toString(page.getPageId()));
+      }
+      properties.put("project", code);
       if (!useBotList) {
         properties.put("view", "only");
-        toolServer.sendPost(
-            "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, null);
+        String url = useLabs ?
+            "checkwiki/cgi-bin/checkwiki.cgi" :
+            "~sk/cgi-bin/checkwiki/checkwiki.cgi";
+        HttpServer server = useLabs ? labs : toolServer;
+        server.sendPost(url, properties, null);
       } else {
         properties.put("action", "mark");
-        toolServer.sendPost(
-            "~sk/cgi-bin/checkwiki/checkwiki_bots.cgi", properties, null);
+        String url = useLabs ?
+            "checkwiki/cgi-bin/checkwiki_bots.cgi" :
+            "~sk/cgi-bin/checkwiki/checkwiki_bots.cgi";
+        HttpServer server = useLabs ? labs : toolServer;
+        server.sendPost(url, properties, null);
       }
     } catch (NumberFormatException e) {
       return false;
