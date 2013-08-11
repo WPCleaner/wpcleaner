@@ -25,10 +25,10 @@ public enum ConfigurationValueShortcut {
   EXTERNAL_VIEWER("ExternalViewer", new ShortcutProperties(true, false, true, false, KeyEvent.VK_E)),
   FULL_ANALYSIS("Title", new ShortcutProperties(true, false, true, false, KeyEvent.VK_F)),
   HISTORY("History", new ShortcutProperties(true, false, true, false, KeyEvent.VK_H)),
-  OCCURRENCE_FIRST("FirstOccurrence", new ShortcutProperties(true, true, false, false, KeyEvent.VK_F)),
-  OCCURRENCE_LAST("LastOccurrence", new ShortcutProperties(true, true, false, false, KeyEvent.VK_L)),
-  OCCURRENCE_NEXT("NextOccurrence", new ShortcutProperties(true, true, false, false, KeyEvent.VK_N)),
-  OCCURRENCE_PREVIOUS("PreviousOccurrence", new ShortcutProperties(true, true, false, false, KeyEvent.VK_P)),
+  OCCURRENCE_FIRST("FirstOccurrence", new ShortcutProperties(true, false, true, false, KeyEvent.VK_F)),
+  OCCURRENCE_LAST("LastOccurrence", new ShortcutProperties(true, false, true, false, KeyEvent.VK_L)),
+  OCCURRENCE_NEXT("NextOccurrence", new ShortcutProperties(true, false, true, false, KeyEvent.VK_N)),
+  OCCURRENCE_PREVIOUS("PreviousOccurrence", new ShortcutProperties(true, false, true, false, KeyEvent.VK_P)),
   RESTORE_DEFAULTS("RestoreDefaults", new ShortcutProperties(true, false, true, false, KeyEvent.VK_R)),
   VALIDATE("Validate", new ShortcutProperties(true, false, true, false, KeyEvent.VK_V));
 

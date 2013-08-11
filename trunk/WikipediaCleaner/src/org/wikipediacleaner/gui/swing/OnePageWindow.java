@@ -335,27 +335,6 @@ public abstract class OnePageWindow
   }
 
   /**
-   * Create a First Occurrence button.
-   * 
-   * @param listener Action listener.
-   * @param icon Flag indicating if an icon should be used.
-   * @return First Occurrence button.
-   */
-  public JButton createButtonFirstOccurence(ActionListener listener, boolean icon) {
-    JButton button = null;
-    if (icon) {
-      button = Utilities.createJButton(
-          "gnome-go-first.png", EnumImageSize.NORMAL,
-          GT._("First occurrence (Alt + &F)"), false, null);
-    } else {
-      button = Utilities.createJButton(GT._("&First occurrence"), null);
-    }
-    button.setActionCommand(ACTION_FIRST_OCCURRENCE);
-    button.addActionListener(listener);
-    return button;
-  }
-
-  /**
    * Add a component for the Full Analysis button.
    * 
    * @param panel Container.
@@ -367,69 +346,6 @@ public abstract class OnePageWindow
           getWikipedia(), getPageName(), true, false, true);
       panel.add(buttonFullAnalysis);
     }
-  }
-
-  /**
-   * Create a Last Occurrence button.
-   * 
-   * @param listener Action listener.
-   * @param icon Flag indicating if an icon should be used.
-   * @return Last Occurrence button.
-   */
-  public JButton createButtonLastOccurence(ActionListener listener, boolean icon) {
-    JButton button = null;
-    if (icon) {
-      button = Utilities.createJButton(
-          "gnome-go-last.png", EnumImageSize.NORMAL,
-          GT._("Last occurrence (Alt + &L)"), false, null);
-    } else {
-      button = Utilities.createJButton(GT._("&Last occurrence"), null);
-    }
-    button.setActionCommand(ACTION_LAST_OCCURRENCE);
-    button.addActionListener(listener);
-    return button;
-  }
-
-  /**
-   * Create a Next Occurence button.
-   * 
-   * @param listener Action listener.
-   * @param icon Flag indicating if an icon should be used.
-   * @return Next Occurrence button.
-   */
-  public JButton createButtonNextOccurence(ActionListener listener, boolean icon) {
-    JButton button = null;
-    if (icon) {
-      button = Utilities.createJButton(
-          "gnome-go-next.png", EnumImageSize.NORMAL,
-          GT._("Next occurrence (Alt + &N)"), false, null);
-    } else {
-      button = Utilities.createJButton(GT._("&Next occurrence"), null);
-    }
-    button.setActionCommand(ACTION_NEXT_OCCURRENCE);
-    button.addActionListener(listener);
-    return button;
-  }
-
-  /**
-   * Create a Previous Occurrence button.
-   * 
-   * @param listener Action listener.
-   * @param icon Flag indicating if an icon should be used.
-   * @return Previous Occurrence button.
-   */
-  public JButton createButtonPreviousOccurence(ActionListener listener, boolean icon) {
-    JButton button = null;
-    if (icon) {
-      button = Utilities.createJButton(
-          "gnome-go-previous.png", EnumImageSize.NORMAL,
-          GT._("Previous occurrence (Alt + &P)"), false, null);
-    } else {
-      button = Utilities.createJButton(GT._("&Previous occurrence"), null);
-    }
-    button.setActionCommand(ACTION_PREVIOUS_OCCURRENCE);
-    button.addActionListener(listener);
-    return button;
   }
 
   /**
@@ -970,12 +886,8 @@ public abstract class OnePageWindow
   /* ActionListener                                                         */
   /* ====================================================================== */
 
-  public final static String ACTION_FIRST_OCCURRENCE     = "FIRST OCCURRENCE";
   public final static String ACTION_FULL_ANALYSIS_PAGE   = "FULL ANALYSIS PAGE";
   public final static String ACTION_FULL_ANALYSIS_REDIR  = "FULL ANALYSIS REDIR";
-  public final static String ACTION_LAST_OCCURRENCE      = "LAST OCCURRENCE";
-  public final static String ACTION_NEXT_OCCURRENCE      = "NEXT OCCURRENCE";
-  public final static String ACTION_PREVIOUS_OCCURRENCE  = "PREVIOUS OCCURRENCE";
   public final static String ACTION_RELOAD               = "RELOAD";
   public final static String ACTION_SEND                 = "SEND";
   public final static String ACTION_TOC                  = "TOC";
