@@ -7,12 +7,10 @@
 
 package org.wikipediacleaner.gui.swing.menu;
 
-import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextPane;
 
@@ -20,7 +18,6 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.LinkReplacement;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.action.FindTextAction;
-import org.wikipediacleaner.gui.swing.action.RedLinksAnalysisAction;
 import org.wikipediacleaner.gui.swing.action.RemoveAllLinksAction;
 import org.wikipediacleaner.gui.swing.action.ReplaceAllLinksAction;
 import org.wikipediacleaner.gui.swing.action.TemplatesAnalysisAction;
@@ -133,22 +130,5 @@ public class AnalysisPageListMenuCreator extends BasicMenuCreator {
 
       addSubmenu(popup, submenuLink, fixedBeginLink, fixedEndLink);
     }
-  }
-
-  /**
-   * Add item for analyzing missing page.
-   * 
-   * @param wikipedia Wikipedia.
-   * @param popup Popup menu.
-   * @param page Page.
-   * @param textPane Text pane.
-   */
-  public void addItemRedLinksAnalysis(
-      EnumWikipedia wikipedia, JPopupMenu popup, Page page, MWPane textPane) {
-    JMenuItem menuItem = new JMenuItem(GT._("Red links analysis"));
-    ActionListener action = new RedLinksAnalysisAction(page, textPane, wikipedia);
-    menuItem.addActionListener(action);
-    menuItem.setEnabled(false); //TODO and use addItem()
-    popup.add(menuItem);
   }
 }

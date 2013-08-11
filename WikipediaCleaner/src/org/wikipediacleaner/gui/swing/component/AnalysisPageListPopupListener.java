@@ -9,7 +9,6 @@ package org.wikipediacleaner.gui.swing.component;
 
 import javax.swing.JList;
 import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
@@ -48,10 +47,6 @@ public class AnalysisPageListPopupListener extends
     }
     menu.addItemRemoveAllLinks(popup, link, textPane);
     menu.addSeparator(popup);
-    if (Boolean.FALSE.equals(link.isExisting())) {
-      menu.addItemRedLinksAnalysis(wikipedia, popup, link, textPane);
-      popup.add(new JSeparator());
-    }
     menu.addAnalyze(wikipedia, popup, link);
     menu.addView(wikipedia, popup, link, true);
     menu.addDisambiguation(wikipedia, popup, link);
