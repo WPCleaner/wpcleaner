@@ -23,6 +23,7 @@ import org.wikipediacleaner.api.constants.CWConfiguration;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
@@ -44,10 +45,16 @@ public class CheckWiki {
   private final HttpServer toolServer;
 
   /**
-   * @param toolServer Tool Server<
+   * Access to WMF labs.
    */
-  CheckWiki(HttpServer toolServer) {
+  private final HttpServer labs;
+
+  /**
+   * @param toolServer Tool Server
+   */
+  CheckWiki(HttpServer toolServer, HttpServer labs) {
     this.toolServer = toolServer;
+    this.labs = labs;
   }
 
   /**
@@ -68,6 +75,7 @@ public class CheckWiki {
     }
 
     // Retrieving list of pages for the error number
+    boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
     String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
     Map<String, String> properties = new HashMap<String, String>();
     properties.put("id", algorithm.getErrorNumberString());
@@ -76,8 +84,12 @@ public class CheckWiki {
     properties.put("project", code);
     if (!useBotList) {
       properties.put("view", "bots");
-      toolServer.sendPost(
-          "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties,
+      String url = useLabs ?
+          "checkwiki/cgi-bin/checkwiki.cgi" :
+          "~sk/cgi-bin/checkwiki/checkwiki.cgi";
+      HttpServer server = useLabs ? labs : toolServer;
+      server.sendPost(
+          url, properties,
           new PagesResponseManager(true, algorithm, wiki, errors));
     } else {
       properties.put("action", "list");

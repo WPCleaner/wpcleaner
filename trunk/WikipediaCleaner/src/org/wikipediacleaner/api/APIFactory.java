@@ -42,8 +42,13 @@ public class APIFactory {
     httpClient = createHttpClient(connectionManger);
     HttpServer toolServer = new HttpServer(httpClient, "http://toolserver.org/");
 
+    // Initialize WMF Labs access
+    connectionManger = new MultiThreadedHttpConnectionManager();
+    httpClient = createHttpClient(connectionManger);
+    HttpServer labs = new HttpServer(httpClient, "http://tools.wmflabs.org/");
+
     // Initialize Check Wiki project
-    checkWiki = new CheckWiki(toolServer);
+    checkWiki = new CheckWiki(toolServer, labs);
   }
 
   /**
