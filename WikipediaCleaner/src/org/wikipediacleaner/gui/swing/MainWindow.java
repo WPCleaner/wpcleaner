@@ -18,13 +18,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.beans.EventHandler;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -57,11 +54,6 @@ import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.MediaWiki;
-import org.wikipediacleaner.api.ResponseManager;
-import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
-import org.wikipediacleaner.api.constants.CWConfiguration;
-import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumQueryPage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -1826,66 +1818,9 @@ public class MainWindow
         setText(GT._("Retrieving suggestions for text replacements"));
         getConfiguration().initSuggestions(api, reloadOnly);
 
-        // Retrieving general Check Wiki configuration
-        final CWConfiguration cwConfiguration = getWikipedia().getCWConfiguration();
-        String code = getWikipedia().getSettings().getCodeCheckWiki().replace("-", "_");
-        try {
-          setText(GT._("Retrieving Check Wiki configuration"));
-          ResponseManager manager = new ResponseManager() {
-            
-            public void manageResponse(InputStream stream) throws IOException, APIException {
-              if (stream != null) {
-                cwConfiguration.setGeneralConfiguration(
-                    new InputStreamReader(stream, "UTF-8"));
-              }
-            }
-          };
-          APIFactory.getToolServer().sendGet(
-              "~sk/checkwiki/" + code + "/" + code + "_translation.txt",
-              manager);
-        } catch (APIException e) {
-          System.err.println("Error retrieving Check Wiki configuration: " + e.getMessage());
-        }
-
-        // Retrieving specific Check Wiki configuration
-        try {
-          setText(GT._("Retrieving Check Wiki configuration"));
-          if (getWikipedia().getCWConfiguration().getTranslationPage() != null) {
-            MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-            Page page = DataManager.getPage(
-                getWikipedia(),
-                cwConfiguration.getTranslationPage(),
-                null, null, null);
-            mw.retrieveContents(getWikipedia(), page, true, false, false, false);
-            if (Boolean.TRUE.equals(page.isExisting())) {
-              cwConfiguration.setWikiConfiguration(new StringReader(page.getContents()));
-            }
-          }
-        } catch (APIException e) {
-          System.err.println("Error retrieving Check Wiki configuration: " + e.getMessage());
-        }
-
-        // Retrieving white lists
-        HashMap<String, Page> whiteListPages = new HashMap<String, Page>();
-        for (int i = 0; i < CWConfiguration.MAX_ERROR_NUMBER; i++) {
-          CWConfigurationError error = cwConfiguration.getErrorConfiguration(i);
-          if ((error != null) && (error.getWhiteListPageName() != null)) {
-            Page page = DataManager.getPage(
-                getWikipedia(), error.getWhiteListPageName(), null, null, null);
-            whiteListPages.put(error.getWhiteListPageName(), page);
-          }
-        }
-        if (whiteListPages.size() > 0) {
-          api.retrieveLinks(getWikipedia(), whiteListPages.values());
-          for (int i = 0; i < CWConfiguration.MAX_ERROR_NUMBER; i++) {
-            CWConfigurationError error = cwConfiguration.getErrorConfiguration(i);
-            if ((error != null) && (error.getWhiteListPageName() != null)) {
-              Page page = whiteListPages.get(error.getWhiteListPageName());
-              error.setWhiteList(page);
-            }
-          }
-        }
-        CheckErrorAlgorithms.initializeAlgorithms(getWikipedia());
+        // Retrieving Check Wiki configuration
+        setText(GT._("Retrieving Check Wiki configuration"));
+        APIFactory.getCheckWiki().retrieveConfiguration(getWikipedia(), this);
       } catch (APIException e) {
         return e;
       }

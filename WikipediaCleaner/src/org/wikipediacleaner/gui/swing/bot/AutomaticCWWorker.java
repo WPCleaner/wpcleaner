@@ -14,7 +14,7 @@ import java.util.List;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
-import org.wikipediacleaner.api.ToolServer;
+import org.wikipediacleaner.api.CheckWiki;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -90,12 +90,12 @@ class AutomaticCWWorker extends BasicWorker {
     List<CheckError> errors = new ArrayList<CheckError>();
     try {
       API api = APIFactory.getAPI();
-      ToolServer toolServer = APIFactory.getToolServer();
+      CheckWiki checkWiki = APIFactory.getCheckWiki();
       for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
         setText(
             GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
             " - " + algorithm.getShortDescriptionReplaced());
-        toolServer.retrievePagesForError(algorithm, max, getWikipedia(), errors);
+        checkWiki.retrievePagesForError(algorithm, max, getWikipedia(), errors);
         for (CheckError error : errors) {
           for (int numPage = 0;
               (numPage < error.getPageCount()) && shouldContinue();
@@ -140,14 +140,14 @@ class AutomaticCWWorker extends BasicWorker {
                 for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
                   CheckErrorPage errorPage = CheckError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
                   if ((errorPage != null) && (!errorPage.getErrorFound())) {
-                    toolServer.markPageAsFixed(page, usedAlgorithm.getErrorNumberString());
+                    checkWiki.markPageAsFixed(page, usedAlgorithm.getErrorNumberString());
                   }
                 }
               } else if (analyzeNonFixed) {
                 Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
               }
             } else if (algorithm.isFullDetection()) {
-              toolServer.markPageAsFixed(page, algorithm.getErrorNumberString());
+              checkWiki.markPageAsFixed(page, algorithm.getErrorNumberString());
             }
           }
         }
