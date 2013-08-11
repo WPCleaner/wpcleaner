@@ -211,17 +211,28 @@ public class CheckError {
         }
         for (String tmpLine : lines) {
           String[] elements = tmpLine.split("\\|");
-          if (elements.length > 1) {
-            int equalIndex = elements[0].indexOf("=");
-            Integer pageId = (equalIndex > 0) ? Integer.valueOf(elements[0].substring(equalIndex + 1)) : null;
-            equalIndex = elements[1].indexOf("=");
-            String pageName = (equalIndex > 0) ? elements[1].substring(equalIndex + 1) : null;
-            if ((pageId != null) && (pageName != null)) {
-              pageName = pageName.replaceAll(Pattern.quote("&#039;"), "'");
-              pageName = pageName.replaceAll(Pattern.quote("&quot;"), "\"");
-              pageName = pageName.replaceAll(Pattern.quote("&amp;"), "&");
-              error.addPage(pageName, pageId);
+          String pageName = null;
+          Integer pageId = null;
+          for (String element : elements) {
+            int equalIndex = element.indexOf("=");
+            if (equalIndex > 0) {
+              String attribute = element.substring(0, equalIndex);
+              if ("title".equals(attribute)) {
+                pageName = element.substring(equalIndex + 1);
+              } else if ("pageid".equals(attribute)) {
+                try {
+                  pageId = Integer.valueOf(element.substring(equalIndex + 1));
+                } catch (NumberFormatException e) {
+                  //
+                }
+              }
             }
+          }
+          if (pageName != null) {
+            pageName = pageName.replaceAll(Pattern.quote("&#039;"), "'");
+            pageName = pageName.replaceAll(Pattern.quote("&quot;"), "\"");
+            pageName = pageName.replaceAll(Pattern.quote("&amp;"), "&");
+            error.addPage(pageName, pageId);
           }
         }
       } catch (UnsupportedEncodingException e) {
