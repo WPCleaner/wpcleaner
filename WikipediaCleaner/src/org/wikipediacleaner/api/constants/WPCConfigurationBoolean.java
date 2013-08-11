@@ -15,6 +15,8 @@ public enum WPCConfigurationBoolean {
 
   // Used to force the activation of Check Wiki project even without a project page.
   CW_FORCE("check_wiki_force", false, true, false),
+  // Used to mark error fixed both on Tool Server and WMF Labs
+  CW_MARK_BOTH("check_wiki_mark_both", true, true, false),
   // Used to decide if Check Wiki is on WMF Labs or on Tool Server.
   CW_USE_LABS("check_wiki_use_labs", false, true, false),
   // Allow use of __DISAMBIG__ magic word.
