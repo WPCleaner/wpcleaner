@@ -10,8 +10,6 @@ package org.wikipediacleaner.api;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
@@ -22,10 +20,6 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.wikipediacleaner.api.check.CheckError;
-import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.data.Page;
 
 
 /**
@@ -40,8 +34,6 @@ public class ToolServer {
    */
   private final HttpClient httpClient;
 
-  private final static boolean useBotList = true;
-
   /**
    * Create a ToolServer object.
    * 
@@ -52,93 +44,6 @@ public class ToolServer {
   }
 
   /**
-   * Retrieve list of pages for a given error.
-   * 
-   * @param algorithm Algorithm.
-   * @param errorLimit Maximum number of pages.
-   * @param wiki Wiki.
-   * @param errors List of errors.
-   * @throws APIException
-   */
-  public void retrievePagesForError(
-      final CheckErrorAlgorithm algorithm, int errorLimit,
-      final EnumWikipedia wiki,
-      final List<CheckError> errors) throws APIException {
-    if (algorithm.getErrorNumber() > CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
-      return;
-    }
-
-    // Retrieving list of pages for the error number
-    String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
-    Map<String, String> properties = new HashMap<String, String>();
-    properties.put("id", algorithm.getErrorNumberString());
-    properties.put("limit", Integer.toString(errorLimit));
-    properties.put("offset", Integer.toString(0));
-    properties.put("project", code);
-    if (!useBotList) {
-      properties.put("view", "bots");
-      ResponseManager manager = new ResponseManager() {
-        
-        public void manageResponse(InputStream stream)
-            throws IOException, APIException {
-          CheckError.addCheckErrorClassic(
-              errors, wiki,
-              Integer.valueOf(algorithm.getErrorNumberString()), stream);
-        }
-      };
-      sendPost(
-          "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, manager);
-    } else {
-      properties.put("action", "list");
-      ResponseManager manager = new ResponseManager() {
-        
-        public void manageResponse(InputStream stream)
-            throws IOException, APIException {
-          CheckError.addCheckErrorBots(
-              errors, wiki,
-              Integer.valueOf(algorithm.getErrorNumberString()), stream);
-        }
-      };
-      sendPost(
-          "~sk/cgi-bin/checkwiki/checkwiki_bots.cgi", properties, manager);
-    }
-  }
-
-  /**
-   * Mark a page as fixed.
-   * 
-   * @param page Page.
-   * @param errorNumber Error number.
-   * @return True if it has been done.
-   */
-  public boolean markPageAsFixed(Page page, String errorNumber) {
-    try {
-      int error = Integer.parseInt(errorNumber);
-      if (error > CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
-        return true;
-      }
-      Map<String, String> properties = new HashMap<String, String>();
-      properties.put("id", Integer.toString(error));
-      properties.put("pageid", Integer.toString(page.getPageId()));
-      properties.put("project", page.getWikipedia().getSettings().getCodeCheckWiki());
-      if (!useBotList) {
-        properties.put("view", "only");
-        sendPost(
-            "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, null);
-      } else {
-        properties.put("action", "mark");
-        sendPost(
-            "~sk/cgi-bin/checkwiki/checkwiki_bots.cgi", properties, null);
-      }
-    } catch (NumberFormatException e) {
-      return false;
-    } catch (APIException e) {
-      return false;
-    }
-    return true;
-  }
-
-  /**
    * Send a POST request to the Tool Server.
    * 
    * @param path Path on the tool server.
@@ -146,7 +51,7 @@ public class ToolServer {
    * @param manager Response manager.
    * @throws APIException
    */
-  private void sendPost(
+  void sendPost(
       String              path,
       Map<String, String> properties,
       ResponseManager     manager) throws APIException {

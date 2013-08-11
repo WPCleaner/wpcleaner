@@ -25,6 +25,11 @@ public class APIFactory {
   private static API api;
 
   /**
+   * Check Wiki project.
+   */
+  private static CheckWiki checkWiki;
+
+  /**
    * Access to the tool server.
    */
   private static ToolServer toolServer;
@@ -41,6 +46,9 @@ public class APIFactory {
     connectionManger = new MultiThreadedHttpConnectionManager();
     httpClient = createHttpClient(connectionManger);
     toolServer = new ToolServer(httpClient);
+
+    // Initialize Check Wiki project
+    checkWiki = new CheckWiki(toolServer);
   }
 
   /**
@@ -50,7 +58,17 @@ public class APIFactory {
     return api;
   }
 
-  public static ToolServer getToolServer() {
+  /**
+   * @return Access to Check Wiki project.
+   */
+  public static CheckWiki getCheckWiki() {
+    return checkWiki;
+  }
+
+  /**
+   * @return Access to the tool server.
+   */
+  static ToolServer getToolServer() {
     return toolServer;
   }
 
