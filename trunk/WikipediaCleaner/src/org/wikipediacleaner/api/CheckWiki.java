@@ -76,31 +76,78 @@ public class CheckWiki {
     properties.put("project", code);
     if (!useBotList) {
       properties.put("view", "bots");
-      ResponseManager manager = new ResponseManager() {
-        
-        public void manageResponse(InputStream stream)
-            throws IOException, APIException {
-          CheckError.addCheckErrorClassic(
-              errors, wiki,
-              Integer.valueOf(algorithm.getErrorNumberString()), stream);
-        }
-      };
       toolServer.sendPost(
-          "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, manager);
+          "~sk/cgi-bin/checkwiki/checkwiki.cgi", properties,
+          new PagesResponseManager(true, algorithm, wiki, errors));
     } else {
       properties.put("action", "list");
-      ResponseManager manager = new ResponseManager() {
-        
-        public void manageResponse(InputStream stream)
-            throws IOException, APIException {
-          CheckError.addCheckErrorBots(
-              errors, wiki,
-              Integer.valueOf(algorithm.getErrorNumberString()), stream);
-        }
-      };
       toolServer.sendPost(
-          "~sk/cgi-bin/checkwiki/checkwiki_bots.cgi", properties, manager);
+          "~sk/cgi-bin/checkwiki/checkwiki_bots.cgi", properties,
+          new PagesResponseManager(false, algorithm, wiki, errors));
     }
+  }
+
+  private static class PagesResponseManager implements ResponseManager {
+
+    /**
+     * True if classic interface should be used.
+     */
+    private final boolean classic;
+
+    /**
+     * Algorithm.
+     */
+    private final Integer errorNumber;
+
+    /**
+     * Wiki.
+     */
+    private final EnumWikipedia wiki;
+
+    /**
+     * List of errors.
+     */
+    private final List<CheckError> errors;
+
+    /**
+     * @param classic True if classic interface should be used.
+     */
+    public PagesResponseManager(
+        boolean classic,
+        CheckErrorAlgorithm algorithm,
+        EnumWikipedia wiki,
+        List<CheckError> errors) {
+      this.classic = classic;
+      Integer tmp = null;
+      try {
+        tmp = Integer.valueOf(algorithm.getErrorNumberString());
+      } catch (NumberFormatException e) {
+        //
+      }
+      this.errorNumber = tmp;
+      this.wiki = wiki;
+      this.errors = errors;
+    }
+
+    /**
+     * @param stream
+     * @throws IOException
+     * @throws APIException
+     * @see org.wikipediacleaner.api.ResponseManager#manageResponse(java.io.InputStream)
+     */
+    public void manageResponse(InputStream stream) throws IOException,
+        APIException {
+      if (classic) {
+        CheckError.addCheckErrorClassic(
+            errors, wiki,
+            errorNumber, stream);
+      } else {
+        CheckError.addCheckErrorBots(
+            errors, wiki,
+            errorNumber, stream);
+      }
+    }
+    
   }
 
   /**
