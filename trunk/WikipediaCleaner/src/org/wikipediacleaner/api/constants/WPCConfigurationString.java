@@ -13,6 +13,12 @@ package org.wikipediacleaner.api.constants;
  */
 public enum WPCConfigurationString {
 
+  // Check Wiki comment
+  CW_COMMENT("check_wiki_comment", null, false, true, false),
+  // Check Wiki project page
+  CW_PROJECT_PAGE("check_wiki_project_page", null, false, true, false),
+  // Check Wiki translation page
+  CW_TRANSLATION_PAGE("check_wiki_translation_page", null, false, true, false),
   // Comment for disambiguation links that have been fixed
   DAB_COMMENT("dab_comment", null, false, true, true),
   // Comment for one disambiguation link that has been fixed

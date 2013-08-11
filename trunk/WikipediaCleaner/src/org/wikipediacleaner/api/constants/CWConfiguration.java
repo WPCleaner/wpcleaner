@@ -31,126 +31,53 @@ public class CWConfiguration {
    */
   private final String code;
 
-  public CWConfiguration(String code) {
+  /**
+   * Wiki.
+   */
+  private final EnumWikipedia wiki;
+
+  public CWConfiguration(String code, EnumWikipedia wiki) {
     this.code = code;
+    this.wiki = wiki;
     this.configuration = new ArrayList<CWConfigurationError>();
   }
 
-  /* ================================================================================= */
-  /* Project page                                                                      */
-  /* ================================================================================= */
-
-  /**
-   * Page of the Check Wiki projet.
-   */
-  private String projectPage;
-
-  /**
-   * @return Page of the Check Wiki project.
-   */
-  public String getProjectPage() {
-    return projectPage;
-  }
-
-  /**
-   * @param projectPage Page of the Check Wiki project.
-   */
-  void setProjectPage(String projectPage) {
-    this.projectPage = null;
-    if ((projectPage != null) && (projectPage.trim().length() > 0)) {
-      this.projectPage = projectPage.trim();
-    }
-  }
+  // =================================================================================
+  // Project availability
+  // =================================================================================
 
   /**
    * @return Flag indicating if the Check Wiki project is available.
    */
   public boolean isProjectAvailable() {
-    String project = getProjectPage();
+    WPCConfiguration config = wiki.getConfiguration();
+    String project = config.getString(WPCConfigurationString.CW_PROJECT_PAGE);
     if (project != null) {
       return true;
     }
-    return force;
+    return config.getBoolean(WPCConfigurationBoolean.CW_FORCE);
   }
 
-  /* ================================================================================= */
-  /* Force                                                                             */
-  /* ================================================================================= */
-
-  /**
-   * Flag indicating if project is forced even without project page.
-   */
-  private boolean force;
-
-  /**
-   * @param value Flag indicating if project is forced even without project page.
-   */
-  void setForce(String value) {
-    if ((value == null) || (value.trim().length() == 0)) {
-      force = false;
-    } else {
-      force = Boolean.valueOf(value);
-    }
-  }
-
-  /* ================================================================================= */
-  /* Comment                                                                           */
-  /* ================================================================================= */
-
-  /**
-   * Comment for Check Wiki project.
-   */
-  private String comment;
+  // =================================================================================
+  // Comment
+  // =================================================================================
 
   /**
    * @return Comment for Check Wiki project.
    */
   public String getComment() {
+    WPCConfiguration config = wiki.getConfiguration();
+    String comment = config.getString(WPCConfigurationString.CW_COMMENT);
     if (comment != null) {
       return comment;
     }
-    return GT._("Fixed using [[{0}]]", getProjectPage());
+    String project = config.getString(WPCConfigurationString.CW_PROJECT_PAGE);
+    return GT._("Fixed using {0}", (project != null) ? "[[" + project + "]]" : "Check Wiki project");
   }
 
-  /**
-   * @param comment Comment for Check Wiki project.
-   */
-  void setComment(String comment) {
-    this.comment = null;
-    if ((comment != null) && (comment.trim().length() > 0)) {
-      this.comment = comment.trim();
-    }
-  }
-
-  /* ================================================================================= */
-  /* Translation page                                                                  */
-  /* ================================================================================= */
-
-  /**
-   * Translation page for Check Wiki project.
-   */
-  private String translationPage;
-
-  /**
-   * @return Translation page for Check Wiki project.
-   */
-  public String getTranslationPage() {
-    return translationPage;
-  }
-
-  /**
-   * @param page Translation page for Check Wiki project.
-   */
-  void setTranslationPage(String page) {
-    translationPage = null;
-    if ((page != null) && (page.trim().length() > 0)) {
-      this.translationPage = page;
-    }
-  }
-
-  /* ================================================================================= */
-  /* Error configuration                                                               */
-  /* ================================================================================= */
+  // =================================================================================
+  // Error configuration
+  // =================================================================================
 
   /**
    * Configuration for each error.
