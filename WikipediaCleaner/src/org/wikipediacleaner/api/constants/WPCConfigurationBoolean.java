@@ -13,6 +13,8 @@ package org.wikipediacleaner.api.constants;
  */
 public enum WPCConfigurationBoolean {
 
+  // Used to force the activation of Check Wiki project even without a project page.
+  CW_FORCE("check_wiki_force", false, true, false),
   // Allow use of __DISAMBIG__ magic word.
   DAB_USE_DISAMBIG_MAGIC_WORD("dab_use_disambig", true, true, false),
   // Allow disambiguation warning outside section 0 of talk page.

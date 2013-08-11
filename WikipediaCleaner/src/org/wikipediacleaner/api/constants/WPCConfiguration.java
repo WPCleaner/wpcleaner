@@ -470,14 +470,6 @@ public class WPCConfiguration {
       setTemplatesAfterAskHelp(value);
     } else if (name.equals("wikt_templates")) {
       setWiktionaryMatches(value);
-    } else if (name.equals("check_wiki_project_page")) {
-      wiki.getCWConfiguration().setProjectPage(value);
-    } else if (name.equals("check_wiki_comment")) {
-      wiki.getCWConfiguration().setComment(value);
-    } else if (name.equals("check_wiki_translation_page")) {
-      wiki.getCWConfiguration().setTranslationPage(value);
-    } else if (name.equals("check_wiki_force")) {
-      wiki.getCWConfiguration().setForce(value);
     } else {
       log.warn(GT._("Attribute {0} can''t be set in general configuration", name));
     }

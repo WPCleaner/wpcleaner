@@ -22,6 +22,8 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfiguration;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 
@@ -166,12 +168,13 @@ public class CheckWiki {
     }
 
     // Retrieve specific configuration
+    final WPCConfiguration wpcConfiguration = wiki.getConfiguration();
     try {
-      if (wiki.getCWConfiguration().getTranslationPage() != null) {
+      String translationPage = wpcConfiguration.getString(WPCConfigurationString.CW_TRANSLATION_PAGE);
+      if (translationPage != null) {
         MediaWiki mw = MediaWiki.getMediaWikiAccess(listener);
         Page page = DataManager.getPage(
-            wiki,
-            cwConfiguration.getTranslationPage(),
+            wiki, translationPage,
             null, null, null);
         mw.retrieveContents(wiki, page, true, false, false, false);
         if (Boolean.TRUE.equals(page.isExisting())) {

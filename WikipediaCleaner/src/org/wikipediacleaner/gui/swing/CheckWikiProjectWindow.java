@@ -79,6 +79,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -1620,8 +1621,10 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       try {
         Configuration config = Configuration.getConfiguration();
         boolean secured = config.getBoolean(null, ConfigurationValueBoolean.SECURE_URL);
-        String url =
-          getWikipedia().getSettings().getURL(getWikipedia().getCWConfiguration().getTranslationPage(), true, secured);
+        EnumWikipedia wiki = getWikipedia();
+        String translationPage = wiki.getConfiguration().getString(
+            WPCConfigurationString.CW_TRANSLATION_PAGE);
+        String url = wiki.getSettings().getURL(translationPage, true, secured);
         StringBuilder parametersDescription = new StringBuilder();
         parametersDescription.append(GT._(
             "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :",
@@ -1810,20 +1813,25 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     Object selected = listAllErrors.getSelectedItem();
     if ((selected instanceof CheckError) &&
         (Utilities.isDesktopSupported())) {
+      EnumWikipedia wiki = getWikipedia();
       CheckError error = (CheckError) selected;
       if (error.getAlgorithm().getLink() != null) {
-        Utilities.browseURL(getWikipedia(), error.getAlgorithm().getLink(), true);
+        Utilities.browseURL(wiki, error.getAlgorithm().getLink(), true);
       } else {
         DecimalFormat format = new DecimalFormat("000");
+        String description =
+            "error_" +
+            format.format(error.getErrorNumber()) +
+            "_link_" +
+            wiki.getSettings().getCodeCheckWiki();
+        String translationPage = wiki.getConfiguration().getString(
+            WPCConfigurationString.CW_TRANSLATION_PAGE);
         Utilities.displayInformationMessage(getParentComponent(), GT._(
             "There''s no page defined for this error type.\n" +
             "If you want to define a page you need to add :\n" +
             "  {0} = <page name> END\n" +
             "to the translation page ({1}) on \"{2}\"",
-            new Object[] {
-                "error_" + format.format(error.getErrorNumber()) + "_link_" + getWikipedia().getSettings().getCodeCheckWiki(),
-                getWikipedia().getCWConfiguration().getTranslationPage(),
-                getWikipedia().toString()
+            new Object[] { description, translationPage, wiki.toString()
             }));
       }
     }
@@ -1854,20 +1862,25 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     Object selected = listAllErrors.getSelectedItem();
     if ((selected instanceof CheckError) &&
         (Utilities.isDesktopSupported())) {
+      EnumWikipedia wiki = getWikipedia();
       CheckError error = (CheckError) selected;
       if (error.getAlgorithm().getWhiteListPageName() != null) {
-        Utilities.browseURL(getWikipedia(), error.getAlgorithm().getWhiteListPageName(), true);
+        Utilities.browseURL(wiki, error.getAlgorithm().getWhiteListPageName(), true);
       } else {
         DecimalFormat format = new DecimalFormat("000");
+        String parameter =
+            "error_" +
+            format.format(error.getErrorNumber()) +
+            "_whitelistpage_" +
+            wiki.getSettings().getCodeCheckWiki();
+        String translationPage = wiki.getConfiguration().getString(
+            WPCConfigurationString.CW_TRANSLATION_PAGE);
         Utilities.displayInformationMessage(getParentComponent(), GT._(
             "There''s no white list defined for this error type.\n" +
             "If you want to define a white list you need to add :\n" +
             "  {0} = <page name> END\n" +
             "to the translation page ({1}) on \"{2}\"",
-            new Object[] {
-                "error_" + format.format(error.getErrorNumber()) + "_whitelistpage_" + getWikipedia().getSettings().getCodeCheckWiki(),
-                getWikipedia().getCWConfiguration().getTranslationPage(),
-                getWikipedia().toString()
+            new Object[] { parameter, translationPage, wiki.toString()
             }));
       }
     }

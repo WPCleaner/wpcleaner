@@ -170,7 +170,7 @@ public enum EnumWikipedia {
     this.configPage = settings.getConfigurationPage();
     this.wikiConfiguration = new WikiConfiguration();
     this.WPCConfiguration = new WPCConfiguration(this);
-    this.CWConfiguration = new CWConfiguration(settings.getCodeCheckWiki());
+    this.CWConfiguration = new CWConfiguration(settings.getCodeCheckWiki(), this);
   }
 
   /**
