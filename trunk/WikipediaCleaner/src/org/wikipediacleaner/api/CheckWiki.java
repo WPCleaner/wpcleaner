@@ -93,8 +93,12 @@ public class CheckWiki {
           new PagesResponseManager(true, algorithm, wiki, errors));
     } else {
       properties.put("action", "list");
-      toolServer.sendPost(
-          "~sk/cgi-bin/checkwiki/checkwiki_bots.cgi", properties,
+      String url = useLabs ?
+          "checkwiki/cgi-bin/checkwiki_bots.cgi" :
+          "~sk/cgi-bin/checkwiki/checkwiki_bots.cgi";
+      HttpServer server = useLabs ? labs : toolServer;
+      server.sendPost(
+          url, properties,
           new PagesResponseManager(false, algorithm, wiki, errors));
     }
   }
