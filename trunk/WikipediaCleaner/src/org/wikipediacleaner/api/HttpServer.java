@@ -25,9 +25,12 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Manage interactions with the tool server.
  */
-public class ToolServer {
+public class HttpServer {
 
-  private final Log log = LogFactory.getLog(ToolServer.class);
+  /**
+   * Logs.
+   */
+  private final Log log = LogFactory.getLog(HttpServer.class);
 
   /**
    * HTTP Client.
@@ -35,12 +38,18 @@ public class ToolServer {
   private final HttpClient httpClient;
 
   /**
-   * Create a ToolServer object.
+   * Base URL.
+   */
+  private final String baseUrl;
+
+  /**
+   * Create an HttpServer object.
    * 
    * @param httpClient HTTP client.
    */
-  ToolServer(HttpClient httpClient) {
+  HttpServer(HttpClient httpClient, String baseUrl) {
     this.httpClient = httpClient;
+    this.baseUrl = baseUrl;
   }
 
   /**
@@ -58,7 +67,7 @@ public class ToolServer {
     HttpMethod method = null;
     InputStream inputStream = null;
     try {
-      String url = "http://toolserver.org/" + path;
+      String url = baseUrl + path;
       method = HttpUtils.createHttpMethod(url, properties, false);
       int statusCode = httpClient.executeMethod(method);
       inputStream = method.getResponseBodyAsStream();
@@ -113,7 +122,7 @@ public class ToolServer {
     HttpMethod method = null;
     InputStream inputStream = null;
     try {
-      String url = "http://toolserver.org/" + path;
+      String url = baseUrl + path;
       method = HttpUtils.createHttpMethod(url, null, true);
       int statusCode = httpClient.executeMethod(method);
       if (statusCode == HttpStatus.SC_NOT_FOUND) {
