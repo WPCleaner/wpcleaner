@@ -29,11 +29,6 @@ public class APIFactory {
    */
   private static CheckWiki checkWiki;
 
-  /**
-   * Access to the tool server.
-   */
-  private static ToolServer toolServer;
-
   // Initialize static members
   static {
 
@@ -45,7 +40,7 @@ public class APIFactory {
     // Initialize ToolServer access
     connectionManger = new MultiThreadedHttpConnectionManager();
     httpClient = createHttpClient(connectionManger);
-    toolServer = new ToolServer(httpClient);
+    HttpServer toolServer = new HttpServer(httpClient, "http://toolserver.org/");
 
     // Initialize Check Wiki project
     checkWiki = new CheckWiki(toolServer);
@@ -63,13 +58,6 @@ public class APIFactory {
    */
   public static CheckWiki getCheckWiki() {
     return checkWiki;
-  }
-
-  /**
-   * @return Access to the tool server.
-   */
-  static ToolServer getToolServer() {
-    return toolServer;
   }
 
   /**

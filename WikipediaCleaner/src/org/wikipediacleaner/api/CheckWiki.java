@@ -41,12 +41,12 @@ public class CheckWiki {
   /**
    * Access to Tool Server.
    */
-  private final ToolServer toolServer;
+  private final HttpServer toolServer;
 
   /**
    * @param toolServer Tool Server<
    */
-  CheckWiki(ToolServer toolServer) {
+  CheckWiki(HttpServer toolServer) {
     this.toolServer = toolServer;
   }
 
@@ -59,7 +59,7 @@ public class CheckWiki {
    * @param errors List of errors.
    * @throws APIException
    */
-  public void retrievePagesForError(
+  public void retrievePages(
       final CheckErrorAlgorithm algorithm, int errorLimit,
       final EnumWikipedia wiki,
       final List<CheckError> errors) throws APIException {
@@ -110,7 +110,7 @@ public class CheckWiki {
    * @param errorNumber Error number.
    * @return True if it has been done.
    */
-  public boolean markPageAsFixed(Page page, String errorNumber) {
+  public boolean markAsFixed(Page page, String errorNumber) {
     try {
       int error = Integer.parseInt(errorNumber);
       if (error > CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
@@ -160,7 +160,7 @@ public class CheckWiki {
           }
         }
       };
-      APIFactory.getToolServer().sendGet(
+      toolServer.sendGet(
           "~sk/checkwiki/" + code + "/" + code + "_translation.txt",
           manager);
     } catch (APIException e) {

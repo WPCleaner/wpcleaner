@@ -95,7 +95,7 @@ class AutomaticCWWorker extends BasicWorker {
         setText(
             GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
             " - " + algorithm.getShortDescriptionReplaced());
-        checkWiki.retrievePagesForError(algorithm, max, getWikipedia(), errors);
+        checkWiki.retrievePages(algorithm, max, getWikipedia(), errors);
         for (CheckError error : errors) {
           for (int numPage = 0;
               (numPage < error.getPageCount()) && shouldContinue();
@@ -140,14 +140,14 @@ class AutomaticCWWorker extends BasicWorker {
                 for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
                   CheckErrorPage errorPage = CheckError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
                   if ((errorPage != null) && (!errorPage.getErrorFound())) {
-                    checkWiki.markPageAsFixed(page, usedAlgorithm.getErrorNumberString());
+                    checkWiki.markAsFixed(page, usedAlgorithm.getErrorNumberString());
                   }
                 }
               } else if (analyzeNonFixed) {
                 Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
               }
             } else if (algorithm.isFullDetection()) {
-              checkWiki.markPageAsFixed(page, algorithm.getErrorNumberString());
+              checkWiki.markAsFixed(page, algorithm.getErrorNumberString());
             }
           }
         }

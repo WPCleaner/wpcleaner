@@ -75,7 +75,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
             setText(
                 GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
                 " - " + algorithm.getShortDescriptionReplaced());
-            APIFactory.getCheckWiki().retrievePagesForError(algorithm, errorLimit, getWikipedia(), errors);
+            APIFactory.getCheckWiki().retrievePages(algorithm, errorLimit, getWikipedia(), errors);
             errorLoaded = true;
           }
         } catch (APIException e) {

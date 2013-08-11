@@ -352,7 +352,7 @@ public class CheckError {
    * @return Flag indicating if fix was done.
    */
   public static boolean fix(Page page, String errorNumber) {
-    return APIFactory.getCheckWiki().markPageAsFixed(page, errorNumber);
+    return APIFactory.getCheckWiki().markAsFixed(page, errorNumber);
   }
 
   /**
