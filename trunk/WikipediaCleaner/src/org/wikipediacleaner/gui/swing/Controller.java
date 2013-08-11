@@ -17,7 +17,6 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.bot.BotToolsWindow;
-import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.gui.swing.options.OptionsWindow;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
@@ -64,22 +63,6 @@ public class Controller {
       if (page != null) {
         runFullAnalysis(page.toString(), knownPages, wikipedia);
       }
-    }
-  }
-
-  /**
-   * Run a red links analysis.
-   * 
-   * @param page Page.
-   * @param textPane Text pane.
-   * @param wikipedia Wikipedia.
-   */
-  public static void runRedLinksAnalysis(
-      Page page,
-      MWPane textPane,
-      EnumWikipedia wikipedia) {
-    if (page != null) {
-      RedLinksWindow.createRedLinksWindow(page, textPane, wikipedia);
     }
   }
 

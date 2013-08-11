@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-11 12:31+0200\n"
+"POT-Creation-Date: 2013-08-11 18:01+0200\n"
 "PO-Revision-Date: 2013-06-14 18:30+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -1154,7 +1154,7 @@ msgid ""
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/Controller.java:258
+#: org/wikipediacleaner/gui/swing/Controller.java:241
 #, java-format
 msgid ""
 "You have selected {0} pages.\n"
@@ -1706,7 +1706,7 @@ msgid "Count other pages"
 msgstr "Contar otras páginas"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:561
-#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:79
+#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:76
 msgid "Remove all links"
 msgstr "Remover todos los enlaces"
 
@@ -2067,52 +2067,6 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:256
 msgid "User"
 msgstr "Usuario"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:131
-#, java-format
-msgid "Red links Analysis - {0}"
-msgstr "Análisis de enlaces rojos - {0}"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:196
-msgid "Re&place"
-msgstr "Reem&plazar"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:213
-msgid "Pages concerned"
-msgstr "Páginas afectadas"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:230
-#, java-format
-msgid "&Apply only to {0}"
-msgstr "&Aplicar sólo a {0}"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:250
-msgid "&Reload page list"
-msgstr "&Racargar listado de páginas"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:291
-msgid "Possible pages"
-msgstr "Páginas posibles"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:306
-msgid "Search"
-msgstr "Buscar"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:337
-msgid "&Begins with"
-msgstr "C&omienza con"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:351
-msgid "&Contains"
-msgstr "&Contiene"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:366
-msgid "&Ends with"
-msgstr "&Termina con"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:381
-msgid "&Search for possible pages"
-msgstr "Bu&scar por páginas posibles"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:90
 #, java-format
@@ -2477,22 +2431,18 @@ msgid_plural "{0} total links"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:47
+#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:44
 msgid "Find text"
 msgstr "Encontrar texto"
 
-#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:64
+#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:61
 msgid "Search in templates"
 msgstr "Buscar en plantillas"
 
-#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:94
+#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:91
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:257
 msgid "Link to"
 msgstr "Enlaces a"
-
-#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:148
-msgid "Red links analysis"
-msgstr "Análisis de enlaces rojos"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:149
 msgid "Template External Viewer"
@@ -3217,6 +3167,42 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:53
 msgid "The value can't contain any of these characters: {0}"
 msgstr "El valor no contiene ninguno de estos caractéres: {0}"
+
+#~ msgid "Red links Analysis - {0}"
+#~ msgstr "Análisis de enlaces rojos - {0}"
+
+#~ msgid "Re&place"
+#~ msgstr "Reem&plazar"
+
+#~ msgid "Pages concerned"
+#~ msgstr "Páginas afectadas"
+
+#~ msgid "&Apply only to {0}"
+#~ msgstr "&Aplicar sólo a {0}"
+
+#~ msgid "&Reload page list"
+#~ msgstr "&Racargar listado de páginas"
+
+#~ msgid "Possible pages"
+#~ msgstr "Páginas posibles"
+
+#~ msgid "Search"
+#~ msgstr "Buscar"
+
+#~ msgid "&Begins with"
+#~ msgstr "C&omienza con"
+
+#~ msgid "&Contains"
+#~ msgstr "&Contiene"
+
+#~ msgid "&Ends with"
+#~ msgstr "&Termina con"
+
+#~ msgid "&Search for possible pages"
+#~ msgstr "Bu&scar por páginas posibles"
+
+#~ msgid "Red links analysis"
+#~ msgstr "Análisis de enlaces rojos"
 
 #~ msgid "&First occurrence"
 #~ msgstr "Primera coincidencia"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-11 12:31+0200\n"
+"POT-Creation-Date: 2013-08-11 18:01+0200\n"
 "PO-Revision-Date: 2013-07-06 19:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -1120,7 +1120,7 @@ msgid ""
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/Controller.java:258
+#: org/wikipediacleaner/gui/swing/Controller.java:241
 #, java-format
 msgid ""
 "You have selected {0} pages.\n"
@@ -1653,7 +1653,7 @@ msgid "Count other pages"
 msgstr "ספור עמודים אחרים"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:561
-#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:79
+#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:76
 msgid "Remove all links"
 msgstr "הסר את כל הקישורים"
 
@@ -2008,52 +2008,6 @@ msgstr ""
 msgid "User"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:131
-#, java-format
-msgid "Red links Analysis - {0}"
-msgstr "ניתוח קישורים אדומים - {0}"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:196
-msgid "Re&place"
-msgstr "הח&לף"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:213
-msgid "Pages concerned"
-msgstr "עמודים מושפעים"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:230
-#, java-format
-msgid "&Apply only to {0}"
-msgstr "ה&חל רק על {0}"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:250
-msgid "&Reload page list"
-msgstr "&רענן את רשימת העמודים"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:291
-msgid "Possible pages"
-msgstr "עמודים אפשריים"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:306
-msgid "Search"
-msgstr "חיפוש"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:337
-msgid "&Begins with"
-msgstr "מתחיל &ב-"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:351
-msgid "&Contains"
-msgstr "מ&כיל"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:366
-msgid "&Ends with"
-msgstr "מ&סתיים ב-"
-
-#: org/wikipediacleaner/gui/swing/RedLinksWindow.java:381
-msgid "&Search for possible pages"
-msgstr "ח&פש אחר עמודים אפשריים"
-
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:90
 #, java-format
 msgid "Templates in {0}"
@@ -2402,22 +2356,18 @@ msgid_plural "{0} total links"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:47
+#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:44
 msgid "Find text"
 msgstr "חיפוש טקסט"
 
-#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:64
+#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:61
 msgid "Search in templates"
 msgstr "חפש בתבניות"
 
-#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:94
+#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:91
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:257
 msgid "Link to"
 msgstr "קישור אל"
-
-#: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:148
-msgid "Red links analysis"
-msgstr "ניתוח קישורים אדומים"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:149
 msgid "Template External Viewer"
@@ -3114,6 +3064,42 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:53
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
+
+#~ msgid "Red links Analysis - {0}"
+#~ msgstr "ניתוח קישורים אדומים - {0}"
+
+#~ msgid "Re&place"
+#~ msgstr "הח&לף"
+
+#~ msgid "Pages concerned"
+#~ msgstr "עמודים מושפעים"
+
+#~ msgid "&Apply only to {0}"
+#~ msgstr "ה&חל רק על {0}"
+
+#~ msgid "&Reload page list"
+#~ msgstr "&רענן את רשימת העמודים"
+
+#~ msgid "Possible pages"
+#~ msgstr "עמודים אפשריים"
+
+#~ msgid "Search"
+#~ msgstr "חיפוש"
+
+#~ msgid "&Begins with"
+#~ msgstr "מתחיל &ב-"
+
+#~ msgid "&Contains"
+#~ msgstr "מ&כיל"
+
+#~ msgid "&Ends with"
+#~ msgstr "מ&סתיים ב-"
+
+#~ msgid "&Search for possible pages"
+#~ msgstr "ח&פש אחר עמודים אפשריים"
+
+#~ msgid "Red links analysis"
+#~ msgstr "ניתוח קישורים אדומים"
 
 #~ msgid "&Next occurrence"
 #~ msgstr "המו&פע הבא"
