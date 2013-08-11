@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.AbstractButton;
+import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
@@ -453,6 +454,13 @@ public class Utilities {
           button.setDisplayedMnemonicIndex(index);
         }
       }
+      System.err.println("Action map for " + message);
+      ActionMap map = button.getActionMap();
+      if (map != null) {
+        for (Object key : map.allKeys()) {
+          System.err.println("  " + key.toString());
+        }
+      }
     }
   }
 
@@ -535,7 +543,7 @@ public class Utilities {
       button = new JButton(label);
     }
     button.setToolTipText(fullLabel);
-    setShortcut(button, shortcut, label);
+    setShortcut(button, shortcut, message);
     return button;
   }
 
