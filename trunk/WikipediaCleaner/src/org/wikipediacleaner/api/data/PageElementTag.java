@@ -48,27 +48,29 @@ public class PageElementTag extends PageElement {
   public final static String TAG_HTML_TD           = "td";
   public final static String TAG_HTML_TH           = "th";
   public final static String TAG_HTML_TR           = "tr";
+  public final static String TAG_HTML_TT           = "tt";
   public final static String TAG_HTML_U            = "u";
   public final static String TAG_HTML_UL           = "ul";
 
   // =========================================================================
   // Wiki tags
   // =========================================================================
-  public final static String TAG_WIKI_CODE         = "code";
-  public final static String TAG_WIKI_GALLERY      = "gallery";
-  public final static String TAG_WIKI_HIERO        = "hiero";
-  public final static String TAG_WIKI_IMAGEMAP     = "imagemap";
-  public final static String TAG_WIKI_INCLUDEONLY  = "includeonly";
-  public final static String TAG_WIKI_MATH         = "math";
-  public final static String TAG_WIKI_NOINCLUDE    = "noinclude";
-  public final static String TAG_WIKI_NOWIKI       = "nowiki";
-  public final static String TAG_WIKI_PRE          = "pre";
-  public final static String TAG_WIKI_REF          = "ref";
-  public final static String TAG_WIKI_REFERENCES   = "references";
-  public final static String TAG_WIKI_SCORE        = "score";
-  public final static String TAG_WIKI_SOURCE       = "source";
-  public final static String TAG_WIKI_TEMPLATEDATA = "templatedata";
-  public final static String TAG_WIKI_TIMELINE     = "timeline";
+  public final static String TAG_WIKI_CODE            = "code";
+  public final static String TAG_WIKI_GALLERY         = "gallery";
+  public final static String TAG_WIKI_HIERO           = "hiero";
+  public final static String TAG_WIKI_IMAGEMAP        = "imagemap";
+  public final static String TAG_WIKI_INCLUDEONLY     = "includeonly";
+  public final static String TAG_WIKI_MATH            = "math";
+  public final static String TAG_WIKI_NOINCLUDE       = "noinclude";
+  public final static String TAG_WIKI_NOWIKI          = "nowiki";
+  public final static String TAG_WIKI_PRE             = "pre";
+  public final static String TAG_WIKI_REF             = "ref";
+  public final static String TAG_WIKI_REFERENCES      = "references";
+  public final static String TAG_WIKI_SCORE           = "score";
+  public final static String TAG_WIKI_SOURCE          = "source";
+  public final static String TAG_WIKI_SYNTAXHIGHLIGHT = "syntaxhighlight";
+  public final static String TAG_WIKI_TEMPLATEDATA    = "templatedata";
+  public final static String TAG_WIKI_TIMELINE        = "timeline";
 
   // =========================================================================
   // Other tags
