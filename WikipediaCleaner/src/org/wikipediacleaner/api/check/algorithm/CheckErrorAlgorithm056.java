@@ -76,10 +76,15 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
    * Tags in which arrows should not be detected. 
    */
   private final static String[] exceptTags = {
+    PageElementTag.TAG_HTML_TT,
+    PageElementTag.TAG_WIKI_CODE,
     PageElementTag.TAG_WIKI_HIERO,
+    PageElementTag.TAG_WIKI_MATH,
     PageElementTag.TAG_WIKI_NOWIKI,
+    PageElementTag.TAG_WIKI_PRE,
     PageElementTag.TAG_WIKI_SCORE,
     PageElementTag.TAG_WIKI_SOURCE,
+    PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT,
     PageElementTag.TAG_WIKI_TIMELINE,
   };
 
