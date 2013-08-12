@@ -192,35 +192,32 @@ public class ShortcutOptionsPanel extends OptionsPanel {
   @Override
   public void apply() {
     super.apply();
-    Configuration config = Configuration.getConfiguration();
-    ConfigurationValueShortcut.ShortcutProperties configShortcut = null;
 
-    configShortcut = getShortcut(lineAddToWatchList);
-    config.setShortcut(ConfigurationValueShortcut.ADD_TO_WATCH_LIST, configShortcut);
-    configShortcut = getShortcut(lineApply);
-    config.setShortcut(ConfigurationValueShortcut.APPLY, configShortcut);
-    configShortcut = getShortcut(lineClose);
-    config.setShortcut(ConfigurationValueShortcut.CLOSE, configShortcut);
-    configShortcut = getShortcut(lineDabAnalysis);
-    config.setShortcut(ConfigurationValueShortcut.DAB_ANALYSIS, configShortcut);
-    configShortcut = getShortcut(lineExternalViewer);
-    config.setShortcut(ConfigurationValueShortcut.EXTERNAL_VIEWER, configShortcut);
-    configShortcut = getShortcut(lineFullAnalysis);
-    config.setShortcut(ConfigurationValueShortcut.FULL_ANALYSIS, configShortcut);
-    configShortcut = getShortcut(lineHistory);
-    config.setShortcut(ConfigurationValueShortcut.HISTORY, configShortcut);
-    configShortcut = getShortcut(lineOccurrenceFirst);
-    config.setShortcut(ConfigurationValueShortcut.OCCURRENCE_FIRST, configShortcut);
-    configShortcut = getShortcut(lineOccurrenceLast);
-    config.setShortcut(ConfigurationValueShortcut.OCCURRENCE_LAST, configShortcut);
-    configShortcut = getShortcut(lineOccurrenceNext);
-    config.setShortcut(ConfigurationValueShortcut.OCCURRENCE_NEXT, configShortcut);
-    configShortcut = getShortcut(lineOccurrencePrevious);
-    config.setShortcut(ConfigurationValueShortcut.OCCURRENCE_PREVIOUS, configShortcut);
-    configShortcut = getShortcut(lineRestoreDefaults);
-    config.setShortcut(ConfigurationValueShortcut.RESTORE_DEFAULTS, configShortcut);
-    configShortcut = getShortcut(lineValidate);
-    config.setShortcut(ConfigurationValueShortcut.VALIDATE, configShortcut);
+    applyShortcut(ConfigurationValueShortcut.ADD_TO_WATCH_LIST, lineAddToWatchList);
+    applyShortcut(ConfigurationValueShortcut.APPLY, lineApply);
+    applyShortcut(ConfigurationValueShortcut.CLOSE, lineClose);
+    applyShortcut(ConfigurationValueShortcut.DAB_ANALYSIS, lineDabAnalysis);
+    applyShortcut(ConfigurationValueShortcut.EXTERNAL_VIEWER, lineExternalViewer);
+    applyShortcut(ConfigurationValueShortcut.FULL_ANALYSIS, lineFullAnalysis);
+    applyShortcut(ConfigurationValueShortcut.HISTORY, lineHistory);
+    applyShortcut(ConfigurationValueShortcut.OCCURRENCE_FIRST, lineOccurrenceFirst);
+    applyShortcut(ConfigurationValueShortcut.OCCURRENCE_LAST, lineOccurrenceLast);
+    applyShortcut(ConfigurationValueShortcut.OCCURRENCE_NEXT, lineOccurrenceNext);
+    applyShortcut(ConfigurationValueShortcut.OCCURRENCE_PREVIOUS, lineOccurrencePrevious);
+    applyShortcut(ConfigurationValueShortcut.RESTORE_DEFAULTS, lineRestoreDefaults);
+    applyShortcut(ConfigurationValueShortcut.VALIDATE, lineValidate);
+  }
+
+  /**
+   * Apply new values for a shortcut.
+   * 
+   * @param shortcut Shortcut.
+   * @param line Line.
+   */
+  private void applyShortcut(ConfigurationValueShortcut shortcut, int line) {
+    Configuration config = Configuration.getConfiguration();
+    ConfigurationValueShortcut.ShortcutProperties configShortcut = getShortcut(line, shortcut.getName());
+    config.setShortcut(shortcut, configShortcut);
   }
 
   // ==========================================================================
@@ -325,9 +322,11 @@ public class ShortcutOptionsPanel extends OptionsPanel {
 
   /**
    * @param line Line number.
+   * @param name Shortcut name.
    * @return Shortcut.
    */
-  private ConfigurationValueShortcut.ShortcutProperties getShortcut(int line) {
+  private ConfigurationValueShortcut.ShortcutProperties getShortcut(
+      int line, String name) {
     if ((line < 0) || (line >= linesCount)) {
       return null;
     }
@@ -352,7 +351,7 @@ public class ShortcutOptionsPanel extends OptionsPanel {
       btnKey.get(line).getKeyCode();
     }
     return new ConfigurationValueShortcut.ShortcutProperties(
-        enabled, ctrl, alt, shift, key);
+        enabled, name, ctrl, alt, shift, key);
   }
 
   /**

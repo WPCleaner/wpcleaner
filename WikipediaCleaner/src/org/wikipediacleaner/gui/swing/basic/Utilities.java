@@ -49,6 +49,7 @@ import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.gui.swing.action.ActionClick;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -444,9 +445,10 @@ public class Utilities {
         button.setMnemonic(mnemonic);
       }
     } else {
+      String actionName = "action_" + shortcut.getName();
       InputMap inputMap = button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-      inputMap.put(KeyStroke.getKeyStroke(shortcut.getKey(), shortcut.getModifiers(), false), "pressed");
-      inputMap.put(KeyStroke.getKeyStroke(shortcut.getKey(), shortcut.getModifiers(), true), "released");
+      inputMap.put(KeyStroke.getKeyStroke(shortcut.getKey(), shortcut.getModifiers()), actionName);
+      button.getActionMap().put(actionName, new ActionClick(button));
       if (message != null) {
         int index = message.indexOf(shortcut.getKey());
         if ((index >= 0) && (index < button.getText().length())) {

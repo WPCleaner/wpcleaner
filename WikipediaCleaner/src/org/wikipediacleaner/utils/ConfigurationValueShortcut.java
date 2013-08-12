@@ -18,19 +18,19 @@ import java.util.prefs.Preferences;
  */
 public enum ConfigurationValueShortcut {
 
-  ADD_TO_WATCH_LIST("AddWatch", new ShortcutProperties(true, false, true, false, KeyEvent.VK_W)),
-  APPLY("Apply", new ShortcutProperties(true, false, true, false, KeyEvent.VK_A)),
-  CLOSE("Close", new ShortcutProperties(true, false, true, false, KeyEvent.VK_C)),
-  DAB_ANALYSIS("Disambiguation", new ShortcutProperties(true, false, true, false, KeyEvent.VK_D)),
-  EXTERNAL_VIEWER("ExternalViewer", new ShortcutProperties(true, false, true, false, KeyEvent.VK_E)),
-  FULL_ANALYSIS("Title", new ShortcutProperties(true, false, true, false, KeyEvent.VK_F)),
-  HISTORY("History", new ShortcutProperties(true, false, true, false, KeyEvent.VK_H)),
-  OCCURRENCE_FIRST("FirstOccurrence", new ShortcutProperties(true, false, true, false, KeyEvent.VK_F)),
-  OCCURRENCE_LAST("LastOccurrence", new ShortcutProperties(true, false, true, false, KeyEvent.VK_L)),
-  OCCURRENCE_NEXT("NextOccurrence", new ShortcutProperties(true, false, true, false, KeyEvent.VK_N)),
-  OCCURRENCE_PREVIOUS("PreviousOccurrence", new ShortcutProperties(true, false, true, false, KeyEvent.VK_P)),
-  RESTORE_DEFAULTS("RestoreDefaults", new ShortcutProperties(true, false, true, false, KeyEvent.VK_R)),
-  VALIDATE("Validate", new ShortcutProperties(true, false, true, false, KeyEvent.VK_V));
+  ADD_TO_WATCH_LIST(new ShortcutProperties(true, "AddWatch", false, true, false, KeyEvent.VK_W)),
+  APPLY(new ShortcutProperties(true, "Apply", false, true, false, KeyEvent.VK_A)),
+  CLOSE(new ShortcutProperties(true, "Close", false, true, false, KeyEvent.VK_C)),
+  DAB_ANALYSIS(new ShortcutProperties(true, "Disambiguation", false, true, false, KeyEvent.VK_D)),
+  EXTERNAL_VIEWER(new ShortcutProperties(true, "ExternalViewer", false, true, false, KeyEvent.VK_E)),
+  FULL_ANALYSIS(new ShortcutProperties(true, "Title", false, true, false, KeyEvent.VK_F)),
+  HISTORY(new ShortcutProperties(true, "History", false, true, false, KeyEvent.VK_H)),
+  OCCURRENCE_FIRST(new ShortcutProperties(true, "FirstOccurrence", false, true, false, KeyEvent.VK_F)),
+  OCCURRENCE_LAST(new ShortcutProperties(true, "LastOccurrence", false, true, false, KeyEvent.VK_L)),
+  OCCURRENCE_NEXT(new ShortcutProperties(true, "NextOccurrence", false, true, false, KeyEvent.VK_N)),
+  OCCURRENCE_PREVIOUS(new ShortcutProperties(true, "PreviousOccurrence", false, true, false, KeyEvent.VK_P)),
+  RESTORE_DEFAULTS(new ShortcutProperties(true, "RestoreDefaults", false, true, false, KeyEvent.VK_R)),
+  VALIDATE(new ShortcutProperties(true, "Validate", false, true, false, KeyEvent.VK_V));
 
   private final static String PROPERTY_ENABLED = "Enabled";
   private final static String PROPERTY_CTRL    = "Ctrl";
@@ -39,21 +39,14 @@ public enum ConfigurationValueShortcut {
   private final static String PROPERTY_KEY     = "KEY";
 
   /**
-   * Attribute name.
-   */
-  private final String name;
-
-  /**
    * Attribute default value.
    */
   private final ShortcutProperties defaultValue;
 
   /**
-   * @param name Attribute name.
    * @param defaultValue Attribute default value.
    */
-  ConfigurationValueShortcut(String name, ShortcutProperties defaultValue) {
-    this.name = name;
+  ConfigurationValueShortcut(ShortcutProperties defaultValue) {
     this.defaultValue = defaultValue;
   }
 
@@ -92,7 +85,8 @@ public enum ConfigurationValueShortcut {
         PROPERTY_SHIFT, defaultProperties.getShiftKey());
     int key = preferences.getInt(
         PROPERTY_KEY, defaultProperties.getKey());
-    return new ShortcutProperties(enabled, ctrl, alt, shift, key);
+    return new ShortcutProperties(
+        enabled, defaultProperties.getName(), ctrl, alt, shift, key);
   }
 
   /**
@@ -151,7 +145,7 @@ public enum ConfigurationValueShortcut {
    * @return Name of the configuration attribute.
    */
   public String getName() {
-    return name;
+    return defaultValue.getName();
   }
 
   /**
@@ -166,6 +160,7 @@ public enum ConfigurationValueShortcut {
    */
   public static class ShortcutProperties {
     private final boolean enabled;
+    private final String name;
 
     private final boolean ctrl;
     private final boolean alt;
@@ -175,16 +170,18 @@ public enum ConfigurationValueShortcut {
 
     /**
      * @param enabled Is shortcut enabled ?
+     * @param name Shortcut name.
      * @param ctrl True if key Ctrl should be used.
      * @param alt True if key Alt should be used.
      * @param shift True if key Shift should be used.
      * @param key Key.
      */
     public ShortcutProperties(
-        boolean enabled,
+        boolean enabled, String name,
         boolean ctrl, boolean alt, boolean shift,
         int key) {
       this.enabled = enabled;
+      this.name = name;
       this.ctrl = ctrl;
       this.alt = alt;
       this.shift = shift;
@@ -196,6 +193,13 @@ public enum ConfigurationValueShortcut {
      */
     public boolean getEnabled() {
       return enabled;
+    }
+
+    /**
+     * @return Shortcut name.
+     */
+    public String getName() {
+      return name;
     }
 
     /**
