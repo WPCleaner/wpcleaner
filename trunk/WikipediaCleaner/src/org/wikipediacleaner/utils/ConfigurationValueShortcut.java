@@ -18,19 +18,29 @@ import java.util.prefs.Preferences;
  */
 public enum ConfigurationValueShortcut {
 
-  ADD_TO_WATCH_LIST(new ShortcutProperties(true, "AddWatch", false, true, false, KeyEvent.VK_W)),
-  APPLY(new ShortcutProperties(true, "Apply", false, true, false, KeyEvent.VK_A)),
-  CLOSE(new ShortcutProperties(true, "Close", false, true, false, KeyEvent.VK_C)),
-  DAB_ANALYSIS(new ShortcutProperties(true, "Disambiguation", false, true, false, KeyEvent.VK_D)),
-  EXTERNAL_VIEWER(new ShortcutProperties(true, "ExternalViewer", false, true, false, KeyEvent.VK_E)),
-  FULL_ANALYSIS(new ShortcutProperties(true, "Title", false, true, false, KeyEvent.VK_F)),
-  HISTORY(new ShortcutProperties(true, "History", false, true, false, KeyEvent.VK_H)),
-  OCCURRENCE_FIRST(new ShortcutProperties(true, "FirstOccurrence", false, true, false, KeyEvent.VK_F)),
-  OCCURRENCE_LAST(new ShortcutProperties(true, "LastOccurrence", false, true, false, KeyEvent.VK_L)),
-  OCCURRENCE_NEXT(new ShortcutProperties(true, "NextOccurrence", false, true, false, KeyEvent.VK_N)),
-  OCCURRENCE_PREVIOUS(new ShortcutProperties(true, "PreviousOccurrence", false, true, false, KeyEvent.VK_P)),
-  RESTORE_DEFAULTS(new ShortcutProperties(true, "RestoreDefaults", false, true, false, KeyEvent.VK_R)),
-  VALIDATE(new ShortcutProperties(true, "Validate", false, true, false, KeyEvent.VK_V));
+  //                enabled  name                  CTRL   ALT    SHIFT  key
+  ADD_TO_WATCH_LIST(  true,  "AddWatch",           false, true,  false, KeyEvent.VK_W),
+  APPLY(              true,  "Apply",              false, true,  false, KeyEvent.VK_A),
+  BUG_REPORT(         true,  "BugReport",          false, true,  false, KeyEvent.VK_I),
+  CLOSE(              true,  "Close",              false, true,  false, KeyEvent.VK_C),
+  CURRENT_DAB_LIST(   true,  "CurrentDab",         false, true,  false, KeyEvent.VK_C),
+  DAB_ANALYSIS(       true,  "Disambiguation",     false, true,  false, KeyEvent.VK_D),
+  EXTERNAL_VIEWER(    true,  "ExternalViewer",     false, true,  false, KeyEvent.VK_E),
+  FULL_ANALYSIS(      true,  "Title",              false, true,  false, KeyEvent.VK_F),
+  HELP(               true,  "Help",               false, false, false, KeyEvent.VK_F1),
+  HISTORY(            true,  "History",            false, true,  false, KeyEvent.VK_H),
+  LOGIN(              true,  "Login",              false, true,  false, KeyEvent.VK_L),
+  LOGOUT(             false, "Logout",             false, true,  false, KeyEvent.VK_O),
+  OCCURRENCE_FIRST(   true,  "FirstOccurrence",    false, true,  false, KeyEvent.VK_F),
+  OCCURRENCE_LAST(    true,  "LastOccurrence",     false, true,  false, KeyEvent.VK_L),
+  OCCURRENCE_NEXT(    true,  "NextOccurrence",     false, true,  false, KeyEvent.VK_N),
+  OCCURRENCE_PREVIOUS(true,  "PreviousOccurrence", false, true,  false, KeyEvent.VK_P),
+  OPTIONS(            true,  "Options",            false, true,  false, KeyEvent.VK_O),
+  RANDOM_PAGE(        false, "RandomPage",         false, true,  false, KeyEvent.VK_R),
+  RESTORE_DEFAULTS(   true,  "RestoreDefaults",    false, true,  false, KeyEvent.VK_R),
+  SYSTEM_OPTIONS(     true,  "SystemOptions",      false, true,  false, KeyEvent.VK_Y),
+  VALIDATE(           true,  "Validate",           false, true,  false, KeyEvent.VK_V),
+  WATCH_LIST(         true,  "WatchList",          false, true,  false, KeyEvent.VK_W);
 
   private final static String PROPERTY_ENABLED = "Enabled";
   private final static String PROPERTY_CTRL    = "Ctrl";
@@ -44,10 +54,18 @@ public enum ConfigurationValueShortcut {
   private final ShortcutProperties defaultValue;
 
   /**
-   * @param defaultValue Attribute default value.
+   * @param enabled Is shortcut enabled ?
+   * @param name Shortcut name.
+   * @param ctrl True if key Ctrl should be used.
+   * @param alt True if key Alt should be used.
+   * @param shift True if key Shift should be used.
+   * @param key Key.
    */
-  ConfigurationValueShortcut(ShortcutProperties defaultValue) {
-    this.defaultValue = defaultValue;
+  ConfigurationValueShortcut(
+      boolean enabled, String name,
+      boolean ctrl, boolean alt, boolean shift,
+      int key) {
+    this.defaultValue = new ShortcutProperties(enabled, name, ctrl, alt, shift, key);
   }
 
   /**
@@ -234,7 +252,7 @@ public enum ConfigurationValueShortcut {
      * @return True if mnemonic should be used.
      */
     public boolean useMnemonic() {
-      return !ctrl && !alt;
+      return false;
     }
 
     /**

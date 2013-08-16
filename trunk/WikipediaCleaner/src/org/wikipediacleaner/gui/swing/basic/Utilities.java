@@ -444,7 +444,7 @@ public class Utilities {
       if (mnemonic != -1) {
         button.setMnemonic(mnemonic);
       }
-    } else {
+    } else if (shortcut.getEnabled()) {
       String actionName = "action_" + shortcut.getName();
       InputMap inputMap = button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
       inputMap.put(KeyStroke.getKeyStroke(shortcut.getKey(), shortcut.getModifiers()), actionName);
@@ -474,9 +474,11 @@ public class Utilities {
    */
   public static JButton createJButton(String message, ShortcutProperties shortcut) {
     String label = getLabelWithoutMnemonic(message);
-    String fullLabel = (shortcut != null) ? label + shortcut.getDescription() : label;
     JButton button = new JButton(label);
-    button.setToolTipText(fullLabel);
+    if ((shortcut != null) && (shortcut.getEnabled())) {
+      String fullLabel = label + shortcut.getDescription();
+      button.setToolTipText(fullLabel);
+    }
     setShortcut(button, shortcut, message);
     return button;
   }
