@@ -530,18 +530,17 @@ public class PageElementTag extends PageElement {
           PageElementTemplate template = analysis.isInTemplate(getBeginIndex());
           if (template != null) {
             for (String[] elements : templates) {
-              if (elements.length > 1) {
-                if (Page.areSameTitle(template.getTemplateName(), elements[0])) {
-                  String[] argNames = elements[1].split(",");
-                  for (String argName : argNames) {
-                    String tmp = template.getParameterValue(argName);
-                    if ((result == null) && (tmp != null)) {
-                      result = tmp;
-                      if ((result.length() > 2) &&
-                          (result.charAt(0) == '"') &&
-                          (result.charAt(result.length() - 1) == '"')) {
-                        result = result.substring(1, result.length() - 2);
-                      }
+              if ((elements.length > 1) &&
+                  (Page.areSameTitle(template.getTemplateName(), elements[0]))) {
+                String[] argNames = elements[1].split(",");
+                for (String argName : argNames) {
+                  String tmp = template.getParameterValue(argName);
+                  if ((result == null) && (tmp != null)) {
+                    result = tmp;
+                    if ((result.length() > 2) &&
+                        (result.charAt(0) == '"') &&
+                        (result.charAt(result.length() - 1) == '"')) {
+                      result = result.substring(1, result.length() - 2);
                     }
                   }
                 }
@@ -556,6 +555,101 @@ public class PageElementTag extends PageElement {
       return null;
     }
     return result.trim();
+  }
+
+  /**
+   * Find the main reference tag in a list of reference tags.
+   * 
+   * @param refs List of reference tags.
+   * @param analysis Page analysis.
+   * @return Main reference tag in the list.
+   */
+  public static PageElementTag getMainRef(
+      List<PageElementTag> refs,
+      List<PageElementTag> references,
+      PageAnalysis analysis) {
+    if (refs == null) {
+      return null;
+    }
+
+    // Configuration
+    WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> templates = config.getStringArrayList(WPCConfigurationStringList.REFERENCES_TEMPLATES);
+
+    // Search for a named reference tag
+    PageElementTag namedTag = null;
+    PageElementTag namedTagInReferences = null;
+    PageElementTag namedTagInTemplate = null;
+    for (PageElementTag tag : refs) {
+
+      // Check that the tag has a name
+      boolean hasName = false;
+      Parameter name = tag.getParameter("name");
+      if ((name != null) &&
+          (name.getTrimmedValue() != null) &&
+          (!name.getTrimmedValue().isEmpty())) {
+        hasName = true;
+      }
+
+      // Check that the tag has a value
+      boolean hasValue = false;
+      int beginValue = tag.getValueBeginIndex();
+      int endValue = tag.getValueEndIndex();
+      String value = analysis.getContents().substring(beginValue, endValue);
+      if ((value != null) && (!value.trim().isEmpty())) {
+        hasValue = true;
+      }
+
+      // Check if the tag can be the main tag
+      if (hasName && hasValue) {
+
+        // Direct tag
+        if (namedTag == null) {
+          namedTag = tag;
+        }
+
+        // Tag inside <references />
+        for (PageElementTag reference : references) {
+          if ((tag.getCompleteBeginIndex() > reference.getCompleteBeginIndex()) &&
+              (tag.getCompleteEndIndex() < reference.getCompleteEndIndex())) {
+            if (namedTagInReferences == null) {
+              namedTagInReferences = tag;
+            }
+          }
+        }
+
+        // Tag inside references template
+        if (templates != null) {
+          PageElementTemplate template = analysis.isInTemplate(tag.getCompleteBeginIndex());
+          if (template != null) {
+            for (String[] elements : templates) {
+              if ((elements.length > 0) &&
+                  (Page.areSameTitle(template.getTemplateName(), elements[0])) &&
+                  (namedTagInTemplate == null)) {
+                namedTagInTemplate = tag;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Deal with named reference tag inside <references/>
+    if (namedTagInReferences != null) {
+      return namedTagInReferences;
+    }
+
+    // Deal with named reference tag inside template
+    if (namedTagInTemplate != null) {
+      return namedTagInTemplate;
+    }
+
+    // Deal with named references tag outside <references/>
+    if (namedTag != null) {
+      return namedTag;
+    }
+
+    return null;
   }
 
   /**
