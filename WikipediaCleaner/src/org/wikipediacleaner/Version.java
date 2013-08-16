@@ -24,6 +24,8 @@ public final class Version {
 
   public final static String PROGRAM = "WPCleaner";
 
+  public final static boolean HIGHLIGHT = false;
+
   public final static String MESSAGE =
     "<b>" +
     GT._("Disambiguator extension has been deployed to all WMF wikis.") + " " +
@@ -50,8 +52,6 @@ public final class Version {
         new Object[] { "<a href=\"http://fr.wikipedia.org/wiki/Utilisateur:NicoV/WikiCleanerConfigurationDocumentation\">", "</a>" }) +
     "<br>" +
     GT._("Please, report any other problem you find to me.");
-
-  public final static boolean HIGHLIGHT = true;
 
   public final static String OLD_MESSAGES =
       GT._("Many new features were added recently : try them !") +
