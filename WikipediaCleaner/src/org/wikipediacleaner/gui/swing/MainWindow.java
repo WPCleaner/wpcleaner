@@ -84,6 +84,7 @@ import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationConstants;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
+import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 import org.wikipediacleaner.utils.ConfigurationValueString;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -353,7 +354,7 @@ public class MainWindow
     comboWikipedia.setSelectedItem(defaultWikipedia);
     comboWikipedia.addItemListener(EventHandler.create(
         ItemListener.class, this, "actionChangeWiki"));
-    JLabel labelWikipedia = Utilities.createJLabel(GT._("&Wikipedia"));
+    JLabel labelWikipedia = Utilities.createJLabel(GT._("Wiki"));
     labelWikipedia.setLabelFor(comboWikipedia);
     labelWikipedia.setHorizontalAlignment(SwingConstants.TRAILING);
     JToolBar toolbarWikipedia = new JToolBar(SwingConstants.HORIZONTAL);
@@ -381,7 +382,7 @@ public class MainWindow
     comboLanguage.setSelectedItem(configuration.getLanguage());
     comboLanguage.addItemListener(EventHandler.create(
         ItemListener.class, this, "actionChangeLanguage"));
-    JLabel labelLanguage = Utilities.createJLabel(GT._("Lan&guage"));
+    JLabel labelLanguage = Utilities.createJLabel(GT._("Language"));
     labelLanguage.setLabelFor(comboLanguage);
     labelLanguage.setHorizontalAlignment(SwingConstants.TRAILING);
     JToolBar toolbarLanguage = new JToolBar(SwingConstants.HORIZONTAL);
@@ -408,7 +409,7 @@ public class MainWindow
     comboUser.setEditable(true);
     comboUser.addItemListener(EventHandler.create(
         ItemListener.class, this, "actionChangeUser"));
-    JLabel labelUsername = Utilities.createJLabel(GT._("&User name :"));
+    JLabel labelUsername = Utilities.createJLabel(GT._("User name :"));
     labelUsername.setLabelFor(comboUser);
     labelUsername.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
@@ -423,7 +424,7 @@ public class MainWindow
     textPassword = new JPasswordField();
     textPassword.setText("");
     echoPassword = textPassword.getEchoChar();
-    JLabel labelPassword = Utilities.createJLabel(GT._("&Password :"));
+    JLabel labelPassword = Utilities.createJLabel(GT._("Password :"));
     labelPassword.setLabelFor(textPassword);
     labelPassword.setHorizontalAlignment(SwingConstants.TRAILING);
     constraints.gridx = 0;
@@ -437,17 +438,21 @@ public class MainWindow
     // Login/Demo/Logout buttons
     JToolBar buttonToolbar = new JToolBar(SwingConstants.HORIZONTAL);
     buttonToolbar.setFloatable(false);
-    buttonLogin = Utilities.createJButton(GT._("&Login"), null);
+    buttonLogin = Utilities.createJButton(
+        GT._("Login"),
+        configuration.getShortcut(ConfigurationValueShortcut.LOGIN));
     buttonLogin.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLogin"));
     buttonToolbar.add(buttonLogin);
     buttonToolbar.addSeparator();
-    buttonDemo = Utilities.createJButton(GT._("&Demo"), null);
+    buttonDemo = Utilities.createJButton(GT._("Demo"), null);
     buttonDemo.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDemo"));
     buttonToolbar.add(buttonDemo);
     buttonToolbar.addSeparator();
-    buttonLogout = Utilities.createJButton(GT._("L&ogout"), null);
+    buttonLogout = Utilities.createJButton(
+        GT._("Logout"),
+        configuration.getShortcut(ConfigurationValueShortcut.LOGOUT));
     buttonLogout.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLogout"));
     buttonToolbar.add(buttonLogout);
@@ -463,19 +468,22 @@ public class MainWindow
     buttonToolbar.setFloatable(false);
     buttonHelp = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.NORMAL,
-        GT._("Help (Alt + &H)"), false, null);
+        GT._("Help"), false,
+        configuration.getShortcut(ConfigurationValueShortcut.HELP));
     buttonHelp.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionHelp"));
     buttonToolbar.add(buttonHelp);
     buttonOptions = Utilities.createJButton(
         "gnome-preferences-other.png", EnumImageSize.NORMAL,
-        GT._("Options (Alt + &O)"), false, null);
+        GT._("Options"), false,
+        configuration.getShortcut(ConfigurationValueShortcut.OPTIONS));
     buttonOptions.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOptions"));
     buttonToolbar.add(buttonOptions);
     buttonOptionsSystem = Utilities.createJButton(
         "gnome-preferences-system.png", EnumImageSize.NORMAL,
-        GT._("System Options (Alt + &Y)"), false, null);
+        GT._("System Options"), false,
+        configuration.getShortcut(ConfigurationValueShortcut.SYSTEM_OPTIONS));
     buttonOptionsSystem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOptionsSystem"));
     buttonToolbar.add(buttonOptionsSystem);
@@ -492,7 +500,9 @@ public class MainWindow
         ActionListener.class, this, "actionCheckSpelling"));
     buttonToolbar.add(buttonCheckSpelling);
     buttonToolbar.addSeparator();
-    buttonIdea = Utilities.createJButton(GT._("&Idea ? Bug ?"), null);
+    buttonIdea = Utilities.createJButton(
+        GT._("Idea? Bug?"),
+        configuration.getShortcut(ConfigurationValueShortcut.BUG_REPORT));
     buttonIdea.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionIdea"));
     buttonToolbar.add(buttonIdea);
@@ -500,7 +510,7 @@ public class MainWindow
     buttonAbout = Utilities.createJButton(GT._("About"), null);
     buttonAbout.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAbout"));
-    buttonAbout.setEnabled(false);
+    buttonAbout.setEnabled(false); // TODO: Finish About window
     buttonToolbar.add(buttonAbout);
     constraints.fill = GridBagConstraints.NONE;
     constraints.weighty = 0;
@@ -601,7 +611,8 @@ public class MainWindow
     toolbarRandom.setFloatable(false);
     buttonRandomPage = Utilities.createJButton(
         "commons-nuvola-apps-atlantik.png", EnumImageSize.SMALL,
-        GT._("Random page (Alt + &R)"), false, null);
+        GT._("Random page"), false,
+        configuration.getShortcut(ConfigurationValueShortcut.RANDOM_PAGE));
     buttonRandomPage.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRandomPage"));
     toolbarRandom.add(buttonRandomPage);
@@ -706,6 +717,7 @@ public class MainWindow
     JPanel panel = new JPanel(new GridBagLayout());
     panel.setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), GT._("Projects")));
+    Configuration configuration = Configuration.getConfiguration();
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -732,7 +744,8 @@ public class MainWindow
     // Current disambiguation list button
     buttonCurrentDabList = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
-        GT._("&Current Disambiguation List"), true, null);
+        GT._("Current disambiguation list"), true,
+        configuration.getShortcut(ConfigurationValueShortcut.CURRENT_DAB_LIST));
     buttonCurrentDabList.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCurrentDabList"));
     panel.add(buttonCurrentDabList, constraints);
@@ -795,7 +808,8 @@ public class MainWindow
     // Local watch list button
     buttonWatchlistLocal = Utilities.createJButton(
         "gnome-logviewer.png", EnumImageSize.NORMAL,
-        GT._("Local &Watch list"), true, null);
+        GT._("Local Watch list"), true,
+        configuration.getShortcut(ConfigurationValueShortcut.WATCH_LIST));
     buttonWatchlistLocal.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionWatchlistLocal"));
     panel.add(buttonWatchlistLocal, constraints);
