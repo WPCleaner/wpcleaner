@@ -109,4 +109,13 @@ public class CheckErrorPage {
     }
     return count;
   }
+
+  /**
+   * @return String representation.
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return page.toString();
+  }
 }
