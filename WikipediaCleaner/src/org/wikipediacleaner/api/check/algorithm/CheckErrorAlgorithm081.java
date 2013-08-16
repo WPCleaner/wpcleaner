@@ -127,53 +127,6 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Find the main reference tag in a list of reference tags.
-   * 
-   * @param refs List of reference tags.
-   * @return Main reference tag in the list.
-   */
-  private PageElementTag getMainRef(List<PageElementTag> refs, List<PageElementTag> references) {
-    if (refs == null) {
-      return null;
-    }
-
-    // Search for a named reference tag
-    PageElementTag namedTag = null;
-    PageElementTag namedTagInReferences = null;
-    for (PageElementTag tag : refs) {
-      Parameter name = tag.getParameter("name");
-      if ((name != null) && (name.getTrimmedValue() != null)) {
-        String nameValue = name.getTrimmedValue();
-        if (!nameValue.isEmpty()) {
-          if (namedTag == null) {
-            namedTag = tag;
-          }
-          for (PageElementTag reference : references) {
-            if ((tag.getCompleteBeginIndex() > reference.getCompleteBeginIndex()) &&
-                (tag.getCompleteEndIndex() < reference.getCompleteEndIndex())) {
-              if (namedTagInReferences == null) {
-                namedTagInReferences = tag;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    // Deal with named reference tag inside <references/>
-    if (namedTagInReferences != null) {
-      return namedTagInReferences;
-    }
-
-    // Deal with named references tag outside <references/>
-    if (namedTag != null) {
-      return namedTag;
-    }
-
-    return null;
-  }
-
-  /**
    * Construct a closed reference tag.
    * 
    * @param groupName Name of the group.
@@ -207,21 +160,21 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Group tags by group and value for further analyze
     Map<String, Map<String, List<PageElementTag>>> refs =
         new HashMap<String, Map<String, List<PageElementTag>>>();
-    boolean result = groupTags(pageAnalysis, refs);
+    boolean result = groupTags(analysis, refs);
     if (result == false) {
       return false;
     } else if (errors == null) {
@@ -230,8 +183,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
 
     // Second pass for managing with several tags having the same group and value
     List<PageElementTag> completeReferencesTags =
-        pageAnalysis.getCompleteTags(PageElementTag.TAG_WIKI_REFERENCES);
-    String contents = pageAnalysis.getContents();
+        analysis.getCompleteTags(PageElementTag.TAG_WIKI_REFERENCES);
+    String contents = analysis.getContents();
     for (Entry<String, Map<String, List<PageElementTag>>> entryGroup : refs.entrySet()) {
       String groupName = entryGroup.getKey();
       for (Entry<String, List<PageElementTag>> entryValue : entryGroup.getValue().entrySet()) {
@@ -239,7 +192,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         if (listTags.size() > 1) {
 
           // Find main reference tag
-          PageElementTag mainTag = getMainRef(listTags, completeReferencesTags);
+          PageElementTag mainTag = PageElementTag.getMainRef(
+              listTags, completeReferencesTags, analysis);
           if (mainTag != null) {
 
             // Create an error for each tag, except for the main tag
@@ -247,7 +201,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
             for (PageElementTag tag : listTags) {
               if (tag == mainTag) {
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    pageAnalysis.getPage(),
+                    analysis.getPage(),
                     tag.getCompleteBeginIndex(), tag.getCompleteEndIndex(),
                     CheckErrorResult.ErrorLevel.CORRECT);
                 errors.add(errorResult);
@@ -258,7 +212,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                   nameValue = nameValue.trim();
                 }
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    pageAnalysis.getPage(),
+                    analysis.getPage(),
                     tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
                 errorResult.addReplacement(
                     getClosedRefTag(groupName, selectedName, null),
@@ -273,7 +227,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
               int valueEndIndex = tag.getValueEndIndex();
 
               // Find if an external link is in the reference tag
-              List<PageElementExternalLink> externalLinks = pageAnalysis.getExternalLinks();
+              List<PageElementExternalLink> externalLinks = analysis.getExternalLinks();
               List<PageElementExternalLink> links = new ArrayList<PageElementExternalLink>();
               for (PageElementExternalLink externalLink : externalLinks) {
                 if ((externalLink.getBeginIndex() >= valueBeginIndex) &&
@@ -284,7 +238,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
 
               // Register error
               CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(),
+                  analysis.getPage(),
                   tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
 
               // Add an action for naming the reference tag
@@ -392,7 +346,8 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         List<String> possibleNames = refNamesByGroupAndValue.get(groupName).get(valueRef);
         if ((possibleNames != null) && (possibleNames.size() > 0)) {
           String selectedName = possibleNames.get(0);
-          PageElementTag mainRef = getMainRef(valueRefs, completeReferencesTags);
+          PageElementTag mainRef = PageElementTag.getMainRef(
+              valueRefs, completeReferencesTags, analysis);
           if (mainRef != refTag) {
             String tmp = getClosedRefTag(groupName, selectedName, null);
             String message =
