@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-16 19:07+0200\n"
+"POT-Creation-Date: 2013-08-17 00:21+0200\n"
 "PO-Revision-Date: 2013-08-08 21:39+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -18,17 +18,17 @@ msgstr ""
 "X-Launchpad-Export-Date: 2013-08-08 21:40+0000\n"
 "X-Generator: Launchpad (build 16723)\n"
 
-#: org/wikipediacleaner/Version.java:29
+#: org/wikipediacleaner/Version.java:31
 msgid "Disambiguator extension has been deployed to all WMF wikis."
 msgstr ""
 "L’extension Disambiguator a été déployée sur tous les wikis de la Fondation "
 "WikiMédia."
 
-#: org/wikipediacleaner/Version.java:30
+#: org/wikipediacleaner/Version.java:32
 msgid "It defines the new magic word __DISAMBIG__."
 msgstr "Elle définit le nouveau mot magique __DISAMBIG__."
 
-#: org/wikipediacleaner/Version.java:31
+#: org/wikipediacleaner/Version.java:33
 msgid ""
 "This magic word should be added in every disambiguation pages (either "
 "through templates or directly)."
@@ -36,15 +36,15 @@ msgstr ""
 "Ce mot magique devrait être ajouté à chaque page d’homonymie (soit au "
 "travers d’un modèle, soit directement)."
 
-#: org/wikipediacleaner/Version.java:32
+#: org/wikipediacleaner/Version.java:34
 msgid "WPCleaner v1.28 also uses this as the default system."
 msgstr "WPCleaner v1.28 l’utilise aussi par défaut."
 
-#: org/wikipediacleaner/Version.java:33
+#: org/wikipediacleaner/Version.java:35
 msgid "An action may be required on your wiki:"
 msgstr "Une action peut être nécessaire pour votre wiki :"
 
-#: org/wikipediacleaner/Version.java:35
+#: org/wikipediacleaner/Version.java:37
 #, java-format
 msgid ""
 "You can check if {0} is used on your wiki by opening an existing "
@@ -56,19 +56,19 @@ msgstr ""
 "sur la page\" dans le menu sur la gauche. Enfin, rechercher {0} dans la page "
 "d’information."
 
-#: org/wikipediacleaner/Version.java:39
+#: org/wikipediacleaner/Version.java:41
 #, java-format
 msgid "If {0} is not used on your wiki, you should add {1} to the page {2}."
 msgstr ""
 "Si {0} n’est pas utilisé sur votre wiki, vous devriez ajouter {1} à la page "
 "{2}."
 
-#: org/wikipediacleaner/Version.java:46
+#: org/wikipediacleaner/Version.java:48
 #, java-format
 msgid "I hope you''ll like {0}."
 msgstr "J’espère que vous apprécierez {0}."
 
-#: org/wikipediacleaner/Version.java:49
+#: org/wikipediacleaner/Version.java:51
 #, java-format
 msgid ""
 "WPCleaner configuration is available online, check the {0}System "
@@ -77,7 +77,7 @@ msgstr ""
 "La configuration de WPCleaner est disponible en ligne, regardez la {0}"
 "configuration système{1}"
 
-#: org/wikipediacleaner/Version.java:52
+#: org/wikipediacleaner/Version.java:54
 msgid "Please, report any other problem you find to me."
 msgstr "S’il vous plait, informez-moi des problèmes rencontrés."
 
@@ -1311,9 +1311,10 @@ msgid "Options"
 msgstr "Options"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:485
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:179
 #, fuzzy
-msgid "System Options"
-msgstr "Options système (Alt + &Y)"
+msgid "System options"
+msgstr "Rechargement des options système"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:492
 msgid "Reload system options"
@@ -2932,11 +2933,6 @@ msgstr "Restaurer les valeurs par défaut"
 msgid "Shortcut options (restart needed)"
 msgstr "Options de raccourcis (redémarrage nécessaire)"
 
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:179
-#, fuzzy
-msgid "System options"
-msgstr "Rechargement des options système"
-
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:207
 msgid "Press key for shortcut or ESC to cancel"
 msgstr "Appuyer sur la touche du raccourci ou ESC pour annuler"
@@ -3166,6 +3162,10 @@ msgstr "Un nom de référence ne peut pas contenir les caractères suivants : {0
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:53
 msgid "The value can't contain any of these characters: {0}"
 msgstr "Une valeur ne peut pas contenir les caractères suivants : {0}"
+
+#, fuzzy
+#~ msgid "System Options"
+#~ msgstr "Options système (Alt + &Y)"
 
 #~ msgid "&Wikipedia"
 #~ msgstr "&Wikipédia"

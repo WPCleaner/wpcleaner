@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-16 19:07+0200\n"
+"POT-Creation-Date: 2013-08-17 00:21+0200\n"
 "PO-Revision-Date: 2013-07-06 19:09+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -18,29 +18,29 @@ msgstr ""
 "X-Launchpad-Export-Date: 2013-07-07 10:01+0000\n"
 "X-Generator: Launchpad (build 16696)\n"
 
-#: org/wikipediacleaner/Version.java:29
+#: org/wikipediacleaner/Version.java:31
 msgid "Disambiguator extension has been deployed to all WMF wikis."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:30
+#: org/wikipediacleaner/Version.java:32
 msgid "It defines the new magic word __DISAMBIG__."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:31
+#: org/wikipediacleaner/Version.java:33
 msgid ""
 "This magic word should be added in every disambiguation pages (either "
 "through templates or directly)."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:32
+#: org/wikipediacleaner/Version.java:34
 msgid "WPCleaner v1.28 also uses this as the default system."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:33
+#: org/wikipediacleaner/Version.java:35
 msgid "An action may be required on your wiki:"
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:35
+#: org/wikipediacleaner/Version.java:37
 #, java-format
 msgid ""
 "You can check if {0} is used on your wiki by opening an existing "
@@ -48,24 +48,24 @@ msgid ""
 "the menu on the left. Finally, search for {0} in the information page."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:39
+#: org/wikipediacleaner/Version.java:41
 #, java-format
 msgid "If {0} is not used on your wiki, you should add {1} to the page {2}."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:46
+#: org/wikipediacleaner/Version.java:48
 #, java-format
 msgid "I hope you''ll like {0}."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:49
+#: org/wikipediacleaner/Version.java:51
 #, java-format
 msgid ""
 "WPCleaner configuration is available online, check the {0}System "
 "configuration{1}."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:52
+#: org/wikipediacleaner/Version.java:54
 msgid "Please, report any other problem you find to me."
 msgstr "Rapporteer ieder ander probleem dat u vindt, alstublieft."
 
@@ -1253,9 +1253,10 @@ msgid "Options"
 msgstr "Opties"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:485
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:179
 #, fuzzy
-msgid "System Options"
-msgstr "Opties"
+msgid "System options"
+msgstr "Algemene instellingen"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:492
 msgid "Reload system options"
@@ -2830,11 +2831,6 @@ msgstr ""
 msgid "Shortcut options (restart needed)"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:179
-#, fuzzy
-msgid "System options"
-msgstr "Algemene instellingen"
-
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:207
 msgid "Press key for shortcut or ESC to cancel"
 msgstr ""
@@ -3046,6 +3042,10 @@ msgstr ""
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:53
 msgid "The value can't contain any of these characters: {0}"
 msgstr ""
+
+#, fuzzy
+#~ msgid "System Options"
+#~ msgstr "Opties"
 
 #~ msgid "&Wikipedia"
 #~ msgstr "&Wikipedia"

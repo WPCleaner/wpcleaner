@@ -482,7 +482,7 @@ public class MainWindow
     buttonToolbar.add(buttonOptions);
     buttonOptionsSystem = Utilities.createJButton(
         "gnome-preferences-system.png", EnumImageSize.NORMAL,
-        GT._("System Options"), false,
+        GT._("System options"), false,
         configuration.getShortcut(ConfigurationValueShortcut.SYSTEM_OPTIONS));
     buttonOptionsSystem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOptionsSystem"));
