@@ -113,9 +113,9 @@ public class ApiSearchRequest extends ApiListRequest {
   public final static String PROPERTY_PROP_WORDCOUNT = "wordcount";
 
   /**
-   * Property for Redirect.
+   * Property for Redirects.
    */
-  public final static String PROPERTY_REDIRECT = "srredirect";
+  public final static String PROPERTY_REDIRECTS = "srredirects";
 
   /**
    * Property for Search.
@@ -171,7 +171,7 @@ public class ApiSearchRequest extends ApiListRequest {
       properties.put(PROPERTY_NAMESPACE, "0");
     }
     properties.put(PROPERTY_PROP, PROPERTY_PROP_TITLESNIPPET);
-    properties.put(PROPERTY_REDIRECT, "true");
+    properties.put(PROPERTY_REDIRECTS, "true");
     properties.put(PROPERTY_SEARCH, "intitle:\"" + page.getTitle().replaceAll("\"", "\"\"") + "\"");
     List<Page> list = new ArrayList<Page>();
     int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_SEARCH);
