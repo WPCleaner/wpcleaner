@@ -256,8 +256,8 @@ public class AboutWindow extends BasicWindow {
     constraints.weighty = 0;
 
     // Short presentation
-    JLabel presentation = new JLabel();
-    presentation.setText(
+    JLabel label = new JLabel();
+    label.setText(
         "<html>" +
         "<b>Apache Commons Codec</b> is a component of Commons Apache projet." +
         "<br>" +
@@ -265,10 +265,24 @@ public class AboutWindow extends BasicWindow {
         "<br>" +
         "See <a href='http://commons.apache.org/codec/'>http://commons.apache.org/codec/</a> for more information." +
         "</html>");
-    panel.add(presentation, constraints);
+    panel.add(label, constraints);
     constraints.gridy++;
 
-    //TODO: License
+    // Notice
+    String notice = loadFile("NOTICE_commons-codec.txt");
+    if ((notice != null) && (!"".equals(notice.trim()))) {
+      label = new JLabel(notice);
+      panel.add(label, constraints);
+      constraints.gridy++;
+    }
+
+    // License
+    String license = loadFile("LICENSE_commons-codec.txt");
+    if ((license != null) && (!"".equals(license.trim()))) {
+      label = new JLabel(license);
+      panel.add(label, constraints);
+      constraints.gridy++;
+    }
 
     return panel;
   }
