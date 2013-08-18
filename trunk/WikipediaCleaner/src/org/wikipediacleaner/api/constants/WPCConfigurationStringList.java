@@ -25,6 +25,8 @@ public enum WPCConfigurationStringList {
   EDIT_WARNING_TEMPLATES("general_edit_warning_templates", true, true, true),
   // Pages containing the list of pages with many disambiguation links.
   MOST_DAB_LINKS("most_dab_links", false, true, false),
+  // List of templates for preventing bot editions.
+  NOBOT_TEMPLATES("general_nobot_templates", true, true, true),
   // Categories that can be applied to redirect page.
   REDIRECT_CATEGORIES("redirect_categories", true, true, true),
   // Templates that can be applied to redirect page.

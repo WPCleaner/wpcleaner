@@ -19,8 +19,11 @@ import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -89,7 +92,6 @@ class AutomaticCWWorker extends BasicWorker {
   public Object construct() {
     List<CheckError> errors = new ArrayList<CheckError>();
     try {
-      API api = APIFactory.getAPI();
       CheckWiki checkWiki = APIFactory.getCheckWiki();
       for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
         setText(
@@ -100,55 +102,7 @@ class AutomaticCWWorker extends BasicWorker {
           for (int numPage = 0;
               (numPage < error.getPageCount()) && shouldContinue();
               numPage++) {
-            Page page = error.getPage(numPage);
-            api.retrieveContents(getWikipedia(), Collections.singletonList(page), true, false);
-            PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
-            List<CheckErrorPage> errorPages = CheckError.analyzeErrors(allAlgorithms, analysis);
-            boolean found = false;
-            if (errorPages != null) {
-              for (CheckErrorPage errorPage : errorPages) {
-                if (algorithm.equals(errorPage.getAlgorithm()) &&
-                    errorPage.getErrorFound()) {
-                  found = true;
-                }
-              }
-            }
-            if (found) {
-              String newContents = page.getContents();
-              List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-              for (CheckErrorAlgorithm currentAlgorithm : allAlgorithms) {
-                String tmpContents = newContents;
-                analysis = page.getAnalysis(tmpContents, true);
-                newContents = currentAlgorithm.botFix(analysis);
-                if (!newContents.equals(tmpContents)) {
-                  usedAlgorithms.add(currentAlgorithm);
-                }
-              }
-              if (!newContents.equals(page.getContents())) {
-                StringBuilder comment = new StringBuilder();
-                comment.append(getWikipedia().getCWConfiguration().getComment());
-                for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
-                  comment.append(" - ");
-                  comment.append(usedAlgorithm.getShortDescriptionReplaced());
-                }
-                setText(GT._("Fixing page {0}", page.getTitle()));
-                api.updatePage(
-                    getWikipedia(), page, newContents,
-                    getWikipedia().createUpdatePageComment(comment.toString(), null, true),
-                    false);
-                count++;
-                for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
-                  CheckErrorPage errorPage = CheckError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
-                  if ((errorPage != null) && (!errorPage.getErrorFound())) {
-                    checkWiki.markAsFixed(page, usedAlgorithm.getErrorNumberString());
-                  }
-                }
-              } else if (analyzeNonFixed) {
-                Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
-              }
-            } else if (algorithm.isFullDetection()) {
-              checkWiki.markAsFixed(page, algorithm.getErrorNumberString());
-            }
+            analyzePage(error.getPage(numPage), algorithm);
           }
         }
       }
@@ -156,6 +110,93 @@ class AutomaticCWWorker extends BasicWorker {
       return e;
     }
     return null;
+  }
+
+  /**
+   * Analyze and fix a page.
+   * 
+   * @param page Page.
+   * @param algorithm Main algorithm.
+   * @throws APIException
+   */
+  private void analyzePage(
+      Page page, CheckErrorAlgorithm algorithm) throws APIException {
+
+    // Retrieve page content 
+    API api = APIFactory.getAPI();
+    api.retrieveContents(getWikipedia(), Collections.singletonList(page), true, false);
+    PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
+
+    // Check that robots are authorized to change this page 
+    WPCConfiguration config = getWikipedia().getConfiguration();
+    List<String[]> nobotTemplates = config.getStringArrayList(
+        WPCConfigurationStringList.NOBOT_TEMPLATES);
+    if ((nobotTemplates != null) && (!nobotTemplates.isEmpty())) {
+      for (String[] nobotTemplate : nobotTemplates) {
+        String templateName = nobotTemplate[0];
+        List<PageElementTemplate> templates = analysis.getTemplates(templateName);
+        if ((templates != null) && (!templates.isEmpty())) {
+          if (analyzeNonFixed) {
+            Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
+          }
+          return;
+        }
+      }
+    }
+
+    // Analyze page to check if error has been found
+    List<CheckErrorPage> errorPages = CheckError.analyzeErrors(allAlgorithms, analysis);
+    boolean found = false;
+    if (errorPages != null) {
+      for (CheckErrorPage errorPage : errorPages) {
+        if (algorithm.equals(errorPage.getAlgorithm()) &&
+            errorPage.getErrorFound()) {
+          found = true;
+        }
+      }
+    }
+
+    CheckWiki checkWiki = APIFactory.getCheckWiki();
+    if (found) {
+
+      // Fix all errors that can be fixed
+      String newContents = page.getContents();
+      List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+      for (CheckErrorAlgorithm currentAlgorithm : allAlgorithms) {
+        String tmpContents = newContents;
+        analysis = page.getAnalysis(tmpContents, true);
+        newContents = currentAlgorithm.botFix(analysis);
+        if (!newContents.equals(tmpContents)) {
+          usedAlgorithms.add(currentAlgorithm);
+        }
+      }
+
+      // Save page if errors have been fixed
+      if (!newContents.equals(page.getContents())) {
+        StringBuilder comment = new StringBuilder();
+        comment.append(getWikipedia().getCWConfiguration().getComment());
+        for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
+          comment.append(" - ");
+          comment.append(usedAlgorithm.getShortDescriptionReplaced());
+        }
+        setText(GT._("Fixing page {0}", page.getTitle()));
+        api.updatePage(
+            getWikipedia(), page, newContents,
+            getWikipedia().createUpdatePageComment(comment.toString(), null, true),
+            false);
+        count++;
+        for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
+          CheckErrorPage errorPage = CheckError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
+          if ((errorPage != null) && (!errorPage.getErrorFound())) {
+            checkWiki.markAsFixed(page, usedAlgorithm.getErrorNumberString());
+          }
+        }
+      } else if (analyzeNonFixed) {
+        Controller.runFullAnalysis(page.getTitle(), null, getWikipedia());
+      }
+    } else if (algorithm.isFullDetection()) {
+      checkWiki.markAsFixed(page, algorithm.getErrorNumberString());
+    }
   }
 
   /**
