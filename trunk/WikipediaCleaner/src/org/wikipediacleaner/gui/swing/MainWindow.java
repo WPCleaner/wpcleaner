@@ -517,7 +517,6 @@ public class MainWindow
     buttonAbout = Utilities.createJButton(GT._("About"), null);
     buttonAbout.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAbout"));
-    buttonAbout.setEnabled(false); // TODO: Finish About window
     buttonToolbar.add(buttonAbout);
     constraints.fill = GridBagConstraints.NONE;
     constraints.weighty = 0;
