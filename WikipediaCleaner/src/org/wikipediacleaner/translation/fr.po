@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-08-18 12:42+0200\n"
-"PO-Revision-Date: 2013-08-16 22:21+0000\n"
+"PO-Revision-Date: 2013-08-18 14:21+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2013-08-17 09:48+0000\n"
+"X-Launchpad-Export-Date: 2013-08-18 14:24+0000\n"
 "X-Generator: Launchpad (build 16723)\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -1348,15 +1348,13 @@ msgstr "Page aléatoire"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:638
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
-#, fuzzy
 msgid "Add to list"
-msgstr "Ajouter à la liste de suivi"
+msgstr "Ajouter à la liste"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:645
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:200
-#, fuzzy
 msgid "Remove from list"
-msgstr "Supprimer les sauts de ligne en fin de liste"
+msgstr "Retirer de la liste"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:671
 msgid "Search in titles"
