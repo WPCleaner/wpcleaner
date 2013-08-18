@@ -37,7 +37,10 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
   public boolean analyze(
       PageAnalysis pageAnalysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
+      return false;
+    }
+    if (!pageAnalysis.getPage().isArticle()) {
       return false;
     }
 
@@ -100,7 +103,9 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
   @Override
   public String automaticFix(PageAnalysis analysis) {
     String contents = analysis.getContents();
-    if (!analysis.areTitlesReliable()) {
+    if ((!analysis.getPage().isArticle()) ||
+        (!analysis.getPage().isInMainNamespace()) ||
+        (!analysis.areTitlesReliable())) {
       return contents;
     }
     List<PageElementTitle> titles = analysis.getTitles();
