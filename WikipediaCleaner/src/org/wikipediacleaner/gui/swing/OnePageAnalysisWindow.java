@@ -382,6 +382,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     // Text buttons
     JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarButtons.setFloatable(false);
+    toolbarButtons.setBorderPainted(false);
     buttonFirst = ActionOccurrence.addButton(
         toolbarButtons, getTextContents(), ActionOccurrence.Occurrence.FIRST, true, true);
     buttonPrevious = ActionOccurrence.addButton(
@@ -552,6 +553,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     // Button toolbar
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
+    toolbar.setBorderPainted(false);
     ActionFullAnalysis.addButton(
         getParentComponent(), toolbar, getWikipedia(), listLinks, knownPages, true, true);
     ActionDisambiguationAnalysis.addButton(

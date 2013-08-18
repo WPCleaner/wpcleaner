@@ -137,6 +137,8 @@ public class MainWindow
   private JButton buttonInternalLinks;
   private JButton buttonCategoryMembers;
   private JButton buttonUpdateDabWarning;
+  private JButton buttonAddPage;
+  private JButton buttonRemovePage;
   private JButton buttonRandomPage;
   private JButton buttonContributions;
 
@@ -286,6 +288,8 @@ public class MainWindow
     buttonEmbeddedIn.setEnabled(logged);
     buttonUpdateDabWarning.setEnabled(logged);
     buttonRandomPage.setEnabled(logged);
+    buttonAddPage.setEnabled(logged);
+    buttonRemovePage.setEnabled(logged);
     buttonContributions.setEnabled(logged);
   }
 
@@ -358,6 +362,7 @@ public class MainWindow
     labelWikipedia.setHorizontalAlignment(SwingConstants.TRAILING);
     JToolBar toolbarWikipedia = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarWikipedia.setFloatable(false);
+    toolbarWikipedia.setBorderPainted(false);
     JButton buttonWikipediaInfo = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.SMALL,
         GT._("Other Wikipedia"), false, null);
@@ -386,6 +391,7 @@ public class MainWindow
     labelLanguage.setHorizontalAlignment(SwingConstants.TRAILING);
     JToolBar toolbarLanguage = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarLanguage.setFloatable(false);
+    toolbarLanguage.setBorderPainted(false);
     JButton buttonLanguageInfo = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.SMALL,
         GT._("Other Language"), false, null);
@@ -437,6 +443,7 @@ public class MainWindow
     // Login/Demo/Logout buttons
     JToolBar buttonToolbar = new JToolBar(SwingConstants.HORIZONTAL);
     buttonToolbar.setFloatable(false);
+    buttonToolbar.setBorderPainted(false);
     buttonLogin = Utilities.createJButton(
         GT._("Login"),
         configuration.getShortcut(ConfigurationValueShortcut.LOGIN));
@@ -465,6 +472,7 @@ public class MainWindow
     // Buttons
     buttonToolbar = new JToolBar(SwingConstants.HORIZONTAL);
     buttonToolbar.setFloatable(false);
+    buttonToolbar.setBorderPainted(false);
     buttonHelp = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.NORMAL,
         GT._("Help"), false,
@@ -609,23 +617,38 @@ public class MainWindow
       comboPagename = new JComboBox();
     }
     comboPagename.setEditable(true);
-    comboPagename.setPrototypeDisplayValue("XXXXXXXXXXXXXXXXXXXX");
+    comboPagename.setPrototypeDisplayValue("XXXXXXXXXXXXXXXXXXXXXXXXX");
     comboPagename.setSelectedItem(lastPage);
     panel.add(comboPagename, constraints);
     constraints.gridx++;
 
     // Random page button
-    JToolBar toolbarRandom = new JToolBar(SwingConstants.HORIZONTAL);
-    toolbarRandom.setFloatable(false);
+    JToolBar toolbarPage = new JToolBar(SwingConstants.HORIZONTAL);
+    toolbarPage.setFloatable(false);
+    toolbarPage.setBorderPainted(false);
     buttonRandomPage = Utilities.createJButton(
         "commons-nuvola-apps-atlantik.png", EnumImageSize.SMALL,
         GT._("Random page"), false,
         configuration.getShortcut(ConfigurationValueShortcut.RANDOM_PAGE));
     buttonRandomPage.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRandomPage"));
-    toolbarRandom.add(buttonRandomPage);
+    toolbarPage.add(buttonRandomPage);
+    buttonAddPage = Utilities.createJButton(
+        "gnome-list-add.png", EnumImageSize.SMALL,
+        GT._("Add to list"), false,
+        configuration.getShortcut(ConfigurationValueShortcut.LIST_ADD));
+    buttonAddPage.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionAddPage"));
+    toolbarPage.add(buttonAddPage);
+    buttonRemovePage = Utilities.createJButton(
+        "gnome-list-remove.png", EnumImageSize.SMALL,
+        GT._("Remove from list"), false,
+        configuration.getShortcut(ConfigurationValueShortcut.LIST_REMOVE));
+    buttonRemovePage.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionRemovePage"));
+    toolbarPage.add(buttonRemovePage);
     constraints.weightx = 0;
-    panel.add(toolbarRandom, constraints);
+    panel.add(toolbarPage, constraints);
     constraints.gridy++;
 
     constraints.gridwidth = 2;
@@ -1240,6 +1263,9 @@ public class MainWindow
         }
       }
     }
+    if (message != null) {
+      displayWarning(message);
+    }
     return null;
   }
 
@@ -1578,6 +1604,56 @@ public class MainWindow
    */
   public void actionRandomPage() {
     new RandomPageWorker(getWikipedia(), this, comboPagename).start();
+  }
+
+  /**
+   * Action called when Add page button is pressed.
+   */
+  public void actionAddPage() {
+    String pageName = checkPagename(null);
+    if (pageName == null) {
+      return;
+    }
+    Configuration config = Configuration.getConfiguration();
+    List<String> interestingPages = config.getStringList(
+        null, Configuration.ARRAY_INTERESTING_PAGES);
+    if (interestingPages == null) {
+      interestingPages = new ArrayList<String>();
+    }
+    if (!interestingPages.contains(pageName)) {
+      interestingPages.add(pageName);
+      Collections.sort(interestingPages);
+      config.setStringList(null, Configuration.ARRAY_INTERESTING_PAGES, interestingPages);
+      comboPagename.removeAllItems();
+      for (String page : interestingPages) {
+        comboPagename.addItem(page);
+      }
+    }
+  }
+
+  /**
+   * Action called when Remove page button is pressed.
+   */
+  public void actionRemovePage() {
+    String pageName = checkPagename(null);
+    if (pageName == null) {
+      return;
+    }
+    Configuration config = Configuration.getConfiguration();
+    List<String> interestingPages = config.getStringList(
+        null, Configuration.ARRAY_INTERESTING_PAGES);
+    if (interestingPages == null) {
+      return;
+    }
+    if (interestingPages.contains(pageName)) {
+      interestingPages.remove(pageName);
+      Collections.sort(interestingPages);
+      config.setStringList(null, Configuration.ARRAY_INTERESTING_PAGES, interestingPages);
+      comboPagename.removeAllItems();
+      for (String page : interestingPages) {
+        comboPagename.addItem(page);
+      }
+    }
   }
 
   /**
