@@ -217,6 +217,7 @@ public class DisambiguationWindow extends OnePageWindow {
     addTextPageName(panel);
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
+    toolbar.setBorderPainted(false);
     addButtonReload(toolbar, true);
     buttonView = ActionExternalViewer.addButton(
         toolbar, getWikipedia(), getPageName(), false, true, false);
@@ -299,6 +300,7 @@ public class DisambiguationWindow extends OnePageWindow {
     // Button toolbar
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
+    toolbar.setBorderPainted(false);
     buttonFullAnalysisLink = ActionFullAnalysis.addButton(
         getParentComponent(), toolbar, getWikipedia(), listLinks, knownPages, true, true);
     ActionDisambiguationAnalysis.addButton(

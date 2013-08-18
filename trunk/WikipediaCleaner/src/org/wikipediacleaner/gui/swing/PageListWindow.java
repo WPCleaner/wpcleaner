@@ -223,6 +223,7 @@ public class PageListWindow extends BasicWindow {
     // Tool bar
     JToolBar toolbar = new JToolBar(SwingConstants.HORIZONTAL);
     toolbar.setFloatable(false);
+    toolbar.setBorderPainted(false);
     buttonFullAnalysis = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
         GT._("Full analysis"), false,
