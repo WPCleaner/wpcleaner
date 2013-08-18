@@ -26,7 +26,8 @@
   <property name="WPCleaner.libs.gettext.lic"    value="LICENSE_gettext-commons.txt" />
   <property name="WPCleaner.libs.httpclient.dir" value="libs/commons-httpclient-3.1" />
   <property name="WPCleaner.libs.httpclient.jar" value="commons-httpclient-3.1.jar" />
-  <property name="WPCleaner.libs.httpclient.lic" value="LICENSE_commons-httpclient.txt" />
+  <property name="WPCleaner.libs.httpclient.lic" value="LICENSE.txt" />
+  <property name="WPCleaner.libs.httpclient.not" value="NOTICE.txt" />
   <property name="WPCleaner.libs.jaxen-core.jar" value="jaxen-core.jar" />
   <property name="WPCleaner.libs.jaxen-jdom.jar" value="jaxen-jdom.jar" />
   <property name="WPCleaner.libs.jaxen.lic"      value="LICENSE_jaxen.txt" />
@@ -127,7 +128,9 @@
     <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.not}"
           tofile="${WPCleaner.classes.dir}/NOTICE_commons-codec.txt" />
     <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.lic}"
-          tofile="${WPCleaner.classes.dir}/commons-httpclient.license" />
+          tofile="${WPCleaner.classes.dir}/LICENSE_commons-httpclient.txt" />
+    <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.not}"
+          tofile="${WPCleaner.classes.dir}/NOTICE_commons-httpclient.txt" />
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.lic}"
   	      tofile="${WPCleaner.classes.dir}/LICENSE_commons-logging.txt" />
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.not}"
