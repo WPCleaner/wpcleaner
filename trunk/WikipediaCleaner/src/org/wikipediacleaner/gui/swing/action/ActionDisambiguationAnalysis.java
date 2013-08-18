@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JToolBar;
 import javax.swing.text.JTextComponent;
@@ -152,6 +153,11 @@ public class ActionDisambiguationAnalysis implements ActionListener {
   private final JTextComponent text;
 
   /**
+   * Combo box containing the page name.
+   */
+  private final JComboBox combo;
+
+  /**
    * @param wiki Wiki.
    * @param title Page to be analyzed.
    */
@@ -161,6 +167,7 @@ public class ActionDisambiguationAnalysis implements ActionListener {
     this.title = title;
     this.list = null;
     this.text = null;
+    this.combo = null;
   }
 
   /**
@@ -174,6 +181,7 @@ public class ActionDisambiguationAnalysis implements ActionListener {
     this.title = null;
     this.list = list;
     this.text = null;
+    this.combo = null;
   }
 
   /**
@@ -187,6 +195,21 @@ public class ActionDisambiguationAnalysis implements ActionListener {
     this.title = null;
     this.list = null;
     this.text = text;
+    this.combo = null;
+  }
+
+  /**
+   * @param parent Parent component.
+   * @param wiki Wiki.
+   * @param combo Combo box containing the page name.
+   */
+  public ActionDisambiguationAnalysis(Component parent, EnumWikipedia wiki, JComboBox combo) {
+    this.parent = parent;
+    this.wiki = wiki;
+    this.title = null;
+    this.list = null;
+    this.text = null;
+    this.combo = combo;
   }
 
   /**
@@ -207,13 +230,21 @@ public class ActionDisambiguationAnalysis implements ActionListener {
     }
 
     // Analyze a single page
-    if (text != null) {
-      String tmp = text.getText();
+    if ((text != null) || (combo != null)) {
+      String tmp = null;
+      if (text != null) {
+        tmp = text.getText();
+      } else {
+        Object select = combo.getSelectedItem();
+        if (select != null) {
+          tmp = select.toString();
+        }
+      }
       if ((tmp == null) || (tmp.trim().length() == 0)) {
         Utilities.displayWarning(
             parent,
             GT._("You must input a page name for running a disambiguation analysis"),
-            text);
+            (text != null) ? text : combo);
         return;
       }
       tmp = tmp.trim();
