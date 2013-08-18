@@ -32,9 +32,10 @@
   <property name="WPCleaner.libs.jdom.dir"       value="libs/jdom-1.0" />
   <property name="WPCleaner.libs.jdom.jar"       value="jdom.jar" />
   <property name="WPCleaner.libs.jdom.lic"       value="LICENSE_jdom.txt" />
-  <property name="WPCleaner.libs.logging.dir"    value="libs/commons-logging-1.1" />
-  <property name="WPCleaner.libs.logging.jar"    value="commons-logging-1.1.jar" />
-  <property name="WPCleaner.libs.logging.lic"    value="LICENSE_commons-logging.txt" />
+  <property name="WPCleaner.libs.logging.dir"    value="libs/commons-logging-1.1.3" />
+  <property name="WPCleaner.libs.logging.jar"    value="commons-logging-1.1.3.jar" />
+  <property name="WPCleaner.libs.logging.lic"    value="LICENSE.txt" />
+  <property name="WPCleaner.libs.logging.not"    value="NOTICE.txt" />
   <property name="WPCleaner.libs.saxpath.jar"    value="saxpath.jar" />
 
   <property name="WPCleaner.libs.cobra.jars"     value="${WPCleaner.libs.cobra.jar} ${WPCleaner.libs.cobra-js.jar}" />
@@ -125,7 +126,9 @@
     <copy file="${WPCleaner.libs.httpclient.dir}/${WPCleaner.libs.httpclient.lic}"
           tofile="${WPCleaner.classes.dir}/commons-httpclient.license" />
     <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.lic}"
-  	      tofile="${WPCleaner.classes.dir}/commons-logging.license" />
+  	      tofile="${WPCleaner.classes.dir}/LICENSE_commons-logging.txt" />
+    <copy file="${WPCleaner.libs.logging.dir}/${WPCleaner.libs.logging.not}"
+  	      tofile="${WPCleaner.classes.dir}/NOTICE_commons-logging.txt" />
     <copy file="${WPCleaner.libs.gettext.dir}/${WPCleaner.libs.gettext.lic}"
           tofile="${WPCleaner.classes.dir}/gettext-commons.license" />
     <copy file="${WPCleaner.libs.jdom.dir}/${WPCleaner.libs.jdom.lic}"
