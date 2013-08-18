@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -54,28 +55,10 @@ public class ShortcutOptionsPanel extends OptionsPanel {
     initialize();
   }
 
-  private int lineAddToWatchList;
-  private int lineApply;
-  private int lineBugReport;
-  private int lineClose;
-  private int lineCurrentDab;
-  private int lineDabAnalysis;
-  private int lineExternalViewer;
-  private int lineFullAnalysis;
-  private int lineHelp;
-  private int lineHistory;
-  private int lineLogin;
-  private int lineLogout;
-  private int lineOccurrenceFirst;
-  private int lineOccurrenceLast;
-  private int lineOccurrenceNext;
-  private int lineOccurrencePrevious;
-  private int lineOptions;
-  private int lineRandomPage;
-  private int lineRestoreDefaults;
-  private int lineSystemOptions;
-  private int lineValidate;
-  private int lineWatchList;
+  /**
+   * Shortcuts
+   */
+  private Vector<ConfigurationValueShortcut> shortcuts;
 
   /**
    * A notice to explain how to set up a shortcut.
@@ -88,6 +71,8 @@ public class ShortcutOptionsPanel extends OptionsPanel {
   private void initialize() {
     setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), GT._("Shortcut options (restart needed)")));
+
+    shortcuts = new Vector<ConfigurationValueShortcut>();
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -116,92 +101,124 @@ public class ShortcutOptionsPanel extends OptionsPanel {
     add(scrollPane, constraints);
 
     // Add line for add to watch list
-    lineAddToWatchList = addLine(panel, constraints, GT._("Add to Watch list"));
-    setShortcut(lineAddToWatchList, ConfigurationValueShortcut.ADD_TO_WATCH_LIST);
+    addLine(
+        panel, constraints, GT._("Add to Watch list"),
+        ConfigurationValueShortcut.ADD_TO_WATCH_LIST);
 
     // Add line for apply
-    lineApply = addLine(panel, constraints, GT._("Apply"));
-    setShortcut(lineApply, ConfigurationValueShortcut.APPLY);
+    addLine(
+        panel, constraints, GT._("Apply"),
+        ConfigurationValueShortcut.APPLY);
 
     // Add line for bug report
-    lineBugReport = addLine(panel, constraints, GT._("Idea? Bug?"));
-    setShortcut(lineBugReport, ConfigurationValueShortcut.BUG_REPORT);
+    addLine(
+        panel, constraints, GT._("Idea? Bug?"),
+        ConfigurationValueShortcut.BUG_REPORT);
 
     // Add line for close
-    lineClose = addLine(panel, constraints, GT._("Close"));
-    setShortcut(lineClose, ConfigurationValueShortcut.CLOSE);
+    addLine(
+        panel, constraints, GT._("Close"),
+        ConfigurationValueShortcut.CLOSE);
 
     // Add line for current disambiguation list
-    lineCurrentDab = addLine(panel, constraints, GT._("Current disambiguation list"));
-    setShortcut(lineCurrentDab, ConfigurationValueShortcut.CURRENT_DAB_LIST);
+    addLine(
+        panel, constraints, GT._("Current disambiguation list"),
+        ConfigurationValueShortcut.CURRENT_DAB_LIST);
 
     // Add line for disambiguation analysis
-    lineDabAnalysis = addLine(panel, constraints, GT._("Disambiguation"));
-    setShortcut(lineDabAnalysis, ConfigurationValueShortcut.DAB_ANALYSIS);
+    addLine(
+        panel, constraints, GT._("Disambiguation"),
+        ConfigurationValueShortcut.DAB_ANALYSIS);
 
     // Add line for external viewer
-    lineExternalViewer = addLine(panel, constraints, GT._("External Viewer"));
-    setShortcut(lineExternalViewer, ConfigurationValueShortcut.EXTERNAL_VIEWER);
+    addLine(
+        panel, constraints, GT._("External Viewer"),
+        ConfigurationValueShortcut.EXTERNAL_VIEWER);
 
     // Add line for full analysis
-    lineFullAnalysis = addLine(panel, constraints, GT._("Full analysis"));
-    setShortcut(lineFullAnalysis, ConfigurationValueShortcut.FULL_ANALYSIS);
+    addLine(
+        panel, constraints, GT._("Full analysis"),
+        ConfigurationValueShortcut.FULL_ANALYSIS);
 
     // Add line for help
-    lineHelp = addLine(panel, constraints, GT._("Help"));
-    setShortcut(lineHelp, ConfigurationValueShortcut.HELP);
+    addLine(
+        panel, constraints, GT._("Help"),
+        ConfigurationValueShortcut.HELP);
 
     // Add line for history
-    lineHistory = addLine(panel, constraints, GT._("History"));
-    setShortcut(lineHistory, ConfigurationValueShortcut.HISTORY);
+    addLine(
+        panel, constraints, GT._("History"),
+        ConfigurationValueShortcut.HISTORY);
 
     // Add line for login
-    lineLogin = addLine(panel, constraints, GT._("Login"));
-    setShortcut(lineLogin, ConfigurationValueShortcut.LOGIN);
+    addLine(
+        panel, constraints, GT._("Login"),
+        ConfigurationValueShortcut.LOGIN);
 
     // Add line for logout
-    lineLogout = addLine(panel, constraints, GT._("Logout"));
-    setShortcut(lineLogout, ConfigurationValueShortcut.LOGOUT);
+    addLine(
+        panel, constraints, GT._("Logout"),
+        ConfigurationValueShortcut.LOGOUT);
 
     // Add line for options
-    lineOptions = addLine(panel, constraints, GT._("Options"));
-    setShortcut(lineOptions, ConfigurationValueShortcut.OPTIONS);
+    addLine(
+        panel, constraints, GT._("Options"),
+        ConfigurationValueShortcut.OPTIONS);
 
     // Add line for random page
-    lineRandomPage = addLine(panel, constraints, GT._("Random page"));
-    setShortcut(lineRandomPage, ConfigurationValueShortcut.RANDOM_PAGE);
+    addLine(
+        panel, constraints, GT._("Random page"),
+        ConfigurationValueShortcut.RANDOM_PAGE);
 
     // Add line for restore defaults
-    lineRestoreDefaults = addLine(panel, constraints, GT._("Restore defaults"));
-    setShortcut(lineRestoreDefaults, ConfigurationValueShortcut.RESTORE_DEFAULTS);
+    addLine(
+        panel, constraints, GT._("Restore defaults"),
+        ConfigurationValueShortcut.RESTORE_DEFAULTS);
 
     // Add line for system options
-    lineSystemOptions = addLine(panel, constraints, GT._("System options"));
-    setShortcut(lineSystemOptions, ConfigurationValueShortcut.SYSTEM_OPTIONS);
+    addLine(
+        panel, constraints, GT._("System options"),
+        ConfigurationValueShortcut.SYSTEM_OPTIONS);
 
     // Add line for validate
-    lineValidate = addLine(panel, constraints, GT._("Validate"));
-    setShortcut(lineValidate, ConfigurationValueShortcut.VALIDATE);
+    addLine(
+        panel, constraints, GT._("Validate"),
+        ConfigurationValueShortcut.VALIDATE);
 
     // Add line for watch list
-    lineWatchList = addLine(panel, constraints, GT._("Local Watch list"));
-    setShortcut(lineWatchList, ConfigurationValueShortcut.WATCH_LIST);
+    addLine(
+        panel, constraints, GT._("Local Watch list"),
+        ConfigurationValueShortcut.WATCH_LIST);
+
+    // Add line for adding to list
+    addLine(
+        panel, constraints, GT._("Add to list"),
+        ConfigurationValueShortcut.LIST_ADD);
+
+    // Add line for removing from list
+    addLine(
+        panel, constraints, GT._("Remove from list"),
+        ConfigurationValueShortcut.LIST_REMOVE);
 
     // Add line for first occurrence
-    lineOccurrenceFirst = addLine(panel, constraints, GT._("First occurrence"));
-    setShortcut(lineOccurrenceFirst, ConfigurationValueShortcut.OCCURRENCE_FIRST);
+    addLine(
+        panel, constraints, GT._("First occurrence"),
+        ConfigurationValueShortcut.OCCURRENCE_FIRST);
 
     // Add line for previous occurrence
-    lineOccurrencePrevious = addLine(panel, constraints, GT._("Previous occurrence"));
-    setShortcut(lineOccurrencePrevious, ConfigurationValueShortcut.OCCURRENCE_PREVIOUS);
+    addLine(
+        panel, constraints, GT._("Previous occurrence"),
+        ConfigurationValueShortcut.OCCURRENCE_PREVIOUS);
 
     // Add line for next occurrence
-    lineOccurrenceNext = addLine(panel, constraints, GT._("Next occurrence"));
-    setShortcut(lineOccurrenceNext, ConfigurationValueShortcut.OCCURRENCE_NEXT);
+    addLine(
+        panel, constraints, GT._("Next occurrence"),
+        ConfigurationValueShortcut.OCCURRENCE_NEXT);
 
     // Add line for last occurrence
-    lineOccurrenceLast = addLine(panel, constraints, GT._("Last occurrence"));
-    setShortcut(lineOccurrenceLast, ConfigurationValueShortcut.OCCURRENCE_LAST);
+    addLine(
+        panel, constraints, GT._("Last occurrence"),
+        ConfigurationValueShortcut.OCCURRENCE_LAST);
 
     // Add a notice
     notice = new JLabel(GT._("Press key for shortcut or ESC to cancel"));
@@ -231,28 +248,9 @@ public class ShortcutOptionsPanel extends OptionsPanel {
   @Override
   public void defaultValues() {
     super.defaultValues();
-    setShortcut(lineAddToWatchList, ConfigurationValueShortcut.ADD_TO_WATCH_LIST);
-    setShortcut(lineApply, ConfigurationValueShortcut.APPLY);
-    setShortcut(lineBugReport, ConfigurationValueShortcut.BUG_REPORT);
-    setShortcut(lineClose, ConfigurationValueShortcut.CLOSE);
-    setShortcut(lineCurrentDab, ConfigurationValueShortcut.CURRENT_DAB_LIST);
-    setShortcut(lineDabAnalysis, ConfigurationValueShortcut.DAB_ANALYSIS);
-    setShortcut(lineExternalViewer, ConfigurationValueShortcut.EXTERNAL_VIEWER);
-    setShortcut(lineFullAnalysis, ConfigurationValueShortcut.FULL_ANALYSIS);
-    setShortcut(lineHelp, ConfigurationValueShortcut.HELP);
-    setShortcut(lineHistory, ConfigurationValueShortcut.HISTORY);
-    setShortcut(lineLogin, ConfigurationValueShortcut.LOGIN);
-    setShortcut(lineLogout, ConfigurationValueShortcut.LOGOUT);
-    setShortcut(lineOccurrenceFirst, ConfigurationValueShortcut.OCCURRENCE_FIRST);
-    setShortcut(lineOccurrenceLast, ConfigurationValueShortcut.OCCURRENCE_LAST);
-    setShortcut(lineOccurrenceNext, ConfigurationValueShortcut.OCCURRENCE_NEXT);
-    setShortcut(lineOccurrencePrevious, ConfigurationValueShortcut.OCCURRENCE_PREVIOUS);
-    setShortcut(lineOptions, ConfigurationValueShortcut.OPTIONS);
-    setShortcut(lineRandomPage, ConfigurationValueShortcut.RANDOM_PAGE);
-    setShortcut(lineRestoreDefaults, ConfigurationValueShortcut.RESTORE_DEFAULTS);
-    setShortcut(lineSystemOptions, ConfigurationValueShortcut.SYSTEM_OPTIONS);
-    setShortcut(lineValidate, ConfigurationValueShortcut.VALIDATE);
-    setShortcut(lineWatchList, ConfigurationValueShortcut.WATCH_LIST);
+    for (int line = 0; line < shortcuts.size(); line++) {
+      setShortcut(line, shortcuts.get(line));
+    }
   }
 
   /**
@@ -261,29 +259,9 @@ public class ShortcutOptionsPanel extends OptionsPanel {
   @Override
   public void apply() {
     super.apply();
-
-    applyShortcut(ConfigurationValueShortcut.ADD_TO_WATCH_LIST, lineAddToWatchList);
-    applyShortcut(ConfigurationValueShortcut.APPLY, lineApply);
-    applyShortcut(ConfigurationValueShortcut.BUG_REPORT, lineBugReport);
-    applyShortcut(ConfigurationValueShortcut.CLOSE, lineClose);
-    applyShortcut(ConfigurationValueShortcut.CURRENT_DAB_LIST, lineCurrentDab);
-    applyShortcut(ConfigurationValueShortcut.DAB_ANALYSIS, lineDabAnalysis);
-    applyShortcut(ConfigurationValueShortcut.EXTERNAL_VIEWER, lineExternalViewer);
-    applyShortcut(ConfigurationValueShortcut.FULL_ANALYSIS, lineFullAnalysis);
-    applyShortcut(ConfigurationValueShortcut.HELP, lineHelp);
-    applyShortcut(ConfigurationValueShortcut.HISTORY, lineHistory);
-    applyShortcut(ConfigurationValueShortcut.LOGIN, lineLogin);
-    applyShortcut(ConfigurationValueShortcut.LOGOUT, lineLogout);
-    applyShortcut(ConfigurationValueShortcut.OCCURRENCE_FIRST, lineOccurrenceFirst);
-    applyShortcut(ConfigurationValueShortcut.OCCURRENCE_LAST, lineOccurrenceLast);
-    applyShortcut(ConfigurationValueShortcut.OCCURRENCE_NEXT, lineOccurrenceNext);
-    applyShortcut(ConfigurationValueShortcut.OCCURRENCE_PREVIOUS, lineOccurrencePrevious);
-    applyShortcut(ConfigurationValueShortcut.OPTIONS, lineOptions);
-    applyShortcut(ConfigurationValueShortcut.RANDOM_PAGE, lineRandomPage);
-    applyShortcut(ConfigurationValueShortcut.RESTORE_DEFAULTS, lineRestoreDefaults);
-    applyShortcut(ConfigurationValueShortcut.SYSTEM_OPTIONS, lineSystemOptions);
-    applyShortcut(ConfigurationValueShortcut.VALIDATE, lineValidate);
-    applyShortcut(ConfigurationValueShortcut.WATCH_LIST, lineWatchList);
+    for (int line = 0; line < shortcuts.size(); line++) {
+      applyShortcut(shortcuts.get(line), line);
+    }
   }
 
   /**
@@ -302,7 +280,6 @@ public class ShortcutOptionsPanel extends OptionsPanel {
   // Managing the elements of a shortcut
   // ==========================================================================
 
-  private int linesCount = 0;
   private final List<JCheckBox> chkEnabled = new ArrayList<JCheckBox>();
   private final List<JToggleButton> chkCtrl = new ArrayList<JToggleButton>();
   private final List<JToggleButton> chkAlt = new ArrayList<JToggleButton>();
@@ -324,12 +301,13 @@ public class ShortcutOptionsPanel extends OptionsPanel {
    * @param panel Panel containing the shortcuts.
    * @param constraints Grid bag constraints.
    * @param name Descriptive name of the shortcut.
-   * @return
+   * @param shortcut Shortcut.
    */
-  private int addLine(
+  private void addLine(
       JPanel panel,
       GridBagConstraints constraints,
-      String name) {
+      String name,
+      ConfigurationValueShortcut shortcut) {
 
     // Enabled check box
     JCheckBox chk = Utilities.createJCheckBox("", true);
@@ -376,9 +354,9 @@ public class ShortcutOptionsPanel extends OptionsPanel {
 
     // Next line
     constraints.gridy++;
-    int result = linesCount;
-    linesCount++;
-    return result;
+    int line = shortcuts.size();
+    shortcuts.add(shortcut);
+    setShortcut(line, shortcut);
   }
 
   /**
@@ -407,7 +385,7 @@ public class ShortcutOptionsPanel extends OptionsPanel {
    */
   private ConfigurationValueShortcut.ShortcutProperties getShortcut(
       int line, String name) {
-    if ((line < 0) || (line >= linesCount)) {
+    if ((line < 0) || (line >= shortcuts.size())) {
       return null;
     }
     boolean enabled = true;

@@ -29,6 +29,8 @@ public enum ConfigurationValueShortcut {
   FULL_ANALYSIS(      true,  "Title",              false, true,  false, KeyEvent.VK_F),
   HELP(               true,  "Help",               false, false, false, KeyEvent.VK_F1),
   HISTORY(            true,  "History",            false, true,  false, KeyEvent.VK_H),
+  LIST_ADD(           true,  "ListAdd",            true,  false, false, KeyEvent.VK_PLUS),
+  LIST_REMOVE(        true,  "ListRemove",         true,  false, false, KeyEvent.VK_MINUS),
   LOGIN(              true,  "Login",              false, true,  false, KeyEvent.VK_L),
   LOGOUT(             false, "Logout",             false, true,  false, KeyEvent.VK_O),
   OCCURRENCE_FIRST(   true,  "FirstOccurrence",    false, true,  false, KeyEvent.VK_F),
