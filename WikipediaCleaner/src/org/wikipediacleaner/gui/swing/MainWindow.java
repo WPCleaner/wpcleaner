@@ -40,7 +40,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
@@ -129,7 +128,7 @@ public class MainWindow
   private JButton buttonWatchlistLocal;
   private JButton buttonWatchlist;
 
-  JTextField textPagename;
+  JComboBox comboPagename;
   private JButton buttonFullAnalysis;
   private JButton buttonDisambiguation;
   private JButton buttonSearchTitles;
@@ -277,7 +276,7 @@ public class MainWindow
     buttonWatchlistLocal.setEnabled(logged);
     buttonWatchlist.setEnabled(logged);
 
-    textPagename.setEnabled(logged);
+    comboPagename.setEnabled(logged);
     buttonFullAnalysis.setEnabled(logged);
     buttonDisambiguation.setEnabled(logged);
     buttonSearchTitles.setEnabled(logged);
@@ -602,8 +601,17 @@ public class MainWindow
         ConfigurationValueBoolean.REMEMBER_LAST_PAGE)) {
       lastPage = configuration.getString(null, ConfigurationValueString.PAGE_NAME);
     }
-    textPagename = Utilities.createJTextField(lastPage, 20);
-    panel.add(textPagename, constraints);
+    List<String> interestingPages = configuration.getStringList(
+        null, Configuration.ARRAY_INTERESTING_PAGES);
+    if (interestingPages != null) {
+      comboPagename = new JComboBox(interestingPages.toArray());
+    } else {
+      comboPagename = new JComboBox();
+    }
+    comboPagename.setEditable(true);
+    comboPagename.setPrototypeDisplayValue("XXXXXXXXXXXXXXXXXXXX");
+    comboPagename.setSelectedItem(lastPage);
+    panel.add(comboPagename, constraints);
     constraints.gridx++;
 
     // Random page button
@@ -976,9 +984,9 @@ public class MainWindow
     ActionUtilities.removeActionListeners(buttonDisambiguation);
     ActionUtilities.removeActionListeners(buttonFullAnalysis);
     buttonDisambiguation.addActionListener(new ActionDisambiguationAnalysis(
-        getParentComponent(), getWikipedia(), textPagename));
+        getParentComponent(), getWikipedia(), comboPagename));
     buttonFullAnalysis.addActionListener(new ActionFullAnalysis(
-        getParentComponent(), getWikipedia(), textPagename));
+        getParentComponent(), getWikipedia(), comboPagename));
 
     // Login
     new LoginWorker(
@@ -1217,15 +1225,31 @@ public class MainWindow
   }
 
   /**
+   * Check that page name is given.
+   * 
+   * @param message Message to display if it's not given.
+   * @return Page name if it is given.
+   */
+  private String checkPagename(String message) {
+    if (comboPagename != null) {
+      Object select = comboPagename.getSelectedItem();
+      if (select != null) {
+        String tmp = select.toString().trim();
+        if (!"".equals(tmp)) {
+          return tmp;
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
    * Action called when Update Disambiguation Warning button is pressed.
    */
   public void actionUpdateDabWarning() {
-    if ((textPagename == null) ||
-        (textPagename.getText() == null) ||
-        ("".equals(textPagename.getText().trim()))) {
-      displayWarning(
-          GT._("You must input a page name for updating the disambiguation warning"),
-          textPagename);
+    String pageName = checkPagename(GT._(
+        "You must input a page name for updating the disambiguation warning"));
+    if (pageName == null) {
       return;
     }
     String template = getConfiguration().getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
@@ -1244,7 +1268,8 @@ public class MainWindow
     UpdateDabWarningWorker worker = new UpdateDabWarningWorker(
         getWikipedia(), this,
         Collections.singletonList(DataManager.getPage(
-            getWikipedia(), textPagename.getText(), null, null, null)),
+            getWikipedia(), pageName,
+            null, null, null)),
         true);
     worker.start();
   }
@@ -1253,59 +1278,48 @@ public class MainWindow
    * Action called when Internal Links button is pressed.
    */
   public void actionInternalLinks() {
-    if ((textPagename == null) ||
-        (textPagename.getText() == null) ||
-        ("".equals(textPagename.getText().trim()))) {
-      displayWarning(
-          GT._("You must input a page name for retrieving the list of internal links"),
-          textPagename);
+    String pageName = checkPagename(GT._(
+        "You must input a page name for retrieving the list of internal links"));
+    if (pageName == null) {
       return;
     }
     Configuration config = Configuration.getConfiguration();
     config.setString(
         null,
         ConfigurationValueString.PAGE_NAME,
-        textPagename.getText().trim());
+        pageName);
     config.save();
     new PageListWorker(
         getWikipedia(), this, null,
-        Collections.singletonList(textPagename.getText().trim()),
+        Collections.singletonList(pageName),
         PageListWorker.Mode.INTERNAL_LINKS, false,
-        GT._("Internal links in {0}", textPagename.getText().trim())).start();
+        GT._("Internal links in {0}", pageName)).start();
   }
 
   /**
    * Action called when Search Titles button is pressed.
    */
   public void actionSearchTitles() {
-    if ((textPagename == null) ||
-        (textPagename.getText() == null) ||
-        ("".equals(textPagename.getText().trim()))) {
-      displayWarning(
-          GT._("You must input a page name"),
-          textPagename);
+    String pageName = checkPagename(GT._("You must input a page name"));
+    if (pageName == null) {
       return;
     }
     new PageListWorker(
         getWikipedia(), this, null,
-        Collections.singletonList(textPagename.getText().trim()),
+        Collections.singletonList(pageName),
         PageListWorker.Mode.SEARCH_TITLES, false,
-        GT._("Search results for {0}", textPagename.getText().trim())).start();
+        GT._("Search results for {0}", pageName)).start();
   }
 
   /**
    * Action called when Back links button is pressed.
    */
   public void actionBackLinks() {
-    if ((textPagename == null) ||
-        (textPagename.getText() == null) ||
-        ("".equals(textPagename.getText().trim()))) {
-      displayWarning(
-          GT._("You must input a page name for retrieving the list of backlinks"),
-          textPagename);
+    String pageName = checkPagename(GT._(
+        "You must input a page name for retrieving the list of backlinks"));
+    if (pageName == null) {
       return;
     }
-    String pageName = textPagename.getText().trim();
     Configuration config = Configuration.getConfiguration();
     config.setString(
         null,
@@ -1325,15 +1339,11 @@ public class MainWindow
    * Action called when Category Members button is pressed.
    */
   public void actionCategoryMembers() {
-    if ((textPagename == null) ||
-        (textPagename.getText() == null) ||
-        ("".equals(textPagename.getText().trim()))) {
-      displayWarning(
-          GT._("You must input a page name for retrieving the list of category members"),
-          textPagename);
+    String pageName = checkPagename(GT._(
+        "You must input a page name for retrieving the list of category members"));
+    if (pageName == null) {
       return;
     }
-    String pageName = textPagename.getText().trim();
     Configuration config = Configuration.getConfiguration();
     config.setString(
         null,
@@ -1355,15 +1365,11 @@ public class MainWindow
    * Action called when Embedded In button is pressed.
    */
   public void actionEmbeddedIn() {
-    if ((textPagename == null) ||
-        (textPagename.getText() == null) ||
-        ("".equals(textPagename.getText().trim()))) {
-      displayWarning(
-          GT._("You must input a page name for retrieving the list of page it is embedded in"),
-          textPagename);
+    String pageName = checkPagename(GT._(
+        "You must input a page name for retrieving the list of page it is embedded in"));
+    if (pageName == null) {
       return;
     }
-    String pageName = textPagename.getText().trim();
     Configuration config = Configuration.getConfiguration();
     config.setString(
         null,
@@ -1571,7 +1577,7 @@ public class MainWindow
    * Action called when Random page button is pressed.
    */
   public void actionRandomPage() {
-    new RandomPageWorker(getWikipedia(), this, textPagename).start();
+    new RandomPageWorker(getWikipedia(), this, comboPagename).start();
   }
 
   /**
@@ -1769,7 +1775,7 @@ public class MainWindow
           password[i] = '\0';
         }
       }
-      textPagename.requestFocusInWindow();
+      comboPagename.requestFocusInWindow();
     }
 
     /* (non-Javadoc)

@@ -9,7 +9,7 @@ package org.wikipediacleaner.gui.swing.worker;
 
 import java.util.List;
 
-import javax.swing.text.JTextComponent;
+import javax.swing.JComboBox;
 
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
@@ -25,16 +25,16 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class RandomPageWorker extends BasicWorker {
 
-  private final JTextComponent text;
+  private final JComboBox combo;
 
   /**
    * @param wikipedia Wikipedia.
    * @param window Window.
-   * @param text Text component.
+   * @param combo Combo box.
    */
-  public RandomPageWorker(EnumWikipedia wikipedia, BasicWindow window, JTextComponent text) {
+  public RandomPageWorker(EnumWikipedia wikipedia, BasicWindow window, JComboBox combo) {
     super(wikipedia, window);
-    this.text = text;
+    this.combo = combo;
   }
 
   /* (non-Javadoc)
@@ -48,9 +48,9 @@ public class RandomPageWorker extends BasicWorker {
       setText(GT._("Getting random page"));
       List<Page> pages = api.getRandomPages(getWikipedia(), 1, false);
       if (pages.size() > 0) {
-        text.setText(pages.get(0).getTitle());
+        combo.setSelectedItem(pages.get(0).getTitle());
       } else {
-        text.setText("");
+        combo.setSelectedItem("");
       }
     } catch (APIException e) {
       return e;
