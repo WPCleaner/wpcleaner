@@ -560,8 +560,30 @@ public class ShortcutOptionsPanel extends OptionsPanel {
      * @see java.awt.KeyEventDispatcher#dispatchKeyEvent(java.awt.event.KeyEvent)
      */
     public boolean dispatchKeyEvent(KeyEvent e) {
-      if (e.getKeyCode() != KeyEvent.VK_ESCAPE) {
-        setKeyCode(e.getKeyCode());
+      int key = e.getKeyCode();
+      if ((key == KeyEvent.VK_ALT) ||
+          (key == KeyEvent.VK_ALT_GRAPH) ||
+          (key == KeyEvent.VK_BACK_SPACE) ||
+          (key == KeyEvent.VK_BEGIN) ||
+          (key == KeyEvent.VK_CANCEL) ||
+          (key == KeyEvent.VK_CAPS_LOCK) ||
+          (key == KeyEvent.VK_CONTROL) ||
+          (key == KeyEvent.VK_DELETE) ||
+          (key == KeyEvent.VK_DOWN) ||
+          (key == KeyEvent.VK_END) ||
+          (key == KeyEvent.VK_ENTER) ||
+          (key == KeyEvent.VK_LEFT) ||
+          (key == KeyEvent.VK_PAGE_DOWN) ||
+          (key == KeyEvent.VK_PAGE_UP) ||
+          (key == KeyEvent.VK_RIGHT) ||
+          (key == KeyEvent.VK_SHIFT) ||
+          (key == KeyEvent.VK_TAB) ||
+          (key == KeyEvent.VK_UP) ||
+          (key == KeyEvent.VK_SHIFT)) {
+        return false;
+      }
+      if (key != KeyEvent.VK_ESCAPE) {
+        setKeyCode(key);
       }
       showNotice(false);
       KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(this);
