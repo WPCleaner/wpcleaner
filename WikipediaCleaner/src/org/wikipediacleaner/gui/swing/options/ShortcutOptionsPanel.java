@@ -406,7 +406,7 @@ public class ShortcutOptionsPanel extends OptionsPanel {
     }
     int key = 0;
     if (btnKey.get(line) != null) {
-      btnKey.get(line).getKeyCode();
+      key = btnKey.get(line).getKeyCode();
     }
     return new ConfigurationValueShortcut.ShortcutProperties(
         enabled, name, ctrl, alt, shift, key);
