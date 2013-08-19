@@ -48,7 +48,7 @@ public enum ConfigurationValueShortcut {
   private final static String PROPERTY_CTRL    = "Ctrl";
   private final static String PROPERTY_ALT     = "Alt";
   private final static String PROPERTY_SHIFT   = "Shift";
-  private final static String PROPERTY_KEY     = "KEY";
+  private final static String PROPERTY_KEY     = "Key";
 
   /**
    * Attribute default value.
