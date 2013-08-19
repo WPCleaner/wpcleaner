@@ -14,6 +14,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
@@ -21,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JSpinner;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
@@ -31,6 +33,7 @@ import org.wikipediacleaner.gui.swing.component.ColorButton;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.ConfigurationValueStyle;
 
 
@@ -52,28 +55,10 @@ public class FormattingOptionsPanel extends OptionsPanel {
     initialize();
   }
 
-  private int lineCategory;
-  private int lineCheckWikiError;
-  private int lineCheckWikiOk;
-  private int lineCheckWikiWarning;
-  private int lineComments;
-  private int lineDefaultSort;
-  private int lineExternalLink;
-  private int lineHelpRequested;
-  private int lineImage;
-  private int lineInternalLink;
-  private int lineInternalLinkDab;
-  private int lineInternalLinkMissing;
-  private int lineInternalLinkNormal;
-  private int lineInternalLinkRedirect;
-  private int lineLanguageLink;
-  private int lineProgrammingElements;
-  private int lineReference;
-  private int lineTag;
-  private int lineTemplate;
-  private int lineTemplateDab;
-  private int lineTemplateNormal;
-  private int lineTitle;
+  /**
+   * Styles
+   */
+  private Vector<ConfigurationValueStyle> styles;
 
   /**
    * Initialize the panel.
@@ -81,6 +66,8 @@ public class FormattingOptionsPanel extends OptionsPanel {
   private void initialize() {
     setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), GT._("Formatting options (restart needed)")));
+
+    styles = new Vector<ConfigurationValueStyle>();
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -108,137 +95,152 @@ public class FormattingOptionsPanel extends OptionsPanel {
     constraints.weighty = 1;
     add(scrollPane, constraints);
 
+    // Add font size increase
+    JSpinner spin = createJSpinner(ConfigurationValueInteger.FONT_SIZE, 0, 20, 1);
+    JLabel label = Utilities.createJLabel(GT._("Increase font size"));
+    label.setLabelFor(spin);
+    label.setHorizontalAlignment(SwingConstants.TRAILING);
+    constraints.gridx = columnName;
+    constraints.gridwidth = 1;
+    constraints.weightx = 1;
+    panel.add(label, constraints);
+    constraints.gridx = columnName + 1;
+    constraints.gridwidth = columnCount - columnName - 1;
+    constraints.weightx = 0;
+    panel.add(spin, constraints);
+    constraints.gridy++;
+
     // Add line for comments style
-    lineComments = addLine(
+    addLine(
         panel, constraints, true, GT._("Comments"),
-        true, true, true, true, true, true);
-    setStyle(lineComments, ConfigurationValueStyle.COMMENTS);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.COMMENTS);
 
     // Add line for internal link style
-    lineInternalLink = addLine(
+    addLine(
         panel, constraints, true, GT._("Internal link"),
-        true, true, true, true, true, true);
-    setStyle(lineInternalLink, ConfigurationValueStyle.INTERNAL_LINK);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.INTERNAL_LINK);
 
     // Add line for template style
-    lineTemplate = addLine(
+    addLine(
         panel, constraints, true, GT._("Template"),
-        true, true, true, true, true, true);
-    setStyle(lineTemplate, ConfigurationValueStyle.TEMPLATE);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.TEMPLATE);
 
     // Add line for title style
-    lineTitle = addLine(
+    addLine(
         panel, constraints, true, GT._("Title"),
-        true, true, true, true, true, true);
-    setStyle(lineTitle, ConfigurationValueStyle.TITLE);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.TITLE);
 
     // Add line for image style
-    lineImage = addLine(
+    addLine(
         panel, constraints, true, GT._("Image"),
-        true, true, true, true, true, true);
-    setStyle(lineImage, ConfigurationValueStyle.IMAGE);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.IMAGE);
 
     // Add line for category style
-    lineCategory = addLine(
+    addLine(
         panel, constraints, true, GT._("Category"),
-        true, true, true, true, true, true);
-    setStyle(lineCategory, ConfigurationValueStyle.CATEGORY);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.CATEGORY);
 
     // Add line for DEFAULTSORT style
-    lineDefaultSort = addLine(
+    addLine(
         panel, constraints, true, GT._("Default sort"),
-        true, true, true, true, true, true);
-    setStyle(lineDefaultSort, ConfigurationValueStyle.DEFAULTSORT);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.DEFAULTSORT);
 
     // Add line for language link style
-    lineLanguageLink = addLine(
+    addLine(
         panel, constraints, true, GT._("Language link"),
-        true, true, true, true, true, true);
-    setStyle(lineLanguageLink, ConfigurationValueStyle.LANGUAGE_LINK);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.LANGUAGE_LINK);
 
     // Add line for external link style
-    lineExternalLink = addLine(
+    addLine(
         panel, constraints, true, GT._("External link"),
-        true, true, true, true, true, true);
-    setStyle(lineExternalLink, ConfigurationValueStyle.EXTERNAL_LINK);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.EXTERNAL_LINK);
 
     // Add line for tag style
-    lineTag = addLine(
+    addLine(
         panel, constraints, true, GT._("Tag"),
-        true, true, true, true, true, true);
-    setStyle(lineTag, ConfigurationValueStyle.TAG);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.TAG);
 
     // Add line for reference style
-    lineReference = addLine(
+    addLine(
         panel, constraints, true, GT._("Reference"),
-        true, true, true, true, true, true);
-    setStyle(lineReference, ConfigurationValueStyle.REFERENCE);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.REFERENCE);
 
     // Add line for programming elements style
-    lineProgrammingElements = addLine(
+    addLine(
         panel, constraints, true, GT._("Programming elements"), 
-        true, true, true, true, true, true);
-    setStyle(lineProgrammingElements, ConfigurationValueStyle.PROGRAMMING);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.PROGRAMMING);
 
     // Add line for disambiguation link style
-    lineInternalLinkDab = addLine(
+    addLine(
         panel, constraints, false, GT._("Disambiguation link"),
-        true, true, true, true, true, true);
-    setStyle(lineInternalLinkDab, ConfigurationValueStyle.INTERNAL_LINK_DAB);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.INTERNAL_LINK_DAB);
 
     // Add line for normal internal link style
-    lineInternalLinkNormal = addLine(
+    addLine(
         panel, constraints, false, GT._("Normal internal link"),
-        true, true, true, true, true, true);
-    setStyle(lineInternalLinkNormal, ConfigurationValueStyle.INTERNAL_LINK_NORMAL);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.INTERNAL_LINK_NORMAL);
 
     // Add line for redirect link style
-    lineInternalLinkRedirect = addLine(
+    addLine(
         panel, constraints, false, GT._("Redirect link"),
-        true, true, true, true, true, true);
-    setStyle(lineInternalLinkRedirect, ConfigurationValueStyle.INTERNAL_LINK_REDIRECT);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.INTERNAL_LINK_REDIRECT);
 
     // Add line for missing link style
-    lineInternalLinkMissing = addLine(
+    addLine(
         panel, constraints, false, GT._("Missing link"),
-        true, true, true, true, true, true);
-    setStyle(lineInternalLinkMissing, ConfigurationValueStyle.INTERNAL_LINK_MISSING);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.INTERNAL_LINK_MISSING);
 
     // Add line for disambiguation template style
-    lineTemplateDab = addLine(
+    addLine(
         panel, constraints, false, GT._("Disambiguation template"),
-        true, true, true, true, true, true);
-    setStyle(lineTemplateDab, ConfigurationValueStyle.TEMPLATE_DAB);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.TEMPLATE_DAB);
 
     // Add line for normal template style
-    lineTemplateNormal = addLine(
+    addLine(
         panel, constraints, false, GT._("Normal template"),
-        true, true, true, true, true, true);
-    setStyle(lineTemplateNormal, ConfigurationValueStyle.TEMPLATE_NORMAL);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.TEMPLATE_NORMAL);
 
     // Add line for help requested style
-    lineHelpRequested = addLine(
+    addLine(
         panel, constraints, false, GT._("Help requested"),
-        true, true, true, true, true, true);
-    setStyle(lineHelpRequested, ConfigurationValueStyle.HELP_REQUESTED);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.HELP_REQUESTED);
 
     // Add line for check wiki error style
-    lineCheckWikiError = addLine(
+    addLine(
         panel, constraints, false, GT._("Check wiki error"),
-        true, true, true, true, true, true);
-    setStyle(lineCheckWikiError, ConfigurationValueStyle.CHECK_WIKI_ERROR);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.CHECK_WIKI_ERROR);
 
     // Add line for check wiki warning style
-    lineCheckWikiWarning = addLine(
+    addLine(
         panel, constraints, false, GT._("Check wiki warning"),
-        true, true, true, true, true, true);
-    setStyle(lineCheckWikiWarning, ConfigurationValueStyle.CHECK_WIKI_WARNING);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.CHECK_WIKI_WARNING);
 
     // Add line for check wiki ok style
-    lineCheckWikiOk = addLine(
+    addLine(
         panel, constraints, false, GT._("Check wiki OK"),
-        true, true, true, true, true, true);
-    setStyle(lineCheckWikiOk, ConfigurationValueStyle.CHECK_WIKI_OK);
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.CHECK_WIKI_OK);
 
     // Empty panel
     JPanel emptyPanel = new JPanel();
@@ -257,28 +259,9 @@ public class FormattingOptionsPanel extends OptionsPanel {
   @Override
   public void defaultValues() {
     super.defaultValues();
-    setStyle(lineCategory, ConfigurationValueStyle.CATEGORY);
-    setStyle(lineCheckWikiError, ConfigurationValueStyle.CHECK_WIKI_ERROR);
-    setStyle(lineCheckWikiOk, ConfigurationValueStyle.CHECK_WIKI_OK);
-    setStyle(lineCheckWikiWarning, ConfigurationValueStyle.CHECK_WIKI_WARNING);
-    setStyle(lineComments, ConfigurationValueStyle.COMMENTS);
-    setStyle(lineDefaultSort, ConfigurationValueStyle.DEFAULTSORT);
-    setStyle(lineExternalLink, ConfigurationValueStyle.EXTERNAL_LINK);
-    setStyle(lineHelpRequested, ConfigurationValueStyle.HELP_REQUESTED);
-    setStyle(lineImage, ConfigurationValueStyle.IMAGE);
-    setStyle(lineInternalLink, ConfigurationValueStyle.INTERNAL_LINK);
-    setStyle(lineInternalLinkDab, ConfigurationValueStyle.INTERNAL_LINK_DAB);
-    setStyle(lineInternalLinkMissing, ConfigurationValueStyle.INTERNAL_LINK_MISSING);
-    setStyle(lineInternalLinkNormal, ConfigurationValueStyle.INTERNAL_LINK_NORMAL);
-    setStyle(lineInternalLinkRedirect, ConfigurationValueStyle.INTERNAL_LINK_REDIRECT);
-    setStyle(lineLanguageLink, ConfigurationValueStyle.LANGUAGE_LINK);
-    setStyle(lineProgrammingElements, ConfigurationValueStyle.PROGRAMMING);
-    setStyle(lineReference, ConfigurationValueStyle.REFERENCE);
-    setStyle(lineTag, ConfigurationValueStyle.TAG);
-    setStyle(lineTemplate, ConfigurationValueStyle.TEMPLATE);
-    setStyle(lineTemplateDab, ConfigurationValueStyle.TEMPLATE_DAB);
-    setStyle(lineTemplateNormal, ConfigurationValueStyle.TEMPLATE_NORMAL);
-    setStyle(lineTitle, ConfigurationValueStyle.TITLE);
+    for (int line = 0; line < styles.size(); line++) {
+      setStyle(line, styles.get(line));
+    }
   }
 
   /**
@@ -288,59 +271,16 @@ public class FormattingOptionsPanel extends OptionsPanel {
   public void apply() {
     super.apply();
     Configuration config = Configuration.getConfiguration();
-    ConfigurationValueStyle.StyleProperties configStyle = null;
-
-    configStyle = getStyle(lineCategory);
-    config.setStyle(ConfigurationValueStyle.CATEGORY, configStyle);
-    configStyle = getStyle(lineCheckWikiError);
-    config.setStyle(ConfigurationValueStyle.CHECK_WIKI_ERROR, configStyle);
-    configStyle = getStyle(lineCheckWikiOk);
-    config.setStyle(ConfigurationValueStyle.CHECK_WIKI_OK, configStyle);
-    configStyle = getStyle(lineCheckWikiWarning);
-    config.setStyle(ConfigurationValueStyle.CHECK_WIKI_WARNING, configStyle);
-    configStyle = getStyle(lineComments);
-    config.setStyle(ConfigurationValueStyle.COMMENTS, configStyle);
-    configStyle = getStyle(lineDefaultSort);
-    config.setStyle(ConfigurationValueStyle.DEFAULTSORT, configStyle);
-    configStyle = getStyle(lineExternalLink);
-    config.setStyle(ConfigurationValueStyle.EXTERNAL_LINK, configStyle);
-    configStyle = getStyle(lineHelpRequested);
-    config.setStyle(ConfigurationValueStyle.HELP_REQUESTED, configStyle);
-    configStyle = getStyle(lineImage);
-    config.setStyle(ConfigurationValueStyle.IMAGE, configStyle);
-    configStyle = getStyle(lineInternalLink);
-    config.setStyle(ConfigurationValueStyle.INTERNAL_LINK, configStyle);
-    configStyle = getStyle(lineInternalLinkDab);
-    config.setStyle(ConfigurationValueStyle.INTERNAL_LINK_DAB, configStyle);
-    configStyle = getStyle(lineInternalLinkMissing);
-    config.setStyle(ConfigurationValueStyle.INTERNAL_LINK_MISSING, configStyle);
-    configStyle = getStyle(lineInternalLinkNormal);
-    config.setStyle(ConfigurationValueStyle.INTERNAL_LINK_NORMAL, configStyle);
-    configStyle = getStyle(lineInternalLinkRedirect);
-    config.setStyle(ConfigurationValueStyle.INTERNAL_LINK_REDIRECT, configStyle);
-    configStyle = getStyle(lineLanguageLink);
-    config.setStyle(ConfigurationValueStyle.LANGUAGE_LINK, configStyle);
-    configStyle = getStyle(lineProgrammingElements);
-    config.setStyle(ConfigurationValueStyle.PROGRAMMING, configStyle);
-    configStyle = getStyle(lineReference);
-    config.setStyle(ConfigurationValueStyle.REFERENCE, configStyle);
-    configStyle = getStyle(lineTag);
-    config.setStyle(ConfigurationValueStyle.TAG, configStyle);
-    configStyle = getStyle(lineTemplate);
-    config.setStyle(ConfigurationValueStyle.TEMPLATE, configStyle);
-    configStyle = getStyle(lineTemplateDab);
-    config.setStyle(ConfigurationValueStyle.TEMPLATE_DAB, configStyle);
-    configStyle = getStyle(lineTemplateNormal);
-    config.setStyle(ConfigurationValueStyle.TEMPLATE_NORMAL, configStyle);
-    configStyle = getStyle(lineTitle);
-    config.setStyle(ConfigurationValueStyle.TITLE, configStyle);
+    for (int line = 0; line < styles.size(); line++) {
+      ConfigurationValueStyle.StyleProperties configStyle = getStyle(line);
+      config.setStyle(styles.get(line), configStyle);
+    }
   }
 
   // ==========================================================================
   // Managing the formatting of a style
   // ==========================================================================
 
-  private int linesCount = 0;
   private final List<JCheckBox> chkGeneral = new ArrayList<JCheckBox>();
   private final List<JToggleButton> chkItalic = new ArrayList<JToggleButton>();
   private final List<JToggleButton> chkBold = new ArrayList<JToggleButton>();
@@ -370,13 +310,14 @@ public class FormattingOptionsPanel extends OptionsPanel {
    * @param strike Flag indicating if the style can be in strike through.
    * @param foreground Flag indicating if the foreground color can be changed.
    * @param background Flag indicating if the background color can be changed.
-   * @return
+   * @param style Style.
    */
-  private int addLine(
+  private void addLine(
       JPanel panel, GridBagConstraints constraints,
       boolean general, String name,
       boolean italic, boolean bold, boolean underline, boolean strike,
-      boolean foreground, boolean background) {
+      boolean foreground, boolean background,
+      ConfigurationValueStyle style) {
 
     // General check box
     if (general) {
@@ -469,9 +410,9 @@ public class FormattingOptionsPanel extends OptionsPanel {
 
     // Next line
     constraints.gridy++;
-    int result = linesCount;
-    linesCount++;
-    return result;
+    int line = styles.size();
+    styles.add(style);
+    setStyle(line, style);
   }
 
   /**
@@ -500,7 +441,7 @@ public class FormattingOptionsPanel extends OptionsPanel {
    * @return Style.
    */
   private ConfigurationValueStyle.StyleProperties getStyle(int line) {
-    if ((line < 0) || (line >= linesCount)) {
+    if ((line < 0) || (line >= styles.size())) {
       return null;
     }
     boolean general = true;

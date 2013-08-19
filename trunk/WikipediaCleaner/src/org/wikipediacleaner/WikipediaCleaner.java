@@ -7,11 +7,13 @@
 
 package org.wikipediacleaner;
 
+import java.awt.Font;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.RepaintManager;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -52,7 +54,7 @@ public class WikipediaCleaner {
       RepaintManager.setCurrentManager(new CheckThreadViolationRepaintManager());
     }
 
-    // User Interface
+    // Look & Feel
     String lookAndFeelClassName = null;
     if (SYSTEM_LF) {
       lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
@@ -77,6 +79,21 @@ public class WikipediaCleaner {
         // Not important
       } catch (UnsupportedLookAndFeelException e) {
         // Not important
+      }
+    }
+
+    // Font size for defaults
+    int fontSize = config.getInt(null, ConfigurationValueInteger.FONT_SIZE);
+    if (fontSize > 0) {
+      UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+      for (Object key : defaults.keySet()) {
+        Font font = defaults.getFont(key);
+        if (font != null) {
+          System.err.println("Old font: " + font);
+          font = font.deriveFont((float) (font.getSize() + fontSize));
+          System.err.println("New font: " + font);
+          defaults.put(key, font);
+        }
       }
     }
 
