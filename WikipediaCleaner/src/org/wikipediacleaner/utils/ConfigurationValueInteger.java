@@ -19,6 +19,7 @@ public enum ConfigurationValueInteger {
   ANALYSIS_UNDO_LVL("AnalysisUndoLevels", 10),
   CHECK_NB_ERRORS("CheckNbErrors", 100),
   CONFIG_VERSION("ConfigurationVersion", 1),
+  FONT_SIZE("FontSize", 0),
   INTERROG_THREAD("InterrogationThreads", 30),
   MAXIMUM_PAGES("MaximumPages", 20),
   MAX_CATEGORY_MEMBERS("MaxCategoryMembers", 1000),
