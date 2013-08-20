@@ -58,6 +58,7 @@ import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
+import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 
 /**
  * A base class for Wikipedia Cleaner windows with one page contents.
@@ -421,14 +422,11 @@ public abstract class OnePageWindow
    * @return Send button.
    */
   public JButton createButtonSend(ActionListener listener, boolean icon) {
-    JButton button;
-    if (icon) {
-      button = Utilities.createJButton(
-          "gnome-document-send.png", EnumImageSize.NORMAL,
-          GT._("Send (Alt + &S)"), false, null);
-    } else {
-      button = Utilities.createJButton(GT._("&Send"), null);
-    }
+    JButton button = Utilities.createJButton(
+        icon ? "gnome-document-send.png" : null,
+        EnumImageSize.NORMAL,
+        GT._("Send"), !icon,
+        ConfigurationValueShortcut.SEND);
     button.setActionCommand(ACTION_SEND);
     button.addActionListener(listener);
     return button;
@@ -492,14 +490,11 @@ public abstract class OnePageWindow
    * @return Validate button.
    */
   public JButton createButtonValidate(ActionListener listener, boolean icon) {
-    JButton button;
-    if (icon) {
-      button = Utilities.createJButton(
-          "commons-approve-icon.png", EnumImageSize.NORMAL,
-          GT._("Validate (Alt + &V)"), false, null);
-    } else {
-      button = Utilities.createJButton(GT._("&Validate"), null);
-    }
+    JButton button = Utilities.createJButton(
+        icon ? "commons-approve-icon.png" : null,
+        EnumImageSize.NORMAL,
+        GT._("Validate"), !icon,
+        ConfigurationValueShortcut.VALIDATE);
     button.setActionCommand(ACTION_VALIDATE);
     button.addActionListener(listener);
     return button;

@@ -14,7 +14,9 @@ import java.beans.EventHandler;
 
 import javax.swing.JButton;
 
+import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 
 
@@ -30,10 +32,10 @@ public class ActionDispose {
    */
   private static JButton createInternalButton(
       boolean useShortcut, boolean cancel) {
-    return ActionUtilities.createInternalButton(
-        null, false,
+    return Utilities.createJButton(
+        null, EnumImageSize.NORMAL,
         cancel ? GT._("Cancel") : GT._("Close"), true,
-        ConfigurationValueShortcut.CLOSE, useShortcut);
+        useShortcut ? ConfigurationValueShortcut.CLOSE : null);
   }
 
   /**

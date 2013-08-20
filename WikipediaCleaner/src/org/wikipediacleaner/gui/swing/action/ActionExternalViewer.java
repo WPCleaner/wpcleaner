@@ -20,6 +20,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 
 
@@ -48,15 +49,17 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
       String action,
       boolean showIcon, boolean useShortcut) {
     if ((action != null) && (ACTION_HISTORY.equals(action))) {
-      return ActionUtilities.createInternalButton(
-          "gnome-emblem-documents.png", showIcon,
+      return Utilities.createJButton(
+          showIcon ? "gnome-emblem-documents.png" : null,
+          EnumImageSize.NORMAL,
           GT._("History"), !showIcon,
-          ConfigurationValueShortcut.HISTORY, useShortcut);
+          useShortcut ? ConfigurationValueShortcut.HISTORY : null);
     }
-    return ActionUtilities.createInternalButton(
-        "gnome-emblem-web.png", showIcon,
+    return Utilities.createJButton(
+        showIcon ? "gnome-emblem-web.png" : null,
+        EnumImageSize.NORMAL,
         GT._("External Viewer"), !showIcon,
-        ConfigurationValueShortcut.EXTERNAL_VIEWER, useShortcut);
+        useShortcut ? ConfigurationValueShortcut.EXTERNAL_VIEWER : null);
   }
 
   /**

@@ -147,7 +147,6 @@ public class PageListWindow extends BasicWindow {
   @Override
   protected Component createComponents() {
     JPanel panel = new JPanel(new GridBagLayout());
-    Configuration config = Configuration.getConfiguration();
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -227,7 +226,7 @@ public class PageListWindow extends BasicWindow {
     buttonFullAnalysis = Utilities.createJButton(
         "gnome-system-run.png", EnumImageSize.NORMAL,
         GT._("Full analysis"), false,
-        config.getShortcut(ConfigurationValueShortcut.FULL_ANALYSIS));
+        ConfigurationValueShortcut.FULL_ANALYSIS);
     buttonFullAnalysis.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionFullAnalysis"));
     toolbar.add(buttonFullAnalysis);
@@ -235,7 +234,7 @@ public class PageListWindow extends BasicWindow {
     buttonDisambiguation = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Disambiguation"), false,
-        config.getShortcut(ConfigurationValueShortcut.DAB_ANALYSIS));
+        ConfigurationValueShortcut.DAB_ANALYSIS);
     buttonDisambiguation.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisambiguation"));
     toolbar.add(buttonDisambiguation);
@@ -266,32 +265,30 @@ public class PageListWindow extends BasicWindow {
 
     buttonUpdateInfo = Utilities.createJButton(
         "gnome-view-refresh.png", EnumImageSize.NORMAL,
-        GT._("Update page information (Alt + &U)"),
-        false, null);
+        GT._("Update page information (Alt + &U)"), false, null);
     buttonUpdateInfo.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionUpdateInfo"));
     toolbar.add(buttonUpdateInfo);
 
     buttonComments = Utilities.createJButton(
         "tango-internet-group-chat.png", EnumImageSize.NORMAL,
-        GT._("Set page comments (Alt + &C)"),
-        false, null);
+        GT._("Set page comments (Alt + &C)"), false, null);
     buttonComments.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionSetComments"));
     toolbar.add(buttonComments);
 
     buttonView = Utilities.createJButton(
         "gnome-emblem-web.png", EnumImageSize.NORMAL,
-        GT._("External Viewer"),
-        false, config.getShortcut(ConfigurationValueShortcut.EXTERNAL_VIEWER));
+        GT._("External Viewer"), false,
+        ConfigurationValueShortcut.EXTERNAL_VIEWER);
     buttonView.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionView"));
     toolbar.add(buttonView);
 
     buttonViewHistory = Utilities.createJButton(
         "gnome-emblem-documents.png", EnumImageSize.NORMAL,
-        GT._("History"),
-        false, config.getShortcut(ConfigurationValueShortcut.HISTORY));
+        GT._("History"), false,
+        ConfigurationValueShortcut.HISTORY);
     buttonViewHistory.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionViewHistory"));
     toolbar.add(buttonViewHistory);
@@ -311,13 +308,15 @@ public class PageListWindow extends BasicWindow {
     if (watchList) {
       buttonRemove = Utilities.createJButton(
           "gnome-list-remove.png", EnumImageSize.NORMAL,
-          GT._("Remove page (Alt + &R)"), false, null);
+          GT._("Remove page"), false,
+          ConfigurationValueShortcut.LIST_REMOVE);
       buttonRemove.addActionListener(EventHandler.create(
           ActionListener.class, this, "actionRemove"));
       toolbar.add(buttonRemove);
       buttonAdd = Utilities.createJButton(
           "gnome-list-add.png", EnumImageSize.NORMAL,
-          GT._("Add page (Alt + &A)"), false, null);
+          GT._("Add page"), false,
+          ConfigurationValueShortcut.LIST_ADD);
       buttonAdd.addActionListener(EventHandler.create(
           ActionListener.class, this, "actionAdd"));
       toolbar.add(buttonAdd);

@@ -118,12 +118,11 @@ public class OptionsWindow
    */
   private Component createCommandComponents() {
     JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-    Configuration config = Configuration.getConfiguration();
 
     // Apply button
     buttonApply = Utilities.createJButton(
         GT._("Apply"),
-        config.getShortcut(ConfigurationValueShortcut.APPLY));
+        ConfigurationValueShortcut.APPLY);
     buttonApply.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionApply"));
     panel.add(buttonApply);
@@ -131,7 +130,7 @@ public class OptionsWindow
     // Validate button
     buttonValidate = Utilities.createJButton(
         GT._("Validate"),
-        config.getShortcut(ConfigurationValueShortcut.VALIDATE));
+        ConfigurationValueShortcut.VALIDATE);
     buttonValidate.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionValidate"));
     panel.add(buttonValidate);
@@ -143,7 +142,7 @@ public class OptionsWindow
     // Restore defaults button
     buttonDefault = Utilities.createJButton(
         GT._("Restore defaults"),
-        config.getShortcut(ConfigurationValueShortcut.RESTORE_DEFAULTS));
+        ConfigurationValueShortcut.RESTORE_DEFAULTS);
     buttonDefault.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDefault"));
     panel.add(buttonDefault);

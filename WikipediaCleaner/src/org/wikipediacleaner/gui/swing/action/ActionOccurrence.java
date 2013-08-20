@@ -14,9 +14,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
+import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.gui.swing.component.MWPaneSelectionManager;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 
 
@@ -69,10 +71,11 @@ public class ActionOccurrence implements ActionListener {
       label = GT._("Previous occurrence");
       break;
     }
-    return ActionUtilities.createInternalButton(
-        iconName, showIcon,
+    return Utilities.createJButton(
+        showIcon ? iconName : null,
+        EnumImageSize.NORMAL,
         label, !showIcon,
-        shortcut, useShortcut);
+        useShortcut ? shortcut : null);
   }
 
   /**

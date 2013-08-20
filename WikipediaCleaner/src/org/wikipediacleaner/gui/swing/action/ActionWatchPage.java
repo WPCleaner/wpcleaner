@@ -22,6 +22,7 @@ import javax.swing.JToolBar;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 
@@ -38,10 +39,11 @@ public class ActionWatchPage implements ActionListener {
    */
   private static JButton createInternalButton(
       boolean showIcon, boolean useShortcut) {
-    return ActionUtilities.createInternalButton(
-        "gnome-logviewer-add.png", showIcon,
+    return Utilities.createJButton(
+        showIcon ? "gnome-logviewer-add.png" : null,
+        EnumImageSize.NORMAL,
         GT._("Add to Watch list"), !showIcon,
-        ConfigurationValueShortcut.ADD_TO_WATCH_LIST, useShortcut);
+        useShortcut ? ConfigurationValueShortcut.ADD_TO_WATCH_LIST : null);
   }
 
   /**

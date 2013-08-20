@@ -24,6 +24,7 @@ import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 import org.wikipediacleaner.utils.ConfigurationValueString;
@@ -42,10 +43,11 @@ public class ActionFullAnalysis implements ActionListener {
    */
   private static JButton createInternalButton(
       boolean showIcon, boolean showText, boolean useShortcut) {
-    return ActionUtilities.createInternalButton(
-        "gnome-system-run.png", showIcon,
+    return Utilities.createJButton(
+        showIcon ? "gnome-system-run.png" : null,
+        EnumImageSize.NORMAL,
         GT._("Full analysis"), showText,
-        ConfigurationValueShortcut.FULL_ANALYSIS, useShortcut);
+        useShortcut ? ConfigurationValueShortcut.FULL_ANALYSIS : null);
   }
 
   /**
