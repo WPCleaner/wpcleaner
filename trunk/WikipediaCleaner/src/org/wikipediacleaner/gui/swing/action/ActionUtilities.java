@@ -11,13 +11,6 @@ package org.wikipediacleaner.gui.swing.action;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractButton;
-import javax.swing.JButton;
-
-import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.images.EnumImageSize;
-import org.wikipediacleaner.utils.Configuration;
-import org.wikipediacleaner.utils.ConfigurationValueShortcut;
-import org.wikipediacleaner.utils.ConfigurationValueShortcut.ShortcutProperties;
 
 
 /**
@@ -41,34 +34,5 @@ public class ActionUtilities {
     for (ActionListener listener : listeners) {
       button.removeActionListener(listener);
     }
-  }
-
-  /**
-   * @param iconName Icon name.
-   * @param showIcon True if the button should use an icon.
-   * @param text Text for the button.
-   * @param showText True if the button should display the text.
-   * @param shortcutType Shortcut.
-   * @param useShortcut True if shortcut should be used.
-   * @return Button
-   */
-  static JButton createInternalButton(
-      String iconName, boolean showIcon,
-      String text, boolean showText,
-      ConfigurationValueShortcut shortcutType, boolean useShortcut) {
-    JButton button = null;
-    ShortcutProperties shortcut = null;
-    if (useShortcut && (shortcutType != null)) {
-      Configuration config = Configuration.getConfiguration();
-      shortcut = config.getShortcut(shortcutType);
-    }
-    if (showIcon && (iconName != null)) {
-      button = Utilities.createJButton(
-          iconName, EnumImageSize.NORMAL,
-          text, showText, shortcut);
-    } else {
-      button = Utilities.createJButton(text, shortcut);
-    }
-    return button;
   }
 }

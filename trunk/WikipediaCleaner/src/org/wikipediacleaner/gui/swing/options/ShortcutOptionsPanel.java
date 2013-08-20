@@ -175,6 +175,11 @@ public class ShortcutOptionsPanel extends OptionsPanel {
         panel, constraints, GT._("Restore defaults"),
         ConfigurationValueShortcut.RESTORE_DEFAULTS);
 
+    // Add line for send
+    addLine(
+        panel, constraints, GT._("Send"),
+        ConfigurationValueShortcut.SEND);
+
     // Add line for system options
     addLine(
         panel, constraints, GT._("System options"),

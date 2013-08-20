@@ -446,7 +446,7 @@ public class MainWindow
     buttonToolbar.setBorderPainted(false);
     buttonLogin = Utilities.createJButton(
         GT._("Login"),
-        configuration.getShortcut(ConfigurationValueShortcut.LOGIN));
+        ConfigurationValueShortcut.LOGIN);
     buttonLogin.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLogin"));
     buttonToolbar.add(buttonLogin);
@@ -458,7 +458,7 @@ public class MainWindow
     buttonToolbar.addSeparator();
     buttonLogout = Utilities.createJButton(
         GT._("Logout"),
-        configuration.getShortcut(ConfigurationValueShortcut.LOGOUT));
+        ConfigurationValueShortcut.LOGOUT);
     buttonLogout.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLogout"));
     buttonToolbar.add(buttonLogout);
@@ -476,21 +476,21 @@ public class MainWindow
     buttonHelp = Utilities.createJButton(
         "tango-help-browser.png", EnumImageSize.NORMAL,
         GT._("Help"), false,
-        configuration.getShortcut(ConfigurationValueShortcut.HELP));
+        ConfigurationValueShortcut.HELP);
     buttonHelp.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionHelp"));
     buttonToolbar.add(buttonHelp);
     buttonOptions = Utilities.createJButton(
         "gnome-preferences-other.png", EnumImageSize.NORMAL,
         GT._("Options"), false,
-        configuration.getShortcut(ConfigurationValueShortcut.OPTIONS));
+        ConfigurationValueShortcut.OPTIONS);
     buttonOptions.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOptions"));
     buttonToolbar.add(buttonOptions);
     buttonOptionsSystem = Utilities.createJButton(
         "gnome-preferences-system.png", EnumImageSize.NORMAL,
         GT._("System options"), false,
-        configuration.getShortcut(ConfigurationValueShortcut.SYSTEM_OPTIONS));
+        ConfigurationValueShortcut.SYSTEM_OPTIONS);
     buttonOptionsSystem.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionOptionsSystem"));
     buttonToolbar.add(buttonOptionsSystem);
@@ -509,7 +509,7 @@ public class MainWindow
     buttonToolbar.addSeparator();
     buttonIdea = Utilities.createJButton(
         GT._("Idea? Bug?"),
-        configuration.getShortcut(ConfigurationValueShortcut.BUG_REPORT));
+        ConfigurationValueShortcut.BUG_REPORT);
     buttonIdea.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionIdea"));
     buttonToolbar.add(buttonIdea);
@@ -628,21 +628,21 @@ public class MainWindow
     buttonRandomPage = Utilities.createJButton(
         "commons-nuvola-apps-atlantik.png", EnumImageSize.SMALL,
         GT._("Random page"), false,
-        configuration.getShortcut(ConfigurationValueShortcut.RANDOM_PAGE));
+        ConfigurationValueShortcut.RANDOM_PAGE);
     buttonRandomPage.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRandomPage"));
     toolbarPage.add(buttonRandomPage);
     buttonAddPage = Utilities.createJButton(
         "gnome-list-add.png", EnumImageSize.SMALL,
         GT._("Add to list"), false,
-        configuration.getShortcut(ConfigurationValueShortcut.LIST_ADD));
+        ConfigurationValueShortcut.LIST_ADD);
     buttonAddPage.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionAddPage"));
     toolbarPage.add(buttonAddPage);
     buttonRemovePage = Utilities.createJButton(
         "gnome-list-remove.png", EnumImageSize.SMALL,
         GT._("Remove from list"), false,
-        configuration.getShortcut(ConfigurationValueShortcut.LIST_REMOVE));
+        ConfigurationValueShortcut.LIST_REMOVE);
     buttonRemovePage.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionRemovePage"));
     toolbarPage.add(buttonRemovePage);
@@ -747,7 +747,6 @@ public class MainWindow
     JPanel panel = new JPanel(new GridBagLayout());
     panel.setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), GT._("Projects")));
-    Configuration configuration = Configuration.getConfiguration();
 
     // Initialize constraints
     GridBagConstraints constraints = new GridBagConstraints();
@@ -775,7 +774,7 @@ public class MainWindow
     buttonCurrentDabList = Utilities.createJButton(
         "commons-disambig-colour.png", EnumImageSize.NORMAL,
         GT._("Current disambiguation list"), true,
-        configuration.getShortcut(ConfigurationValueShortcut.CURRENT_DAB_LIST));
+        ConfigurationValueShortcut.CURRENT_DAB_LIST);
     buttonCurrentDabList.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCurrentDabList"));
     panel.add(buttonCurrentDabList, constraints);
@@ -839,7 +838,7 @@ public class MainWindow
     buttonWatchlistLocal = Utilities.createJButton(
         "gnome-logviewer.png", EnumImageSize.NORMAL,
         GT._("Local Watch list"), true,
-        configuration.getShortcut(ConfigurationValueShortcut.WATCH_LIST));
+        ConfigurationValueShortcut.WATCH_LIST);
     buttonWatchlistLocal.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionWatchlistLocal"));
     panel.add(buttonWatchlistLocal, constraints);

@@ -54,6 +54,7 @@ import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
+import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 import org.wikipediacleaner.utils.StringChecker;
 import org.wikipediacleaner.utils.ConfigurationValueShortcut.ShortcutProperties;
 
@@ -71,9 +72,9 @@ public class Utilities {
 
   private final static String URL_CONFIGURATION_HELP = "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Configuration/Help";
 
-  /* ========================================================================== */
-  /* Display message box                                                        */
-  /* ========================================================================== */
+  // ==========================================================================
+  // Display message box
+  // ==========================================================================
 
   /**
    * Display an error message.
@@ -430,12 +431,21 @@ public class Utilities {
         null, values, null);
   }
 
-  /* ========================================================================== */
-  /* Component management                                                       */
-  /* ========================================================================== */
+  // ==========================================================================
+  // Shortcut management
+  // ==========================================================================
 
+  /**
+   * Apply a shortcut to a button.
+   * 
+   * @param button Button.
+   * @param shortcut Shortcut.
+   * @param message Related message.
+   */
   private static void setShortcut(
-      AbstractButton button, ShortcutProperties shortcut, String message) {
+      AbstractButton button,
+      ShortcutProperties shortcut,
+      String message) {
     if ((shortcut == null) || (shortcut.useMnemonic())) {
       int mnemonic = getMnemonic(message);
       if ((mnemonic == -1) && (shortcut != null)) {
@@ -455,15 +465,59 @@ public class Utilities {
           button.setDisplayedMnemonicIndex(index);
         }
       }
-      /* System.err.println("Action map for " + message);
-      ActionMap map = button.getActionMap();
-      if (map != null) {
-        for (Object key : map.allKeys()) {
-          System.err.println("  " + key.toString());
-        }
-      }*/
     }
   }
+
+  /**
+   * @param shortcut Shortcut definition.
+   * @return Shortcut.
+   */
+  private static ShortcutProperties getShortcut(ConfigurationValueShortcut shortcut) {
+    if (shortcut == null) {
+      return null;
+    }
+    Configuration config = Configuration.getConfiguration();
+    return config.getShortcut(shortcut);
+  }
+
+  /**
+   * Return the label to display.
+   * 
+   * @param label Label with optional mnemonic (&).
+   * @return Label without optional mnemonic.
+   */
+  private static String getLabelWithoutMnemonic(String label) {
+    if (label == null) {
+      return null;
+    }
+    int index = label.indexOf('&');
+    if (index == -1) {
+      return label;
+    }
+    return label.substring(0, index) +
+      ((index < label.length() - 1) ? label.substring(index + 1) : "");
+  }
+
+  /**
+   * Return the mnemonic of the label.
+   * 
+   * @param label Label with optional mnemonic (&).
+   * @return Mnemonic.
+   */
+  private static int getMnemonic(String label) {
+    if (label == null) {
+      return 0;
+    }
+    int index = label.indexOf('&');
+    if ((index == -1) || (index == label.length() - 1)){
+      return -1;
+    }
+    return label.charAt(index + 1);
+  }
+
+  // ==========================================================================
+  // Button management
+  // ==========================================================================
 
   /**
    * Create a JButton.
@@ -472,49 +526,18 @@ public class Utilities {
    * @param shortcut Shortcut information.
    * @return Button initialized with text and mnemonic.
    */
-  public static JButton createJButton(String message, ShortcutProperties shortcut) {
+  public static JButton createJButton(
+      String message,
+      ConfigurationValueShortcut shortcut) {
     String label = getLabelWithoutMnemonic(message);
     JButton button = new JButton(label);
-    if ((shortcut != null) && (shortcut.getEnabled())) {
-      String fullLabel = label + shortcut.getDescription();
+    ShortcutProperties shortcutP = getShortcut(shortcut);
+    if ((shortcutP != null) && (shortcutP.getEnabled())) {
+      String fullLabel = label + shortcutP.getDescription();
       button.setToolTipText(fullLabel);
     }
-    setShortcut(button, shortcut, message);
+    setShortcut(button, shortcutP, message);
     return button;
-  }
-
-  /**
-   * Create a JToggleButton.
-   * 
-   * @param message Label text with optional mnemonic inside.
-   * @return Button initialized with text and mnemonic.
-   */
-  public static JToggleButton createJToggleButton(String message) {
-    JToggleButton button = new JToggleButton(getLabelWithoutMnemonic(message));
-    int mnemonic = getMnemonic(message);
-    if (mnemonic != -1) {
-      button.setMnemonic(mnemonic);
-    }
-    return button;
-  }
-
-  /**
-   * Retrieve a icon.
-   * 
-   * @param iconName Icon name.
-   * @param size Icon size.
-   * @return Icon.
-   */
-  public static ImageIcon getImageIcon(String iconName, EnumImageSize size) {
-    ImageIcon icon = null;
-    if ((iconName != null) && (size != null)) {
-      URL url = Utilities.class.getClassLoader().getResource(
-          "org/wikipediacleaner/images/" + size.getFolder() + "/" + iconName);
-      if (url != null) {
-        icon = new ImageIcon(url);
-      }
-    }
-    return icon;
   }
 
   /**
@@ -528,6 +551,24 @@ public class Utilities {
    * @return Button initialized with text and mnemonic.
    */
   public static JButton createJButton(
+      String iconName, EnumImageSize size,
+      String message, boolean showMessage,
+      ConfigurationValueShortcut shortcut) {
+    ShortcutProperties shortcutP = getShortcut(shortcut);
+    return createJButton(iconName, size, message, showMessage, shortcutP);
+  }
+
+  /**
+   * Create a JButton.
+   * 
+   * @param iconName Icon name.
+   * @param size Icon size.
+   * @param message Label text with optional mnemonic inside.
+   * @param showMessage Use message for the button text or for tooltip.
+   * @param shortcut Shortcut information.
+   * @return Button initialized with text and mnemonic.
+   */
+  private static JButton createJButton(
       String iconName, EnumImageSize size,
       String message, boolean showMessage,
       ShortcutProperties shortcut) {
@@ -547,6 +588,25 @@ public class Utilities {
     }
     button.setToolTipText(fullLabel);
     setShortcut(button, shortcut, message);
+    return button;
+  }
+
+  // ==========================================================================
+  // Toggle Button management
+  // ==========================================================================
+
+  /**
+   * Create a JToggleButton.
+   * 
+   * @param message Label text with optional mnemonic inside.
+   * @return Button initialized with text and mnemonic.
+   */
+  public static JToggleButton createJToggleButton(String message) {
+    JToggleButton button = new JToggleButton(getLabelWithoutMnemonic(message));
+    int mnemonic = getMnemonic(message);
+    if (mnemonic != -1) {
+      button.setMnemonic(mnemonic);
+    }
     return button;
   }
 
@@ -578,6 +638,10 @@ public class Utilities {
     return button;
   }
 
+  // ==========================================================================
+  // Check box and radio button management
+  // ==========================================================================
+
   /**
    * Create a JCheckBox.
    * 
@@ -604,6 +668,10 @@ public class Utilities {
     return button;
   }
 
+  // ==========================================================================
+  // Label management
+  // ==========================================================================
+
   /**
    * Create a JLabel.
    * 
@@ -618,6 +686,10 @@ public class Utilities {
     }
     return label;
   }
+
+  // ==========================================================================
+  // Text management
+  // ==========================================================================
 
   /**
    * Create a JTextField.
@@ -697,6 +769,33 @@ public class Utilities {
     
   }
 
+  // ==========================================================================
+  // Icon management
+  // ==========================================================================
+
+  /**
+   * Retrieve an icon.
+   * 
+   * @param iconName Icon name.
+   * @param size Icon size.
+   * @return Icon.
+   */
+  public static ImageIcon getImageIcon(String iconName, EnumImageSize size) {
+    ImageIcon icon = null;
+    if ((iconName != null) && (size != null)) {
+      URL url = Utilities.class.getClassLoader().getResource(
+          "org/wikipediacleaner/images/" + size.getFolder() + "/" + iconName);
+      if (url != null) {
+        icon = new ImageIcon(url);
+      }
+    }
+    return icon;
+  }
+
+  // ==========================================================================
+  // Menu management
+  // ==========================================================================
+
   /**
    * Create a JMenu.
    * 
@@ -736,41 +835,6 @@ public class Utilities {
         getLabelWithoutMnemonic(message), checked);
     setShortcut(menuItem, null, message);
     return menuItem;
-  }
-
-  /**
-   * Return the label to display.
-   * 
-   * @param label Label with optional mnemonic (&).
-   * @return Label without optional mnemonic.
-   */
-  private static String getLabelWithoutMnemonic(String label) {
-    if (label == null) {
-      return null;
-    }
-    int index = label.indexOf('&');
-    if (index == -1) {
-      return label;
-    }
-    return label.substring(0, index) +
-      ((index < label.length() - 1) ? label.substring(index + 1) : "");
-  }
-
-  /**
-   * Return the mnemonic of the label.
-   * 
-   * @param label Label with optional mnemonic (&).
-   * @return Mnemonic.
-   */
-  private static int getMnemonic(String label) {
-    if (label == null) {
-      return 0;
-    }
-    int index = label.indexOf('&');
-    if ((index == -1) || (index == label.length() - 1)){
-      return -1;
-    }
-    return label.charAt(index + 1);
   }
 
   /* ========================================================================== */

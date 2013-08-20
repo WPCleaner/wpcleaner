@@ -22,6 +22,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 import org.wikipediacleaner.utils.ConfigurationValueString;
@@ -40,10 +41,11 @@ public class ActionDisambiguationAnalysis implements ActionListener {
    */
   private static JButton createInternalButton(
       boolean showIcon, boolean showText, boolean useShortcut) {
-    return ActionUtilities.createInternalButton(
-        "commons-disambig-colour.png", showIcon,
+    return Utilities.createJButton(
+        showIcon ? "commons-disambig-colour.png" : null,
+        EnumImageSize.NORMAL,
         GT._("Disambiguation"), showText,
-        ConfigurationValueShortcut.DAB_ANALYSIS, useShortcut);
+        useShortcut ? ConfigurationValueShortcut.DAB_ANALYSIS : null);
   }
 
   /**

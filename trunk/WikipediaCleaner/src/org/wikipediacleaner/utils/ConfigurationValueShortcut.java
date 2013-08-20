@@ -40,6 +40,7 @@ public enum ConfigurationValueShortcut {
   OPTIONS(            true,  "Options",            false, true,  false, KeyEvent.VK_O),
   RANDOM_PAGE(        false, "RandomPage",         false, true,  false, KeyEvent.VK_R),
   RESTORE_DEFAULTS(   true,  "RestoreDefaults",    false, true,  false, KeyEvent.VK_R),
+  SEND(               true,  "Send",               false, true,  false, KeyEvent.VK_S),
   SYSTEM_OPTIONS(     true,  "SystemOptions",      false, true,  false, KeyEvent.VK_Y),
   VALIDATE(           true,  "Validate",           false, true,  false, KeyEvent.VK_V),
   WATCH_LIST(         true,  "WatchList",          false, true,  false, KeyEvent.VK_W);
