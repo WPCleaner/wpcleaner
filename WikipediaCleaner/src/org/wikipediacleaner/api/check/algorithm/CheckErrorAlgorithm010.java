@@ -19,6 +19,7 @@ import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -97,6 +98,12 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
           (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
           (pageAnalysis.isInTag(currentIndex) != null)) {
         shouldCount = false;
+      }
+      if (shouldCount) {
+        PageElementTemplate template = pageAnalysis.isInTemplate(currentIndex + 2);
+        if ((template != null) && (contents.startsWith("]]", template.getEndIndex()))) {
+          shouldCount = false;
+        }
       }
       if (shouldCount) {
         if (errors == null) {
