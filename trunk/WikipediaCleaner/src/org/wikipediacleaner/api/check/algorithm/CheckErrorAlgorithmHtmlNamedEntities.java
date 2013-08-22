@@ -13,6 +13,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -44,29 +45,31 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
     boolean result = false;
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     int ampersandIndex = contents.indexOf('&');
     int maxLength = contents.length();
     while ((ampersandIndex >= 0) && (ampersandIndex + 2 < maxLength)) {
 
       // Check if we should look for a match at this position
       boolean shouldMatch = true;
-      if (shouldMatch &&
-          (pageAnalysis.isInExternalLink(ampersandIndex) != null)) {
-        shouldMatch = false;
+      if (shouldMatch) {
+        if ((analysis.isInExternalLink(ampersandIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, ampersandIndex) != null)) {
+          shouldMatch = false;
+        }
       }
 
       if (shouldMatch) {
@@ -95,7 +98,7 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
               }
               result = true;
               CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), ampersandIndex, colonIndex + 1);
+                  analysis.getPage(), ampersandIndex, colonIndex + 1);
               errorResult.addReplacement("" + htmlCharacter.getValue());
               errors.add(errorResult);
             }
