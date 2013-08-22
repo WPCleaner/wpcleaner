@@ -1116,7 +1116,7 @@ public abstract class OnePageWindow
    */
   static public void markPageAsFixed(
       final CheckError error, final String errorNumber, final Page pageFixed) {
-    if ((pageFixed != null) && (pageFixed.getPageId() != null)) {
+    if (pageFixed != null) {
       MediaWikiController.addSimpleTask(new Callable<Page>() {
   
         public Page call() throws Exception
