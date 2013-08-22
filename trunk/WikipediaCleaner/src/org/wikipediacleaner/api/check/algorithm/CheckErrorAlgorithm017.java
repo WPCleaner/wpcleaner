@@ -41,19 +41,19 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Group categories by name
-    List<PageElementCategory> categories = pageAnalysis.getCategories();
+    List<PageElementCategory> categories = analysis.getCategories();
     if ((categories == null) || (categories.isEmpty())) {
       return false;
     }
@@ -68,7 +68,7 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
     }
 
     // Compute index of last title
-    List<PageElementTitle> titles = pageAnalysis.getTitles();
+    List<PageElementTitle> titles = analysis.getTitles();
     int lastTitle = 0;
     if ((titles != null) && (!titles.isEmpty())) {
       lastTitle = titles.get(titles.size() - 1).getEndIndex();
@@ -76,7 +76,7 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
 
     // Check each category
     boolean result = false;
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     for (PageElementCategory category : categories) {
       List<PageElementCategory> groupCategory = groupedCategories.get(category.getName());
       if ((groupCategory != null) && (groupCategory.size() > 1)) {
@@ -87,7 +87,7 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
         PageElementCategory keepCategory = keepCategory(groupCategory, lastTitle);
         if (keepCategory == category) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
+              analysis.getPage(),
               category.getBeginIndex(),
               category.getEndIndex(),
               CheckErrorResult.ErrorLevel.CORRECT);
@@ -112,10 +112,45 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
           if (!endLine) {
             endIndex = category.getEndIndex();
           }
+
+          // Decide in the fix can be automatic
+          boolean automatic = false;
+          if (category.getBeginIndex() > keepCategory.getBeginIndex()) {
+            int currentIndex = keepCategory.getEndIndex();
+            boolean finished = false;
+            while (!finished && (currentIndex < category.getBeginIndex())) {
+              char currentChar = contents.charAt(currentIndex);
+              if ((currentChar == ' ') || (currentChar == '\n')) {
+                currentIndex++;
+              } else {
+                PageElementCategory nextCategory = analysis.isInCategory(currentIndex);
+                if (nextCategory != null) {
+                  currentIndex = nextCategory.getEndIndex();
+                } else {
+                  finished = true;
+                }
+              }
+            }
+            if (currentIndex >= keepCategory.getBeginIndex()) {
+              if ((category.getSort() != null) &&
+                  (category.getSort().length() > 0)) {
+                if (category.getSort().equals(keepCategory.getSort())) {
+                  automatic = true;
+                }
+              } else {
+                if ((keepCategory.getSort() == null) ||
+                    (keepCategory.getSort().length() == 0)) {
+                  automatic = true;
+                }
+              }
+            }
+          }
+
+          // Mark the error
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
+              analysis.getPage(),
               beginIndex, endIndex);
-          errorResult.addReplacement("", GT._("Delete"));
+          errorResult.addReplacement("", GT._("Delete"), automatic);
           errors.add(errorResult);
         }
       }
@@ -161,13 +196,13 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Bot fixing of all the errors in the page.
+   * Automatic fixing of all the errors in the page.
    * 
    * @param analysis Page analysis.
    * @return Page contents after fix.
    */
   @Override
-  public String botFix(PageAnalysis analysis) {
+  public String automaticFix(PageAnalysis analysis) {
     return fix(globalFixes[0], analysis, null);
   }
 
@@ -189,6 +224,6 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-    return fixUsingFirstReplacement(fixName, analysis);
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
