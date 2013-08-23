@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.EnumCaseSensitiveness;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementTitle;
@@ -52,6 +54,13 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Case sensitiveness
+    Namespace namespace = analysis.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
+    EnumCaseSensitiveness sensitive = EnumCaseSensitiveness.UNKNOWN;
+    if (namespace != null) {
+      sensitive = namespace.getCaseSensitiveness();
+    }
+
     // Group categories by name
     List<PageElementCategory> categories = analysis.getCategories();
     if ((categories == null) || (categories.isEmpty())) {
@@ -59,10 +68,11 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
     }
     Map<String, List<PageElementCategory>> groupedCategories = new HashMap<String, List<PageElementCategory>>();
     for (PageElementCategory category : categories) {
-      List<PageElementCategory> groupCategory = groupedCategories.get(category.getName());
+      String name = sensitive.normalize(category.getName());
+      List<PageElementCategory> groupCategory = groupedCategories.get(name);
       if (groupCategory == null) {
         groupCategory = new ArrayList<PageElementCategory>();
-        groupedCategories.put(category.getName(), groupCategory);
+        groupedCategories.put(name, groupCategory);
       }
       groupCategory.add(category);
     }
@@ -78,7 +88,8 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
     boolean result = false;
     String contents = analysis.getContents();
     for (PageElementCategory category : categories) {
-      List<PageElementCategory> groupCategory = groupedCategories.get(category.getName());
+      String name = sensitive.normalize(category.getName());
+      List<PageElementCategory> groupCategory = groupedCategories.get(name);
       if ((groupCategory != null) && (groupCategory.size() > 1)) {
         if (errors == null) {
           return true;
