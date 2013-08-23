@@ -78,10 +78,18 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
             categories.get(currentCategory).getBeginIndex(),
             categories.get(lastCategory).getEndIndex());
         StringBuilder replacement = new StringBuilder();
+        boolean automatic = true;
         for (int i = currentCategory; i < lastCategory; i++) {
+          int end = categories.get(i + 1).getBeginIndex();
+          for (int index = categories.get(i).getEndIndex(); index < end; index++) {
+            char currentChar = contents.charAt(index);
+            if ((currentChar != ' ') && (currentChar != '\n')) {
+              automatic = false;
+            }
+          }
           replacement.append(contents.substring(
               categories.get(i).getBeginIndex(),
-              categories.get(i + 1).getBeginIndex()).trim());
+              end).trim());
           replacement.append('\n');
         }
         String replacementText = (lastCategory - currentCategory > 1) ?
@@ -89,7 +97,7 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
         replacement.append(contents.substring(
             categories.get(lastCategory).getBeginIndex(),
             categories.get(lastCategory).getEndIndex()));
-        errorResult.addReplacement(replacement.toString(), replacementText);
+        errorResult.addReplacement(replacement.toString(), replacementText, automatic);
         errors.add(errorResult);
       }
       currentCategory = lastCategory + 1;
@@ -99,13 +107,13 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Bot fixing of all the errors in the page.
+   * Automatic fixing of all the errors in the page.
    * 
    * @param analysis Page analysis.
    * @return Page contents after fix.
    */
   @Override
-  public String botFix(PageAnalysis analysis) {
-    return fixUsingFirstReplacement("Replace", analysis);
+  public String automaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
