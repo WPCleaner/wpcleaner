@@ -11,6 +11,7 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
 
 
 /**
@@ -26,17 +27,17 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     int startIndex = contents.length();
     boolean result = false;
     int beginIndex = contents.lastIndexOf("{|", startIndex);
@@ -46,24 +47,42 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
       if ((beginIndex < 0) && (endIndex < 0)) {
         startIndex = 0;
       } else if ((endIndex >= 0) && ((beginIndex < endIndex) || (beginIndex < 0))) {
-        count++;
+        if (shouldCount(analysis, endIndex)) {
+          count++;
+        }
         startIndex = endIndex;
         endIndex = contents.lastIndexOf("|}", startIndex - 1);
       } else {
-        count--;
-        if (count < 0) {
-          if (errors == null) {
-            return true;
+        if (shouldCount(analysis, beginIndex)) {
+          count--;
+          if (count < 0) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            errors.add(createCheckErrorResult(
+                analysis.getPage(), beginIndex, beginIndex + 2));
+            count = 0;
           }
-          result = true;
-          errors.add(createCheckErrorResult(
-              pageAnalysis.getPage(), beginIndex, beginIndex + 2));
-          count = 0;
         }
         startIndex = beginIndex;
         beginIndex = contents.lastIndexOf("{|", startIndex - 1);
       }
     }
     return result;
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param index Current index.
+   * @return True if this place should count for the detection.
+   */
+  private boolean shouldCount(PageAnalysis analysis, int index) {
+    if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_CODE, index) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, index) != null) ||
+        (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, index) != null)) {
+      return false;
+    }
+    return true;
   }
 }
