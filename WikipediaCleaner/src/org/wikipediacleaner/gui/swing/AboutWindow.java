@@ -20,7 +20,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -323,9 +322,17 @@ public class AboutWindow extends BasicWindow {
    * @return Cobra tab.
    */
   private Component createCobraTab() {
-    JPanel panel = new JPanel();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    //TODO
+    JPanel panel = new JPanel(new GridBagLayout());
+    GridBagConstraints constraints = initializeGridBagConstraints();
+    addPresentation(
+        panel, constraints,
+        "<html>" +
+        "<b>Cobra</b> is a pure Java HTML renderer and DOM parser that is being developed to support HTML 4, Javascript and CSS 2." +
+        "<br>" +
+        "See <a href='http://lobobrowser.org/cobra.jsp'>http://lobobrowser.org/cobra.jsp</a> for more information." +
+        "</html>");
+    addFile(panel, constraints, "NOTICE_cobra.txt");
+    addFile(panel, constraints, "LICENSE_cobra.txt");
     return createScrollPane(panel);
   }
 
