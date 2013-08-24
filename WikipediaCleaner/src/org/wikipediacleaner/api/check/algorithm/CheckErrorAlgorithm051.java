@@ -29,29 +29,30 @@ public class CheckErrorAlgorithm051 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
+    if ((analysis == null) || (analysis.getPage() == null)) {
       return false;
     }
-    if (!pageAnalysis.getPage().isArticle()) {
+    if (!analysis.getPage().isArticle()) {
       return false;
     }
 
     // Retrieving last headline
-    List<PageElementTitle> titles = pageAnalysis.getTitles();
+    List<PageElementTitle> titles = analysis.getTitles();
     if (titles.size() == 0) {
       return false;
     }
     int lastTitle = titles.get(titles.size() - 1).getEndIndex();
 
     // Checking every language link
-    List<PageElementLanguageLink> languages = pageAnalysis.getLanguageLinks();
+    List<PageElementLanguageLink> languages = analysis.getLanguageLinks();
+    String contents = analysis.getContents();
     boolean result = false;
     for (PageElementLanguageLink language : languages) {
       if (language.getBeginIndex() >= lastTitle) {
@@ -62,8 +63,10 @@ public class CheckErrorAlgorithm051 extends CheckErrorAlgorithmBase {
       }
       result = true;
       CheckErrorResult errorResult = createCheckErrorResult(
-          pageAnalysis.getPage(),
+          analysis.getPage(),
           language.getBeginIndex(), language.getEndIndex());
+      errorResult.addReplacement(
+          "[[:" + contents.substring(language.getBeginIndex() + 2, language.getEndIndex()));
       errors.add(errorResult);
     }
 
