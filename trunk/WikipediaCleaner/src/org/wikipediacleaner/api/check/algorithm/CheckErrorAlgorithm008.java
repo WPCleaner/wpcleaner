@@ -90,15 +90,17 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
               analysis.getPage(), currentIndex, endLineIndex);
           errorResult.addReplacement(PageElementTitle.createTitle(
               equalsCount,
-              contents.substring(currentIndex + equalsCount, endLineIndex)));
+              contents.substring(currentIndex + equalsCount, endLineIndex),
+              null));
           if (equalIndex > 0) {
             String firstPart = contents.substring(currentIndex + equalsCount, equalIndex); 
-            errorResult.addReplacement(PageElementTitle.createTitle(equalsCount, firstPart));
+            errorResult.addReplacement(PageElementTitle.createTitle(
+                equalsCount, firstPart, null));
             while ((equalIndex < endLineIndex) && (contents.charAt(equalIndex) == '=')) {
               equalIndex++;
             }
             errorResult.addReplacement(
-                PageElementTitle.createTitle(equalsCount, firstPart) + "\n" +
+                PageElementTitle.createTitle(equalsCount, firstPart, null) + "\n" +
                 contents.substring(equalIndex, endLineIndex));
           }
           errors.add(errorResult);
