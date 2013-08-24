@@ -13,10 +13,11 @@
   <property name="WPCleaner.res.dir"     value="resources" />
   <property name="WPCleaner.po.dir"      value="${WPCleaner.src.dir}/org/wikipediacleaner/translation" />
 
-  <property name="WPCleaner.libs.cobra.dir"      value="libs/cobra-0.98.2" />
+  <property name="WPCleaner.libs.cobra.dir"      value="libs/cobra-0.98.4" />
   <property name="WPCleaner.libs.cobra.jar"      value="cobra.jar" />
   <property name="WPCleaner.libs.cobra-js.jar"   value="js.jar" />
-  <property name="WPCleaner.libs.cobra.lic"      value="LICENSE_cobra.txt" />
+  <property name="WPCleaner.libs.cobra.lic"      value="LICENSE.txt" />
+  <property name="WPCleaner.libs.cobra.not"      value="COBRA-README.txt" />
   <property name="WPCleaner.libs.codec.dir"      value="libs/commons-codec-1.6" />
   <property name="WPCleaner.libs.codec.jar"      value="commons-codec-1.6.jar" />
   <property name="WPCleaner.libs.codec.lic"      value="LICENSE.txt" />
@@ -122,7 +123,9 @@
     <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom.png"
           todir="${WPCleaner.jnlp.dir}" />
     <copy file="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra.lic}"
-          tofile="${WPCleaner.classes.dir}/cobra.license" />
+          tofile="${WPCleaner.classes.dir}/LICENSE_cobra.txt" />
+    <copy file="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra.not}"
+          tofile="${WPCleaner.classes.dir}/NOTICE_cobra.txt" />
     <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.lic}"
           tofile="${WPCleaner.classes.dir}/LICENSE_commons-codec.txt" />
     <copy file="${WPCleaner.libs.codec.dir}/${WPCleaner.libs.codec.not}"
