@@ -116,6 +116,9 @@ public class CheckErrorPage {
    */
   @Override
   public String toString() {
-    return page.toString();
+    if (page != null) {
+      return page.toString();
+    }
+    return "?";
   }
 }
