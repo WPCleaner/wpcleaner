@@ -50,7 +50,8 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
         // Check that it is indeed an error
         boolean errorFound = true;
         if ((analysis.isInComment(currentIndex) != null) ||
-            (analysis.isInTitle(currentIndex) != null)) {
+            (analysis.isInTitle(currentIndex) != null) ||
+            (analysis.isInTemplate(currentIndex) != null)) {
           errorFound = false;
         } else {
           if ((analysis.getSurroundingTag(PageElementTag.TAG_WIKI_CODE, currentIndex) != null) ||
