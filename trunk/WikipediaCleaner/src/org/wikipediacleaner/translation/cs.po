@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-24 10:59+0200\n"
+"POT-Creation-Date: 2013-08-24 15:36+0200\n"
 "PO-Revision-Date: 2013-08-14 10:05+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -483,6 +483,10 @@ msgstr "Uspořádat odkaz"
 msgid "Convert them to internal links"
 msgstr "Změnit je na interní odkazy"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:121
+msgid "A template that can be used instead of an apostrophe."
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:235
 msgid "Title of the article describing this type of error"
 msgstr "Název článku popisující tento typ chyby"
@@ -786,7 +790,7 @@ msgstr ""
 "Tato akce je chráněna funkcí CAPTCHA.\n"
 "Jaká je odpověď na otázku zobrazenou ve vašem prohlížeči?"
 
-#: org/wikipediacleaner/gui/swing/AboutWindow.java:62
+#: org/wikipediacleaner/gui/swing/AboutWindow.java:61
 #: org/wikipediacleaner/gui/swing/MainWindow.java:517
 msgid "About"
 msgstr "O aplikaci"
