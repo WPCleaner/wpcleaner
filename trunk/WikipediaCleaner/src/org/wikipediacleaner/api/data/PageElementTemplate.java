@@ -245,6 +245,7 @@ public class PageElementTemplate extends PageElement {
     int depthTagRef = 0;
     int parameterBeginIndex = parametersBeginIndex;
     int equalIndex = -1;
+    boolean equalDone = false;
     while (tmpIndex < maxLength) {
       if (contents.startsWith("{{{", tmpIndex)) {
         // Possible start of a parameter
@@ -374,8 +375,26 @@ public class PageElementTemplate extends PageElement {
             tmpIndex++;
             parameterBeginIndex = tmpIndex;
             equalIndex = -1;
-          } else if ((currentChar == '=') && (equalIndex < 0)) {
-            equalIndex = tmpIndex;
+            equalDone = false;
+          } else if ((currentChar == '=') &&
+                     (equalIndex < 0) &&
+                     (equalDone == false)) {
+            int i = parameterBeginIndex;
+            while ((i < tmpIndex) &&
+                   ((contents.charAt(i) == ' ') || (contents.charAt(i) == '\n'))) {
+              i++;
+            }
+            boolean nameFound = false;
+            while ((i < tmpIndex) && (contents.charAt(i) != '=')) {
+              if ((contents.charAt(i) != ' ') && (contents.charAt(i) != '\n')) {
+                nameFound = true;
+              }
+              i++;
+            }
+            if (nameFound) {
+              equalIndex = tmpIndex;
+            }
+            equalDone = true;
             tmpIndex++;
           } else {
             tmpIndex++;
@@ -557,6 +576,13 @@ public class PageElementTemplate extends PageElement {
     this.templateNameNotTrimmed = templateName;
     this.templateName = (templateName != null) ? Page.getStringUcFirst(templateName.trim()) : null;
     this.parameters = parameters;
+    /*System.err.println("Template: " + this.templateName);
+    if (parameters != null) {
+      for (Parameter parameter : this.parameters) {
+        System.err.println(" Parameter: " + parameter.name);
+        System.err.println(" Value: " + parameter.value);
+      }
+    }*/
   }
 
   private void addPartBeforeParameters(StringBuilder sb) {
