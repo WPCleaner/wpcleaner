@@ -9,12 +9,14 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -104,5 +106,19 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     }
 
     return true;
+  }
+
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (Name -> description).
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        "apostrophe_template",
+        GT._("A template that can be used instead of an apostrophe."));
+    return parameters;
   }
 }

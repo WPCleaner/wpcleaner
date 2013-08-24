@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-24 10:59+0200\n"
+"POT-Creation-Date: 2013-08-24 15:36+0200\n"
 "PO-Revision-Date: 2013-07-06 19:09+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -468,6 +468,10 @@ msgstr ""
 msgid "Convert them to internal links"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:121
+msgid "A template that can be used instead of an apostrophe."
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:235
 msgid "Title of the article describing this type of error"
 msgstr ""
@@ -763,7 +767,7 @@ msgid ""
 "What is the answer to the question displayed in your browser ?"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/AboutWindow.java:62
+#: org/wikipediacleaner/gui/swing/AboutWindow.java:61
 #: org/wikipediacleaner/gui/swing/MainWindow.java:517
 msgid "About"
 msgstr "ウィキクリーナーについて"
