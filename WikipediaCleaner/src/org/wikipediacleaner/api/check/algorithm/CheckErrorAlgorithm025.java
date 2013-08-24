@@ -98,7 +98,8 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
           tmp.append(contents.substring(lastIndex, title.getBeginIndex()));
           lastIndex = title.getBeginIndex();
         }
-        tmp.append(PageElementTitle.createTitle(title.getLevel() - offset, title.getTitle()));
+        tmp.append(PageElementTitle.createTitle(
+            title.getLevel() - offset, title.getTitle(), title.getAfterTitle()));
         if (title.getAfterTitle() != null) {
           tmp.append(title.getAfterTitle());
         }

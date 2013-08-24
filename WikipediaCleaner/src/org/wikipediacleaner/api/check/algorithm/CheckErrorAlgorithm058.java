@@ -76,7 +76,7 @@ public class CheckErrorAlgorithm058 extends CheckErrorAlgorithmBase {
             sb.setCharAt(i, Character.toLowerCase(sb.charAt(i)));
           }
           errorResult.addReplacement(PageElementTitle.createTitle(
-              title.getLevel(), sb.toString()));
+              title.getLevel(), sb.toString(), title.getAfterTitle()));
           errors.add(errorResult);
         }
       }
