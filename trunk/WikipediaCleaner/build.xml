@@ -13,32 +13,39 @@
   <property name="WPCleaner.res.dir"     value="resources" />
   <property name="WPCleaner.po.dir"      value="${WPCleaner.src.dir}/org/wikipediacleaner/translation" />
 
-  <property name="WPCleaner.libs.cobra.dir"      value="libs/cobra-0.98.4" />
+  <property name="WPCleaner.libs.cobra.dir"      value="libs/cobra-0.98.2" />
   <property name="WPCleaner.libs.cobra.jar"      value="cobra.jar" />
   <property name="WPCleaner.libs.cobra-js.jar"   value="js.jar" />
   <property name="WPCleaner.libs.cobra.lic"      value="LICENSE.txt" />
   <property name="WPCleaner.libs.cobra.not"      value="COBRA-README.txt" />
+
   <property name="WPCleaner.libs.codec.dir"      value="libs/commons-codec-1.6" />
   <property name="WPCleaner.libs.codec.jar"      value="commons-codec-1.6.jar" />
   <property name="WPCleaner.libs.codec.lic"      value="LICENSE.txt" />
   <property name="WPCleaner.libs.codec.not"      value="NOTICE.txt" />
+
   <property name="WPCleaner.libs.gettext.dir"    value="libs/gettext-commons-0.9.6" />
   <property name="WPCleaner.libs.gettext.jar"    value="gettext-commons-0.9.6.jar" />
   <property name="WPCleaner.libs.gettext.lic"    value="LICENSE_gettext-commons.txt" />
+
   <property name="WPCleaner.libs.httpclient.dir" value="libs/commons-httpclient-3.1" />
   <property name="WPCleaner.libs.httpclient.jar" value="commons-httpclient-3.1.jar" />
   <property name="WPCleaner.libs.httpclient.lic" value="LICENSE.txt" />
   <property name="WPCleaner.libs.httpclient.not" value="NOTICE.txt" />
+
   <property name="WPCleaner.libs.jaxen-core.jar" value="jaxen-core.jar" />
   <property name="WPCleaner.libs.jaxen-jdom.jar" value="jaxen-jdom.jar" />
   <property name="WPCleaner.libs.jaxen.lic"      value="LICENSE_jaxen.txt" />
+
   <property name="WPCleaner.libs.jdom.dir"       value="libs/jdom-1.0" />
   <property name="WPCleaner.libs.jdom.jar"       value="jdom.jar" />
   <property name="WPCleaner.libs.jdom.lic"       value="LICENSE_jdom.txt" />
+
   <property name="WPCleaner.libs.logging.dir"    value="libs/commons-logging-1.1.3" />
   <property name="WPCleaner.libs.logging.jar"    value="commons-logging-1.1.3.jar" />
   <property name="WPCleaner.libs.logging.lic"    value="LICENSE.txt" />
   <property name="WPCleaner.libs.logging.not"    value="NOTICE.txt" />
+
   <property name="WPCleaner.libs.saxpath.jar"    value="saxpath.jar" />
 
   <property name="WPCleaner.libs.cobra.jars"     value="${WPCleaner.libs.cobra.jar} ${WPCleaner.libs.cobra-js.jar}" />
