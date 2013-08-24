@@ -13,7 +13,6 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -29,36 +28,79 @@ public class CheckErrorAlgorithm029 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Check every <gallery> tag
-    List<PageElementTag> galleryTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_GALLERY);
+    List<PageElementTag> galleryTags = analysis.getTags(PageElementTag.TAG_WIKI_GALLERY);
+    String contents = analysis.getContents();
     boolean result = false;
-    for (PageElementTag galleryTag : galleryTags) {
+    int index = 0;
+    while (index < galleryTags.size()) {
+      PageElementTag galleryTag = galleryTags.get(index);
       int beginIndex = galleryTag.getBeginIndex();
       if (!galleryTag.isFullTag() &&
           !galleryTag.isComplete() &&
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) == null)) {
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) == null)) {
         if (errors == null) {
           return true;
         }
         result = true;
+
+        // Check if an other <gallery> tag is just after and can be used
+        PageElementTag nextTag = null;
+        if (!galleryTag.isEndTag() && (index + 1 < galleryTags.size())) {
+          nextTag = galleryTags.get(index + 1);
+          int currentIndex = galleryTag.getEndIndex();
+          while ((nextTag != null) && (currentIndex < nextTag.getBeginIndex())) {
+            char currentChar = contents.charAt(currentIndex);
+            if ((currentChar != ' ') && (currentChar != '\n')) {
+              nextTag = null;
+            }
+            currentIndex++;
+          }
+          if (nextTag != null) {
+            if ((galleryTag.getParametersCount() > 0) &&
+                (nextTag.getParametersCount() > 0)) {
+              nextTag = null;
+            }
+          }
+        }
+
+        // Report error
+        int endIndex = (nextTag != null) ? nextTag.getEndIndex() : galleryTag.getEndIndex();
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(),
-            beginIndex, galleryTag.getEndIndex());
-        errorResult.addReplacement("", GT._("Delete"));
+            analysis.getPage(), beginIndex, endIndex);
+        if (nextTag == null) {
+          errorResult.addReplacement("");
+          index++;
+        } else if (nextTag.getParametersCount() == 0) {
+          errorResult.addReplacement(contents.substring(
+              galleryTag.getBeginIndex(), galleryTag.getEndIndex()));
+          errorResult.addReplacement(contents.substring(
+              nextTag.getBeginIndex(), nextTag.getEndIndex()));
+          index += 2;
+        } else {
+          errorResult.addReplacement(contents.substring(
+              nextTag.getBeginIndex(), nextTag.getEndIndex()));
+          errorResult.addReplacement(contents.substring(
+              galleryTag.getBeginIndex(), galleryTag.getEndIndex()));
+          index += 2;
+        }
         errors.add(errorResult);
+      } else {
+        index++;
       }
     }
+
     return result;
   }
 }
