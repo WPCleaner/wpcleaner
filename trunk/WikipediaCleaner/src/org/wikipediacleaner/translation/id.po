@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-20 22:15+0200\n"
+"POT-Creation-Date: 2013-08-24 10:59+0200\n"
 "PO-Revision-Date: 2013-07-06 19:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -129,22 +129,21 @@ msgid "Replace with {0}"
 msgstr "Ganti dengan {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:157
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:164
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm013.java:58
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm014.java:58
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm015.java:58
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:118
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:164
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm023.java:55
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm024.java:58
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:86
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:92
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm029.java:58
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:86
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:60
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:141
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:129
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:156
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:165
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:121
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:74
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:70
@@ -191,7 +190,7 @@ msgstr "Tidak dapat mengganti karakter [{0}]"
 msgid "Remove all control characters"
 msgstr "Ganti semua karakter kontrol"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:34
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:36
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:35
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:32
 msgid "Delete all"
@@ -211,7 +210,7 @@ msgid "Comment category out"
 msgstr "Komentar kategori"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm027.java:30
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmHtmlNamedEntities.java:29
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmHtmlNamedEntities.java:30
 msgid "Replace all"
 msgstr "Ganti semua"
 

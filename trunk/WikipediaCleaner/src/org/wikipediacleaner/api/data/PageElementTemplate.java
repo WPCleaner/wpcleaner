@@ -826,4 +826,18 @@ public class PageElementTemplate extends PageElement {
     addPartFromParameters(sb);
     return sb.toString();
   }
+
+  /**
+   * Create a template.
+   * 
+   * @param name Template name.
+   * @return Template.
+   */
+  public static String createTemplate(String name) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("{{");
+    sb.append(name);
+    sb.append("}}");
+    return sb.toString();
+  }
 }

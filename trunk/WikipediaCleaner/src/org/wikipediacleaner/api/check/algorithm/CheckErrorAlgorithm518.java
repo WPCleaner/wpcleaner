@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 
 
 /**
@@ -44,6 +45,9 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Retrieve configuration
+    String apostropheTemplate = getSpecificProperty("apostrophe_template", true, false, false);
+
     // Check each tag
     List<PageElementTag> tags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_NOWIKI);
     if ((tags == null) || (tags.isEmpty())) {
@@ -61,6 +65,27 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
       } else if (tag.isComplete()) {
         String internalText = analysis.getContents().substring(
             tag.getValueBeginIndex(), tag.getValueEndIndex());
+
+        // Check for <nowiki>'</nowiki>
+        if ((apostropheTemplate != null) && "'".equals(internalText)) {
+          errorResult.addReplacement(PageElementTemplate.createTemplate(apostropheTemplate));
+        }
+
+        // Check for <nowiki><tag></nowiki>
+        if (internalText.startsWith("<") && internalText.endsWith(">")) {
+          boolean otherFound = false;
+          for (int i = 1; i < internalText.length() - 1; i++) {
+            char currentChar = internalText.charAt(i);
+            if ((currentChar == '<') || (currentChar == '>')) {
+              otherFound = true;
+            }
+          }
+          if (!otherFound) {
+            errorResult.addReplacement("&lt;" + internalText.substring(1, internalText.length() - 1) + "&gt;");
+          }
+        }
+
+        // Check for <nowiki> </nowiki> at the beginning of a line
         int begin = tag.getBeginIndex();
         if ((begin > 0) && (analysis.getContents().charAt(begin - 1) == '\n')) {
           int index = 0;
