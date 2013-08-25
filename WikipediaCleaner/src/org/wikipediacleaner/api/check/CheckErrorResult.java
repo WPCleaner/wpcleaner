@@ -154,7 +154,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
       possibleReplacements = new ArrayList<Actionnable>();
     }
     for (Actionnable actionnable : possibleReplacements) {
-      if (replacement.equals(actionnable.getName())) {
+      if (text.equals(actionnable.getName())) {
         return;
       }
     }
