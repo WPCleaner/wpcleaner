@@ -49,6 +49,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
 
     // Retrieve configuration
     String apostropheTemplate = getSpecificProperty("apostrophe_template", true, false, false);
+    String asteriskTemplate = getSpecificProperty("asterisk_template", true, false, false);
 
     // Check each tag
     List<PageElementTag> tags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_NOWIKI);
@@ -71,6 +72,11 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
         // Check for <nowiki>'</nowiki>
         if ((apostropheTemplate != null) && "'".equals(internalText)) {
           errorResult.addReplacement(PageElementTemplate.createTemplate(apostropheTemplate));
+        }
+
+        // Check for <nowiki>*</nowiki>
+        if ((asteriskTemplate != null) && "*".equals(internalText)) {
+          errorResult.addReplacement(PageElementTemplate.createTemplate(asteriskTemplate));
         }
 
         // Check for <nowiki><tag></nowiki>
@@ -119,6 +125,9 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     parameters.put(
         "apostrophe_template",
         GT._("A template that can be used instead of an apostrophe."));
+    parameters.put(
+        "asterisk_template",
+        GT._("A template that can be used instead of an asterisk."));
     return parameters;
   }
 }

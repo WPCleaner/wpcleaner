@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-24 15:36+0200\n"
+"POT-Creation-Date: 2013-08-26 22:54+0200\n"
 "PO-Revision-Date: 2013-08-14 10:05+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -483,8 +483,12 @@ msgstr "Uspořádat odkaz"
 msgid "Convert them to internal links"
 msgstr "Změnit je na interní odkazy"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:121
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:127
 msgid "A template that can be used instead of an apostrophe."
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:130
+msgid "A template that can be used instead of an asterisk."
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:235
