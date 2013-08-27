@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-26 22:54+0200\n"
+"POT-Creation-Date: 2013-08-27 18:41+0200\n"
 "PO-Revision-Date: 2013-07-06 19:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -167,6 +167,17 @@ msgstr ""
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr "Список шаблонів, що випливають з попереднього включення {0}"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:78
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:84
+msgid "Properly end the comment"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:87
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:91
+#, fuzzy
+msgid "Uncomment"
+msgstr "Коментар"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:32
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:30

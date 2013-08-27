@@ -10,7 +10,9 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -37,49 +39,63 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyze contents from the beginning
-    int startIndex = 0;
-    boolean inComment = false;
-    int commentIndex = -1;
-    int possibleEndIndex = -1;
+    // Analyze contents from the end
+    boolean result = false;
+    Page page = pageAnalysis.getPage();
     String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      if (inComment) {
-        if (contents.startsWith("-->", startIndex)) {
+    boolean inComment = false;
+    int possibleEndIndex = -1;
+    int previousStartIndex = -1;
+    int currentIndex = contents.length();
+    while (currentIndex > 0) {
+      currentIndex--;
+      if (contents.startsWith("-->", currentIndex)) {
+        inComment = true;
+        possibleEndIndex = -1;
+        previousStartIndex = -1;
+        currentIndex -= 4;
+      } else if (contents.startsWith("->", currentIndex)) {
+        possibleEndIndex = currentIndex;
+      } else if (contents.startsWith("<!--", currentIndex)) {
+        if (inComment) {
           inComment = false;
-          startIndex += 2;
-        } else if (contents.startsWith("->", startIndex)) {
-          if (possibleEndIndex == -1) {
-            possibleEndIndex = startIndex;
+        } else {
+          if (errors == null) {
+            return true;
           }
+          result = true;
+          int nextIndex = currentIndex + 4;
+          while ((nextIndex < contents.length()) &&
+                 (contents.charAt(nextIndex) == ' ')) {
+            nextIndex++;
+          }
+          CheckErrorResult errorResult = null;
+          if (possibleEndIndex > 0) {
+            errorResult = createCheckErrorResult(
+                page, currentIndex, possibleEndIndex + 2);
+            errorResult.addReplacement(
+                contents.substring(currentIndex, possibleEndIndex) + "-->",
+                GT._("Properly end the comment"));
+          } else if (previousStartIndex > 0) {
+            errorResult = createCheckErrorResult(
+                page, currentIndex, previousStartIndex);
+            errorResult.addReplacement(
+                contents.substring(currentIndex, previousStartIndex) + "-->",
+                GT._("Properly end the comment"));
+            errorResult.addReplacement(
+                contents.substring(nextIndex, previousStartIndex),
+                GT._("Uncomment"));
+          } else {
+            errorResult = createCheckErrorResult(
+                page, currentIndex, nextIndex);
+            errorResult.addReplacement("", GT._("Uncomment"));
+          }
+          errors.add(errorResult);
         }
-      } else {
-        if (contents.startsWith("<!--", startIndex)) {
-          inComment = true;
-          commentIndex = startIndex;
-          possibleEndIndex = -1;
-          startIndex += 3;
-        }
+        previousStartIndex = currentIndex;
       }
-      startIndex++;
     }
-    if (!inComment) {
-      return false;
-    }
-    if (errors == null) {
-      return true;
-    }
-    CheckErrorResult errorResult = null;
-    if (possibleEndIndex < 0) {
-      errorResult = createCheckErrorResult(
-          pageAnalysis.getPage(), commentIndex, commentIndex + 4);
-    } else {
-      errorResult = createCheckErrorResult(
-          pageAnalysis.getPage(), commentIndex, possibleEndIndex + 2);
-      errorResult.addReplacement(
-          contents.substring(commentIndex, possibleEndIndex) + "-->");
-    }
-    errors.add(errorResult);
-    return true;
+
+    return result;
   }
 }

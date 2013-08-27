@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-26 22:54+0200\n"
+"POT-Creation-Date: 2013-08-27 18:41+0200\n"
 "PO-Revision-Date: 2013-06-14 16:35+0000\n"
 "Last-Translator: abuyop <Unknown>\n"
 "Language-Team: Malay <ms@li.org>\n"
@@ -166,6 +166,16 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:123
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:78
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:84
+msgid "Properly end the comment"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:87
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:91
+msgid "Uncomment"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:32
