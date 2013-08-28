@@ -58,9 +58,15 @@ public class FindTextAction extends TextAction {
       return;
     }
     lastSearch = currentSearch;
-    String textPattern =
-      "[" + Character.toUpperCase(lastSearch.charAt(0)) + Character.toLowerCase(lastSearch.charAt(0)) + "]" +
-     Pattern.quote(lastSearch.substring(1));
+    String textPattern = "";
+    char firstChar = lastSearch.charAt(0);
+    if (Character.isLetter(firstChar)) {
+      textPattern =
+          "[" + Character.toUpperCase(firstChar) + Character.toLowerCase(firstChar) + "]" +
+          Pattern.quote(lastSearch.substring(1));
+    } else {
+      textPattern = Pattern.quote(lastSearch);
+    }
     Pattern pattern = Pattern.compile(textPattern);
     Matcher matcher = pattern.matcher(text.getText());
     if (matcher.find(text.getCaretPosition())) {
