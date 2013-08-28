@@ -49,6 +49,7 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
     int currentCategory = 0;
     String contents = pageAnalysis.getContents();
     while (currentCategory < maxCategory) {
+
       // Group categories in the same line
       boolean endFound = false;
       int lastCategory = currentCategory;
@@ -73,11 +74,24 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
         }
         result = true;
 
+        // Check first category in the line
+        StringBuilder replacement = new StringBuilder();
+        int beginIndex = categories.get(currentCategory).getBeginIndex();
+        if ((currentCategory == 0) && (pageAnalysis.getPage().isRedirect())) {
+          int crIndex = contents.indexOf('\n');
+          if ((crIndex < 0) || (crIndex > beginIndex)) {
+            replacement.append("\n\n");
+            while ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == ' ')) {
+              beginIndex--;
+            }
+          }
+        }
+
+        // Put each category on a different line
         CheckErrorResult errorResult = createCheckErrorResult(
             pageAnalysis.getPage(),
-            categories.get(currentCategory).getBeginIndex(),
+            beginIndex,
             categories.get(lastCategory).getEndIndex());
-        StringBuilder replacement = new StringBuilder();
         boolean automatic = true;
         for (int i = currentCategory; i < lastCategory; i++) {
           int end = categories.get(i + 1).getBeginIndex();
