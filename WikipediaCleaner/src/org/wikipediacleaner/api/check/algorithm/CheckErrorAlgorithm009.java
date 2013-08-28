@@ -13,6 +13,8 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
+import org.wikipediacleaner.api.data.PageElementFunction;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 
 
 /**
@@ -28,26 +30,26 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Check every category
-    List<PageElementCategory> categories = pageAnalysis.getCategories();
+    List<PageElementCategory> categories = analysis.getCategories();
     if (categories.size() < 2) {
       return false;
     }
     int maxCategory = categories.size();
     boolean result = false;
     int currentCategory = 0;
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     while (currentCategory < maxCategory) {
 
       // Group categories in the same line
@@ -77,19 +79,31 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
         // Check first category in the line
         StringBuilder replacement = new StringBuilder();
         int beginIndex = categories.get(currentCategory).getBeginIndex();
-        if ((currentCategory == 0) && (pageAnalysis.getPage().isRedirect())) {
-          int crIndex = contents.indexOf('\n');
-          if ((crIndex < 0) || (crIndex > beginIndex)) {
+        if (currentCategory == 0) {
+          int tmpIndex = beginIndex;
+          while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) == ' ')) {
+            tmpIndex--;
+          }
+          PageElementTemplate template = analysis.isInTemplate(tmpIndex - 1);
+          PageElementFunction function = analysis.isInFunction(tmpIndex - 1);
+          if ((template != null) && (template.getEndIndex() == tmpIndex)) {
             replacement.append("\n\n");
-            while ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == ' ')) {
-              beginIndex--;
+            beginIndex = tmpIndex;
+          } else if ((function != null) && (function.getEndIndex() == tmpIndex)) {
+            replacement.append("\n");
+            beginIndex = tmpIndex;
+          } else if (analysis.getPage().isRedirect()) {
+            int crIndex = contents.indexOf('\n');
+            if ((crIndex < 0) || (crIndex > tmpIndex)) {
+              replacement.append("\n\n");
+              beginIndex = tmpIndex;
             }
           }
         }
 
         // Put each category on a different line
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(),
+            analysis.getPage(),
             beginIndex,
             categories.get(lastCategory).getEndIndex());
         boolean automatic = true;
