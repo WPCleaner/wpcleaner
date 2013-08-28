@@ -77,13 +77,22 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
                 contents.substring(currentIndex, possibleEndIndex) + "-->",
                 GT._("Properly end the comment"));
           } else if (previousStartIndex > 0) {
+            int tmpIndex = previousStartIndex;
+            while ((tmpIndex > 0) &&
+                   ((contents.charAt(tmpIndex - 1) == '\n') ||
+                    (contents.charAt(tmpIndex - 1) == ' '))) {
+              tmpIndex--;
+            }
+            if (tmpIndex < currentIndex + 5) {
+              tmpIndex = currentIndex + 5;
+            }
             errorResult = createCheckErrorResult(
-                page, currentIndex, previousStartIndex);
+                page, currentIndex, tmpIndex);
             errorResult.addReplacement(
-                contents.substring(currentIndex, previousStartIndex) + "-->",
+                contents.substring(currentIndex, tmpIndex) + "-->",
                 GT._("Properly end the comment"));
             errorResult.addReplacement(
-                contents.substring(nextIndex, previousStartIndex),
+                contents.substring(nextIndex, tmpIndex),
                 GT._("Uncomment"));
           } else {
             errorResult = createCheckErrorResult(
