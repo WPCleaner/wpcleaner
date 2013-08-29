@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementFunction;
@@ -81,7 +82,13 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
         int beginIndex = categories.get(currentCategory).getBeginIndex();
         if (currentCategory == 0) {
           int tmpIndex = beginIndex;
-          while ((tmpIndex > 0) && (contents.charAt(tmpIndex - 1) == ' ')) {
+          int nbCr = 0;
+          while ((tmpIndex > 0) &&
+                 ((contents.charAt(tmpIndex - 1) == ' ') ||
+                  (contents.charAt(tmpIndex - 1) == '\n'))) {
+            if (contents.charAt(tmpIndex - 1) == '\n') {
+              nbCr++;
+            }
             tmpIndex--;
           }
           PageElementTemplate template = analysis.isInTemplate(tmpIndex - 1);
@@ -90,9 +97,19 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
             replacement.append("\n\n");
             beginIndex = tmpIndex;
           } else if ((function != null) && (function.getEndIndex() == tmpIndex)) {
+            if (function.getMagicWord().isPossibleAlias(MagicWord.DEFAULT_SORT)) {
+              tmpIndex = function.getBeginIndex();
+              while ((tmpIndex > 0) &&
+                     ((contents.charAt(tmpIndex - 1) == ' ') ||
+                      (contents.charAt(tmpIndex - 1) == '\n'))) {
+                tmpIndex--;
+              }
+              replacement.append("\n\n");
+              replacement.append(contents.substring(function.getBeginIndex(), function.getEndIndex()));
+            }
             replacement.append("\n");
             beginIndex = tmpIndex;
-          } else if (analysis.getPage().isRedirect()) {
+          } else if (analysis.getPage().isRedirect() && (nbCr == 0)) {
             int crIndex = contents.indexOf('\n');
             if ((crIndex < 0) || (crIndex > tmpIndex)) {
               replacement.append("\n\n");
