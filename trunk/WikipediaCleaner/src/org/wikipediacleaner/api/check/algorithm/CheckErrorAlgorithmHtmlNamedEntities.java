@@ -78,6 +78,8 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
           if ((name != null) &&
               contents.startsWith(name, ampersandIndex + 1) &&
               htmlCharacter.shouldReplaceName()) {
+
+            // Analyze semicolon after the name
             int colonIndex = ampersandIndex + name.length() + 1;
             boolean found = false;
             if (useSemiColon()) {
@@ -92,14 +94,34 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
                 colonIndex--;
               }
             }
+
+            // Report error
             if (found) {
               if (errors == null) {
                 return true;
               }
               result = true;
+
+              // Analyze for possible semicolon afterwards
+              int endIndex = colonIndex + 1;
+              if (!useSemiColon()) {
+                int tmpIndex = endIndex;
+                while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
+                  tmpIndex++;
+                }
+                if (contents.charAt(tmpIndex) == ';') {
+                  endIndex = tmpIndex + 1;
+                }
+              }
+
               CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis.getPage(), ampersandIndex, colonIndex + 1);
+                  analysis.getPage(), ampersandIndex, endIndex);
               errorResult.addReplacement("" + htmlCharacter.getValue());
+              if (endIndex > colonIndex + 1) {
+                errorResult.addReplacement(
+                    "" + htmlCharacter.getValue() +
+                    contents.substring(colonIndex + 1, endIndex));
+              }
               errors.add(errorResult);
             }
           }
