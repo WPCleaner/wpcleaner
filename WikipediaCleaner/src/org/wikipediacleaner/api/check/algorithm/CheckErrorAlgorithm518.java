@@ -14,6 +14,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
@@ -59,14 +60,36 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     if (errors == null) {
       return true;
     }
+    String contents = analysis.getContents();
     for (PageElementTag tag : tags) {
-      CheckErrorResult errorResult = createCheckErrorResult(
-          analysis.getPage(), tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+      CheckErrorResult errorResult = null;
       if (tag.isFullTag()) {
-        errorResult.addReplacement(" ");
-        errorResult.addReplacement("");
+        int beginIndex = tag.getBeginIndex();
+        int endIndex = tag.getEndIndex();
+        PageElementInternalLink link = analysis.isInInternalLink(beginIndex - 1);
+        if ((link != null) && (link.getEndIndex() == beginIndex)) {
+          beginIndex = link.getBeginIndex();
+          while ((endIndex < contents.length()) &&
+                 (Character.isLetter(contents.charAt(endIndex)))) {
+            endIndex++;
+          }
+        } else {
+          link = null;
+        }
+        String textBefore = contents.substring(beginIndex, tag.getBeginIndex());
+        String textAfter = contents.substring(tag.getEndIndex(), endIndex);
+        errorResult = createCheckErrorResult(
+            analysis.getPage(), beginIndex, endIndex);
+        if (link != null) {
+          errorResult.addReplacement(PageElementInternalLink.createInternalLink(
+              link.getFullLink(), link.getText() + textAfter));
+        }
+        errorResult.addReplacement(textBefore + " " + textAfter);
+        errorResult.addReplacement(textBefore + textAfter);
       } else if (tag.isComplete()) {
-        String internalText = analysis.getContents().substring(
+        errorResult = createCheckErrorResult(
+            analysis.getPage(), tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+        String internalText = contents.substring(
             tag.getValueBeginIndex(), tag.getValueEndIndex());
 
         // Check for <nowiki>'</nowiki>
@@ -95,7 +118,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
 
         // Check for <nowiki> </nowiki> at the beginning of a line
         int begin = tag.getBeginIndex();
-        if ((begin > 0) && (analysis.getContents().charAt(begin - 1) == '\n')) {
+        if ((begin > 0) && (contents.charAt(begin - 1) == '\n')) {
           int index = 0;
           while ((index < internalText.length()) && (internalText.charAt(index) == ' ')) {
             index++;
@@ -106,6 +129,8 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
         }
         errorResult.addReplacement(internalText);
       } else {
+        errorResult = createCheckErrorResult(
+            analysis.getPage(), tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
         errorResult.addReplacement("");
       }
       errors.add(errorResult);
