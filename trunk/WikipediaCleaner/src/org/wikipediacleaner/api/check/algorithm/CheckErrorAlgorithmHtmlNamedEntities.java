@@ -13,6 +13,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -65,10 +66,17 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
 
       // Check if we should look for a match at this position
       boolean shouldMatch = true;
+      if (shouldMatch &&
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, ampersandIndex) != null)) {
+        shouldMatch = false;
+      }
       if (shouldMatch) {
-        if ((analysis.isInExternalLink(ampersandIndex) != null) ||
-            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, ampersandIndex) != null)) {
-          shouldMatch = false;
+        PageElementExternalLink link = analysis.isInExternalLink(ampersandIndex);
+        if (link != null) {
+          int offset = link.getTextOffset();
+          if ((offset < 0) || (ampersandIndex < link.getBeginIndex() + offset)) {
+            shouldMatch = false;
+          }
         }
       }
 
