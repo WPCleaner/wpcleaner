@@ -53,7 +53,7 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
         inComment = true;
         possibleEndIndex = -1;
         previousStartIndex = -1;
-        currentIndex -= 4;
+        currentIndex -= 3;
       } else if (contents.startsWith("->", currentIndex)) {
         possibleEndIndex = currentIndex;
       } else if (contents.startsWith("<!--", currentIndex)) {
@@ -86,13 +86,17 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
             if (tmpIndex < currentIndex + 5) {
               tmpIndex = currentIndex + 5;
             }
+            int endIndex = previousStartIndex + 4;
             errorResult = createCheckErrorResult(
-                page, currentIndex, tmpIndex);
+                page, currentIndex, endIndex);
             errorResult.addReplacement(
-                contents.substring(currentIndex, tmpIndex) + "-->",
+                contents.substring(currentIndex, tmpIndex) + "-->" + contents.substring(tmpIndex, endIndex),
                 GT._("Properly end the comment"));
             errorResult.addReplacement(
-                contents.substring(nextIndex, tmpIndex),
+                contents.substring(currentIndex, previousStartIndex),
+                GT._("Merge comments"));
+            errorResult.addReplacement(
+                contents.substring(nextIndex, endIndex),
                 GT._("Uncomment"));
           } else {
             errorResult = createCheckErrorResult(
