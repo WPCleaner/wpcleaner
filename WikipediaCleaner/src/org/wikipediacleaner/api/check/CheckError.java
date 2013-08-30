@@ -228,6 +228,7 @@ public class CheckError {
               }
             }
           }
+          // System.err.println("Line: " + tmpLine);
           if (pageName != null) {
             pageName = pageName.replaceAll(Pattern.quote("&#039;"), "'");
             pageName = pageName.replaceAll(Pattern.quote("&quot;"), "\"");
