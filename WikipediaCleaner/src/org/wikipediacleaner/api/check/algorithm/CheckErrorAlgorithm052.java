@@ -66,10 +66,25 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
             pageAnalysis.getPage(),
             category.getBeginIndex(),
             category.getEndIndex());
+        String categoryName = category.getName();
+        if ((categoryName == null) || ("".equals(categoryName))) {
+          errorResult.addReplacement("", true);
+        }
         errors.add(errorResult);
       }
     }
 
     return result;
+  }
+
+  /**
+   * Automatic fixing of some errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String automaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
