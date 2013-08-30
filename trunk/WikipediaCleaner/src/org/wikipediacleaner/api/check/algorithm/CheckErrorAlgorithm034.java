@@ -92,6 +92,12 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
             }
             CheckErrorResult errorResult = createCheckErrorResult(
                 page, parameter.getBeginIndex(), parameter.getEndIndex());
+            if (parameter.getParameterCount() == 1) {
+              String value = parameter.getParameterValue(0);
+              if (value != null) {
+                errorResult.addReplacement(value);
+              }
+            }
             errors.add(errorResult);
             nextIndex = parameter.getEndIndex();
           }
