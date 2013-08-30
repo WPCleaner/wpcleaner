@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-08-27 18:41+0200\n"
+"POT-Creation-Date: 2013-08-30 23:34+0200\n"
 "PO-Revision-Date: 2013-07-06 19:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -174,12 +174,17 @@ msgid "A list of templates resulting in the inclusion of {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:78
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:84
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:94
 msgid "Properly end the comment"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:87
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:91
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:97
+#, fuzzy
+msgid "Merge comments"
+msgstr "&Rimuovi pagina commenti"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:100
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm005.java:104
 #, fuzzy
 msgid "Uncomment"
 msgstr "Commento"
@@ -221,7 +226,7 @@ msgid "Comment category out"
 msgstr "Commenta la categoria"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm027.java:30
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmHtmlNamedEntities.java:30
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmHtmlNamedEntities.java:31
 msgid "Replace all"
 msgstr "Sostituisci tutti"
 
@@ -384,11 +389,11 @@ msgstr "Puoi sostituire il link usando il template {0}."
 msgid "The checksum is {0} instead of {1}"
 msgstr "Il checksum è {0} invece di {1}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:29
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:30
 msgid "Replace all %20 by space character"
 msgstr "Sostituisci tutto %20 col carattere spazio"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:65
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:66
 msgid "Replace %20 by space character"
 msgstr "Sostituisci %20 col carattere spazio"
 
@@ -496,11 +501,11 @@ msgstr "Compatta il link"
 msgid "Convert them to internal links"
 msgstr "Convertili in link interni"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:127
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:152
 msgid "A template that can be used instead of an apostrophe."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:130
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:155
 msgid "A template that can be used instead of an asterisk."
 msgstr ""
 
