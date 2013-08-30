@@ -11,6 +11,7 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -36,20 +37,20 @@ public class CheckErrorAlgorithm076 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
-    // Analyzing the text from the beginning
+    // Analyze each internal link
     boolean result = false;
-    for (PageElementInternalLink link : pageAnalysis.getInternalLinks()) {
+    for (PageElementInternalLink link : analysis.getInternalLinks()) {
       int spaceIndex = link.getFullLink().indexOf("%20");
       if (spaceIndex >= 0) {
         if (errors == null) {
@@ -57,13 +58,35 @@ public class CheckErrorAlgorithm076 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+            analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
         errorResult.addReplacement(
             PageElementInternalLink.createInternalLink(
                 link.getFullLink().replaceAll("\\%20", " "),
                 link.getText()),
             GT._("Replace %20 by space character"));
         errors.add(errorResult);
+      }
+    }
+
+    // Analyze each external link
+    String contents = analysis.getContents();
+    for (PageElementExternalLink link : analysis.getExternalLinks()) {
+      int beginIndex = link.getBeginIndex();
+      int endIndex = link.getEndIndex();
+      if (link.hasSquare() &&
+          (beginIndex > 0) && (contents.charAt(beginIndex - 1) == '[') &&
+          (endIndex < contents.length()) && (contents.charAt(endIndex) == ']')) {
+        int spaceIndex = link.getLink().indexOf("%20");
+        if (spaceIndex >= 0) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis.getPage(), beginIndex - 1, endIndex + 1);
+          errorResult.addReplacement(contents.substring(beginIndex, endIndex));
+          errors.add(errorResult);
+        }
       }
     }
 
