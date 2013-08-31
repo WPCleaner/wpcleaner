@@ -36,71 +36,71 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
-    // Analyze contents from the beginning
-    String contents = pageAnalysis.getContents();
+    // Analyze contents by looking for [[
+    String contents = analysis.getContents();
     int maxLength = contents.length();
     int currentIndex = contents.indexOf("[[");
     boolean result = false;
     while (currentIndex >= 0) {
       boolean shouldCount = true;
       if (shouldCount) {
-        PageElementInternalLink link = pageAnalysis.isInInternalLink(currentIndex);
+        PageElementInternalLink link = analysis.isInInternalLink(currentIndex);
         if ((link != null) && (link.getBeginIndex() == currentIndex)) {
           shouldCount = false;
         }
       }
       if (shouldCount) {
-        PageElementImage image = pageAnalysis.isInImage(currentIndex);
+        PageElementImage image = analysis.isInImage(currentIndex);
         if ((image != null) && (image.getBeginIndex() == currentIndex)) {
           shouldCount = false;
         }
       }
       if (shouldCount) {
-        PageElementCategory category = pageAnalysis.isInCategory(currentIndex);
+        PageElementCategory category = analysis.isInCategory(currentIndex);
         if ((category != null) && (category.getBeginIndex() == currentIndex)) {
           shouldCount = false;
         }
       }
       if (shouldCount) {
-        PageElementLanguageLink link = pageAnalysis.isInLanguageLink(currentIndex);
+        PageElementLanguageLink link = analysis.isInLanguageLink(currentIndex);
         if ((link != null) && (link.getBeginIndex() == currentIndex)) {
           shouldCount = false;
         }
       }
       if (shouldCount) {
-        PageElementInterwikiLink link = pageAnalysis.isInInterwikiLink(currentIndex);
+        PageElementInterwikiLink link = analysis.isInInterwikiLink(currentIndex);
         if ((link != null) && (link.getBeginIndex() == currentIndex)) {
           shouldCount = false;
         }
       }
       if (shouldCount) {
-        PageElementExternalLink link = pageAnalysis.isInExternalLink(currentIndex + 1);
+        PageElementExternalLink link = analysis.isInExternalLink(currentIndex + 1);
         if ((link != null) && (link.getBeginIndex() == currentIndex + 1)) {
           shouldCount = false;
         }
       }
       if (shouldCount &&
-          (pageAnalysis.isInComment(currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
-          (pageAnalysis.isInTag(currentIndex) != null)) {
+          (analysis.isInComment(currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
+          (analysis.isInTag(currentIndex) != null)) {
         shouldCount = false;
       }
       if (shouldCount) {
-        PageElementTemplate template = pageAnalysis.isInTemplate(currentIndex + 2);
+        PageElementTemplate template = analysis.isInTemplate(currentIndex + 2);
         if ((template != null) && (contents.startsWith("]]", template.getEndIndex()))) {
           shouldCount = false;
         }
@@ -123,7 +123,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
             finished = true;
           } else if (tmpChar == ']') {
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), currentIndex, tmpIndex + 1);
+                analysis.getPage(), currentIndex, tmpIndex + 1);
 
             // Check if the situation is something like [[http://....] (replacement: [http://....])
             List<String> protocols = PageElementExternalLink.getProtocols();
@@ -147,7 +147,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
               lastChar++;
             }
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), currentIndex, lastChar + 1);
+                analysis.getPage(), currentIndex, lastChar + 1);
             errorResult.addReplacement(contents.substring(currentIndex, tmpIndex) + "]]");
             errorResult.addReplacement("{{" + contents.substring(currentIndex + 2, tmpIndex) + "}}");
             errors.add(errorResult);
@@ -160,7 +160,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
         // Default
         if (!errorReported) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), currentIndex, currentIndex + 2);
+              analysis.getPage(), currentIndex, currentIndex + 2);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
         }
@@ -168,6 +168,119 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
       currentIndex = contents.indexOf("[[", currentIndex + 2);
     }
 
+    // Analyze each internal link to see if it contains a [
+    for (PageElementInternalLink link : analysis.getInternalLinks()) {
+      String text = link.getText();
+      if (text != null) {
+        text = cleanText(text);
+        if (text != null) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+          errorResult.addReplacement(PageElementInternalLink.createInternalLink(
+              link.getLink(), link.getAnchor(), text));
+          errors.add(errorResult);
+        }
+      }
+    }
+
+    // Analyze each image to see if it contains a [
+    for (PageElementImage image : analysis.getImages()) {
+      String text = image.getDescription();
+      String modifiedText = cleanText(text);
+      String alt = image.getAlternateDescription();
+      String modifiedAlt = cleanText(alt);
+      if ((modifiedText != null) || (modifiedAlt != null)) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis.getPage(), image.getBeginIndex(), image.getEndIndex());
+        errorResult.addReplacement(image.getDescriptionReplacement(
+            (modifiedText != null) ? modifiedText : text,
+            (modifiedAlt != null) ? modifiedAlt : alt));
+        errors.add(errorResult);
+      }
+    }
+
+    // Analyze each external link to see if it has a [ before
+    for (PageElementExternalLink link : analysis.getExternalLinks()) {
+      int begin = link.getBeginIndex();
+      if ((begin > 0) && (contents.charAt(begin - 1) == '[')) {
+        int end = link.getEndIndex();
+        if ((end >= contents.length()) || (contents.charAt(end) != ']')) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis.getPage(), begin - 1, begin);
+          errorResult.addReplacement("[");
+          errors.add(errorResult);
+        }
+      }
+    }
+
     return result;
+  }
+
+  /**
+   * @param originalText Original text.
+   * @return Cleaned up text (or null if no cleanup required).
+   */
+  private String cleanText(String originalText) {
+    if (originalText == null) {
+      return null;
+    }
+    StringBuilder sb = null;
+    int index = 0;
+    int singleBracketsCount = 0;
+    while (index < originalText.length()) {
+      boolean doubleBrackets = originalText.startsWith("[[", index);
+      if (doubleBrackets || !originalText.startsWith("[", index)) {
+        boolean  ok = true;
+        if (originalText.startsWith("]", index)) {
+          doubleBrackets = originalText.startsWith("]]", index);
+          if (!doubleBrackets) {
+            if (singleBracketsCount > 0) {
+              singleBracketsCount--;
+            } else {
+              ok = false;
+              if (sb == null) {
+                sb = new StringBuilder(originalText.substring(0, index));
+              }
+            }
+          }
+        }
+        int count = doubleBrackets ? 2 : 1;
+        if (ok && (sb != null)) {
+          sb.append(originalText.substring(index, index + count));
+        }
+        index += count;
+      } else {
+        singleBracketsCount++;
+        boolean paired = false;
+        int index2 = index + 1;
+        while (!paired && (index2 < originalText.length())) {
+          if (originalText.startsWith("]", index2) && !originalText.startsWith("]]", index2)) {
+            paired = true;
+          }
+          index2++;
+        }
+        if (!paired) {
+          if (sb == null) {
+            sb = new StringBuilder(originalText.substring(0, index));
+          }
+        } else if (sb != null) {
+          sb.append('[');
+        }
+        index++;
+      }
+    }
+    return (sb != null) ? sb.toString() : null;
   }
 }
