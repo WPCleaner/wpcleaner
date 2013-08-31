@@ -1108,6 +1108,23 @@ public abstract class OnePageWindow
   }
 
   /**
+   * @return Initial algorithms.
+   */
+  protected Collection<CheckErrorAlgorithm> getInitialAlgorithms() {
+    if (initialErrors == null) {
+      return null;
+    }
+    Collection<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
+    for (CheckErrorPage error : initialErrors) {
+      CheckErrorAlgorithm algorithm = error.getAlgorithm();
+      if (!algorithms.contains(algorithm)) {
+        algorithms.add(algorithm);
+      }
+    }
+    return algorithms;
+  }
+
+  /**
    * Mark a page as fixed for an error.
    * 
    * @param error Error.

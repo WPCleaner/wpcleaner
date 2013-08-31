@@ -946,11 +946,9 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         (getInitialErrors() != null) &&
         (getTextContents() != null)) {
       String initialContents = getTextContents().getText();
-      String contents = initialContents;
-      for (CheckErrorPage error : getInitialErrors()) {
-        analysis = getPage().getAnalysis(contents, true);
-        contents = error.getAlgorithm().automaticFix(analysis);
-      }
+      String contents = PageAnalysis.tidyArticle(
+          getPage(), initialContents,
+          getInitialAlgorithms(), null);
       if (!contents.equals(initialContents)) {
         getTextContents().changeText(contents);
         actionValidate(false);
