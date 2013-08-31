@@ -304,6 +304,61 @@ public class PageElementImage extends PageElement {
     return sb.toString();
   }
 
+  /**
+   * Change image to have a different descriptions.
+   * 
+   * @param newDescription New description.
+   * @param altDescription New alternate description.
+   * @return String representing the image with the new descriptions.
+   */
+  public String getDescriptionReplacement(
+      String newDescription, String altDescription) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("[[");
+    sb.append(namespaceNotTrimmed);
+    if (imageNotTrimmed != null) {
+      sb.append(':');
+      sb.append(imageNotTrimmed);
+    }
+    boolean descriptionAdded = false;
+    boolean altDescriptionAdded = false;
+    for (Parameter param : parameters) {
+      MagicWord magicWord = param.getMagicWord();
+      if (magicWord != null) {
+        if (MagicWord.IMG_ALT.equals(magicWord.getName())) {
+          if (altDescription != null) {
+            sb.append('|');
+            sb.append(magicWord.getName());
+            sb.append('=');
+            sb.append(altDescription);
+          }
+          altDescriptionAdded = true;
+        } else {
+          sb.append('|');
+          sb.append(param.getContents());
+        }
+      } else {
+        if (newDescription != null) {
+          sb.append('|');
+          sb.append(newDescription);
+        }
+        descriptionAdded = true;
+      }
+    }
+    if (!altDescriptionAdded && (altDescription != null)) {
+      sb.append('|');
+      sb.append(MagicWord.IMG_ALT);
+      sb.append('=');
+      sb.append(altDescription);
+    }
+    if (!descriptionAdded && (newDescription != null)) {
+      sb.append('|');
+      sb.append(newDescription);
+    }
+    sb.append("]]");
+    return sb.toString();
+  }
+
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */
