@@ -78,8 +78,12 @@ public class HttpServer {
           inputStream = new GZIPInputStream(inputStream);
         }
       }
-      if ((statusCode == HttpStatus.SC_OK) && (manager != null)) {
-        manager.manageResponse(inputStream);
+      if (statusCode == HttpStatus.SC_OK) {
+        if (manager != null) {
+          manager.manageResponse(inputStream);
+        }
+      } else {
+        log.warn("Error accessing url: " + statusCode + "-" + HttpStatus.getStatusText(statusCode));
       }
       try {
         while (inputStream.read() >= 0) {
