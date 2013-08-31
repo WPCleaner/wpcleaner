@@ -133,6 +133,11 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
               if (MagicWord.PAGE_NAME.equals(magicWordName)) {
                 errorResult.addReplacement(page.getTitle());
               }
+              if (MagicWord.IF_EXPR.equals(magicWordName)) {
+                for (int param = 1; param < function.getParameterCount(); param++) {
+                  errorResult.addReplacement(function.getParameterValue(param));
+                }
+              }
               errors.add(errorResult);
               nextIndex = function.getEndIndex();
             } else {
