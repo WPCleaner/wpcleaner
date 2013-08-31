@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.wikipediacleaner.api.check.HtmlCharacters;
 
 
 /**
@@ -68,10 +69,17 @@ public class TextProviderUrlTitle implements TextProvider {
             Matcher m = pTitle.matcher(text);
             if (m.find() == true) {
               String title = m.group(1).trim();
-              title = title.replaceAll("&#39;", "’");
-              title = title.replaceAll("&#232;", "è");
-              title = title.replaceAll("&#233;", "é");
-              title = title.replaceAll("&eacute;", "é");
+              for (HtmlCharacters htmlChar : HtmlCharacters.values()) {
+                if (!HtmlCharacters.SYMBOL_AMPERSAND.equals(htmlChar)) {
+                  title = title.replaceAll("&#" + htmlChar.getNumber() + ";", "" + htmlChar.getValue());
+                  if (htmlChar.getNumber() != htmlChar.getAlternativeNumber()) {
+                    title = title.replaceAll("&#" + htmlChar.getAlternativeNumber() + ";", "" + htmlChar.getValue());
+                  }
+                  if (htmlChar.getName() != null) {
+                    title = title.replaceAll("&" + htmlChar.getName() + ";", "" + htmlChar.getValue());
+                  }
+                }
+              }
               result.add(title);
             }
           }
