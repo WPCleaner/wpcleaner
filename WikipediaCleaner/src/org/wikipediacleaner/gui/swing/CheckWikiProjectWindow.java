@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -1076,11 +1077,12 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       // Automatic fix of some errors
       if ((initialErrors != null) && (textPage != null)) {
         String initialContents = textPage.getText();
-        String contents = initialContents;
+        Collection<CheckErrorAlgorithm> algorithms = new ArrayList<CheckErrorAlgorithm>();
         for (CheckErrorPage initialError : initialErrors) {
-          PageAnalysis analysis = page.getAnalysis(contents, true);
-          contents = initialError.getAlgorithm().automaticFix(analysis);
+          algorithms.add(initialError.getAlgorithm());
         }
+        String contents = PageAnalysis.tidyArticle(
+            page, initialContents, algorithms, null);
         if (!contents.equals(initialContents)) {
           textPage.changeText(contents);
           actionValidate();

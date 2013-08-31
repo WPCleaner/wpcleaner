@@ -237,17 +237,7 @@ public class MediaWiki extends MediaWikiController {
             if (automaticCW) {
               List<CheckErrorAlgorithm> algorithms = CheckErrorAlgorithms.getAlgorithms(wiki);
               List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-              for (CheckErrorAlgorithm algorithm : algorithms) {
-                if (algorithm.isAvailable() &&
-                    CheckErrorAlgorithms.isAlgorithmActive(wiki, algorithm.getErrorNumber())) {
-                  PageAnalysis analysis = page.getAnalysis(newContents, true);
-                  String tmp = algorithm.automaticFix(analysis);
-                  if (!tmp.equals(newContents)) {
-                    newContents = tmp;
-                    usedAlgorithms.add(algorithm);
-                  }
-                }
-              }
+              newContents = PageAnalysis.tidyArticle(page, newContents, algorithms, usedAlgorithms);
               if (!usedAlgorithms.isEmpty()) {
                 fullComment.append(" / ");
                 fullComment.append(wiki.getCWConfiguration().getComment());

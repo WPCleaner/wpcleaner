@@ -8,12 +8,15 @@
 package org.wikipediacleaner.api.data;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
@@ -1441,7 +1444,7 @@ public class PageAnalysis {
   private Map<Integer, Result> checkWikiErrors;
 
   /**
-   * Memorize Check Wiki erros.
+   * Memorize Check Wiki errors.
    * 
    * @param errorNumber Error number.
    * @param found True if errors of this kind have been found.
@@ -1463,5 +1466,44 @@ public class PageAnalysis {
       return null;
     }
     return checkWikiErrors.get(Integer.valueOf(errorNumber));
+  }
+
+  // ==========================================================================
+  // Errors management
+  // ==========================================================================
+
+  /**
+   * Tidy up an article.
+   * 
+   * @param page Page.
+   * @param contents Current contents.
+   * @param algorithms List of Check Wiki algorithms.
+   * @param usedAlgorithms Algorithms used to tidy up the article.
+   * @return New contents.
+   */
+  public static String tidyArticle(
+      Page page, String contents,
+      Collection<CheckErrorAlgorithm> algorithms,
+      List<CheckErrorAlgorithm> usedAlgorithms) {
+    if ((page == null) || (contents == null)) {
+      return contents;
+    }
+
+    // Fix Check Wiki errors
+    if (algorithms != null) {
+      for (CheckErrorAlgorithm algorithm : algorithms) {
+        if (algorithm.isAvailable() &&
+            CheckErrorAlgorithms.isAlgorithmActive(page.getWikipedia(), algorithm.getErrorNumber())) {
+          String currentContents = contents;
+          PageAnalysis analysis = page.getAnalysis(currentContents, true);
+          contents = algorithm.automaticFix(analysis);
+          if ((usedAlgorithms != null) && (!contents.equals(currentContents))) {
+            usedAlgorithms.add(algorithm);
+          }
+        }
+      }
+    }
+
+    return contents;
   }
 }
