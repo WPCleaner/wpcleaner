@@ -61,6 +61,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.AutomaticFormatter;
 import org.wikipediacleaner.api.data.CompositeComparator;
 import org.wikipediacleaner.api.data.InternalLinkCount;
 import org.wikipediacleaner.api.data.Page;
@@ -946,7 +947,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         (getInitialErrors() != null) &&
         (getTextContents() != null)) {
       String initialContents = getTextContents().getText();
-      String contents = PageAnalysis.tidyArticle(
+      String contents = AutomaticFormatter.tidyArticle(
           getPage(), initialContents,
           getInitialAlgorithms(), null);
       if (!contents.equals(initialContents)) {
