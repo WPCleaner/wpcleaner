@@ -81,6 +81,7 @@ import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.Contributions;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
+import org.wikipediacleaner.api.data.AutomaticFormatter;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -1081,7 +1082,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         for (CheckErrorPage initialError : initialErrors) {
           algorithms.add(initialError.getAlgorithm());
         }
-        String contents = PageAnalysis.tidyArticle(
+        String contents = AutomaticFormatter.tidyArticle(
             page, initialContents, algorithms, null);
         if (!contents.equals(initialContents)) {
           textPage.changeText(contents);

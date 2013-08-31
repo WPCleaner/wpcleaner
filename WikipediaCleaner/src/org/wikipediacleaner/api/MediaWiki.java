@@ -20,8 +20,8 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
+import org.wikipediacleaner.api.data.AutomaticFormatter;
 import org.wikipediacleaner.api.data.Page;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.execution.BacklinksWRCallable;
 import org.wikipediacleaner.api.execution.ContentsCallable;
 import org.wikipediacleaner.api.execution.DisambiguationStatusCallable;
@@ -237,7 +237,7 @@ public class MediaWiki extends MediaWikiController {
             if (automaticCW) {
               List<CheckErrorAlgorithm> algorithms = CheckErrorAlgorithms.getAlgorithms(wiki);
               List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-              newContents = PageAnalysis.tidyArticle(page, newContents, algorithms, usedAlgorithms);
+              newContents = AutomaticFormatter.tidyArticle(page, newContents, algorithms, usedAlgorithms);
               if (!usedAlgorithms.isEmpty()) {
                 fullComment.append(" / ");
                 fullComment.append(wiki.getCWConfiguration().getComment());

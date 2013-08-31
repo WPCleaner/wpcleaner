@@ -8,19 +8,14 @@
 package org.wikipediacleaner.api.data;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
-import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
 import org.wikipediacleaner.utils.Configuration;
@@ -1468,165 +1463,5 @@ public class PageAnalysis {
       return null;
     }
     return checkWikiErrors.get(Integer.valueOf(errorNumber));
-  }
-
-  // ==========================================================================
-  // Errors management
-  // ==========================================================================
-
-  /**
-   * Tidy up an article.
-   * 
-   * @param page Page.
-   * @param contents Current contents.
-   * @param algorithms List of Check Wiki algorithms.
-   * @param usedAlgorithms Algorithms used to tidy up the article.
-   * @return New contents.
-   */
-  public static String tidyArticle(
-      Page page, String contents,
-      Collection<CheckErrorAlgorithm> algorithms,
-      List<CheckErrorAlgorithm> usedAlgorithms) {
-    if ((page == null) || (contents == null)) {
-      return contents;
-    }
-    EnumWikipedia wiki = page.getWikipedia();
-    WPCConfiguration config = wiki.getConfiguration();
-
-    // Fix Check Wiki errors
-    if (algorithms != null) {
-      for (CheckErrorAlgorithm algorithm : algorithms) {
-        if (algorithm.isAvailable() &&
-            CheckErrorAlgorithms.isAlgorithmActive(wiki, algorithm.getErrorNumber())) {
-          String currentContents = contents;
-          PageAnalysis analysis = page.getAnalysis(currentContents, true);
-          contents = algorithm.automaticFix(analysis);
-          if ((usedAlgorithms != null) && (!contents.equals(currentContents))) {
-            usedAlgorithms.add(algorithm);
-          }
-        }
-      }
-    }
-
-    if (!config.getBoolean(WPCConfigurationBoolean.AUTO_ACTIVE)) {
-      return contents;
-    }
-
-    // Auto formatting options: number of carriage returns between default sort and category
-    String option = config.getString(WPCConfigurationString.AUTO_CR_DEFAULTSORT_CATEGORY);
-    if (isValidCrOption(option)) {
-      int min = getMinCrOption(option);
-      int max = getMaxCrOption(option);
-      if ((min > 0) || (max < Integer.MAX_VALUE)) {
-        PageAnalysis analysis = page.getAnalysis(contents, true);
-        for (PageElementFunction function : analysis.getDefaultSorts()) {
-          int nbCr = 0;
-          int index = function.getEndIndex();
-          boolean finished = false;
-          while (!finished && (index < contents.length())) {
-            char currentChar = contents.charAt(index);
-            if (currentChar == '\n') {
-              nbCr++;
-              index++;
-            } else if (currentChar == ' ') {
-              index++;
-            } else {
-              finished = true;
-            }
-          }
-          if (finished && (contents.charAt(index) == '[') &&
-              ((nbCr < min) || (nbCr > max))) {
-            PageElementCategory category = analysis.isInCategory(index);
-            if (category != null) {
-              StringBuilder sb = new StringBuilder(contents.substring(0, function.getEndIndex()));
-              for (int i = normalizeValue(nbCr, min, max); i > 0; i--) {
-                sb.append('\n');
-              }
-              sb.append(contents.substring(category.getBeginIndex()));
-              contents = sb.toString();
-            }
-          }
-        }
-      }
-    }
-
-    return contents;
-  }
-
-  /**
-   * @param option Option for number of carriage returns.
-   * @return True if option is valid.
-   */
-  private static boolean isValidCrOption(String option) {
-    if ((option == null) || (option.length() == 0)) {
-      return false;
-    }
-    int minusIndex = option.indexOf('-');
-    try {
-      if (minusIndex < 0) {
-        int value = Integer.parseInt(option);
-        if (value < 0) {
-          return false;
-        }
-      } else {
-        if (minusIndex + 1 >= option.length()) {
-          return false;
-        }
-        int min = Integer.parseInt(option.substring(0, minusIndex));
-        int max = Integer.parseInt(option.substring(minusIndex + 1));
-        if ((min < 0) || (max < min)) {
-          return false;
-        }
-      }
-    } catch (NumberFormatException e) {
-      return false;
-    }
-    return true;
-  }
-
-  /**
-   * @param option Option for number of carriage returns.
-   * @return Minimum number of carriage returns.
-   */
-  private static int getMinCrOption(String option) {
-    if ((option == null) || (option.length() == 0)) {
-      return 0;
-    }
-    int minusIndex = option.indexOf('-');
-    if (minusIndex < 0) {
-      return Integer.parseInt(option);
-    }
-    return Integer.parseInt(option.substring(0, minusIndex));
-  }
-
-  /**
-   * @param option Option for number of carriage returns.
-   * @return Maximum number of carriage returns.
-   */
-  private static int getMaxCrOption(String option) {
-    if ((option == null) || (option.length() == 0)) {
-      return Integer.MAX_VALUE;
-    }
-    int minusIndex = option.indexOf('-');
-    if (minusIndex < 0) {
-      return Integer.parseInt(option);
-    }
-    return Integer.parseInt(option.substring(minusIndex + 1));
-  }
-
-  /**
-   * @param value Current value.
-   * @param min Minimum possible value.
-   * @param max Maximum possible value.
-   * @return Normalized value.
-   */
-  private static int normalizeValue(int value, int min, int max) {
-    if (value < min) {
-      return min;
-    }
-    if (value > max) {
-      return max;
-    }
-    return value;
   }
 }
