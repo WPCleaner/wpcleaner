@@ -59,6 +59,9 @@ public class AutomaticFormatter {
     }
 
     // Auto formatting options
+    if (!page.isInMainNamespace()) {
+      return contents;
+    }
     if (!config.getBoolean(WPCConfigurationBoolean.AUTO_ACTIVE)) {
       return contents;
     }
