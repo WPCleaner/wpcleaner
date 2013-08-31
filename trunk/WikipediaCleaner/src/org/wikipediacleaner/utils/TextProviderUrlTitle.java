@@ -9,6 +9,7 @@ package org.wikipediacleaner.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.regex.Matcher;
@@ -59,14 +60,30 @@ public class TextProviderUrlTitle implements TextProvider {
           is = method.getResponseBodyAsStream();
           byte[] tmpBytes = new byte[MAXIMUM_SIZE];
           int size = is.read(tmpBytes);
-          String text = new String(tmpBytes, 0, size).replaceAll("\\s", " ");
+          Charset utf8 = Charset.forName("UTF8");
+          String text = new String(tmpBytes, 0, size, utf8).replaceAll("\\s", " ");
+          Pattern pCharset = Pattern.compile(
+              "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=([^\"]+?)\"",
+              Pattern.CASE_INSENSITIVE);
+          Matcher m = pCharset.matcher(text);
+          if (m.find() == true) {
+            String charsetName = m.group(1).trim();
+            try {
+              Charset charset = Charset.forName(charsetName);
+              if (!charset.equals(utf8)) {
+                text = new String(tmpBytes, 0, size, charset).replaceAll("\\s", " ");
+              }
+            } catch (Exception e) {
+              //
+            }
+          }
           Pattern[] pTitles = {
               Pattern.compile("<title>(.+?)</title>", Pattern.CASE_INSENSITIVE),
-              Pattern.compile("<meta name=\"title\" content=\"([^\"]+?)\"/?>", Pattern.CASE_INSENSITIVE),
-              Pattern.compile("<meta name=\"description\" content=\"([^\"]+?)\"/?>", Pattern.CASE_INSENSITIVE)
+              Pattern.compile("<meta name=\"title\" content=\"([^\"]+?)\"", Pattern.CASE_INSENSITIVE),
+              Pattern.compile("<meta name=\"description\" content=\"([^\"]+?)\"", Pattern.CASE_INSENSITIVE)
           };
           for (Pattern pTitle : pTitles) {
-            Matcher m = pTitle.matcher(text);
+            m = pTitle.matcher(text);
             if (m.find() == true) {
               String title = m.group(1).trim();
               for (HtmlCharacters htmlChar : HtmlCharacters.values()) {
