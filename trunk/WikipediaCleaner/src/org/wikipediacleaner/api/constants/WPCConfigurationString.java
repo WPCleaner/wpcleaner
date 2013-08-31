@@ -13,6 +13,8 @@ package org.wikipediacleaner.api.constants;
  */
 public enum WPCConfigurationString {
 
+  // Automatic formatting: number of carriage returns between default sort and category
+  AUTO_CR_DEFAULTSORT_CATEGORY("auto_cr_defaultsort_category", null, false, true, true),
   // Check Wiki comment
   CW_COMMENT("check_wiki_comment", null, false, true, false),
   // Check Wiki project page
