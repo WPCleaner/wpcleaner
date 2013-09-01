@@ -15,6 +15,8 @@ public enum WPCConfigurationString {
 
   // Automatic formatting: number of carriage returns before categories
   AUTO_CR_BEFORE_CATEGORY("auto_cr_before_category", null, false, true, true),
+  // Automatic formatting: number of carriage returns between categories
+  AUTO_CR_BETWEEN_CATEGORY("auto_cr_between_category", null, false, true, true),
   // Automatic formatting: number of carriage returns between default sort and categories
   AUTO_CR_DEFAULTSORT_CATEGORY("auto_cr_defaultsort_category", null, false, true, true),
   // Check Wiki comment
