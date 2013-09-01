@@ -68,6 +68,7 @@ public class AutomaticFormatter {
     contents = fixLinkDefaultsortCategory(page, contents);
     contents = fixCrBeforeCategory(page, contents);
     contents = fixCrDefaultsortCategory(page, contents);
+    contents = fixCrBetweenCategory(page, contents);
 
     return contents;
   }
@@ -298,6 +299,76 @@ public class AutomaticFormatter {
               normalizeValue(nbCr, min, max), category.getBeginIndex());
         }
       }
+    }
+
+    return contents;
+  }
+
+  /**
+   * Auto formatting options: number of carriage returns between each category.
+   * 
+   * @param page Page.
+   * @param contents Current contents.
+   * @return New contents.
+   */
+  public static String fixCrBetweenCategory(Page page, String contents) {
+
+    // Check configuration
+    WPCConfiguration config = page.getWikipedia().getConfiguration();
+    String option = config.getString(WPCConfigurationString.AUTO_CR_BETWEEN_CATEGORY);
+    if (!isValidCrOption(option)) {
+      return contents;
+    }
+    int min = getMinCrOption(option);
+    int max = getMaxCrOption(option);
+    if ((min <= 0) && (max == Integer.MAX_VALUE)) {
+      return contents;
+    }
+    PageAnalysis analysis = page.getAnalysis(contents, true);
+
+    // Analyze each category
+    List<PageElementCategory> categories = analysis.getCategories();
+    if ((categories == null) || (categories.isEmpty())) {
+      return contents;
+    }
+    StringBuilder sb = new StringBuilder();
+    int lastIndex = 0;
+    for (int numCategory = 1; numCategory < categories.size(); numCategory++) {
+      PageElementCategory previousCategory = categories.get(numCategory - 1);
+      PageElementCategory category = categories.get(numCategory);
+
+      // Check what is between the two categories
+      int index = previousCategory.getEndIndex();
+      boolean ok = true;
+      int nbCr = 0;
+      while (ok && (index < category.getBeginIndex())) {
+        char currentChar = contents.charAt(index);
+        if (currentChar == '\n') {
+          nbCr++;
+        } else if (currentChar != ' ') {
+          ok = false;
+        }
+        index++;
+      }
+
+      // Update text if needed
+      if (ok && ((nbCr < min) || (nbCr > max))) {
+        if (lastIndex < previousCategory.getEndIndex()) {
+          sb.append(contents.substring(lastIndex, previousCategory.getEndIndex()));
+          lastIndex = previousCategory.getEndIndex();
+        }
+        nbCr = normalizeValue(nbCr, min, max);
+        for (int i = 0; i < nbCr; i++) {
+          sb.append('\n');
+        }
+        lastIndex = category.getBeginIndex();
+      }
+    }
+    if (lastIndex > 0) {
+      if (lastIndex < contents.length()) {
+        sb.append(contents.substring(lastIndex));
+      }
+      contents = sb.toString();
     }
 
     return contents;
