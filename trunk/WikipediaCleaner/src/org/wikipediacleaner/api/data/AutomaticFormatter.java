@@ -65,8 +65,96 @@ public class AutomaticFormatter {
     if (!config.getBoolean(WPCConfigurationBoolean.AUTO_ACTIVE)) {
       return contents;
     }
-    contents = fixBeforeCategory(page, contents);
-    contents = fixDefaultsortCategory(page, contents);
+    contents = fixLinkDefaultsortCategory(page, contents);
+    contents = fixCrBeforeCategory(page, contents);
+    contents = fixCrDefaultsortCategory(page, contents);
+
+    return contents;
+  }
+
+  /**
+   * Auto formatting options: link default sort and categories.
+   * 
+   * @param page Page.
+   * @param contents Current contents.
+   * @return New contents.
+   */
+  public static String fixLinkDefaultsortCategory(Page page, String contents) {
+
+    // Check configuration
+    WPCConfiguration config = page.getWikipedia().getConfiguration();
+    boolean option = config.getBoolean(WPCConfigurationBoolean.AUTO_LINK_DEFAULTSORT_CATEGORY);
+    if (!option) {
+      return contents;
+    }
+    PageAnalysis analysis = page.getAnalysis(contents, true);
+
+    // Retrieve default sort
+    List<PageElementFunction> defaultSorts = analysis.getDefaultSorts();
+    if ((defaultSorts == null) || (defaultSorts.isEmpty())) {
+      return contents;
+    }
+    PageElementFunction defaultSort = defaultSorts.get(0);
+    int beginDefaultSort = defaultSort.getBeginIndex();
+    int endDefaultSort = defaultSort.getEndIndex();
+
+    // Retrieve categories
+    List<PageElementCategory> categories = analysis.getCategories();
+    if ((categories == null) || (categories.isEmpty())) {
+      return contents;
+    }
+    PageElementCategory category = categories.get(0);
+    int beginCategory = category.getBeginIndex();
+    if (endDefaultSort > beginCategory) {
+      return contents;
+    }
+
+    // Analyze text between default sort and category
+    int index = endDefaultSort;
+    boolean ok = true;
+    while (ok && (index < beginCategory)) {
+      char currentChar = contents.charAt(index);
+      if ((currentChar != ' ') && (currentChar != '\n')) {
+        ok = false;
+      }
+      index++;
+    }
+    if (ok) {
+      return contents;
+    }
+    index = beginCategory;
+    while ((index > 0) && ok) {
+      char currentChar = contents.charAt(index);
+      if (currentChar == '\n') {
+        ok = false;
+      } else if (currentChar != ' ') {
+        return contents;
+      }
+      index--;
+    }
+
+    // Fix default sort position
+    StringBuilder sb = new StringBuilder(contents.substring(0, beginDefaultSort));
+    int delta = 0;
+    if ((beginDefaultSort == 0) ||
+        (contents.charAt(beginDefaultSort - 1) == '\n')) {
+      if ((endDefaultSort < contents.length()) &&
+          (contents.charAt(endDefaultSort) == '\n')) {
+        delta = 1;
+        if ((beginDefaultSort == 1) ||
+            (contents.charAt(beginDefaultSort - 2) == '\n')) {
+          if ((endDefaultSort + 1 < contents.length() &&
+              (contents.charAt(endDefaultSort + 1) == '\n'))) {
+            delta = 2;
+          }
+        }
+      }
+    }
+    sb.append(contents.substring(endDefaultSort + delta, beginCategory));
+    sb.append(contents.substring(beginDefaultSort, endDefaultSort));
+    sb.append("\n");
+    sb.append(contents.substring(beginCategory));
+    contents = sb.toString();
 
     return contents;
   }
@@ -78,7 +166,7 @@ public class AutomaticFormatter {
    * @param contents Current contents.
    * @return New contents.
    */
-  public static String fixBeforeCategory(Page page, String contents) {
+  public static String fixCrBeforeCategory(Page page, String contents) {
 
     // Check configuration
     WPCConfiguration config = page.getWikipedia().getConfiguration();
@@ -166,7 +254,7 @@ public class AutomaticFormatter {
    * @param contents Current contents.
    * @return New contents.
    */
-  public static String fixDefaultsortCategory(Page page, String contents) {
+  public static String fixCrDefaultsortCategory(Page page, String contents) {
 
     // Check configuration
     WPCConfiguration config = page.getWikipedia().getConfiguration();

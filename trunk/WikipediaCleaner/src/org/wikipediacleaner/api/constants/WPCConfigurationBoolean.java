@@ -15,6 +15,8 @@ public enum WPCConfigurationBoolean {
 
   // Automatic formatting: active
   AUTO_ACTIVE("auto_active", false, true, true),
+  // Automatic formatting: link default sort and categories
+  AUTO_LINK_DEFAULTSORT_CATEGORY("auto_link_defaultsort_category", false, true, true),
   // Used to force the activation of Check Wiki project even without a project page.
   CW_FORCE("check_wiki_force", false, true, false),
   // Used to mark error fixed both on Tool Server and WMF Labs
