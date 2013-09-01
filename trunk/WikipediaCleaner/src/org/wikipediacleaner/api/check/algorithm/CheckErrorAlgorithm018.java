@@ -57,7 +57,7 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
     }
     boolean result = false;
     for (PageElementCategory category : categories) {
-      String namespace = category.getCategory();
+      String namespace = category.getCategoryNotTrimmed().trim();
       boolean lowerCaseNamespace = false;
       if ((namespace != null) &&
           (namespace.length() > 0) &&
