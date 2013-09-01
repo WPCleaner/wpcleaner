@@ -69,6 +69,7 @@ public class AutomaticFormatter {
     contents = fixCrBeforeCategory(page, contents);
     contents = fixCrDefaultsortCategory(page, contents);
     contents = fixCrBetweenCategory(page, contents);
+    contents = fixEndOfArticle(page, contents);
 
     return contents;
   }
@@ -106,36 +107,51 @@ public class AutomaticFormatter {
     }
     PageElementCategory category = categories.get(0);
     int beginCategory = category.getBeginIndex();
-    if (endDefaultSort > beginCategory) {
-      return contents;
-    }
+    boolean defaultSortFirst = beginDefaultSort < beginCategory;
 
-    // Analyze text between default sort and category
-    int index = endDefaultSort;
-    boolean ok = true;
-    while (ok && (index < beginCategory)) {
-      char currentChar = contents.charAt(index);
-      if ((currentChar != ' ') && (currentChar != '\n')) {
-        ok = false;
+    // Analyze text between category and default sort
+    if (!defaultSortFirst) {
+      int index = category.getEndIndex();
+      while (index < beginDefaultSort) {
+        char currentChar = contents.charAt(index);
+        if ((currentChar == ' ') || (currentChar == '\n')) {
+          index++;
+        } else if (currentChar == '[') {
+          PageElementCategory currentCategory = analysis.isInCategory(index);
+          if (currentCategory == null) {
+            return contents;
+          }
+          index = currentCategory.getEndIndex();
+        } else {
+          return contents;
+        }
       }
-      index++;
-    }
-    if (ok) {
-      return contents;
-    }
-    index = beginCategory;
-    while ((index > 0) && ok) {
-      char currentChar = contents.charAt(index);
-      if (currentChar == '\n') {
-        ok = false;
-      } else if (currentChar != ' ') {
+    } else {
+      int index = endDefaultSort;
+      boolean ok = true;
+      while (ok && (index < beginCategory)) {
+        char currentChar = contents.charAt(index);
+        if ((currentChar != ' ') && (currentChar != '\n')) {
+          ok = false;
+        }
+        index++;
+      }
+      if (ok) {
         return contents;
       }
-      index--;
+      index = beginCategory;
+      while ((index > 0) && ok) {
+        char currentChar = contents.charAt(index);
+        if (currentChar == '\n') {
+          ok = false;
+        } else if (currentChar != ' ') {
+          return contents;
+        }
+        index--;
+      }
     }
 
     // Fix default sort position
-    StringBuilder sb = new StringBuilder(contents.substring(0, beginDefaultSort));
     int delta = 0;
     if ((beginDefaultSort == 0) ||
         (contents.charAt(beginDefaultSort - 1) == '\n')) {
@@ -151,10 +167,24 @@ public class AutomaticFormatter {
         }
       }
     }
-    sb.append(contents.substring(endDefaultSort + delta, beginCategory));
+    StringBuilder sb = new StringBuilder(contents.substring(
+        0,
+        defaultSortFirst ? beginDefaultSort : beginCategory));
+    if (defaultSortFirst) {
+      sb.append(contents.substring(endDefaultSort + delta, beginCategory));
+    }
     sb.append(contents.substring(beginDefaultSort, endDefaultSort));
     sb.append("\n");
-    sb.append(contents.substring(beginCategory));
+    if (defaultSortFirst) {
+      if (beginCategory < contents.length()) {
+        sb.append(contents.substring(beginCategory));
+      }
+    } else {
+      sb.append(contents.substring(beginCategory, beginDefaultSort));
+      if (endDefaultSort + delta < contents.length()) {
+        sb.append(endDefaultSort + delta);
+      }
+    }
     contents = sb.toString();
 
     return contents;
@@ -371,6 +401,35 @@ public class AutomaticFormatter {
       contents = sb.toString();
     }
 
+    return contents;
+  }
+
+  /**
+   * Auto formatting options: end of article.
+   * 
+   * @param page Page.
+   * @param contents Current contents.
+   * @return New contents.
+   */
+  public static String fixEndOfArticle(Page page, String contents) {
+    int index = contents.length();
+    int nbCr = 0;
+    boolean finished = false;
+    while (!finished && (index > 0)) {
+      index--;
+      char currentChar = contents.charAt(index);
+      if (currentChar == '\n') {
+        nbCr++;
+      } else if (currentChar != ' ') {
+        finished = true;
+      }
+    }
+    if (index < contents.length() - 2) {
+      if (nbCr >= 1) {
+        return contents.substring(0, index + 1) + "\n";
+      }
+      return contents.substring(0, index + 1);
+    }
     return contents;
   }
 
