@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2013-08-31 23:00+0000\n"
-"X-Generator: Launchpad (build 16750)\n"
+"X-Launchpad-Export-Date: 2013-09-02 16:56+0000\n"
+"X-Generator: Launchpad (build 16753)\n"
 
 #: org/wikipediacleaner/Version.java:31
 msgid "Disambiguator extension has been deployed to all WMF wikis."
