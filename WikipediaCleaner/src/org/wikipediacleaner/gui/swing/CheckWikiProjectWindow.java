@@ -1056,13 +1056,15 @@ public class CheckWikiProjectWindow extends OnePageWindow {
           yesAll = true;
           // Go through
         case JOptionPane.YES_OPTION:
-          error.remove(page);
           if (errorCount == 0) {
             pane.remove(this);
           }
+          error.remove(page);
           markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
           actionSelectErrorType();
-          return;
+          if (errorCount == 0) {
+            return;
+          }
         case Utilities.NO_ALL_OPTION:
           noAll = true;
           break;
