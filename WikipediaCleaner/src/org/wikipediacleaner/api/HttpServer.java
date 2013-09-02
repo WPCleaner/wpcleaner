@@ -75,8 +75,15 @@ public class HttpServer {
     int count = 0;
     while ((statusCode != HttpStatus.SC_OK) &&
            (count < MAX_ATTEMPTS)) {
+      if (count > 0) {
+        try {
+          Thread.sleep(2000 * count);
+        } catch (InterruptedException e) {
+          // Nothing
+        }
+      }
+      count++;
       try {
-        count++;
         String url = baseUrl + path;
         method = HttpUtils.createHttpMethod(url, properties, false);
         statusCode = httpClient.executeMethod(method);
@@ -94,11 +101,6 @@ public class HttpServer {
           }
         } else {
           log.warn("Error accessing url: " + statusCode + "-" + HttpStatus.getStatusText(statusCode));
-          try {
-            Thread.sleep(2000 * count);
-          } catch (InterruptedException e) {
-            // Nothing
-          }
         }
         try {
           while (inputStream.read() >= 0) {
@@ -145,6 +147,14 @@ public class HttpServer {
     int count = 0;
     while ((statusCode != HttpStatus.SC_OK) &&
            (count < MAX_ATTEMPTS)) {
+      if (count > 0) {
+        try {
+          Thread.sleep(2000 * count);
+        } catch (InterruptedException e) {
+          // Nothing
+        }
+      }
+      count++;
       try {
         String url = baseUrl + path;
         method = HttpUtils.createHttpMethod(url, null, true);
