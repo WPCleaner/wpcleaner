@@ -43,6 +43,11 @@ public class HttpServer {
   private final String baseUrl;
 
   /**
+   * Maximum number of attempts.
+   */
+  private final static int MAX_ATTEMPTS = 3;
+
+  /**
    * Create an HttpServer object.
    * 
    * @param httpClient HTTP client.
@@ -66,50 +71,61 @@ public class HttpServer {
       ResponseManager     manager) throws APIException {
     HttpMethod method = null;
     InputStream inputStream = null;
-    try {
-      String url = baseUrl + path;
-      method = HttpUtils.createHttpMethod(url, properties, false);
-      int statusCode = httpClient.executeMethod(method);
-      inputStream = method.getResponseBodyAsStream();
-      inputStream = new BufferedInputStream(inputStream);
-      Header contentEncoding = method.getResponseHeader("Content-Encoding");
-      if (contentEncoding != null) {
-        if (contentEncoding.getValue().equals("gzip")) {
-          inputStream = new GZIPInputStream(inputStream);
-        }
-      }
-      if (statusCode == HttpStatus.SC_OK) {
-        if (manager != null) {
-          manager.manageResponse(inputStream);
-        }
-      } else {
-        log.warn("Error accessing url: " + statusCode + "-" + HttpStatus.getStatusText(statusCode));
-      }
+    int statusCode = HttpStatus.SC_SEE_OTHER;
+    int count = 0;
+    while ((statusCode != HttpStatus.SC_OK) &&
+           (count < MAX_ATTEMPTS)) {
       try {
-        while (inputStream.read() >= 0) {
+        count++;
+        String url = baseUrl + path;
+        method = HttpUtils.createHttpMethod(url, properties, false);
+        statusCode = httpClient.executeMethod(method);
+        inputStream = method.getResponseBodyAsStream();
+        inputStream = new BufferedInputStream(inputStream);
+        Header contentEncoding = method.getResponseHeader("Content-Encoding");
+        if (contentEncoding != null) {
+          if (contentEncoding.getValue().equals("gzip")) {
+            inputStream = new GZIPInputStream(inputStream);
+          }
+        }
+        if (statusCode == HttpStatus.SC_OK) {
+          if (manager != null) {
+            manager.manageResponse(inputStream);
+          }
+        } else {
+          log.warn("Error accessing url: " + statusCode + "-" + HttpStatus.getStatusText(statusCode));
+          try {
+            Thread.sleep(2000);
+          } catch (InterruptedException e) {
+            // Nothing
+          }
+        }
+        try {
+          while (inputStream.read() >= 0) {
+            //
+          }
+        } catch (IOException e) {
           //
         }
+      } catch (HttpException e) {
+        throw new APIException("HttpException: " + e.getMessage());
       } catch (IOException e) {
-        //
-      }
-      if (statusCode != HttpStatus.SC_OK) {
-        throw new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
-      }
-    } catch (HttpException e) {
-      throw new APIException("HttpException: " + e.getMessage());
-    } catch (IOException e) {
-      throw new APIException("IOException: " + e.getMessage());
-    } finally {
-      if (inputStream != null) {
-        try {
-          inputStream.close();
-        } catch (IOException e) {
-          log.warn("Error closing stream: " + e.getMessage());
+        throw new APIException("IOException: " + e.getMessage());
+      } finally {
+        if (inputStream != null) {
+          try {
+            inputStream.close();
+          } catch (IOException e) {
+            log.warn("Error closing stream: " + e.getMessage());
+          }
+        }
+        if (method != null) {
+          method.releaseConnection();
         }
       }
-      if (method != null) {
-        method.releaseConnection();
-      }
+    }
+    if (statusCode != HttpStatus.SC_OK) {
+      throw new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
     }
   }
 
@@ -125,49 +141,63 @@ public class HttpServer {
       ResponseManager manager) throws APIException {
     HttpMethod method = null;
     InputStream inputStream = null;
-    try {
-      String url = baseUrl + path;
-      method = HttpUtils.createHttpMethod(url, null, true);
-      int statusCode = httpClient.executeMethod(method);
-      if (statusCode == HttpStatus.SC_NOT_FOUND) {
-        return;
-      }
-      inputStream = method.getResponseBodyAsStream();
-      inputStream = new BufferedInputStream(inputStream);
-      Header contentEncoding = method.getResponseHeader("Content-Encoding");
-      if (contentEncoding != null) {
-        if (contentEncoding.getValue().equals("gzip")) {
-          inputStream = new GZIPInputStream(inputStream);
-        }
-      }
-      if ((statusCode == HttpStatus.SC_OK) && (manager != null)) {
-        manager.manageResponse(inputStream);
-      }
+    int statusCode = HttpStatus.SC_SEE_OTHER;
+    int count = 0;
+    while ((statusCode != HttpStatus.SC_OK) &&
+           (count < MAX_ATTEMPTS)) {
       try {
-        while (inputStream.read() >= 0) {
+        String url = baseUrl + path;
+        method = HttpUtils.createHttpMethod(url, null, true);
+        statusCode = httpClient.executeMethod(method);
+        if (statusCode == HttpStatus.SC_NOT_FOUND) {
+          return;
+        }
+        inputStream = method.getResponseBodyAsStream();
+        inputStream = new BufferedInputStream(inputStream);
+        Header contentEncoding = method.getResponseHeader("Content-Encoding");
+        if (contentEncoding != null) {
+          if (contentEncoding.getValue().equals("gzip")) {
+            inputStream = new GZIPInputStream(inputStream);
+          }
+        }
+        if (statusCode == HttpStatus.SC_OK) {
+          if (manager != null) {
+            manager.manageResponse(inputStream);
+          }
+        } else {
+          log.warn("Error accessing url: " + statusCode + "-" + HttpStatus.getStatusText(statusCode));
+          try {
+            Thread.sleep(2000);
+          } catch (InterruptedException e) {
+            // Nothing
+          }
+        }
+        try {
+          while (inputStream.read() >= 0) {
+            //
+          }
+        } catch (IOException e) {
           //
         }
+      } catch (HttpException e) {
+        throw new APIException("HttpException: " + e.getMessage());
       } catch (IOException e) {
-        //
-      }
-      if (statusCode != HttpStatus.SC_OK) {
-        throw new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
-      }
-    } catch (HttpException e) {
-      throw new APIException("HttpException: " + e.getMessage());
-    } catch (IOException e) {
-      throw new APIException("IOException: " + e.getMessage());
-    } finally {
-      if (inputStream != null) {
-        try {
-          inputStream.close();
-        } catch (IOException e) {
-          log.warn("Error closing stream: " + e.getMessage());
+        throw new APIException("IOException: " + e.getMessage());
+      } finally {
+        if (inputStream != null) {
+          try {
+            inputStream.close();
+          } catch (IOException e) {
+            log.warn("Error closing stream: " + e.getMessage());
+          }
+        }
+        if (method != null) {
+          method.releaseConnection();
         }
       }
-      if (method != null) {
-        method.releaseConnection();
-      }
+    }
+    if (statusCode != HttpStatus.SC_OK) {
+      throw new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
     }
   }
 }
