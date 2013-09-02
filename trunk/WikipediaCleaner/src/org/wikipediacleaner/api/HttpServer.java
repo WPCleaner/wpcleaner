@@ -95,7 +95,7 @@ public class HttpServer {
         } else {
           log.warn("Error accessing url: " + statusCode + "-" + HttpStatus.getStatusText(statusCode));
           try {
-            Thread.sleep(2000);
+            Thread.sleep(2000 * count);
           } catch (InterruptedException e) {
             // Nothing
           }
@@ -167,7 +167,7 @@ public class HttpServer {
         } else {
           log.warn("Error accessing url: " + statusCode + "-" + HttpStatus.getStatusText(statusCode));
           try {
-            Thread.sleep(2000);
+            Thread.sleep(2000 * count);
           } catch (InterruptedException e) {
             // Nothing
           }
