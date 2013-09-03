@@ -82,7 +82,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
             analysis.getPage(), beginIndex, endIndex);
         if (link != null) {
           errorResult.addReplacement(PageElementInternalLink.createInternalLink(
-              link.getFullLink(), link.getText() + textAfter));
+              link.getFullLink(), link.getDisplayedText() + textAfter));
         }
         errorResult.addReplacement(textBefore + " " + textAfter);
         errorResult.addReplacement(textBefore + textAfter);
