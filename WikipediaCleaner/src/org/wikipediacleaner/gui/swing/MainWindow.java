@@ -1814,7 +1814,7 @@ public class MainWindow
   class LoginWorker extends BasicWorker {
 
     private final EnumLanguage language;
-    private final String username;
+    private String username;
     private final char[] password;
     private final int saveUser;
     private final boolean login;
@@ -1871,6 +1871,7 @@ public class MainWindow
             }
           }
           User user = api.retrieveUser(getWikipedia(), username);
+          username = user.getName();
           getWikipedia().getConnection().setUser(user);
           api.retrieveTokens(getWikipedia());
           logged = true;
