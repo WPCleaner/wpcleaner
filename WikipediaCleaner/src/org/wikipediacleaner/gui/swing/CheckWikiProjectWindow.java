@@ -1085,7 +1085,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
           algorithms.add(initialError.getAlgorithm());
         }
         String contents = AutomaticFormatter.tidyArticle(
-            page, initialContents, algorithms, null);
+            page, initialContents, algorithms, false, null);
         if (!contents.equals(initialContents)) {
           textPage.changeText(contents);
           actionValidate();

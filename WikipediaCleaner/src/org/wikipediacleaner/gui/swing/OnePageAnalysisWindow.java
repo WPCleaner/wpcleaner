@@ -949,7 +949,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
       String initialContents = getTextContents().getText();
       String contents = AutomaticFormatter.tidyArticle(
           getPage(), initialContents,
-          getInitialAlgorithms(), null);
+          getInitialAlgorithms(), false, null);
       if (!contents.equals(initialContents)) {
         getTextContents().changeText(contents);
         actionValidate(false);

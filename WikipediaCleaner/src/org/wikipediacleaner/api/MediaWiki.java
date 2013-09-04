@@ -237,7 +237,8 @@ public class MediaWiki extends MediaWikiController {
             if (automaticCW) {
               List<CheckErrorAlgorithm> algorithms = CheckErrorAlgorithms.getAlgorithms(wiki);
               List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-              newContents = AutomaticFormatter.tidyArticle(page, newContents, algorithms, usedAlgorithms);
+              newContents = AutomaticFormatter.tidyArticle(
+                  page, newContents, algorithms, false, usedAlgorithms);
               if (!usedAlgorithms.isEmpty()) {
                 fullComment.append(" / ");
                 fullComment.append(wiki.getCWConfiguration().getComment());
