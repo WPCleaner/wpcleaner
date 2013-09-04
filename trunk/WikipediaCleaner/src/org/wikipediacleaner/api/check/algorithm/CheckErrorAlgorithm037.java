@@ -12,9 +12,11 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementFunction;
+import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -31,19 +33,19 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Retrieve configuration
-    int limit = 3;
+    int limit = 5;
     String firstCharaters = getSpecificProperty("first_characters", true, false, false);
     if (firstCharaters != null) {
       try {
@@ -54,13 +56,21 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     }
 
     // Analyzing title to find special characters
-    String title = pageAnalysis.getPage().getTitle();
+    String title = analysis.getPage().getTitle();
+    EnumWikipedia wiki = analysis.getWikipedia();
     boolean characterFound = false;
+    boolean replaceable = true;
     int currentPos = 0;
     while ((currentPos < title.length()) && (currentPos < limit)) {
       char character = title.charAt(currentPos);
-      if (!SpecialCharacters.isAuthorized(character, pageAnalysis.getWikipedia())) {
+      if (!SpecialCharacters.isAuthorized(character, wiki)) {
         characterFound = true;
+        String replacement = SpecialCharacters.proposeReplacement(character, wiki);
+        for (int i = 0; i < replacement.length(); i++) {
+          if (!SpecialCharacters.isAuthorized(replacement.charAt(i), wiki)) {
+            replaceable = false;
+          }
+        }
       }
       currentPos++;
     }
@@ -69,14 +79,14 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     }
 
     // Searching a DEFAULTSORT tag
-    List<PageElementFunction> defaultSorts = pageAnalysis.getDefaultSorts();
+    List<PageElementFunction> defaultSorts = analysis.getDefaultSorts();
     if ((defaultSorts != null) && (defaultSorts.size() > 0)) {
       return false;
     }
 
     // Searching for Categories without a sort key
     boolean categoriesWithoutSort = false;
-    List<PageElementCategory> categories = pageAnalysis.getCategories();
+    List<PageElementCategory> categories = analysis.getCategories();
     if ((categories == null) || (categories.isEmpty())) {
       return false;
     }
@@ -95,13 +105,55 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
       return true;
     }
     PageElementCategory category = categories.get(0);
-    CheckErrorResult errorResult = createCheckErrorResult(
-        pageAnalysis.getPage(), category.getBeginIndex(), category.getEndIndex());
+    int beginIndex = category.getBeginIndex();
+    int endIndex = category.getEndIndex();
+    String contents = analysis.getContents();
     String replacement =
-        createDefaultSort(pageAnalysis) + "\n" +
-    pageAnalysis.getContents().substring(category.getBeginIndex(), category.getEndIndex());
-    errorResult.addReplacement(replacement, GT._("Add DEFAULTSORT"));
+        createDefaultSort(analysis) + "\n" +
+        contents.substring(beginIndex, endIndex);
+    boolean automatic = replaceable;
+    if (automatic) {
+      int index = beginIndex;
+      while ((index > 0) && (contents.charAt(index - 1) == ' ')) {
+        index--;
+      }
+      if ((index > 0) && (contents.charAt(index - 1) != '\n')) {
+        automatic = false;
+      }
+    }
+    if (automatic) {
+      int index = endIndex;
+      while ((index < contents.length()) && (contents.charAt(index) == ' ')) {
+        index++;
+      }
+      if ((index < contents.length()) && (contents.charAt(index) != '\n')) {
+        automatic = false;
+      }
+    }
+    if (automatic) {
+      List<PageElementTitle> titles = analysis.getTitles();
+      if ((titles != null) && (titles.size() > 0)) {
+        if (beginIndex < titles.get(titles.size() - 1).getEndIndex()) {
+          automatic = false;
+        }
+      }
+    }
+
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis.getPage(), beginIndex, endIndex);
+    errorResult.addReplacement(replacement, GT._("Add DEFAULTSORT"), automatic);
     errors.add(errorResult);
     return true;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String automaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
