@@ -21,6 +21,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.AutomaticFormatter;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -162,17 +163,11 @@ class AutomaticCWWorker extends BasicWorker {
       // Fix all errors that can be fixed
       String newContents = page.getContents();
       List<CheckErrorAlgorithm> usedAlgorithms = new ArrayList<CheckErrorAlgorithm>();
-      for (CheckErrorAlgorithm currentAlgorithm : allAlgorithms) {
-        String tmpContents = newContents;
-        analysis = page.getAnalysis(tmpContents, true);
-        newContents = currentAlgorithm.botFix(analysis);
-        if (!newContents.equals(tmpContents)) {
-          usedAlgorithms.add(currentAlgorithm);
-        }
-      }
+      newContents = AutomaticFormatter.tidyArticle(page, newContents, allAlgorithms, true, usedAlgorithms);
 
       // Save page if errors have been fixed
-      if (!newContents.equals(page.getContents())) {
+      if ((!newContents.equals(page.getContents())) &&
+          (!usedAlgorithms.isEmpty())) {
         StringBuilder comment = new StringBuilder();
         comment.append(getWikipedia().getCWConfiguration().getComment());
         for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {

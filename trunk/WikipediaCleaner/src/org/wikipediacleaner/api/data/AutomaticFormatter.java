@@ -30,12 +30,13 @@ public class AutomaticFormatter {
    * @param page Page.
    * @param contents Current contents.
    * @param algorithms List of Check Wiki algorithms.
+   * @param botFix True to use bot fixes.
    * @param usedAlgorithms Algorithms used to tidy up the article.
    * @return New contents.
    */
   public static String tidyArticle(
       Page page, String contents,
-      Collection<CheckErrorAlgorithm> algorithms,
+      Collection<CheckErrorAlgorithm> algorithms, boolean botFix,
       List<CheckErrorAlgorithm> usedAlgorithms) {
     if ((page == null) || (contents == null)) {
       return contents;
@@ -50,7 +51,7 @@ public class AutomaticFormatter {
             CheckErrorAlgorithms.isAlgorithmActive(wiki, algorithm.getErrorNumber())) {
           String currentContents = contents;
           PageAnalysis analysis = page.getAnalysis(currentContents, true);
-          contents = algorithm.automaticFix(analysis);
+          contents = botFix ? algorithm.botFix(analysis) : algorithm.automaticFix(analysis);
           if ((usedAlgorithms != null) && (!contents.equals(currentContents))) {
             usedAlgorithms.add(algorithm);
           }
