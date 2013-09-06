@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -29,6 +30,11 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     GT._("Remove all control characters"),
   };
 
+  /**
+   * All control character.
+   */
+  private final static String controlCharacters = "" + (char) 0xFEFF + (char) 0x200E + (char) 0x200B;
+
   public CheckErrorAlgorithm016() {
     super("Template with Unicode control characters");
   }
@@ -47,47 +53,85 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    Collection<PageElementTemplate> templates = pageAnalysis.getTemplates();
-    if (templates == null) {
-      return false;
-    }
+    // Retrieve configuration
+    boolean onlyTemplates = Boolean.valueOf(getSpecificProperty("only_templates", true, true, false));
+
     boolean result = false;
     String contents = pageAnalysis.getContents();
-    int lastEnd = 0;
-    for (PageElementTemplate template : templates) {
-      int begin = template.getBeginIndex();
-      int end = template.getEndIndex();
-      if (begin >= lastEnd) {
-        boolean found = false;
-        for (int index = begin; index < end; index++) {
-          char character = contents.charAt(index);
-          if ((character == (char) 0xFEFF) ||
-              (character == (char) 0x200E) ||
-              (character == (char) 0x200B)) {
-            found = true;
+
+    if (onlyTemplates) {
+      Collection<PageElementTemplate> templates = pageAnalysis.getTemplates();
+      if (templates == null) {
+        return false;
+      }
+      int lastEnd = 0;
+      for (PageElementTemplate template : templates) {
+        int begin = template.getBeginIndex();
+        int end = template.getEndIndex();
+        if (begin >= lastEnd) {
+          boolean found = false;
+          for (int index = begin; index < end; index++) {
+            char character = contents.charAt(index);
+            if (controlCharacters.indexOf(character) >= 0) {
+              found = true;
+            }
           }
+          if (found) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            CheckErrorResult errorResult = createCheckErrorResult(pageAnalysis.getPage(), begin, end);
+            StringBuilder replacement = new StringBuilder();
+            for (int index = begin; index < end; index++) {
+              char character = contents.charAt(index);
+              if (controlCharacters.indexOf(character) < 0) {
+                replacement.append(character);
+              }
+            }
+            errorResult.addReplacement(replacement.toString(), GT._("Remove all control characters"));
+            errors.add(errorResult);
+          }
+          lastEnd = end;
         }
-        if (found) {
+      }
+    } else {
+      int index = 0;
+      while (index < contents.length()) {
+        char character = contents.charAt(index);
+        if (controlCharacters.indexOf(character) >= 0) {
           if (errors == null) {
             return true;
           }
           result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(pageAnalysis.getPage(), begin, end);
+          int begin = Math.max(index - 1, 0);
+          while ((begin >= 0) &&
+                 (controlCharacters.indexOf(contents.charAt(begin)) >= 0)) {
+            begin--;
+          }
+          int end = Math.min(index + 1, contents.length() - 1);
+          while ((end + 1 < contents.length()) &&
+                 ((controlCharacters.indexOf(contents.charAt(end)) >= 0) ||
+                  (controlCharacters.indexOf(contents.charAt(end + 1)) >= 0))) {
+            end++;
+          }
+          CheckErrorResult errorResult = createCheckErrorResult(pageAnalysis.getPage(), begin, end + 1);
           StringBuilder replacement = new StringBuilder();
-          for (int index = begin; index < end; index++) {
-            char character = contents.charAt(index);
-            if ((character != (char) 0xFEFF) &&
-                (character != (char) 0x200E) &&
-                (character != (char) 0x200B)) {
+          for (int i = begin; i < end + 1; i++) {
+            character = contents.charAt(i);
+            if (controlCharacters.indexOf(character) < 0) {
               replacement.append(character);
             }
           }
           errorResult.addReplacement(replacement.toString(), GT._("Remove all control characters"));
           errors.add(errorResult);
+          index = end + 2;
+        } else {
+          index++;
         }
-        lastEnd = end;
       }
     }
+
     return result;
   }
 
@@ -110,5 +154,16 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
     return fixUsingFirstReplacement(fixName, analysis);
+  }
+
+  /**
+   * @return Map of parameters (Name -> description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put("only_templates", GT._("To report control characters only in templates"));
+    return parameters;
   }
 }
