@@ -9,6 +9,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -214,5 +215,17 @@ public class CheckErrorAlgorithm512 extends CheckErrorAlgorithmBase {
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
     return fixUsingFirstReplacement(fixName, analysis);
+  }
+
+  /**
+   * @return Map of parameters (Name -> description).
+   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put("only_language", GT._("To report only links to an other language"));
+    parameters.put("only_local", GT._("To report only links to local wikis"));
+    return parameters;
   }
 }
