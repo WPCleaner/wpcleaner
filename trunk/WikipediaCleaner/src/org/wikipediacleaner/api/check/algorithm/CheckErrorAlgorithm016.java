@@ -30,10 +30,18 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     GT._("Remove all control characters"),
   };
 
+  private final static char ZERO_WIDTH_BREAK = 0x200B;
+  private final static char LEFT_TO_RIGHT_MARK = 0x200E;
+  private final static char ZERO_WIDTH_NO_BREAK = 0xFEFF;
+
   /**
    * All control character.
    */
-  private final static String controlCharacters = "" + (char) 0xFEFF + (char) 0x200E + (char) 0x200B;
+  private final static String controlCharacters =
+      "" +
+      ZERO_WIDTH_NO_BREAK +
+      LEFT_TO_RIGHT_MARK +
+      ZERO_WIDTH_BREAK;
 
   public CheckErrorAlgorithm016() {
     super("Template with Unicode control characters");
@@ -98,36 +106,50 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     } else {
       int index = 0;
       while (index < contents.length()) {
-        char character = contents.charAt(index);
+        int character = contents.codePointAt(index);
         if (controlCharacters.indexOf(character) >= 0) {
           if (errors == null) {
             return true;
           }
           result = true;
-          int begin = Math.max(index - 1, 0);
-          while ((begin >= 0) &&
-                 (controlCharacters.indexOf(contents.charAt(begin)) >= 0)) {
-            begin--;
+          int begin = Math.max(index - Character.charCount(contents.codePointBefore(index)), 0);
+          boolean finished = false;
+          while ((begin >= 0) && !finished) {
+            int before = contents.codePointBefore(begin);
+            if (controlCharacters.indexOf(before) >= 0) {
+              begin -= Character.charCount(before);
+            } else {
+              finished = true;
+            }
           }
           int end = Math.min(index + 1, contents.length() - 1);
-          while ((end + 1 < contents.length()) &&
-                 ((controlCharacters.indexOf(contents.charAt(end)) >= 0) ||
-                  (controlCharacters.indexOf(contents.charAt(end + 1)) >= 0))) {
-            end++;
-          }
-          CheckErrorResult errorResult = createCheckErrorResult(pageAnalysis.getPage(), begin, end + 1);
-          StringBuilder replacement = new StringBuilder();
-          for (int i = begin; i < end + 1; i++) {
-            character = contents.charAt(i);
-            if (controlCharacters.indexOf(character) < 0) {
-              replacement.append(character);
+          finished = false;
+          while ((end + 1 < contents.length()) && !finished) {
+            int after = contents.codePointAt(end);
+            if (controlCharacters.indexOf(after) >= 0) {
+              end += Character.charCount(after);
+            } else {
+              finished = true;
             }
+          }
+          if (end < contents.length()) {
+            end += Character.charCount(contents.codePointAt(end));
+          }
+          CheckErrorResult errorResult = createCheckErrorResult(pageAnalysis.getPage(), begin, end);
+          StringBuilder replacement = new StringBuilder();
+          int i = begin;
+          while (i < end) {
+            character = contents.codePointAt(i);
+            if (controlCharacters.indexOf(character) < 0) {
+              replacement.appendCodePoint(character);
+            }
+            i += Character.charCount(character);
           }
           errorResult.addReplacement(replacement.toString(), GT._("Remove all control characters"));
           errors.add(errorResult);
           index = end + 2;
         } else {
-          index++;
+          index += Character.charCount(character);
         }
       }
     }
