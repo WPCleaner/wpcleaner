@@ -169,9 +169,9 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
   private final static String automatic =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
       "abcdefghijklmnopqrstuvwxyz" +
-      "áàâ" + "éèêë" + "îï" + "ôöō" + "ùûü" +
+      "áàâ" + "éèêëÉ" + "îï" + "ôöō" + "ùûü" +
       "0123456789" +
-      " []|(){}<>,.!?;:-–=+/'\n";
+      " []|(){}<>,.!?;:--–=+*#/'\n";
 
   /**
    * @param replacement Replacement.
