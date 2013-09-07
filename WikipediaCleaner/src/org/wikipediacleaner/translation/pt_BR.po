@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-09-07 18:34+0200\n"
+"POT-Creation-Date: 2013-09-07 20:49+0200\n"
 "PO-Revision-Date: 2013-07-06 19:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -101,6 +101,7 @@ msgid "Updating page {0}"
 msgstr "Atualizando página {0}"
 
 #: org/wikipediacleaner/api/MediaWiki.java:274
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:211
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:95
 #, java-format
 msgid "Error {0} detected: Waiting and retrying"
@@ -2240,32 +2241,32 @@ msgstr ""
 msgid "No to all"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:111
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:113
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:76
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:195
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:197
 #, java-format
 msgid "Fixing page {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:233
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:252
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:238
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:257
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:243
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:262
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
