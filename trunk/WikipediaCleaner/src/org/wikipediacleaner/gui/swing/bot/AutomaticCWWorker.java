@@ -112,10 +112,13 @@ class AutomaticCWWorker extends BasicWorker {
             " - " + algorithm.getShortDescriptionReplaced());
         checkWiki.retrievePages(algorithm, max, getWikipedia(), errors);
         for (CheckError error : errors) {
+          int maxErrors = error.getPageCount();
           for (int numPage = 0;
-              (numPage < error.getPageCount()) && shouldContinue();
+              (numPage < maxErrors) && shouldContinue();
               numPage++) {
-            analyzePage(error.getPage(numPage), algorithm);
+            analyzePage(
+                error.getPage(numPage), algorithm,
+                algorithm.getErrorNumberString() + " - " + (numPage + 1) + "/" + maxErrors);
           }
         }
       }
@@ -130,10 +133,13 @@ class AutomaticCWWorker extends BasicWorker {
    * 
    * @param page Page.
    * @param algorithm Main algorithm.
+   * @param prefix Prefix for the message
    * @throws APIException
    */
   private void analyzePage(
-      Page page, CheckErrorAlgorithm algorithm) throws APIException {
+      Page page,
+      CheckErrorAlgorithm algorithm,
+      String prefix) throws APIException {
 
     // Retrieve page content 
     API api = APIFactory.getAPI();
@@ -186,7 +192,7 @@ class AutomaticCWWorker extends BasicWorker {
           comment.append(" - ");
           comment.append(usedAlgorithm.getShortDescriptionReplaced());
         }
-        setText(GT._("Fixing page {0}", page.getTitle()));
+        setText(prefix + " - " + GT._("Fixing page {0}", page.getTitle()));
         api.updatePage(
             getWikipedia(), page, newContents,
             getWikipedia().createUpdatePageComment(comment.toString(), null, true),
