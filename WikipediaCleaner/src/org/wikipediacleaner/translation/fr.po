@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-09-07 14:43+0200\n"
+"POT-Creation-Date: 2013-09-07 18:34+0200\n"
 "PO-Revision-Date: 2013-09-07 07:41+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -213,12 +213,12 @@ msgid "Unable to replace the characters [{0}]"
 msgstr "Impossible de remplacer le caractère [{0}]"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:30
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:100
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:148
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:102
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:153
 msgid "Remove all control characters"
 msgstr "Supprimer tous les caractères de contrôle"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:188
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:234
 msgid "To report control characters only in templates"
 msgstr "Pour détecter les caractères de contrôle uniquement dans les modèles"
 
@@ -2332,37 +2332,37 @@ msgid "Checking for errors n°{0}"
 msgstr ""
 "Chargement de la liste des articles contenant l’erreur syntaxique n° {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:189
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:195
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Correction de la page « {0} »"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:227
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:233
 #, fuzzy, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
 msgstr[0] "{0} page a été modifiée"
 msgstr[1] "{0} pages ont été modifiées"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:232
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:238
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:237
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:243
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:204
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:205
 msgid "Description"
 msgstr "Description"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:206
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:207
 msgid "N°"
 msgstr "N°"
 
@@ -3207,7 +3207,8 @@ msgid "A reference name cannot contain any of these characters: {0}"
 msgstr "Un nom de référence ne peut pas contenir les caractères suivants : {0}"
 
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:53
-msgid "The value can't contain any of these characters: {0}"
+#, fuzzy, java-format
+msgid "The value can''t contain any of these characters: {0}"
 msgstr "Une valeur ne peut pas contenir les caractères suivants : {0}"
 
 #~ msgid "&Close"

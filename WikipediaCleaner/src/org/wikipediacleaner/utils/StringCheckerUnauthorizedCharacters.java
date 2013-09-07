@@ -50,7 +50,7 @@ public class StringCheckerUnauthorizedCharacters implements StringChecker {
       }
     }
     return new Result(ok, buffer.toString(), GT._(
-        "The value can't contain any of these characters: {0}", unauthorized));
+        "The value can''t contain any of these characters: {0}", unauthorized));
   }
 
 }
