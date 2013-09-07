@@ -58,9 +58,19 @@ class AutomaticCWWorker extends BasicWorker {
   private final boolean analyzeNonFixed;
 
   /**
-   * Count of pages fixed.
+   * Count of modified pages.
    */
-  private int count;
+  private int countModified;
+
+  /**
+   * Count of marked pages.
+   */
+  private int countMarked;
+
+  /**
+   * Count of marked pages for other algorithms.
+   */
+  private int countMarkedOther;
 
   /**
    * @param wiki Wiki.
@@ -80,7 +90,9 @@ class AutomaticCWWorker extends BasicWorker {
     this.max = max;
     this.allAlgorithms = allAlgorithms;
     this.analyzeNonFixed = analyzeNonFixed;
-    this.count = 0;
+    this.countModified = 0;
+    this.countMarked = 0;
+    this.countMarkedOther = 0;
   }
 
   /** 
@@ -179,11 +191,16 @@ class AutomaticCWWorker extends BasicWorker {
             getWikipedia(), page, newContents,
             getWikipedia().createUpdatePageComment(comment.toString(), null, true),
             false);
-        count++;
+        countModified++;
         for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
           CheckErrorPage errorPage = CheckError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));
           if ((errorPage != null) && (!errorPage.getErrorFound())) {
             checkWiki.markAsFixed(page, usedAlgorithm.getErrorNumberString());
+            if (selectedAlgorithms.contains(usedAlgorithm)) {
+              countMarked++;
+            } else {
+              countMarkedOther++;
+            }
           }
         }
       } else if (analyzeNonFixed) {
@@ -191,6 +208,7 @@ class AutomaticCWWorker extends BasicWorker {
       }
     } else if (algorithm.isFullDetection()) {
       checkWiki.markAsFixed(page, algorithm.getErrorNumberString());
+      countMarked++;
     }
   }
 
@@ -204,12 +222,23 @@ class AutomaticCWWorker extends BasicWorker {
   public void finished() {
     super.finished();
     if (getWindow() != null) {
+      StringBuilder message = new StringBuilder();
+      message.append(GT.__(
+          "{0} page has been modified",
+          "{0} pages have been modified",
+          countModified, Integer.toString(countModified)));
+      message.append("\n");
+      message.append(GT.__(
+          "{0} page has been marked as fixed for the selected algorithms",
+          "{0} pages have been marked as fixed for the selected algorithms",
+          countMarked, Integer.toString(countMarked)));
+      message.append("\n");
+      message.append(GT.__(
+          "{0} page has been marked as fixed for other algorithms",
+          "{0} pages have been marked as fixed for other algorithms",
+          countMarkedOther, Integer.toString(countMarkedOther)));
       Utilities.displayInformationMessage(
-          getWindow().getParentComponent(),
-          GT.__(
-              "{0} page has been fixed",
-              "{0} pages have been fixed",
-              count, Integer.toString(count)));
+          getWindow().getParentComponent(), message.toString());
     }
   }
 
