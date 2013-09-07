@@ -25,12 +25,14 @@ public class GT {
 
   private final I18n i18n;
 
+  private EnumLanguage language;
+
   /**
    * Constructor.
    */
   private GT() {
     Configuration config = Configuration.getConfiguration();
-    EnumLanguage language = config.getLanguage();
+    language = config.getLanguage();
     i18n = I18nFactory.getI18n(getClass(), "org.wikipediacleaner.i18n.Messages", language.getLocale());
   }
 
@@ -140,7 +142,12 @@ public class GT {
     if (msg == null) {
       return null;
     }
-    String txt = getString(msg, msgPlural, n);
+    String txt = null;
+    if ((language == null) || (language == EnumLanguage.EN)) {
+      txt = (n == 1) ? msg : msgPlural;
+    } else {
+      txt = getString(msg, msgPlural, n);
+    }
     return MessageFormat.format(txt, objects);
   }
 
@@ -149,9 +156,19 @@ public class GT {
    * 
    * @param language Current language.
    */
-  public static void setCurrentLanguage(EnumLanguage language) {
+  private void setLanguage(EnumLanguage language) {
     Locale locale = (language != null) ? language.getLocale() : Locale.getDefault();
     Locale.setDefault(locale);
-    getTextWrapper().i18n.setLocale(locale);
+    this.language = language;
+    i18n.setLocale(locale);
+  }
+
+  /**
+   * Change the current language.
+   * 
+   * @param language Current language.
+   */
+  public static void setCurrentLanguage(EnumLanguage language) {
+    getTextWrapper().setLanguage(language);
   }
 }

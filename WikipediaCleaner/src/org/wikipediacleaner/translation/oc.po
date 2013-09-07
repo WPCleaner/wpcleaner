@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-09-06 09:48+0200\n"
+"POT-Creation-Date: 2013-09-07 14:43+0200\n"
 "PO-Revision-Date: 2013-07-06 19:09+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
@@ -137,7 +137,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:60
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:141
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:129
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:165
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:173
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:121
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:74
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:70
@@ -196,12 +196,12 @@ msgid "Unable to replace the characters [{0}]"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:30
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:92
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:100
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:148
 msgid "Remove all control characters"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:166
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:188
 msgid "To report control characters only in templates"
 msgstr ""
 
@@ -250,7 +250,7 @@ msgstr ""
 msgid "View image"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:144
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:148
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:96
 msgid "Add DEFAULTSORT"
 msgstr ""
@@ -2244,29 +2244,43 @@ msgstr ""
 msgid "No to all"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:99
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:111
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:76
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:177
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:189
 #, java-format
 msgid "Fixing page {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:210
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:227
 #, java-format
-msgid "{0} page has been fixed"
-msgid_plural "{0} pages have been fixed"
+msgid "{0} page has been modified"
+msgid_plural "{0} pages have been modified"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:203
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:232
+#, java-format
+msgid "{0} page has been marked as fixed for the selected algorithms"
+msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
+msgstr[0] ""
+msgstr[1] ""
+
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:237
+#, java-format
+msgid "{0} page has been marked as fixed for other algorithms"
+msgid_plural "{0} pages have been marked as fixed for other algorithms"
+msgstr[0] ""
+msgstr[1] ""
+
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:204
 msgid "Description"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:205
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:206
 msgid "N°"
 msgstr ""
 
