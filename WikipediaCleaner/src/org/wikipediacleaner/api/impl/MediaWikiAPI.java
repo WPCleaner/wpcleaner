@@ -1484,7 +1484,7 @@ public class MediaWikiAPI implements API {
           // Nothing
         }
       } catch (IOException e) {
-        String message = "IOException: " + e.getMessage();
+        String message = "" + e.getClass().getName() + ": " + e.getMessage();
         log.error(message);
         if (attempt > maxTry) {
           log.warn("Error. Maximum attempts count reached.");
