@@ -411,6 +411,7 @@ public class MediaWikiAPI implements API {
         if ((e.getQueryResult() != EnumQueryResult.BAD_TOKEN) || (attemptNumber > 1)) {
           throw e;
         }
+        log.warn("Retrieving tokens after a BAD_TOKEN answer");
         retrieveTokens(wikipedia);
       } catch (JDOMParseException e) {
         log.error("Error updating page: " + e.getMessage());
@@ -527,6 +528,7 @@ public class MediaWikiAPI implements API {
         if ((e.getQueryResult() != EnumQueryResult.BAD_TOKEN) || (attemptNumber > 1)) {
           throw e;
         }
+        log.warn("Retrieving tokens after a BAD_TOKEN answer");
         retrieveTokens(wikipedia);
       } catch (JDOMParseException e) {
         log.error("Error updating page: " + e.getMessage());
