@@ -18,7 +18,6 @@ import org.wikipediacleaner.api.CheckWiki;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
@@ -26,7 +25,6 @@ import org.wikipediacleaner.api.data.AutomaticFormatter;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
-import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -195,27 +193,10 @@ class AutomaticCWWorker extends BasicWorker {
           comment.append(usedAlgorithm.getShortDescriptionReplaced());
         }
         setText(prefix + " - " + GT._("Fixing page {0}", page.getTitle()));
-        int attemptNumber = 0;
-        QueryResult queryResult = null;
-        do {
-          try {
-            attemptNumber++;
-            queryResult = api.updatePage(
-                getWikipedia(), page, newContents,
-                getWikipedia().createUpdatePageComment(comment.toString(), null, true),
-                false);
-          } catch (APIException e) {
-            if ((e.getQueryResult() == EnumQueryResult.BAD_TOKEN) && (attemptNumber < 2)) {
-              // Bad Token : Retrieve contents and try again
-              setText(GT._(
-                  "Error {0} detected: Waiting and retrying",
-                  "'" + e.getErrorCode() + "'"));
-              api.retrieveTokens(getWikipedia());
-            } else {
-              throw e;
-            }
-          }
-        } while (queryResult == null);
+        api.updatePage(
+            getWikipedia(), page, newContents,
+            getWikipedia().createUpdatePageComment(comment.toString(), null, true),
+            false);
         countModified++;
         for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
           CheckErrorPage errorPage = CheckError.analyzeError(usedAlgorithm, page.getAnalysis(newContents, true));

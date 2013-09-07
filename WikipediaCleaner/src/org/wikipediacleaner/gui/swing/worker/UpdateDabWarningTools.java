@@ -22,7 +22,6 @@ import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWiki;
-import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
@@ -1251,22 +1250,7 @@ public class UpdateDabWarningTools {
       Page page,
       String newContents, String comment,
       boolean forceWatch) throws APIException {
-    int attemptNumber = 0;
-    for (;;) {
-      try {
-        attemptNumber++;
-        return api.updatePage(wiki, page, newContents, comment, forceWatch);
-      } catch (APIException e) {
-        if ((e.getQueryResult() != EnumQueryResult.BAD_TOKEN) || (attemptNumber > 1)) {
-          throw e;
-        }
-        try {
-          api.retrieveTokens(wiki);
-        } catch (APIException e2) {
-          throw e;
-        }
-      }
-    }
+    return api.updatePage(wiki, page, newContents, comment, forceWatch);
   }
 
   /**
@@ -1283,22 +1267,7 @@ public class UpdateDabWarningTools {
   private QueryResult updateSection(
       Page page, String title, int section,
       String contents, boolean forceWatch) throws APIException {
-    int attemptNumber = 0;
-    for (;;) {
-      try {
-        attemptNumber++;
-        return api.updateSection(wiki, page, title, section, contents, forceWatch);
-      } catch (APIException e) {
-        if ((e.getQueryResult() != EnumQueryResult.BAD_TOKEN) || (attemptNumber > 1)) {
-          throw e;
-        }
-        try {
-          api.retrieveTokens(wiki);
-        } catch (APIException e2) {
-          throw e;
-        }
-      }
-    }
+    return api.updateSection(wiki, page, title, section, contents, forceWatch);
   }
 
   /**

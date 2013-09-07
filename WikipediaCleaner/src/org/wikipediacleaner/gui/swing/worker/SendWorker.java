@@ -15,7 +15,6 @@ import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.Contributions;
-import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -79,31 +78,15 @@ public class SendWorker extends BasicWorker {
 
     // Updating page contents
     QueryResult queryResult = null;
-    setText(GT._("Updating page contents"));
-    int attemptNumber = 0;
-    do {
-      try {
-        attemptNumber++;
-        queryResult = api.updatePage(
-            getWikipedia(), page, text,
-            getWikipedia().createUpdatePageComment(comment, null, false),
-            forceWatch);
-      } catch (APIException e) {
-        if ((e.getQueryResult() == EnumQueryResult.BAD_TOKEN) && (attemptNumber < 2)) {
-          // Bad Token : Retrieve contents and try again
-          setText(GT._(
-              "Error {0} detected: Waiting and retrying",
-              "'" + e.getErrorCode() + "'"));
-          try {
-            api.retrieveTokens(getWikipedia());
-          } catch (APIException e2) {
-            return e;
-          }
-        } else {
-          return e;
-        }
-      }
-    } while (queryResult == null);
+    try {
+      setText(GT._("Updating page contents"));
+      queryResult = api.updatePage(
+          getWikipedia(), page, text,
+          getWikipedia().createUpdatePageComment(comment, null, false),
+          forceWatch);
+    } catch (APIException e) {
+      return e;
+    }
 
     // Take contributions into account
     if ((contributions != null) &&

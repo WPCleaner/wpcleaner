@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-09-07 20:49+0200\n"
+"POT-Creation-Date: 2013-09-07 22:31+0200\n"
 "PO-Revision-Date: 2013-09-02 20:08+0000\n"
 "Last-Translator: Wojciech T. Mężyk <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -93,22 +93,15 @@ msgstr ""
 msgid "Fixing speling or typography based on a list of suggestions."
 msgstr "Poprawa pisowni lub typografii na podstawie listy propozycji."
 
-#: org/wikipediacleaner/api/MediaWiki.java:208
+#: org/wikipediacleaner/api/MediaWiki.java:207
 #, java-format
 msgid "Page {0}:"
 msgstr "Strona {0}:"
 
-#: org/wikipediacleaner/api/MediaWiki.java:261
+#: org/wikipediacleaner/api/MediaWiki.java:260
 #, java-format
 msgid "Updating page {0}"
 msgstr "Aktualizowanie strony {0}"
-
-#: org/wikipediacleaner/api/MediaWiki.java:274
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:211
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:95
-#, java-format
-msgid "Error {0} detected: Waiting and retrying"
-msgstr "Błąd {0} wykryty: czekam i próbuję ponownie"
 
 #: org/wikipediacleaner/api/check/CheckError.java:333
 #, java-format
@@ -808,7 +801,7 @@ msgstr "Przetwarzanie tekstu"
 msgid "Retrieving templates"
 msgstr "Pobieranie szablonów"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1593
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1610
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -816,7 +809,7 @@ msgstr ""
 "To działanie posiada zabezpieczenie w postaci CAPTCHA.\n"
 "Jaka jest odpowiedź na następujące pytanie?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1600
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1617
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1628,7 +1621,7 @@ msgstr "Liczba stron musi się zawierać w przedziale między {0} a {1}"
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:59
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:46
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:77
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:76
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:110
 msgid "Retrieving MediaWiki API"
 msgstr "Pobieranie API MediaWiki"
@@ -2297,18 +2290,18 @@ msgstr "Nie"
 msgid "No to all"
 msgstr "Nie dla wszystkich"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:113
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:111
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:76
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr "Sprawdzanie błędu nr {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:197
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:195
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Naprawa strony {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:252
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:233
 #, fuzzy, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
@@ -2316,7 +2309,7 @@ msgstr[0] "Naprawiono {0} stronę"
 msgstr[1] "Naprawiono {0} strony"
 msgstr[2] "Naprawiono {0} stron"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:257
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:238
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
@@ -2324,7 +2317,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:262
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:243
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
@@ -3056,22 +3049,22 @@ msgstr "Odświeżanie zawartości strony"
 msgid "Retrieving interwiki for {0}"
 msgstr "Pobieranie interwiki dla {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:312
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:327
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:311
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:326
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Pobieranie zawartości strony - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:484
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:610
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:843
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:483
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:609
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:842
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Aktualizowanie komunikatu o disambigach - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:735
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:879
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:984
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:734
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:878
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:983
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Usuwanie komunikatu o disambigach - {0}"
@@ -3175,6 +3168,9 @@ msgstr "Nazwa przypisu nie może zawierać żadnego z tych znaków: {0}"
 #, fuzzy, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "Wartość nie może zawierać żadnego z tych znaków: {0}"
+
+#~ msgid "Error {0} detected: Waiting and retrying"
+#~ msgstr "Błąd {0} wykryty: czekam i próbuję ponownie"
 
 #~ msgid "&Close"
 #~ msgstr "&Zamknij"
