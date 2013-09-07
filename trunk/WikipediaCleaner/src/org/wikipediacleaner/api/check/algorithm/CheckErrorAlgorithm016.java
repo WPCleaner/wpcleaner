@@ -97,7 +97,10 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
                 replacement.append(character);
               }
             }
-            errorResult.addReplacement(replacement.toString(), GT._("Remove all control characters"));
+            errorResult.addReplacement(
+                replacement.toString(),
+                GT._("Remove all control characters"),
+                canBeAutomatic(replacement.toString()));
             errors.add(errorResult);
           }
           lastEnd = end;
@@ -145,7 +148,10 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
             }
             i += Character.charCount(character);
           }
-          errorResult.addReplacement(replacement.toString(), GT._("Remove all control characters"));
+          errorResult.addReplacement(
+              replacement.toString(),
+              GT._("Remove all control characters"),
+              canBeAutomatic(replacement.toString()));
           errors.add(errorResult);
           index = end + 2;
         } else {
@@ -155,6 +161,46 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * Authorized characters for automatic replacement.
+   */
+  private final static String automatic =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+      "abcdefghijklmnopqrstuvwxyz" +
+      "á" +
+      "0123456789" +
+      " []|(),./'\n";
+
+  /**
+   * @param replacement Replacement.
+   * @return True if replacement can be applied automatically.
+   */
+  private boolean canBeAutomatic(String replacement) {
+    if (replacement == null) {
+      return false;
+    }
+    int i = 0;
+    while (i < replacement.length()) {
+      int codePoint = replacement.codePointAt(i);
+      if (automatic.indexOf(codePoint) < 0) {
+        return false;
+      }
+      i += Character.charCount(codePoint);
+    }
+    return true;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  public String automaticFix(PageAnalysis analysis) {
+    return fix(globalFixes[0], analysis, null);
   }
 
   /**
@@ -175,7 +221,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-    return fixUsingFirstReplacement(fixName, analysis);
+    return fixUsingAutomaticReplacement(analysis);
   }
 
   /**

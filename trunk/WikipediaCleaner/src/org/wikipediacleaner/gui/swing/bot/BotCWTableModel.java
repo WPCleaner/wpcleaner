@@ -70,6 +70,7 @@ public class BotCWTableModel extends AbstractTableModel {
     addAlgorithm(7);  // Headlines all start with three "="
     addAlgorithm(9);  // Categories more at one line
     addAlgorithm(11); // HTML named entities
+    addAlgorithm(16); // Template with Unicode control characters
     addAlgorithm(17); // Category duplication
     addAlgorithm(18); // Category first letter small
     addAlgorithm(19); // Headlines start with one "="
