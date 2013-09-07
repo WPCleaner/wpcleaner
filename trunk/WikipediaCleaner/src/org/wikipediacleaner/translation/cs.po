@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-09-07 20:49+0200\n"
+"POT-Creation-Date: 2013-09-07 22:31+0200\n"
 "PO-Revision-Date: 2013-08-31 20:35+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -94,22 +94,15 @@ msgstr "Opravy chyb zjištených projektem Check Wikipedia v okně analýzy."
 msgid "Fixing speling or typography based on a list of suggestions."
 msgstr "Opravy překlepů a typografie založené na seznamu návrhů."
 
-#: org/wikipediacleaner/api/MediaWiki.java:208
+#: org/wikipediacleaner/api/MediaWiki.java:207
 #, java-format
 msgid "Page {0}:"
 msgstr "Stránka {0}:"
 
-#: org/wikipediacleaner/api/MediaWiki.java:261
+#: org/wikipediacleaner/api/MediaWiki.java:260
 #, java-format
 msgid "Updating page {0}"
 msgstr "Aktualizuji stránku {0}"
-
-#: org/wikipediacleaner/api/MediaWiki.java:274
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:211
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:95
-#, java-format
-msgid "Error {0} detected: Waiting and retrying"
-msgstr "Zjištěna chyba {0}: čekám a pokouším se o nápravu"
 
 #: org/wikipediacleaner/api/check/CheckError.java:333
 #, java-format
@@ -807,7 +800,7 @@ msgstr "Převádím text"
 msgid "Retrieving templates"
 msgstr "Přijímám šablony"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1593
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1610
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -815,7 +808,7 @@ msgstr ""
 "Tato akce je chráněna funkcí CAPTCHA.\n"
 "Jaká je odpověď na následující otázku?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1600
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1617
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -1623,7 +1616,7 @@ msgstr "Počet stránek musí být {0} až {1}"
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:59
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:46
-#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:77
+#: org/wikipediacleaner/gui/swing/worker/SendWorker.java:76
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:110
 msgid "Retrieving MediaWiki API"
 msgstr "Získávám MediaWiki API"
@@ -2293,18 +2286,18 @@ msgstr "Ne"
 msgid "No to all"
 msgstr "Ne všem"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:113
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:111
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:76
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr "Ověřuji chybu číslo {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:197
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:195
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Opravuji stránku „{0}“"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:252
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:233
 #, fuzzy, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
@@ -2312,7 +2305,7 @@ msgstr[0] "{0} stránka byla opravena"
 msgstr[1] "{0} stránky byly opraveny"
 msgstr[2] "{0} stránek bylo opraveno"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:257
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:238
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
@@ -2320,7 +2313,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:262
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:243
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
@@ -3060,22 +3053,22 @@ msgstr "Aktualizuji obsah stránky"
 msgid "Retrieving interwiki for {0}"
 msgstr "Nahrávám interwiki pro {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:312
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:327
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:311
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:326
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Načítám obsah stránky - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:484
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:610
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:843
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:483
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:609
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:842
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Aktualizuji rozcestníkové varování - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:735
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:879
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:984
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:734
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:878
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:983
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Odstraňuji rozcestníkové varování - {0}"
@@ -3182,6 +3175,9 @@ msgstr "Název reference nemůže obsahovat tyto znaky: {0}"
 #, fuzzy, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "Hodnota nemůže obsahovat žádný ze znaků: {0}"
+
+#~ msgid "Error {0} detected: Waiting and retrying"
+#~ msgstr "Zjištěna chyba {0}: čekám a pokouším se o nápravu"
 
 #~ msgid "The page {0} doesn't exist on Wikipedia"
 #~ msgstr "Stránka {0} na Wikipedii neexistuje"

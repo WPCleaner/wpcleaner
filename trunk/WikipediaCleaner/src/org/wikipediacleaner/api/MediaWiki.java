@@ -17,7 +17,6 @@ import java.util.Map.Entry;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithms;
-import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFixing;
 import org.wikipediacleaner.api.data.AutomaticFormatter;
@@ -261,27 +260,7 @@ public class MediaWiki extends MediaWikiController {
             setText(GT._("Updating page {0}", page.getTitle()));
             count++;
             if (save) {
-              int attemptNumber = 0;
-              boolean attemptDone = true;
-              do {
-                try {
-                  attemptNumber++;
-                  api.updatePage(wiki, page, newContents, fullComment.toString(), false);
-                } catch (APIException e) {
-                  if ((e.getQueryResult() == EnumQueryResult.BAD_TOKEN) && (attemptNumber < 2)) {
-                    // Bad Token : Retrieve contents and try again
-                    setText(GT._(
-                        "Error {0} detected: Waiting and retrying",
-                        "'" + e.getErrorCode() + "'"));
-                    attemptDone = false;
-                    Page tmpPage = page.replicatePage();
-                    api.retrieveContents(wiki, Collections.singletonList(tmpPage), false, false);
-                  } else {
-                    throw e;
-                  }
-                }
-              } while (!attemptDone);
-
+              api.updatePage(wiki, page, newContents, fullComment.toString(), false);
               if (updateDabWarning) {
                 dabWarnings.updateDabWarning(
                     Collections.singletonList(page), false, false, false, null, null, null);

@@ -40,6 +40,7 @@ import org.wikipediacleaner.api.CaptchaException;
 import org.wikipediacleaner.api.HttpUtils;
 import org.wikipediacleaner.api.RecentChangesListener;
 import org.wikipediacleaner.api.constants.EnumQueryPage;
+import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
@@ -366,48 +367,56 @@ public class MediaWikiAPI implements API {
     if (wikipedia.getConnection().getLgToken() == null) {
       throw new APIException("You must be logged in to update pages");
     }
+    int attemptNumber = 0;
     QueryResult result = null;
-    Map<String, String> properties = getProperties(ApiRequest.ACTION_EDIT, true);
-    properties.put("assert", "user");
-    if (page.getContentsTimestamp() != null) {
-      properties.put("basetimestamp", page.getContentsTimestamp());
-    }
-    properties.put("bot", "");
-    properties.put("minor", "");
-    if (page.getStartTimestamp() != null) {
-      properties.put("starttimestamp", page.getStartTimestamp());
-    }
-    properties.put("summary", comment);
-    properties.put("text", newContents);
-    properties.put("title", page.getTitle());
-    if (wikipedia.getConnection().getEditToken() != null) {
-      properties.put("token", wikipedia.getConnection().getEditToken());
-    }
-    properties.put("watchlist", forceWatch ? "watch" : "nochange");
-    try {
+    do {
+      Map<String, String> properties = getProperties(ApiRequest.ACTION_EDIT, true);
+      properties.put("assert", "user");
+      if (page.getContentsTimestamp() != null) {
+        properties.put("basetimestamp", page.getContentsTimestamp());
+      }
+      properties.put("bot", "");
+      properties.put("minor", "");
+      if (page.getStartTimestamp() != null) {
+        properties.put("starttimestamp", page.getStartTimestamp());
+      }
+      properties.put("summary", comment);
+      properties.put("text", newContents);
+      properties.put("title", page.getTitle());
+      if (wikipedia.getConnection().getEditToken() != null) {
+        properties.put("token", wikipedia.getConnection().getEditToken());
+      }
+      properties.put("watchlist", forceWatch ? "watch" : "nochange");
       checkTimeForEdit();
-      boolean hasCaptcha = false;
-      do {
-        hasCaptcha = false;
-        try {
-          result = constructEdit(
-              getRoot(wikipedia, properties, 1),
-              "/api/edit");
-        } catch (CaptchaException e) {
-          String captchaAnswer = getCaptchaAnswer(wikipedia, e);
-          if (captchaAnswer != null) {
-            properties.put("captchaid", e.getId());
-            properties.put("captchaword", captchaAnswer);
-            hasCaptcha = true;
-          } else {
-            throw new APIException("CAPTCHA", e);
+      try {
+        boolean hasCaptcha = false;
+        do {
+          hasCaptcha = false;
+          try {
+            result = constructEdit(
+                getRoot(wikipedia, properties, 1),
+                "/api/edit");
+          } catch (CaptchaException e) {
+            String captchaAnswer = getCaptchaAnswer(wikipedia, e);
+            if (captchaAnswer != null) {
+              properties.put("captchaid", e.getId());
+              properties.put("captchaword", captchaAnswer);
+              hasCaptcha = true;
+            } else {
+              throw new APIException("CAPTCHA", e);
+            }
           }
+        } while (hasCaptcha);
+      } catch (APIException e) {
+        if ((e.getQueryResult() != EnumQueryResult.BAD_TOKEN) || (attemptNumber > 1)) {
+          throw e;
         }
-      } while (hasCaptcha);
-    } catch (JDOMParseException e) {
-      log.error("Error updating page: " + e.getMessage());
-      throw new APIException("Error parsing XML", e);
-    }
+        retrieveTokens(wikipedia);
+      } catch (JDOMParseException e) {
+        log.error("Error updating page: " + e.getMessage());
+        throw new APIException("Error parsing XML", e);
+      }
+    } while (result == null);
     return result;
   }
 
@@ -475,47 +484,55 @@ public class MediaWikiAPI implements API {
     if (wikipedia.getConnection().getLgToken() == null) {
       throw new APIException("You must be logged in to update pages");
     }
+    int attemptNumber = 0;
     QueryResult result = null;
-    Map<String, String> properties = getProperties(ApiRequest.ACTION_EDIT, true);
-    properties.put("assert", "user");
-    if (page.getContentsTimestamp() != null) {
-      properties.put("basetimestamp", page.getContentsTimestamp());
-    }
-    properties.put("bot", "");
-    properties.put("minor", "");
-    properties.put("section", section);
-    if (page.getStartTimestamp() != null) {
-      properties.put("starttimestamp", page.getStartTimestamp());
-    }
-    properties.put("summary", title);
-    properties.put("text", contents);
-    properties.put("title", page.getTitle());
-    properties.put("token", wikipedia.getConnection().getEditToken());
-    properties.put("watchlist", forceWatch ? "watch" : "nochange");
-    try {
+    do {
+      Map<String, String> properties = getProperties(ApiRequest.ACTION_EDIT, true);
+      properties.put("assert", "user");
+      if (page.getContentsTimestamp() != null) {
+        properties.put("basetimestamp", page.getContentsTimestamp());
+      }
+      properties.put("bot", "");
+      properties.put("minor", "");
+      properties.put("section", section);
+      if (page.getStartTimestamp() != null) {
+        properties.put("starttimestamp", page.getStartTimestamp());
+      }
+      properties.put("summary", title);
+      properties.put("text", contents);
+      properties.put("title", page.getTitle());
+      properties.put("token", wikipedia.getConnection().getEditToken());
+      properties.put("watchlist", forceWatch ? "watch" : "nochange");
       checkTimeForEdit();
-      boolean hasCaptcha = false;
-      do {
-        hasCaptcha = false;
-        try {
-          result = constructEdit(
-              getRoot(wikipedia, properties, 1),
-              "/api/edit");
-        } catch (CaptchaException e) {
-          String captchaAnswer = getCaptchaAnswer(wikipedia, e);
-          if (captchaAnswer != null) {
-            properties.put("captchaid", e.getId());
-            properties.put("captchaword", captchaAnswer);
-            hasCaptcha = true;
-          } else {
-            throw new APIException("CAPTCHA", e);
+      try {
+        boolean hasCaptcha = false;
+        do {
+          hasCaptcha = false;
+          try {
+            result = constructEdit(
+                getRoot(wikipedia, properties, 1),
+                "/api/edit");
+          } catch (CaptchaException e) {
+            String captchaAnswer = getCaptchaAnswer(wikipedia, e);
+            if (captchaAnswer != null) {
+              properties.put("captchaid", e.getId());
+              properties.put("captchaword", captchaAnswer);
+              hasCaptcha = true;
+            } else {
+              throw new APIException("CAPTCHA", e);
+            }
           }
+        } while (hasCaptcha);
+      } catch (APIException e) {
+        if ((e.getQueryResult() != EnumQueryResult.BAD_TOKEN) || (attemptNumber > 1)) {
+          throw e;
         }
-      } while (hasCaptcha);
-    } catch (JDOMParseException e) {
-      log.error("Error updating page: " + e.getMessage());
-      throw new APIException("Error parsing XML", e);
-    }
+        retrieveTokens(wikipedia);
+      } catch (JDOMParseException e) {
+        log.error("Error updating page: " + e.getMessage());
+        throw new APIException("Error parsing XML", e);
+      }
+    } while (result == null);
     return result;
   }
 
