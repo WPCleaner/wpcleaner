@@ -171,7 +171,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
       "abcdefghijklmnopqrstuvwxyz" +
       "áàéèêïōù" +
       "0123456789" +
-      " []|()<>,.!?-/'\n";
+      " []|()<>,.!?-=+/'\n";
 
   /**
    * @param replacement Replacement.
