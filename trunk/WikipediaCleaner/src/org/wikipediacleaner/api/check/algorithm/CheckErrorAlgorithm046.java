@@ -36,73 +36,81 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyze contents from the beginning
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     int currentIndex = contents.indexOf("]]");
     boolean result = false;
     while (currentIndex > 0) {
       boolean shouldCount = true;
       if (shouldCount) {
-        PageElementInternalLink link = pageAnalysis.isInInternalLink(currentIndex);
+        PageElementInternalLink link = analysis.isInInternalLink(currentIndex);
         if ((link != null) && (link.getEndIndex() == currentIndex + 2)) {
           shouldCount = false;
         }
       }
       if (shouldCount) {
-        PageElementImage image = pageAnalysis.isInImage(currentIndex);
+        PageElementImage image = analysis.isInImage(currentIndex);
         if ((image != null) && (image.getEndIndex() == currentIndex + 2)) {
           shouldCount = false;
         }
       }
       if (shouldCount) {
-        PageElementCategory category = pageAnalysis.isInCategory(currentIndex);
+        PageElementCategory category = analysis.isInCategory(currentIndex);
         if ((category != null) && (category.getEndIndex() == currentIndex + 2)) {
           shouldCount = false;
         }
       }
       if (shouldCount) {
-        PageElementLanguageLink link = pageAnalysis.isInLanguageLink(currentIndex);
+        PageElementLanguageLink link = analysis.isInLanguageLink(currentIndex);
         if ((link != null) && (link.getEndIndex() == currentIndex + 2)) {
           shouldCount = false;
         }
       }
       if (shouldCount) {
-        PageElementInterwikiLink link = pageAnalysis.isInInterwikiLink(currentIndex);
+        PageElementInterwikiLink link = analysis.isInInterwikiLink(currentIndex);
         if ((link != null) && (link.getEndIndex() == currentIndex + 2)) {
-          shouldCount = false;
-        }
-      }
-      if (shouldCount) {
-        PageElementExternalLink link = pageAnalysis.isInExternalLink(currentIndex);
-        if ((link != null) && (link.getEndIndex() == currentIndex + 1)) {
           shouldCount = false;
         }
       }
       if (shouldCount &&
-          (pageAnalysis.isInComment(currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
-          (pageAnalysis.isInTag(currentIndex) != null)) {
+          (analysis.isInComment(currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
+          (analysis.isInTag(currentIndex) != null)) {
         shouldCount = false;
       }
       if (shouldCount) {
-        PageElementTemplate template = pageAnalysis.isInTemplate(currentIndex - 1);
+        PageElementTemplate template = analysis.isInTemplate(currentIndex - 1);
         if ((template != null) &&
             (template.getEndIndex() == currentIndex) &&
             (contents.startsWith("[[", template.getBeginIndex() - 2))) {
+          shouldCount = false;
+        }
+      }
+      if (shouldCount) {
+        PageElementExternalLink link = analysis.isInExternalLink(currentIndex);
+        if ((link != null) && (link.getEndIndex() == currentIndex + 1)) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis.getPage(), currentIndex, currentIndex + 2);
+          errorResult.addReplacement("]");
+          errors.add(errorResult);
           shouldCount = false;
         }
       }
@@ -124,7 +132,7 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
             finished = true;
           } else if (tmpChar == '[') {
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), tmpIndex, currentIndex + 2);
+                analysis.getPage(), tmpIndex, currentIndex + 2);
 
             // Check if the situation is something like [http://....]] (replacement: [http://....])
             List<String> protocols = PageElementExternalLink.getProtocols();
@@ -148,7 +156,7 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
               firstChar--;
             }
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), firstChar, currentIndex + 2);
+                analysis.getPage(), firstChar, currentIndex + 2);
             errorResult.addReplacement("[[" + contents.substring(tmpIndex + 1, currentIndex + 2));
             errorResult.addReplacement("{{" + contents.substring(tmpIndex + 1, currentIndex) + "}}");
             errors.add(errorResult);
@@ -161,7 +169,7 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
         // Default
         if (!errorReported) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), currentIndex, currentIndex + 2);
+              analysis.getPage(), currentIndex, currentIndex + 2);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
         }
