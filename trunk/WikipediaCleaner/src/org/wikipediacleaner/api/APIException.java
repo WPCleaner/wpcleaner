@@ -29,11 +29,17 @@ public class APIException extends Exception {
   private final String code;
 
   /**
+   * HTTP status.
+   */
+  private final int httpStatus;
+
+  /**
    * Constructor.
    */
   public APIException() {
     super();
-    code = null;
+    this.code = null;
+    this.httpStatus = -1;
   }
 
   /**
@@ -41,7 +47,8 @@ public class APIException extends Exception {
    */
   public APIException(String message) {
     super(message);
-    code = null;
+    this.code = null;
+    this.httpStatus = -1;
   }
 
   /**
@@ -51,6 +58,16 @@ public class APIException extends Exception {
   public APIException(String message, String code) {
     super(message);
     this.code = code;
+    this.httpStatus = -1;
+  }
+
+  /**
+   * @param message Exception message.
+   */
+  public APIException(String message, int httpStatus) {
+    super(message);
+    this.code = null;
+    this.httpStatus = httpStatus;
   }
 
   /**
@@ -58,7 +75,8 @@ public class APIException extends Exception {
    */
   public APIException(Throwable cause) {
     super(cause);
-    code = null;
+    this.code = null;
+    this.httpStatus = -1;
   }
 
   /**
@@ -67,7 +85,8 @@ public class APIException extends Exception {
    */
   public APIException(String message, Throwable cause) {
     super(message, cause);
-    code = null;
+    this.code = null;
+    this.httpStatus = -1;
   }
 
   /**
@@ -78,6 +97,7 @@ public class APIException extends Exception {
   public APIException(String message, Throwable cause, String code) {
     super(message, cause);
     this.code = code;
+    this.httpStatus = -1;
   }
 
   /**
@@ -85,6 +105,13 @@ public class APIException extends Exception {
    */
   public String getErrorCode() {
     return code;
+  }
+
+  /**
+   * @return HTTP status.
+   */
+  public int getHttpStatus() {
+    return httpStatus;
   }
 
   /**
