@@ -371,6 +371,7 @@ public class MediaWikiAPI implements API {
     int attemptNumber = 0;
     QueryResult result = null;
     do {
+      attemptNumber++;
       Map<String, String> properties = getProperties(ApiRequest.ACTION_EDIT, true);
       properties.put("assert", "user");
       if (page.getContentsTimestamp() != null) {
@@ -503,6 +504,7 @@ public class MediaWikiAPI implements API {
     int attemptNumber = 0;
     QueryResult result = null;
     do {
+      attemptNumber++;
       Map<String, String> properties = getProperties(ApiRequest.ACTION_EDIT, true);
       properties.put("assert", "user");
       if (page.getContentsTimestamp() != null) {
