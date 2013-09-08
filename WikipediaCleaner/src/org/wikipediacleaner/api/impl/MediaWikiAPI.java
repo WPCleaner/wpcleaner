@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -408,11 +409,25 @@ public class MediaWikiAPI implements API {
           }
         } while (hasCaptcha);
       } catch (APIException e) {
-        if ((e.getQueryResult() != EnumQueryResult.BAD_TOKEN) || (attemptNumber > 1)) {
+        if (e.getHttpStatus() == HttpStatus.SC_GATEWAY_TIMEOUT) {
+          Page tmpPage = page.replicatePage();
+          retrieveContents(wikipedia, Collections.singletonList(tmpPage), false, false);
+          String tmpContents = tmpPage.getContents();
+          if ((tmpContents != null) &&
+              (tmpContents.equals(newContents))) {
+            log.warn("Gateway timeout, but modification has been taken into account");
+            return QueryResult.createCorrectQuery(
+                tmpPage.getPageId(), tmpPage.getTitle(),
+                page.getPageId(), tmpPage.getPageId());
+          }
+        }
+        if (attemptNumber > 1) {
           throw e;
         }
-        log.warn("Retrieving tokens after a BAD_TOKEN answer");
-        retrieveTokens(wikipedia);
+        if (e.getQueryResult() == EnumQueryResult.BAD_TOKEN) {
+          log.warn("Retrieving tokens after a BAD_TOKEN answer");
+          retrieveTokens(wikipedia);
+        }
       } catch (JDOMParseException e) {
         log.error("Error updating page: " + e.getMessage());
         throw new APIException("Error parsing XML", e);
@@ -525,11 +540,13 @@ public class MediaWikiAPI implements API {
           }
         } while (hasCaptcha);
       } catch (APIException e) {
-        if ((e.getQueryResult() != EnumQueryResult.BAD_TOKEN) || (attemptNumber > 1)) {
+        if (attemptNumber > 1) {
           throw e;
         }
-        log.warn("Retrieving tokens after a BAD_TOKEN answer");
-        retrieveTokens(wikipedia);
+        if (e.getQueryResult() == EnumQueryResult.BAD_TOKEN) {
+          log.warn("Retrieving tokens after a BAD_TOKEN answer");
+          retrieveTokens(wikipedia);
+        }
       } catch (JDOMParseException e) {
         log.error("Error updating page: " + e.getMessage());
         throw new APIException("Error parsing XML", e);
@@ -1433,9 +1450,9 @@ public class MediaWikiAPI implements API {
         if (statusCode != HttpStatus.SC_OK) {
           String message = "URL access returned " + HttpStatus.getStatusText(statusCode);
           log.error(message);
-          if (attempt > maxTry) {
+          if (attempt >= maxTry) {
             log.warn("Error. Maximum attempts count reached.");
-            throw new APIException(message);
+            throw new APIException(message, statusCode);
           }
           try {
             Thread.sleep(30000);
