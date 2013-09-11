@@ -411,6 +411,11 @@ public class MediaWikiAPI implements API {
         } while (hasCaptcha);
       } catch (APIException e) {
         if (e.getHttpStatus() == HttpStatus.SC_GATEWAY_TIMEOUT) {
+          try {
+            Thread.sleep(30000);
+          } catch (InterruptedException e2) {
+            // Nothing
+          }
           Page tmpPage = page.replicatePage();
           retrieveContents(wikipedia, Collections.singletonList(tmpPage), false, false);
           String tmpContents = tmpPage.getContents();
