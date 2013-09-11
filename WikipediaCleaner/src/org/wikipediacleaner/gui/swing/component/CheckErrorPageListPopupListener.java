@@ -16,6 +16,8 @@ import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.CheckWiki;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -113,11 +115,8 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
     // Create sub menus
     menu.addSeparator(popup);
     menu.addItemView(wikipedia, popup, algorithm.getLink(), GT._("Detail"));
-    String toolserverUrl =
-      "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi" +
-      "?id=" + algorithm.getErrorNumberString() +
-      "&project=" + wikipedia.getSettings().getCodeCheckWiki() +
-      "&view=only";
+    CheckWiki checkWiki = APIFactory.getCheckWiki();
+    String toolserverUrl = checkWiki.getUrlDescription(wikipedia, algorithm);
     menu.addItemView(null, popup, toolserverUrl, GT._("List on toolserver"));
     menu.addItemView(wikipedia, popup, algorithm.getWhiteListPageName(), GT._("View or edit white list"));
 

@@ -104,6 +104,27 @@ public class CheckWiki {
   }
 
   /**
+   * @param wiki Wiki.
+   * @param algorithm Algorithm.
+   * @return URL for algorithm description.
+   */
+  public String getUrlDescription(
+      final EnumWikipedia wiki,
+      final CheckErrorAlgorithm algorithm) {
+    boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
+    String path = useLabs ?
+        "checkwiki/cgi-bin/checkwiki.cgi" :
+        "~sk/cgi-bin/checkwiki/checkwiki.cgi";
+    HttpServer server = useLabs ? labs : toolServer;
+    String url =
+        server.getBaseUrl() + path +
+        "&id=" + algorithm.getErrorNumberString() +
+        "&project=" + wiki.getSettings().getCodeCheckWiki() +
+        "&view=only";
+    return url;
+  }
+
+  /**
    * Response manager for the list of pages.
    */
   private static class PagesResponseManager implements ResponseManager {

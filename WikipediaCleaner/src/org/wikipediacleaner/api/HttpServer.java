@@ -210,4 +210,11 @@ public class HttpServer {
       throw new APIException("URL access returned " + HttpStatus.getStatusText(statusCode));
     }
   }
+
+  /**
+   * @return Base URL.
+   */
+  public String getBaseUrl() {
+    return baseUrl;
+  }
 }
