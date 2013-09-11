@@ -73,6 +73,8 @@ import org.lobobrowser.html.gui.HtmlPanel;
 import org.lobobrowser.html.parser.DocumentBuilderImpl;
 import org.lobobrowser.html.test.SimpleUserAgentContext;
 import org.w3c.dom.Document;
+import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.CheckWiki;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -1843,19 +1845,15 @@ public class CheckWikiProjectWindow extends OnePageWindow {
   }
 
   /**
-   * Action called to display error list on toolserver. 
+   * Action called to display error list on server. 
    */
   public void actionErrorList() {
     Object selected = listAllErrors.getSelectedItem();
     if ((selected instanceof CheckError) &&
         (Utilities.isDesktopSupported())) {
       CheckError error = (CheckError) selected;
-      String url =
-        "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi" +
-        "?id=" + error.getErrorNumber() +
-        "&project=" + getWikipedia().getSettings().getCodeCheckWiki() +
-        "&view=only" +
-        "&limit=" + modelMaxErrors.getNumber();
+      CheckWiki checkWiki = APIFactory.getCheckWiki();
+      String url = checkWiki.getUrlDescription(getWikipedia(), error.getAlgorithm());
       Utilities.browseURL(url);
     }
   }
