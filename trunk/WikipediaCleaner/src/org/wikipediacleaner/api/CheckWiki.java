@@ -118,7 +118,7 @@ public class CheckWiki {
     HttpServer server = useLabs ? labs : toolServer;
     String url =
         server.getBaseUrl() + path +
-        "&id=" + algorithm.getErrorNumberString() +
+        "?id=" + algorithm.getErrorNumberString() +
         "&project=" + wiki.getSettings().getCodeCheckWiki() +
         "&view=only";
     return url;
