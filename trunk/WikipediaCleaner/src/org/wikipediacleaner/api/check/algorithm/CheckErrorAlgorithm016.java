@@ -117,7 +117,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
           result = true;
           int begin = Math.max(index - Character.charCount(contents.codePointBefore(index)), 0);
           boolean finished = false;
-          while ((begin >= 0) && !finished) {
+          while ((begin > 0) && !finished) {
             int before = contents.codePointBefore(begin);
             if (controlCharacters.indexOf(before) >= 0) {
               begin -= Character.charCount(before);
