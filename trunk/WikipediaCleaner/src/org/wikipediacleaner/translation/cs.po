@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-07 22:31+0200\n"
-"PO-Revision-Date: 2013-08-31 20:35+0000\n"
+"PO-Revision-Date: 2013-09-12 15:08+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2013-09-11 21:20+0000\n"
+"X-Launchpad-Export-Date: 2013-09-12 20:36+0000\n"
 "X-Generator: Launchpad (build 16761)\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -201,7 +201,7 @@ msgstr "Odstranit všechny řídící znaky"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:234
 msgid "To report control characters only in templates"
-msgstr ""
+msgstr "Hlásit řídicí znaky pouze v šablonách"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:36
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:35
@@ -499,11 +499,11 @@ msgstr "Změnit je na interní odkazy"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:227
 msgid "To report only links to an other language"
-msgstr ""
+msgstr "Hlásit pouze odkazy do jiného jazyka"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:228
 msgid "To report only links to local wikis"
-msgstr ""
+msgstr "Hlásit pouze odkazy do místních wiki"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:152
 msgid "A template that can be used instead of an apostrophe."
@@ -2306,23 +2306,26 @@ msgstr "Opravuji stránku „{0}“"
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{0} stránka byla editována"
+msgstr[1] "{0} stránky byly editovány"
+msgstr[2] "{0} stránek bylo editováno"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:238
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural ""
 "{0} pages have been marked as fixed for the selected algorithms"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{0} stránka byla pro daný algoritmus označena jako opravená"
+msgstr[1] "{0} stránky byly pro daný algoritmus označeny jako opravené"
+msgstr[2] "{0} stránek bylo pro daný algoritmus označeno jako opravené"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:243
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{0} stránka byla označena jako opravená pro jiný algoritmus"
+msgstr[1] "{0} stránky byly označeny jako opravené pro jiný algoritmus"
+msgstr[2] "{0} stránek bylo označeno jako opravené pro jiný algoritmus"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:205
 msgid "Description"
@@ -3181,7 +3184,7 @@ msgstr "Název reference nemůže obsahovat tyto znaky: {0}"
 #: org/wikipediacleaner/utils/StringCheckerUnauthorizedCharacters.java:53
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
-msgstr ""
+msgstr "Tato hodnota nemůže obsahovat žádné ze znaků: {0}"
 
 #, java-format
 #~ msgid "The page {0} doesn't exist on Wikipedia"
