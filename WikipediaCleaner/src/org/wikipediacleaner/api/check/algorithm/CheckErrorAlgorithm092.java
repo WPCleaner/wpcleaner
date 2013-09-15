@@ -101,7 +101,7 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
    * @return Page contents after fix.
    */
   @Override
-  public String automaticFix(PageAnalysis analysis) {
+  protected String internalAutomaticFix(PageAnalysis analysis) {
     String contents = analysis.getContents();
     if ((!analysis.getPage().isArticle()) ||
         (!analysis.getPage().isInMainNamespace()) ||

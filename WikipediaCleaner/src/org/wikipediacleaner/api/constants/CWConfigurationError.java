@@ -20,9 +20,6 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * Configuration for an error in Check Wiki project.
  */
-/**
- * 
- */
 public class CWConfigurationError {
 
   /**
@@ -90,6 +87,8 @@ public class CWConfigurationError {
       setLongDescription(value, origin);
     } else if (name.equals("link")) {
       setLink(value, origin);
+    } else if (name.equals("noauto")) {
+      setNoAuto(value, origin);
     } else if (name.equals("whitelist")) {
       setWhiteList(value, origin);
     } else if (name.equals("whitelistpage")) {
@@ -138,9 +137,9 @@ public class CWConfigurationError {
     return result;
   }
 
-  /* ================================================================================= */
-  /* Priority                                                                          */
-  /* ================================================================================= */
+  // =================================================================================
+  // Priority
+  // =================================================================================
 
   public final static int PRIORITY_UNKOWN = -1;
   public final static int PRIORITY_DEACTIVATED = 0;
@@ -304,9 +303,9 @@ public class CWConfigurationError {
     }
   }
 
-  /* ================================================================================= */
-  /* Short description                                                                 */
-  /* ================================================================================= */
+  // =================================================================================
+  // Short description
+  // =================================================================================
 
   /**
    * Short description of the error (general configuration).
@@ -380,9 +379,9 @@ public class CWConfigurationError {
     return shortDescriptionReplacedGeneral;
   }
 
-  /* ================================================================================= */
-  /* Long description                                                                 */
-  /* ================================================================================= */
+  // =================================================================================
+  // Long description
+  // =================================================================================
 
   /**
    * Long description of the error (general configuration).
@@ -428,6 +427,60 @@ public class CWConfigurationError {
       return longDescriptionWiki;
     }
     return longDescriptionGeneral;
+  }
+
+  // =================================================================================
+  // No automatic fixing
+  // =================================================================================
+
+  /**
+   * True if automatic modifications should be prevented (general configuration).
+   */
+  private Boolean noAutoGeneral = null;
+
+  /**
+   * True if automatic modifications should be prevented (wiki configuration).
+   */
+  private Boolean noAutoWiki = null;
+
+  /**
+   * True if automatic modifications should be prevented (user configuration).
+   */
+  private Boolean noAutoUser = null;
+
+  /**
+   * @param value No automatic modifications value.
+   * @param origin Origin of the configuration.
+   */
+  private void setNoAuto(String value, Origin origin) {
+    Boolean booleanValue = Boolean.valueOf(value);
+    switch (origin) {
+    case GENERAL_CONFIGURATION:
+      noAutoGeneral = booleanValue;
+      break;
+    case WIKI_CONFIGURATION:
+      noAutoWiki = booleanValue;
+      break;
+    case USER_CONFIGURATION:
+      noAutoUser = booleanValue;
+      break;
+    }
+  }
+
+  /**
+   * @return True if automatic modifications should be prevented.
+   */
+  public boolean getNoAuto() {
+    if (noAutoUser != null) {
+      return noAutoUser.booleanValue();
+    }
+    if (noAutoWiki != null) {
+      return noAutoWiki.booleanValue();
+    }
+    if (noAutoGeneral != null) {
+      return noAutoGeneral.booleanValue();
+    }
+    return false;
   }
 
   /* ================================================================================= */

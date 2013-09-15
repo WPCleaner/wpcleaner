@@ -404,7 +404,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    * @return Page contents after fix.
    */
   @Override
-  public String automaticFix(PageAnalysis analysis) {
+  protected String internalAutomaticFix(PageAnalysis analysis) {
     List<String[]> refTemplates = analysis.getWPCConfiguration().getStringArrayList(
         WPCConfigurationStringList.REFERENCES_TEMPLATES);
     if ((refTemplates == null) || (refTemplates.isEmpty())) {

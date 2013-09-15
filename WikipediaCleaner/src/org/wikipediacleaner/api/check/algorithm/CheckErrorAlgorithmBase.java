@@ -233,6 +233,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   public Map<String, String> getParameters() {
     Map<String, String> parameters = new Hashtable<String, String>();
     parameters.put("link", GT._("Title of the article describing this type of error"));
+    parameters.put("noauto", GT._("Set to true to prevent automatic modifications for this type of error"));
     parameters.put("whitelist", GT._("List of false positives for this type of error"));
     parameters.put("whitelistpage", GT._("Page containing the list of false positives for this type of error"));
     return parameters;
@@ -244,7 +245,20 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param analysis Page analysis.
    * @return Page contents after fix.
    */
-  public String automaticFix(PageAnalysis analysis) {
+  public final String automaticFix(PageAnalysis analysis) {
+    if (configuration.getNoAuto()) {
+      return analysis.getContents();
+    }
+    return internalAutomaticFix(analysis);
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  protected String internalAutomaticFix(PageAnalysis analysis) {
     return analysis.getContents();
   }
 
@@ -254,8 +268,21 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @param analysis Page analysis.
    * @return Page contents after fix.
    */
-  public String botFix(PageAnalysis analysis) {
-    return automaticFix(analysis);
+  public final String botFix(PageAnalysis analysis) {
+    if (configuration.getNoAuto()) {
+      return analysis.getContents();
+    }
+    return internalBotFix(analysis);
+  }
+
+  /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  protected String internalBotFix(PageAnalysis analysis) {
+    return internalAutomaticFix(analysis);
   }
 
   /**

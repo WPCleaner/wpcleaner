@@ -109,7 +109,7 @@ public class CheckErrorAlgorithm027 extends CheckErrorAlgorithmBase {
    * @return Page contents after fix.
    */
   @Override
-  public String botFix(PageAnalysis analysis) {
+  protected String internalBotFix(PageAnalysis analysis) {
     return fix(globalFixes[0], analysis, null);
   }
 
