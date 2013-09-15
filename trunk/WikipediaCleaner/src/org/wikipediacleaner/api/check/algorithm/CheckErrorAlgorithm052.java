@@ -84,7 +84,7 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
    * @return Page contents after fix.
    */
   @Override
-  public String automaticFix(PageAnalysis analysis) {
+  protected String internalAutomaticFix(PageAnalysis analysis) {
     return fixUsingAutomaticReplacement(analysis);
   }
 }

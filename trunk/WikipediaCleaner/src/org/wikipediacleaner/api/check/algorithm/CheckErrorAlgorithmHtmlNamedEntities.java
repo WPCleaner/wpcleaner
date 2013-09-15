@@ -154,7 +154,7 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
    * @return Page contents after fix.
    */
   @Override
-  public String botFix(PageAnalysis analysis) {
+  protected String internalBotFix(PageAnalysis analysis) {
     return fix(globalFixes[0], analysis, null);
   }
 

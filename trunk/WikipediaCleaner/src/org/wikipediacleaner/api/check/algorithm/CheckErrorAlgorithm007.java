@@ -68,7 +68,7 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
    * @return Page contents after fix.
    */
   @Override
-  public String botFix(PageAnalysis analysis) {
+  protected String internalBotFix(PageAnalysis analysis) {
     String contents = analysis.getContents();
     if (!analysis.areTitlesReliable()) {
       return contents;

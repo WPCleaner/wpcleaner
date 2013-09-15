@@ -213,7 +213,7 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
    * @return Page contents after fix.
    */
   @Override
-  public String automaticFix(PageAnalysis analysis) {
+  protected String internalAutomaticFix(PageAnalysis analysis) {
     return fix(globalFixes[0], analysis, null);
   }
 
