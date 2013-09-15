@@ -30,19 +30,21 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
+
     boolean result = false;
-    Namespace fileNamespace = pageAnalysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
-    for (PageElementInternalLink link : pageAnalysis.getInternalLinks()) {
+    Namespace fileNamespace = analysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
+    String contents = analysis.getContents();
+    for (PageElementInternalLink link : analysis.getInternalLinks()) {
       // Finding possible namespace
       String namespace = null;
       if (link.getLink() != null) {
@@ -129,7 +131,7 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
 
           // Create error
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+              analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
           boolean emptyLink = false;
           if ((link.getFullLink() == null) || (link.getFullLink().trim().length() == 0)) {
             errorResult.addReplacement(PageElementInternalLink.createInternalLink(link.getText(), null));
@@ -138,6 +140,7 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
           for (String replacement : replacements) {
             errorResult.addReplacement(replacement, !emptyLink && (replacements.size() == 1));
           }
+          errorResult.addReplacement("{{" + contents.substring(link.getBeginIndex() + 2, link.getEndIndex() - 2) + "}}");
           errors.add(errorResult);
         }
       }
