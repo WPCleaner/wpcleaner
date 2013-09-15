@@ -319,29 +319,6 @@ public class MediaWikiAPI implements API {
   }
 
   /**
-   * Check current time to see if edit is authorized (wait if needed).
-   */
-  private void checkTimeForEdit() {
-    Configuration config = Configuration.getConfiguration();
-    int minimumTime = config.getInt(null, ConfigurationValueInteger.TIME_BETWEEN_EDIT);
-    if (minimumTime <= 0) {
-      return;
-    }
-    synchronized (editLock) {
-      long currentTime = System.currentTimeMillis();
-      if (currentTime < lastEditTime + minimumTime * 1000) {
-        try {
-          Thread.sleep(lastEditTime + minimumTime * 1000 - currentTime);
-        } catch (InterruptedException e) {
-          // Nothing to do
-        }
-        currentTime = System.currentTimeMillis();
-      }
-      lastEditTime = currentTime;
-    }
-  }
-
-  /**
    * Update a page on Wikipedia.
    * 
    * @param wikipedia Wikipedia.
@@ -411,11 +388,7 @@ public class MediaWikiAPI implements API {
         } while (hasCaptcha);
       } catch (APIException e) {
         if (e.getHttpStatus() == HttpStatus.SC_GATEWAY_TIMEOUT) {
-          try {
-            Thread.sleep(30000);
-          } catch (InterruptedException e2) {
-            // Nothing
-          }
+          waitBeforeRetrying();
           Page tmpPage = page.replicatePage();
           retrieveContents(wikipedia, Collections.singletonList(tmpPage), false, false);
           String tmpContents = tmpPage.getContents();
@@ -431,6 +404,7 @@ public class MediaWikiAPI implements API {
           throw e;
         }
         if (e.getQueryResult() == EnumQueryResult.BAD_TOKEN) {
+          waitBeforeRetrying();
           log.warn("Retrieving tokens after a BAD_TOKEN answer");
           retrieveTokens(wikipedia);
         }
@@ -551,6 +525,7 @@ public class MediaWikiAPI implements API {
           throw e;
         }
         if (e.getQueryResult() == EnumQueryResult.BAD_TOKEN) {
+          waitBeforeRetrying();
           log.warn("Retrieving tokens after a BAD_TOKEN answer");
           retrieveTokens(wikipedia);
         }
@@ -1461,11 +1436,7 @@ public class MediaWikiAPI implements API {
             log.warn("Error. Maximum attempts count reached.");
             throw new APIException(message, statusCode);
           }
-          try {
-            Thread.sleep(30000);
-          } catch (InterruptedException e) {
-            // Nothing
-          }
+          waitBeforeRetrying();
         } else {
           InputStream stream = method.getResponseBodyAsStream();
           stream = new BufferedInputStream(stream);
@@ -1490,11 +1461,7 @@ public class MediaWikiAPI implements API {
           log.warn("Error. Maximum attempts count reached.");
           throw e;
         }
-        try {
-          Thread.sleep(30000);
-        } catch (InterruptedException e2) {
-          // Nothing
-        }
+        waitBeforeRetrying();
       } catch (JDOMException e) {
         String message = "JDOMException: " + e.getMessage();
         log.error(message);
@@ -1502,11 +1469,7 @@ public class MediaWikiAPI implements API {
           log.warn("Error. Maximum attempts count reached.");
           throw new APIException("Error parsing XML result", e);
         }
-        try {
-          Thread.sleep(30000);
-        } catch (InterruptedException e2) {
-          // Nothing
-        }
+        waitBeforeRetrying();
       } catch (IOException e) {
         String message = "" + e.getClass().getName() + ": " + e.getMessage();
         log.error(message);
@@ -1514,11 +1477,7 @@ public class MediaWikiAPI implements API {
           log.warn("Error. Maximum attempts count reached.");
           throw new APIException("Error accessing MediaWiki", e);
         }
-        try {
-          Thread.sleep(30000);
-        } catch (InterruptedException e2) {
-          // Nothing
-        }
+        waitBeforeRetrying();
       } catch (APIException e) {
         if (!e.shouldRetry() || (attempt > e.getMaxRetry())) {
           throw e;
@@ -1530,6 +1489,40 @@ public class MediaWikiAPI implements API {
         }
       }
       log.warn("Error. Trying again");
+    }
+  }
+
+  /**
+   * Wait after a problem occurred.
+   */
+  private void waitBeforeRetrying() {
+    try {
+      Thread.sleep(30000);
+    } catch (InterruptedException e) {
+      // Nothing
+    }
+  }
+
+  /**
+   * Check current time to see if edit is authorized (wait if needed).
+   */
+  private void checkTimeForEdit() {
+    Configuration config = Configuration.getConfiguration();
+    int minimumTime = config.getInt(null, ConfigurationValueInteger.TIME_BETWEEN_EDIT);
+    if (minimumTime <= 0) {
+      return;
+    }
+    synchronized (editLock) {
+      long currentTime = System.currentTimeMillis();
+      if (currentTime < lastEditTime + minimumTime * 1000) {
+        try {
+          Thread.sleep(lastEditTime + minimumTime * 1000 - currentTime);
+        } catch (InterruptedException e) {
+          // Nothing to do
+        }
+        currentTime = System.currentTimeMillis();
+      }
+      lastEditTime = currentTime;
     }
   }
 
