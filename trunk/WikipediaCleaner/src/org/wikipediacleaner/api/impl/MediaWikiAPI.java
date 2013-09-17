@@ -388,13 +388,13 @@ public class MediaWikiAPI implements API {
         } while (hasCaptcha);
       } catch (APIException e) {
         if (e.getHttpStatus() == HttpStatus.SC_GATEWAY_TIMEOUT) {
+          log.warn("Gateway timeout, waiting to see if modification has been taken into account");
           waitBeforeRetrying();
           Page tmpPage = page.replicatePage();
           retrieveContents(wikipedia, Collections.singletonList(tmpPage), false, false);
           String tmpContents = tmpPage.getContents();
           if ((tmpContents != null) &&
               (tmpContents.equals(newContents))) {
-            log.warn("Gateway timeout, but modification has been taken into account");
             return QueryResult.createCorrectQuery(
                 tmpPage.getPageId(), tmpPage.getTitle(),
                 page.getPageId(), tmpPage.getPageId());
