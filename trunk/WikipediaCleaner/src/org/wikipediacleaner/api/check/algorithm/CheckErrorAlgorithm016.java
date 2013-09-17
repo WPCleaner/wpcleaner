@@ -121,9 +121,9 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
           }
           boolean finished = false;
           while ((begin > 0) && !finished) {
-            int before = contents.codePointBefore(begin);
-            if (controlCharacters.indexOf(before) >= 0) {
-              begin -= Character.charCount(before);
+            int current = contents.codePointAt(begin);
+            if (controlCharacters.indexOf(current) >= 0) {
+              begin -= Character.charCount(contents.codePointBefore(begin));
             } else {
               finished = true;
             }
@@ -172,9 +172,10 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
   private final static String automatic =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
       "abcdefghijklmnopqrstuvwxyz" +
-      "áàâ" + "éèêëÉ" + "îï" + "ôöō" + "ùûü" +
+      "áàâäåãÀ" + "éèêëÉ" + "ìîïĩ" + "óôöō" + "úùûü" + "ý" +
+      "č" + "š" + "ź" +
       "0123456789" +
-      " []|(){}<>,.!?;:--–=+*#/'\"\n";
+      " []|(){}<>,.!?;:--–=+*#/'\"«»\n\t";
 
   /**
    * @param replacement Replacement.
