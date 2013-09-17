@@ -116,9 +116,13 @@ class AutomaticCWWorker extends BasicWorker {
           for (int numPage = 0;
               (numPage < maxErrors) && shouldContinue();
               numPage++) {
-            analyzePage(
-                error.getPage(numPage), algorithm,
-                algorithm.getErrorNumberString() + " - " + (numPage + 1) + "/" + maxErrors);
+            try {
+              analyzePage(
+                  error.getPage(numPage), algorithm,
+                  algorithm.getErrorNumberString() + " - " + (numPage + 1) + "/" + maxErrors);
+            } catch (APIException e) {
+              //
+            }
           }
         }
       }
