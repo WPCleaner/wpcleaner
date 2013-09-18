@@ -173,7 +173,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
       "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
       "abcdefghijklmnopqrstuvwxyz" +
       "áàâäåãÀ" + "éèêëÉ" + "ìîïĩ" + "óôöō" + "úùûü" + "ý" +
-      "č" + "š" + "ź" +
+      "č" + "ń" + "š" + "ź" +
       "0123456789" +
       " []|(){}<>,.!?;:--–=+*#/'\"«»\n\t";
 
