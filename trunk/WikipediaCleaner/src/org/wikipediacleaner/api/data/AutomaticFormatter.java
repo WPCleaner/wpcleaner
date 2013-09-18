@@ -154,12 +154,12 @@ public class AutomaticFormatter {
 
     // Fix default sort position
     int delta = 0;
-    if ((beginDefaultSort == 0) ||
+    if ((beginDefaultSort <= 0) ||
         (contents.charAt(beginDefaultSort - 1) == '\n')) {
       if ((endDefaultSort < contents.length()) &&
           (contents.charAt(endDefaultSort) == '\n')) {
         delta = 1;
-        if ((beginDefaultSort == 1) ||
+        if ((beginDefaultSort <= 1) ||
             (contents.charAt(beginDefaultSort - 2) == '\n')) {
           if ((endDefaultSort + 1 < contents.length() &&
               (contents.charAt(endDefaultSort + 1) == '\n'))) {
