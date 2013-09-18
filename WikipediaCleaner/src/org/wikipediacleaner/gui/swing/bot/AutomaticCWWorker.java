@@ -53,6 +53,16 @@ class AutomaticCWWorker extends BasicWorker {
   private final List<CheckErrorAlgorithm> allAlgorithms;
 
   /**
+   * Extra comment.
+   */
+  private final String extraComment;
+
+  /**
+   * True if modifications should be saved.
+   */
+  private final boolean saveModifications;
+
+  /**
    * True if pages that couldn't be fixed should be analyzed.
    */
   private final boolean analyzeNonFixed;
@@ -78,17 +88,22 @@ class AutomaticCWWorker extends BasicWorker {
    * @param selectedAlgorithms List of selected algorithms.
    * @param max Maximum number of pages for each algorithm.
    * @param allAlgorithms List of possible algorithms.
+   * @param extraComment Extra comment.
+   * @param saveModifications True if modifications shoud be saved.
    * @param analyzeNonFixed True if pages that couldn't be fixed should be analyzed.
    */
   public AutomaticCWWorker(
       EnumWikipedia wiki, BasicWindow window,
       List<CheckErrorAlgorithm> selectedAlgorithms, int max,
       List<CheckErrorAlgorithm> allAlgorithms,
-      boolean analyzeNonFixed) {
+      String extraComment,
+      boolean saveModifications, boolean analyzeNonFixed) {
     super(wiki, window);
     this.selectedAlgorithms = selectedAlgorithms;
     this.max = max;
     this.allAlgorithms = allAlgorithms;
+    this.extraComment = extraComment;
+    this.saveModifications = saveModifications;
     this.analyzeNonFixed = analyzeNonFixed;
     this.countModified = 0;
     this.countMarked = 0;
@@ -190,7 +205,14 @@ class AutomaticCWWorker extends BasicWorker {
       // Save page if errors have been fixed
       if ((!newContents.equals(page.getContents())) &&
           (!usedAlgorithms.isEmpty())) {
+        if (!saveModifications) {
+          return;
+        }
         StringBuilder comment = new StringBuilder();
+        if ((extraComment != null) && (extraComment.trim().length() > 0)) {
+          comment.append(extraComment.trim());
+          comment.append(" - ");
+        }
         comment.append(getWikipedia().getCWConfiguration().getComment());
         for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
           comment.append(" - ");
