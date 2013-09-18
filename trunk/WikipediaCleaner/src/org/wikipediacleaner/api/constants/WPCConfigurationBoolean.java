@@ -22,7 +22,7 @@ public enum WPCConfigurationBoolean {
   // Used to mark error fixed both on Tool Server and WMF Labs
   CW_MARK_BOTH("check_wiki_mark_both", true, true, true),
   // Used to decide if Check Wiki is on WMF Labs or on Tool Server.
-  CW_USE_LABS("check_wiki_use_labs", false, true, true),
+  CW_USE_LABS("check_wiki_use_labs", true, true, true),
   // Allow use of __DISAMBIG__ magic word.
   DAB_USE_DISAMBIG_MAGIC_WORD("dab_use_disambig", true, true, false),
   // Allow disambiguation warning outside section 0 of talk page.
