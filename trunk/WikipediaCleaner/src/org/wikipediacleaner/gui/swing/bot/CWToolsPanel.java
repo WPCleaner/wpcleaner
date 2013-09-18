@@ -21,9 +21,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SpinnerNumberModel;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -49,9 +52,24 @@ public class CWToolsPanel extends BotToolsPanel {
   private JButton buttonCWAutomaticFixing;
 
   /**
+   * Button for marking already fixed Check Wiki errors.
+   */
+  private JButton buttonCWAutomaticMarking;
+
+  /**
    * Configure if page that couldn't be fixed should be analyzed.
    */
   private JCheckBox chkCWAnalyze;
+
+  /**
+   * Configure number of pages for each error.
+   */
+  private SpinnerNumberModel modelNbPages;
+
+  /**
+   * Comment.
+   */
+  private JTextField txtComment;
 
   /**
    * Table model for Check Wiki automatic fixing.
@@ -79,10 +97,11 @@ public class CWToolsPanel extends BotToolsPanel {
   private void initialize() {
 
     // Initialize constraints
+    final int maxX = 3;
     GridBagConstraints constraints = new GridBagConstraints();
     constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.gridheight = 1;
-    constraints.gridwidth = 1;
+    constraints.gridwidth = maxX;
     constraints.gridx = 0;
     constraints.gridy = 0;
     constraints.insets = new Insets(0, 0, 0, 0);
@@ -110,19 +129,61 @@ public class CWToolsPanel extends BotToolsPanel {
     constraints.gridy++;
     constraints.weighty = 0;
 
-    // Button for running the automatic fixing
-    buttonCWAutomaticFixing = Utilities.createJButton(
-        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Automatic fixing for Check Wiki"), false, null);
-    buttonCWAutomaticFixing.addActionListener(EventHandler.create(
-        ActionListener.class, this, "actionCWAutomaticFixing"));
-    add(buttonCWAutomaticFixing, constraints);
-    constraints.gridy++;
-
     // Check box to decide if pages should be analyzed if not fixed
     chkCWAnalyze = Utilities.createJCheckBox(
         GT._("Analyze pages that couldn't be fixed by bot"), true);
     add(chkCWAnalyze, constraints);
+    constraints.gridy++;
+
+    // Number of errors
+    modelNbPages = new SpinnerNumberModel(100, 1, 10000, 1);
+    JSpinner spinNbPages = new JSpinner(modelNbPages);
+    JLabel labelNbPages = Utilities.createJLabel(GT._("Number of pages:"));
+    labelNbPages.setLabelFor(spinNbPages);
+    constraints.gridwidth = 2;
+    constraints.weightx = 1;
+    add(labelNbPages, constraints);
+    constraints.gridx += constraints.gridwidth;
+    constraints.gridwidth = maxX - constraints.gridwidth;
+    constraints.weightx = 0;
+    add(spinNbPages, constraints);
+    constraints.gridx = 0;
+    constraints.gridy++;
+
+    // Comment
+    txtComment = Utilities.createJTextField("", 40);
+    JLabel labelComment = Utilities.createJLabel(GT._("Comment:"));
+    labelComment.setLabelFor(txtComment);
+    constraints.gridwidth = 1;
+    constraints.weightx = 0;
+    add(labelComment, constraints);
+    constraints.gridx += constraints.gridwidth;
+    constraints.gridwidth = maxX - constraints.gridwidth;
+    constraints.weightx = 1;
+    add(txtComment, constraints);
+    constraints.gridx = 0;
+    constraints.gridy++;
+
+    // Button for running the automatic fixing
+    buttonCWAutomaticFixing = Utilities.createJButton(
+        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
+        GT._("Automatic fixing for Check Wiki"), true, null);
+    buttonCWAutomaticFixing.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionCWAutomaticFixing"));
+    constraints.gridwidth = maxX;
+    constraints.weightx = 1;
+    add(buttonCWAutomaticFixing, constraints);
+    constraints.gridy++;
+
+    // Button for marking errors already fixed
+    buttonCWAutomaticMarking = Utilities.createJButton(
+        "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
+        GT._("Mark errors already fixed"), true, null);
+    buttonCWAutomaticMarking.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionCWAutomaticMarking"));
+    constraints.gridwidth = maxX;
+    constraints.weightx = 1;
+    add(buttonCWAutomaticMarking, constraints);
     constraints.gridy++;
 
     // Select errors that can be fixed by bot
@@ -147,6 +208,20 @@ public class CWToolsPanel extends BotToolsPanel {
    * Action called when Automatic Check Wiki Fixing button is pressed.
    */
   public void actionCWAutomaticFixing() {
+    automaticFixing(true);
+  }
+
+  /**
+   * Action called when Automatic Check Wiki Marking button is pressed.
+   */
+  public void actionCWAutomaticMarking() {
+    automaticFixing(false);
+  }
+  
+  /**
+   * @param saveModifications True if modifications should be saved.
+   */
+  private void automaticFixing(boolean saveModifications) {
     EnumWikipedia wiki = window.getWikipedia();
     if (!wiki.getCWConfiguration().isProjectAvailable()) {
       Utilities.displayMissingConfiguration(
@@ -166,22 +241,16 @@ public class CWToolsPanel extends BotToolsPanel {
       return;
     }
     int max = 100;
-    String maxString = window.askForValue(
-        GT._("How many pages do you want to analyze"),
-        Integer.toString(max), null);
-    if (maxString == null) {
-      return;
-    }
-    try {
-      max = Integer.parseInt(maxString);
-    } catch (NumberFormatException e) {
-      return;
+    if (modelNbPages.getNumber() != null) {
+      Number number = modelNbPages.getNumber();
+      max = number.intValue();
     }
     AutomaticCWWorker worker = new AutomaticCWWorker(
         wiki, window,
         selectedAlgorithms, max,
         modelCWAutomaticFixing.getAlgorithms(),
-        chkCWAnalyze.isSelected());
+        txtComment.getText(),
+        saveModifications, chkCWAnalyze.isSelected());
     worker.start();
   }
 }

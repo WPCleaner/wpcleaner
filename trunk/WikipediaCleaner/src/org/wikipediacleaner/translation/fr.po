@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-09-15 11:06+0200\n"
+"POT-Creation-Date: 2013-09-18 18:58+0200\n"
 "PO-Revision-Date: 2013-09-08 06:16+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -212,7 +212,7 @@ msgstr "Impossible de remplacer le caractère [{0}]"
 msgid "Remove all control characters"
 msgstr "Supprimer tous les caractères de contrôle"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:237
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:238
 msgid "To report control characters only in templates"
 msgstr "Pour détecter les caractères de contrôle uniquement dans les modèles"
 
@@ -817,7 +817,7 @@ msgstr "Analyse du texte"
 msgid "Retrieving templates"
 msgstr "Récupération des modèles"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1636
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1629
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the following question ?"
@@ -825,7 +825,7 @@ msgstr ""
 "Cette action est protégée par un CAPTCHA.\n"
 "Quelle est la réponse à la question suivante ?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1643
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1636
 msgid ""
 "This action is protected by a CAPTCHA.\n"
 "What is the answer to the question displayed in your browser ?"
@@ -897,8 +897,8 @@ msgid "Save"
 msgstr "Enregistrer"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:253
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:95
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:116
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:114
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:170
 msgid "Automatic fixing for Check Wiki"
 msgstr "Corrections syntaxiques automatiques"
 
@@ -2324,26 +2324,26 @@ msgstr "Non"
 msgid "No to all"
 msgstr "Non pour tous"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:111
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:126
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:76
 #, java-format
 msgid "Checking for errors n°{0}"
 msgstr ""
 "Chargement de la liste des articles contenant l’erreur syntaxique n° {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:195
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:221
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Correction de la page « {0} »"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:233
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:259
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
 msgstr[0] "{0} page a été modifiée"
 msgstr[1] "{0} page ont été modifiées"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:238
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:264
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
@@ -2352,7 +2352,7 @@ msgstr[0] ""
 msgstr[1] ""
 "{0} pages ont été marquées comme corrigées pour les algorithmes sélectionnés"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:243
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:269
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
@@ -2386,13 +2386,22 @@ msgstr "Général"
 msgid "Check Wiki"
 msgstr "Correction syntaxique"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:124
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:134
 msgid "Analyze pages that couldn't be fixed by bot"
 msgstr "Analyser les pages qui ne pourraient pas être corrigées par le robot"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:170
-msgid "How many pages do you want to analyze"
-msgstr "Combien de page souhaitez-vous analyser ?"
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:141
+msgid "Number of pages:"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:155
+#, fuzzy
+msgid "Comment:"
+msgstr "Commentaire"
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:181
+msgid "Mark errors already fixed"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:89
 msgid "Semi-automatic disambiguation fixing"
@@ -3212,6 +3221,9 @@ msgstr "Un nom de référence ne peut pas contenir les caractères suivants : {0
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "La valeur ne doit contenir aucun de ces caractères : {0}"
+
+#~ msgid "How many pages do you want to analyze"
+#~ msgstr "Combien de page souhaitez-vous analyser ?"
 
 #~ msgid "&Close"
 #~ msgstr "&Fermer"
