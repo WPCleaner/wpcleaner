@@ -125,6 +125,7 @@ class AutomaticCWWorker extends BasicWorker {
         setText(
             GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
             " - " + algorithm.getShortDescriptionReplaced());
+        errors.clear();
         checkWiki.retrievePages(algorithm, max, getWikipedia(), errors);
         for (CheckError error : errors) {
           int maxErrors = error.getPageCount();
@@ -159,6 +160,8 @@ class AutomaticCWWorker extends BasicWorker {
       Page page,
       CheckErrorAlgorithm algorithm,
       String prefix) throws APIException {
+
+    setText(prefix + " - " + GT._("Analyzing page {0}", page.getTitle()));
 
     // Retrieve page content 
     API api = APIFactory.getAPI();
