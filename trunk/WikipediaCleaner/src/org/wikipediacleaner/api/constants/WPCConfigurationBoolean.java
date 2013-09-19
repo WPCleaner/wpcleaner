@@ -15,6 +15,8 @@ public enum WPCConfigurationBoolean {
 
   // Automatic formatting: active
   AUTO_ACTIVE("auto_active", false, true, true),
+  // Automatic formatting: language links after categories
+  AUTO_LANGLINK_AFTER_CATEGORY("auto_langlink_after_category", false, true, true),
   // Automatic formatting: link default sort and categories
   AUTO_LINK_DEFAULTSORT_CATEGORY("auto_link_defaultsort_category", false, true, true),
   // Used to force the activation of Check Wiki project even without a project page.
