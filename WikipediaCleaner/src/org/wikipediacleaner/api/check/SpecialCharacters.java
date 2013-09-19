@@ -135,6 +135,7 @@ public class SpecialCharacters {
     addReplacements("ŹẐŻŽẒ", "Z");
     addReplacements("źẑżẓž", "z");
 
+    addReplacements("²", "2");
     addReplacements("–—", "-");
 
     // Specific configuration for CS
