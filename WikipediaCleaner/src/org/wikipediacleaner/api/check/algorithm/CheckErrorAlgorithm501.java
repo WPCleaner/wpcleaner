@@ -549,6 +549,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_MATH);
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_SCORE);
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_SOURCE);
+    removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT);
     removeCompleteTags(chunks, analysis, PageElementTag.TAG_WIKI_TIMELINE);
     removeGalleryTags(chunks, analysis);
 

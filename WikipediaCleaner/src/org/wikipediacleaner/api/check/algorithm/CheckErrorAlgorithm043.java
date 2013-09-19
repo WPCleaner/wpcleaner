@@ -53,8 +53,9 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
       if ((pageAnalysis.isInComment(currentIndex) != null) ||
           (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
           (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
           (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
+          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
+          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null) ||
           (pageAnalysis.isInCategory(currentIndex) != null) ||
           (pageAnalysis.isInTag(currentIndex) != null)) {
         shouldCount = false;
