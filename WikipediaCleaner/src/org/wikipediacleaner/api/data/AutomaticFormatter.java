@@ -67,6 +67,7 @@ public class AutomaticFormatter {
       return contents;
     }
     contents = fixLinkDefaultsortCategory(page, contents);
+    contents = fixLangLinksAfterCategory(page, contents);
     contents = fixCrBeforeCategory(page, contents);
     contents = fixCrDefaultsortCategory(page, contents);
     contents = fixCrBetweenCategory(page, contents);
@@ -394,6 +395,140 @@ public class AutomaticFormatter {
         }
         lastIndex = category.getBeginIndex();
       }
+    }
+    if (lastIndex > 0) {
+      if (lastIndex < contents.length()) {
+        sb.append(contents.substring(lastIndex));
+      }
+      contents = sb.toString();
+    }
+
+    return contents;
+  }
+
+  /**
+   * Auto formatting options: language links after categories.
+   * 
+   * @param page Page.
+   * @param contents Current contents.
+   * @return New contents.
+   */
+  public static String fixLangLinksAfterCategory(Page page, String contents) {
+
+    // Check configuration
+    WPCConfiguration config = page.getWikipedia().getConfiguration();
+    boolean option = config.getBoolean(WPCConfigurationBoolean.AUTO_LANGLINK_AFTER_CATEGORY);
+    if (!option) {
+      return contents;
+    }
+    PageAnalysis analysis = page.getAnalysis(contents, true);
+
+    // Check if language links are already after categories
+    List<PageElementCategory> categories = analysis.getCategories();
+    if ((categories == null) || (categories.isEmpty())) {
+      return contents;
+    }
+    List<PageElementLanguageLink> links = analysis.getLanguageLinks();
+    if ((links == null) || (links.isEmpty())) {
+      return contents;
+    }
+    if (links.get(0).getBeginIndex() >= categories.get(categories.size() - 1).getEndIndex()) {
+      return contents;
+    }
+
+    // Analyze each language link
+    StringBuilder sb = new StringBuilder();
+    int lastIndex = 0;
+    int numLink = 0;
+    while (numLink < links.size()) {
+
+      // Find first element before link
+      int beginNum = numLink;
+      PageElementLanguageLink begin = links.get(beginNum);
+      boolean done = false;
+      int beginIndex = begin.getBeginIndex();
+      while ((beginIndex > 0) &&
+             ((contents.charAt(beginIndex - 1) == ' ') ||
+              (contents.charAt(beginIndex - 1) == '\n'))) {
+        beginIndex--;
+      }
+
+      // Group language links
+      done = false;
+      while ((numLink + 1 < links.size()) && !done) {
+        int index = links.get(numLink).getEndIndex();
+        int max = links.get(numLink + 1).getBeginIndex();
+        while ((index < max) && !done) {
+          char current = contents.charAt(index);
+          if ((current != ' ') && (current != '\n')) {
+            done = true;
+          }
+          index++;
+        }
+        if (!done) {
+          numLink++;
+        }
+      }
+      int endNum = numLink;
+      PageElementLanguageLink end = links.get(endNum);
+
+      // Check if the group is before default sort/categories
+      int index = end.getEndIndex();
+      done = false;
+      while ((index < contents.length()) && !done) {
+        char current = contents.charAt(index);
+        if ((current != ' ') && (current != '\n')) {
+          done = true;
+        } else {
+          index++;
+        }
+      }
+      PageElement firstElement = null;
+      if (done) {
+        char current = contents.charAt(index);
+        if (current == '{') {
+          firstElement = analysis.isInDefaultSort(index);
+        } else if (current == '[') {
+          firstElement = analysis.isInCategory(index);
+        }
+      }
+
+      // Group default sort/categories
+      if (firstElement != null) {
+        index = firstElement.getEndIndex();
+        PageElement lastElement = firstElement;
+        done = false;
+        while ((index < contents.length()) && !done) {
+          char current = contents.charAt(index);
+          if ((current == ' ') || (current == '\n')) {
+            index++;
+          } else {
+            PageElement element = null;
+            if (current == '{') {
+              element = analysis.isInDefaultSort(index);
+            } else if (current == '[') {
+              element = analysis.isInCategory(index);
+            }
+            if (element != null) {
+              lastElement = element;
+              index = element.getEndIndex();
+            } else {
+              done = true;
+            }
+          }
+        }
+
+        // Modify contents
+        if (lastIndex < begin.getBeginIndex()) {
+          sb.append(contents.substring(lastIndex, beginIndex));
+          lastIndex = beginIndex;
+        }
+        sb.append(contents.substring(end.getEndIndex(), lastElement.getEndIndex()));
+        sb.append(contents.substring(beginIndex, end.getEndIndex()));
+        lastIndex = lastElement.getEndIndex();
+      }
+
+      numLink++;
     }
     if (lastIndex > 0) {
       if (lastIndex < contents.length()) {
