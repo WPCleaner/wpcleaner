@@ -122,6 +122,9 @@ class AutomaticCWWorker extends BasicWorker {
     try {
       CheckWiki checkWiki = APIFactory.getCheckWiki();
       for (CheckErrorAlgorithm algorithm : selectedAlgorithms) {
+        if (!shouldContinue()) {
+          return null;
+        }
         setText(
             GT._("Checking for errors n°{0}", Integer.toString(algorithm.getErrorNumber())) +
             " - " + algorithm.getShortDescriptionReplaced());
