@@ -96,6 +96,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
           (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null) ||
           (analysis.isInTag(currentIndex) != null)) {
         shouldCount = false;
       }
