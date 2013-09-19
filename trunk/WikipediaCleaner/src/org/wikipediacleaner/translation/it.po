@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-09-18 18:58+0200\n"
+"POT-Creation-Date: 2013-09-19 05:51+0200\n"
 "PO-Revision-Date: 2013-07-06 19:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -2298,26 +2298,31 @@ msgstr "No a tutto"
 msgid "Checking for errors n°{0}"
 msgstr "Controllo per errori n°{0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:221
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:164
+#, fuzzy, java-format
+msgid "Analyzing page {0}"
+msgstr "Aggiornamento pagina {0}"
+
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:224
 #, java-format
 msgid "Fixing page {0}"
 msgstr "Correzione pagina {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:259
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:262
 #, fuzzy, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
 msgstr[0] "{0} pagina è stata corretta"
 msgstr[1] "{0} pagine sono state corrette"
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:264
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:267
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:269
+#: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:272
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
