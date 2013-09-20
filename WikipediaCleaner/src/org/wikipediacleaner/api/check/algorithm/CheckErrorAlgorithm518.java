@@ -51,6 +51,8 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     // Retrieve configuration
     String apostropheTemplate = getSpecificProperty("apostrophe_template", true, false, false);
     String asteriskTemplate = getSpecificProperty("asterisk_template", true, false, false);
+    String openSBTemplate = getSpecificProperty("open_sb_template", true, false, false);
+    String closeSBTemplate = getSpecificProperty("close_sb_template", true, false, false);
 
     // Check each tag
     List<PageElementTag> tags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_NOWIKI);
@@ -64,8 +66,12 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     for (PageElementTag tag : tags) {
       CheckErrorResult errorResult = null;
       if (tag.isFullTag()) {
+
+        // Full tag <nowiki/>
         int beginIndex = tag.getBeginIndex();
         int endIndex = tag.getEndIndex();
+
+        // Check for <nowiki/> just after an internal link
         PageElementInternalLink link = analysis.isInInternalLink(beginIndex - 1);
         if ((link != null) && (link.getEndIndex() == beginIndex)) {
           beginIndex = link.getBeginIndex();
@@ -74,32 +80,65 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
             endIndex++;
           }
         } else {
-          link = null;
+          // Check for <nowiki/> inside an internal link
+          link = analysis.isInInternalLink(beginIndex);
+          if (link != null) {
+            int index = beginIndex;
+            while ((index > link.getBeginIndex() + link.getTextOffset()) &&
+                   (contents.charAt(index - 1) == ' ')) {
+              index--;
+            }
+            if (index == link.getBeginIndex() + link.getTextOffset()) {
+              index = endIndex;
+              while ((index + 2 < link.getEndIndex()) &&
+                     (contents.charAt(index) == ' ')) {
+                index++;
+              }
+              if (index + 2 == link.getEndIndex()) {
+                errorResult = createCheckErrorResult(
+                    analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+                errorResult.addReplacement("");
+              }
+            }
+          }
         }
-        String textBefore = contents.substring(beginIndex, tag.getBeginIndex());
-        String textAfter = contents.substring(tag.getEndIndex(), endIndex);
-        errorResult = createCheckErrorResult(
-            analysis.getPage(), beginIndex, endIndex);
-        if (link != null) {
-          errorResult.addReplacement(PageElementInternalLink.createInternalLink(
-              link.getFullLink(), link.getDisplayedText() + textAfter));
+        if (errorResult == null) {
+          String textBefore = contents.substring(beginIndex, tag.getBeginIndex());
+          String textAfter = contents.substring(tag.getEndIndex(), endIndex);
+          errorResult = createCheckErrorResult(
+              analysis.getPage(), beginIndex, endIndex);
+          if (link != null) {
+            errorResult.addReplacement(PageElementInternalLink.createInternalLink(
+                link.getFullLink(), link.getDisplayedText() + textAfter));
+          }
+          errorResult.addReplacement(textBefore + " " + textAfter);
+          errorResult.addReplacement(textBefore + textAfter);
         }
-        errorResult.addReplacement(textBefore + " " + textAfter);
-        errorResult.addReplacement(textBefore + textAfter);
       } else if (tag.isComplete()) {
+        // Complete tag <nowiki> ... </nowiki>
         errorResult = createCheckErrorResult(
             analysis.getPage(), tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
         String internalText = contents.substring(
             tag.getValueBeginIndex(), tag.getValueEndIndex());
 
-        // Check for <nowiki>'</nowiki>
-        if ((apostropheTemplate != null) && "'".equals(internalText)) {
-          errorResult.addReplacement(PageElementTemplate.createTemplate(apostropheTemplate));
+        // Check for specific characters
+        StringBuilder replacement = new StringBuilder();
+        for (int i = 0; i < internalText.length(); i++) {
+          char currentChar = internalText.charAt(i);
+          if ((apostropheTemplate != null) && (currentChar == '\'')) {
+            replacement.append(PageElementTemplate.createTemplate(apostropheTemplate));
+          } else if ((asteriskTemplate != null) && (currentChar == '*')) {
+            replacement.append(PageElementTemplate.createTemplate(asteriskTemplate));
+          } else if ((openSBTemplate != null) && (currentChar == '[')) {
+              replacement.append(PageElementTemplate.createTemplate(openSBTemplate));
+          } else if ((closeSBTemplate != null) && (currentChar == ']')) {
+            replacement.append(PageElementTemplate.createTemplate(closeSBTemplate));
+          } else {
+            replacement.append(currentChar);
+          }
         }
-
-        // Check for <nowiki>*</nowiki>
-        if ((asteriskTemplate != null) && "*".equals(internalText)) {
-          errorResult.addReplacement(PageElementTemplate.createTemplate(asteriskTemplate));
+        if (!internalText.equals(replacement.toString())) {
+          errorResult.addReplacement(replacement.toString());
         }
 
         // Check for <nowiki><tag></nowiki>
