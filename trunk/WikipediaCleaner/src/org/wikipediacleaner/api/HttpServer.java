@@ -101,6 +101,7 @@ public class HttpServer {
           }
         } else {
           log.warn("Error accessing url: " + statusCode + "-" + HttpStatus.getStatusText(statusCode));
+          waitBeforeRetrying(count);
         }
         try {
           while (inputStream.read() >= 0) {
@@ -176,11 +177,7 @@ public class HttpServer {
           }
         } else {
           log.warn("Error accessing url: " + statusCode + "-" + HttpStatus.getStatusText(statusCode));
-          try {
-            Thread.sleep(2000 * count);
-          } catch (InterruptedException e) {
-            // Nothing
-          }
+          waitBeforeRetrying(count);
         }
         try {
           while (inputStream.read() >= 0) {
@@ -216,5 +213,16 @@ public class HttpServer {
    */
   public String getBaseUrl() {
     return baseUrl;
+  }
+
+  /**
+   * Wait after a problem occurred.
+   */
+  private void waitBeforeRetrying(int count) {
+    try {
+      Thread.sleep(10000 * Math.min(count, 1));
+    } catch (InterruptedException e) {
+      log.warn("Waiting before retrying");
+    }
   }
 }
