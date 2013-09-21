@@ -130,14 +130,17 @@ class AutomaticCWWorker extends BasicWorker {
             " - " + algorithm.getShortDescriptionReplaced());
         errors.clear();
         checkWiki.retrievePages(algorithm, max, getWikipedia(), errors);
-        for (CheckError error : errors) {
+        while (!errors.isEmpty()) {
+          CheckError error = errors.remove(0);
           int maxErrors = error.getPageCount();
           for (int numPage = 0;
-              (numPage < maxErrors) && shouldContinue();
+              (error.getPageCount() > 0) && shouldContinue();
               numPage++) {
             try {
+              Page page = error.getPage(0);
+              error.remove(page);
               analyzePage(
-                  error.getPage(numPage), algorithm,
+                  page, algorithm,
                   algorithm.getErrorNumberString() + " - " + (numPage + 1) + "/" + maxErrors);
             } catch (APIException e) {
               //
