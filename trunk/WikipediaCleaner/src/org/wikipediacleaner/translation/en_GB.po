@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2013-09-21 23:47+0200\n"
-"PO-Revision-Date: 2013-09-16 17:33+0000\n"
+"PO-Revision-Date: 2013-09-21 05:14+0000\n"
 "Last-Translator: Anthony Harrington <untaintableangel@ubuntu.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2013-09-18 17:32+0000\n"
+"X-Launchpad-Export-Date: 2013-09-21 21:52+0000\n"
 "X-Generator: Launchpad (build 16765)\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -2309,9 +2309,9 @@ msgid "Checking for errors n°{0}"
 msgstr "Checking for errors n°{0}"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:170
-#, fuzzy, java-format
+#, java-format
 msgid "Analyzing page {0}"
-msgstr "Updating page {0}"
+msgstr "Analysing page {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:230
 #, java-format
@@ -2370,15 +2370,15 @@ msgstr "Analyse pages that couldn't be fixed by bot"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:141
 msgid "Number of pages:"
-msgstr ""
+msgstr "Number of pages:"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:155
 msgid "Comment:"
-msgstr ""
+msgstr "Comment:"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:181
 msgid "Mark errors already fixed"
-msgstr ""
+msgstr "Mark errors already fixed"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:89
 msgid "Semi-automatic disambiguation fixing"
@@ -3341,9 +3341,6 @@ msgstr "The value cannot contain any of these characters: {0}"
 
 #~ msgid "&Reload page list"
 #~ msgstr "&Reload page list"
-
-#~ msgid "How many pages do you want to analyze"
-#~ msgstr "How many pages do you want to analyse"
 
 #~ msgid "Red links analysis"
 #~ msgstr "Red links analysis"
