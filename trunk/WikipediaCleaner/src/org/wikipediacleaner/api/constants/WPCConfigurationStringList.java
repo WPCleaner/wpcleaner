@@ -23,6 +23,8 @@ public enum WPCConfigurationStringList {
   DAB_WARNING_AFTER_TEMPLATES("dab_warning_after_templates", false, true, false),
   // List of templates for displaying a warning when editing.
   EDIT_WARNING_TEMPLATES("general_edit_warning_templates", true, true, true),
+  // Templates to ask for help about ISBN.
+  ISBN_HELP_NEEDED_TEMPLATES("general_isbn_help_needed_templates", true, true, true),
   // Pages containing the list of pages with many disambiguation links.
   MOST_DAB_LINKS("most_dab_links", false, true, false),
   // List of templates for preventing bot editions.

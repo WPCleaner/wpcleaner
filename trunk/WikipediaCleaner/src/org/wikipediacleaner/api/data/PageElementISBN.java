@@ -127,6 +127,52 @@ public class PageElementISBN extends PageElement {
   }
 
   /**
+   * @param helpNeededTemplate Name of template for asking for help.
+   * @param reason Reason of the request.
+   * @return Text for requesting for help.
+   */
+  public String askForHelp(
+      String[] helpNeededTemplate, String reason) {
+    if ((helpNeededTemplate == null) ||
+        (helpNeededTemplate.length == 0)) {
+      return null;
+    }
+
+    // Template name
+    StringBuilder replacement = new StringBuilder();
+    replacement.append("{{");
+    replacement.append(helpNeededTemplate[0]);
+
+    // ISBN
+    replacement.append("|");
+    if ((helpNeededTemplate.length > 1) &&
+        (helpNeededTemplate[1].length() > 0)) {
+      replacement.append(helpNeededTemplate[1]);
+      replacement.append("=");
+    }
+    replacement.append(getISBNNotTrimmed());
+
+    // Reason
+    if ((reason != null) &&
+        (helpNeededTemplate.length > 2) &&
+        (helpNeededTemplate[2].length() > 0)) {
+      replacement.append("|");
+      replacement.append(helpNeededTemplate[2]);
+      replacement.append("=");
+      replacement.append(reason);
+    }
+
+    // Extra parameters
+    for (int i = 3; i < helpNeededTemplate.length; i++) {
+      replacement.append("|");
+      replacement.append(helpNeededTemplate[i]);
+    }
+
+    replacement.append("}}");
+    return replacement.toString();
+  }
+
+  /**
    * @param isbn ISBN number.
    * @return Cleaned up ISBN number.
    */
