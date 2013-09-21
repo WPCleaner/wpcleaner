@@ -154,12 +154,32 @@ public class PageElementISBN extends PageElement {
         char currentChar = isbn.charAt(i);
         if (Character.isDigit(currentChar)) {
           check += (10 - i) * (currentChar - '0');
+        } else {
+          return 0;
         }
       }
       check = check % 11; // Modulus 11
       check = 11 - check; // Invert
       check = check % 11; // 11 -> 0
       char computedCheck = (check < 10) ? (char) ('0' + check): 'X';
+      return computedCheck;
+    }
+
+    // Check for ISBN-13
+    if (isbn.length() == 13) {
+      int check = 0;
+      for (int i = 0; i < 12; i++) {
+        char currentChar = isbn.charAt(i);
+        if (Character.isDigit(currentChar)) {
+          check += ((i % 2 == 0) ? 1 : 3) * (currentChar - '0');
+        } else {
+          return 0;
+        }
+      }
+      check = check % 10; // Modulus 10
+      check = 10 - check; // Invert
+      check = check % 10; // 10 -> 0
+      char computedCheck = (char) ('0' + check);
       return computedCheck;
     }
 
@@ -212,6 +232,28 @@ public class PageElementISBN extends PageElement {
     }
 
     replacement.append("}}");
+    return replacement.toString();
+  }
+
+  /**
+   * @param comment Comment for asking for help.
+   * @param reason Reason of the request.
+   * @return Text for requesting for help.
+   */
+  public String askForHelp(
+      String comment, String reason) {
+    if ((comment == null) ||
+        (comment.trim().length() == 0)) {
+      return null;
+    }
+    StringBuilder replacement = new StringBuilder();
+    replacement.append("<!-- ");
+    replacement.append(comment);
+    if ((reason != null) && (reason.trim().length() > 0)) {
+      replacement.append(" - ");
+      replacement.append(reason);
+    }
+    replacement.append(" -->");
     return replacement.toString();
   }
 
