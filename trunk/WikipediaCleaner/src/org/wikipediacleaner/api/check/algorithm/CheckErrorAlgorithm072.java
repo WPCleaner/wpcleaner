@@ -63,8 +63,8 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmBase {
     for (PageElementISBN isbn : isbns) {
       String number = isbn.getISBN();
       if ((number != null) && (number.length() == 10)) {
-        char check = number.charAt(9);
-        char computedCheck = isbn.getCheck();
+        char check = Character.toUpperCase(number.charAt(9));
+        char computedCheck = Character.toUpperCase(isbn.getCheck());
         if ((check != computedCheck) &&
             (Character.isDigit(computedCheck) || (computedCheck == 'X'))) {
           if (errors == null) {

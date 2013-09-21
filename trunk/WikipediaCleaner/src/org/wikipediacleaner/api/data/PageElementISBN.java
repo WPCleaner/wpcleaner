@@ -23,6 +23,11 @@ public class PageElementISBN extends PageElement {
   private final static String ISBN_PREFIX = "ISBN";
 
   /**
+   * ISBN possible characters.
+   */
+  private final static String POSSIBLE_CHARACTERS = "0123456789Xx- ";
+
+  /**
    * @param analysis Page analysis.
    * @return List of ISBN.
    */
@@ -45,8 +50,9 @@ public class PageElementISBN extends PageElement {
         int beginNumber = index;
         int endIndex = beginNumber;
         while ((index < contents.length()) &&
-               ("0123456789X- ".indexOf(contents.charAt(index)) >= 0)) {
-          if (contents.charAt(index) != ' ') {
+               (POSSIBLE_CHARACTERS.indexOf(contents.charAt(index)) >= 0)) {
+          if ((contents.charAt(index) != ' ') &&
+              (contents.charAt(index) != '-')) {
             endIndex = index + 1;
           }
           index++;
@@ -54,10 +60,38 @@ public class PageElementISBN extends PageElement {
         if (endIndex > beginNumber) {
           String number = contents.substring(beginNumber, endIndex);
           isbns.add(new PageElementISBN(
-              beginIndex, endIndex, number));
+              beginIndex, endIndex, number, false));
         }
       }
       index = contents.indexOf(ISBN_PREFIX, index);
+    }
+
+    // Search for ISBN in template parameters
+    List<PageElementTemplate> templates = analysis.getTemplates();
+    for (PageElementTemplate template : templates) {
+      for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+        String paramName = template.getParameterName(paramNum);
+        if ("ISBN".equalsIgnoreCase(paramName)) {
+          String paramValue = template.getParameterValue(paramNum);
+          boolean ok = true;
+          for (int i = 0; i < paramValue.length(); i++) {
+            if (POSSIBLE_CHARACTERS.indexOf(paramValue.charAt(i)) < 0) {
+              ok = false;
+            }
+          }
+          if (ok) {
+            paramValue = paramValue.trim();
+            if (paramValue.length() > 0) {
+              int beginIndex = template.getParameterValueOffset(paramNum);
+              int endIndex = (paramNum + 1 < template.getParameterCount()) ?
+                  template.getParameterPipeOffset(paramNum + 1) :
+                  template.getEndIndex() - 2;
+              isbns.add(new PageElementISBN(
+                  beginIndex, endIndex, paramValue, true));
+            }
+          }
+        }
+      }
     }
 
     return isbns;
@@ -74,15 +108,21 @@ public class PageElementISBN extends PageElement {
   private String isbn;
 
   /**
+   * True if ISBN is a template parameter (ISBN=...)
+   */
+  private boolean isTemplateParameter;
+
+  /**
    * @param beginIndex Begin index.
    * @param endIndex End index.
    */
   private PageElementISBN(
       int beginIndex, int endIndex,
-      String isbn) {
+      String isbn, boolean isTemplateParameter) {
     super(beginIndex, endIndex);
     this.isbnNotTrimmed = isbn;
     this.isbn = cleanISBN(isbn);
+    this.isTemplateParameter = isTemplateParameter;
   }
 
   /**
@@ -137,6 +177,9 @@ public class PageElementISBN extends PageElement {
         (helpNeededTemplate.length == 0)) {
       return null;
     }
+    if (isTemplateParameter) {
+      return null;
+    }
 
     // Template name
     StringBuilder replacement = new StringBuilder();
@@ -186,7 +229,7 @@ public class PageElementISBN extends PageElement {
     }
     StringBuilder result = new StringBuilder();
     for (int i = 0; i < isbn.length(); i++) {
-      char current = isbn.charAt(i);
+      char current = Character.toUpperCase(isbn.charAt(i));
       if (((current >= '0') && (current <= '9')) || (current == 'X')) {
         result.append(current);
       }
