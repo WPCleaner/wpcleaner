@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-09-21 22:21+0200\n"
+"POT-Creation-Date: 2013-09-21 23:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -365,21 +365,28 @@ msgstr ""
 msgid "You can replace the link using template {0}."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:82
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:81
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:71
 #, java-format
-msgid "The checksum is {0} instead of {1}"
+msgid "The ISBN''s length is {0} instead of 10 or 13"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:85
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:96
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:95
 #, java-format
 msgid "Ask for help using {0}"
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:94
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:105
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:104
 msgid "Add a comment"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:82
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:81
+#, java-format
+msgid "The checksum is {0} instead of {1}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:30
