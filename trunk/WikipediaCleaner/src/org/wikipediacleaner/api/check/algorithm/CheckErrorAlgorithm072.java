@@ -8,10 +8,12 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -36,96 +38,43 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
-    // Analyze contents from the beginning
-    int startIndex = -1;
+    // Analyze each ISBN
     boolean result = false;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      startIndex = contents.indexOf("ISBN ", startIndex + 1);
-      if (startIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        // Removing white spaces
-        int tmpIndex = startIndex + 5;
-        while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
-          tmpIndex++;
-        }
-
-        // Check 9 digits and compute check
-        boolean isISBN = true;
-        int check = 0;
-        for (int i = 0; i < 9; i++) {
-          if ((tmpIndex < contents.length()) && Character.isDigit(contents.charAt(tmpIndex))) {
-            check += (10 - i) * (contents.charAt(tmpIndex) - '0');
-            tmpIndex++;
-          } else {
-            isISBN = false;
-          }
-          if ((tmpIndex < contents.length()) &&
-              ((contents.charAt(tmpIndex) == ' ') || (contents.charAt(tmpIndex) == '-'))) {
-            tmpIndex++;
-          }
-        }
-        check = check % 11; // Modulus 11
-        check = 11 - check; // Invert
-        check = check % 11; // 11 -> 0
-        char computedCheck = (check < 10) ? (char) ('0' + check): 'X';
-
-        // Verify check
-        boolean checkVerified = false;
-        char checkCharacter = ' ';
-        if ((tmpIndex < contents.length()) &&
-            ((Character.isDigit(contents.charAt(tmpIndex))) ||
-             (contents.charAt(tmpIndex) == 'X') ||
-             (contents.charAt(tmpIndex) == 'x'))) {
-          checkCharacter = contents.charAt(tmpIndex);
-          if (computedCheck == Character.toUpperCase(checkCharacter)) {
-            checkVerified = true;
-          }
-        } else {
-          isISBN = false;
-        }
-        tmpIndex++;
-
-        // Verify end of ISBN
-        while ((tmpIndex < contents.length()) &&
-               ((contents.charAt(tmpIndex) == '-') ||
-                (contents.charAt(tmpIndex) == ' '))) {
-          tmpIndex++;
-        }
-        if ((tmpIndex < contents.length()) &&
-            (Character.isLetterOrDigit(contents.charAt(tmpIndex)))) {
-          isISBN = false;
-        }
-
-        // Check result
-        if (isISBN && !checkVerified) {
+    List<PageElementISBN> isbns = analysis.getISBNs();
+    for (PageElementISBN isbn : isbns) {
+      String number = isbn.getISBN();
+      if ((number != null) && (number.length() == 10)) {
+        char check = number.charAt(9);
+        char computedCheck = isbn.getCheck();
+        if ((check != computedCheck) &&
+            (Character.isDigit(computedCheck) || (computedCheck == 'X'))) {
           if (errors == null) {
             return true;
           }
+          result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), startIndex, tmpIndex);
+              analysis.getPage(), isbn.getBeginIndex(), isbn.getEndIndex());
           errorResult.addPossibleAction(
               GT._(
                   "The checksum is {0} instead of {1}",
-                  new Object[] { checkCharacter, computedCheck } ),
+                  new Object[] { check, computedCheck } ),
               new NullActionProvider());
           errors.add(errorResult);
-          result = true;
         }
       }
     }
+
     return result;
   }
 }
