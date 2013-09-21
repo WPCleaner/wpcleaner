@@ -43,14 +43,18 @@ public class PageElementISBN extends PageElement {
       }
       if (spaceFound) {
         int beginNumber = index;
+        int endIndex = beginNumber;
         while ((index < contents.length()) &&
                ("0123456789X- ".indexOf(contents.charAt(index)) >= 0)) {
+          if (contents.charAt(index) != ' ') {
+            endIndex = index + 1;
+          }
           index++;
         }
-        if (index > beginNumber) {
-          String number = contents.substring(beginNumber, index);
+        if (endIndex > beginNumber) {
+          String number = contents.substring(beginNumber, endIndex);
           isbns.add(new PageElementISBN(
-              beginIndex, index, number));
+              beginIndex, endIndex, number));
         }
       }
       index = contents.indexOf(ISBN_PREFIX, index);
@@ -93,6 +97,33 @@ public class PageElementISBN extends PageElement {
    */
   public String getISBN() {
     return isbn;
+  }
+
+  /**
+   * @return Check.
+   */
+  public char getCheck() {
+    if (isbn == null) {
+      return 0;
+    }
+
+    // Check for ISBN-10
+    if (isbn.length() == 10) {
+      int check = 0;
+      for (int i = 0; i < 9; i++) {
+        char currentChar = isbn.charAt(i);
+        if (Character.isDigit(currentChar)) {
+          check += (10 - i) * (currentChar - '0');
+        }
+      }
+      check = check % 11; // Modulus 11
+      check = 11 - check; // Invert
+      check = check % 11; // 11 -> 0
+      char computedCheck = (check < 10) ? (char) ('0' + check): 'X';
+      return computedCheck;
+    }
+
+    return 0;
   }
 
   /**
