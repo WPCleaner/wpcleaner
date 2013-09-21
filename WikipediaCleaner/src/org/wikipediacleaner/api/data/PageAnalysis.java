@@ -316,6 +316,11 @@ public class PageAnalysis {
   private final Object thirdLevelLock = new Object();
 
   /**
+   * Internal lock for fourth level analysis.
+   */
+  private final Object fourthLevelLock = new Object();
+
+  /**
    * Perform a first level analysis of the page (comments).
    */
   private void firstLevelAnalysis() {
@@ -471,6 +476,19 @@ public class PageAnalysis {
       areas.addParameters(parameters);
       areas.addTitles(titles);
       areas.addExternalLinks(externalLinks);
+    }
+  }
+
+  /**
+   * Perform a fourth level analysis of the page (ISBN).
+   */
+  private void fourthLevelAnalysis() {
+    synchronized (fourthLevelLock) {
+      if (isbns != null) {
+        return;
+      }
+      thirdLevelAnalysis();
+      isbns = PageElementISBN.analyzePage(this);
     }
   }
 
@@ -1394,6 +1412,38 @@ public class PageAnalysis {
       if ((link.getBeginIndex() <= currentIndex) &&
           (link.getEndIndex() > currentIndex)) {
         return link;
+      }
+    }
+    return null;
+  }
+
+  // ==========================================================================
+  // ISBN management
+  // ==========================================================================
+
+  /**
+   * All ISBNs in the page
+   */
+  private List<PageElementISBN> isbns;
+
+  /**
+   * @return All ISBNs in the page.
+   */
+  public List<PageElementISBN> getISBNs() {
+    fourthLevelAnalysis();
+    return isbns;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return ISBN if the current index is inside an ISBN.
+   */
+  public PageElementISBN isInISBN(int currentIndex) {
+    List<PageElementISBN> tmpIsbns = getISBNs();
+    for (PageElementISBN isbn : tmpIsbns) {
+      if ((isbn.getBeginIndex() <= currentIndex) &&
+          (isbn.getEndIndex() > currentIndex)) {
+        return isbn;
       }
     }
     return null;
