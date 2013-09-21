@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-09-21 19:08+0200\n"
+"POT-Creation-Date: 2013-09-21 22:21+0200\n"
 "PO-Revision-Date: 2013-09-19 11:25+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -382,16 +382,23 @@ msgstr "La página «{0}» en «{1}» no tiene un enlace de idioma a «{2}»."
 msgid "You can replace the link using template {0}."
 msgstr "Puede reemplazar el enlace utilizando la plantilla {0}."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:78
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:143
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:82
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:81
 #, java-format
 msgid "The checksum is {0} instead of {1}"
 msgstr "La suma de comprobación (checksum) es {0} en lugar de {1}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:92
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:96
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:95
 #, java-format
 msgid "Ask for help using {0}"
 msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:105
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:104
+#, fuzzy
+msgid "Add a comment"
+msgstr "Agregar comentario"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm076.java:30
 msgid "Replace all %20 by space character"
