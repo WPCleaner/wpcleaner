@@ -46,7 +46,7 @@ public class CheckErrorAlgorithm071 extends CheckErrorAlgorithmBase {
       if (isbnNumber != null) {
         boolean found = false;
         for (int i = 0; i < isbnNumber.length(); i++) {
-          if (isbnNumber.charAt(i) == 'X') {
+          if (Character.toUpperCase(isbnNumber.charAt(i)) == 'X') {
             if ((i != 9) || (isbnNumber.length() != 10)) {
               found = true;
             }
