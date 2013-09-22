@@ -31,14 +31,6 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return Flag indicating if the detection is fully done.
-   */
-  @Override
-  public boolean isFullDetection() {
-    return false;
-  }
-
-  /**
    * Analyze a page to check if errors are present.
    * 
    * @param analysis Page analysis.
