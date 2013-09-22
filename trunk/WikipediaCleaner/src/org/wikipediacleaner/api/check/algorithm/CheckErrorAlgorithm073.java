@@ -9,6 +9,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
@@ -102,5 +103,18 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (Name -> description).
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        "reason", GT._("An explanation of the problem"));
+    return parameters;
   }
 }
