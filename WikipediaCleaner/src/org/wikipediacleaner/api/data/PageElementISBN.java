@@ -42,9 +42,11 @@ public class PageElementISBN extends PageElement {
       int beginIndex = index;
       index += ISBN_PREFIX.length();
       boolean spaceFound = false;
-      while ((index < contents.length()) && (contents.charAt(index) == ' ')) {
-        index++;
-        spaceFound = true;
+      if (analysis.isInComment(index) == null) {
+        while ((index < contents.length()) && (contents.charAt(index) == ' ')) {
+          index++;
+          spaceFound = true;
+        }
       }
       if (spaceFound) {
         int beginNumber = index;
