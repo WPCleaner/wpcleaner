@@ -92,7 +92,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     }
     for (PageElementCategory category : categories) {
       if ((category.getSort() == null) ||
-          (category.getSort().trim().length() == 0)) {
+          (category.getSortNotTrimmed().length() == 0)) {
         categoriesWithoutSort = true;
       }
     }
