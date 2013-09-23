@@ -100,8 +100,8 @@ public class SpecialCharacters {
     addReplacements("ǸŃÑṄŇṆŅ", "N");
     addReplacements("ǹńñṅňṇņ", "n");
 
-    addReplacements("ÒÓÔÕŌŎȮÖỎŐǑỌǪ", "O");
-    addReplacements("òóôõōŏȯöỏőǒọǫ", "o");
+    addReplacements("ÒÓÔÕŌŎȮÖỎŐǑỌǪØ", "O");
+    addReplacements("òóôõōŏȯöỏőǒọǫø", "o");
     addReplacements("Œ", "OE");
     addReplacements("œ", "oe");
 
@@ -113,6 +113,7 @@ public class SpecialCharacters {
 
     addReplacements("ŚŜṠŠṢȘŞ", "S");
     addReplacements("śŝṡšṣșş", "s");
+    addReplacements("ß", "ss");
 
     addReplacements("ṪƬŤṬŢŢ", "T");
     addReplacements("ṫẗƭťṭţţ", "t");
