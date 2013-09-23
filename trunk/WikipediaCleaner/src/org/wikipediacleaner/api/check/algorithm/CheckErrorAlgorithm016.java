@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -143,18 +144,31 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
           }
           CheckErrorResult errorResult = createCheckErrorResult(pageAnalysis.getPage(), begin, end);
           StringBuilder replacement = new StringBuilder();
+          StringBuilder replacement2 = new StringBuilder();
           int i = begin;
           while (i < end) {
             character = contents.codePointAt(i);
             if (controlCharacters.indexOf(character) < 0) {
               replacement.appendCodePoint(character);
+              replacement2.appendCodePoint(character);
+            } else {
+              if (character == HtmlCharacters.LEFT_TO_RIGHT_MARK.getValue()) {
+                replacement2.append("&");
+                replacement2.append(HtmlCharacters.LEFT_TO_RIGHT_MARK.getName());
+                replacement2.append(";");
+              }
             }
             i += Character.charCount(character);
           }
+          boolean isAutomatic = canBeAutomatic(replacement.toString());
           errorResult.addReplacement(
               replacement.toString(),
               GT._("Remove all control characters"),
-              canBeAutomatic(replacement.toString()));
+              isAutomatic);
+          if (!isAutomatic && (!replacement2.equals(replacement))) {
+            // TODO: Test replacement2
+            // errorResult.addReplacement(replacement2.toString());
+          }
           errors.add(errorResult);
           index = end + 2;
         } else {
