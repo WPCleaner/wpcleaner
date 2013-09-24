@@ -76,20 +76,54 @@ public class PageElementISBN extends PageElement {
         if ("ISBN".equalsIgnoreCase(paramName)) {
           String paramValue = template.getParameterValue(paramNum);
           boolean ok = true;
-          for (int i = 0; i < paramValue.length(); i++) {
-            if (POSSIBLE_CHARACTERS.indexOf(paramValue.charAt(i)) < 0) {
+          boolean hasDigit = false;
+          int i = 0;
+          int beginIndex = -1;
+          int endIndex = -1;
+          while (ok && (i < paramValue.length())) {
+            char currentChar = paramValue.charAt(i);
+            if (POSSIBLE_CHARACTERS.indexOf(currentChar) < 0) {
               ok = false;
+            } else {
+              if (Character.isDigit(currentChar)) {
+                if (beginIndex < 0) {
+                  beginIndex = i;
+                }
+                endIndex = i + 1;
+                hasDigit = true;
+              } else if (Character.toUpperCase(currentChar) == 'X') {
+                endIndex = i + 1;
+              }
+              i++;
+            }
+          }
+          int delta = template.getParameterValueOffset(paramNum);
+          beginIndex += delta;
+          endIndex += delta;
+          if (beginIndex < 0) {
+            ok = false;
+          } else {
+            if (!ok && hasDigit && (paramValue.charAt(i) == '<')) {
+              PageElementComment comment = analysis.isInComment(beginIndex + i);
+              if ((comment != null) &&
+                  (comment.getBeginIndex() == beginIndex + i)) {
+                ok = true;
+                i += comment.getEndIndex() - comment.getBeginIndex();
+                while (ok && (i < paramValue.length())) {
+                  char currentChar = paramValue.charAt(i);
+                  if ((currentChar != ' ') && (currentChar != '\n')) {
+                    ok = false;
+                  }
+                  i++;
+                }
+              }
             }
           }
           if (ok) {
-            paramValue = paramValue.trim();
+            String value = contents.substring(beginIndex, endIndex);
             if (paramValue.length() > 0) {
-              int beginIndex = template.getParameterValueOffset(paramNum);
-              int endIndex = (paramNum + 1 < template.getParameterCount()) ?
-                  template.getParameterPipeOffset(paramNum + 1) :
-                  template.getEndIndex() - 2;
               isbns.add(new PageElementISBN(
-                  beginIndex, endIndex, paramValue, true));
+                  beginIndex, endIndex, value, true));
             }
           }
         }
