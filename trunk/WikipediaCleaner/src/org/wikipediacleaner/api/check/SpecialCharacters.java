@@ -116,7 +116,7 @@ public class SpecialCharacters {
     addReplacements("ß", "ss");
 
     addReplacements("ṪƬŤṬŢŢ", "T");
-    addReplacements("ṫẗƭťṭţţ", "t");
+    addReplacements("ṫẗƭťṭţţț", "t");
 
     addReplacements("ÙÚÛŨŪŬÜŮŰǓỤŲ", "U");
     addReplacements("ùúûũūŭüůűǔụų", "u");
