@@ -8,9 +8,11 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementISBN;
 
 
 /**
@@ -26,50 +28,32 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
-    // Analyze contents from the beginning
-    int startIndex = 0;
+    // Analyze each ISBN
     boolean result = false;
-    String contents = pageAnalysis.getContents();
-    while (startIndex < contents.length()) {
-      startIndex = contents.indexOf("ISBN", startIndex);
-      if (startIndex < 0) {
-        startIndex = contents.length();
-      } else {
-        // Check following characters
-        int tmpIndex = startIndex + 4;
-        if (tmpIndex < contents.length()) {
-          if ((contents.startsWith("-10", tmpIndex)) ||
-              (contents.startsWith("-13", tmpIndex))) {
-            int tmpIndex2 = startIndex - 1;
-            while ((tmpIndex2 >= 0) && (contents.charAt(tmpIndex2) == ' ')) {
-              tmpIndex2--;
-            }
-            if ((tmpIndex2 < 1) ||
-                (!contents.startsWith("{{", tmpIndex2 - 1))) {
-              if (errors == null) {
-                return true;
-              }
-              CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), startIndex, tmpIndex + 3);
-              errors.add(errorResult);
-              result = true;
-            }
-          }
+    List<PageElementISBN> isbns = analysis.getISBNs();
+    for (PageElementISBN isbn : isbns) {
+      if (!isbn.isCorrect()) {
+        if (errors == null) {
+          return true;
         }
-        startIndex = tmpIndex;
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis.getPage(), isbn.getBeginIndex(), isbn.getEndIndex());
+        errors.add(errorResult);
       }
     }
+
     return result;
   }
 }

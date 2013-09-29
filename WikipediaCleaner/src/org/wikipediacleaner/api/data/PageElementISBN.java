@@ -23,9 +23,19 @@ public class PageElementISBN extends PageElement {
   private final static String ISBN_PREFIX = "ISBN";
 
   /**
-   * ISBN possible characters.
+   * ISBN possible meaningful characters.
    */
-  private final static String POSSIBLE_CHARACTERS = "0123456789Xx- ";
+  private final static String POSSIBLE_CHARACTERS = "0123456789Xx";
+
+  /**
+   * ISBN possible extraneous characters.
+   */
+  private final static String EXTRA_CHARACTERS = "- ";
+
+  /**
+   * ISBN incorrect characters.
+   */
+  private final static String INCORRECT_CHARACTERS = ":";
 
   /**
    * @param analysis Page analysis.
@@ -48,22 +58,32 @@ public class PageElementISBN extends PageElement {
           spaceFound = true;
         }
       }
-      if (spaceFound) {
-        int beginNumber = index;
-        int endIndex = beginNumber;
-        while ((index < contents.length()) &&
-               (POSSIBLE_CHARACTERS.indexOf(contents.charAt(index)) >= 0)) {
-          if ((contents.charAt(index) != ' ') &&
-              (contents.charAt(index) != '-')) {
-            endIndex = index + 1;
+      //int beginValue = index;
+      int beginNumber = -1;
+      int endNumber = beginNumber;
+      boolean finished = false;
+      boolean correct = spaceFound;
+      while (!finished && (index < contents.length())) {
+        char currentChar = contents.charAt(index);
+        if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
+          if (beginNumber < 0) {
+            beginNumber = index;
           }
+          endNumber = index + 1;
           index++;
+        } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
+          index++;
+        } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
+          index++;
+          correct = false;
+        } else {
+          finished = true;
         }
-        if (endIndex > beginNumber) {
-          String number = contents.substring(beginNumber, endIndex);
-          isbns.add(new PageElementISBN(
-              beginIndex, endIndex, number, false));
-        }
+      }
+      if (endNumber > beginNumber) {
+        String number = contents.substring(beginNumber, endNumber);
+        isbns.add(new PageElementISBN(
+            beginIndex, endNumber, number, correct, false));
       }
       index = contents.indexOf(ISBN_PREFIX, index);
     }
@@ -80,11 +100,10 @@ public class PageElementISBN extends PageElement {
           int i = 0;
           int beginIndex = -1;
           int endIndex = -1;
+          boolean correct = true;
           while (ok && (i < paramValue.length())) {
             char currentChar = paramValue.charAt(i);
-            if (POSSIBLE_CHARACTERS.indexOf(currentChar) < 0) {
-              ok = false;
-            } else {
+            if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
               if (Character.isDigit(currentChar)) {
                 if (beginIndex < 0) {
                   beginIndex = i;
@@ -95,6 +114,13 @@ public class PageElementISBN extends PageElement {
                 endIndex = i + 1;
               }
               i++;
+            } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
+              i++;
+            } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
+              i++;
+              correct = false;
+            } else {
+              ok = false;
             }
           }
           int delta = template.getParameterValueOffset(paramNum);
@@ -123,7 +149,7 @@ public class PageElementISBN extends PageElement {
             String value = contents.substring(beginIndex, endIndex);
             if (paramValue.length() > 0) {
               isbns.add(new PageElementISBN(
-                  beginIndex, endIndex, value, true));
+                  beginIndex, endIndex, value, correct, true));
             }
           }
         }
@@ -144,6 +170,11 @@ public class PageElementISBN extends PageElement {
   private String isbn;
 
   /**
+   * True if ISBN syntax is correct.
+   */
+  private boolean isCorrect;
+
+  /**
    * True if ISBN is a template parameter (ISBN=...)
    */
   private boolean isTemplateParameter;
@@ -151,13 +182,18 @@ public class PageElementISBN extends PageElement {
   /**
    * @param beginIndex Begin index.
    * @param endIndex End index.
+   * @param isbn ISBN.
+   * @param isCorrect True if ISBN syntax is correct.
+   * @param isTemplateParameter True if ISBN is a template parameter.
    */
   private PageElementISBN(
       int beginIndex, int endIndex,
-      String isbn, boolean isTemplateParameter) {
+      String isbn,
+      boolean isCorrect, boolean isTemplateParameter) {
     super(beginIndex, endIndex);
     this.isbnNotTrimmed = isbn;
     this.isbn = cleanISBN(isbn);
+    this.isCorrect = isCorrect;
     this.isTemplateParameter = isTemplateParameter;
   }
 
@@ -220,6 +256,13 @@ public class PageElementISBN extends PageElement {
     }
 
     return 0;
+  }
+
+  /**
+   * @return True if ISBN syntax is correct.
+   */
+  public boolean isCorrect() {
+    return isCorrect;
   }
 
   /**
