@@ -7,6 +7,9 @@
 
 package org.wikipediacleaner.api.constants;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Configuration for String list attributes.
@@ -25,6 +28,8 @@ public enum WPCConfigurationStringList {
   EDIT_WARNING_TEMPLATES("general_edit_warning_templates", true, true, true),
   // Templates to ask for help about ISBN.
   ISBN_HELP_NEEDED_TEMPLATES("general_isbn_help_needed_templates", true, true, true),
+  // Templates for ISBN.
+  ISBN_TEMPLATES("general_isbn_templates", true, true, true, new String[] { "ISBN|1" } ),
   // Pages containing the list of pages with many disambiguation links.
   MOST_DAB_LINKS("most_dab_links", false, true, false),
   // List of templates for preventing bot editions.
@@ -77,6 +82,11 @@ public enum WPCConfigurationStringList {
   private final boolean userAttribute;
 
   /**
+   * Default value.
+   */
+  private final List<String> defaultValue;
+
+  /**
    * @param attributeName Attribute name.
    * @param canCombine True if general attribute and user attribute can be combined.
    * @param generalAttribute True if it can be set as a general attribute.
@@ -85,10 +95,32 @@ public enum WPCConfigurationStringList {
   WPCConfigurationStringList(
       String attributeName, boolean canCombine,
       boolean generalAttribute, boolean userAttribute) {
+    this(attributeName, canCombine, generalAttribute, userAttribute, null);
+  }
+
+  /**
+   * @param attributeName Attribute name.
+   * @param canCombine True if general attribute and user attribute can be combined.
+   * @param generalAttribute True if it can be set as a general attribute.
+   * @param userAttribute True if it can be set as a user attribute.
+   * @param defaultValue Default value.
+   */
+  WPCConfigurationStringList(
+      String attributeName, boolean canCombine,
+      boolean generalAttribute, boolean userAttribute,
+      String[] defaultValue) {
     this.attributeName = attributeName;
     this.canCombine = canCombine;
     this.generalAttribute = generalAttribute;
     this.userAttribute = userAttribute;
+    if (defaultValue != null) {
+      this.defaultValue = new ArrayList<String>(defaultValue.length);
+      for (String element : defaultValue) {
+        this.defaultValue.add(element);
+      }
+    } else {
+      this.defaultValue = null;
+    }
   }
 
   /**
@@ -136,5 +168,12 @@ public enum WPCConfigurationStringList {
    */
   public boolean isUserAttribute() {
     return userAttribute;
+  }
+
+  /**
+   * @return Default value.
+   */
+  public List<String> getDefaultValue() {
+    return defaultValue;
   }
 }

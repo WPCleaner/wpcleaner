@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-09-22 13:49+0200\n"
+"POT-Creation-Date: 2013-09-30 21:14+0200\n"
 "PO-Revision-Date: 2013-07-06 19:07+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -191,13 +191,13 @@ msgstr "Corrigir DEFAULTSORT"
 msgid "Unable to replace the characters [{0}]"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:30
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:102
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:156
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:31
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:103
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:166
 msgid "Remove all control characters"
 msgstr "Remover todos os caracteres de controle"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:238
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:252
 msgid "To report control characters only in templates"
 msgstr ""
 
@@ -376,6 +376,7 @@ msgid "The ISBN''s length is {0} instead of 10 or 13"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:86
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:88
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:89
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:88
 #, java-format
@@ -383,6 +384,7 @@ msgid "Ask for help using {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:95
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:97
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:98
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:97
 #, fuzzy
@@ -390,6 +392,7 @@ msgid "Add a comment"
 msgstr "Comentário automático"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:115
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:117
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:118
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:117
 msgid "An explanation of the problem"
@@ -718,25 +721,25 @@ msgstr ""
 msgid "Pages without language links"
 msgstr ""
 
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:366
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:385
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:405
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:426
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:474
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:369
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:388
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:408
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:429
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:477
 #, java-format
 msgid "Attribute {0} can''t be set in general configuration"
 msgstr ""
 
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:372
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:391
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:411
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:432
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:446
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:375
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:394
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:414
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:435
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:449
 #, java-format
 msgid "Attribute {0} can''t be set in user configuration"
 msgstr ""
 
-#: org/wikipediacleaner/api/constants/WPCConfiguration.java:436
+#: org/wikipediacleaner/api/constants/WPCConfiguration.java:439
 #, java-format
 msgid "Attribute {0} should be integer value"
 msgstr ""

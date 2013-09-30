@@ -11,6 +11,9 @@ package org.wikipediacleaner.api.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+
 
 /**
  * Class containing information about an ISBN.
@@ -35,7 +38,7 @@ public class PageElementISBN extends PageElement {
   /**
    * ISBN incorrect characters.
    */
-  private final static String INCORRECT_CHARACTERS = ":";
+  private final static String INCORRECT_CHARACTERS = ":‐";
 
   /**
    * @param analysis Page analysis.
@@ -88,75 +91,119 @@ public class PageElementISBN extends PageElement {
       index = contents.indexOf(ISBN_PREFIX, index);
     }
 
-    // Search for ISBN in template parameters
-    List<PageElementTemplate> templates = analysis.getTemplates();
-    for (PageElementTemplate template : templates) {
-      for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-        String paramName = template.getParameterName(paramNum);
-        if ("ISBN".equalsIgnoreCase(paramName)) {
-          String paramValue = template.getParameterValue(paramNum);
-          boolean ok = true;
-          boolean hasDigit = false;
-          int i = 0;
-          int beginIndex = -1;
-          int endIndex = -1;
-          boolean correct = true;
-          while (ok && (i < paramValue.length())) {
-            char currentChar = paramValue.charAt(i);
-            if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
-              if (Character.isDigit(currentChar)) {
-                if (beginIndex < 0) {
-                  beginIndex = i;
-                }
-                endIndex = i + 1;
-                hasDigit = true;
-              } else if (Character.toUpperCase(currentChar) == 'X') {
-                endIndex = i + 1;
-              }
-              i++;
-            } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
-              i++;
-            } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
-              i++;
-              correct = false;
-            } else {
-              ok = false;
-            }
-          }
-          int delta = template.getParameterValueOffset(paramNum);
-          beginIndex += delta;
-          endIndex += delta;
-          if (beginIndex < 0) {
-            ok = false;
-          } else {
-            if (!ok && hasDigit && (paramValue.charAt(i) == '<')) {
-              PageElementComment comment = analysis.isInComment(beginIndex + i);
-              if ((comment != null) &&
-                  (comment.getBeginIndex() == beginIndex + i)) {
-                ok = true;
-                i += comment.getEndIndex() - comment.getBeginIndex();
-                while (ok && (i < paramValue.length())) {
-                  char currentChar = paramValue.charAt(i);
-                  if ((currentChar != ' ') && (currentChar != '\n')) {
-                    ok = false;
-                  }
-                  i++;
-                }
-              }
-            }
-          }
-          if (ok) {
-            String value = contents.substring(beginIndex, endIndex);
-            if (paramValue.length() > 0) {
-              isbns.add(new PageElementISBN(
-                  beginIndex, endIndex, value, correct, true));
+    // Search for ISBN templates
+    WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> isbnTemplates = config.getStringArrayList(WPCConfigurationStringList.ISBN_TEMPLATES);
+    if (isbnTemplates != null) {
+      for (String[] isbnTemplate : isbnTemplates) {
+        if (isbnTemplate.length > 0) {
+          List<PageElementTemplate> templates = analysis.getTemplates(isbnTemplate[0]);
+          if (templates != null) {
+            for (PageElementTemplate template : templates) {
+              analyzeTemplateParams(
+                  analysis, isbns, template,
+                  (isbnTemplate.length > 1) ? isbnTemplate[1] : "1", false);
             }
           }
         }
       }
     }
 
+    // Search for ISBN in template parameters
+    List<PageElementTemplate> templates = analysis.getTemplates();
+    for (PageElementTemplate template : templates) {
+      analyzeTemplateParams(analysis, isbns, template, "ISBN", true);
+    }
+
     return isbns;
+  }
+
+  /**
+   * Check if template parameter is an ISBN.
+   * 
+   * @param analysis Page analysis.
+   * @param isbns Current list of ISBN.
+   * @param template Template.
+   * @param argumentName Template parameter name.
+   * @param ignoreCase True if parameter name should compared ignoring case.
+   */
+  private static void analyzeTemplateParams(
+      PageAnalysis analysis, List<PageElementISBN> isbns,
+      PageElementTemplate template,
+      String argumentName,
+      boolean ignoreCase) {
+    for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+      String paramName = template.getParameterName(paramNum);
+      if ((ignoreCase && argumentName.equalsIgnoreCase(paramName)) ||
+          (argumentName.equals(paramName))) {
+        String paramValue = template.getParameterValue(paramNum);
+        boolean ok = true;
+        boolean hasDigit = false;
+        int i = 0;
+        int beginIndex = -1;
+        int endIndex = -1;
+        boolean correct = true;
+        while (ok && (i < paramValue.length())) {
+          char currentChar = paramValue.charAt(i);
+          if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
+            if (Character.isDigit(currentChar)) {
+              if (beginIndex < 0) {
+                beginIndex = i;
+              }
+              endIndex = i + 1;
+              hasDigit = true;
+            } else if (Character.toUpperCase(currentChar) == 'X') {
+              endIndex = i + 1;
+            }
+            i++;
+          } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
+            i++;
+          } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
+            i++;
+            correct = false;
+          } else {
+            ok = false;
+          }
+        }
+        int delta = template.getParameterValueOffset(paramNum);
+        beginIndex += delta;
+        endIndex += delta;
+        if (beginIndex < 0) {
+          ok = false;
+        } else {
+          if (!ok && hasDigit && (paramValue.charAt(i) == '<')) {
+            PageElementComment comment = analysis.isInComment(beginIndex + i);
+            if ((comment != null) &&
+                (comment.getBeginIndex() == beginIndex + i)) {
+              ok = true;
+              i += comment.getEndIndex() - comment.getBeginIndex();
+              while (ok && (i < paramValue.length())) {
+                char currentChar = paramValue.charAt(i);
+                if (currentChar == '<') {
+                  comment = analysis.isInComment(beginIndex + i);
+                  if (comment != null) {
+                    i += comment.getEndIndex() - comment.getBeginIndex();
+                  } else {
+                    ok = false;
+                  }
+                } else if ((currentChar != ' ') && (currentChar != '\n')) {
+                  ok = false;
+                } else {
+                  i++;
+                }
+              }
+            }
+          }
+        }
+        if (ok) {
+          String value = analysis.getContents().substring(beginIndex, endIndex);
+          if (paramValue.length() > 0) {
+            isbns.add(new PageElementISBN(
+                beginIndex, endIndex, value, correct, true));
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -263,6 +310,28 @@ public class PageElementISBN extends PageElement {
    */
   public boolean isCorrect() {
     return isCorrect;
+  }
+
+  /**
+   * @return Fixed ISBN.
+   */
+  public String getCorrectISBN() {
+    StringBuilder result = new StringBuilder();
+    if (!isTemplateParameter) {
+      result.append("ISBN ");
+    }
+    for (int i = 0; i < isbnNotTrimmed.length(); i++) {
+      char currentChar = isbnNotTrimmed.charAt(i);
+      if ((POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) ||
+          (EXTRA_CHARACTERS.indexOf(currentChar) >= 0)) {
+        result.append(currentChar);
+      } else if (currentChar == '‐') {
+        result.append("-");
+      } else {
+        result.append(currentChar);
+      }
+    }
+    return result.toString();
   }
 
   /**
