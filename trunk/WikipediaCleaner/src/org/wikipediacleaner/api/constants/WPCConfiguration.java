@@ -314,6 +314,9 @@ public class WPCConfiguration {
     if (userResult != null) {
       result.addAll(userResult);
     }
+    if ((generalResult == null) && (userResult == null)) {
+      result.addAll(attribute.getDefaultValue());
+    }
     List<String[]> fullResult = new ArrayList<String[]>(result.size());
     for (String element : result) {
       fullResult.add(element.split("\\|"));

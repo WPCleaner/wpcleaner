@@ -50,6 +50,11 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmBase {
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis.getPage(), isbn.getBeginIndex(), isbn.getEndIndex());
+        String replacement = isbn.getCorrectISBN();
+        if ((replacement != null) &&
+            (!replacement.equals(analysis.getContents().substring(isbn.getBeginIndex(), isbn.getEndIndex())))) {
+          errorResult.addReplacement(replacement);
+        }
         errors.add(errorResult);
       }
     }
