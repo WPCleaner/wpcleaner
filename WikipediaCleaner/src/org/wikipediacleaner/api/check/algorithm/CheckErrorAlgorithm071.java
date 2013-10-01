@@ -12,9 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationString;
-import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.i18n.GT;
@@ -24,7 +21,7 @@ import org.wikipediacleaner.i18n.GT;
  * Algorithm for analyzing error 71 of check wikipedia project.
  * Error 71: ISBN wrong position of X
  */
-public class CheckErrorAlgorithm071 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm071 extends CheckErrorAlgorithmISBN {
 
   public CheckErrorAlgorithm071() {
     super("ISBN wrong position of X");
@@ -44,16 +41,10 @@ public class CheckErrorAlgorithm071 extends CheckErrorAlgorithmBase {
     }
 
     // Configuration
-    WPCConfiguration config = analysis.getWPCConfiguration();
-    List<String[]> helpNeededTemplates = config.getStringArrayList(
-        WPCConfigurationStringList.ISBN_HELP_NEEDED_TEMPLATES);
-    String helpNeededComment = config.getString(
-        WPCConfigurationString.ISBN_HELP_NEEDED_COMMENT);
     String reasonTemplate = getSpecificProperty("reason", true, true, false);
 
     // Analyze each ISBN
     boolean result = false;
-    String contents = analysis.getContents();
     List<PageElementISBN> isbns = analysis.getISBNs();
     for (PageElementISBN isbn : isbns) {
       String isbnNumber = isbn.getISBN();
@@ -72,31 +63,13 @@ public class CheckErrorAlgorithm071 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), isbn.getBeginIndex(), isbn.getEndIndex());
+          CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
           String reason = null;
           if (reasonTemplate != null) {
             reason = GT._(reasonTemplate);
           }
-          if ((helpNeededTemplates != null) &&
-              (!helpNeededTemplates.isEmpty())) {
-            for (String[] helpNeededTemplate : helpNeededTemplates) {
-              String replacement = isbn.askForHelp(helpNeededTemplate, reason);
-              if (replacement != null) {
-                errorResult.addReplacement(
-                    replacement.toString(),
-                    GT._("Ask for help using {0}", "{{" + helpNeededTemplate[0] + "}}"));
-              }
-            }
-          }
-          if (helpNeededComment != null) {
-            String replacement = isbn.askForHelp(helpNeededComment, reason);
-            if (replacement != null) {
-              errorResult.addReplacement(
-                  contents.substring(isbn.getBeginIndex(), isbn.getEndIndex()) + replacement.toString(),
-                  GT._("Add a comment"));
-            }
-          }
+          addHelpNeededTemplates(analysis, errorResult, isbn, reason);
+          addHelpNeededComment(analysis, errorResult, isbn, reason);
           errors.add(errorResult);
         }
       }

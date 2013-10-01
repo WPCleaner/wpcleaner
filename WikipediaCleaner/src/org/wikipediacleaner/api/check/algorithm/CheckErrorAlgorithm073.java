@@ -13,9 +13,6 @@ import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
-import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.constants.WPCConfigurationString;
-import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementISBN;
 import org.wikipediacleaner.i18n.GT;
@@ -25,7 +22,7 @@ import org.wikipediacleaner.i18n.GT;
  * Algorithm for analyzing error 73 of check wikipedia project.
  * Error 73: ISBN wrong checksum in ISBN-13
  */
-public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
 
   public CheckErrorAlgorithm073() {
     super("ISBN wrong checksum in ISBN-13");
@@ -46,16 +43,10 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmBase {
     }
 
     // Configuration
-    WPCConfiguration config = analysis.getWPCConfiguration();
-    List<String[]> helpNeededTemplates = config.getStringArrayList(
-        WPCConfigurationStringList.ISBN_HELP_NEEDED_TEMPLATES);
-    String helpNeededComment = config.getString(
-        WPCConfigurationString.ISBN_HELP_NEEDED_COMMENT);
     String reasonTemplate = getSpecificProperty("reason", true, true, false);
 
     // Analyze each ISBN
     boolean result = false;
-    String contents = analysis.getContents();
     List<PageElementISBN> isbns = analysis.getISBNs();
     for (PageElementISBN isbn : isbns) {
       String number = isbn.getISBN();
@@ -67,8 +58,7 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), isbn.getBeginIndex(), isbn.getEndIndex());
+          CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, true);
           errorResult.addPossibleAction(
               GT._(
                   "The checksum is {0} instead of {1}",
@@ -78,25 +68,8 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmBase {
           if (reasonTemplate != null) {
             reason = GT._(reasonTemplate, new Object[] { computedCheck, check });
           }
-          if ((helpNeededTemplates != null) &&
-              (!helpNeededTemplates.isEmpty())) {
-            for (String[] helpNeededTemplate : helpNeededTemplates) {
-              String replacement = isbn.askForHelp(helpNeededTemplate, reason);
-              if (replacement != null) {
-                errorResult.addReplacement(
-                    replacement.toString(),
-                    GT._("Ask for help using {0}", "{{" + helpNeededTemplate[0] + "}}"));
-              }
-            }
-          }
-          if (helpNeededComment != null) {
-            String replacement = isbn.askForHelp(helpNeededComment, reason);
-            if (replacement != null) {
-              errorResult.addReplacement(
-                  contents.substring(isbn.getBeginIndex(), isbn.getEndIndex()) + replacement.toString(),
-                  GT._("Add a comment"));
-            }
-          }
+          addHelpNeededTemplates(analysis, errorResult, isbn, reason);
+          addHelpNeededComment(analysis, errorResult, isbn, reason);
           errors.add(errorResult);
         }
       }

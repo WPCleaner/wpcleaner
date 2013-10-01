@@ -19,7 +19,7 @@ import org.wikipediacleaner.api.data.PageElementISBN;
  * Algorithm for analyzing error 69 of check wikipedia project.
  * Error 69: ISBN wrong syntax
  */
-public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
 
   public CheckErrorAlgorithm069() {
     super("ISBN wrong syntax");
@@ -48,8 +48,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmBase {
           return true;
         }
         result = true;
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), isbn.getBeginIndex(), isbn.getEndIndex());
+        CheckErrorResult errorResult = createCheckErrorResult(analysis, isbn, false);
         String replacement = isbn.getCorrectISBN();
         if ((replacement != null) &&
             (!replacement.equals(analysis.getContents().substring(isbn.getBeginIndex(), isbn.getEndIndex())))) {
