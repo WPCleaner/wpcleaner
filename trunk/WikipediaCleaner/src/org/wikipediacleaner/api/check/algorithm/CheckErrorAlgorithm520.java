@@ -16,13 +16,18 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 
 /**
  * Algorithm for analyzing error 520 of check wikipedia project.
- * Error 520: Pawns (♙) in main namespace
+ * Error 520: Weird characters (pawns, snowmen) in main namespace
  */
 public class CheckErrorAlgorithm520 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm520() {
-    super("Pawns");
+    super("Weird characters");
   }
+
+  /**
+   * Weird characters to look for.
+   */
+  private final static String weirdCharacters = "♙☃"; // pawns, snowmen
 
   /**
    * Analyze a page to check if errors are present.
@@ -42,20 +47,20 @@ public class CheckErrorAlgorithm520 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Search pawns
+    // Search weird characters
     String contents = analysis.getContents();
-    int index = contents.indexOf('♙');
     boolean result = false;
-    while (index >= 0) {
-      if (errors == null) {
-        return true;
+    for (int index = 0; index < contents.length(); index++) {
+      if (weirdCharacters.indexOf(contents.charAt(index)) >= 0) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis.getPage(), index, index + 1);
+        errorResult.addReplacement("");
+        errors.add(errorResult);
       }
-      result = true;
-      CheckErrorResult errorResult = createCheckErrorResult(
-          analysis.getPage(), index, index + 1);
-      errorResult.addReplacement("");
-      errors.add(errorResult);
-      index = contents.indexOf('♙', index + 1);
     }
 
     return result;
