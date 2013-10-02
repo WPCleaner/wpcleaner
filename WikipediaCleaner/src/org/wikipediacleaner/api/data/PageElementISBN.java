@@ -38,7 +38,7 @@ public class PageElementISBN extends PageElement {
   /**
    * ISBN incorrect characters.
    */
-  private final static String INCORRECT_CHARACTERS = ":‐";
+  private final static String INCORRECT_CHARACTERS = ":‐\t";
 
   /**
    * @param analysis Page analysis.
@@ -327,6 +327,8 @@ public class PageElementISBN extends PageElement {
         result.append(currentChar);
       } else if (currentChar == '‐') {
         result.append("-");
+      } else if (currentChar == '\t') {
+        result.append(" ");
       } else {
         result.append(currentChar);
       }
