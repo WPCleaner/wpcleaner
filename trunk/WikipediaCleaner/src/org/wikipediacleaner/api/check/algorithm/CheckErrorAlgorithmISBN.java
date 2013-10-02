@@ -8,16 +8,22 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.wikipediacleaner.api.check.Actionnable;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
+import org.wikipediacleaner.api.check.CompositeAction;
+import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementISBN;
+import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -107,6 +113,31 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
             replacement;
         errorResult.addReplacement(replacement, GT._("Add a comment"));
       }
+    }
+  }
+
+  protected void addSearchEngines(
+      PageAnalysis analysis, CheckErrorResult errorResult,
+      String search) {
+    WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> searchEngines = config.getStringArrayList(
+        WPCConfigurationStringList.ISBN_SEARCH_ENGINES);
+    if ((searchEngines != null) &&
+        (!searchEngines.isEmpty())) {
+      List<Actionnable> actions = new ArrayList<Actionnable>();
+      for (String[] searchEngine : searchEngines) {
+        try {
+          if (searchEngine.length > 1) {
+            actions.add(new SimpleAction(
+                searchEngine[0],
+                new ActionExternalViewer(MessageFormat.format(searchEngine[1], search))));
+          }
+        } catch (IllegalArgumentException e) {
+          //
+        }
+      }
+      errorResult.addPossibleAction(new CompositeAction(
+          GT._("Search ISBN {0}", search), actions));
     }
   }
 }
