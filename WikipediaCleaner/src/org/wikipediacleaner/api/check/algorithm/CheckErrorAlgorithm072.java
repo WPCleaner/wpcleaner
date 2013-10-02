@@ -71,6 +71,10 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
           }
           addHelpNeededTemplates(analysis, errorResult, isbn, reason);
           addHelpNeededComment(analysis, errorResult, isbn, reason);
+          String value = isbn.getISBN();
+          addSearchEngines(analysis, errorResult, value);
+          value = value.substring(0, value.length() - 1) + computedCheck;
+          addSearchEngines(analysis, errorResult, value);
           errors.add(errorResult);
         }
       }

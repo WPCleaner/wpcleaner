@@ -304,7 +304,7 @@ public class WPCConfiguration {
   public List<String[]> getStringArrayList(WPCConfigurationStringList attribute) {
     List<String> userResult = userStringListValues.get(attribute);
     List<String> generalResult = generalStringListValues.get(attribute);
-    if ((userResult == null) && (generalResult == null)) {
+    if ((userResult == null) && (generalResult == null) && (attribute.getDefaultValue() == null)) {
       return null;
     }
     List<String> result = new ArrayList<String>();
