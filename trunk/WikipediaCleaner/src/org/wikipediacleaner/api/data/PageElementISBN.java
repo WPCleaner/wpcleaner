@@ -50,45 +50,67 @@ public class PageElementISBN extends PageElement {
 
     // Search for ISBN in plain texts
     String contents = analysis.getContents();
-    int index = contents.indexOf(ISBN_PREFIX);
-    while (index >= 0) {
-      int beginIndex = index;
-      index += ISBN_PREFIX.length();
-      boolean spaceFound = false;
-      if (analysis.isInComment(index) == null) {
-        while ((index < contents.length()) && (contents.charAt(index) == ' ')) {
-          index++;
-          spaceFound = true;
-        }
-      }
-      //int beginValue = index;
-      int beginNumber = -1;
-      int endNumber = beginNumber;
-      boolean finished = false;
-      boolean correct = spaceFound;
-      while (!finished && (index < contents.length())) {
-        char currentChar = contents.charAt(index);
-        if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
-          if (beginNumber < 0) {
-            beginNumber = index;
+    int index = 0;
+    while (index < contents.length()) {
+      if ((index + ISBN_PREFIX.length() <= contents.length()) &&
+          ISBN_PREFIX.equalsIgnoreCase(contents.substring(index, index + ISBN_PREFIX.length())) &&
+          (analysis.isInComment(index) == null)) {
+
+        // Check if it's a template parameter
+        boolean parameter = false;
+        PageElementTemplate template = analysis.isInTemplate(index);
+        if (template != null) {
+          for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+            if ((template.getParameterPipeOffset(paramNum) < index) &&
+                (template.getParameterValueOffset(paramNum) > index)) {
+              parameter = true;
+            }
           }
-          endNumber = index + 1;
-          index++;
-        } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
-          index++;
-        } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
-          index++;
-          correct = false;
-        } else {
-          finished = true;
         }
+
+        int beginIndex = index;
+        index += ISBN_PREFIX.length();
+        if (!parameter) {
+          boolean spaceFound = false;
+          if (analysis.isInComment(index) == null) {
+            while ((index < contents.length()) && (contents.charAt(index) == ' ')) {
+              index++;
+              spaceFound = true;
+            }
+          }
+          int beginNumber = -1;
+          int endNumber = beginNumber;
+          boolean finished = false;
+          boolean correct = spaceFound;
+          boolean nextCorrect = correct;
+          while (!finished && (index < contents.length())) {
+            char currentChar = contents.charAt(index);
+            if (POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) {
+              if (beginNumber < 0) {
+                beginNumber = index;
+              }
+              endNumber = index + 1;
+              index++;
+              correct = nextCorrect;
+            } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
+              index++;
+            } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
+              index++;
+              nextCorrect = false;
+            } else {
+              finished = true;
+            }
+          }
+          if (endNumber > beginNumber) {
+            String number = contents.substring(beginNumber, endNumber);
+            isbns.add(new PageElementISBN(
+                beginIndex, endNumber, number, correct, false));
+            index = endNumber;
+          }
+        }
+      } else {
+        index++;
       }
-      if (endNumber > beginNumber) {
-        String number = contents.substring(beginNumber, endNumber);
-        isbns.add(new PageElementISBN(
-            beginIndex, endNumber, number, correct, false));
-      }
-      index = contents.indexOf(ISBN_PREFIX, index);
     }
 
     // Search for ISBN templates
@@ -102,7 +124,8 @@ public class PageElementISBN extends PageElement {
             for (PageElementTemplate template : templates) {
               analyzeTemplateParams(
                   analysis, isbns, template,
-                  (isbnTemplate.length > 1) ? isbnTemplate[1] : "1", false);
+                  (isbnTemplate.length > 1) ? isbnTemplate[1] : "1",
+                  false, false);
             }
           }
         }
@@ -112,7 +135,7 @@ public class PageElementISBN extends PageElement {
     // Search for ISBN in template parameters
     List<PageElementTemplate> templates = analysis.getTemplates();
     for (PageElementTemplate template : templates) {
-      analyzeTemplateParams(analysis, isbns, template, "ISBN", true);
+      analyzeTemplateParams(analysis, isbns, template, "ISBN", true, true);
     }
 
     return isbns;
@@ -126,16 +149,35 @@ public class PageElementISBN extends PageElement {
    * @param template Template.
    * @param argumentName Template parameter name.
    * @param ignoreCase True if parameter name should compared ignoring case.
+   * @param acceptNumbers True if numbers are accepted after parameter name.
    */
   private static void analyzeTemplateParams(
       PageAnalysis analysis, List<PageElementISBN> isbns,
       PageElementTemplate template,
       String argumentName,
-      boolean ignoreCase) {
+      boolean ignoreCase, boolean acceptNumbers) {
     for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+
+      // Check parameter name
       String paramName = template.getParameterName(paramNum);
+      boolean nameOk = false;
       if ((ignoreCase && argumentName.equalsIgnoreCase(paramName)) ||
           (argumentName.equals(paramName))) {
+        nameOk = true;
+      } else if (acceptNumbers && (paramName.length() > argumentName.length())) {
+        String shortParamName = paramName.substring(0, argumentName.length());
+        if ((ignoreCase && argumentName.equalsIgnoreCase(shortParamName)) ||
+            (argumentName.equals(paramName))) {
+          nameOk = true;
+          for (int i = argumentName.length(); i < paramName.length(); i++) {
+            if (!Character.isDigit(paramName.charAt(i))) {
+              nameOk = false;
+            }
+          }
+        }
+      }
+      
+      if (nameOk) {
         String paramValue = template.getParameterValue(paramNum);
         boolean ok = true;
         boolean hasDigit = false;
@@ -325,7 +367,8 @@ public class PageElementISBN extends PageElement {
       if ((POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) ||
           (EXTRA_CHARACTERS.indexOf(currentChar) >= 0)) {
         result.append(currentChar);
-      } else if (currentChar == '‐') {
+      } else if ((currentChar == '‐') ||
+                 (currentChar == '.')) {
         result.append("-");
       } else if (currentChar == '\t') {
         result.append(" ");
