@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-10-02 18:42+0200\n"
+"POT-Creation-Date: 2013-10-11 21:44+0200\n"
 "PO-Revision-Date: 2013-06-14 11:28+0000\n"
 "Last-Translator: Oleg Koptev <koptev.oleg@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -153,11 +153,12 @@ msgstr "Редактировать содержание"
 msgid "Fix all <br> tags"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:111
 msgid "Close tag"
 msgstr "Закрыть тэг"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:123
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:127
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:128
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr "Список шаблонов влечёт включение {0}"
