@@ -76,7 +76,11 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
 
     // Search for templates like {{References}}
     String templates = getSpecificProperty(
-        "references_templates", true, true, false);
+        "templates", true, true, false);
+    if (templates == null) {
+      templates = getSpecificProperty(
+          "references_templates", true, true, false);
+    }
     List<String> referencesTemplates = null;
     if (templates != null) {
       referencesTemplates = WPCConfiguration.convertPropertyToStringList(templates);
@@ -121,6 +125,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
   public Map<String, String> getParameters() {
     Map<String, String> parameters = super.getParameters();
     parameters.put("references_templates", GT._("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
+    parameters.put("templates", GT._("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"));
     return parameters;
   }
 }
