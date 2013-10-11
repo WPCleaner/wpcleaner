@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-10-02 18:42+0200\n"
+"POT-Creation-Date: 2013-10-11 21:44+0200\n"
 "PO-Revision-Date: 2013-05-03 02:21+0000\n"
 "Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -157,11 +157,12 @@ msgstr ""
 msgid "Fix all <br> tags"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:107
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:111
 msgid "Close tag"
 msgstr "Κλείσιμο ετικέτας"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:123
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:127
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:128
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr "Λίστα προτύπων που περιλαμβάνουν το {0}"
