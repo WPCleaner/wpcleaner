@@ -158,22 +158,22 @@ public class UpdateDabWarningWorker extends BasicWorker {
             }
           }
         }
-        dabWarningPages.addAll(tmpWarningPages);
-        tmpWarningPages.clear();
-
-        // Sort the list of articles
-        Collections.sort(dabWarningPages, PageComparator.getTitleFirstComparator());
-        if (dabWarningPages.isEmpty()) {
-          return Integer.valueOf(0);
-        }
         if (getWindow() != null) {
           int answer = getWindow().displayYesNoWarning(GT._(
               "Analysis found {0} articles with disambiguation warning {1}.\n" +
               "Do you want to update the disambiguation warnings ?",
-              new Object[] { Integer.valueOf(dabWarningPages.size()), "{{" + dabWarningTemplateName + "}}" }));
+              new Object[] { Integer.valueOf(tmpWarningPages.size()), "{{" + dabWarningTemplateName + "}}" }));
           if (answer != JOptionPane.YES_OPTION) {
             return Integer.valueOf(0);
           }
+        }
+
+        // Sort the list of articles
+        dabWarningPages.addAll(tmpWarningPages);
+        tmpWarningPages.clear();
+        Collections.sort(dabWarningPages, PageComparator.getTitleFirstComparator());
+        if (dabWarningPages.isEmpty()) {
+          return Integer.valueOf(0);
         }
       }
 
