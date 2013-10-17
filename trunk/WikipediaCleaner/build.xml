@@ -164,7 +164,10 @@
 
     <!-- Create manifest file -->
     <manifest file="${WPCleaner.build.dir}/manifest.txt">
+      <attribute name="Application-Name"     value="WPCleaner" />
+      <attribute name="Codebase"             value="*.sivit.org" />
       <attribute name="Main-Class"           value="org.wikipediacleaner.WikipediaCleaner" />
+      <attribute name="Permissions"          value="all-permissions" />
       <attribute name="Specification-Title"  value="WPCleaner" />
       <attribute name="Specification-Vendor" value="NicoV" />
     </manifest>
