@@ -185,19 +185,26 @@
     </jar>
 
     <!-- Sign jars for JNLP -->
-    <!-- <signjar jar="${WPCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
-             signedjar="${WPCleaner.jnlp.dir}/WikipediaCleaner.jar"
-             keystore="${WPCleaner.res.dir}/certificate/WPCleaner.jks"
-             storepass="${WPCleaner.keystore.password}"
-             alias="wpcleaner-sign"
-             keypass="${WPCleaner.key.password}" >
-    </signjar> -->
-    <signjar jar="${WPCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
-             signedjar="${WPCleaner.jnlp.dir}/WikipediaCleaner.jar"
-             keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
-             storepass="${WPCleaner.keystore.password}"
-             alias="wikipediacleaner" >
-    </signjar>
+    <if>
+      <available file="${WPCleaner.res.dir}/certificate/WPCleaner.jks" />
+      <then>
+        <signjar jar="${WPCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
+                 signedjar="${WPCleaner.jnlp.dir}/WikipediaCleaner.jar"
+                 keystore="${WPCleaner.res.dir}/certificate/WPCleaner.jks"
+                 storepass="${WPCleaner.keystore.password}"
+                 alias="wpcleaner-sign"
+                 keypass="${WPCleaner.key.password}" >
+        </signjar>
+      </then>
+      <else>
+        <signjar jar="${WPCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
+                 signedjar="${WPCleaner.jnlp.dir}/WikipediaCleaner.jar"
+                 keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
+                 storepass="${WPCleaner.keystore.password}"
+                 alias="wikipediacleaner" >
+        </signjar>
+      </else>
+    </if>
 
     <!-- Create jar for full release -->
     <copy file="${WPCleaner.jnlp.dir}/WikipediaCleaner.jar" todir="${WPCleaner.full.dir}" />
