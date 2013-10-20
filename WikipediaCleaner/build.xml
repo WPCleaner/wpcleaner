@@ -164,12 +164,16 @@
 
     <!-- Create manifest file -->
     <manifest file="${WPCleaner.build.dir}/manifest.txt">
-      <attribute name="Application-Name"     value="WPCleaner" />
-      <attribute name="Codebase"             value="*.sivit.org" />
-      <attribute name="Main-Class"           value="org.wikipediacleaner.WikipediaCleaner" />
-      <attribute name="Permissions"          value="all-permissions" />
-      <attribute name="Specification-Title"  value="WPCleaner" />
-      <attribute name="Specification-Vendor" value="NicoV" />
+      <attribute name="Application-Library-Allowable-Classes" value="*" />
+      <attribute name="Application-Name"                      value="WPCleaner" />
+      <attribute name="Caller-Allowable-Codebase"             value="*" />
+      <attribute name="Codebase"                              value="*.sivit.org" />
+      <attribute name="Main-Class"                            value="org.wikipediacleaner.WikipediaCleaner" />
+      <attribute name="Permissions"                           value="all-permissions" />
+      <attribute name="Specification-Title"                   value="WPCleaner" />
+      <attribute name="Specification-Vendor"                  value="NicoV" />
+      <attribute name="Trusted-Library"                       value="true" />
+      <attribute name="Trusted-Only"                          value="false" />
     </manifest>
 
   	<!-- Create jar for JNLP release -->
@@ -181,10 +185,18 @@
     </jar>
 
     <!-- Sign jars for JNLP -->
+    <!-- <signjar jar="${WPCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
+             signedjar="${WPCleaner.jnlp.dir}/WikipediaCleaner.jar"
+             keystore="${WPCleaner.res.dir}/certificate/WPCleaner.jks"
+             storepass="${WPCleaner.keystore.password}"
+             alias="wpcleaner-sign"
+             keypass="${WPCleaner.key.password}" >
+    </signjar> -->
     <signjar jar="${WPCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
              signedjar="${WPCleaner.jnlp.dir}/WikipediaCleaner.jar"
              keystore="${WPCleaner.res.dir}/certificate/WikipediaCleanerKeystore"
-             storepass="${WPCleaner.keystore.password}" alias="WikipediaCleaner">
+             storepass="${WPCleaner.keystore.password}"
+             alias="wikipediacleaner" >
     </signjar>
 
     <!-- Create jar for full release -->
