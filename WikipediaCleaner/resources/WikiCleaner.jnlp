@@ -3,10 +3,11 @@
   <information>
     <title>WPCleaner</title>
     <vendor>User:NicoV</vendor>
+    <homepage href="http://en.wikipedia.org/wiki/WP:WPCleaner"/>
     <description>WPCleaner</description>
     <description kind="short">A tool for Wikipedia maintenance</description>
-    <homepage href="http://en.wikipedia.org/wiki/WP:WPCleaner"/>
-    <icon href="commons-nuvola-web-broom.png"/>
+    <icon href="commons-nuvola-web-broom-64px.gif" width="64" height="64"/>
+    <offline-allowed/>
     <shortcut>
       <desktop/>
     </shortcut>
@@ -15,7 +16,7 @@
     <all-permissions/>
   </security>
   <resources>
-    <j2se version="1.5.0+" java-vm-args="-Xmx512M"/>
+    <j2se version="1.5+" java-vm-args="-Xmx512M"/>
     <jar href="WikipediaCleaner.jar" download="eager" main="true"/>
   </resources>
   <application-desc main-class="org.wikipediacleaner.WikipediaCleaner"/>

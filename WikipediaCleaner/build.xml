@@ -129,6 +129,8 @@
           todir="${WPCleaner.jnlp.dir}" />
     <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom.png"
           todir="${WPCleaner.jnlp.dir}" />
+    <copy file="${WPCleaner.res.dir}/commons-nuvola-web-broom-64px.gif"
+          todir="${WPCleaner.jnlp.dir}" />
     <copy file="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra.lic}"
           tofile="${WPCleaner.classes.dir}/LICENSE_cobra.txt" />
     <copy file="${WPCleaner.libs.cobra.dir}/${WPCleaner.libs.cobra.not}"
