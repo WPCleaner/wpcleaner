@@ -186,14 +186,15 @@
 
     <!-- Sign jars for JNLP -->
     <if>
-      <available file="${WPCleaner.res.dir}/certificate/WPCleaner.jks" />
+      <available file="${WPCleaner.res.dir}/certificate/WPCleaner.p12" />
       <then>
         <signjar jar="${WPCleaner.build.dir}/WikipediaCleanerUnsigned.jar"
                  signedjar="${WPCleaner.jnlp.dir}/WikipediaCleaner.jar"
-                 keystore="${WPCleaner.res.dir}/certificate/WPCleaner.jks"
-                 storepass="${WPCleaner.keystore.password}"
+                 keystore="${WPCleaner.res.dir}/certificate/WPCleaner.p12"
+                 storetype="pkcs12"
+                 storepass="${WPCleaner.p12.password}"
                  alias="wpcleaner-sign"
-                 keypass="${WPCleaner.key.password}" >
+                 keypass="${WPCleaner.p12key.password}" >
         </signjar>
       </then>
       <else>
