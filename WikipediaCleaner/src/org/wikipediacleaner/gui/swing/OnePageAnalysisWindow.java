@@ -1640,7 +1640,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     // Check for new errors
     analysis.shouldCheckSpelling(shouldCheckSpelling());
     List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-        allAlgorithms, analysis);
+        allAlgorithms, analysis, false);
     if (errorsFound != null) {
       for (CheckErrorPage tmpError : errorsFound) {
         boolean errorFound = false;

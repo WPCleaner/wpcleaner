@@ -218,6 +218,20 @@ public class Suggestion implements Comparable<Suggestion> {
   }
 
   /**
+   * @return True if at least some replacements are automatic.
+   */
+  public boolean hasAutomaticReplacements() {
+    if (suggestions != null) {
+      for (ElementarySuggestion suggestion : suggestions) {
+        if (suggestion.isAutomatic()) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
    * @param initialText Initial text.
    * @return Possible replacements.
    */

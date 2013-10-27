@@ -1019,7 +1019,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       textPage.setModified(false);
       PageAnalysis pageAnalysis = page.getAnalysis(textPage.getText(), true);
       List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-          allAlgorithms, pageAnalysis);
+          allAlgorithms, pageAnalysis, false);
       modelErrors.clear();
       initialErrors = new ArrayList<CheckErrorPage>();
       boolean errorFound = false;
@@ -1367,7 +1367,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       // Check for new errors
       PageAnalysis pageAnalysis = page.getAnalysis(textPage.getText(), true);
       List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-          allAlgorithms, pageAnalysis);
+          allAlgorithms, pageAnalysis, false);
       if (errorsFound != null) {
         for (CheckErrorPage tmpError : errorsFound) {
           boolean errorFound = false;

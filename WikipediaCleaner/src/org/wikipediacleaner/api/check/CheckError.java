@@ -41,10 +41,13 @@ public class CheckError {
    * 
    * @param algorithms Possible algorithms.
    * @param pageAnalysis Page analysis.
+   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Errors found in the page.
    */
   public static List<CheckErrorPage> analyzeErrors(
-      Collection<CheckErrorAlgorithm> algorithms, PageAnalysis pageAnalysis) {
+      Collection<CheckErrorAlgorithm> algorithms,
+      PageAnalysis pageAnalysis,
+      boolean onlyAutomatic) {
     Performance perf = new Performance("CheckError.analyzeErrors");
     if (traceTime) {
       perf.printStart();
@@ -64,7 +67,7 @@ public class CheckError {
           if (result != null) {
             errorFound = result.getErrors(results);
           } else {
-            errorFound = algorithm.analyze(pageAnalysis, results);
+            errorFound = algorithm.analyze(pageAnalysis, results, onlyAutomatic);
             pageAnalysis.setCheckWikiErrors(errorNumber, errorFound, results);
           }
           if (errorFound) {
@@ -109,7 +112,7 @@ public class CheckError {
     if (result != null) {
       errorFound = result.getErrors(errorsFound);
     } else {
-      errorFound = algorithm.analyze(pageAnalysis, errorsFound);
+      errorFound = algorithm.analyze(pageAnalysis, errorsFound, false);
       pageAnalysis.setCheckWikiErrors(errorNumber, errorFound, errorsFound);
     }
     errorPage.setResults(errorFound, errorsFound);
