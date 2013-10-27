@@ -42,11 +42,12 @@ public class CheckErrorAlgorithm511 extends CheckErrorAlgorithmBase {
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
+   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
       PageAnalysis analysis,
-      Collection<CheckErrorResult> errors) {
+      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
     if ((analysis == null) || (analysis.getInternalLinks() == null)) {
       return false;
     }

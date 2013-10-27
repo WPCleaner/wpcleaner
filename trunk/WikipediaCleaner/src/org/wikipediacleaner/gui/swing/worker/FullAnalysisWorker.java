@@ -100,7 +100,7 @@ public class FullAnalysisWorker extends BasicWorker {
       }
       setText("Analyzing data");
       PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
-      CheckError.analyzeErrors(algorithms, analysis);
+      CheckError.analyzeErrors(algorithms, analysis, false);
     } catch (APIException e) {
       return e;
     }

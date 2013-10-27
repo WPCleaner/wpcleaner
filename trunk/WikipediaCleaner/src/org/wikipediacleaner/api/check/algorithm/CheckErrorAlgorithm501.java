@@ -54,11 +54,13 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
    * 
    * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
+   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
       PageAnalysis pageAnalysis,
-      Collection<CheckErrorResult> errors) {
+      Collection<CheckErrorResult> errors,
+      boolean onlyAutomatic) {
     boolean result = false;
     if ((pageAnalysis == null) || (!pageAnalysis.shouldCheckSpelling())) {
       return result;
@@ -72,7 +74,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     List<Suggestion> activeSuggestions = new LinkedList<Suggestion>();
     for (Suggestion suggestion : suggestions.values()) {
       if (suggestion.isActive()) {
-        activeSuggestions.add(suggestion);
+        if (!onlyAutomatic || suggestion.hasAutomaticReplacements()) {
+          activeSuggestions.add(suggestion);
+        }
       }
     }
     if (activeSuggestions.isEmpty()) {

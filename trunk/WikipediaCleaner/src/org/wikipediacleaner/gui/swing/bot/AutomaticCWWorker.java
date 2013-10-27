@@ -89,7 +89,7 @@ class AutomaticCWWorker extends BasicWorker {
    * @param max Maximum number of pages for each algorithm.
    * @param allAlgorithms List of possible algorithms.
    * @param extraComment Extra comment.
-   * @param saveModifications True if modifications shoud be saved.
+   * @param saveModifications True if modifications should be saved.
    * @param analyzeNonFixed True if pages that couldn't be fixed should be analyzed.
    */
   public AutomaticCWWorker(
@@ -192,7 +192,7 @@ class AutomaticCWWorker extends BasicWorker {
     }
 
     // Analyze page to check if error has been found
-    List<CheckErrorPage> errorPages = CheckError.analyzeErrors(allAlgorithms, analysis);
+    List<CheckErrorPage> errorPages = CheckError.analyzeErrors(allAlgorithms, analysis, true);
     boolean found = false;
     if (errorPages != null) {
       for (CheckErrorPage errorPage : errorPages) {

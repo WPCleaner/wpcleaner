@@ -1090,7 +1090,7 @@ public abstract class OnePageWindow
       PageAnalysis pageAnalysis = page.getAnalysis(page.getContents(), false);
       pageAnalysis.shouldCheckSpelling(shouldCheckSpelling());
       List<CheckErrorPage> errorsFound = CheckError.analyzeErrors(
-          algorithms, pageAnalysis);
+          algorithms, pageAnalysis, false);
       initialErrors = new ArrayList<CheckErrorPage>();
       if (errorsFound != null) {
         for (CheckErrorPage tmpError : errorsFound) {

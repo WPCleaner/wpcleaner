@@ -29,14 +29,16 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
   }
 
   /**
-   * @param analysis Page analysis. 
+   * Analyze a page to check if errors are present.
+   * 
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
+   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
-   * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm#analyze(org.wikipediacleaner.api.data.PageAnalysis, java.util.Collection)
    */
   public boolean analyze(
       PageAnalysis analysis,
-      Collection<CheckErrorResult> errors) {
+      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
     if (analysis == null) {
       return false;
     }

@@ -314,7 +314,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   public String fixUsingFirstReplacement(String fixName, PageAnalysis analysis) {
     String result = analysis.getContents();
     List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
-    if (analyze(analysis, errors)) {
+    if (analyze(analysis, errors, false)) {
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
         String newText = errorResult.getFirstReplacement();
@@ -339,7 +339,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   public String fixUsingAutomaticReplacement(PageAnalysis analysis) {
     String result = analysis.getContents();
     List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
-    if (analyze(analysis, errors)) {
+    if (analyze(analysis, errors, false)) {
       Collections.sort(errors);
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
@@ -366,7 +366,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   public String fixUsingRemove(String fixName, PageAnalysis analysis) {
     String result = analysis.getContents();
     List<CheckErrorResult> errors = new ArrayList<CheckErrorResult>();
-    if (analyze(analysis, errors)) {
+    if (analyze(analysis, errors, false)) {
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
         String tmp =

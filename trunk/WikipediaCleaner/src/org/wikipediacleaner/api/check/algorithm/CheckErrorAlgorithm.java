@@ -108,9 +108,10 @@ public interface CheckErrorAlgorithm {
    * 
    * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
+   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
-  public boolean analyze(PageAnalysis pageAnalysis, Collection<CheckErrorResult> errors);
+  public boolean analyze(PageAnalysis pageAnalysis, Collection<CheckErrorResult> errors, boolean onlyAutomatic);
 
   /**
    * Return the parameters used to configure the algorithm.

@@ -16,7 +16,7 @@ import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 
 /**
  * Algorithm for analyzing error 82 of check wikipedia project.
- * Error 82: Link to other wikiproject
+ * Error 82: Link to other wiki project
  */
 public class CheckErrorAlgorithm082 extends CheckErrorAlgorithmBase {
 
@@ -29,11 +29,12 @@ public class CheckErrorAlgorithm082 extends CheckErrorAlgorithmBase {
    * 
    * @param pageAnalysis Page analysis.
    * @param errors Errors found in the page.
+   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
       PageAnalysis pageAnalysis,
-      Collection<CheckErrorResult> errors) {
+      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
     if (pageAnalysis == null) {
       return false;
     }
