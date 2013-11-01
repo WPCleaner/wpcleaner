@@ -51,10 +51,28 @@ public class PageElementISBN extends PageElement {
     // Search for ISBN in plain texts
     String contents = analysis.getContents();
     int index = 0;
-    while (index < contents.length()) {
-      if ((index + ISBN_PREFIX.length() <= contents.length()) &&
-          ISBN_PREFIX.equalsIgnoreCase(contents.substring(index, index + ISBN_PREFIX.length())) &&
-          (analysis.isInComment(index) == null)) {
+    int maxIndex = contents.length() - ISBN_PREFIX.length();
+    while (index < maxIndex) {
+
+      // Check if it's a potential ISBN
+      boolean isISBN = ISBN_PREFIX.equalsIgnoreCase(
+          contents.substring(index, index + ISBN_PREFIX.length()));
+      if (isISBN && (analysis.isInComment(index) != null)) {
+        isISBN = false;
+      }
+      if (isISBN && (analysis.isInTag(index) != null)) {
+        isISBN = false;
+      }
+      if (isISBN) {
+        PageElementExternalLink link = analysis.isInExternalLink(index);
+        if (link != null) {
+          if (!link.hasSquare() || (index < link.getTextOffset())) {
+            isISBN = false;
+          }
+        }
+      }
+
+      if (isISBN) {
 
         // Check if it's a template parameter
         boolean parameter = false;
