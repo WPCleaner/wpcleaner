@@ -281,7 +281,7 @@ public class CheckWiki {
         Page page = DataManager.getPage(
             wiki, translationPage,
             null, null, null);
-        mw.retrieveContents(wiki, page, true, false, false, false);
+        mw.retrieveContents(wiki, page, true, false, false, false, false);
         if (Boolean.TRUE.equals(page.isExisting())) {
           cwConfiguration.setWikiConfiguration(new StringReader(page.getContents()));
         }

@@ -231,7 +231,7 @@ public class UpdateDabWarningTools {
         }
       }
       if (!tmpPages.isEmpty()) {
-        mw.retrieveContents(wiki, tmpPages, true, false, false);
+        mw.retrieveContents(wiki, tmpPages, true, false, false, false);
       }
     }
 
@@ -250,9 +250,9 @@ public class UpdateDabWarningTools {
     if (section0) {
       mw.retrieveSectionContents(wiki, mapTalkPages.values(), 0, false);
     } else {
-      mw.retrieveContents(wiki, mapTalkPages.values(), false, false, false);
+      mw.retrieveContents(wiki, mapTalkPages.values(), false, false, false, false);
     }
-    mw.retrieveContents(wiki, mapTodoSubpages.values(), true, false, false);
+    mw.retrieveContents(wiki, mapTodoSubpages.values(), true, false, false, false);
     if (mw.shouldStop()) {
       return;
     }
