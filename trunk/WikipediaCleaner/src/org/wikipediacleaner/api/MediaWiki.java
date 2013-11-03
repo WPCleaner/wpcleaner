@@ -81,12 +81,14 @@ public class MediaWiki extends MediaWikiController {
    * @param returnPage Flag indicating if the page should be returned once task is finished.
    * @param usePageId True if page identifiers should be used.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
+   * @param doAnalysis True if page analysis should be done.
    * @throws APIException
    */
   public void retrieveContents(
       EnumWikipedia wikipedia, Page page,
       boolean block, boolean returnPage,
-      boolean usePageId, boolean withRedirects) throws APIException {
+      boolean usePageId, boolean withRedirects,
+      boolean doAnalysis) throws APIException {
     if (page == null) {
       return;
     }
@@ -94,7 +96,8 @@ public class MediaWiki extends MediaWikiController {
     addTask(new ContentsCallable(
         wikipedia, this, api,
         page, returnPage ? page : null,
-        usePageId, withRedirects, null));
+        usePageId, withRedirects, null,
+        doAnalysis));
     block(block);
   }
 
@@ -106,11 +109,13 @@ public class MediaWiki extends MediaWikiController {
    * @param block Flag indicating if the call should block until completed.
    * @param usePageId True if page identifiers should be used.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
+   * @param doAnalysis True if page analysis should be done.
    * @throws APIException
    */
   public void retrieveContents(
       EnumWikipedia wikipedia, Collection<Page> pages,
-      boolean block, boolean usePageId, boolean withRedirects) throws APIException {
+      boolean block, boolean usePageId, boolean withRedirects,
+      boolean doAnalysis) throws APIException {
     if (pages == null) {
       return;
     }
@@ -119,7 +124,8 @@ public class MediaWiki extends MediaWikiController {
       addTask(new ContentsCallable(
           wikipedia, this, api,
           page, null,
-          usePageId, withRedirects, null));
+          usePageId, withRedirects, null,
+          doAnalysis));
     }
     block(block);
   }
@@ -144,7 +150,8 @@ public class MediaWiki extends MediaWikiController {
       addTask(new ContentsCallable(
           wikipedia, this, api,
           page, null,
-          false, false, Integer.valueOf(section)));
+          false, false, Integer.valueOf(section),
+          false));
     }
     block(block);
   }
@@ -175,7 +182,7 @@ public class MediaWiki extends MediaWikiController {
     }
     UpdateDabWarningTools dabWarnings = new UpdateDabWarningTools(wiki, null, false, false);
     for (Page page : pages) {
-      retrieveContents(wiki, page, false, true, false, true); // TODO: withRedirects=false ?
+      retrieveContents(wiki, page, false, true, false, true, false); // TODO: withRedirects=false ?
     }
     int count = 0;
     final API api = APIFactory.getAPI();

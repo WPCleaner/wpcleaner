@@ -14,6 +14,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWikiListener;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -27,6 +28,7 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
   private final boolean usePageId;
   private final boolean withRedirects;
   private final Integer section;
+  private final boolean doAnalysis;
 
   /**
    * @param wikipedia Wikipedia.
@@ -37,17 +39,20 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
    * @param usePageId True if page identifiers should be used.
    * @param withRedirects Flag indicating if redirects information should be retrieved.
    * @param section (Optional) Section of the page.
+   * @param doAnalysis True if page analysis should be done.
    */
   public ContentsCallable(
       EnumWikipedia wikipedia, MediaWikiListener listener, API api,
       Page page, Page returnPage, boolean usePageId,
-      boolean withRedirects, Integer section) {
+      boolean withRedirects, Integer section,
+      boolean doAnalysis) {
     super(wikipedia, listener, api);
     this.page = page;
     this.returnPage = returnPage;
     this.usePageId = usePageId;
     this.withRedirects = withRedirects;
     this.section = section;
+    this.doAnalysis = doAnalysis;
   }
 
   /* (non-Javadoc)
@@ -67,6 +72,10 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
       }
     } else {
       api.retrieveSectionContents(getWikipedia(), page, section.intValue());
+    }
+    if (doAnalysis) {
+      PageAnalysis analysis = page.getAnalysis(page.getContents(), true);
+      analysis.performFullPageAnalysis();
     }
     return returnPage;
   }

@@ -60,7 +60,7 @@ public class FullAnalysisWorker extends BasicWorker {
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       final API api = APIFactory.getAPI();
       EnumWikipedia wiki = getWikipedia();
-      mw.retrieveContents(wiki, page, false, false, false, true);
+      mw.retrieveContents(wiki, page, false, false, false, true, false);
       api.retrieveLinks(wiki, page, Namespace.MAIN, knownPages, true, true);
 
       // Retrieve disambiguation information if not already retrieved
@@ -85,7 +85,7 @@ public class FullAnalysisWorker extends BasicWorker {
             }
             if (link.hasWiktionaryTemplate() &&
                 (link.getContents() == null)) {
-              mw.retrieveContents(wiki, link2, false, false, false, true);
+              mw.retrieveContents(wiki, link2, false, false, false, true, false);
             }
           }
         }
