@@ -67,7 +67,7 @@ public class SpecialCharacters {
     addReplacements("ĆḈĈĊƇČÇ", "C");
     addReplacements("ćḉĉċƈčç", "c");
 
-    addReplacements("ḊƊĎḌḐ", "D");
+    addReplacements("ḊƊĎḌḐĐ", "D");
     addReplacements("ḋɗďḍḑ", "d");
 
     addReplacements("ÈÉÊẼỄĒĔĖËẺỂĚẸỆȨĘę", "E");
