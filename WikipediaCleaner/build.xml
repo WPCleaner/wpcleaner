@@ -196,7 +196,8 @@
                  storetype="pkcs12"
                  storepass="${WPCleaner.p12.password}"
                  alias="wpcleaner-sign"
-                 keypass="${WPCleaner.p12key.password}" >
+                 keypass="${WPCleaner.p12key.password}"
+                 tsaurl="http://time.certum.pl/">
         </signjar>
       </then>
       <else>
