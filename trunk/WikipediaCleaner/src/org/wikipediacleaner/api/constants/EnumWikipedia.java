@@ -61,6 +61,7 @@ import org.wikipediacleaner.api.constants.wiki.WikipediaSimple;
 import org.wikipediacleaner.api.constants.wiki.WikipediaSk;
 import org.wikipediacleaner.api.constants.wiki.WikipediaSl;
 import org.wikipediacleaner.api.constants.wiki.WikipediaSv;
+import org.wikipediacleaner.api.constants.wiki.WikipediaTa;
 import org.wikipediacleaner.api.constants.wiki.WikipediaTr;
 import org.wikipediacleaner.api.constants.wiki.WikipediaUk;
 import org.wikipediacleaner.api.constants.wiki.WikipediaVi;
@@ -130,6 +131,7 @@ public enum EnumWikipedia {
   SK(new WikipediaSk()),
   SL(new WikipediaSl()),
   SV(new WikipediaSv()),
+  TA(new WikipediaTa()),
   TR(new WikipediaTr()),
   UK(new WikipediaUk()),
   VI(new WikipediaVi()),
