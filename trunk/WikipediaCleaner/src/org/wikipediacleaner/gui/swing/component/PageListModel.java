@@ -10,6 +10,7 @@ package org.wikipediacleaner.gui.swing.component;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import javax.swing.AbstractListModel;
 import javax.swing.JLabel;
@@ -33,6 +34,7 @@ public class PageListModel extends AbstractListModel {
   private boolean showMissing;
   private boolean showOther;
   private boolean showRedirect;
+  private List<String> filterNamespaces;
 
   private PageAnalysis analysis;
   private boolean countDisambiguation;
@@ -184,6 +186,11 @@ public class PageListModel extends AbstractListModel {
     if (page == null) {
       return false;
     }
+    if ((page.getNamespace() != null) && (filterNamespaces != null)) {
+      if (filterNamespaces.contains(page.getNamespace().toString())) {
+        return false;
+      }
+    }
     if (!Boolean.FALSE.equals(page.isDisambiguationPage()) && showDisambiguation) {
       return true;
     }
@@ -248,6 +255,11 @@ public class PageListModel extends AbstractListModel {
       showRedirect = show;
       updateStatus();
     }
+  }
+
+  public void setFilterNamespace(List<String> filter) {
+    this.filterNamespaces = filter;
+    updateStatus();
   }
 
   public boolean getCountDisambiguation() {
