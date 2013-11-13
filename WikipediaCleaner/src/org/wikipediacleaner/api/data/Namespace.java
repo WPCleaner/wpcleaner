@@ -144,7 +144,7 @@ public class Namespace implements Comparable<Namespace> {
    */
   @Override
   public String toString() {
-    return "" + id + ":" + title;
+    return "" + id + " - " + title;
   }
 
   /* (non-Javadoc)

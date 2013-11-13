@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.constants;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -146,6 +147,9 @@ public class WikiConfiguration {
    */
   public void setNamespaces(List<Namespace> namespaces) {
     this.namespaces = namespaces;
+    if (namespaces != null) {
+      Collections.sort(namespaces);
+    }
   }
 
   /**

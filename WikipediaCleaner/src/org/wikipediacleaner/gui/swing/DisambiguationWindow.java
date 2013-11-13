@@ -22,6 +22,7 @@ import java.util.Properties;
 
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -37,6 +38,7 @@ import javax.swing.WindowConstants;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.CompositeComparator;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageComparator;
 import org.wikipediacleaner.gui.swing.action.ActionDisambiguationAnalysis;
@@ -84,6 +86,8 @@ public class DisambiguationWindow extends OnePageWindow {
   private JButton buttonViewLink;
   private JButton buttonWatch;
 
+  private JMenu menuFilter;
+
   List<Page> knownPages;
 
   /**
@@ -110,6 +114,9 @@ public class DisambiguationWindow extends OnePageWindow {
               disambig.modelLinks.setComparator(PageComparator.getTemplateFirstComparator());
               disambig.modelLinks.setShowDisambiguation(true);
               disambig.modelLinks.setShowOther(true);
+              Configuration config = Configuration.getConfiguration();
+              List<String> filtered = config.getStringList(wikipedia, Configuration.ARRAY_FILTER_NS);
+              disambig.modelLinks.setFilterNamespace(filtered);
               disambig.knownPages = new ArrayList<Page>();
             }
           }
@@ -351,6 +358,85 @@ public class DisambiguationWindow extends OnePageWindow {
     constraints.gridy++;
 
     return panel;
+  }
+
+  /**
+   * @return Tools menu.
+   */
+  @Override
+  protected JMenu createToolsMenu() {
+    JMenu menu = super.createToolsMenu();
+    menu.add(createFilterMenu());
+    return menu;
+  }
+
+  /**
+   * @return Filter namespace menu.
+   */
+  private JMenu createFilterMenu() {
+    if (menuFilter == null) {
+      menuFilter = Utilities.createJMenu(GT._("Filter namespaces"));
+    } else {
+      menuFilter.removeAll();
+    }
+    EnumWikipedia wiki = getWikipedia();
+    if (wiki == null) {
+      return menuFilter;
+    }
+    Configuration config = Configuration.getConfiguration();
+    List<String> filtered = config.getStringList(wiki, Configuration.ARRAY_FILTER_NS);
+    for (Namespace ns : wiki.getWikiConfiguration().getNamespaces()) {
+      Integer id = ns.getId();
+      if ((id != null) && (id.intValue() >= 0)) {
+        boolean active = !filtered.contains(Integer.toString(ns.getId()));
+        JMenuItem item = new JCheckBoxMenuItem(
+            ns.toString(), active);
+        item.setActionCommand(id.toString());
+        item.addActionListener(EventHandler.create(
+            ActionListener.class, this,
+            active ? "actionFilterNamespaceTrue" : "actionFilterNamespaceFalse",
+            "actionCommand"));
+        menuFilter.add(item);
+      }
+    }
+    return menuFilter;
+  }
+
+  /**
+   * Action called to activate the filter on a namespace.
+   * 
+   * @param namespaceId Namespace identifier.
+   */
+  public void actionFilterNamespaceTrue(String namespaceId) {
+    actionFilterNamespace(namespaceId, true);
+  }
+
+  /**
+   * Action called to deactivate the filter on a namespace.
+   * 
+   * @param namespaceId Namespace identifier.
+   */
+  public void actionFilterNamespaceFalse(String namespaceId) {
+    actionFilterNamespace(namespaceId, false);
+  }
+
+  /**
+   * Action called to activate/deactivate the filter on a namespace.
+   * 
+   * @param namespaceId Namespace identifier.
+   * @param filter True to activate the filter on the namespace.
+   */
+  private void actionFilterNamespace(String namespaceId, boolean filter) {
+    EnumWikipedia wiki = getWikipedia();
+    Configuration config = Configuration.getConfiguration();
+    List<String> filtered = config.getStringList(wiki, Configuration.ARRAY_FILTER_NS);
+    if (filter) {
+      filtered.add(namespaceId);
+    } else {
+      filtered.remove(namespaceId);
+    }
+    config.setStringList(wiki, Configuration.ARRAY_FILTER_NS, filtered);
+    modelLinks.setFilterNamespace(filtered);
   }
 
   /**
