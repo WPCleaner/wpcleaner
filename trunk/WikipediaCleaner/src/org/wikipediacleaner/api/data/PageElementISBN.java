@@ -66,7 +66,8 @@ public class PageElementISBN extends PageElement {
       if (isISBN) {
         PageElementExternalLink link = analysis.isInExternalLink(index);
         if (link != null) {
-          if (!link.hasSquare() || (index < link.getTextOffset())) {
+          if (!link.hasSquare() ||
+              (index < link.getBeginIndex() + link.getTextOffset())) {
             isISBN = false;
           }
         }
