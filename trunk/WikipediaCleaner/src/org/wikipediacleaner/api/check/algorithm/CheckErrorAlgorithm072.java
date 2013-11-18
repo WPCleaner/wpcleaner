@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementISBN;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -76,6 +77,10 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
           addSearchEngines(analysis, errorResult, value);
           value = value.substring(0, value.length() - 1) + computedCheck;
           addSearchEngines(analysis, errorResult, value);
+          if (isbn.isTemplateParameter()) {
+            PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+            addSearchEngines(analysis, errorResult, template);
+          }
           errors.add(errorResult);
         }
       }

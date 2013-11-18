@@ -30,9 +30,13 @@ public enum WPCConfigurationStringList {
   ISBN_HELP_NEEDED_TEMPLATES("general_isbn_help_needed_templates", true, true, true),
   // ISBN search engines.
   ISBN_SEARCH_ENGINES("general_isbn_search_engines", true, true, true, new String[] { 
-      "WorldCat|http://www.worldcat.org/search?q={0}&qt=owc_search",
+      "WorldCat|http://www.worldcat.org/search?q={0}",
       "OttoBib|http://www.ottobib.com/isbn/{0}",
       "Copyright Clearance Center|http://www.copyright.com/openurl.do?isbn={0}&servicename=all&WT.mc_id=wikipedia",
+  } ),
+  // ISBN search engines.
+  ISBN_SEARCH_ENGINES_TEMPLATES("general_isbn_search_engines_templates", true, true, true, new String[] { 
+      "WorldCat|http://www.worldcat.org/search?q={0}|Ouvrage|titre",
   } ),
   // Templates for ISBN.
   ISBN_TEMPLATES("general_isbn_templates", true, true, true, new String[] { "ISBN|1" } ),
