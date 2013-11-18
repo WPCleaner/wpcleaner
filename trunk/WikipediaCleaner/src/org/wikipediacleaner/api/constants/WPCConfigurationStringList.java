@@ -35,9 +35,7 @@ public enum WPCConfigurationStringList {
       "Copyright Clearance Center|http://www.copyright.com/openurl.do?isbn={0}&servicename=all&WT.mc_id=wikipedia",
   } ),
   // ISBN search engines.
-  ISBN_SEARCH_ENGINES_TEMPLATES("general_isbn_search_engines_templates", true, true, true, new String[] { 
-      "WorldCat|http://www.worldcat.org/search?q={0}|Ouvrage|titre",
-  } ),
+  ISBN_SEARCH_ENGINES_TEMPLATES("general_isbn_search_engines_templates", true, true, true),
   // Templates for ISBN.
   ISBN_TEMPLATES("general_isbn_templates", true, true, true, new String[] { "ISBN|1" } ),
   // Pages containing the list of pages with many disambiguation links.
