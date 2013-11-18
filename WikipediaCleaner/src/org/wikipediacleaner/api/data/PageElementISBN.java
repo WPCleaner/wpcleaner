@@ -374,6 +374,13 @@ public class PageElementISBN extends PageElement {
   }
 
   /**
+   * @return True if ISBN is a template parameter.
+   */
+  public boolean isTemplateParameter() {
+    return isTemplateParameter;
+  }
+
+  /**
    * @return Fixed ISBN.
    */
   public String getCorrectISBN() {

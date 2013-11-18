@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-11-13 23:50+0100\n"
+"POT-Creation-Date: 2013-11-18 19:22+0100\n"
 "PO-Revision-Date: 2013-07-06 19:09+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -377,13 +377,13 @@ msgstr "Het controlegetal is {0} in plaats van {1}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:90
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:92
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:96
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:95
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:101
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:100
 msgid "An explanation of the problem"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:66
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:65
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:67
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:66
 #, java-format
 msgid "The checksum is {0} instead of {1}"
 msgstr "Het controlegetal is {0} in plaats van {1}"
@@ -530,18 +530,23 @@ msgstr "Lijst van valse positieven voor dit soort fouten"
 msgid "Page containing the list of false positives for this type of error"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:89
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:93
 #, java-format
 msgid "Ask for help using {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:114
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:118
 msgid "Add a comment"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:140
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:149
 #, java-format
 msgid "Search ISBN {0}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:213
+#, java-format
+msgid "Search using {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/constants/CWConfiguration.java:75

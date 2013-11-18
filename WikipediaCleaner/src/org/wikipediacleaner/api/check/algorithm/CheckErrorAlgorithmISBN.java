@@ -8,6 +8,8 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +22,11 @@ import org.wikipediacleaner.api.check.SimpleAction;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementISBN;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
 import org.wikipediacleaner.i18n.GT;
 
@@ -116,6 +120,11 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
     }
   }
 
+  /**
+   * @param analysis Page analysis.
+   * @param errorResult Error result.
+   * @param search String to search.
+   */
   protected void addSearchEngines(
       PageAnalysis analysis, CheckErrorResult errorResult,
       String search) {
@@ -138,6 +147,70 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
       }
       errorResult.addPossibleAction(new CompositeAction(
           GT._("Search ISBN {0}", search), actions));
+    }
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param errorResult Error result.
+   * @param template Template in which the ISBN is.
+   */
+  protected void addSearchEngines(
+      PageAnalysis analysis, CheckErrorResult errorResult,
+      PageElementTemplate template) {
+    if (template == null) {
+      return;
+    }
+    WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> searchEngines = config.getStringArrayList(
+        WPCConfigurationStringList.ISBN_SEARCH_ENGINES_TEMPLATES);
+    if (searchEngines == null) {
+      return;
+    }
+
+    // Keep only search engines relative to the template
+    int index = 0;
+    while (index < searchEngines.size()) {
+      boolean keep = false;
+      String[] searchEngine = searchEngines.get(index);
+      if ((searchEngine.length >= 4) &&
+          (Page.areSameTitle(template.getTemplateName(), searchEngine[2]))) {
+        String value = template.getParameterValue(searchEngine[3]);
+        if ((value != null) && (value.trim().length() > 0)) {
+          keep = true;
+        }
+      }
+      if (keep) {
+        index++;
+      } else {
+        searchEngines.remove(index);
+      }
+    }
+
+    // Add search engines
+    while (!searchEngines.isEmpty()) {
+      String paramName = searchEngines.get(0)[3].trim();
+      String paramValue = template.getParameterValue(paramName);
+      List<Actionnable> actions = new ArrayList<Actionnable>();
+      index = 0;
+      while (index < searchEngines.size()) {
+        String[] searchEngine = searchEngines.get(index);
+        if (paramName.equals(searchEngine[3].trim())) {
+          try {
+            actions.add(new SimpleAction(
+                searchEngine[0],
+                new ActionExternalViewer(MessageFormat.format(
+                    searchEngine[1], URLEncoder.encode(paramValue, "UTF8")))));
+          } catch (UnsupportedEncodingException e) {
+            // Nothing to do
+          }
+          searchEngines.remove(index);
+        } else {
+          index++;
+        }
+      }
+      errorResult.addPossibleAction(new CompositeAction(
+          GT._("Search using {0}", paramName), actions));
     }
   }
 }
