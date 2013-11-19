@@ -14,6 +14,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementISBN;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -72,6 +73,10 @@ public class CheckErrorAlgorithm071 extends CheckErrorAlgorithmISBN {
           }
           addHelpNeededTemplates(analysis, errorResult, isbn, reason);
           addHelpNeededComment(analysis, errorResult, isbn, reason);
+          if (isbn.isTemplateParameter()) {
+            PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
+            addSearchEngines(analysis, errorResult, template);
+          }
           errors.add(errorResult);
         }
       }
