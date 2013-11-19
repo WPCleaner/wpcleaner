@@ -38,6 +38,10 @@ public enum WPCConfigurationStringList {
   ISBN_SEARCH_ENGINES_TEMPLATES("general_isbn_search_engines_templates", true, true, true),
   // Templates for ISBN.
   ISBN_TEMPLATES("general_isbn_templates", true, true, true, new String[] { "ISBN|1" } ),
+  // ISSN search engines.
+  ISSN_SEARCH_ENGINES("general_issn_search_engines", true, true, true, new String[] { 
+      "WorldCat|http://worldcat.org/issn/{0}",
+  } ),
   // Pages containing the list of pages with many disambiguation links.
   MOST_DAB_LINKS("most_dab_links", false, true, false),
   // List of templates for preventing bot editions.

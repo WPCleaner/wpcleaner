@@ -153,6 +153,36 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
   /**
    * @param analysis Page analysis.
    * @param errorResult Error result.
+   * @param search String to search.
+   */
+  protected void addSearchEnginesISSN(
+      PageAnalysis analysis, CheckErrorResult errorResult,
+      String search) {
+    WPCConfiguration config = analysis.getWPCConfiguration();
+    List<String[]> searchEngines = config.getStringArrayList(
+        WPCConfigurationStringList.ISSN_SEARCH_ENGINES);
+    if ((searchEngines != null) &&
+        (!searchEngines.isEmpty())) {
+      List<Actionnable> actions = new ArrayList<Actionnable>();
+      for (String[] searchEngine : searchEngines) {
+        try {
+          if (searchEngine.length > 1) {
+            actions.add(new SimpleAction(
+                searchEngine[0],
+                new ActionExternalViewer(MessageFormat.format(searchEngine[1], search))));
+          }
+        } catch (IllegalArgumentException e) {
+          //
+        }
+      }
+      errorResult.addPossibleAction(new CompositeAction(
+          GT._("Search ISSN {0}", search), actions));
+    }
+  }
+
+  /**
+   * @param analysis Page analysis.
+   * @param errorResult Error result.
    * @param template Template in which the ISBN is.
    */
   protected void addSearchEngines(
