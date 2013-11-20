@@ -57,7 +57,7 @@ public class SpecialCharacters {
     addReplacements("’", "'");
 
     addReplacements("ÀÁÂÃĀĂȦÄẢÅǍẠĄ", "A");
-    addReplacements("àáâãāăȧäảåǎạą", "a");
+    addReplacements("àáâãāăȧäảåǎạąặậấ", "a");
     addReplacements("ÆǼǢ", "AE");
     addReplacements("æǽǣ", "ae");
 
@@ -71,7 +71,7 @@ public class SpecialCharacters {
     addReplacements("ḋɗďḍḑ", "d");
 
     addReplacements("ÈÉÊẼỄĒĔĖËẺỂĚẸỆȨĘę", "E");
-    addReplacements("èéêẽễēĕėëẻểěẹệȩ", "e");
+    addReplacements("èéêẽễēĕėëẻểěẹệȩế", "e");
 
     addReplacements("ḞƑ", "F");
     addReplacements("ḟƒ", "f");
@@ -101,7 +101,7 @@ public class SpecialCharacters {
     addReplacements("ǹńñṅňṇņ", "n");
 
     addReplacements("ÒÓÔÕŌŎȮÖỎŐǑỌǪØ", "O");
-    addReplacements("òóôõōŏȯöỏőǒọǫøớ", "o");
+    addReplacements("òóôõōŏȯöỏőǒọǫøớố", "o");
     addReplacements("Œ", "OE");
     addReplacements("œ", "oe");
 
@@ -115,8 +115,8 @@ public class SpecialCharacters {
     addReplacements("śŝṡšṣșş", "s");
     addReplacements("ß", "ss");
 
-    addReplacements("ṪƬŤṬŢŢ", "T");
-    addReplacements("ṫẗƭťṭţţț", "t");
+    addReplacements("ṪƬŤṬŢ", "T");
+    addReplacements("ṫẗƭťṭţț", "t");
 
     addReplacements("ÙÚÛŨŪŬÜŮŰǓỤŲ", "U");
     addReplacements("ùúûũūŭüůűǔụųư", "u");
@@ -195,6 +195,14 @@ public class SpecialCharacters {
    */
   private static void addReplacements(String characters, String replacement) {
     for (int i = 0; i < characters.length(); i++) {
+      for (int j = i + 1; j < characters.length(); j++) {
+        if (characters.charAt(j) == characters.charAt(i)) {
+          System.err.println(
+              "Character in double for " + replacement + ": " +
+              characters.charAt(i) + "/" + i + " = " +
+              characters.charAt(j) + "/" + j);
+        }
+      }
       replacements.put(characters.charAt(i), replacement);
     }
   }
