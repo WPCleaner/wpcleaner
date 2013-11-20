@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-11-19 23:45+0100\n"
+"POT-Creation-Date: 2013-11-20 18:47+0100\n"
 "PO-Revision-Date: 2013-11-14 19:58+0000\n"
 "Last-Translator: Anthony Harrington <untaintableangel@ubuntu.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -231,6 +231,11 @@ msgstr "Comment category out"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmHtmlNamedEntities.java:31
 msgid "Replace all"
 msgstr "Replace all"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm028.java:194
+#, fuzzy
+msgid "Templates that can replace the end of a table"
+msgstr "A template that can be used instead of an asterisk."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:90
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:102

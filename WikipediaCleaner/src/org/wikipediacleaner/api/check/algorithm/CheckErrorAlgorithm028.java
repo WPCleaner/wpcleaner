@@ -7,11 +7,18 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -38,39 +45,127 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
     if (analysis == null) {
       return false;
     }
-    String contents = analysis.getContents();
-    int startIndex = contents.length();
-    boolean result = false;
-    int beginIndex = contents.lastIndexOf("{|", startIndex);
-    int endIndex = contents.lastIndexOf("|}", startIndex);
-    int count = 0;
-    while (startIndex > 0) {
-      if ((beginIndex < 0) && (endIndex < 0)) {
-        startIndex = 0;
-      } else if ((endIndex >= 0) && ((beginIndex < endIndex) || (beginIndex < 0))) {
-        if (shouldCount(analysis, endIndex)) {
-          count++;
+
+    // Retrieve list of table starts
+    List<TableElement> starts = getTableStarts(analysis);
+    if (starts.isEmpty()) {
+      return false;
+    }
+
+    // Retrieve list of table ends and pair them
+    List<TableElement> ends = getTableEnds(analysis);
+    for (TableElement end : ends) {
+      TableElement pair = null;
+      for (TableElement start : starts) {
+        if (!start.hasMatch && (start.endIndex < end.beginIndex)) {
+          pair = start;
         }
-        startIndex = endIndex;
-        endIndex = contents.lastIndexOf("|}", startIndex - 1);
-      } else {
-        if (shouldCount(analysis, beginIndex)) {
-          count--;
-          if (count < 0) {
-            if (errors == null) {
-              return true;
-            }
-            result = true;
-            errors.add(createCheckErrorResult(
-                analysis.getPage(), beginIndex, beginIndex + 2));
-            count = 0;
-          }
-        }
-        startIndex = beginIndex;
-        beginIndex = contents.lastIndexOf("{|", startIndex - 1);
+      }
+      if (pair != null) {
+        pair.hasMatch = true;
+        end.hasMatch = true;
       }
     }
+
+    // Check that every start has a matching end
+    boolean result = false;
+    for (TableElement start : starts) {
+      if (!start.hasMatch) {
+        result = true;
+      }
+    }
+    if (!result || (errors == null)) {
+      return result;
+    }
+
+    // Mark errors
+    starts.addAll(ends);
+    Collections.sort(starts);
+    for (TableElement element : starts) {
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis.getPage(), element.beginIndex, element.endIndex,
+          (element.begin && !element.hasMatch) ? ErrorLevel.ERROR : ErrorLevel.CORRECT);
+      errors.add(errorResult);
+    }
     return result;
+  }
+
+  /**
+   * Construct list of table starts.
+   * 
+   * @param analysis Page analysis.
+   * @return List of table starts.
+   */
+  private List<TableElement> getTableStarts(PageAnalysis analysis) {
+    List<TableElement> list = new ArrayList<CheckErrorAlgorithm028.TableElement>();
+
+    // Find tables beginning by {|
+    String contents = analysis.getContents();
+    int index = contents.indexOf("{|");
+    while (index >= 0) {
+      if (shouldCount(analysis, index)) {
+        list.add(new TableElement(index, index + 2, true));
+      }
+      index = contents.indexOf("{|", index + 1);
+    }
+
+    // Find tables beginning by <table>
+    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_TABLE);
+    for (PageElementTag tag : tags) {
+      if (!tag.isFullTag() && !tag.isEndTag()) {
+        if (shouldCount(analysis, index)) {
+          list.add(new TableElement(tag.getBeginIndex(), tag.getEndIndex(), true));
+        }
+      }
+    }
+
+    Collections.sort(list);
+    return list;
+  }
+
+  /**
+   * Construct list of table ends.
+   * 
+   * @param analysis Page analysis.
+   * @return List of table ends.
+   */
+  private List<TableElement> getTableEnds(PageAnalysis analysis) {
+    List<TableElement> list = new ArrayList<CheckErrorAlgorithm028.TableElement>();
+
+    // Find tables ending by |}
+    String contents = analysis.getContents();
+    int index = contents.indexOf("|}");
+    while (index >= 0) {
+      if (shouldCount(analysis, index)) {
+        list.add(new TableElement(index, index + 2, false));
+      }
+      index = contents.indexOf("|}", index + 1);
+    }
+
+    // Find tables ending by </table>
+    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_TABLE);
+    for (PageElementTag tag : tags) {
+      if (!tag.isFullTag() && tag.isEndTag()) {
+        if (shouldCount(analysis, index)) {
+          list.add(new TableElement(tag.getBeginIndex(), tag.getEndIndex(), false));
+        }
+      }
+    }
+
+    // Find tables ending by a template
+    String templateNames = getSpecificProperty("templates", true, true, true);
+    if ((templateNames != null) && (templateNames.trim().length() > 0)) {
+      String[] templatesList = templateNames.split("\n");
+      for (String templateName : templatesList) {
+        List<PageElementTemplate> templates = analysis.getTemplates(templateName.trim());
+        for (PageElementTemplate template : templates) {
+          list.add(new TableElement(template.getBeginIndex(), template.getEndIndex(), false));
+        }
+      }
+    }
+
+    Collections.sort(list);
+    return list;
   }
 
   /**
@@ -85,5 +180,43 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
       return false;
     }
     return true;
+  }
+
+  /**
+   * Return the parameters used to configure the algorithm.
+   * 
+   * @return Map of parameters (Name -> description).
+   */
+  @Override
+  public Map<String, String> getParameters() {
+    Map<String, String> parameters = super.getParameters();
+    parameters.put(
+        "templates", GT._("Templates that can replace the end of a table"));
+    return parameters;
+  }
+
+  /**
+   * POJO for storing table begin and end.
+   */
+  private static class TableElement implements Comparable<TableElement> {
+    public final int beginIndex;
+    public final int endIndex;
+    public final boolean begin;
+    public boolean hasMatch;
+
+    TableElement(int beginIndex, int endIndex, boolean begin) {
+      this.beginIndex = beginIndex;
+      this.endIndex = endIndex;
+      this.begin = begin;
+    }
+
+    /**
+     * @param o
+     * @return
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compareTo(TableElement o) {
+      return beginIndex - o.beginIndex;
+    }
   }
 }
