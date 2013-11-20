@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-11-19 23:45+0100\n"
+"POT-Creation-Date: 2013-11-20 18:47+0100\n"
 "PO-Revision-Date: 2013-11-01 03:31+0000\n"
 "Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -234,6 +234,11 @@ msgstr "Zakomentuj kategorię"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmHtmlNamedEntities.java:31
 msgid "Replace all"
 msgstr "Zamień wszystkie"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm028.java:194
+#, fuzzy
+msgid "Templates that can replace the end of a table"
+msgstr "Szablon, którego można użyć zamiast znaku gwiazdki"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm030.java:90
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm079.java:102
