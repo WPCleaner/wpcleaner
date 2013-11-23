@@ -71,6 +71,8 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
           }
           addHelpNeededTemplates(analysis, errorResult, isbn, reason);
           addHelpNeededComment(analysis, errorResult, isbn, reason);
+          String value = isbn.getISBN();
+          addSearchEngines(analysis, errorResult, value);
           if (isbn.isTemplateParameter()) {
             PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
             addSearchEngines(analysis, errorResult, template);
