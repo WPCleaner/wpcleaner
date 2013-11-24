@@ -33,27 +33,27 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyzing text for <ref> tags
     boolean refFound = false;
-    List<PageElementTag> refTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REF);
+    List<PageElementTag> refTags = analysis.getTags(PageElementTag.TAG_WIKI_REF);
     if ((refTags != null) && (refTags.size() > 0)) {
       Iterator<PageElementTag> itRefTags = refTags.iterator();
       while (!refFound && itRefTags.hasNext()) {
         boolean usefulRef = true;
         PageElementTag refTag = itRefTags.next();
-        if (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, refTag.getBeginIndex()) != null) {
+        if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, refTag.getBeginIndex()) != null) {
           usefulRef =  false;
         }
         if (usefulRef) {
@@ -66,7 +66,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     }
 
     // Analyzing text for <references> tags
-    List<PageElementTag> referencesTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REFERENCES);
+    List<PageElementTag> referencesTags = analysis.getTags(PageElementTag.TAG_WIKI_REFERENCES);
     if (referencesTags != null) {
       for (PageElementTag referencesTag : referencesTags) {
         if (referencesTag.isComplete()) {
@@ -87,7 +87,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       referencesTemplates = WPCConfiguration.convertPropertyToStringList(templates);
     }
     if (referencesTemplates != null) {
-      List<PageElementTemplate> allTemplates = pageAnalysis.getTemplates();
+      List<PageElementTemplate> allTemplates = analysis.getTemplates();
       int templateNum = allTemplates.size();
       while (templateNum > 0) {
         templateNum--;
@@ -104,18 +104,59 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     if (errors == null) {
       return true;
     }
+    String contents = analysis.getContents();
     if (referencesTags != null) {
       for (PageElementTag referencesTag : referencesTags) {
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(), referencesTag.getBeginIndex(), referencesTag.getEndIndex());
+            analysis.getPage(), referencesTag.getBeginIndex(), referencesTag.getEndIndex());
         if (referencesTags.size() == 1) {
-          errorResult.addReplacement("<references />", GT._("Close tag"));
+          errorResult.addReplacement(
+              PageElementTag.createTag(PageElementTag.TAG_WIKI_REFERENCES, true, true),
+              GT._("Close tag"));
         }
         errors.add(errorResult);
+        if (referencesTags.size() == 1) {
+          int index = referencesTag.getEndIndex();
+          boolean ok = true;
+          while (ok && (index < contents.length())) {
+            char currentChar = contents.charAt(index);
+            if (Character.isWhitespace(currentChar)) {
+              index++;
+            } else if (currentChar == '<') {
+              PageElementTag tag = analysis.isInTag(index);
+              if ((tag != null) &&
+                  (tag.getBeginIndex() == index) &&
+                  (PageElementTag.TAG_WIKI_REF.equals(tag.getNormalizedName()))) {
+                index = tag.getCompleteEndIndex();
+              } else {
+                if (contents.startsWith("</references/>", index)) {
+                  errorResult = createCheckErrorResult(analysis.getPage(), index, index + 14);
+                  errorResult.addReplacement(PageElementTag.createTag(
+                      PageElementTag.TAG_WIKI_REFERENCES, true, false), true);
+                  errors.add(errorResult);
+                }
+                ok = false;
+              }
+            } else {
+              ok = false;
+            }
+          }
+        }
       }
     }
 
     return true;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 
   /**
