@@ -7,9 +7,15 @@
 
 package org.wikipediacleaner.api.check;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
@@ -48,6 +54,11 @@ public class SpecialCharacters {
   private final static Map<EnumWikipedia, Map<Character, String>> localReplacements =
       new HashMap<EnumWikipedia, Map<Character,String>>();
 
+  /**
+   * Set to true to check all replacements.
+   */
+  private final static boolean CHECK_REPLACEMENTS = false;
+
   static {
 
     // Possible replacements for every Wiki
@@ -56,85 +67,92 @@ public class SpecialCharacters {
     replacements.put((char) 0x200B, "");
     addReplacements("’", "'");
 
-    addReplacements("ÀÁÂÃĀĂȦÄẢÅǍẠĄ", "A");
-    addReplacements("àáâãāăȧäảåǎạąặậấ", "a");
-    addReplacements("ÆǼǢ", "AE");
-    addReplacements("æǽǣ", "ae");
+    addReplacements("ÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦȺАḀẠẢẤẦẨẪẬẮẰẲẴẶ", "A");
+    addReplacements("àáâãäåāăąǎǟǡǻȁȃȧаḁẚạảấầẩẫậắằẳẵặⱥ", "a");
+    addReplacements("ÆǢǼ", "Ae");
+    addReplacements("æǣǽ", "ae");
 
-    addReplacements("ḂƁḄ", "B");
-    addReplacements("ḃɓḅ", "b");
+    addReplacements("ƁɃḂḄḆ", "B");
+    addReplacements("ƀɓбᶀḃḅḇ", "b");
 
-    addReplacements("ĆḈĈĊƇČÇ", "C");
-    addReplacements("ćḉĉċƈčç", "c");
+    addReplacements("ÇĆĈĊČƇȻḈ", "C");
+    addReplacements("çćĉċčƈȼḉ", "c");
 
-    addReplacements("ḊƊĎḌḐĐ", "D");
-    addReplacements("ḋɗďḍḑ", "d");
+    addReplacements("ÐĎĐƉƊƋḊḌḎḐ", "D");
+    addReplacements("ðďđƌȡɖɗᶁḋḍḏḑ", "d");
+    addReplacements("ǅǲ", "Dz");
 
-    addReplacements("ÈÉÊẼỄĒĔĖËẺỂĚẸỆȨĘę", "E");
-    addReplacements("èéêẽễēĕėëẻểěẹệȩế", "e");
+    addReplacements("ÈÉÊËĒĔĖĘĚƎƏƐȄȆȨɆЁЕḘḚẸẺẼẾỀỂỄỆ", "E");
+    addReplacements("èéêëēĕėęěǝȅȇȩɇəеёḕḗḙḛḝẹẻẽếềểễệ", "e");
 
-    addReplacements("ḞƑ", "F");
-    addReplacements("ḟƒ", "f");
+    addReplacements("ƑḞ", "F");
+    addReplacements("ƒᶂḟ", "f");
 
-    addReplacements("ǴĜḠĞĠƓǦĢ", "G");
-    addReplacements("ǵĝḡğġɠǧģ", "g");
+    addReplacements("ĜĞĠĢƓǤǦǴḠ", "G");
+    addReplacements("ĝğġģǥǧǵɠᶃḡ", "g");
 
-    addReplacements("ĤḢḦȞḤḨ", "H");
-    addReplacements("ĥḣḧɦȟḥḩ", "h");
+    addReplacements("ĤĦȞḢḤḦḨḪⱧ", "H");
+    addReplacements("ĥħȟɦḣḥḧḩḫẖⱨ", "h");
 
-    addReplacements("ÌÍÎĨĪĬİÏǏỊĮ", "I");
-    addReplacements("ìíîĩīĭıïǐịį", "i");
+    addReplacements("ÌÍÎÏĨĪĬĮİƗǏȈȊỊ", "I");
+    addReplacements("ìíîïĩīĭįıǐȉȋɨỉị", "i");
 
-    addReplacements("Ĵ", "J");
-    addReplacements("ĵǰ", "j");
+    addReplacements("ĴɈ", "J");
+    addReplacements("ĵǰɉ", "j");
 
-    addReplacements("ḰƘǨḲĶ", "K");
-    addReplacements("ḱƙǩḳķ", "k");
+    addReplacements("ĶƘǨКḰḲḴⱩ", "K");
+    addReplacements("ķƙǩкᶄḱḳḵⱪ", "k");
 
-    addReplacements("ĹĿĽḶĻ", "L");
-    addReplacements("ĺŀľḷļł", "l");
+    addReplacements("ĹĻĽĿŁȽḶḸḺⱠⱢ", "L");
+    addReplacements("ĺļľŀłƚȴлᶅḷḹḻⱡ", "l");
+    addReplacements("ǈ", "Lj");
 
-    addReplacements("ḾṀṂ", "M");
-    addReplacements("ḿṁɱṃ", "m");
+    addReplacements("МḾṀṂ", "M");
+    addReplacements("ɱмᶆḿṁṃ", "m");
 
-    addReplacements("ǸŃÑṄŇṆŅ", "N");
-    addReplacements("ǹńñṅňṇņ", "n");
+    addReplacements("ÑŃŅŇƝǸȠṄṆṈ", "N");
+    addReplacements("ñńņňŊŋƞǹȵɲᶇṅṇṉ", "n");
+    addReplacements("ǋ", "Nj");
 
-    addReplacements("ÒÓÔÕŌŎȮÖỎŐǑỌǪØ", "O");
-    addReplacements("òóôõōŏȯöỏőǒọǫøớố", "o");
-    addReplacements("Œ", "OE");
+    addReplacements("ÒÓÔÕÖØŌŎŐƟƠǑǪǬǾȌȎȪȬȮȰОỌỎỐỒỔỖỘỚỜỞỠỢ", "O");
+    addReplacements("òóôõöøōŏőơǒǫǭǿȍȏȫȭȯȱɵоọỏốồổỗộớờởỡợ", "o");
+    addReplacements("Œ", "Oe");
     addReplacements("œ", "oe");
 
-    addReplacements("ṔṖƤ", "P");
-    addReplacements("ṕṗ", "p");
+    addReplacements("ƤṔṖⱣ", "P");
+    addReplacements("ƥᵽᶈṕṗ", "p");
 
-    addReplacements("ŔṘŘṚŖ", "R");
-    addReplacements("ŕṙřṛŗ", "r");
+    addReplacements("ʠ", "q");
 
-    addReplacements("ŚŜṠŠṢȘŞ", "S");
-    addReplacements("śŝṡšṣșş", "s");
+    addReplacements("ŔŖŘȐȒɌṘṚṜṞⱤ", "R");
+    addReplacements("ŕŗřȑȓɍᶉṙṛṝṟ", "r");
+
+    addReplacements("ŚŜŞŠȘṠṢ", "S");
+    addReplacements("śŝşšșȿᶊṡṣ", "s");
     addReplacements("ß", "ss");
 
-    addReplacements("ṪƬŤṬŢ", "T");
-    addReplacements("ṫẗƭťṭţț", "t");
+    addReplacements("ŢŤŦƬƮȚȾṪṬṮṰ", "T");
+    addReplacements("ţťŧƫƭțȶʈṫṭṯṱẗⱦ", "t");
+    addReplacements("Þ", "Th");
+    addReplacements("þ", "th");
 
-    addReplacements("ÙÚÛŨŪŬÜŮŰǓỤŲ", "U");
-    addReplacements("ùúûũūŭüůűǔụųư", "u");
+    addReplacements("ÙÚÛÜŨŪŬŮŰŲƯǓǕǗǙǛȔȖɄṶỤỨỪỬỮỰ", "U");
+    addReplacements("ùúûüũūŭůűųưǔǖǘǚǜȕȗʉṷụủứừửữự", "u");
 
-    addReplacements("ṼṾ", "V");
-    addReplacements("ṽṿ", "v");
+    addReplacements("ƲṼṾ", "V");
+    addReplacements("ʋṽṿⱴ", "v");
 
-    addReplacements("ẀẂŴẆẄẈ", "W");
-    addReplacements("ẁẃŵẇẅẘẉ", "w");
+    addReplacements("ŴƜẀẂẄẆẈⱲ", "W");
+    addReplacements("ŵẁẃẅẇẉẘⱳ", "w");
 
     addReplacements("ẊẌ", "X");
-    addReplacements("ẋẍ", "x");
+    addReplacements("ᶍẋẍ", "x");
 
-    addReplacements("ỲÝŶỸȲẎŸỴ", "Y");
-    addReplacements("ỳýŷỹȳẏÿẙỵ", "y");
+    addReplacements("ÝŶŸƳȲɎӲẎỲỴỶỸ", "Y");
+    addReplacements("ýÿŷƴȳɏӳᶌẏẙỳỵỷỹ", "y");
 
-    addReplacements("ŹẐŻŽẒ", "Z");
-    addReplacements("źẑżẓž", "z");
+    addReplacements("ŹŻŽƵȤẐẒẔⱫ", "Z");
+    addReplacements("źżžƶȥɀʐᶎẑẓⱬ", "z");
 
     addReplacements("²", "2");
     addReplacements("–—", "-");
@@ -185,6 +203,64 @@ public class SpecialCharacters {
 
     // Specific configuration for UK
     localAuthorizedCharacters.put(EnumWikipedia.UK, "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдежзийклмнопрстуфхцчшщьыъэюяіїґ");
+
+    if (CHECK_REPLACEMENTS) {
+      // Compare with AWB
+      BufferedReader br = null;
+      GetMethod method = null;
+      try {
+        HttpClient httpClient = new HttpClient();
+        method = new GetMethod("http://sourceforge.net/p/autowikibrowser/code/HEAD/tree/AWB/WikiFunctions/Tools.cs?format=raw");
+        int statusCode = httpClient.executeMethod(method);
+        if (statusCode == HttpStatus.SC_OK) {
+          br = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream(), "UTF8"));
+          String line = null;
+          boolean startDiacritics = false;
+          boolean endDiacritics = false;
+          while (!endDiacritics && ((line = br.readLine()) != null)) {
+            if (!startDiacritics) {
+              if (line.contains("Diacritics =")) {
+                startDiacritics = true;
+              }
+            } else {
+              if (line.contains("}")) {
+                endDiacritics = true;
+              } else if (line.contains("new KeyValuePair<string, string>")) {
+                int quote1 = line.indexOf('\"');
+                int quote2 = line.indexOf('\"', quote1 + 1);
+                int quote3 = line.indexOf('\"', quote2 + 1);
+                int quote4 = line.indexOf('\"', quote3 + 1);
+                if ((quote1 >= 0) && (quote2 >= 0) && (quote3 >= 0) && (quote4 >= 0) &&
+                    (quote2 == quote1 + 2)) {
+                  char awbDiacritic = line.charAt(quote1 + 1);
+                  String awbReplacement = line.substring(quote3 + 1, quote4);
+                  String replacement = replacements.get(awbDiacritic);
+                  if (replacement == null) {
+                    System.err.println("AWB replacement for " + awbDiacritic + "/" + awbReplacement + " not defined");
+                  } else if (!replacement.equals(awbReplacement)) {
+                    System.err.println("AWB replacement for " + awbDiacritic + "/" + awbReplacement + " different than " + replacement);
+                  }
+                }
+              }
+            }
+          }
+        } else {
+          System.err.println("Error when accessing AWB source code: " + statusCode + " - " + HttpStatus.getStatusText(statusCode));
+        }
+      } catch (Exception e) {
+        System.err.println("Exception when accessing AWB source code (" + e.getClass().getName() + "): " + e.getMessage());
+        if (br != null) {
+          try {
+            br.close();
+          } catch (IOException e1) {
+            // Do nothing
+          }
+        }
+        if (method != null) {
+          method.releaseConnection();
+        }
+      }
+    }
   }
 
   /**
@@ -194,16 +270,38 @@ public class SpecialCharacters {
    * @param replacement Replacement.
    */
   private static void addReplacements(String characters, String replacement) {
-    for (int i = 0; i < characters.length(); i++) {
-      for (int j = i + 1; j < characters.length(); j++) {
-        if (characters.charAt(j) == characters.charAt(i)) {
-          System.err.println(
-              "Character in double for " + replacement + ": " +
-              characters.charAt(i) + "/" + i + " = " +
-              characters.charAt(j) + "/" + j);
+
+    // Check a few things : characters in double, characters order, several replacements, ...
+    if (CHECK_REPLACEMENTS) {
+      for (int i = 0; i < characters.length(); i++) {
+        char currentChar = characters.charAt(i);
+  
+        for (int j = i + 1; j < characters.length(); j++) {
+          if (characters.charAt(j) == currentChar) {
+            System.err.println(
+                "Character in double for " + replacement + ": " +
+                currentChar + "/" + i + " = " +
+                characters.charAt(j) + "/" + j);
+          }
+          if (characters.charAt(j) < currentChar) {
+            System.err.println(
+                "Character " + characters.charAt(j) + "/" + j +
+                " for " + replacement +
+                " should be before " + currentChar + "/" + i);
+          }
+        }
+
+        if (replacements.containsKey(currentChar) &&
+            !replacement.equals(replacements.get(currentChar))) {
+          System.err.println("Several replacements defined for " + currentChar + ":" + replacements.get(currentChar) + "," + replacement);
         }
       }
-      replacements.put(characters.charAt(i), replacement);
+    }
+
+    // Add the replacement
+    for (int i = 0; i < characters.length(); i++) {
+      char currentChar = characters.charAt(i);
+      replacements.put(currentChar, replacement);
     }
   }
 
