@@ -686,6 +686,7 @@ public class PageElementTag extends PageElement {
       int firstTagIndex,
       String contents,
       String punctuation, String separator) {
+    // TODO: Check if still necessary after refactoring of <ref> errors.
     if (tags == null) {
       return firstTagIndex;
     }
@@ -737,6 +738,7 @@ public class PageElementTag extends PageElement {
       List<PageElementTag> tags,
       int firstTagIndex, int lastTagIndex,
       String contents, String separator) {
+    // TODO: Check if still necessary after refactoring of <ref> errors.
     StringBuilder buffer = new StringBuilder();
     int tagIndex = firstTagIndex;
     while (tagIndex <= lastTagIndex) {
@@ -765,6 +767,7 @@ public class PageElementTag extends PageElement {
       List<PageElementTag> tags,
       int firstTagIndex, int lastTagIndex,
       String separator) {
+    // TODO: Check if still necessary after refactoring of <ref> errors.
     int tagIndex = firstTagIndex;
     int count = 0;
     while (tagIndex <= lastTagIndex) {

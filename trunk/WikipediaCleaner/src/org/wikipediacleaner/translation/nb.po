@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2013-11-20 18:47+0100\n"
+"POT-Creation-Date: 2013-11-25 22:55+0100\n"
 "PO-Revision-Date: 2012-10-21 17:40+0000\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
@@ -152,12 +152,12 @@ msgstr ""
 msgid "Fix all <br> tags"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:112
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:115
 msgid "Close tag"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:128
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:129
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:169
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm003.java:170
 #, java-format
 msgid "A list of templates resulting in the inclusion of {0}"
 msgstr ""
@@ -283,10 +283,15 @@ msgstr ""
 msgid "Remove"
 msgstr "Fjern"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:174
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:234
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:209
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:237
+#, java-format
+msgid "Templates that can be used to replace {0} tags"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm064.java:30
@@ -378,7 +383,7 @@ msgstr ""
 msgid "The ISBN''s length is {0} instead of 10 or 13"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:98
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:100
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:97
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:101
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:100
