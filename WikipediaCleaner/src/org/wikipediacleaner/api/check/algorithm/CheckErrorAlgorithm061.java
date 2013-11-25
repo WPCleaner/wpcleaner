@@ -7,14 +7,20 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElement;
+import org.wikipediacleaner.api.data.PageElementComparator;
+import org.wikipediacleaner.api.data.PageElementFullTag;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -31,15 +37,15 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
@@ -52,25 +58,25 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
 
 
     // Analyze from the beginning
-    List<PageElementTag> tags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REF);
-    if (tags == null) {
+    List<PageElement> refs = getRefs(analysis);
+    if ((refs == null) || (refs.isEmpty())) {
       return false;
     }
     boolean result = false;
-    String contents = pageAnalysis.getContents();
-    int tagIndex = 0;
-    int maxTags = tags.size();
-    while (tagIndex < maxTags) {
+    String contents = analysis.getContents();
+    int refIndex = 0;
+    int maxRefs = refs.size();
+    while (refIndex < maxRefs) {
 
-      // Group tags separated only by punctuation characters
-      int firstTagIndex = tagIndex;
-      PageElementTag firstTag = tags.get(firstTagIndex);
-      int lastTagIndex = PageElementTag.groupTags(tags, firstTagIndex, contents, ",;.\'", separator);
-      PageElementTag lastTag = tags.get(lastTagIndex);
-      tagIndex = lastTagIndex + 1;
+      // Group references separated only by punctuation characters
+      int firstRefIndex = refIndex;
+      PageElement firstRef = refs.get(firstRefIndex);
+      int lastRefIndex = PageElement.groupElements(refs, firstRefIndex, contents, ",;.\'", separator);
+      PageElement lastRef = refs.get(lastRefIndex);
+      refIndex = lastRefIndex + 1;
 
       // Remove possible whitespace characters after last reference
-      int tmpIndex = lastTag.getEndIndex();
+      int tmpIndex = lastRef.getEndIndex();
       boolean finished = false;
       while (!finished) {
         if (tmpIndex >= contents.length()) {
@@ -121,15 +127,15 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
         while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == punctuation)) {
           tmpIndex++;
         }
-        int beginIndex = firstTag.getBeginIndex();
+        int beginIndex = firstRef.getBeginIndex();
         int endIndex = tmpIndex;
         String allPunctuations = contents.substring(firstPunctuationIndex, endIndex);
 
         // Construct list of tags
-        String replace = PageElementTag.createListOfTags(
-            tags, firstTagIndex, lastTagIndex, contents, separator);
-        String textReplace = PageElementTag.createReducedListOfTags(
-            tags, firstTagIndex, lastTagIndex, separator);
+        String replace = PageElement.createListOfElements(
+            refs, firstRefIndex, lastRefIndex, contents, separator);
+        String textReplace = createReducedListOfRefs(
+            lastRefIndex - firstRefIndex + 1, separator);
 
         // Check for possible punctuation before tags
         tmpIndex = beginIndex - 1;
@@ -152,7 +158,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
 
         // Create error
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(), beginIndex, endIndex);
+            analysis.getPage(), beginIndex, endIndex);
         errorResult.addReplacement(
             allPunctuations + replace,
             allPunctuations + textReplace);
@@ -168,6 +174,55 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  /**
+   * @param analysis Page analysis.
+   * @return List of references (tags, templates, ...).
+   */
+  private List<PageElement> getRefs(PageAnalysis analysis) {
+    List<PageElement> refs = new ArrayList<PageElement>();
+
+    // Retrieve references defined by tags
+    List<PageElementTag> refTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
+    if (refTags != null) {
+      for (PageElementTag refTag : refTags) {
+        refs.add(new PageElementFullTag(refTag));
+      }
+    }
+
+    // Retrieve references defined by templates
+    String templatesProp = getSpecificProperty("templates", true, true, false);
+    if (templatesProp != null) {
+      String[] templatesName = templatesProp.split("\n");
+      for (String templateName : templatesName) {
+        List<PageElementTemplate> templates = analysis.getTemplates(templateName.trim());
+        if (templates != null) {
+          refs.addAll(templates);
+        }
+      }
+    }
+
+    Collections.sort(refs, new PageElementComparator());
+    return refs;
+  }
+
+  /**
+   * Create a reduced textual representation of a list of references.
+   * 
+   * @param count Number of references in the list.
+   * @param separator Separator.
+   * @return Reduced textual representation of a list of references.
+   */
+  public static String createReducedListOfRefs(
+      int count, String separator) {
+    if (count > 2) {
+      return "<ref>...</ref>" + separator + "..." + separator + "<ref>...</ref>";
+    }
+    if (count > 1) {
+      return "<ref>...</ref>" + separator + "<ref>...</ref>";
+    }
+    return "<ref>...</ref>";
+  }
+
   /* (non-Javadoc)
    * @see org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase#getParameters()
    */
@@ -177,6 +232,9 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     parameters.put(
         "separator",
         GT._("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"));
+    parameters.put(
+        "templates",
+        GT._("Templates that can be used to replace {0} tags", "&lt;ref&gt;"));
     return parameters;
   }
 }
