@@ -100,7 +100,12 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
       if (tmpIndex < contents.length()) {
         punctuation = contents.charAt(tmpIndex);
         if (SpecialCharacters.isPunctuation(punctuation)) {
-          punctuationFound = true;
+          // TODO: Once tables are managed by parser, remove the this trick that prevent detection before "!!"
+          if ((punctuation != '!') ||
+              (tmpIndex + 1 >= contents.length()) ||
+              (contents.charAt(tmpIndex + 1) != punctuation)) {
+            punctuationFound = true;
+          }
         }
       }
 
