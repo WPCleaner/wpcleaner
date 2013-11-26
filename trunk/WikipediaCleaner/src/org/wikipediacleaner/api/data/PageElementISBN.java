@@ -175,10 +175,15 @@ public class PageElementISBN extends PageElement {
       PageElementTemplate template,
       String argumentName,
       boolean ignoreCase, boolean acceptNumbers) {
+    int paramDefaultName = 1;
     for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
 
       // Check parameter name
       String paramName = template.getParameterName(paramNum);
+      if ((paramName == null) || (paramName.trim().length() == 0)) {
+        paramName = Integer.toString(paramDefaultName);
+        paramDefaultName++;
+      }
       boolean nameOk = false;
       if ((ignoreCase && argumentName.equalsIgnoreCase(paramName)) ||
           (argumentName.equals(paramName))) {
