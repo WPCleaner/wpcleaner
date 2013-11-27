@@ -24,6 +24,7 @@ import org.wikipediacleaner.api.constants.wiki.WikipediaAls;
 import org.wikipediacleaner.api.constants.wiki.WikipediaAr;
 import org.wikipediacleaner.api.constants.wiki.WikipediaArz;
 import org.wikipediacleaner.api.constants.wiki.WikipediaBar;
+import org.wikipediacleaner.api.constants.wiki.WikipediaBn;
 import org.wikipediacleaner.api.constants.wiki.WikipediaCa;
 import org.wikipediacleaner.api.constants.wiki.WikipediaCommons;
 import org.wikipediacleaner.api.constants.wiki.WikipediaCs;
@@ -95,6 +96,7 @@ public enum EnumWikipedia {
   AR(new WikipediaAr()),
   ARZ(new WikipediaArz()),
   BAR(new WikipediaBar()),
+  BN(new WikipediaBn()),
   CA(new WikipediaCa()),
   CS(new WikipediaCs()),
   CY(new WikipediaCy()),
