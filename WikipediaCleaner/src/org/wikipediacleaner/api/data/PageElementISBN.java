@@ -388,26 +388,100 @@ public class PageElementISBN extends PageElement {
   /**
    * @return Fixed ISBN.
    */
-  public String getCorrectISBN() {
-    StringBuilder result = new StringBuilder();
-    if (!isTemplateParameter) {
-      result.append("ISBN ");
-    }
+  public List<String> getCorrectISBN() {
+    List<String> result = new ArrayList<String>();
+    String prefix = isTemplateParameter ? "" : "ISBN ";
+
+    // Construct a basic ISBN number
+    StringBuilder buffer = new StringBuilder();
     for (int i = 0; i < isbnNotTrimmed.length(); i++) {
       char currentChar = isbnNotTrimmed.charAt(i);
       if ((POSSIBLE_CHARACTERS.indexOf(currentChar) >= 0) ||
           (EXTRA_CHARACTERS.indexOf(currentChar) >= 0)) {
-        result.append(currentChar);
+        buffer.append(currentChar);
       } else if ((currentChar == '‐') ||
                  (currentChar == '.')) {
-        result.append("-");
+        buffer.append("-");
       } else if (currentChar == '\t') {
-        result.append(" ");
+        buffer.append(" ");
       } else {
-        result.append(currentChar);
+        buffer.append(currentChar);
       }
     }
-    return result.toString();
+    String cleanedISBN = buffer.toString().trim();
+
+    // ISBN-10
+    if ((isbn.length() == 12) && (isbn.startsWith("10"))) {
+      boolean ok = true;
+      int index = 0;
+      while ((index < cleanedISBN.length()) &&
+             ((Character.isWhitespace(cleanedISBN.charAt(index))) ||
+              (cleanedISBN.charAt(index) == '-'))) {
+        index++;
+      }
+      if ((index < cleanedISBN.length() && (cleanedISBN.charAt(index) == '1'))) {
+        index++;
+      } else {
+        ok = false;
+      }
+      while ((index < cleanedISBN.length()) &&
+             ((Character.isWhitespace(cleanedISBN.charAt(index))) ||
+              (cleanedISBN.charAt(index) == '-'))) {
+        index++;
+      }
+      if ((index < cleanedISBN.length() && (cleanedISBN.charAt(index) == '0'))) {
+        index++;
+      } else {
+        ok = false;
+      }
+      while ((index < cleanedISBN.length()) &&
+             ((!Character.isDigit(cleanedISBN.charAt(index))) &&
+              (cleanedISBN.charAt(index) != 'X'))) {
+        index++;
+      }
+      if (ok && (index < cleanedISBN.length())) {
+        result.add(prefix + cleanedISBN.substring(index));
+      }
+    }
+
+    // ISBN-13
+    if ((isbn.length() == 15) && (isbn.startsWith("13"))) {
+      boolean ok = true;
+      int index = 0;
+      while ((index < cleanedISBN.length()) &&
+             ((Character.isWhitespace(cleanedISBN.charAt(index))) ||
+              (cleanedISBN.charAt(index) == '-'))) {
+        index++;
+      }
+      if ((index < cleanedISBN.length() && (cleanedISBN.charAt(index) == '1'))) {
+        index++;
+      } else {
+        ok = false;
+      }
+      while ((index < cleanedISBN.length()) &&
+             ((Character.isWhitespace(cleanedISBN.charAt(index))) ||
+              (cleanedISBN.charAt(index) == '-'))) {
+        index++;
+      }
+      if ((index < cleanedISBN.length() && (cleanedISBN.charAt(index) == '3'))) {
+        index++;
+      } else {
+        ok = false;
+      }
+      while ((index < cleanedISBN.length()) &&
+             ((!Character.isDigit(cleanedISBN.charAt(index))) &&
+              (cleanedISBN.charAt(index) != 'X'))) {
+        index++;
+      }
+      if (ok && (index < cleanedISBN.length())) {
+        result.add(prefix + cleanedISBN.substring(index));
+      }
+    }
+
+    // Basic replacement
+    result.add(prefix + cleanedISBN);
+    
+    return result;
   }
 
   /**
