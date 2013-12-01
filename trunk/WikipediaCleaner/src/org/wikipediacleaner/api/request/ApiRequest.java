@@ -7,11 +7,11 @@
 
 package org.wikipediacleaner.api.request;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -117,6 +117,11 @@ public abstract class ApiRequest {
    */
   public final static int MAX_PAGES_PER_QUERY = 50;
 
+  /**
+   * Maximum size for an url encoded list.
+   */
+  public final static int MAX_LENGTH_LIST_URLENCODED = 1500;
+
   // ==========================================================================
   // Wiki management
   // ==========================================================================
@@ -168,19 +173,30 @@ public abstract class ApiRequest {
     if (pages == null) {
       return null;
     }
-    if (pages.size() <= maxSize) {
-      return Collections.singletonList(pages);
-    }
     List<Collection<Page>> result = new ArrayList<Collection<Page>>();
-    Iterator<Page> itPage = pages.iterator();
-    while (itPage.hasNext()) {
-      List<Page> splitList = new ArrayList<Page>();
-      int count = 0;
-      while ((itPage.hasNext()) && (count < maxSize)) {
-        splitList.add(itPage.next());
-        count++;
+    List<Page> currentList = new ArrayList<Page>();
+    int pagesCount = 0;
+    int charactersCount = 0;
+    for (Page page : pages) {
+      int length = 0;
+      try {
+        length = URLEncoder.encode(page.getTitle(), "UTF8").length();
+      } catch (UnsupportedEncodingException e) {
+        // Not supposed to happen.
       }
-      result.add(splitList);
+      if ((pagesCount + 1> maxSize) ||
+          ((charactersCount + length > MAX_LENGTH_LIST_URLENCODED) && (pagesCount > 0))) {
+        result.add(currentList);
+        currentList = new ArrayList<Page>();
+        pagesCount = 0;
+        charactersCount = 0;
+      }
+      currentList.add(page);
+      pagesCount++;
+      charactersCount += length;
+    }
+    if (!currentList.isEmpty()) {
+      result.add(currentList);
     }
     return result;
   }
