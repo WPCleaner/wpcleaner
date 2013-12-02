@@ -92,7 +92,9 @@ public class CheckErrorAlgorithm027 extends CheckErrorAlgorithmBase {
               pageAnalysis.getPage(), ampersandIndex, tmpIndex + 1,
               htmlCharacter != null ? ErrorLevel.ERROR : ErrorLevel.WARNING);
           if (htmlCharacter != null) {
-            errorResult.addReplacement("" + htmlCharacter.getValue());
+            errorResult.addReplacement("" + htmlCharacter.getValue(), true);
+          } else {
+            errorResult.addReplacement("" + (char) entityNumber, false); 
           }
           errors.add(errorResult);
         }
@@ -111,7 +113,7 @@ public class CheckErrorAlgorithm027 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalBotFix(PageAnalysis analysis) {
-    return fix(globalFixes[0], analysis, null);
+    return fixUsingAutomaticReplacement(analysis);
   }
 
   /**
