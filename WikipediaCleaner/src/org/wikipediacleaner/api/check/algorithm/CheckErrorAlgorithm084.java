@@ -68,6 +68,7 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
         boolean textFound = false;
         int lastPos = (nextTitle != null) ? nextTitle.getBeginIndex() : contents.length(); 
         int pos = title.getEndIndex();
+        PageElementComment commentFound = null;
         while (!textFound && (pos < lastPos)) {
           char currentChar = contents.charAt(pos);
           if (Character.isWhitespace(currentChar)) {
@@ -76,6 +77,9 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
             PageElementComment comment = pageAnalysis.isInComment(pos);
             if (comment != null) {
               pos = comment.getEndIndex();
+              if (commentFound == null) {
+                commentFound = comment;
+              }
             } else {
               textFound = true;
             }
@@ -88,6 +92,9 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
             return true;
           }
           result = true;
+          if (commentFound != null) {
+            lastPos = commentFound.getBeginIndex();
+          }
           CheckErrorResult errorResult = createCheckErrorResult(
               pageAnalysis.getPage(), title.getBeginIndex(), lastPos);
           if (texts != null) {
