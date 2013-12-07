@@ -49,6 +49,8 @@ public enum WPCConfigurationString {
   DAB_WARNING_TEMPLATE("dab_warning_template", null, false, true, false),
   // Comment for warning template about disambiguation links in a page
   DAB_WARNING_TEMPLATE_COMMENT("dab_warning_template_comment", null, false, true, false),
+  // localized DEFAULTSORT
+  DEFAULTSORT("general_defaultsort", null, false, true, true),
   // Help page
   HELP_PAGE("help_page", null, false, true, false),
   // URL of the help page

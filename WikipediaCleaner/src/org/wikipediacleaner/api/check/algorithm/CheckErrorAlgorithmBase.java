@@ -25,6 +25,8 @@ import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.check.SpecialCharacters;
 import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WPCConfigurationString;
+import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -526,29 +528,43 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * Create a default DEFAULTSORT.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @return Default DEFAULTSORT.
    */
-  protected String createDefaultSort(PageAnalysis pageAnalysis) {
+  protected String createDefaultSort(PageAnalysis analysis) {
     // Basic check
-    if ((pageAnalysis == null) ||
-        (pageAnalysis.getContents() == null)) {
+    if ((analysis == null) ||
+        (analysis.getContents() == null)) {
       return null;
     }
-    String contents = pageAnalysis.getContents();
-    if ((pageAnalysis.getPage() == null) ||
-        (pageAnalysis.getPage().getTitle() == null)) {
+    String contents = analysis.getContents();
+    if ((analysis.getPage() == null) ||
+        (analysis.getPage().getTitle() == null)) {
       return contents;
+    }
+
+    // Get DEFAULTSORT name
+    String defaultSort = "DEFAULTSORT:";
+    MagicWord magicWord = analysis.getWikiConfiguration().getMagicWord(MagicWord.DEFAULT_SORT);
+    if (magicWord != null) {
+      String value = analysis.getWPCConfiguration().getString(WPCConfigurationString.DEFAULTSORT);
+      if ((value != null) && (value.trim().length() > 0)) {
+        value = value.trim();
+        if (magicWord.isPossibleAlias(value)) {
+          defaultSort = value;
+        }
+      }
     }
 
     // Create DEFAULTSORT
     StringBuilder buffer = new StringBuilder();
-    buffer.append("{{DEFAULTSORT:");
+    buffer.append("{{");
+    buffer.append(defaultSort);
 
     // Remove special characters from title
-    String title = pageAnalysis.getPage().getTitle();
+    String title = analysis.getPage().getTitle();
     StringBuilder currentTitle = new StringBuilder();
-    EnumWikipedia wiki = pageAnalysis.getWikipedia();
+    EnumWikipedia wiki = analysis.getWikipedia();
     for (int i = 0; i < title.length(); i++) {
       char character = title.charAt(i);
       if (!CheckErrorAlgorithms.isAlgorithmActive(wiki, 6) ||
