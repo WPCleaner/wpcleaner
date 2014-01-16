@@ -7,8 +7,6 @@
 
 package org.wikipediacleaner.api.data;
 
-import java.util.List;
-
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 
 
@@ -199,11 +197,8 @@ public class PageElementInternalLink extends PageElement {
     }
 
     // Check that this is not an external link between double square brackets
-    List<String> protocols = PageElementExternalLink.getProtocols();
-    for (String protocol : protocols) {
-      if (linkTrimmed.startsWith(protocol)) {
-        return null;
-      }
+    if (PageElementExternalLink.isPossibleProtocol(linkTrimmed, 0)) {
+      return null;
     }
 
     // Create internal link
