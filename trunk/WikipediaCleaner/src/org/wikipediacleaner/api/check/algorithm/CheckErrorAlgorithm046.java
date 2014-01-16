@@ -8,7 +8,6 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
@@ -137,13 +136,7 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
                 analysis.getPage(), tmpIndex, currentIndex + 2);
 
             // Check if the situation is something like [http://....]] (replacement: [http://....])
-            List<String> protocols = PageElementExternalLink.getProtocols();
-            boolean protocolFound = false;
-            for (String protocol : protocols) {
-              if (contents.startsWith(protocol, tmpIndex + 1)) {
-                protocolFound = true;
-              }
-            }
+            boolean protocolFound = PageElementExternalLink.isPossibleProtocol(contents, tmpIndex + 1);
             if (protocolFound) {
               errorResult.addReplacement(contents.substring(tmpIndex, currentIndex + 1));
             }

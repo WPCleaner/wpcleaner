@@ -8,7 +8,6 @@
 package org.wikipediacleaner.api.data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
@@ -30,7 +29,6 @@ public class PageElementExternalLink extends PageElement {
   private final static String END_CHARACTERS = " \n\t<>|";
 
   private final static List<String> privateProtocols = new ArrayList<String>();
-  private final static List<String> publicProtocols = Collections.unmodifiableList(privateProtocols);
 
   static {
     privateProtocols.add("http://");
@@ -81,25 +79,7 @@ public class PageElementExternalLink extends PageElement {
     if (tmpIndex >= maxLength) {
       return null;
     }
-    boolean protocolOk = false;
-    for (String protocol : privateProtocols) {
-      if (!protocolOk) {
-        int pos = 0;
-        boolean same = true;
-        while (same && (pos < protocol.length())) {
-          if (tmpIndex + pos >= contents.length()) {
-            same = false;
-          } else if (protocol.charAt(pos) != Character.toLowerCase(contents.charAt(tmpIndex + pos))) {
-            same = false;
-          } else {
-            pos++;
-          }
-        }
-        if (same) {
-          protocolOk = true;
-        }
-      }
-    }
+    boolean protocolOk = isPossibleProtocol(contents, tmpIndex);
     if (!protocolOk) {
       return null;
     }
@@ -176,10 +156,28 @@ public class PageElementExternalLink extends PageElement {
   }
 
   /**
-   * @return List of protocols.
+   * @param text Text.
+   * @param offset Offset in the text.
+   * @return True if the offset in the text is a possible protocol.
    */
-  public static List<String> getProtocols() {
-    return publicProtocols;
+  public static boolean isPossibleProtocol(String text, int offset) {
+    for (String protocol : privateProtocols) {
+      int pos = 0;
+      boolean same = true;
+      while (same && (pos < protocol.length())) {
+        if (offset + pos >= text.length()) {
+          same = false;
+        } else if (protocol.charAt(pos) != Character.toLowerCase(text.charAt(offset + pos))) {
+          same = false;
+        } else {
+          pos++;
+        }
+      }
+      if (same) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**

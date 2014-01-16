@@ -100,13 +100,7 @@ public class CheckErrorAlgorithm519 extends CheckErrorAlgorithmBase {
   
           // Check for link
           if ((hrefValue != null) && (hrefValue.length() > 0)) {
-            boolean protocolOk = false;
-            List<String> protocols = PageElementExternalLink.getProtocols();
-            for (String protocol : protocols) {
-              if (hrefValue.startsWith(protocol)) {
-                protocolOk = true;
-              }
-            }
+            boolean protocolOk = PageElementExternalLink.isPossibleProtocol(hrefValue, 0);
             if (protocolOk) {
               errorResult.addReplacement(
                   PageElementExternalLink.createExternalLink(hrefValue, internalText));
