@@ -142,6 +142,26 @@ public class Performance {
   }
 
   /**
+   * Print an end message.
+   */
+  public void printEnd(String message) {
+    long time = currentTime();
+    if (time > initialTime + threshold) {
+      printMessage(message + "(" + (time - initialTime) + unit + ")");
+    }
+  }
+
+  /**
+   * Print an end message.
+   */
+  public void printEnd(String message, String message2) {
+    long time = currentTime();
+    if (time > initialTime + threshold) {
+      printMessage(message + ":" + message2 + "(" + (time - initialTime) + unit + ")");
+    }
+  }
+
+  /**
    * @return Current time.
    */
   private static long currentTime() {

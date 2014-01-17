@@ -213,7 +213,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     while (itSuggestion.hasNext()) {
       Suggestion suggestion = itSuggestion.next();
       if (!suggestion.isOtherPattern()) {
-        Performance perf = new Performance("Slow regular expression: " + suggestion.getPatternText());
+        Performance perf = new Performance("Slow regular expression");
         perf.setThreshold(slowRegexp);
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
@@ -256,7 +256,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             authorizedBegin = end;
           }
         }
-        perf.printEnd();
+        perf.printEnd(suggestion.getPatternText());
       }
     }
 
@@ -285,7 +285,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     while (itSuggestion.hasNext()) {
       Suggestion suggestion = itSuggestion.next();
       if (suggestion.isOtherPattern()) {
-        Performance perf = new Performance("Slow " + suggestion.getComment() + ":" + suggestion.getPatternText());
+        Performance perf = new Performance("Slow regular expression");
         perf.setThreshold(slowRegexp);
         itSuggestion.remove();
         Matcher matcher = suggestion.initMatcher(contents);
@@ -309,7 +309,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
             authorizedBegin = end;
           }
         }
-        perf.printEnd();
+        perf.printEnd(suggestion.getComment(), suggestion.getPatternText());
       }
     }
 
@@ -499,6 +499,9 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
               possible, element.isAutomatic());
           replacements.add(replacement);
           result = true;
+        } else {
+          // If a replacement gives the original text, it's a possible confusion
+          return false;
         }
       }
     }
