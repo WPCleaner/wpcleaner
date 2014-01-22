@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-01-22 22:14+0100\n"
+"POT-Creation-Date: 2014-01-22 22:42+0100\n"
 "PO-Revision-Date: 2013-09-30 23:13+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -158,7 +158,7 @@ msgstr "Sostituisci con {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm026.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:87
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:93
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:61
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042_Old.java:61
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:136
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:130
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:168
@@ -214,7 +214,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:32
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:30
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089.java:30
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:30
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090_Old.java:30
 msgid "Fix DEFAULTSORT"
 msgstr "Correggi DEFAULTSORT (ordinamento)"
 
@@ -283,7 +283,7 @@ msgid "View image"
 msgstr "Guarda l'immagine"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm037.java:149
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:97
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091_Old.java:97
 msgid "Add DEFAULTSORT"
 msgstr "aggiungi DEFAULTSORT"
 
@@ -352,18 +352,18 @@ msgid "Check all links to other language"
 msgstr "Controlla tutti i collegamenti ad altre lingue (interwiki)"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:161
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:139
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:139
 msgid "Check language links"
 msgstr "Controlla gli interwiki"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:176
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:319
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:159
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:159
 msgid "What is the title of the page on this wiki ?"
 msgstr "Qual è il titolo della pagina su questa wiki?"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:189
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:172
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:172
 #, java-format
 msgid "Replace using template {0}"
 msgstr "Sostituisci con il template {0}"
@@ -518,6 +518,19 @@ msgstr ""
 msgid "Delete all tags without content"
 msgstr "Cancella tutti i tag senza contenuto"
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090.java:33
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:44
+msgid "Convert them to internal links"
+msgstr "Convertili in link interni"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:228
+msgid "To report only links to an other language"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:229
+msgid "To report only links to local wikis"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:172
 msgid "Restore original text"
 msgstr "Ripristina il testo originale"
@@ -538,19 +551,6 @@ msgstr "Compatta i link"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm509.java:73
 msgid "Compact link"
 msgstr "Compatta il link"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm511.java:33
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:44
-msgid "Convert them to internal links"
-msgstr "Convertili in link interni"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:228
-msgid "To report only links to an other language"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm512.java:229
-msgid "To report only links to local wikis"
-msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:192
 msgid "A template that can be used instead of an apostrophe."
