@@ -20,8 +20,8 @@ import org.wikipediacleaner.api.data.PageElementTag;
 
 
 /**
- * Algorithm for analyzing error 519 of check wikipedia project.
- * Error 519: &lt;a&gt; tags in main namespace
+ * Algorithm for analyzing error 004 of check wikipedia project.
+ * Error 004: &lt;a&gt; tags in main namespace
  */
 public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
 
