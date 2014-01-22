@@ -8,80 +8,59 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * Algorithm for analyzing error 42 of check wikipedia project.
- * Error 42: HTML text style element &lt;small&gt;
+ * Algorithm for analyzing error 042 of check wikipedia project.
+ * Error 042: strike tags
  */
 public class CheckErrorAlgorithm042 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm042() {
-    super("HTML text style element <small>");
+    super("<strike> tags");
   }
 
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if ((analysis == null) || (analysis.getPage() == null)) {
+      return false;
+    }
+    Integer ns = analysis.getPage().getNamespace();
+    if ((ns == null) || (ns.intValue() != Namespace.MAIN)) {
       return false;
     }
 
-    // Analyzing the text from the beginning
-    Collection<PageElementTag> tags = pageAnalysis.getTags(PageElementTag.TAG_HTML_SMALL);
-    if (tags == null) {
+    // Check each tag
+    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_STRIKE);
+    if ((tags == null) || (tags.isEmpty())) {
       return false;
     }
-    int level = 0;
-    boolean result = false;
+    if (errors == null) {
+      return true;
+    }
     for (PageElementTag tag : tags) {
-      if (tag.isFullTag()) {
-        // Full tag
-        if (level == 0) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
-              tag.getBeginIndex(), tag.getEndIndex());
-          errorResult.addReplacement("", GT._("Delete"));
-          errors.add(errorResult);
-        }
-      } else if (tag.isEndTag()) {
-        // Closing tag
-        level--;
-        if (level < 0) {
-          level = 0;
-        }
-      } else {
-        level++;
-        if (level == 1) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
-              tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
-          errors.add(errorResult);
-        }
-      }
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis.getPage(), tag.getBeginIndex(), tag.getEndIndex());
+      errorResult.addReplacement(PageElementTag.createTag(
+          PageElementTag.TAG_HTML_S, tag.isEndTag(), tag.isFullTag()));
+      errors.add(errorResult);
     }
 
-    return result;
+    return true;
   }
 }
