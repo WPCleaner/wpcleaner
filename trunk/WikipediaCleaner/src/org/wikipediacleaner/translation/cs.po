@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-01-22 22:08+0100\n"
+"POT-Creation-Date: 2014-01-22 22:14+0100\n"
 "PO-Revision-Date: 2013-12-13 17:13+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -177,6 +177,11 @@ msgstr "Smazat"
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:215
 msgid "Edit table of contents"
 msgstr "Editovat obsah"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm001.java:90
+#, java-format
+msgid "Remove {0} namespace from template name"
+msgstr "Odstranit prefix „{0}“ z volání šablony"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:29
 msgid "Fix all <br> tags"
@@ -523,11 +528,6 @@ msgstr "Pokaždé nahradit {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:185
 msgid "Replace each time with"
 msgstr "Pokaždé nahradit"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm502.java:90
-#, java-format
-msgid "Remove {0} namespace from template name"
-msgstr "Odstranit prefix „{0}“ z volání šablony"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm509.java:30
 msgid "Compact links"

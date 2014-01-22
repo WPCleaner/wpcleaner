@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-01-22 22:08+0100\n"
+"POT-Creation-Date: 2014-01-22 22:14+0100\n"
 "PO-Revision-Date: 2014-01-10 09:34+0000\n"
 "Last-Translator: Gaël Desbois <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -189,6 +189,11 @@ msgstr "Supprimer"
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:215
 msgid "Edit table of contents"
 msgstr "Éditer la table des matières"
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm001.java:90
+#, java-format
+msgid "Remove {0} namespace from template name"
+msgstr "Enlever {0} du nom du modèle"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:29
 msgid "Fix all <br> tags"
@@ -537,11 +542,6 @@ msgstr "Remplacer à chaque fois par {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:185
 msgid "Replace each time with"
 msgstr "Remplacer à chaque fois par"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm502.java:90
-#, java-format
-msgid "Remove {0} namespace from template name"
-msgstr "Enlever {0} du nom du modèle"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm509.java:30
 msgid "Compact links"
