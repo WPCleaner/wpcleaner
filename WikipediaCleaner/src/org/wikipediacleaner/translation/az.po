@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-01-08 13:27+0100\n"
+"POT-Creation-Date: 2014-01-22 22:08+0100\n"
 "PO-Revision-Date: 2013-06-14 22:05+0000\n"
 "Last-Translator: Rashid Aliyev <Unknown>\n"
 "Language-Team: Azerbaijani <az@li.org>\n"
@@ -19,28 +19,67 @@ msgstr ""
 "X-Generator: Launchpad (build 16696)\n"
 
 #: org/wikipediacleaner/Version.java:31
-msgid "Disambiguator extension has been deployed to all WMF wikis."
+msgid "Check Wiki project has evolved a lot recently."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:32
-msgid "It defines the new magic word __DISAMBIG__."
+msgid ""
+"New detections have been added either with new error numbers or by replacing "
+"previously used error numbers."
 msgstr ""
 
 #: org/wikipediacleaner/Version.java:33
+msgid ""
+"You may need to update Check Wiki translation file on your wiki to configure "
+"the new detections."
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:35
+#, java-format
+msgid ""
+"I try to keep {0} up to date with Check Wiki, but if you find any "
+"discrepancy in the detections, please let me know."
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:37
+#, java-format
+msgid "I hope you''ll like {0}."
+msgstr "Ümidvaram ki {0} xounuza gələcək."
+
+#: org/wikipediacleaner/Version.java:40
+#, java-format
+msgid ""
+"WPCleaner configuration is available online, check the {0}System "
+"configuration{1}."
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:43
+msgid "Please, report any other problem you find to me."
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:46
+msgid "Disambiguator extension has been deployed to all WMF wikis."
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:47
+msgid "It defines the new magic word __DISAMBIG__."
+msgstr ""
+
+#: org/wikipediacleaner/Version.java:48
 msgid ""
 "This magic word should be added in every disambiguation pages (either "
 "through templates or directly)."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:34
+#: org/wikipediacleaner/Version.java:49
 msgid "WPCleaner v1.28 also uses this as the default system."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:35
+#: org/wikipediacleaner/Version.java:50
 msgid "An action may be required on your wiki:"
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:37
+#: org/wikipediacleaner/Version.java:52
 #, java-format
 msgid ""
 "You can check if {0} is used on your wiki by opening an existing "
@@ -48,43 +87,27 @@ msgid ""
 "the menu on the left. Finally, search for {0} in the information page."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:41
+#: org/wikipediacleaner/Version.java:56
 #, java-format
 msgid "If {0} is not used on your wiki, you should add {1} to the page {2}."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:48
-#, java-format
-msgid "I hope you''ll like {0}."
-msgstr "Ümidvaram ki {0} xounuza gələcək."
-
-#: org/wikipediacleaner/Version.java:51
-#, java-format
-msgid ""
-"WPCleaner configuration is available online, check the {0}System "
-"configuration{1}."
-msgstr ""
-
-#: org/wikipediacleaner/Version.java:54
-msgid "Please, report any other problem you find to me."
-msgstr ""
-
-#: org/wikipediacleaner/Version.java:57
+#: org/wikipediacleaner/Version.java:62
 msgid "Many new features were added recently : try them !"
 msgstr "Bir çox yeni funksiya əlavə olunmuşdur : sınayın!"
 
-#: org/wikipediacleaner/Version.java:59
+#: org/wikipediacleaner/Version.java:64
 msgid ""
 "Leaving a note on talk pages with the list of links to disambiguation pages."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:60
+#: org/wikipediacleaner/Version.java:65
 msgid ""
 "Fixing errors detected by the Check Wiki project, in the full analysis "
 "window."
 msgstr ""
 
-#: org/wikipediacleaner/Version.java:61
+#: org/wikipediacleaner/Version.java:66
 msgid "Fixing spelling or typography based on a list of suggestions."
 msgstr ""
 
@@ -117,7 +140,7 @@ msgid "Replace with {0}"
 msgstr "{0} ilə əvəz et"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:127
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:166
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm010.java:159
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm013.java:59
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm014.java:59
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm015.java:59
@@ -129,9 +152,9 @@ msgstr "{0} ilə əvəz et"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:87
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm038.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm042.java:61
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:143
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm043.java:136
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:130
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:175
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:168
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:123
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:75
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:71
