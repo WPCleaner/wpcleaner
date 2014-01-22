@@ -14,5 +14,5 @@ package org.wikipediacleaner.api.check.algorithm;
  */
 public class CheckErrorAlgorithm511 extends CheckErrorAlgorithm090 {
 
-  // Renamed as 042
+  // Renamed as 090
 }
