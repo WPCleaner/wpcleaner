@@ -11,15 +11,18 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.WikiConfiguration;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementFunction;
+import org.wikipediacleaner.api.data.PageElementExternalLink;
+import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
 
 /**
- * Algorithm for analyzing error 90 of check wikipedia project.
- * Error 90: DEFAULTSORT with lower case letters
+ * Algorithm for analyzing error 090 of check wikipedia project.
+ * Error 090: Internal link written as external link
  */
 public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
 
@@ -27,75 +30,72 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
    * Possible global fixes.
    */
   private final static String[] globalFixes = new String[] {
-    GT._("Fix DEFAULTSORT"),
+    GT._("Convert them to internal links"),
   };
 
   public CheckErrorAlgorithm090() {
-    super("DEFAULTSORT with lowercase letters");
+    super("Internal link written as external link");
   }
 
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if ((analysis == null) || (analysis.getInternalLinks() == null)) {
       return false;
     }
 
-    // Check every DEFAULTSORT
-    List<PageElementFunction> defaultSorts = pageAnalysis.getDefaultSorts();
+    // Analyze each external link
     boolean result = false;
-    for (PageElementFunction defaultSort : defaultSorts) {
-
-      // Check if a lower case character is at the beginning of a word
-      boolean firstLetter = true;
-      StringBuilder newText = null;
-      String text = (defaultSort.getParameterCount() > 0) ? defaultSort.getParameterValue(0) : "";
-      for (int index = 0; index < text.length(); index++) {
-        char currentChar = text.charAt(index);
-        if (Character.isUpperCase(currentChar)) {
-          firstLetter = false;
-        } else if (Character.isLowerCase(currentChar)) {
-          if (firstLetter) {
-            if (newText == null) {
-              newText = new StringBuilder(text.substring(0, index));
-            }
-            currentChar = Character.toUpperCase(currentChar);
+    List<PageElementExternalLink> links = analysis.getExternalLinks();
+    if (links == null) {
+      return result;
+    }
+    EnumWikipedia wiki = analysis.getWikipedia();
+    WikiConfiguration wikiConf = wiki.getWikiConfiguration();
+    String contents = analysis.getContents();
+    for (PageElementExternalLink link : links) {
+      if (link.hasSquare()) {
+        String article = wikiConf.isArticleUrl(link.getLink());
+        if ((article != null) && (article.length() > 0)) {
+          if (errors == null) {
+            return true;
           }
-          firstLetter = false;
-        } else if (Character.isWhitespace(currentChar)) {
-          firstLetter = true;
-        } else {
-          firstLetter = false;
+          result = true;
+          int beginIndex = link.getBeginIndex();
+          int endIndex = link.getEndIndex();
+          if ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '[') &&
+              (endIndex < contents.length()) && (contents.charAt(endIndex) == ']')) {
+            beginIndex--;
+            endIndex++;
+          }
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis.getPage(), beginIndex, endIndex);
+          errorResult.addReplacement(PageElementInternalLink.createInternalLink(article, link.getText()));
+          errors.add(errorResult);
         }
-        if (newText != null) {
-          newText.append(currentChar);
-        }
-      }
-
-      // Register error
-      if (newText != null) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-        CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(),
-            defaultSort.getBeginIndex(), defaultSort.getEndIndex());
-        errorResult.addReplacement(PageElementFunction.createFunction(
-            defaultSort.getFunctionName(), newText.toString()));
-        errors.add(errorResult);
       }
     }
 
     return result;
+  }
+
+  /**
+   * Bot fixing of all the errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalBotFix(PageAnalysis analysis) {
+    return fix(globalFixes[0], analysis, null);
   }
 
   /**
