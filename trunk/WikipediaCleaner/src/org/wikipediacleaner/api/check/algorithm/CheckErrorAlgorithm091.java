@@ -176,8 +176,12 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
           }
 
           // Create internal link
-          errorResult.addReplacement(
-              "[[:" + prefix + ":" + article + "|" + (link.getText() != null ? link.getText() : article) + "]]");
+          boolean first = (errorResult.getPossibleActions() == null) || (errorResult.getPossibleActions().isEmpty());
+          if (first && link.hasSquare() && link.hasSecondSquare()) {
+            errorResult.addReplacement(
+                "[[:" + prefix + ":" + article + "|" + (link.getText() != null ? link.getText() : article) + "]]",
+                true);
+          }
           errors.add(errorResult);
         }
       }
@@ -215,7 +219,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-    return fixUsingFirstReplacement(fixName, analysis);
+    return fixUsingAutomaticReplacement(analysis);
   }
 
   /**

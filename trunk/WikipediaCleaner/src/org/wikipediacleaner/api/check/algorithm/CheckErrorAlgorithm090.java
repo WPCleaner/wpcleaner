@@ -78,7 +78,11 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
           }
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis.getPage(), beginIndex, endIndex);
-          errorResult.addReplacement(PageElementInternalLink.createInternalLink(article, link.getText()));
+          if (link.hasSecondSquare()) {
+            errorResult.addReplacement(
+                PageElementInternalLink.createInternalLink(article, link.getText()),
+                true);
+          }
           errors.add(errorResult);
         }
       }
@@ -116,6 +120,6 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-    return fixUsingFirstReplacement(fixName, analysis);
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
