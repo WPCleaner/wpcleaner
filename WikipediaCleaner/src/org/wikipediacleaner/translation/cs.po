@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-01-22 22:42+0100\n"
+"POT-Creation-Date: 2014-01-23 21:00+0100\n"
 "PO-Revision-Date: 2013-12-13 17:13+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -213,7 +213,6 @@ msgstr "Odkomentovat"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm006.java:32
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm088.java:30
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm089.java:30
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm090_Old.java:30
 msgid "Fix DEFAULTSORT"
 msgstr "Opravit DEFAULTSORT"
@@ -521,11 +520,11 @@ msgstr "Odstranit všechny tagy bez obsahu"
 msgid "Convert them to internal links"
 msgstr "Změnit je na interní odkazy"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:228
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:232
 msgid "To report only links to an other language"
 msgstr "Hlásit pouze odkazy do jiného jazyka"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:229
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:233
 msgid "To report only links to local wikis"
 msgstr "Hlásit pouze odkazy do místních wiki"
 
