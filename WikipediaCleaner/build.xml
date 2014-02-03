@@ -261,8 +261,13 @@
         <delete file="${WPCleaner.po.dir}/tstamp.WikiCleaner.pot_"/>
         <!-- generate new WikiCleaner.pot -->
         <mkdir dir="${WPCleaner.po.dir}/tmp"/>
+        <pathconvert pathsep="${line.separator}" dirsep="/"
+                     property="WPCleaner.java.files.converted" refid="WPCleaner.java.files">
+          <map from="${basedir}/${WPCleaner.src.dir}/" to="" />
+        </pathconvert>
+        <echo file="${WPCleaner.po.dir}/tmp/files.txt">${WPCleaner.java.files.converted}</echo>
         <apply executable="${gettext.xgettext}" dir="${basedir}/${WPCleaner.src.dir}" parallel="true"
-               verbose="true" relative="true" forwardslash="true">
+               verbose="true" relative="true" forwardslash="true" addsourcefile="false">
           <arg value="-kGT._" />
           <arg value="-kGT._No" />
           <arg value="-kGT.__:1,2" />
@@ -271,6 +276,7 @@
           <arg value="--msgid-bugs-address=nicove@users.sourceforge.net"/>
           <arg value="--output-dir=${basedir}/${WPCleaner.po.dir}/tmp" />
           <arg value="--output=WikiCleaner.pot" />
+          <arg value="--files-from=${basedir}/${WPCleaner.po.dir}/tmp/files.txt" />
           <fileset refid="WPCleaner.java.files" />
         </apply>
         <if>
