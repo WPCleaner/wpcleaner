@@ -48,7 +48,8 @@ public enum EnumLanguage {
   RU   (new Locale("ru")      , "Russian"),
   SV   (new Locale("sv")      , "Swedish"),
   TR   (new Locale("tr")      , "Turkish"),
-  UK   (new Locale("uk")      , "Ukrainian");
+  UK   (new Locale("uk")      , "Ukrainian"),
+  ZH_CN(new Locale("zh", "CN"), "Chinese (Simplified)");
 
   private final String code;
   private final Locale locale;
