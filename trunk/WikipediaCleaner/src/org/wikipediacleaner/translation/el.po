@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-02-03 21:53+0100\n"
+"POT-Creation-Date: 2014-02-05 19:42+0100\n"
 "PO-Revision-Date: 2013-05-03 02:21+0000\n"
 "Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -222,14 +222,41 @@ msgstr "Διότθωση της DEFAULTSORT"
 msgid "Unable to replace the characters [{0}]"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:31
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:104
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:167
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:35
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:173
 msgid "Remove all control characters"
 msgstr "Αφαίρεση όλων των χαρακτήρων ελέγχου"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:253
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:241
 msgid "To report control characters only in templates"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:249
+msgid "Zero width break"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:250
+msgid "Left to righ mark"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:251
+msgid "Line separator"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:252
+msgid "Zero width no break"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:253
+msgid "Private use area"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:254
+msgid "Private use area A"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:255
+msgid "Private use are B"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:36

@@ -7,11 +7,15 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
+import org.wikipediacleaner.api.check.NullActionProvider;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -20,7 +24,7 @@ import org.wikipediacleaner.i18n.GT;
 
 /**
  * Algorithm for analyzing error 16 of check wikipedia project.
- * Error 16: Template with Unicode control characters
+ * Error 16: Unicode control characters
  */
 public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
 
@@ -31,21 +35,8 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     GT._("Remove all control characters"),
   };
 
-  private final static char ZERO_WIDTH_BREAK = 0x200B;
-  private final static char LEFT_TO_RIGHT_MARK = 0x200E;
-  private final static char ZERO_WIDTH_NO_BREAK = 0xFEFF;
-
-  /**
-   * All control character.
-   */
-  private final static String controlCharacters =
-      "" +
-      ZERO_WIDTH_NO_BREAK +
-      LEFT_TO_RIGHT_MARK +
-      ZERO_WIDTH_BREAK;
-
   public CheckErrorAlgorithm016() {
-    super("Template with Unicode control characters");
+    super("Unicode control characters");
   }
 
   /**
@@ -68,6 +59,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
 
     boolean result = false;
     String contents = pageAnalysis.getContents();
+    Page page = pageAnalysis.getPage();
 
     if (onlyTemplates) {
       Collection<PageElementTemplate> templates = pageAnalysis.getTemplates();
@@ -79,102 +71,117 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         int begin = template.getBeginIndex();
         int end = template.getEndIndex();
         if (begin >= lastEnd) {
-          boolean found = false;
-          for (int index = begin; index < end; index++) {
-            char character = contents.charAt(index);
-            if (controlCharacters.indexOf(character) >= 0) {
-              found = true;
-            }
-          }
-          if (found) {
+          if (analyzeArea(page, contents, begin, end, errors)) {
             if (errors == null) {
               return true;
             }
             result = true;
-            CheckErrorResult errorResult = createCheckErrorResult(pageAnalysis.getPage(), begin, end);
-            StringBuilder replacement = new StringBuilder();
-            for (int index = begin; index < end; index++) {
-              char character = contents.charAt(index);
-              if (controlCharacters.indexOf(character) < 0) {
-                replacement.append(character);
-              }
-            }
-            errorResult.addReplacement(
-                replacement.toString(),
-                GT._("Remove all control characters"),
-                canBeAutomatic(replacement.toString()));
-            errors.add(errorResult);
           }
           lastEnd = end;
         }
       }
     } else {
-      int index = 0;
-      while (index < contents.length()) {
-        int character = contents.codePointAt(index);
-        if (controlCharacters.indexOf(character) >= 0) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          int begin = index;
-          if (index > 0) {
-            begin = Math.max(index - Character.charCount(contents.codePointBefore(index)), 0);
-          }
-          boolean finished = false;
-          while ((begin > 0) && !finished) {
-            int current = contents.codePointAt(begin);
-            if (controlCharacters.indexOf(current) >= 0) {
-              begin -= Character.charCount(contents.codePointBefore(begin));
-            } else {
-              finished = true;
-            }
-          }
-          int end = Math.min(index + 1, contents.length() - 1);
-          finished = false;
-          while ((end + 1 < contents.length()) && !finished) {
-            int after = contents.codePointAt(end);
-            if (controlCharacters.indexOf(after) >= 0) {
-              end += Character.charCount(after);
-            } else {
-              finished = true;
-            }
-          }
-          if (end < contents.length()) {
-            end += Character.charCount(contents.codePointAt(end));
-          }
-          CheckErrorResult errorResult = createCheckErrorResult(pageAnalysis.getPage(), begin, end);
-          StringBuilder replacement = new StringBuilder();
-          StringBuilder replacement2 = new StringBuilder();
-          int i = begin;
-          while (i < end) {
-            character = contents.codePointAt(i);
-            if (controlCharacters.indexOf(character) < 0) {
-              replacement.appendCodePoint(character);
-              replacement2.appendCodePoint(character);
-            } else {
-              if (character == HtmlCharacters.LEFT_TO_RIGHT_MARK.getValue()) {
-                replacement2.append("&");
-                replacement2.append(HtmlCharacters.LEFT_TO_RIGHT_MARK.getName());
-                replacement2.append(";");
-              }
-            }
-            i += Character.charCount(character);
-          }
-          boolean isAutomatic = canBeAutomatic(replacement.toString());
-          errorResult.addReplacement(
-              replacement.toString(),
-              GT._("Remove all control characters"),
-              isAutomatic);
-          if (!isAutomatic && (!replacement2.equals(replacement))) {
-            // TODO: Test replacement2
-            // errorResult.addReplacement(replacement2.toString());
-          }
-          errors.add(errorResult);
-          index = end + 2;
-        } else {
-          index += Character.charCount(character);
+      result = analyzeArea(page, contents, 0, contents.length(), errors);
+    }
+
+    return result;
+  }
+
+  /**
+   * Analyze a page area to check if errors are present.
+   * 
+   * @param page Page.
+   * @param contents Page contents.
+   * @param beginArea Begin index of the area.
+   * @param endArea End index of the area.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeArea(
+      Page page, String contents, int beginArea, int endArea,
+      Collection<CheckErrorResult> errors) {
+    boolean result = false;
+
+    // Check every character
+    int index = beginArea;
+    while (index < endArea) {
+      int codePoint = contents.codePointAt(index);
+      ControlCharacter control = ControlCharacter.getControlCharacter(codePoint);
+      if (control != null) {
+        if (errors == null) {
+          return true;
         }
+        result = true;
+
+        // Find extent of the area to highlight
+        int begin = index;
+        if (begin > beginArea) {
+          begin = Math.max(index - Character.charCount(contents.codePointBefore(index)), 0);
+        }
+        List<Integer> controls = new ArrayList<Integer>();
+        controls.add(Integer.valueOf(codePoint));
+        int end = index + Character.charCount(codePoint);
+        while ((end < endArea) &&
+               ((ControlCharacter.getControlCharacter(contents.codePointBefore(end)) != null) ||
+                (ControlCharacter.getControlCharacter(contents.codePointAt(end)) != null))) {
+          Integer controlNum = Integer.valueOf(contents.codePointAt(end));
+          if ((controlNum != null) && (!controls.contains(controlNum))) {
+            controls.add(controlNum);
+          }
+          end += Character.charCount(contents.codePointAt(end));
+        }
+
+        // Report error
+        CheckErrorResult errorResult = createCheckErrorResult(page, begin, end);
+        for (Integer controlFound : controls) {
+          ControlCharacter found = ControlCharacter.getControlCharacter(controlFound.intValue());
+          if (found != null) {
+            errorResult.addPossibleAction(
+                Integer.toHexString(controlFound.intValue()) + " - " + found.description,
+                new NullActionProvider());
+          }
+        }
+        StringBuilder replacementB = new StringBuilder();
+        StringBuilder replacementB2 = new StringBuilder();
+        boolean unsafeCharacter = false;
+        boolean checkUnsafe = false;
+        int i = begin;
+        while (i < end) {
+          codePoint = contents.codePointAt(i);
+          control = ControlCharacter.getControlCharacter(codePoint);
+          if ((control == null) || !control.removable){
+            replacementB.appendCodePoint(codePoint);
+            replacementB2.appendCodePoint(codePoint);
+            unsafeCharacter |= (control != null) || (automaticChars.indexOf(codePoint) < 0);
+            checkUnsafe |= (control != null);
+          } else {
+            if (codePoint == HtmlCharacters.LEFT_TO_RIGHT_MARK.getValue()) {
+              replacementB2.append("&");
+              replacementB2.append(HtmlCharacters.LEFT_TO_RIGHT_MARK.getName());
+              replacementB2.append(";");
+            }
+            checkUnsafe |= !control.safe;
+          }
+          i += Character.charCount(codePoint);
+        }
+        boolean automatic = !unsafeCharacter || !checkUnsafe;
+        String original = contents.substring(begin, end);
+        String replacement = replacementB.toString();
+        if (!replacement.equals(original)) {
+          errorResult.addReplacement(
+              replacement,
+              GT._("Remove all control characters"),
+              automatic);
+        }
+        String replacement2 = replacementB2.toString();
+        if (!automatic && !replacement2.equals(original) && !replacement2.equals(replacement)) {
+          // TODO: Test replacing left to right mark with HTML character
+          //errorResult.addReplacement(replacement2);
+        }
+        errors.add(errorResult);
+        index = end;
+      } else {
+        index += Character.charCount(codePoint);
       }
     }
 
@@ -184,32 +191,13 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
   /**
    * Authorized characters for automatic replacement.
    */
-  private final static String automatic =
+  private final static String automaticChars =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
       "abcdefghijklmnopqrstuvwxyz" +
       "áàâäåãÀ" + "éèêëÉ" + "íìîïĩ" + "óôöōŌ" + "úùûü" + "ý" +
       "ćč" + "ńň" + "š" + "ź" +
       "0123456789" +
       " []|(){}<>,.!?;:--–=+*#/%'\"«»\n\t";
-
-  /**
-   * @param replacement Replacement.
-   * @return True if replacement can be applied automatically.
-   */
-  private boolean canBeAutomatic(String replacement) {
-    if (replacement == null) {
-      return false;
-    }
-    int i = 0;
-    while (i < replacement.length()) {
-      int codePoint = replacement.codePointAt(i);
-      if (automatic.indexOf(codePoint) < 0) {
-        return false;
-      }
-      i += Character.charCount(codePoint);
-    }
-    return true;
-  }
 
   /**
    * Automatic fixing of all the errors in the page.
@@ -252,5 +240,55 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     Map<String, String> parameters = super.getParameters();
     parameters.put("only_templates", GT._("To report control characters only in templates"));
     return parameters;
+  }
+
+  /**
+   * Control characters characteristics.
+   */
+  private enum ControlCharacter {
+    ZERO_WIDTH_BREAK(0x200B, 0x200B, true, false, GT._No("Zero width break")),
+    LEFT_TO_RIGHT_MARK(0x200E, 0x200E, true, false, GT._No("Left to righ mark")),
+    LINE_SEPARATOR(0x2028, 0x2028, false, false, GT._No("Line separator")),
+    ZERO_WIDTH_NO_BREAK(0xFEFF, 0xFEFF, true, false, GT._No("Zero width no break")),
+    PUA(0xE000, 0xF8FF, false, false, GT._No("Private use area")),
+    PUA_A(0XF0000, 0xFFFFD, false, false, GT._No("Private use area A")),
+    PUA_B(0x100000, 0x10FFFD, false, false, GT._No("Private use are B"));
+
+    public final int begin;
+    public final int end;
+    public final boolean removable;
+    public final boolean safe;
+    public final String description;
+
+    /**
+     * @param begin Begin of the range of control characters.
+     * @param end End of the range of control characters.
+     * @param removable True if the control character can be removed.
+     * @param safe True if removing the control character is safe.
+     * @param description Description of the control character.
+     */
+    private ControlCharacter(
+        int begin, int end,
+        boolean removable, boolean safe,
+        String description) {
+      this.begin = begin;
+      this.end = end;
+      this.removable = removable;
+      this.safe = safe;
+      this.description = description;
+    }
+
+    /**
+     * @param codePoint Code point.
+     * @return Control character for the given code point.
+     */
+    public static ControlCharacter getControlCharacter(int codePoint) {
+      for (ControlCharacter control : values()) {
+        if ((codePoint >= control.begin) && (codePoint <= control.end)) {
+          return control;
+        }
+      }
+      return null;
+    }
   }
 }
