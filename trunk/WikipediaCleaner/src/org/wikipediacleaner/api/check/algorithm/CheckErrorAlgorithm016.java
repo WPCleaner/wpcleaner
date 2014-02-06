@@ -246,15 +246,15 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
    * Control characters characteristics.
    */
   private enum ControlCharacter {
-    ZERO_WIDTH_BREAK(0x200B, 0x200B, true, false, GT._No("Zero width break")),
+    ZERO_WIDTH_SPACE(0x200B, 0x200B, true, false, GT._No("Zero-width space")),
     LEFT_TO_RIGHT_MARK(0x200E, 0x200E, true, false, GT._No("Left-to-righ mark")),
     LINE_SEPARATOR(0x2028, 0x2028, false, false, GT._No("Line separator")),
     LEFT_TO_RIGHT_EMBEDDING(0x202A, 0x202A, true, false, GT._No("Left-to-right embedding")),
     POP_DIRECTIONAL_FORMATTING(0x202C, 0x202C, true, false, GT._No("Pop directional formatting")),
-    ZERO_WIDTH_NO_BREAK(0xFEFF, 0xFEFF, true, false, GT._No("Zero width no break")),
+    BYTE_ORDER_MARK(0xFEFF, 0xFEFF, true, false, GT._No("Byte order mark")),
     PUA(0xE000, 0xF8FF, false, false, GT._No("Private use area")),
     PUA_A(0XF0000, 0xFFFFD, false, false, GT._No("Private use area A")),
-    PUA_B(0x100000, 0x10FFFD, false, false, GT._No("Private use are B"));
+    PUA_B(0x100000, 0x10FFFD, false, false, GT._No("Private use area B"));
 
     public final int begin;
     public final int end;
