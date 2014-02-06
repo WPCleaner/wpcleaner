@@ -7,16 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-02-06 18:24+0100\n"
-"PO-Revision-Date: 2014-01-23 07:13+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"POT-Creation-Date: 2014-02-06 18:58+0100\n"
+"PO-Revision-Date: 2014-02-06 19:02+0100\n"
+"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Launchpad-Export-Date: 2014-01-23 07:16+0000\n"
-"X-Generator: Launchpad (build 16901)\n"
+"X-Generator: Poedit 1.6.3\n"
+"Language: fr\n"
 
 #: org/wikipediacleaner/Version.java:31
 msgid "Check Wiki project has evolved a lot recently."
@@ -251,40 +252,40 @@ msgid "To report control characters only in templates"
 msgstr "Pour détecter les caractères de contrôle uniquement dans les modèles"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:249
-msgid "Zero width break"
-msgstr ""
+msgid "Zero-width space"
+msgstr "Espace sans chasse"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:250
 msgid "Left-to-righ mark"
-msgstr ""
+msgstr "Marque gauche-à-droite"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:251
 msgid "Line separator"
-msgstr ""
+msgstr "Séparateur de ligne"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:252
 msgid "Left-to-right embedding"
-msgstr ""
+msgstr "Enchâssement gauche-à-droite"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:253
 msgid "Pop directional formatting"
-msgstr ""
+msgstr "Dépilement de formatage directionnel"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:254
-msgid "Zero width no break"
-msgstr ""
+msgid "Byte order mark"
+msgstr "Indicateur d'ordre des octets"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:255
 msgid "Private use area"
-msgstr ""
+msgstr "Zone d'usage privé"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:256
 msgid "Private use area A"
-msgstr ""
+msgstr "Zone d'usage privé A"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm016.java:257
-msgid "Private use are B"
-msgstr ""
+msgid "Private use area B"
+msgstr "Zone d'usage privé B"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:36
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:35
