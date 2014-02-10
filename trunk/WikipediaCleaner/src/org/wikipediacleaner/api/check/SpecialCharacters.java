@@ -65,7 +65,7 @@ public class SpecialCharacters {
     replacements.put((char) 0xFEFF, "");
     replacements.put((char) 0x200E, "");
     replacements.put((char) 0x200B, "");
-    addReplacements("’", "'");
+    addReplacements("ʻ’′", "'");
 
     addReplacements("ÀÁÂÃÄÅĀĂĄǍǞǠǺȀȂȦȺАḀẠẢẤẦẨẪẬẮẰẲẴẶ", "A");
     addReplacements("àáâãäåāăąǎǟǡǻȁȃȧаḁẚạảấầẩẫậắằẳẵặⱥ", "a");
@@ -82,7 +82,7 @@ public class SpecialCharacters {
     addReplacements("ðďđƌȡɖɗᶁḋḍḏḑ", "d");
     addReplacements("ǅǲ", "Dz");
 
-    addReplacements("ÈÉÊËĒĔĖĘĚƎƏƐȄȆȨɆЁЕḘḚẸẺẼẾỀỂỄỆ", "E");
+    addReplacements("ÈÉÊËĒĔĖĘĚƎƏƐȄȆȨɆΕЁЕḘḚẸẺẼẾỀỂỄỆ", "E");
     addReplacements("èéêëēĕėęěǝȅȇȩɇəеёḕḗḙḛḝẹẻẽếềểễệ", "e");
 
     addReplacements("ƑḞ", "F");
@@ -94,8 +94,8 @@ public class SpecialCharacters {
     addReplacements("ĤĦȞḢḤḦḨḪⱧ", "H");
     addReplacements("ĥħȟɦḣḥḧḩḫẖⱨ", "h");
 
-    addReplacements("ÌÍÎÏĨĪĬĮİƗǏȈȊỊ", "I");
-    addReplacements("ìíîïĩīĭįıǐȉȋɨỉị", "i");
+    addReplacements("ÌÍÎÏĨĪĬĮİƗǏȈȊІỊ", "I");
+    addReplacements("ìíîïĩīĭįıǐȉȋɨіỉị", "i");
 
     addReplacements("ĴɈ", "J");
     addReplacements("ĵǰɉ", "j");
@@ -136,8 +136,8 @@ public class SpecialCharacters {
     addReplacements("Þ", "Th");
     addReplacements("þ", "th");
 
-    addReplacements("ÙÚÛÜŨŪŬŮŰŲƯǓǕǗǙǛȔȖɄṶỤỨỪỬỮỰ", "U");
-    addReplacements("ùúûüũūŭůűųưǔǖǘǚǜȕȗʉṷụủứừửữự", "u");
+    addReplacements("ÙÚÛÜŨŪŬŮŰŲƯǓǕǗǙǛȔȖɄṲṶỤỨỪỬỮỰ", "U");
+    addReplacements("ùúûüũūŭůűųưǔǖǘǚǜȕȗʉṳṷụủứừửữự", "u");
 
     addReplacements("ƲṼṾ", "V");
     addReplacements("ʋṽṿⱴ", "v");
@@ -145,8 +145,8 @@ public class SpecialCharacters {
     addReplacements("ŴƜẀẂẄẆẈⱲ", "W");
     addReplacements("ŵẁẃẅẇẉẘⱳ", "w");
 
-    addReplacements("ẊẌ", "X");
-    addReplacements("ᶍẋẍ", "x");
+    addReplacements("ХẊẌ", "X");
+    addReplacements("хᶍẋẍ", "x");
 
     addReplacements("ÝŶŸƳȲɎӲẎỲỴỶỸ", "Y");
     addReplacements("ýÿŷƴȳɏӳᶌẏẙỳỵỷỹ", "y");
@@ -155,7 +155,7 @@ public class SpecialCharacters {
     addReplacements("źżžƶȥɀʐᶎẑẓⱬ", "z");
 
     addReplacements("²", "2");
-    addReplacements("–—", "-");
+    addReplacements("–—−", "-");
     addReplacements("…", "...");
 
     // Specific configuration for CS
