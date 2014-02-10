@@ -792,7 +792,7 @@ public class MainWindow
     // Check Wiki Project button
     buttonCheckWiki = Utilities.createJButton(
         "commons-nuvola-web-broom.png", EnumImageSize.NORMAL,
-        GT._("Project check wikipedia"), true, null);
+        GT._("Project Check Wikipedia"), true, null);
     buttonCheckWiki.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCheckWiki"));
     panel.add(buttonCheckWiki, constraints);

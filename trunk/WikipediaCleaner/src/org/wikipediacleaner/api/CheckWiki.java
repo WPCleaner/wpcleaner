@@ -125,6 +125,15 @@ public class CheckWiki {
   }
 
   /**
+   * @param wiki Wiki.
+   * @return Server name.
+   */
+  public static String getServerName(EnumWikipedia wiki) {
+    boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
+    return useLabs ? "WMFLabs" : "Toolserver";
+  }
+
+  /**
    * Response manager for the list of pages.
    */
   private static class PagesResponseManager implements ResponseManager {
