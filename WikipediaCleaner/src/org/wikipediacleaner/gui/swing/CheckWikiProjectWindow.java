@@ -669,7 +669,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     toolbar.add(buttonErrorDetail);
     buttonErrorList = Utilities.createJButton(
         "gnome-web-browser.png", EnumImageSize.NORMAL,
-        GT._("List on toolserver"), false, null);
+        GT._("List on {0}", CheckWiki.getServerName(getWikipedia())), false, null);
     buttonErrorList.addActionListener(
         EventHandler.create(ActionListener.class, this, "actionErrorList"));
     buttonErrorList.setEnabled(false);
@@ -1516,7 +1516,6 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         Page page = error.getPage(numPage);
         CheckErrorPage errorPage = new CheckErrorPage(page, error.getAlgorithm());
         if ((errorPage.isInWhiteList()) && (page.getPageId() != null)) {
-          // TODO: Need page id (either retrieve it when needed or wait to have it directly from toolserver)
           markPageAsFixed(error, error.getAlgorithm().getErrorNumberString(), page);
         } else {
           modelPages.addElement(errorPage);
@@ -1613,9 +1612,8 @@ public class CheckWikiProjectWindow extends OnePageWindow {
       try {
         DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontextDescription);
         InputSource is = new InputSource(new StringReader(algorithm.getLongDescription()));
-        is.setSystemId(
-            "http://toolserver.org/~sk/cgi-bin/checkwiki/checkwiki.cgi?" +
-            "project=frwiki&view=only&id=" + algorithm.getErrorNumber());
+        CheckWiki cw = APIFactory.getCheckWiki();
+        is.setSystemId(cw.getUrlDescription(getWikipedia(), algorithm));
         Document document = dbi.parse(is);
         textDescription.setDocument(document, rcontextDescription);
       } catch (SAXException e) {

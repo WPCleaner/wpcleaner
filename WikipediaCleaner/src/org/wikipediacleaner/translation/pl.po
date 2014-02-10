@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-02-06 18:58+0100\n"
+"POT-Creation-Date: 2014-02-10 18:47+0100\n"
 "PO-Revision-Date: 2013-11-01 03:31+0000\n"
 "Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -1199,9 +1199,9 @@ msgid "Detail"
 msgstr "Szczegóły"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:672
-#: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:120
-msgid "List on toolserver"
-msgstr "Lista na toolserverze"
+#, fuzzy, java-format
+msgid "List on {0}"
+msgstr "Linkujące do {0}"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:679
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:121
@@ -1277,7 +1277,7 @@ msgstr "Do wysłania tej strony wymaga się ręcznego wpisania komentarza."
 msgid "Pages with several errors"
 msgstr "Strony z kilkoma błędami"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1637
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1635
 #, java-format
 msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
@@ -1286,7 +1286,7 @@ msgstr ""
 "Błąd nr {0} można <a href=\"{1}\">skonfigurować</a> z użyciem następujących "
 "parametrów:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1837
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1835
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
@@ -1299,7 +1299,7 @@ msgstr ""
 "  {0} = <nazwa strony> END\n"
 "w odpowiednim miejscu na stronie z tłumaczeniem ({1}) na \"{2}\""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1882
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1880
 #, java-format
 msgid ""
 "There''s no white list defined for this error type.\n"
@@ -1536,7 +1536,8 @@ msgid "With many disambiguation links"
 msgstr "Z wieloma linkami do ujednoznacznień"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:795
-msgid "Project check wikipedia"
+#, fuzzy
+msgid "Project Check Wikipedia"
 msgstr "Projekt Check Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:804
@@ -2519,6 +2520,10 @@ msgstr ""
 #, java-format
 msgid "Error n°{0}"
 msgstr "Błąd nr {0}"
+
+#: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:120
+msgid "List on toolserver"
+msgstr "Lista na toolserverze"
 
 #: org/wikipediacleaner/gui/swing/component/CloseTabComponent.java:79
 msgid "Close this tab"
