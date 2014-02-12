@@ -283,16 +283,18 @@ public class PageElementTag extends PageElement {
     String value = null;
     String marker = null;
     int endValueIndex = startValueIndex;
-    if ((paramString.charAt(startValueIndex) == '\'') ||
-        (paramString.charAt(startValueIndex) == '\"')) {
+    if ("'\"«".indexOf(paramString.charAt(startValueIndex)) >= 0) {
       marker = paramString.substring(startValueIndex, startValueIndex + 1);
-      endValueIndex = paramString.indexOf(paramString.charAt(startValueIndex), startValueIndex + 1);
-      if (endValueIndex < 0) {
-        return false;
+      endValueIndex = startValueIndex + 1;
+      while ((endValueIndex < paramString.length()) &&
+             ("'\"»".indexOf(paramString.charAt(endValueIndex)) < 0)) {
+        endValueIndex++;
       }
       startValueIndex++;
       value = paramString.substring(startValueIndex, endValueIndex);
-      endValueIndex++;
+      if (endValueIndex < paramString.length()) {
+        endValueIndex++;
+      }
     } else {
       while ((endValueIndex < maxLength) &&
              (paramString.charAt(endValueIndex) != ' ')) {
