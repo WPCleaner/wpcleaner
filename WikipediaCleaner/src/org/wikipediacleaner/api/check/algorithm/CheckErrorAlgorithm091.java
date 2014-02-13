@@ -145,7 +145,8 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
           // Use templates
           if ((templatesList != null) &&
               (templatesList.size() > 0) &&
-              (article.length() > 0)) {
+              (article.length() > 0) &&
+              (language != null)) {
             for (String template : templatesList) {
               String[] templateArgs = template.split("\\|");
               if (templateArgs.length >= 5) {
