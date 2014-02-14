@@ -38,7 +38,7 @@ public class PageElementISBN extends PageElement {
   /**
    * ISBN incorrect characters.
    */
-  private final static String INCORRECT_CHARACTERS = ":‐\t";
+  private final static String INCORRECT_CHARACTERS = ":‐\t—";
 
   /**
    * @param analysis Page analysis.
