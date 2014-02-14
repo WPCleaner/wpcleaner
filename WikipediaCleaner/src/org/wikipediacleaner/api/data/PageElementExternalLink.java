@@ -26,7 +26,7 @@ public class PageElementExternalLink extends PageElement {
   private final boolean hasSquare;
   private final boolean hasSecondSquare;
 
-  private final static String END_CHARACTERS = " \n\t<>|";
+  private final static String END_CHARACTERS = " \n\t<>|}";
 
   private final static List<String> privateProtocols = new ArrayList<String>();
 
