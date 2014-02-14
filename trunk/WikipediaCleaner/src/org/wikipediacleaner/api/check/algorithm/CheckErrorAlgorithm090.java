@@ -13,6 +13,9 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WikiConfiguration;
+import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Namespace;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -79,8 +82,24 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis.getPage(), beginIndex, endIndex);
           if (link.hasSecondSquare()) {
+            Page articlePage = DataManager.getPage(analysis.getWikipedia(), article, null, null, null);
+            boolean needColon = false;
+            if (articlePage.getNamespace() != null) {
+              int ns = articlePage.getNamespace().intValue();
+              if (ns % 2 == 0) {
+                if ((ns != Namespace.MAIN) &&
+                    (ns != Namespace.USER) &&
+                    (ns != Namespace.HELP) &&
+                    (ns != Namespace.MEDIAWIKI) &&
+                    (ns != Namespace.TEMPLATE) &&
+                    (ns != Namespace.WIKIPEDIA)) {
+                  needColon = true;
+                }
+              }
+            }
             errorResult.addReplacement(
-                PageElementInternalLink.createInternalLink(article, link.getText()),
+                PageElementInternalLink.createInternalLink(
+                    (needColon ? ":" : "") + article, link.getText()),
                 true);
           }
           errors.add(errorResult);
