@@ -66,9 +66,11 @@ public class CheckErrorAlgorithm093 extends CheckErrorAlgorithmBase {
               (tmp1.length() < dest.length()) &&
               (tmp1.equalsIgnoreCase(dest.substring(0, tmp1.length())))) {
             for (String tmp2 : possiblePrefixes) {
-              if ((prefix2 == null) && tmp2.equalsIgnoreCase(dest.substring(
-                  tmp1.length(),
-                  tmp1.length() + tmp2.length()))) {
+              if ((prefix2 == null) &&
+                  (tmp1.length() + tmp2.length() < dest.length()) &&
+                  tmp2.equalsIgnoreCase(dest.substring(
+                      tmp1.length(),
+                      tmp1.length() + tmp2.length()))) {
                 errorFound = true;
                 prefix1 = tmp1;
                 prefix2 = tmp2;
@@ -82,6 +84,7 @@ public class CheckErrorAlgorithm093 extends CheckErrorAlgorithmBase {
         if (!errorFound && !link.hasSquare()) {
           for (String tmp2 : possiblePrefixes) {
             if ((prefix2 == null) &&
+                (tmp2.length() < dest.length()) &&
                 (tmp2.equalsIgnoreCase(dest.substring(0, tmp2.length())))) {
               prefix2 = tmp2;
             }
