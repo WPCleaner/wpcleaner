@@ -65,7 +65,9 @@ public class BotCWTableModel extends AbstractTableModel {
       }
     }
     botAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    addAlgorithm(1);  // Template namespace in template usage
     addAlgorithm(2);  // Article with false <br/>
+    addAlgorithm(4);  // <a> tags
     addAlgorithm(6);  // DEFAULTSORT with special letter
     addAlgorithm(7);  // Headlines all start with three "="
     addAlgorithm(9);  // Categories more at one line
@@ -92,6 +94,8 @@ public class BotCWTableModel extends AbstractTableModel {
     addAlgorithm(85); // Tag without content
     addAlgorithm(87); // HTML named entities without semicolon
     addAlgorithm(88); // DEFAULTSORT with blank at first position
+    addAlgorithm(90); // Internal link written as external link
+    addAlgorithm(91); // Interwiki link written as external link
     addAlgorithm(92); // Headline double
   }
 
