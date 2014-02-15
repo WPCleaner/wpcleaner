@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2014-02-15 16:54+0100\n"
-"PO-Revision-Date: 2014-02-05 08:24+0000\n"
-"Last-Translator: byfserag <john_k586@sina.cn>\n"
+"PO-Revision-Date: 2014-02-15 09:59+0000\n"
+"Last-Translator: Xiaoxing Ye <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2014-02-05 16:12+0000\n"
+"X-Launchpad-Export-Date: 2014-02-15 16:01+0000\n"
 "X-Generator: Launchpad (build 16916)\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -59,7 +59,7 @@ msgstr "请向我报告您所发现的其它问题。"
 
 #: org/wikipediacleaner/Version.java:46
 msgid "Disambiguator extension has been deployed to all WMF wikis."
-msgstr ""
+msgstr "限定词扩展已被部署到所有的维基项目。"
 
 #: org/wikipediacleaner/Version.java:47
 msgid "It defines the new magic word __DISAMBIG__."
@@ -99,7 +99,7 @@ msgstr "最近添加了许多新功能，试试它们吧！"
 #: org/wikipediacleaner/Version.java:64
 msgid ""
 "Leaving a note on talk pages with the list of links to disambiguation pages."
-msgstr ""
+msgstr "在讨论页上留下一条带有消歧义页链接的列表"
 
 #: org/wikipediacleaner/Version.java:65
 msgid ""
@@ -174,7 +174,7 @@ msgstr "编辑目录"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm001.java:90
 #, java-format
 msgid "Remove {0} namespace from template name"
-msgstr ""
+msgstr "从模板名称中移除{0}命名空间"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:29
 msgid "Fix all <br> tags"
@@ -325,7 +325,7 @@ msgstr "移除指向标题的所有链接（第一个粗体）"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:33
 msgid "Remove all links to title"
-msgstr ""
+msgstr "移除指向标题的所有链接"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:28
 msgid "Remove breaks in list"
@@ -353,7 +353,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:237
 #, java-format
 msgid "Templates that can be used to replace {0} tags"
-msgstr ""
+msgstr "可以用来代替{0}标签的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm064.java:30
 msgid "Modify all internal links"
@@ -375,7 +375,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:50
 msgid "Check all links to other language"
-msgstr ""
+msgstr "检查指向其他语言的所有链接"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:161
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:139
@@ -497,12 +497,12 @@ msgstr "给<ref>标签一个名称"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:259
 msgid "What name would like to use for the <ref> tag ?"
-msgstr ""
+msgstr "希望<ref>标签使用什么名称？"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:355
 #, java-format
 msgid "A <ref> tag shares the same content, and is named \"{0}\"."
-msgstr ""
+msgstr "一个<ref>标签共享相同的内容，并被命名为“{0}”。"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:356
 #, java-format
@@ -512,7 +512,7 @@ msgstr "您想用“{0}”替换<ref>标签吗？"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:366
 msgid ""
 "Several <ref> tags share the same content, but none has been given a name."
-msgstr ""
+msgstr "几个<ref>标签共享相同的内容，但没有被赋予一个名称。"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:367
 msgid "What name do you want to use for this <ref> tag ?"
@@ -550,7 +550,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:172
 msgid "Restore original text"
-msgstr ""
+msgstr "恢复原始文本"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:178
 #, java-format
@@ -575,7 +575,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:195
 msgid "A template that can be used instead of an asterisk."
-msgstr ""
+msgstr "可以用来代替星号的模板。"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:237
 msgid "Title of the article describing this type of error"
@@ -671,8 +671,7 @@ msgstr[0] "您修复了{0}个到消歧页的链接。"
 #, java-format
 msgid "You have fixed {0} error \"{1}\"."
 msgid_plural "You have fixed {0} errors \"{1}\"."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "您修复了{0}个错误“{1}”。"
 
 #: org/wikipediacleaner/api/constants/Contributions.java:82
 #, java-format
@@ -701,7 +700,7 @@ msgstr "双重重定向"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
 msgid "Pages with the fewest revisions"
-msgstr ""
+msgstr "修订次数最少的页面"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:24
 msgid "Redirects"
@@ -713,7 +712,7 @@ msgstr "孤立页面"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
 msgid "Long pages"
-msgstr ""
+msgstr "长页面"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:27
 msgid "Pages with the most categories"
@@ -745,7 +744,7 @@ msgstr "短页面"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
 msgid "Uncategorized categories"
-msgstr ""
+msgstr "未分类的分类"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
 msgid "Uncategorized files"
@@ -1166,9 +1165,9 @@ msgid "Detail"
 msgstr "详情"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:672
-#, fuzzy, java-format
+#, java-format
 msgid "List on {0}"
-msgstr "链接到{0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:679
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:121
@@ -1485,9 +1484,8 @@ msgid "With many disambiguation links"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:795
-#, fuzzy
 msgid "Project Check Wikipedia"
-msgstr "检查维基百科"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:804
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1488
