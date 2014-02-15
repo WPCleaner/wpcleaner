@@ -83,6 +83,17 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
         spaceFound = true;
       }
       String sortFull = category.getSortNotTrimmed();
+      String sortSimple = sortFull;
+      if (sortFull != null) {
+        for (int i = 0; i < sortFull.length(); i++) {
+          if (!Character.isWhitespace(sortFull.charAt(i))) {
+            sortSimple = sortFull.trim();
+          }
+        }
+        if (sortFull.length() > sortSimple.length()) {
+          spaceFound = true;
+        }
+      }
 
       // Register error
       if (spaceFound) {
@@ -94,12 +105,12 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(
             pageAnalysis.getPage(),
             category.getBeginIndex(), category.getEndIndex());
-        if (sortFull == null) {
+        if (sortSimple == null) {
           errorResult.addReplacement(
               "[[" + preferredCategory + ":" + nameSimple + "]]");
         } else {
           errorResult.addReplacement(
-              "[[" + preferredCategory + ":" + nameSimple + "|" + sortFull + "]]");
+              "[[" + preferredCategory + ":" + nameSimple + "|" + sortSimple + "]]");
         }
         errors.add(errorResult);
       }
