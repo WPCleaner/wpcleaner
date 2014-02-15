@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
+import org.wikipediacleaner.api.data.PageElementMagicWord;
 import org.wikipediacleaner.api.data.PageElementParameter;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -174,6 +175,7 @@ public abstract class MWPaneFormatter {
         false,
         styleLanguageLink.getEnabled(),
         styleProgramming.getEnabled(),
+        styleProgramming.getEnabled(),
         styleTag.getEnabled(),
         styleTemplate.getEnabled(),
         styleTitle.getEnabled());
@@ -229,6 +231,8 @@ public abstract class MWPaneFormatter {
       } else if (element instanceof PageElementExternalLink) {
         style = doc.getStyle(ConfigurationValueStyle.EXTERNAL_LINK.getName());
       } else if (element instanceof PageElementFunction) {
+        style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
+      } else if (element instanceof PageElementMagicWord) {
         style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
       } else if (element instanceof PageElementImage) {
         style = doc.getStyle(ConfigurationValueStyle.IMAGE.getName());

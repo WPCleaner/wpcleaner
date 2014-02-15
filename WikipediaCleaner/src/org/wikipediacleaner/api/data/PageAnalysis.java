@@ -171,8 +171,8 @@ public class PageAnalysis {
       boolean withExternalLinks, boolean withFunctions,
       boolean withImages, boolean withInternalLinks,
       boolean withInterwikiLinks, boolean withLanguageLinks,
-      boolean withParameters, boolean withTags,
-      boolean withTemplates, boolean withTitles) {
+      boolean withMagicWords, boolean withParameters,
+      boolean withTags, boolean withTemplates, boolean withTitles) {
     List<PageElement> elements = new ArrayList<PageElement>();
     if (withCategories) {
       elements.addAll(getCategories());
@@ -197,6 +197,9 @@ public class PageAnalysis {
     }
     if (withLanguageLinks) {
       elements.addAll(getLanguageLinks());
+    }
+    if (withMagicWords) {
+      elements.addAll(getMagicWords());
     }
     if (withParameters) {
       elements.addAll(getParameters());
@@ -434,6 +437,7 @@ public class PageAnalysis {
       interwikiLinks = new ArrayList<PageElementInterwikiLink>();
       languageLinks = new ArrayList<PageElementLanguageLink>();
       functions = new ArrayList<PageElementFunction>();
+      magicWords = new ArrayList<PageElementMagicWord>();
       templates = new ArrayList<PageElementTemplate>();
       parameters = new ArrayList<PageElementParameter>();
       titles = new ArrayList<PageElementTitle>();
@@ -459,6 +463,8 @@ public class PageAnalysis {
             currentIndex = analyze2CurlyBrackets(currentIndex);
           } else if (contents.startsWith("=", currentIndex)) {
             currentIndex = analyze1Equal(currentIndex);
+          } else if (contents.startsWith("__", currentIndex)) {
+            currentIndex = analyze2Undescore(currentIndex);
           } else {
             currentIndex = analyzeText(currentIndex);
           }
@@ -473,6 +479,7 @@ public class PageAnalysis {
       areas.addLanguageLinks(languageLinks);
       areas.addTemplates(templates);
       areas.addFunctions(functions);
+      areas.addMagicWords(magicWords);
       areas.addParameters(parameters);
       areas.addTitles(titles);
       areas.addExternalLinks(externalLinks);
@@ -566,6 +573,25 @@ public class PageAnalysis {
         return link.getEndIndex();
       }
       return link.getBeginIndex() + Math.max(2, link.getTextOffset());
+    }
+
+    return currentIndex + 1;
+  }
+
+  /**
+   * Part of the third level of analysis when text is beginning with "__".
+   * 
+   * @param currentIndex Current index in the text.
+   * @return Next index.
+   */
+  private int analyze2Undescore(int currentIndex) {
+
+    // Check if this a magic word
+    PageElementMagicWord magicWord = PageElementMagicWord.analyzeBlock(
+        getWikipedia(), contents, currentIndex);
+    if (magicWord != null) {
+      magicWords.add(magicWord);
+      return magicWord.getEndIndex();
     }
 
     return currentIndex + 1;
@@ -1094,6 +1120,39 @@ public class PageAnalysis {
       if ((function.getBeginIndex() <= currentIndex) &&
           (function.getEndIndex() > currentIndex)) {
         result = function;
+      }
+    }
+    return result;
+  }
+
+  // ==========================================================================
+  // Magic words management
+  // ==========================================================================
+
+  /**
+   * All magic words in the page.
+   */
+  private List<PageElementMagicWord> magicWords;
+
+  /**
+   * @return All magic words in the page.
+   */
+  public List<PageElementMagicWord> getMagicWords() {
+    thirdLevelAnalysis();
+    return magicWords;
+  }
+
+  /**
+   * @param currentIndex Current index.
+   * @return Magic word if the current index is inside a magic word.
+   */
+  public PageElementMagicWord isInMagicWord(int currentIndex) {
+    List<PageElementMagicWord> tmpMagicWords = getMagicWords();
+    PageElementMagicWord result = null;
+    for (PageElementMagicWord magicWord : tmpMagicWords) {
+      if ((magicWord.getBeginIndex() <= currentIndex) &&
+          (magicWord.getEndIndex() > currentIndex)) {
+        result = magicWord;
       }
     }
     return result;

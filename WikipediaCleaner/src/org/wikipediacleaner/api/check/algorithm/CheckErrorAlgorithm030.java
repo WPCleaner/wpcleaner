@@ -12,6 +12,7 @@ import java.util.Collection;
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.SimpleAction;
+import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.MagicWord;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
@@ -41,21 +42,22 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     boolean result = false;
-    MagicWord magicWordImgAlt = pageAnalysis.getWikipedia().getWikiConfiguration().getMagicWord(MagicWord.IMG_ALT);
-    for (PageElementImage image : pageAnalysis.getImages()) {
+    EnumWikipedia wiki = analysis.getWikipedia();
+    MagicWord magicWordImgAlt = wiki.getWikiConfiguration().getMagicWordByName(MagicWord.IMG_ALT);
+    for (PageElementImage image : analysis.getImages()) {
       String description = image.getDescription();
       if ((description == null) || (description.trim().length() == 0)) {
         String alt = image.getAlternateDescription();
@@ -65,7 +67,7 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), image.getBeginIndex(), image.getEndIndex());
+              analysis.getPage(), image.getBeginIndex(), image.getEndIndex());
 
           // Action: add a description
           StringBuilder prefixFull = new StringBuilder();
@@ -105,7 +107,7 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
           errorResult.addPossibleAction(new SimpleAction(
               GT._("View image"),
               new ActionExternalViewer(
-                  pageAnalysis.getWikipedia(),
+                  wiki,
                   image.getNamespace() + ":" + image.getImage(),
                   true)));
           errors.add(errorResult);

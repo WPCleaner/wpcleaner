@@ -250,11 +250,27 @@ public class WikiConfiguration {
    * @param name Magic word name.
    * @return Magic word.
    */
-  public MagicWord getMagicWord(String name) {
+  public MagicWord getMagicWordByName(String name) {
     if ((name == null) || (magicWords == null)) {
       return null;
     }
     return magicWords.get(name); 
+  }
+
+  /**
+   * @param value Magic word value.
+   * @return Magic word.
+   */
+  public MagicWord getMagicWordByValue(String value) {
+    if ((value == null) || (magicWords == null)) {
+      return null;
+    }
+    for (MagicWord magicWord : magicWords.values()) {
+      if (magicWord.isPossibleAlias(value)) {
+        return magicWord;
+      }
+    }
+    return null; 
   }
 
   /**
@@ -266,7 +282,7 @@ public class WikiConfiguration {
     List<String> functionMagicWords = MagicWord.getFunctionMagicWords();
     String colonText = text + ":";
     for (String functionMagicWord : functionMagicWords) {
-      MagicWord magicWord = getMagicWord(functionMagicWord);
+      MagicWord magicWord = getMagicWordByName(functionMagicWord);
       if (magicWord != null) {
         if (magicWord.isPossibleAlias(text)) {
           return magicWord;
@@ -286,7 +302,7 @@ public class WikiConfiguration {
   public MagicWord getImgMagicWord(String text) {
     List<String> imgMagicWords = MagicWord.getImgMagicWords();
     for (String imgMagicWord : imgMagicWords) {
-      MagicWord magicWord = getMagicWord(imgMagicWord);
+      MagicWord magicWord = getMagicWordByName(imgMagicWord);
       if ((magicWord != null) && magicWord.isPossibleAlias(text)) {
         return magicWord;
       }

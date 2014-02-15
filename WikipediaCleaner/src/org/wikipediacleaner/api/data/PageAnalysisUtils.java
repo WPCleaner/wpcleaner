@@ -73,7 +73,7 @@ public class PageAnalysisUtils {
         WPCConfigurationStringList.TEMPLATES_AFTER_HELP_ASKED);
     List<String> commentsAfter = pageAnalysis.getWPCConfiguration().getStringList(
         WPCConfigurationStringList.COMMENTS_FOR_DAB_LINK);
-    MagicWord redirect = pageAnalysis.getWikiConfiguration().getMagicWord(MagicWord.REDIRECT);
+    MagicWord redirect = pageAnalysis.getWikiConfiguration().getMagicWordByName(MagicWord.REDIRECT);
     String contents = pageAnalysis.getContents();
     int maxSize = contents.length();
     boolean firstLink = true;
