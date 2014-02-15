@@ -242,6 +242,15 @@ public class PageElementAreas {
   }
 
   /**
+   * Add magic words to non wiki text areas.
+   * 
+   * @param magicWords List of magic words.
+   */
+  public void addMagicWords(List<PageElementMagicWord> magicWords) {
+    addPageElements(magicWords);
+  }
+
+  /**
    * Add parameters to non wiki text areas.
    * 
    * @param parameters List of parameters.

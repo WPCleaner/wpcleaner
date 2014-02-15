@@ -228,7 +228,7 @@ public class PageElementImage extends PageElement {
       String contents = param.getContents();
       if ((contents != null) &&
           (param.getMagicWord() != null) &&
-          (wikiConfiguration.getMagicWord(MagicWord.IMG_ALT).isPossibleAlias(contents))) {
+          (wikiConfiguration.getMagicWordByName(MagicWord.IMG_ALT).isPossibleAlias(contents))) {
         // TODO: Don't rely on "="
         int equalIndex = contents.indexOf("=");
         if (equalIndex >= 0) {

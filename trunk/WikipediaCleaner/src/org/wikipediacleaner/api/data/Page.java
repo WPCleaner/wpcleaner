@@ -922,7 +922,7 @@ public class Page implements Comparable<Page> {
         // Removing REDIRECT
         if (ok) {
           ok = false;
-          MagicWord magicRedirect = wikipedia.getWikiConfiguration().getMagicWord(MagicWord.REDIRECT);
+          MagicWord magicRedirect = wikipedia.getWikiConfiguration().getMagicWordByName(MagicWord.REDIRECT);
           if ((magicRedirect != null) && (magicRedirect.getAliases() != null)) {
             int length = 0;
             for (String magic : magicRedirect.getAliases()) {

@@ -545,7 +545,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
 
     // Get DEFAULTSORT name
     String defaultSort = "DEFAULTSORT:";
-    MagicWord magicWord = analysis.getWikiConfiguration().getMagicWord(MagicWord.DEFAULT_SORT);
+    MagicWord magicWord = analysis.getWikiConfiguration().getMagicWordByName(MagicWord.DEFAULT_SORT);
     if (magicWord != null) {
       String value = analysis.getWPCConfiguration().getString(WPCConfigurationString.DEFAULTSORT);
       if ((value != null) && (value.trim().length() > 0)) {
