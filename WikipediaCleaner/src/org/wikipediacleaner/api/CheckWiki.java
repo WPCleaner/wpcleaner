@@ -220,18 +220,6 @@ public class CheckWiki {
       properties.put("id", Integer.toString(error));
       properties.put("project", code);
 
-      // Tool Server
-      if ((!useLabs || markBoth) && (page.getPageId() != null)) {
-        properties.put("pageid", Integer.toString(page.getPageId()));
-        if (!useBotList) {
-          properties.put("view", "only");
-          toolServer.sendPost("~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, null);
-        } else {
-          properties.put("action", "mark");
-          toolServer.sendPost("~sk/cgi-bin/checkwiki/checkwiki_bots.cgi", properties, null);
-        }
-      }
-
       // WMF Labs
       if (useLabs || markBoth) {
         properties.put("title", page.getTitle());
@@ -241,6 +229,18 @@ public class CheckWiki {
         } else {
           properties.put("action", "mark");
           labs.sendPost("checkwiki/cgi-bin/checkwiki_bots.cgi", properties, null);
+        }
+      }
+
+      // Tool Server
+      if ((!useLabs || markBoth) && (page.getPageId() != null)) {
+        properties.put("pageid", Integer.toString(page.getPageId()));
+        if (!useBotList) {
+          properties.put("view", "only");
+          toolServer.sendPost("~sk/cgi-bin/checkwiki/checkwiki.cgi", properties, null);
+        } else {
+          properties.put("action", "mark");
+          toolServer.sendPost("~sk/cgi-bin/checkwiki/checkwiki_bots.cgi", properties, null);
         }
       }
     } catch (NumberFormatException e) {
