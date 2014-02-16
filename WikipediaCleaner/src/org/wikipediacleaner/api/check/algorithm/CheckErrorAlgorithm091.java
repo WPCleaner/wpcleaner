@@ -69,7 +69,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
     CWConfigurationError error68 = wiki.getCWConfiguration().getErrorConfiguration(68);
     List<String> templatesList = null;
     if (error68 != null) {
-      String templatesParam = error68.getSpecificProperty("template", true, false, false);
+      String templatesParam = error68.getSpecificProperty("template", true, false, false, false);
       if (templatesParam != null) {
         templatesList = WPCConfiguration.convertPropertyToStringList(templatesParam);
       }

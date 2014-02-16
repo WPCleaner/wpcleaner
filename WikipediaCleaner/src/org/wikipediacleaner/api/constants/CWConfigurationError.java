@@ -33,6 +33,7 @@ public class CWConfigurationError {
   CWConfigurationError(int errorNumber) {
     this.errorNumber = errorNumber;
     this.generalConfiguration = new Properties();
+    this.userConfiguration = new Properties();
     this.wikiConfiguration = new Properties();
   }
 
@@ -44,6 +45,7 @@ public class CWConfigurationError {
   }
 
   private final Properties generalConfiguration;
+  private final Properties userConfiguration;
   private final Properties wikiConfiguration;
 
   /**
@@ -52,6 +54,14 @@ public class CWConfigurationError {
   void clearGeneralConfiguration() {
     generalConfiguration.clear();
     priorityGeneral = null;
+  }
+
+  /**
+   * Clear user configuration.
+   */
+  void clearUserConfiguration() {
+    userConfiguration.clear();
+    priorityUser = null;
   }
 
   /**
@@ -103,6 +113,14 @@ public class CWConfigurationError {
         }
         break;
 
+      case USER_CONFIGURATION:
+        if (value == null) {
+          userConfiguration.remove(name);
+        } else {
+          userConfiguration.setProperty(name, value);
+        }
+        break;
+
       case WIKI_CONFIGURATION:
         if (value == null) {
           wikiConfiguration.remove(name);
@@ -118,13 +136,21 @@ public class CWConfigurationError {
    * @param name Property name.
    * @param useWiki Flag indicating if wiki configuration can be used.
    * @param useGeneral Flag indicating if general configuration can be used.
+   * @param useUser Flag indicating if user configuration can be used.
    * @param acceptEmpty Flag indicating if empty strings are accepted.
    * @return Property value.
    */
   public String getSpecificProperty(
       String name,
-      boolean useWiki, boolean useGeneral, boolean acceptEmpty) {
+      boolean useWiki, boolean useGeneral,
+      boolean useUser, boolean acceptEmpty) {
     String result = null;
+    if (useUser) {
+      result = userConfiguration.getProperty(name);
+      if ((result != null) && (acceptEmpty || (result.length() > 0))) {
+        return result;
+      }
+    }
     if (useWiki) {
       result = wikiConfiguration.getProperty(name);
       if ((result != null) && (acceptEmpty || (result.length() > 0))) {
