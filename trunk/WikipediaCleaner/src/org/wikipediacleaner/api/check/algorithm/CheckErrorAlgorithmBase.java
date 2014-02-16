@@ -224,7 +224,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   public String getSpecificProperty(
       String property,
       boolean useWiki, boolean useGeneral, boolean acceptEmpty) {
-    return configuration.getSpecificProperty(property, useWiki, useGeneral, acceptEmpty);
+    return configuration.getSpecificProperty(property, useWiki, useGeneral, useWiki, acceptEmpty);
   }
 
   /**
