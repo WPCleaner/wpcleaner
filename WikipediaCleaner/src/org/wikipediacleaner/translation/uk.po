@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-02-15 16:54+0100\n"
+"POT-Creation-Date: 2014-02-16 16:27+0100\n"
 "PO-Revision-Date: 2013-07-06 19:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -582,6 +582,10 @@ msgstr ""
 msgid "A template that can be used instead of an asterisk."
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:251
+msgid "A list of templates and parameters in which format should be checked"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:237
 msgid "Title of the article describing this type of error"
 msgstr "Назва статті, що описує цей тип помилки"
@@ -634,27 +638,27 @@ msgstr "Список шаблонів, що випливають з попере
 msgid "Fixed using {0}"
 msgstr "Відсилання {0}"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:292
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:318
 msgid "Deactivated"
 msgstr "Деактивовано"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:294
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:320
 msgid "Low priority"
 msgstr "Низький пріоритет"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:296
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:322
 msgid "Middle priority"
 msgstr "Середній пріоритет"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:298
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:324
 msgid "Top priority"
 msgstr "Високий пріоритет"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:300
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:326
 msgid "For Bot"
 msgstr "Для бота"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:302
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:328
 msgid "Priority unknown"
 msgstr "Пріоритет невідомий"
 
@@ -2433,11 +2437,11 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:205
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:209
 msgid "Description"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:207
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:211
 msgid "N°"
 msgstr ""
 

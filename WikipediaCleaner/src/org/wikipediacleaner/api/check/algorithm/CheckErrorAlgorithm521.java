@@ -120,7 +120,27 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
       char valueChar = value.charAt(valueIndex);
       if (formatChar == '\'') {
         // Check for quoted text or quote
-        // TODO
+        if ((formatIndex + 1 < format.length()) &&
+            (format.charAt(formatIndex + 1) == '\'')) {
+          if (formatChar != '\'') {
+            return false;
+          }
+          formatIndex += 2;
+          valueIndex++;
+        } else {
+          int tmpIndex = formatIndex + 1;
+          while ((tmpIndex < format.length()) &&
+                 (format.charAt(tmpIndex) != '\'')) {
+            tmpIndex++;
+          }
+          int length = tmpIndex - formatIndex - 1;
+          if ((valueIndex + length >= value.length()) ||
+              !format.substring(formatIndex + 1, tmpIndex).equals(value.substring(valueIndex, valueIndex + length))) {
+            return false;
+          }
+          valueIndex += length;
+          formatIndex = tmpIndex + 1;
+        }
       } else if ((formatChar == 'd') ||
                  (formatChar == 'M') ||
                  (formatChar == 'y')) {
