@@ -73,7 +73,8 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           tmpIndex++;
         }
         boolean incorrectChar = false;
-        while ((tmpIndex < maxSize) && (" \\.:?/".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+        while ((tmpIndex < maxSize) &&
+               (" \\.:?/\n".indexOf(contents.charAt(tmpIndex)) >= 0)) {
           tmpIndex++;
           incorrectChar = true;
         }
@@ -92,7 +93,8 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           if ((tmpIndex < maxSize) && (contents.charAt(tmpIndex) == '/')) {
             tmpIndex++;
           }
-          while ((tmpIndex < maxSize) && (" \\.:?/".indexOf(contents.charAt(tmpIndex)) >= 0)) {
+          while ((tmpIndex < maxSize) &&
+                 (" \\.:?/\n".indexOf(contents.charAt(tmpIndex)) >= 0)) {
             tmpIndex++;
             incorrectChar = true;
           }
