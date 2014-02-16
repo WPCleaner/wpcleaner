@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
 
@@ -61,10 +62,22 @@ public class CheckErrorAlgorithm062 extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  /**
+   * Prefixes to look for.
+   */
   private final static String[] prefixes = {
     "www."
   };
 
+  /**
+   * Analyze an area for finding URL without http://
+   * 
+   * @param analysis Page analysis.
+   * @param beginIndex Begin index of the area to analyze.
+   * @param endIndex End index of the area to analyze.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
   public boolean analyzeArea(
       PageAnalysis analysis, int beginIndex, int endIndex,
       Collection<CheckErrorResult> errors) {
@@ -77,15 +90,28 @@ public class CheckErrorAlgorithm062 extends CheckErrorAlgorithmBase {
         if (text.startsWith(prefix, index) &&
             (index + prefix.length() < text.length()) &&
             (Character.isLetterOrDigit(text.charAt(index + prefix.length())))) {
-          PageElementExternalLink link = analysis.isInExternalLink(beginIndex + index);
-          if (link == null) {
+          boolean shouldCount = true;
+          int currentIndex = beginIndex + index;
+          if (shouldCount) {
+            PageElementExternalLink link = analysis.isInExternalLink(currentIndex);
+            if (link != null) {
+              shouldCount = false;
+            }
+          }
+          if (shouldCount) {
+            PageElementComment comment = analysis.isInComment(currentIndex);
+            if (comment != null) {
+              shouldCount = false;
+            }
+          }
+          if (shouldCount) {
             if (errors == null) {
               return true;
             }
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
                 analysis.getPage(),
-                beginIndex + index, beginIndex + index + prefix.length());
+                currentIndex, currentIndex + prefix.length());
             errors.add(errorResult);
           }
         }
