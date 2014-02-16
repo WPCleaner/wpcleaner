@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-02-15 16:54+0100\n"
+"POT-Creation-Date: 2014-02-16 16:27+0100\n"
 "PO-Revision-Date: 2014-02-10 19:23+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -598,6 +598,10 @@ msgstr "Šablona, která může být použita místo apostrofu."
 msgid "A template that can be used instead of an asterisk."
 msgstr "Šablona, která může být použita místo hvězdičky (*)."
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:251
+msgid "A list of templates and parameters in which format should be checked"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:237
 msgid "Title of the article describing this type of error"
 msgstr "Název článku popisující tento typ chyby"
@@ -649,27 +653,27 @@ msgstr "Seznam šablon s vloženou {0}"
 msgid "Fixed using {0}"
 msgstr "Opraveno pomocí {0}"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:292
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:318
 msgid "Deactivated"
 msgstr "Deaktivováno"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:294
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:320
 msgid "Low priority"
 msgstr "Nízká priorita"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:296
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:322
 msgid "Middle priority"
 msgstr "Střední priorita"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:298
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:324
 msgid "Top priority"
 msgstr "Vysoká priorita"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:300
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:326
 msgid "For Bot"
 msgstr "Pro bota"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:302
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:328
 msgid "Priority unknown"
 msgstr "Neznámá priorita"
 
@@ -2448,11 +2452,11 @@ msgstr[0] "{0} stránka byla označena jako opravená pro jiný algoritmus"
 msgstr[1] "{0} stránky byly označeny jako opravené pro jiný algoritmus"
 msgstr[2] "{0} stránek bylo označeno jako opravené pro jiný algoritmus"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:205
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:209
 msgid "Description"
 msgstr "Popis"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:207
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:211
 msgid "N°"
 msgstr "Č."
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-02-15 16:54+0100\n"
+"POT-Creation-Date: 2014-02-16 16:27+0100\n"
 "PO-Revision-Date: 2013-09-30 23:13+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -595,6 +595,10 @@ msgstr ""
 msgid "A template that can be used instead of an asterisk."
 msgstr ""
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:251
+msgid "A list of templates and parameters in which format should be checked"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:237
 msgid "Title of the article describing this type of error"
 msgstr ""
@@ -644,27 +648,27 @@ msgstr ""
 msgid "Fixed using {0}"
 msgstr ""
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:292
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:318
 msgid "Deactivated"
 msgstr "Disattivato"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:294
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:320
 msgid "Low priority"
 msgstr "Bassa priorità"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:296
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:322
 msgid "Middle priority"
 msgstr "Media priorità"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:298
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:324
 msgid "Top priority"
 msgstr "Alta priorità"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:300
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:326
 msgid "For Bot"
 msgstr "Per Bot"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:302
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:328
 msgid "Priority unknown"
 msgstr "Priorità sconosciuta"
 
@@ -2418,11 +2422,11 @@ msgid_plural "{0} pages have been marked as fixed for other algorithms"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:205
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:209
 msgid "Description"
 msgstr "Descrizione"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:207
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:211
 msgid "N°"
 msgstr "N°"
 

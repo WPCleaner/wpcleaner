@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-02-15 16:54+0100\n"
+"POT-Creation-Date: 2014-02-16 16:27+0100\n"
 "PO-Revision-Date: 2014-02-10 19:49+0000\n"
 "Last-Translator: Anthony Harrington <untaintableangel@ubuntu.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -601,6 +601,10 @@ msgstr "A template that can be used instead of an apostrophe."
 msgid "A template that can be used instead of an asterisk."
 msgstr "A template that can be used instead of an asterisk."
 
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:251
+msgid "A list of templates and parameters in which format should be checked"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:237
 msgid "Title of the article describing this type of error"
 msgstr "Title of the article describing this type of error"
@@ -651,27 +655,27 @@ msgstr "A list of templates resulting in the inclusion of {0}"
 msgid "Fixed using {0}"
 msgstr "Fixed using {0}"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:292
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:318
 msgid "Deactivated"
 msgstr "Deactivated"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:294
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:320
 msgid "Low priority"
 msgstr "Low priority"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:296
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:322
 msgid "Middle priority"
 msgstr "Middle priority"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:298
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:324
 msgid "Top priority"
 msgstr "Top priority"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:300
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:326
 msgid "For Bot"
 msgstr "For Bot"
 
-#: org/wikipediacleaner/api/constants/CWConfigurationError.java:302
+#: org/wikipediacleaner/api/constants/CWConfigurationError.java:328
 msgid "Priority unknown"
 msgstr "Priority unknown"
 
@@ -2439,11 +2443,11 @@ msgid_plural "{0} pages have been marked as fixed for other algorithms"
 msgstr[0] "{0} page has been marked as fixed for other algorithms"
 msgstr[1] "{0} pages have been marked as fixed for other algorithms"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:205
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:209
 msgid "Description"
 msgstr "Description"
 
-#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:207
+#: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:211
 msgid "N°"
 msgstr "N°"
 
