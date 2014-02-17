@@ -13,6 +13,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.swing.RepaintManager;
 import javax.swing.UIDefaults;
@@ -100,11 +101,12 @@ public class WikipediaCleaner {
 
     // Debugging
     if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_DETAILS)) {
-      Logger.getLogger("").setLevel(Level.FINE);
+      Logger.getLogger("org.wikipediacleaner").setLevel(Level.FINE);
     }
     if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_FILE)) {
       try {
         Handler fh = new FileHandler("%t/WPCleaner.log");
+        fh.setFormatter(new SimpleFormatter());
         Logger.getLogger("").addHandler(fh);
       } catch (Exception e) {
         // Nothing to do
