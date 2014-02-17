@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-02-16 16:27+0100\n"
+"POT-Creation-Date: 2014-02-17 18:16+0100\n"
 "PO-Revision-Date: 2014-02-15 09:59+0000\n"
 "Last-Translator: Xiaoxing Ye <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -2726,6 +2726,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:81
 msgid "Add a timestamp to logs"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:88
+#, fuzzy
+msgid "Use a log file"
+msgstr "未使用的文件"
+
+#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:95
+msgid "Detailed debugging"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:68

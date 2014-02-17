@@ -33,6 +33,8 @@ public enum ConfigurationValueBoolean {
   CREATE_DAB_WARNING("CreateDabWarning", true),
   CREATE_DAB_WARNING_ALL("CreateDabWarningAll", false),
   CREATE_DAB_WARNING_ENCY("CreateDabWarningEncyclo", true),
+  DEBUG_DETAILS("DebugDetails", false),
+  DEBUG_FILE("DebugFile", false),
   DEBUG_TIME("DebugTime", false),
   DEBUG_URL("DebugURL", true),
   DEBUG_XML("DebugXML", false),

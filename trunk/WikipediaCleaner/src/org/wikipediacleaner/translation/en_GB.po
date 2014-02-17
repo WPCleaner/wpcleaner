@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-02-16 16:27+0100\n"
+"POT-Creation-Date: 2014-02-17 18:16+0100\n"
 "PO-Revision-Date: 2014-02-10 19:49+0000\n"
 "Last-Translator: Anthony Harrington <untaintableangel@ubuntu.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -2802,6 +2802,15 @@ msgstr "Log all answers to MediaWiki API calls"
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:81
 msgid "Add a timestamp to logs"
 msgstr "Add a timestamp to logs"
+
+#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:88
+#, fuzzy
+msgid "Use a log file"
+msgstr "Unused files"
+
+#: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:95
+msgid "Detailed debugging"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:68
 msgid "Formatting options (restart needed)"

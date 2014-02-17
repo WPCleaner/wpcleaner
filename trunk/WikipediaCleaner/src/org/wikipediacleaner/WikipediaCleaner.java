@@ -9,6 +9,8 @@ package org.wikipediacleaner;
 
 import java.awt.Font;
 import java.util.Locale;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +26,7 @@ import org.wikipediacleaner.gui.swing.component.CheckThreadViolationRepaintManag
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationConstants;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.ConfigurationValueString;
 
@@ -89,11 +92,22 @@ public class WikipediaCleaner {
       for (Object key : defaults.keySet()) {
         Font font = defaults.getFont(key);
         if (font != null) {
-          System.err.println("Old font: " + font);
           font = font.deriveFont((float) (font.getSize() + fontSize));
-          System.err.println("New font: " + font);
           defaults.put(key, font);
         }
+      }
+    }
+
+    // Debugging
+    if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_DETAILS)) {
+      Logger.getLogger("").setLevel(Level.FINE);
+    }
+    if (config.getBoolean(null, ConfigurationValueBoolean.DEBUG_FILE)) {
+      try {
+        Handler fh = new FileHandler("%t/WPCleaner.log");
+        Logger.getLogger("").addHandler(fh);
+      } catch (Exception e) {
+        // Nothing to do
       }
     }
 
