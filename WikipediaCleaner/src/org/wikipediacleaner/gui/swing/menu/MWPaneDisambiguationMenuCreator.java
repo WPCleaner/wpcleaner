@@ -177,7 +177,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         if ((templates != null) && (templates.size() > 0)) {
           newText = createTextForTemplate(templates.get(0), page.getTitle(), text);
         } else if ((templatesAfter != null) && (templatesAfter.size() > 0)) {
-          newText = createTextForTemplateAfterLink(templatesAfter.get(0), page.getTitle(), newText);
+          newText = createTextForTemplateAfterLink(templatesAfter.get(0), page.getTitle(), text);
         }
         if (newText != null) {
           addItem(
