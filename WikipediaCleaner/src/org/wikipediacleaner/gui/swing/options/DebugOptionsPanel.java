@@ -27,7 +27,7 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 public class DebugOptionsPanel extends OptionsPanel {
 
   /**
-   * Serialisation.
+   * Serialization.
    */
   private static final long serialVersionUID = 3614825228324362078L;
 
@@ -80,6 +80,20 @@ public class DebugOptionsPanel extends OptionsPanel {
     chk = createJCheckBox(
         GT._("Add a timestamp to logs"),
         ConfigurationValueBoolean.DEBUG_TIME);
+    add(chk, constraints);
+    constraints.gridy++;
+
+    // Create log file
+    chk = createJCheckBox(
+        GT._("Use a log file"),
+        ConfigurationValueBoolean.DEBUG_FILE);
+    add(chk, constraints);
+    constraints.gridy++;
+
+    // Detailed debugging
+    chk = createJCheckBox(
+        GT._("Detailed debugging"),
+        ConfigurationValueBoolean.DEBUG_DETAILS);
     add(chk, constraints);
     constraints.gridy++;
 
