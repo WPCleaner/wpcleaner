@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,6 +26,8 @@ import org.wikipediacleaner.api.check.HtmlCharacters;
  * A text provider for URL titles.
  */
 public class TextProviderUrlTitle implements TextProvider {
+
+  private final static Logger log = Logger.getLogger(TextProviderUrlTitle.class.getName());
 
   /**
    * URL. 
@@ -47,16 +50,19 @@ public class TextProviderUrlTitle implements TextProvider {
    * @return Possible texts.
    */
   public Collection<String> getTexts() {
+    log.fine("IN");
     Collection<String> result = new ArrayList<String>();
     if (url != null) {
       GetMethod method = null;
       InputStream is = null;
       try {
+        log.fine("new HttpClient()");
         HttpClient httpClient = new HttpClient();
         method = new GetMethod(url);
         System.out.println(url);
         int statusCode = httpClient.executeMethod(method);
         if (statusCode == HttpStatus.SC_OK) {
+          log.fine("HttpStatus.SC_OK");
           is = method.getResponseBodyAsStream();
           byte[] tmpBytes = new byte[MAXIMUM_SIZE];
           int size = is.read(tmpBytes);
@@ -102,10 +108,13 @@ public class TextProviderUrlTitle implements TextProvider {
           }
         }
       } catch (IOException ex) {
+        log.fine("IOException");
         // Nothing to do
       } catch (Exception ex) {
+        log.fine("Exception");
         // Nothing to do
       } finally {
+        log.fine("finally");
         if (is != null) {
           try {
             is.close();
@@ -118,6 +127,7 @@ public class TextProviderUrlTitle implements TextProvider {
         }
       }
     }
+    log.fine("OUT");
     return result;
   }
 
