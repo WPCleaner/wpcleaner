@@ -139,8 +139,12 @@ public class PageElementExternalLink extends PageElement {
     }
 
     // Find possible description
-    int spaceIndex = contents.indexOf(' ', tmpIndex);
-    if ((spaceIndex < 0) || (spaceIndex >= endIndex)) {
+    int separatorIndex = tmpIndex;
+    while ((separatorIndex < endIndex) &&
+           (END_CHARACTERS.indexOf(contents.charAt(separatorIndex)) < 0)) {
+      separatorIndex++;
+    }
+    if ((separatorIndex < 0) || (separatorIndex >= endIndex)) {
       return new PageElementExternalLink(
           index, endIndex + (hasSecondSquare ? 1 : 0),
           contents.substring(beginIndex, endIndex),
@@ -149,9 +153,9 @@ public class PageElementExternalLink extends PageElement {
 
     return new PageElementExternalLink(
         index, endIndex + (hasSecondSquare ? 1 : 0),
-        contents.substring(beginIndex, spaceIndex),
-        contents.substring(spaceIndex + 1, endIndex),
-        spaceIndex + 1 - index,
+        contents.substring(beginIndex, separatorIndex),
+        contents.substring(separatorIndex + 1, endIndex),
+        separatorIndex + 1 - index,
         hasSquare, hasSecondSquare);
   }
 
