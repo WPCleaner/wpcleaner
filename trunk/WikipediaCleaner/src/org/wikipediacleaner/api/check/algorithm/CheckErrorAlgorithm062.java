@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 
 
 /**
@@ -102,6 +103,16 @@ public class CheckErrorAlgorithm062 extends CheckErrorAlgorithmBase {
             PageElementComment comment = analysis.isInComment(currentIndex);
             if (comment != null) {
               shouldCount = false;
+            }
+          }
+          if (shouldCount) {
+            PageElementTemplate template = analysis.isInTemplate(currentIndex);
+            if (template != null) {
+              for (int numParam = 0; numParam < template.getParameterCount(); numParam++) {
+                if (template.getParameterValueOffset(numParam) == currentIndex) {
+                  shouldCount = false;
+                }
+              }
             }
           }
           if (shouldCount) {
