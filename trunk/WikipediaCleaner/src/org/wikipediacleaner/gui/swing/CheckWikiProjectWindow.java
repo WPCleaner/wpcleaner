@@ -1606,12 +1606,19 @@ public class CheckWikiProjectWindow extends OnePageWindow {
     }
     lastErrorDisplayed = errorNumber;
 
-    // Display description
+    String description = null;
     if (algorithm != null) {
+      description = algorithm.getLongDescription();
+      if ((description == null) || (description.trim().length() == 0)) {
+        description = algorithm.getShortDescription();
+      }
+    }
+    // Display description
+    if ((algorithm != null) && (description != null)) {
       // Error type description
       try {
         DocumentBuilderImpl dbi = new DocumentBuilderImpl(ucontext, rcontextDescription);
-        InputSource is = new InputSource(new StringReader(algorithm.getLongDescription()));
+        InputSource is = new InputSource(new StringReader(description));
         CheckWiki cw = APIFactory.getCheckWiki();
         is.setSystemId(cw.getUrlDescription(getWikipedia(), algorithm));
         Document document = dbi.parse(is);
@@ -1633,7 +1640,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         StringBuilder parametersDescription = new StringBuilder();
         parametersDescription.append(GT._(
             "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :",
-            new Object[] { Integer.toString(algorithm.getErrorNumber()), url }));
+            new Object[] { Integer.toString(errorNumber), url }));
         parametersDescription.append("\n<ul>");
         Map<String, String> parameters = algorithm.getParameters();
         for (Map.Entry<String, String> entry : parameters.entrySet()) {
