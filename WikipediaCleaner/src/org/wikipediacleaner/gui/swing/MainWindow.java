@@ -1224,9 +1224,10 @@ public class MainWindow
   public void actionContributions() {
     EnumWikipedia wikipedia = getWikipedia();
     if ((wikipedia != null) && (wikipedia.getContributions() != null)) {
-      Utilities.displayInformationMessage(
-          getParentComponent(),
-          wikipedia.getContributions().getDescription());
+      InformationWindow.createInformationWindow(
+          GT._("Your contributions"),
+          wikipedia.getContributions().getDescription(),
+          wikipedia);
     }
   }
   
