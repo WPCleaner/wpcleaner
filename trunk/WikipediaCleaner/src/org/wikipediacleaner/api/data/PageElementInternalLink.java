@@ -182,17 +182,32 @@ public class PageElementInternalLink extends PageElement {
         return null;
       }
 
-      // Is it an interwiki ?
-      for (Interwiki iw : wikipedia.getWikiConfiguration().getInterwikis()) {
-        if (iw.getPrefix().equals(namespaceName)) {
-          return null;
-        }
-      }
-
       // Is it a language link ?
       if (Language.isLanguageCode(
           wikipedia.getWikiConfiguration().getLanguages(), namespaceName)) {
         return null;
+      }
+    }
+
+    // Is it an interwiki ?
+    if (colonIndex >= 0) {
+      String namespaceName = null;
+      if (colonIndex == 0) {
+        if (linkTrimmed.length() > 1) {
+          colonIndex = linkTrimmed.indexOf(':', 1);
+          if (colonIndex > 1) {
+            namespaceName = linkTrimmed.substring(1, colonIndex);
+          }
+        }
+      } else {
+        namespaceName = linkTrimmed.substring(0, colonIndex);
+      }
+      if (namespaceName != null) {
+        for (Interwiki iw : wikipedia.getWikiConfiguration().getInterwikis()) {
+          if (iw.getPrefix().equals(namespaceName)) {
+            return null;
+          }
+        }
       }
     }
 
