@@ -44,45 +44,14 @@ public class Interwiki implements Comparable<Interwiki> {
       return null;
     }
 
-    // Check protocol
-    if (test.startsWith("http:")) {
-      test = test.substring(5);
-    } else if (test.startsWith("https:")) {
-      test = test.substring(6);
-    } else {
-      return null;
-    }
-
-    // Check URL
     int colonIndex = url.indexOf(':');
     if (colonIndex < 0) {
       return null;
     }
     String tmpUrl = url.substring(colonIndex + 1);
-    int paramIndex = tmpUrl.indexOf("$1");
-    if (paramIndex >= 0) {
-      if (test.startsWith(tmpUrl.substring(0, paramIndex))) {
-        String tmp = test.substring(paramIndex);
-        String articleName = null;
-        if (paramIndex + 2 >= tmpUrl.length()) {
-          articleName = tmp;
-        } else if (test.endsWith(tmpUrl.substring(paramIndex + 2))) {
-          articleName = tmp.substring(0, tmp.length() - tmpUrl.length() + paramIndex + 2);
-        }
-        articleName = HttpUtils.decodeUrl(articleName);
-        return articleName;
-      }
-    }
-
-    // Check general URL
-    final String possibleEnd = "/wiki/$1";
-    if (local && tmpUrl.endsWith(possibleEnd)) {
-      if ((test.length() == tmpUrl.length() - possibleEnd.length()) ||
-          (test.length() == tmpUrl.length() - possibleEnd.length() + 1)) {
-        if (tmpUrl.startsWith(test)) {
-          return "";
-        }
-      }
+    String result = HttpUtils.getArticleFromUrl(test, tmpUrl);
+    if (result != null) {
+      return result;
     }
 
     return null;
