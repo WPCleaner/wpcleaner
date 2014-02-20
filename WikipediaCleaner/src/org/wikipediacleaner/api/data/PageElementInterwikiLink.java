@@ -51,11 +51,20 @@ public class PageElementInterwikiLink extends PageElement {
     tmpIndex += 2;
     int beginIndex = tmpIndex;
 
-    // Possible whitespaces characters
+    // Possible whitespace characters
     while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
       tmpIndex++;
     }
 
+    // Possible colon at the beginning
+    if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ':')) {
+      tmpIndex++;
+      beginIndex = tmpIndex;
+      while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
+        tmpIndex++;
+      }
+    }
+    
     // Find elements of interwiki link
     if (tmpIndex >= contents.length()) {
       return null;
