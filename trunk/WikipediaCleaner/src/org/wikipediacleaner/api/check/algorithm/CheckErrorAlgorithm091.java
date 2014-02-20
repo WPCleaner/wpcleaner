@@ -177,11 +177,11 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
           }
 
           // Create internal link
-          boolean first = (errorResult.getPossibleActions() == null) || (errorResult.getPossibleActions().isEmpty());
-          if (first && link.hasSquare() && link.hasSecondSquare()) {
+          if (link.hasSquare() && link.hasSecondSquare()) {
+            boolean first = (errorResult.getPossibleActions() == null) || (errorResult.getPossibleActions().isEmpty());
             errorResult.addReplacement(
                 "[[:" + prefix + ":" + article + "|" + (link.getText() != null ? link.getText() : article) + "]]",
-                true);
+                first);
           }
           errors.add(errorResult);
         }
