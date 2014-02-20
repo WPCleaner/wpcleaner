@@ -7,9 +7,15 @@
 
 package org.wikipediacleaner.api;
 
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.ByteBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -210,51 +216,159 @@ public class HttpUtils {
   // Configuration
   // ==========================================================================
 
+  private static Charset utf8Charset = null;
+  private static Charset iso88591Charset = null;
+
+  static {
+    utf8Charset = Charset.forName("UTF8");
+    iso88591Charset = Charset.forName("ISO-8859-1");
+  }
+
   /**
-   * @param url URL
-   * @return Decoded URL
+   * Append bytes of a String to a buffer.
+   * 
+   * @param buf Byte buffer.
+   * @param data String.
+   * @throws UnsupportedEncodingException
    */
-  public static String decodeUrl(String url) {
+  private static void appendBytes(ByteArrayOutputStream buf, String data) throws UnsupportedEncodingException {
+    byte[] b = data.getBytes("UTF8");
+    buf.write(b, 0, b.length);
+  }
 
-    // Basic cases
-    if ((url == null) ||
-        (url.length() == 0) ||
-        (url.contains("&"))) {
-      return null;
-    }
-    url = url.replaceAll("\\_", " ");
-    if (url.indexOf('%') < 0) {
-      return url;
-    }
-
-    // URL decoding
-    try {
-      byte[] original = url.getBytes("UTF8");
-      byte[] converted = new byte[original.length];
-      int currentOriginal = 0;
-      int currentConverted = 0;
-      while (currentOriginal < original.length) {
-        if ((original[currentOriginal] == '%') && (currentOriginal + 2 < original.length)) {
-          byte[] hexa = new byte[2];
-          hexa[0] = original[currentOriginal + 1];
-          hexa[1] = original[currentOriginal + 2];
-          String hexaString = new String(hexa, "UTF8");
-          converted[currentConverted] = Integer.valueOf(hexaString, 16).byteValue();
-          currentOriginal += 3;
-          currentConverted++;
+  /**
+   * Parse an encoded string into a byte array.
+   * 
+   * @param segment String
+   * @return Byte array.
+   * @throws UnsupportedEncodingException
+   */
+  private static byte[] parseEncodedString(String segment) throws UnsupportedEncodingException {
+    ByteArrayOutputStream buf = new ByteArrayOutputStream(segment.length());
+    int last = 0;
+    int index = 0;
+    while (index < segment.length()) {
+      if (segment.charAt(index) == '%') {
+        appendBytes(buf, segment.substring(last, index));
+        if ((index < segment.length() + 2) &&
+            ("ABCDEFabcdef0123456789".indexOf(segment.charAt(index + 1)) >= 0) &&
+            ("ABCDEFabcdef0123456789".indexOf(segment.charAt(index + 2)) >= 0)) {
+          buf.write((byte) Integer.parseInt(segment.substring(index + 1, index + 3), 16));
+          index += 3;
+        } else if ((index < segment.length() + 1) &&
+                   (segment.charAt(index + 1) == '%')) {
+          buf.write((byte) '%');
+          index += 2;
         } else {
-          converted[currentConverted] = original[currentOriginal];
-          currentOriginal++;
-          currentConverted++;
+          buf.write((byte) '%');
+          index++;
+        }
+        last = index;
+      } else {
+        index++;
+      }
+    }
+    appendBytes(buf, segment.substring(last));
+    return buf.toByteArray();
+  }
+
+  /**
+   * Parse an encoded string, trying several characters sets.
+   * 
+   * @param segment String to parse.
+   * @param encodings Characters sets.
+   * @return Decoded string.
+   */
+  private static String parseEncodedString(String segment, Charset... encodings) {
+    if ((segment == null) || (segment.indexOf('%') < 0)) {
+      return segment;
+    }
+    try {
+      byte[] data = parseEncodedString(segment);
+      for (Charset encoding : encodings) {
+        try {
+          if (encoding != null) {
+            return encoding.newDecoder().
+                onMalformedInput(CodingErrorAction.REPORT).
+                decode(ByteBuffer.wrap(data)).toString();
+          }
+        } catch (CharacterCodingException e) {
+          // Incorrect encoding, try next one
         }
       }
-      converted = Arrays.copyOf(converted, currentConverted);
-      url = new String(converted, "UTF8");
     } catch (UnsupportedEncodingException e) {
       // Nothing to do
-    } catch (NumberFormatException e) {
-      // Nothing to do
     }
-    return url;
+    return segment;
+  }
+
+  /**
+   * Find if a given URL is for an article.
+   * 
+   * @param url URL.
+   * @param base Base URL.
+   * @return Article name or null if it doesn't match an article.
+   */
+  public static String getArticleFromUrl(String url, String base) {
+    if ((url == null) || (base == null)) {
+      return null;
+    }
+
+    // Create URI
+    URI uri = null;
+    try {
+      uri = new URI(url);
+    } catch (URISyntaxException e) {
+      return null;
+    }
+
+    // Various checks
+    if (!uri.isAbsolute() || uri.isOpaque()) {
+      return null;
+    }
+
+    // Check scheme
+    String scheme = uri.getScheme();
+    if (scheme == null) {
+      return null;
+    }
+    if (!scheme.equalsIgnoreCase("http") &&
+        !scheme.equalsIgnoreCase("https")) {
+      return null;
+    }
+
+    // Build decoded parts
+    StringBuilder details = new StringBuilder();
+    details.append("//");
+    details.append(uri.getAuthority());
+    details.append(parseEncodedString(uri.getRawPath(), utf8Charset, iso88591Charset));
+    if (uri.getQuery() != null) {
+      details.append("?");
+      details.append(uri.getQuery());
+    }
+    if (uri.getFragment() != null) {
+      details.append("#");
+      details.append(uri.getFragment());
+    }
+
+    // Check that URL starts correctly
+    int paramIndex = base.indexOf("$1");
+    if (paramIndex < 0) {
+      return null;
+    }
+    String detailsStr = details.toString();
+    if (!detailsStr.startsWith(base.substring(0, paramIndex))) {
+      return null;
+    }
+
+    // Check that URL ends correctly
+    if (paramIndex + 2 >= base.length()) {
+      return detailsStr.substring(paramIndex).replaceAll("\\_", " ");
+    }
+    if (!detailsStr.endsWith(base.substring(paramIndex + 2))) {
+      return null;
+    }
+
+    return detailsStr.substring(paramIndex, details.length() - base.length() + 2 + paramIndex).replaceAll("\\_", " ");
   }
 }

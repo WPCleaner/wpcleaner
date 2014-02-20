@@ -53,52 +53,14 @@ public class WikiConfiguration {
       return null;
     }
 
-    // Check protocol
-    if (url.startsWith("http:")) {
-      url = url.substring(5);
-    } else if (url.startsWith("https:")) {
-      url = url.substring(6);
-    } else {
-      return null;
+    String article = HttpUtils.getArticleFromUrl(url, server + articlePath);
+    if (article != null) {
+      return article;
     }
-
-    // Check server URL
-    if (!url.startsWith(server)) {
-      return null;
-    }
-    url = url.substring(server.length());
-
-    // Check with article path
-    if (articlePath != null) {
-      int paramIndex = articlePath.indexOf("$1");
-      if (paramIndex >= 0) {
-        if (url.startsWith(articlePath.substring(0, paramIndex))) {
-          String tmp = url.substring(paramIndex);
-          String articleName = null;
-          if (paramIndex + 2 >= articlePath.length()) {
-            articleName = tmp;
-          } else if (url.endsWith(articlePath.substring(paramIndex + 2))) {
-            articleName = tmp.substring(0, tmp.length() - articlePath.length() + paramIndex + 2);
-          }
-          articleName = HttpUtils.decodeUrl(articleName);
-          if (articleName != null) {
-            return articleName;
-          }
-        }
-      }
-    }
-
-    // Check with script
     if (script != null) {
-      if (url.startsWith(script)) {
-        String tmp = url.substring(script.length());
-        if (url.startsWith("?title=")) {
-          tmp = tmp.substring(0, 7);
-          tmp = HttpUtils.decodeUrl(tmp);
-          if (tmp != null) {
-            return tmp;
-          }
-        }
+      article = HttpUtils.getArticleFromUrl(url, server + script + "?title=$1");
+      if (article != null) {
+        return article;
       }
     }
 
