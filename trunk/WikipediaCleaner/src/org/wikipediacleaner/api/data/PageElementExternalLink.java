@@ -243,8 +243,13 @@ public class PageElementExternalLink extends PageElement {
     super(beginIndex, endIndex);
     this.linkNotTrimmed = link;
     this.link = (link != null) ? link.trim() : null;
-    this.textNotTrimmed = text;
-    this.text = (text != null) ? text.trim() : null;
+    if ((text != null) && (text.trim().length() > 0)) {
+      this.textNotTrimmed = text;
+      this.text = text.trim();
+    } else {
+      this.textNotTrimmed = null;
+      this.text = null;
+    }
     this.textOffset = textOffset;
     this.hasSquare = hasSquare;
     this.hasSecondSquare = hasSecondSquare;
