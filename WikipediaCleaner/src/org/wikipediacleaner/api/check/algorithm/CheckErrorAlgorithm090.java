@@ -67,7 +67,8 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
     for (PageElementExternalLink link : links) {
       if (link.hasSquare()) {
         String article = wikiConf.isArticleUrl(link.getLink());
-        if ((article != null) && (article.length() > 0)) {
+        if ((article != null) &&
+            (article.length() > 0)) {
           if (errors == null) {
             return true;
           }
@@ -81,7 +82,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
           }
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis.getPage(), beginIndex, endIndex);
-          if (link.hasSecondSquare()) {
+          if (link.hasSecondSquare() && (link.getLink().indexOf('?') < 0)) {
             Page articlePage = DataManager.getPage(analysis.getWikipedia(), article, null, null, null);
             boolean needColon = false;
             if (articlePage.getNamespace() != null) {
@@ -100,7 +101,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
             errorResult.addReplacement(
                 PageElementInternalLink.createInternalLink(
                     (needColon ? ":" : "") + article, link.getText()),
-                true);
+                link.getText() != null);
           }
           errors.add(errorResult);
         }
