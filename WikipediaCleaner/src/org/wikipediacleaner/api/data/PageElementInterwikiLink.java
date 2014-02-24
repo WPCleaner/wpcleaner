@@ -17,8 +17,9 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
  */
 public class PageElementInterwikiLink extends PageElement {
 
-  private final String interwikiNotTrimmed;
-  private final String interwiki;
+  private final Interwiki interwiki;
+  private final String interwikiTextNotTrimmed;
+  private final String interwikiText;
   private final String linkNotTrimmed;
   private final String link;
   private final String anchorNotTrimmed;
@@ -57,7 +58,9 @@ public class PageElementInterwikiLink extends PageElement {
     }
 
     // Possible colon at the beginning
+    boolean beginWithColon = false;
     if ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ':')) {
+      beginWithColon = true;
       tmpIndex++;
       beginIndex = tmpIndex;
       while ((tmpIndex < contents.length()) && (contents.charAt(tmpIndex) == ' ')) {
@@ -82,15 +85,21 @@ public class PageElementInterwikiLink extends PageElement {
     if (interwikis == null) {
       return null;
     }
-    boolean interwikiFound = false;
-    for (Interwiki interwiki : interwikis) {
-      if ((interwiki != null) &&
-          ((interwiki.getLanguage() == null) || (interwiki.getLanguage().length() == 0)) &&
-          (interwikiText.equals(interwiki.getPrefix()))) {
-        interwikiFound = true;
+    Interwiki interwiki = null;
+    for (Interwiki tmpInterwiki : interwikis) {
+      if ((tmpInterwiki != null) &&
+          ((tmpInterwiki.getLanguage() == null) ||
+           (tmpInterwiki.getLanguage().length() == 0) ||
+           beginWithColon) &&
+          (interwikiText.equals(tmpInterwiki.getPrefix()))) {
+        if (interwiki == null) {
+          interwiki = tmpInterwiki;
+        } else if (tmpInterwiki.getLanguage().length() < interwiki.getLanguage().length()) {
+          interwiki = tmpInterwiki;
+        }
       }
     }
-    if (!interwikiFound) {
+    if (interwiki == null) {
       return null;
     }
 
@@ -102,7 +111,7 @@ public class PageElementInterwikiLink extends PageElement {
       if ((anchorIndex >= 0) && (anchorIndex < pipeIndex)) {
         return new PageElementInterwikiLink(
             index, endIndex + 2,
-            interwikiText,
+            interwiki, interwikiText,
             contents.substring(colonIndex + 1, anchorIndex),
             contents.substring(anchorIndex + 1, pipeIndex),
             contents.substring(pipeIndex + 1, endIndex),
@@ -110,7 +119,7 @@ public class PageElementInterwikiLink extends PageElement {
       }
       return new PageElementInterwikiLink(
           index, endIndex + 2,
-          interwikiText,
+          interwiki, interwikiText,
           contents.substring(colonIndex + 1, pipeIndex),
           null,
           contents.substring(pipeIndex + 1, endIndex),
@@ -119,20 +128,24 @@ public class PageElementInterwikiLink extends PageElement {
     if ((anchorIndex >= 0) && (anchorIndex < endIndex)) {
       return new PageElementInterwikiLink(
           index, endIndex + 2,
-          interwikiText,
+          interwiki, interwikiText,
           contents.substring(colonIndex + 1, anchorIndex),
           contents.substring(anchorIndex + 1, endIndex),
           null, -1);
     }
     return new PageElementInterwikiLink(
         index, endIndex + 2,
-        interwikiText,
+        interwiki, interwikiText,
         contents.substring(colonIndex + 1, endIndex),
         null, null, -1);
   }
 
-  public String getInterwiki() {
+  public Interwiki getInterwiki() {
     return interwiki;
+  }
+
+  public String getInterwikiText() {
+    return interwikiText;
   }
 
   public String getLink() {
@@ -158,14 +171,25 @@ public class PageElementInterwikiLink extends PageElement {
     return textOffset;
   }
 
+  /**
+   * @param beginIndex Begin index.
+   * @param endIndex End index.
+   * @param interwiki Interwiki.
+   * @param interwikiText Interwiki text.
+   * @param link Link.
+   * @param anchor Anchor.
+   * @param text Text.
+   * @param textOffset Offset of the text.
+   */
   private PageElementInterwikiLink(
       int beginIndex, int endIndex,
-      String interwiki,
+      Interwiki interwiki, String interwikiText,
       String link, String anchor,
       String text, int textOffset) {
     super(beginIndex, endIndex);
-    this.interwikiNotTrimmed = interwiki;
-    this.interwiki = (interwiki != null) ? interwiki.trim() : null;
+    this.interwiki = interwiki;
+    this.interwikiTextNotTrimmed = interwikiText;
+    this.interwikiText = (interwikiText != null) ? interwikiText.trim() : null;
     this.linkNotTrimmed = link;
     this.link = (link != null) ? Page.getStringUcFirst(link.trim()) : null;
     this.anchorNotTrimmed = anchor;
@@ -182,7 +206,7 @@ public class PageElementInterwikiLink extends PageElement {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("[[");
-    sb.append(interwikiNotTrimmed);
+    sb.append(interwikiTextNotTrimmed);
     sb.append(':');
     sb.append(linkNotTrimmed);
     if (anchorNotTrimmed != null) {

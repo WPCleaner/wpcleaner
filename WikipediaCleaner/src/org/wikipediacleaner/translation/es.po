@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-02-20 20:07+0100\n"
+"POT-Creation-Date: 2014-02-24 22:37+0100\n"
 "PO-Revision-Date: 2013-11-20 10:51+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -385,28 +385,23 @@ msgstr ""
 "Lista de abreviaciones que generan falsos positivos cuando están ubicados "
 "antes de {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:50
-msgid "Check all links to other language"
-msgstr "Comprobar todos los enlaces a otros idiomas"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:161
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:94
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:139
 msgid "Check language links"
 msgstr "Comprobar los enlaces de idiomas"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:176
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:319
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:109
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:160
 msgid "What is the title of the page on this wiki ?"
 msgstr "¿Cuál es el título de la página en esta wiki?"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:189
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:122
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:173
 #, java-format
 msgid "Replace using template {0}"
 msgstr "Reemplazar usando plantilla {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:195
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:128
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm081.java:265
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:282
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:61
@@ -417,7 +412,7 @@ msgstr "Reemplazar usando plantilla {0}"
 msgid "External Viewer"
 msgstr "Visor externo"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:214
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:148
 msgid ""
 "A template that can be used instead of the link to an other language. It "
 "must be specified as: <template name>|<param name for local page name>|"
@@ -429,34 +424,6 @@ msgstr ""
 "nombre local de la página>|<nombre del parámetro para el código de otro "
 "idioma>|<nombre del parámetro para el código de otro idioma>|<nombre del "
 "parámetro para el texto mostrado>"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:297
-msgid "Do not replace"
-msgstr "No reemplazar"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:298
-#: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:302
-#, java-format
-msgid ""
-"The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\n"
-"By what text do you want to replace the link ?"
-msgstr ""
-"La página «{0}» en «{1}» tiene un enlace de idioma a «{2}»: {3}.\n"
-"¿Con qué texto quiere reemplazar el enlace?"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:315
-#, java-format
-msgid "The page \"{0}\" in \"{1}\" doesn''t have a language link to \"{2}\"."
-msgstr "La página «{0}» en «{1}» no tiene un enlace de idioma a «{2}»."
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:317
-#, java-format
-msgid "You can replace the link using template {0}."
-msgstr "Puede reemplazar el enlace utilizando la plantilla {0}."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:65
 #, java-format
@@ -2227,6 +2194,10 @@ msgstr ""
 "desambiguación"
 
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:120
 msgid "Close"
 msgstr "Cerrar"
@@ -3322,6 +3293,26 @@ msgstr ""
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr ""
+
+#~ msgid "Check all links to other language"
+#~ msgstr "Comprobar todos los enlaces a otros idiomas"
+
+#~ msgid "Do not replace"
+#~ msgstr "No reemplazar"
+
+#~ msgid ""
+#~ "The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\n"
+#~ "By what text do you want to replace the link ?"
+#~ msgstr ""
+#~ "La página «{0}» en «{1}» tiene un enlace de idioma a «{2}»: {3}.\n"
+#~ "¿Con qué texto quiere reemplazar el enlace?"
+
+#~ msgid ""
+#~ "The page \"{0}\" in \"{1}\" doesn''t have a language link to \"{2}\"."
+#~ msgstr "La página «{0}» en «{1}» no tiene un enlace de idioma a «{2}»."
+
+#~ msgid "You can replace the link using template {0}."
+#~ msgstr "Puede reemplazar el enlace utilizando la plantilla {0}."
 
 #~ msgid "&Close"
 #~ msgstr "&Cerrar"

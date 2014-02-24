@@ -7,26 +7,19 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.wikipediacleaner.api.API;
-import org.wikipediacleaner.api.APIException;
-import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.check.AddTextActionProvider;
 import org.wikipediacleaner.api.check.BasicActionProvider;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckLanguageLinkActionProvider;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
-import org.wikipediacleaner.api.data.Language;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.gui.swing.action.ActionExternalViewer;
-import org.wikipediacleaner.gui.swing.basic.Utilities;
-import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.StringChecker;
 import org.wikipediacleaner.utils.StringCheckerUnauthorizedCharacters;
@@ -43,68 +36,9 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
    */
   private final StringChecker checker;
 
-  /**
-   * Possible global fixes.
-   */
-  private final static String[] globalFixes = new String[] {
-    GT._("Check all links to other language"),
-  };
-
   public CheckErrorAlgorithm068() {
     super("Link to other language");
     checker = new StringCheckerUnauthorizedCharacters("[]\"");
-  }
-
-  /**
-   * Local class for holding analysis result.
-   */
-  private static class ErrorAnalysis {
-    final Language language;
-    final EnumWikipedia fromWiki;
-    final String title;
-
-    ErrorAnalysis(Language language, String title) {
-      this.language = language;
-      this.fromWiki = EnumWikipedia.getWikipedia(language.getCode());
-      this.title = title;
-    }
-  }
-
-  /**
-   * Check if a link is to an other language.
-   * 
-   * @param link Link.
-   * @param pageAnalysis Page analysis.
-   * @return Language to which the link is pointing to.
-   */
-  private ErrorAnalysis isLinkToOtherLanguage(
-      PageElementInternalLink link, PageAnalysis pageAnalysis) {
-    // Check that link starts with :
-    String linkUrl = link.getLink();
-    if ((linkUrl == null) || (!linkUrl.startsWith(":"))) {
-      return null;
-    }
-
-    // Check that there's a second :
-    int currentPos = linkUrl.indexOf(":", 1);
-    if (currentPos < 0) {
-      return null;
-    }
-
-    // Check that it's not a link to the current wiki
-    String namespace = linkUrl.substring(1, currentPos);
-    if (namespace.equals(pageAnalysis.getSettings().getCode())) {
-      return null;
-    }
-
-    // Check that it's a link to an other wiki
-    for (Language lg : pageAnalysis.getWikiConfiguration().getLanguages()) {
-      if (namespace.equals(lg.getCode())) {
-        return new ErrorAnalysis(lg, linkUrl.substring(currentPos + 1));
-      }
-    }
-
-    return null;
   }
 
   /**
@@ -123,15 +57,16 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
-      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      boolean onlyAutomatic) {
+    if (analysis == null) {
       return false;
     }
 
@@ -140,27 +75,25 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
 
     // Analyzing the text from the beginning
     boolean result = false;
-    for (PageElementInternalLink link : pageAnalysis.getInternalLinks()) {
-
-      // Check if it is a link to an other language
-      ErrorAnalysis analysis = isLinkToOtherLanguage(link, pageAnalysis);
-      if (analysis != null) {
+    EnumWikipedia wiki = analysis.getWikipedia();
+    for (PageElementInterwikiLink link : analysis.getInterwikiLinks()) {
+      if ((link != null) &&
+          (link.getInterwiki() != null) &&
+          (link.getInterwiki().getLanguage() != null) &&
+          (!link.getInterwikiText().equals(wiki.getSettings().getCode()))) {
         if (errors == null) {
           return true;
         }
         result = true;
-
-        String lgCode = analysis.language.getCode();
-        String pageTitle = analysis.title;
-        EnumWikipedia fromWikipedia = analysis.fromWiki;
-
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
-        if (fromWikipedia != null) {
+            analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+        EnumWikipedia fromWiki = EnumWikipedia.getWikipedia(link.getInterwiki().getLanguage());
+        if (fromWiki != null) {
+          String pageTitle = link.getLink();
           errorResult.addPossibleAction(
               GT._("Check language links"),
               new CheckLanguageLinkActionProvider(
-                  fromWikipedia, pageAnalysis.getWikipedia(),
+                  fromWiki, wiki,
                   pageTitle, link.getText()));
           if ((templatesList != null) && (templatesList.size() > 0)) {
             for (String template : templatesList) {
@@ -169,7 +102,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
                 String prefix =
                   "{{" + templateArgs[0] + "|" + templateArgs[1] + "=";
                 String suffix =
-                  "|" + templateArgs[2] + "=" + lgCode +
+                  "|" + templateArgs[2] + "=" + fromWiki.getSettings().getCode() +
                   "|" + templateArgs[3] + "=" + pageTitle +
                   "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : pageTitle) +
                   "}}";
@@ -194,11 +127,12 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
           errorResult.addPossibleAction(
               GT._("External Viewer"),
               new BasicActionProvider(
-                  new ActionExternalViewer(fromWikipedia, pageTitle)));
+                  new ActionExternalViewer(fromWiki, pageTitle)));
         }
         errors.add(errorResult);
       }
     }
+
     return result;
   }
 
@@ -219,147 +153,5 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
           "<param name for page name in other language>|" +
           "<param name for displayed text>").replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;"));
     return parameters;
-  }
-
-  /**
-   * @return List of possible global fixes.
-   */
-  @Override
-  public String[] getGlobalFixes() {
-    return globalFixes;
-  }
-
-  /**
-   * Fix all the errors in the page.
-   * 
-   * @param fixName Fix name (extracted from getGlobalFixes()).
-   * @param analysis Page analysis.
-   * @param textPane Text pane.
-   * @return Page contents after fix.
-   */
-  @Override
-  public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-
-    // Initialize
-    API api = APIFactory.getAPI();
-    StringBuilder tmpContents = new StringBuilder();
-    int currentIndex = 0;
-
-    // Manage templates that can be used to replace a link to an other language
-    List<String> templatesList = getTemplatesList();
-    String[] templateArgs = null;
-    if ((templatesList != null) && (templatesList.size() > 0)) {
-      String[] tmp = templatesList.get(0).split("\\|");
-      if (tmp.length >= 5) {
-        templateArgs = tmp;
-      }
-    }
-
-    // Check all internal links
-    Object highlight = null;
-    String contents = analysis.getContents();
-    try {
-      for (PageElementInternalLink link : analysis.getInternalLinks()) {
-        ErrorAnalysis errorAnalysis = isLinkToOtherLanguage(link, analysis);
-        if ((errorAnalysis != null) && (errorAnalysis.fromWiki != null)) {
-          EnumWikipedia fromWiki = errorAnalysis.fromWiki;
-          EnumWikipedia toWiki = analysis.getWikipedia();
-          String pageTitle = errorAnalysis.title;
-          String lgCode = errorAnalysis.language.getCode();
-          String replacement = null;
-
-          // Display selection
-          highlight = addHighlight(
-              textPane, link.getBeginIndex(), link.getEndIndex());
-          textPane.select(link.getBeginIndex(), link.getEndIndex());
-
-          // Check for language link
-          String toTitle = api.getLanguageLink(fromWiki, toWiki, pageTitle);
-          if (toTitle != null) {
-
-            // List possible replacements
-            List<String> possibleValues = new ArrayList<String>();
-            String possible = PageElementInternalLink.createInternalLink(
-                toTitle, link.getText());
-            if (!possibleValues.contains(possible)) {
-              possibleValues.add(possible);
-            }
-            possible = PageElementInternalLink.createInternalLink(
-                toTitle, link.getDisplayedText());
-            if (!possibleValues.contains(possible)) {
-              possibleValues.add(possible);
-            }
-            possible = PageElementInternalLink.createInternalLink(
-                toTitle, null);
-            if (!possibleValues.contains(possible)) {
-              possibleValues.add(possible);
-            }
-            possibleValues.add(GT._("Do not replace"));
-            possibleValues.add(GT._("Cancel"));
-
-            // Ask user what replacement to use
-            String message = GT._(
-                "The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\n" +
-                "By what text do you want to replace the link ?",
-                new Object[] { pageTitle, fromWiki, toWiki, toTitle } );
-            int answer = Utilities.displayQuestion(
-                textPane.getParent(), message,
-                possibleValues.toArray());
-            if ((answer < 0) || (answer >= possibleValues.size() - 1)) {
-              break;
-            } else if (answer < possibleValues.size() - 2) {
-              replacement = possibleValues.get(answer);
-            }
-          } else if (templateArgs != null) {
-            String message =
-                GT._("The page \"{0}\" in \"{1}\" doesn''t have a language link to \"{2}\".",
-                     new Object[] { pageTitle, fromWiki, toWiki }) +"\n" +
-                GT._("You can replace the link using template {0}.",
-                     "{{" + templateArgs[0] + "}}") + "\n" +
-                GT._("What is the title of the page on this wiki ?");
-            if ((link.getText() != null) && (!link.getText().equals(pageTitle))) {
-              toTitle = Utilities.askForValue(
-                  textPane.getParent(), message, link.getText(), checker);
-            } else {
-              toTitle = Utilities.askForValue(
-                  textPane.getParent(), message, pageTitle, checker);
-            }
-            if (toTitle != null) {
-              replacement =
-                  "{{" + templateArgs[0] +
-                  "|" + templateArgs[1] + "=" + toTitle +
-                  "|" + templateArgs[2] + "=" + lgCode +
-                  "|" + templateArgs[3] + "=" + pageTitle +
-                  "|" + templateArgs[4] + "=" + ((link.getText() != null) ? link.getText() : pageTitle) +
-                  "}}";
-            }
-          }
-
-          // Do the replacement
-          if (replacement != null) {
-            if (currentIndex < link.getBeginIndex()) {
-              tmpContents.append(contents.substring(currentIndex, link.getBeginIndex()));
-            }
-            tmpContents.append(replacement);
-            currentIndex = link.getEndIndex();
-          }
-          removeHighlight(textPane, highlight);
-          highlight = null;
-        }
-      }
-    } catch (APIException e) {
-      //
-    }
-    removeHighlight(textPane, highlight);
-    highlight = null;
-
-    // Return result
-    if (currentIndex == 0) {
-      return contents;
-    }
-    if (currentIndex < contents.length()) {
-      tmpContents.append(contents.substring(currentIndex));
-    }
-    return tmpContents.toString();
   }
 }

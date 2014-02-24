@@ -45,7 +45,9 @@ public class CheckErrorAlgorithm082 extends CheckErrorAlgorithmBase {
     String contents = pageAnalysis.getContents();
     while (startIndex < contents.length()) {
       PageElementInterwikiLink link = pageAnalysis.getNextInterwikiLink(startIndex);
-      if (link != null) {
+      if ((link != null) &&
+          (link.getInterwiki() != null) &&
+          (link.getInterwiki().getLanguage() == null)) {
         startIndex = link.getEndIndex();
         if (errors == null) {
           return true;
