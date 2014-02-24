@@ -292,7 +292,7 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     BasicMenuCreator menu = new BasicMenuCreator();
     JPopupMenu popup = menu.createPopupMenu(GT._(
         "Interwiki: {0}",
-        limitTextLength(link.getInterwiki() + ":" + link.getLink(), 50)));
+        limitTextLength(link.getInterwikiText() + ":" + link.getLink(), 50)));
     menu.addCurrentChapter(popup, position, pageAnalysis);
 
     return popup;
