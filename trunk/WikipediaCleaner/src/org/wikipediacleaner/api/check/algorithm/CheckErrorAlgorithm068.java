@@ -87,8 +87,9 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
-        EnumWikipedia fromWiki = EnumWikipedia.getWikipedia(link.getInterwiki().getLanguage());
-        if (fromWiki != null) {
+        String lgCode = link.getInterwiki().getPrefix();
+        EnumWikipedia fromWiki = EnumWikipedia.getWikipedia(lgCode);
+        if ((fromWiki != null) && (fromWiki.getSettings().getCode().equals(lgCode))) {
           String pageTitle = link.getLink();
           errorResult.addPossibleAction(
               GT._("Check language links"),
