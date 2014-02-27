@@ -52,7 +52,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
   protected CheckErrorResult createCheckErrorResult(
       PageAnalysis analysis, PageElementISBN isbn,
       boolean checkForComment) {
-    ErrorLevel level = ErrorLevel.ERROR;
+    ErrorLevel level = isbn.isValid() ? ErrorLevel.ERROR : ErrorLevel.WARNING;
     if (checkForComment) {
       String contents = analysis.getContents();
       int index = isbn.getEndIndex();

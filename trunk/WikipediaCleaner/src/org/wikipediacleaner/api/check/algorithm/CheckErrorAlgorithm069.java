@@ -44,7 +44,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
     boolean result = false;
     List<PageElementISBN> isbns = analysis.getISBNs();
     for (PageElementISBN isbn : isbns) {
-      if (!isbn.isCorrect()) {
+      if (!isbn.isCorrect() && isbn.isValid()) {
         if (errors == null) {
           return true;
         }

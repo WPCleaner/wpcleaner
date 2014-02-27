@@ -55,6 +55,7 @@ public class PageElementISBN extends PageElement {
     while (index < maxIndex) {
 
       // Check if it's a potential ISBN
+      boolean isValid = true;
       boolean isISBN = ISBN_PREFIX.equalsIgnoreCase(
           contents.substring(index, index + ISBN_PREFIX.length()));
       if (isISBN && (analysis.isInComment(index) != null)) {
@@ -69,7 +70,7 @@ public class PageElementISBN extends PageElement {
           if (!link.hasSquare() ||
               (index < link.getBeginIndex() + link.getTextOffset()) ||
               (link.getText() == null)) {
-            isISBN = false;
+            isValid = false;
           }
         }
       }
@@ -124,7 +125,7 @@ public class PageElementISBN extends PageElement {
           if (endNumber > beginNumber) {
             String number = contents.substring(beginNumber, endNumber);
             isbns.add(new PageElementISBN(
-                beginIndex, endNumber, number, correct, false));
+                beginIndex, endNumber, number, isValid, correct, false));
             index = endNumber;
           }
         }
@@ -266,7 +267,7 @@ public class PageElementISBN extends PageElement {
           String value = analysis.getContents().substring(beginIndex, endIndex);
           if (paramValue.length() > 0) {
             isbns.add(new PageElementISBN(
-                beginIndex, endIndex, value, correct, true));
+                beginIndex, endIndex, value, true, correct, true));
           }
         }
       }
@@ -284,6 +285,11 @@ public class PageElementISBN extends PageElement {
   private String isbn;
 
   /**
+   * True if ISBN is in a valid location.
+   */
+  private boolean isValid;
+
+  /**
    * True if ISBN syntax is correct.
    */
   private boolean isCorrect;
@@ -297,16 +303,18 @@ public class PageElementISBN extends PageElement {
    * @param beginIndex Begin index.
    * @param endIndex End index.
    * @param isbn ISBN.
+   * @param isValid True if ISBN is in a valid location.
    * @param isCorrect True if ISBN syntax is correct.
    * @param isTemplateParameter True if ISBN is a template parameter.
    */
   private PageElementISBN(
       int beginIndex, int endIndex,
-      String isbn,
+      String isbn, boolean isValid,
       boolean isCorrect, boolean isTemplateParameter) {
     super(beginIndex, endIndex);
     this.isbnNotTrimmed = isbn;
     this.isbn = cleanISBN(isbn);
+    this.isValid = isValid;
     this.isCorrect = isCorrect;
     this.isTemplateParameter = isTemplateParameter;
   }
@@ -370,6 +378,13 @@ public class PageElementISBN extends PageElement {
     }
 
     return 0;
+  }
+
+  /**
+   * @return True if ISBN is in a valid location.
+   */
+  public boolean isValid() {
+    return isValid;
   }
 
   /**
