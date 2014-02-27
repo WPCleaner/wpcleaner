@@ -191,7 +191,7 @@ public class PageElementInterwikiLink extends PageElement {
     this.interwikiTextNotTrimmed = interwikiText;
     this.interwikiText = (interwikiText != null) ? interwikiText.trim() : null;
     this.linkNotTrimmed = link;
-    this.link = (link != null) ? Page.getStringUcFirst(link.trim()) : null;
+    this.link = (link != null) ? link.trim() : null;
     this.anchorNotTrimmed = anchor;
     this.anchor = (anchor != null) ? anchor.trim() : null;
     this.textNotTrimmed = text;
