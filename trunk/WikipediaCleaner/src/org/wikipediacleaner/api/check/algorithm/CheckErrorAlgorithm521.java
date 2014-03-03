@@ -118,7 +118,14 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
     while ((valueIndex < value.length()) && (formatIndex < format.length())) {
       char formatChar = format.charAt(formatIndex);
       char valueChar = value.charAt(valueIndex);
-      if (formatChar == '\'') {
+      if ((valueChar == '<') &&
+          (value.startsWith("<!--", valueIndex))) {
+        int index = value.indexOf("-->");
+        if (index < 0) {
+          return false;
+        }
+        valueIndex = index + 3;
+      } else  if (formatChar == '\'') {
         // Check for quoted text or quote
         if ((formatIndex + 1 < format.length()) &&
             (format.charAt(formatIndex + 1) == '\'')) {
