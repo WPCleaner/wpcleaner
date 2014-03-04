@@ -118,130 +118,175 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
     while ((valueIndex < value.length()) && (formatIndex < format.length())) {
       char formatChar = format.charAt(formatIndex);
       char valueChar = value.charAt(valueIndex);
-      if ((valueChar == '<') &&
-          (value.startsWith("<!--", valueIndex))) {
-        int index = value.indexOf("-->");
-        if (index < 0) {
-          return false;
-        }
-        valueIndex = index + 3;
-      } else  if (formatChar == '\'') {
-        // Check for quoted text or quote
+      boolean formatOk = false;
+
+      // If format string has a quote, it can be for quoted text or really a quote
+      if (formatChar == '\'') {
+
+        // Two quotes in format string means a single quote
         if ((formatIndex + 1 < format.length()) &&
             (format.charAt(formatIndex + 1) == '\'')) {
-          if (formatChar != '\'') {
-            return false;
+          if (formatChar == '\'') {
+            formatOk = true;
+            formatIndex += 2;
+            valueIndex++;
           }
-          formatIndex += 2;
-          valueIndex++;
+
+        // Quoted text
         } else {
           int tmpIndex = formatIndex + 1;
           while ((tmpIndex < format.length()) &&
                  (format.charAt(tmpIndex) != '\'')) {
             tmpIndex++;
           }
-          int length = tmpIndex - formatIndex - 1;
-          if ((valueIndex + length >= value.length()) ||
-              !format.substring(formatIndex + 1, tmpIndex).equals(value.substring(valueIndex, valueIndex + length))) {
-            return false;
+          if (tmpIndex >= format.length()) {
+            return false; // Wrong format: missing closing quote
           }
-          valueIndex += length;
-          formatIndex = tmpIndex + 1;
+          int length = tmpIndex - formatIndex - 1;
+          if ((valueIndex + length < value.length()) &&
+              format.substring(formatIndex + 1, tmpIndex).equals(value.substring(valueIndex, valueIndex + length))) {
+            formatOk = true;
+            valueIndex += length;
+            formatIndex = tmpIndex + 1;
+          }
         }
+
+      // Formatting characters
       } else if ((formatChar == 'd') ||
                  (formatChar == 'M') ||
                  (formatChar == 'y')) {
+
         // Count the number of consecutive identical formatting characters
         int formatCount = 0;
-        while ((formatIndex < format.length()) &&
-               (format.charAt(formatIndex) == formatChar)) {
+        int nextFormatIndex = formatIndex;
+        while ((nextFormatIndex < format.length()) &&
+               (format.charAt(nextFormatIndex) == formatChar)) {
           formatCount++;
-          formatIndex++;
+          nextFormatIndex++;
         }
 
         // Count the number of consecutive digits
         int digitCount = 0;
-        while ((valueIndex < value.length()) &&
-               (Character.isDigit(value.charAt(valueIndex)))) {
+        int nextValueIndex = valueIndex;
+        while ((nextValueIndex < value.length()) &&
+               (Character.isDigit(value.charAt(nextValueIndex)))) {
           digitCount++;
-          valueIndex++;
+          nextValueIndex++;
         }
 
-        // Check format
-        if (formatChar == 'd') {
-
-          // Check format of day field
+        // Depending on the formatting character
+        switch (formatChar) {
+        case 'd': // Day
           if (formatCount == 1) {
             // Format "d": day number without leading 0
-            if ((digitCount == 0) || (digitCount > 2) || (valueChar == '0')) {
-              return false;
+            if ((digitCount != 0) && (digitCount <= 2) && (valueChar != '0')) {
+              formatOk = true;
             }
           } else {
             // Format "dd": day number with leading 0
-            if (digitCount != 2) {
-              return false;
+            if (digitCount == 2) {
+              formatOk = true;
             }
           }
+          break;
 
-        } else if (formatChar == 'M') {
-
-          // Check format of month field
+        case 'M': // Month
           if (formatCount == 1) {
             // Format "M": month number without leading 0
-            if ((digitCount == 0) || (digitCount > 2) || (valueChar == '0')) {
-              return false;
+            if ((digitCount != 0) && (digitCount <= 2) && (valueChar != '0')) {
+              formatOk = true;
             }
           } else if (formatCount == 2) {
             // Format "MM": month number with leading 0
-            if (digitCount != 2) {
-              return false;
+            if (digitCount == 2) {
+              formatOk = true;
             }
           } else {
             // Format "MMM": month name
-            if (digitCount != 0) {
-              return false;
-            }
-            if (months == null) {
-              return false;
-            }
-            boolean monthFound = false;
-            for (String month : months) {
-              if (!monthFound && value.startsWith(month, valueIndex)) {
-                valueIndex += month.length();
-                monthFound = true;
+            if ((digitCount == 0) && (months != null)) {
+              boolean monthFound = false;
+              for (String month : months) {
+                if (!monthFound && value.startsWith(month, nextValueIndex)) {
+                  nextValueIndex += month.length();
+                  monthFound = true;
+                }
+              }
+              if (monthFound) {
+                formatOk = true;
               }
             }
-            if (!monthFound) {
-              return false;
-            }
           }
+          break;
 
-        } else if (formatChar == 'y') {
-
-          // Check format of year field
+        case 'y': // Year
           if ((formatCount == 1) || (formatCount == 2)) {
             // Format "Y" or "YY": year on 2 digits
-            if (digitCount != 2) {
-              return false;
+            if (digitCount == 2) {
+              formatOk = true;
             }
           } else {
             // Format "YYY": year on as many digits as required
-            if ((digitCount == 0) || (valueChar == '0')) {
-              return false;
+            if ((digitCount != 0) && (valueChar != '0')) {
+              formatOk = true;
             }
           }
+          break;
         }
 
-      } else {
+        // Move indexes if needed
+        if (formatOk) {
+          formatIndex = nextFormatIndex;
+          valueIndex = nextValueIndex;
+        }
 
         // Check for identical text
-        if (value.charAt(valueIndex) != format.charAt(formatIndex)) {
-          return false;
+      } else {
+        if (value.charAt(valueIndex) == format.charAt(formatIndex)) {
+          formatOk = true;
+          valueIndex++;
+          formatIndex++;
         }
-        valueIndex++;
-        formatIndex++;
+      }
+
+      // Check for potential comments
+      if (!formatOk) {
+        while ((valueIndex < value.length()) && Character.isWhitespace(value.charAt(valueIndex))) {
+          valueIndex++;
+        }
+        if ((valueIndex < value.length()) && value.startsWith("<!--", valueIndex)) {
+          valueIndex += 2;
+          while ((valueIndex < value.length() && !value.startsWith("-->", valueIndex))) {
+            valueIndex++;
+          }
+          if (valueIndex < value.length()) {
+            formatOk = true;
+            valueIndex += 3;
+          }
+        }
+      }
+
+      // Break if nothing found
+      if (!formatOk) {
+        return false;
       }
     }
+
+    // Check for potential comments or whitespace characters
+    while ((valueIndex < value.length()) && Character.isWhitespace(value.charAt(valueIndex))) {
+      valueIndex++;
+    }
+    if ((valueIndex < value.length()) && value.startsWith("<!--", valueIndex)) {
+      valueIndex += 2;
+      while ((valueIndex < value.length() && !value.startsWith("-->", valueIndex))) {
+        valueIndex++;
+      }
+      if (valueIndex < value.length()) {
+        valueIndex += 3;
+      } else {
+        return false;
+      }
+    }
+
     if ((valueIndex < value.length()) || (formatIndex < format.length())) {
       return false;
     }
