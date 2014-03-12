@@ -106,7 +106,7 @@ public class CheckErrorPageListCellRenderer extends JLabel implements ListCellRe
     }
 
     // Color
-    Color background = isSelected ? list.getSelectionBackground() : Color.WHITE;
+    Color background = isSelected ? Color.LIGHT_GRAY : Color.WHITE;
     Color foreground = isSelected ? list.getSelectionForeground() : list.getForeground();
     if (forPage) {
       if (whiteList) {
