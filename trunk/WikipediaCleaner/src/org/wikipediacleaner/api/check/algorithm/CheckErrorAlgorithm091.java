@@ -74,8 +74,10 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
         templatesList = WPCConfiguration.convertPropertyToStringList(templatesParam);
       }
     }
-    boolean onlyLanguage = Boolean.valueOf(getSpecificProperty("only_language", true, false, false));
-    boolean onlyLocal = Boolean.valueOf(getSpecificProperty("only_local", true, false, false));
+    String strOnlyLanguage = getSpecificProperty("only_language", true, false, false);
+    boolean onlyLanguage = (strOnlyLanguage != null) ? Boolean.valueOf(strOnlyLanguage) : true;
+    String strOnlyLocal = getSpecificProperty("only_local", true, false, false);
+    boolean onlyLocal = (strOnlyLocal != null) ? Boolean.valueOf(strOnlyLocal) : true;
 
     // Analyze each external link
     boolean result = false;
