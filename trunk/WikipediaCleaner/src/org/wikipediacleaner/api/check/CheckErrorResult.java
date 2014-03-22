@@ -123,7 +123,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
     addReplacement(
         replacement,
         (replacement.length() > 0) ?
-            GT._("Replace with {0}", replacement) :
+            GT._("Replace with {0}", replacement.replaceAll("\\n", "\u21b5")) :
             GT._("Delete"),
         automatic);
   }
