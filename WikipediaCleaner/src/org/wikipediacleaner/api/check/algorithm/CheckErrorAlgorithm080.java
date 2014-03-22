@@ -95,7 +95,7 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
         if ((possibleEnd < 0) &&
             (currentIndex < maxEnd) &&
             (contents.charAt(currentIndex) == ']')) {
-          possibleEnd = currentIndex;
+          possibleEnd = currentIndex + 1;
         }
         if ((possibleEnd < 0) &&
             (currentIndex == maxEnd) &&
@@ -129,7 +129,9 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
                 }
                 replacement.append(contents.substring(linkEndIndex, possibleEnd).replaceAll("\\n", ""));
               }
-              replacement.append("]");
+              if (contents.charAt(possibleEnd - 1) != ']') {
+                replacement.append("]");
+              }
               replacement.append(contents.substring(possibleEnd, endIndex));
               errorResult.addReplacement(replacement.toString());
             }
