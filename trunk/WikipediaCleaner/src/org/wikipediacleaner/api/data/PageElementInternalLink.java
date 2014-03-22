@@ -26,13 +26,13 @@ public class PageElementInternalLink extends PageElement {
   /**
    * Analyze contents to check if it matches an internal link.
    * 
-   * @param wikipedia Wikipedia.
+   * @param wiki Wiki.
    * @param contents Contents.
    * @param index Block start index.
    * @return Block details it there's a block.
    */
   public static PageElementInternalLink analyzeBlock(
-      EnumWikipedia wikipedia, String contents, int index) {
+      EnumWikipedia wiki, String contents, int index) {
     // Verify arguments
     if (contents == null) {
       return null;
@@ -171,20 +171,20 @@ public class PageElementInternalLink extends PageElement {
       String namespaceName = linkTrimmed.substring(0, colonIndex);
 
       // Is it a category ?
-      Namespace category = wikipedia.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
+      Namespace category = wiki.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
       if ((category != null) && (category.isPossibleName(namespaceName))) {
         return null;
       }
 
       // Is it a file / image ?
-      Namespace image = wikipedia.getWikiConfiguration().getNamespace(Namespace.IMAGE);
+      Namespace image = wiki.getWikiConfiguration().getNamespace(Namespace.IMAGE);
       if ((image != null) && (image.isPossibleName(namespaceName))) {
         return null;
       }
 
       // Is it a language link ?
       if (Language.isLanguageCode(
-          wikipedia.getWikiConfiguration().getLanguages(), namespaceName)) {
+          wiki.getWikiConfiguration().getLanguages(), namespaceName)) {
         return null;
       }
     }
@@ -202,8 +202,10 @@ public class PageElementInternalLink extends PageElement {
       } else {
         namespaceName = linkTrimmed.substring(0, colonIndex);
       }
-      if (namespaceName != null) {
-        for (Interwiki iw : wikipedia.getWikiConfiguration().getInterwikis()) {
+      if ((namespaceName != null) &&
+          (wiki.getWikiConfiguration() != null) &&
+          (wiki.getWikiConfiguration().getInterwikis() != null)) {
+        for (Interwiki iw : wiki.getWikiConfiguration().getInterwikis()) {
           if (iw.getPrefix().equals(namespaceName)) {
             return null;
           }
@@ -218,7 +220,7 @@ public class PageElementInternalLink extends PageElement {
 
     // Create internal link
     return new PageElementInternalLink(
-        wikipedia,
+        wiki,
         index, endIndex + 2,
         link, anchor, text, textOffset);
   }
