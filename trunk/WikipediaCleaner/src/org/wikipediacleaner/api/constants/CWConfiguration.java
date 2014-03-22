@@ -11,9 +11,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.wikipediacleaner.api.APIException;
+import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
 import org.wikipediacleaner.i18n.GT;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 
 
 /**
@@ -73,6 +77,45 @@ public class CWConfiguration {
     }
     String project = config.getString(WPCConfigurationString.CW_PROJECT_PAGE);
     return GT._("Fixed using {0}", (project != null) ? "[[" + project + "]]" : "Check Wiki project");
+  }
+
+  /**
+   * @return Comment for Check Wiki project.
+   */
+  public String getComment(Collection<CheckErrorAlgorithm> algorithms) {
+    if ((algorithms == null) || (algorithms.isEmpty())) {
+      return "";
+    }
+    
+    // Build part of the comment for the errors that were fixed
+    StringBuilder algorithmsComment = new StringBuilder();
+    Configuration config = Configuration.getConfiguration();
+    for (CheckErrorAlgorithm algorithm : algorithms) {
+      if (algorithmsComment.length() > 0) {
+        algorithmsComment.append(" - ");
+      }
+      String link = algorithm.getLink();
+      if ((link != null) &&
+          (config != null) &&
+          (config.getBoolean(
+              null,
+              ConfigurationValueBoolean.CHECK_LINK_ERRORS))) {
+        algorithmsComment.append("[[");
+        algorithmsComment.append(link);
+        algorithmsComment.append("|");
+        algorithmsComment.append(algorithm.getShortDescriptionReplaced());
+        algorithmsComment.append("]]");
+      } else {
+        algorithmsComment.append(algorithm.getShortDescriptionReplaced());
+      }
+    }
+
+    // Build the entire comment
+    String comment = getComment();
+    if (comment.indexOf("{0}") < 0) {
+      return comment + " (" + algorithmsComment.toString() + ")";
+    }
+    return GT._(comment, algorithmsComment.toString());
   }
 
   // =================================================================================

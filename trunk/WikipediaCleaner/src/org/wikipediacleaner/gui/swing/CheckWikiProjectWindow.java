@@ -1229,35 +1229,7 @@ public class CheckWikiProjectWindow extends OnePageWindow {
      * @return Comment.
      */
     private String getComment(List<CheckErrorAlgorithm> errorsFixed) {
-      StringBuilder comment = new StringBuilder();
-      if (errorsFixed != null) {
-        for (int pos = 0; pos < errorsFixed.size(); pos++) {
-          if (pos > 0) {
-            comment.append(" - ");
-          }
-          String link = errorsFixed.get(pos).getLink();
-          Configuration config = Configuration.getConfiguration();
-          if ((link != null) &&
-              (config != null) &&
-              (config.getBoolean(
-                  null,
-                  ConfigurationValueBoolean.CHECK_LINK_ERRORS))) {
-            comment.append("[[");
-            comment.append(link);
-            comment.append("|");
-            comment.append(errorsFixed.get(pos).getShortDescriptionReplaced());
-            comment.append("]]");
-          } else {
-            comment.append(errorsFixed.get(pos).getShortDescriptionReplaced());
-          }
-        }
-      }
-      if (comment.length() > 0) {
-        comment.append(" (");
-        comment.append(getAutomaticComment(null));
-        comment.append(")");
-      }
-      return comment.toString();
+      return getWikipedia().getCWConfiguration().getComment(errorsFixed);
     }
 
     /**
@@ -1434,15 +1406,6 @@ public class CheckWikiProjectWindow extends OnePageWindow {
         updateComment(null);
       }
     }
-  }
-
-  /**
-   * @param pageAnalysis Page analysis.
-   * @return Default comment.
-   */
-  @Override
-  protected String getAutomaticComment(PageAnalysis pageAnalysis) {
-    return getWikipedia().getCWConfiguration().getComment();
   }
 
   /* (non-Javadoc)

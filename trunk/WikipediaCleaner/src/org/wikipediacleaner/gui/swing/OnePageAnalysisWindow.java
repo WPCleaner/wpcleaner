@@ -1544,25 +1544,9 @@ public class OnePageAnalysisWindow extends OnePageWindow {
         if (comment.length() > 0) {
           comment.append(" / ");
         }
-        comment.append(getWikipedia().getCWConfiguration().getComment());
-        Configuration config = Configuration.getConfiguration();
+        comment.append(getWikipedia().getCWConfiguration().getComment(errorsFixed));
         for (CheckErrorAlgorithm errorFixed : errorsFixed) {
           contributions.increaseCheckWikiError(errorFixed.getErrorNumber(), 1);
-          comment.append(" - ");
-          String link = errorFixed.getLink();
-          if ((link != null) &&
-              (config != null) &&
-              (config.getBoolean(
-                  null,
-                  ConfigurationValueBoolean.CHECK_LINK_ERRORS))) {
-            comment.append("[[");
-            comment.append(link);
-            comment.append("|");
-            comment.append(errorFixed.getShortDescriptionReplaced());
-            comment.append("]]");
-          } else {
-            comment.append(errorFixed.getShortDescriptionReplaced());
-          }
         }
       }
     }

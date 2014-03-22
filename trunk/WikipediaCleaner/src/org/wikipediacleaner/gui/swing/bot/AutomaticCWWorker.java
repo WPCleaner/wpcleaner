@@ -222,11 +222,7 @@ class AutomaticCWWorker extends BasicWorker {
           comment.append(extraComment.trim());
           comment.append(" - ");
         }
-        comment.append(getWikipedia().getCWConfiguration().getComment());
-        for (CheckErrorAlgorithm usedAlgorithm : usedAlgorithms) {
-          comment.append(" - ");
-          comment.append(usedAlgorithm.getShortDescriptionReplaced());
-        }
+        comment.append(getWikipedia().getCWConfiguration().getComment(usedAlgorithms));
         setText(prefix + " - " + GT._("Fixing page {0}", page.getTitle()));
         api.updatePage(
             getWikipedia(), page, newContents,
