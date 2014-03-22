@@ -26,7 +26,13 @@ public class PageElementExternalLink extends PageElement {
   private final boolean hasSquare;
   private final boolean hasSecondSquare;
 
-  private final static String END_CHARACTERS = " \n\t<>|}";
+  private final static String SEPARATORS_EXCLUDED = " \t";
+
+  private final static String SEPARATORS_INCLUDED = "<>";
+
+  private final static String UNACCEPTABLE = "\n";
+
+  private final static String ALL_SEPARATORS = SEPARATORS_EXCLUDED + SEPARATORS_INCLUDED + UNACCEPTABLE + "[]";
 
   private final static List<String> privateProtocols = new ArrayList<String>();
 
@@ -60,12 +66,10 @@ public class PageElementExternalLink extends PageElement {
       return null;
     }
     boolean hasSquare = false;
-    boolean hasSecondSquare = false;
     if (contents.startsWith("[", tmpIndex)) {
       hasSquare = true;
       tmpIndex++;
     }
-    int beginIndex = tmpIndex;
 
     // Possible white spaces characters
     if (hasSquare) {
@@ -83,80 +87,90 @@ public class PageElementExternalLink extends PageElement {
     if (!protocolOk) {
       return null;
     }
+    int beginUrlIndex = tmpIndex;
 
-    // Find end of external link
-    int endIndex = -1;
-    if (hasSquare) {
-      int doubleSquare = 0;
-      int tmpIndex2 = tmpIndex;
-      int prematureEnd = -1;
-      int maxEndIndex = Integer.MAX_VALUE;
-      if (analysis != null) {
-        PageElementTag refTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, index);
-        if ((refTag != null) && !refTag.isFullTag() && refTag.isComplete()) {
-          maxEndIndex = refTag.getValueEndIndex();
-        }
-      }
-      while (endIndex < 0) {
-        if (tmpIndex2 >= contents.length()) {
-          return null;
-        }
-        if (contents.startsWith("[[", tmpIndex2)) {
-          if (prematureEnd < 0) {
-            prematureEnd = tmpIndex2;
-          }
-          doubleSquare++;
-          tmpIndex2 += 2;
-        } else if ((doubleSquare > 0) && contents.startsWith("]]", tmpIndex2)) {
-          doubleSquare--;
-          tmpIndex2 += 2;
-        } else if (contents.startsWith("]", tmpIndex2)) {
-          if (prematureEnd < 0) {
-            endIndex = tmpIndex2;
-            hasSecondSquare = true;
-          } else {
-            endIndex = prematureEnd;
-          }
-        } else if (tmpIndex2 == maxEndIndex) {
-          endIndex = tmpIndex2;
-        } else {
-          tmpIndex2++;
-        }
-      }
-    } else {
-      endIndex = tmpIndex;
-      while ((endIndex < maxLength) &&
-             (END_CHARACTERS.indexOf(contents.charAt(endIndex)) < 0)) {
-        endIndex++;
-      }
+    // Find destination of external link
+    int endUrlIndex = beginUrlIndex;
+    while ((endUrlIndex < maxLength) &&
+           (ALL_SEPARATORS.indexOf(contents.charAt(endUrlIndex)) < 0)) {
+      endUrlIndex++;
+    }
+
+    // Situations where the external link consists only of the URL
+    if (!hasSquare ||
+        (endUrlIndex >= maxLength) ||
+        (UNACCEPTABLE.indexOf(contents.charAt(endUrlIndex)) >= 0)) {
       return new PageElementExternalLink(
-          index, endIndex,
-          contents.substring(beginIndex, endIndex),
-          null, -1, hasSquare, hasSecondSquare);
+          beginUrlIndex, endUrlIndex,
+          contents.substring(beginUrlIndex, endUrlIndex),
+          null, -1, false, false);
     }
-    if (endIndex < 0) {
-      return null;
-    }
-
-    // Find possible description
-    int separatorIndex = tmpIndex;
-    while ((separatorIndex < endIndex) &&
-           (END_CHARACTERS.indexOf(contents.charAt(separatorIndex)) < 0)) {
-      separatorIndex++;
-    }
-    if ((separatorIndex < 0) || (separatorIndex >= endIndex)) {
+    if ((endUrlIndex < maxLength) &&
+        (contents.charAt(endUrlIndex) == ']')) {
       return new PageElementExternalLink(
-          index, endIndex + (hasSecondSquare ? 1 : 0),
-          contents.substring(beginIndex, endIndex),
-          null, -1, hasSquare, hasSecondSquare);
+          index, endUrlIndex + 1,
+          contents.substring(beginUrlIndex, endUrlIndex),
+          null, -1, true, true);
     }
 
+    // Compute maximum index for end of external link
+    int maxEndIndex = maxLength;
+    if (analysis != null) {
+      PageElementTag refTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, index);
+      if ((refTag != null) && !refTag.isFullTag() && refTag.isComplete()) {
+        maxEndIndex = refTag.getValueEndIndex();
+      }
+    }
+
+    // Find beginning of text
+    int beginTextIndex = endUrlIndex;
+    while ((beginTextIndex < maxEndIndex) &&
+           (SEPARATORS_EXCLUDED.indexOf(contents.charAt(beginTextIndex)) >= 0)) {
+      beginTextIndex++;
+    }
+
+    // Find end of text
+    int endTextIndex = beginTextIndex;
+    int prematureEndIndex = -1;
+    int doubleSquareCount = 0;
+    while (endTextIndex < maxEndIndex) {
+      if (contents.startsWith("[[", endTextIndex)) {
+        if (prematureEndIndex < 0) {
+          prematureEndIndex = endTextIndex;
+        }
+        doubleSquareCount++;
+        endTextIndex += 2;
+      } else if ((doubleSquareCount > 0) && contents.startsWith("]]", endTextIndex)) {
+        doubleSquareCount--;
+        endTextIndex += 2;
+      } else if (contents.charAt(endTextIndex) == ']') {
+        if (prematureEndIndex < 0) {
+          return new PageElementExternalLink(
+              index, endTextIndex + 1,
+              contents.substring(beginUrlIndex, endUrlIndex),
+              contents.substring(beginTextIndex, endTextIndex),
+              beginTextIndex - index, true, true);
+        }
+        return new PageElementExternalLink(
+            index, prematureEndIndex,
+            contents.substring(beginUrlIndex, endUrlIndex),
+            contents.substring(beginTextIndex, prematureEndIndex),
+            beginTextIndex - index, true, false);
+      } else if (UNACCEPTABLE.indexOf(contents.charAt(endTextIndex)) >= 0) {
+        return new PageElementExternalLink(
+            beginUrlIndex, endUrlIndex,
+            contents.substring(beginUrlIndex, endUrlIndex),
+            null, -1, false, false);
+      } else {
+        endTextIndex++;
+      }
+    }
+
+    // No end found
     return new PageElementExternalLink(
-        index, endIndex + (hasSecondSquare ? 1 : 0),
-        contents.substring(beginIndex, separatorIndex),
-        contents.substring(separatorIndex + 1, endIndex),
-        separatorIndex + 1 - index,
-        hasSquare, hasSecondSquare);
+        beginUrlIndex, endUrlIndex,
+        contents.substring(beginUrlIndex, endUrlIndex),
+        null, -1, false, false);
   }
 
   /**

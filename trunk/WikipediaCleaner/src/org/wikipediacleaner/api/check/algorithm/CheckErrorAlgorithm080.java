@@ -28,56 +28,122 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
-    // Check every external links
-    Collection<PageElementExternalLink> links = pageAnalysis.getExternalLinks();
-    String contents = pageAnalysis.getContents();
+    // Check each external link
+    Collection<PageElementExternalLink> links = analysis.getExternalLinks();
+    String contents = analysis.getContents();
+    int maxLength = contents.length();
     boolean result = false;
     for (PageElementExternalLink link : links) {
-      String text = link.getTextNotTrimmed();
-      if (text != null) {
-        int crIndex = text.indexOf('\n');
-        if (crIndex >= 0) {
-          if (errors == null) {
-            return true;
+      int linkBeginIndex = link.getBeginIndex();
+      int beginIndex = linkBeginIndex - 1;
+      if (!link.hasSquare() &&
+          !link.hasSecondSquare() &&
+          (linkBeginIndex > 0) &&
+          (contents.charAt(beginIndex) == '[')) {
+
+        // Compute maximum index for link end
+        int linkEndIndex = link.getEndIndex();
+        int maxEnd = maxLength;
+        PageElementTag refTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, linkBeginIndex);
+        if ((refTag != null) &&
+            (refTag.getMatchingTag() != null) &&
+            (refTag.getMatchingTag().getBeginIndex() >= linkEndIndex)) {
+          maxEnd = refTag.getMatchingTag().getBeginIndex();
+        }
+
+        // Search for possible end
+        boolean searchDone = false;
+        int possibleEnd = -1;
+        int currentIndex = linkEndIndex;
+        int firstCrIndex = -1;
+        while (!searchDone &&
+               (currentIndex < maxEnd) &&
+               (contents.charAt(currentIndex) != ']')) {
+          boolean posDone = false;
+
+          // Check for carriage return
+          if ((firstCrIndex < 0) && (contents.charAt(currentIndex) == '\n')) {
+            firstCrIndex = currentIndex;
           }
-          result = true;
-          int beginIndex = link.getBeginIndex();
-          PageElementTag refTag = pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, beginIndex);
-          if ((refTag != null) &&
-              (refTag.getMatchingTag() != null) &&
-              (refTag.getMatchingTag().getBeginIndex() < link.getEndIndex())) {
+
+          // Check for an other external link
+          if (!posDone) {
+            PageElementExternalLink externalLink = analysis.isInExternalLink(currentIndex);
+            if (externalLink != null) {
+              possibleEnd = currentIndex;
+              searchDone = true;
+              posDone = true;
+            }
+          }
+
+          if (!posDone) {
+            currentIndex++;
+          }
+        }
+        if ((possibleEnd < 0) &&
+            (currentIndex < maxEnd) &&
+            (contents.charAt(currentIndex) == ']')) {
+          possibleEnd = currentIndex;
+        }
+        if ((possibleEnd < 0) &&
+            (currentIndex == maxEnd) &&
+            (maxEnd < maxLength)) {
+          possibleEnd = currentIndex;
+        }
+
+        if ((possibleEnd > 0) || (firstCrIndex > 0)) {
+          while ((possibleEnd > 0) &&
+                 Character.isWhitespace(contents.charAt(possibleEnd - 1))) {
+            possibleEnd--;
+          }
+          while ((firstCrIndex > 0) &&
+                 Character.isWhitespace(contents.charAt(firstCrIndex - 1))) {
+            firstCrIndex--;
+          }
+          if ((possibleEnd >= link.getEndIndex()) || (firstCrIndex >= link.getEndIndex())) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            int endIndex = Math.max(possibleEnd, firstCrIndex);
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(),
-                beginIndex, refTag.getMatchingTag().getBeginIndex());
-            String replacement =
-                (link.hasSquare() ? "" : "[") +
-                contents.substring(beginIndex, refTag.getMatchingTag().getBeginIndex()) +
-                "]";
-            errorResult.addReplacement(replacement);
-            errors.add(errorResult);
-          } else {
-            CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(),
-                beginIndex, link.getEndIndex());
-            errorResult.addReplacement(
-                "[" + link.getLink() + " " + link.getText().replaceAll("\\n", "") + "]");
+                analysis.getPage(), beginIndex, endIndex);
+            if (possibleEnd > 0) {
+              StringBuilder replacement = new StringBuilder();
+              replacement.append(contents.substring(beginIndex, linkEndIndex));
+              if (linkEndIndex < possibleEnd) {
+                if (contents.charAt(linkEndIndex) != ' ') {
+                  replacement.append(' ');
+                }
+                replacement.append(contents.substring(linkEndIndex, possibleEnd).replaceAll("\\n", ""));
+              }
+              replacement.append("]");
+              replacement.append(contents.substring(possibleEnd, endIndex));
+              errorResult.addReplacement(replacement.toString());
+            }
+            if (firstCrIndex > 0) {
+              errorResult.addReplacement(
+                  contents.substring(beginIndex, firstCrIndex) + "]" +
+                  contents.substring(firstCrIndex, endIndex));
+            }
             errors.add(errorResult);
           }
         }
       }
     }
+
     return result;
   }
 }

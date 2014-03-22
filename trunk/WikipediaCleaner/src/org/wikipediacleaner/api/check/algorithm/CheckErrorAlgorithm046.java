@@ -103,15 +103,19 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
       }
       if (shouldCount) {
         PageElementExternalLink link = analysis.isInExternalLink(currentIndex);
-        if ((link != null) && (link.getEndIndex() == currentIndex + 1)) {
-          if (errors == null) {
-            return true;
+        if ((link != null) &&
+            (link.getEndIndex() == currentIndex + 1)) {
+          if ((link.getBeginIndex() == 0) ||
+              (contents.charAt(link.getBeginIndex() - 1) != '[')) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis.getPage(), currentIndex, currentIndex + 2);
+            errorResult.addReplacement("]");
+            errors.add(errorResult);
           }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), currentIndex, currentIndex + 2);
-          errorResult.addReplacement("]");
-          errors.add(errorResult);
           shouldCount = false;
         }
       }
