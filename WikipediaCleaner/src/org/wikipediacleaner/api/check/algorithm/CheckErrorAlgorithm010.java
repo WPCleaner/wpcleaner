@@ -205,17 +205,19 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
     // Analyze each external link to see if it has a [ before
     for (PageElementExternalLink link : analysis.getExternalLinks()) {
       int begin = link.getBeginIndex();
-      if ((begin > 0) && (contents.charAt(begin - 1) == '[')) {
-        int end = link.getEndIndex();
-        if ((end >= contents.length()) || (contents.charAt(end) != ']')) {
-          if (errors == null) {
-            return true;
+      if (link.hasSquare()) {
+        if ((begin > 0) && (contents.charAt(begin - 1) == '[')) {
+          int end = link.getEndIndex();
+          if ((end >= contents.length()) || (contents.charAt(end) != ']')) {
+            if (errors == null) {
+              return true;
+            }
+            result = true;
+            CheckErrorResult errorResult = createCheckErrorResult(
+                analysis.getPage(), begin - 1, begin);
+            errorResult.addReplacement("[");
+            errors.add(errorResult);
           }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), begin - 1, begin);
-          errorResult.addReplacement("[");
-          errors.add(errorResult);
         }
       }
     }
