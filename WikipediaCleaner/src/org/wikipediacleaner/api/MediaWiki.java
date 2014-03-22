@@ -247,11 +247,9 @@ public class MediaWiki extends MediaWikiController {
                   page, newContents, algorithms, false, usedAlgorithms);
               if (!usedAlgorithms.isEmpty()) {
                 fullComment.append(" / ");
-                fullComment.append(wiki.getCWConfiguration().getComment());
-                for (CheckErrorAlgorithm algorithm : usedAlgorithms) {
-                  fullComment.append(" - ");
-                  fullComment.append(algorithm.getShortDescriptionReplaced());
-                  if (description != null) {
+                fullComment.append(wiki.getCWConfiguration().getComment(usedAlgorithms));
+                if (description != null) {
+                  for (CheckErrorAlgorithm algorithm : usedAlgorithms) {
                     description.append("<li>");
                     description.append(algorithm.getShortDescriptionReplaced());
                     description.append("</li>\n");
