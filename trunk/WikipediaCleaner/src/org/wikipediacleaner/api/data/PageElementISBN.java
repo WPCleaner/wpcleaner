@@ -33,7 +33,7 @@ public class PageElementISBN extends PageElement {
   /**
    * ISBN possible extraneous characters.
    */
-  private final static String EXTRA_CHARACTERS = "- ";
+  private final static String EXTRA_CHARACTERS = "-  ";
 
   /**
    * ISBN incorrect characters.
@@ -114,6 +114,9 @@ public class PageElementISBN extends PageElement {
               index++;
               correct = nextCorrect;
             } else if (EXTRA_CHARACTERS.indexOf(currentChar) >= 0) {
+              if (beginNumber < 0) {
+                nextCorrect = false;
+              }
               index++;
             } else if (INCORRECT_CHARACTERS.indexOf(currentChar) >= 0) {
               index++;
