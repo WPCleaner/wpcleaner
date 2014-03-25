@@ -19,6 +19,7 @@ public class Interwiki implements Comparable<Interwiki> {
   private final boolean local;
   private final String language;
   private final String url;
+  private final String urlWithoutProtocol;
 
   /**
    * @param prefix Interwiki prefix.
@@ -31,6 +32,8 @@ public class Interwiki implements Comparable<Interwiki> {
     this.local = local;
     this.language = language;
     this.url = url;
+    int colonIndex = (url != null) ? url.indexOf(':') : -1;
+    this.urlWithoutProtocol = ((colonIndex < 0) || (url == null)) ? null : url.substring(colonIndex + 1);
   }
 
   /**
@@ -40,16 +43,11 @@ public class Interwiki implements Comparable<Interwiki> {
    * @return Article if the URL matches an article.
    */
   public String isArticleUrl(String test) {
-    if ((test == null) || (url == null)) {
+    if ((test == null) || (urlWithoutProtocol == null)) {
       return null;
     }
 
-    int colonIndex = url.indexOf(':');
-    if (colonIndex < 0) {
-      return null;
-    }
-    String tmpUrl = url.substring(colonIndex + 1);
-    String result = HttpUtils.getArticleFromUrl(test, tmpUrl);
+    String result = HttpUtils.getArticleFromUrl(test, urlWithoutProtocol);
     if (result != null) {
       return result;
     }
