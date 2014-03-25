@@ -90,15 +90,16 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
           shouldCount = false;
         }
       }
-      if (shouldCount &&
-          (analysis.isInComment(currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null) ||
-          (analysis.isInTag(currentIndex) != null)) {
-        shouldCount = false;
+      if (shouldCount) {
+        if ((analysis.isInComment(currentIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
+            (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null) ||
+            (analysis.isInTag(currentIndex) != null)) {
+          shouldCount = false;
+        }
       }
       if (shouldCount) {
         PageElementTemplate template = analysis.isInTemplate(currentIndex + 2);
