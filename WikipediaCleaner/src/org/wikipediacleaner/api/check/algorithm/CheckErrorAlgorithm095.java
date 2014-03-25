@@ -56,7 +56,9 @@ public class CheckErrorAlgorithm095 extends CheckErrorAlgorithmBase {
     EnumWikipedia wiki = analysis.getWikipedia();
     for (PageElementInternalLink link : links) {
       String linkDest = link.getLink();
-      if ((linkDest != null) && (linkDest.trim().length() > 0)) {
+      if ((linkDest != null) &&
+          (linkDest.trim().length() > 0) &&
+          (linkDest.indexOf(':') >= 0)) {
         Page page = DataManager.getPage(wiki, linkDest, null, null, null);
         Integer namespace = page.getNamespace();
         if ((namespace != null) &&
