@@ -26,6 +26,7 @@ public class PageElementTag extends PageElement {
   public final static String TAG_HTML_B            = "b";
   public final static String TAG_HTML_BIG          = "big";
   public final static String TAG_HTML_BR           = "br";
+  public final static String TAG_HTML_DEL          = "del";
   public final static String TAG_HTML_FONT         = "font";
   public final static String TAG_HTML_H1           = "h1";
   public final static String TAG_HTML_H2           = "h2";
