@@ -362,13 +362,20 @@ public class HttpUtils {
     }
 
     // Check that URL ends correctly
+    String result = null;
     if (paramIndex + 2 >= base.length()) {
-      return detailsStr.substring(paramIndex).replaceAll("\\_", " ");
-    }
-    if (!detailsStr.endsWith(base.substring(paramIndex + 2))) {
+      result = detailsStr.substring(paramIndex);
+    } else if (!detailsStr.endsWith(base.substring(paramIndex + 2))) {
       return null;
+    } else {
+      result = detailsStr.substring(paramIndex, details.length() - base.length() + 2 + paramIndex);
     }
-
-    return detailsStr.substring(paramIndex, details.length() - base.length() + 2 + paramIndex).replaceAll("\\_", " ");
+    if (result != null) {
+      result = result.replaceAll("\\_", " ");
+      if (result.endsWith("/")) {
+        result = result.substring(0, result.length() - 1);
+      }
+    }
+    return result;
   }
 }
