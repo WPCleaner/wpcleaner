@@ -57,6 +57,11 @@ public class CWToolsPanel extends BotToolsPanel {
   private JButton buttonCWAutomaticMarking;
 
   /**
+   * Button for checking white lists.
+   */
+  private JButton buttonCWCheckWhiteLists;
+
+  /**
    * Configure if page that couldn't be fixed should be analyzed.
    */
   private JCheckBox chkCWAnalyze;
@@ -186,6 +191,17 @@ public class CWToolsPanel extends BotToolsPanel {
     add(buttonCWAutomaticMarking, constraints);
     constraints.gridy++;
 
+    // Button for checking white lists
+    buttonCWCheckWhiteLists = Utilities.createJButton(
+        "gnome-edit-find.png", EnumImageSize.NORMAL,
+        GT._("Check white lists"), true, null);
+    buttonCWCheckWhiteLists.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionCWCheckWhiteLists"));
+    constraints.gridwidth = maxX;
+    constraints.weightx = 1;
+    add(buttonCWCheckWhiteLists, constraints);
+    constraints.gridy++;
+
     // Select errors that can be fixed by bot
     ListSelectionModel selectionModel = tableCWAutomaticFixing.getSelectionModel();
     selectionModel.clearSelection();
@@ -251,6 +267,15 @@ public class CWToolsPanel extends BotToolsPanel {
         modelCWAutomaticFixing.getAlgorithms(),
         txtComment.getText(),
         saveModifications, chkCWAnalyze.isSelected());
+    worker.start();
+  }
+
+  /**
+   * Action called when Check White Lists button is pressed.
+   */
+  public void actionCWCheckWhiteLists() {
+    EnumWikipedia wiki = window.getWikipedia();
+    CWCheckWhiteListsWorker worker = new CWCheckWhiteListsWorker(wiki, window);
     worker.start();
   }
 }
