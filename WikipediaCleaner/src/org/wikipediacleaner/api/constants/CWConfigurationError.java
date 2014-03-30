@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.constants;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
@@ -608,11 +609,14 @@ public class CWConfigurationError {
   /**
    * @return White list.
    */
-  private Set<String> getWhiteList() {
+  public Set<String> getWhiteList() {
     if (whiteListPages != null) {
-      return whiteListPages;
+      return Collections.unmodifiableSet(whiteListPages);
     }
-    return whiteListWiki;
+    if (whiteListWiki != null) {
+      return Collections.unmodifiableSet(whiteListWiki);
+    }
+    return null;
   }
 
   /**
