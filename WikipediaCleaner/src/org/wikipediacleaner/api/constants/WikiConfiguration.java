@@ -54,17 +54,14 @@ public class WikiConfiguration {
     }
 
     String article = HttpUtils.getArticleFromUrl(url, server + articlePath);
-    if (article != null) {
-      return article;
-    }
-    if (script != null) {
+    if ((article == null) && (script != null)) {
       article = HttpUtils.getArticleFromUrl(url, server + script + "?title=$1");
-      if (article != null) {
-        return article;
-      }
+    }
+    if ((article != null) && (article.endsWith("/"))) {
+      article = article.substring(0, article.length() - 1);
     }
 
-    return null;
+    return article;
   }
 
   /**
