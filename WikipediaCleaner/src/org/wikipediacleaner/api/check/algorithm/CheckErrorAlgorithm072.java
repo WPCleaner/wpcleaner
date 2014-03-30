@@ -77,6 +77,8 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
           addSearchEngines(analysis, errorResult, value);
           value = value.substring(0, value.length() - 1) + computedCheck;
           addSearchEngines(analysis, errorResult, value);
+          value = "978" + isbn.getISBN();
+          addSearchEngines(analysis, errorResult, value);
           if (isbn.isTemplateParameter()) {
             PageElementTemplate template = analysis.isInTemplate(isbn.getBeginIndex());
             addSearchEngines(analysis, errorResult, template);
