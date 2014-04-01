@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-03-30 19:57+0200\n"
+"POT-Creation-Date: 2014-04-01 23:17+0200\n"
 "PO-Revision-Date: 2013-07-06 19:09+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -452,7 +452,7 @@ msgstr "Het controlegetal is {0} in plaats van {1}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:100
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:97
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:101
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:103
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:100
 msgid "An explanation of the problem"
 msgstr ""
@@ -1248,23 +1248,23 @@ msgstr ""
 "U heeft de fout gerepareerd door de pagina aan te pasen.\n"
 "U moet uw veranderingen insturen, de pagina wordt gemarkeerd als gerepareerd."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1268
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1270
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1000
 msgid "A comment is required for sending the page."
 msgstr "Een opmerking is noodzakelijk voor het inzenden van de pagina."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1447
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1449
 msgid "Pages with several errors"
 msgstr "Pagina met meerdere fouten"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1605
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1607
 #, java-format
 msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
 "href=\"{1}\">translation file</a> :"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1805
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1807
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
@@ -1273,7 +1273,7 @@ msgid ""
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1850
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1852
 #, java-format
 msgid ""
 "There''s no white list defined for this error type.\n"
@@ -2464,7 +2464,7 @@ msgid "Mark errors already fixed"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
-msgid "Check white lists"
+msgid "Check whitelists"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:89

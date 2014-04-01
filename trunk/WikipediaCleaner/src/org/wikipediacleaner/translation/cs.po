@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-03-30 19:57+0200\n"
+"POT-Creation-Date: 2014-04-01 23:17+0200\n"
 "PO-Revision-Date: 2014-02-28 13:49+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -469,7 +469,7 @@ msgstr "Délka ISBN je {0} místo 10 nebo 13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:100
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:97
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:101
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:103
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:100
 msgid "An explanation of the problem"
 msgstr "Vysvětlení problému"
@@ -1271,16 +1271,16 @@ msgstr ""
 "Při editaci stránky jste chybu opravil.\n"
 "Můžete změny uložit, chyba bude označena jako opravená."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1268
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1270
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1000
 msgid "A comment is required for sending the page."
 msgstr "Pro odeslání této stránky je vyžadován ruční komentář."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1447
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1449
 msgid "Pages with several errors"
 msgstr "Stránky s několika chybami"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1605
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1607
 #, java-format
 msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
@@ -1289,7 +1289,7 @@ msgstr ""
 "Chyba číslo {0} může být <a href=\"{1}\">konfigurována</a> následujícími "
 "parametry:"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1805
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1807
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
@@ -1302,7 +1302,7 @@ msgstr ""
 "  {0} = <název stránky> END\n"
 "na stránku s překladem ({1}) na „{2}“."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1850
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1852
 #, java-format
 msgid ""
 "There''s no white list defined for this error type.\n"
@@ -2518,7 +2518,7 @@ msgstr "Označit již opravené chyby"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
 #, fuzzy
-msgid "Check white lists"
+msgid "Check whitelists"
 msgstr "Check Wikipedia OK"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:89

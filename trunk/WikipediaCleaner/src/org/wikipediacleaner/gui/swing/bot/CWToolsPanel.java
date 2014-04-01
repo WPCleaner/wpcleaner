@@ -194,7 +194,7 @@ public class CWToolsPanel extends BotToolsPanel {
     // Button for checking white lists
     buttonCWCheckWhiteLists = Utilities.createJButton(
         "gnome-edit-find.png", EnumImageSize.NORMAL,
-        GT._("Check white lists"), true, null);
+        GT._("Check whitelists"), true, null);
     buttonCWCheckWhiteLists.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionCWCheckWhiteLists"));
     constraints.gridwidth = maxX;
