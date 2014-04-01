@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-03-30 19:57+0200\n"
+"POT-Creation-Date: 2014-04-01 23:17+0200\n"
 "PO-Revision-Date: 2013-07-06 19:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -453,7 +453,7 @@ msgstr "Контрольна сума — {0} замість {1}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm070.java:100
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm071.java:97
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:101
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm072.java:103
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm073.java:100
 msgid "An explanation of the problem"
 msgstr ""
@@ -1252,16 +1252,16 @@ msgstr ""
 "Ви вже виправили цю помилку, змінивши сторінку.\n"
 "Вам потрібно надіслати ваш варіанті сторінка буде позначена, як виправлена."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1268
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1270
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1000
 msgid "A comment is required for sending the page."
 msgstr "Для надсилання сторінки потрібний коментар."
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1447
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1449
 msgid "Pages with several errors"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1605
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1607
 #, java-format
 msgid ""
 "The error n°{0} can be configured with the following parameters in the <a "
@@ -1270,7 +1270,7 @@ msgstr ""
 "Помилка n°{0} може бути сконфігурована з такими параметрами у <a href=\"{1}"
 "\">файлі перекладу</a> :"
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1805
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1807
 #, java-format
 msgid ""
 "There''s no page defined for this error type.\n"
@@ -1279,7 +1279,7 @@ msgid ""
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1850
+#: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1852
 #, java-format
 msgid ""
 "There''s no white list defined for this error type.\n"
@@ -2504,8 +2504,9 @@ msgid "Mark errors already fixed"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
-msgid "Check white lists"
-msgstr ""
+#, fuzzy
+msgid "Check whitelists"
+msgstr "Перевірка на помилки n°{0}"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:89
 msgid "Semi-automatic disambiguation fixing"
