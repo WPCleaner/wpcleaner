@@ -1209,7 +1209,9 @@ public class CheckWikiProjectWindow extends OnePageWindow {
 
       // Mark as fixed
       error.remove(page);
-      pane.remove(CheckWikiContentPanel.this);
+      if (!textPage.isModified()) {
+        pane.remove(CheckWikiContentPanel.this);
+      }
       if (error.getPageCount() == 0) {
         Configuration configuration = Configuration.getConfiguration();
         if (!configuration.getBoolean(
