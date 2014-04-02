@@ -12,9 +12,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
-import org.wikipediacleaner.api.APIFactory;
+import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.check.CheckError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -52,7 +51,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
   @Override
   public Object construct() {
     try {
-      API api = APIFactory.getAPI();
+      MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
       EnumWikipedia wiki = getWikipedia();
       StringBuilder result = new StringBuilder();
       StringBuilder details = new StringBuilder();
@@ -73,7 +72,7 @@ class CWCheckWhiteListsWorker extends BasicWorker {
                 pages.add(page);
               }
               Collections.sort(pages);
-              api.retrieveContents(wiki, pages, false, false);
+              mw.retrieveContents(wiki, pages, true, false, false, false);
               for (Page page : pages) {
                 if (Boolean.FALSE.equals(page.isExisting())) {
                   details.append("<li>");
