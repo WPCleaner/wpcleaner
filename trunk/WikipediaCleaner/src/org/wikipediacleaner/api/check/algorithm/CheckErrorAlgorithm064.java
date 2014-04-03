@@ -59,8 +59,20 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
       String anchor = link.getAnchor();
       String linkName = link.getLink();
       String text = link.getText();
+      boolean same = false;
+      boolean automatic = false;
       if (((anchor == null) || (anchor.trim().length() == 0)) &&
-          (Page.areSameTitle(linkName, text))) {
+          (text != null)) {
+        if (!same && Page.areSameTitle(linkName, text)) {
+          same = true;
+          automatic = true;
+        }
+        if (!same && Page.areSameTitle(linkName, text.replaceAll("\\_", " "))) {
+          same = true;
+          automatic = false;
+        }
+      }
+      if (same && (text != null)) {
         if (errors == null) {
           return true;
         }
@@ -69,7 +81,14 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
             pageAnalysis.getPage(),
             link.getBeginIndex(),
             link.getEndIndex());
-        errorResult.addReplacement("[[" + text + "]]");
+        errorResult.addReplacement(
+            PageElementInternalLink.createInternalLink(text, null),
+            automatic);
+        if (text.contains("_")) {
+          errorResult.addReplacement(
+              PageElementInternalLink.createInternalLink(text.replaceAll("\\_", " "), null),
+              false);
+        }
         errors.add(errorResult);
       }
     }
@@ -105,6 +124,6 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-    return fixUsingFirstReplacement(fixName, analysis);
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
