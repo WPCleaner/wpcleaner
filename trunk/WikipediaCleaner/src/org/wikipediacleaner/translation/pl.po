@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-01 23:17+0200\n"
+"POT-Creation-Date: 2014-04-04 02:36+0200\n"
 "PO-Revision-Date: 2013-11-01 03:31+0000\n"
 "Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -171,7 +171,6 @@ msgstr "Zastąp przez {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:172
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:123
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:75
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:71
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:126
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:86
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:93
@@ -349,7 +348,7 @@ msgstr "Usuń (odlinkuj) linki do samego siebie"
 msgid "Remove breaks in list"
 msgstr "Usuń wszystkie <br /> z list"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:148
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm055.java:157
 msgid "Remove <small> tags"
 msgstr "Skasuj znaczniki <small>"
 
@@ -1232,7 +1231,7 @@ msgid "Mark as Fixed"
 msgstr "Oznacz jako naprawiony"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:1007
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:80
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:79
 #, java-format
 msgid "The page {0} doesn''t exist on Wikipedia"
 msgstr "Strona {0} nie istnieje w Wikipedii"
@@ -2496,22 +2495,22 @@ msgstr "Ogólne"
 msgid "Check Wiki"
 msgstr "Check Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:64
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:63
 #, fuzzy, java-format
 msgid "Checking white list for error {0}"
 msgstr "Sprawdzanie błędu nr {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:93
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:92
 #, java-format
 msgid "The error hasn''t been detected in page {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:110
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:109
 #, java-format
 msgid "The following problems were detected on the white list for error {0}:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:136
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:135
 #, fuzzy
 msgid "White lists"
 msgstr "Lista obserwowanych"

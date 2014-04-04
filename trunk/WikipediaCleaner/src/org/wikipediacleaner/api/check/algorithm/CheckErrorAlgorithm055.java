@@ -68,7 +68,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = createCheckErrorResult(
               pageAnalysis.getPage(),
               tag.getBeginIndex(), tag.getEndIndex());
-          errorResult.addReplacement("", GT._("Delete"));
+          errorResult.addReplacement("");
           errors.add(errorResult);
         }
       } else if (tag.isEndTag()) {
@@ -76,6 +76,15 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
         level--;
         if (level < 0) {
           level = 0;
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              pageAnalysis.getPage(),
+              tag.getBeginIndex(), tag.getEndIndex());
+          errorResult.addReplacement("");
+          errors.add(errorResult);
         }
       } else {
         if (level == 0) {
