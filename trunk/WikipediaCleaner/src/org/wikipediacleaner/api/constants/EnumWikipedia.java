@@ -228,7 +228,7 @@ public enum EnumWikipedia {
     if (pageTitle == null) {
       return null;
     }
-    String result = pageTitle.trim();
+    String result = pageTitle.replaceAll(" ", " ");
     result = result.replaceAll("_", " ");
     result = result.replaceAll(" +", " ");
     result = result.trim();

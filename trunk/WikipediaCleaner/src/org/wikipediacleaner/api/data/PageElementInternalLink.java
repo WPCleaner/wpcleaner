@@ -279,7 +279,7 @@ public class PageElementInternalLink extends PageElement {
       String text, int textOffset) {
     super(beginIndex, endIndex);
     this.linkNotTrimmed = link;
-    this.link = (link != null) ? wikipedia.normalizeTitle(link.trim()) : null;
+    this.link = (link != null) ? wikipedia.normalizeTitle(link) : null;
     this.anchorNotTrimmed = anchor;
     this.anchor = (anchor != null) ? anchor.trim() : null;
     this.textNotTrimmed = text;
