@@ -164,6 +164,12 @@ public class FormattingOptionsPanel extends OptionsPanel {
         true, true, true, true, true, true,
         ConfigurationValueStyle.EXTERNAL_LINK);
 
+    // Add line for interwiki link style
+    addLine(
+        panel, constraints, true, GT._("Interwiki link"),
+        true, true, true, true, true, true,
+        ConfigurationValueStyle.INTERWIKI_LINK);
+
     // Add line for tag style
     addLine(
         panel, constraints, true, GT._("Tag"),

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-04 02:36+0200\n"
+"POT-Creation-Date: 2014-04-05 13:28+0200\n"
 "PO-Revision-Date: 2014-03-30 18:41+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -2889,88 +2889,93 @@ msgid "External link"
 msgstr "Externí odkaz"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:169
+#, fuzzy
+msgid "Interwiki link"
+msgstr "Interní odkaz"
+
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:175
 msgid "Tag"
 msgstr "Tag"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:175
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:181
 msgid "Reference"
 msgstr "Reference"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:181
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:187
 msgid "Programming elements"
 msgstr "Programátorské šablony"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:187
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:193
 msgid "Disambiguation link"
 msgstr "Odkaz na rozcestník"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:193
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:199
 msgid "Normal internal link"
 msgstr "Normální interní odkaz"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:199
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:205
 msgid "Redirect link"
 msgstr "Odkaz na přesměrování"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:205
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:211
 msgid "Missing link"
 msgstr "Červený odkaz"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:211
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:217
 msgid "Disambiguation template"
 msgstr "Rozcestníková šablona"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:217
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:223
 msgid "Normal template"
 msgstr "Normální šablona"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:223
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:229
 msgid "Help requested"
 msgstr "Vyžadující pomoc"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:229
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:235
 msgid "Check wiki error"
 msgstr "Chyba Check wiki"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:235
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:241
 msgid "Check wiki warning"
 msgstr "Varování Check wiki"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:241
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:247
 msgid "Check wiki OK"
 msgstr "Check Wikipedia OK"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:351
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:357
 msgid "Italic"
 msgstr "Kurzíva"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:359
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:365
 msgid "Bold"
 msgstr "Tučné"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:367
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:373
 msgid "Underline"
 msgstr "Podtržené"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:375
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:381
 msgid "Strike through"
 msgstr "Škrtnuté"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:383
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:388
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:389
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:394
 msgid "Foreground color"
 msgstr "Barva popředí"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:387
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:393
 msgid "Choose foreground color"
 msgstr "Vybrat barvu popředí"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:396
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:401
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:402
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:407
 msgid "Background color"
 msgstr "Barva pozadí"
 
-#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:400
+#: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:406
 msgid "Choose background color"
 msgstr "Vybrat barvu pozadí"
 
