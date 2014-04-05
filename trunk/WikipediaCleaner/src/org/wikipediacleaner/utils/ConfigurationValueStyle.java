@@ -87,6 +87,11 @@ public enum ConfigurationValueStyle {
       true, Color.CYAN,
       false, Color.WHITE,
       true, true, false, false)),
+  INTERWIKI_LINK("InterwikiLink", new StyleProperties(
+      true,
+      false, Color.BLACK,
+      true, new Color(214, 255, 255),
+      true, false, false, false)),
   LANGUAGE_LINK("LanguageLink", new StyleProperties(
       true,
       false, Color.BLACK,

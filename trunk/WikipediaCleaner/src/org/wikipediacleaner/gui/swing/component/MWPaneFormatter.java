@@ -25,6 +25,7 @@ import org.wikipediacleaner.api.data.PageElementExternalLink;
 import org.wikipediacleaner.api.data.PageElementFunction;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
+import org.wikipediacleaner.api.data.PageElementInterwikiLink;
 import org.wikipediacleaner.api.data.PageElementLanguageLink;
 import org.wikipediacleaner.api.data.PageElementMagicWord;
 import org.wikipediacleaner.api.data.PageElementParameter;
@@ -153,6 +154,8 @@ public abstract class MWPaneFormatter {
         ConfigurationValueStyle.IMAGE);
     ConfigurationValueStyle.StyleProperties styleInternalLink = config.getStyle(
         ConfigurationValueStyle.INTERNAL_LINK);
+    ConfigurationValueStyle.StyleProperties styleInterwikiLink = config.getStyle(
+        ConfigurationValueStyle.INTERWIKI_LINK);
     ConfigurationValueStyle.StyleProperties styleLanguageLink = config.getStyle(
         ConfigurationValueStyle.LANGUAGE_LINK);
     ConfigurationValueStyle.StyleProperties styleProgramming = config.getStyle(
@@ -172,7 +175,7 @@ public abstract class MWPaneFormatter {
         styleProgramming.getEnabled(),
         styleImage.getEnabled(),
         styleInternalLink.getEnabled(),
-        false,
+        styleInterwikiLink.getEnabled(),
         styleLanguageLink.getEnabled(),
         styleProgramming.getEnabled(),
         styleProgramming.getEnabled(),
@@ -230,6 +233,8 @@ public abstract class MWPaneFormatter {
         style = doc.getStyle(ConfigurationValueStyle.COMMENTS.getName());
       } else if (element instanceof PageElementExternalLink) {
         style = doc.getStyle(ConfigurationValueStyle.EXTERNAL_LINK.getName());
+      } else if (element instanceof PageElementInterwikiLink) {
+        style = doc.getStyle(ConfigurationValueStyle.INTERWIKI_LINK.getName());
       } else if (element instanceof PageElementFunction) {
         style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
       } else if (element instanceof PageElementMagicWord) {
@@ -420,6 +425,11 @@ public abstract class MWPaneFormatter {
         Style internalLinkStyle = addStyle(
             ConfigurationValueStyle.INTERNAL_LINK, rootStyle);
         internalLinkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
+
+        // Style for interwiki link
+        Style interwikiLinkStyle = addStyle(
+            ConfigurationValueStyle.INTERWIKI_LINK, rootStyle);
+        interwikiLinkStyle.addAttribute(ATTRIBUTE_OCCURRENCE, Boolean.FALSE);
 
         // Style for language link
         Style languageLinkStyle = addStyle(
