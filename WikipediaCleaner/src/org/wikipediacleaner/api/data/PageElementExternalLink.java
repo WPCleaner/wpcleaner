@@ -34,6 +34,8 @@ public class PageElementExternalLink extends PageElement {
 
   private final static String ALL_SEPARATORS = SEPARATORS_EXCLUDED + SEPARATORS_INCLUDED + UNACCEPTABLE + "[]";
 
+  private final static String IN_TEMPLATES_SEPARATORS = "|}";
+
   private final static List<String> privateProtocols = new ArrayList<String>();
 
   static {
@@ -89,10 +91,19 @@ public class PageElementExternalLink extends PageElement {
     }
     int beginUrlIndex = tmpIndex;
 
+    // Find if the external link is inside a template
+    String fullSeparators = ALL_SEPARATORS;
+    if (analysis != null) {
+      PageElementTemplate template = analysis.isInTemplate(index);
+      if (!hasSquare && (template != null)) {
+        fullSeparators += IN_TEMPLATES_SEPARATORS;
+      }
+    }
+
     // Find destination of external link
     int endUrlIndex = beginUrlIndex;
     while ((endUrlIndex < maxLength) &&
-           (ALL_SEPARATORS.indexOf(contents.charAt(endUrlIndex)) < 0)) {
+           (fullSeparators.indexOf(contents.charAt(endUrlIndex)) < 0)) {
       endUrlIndex++;
     }
 
