@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-05 13:28+0200\n"
+"POT-Creation-Date: 2014-04-05 14:20+0200\n"
 "PO-Revision-Date: 2013-11-20 10:51+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -436,6 +436,7 @@ msgid "Do not replace"
 msgstr "No reemplazar"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:258
+#: org/wikipediacleaner/gui/swing/Controller.java:240
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 msgid "Cancel"
 msgstr "Cancelar"
@@ -1304,7 +1305,17 @@ msgid ""
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/Controller.java:241
+#: org/wikipediacleaner/gui/swing/Controller.java:238
+#, fuzzy, java-format
+msgid "Yes, {0} pages"
+msgstr "{0} páginas"
+
+#: org/wikipediacleaner/gui/swing/Controller.java:239
+#, fuzzy, java-format
+msgid "No, {0} pages"
+msgstr "{0} páginas"
+
+#: org/wikipediacleaner/gui/swing/Controller.java:244
 #, java-format
 msgid ""
 "You have selected {0} pages.\n"
@@ -3556,9 +3567,6 @@ msgstr ""
 
 #~ msgid "Disambiguation (Alt + &D)"
 #~ msgstr "Desambiguación (Alt + &D)"
-
-#~ msgid "{0} pages"
-#~ msgstr "{0} páginas"
 
 #~ msgid "Full analysis (Alt + &F)"
 #~ msgstr "Análisis completo (Alt + &F)"

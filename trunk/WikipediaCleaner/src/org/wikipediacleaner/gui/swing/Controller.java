@@ -11,8 +11,6 @@ import java.awt.Component;
 import java.util.Collection;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
@@ -236,14 +234,20 @@ public class Controller {
         null,
         ConfigurationValueInteger.MAXIMUM_PAGES);
     if (pagesCount > maxPagesCount) {
-      int answer = Utilities.displayYesNoCancelWarning(
+      Object[] options = new Object[] {
+          GT._("Yes, {0} pages", Integer.toString(pagesCount)),
+          GT._("No, {0} pages", Integer.toString(maxPagesCount)),
+          GT._("Cancel")
+      };
+      int answer = Utilities.displayQuestion(
           parentComponent, GT._(
               "You have selected {0} pages.\n" +
               "Would you like to analyze more than {1} pages ?",
-              new Object[]{ pagesCount, maxPagesCount }));
-      if (answer == JOptionPane.NO_OPTION) {
+              new Object[]{ pagesCount, maxPagesCount }),
+          options);
+      if (answer == 1) {
         pagesCount = maxPagesCount;
-      } else if (answer == JOptionPane.CANCEL_OPTION) {
+      } else if (answer != 0) {
         pagesCount = 0;
       }
     }
