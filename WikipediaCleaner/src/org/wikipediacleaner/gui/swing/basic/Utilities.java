@@ -391,7 +391,7 @@ public class Utilities {
    * 
    * @param parent Parent component.
    * @param message Message.
-   * @return Answer {@link JOptionPane#YES_OPTION} or {@link JOptionPane#NO_OPTION}.
+   * @return Answer {@link JOptionPane#YES_OPTION} or {@link JOptionPane#NO_OPTION} or YES_ALL_OPTION or NO_ALL_OPTION.
    */
   public static int displayYesNoAllWarning(Component parent, String message) {
     Object[] options = new Object[] {
@@ -424,6 +424,14 @@ public class Utilities {
     return JOptionPane.CLOSED_OPTION;
   }
 
+  /**
+   * Display a question with possible values.
+   * 
+   * @param parent Parent component.
+   * @param message Message.
+   * @param values Possible values.
+   * @return Selected value.
+   */
   public static int displayQuestion(Component parent, String message, Object[] values) {
     return JOptionPane.showOptionDialog(
         parent, message, Version.PROGRAM,

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-05 13:28+0200\n"
+"POT-Creation-Date: 2014-04-05 14:20+0200\n"
 "PO-Revision-Date: 2014-04-03 21:53+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -451,6 +451,7 @@ msgid "Do not replace"
 msgstr "Ne pas remplacer"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:258
+#: org/wikipediacleaner/gui/swing/Controller.java:240
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 msgid "Cancel"
 msgstr "Annuler"
@@ -1339,7 +1340,17 @@ msgstr ""
 "  {0} = <nom de page> END\n"
 "à la page de traduction ({1}) sur \"{2}\""
 
-#: org/wikipediacleaner/gui/swing/Controller.java:241
+#: org/wikipediacleaner/gui/swing/Controller.java:238
+#, fuzzy, java-format
+msgid "Yes, {0} pages"
+msgstr "{0} pages"
+
+#: org/wikipediacleaner/gui/swing/Controller.java:239
+#, fuzzy, java-format
+msgid "No, {0} pages"
+msgstr "{0} pages"
+
+#: org/wikipediacleaner/gui/swing/Controller.java:244
 #, java-format
 msgid ""
 "You have selected {0} pages.\n"
@@ -3564,9 +3575,6 @@ msgstr "La valeur ne doit contenir aucun de ces caractères : {0}"
 
 #~ msgid "Disambiguation (Alt + &D)"
 #~ msgstr "Homonymie (Alt + &D)"
-
-#~ msgid "{0} pages"
-#~ msgstr "{0} pages"
 
 #~ msgid "Add page (Alt + &A)"
 #~ msgstr "Ajouter une page (Alt + &A)"

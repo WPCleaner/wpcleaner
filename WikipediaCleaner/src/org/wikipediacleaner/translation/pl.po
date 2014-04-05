@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-05 13:28+0200\n"
+"POT-Creation-Date: 2014-04-05 14:20+0200\n"
 "PO-Revision-Date: 2013-11-01 03:31+0000\n"
 "Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -441,6 +441,7 @@ msgid "Do not replace"
 msgstr "Nie zamieniaj"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:258
+#: org/wikipediacleaner/gui/swing/Controller.java:240
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 msgid "Cancel"
 msgstr "Anuluj"
@@ -1323,7 +1324,17 @@ msgstr ""
 "  {0} = <nazwa strony> END\n"
 "w odpowiednim miejscu na stronie z tłumaczeniem ({1}) na \"{2}\""
 
-#: org/wikipediacleaner/gui/swing/Controller.java:241
+#: org/wikipediacleaner/gui/swing/Controller.java:238
+#, fuzzy, java-format
+msgid "Yes, {0} pages"
+msgstr "{0} stron"
+
+#: org/wikipediacleaner/gui/swing/Controller.java:239
+#, fuzzy, java-format
+msgid "No, {0} pages"
+msgstr "{0} stron"
+
+#: org/wikipediacleaner/gui/swing/Controller.java:244
 #, java-format
 msgid ""
 "You have selected {0} pages.\n"
@@ -3551,9 +3562,6 @@ msgstr "Wartość nie może zawierać tych znaków: {0}"
 
 #~ msgid "Help (Alt + &H)"
 #~ msgstr "Pomoc"
-
-#~ msgid "{0} pages"
-#~ msgstr "{0} stron"
 
 #~ msgid "Check orthograph and typography"
 #~ msgstr "Sprawdź ortografię i typografię"

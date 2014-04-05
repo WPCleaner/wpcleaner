@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-05 13:28+0200\n"
+"POT-Creation-Date: 2014-04-05 14:20+0200\n"
 "PO-Revision-Date: 2014-03-30 18:41+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -437,6 +437,7 @@ msgid "Do not replace"
 msgstr "Nenahradit"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:258
+#: org/wikipediacleaner/gui/swing/Controller.java:240
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 msgid "Cancel"
 msgstr "Zrušit"
@@ -1314,7 +1315,17 @@ msgstr ""
 "  {0} = <název stránky> END\n"
 "na stránku s překladem ({1}) na „{2}“."
 
-#: org/wikipediacleaner/gui/swing/Controller.java:241
+#: org/wikipediacleaner/gui/swing/Controller.java:238
+#, fuzzy, java-format
+msgid "Yes, {0} pages"
+msgstr "{0} stránek"
+
+#: org/wikipediacleaner/gui/swing/Controller.java:239
+#, fuzzy, java-format
+msgid "No, {0} pages"
+msgstr "{0} stránek"
+
+#: org/wikipediacleaner/gui/swing/Controller.java:244
 #, java-format
 msgid ""
 "You have selected {0} pages.\n"
@@ -3497,9 +3508,6 @@ msgstr "Tato hodnota nemůže obsahovat žádné ze znaků: {0}"
 
 #~ msgid "Help (Alt + &H)"
 #~ msgstr "Nápověda (Alt + &H)"
-
-#~ msgid "{0} pages"
-#~ msgstr "{0} stránek"
 
 #~ msgid "Add page (Alt + &A)"
 #~ msgstr "Přidat stránku (Alt + &A)"

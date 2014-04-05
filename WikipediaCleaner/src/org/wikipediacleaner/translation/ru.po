@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-05 13:28+0200\n"
+"POT-Creation-Date: 2014-04-05 14:20+0200\n"
 "PO-Revision-Date: 2013-06-14 11:28+0000\n"
 "Last-Translator: Oleg Koptev <koptev.oleg@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -424,6 +424,7 @@ msgid "Do not replace"
 msgstr "Не заменять"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm068.java:258
+#: org/wikipediacleaner/gui/swing/Controller.java:240
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 msgid "Cancel"
 msgstr "Отмена"
@@ -1289,7 +1290,17 @@ msgid ""
 "to the translation page ({1}) on \"{2}\""
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/Controller.java:241
+#: org/wikipediacleaner/gui/swing/Controller.java:238
+#, fuzzy, java-format
+msgid "Yes, {0} pages"
+msgstr "{0} страниц"
+
+#: org/wikipediacleaner/gui/swing/Controller.java:239
+#, fuzzy, java-format
+msgid "No, {0} pages"
+msgstr "{0} страниц"
+
+#: org/wikipediacleaner/gui/swing/Controller.java:244
 #, java-format
 msgid ""
 "You have selected {0} pages.\n"
@@ -3513,9 +3524,6 @@ msgstr ""
 
 #~ msgid "Reverse to [[{0}|{1}]]"
 #~ msgstr "Обратить в [[{0}|{1}]]"
-
-#~ msgid "{0} pages"
-#~ msgstr "{0} страниц"
 
 #~ msgid "Fix all <br/> tags"
 #~ msgstr "Исправить все тэги </br>"
