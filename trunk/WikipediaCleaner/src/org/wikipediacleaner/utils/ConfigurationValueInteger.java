@@ -17,6 +17,7 @@ public enum ConfigurationValueInteger {
 
   ANALYSIS_NB_PAGES("AnalysisNbPages", 10),
   ANALYSIS_UNDO_LVL("AnalysisUndoLevels", 10),
+  CHECK_BOT_NB_PAGES("CheckBotNbPages", 100),
   CHECK_NB_ERRORS("CheckNbErrors", 100),
   CONFIG_VERSION("ConfigurationVersion", 1),
   FONT_SIZE("FontSize", 0),

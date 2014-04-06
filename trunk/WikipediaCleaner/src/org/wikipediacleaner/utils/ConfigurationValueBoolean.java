@@ -25,6 +25,7 @@ public enum ConfigurationValueBoolean {
   ANALYSIS_MISSING_PAGES("AnalysisMissingPages", false),
   ANALYSIS_OTHER_PAGES("AnalysisOtherPages", false),
   ANALYSIS_REDIRECT_PAGES("AnalysisRedirectPages", false),
+  CHECK_BOT_ANALYZE("CheckBotAnalyze", true),
   CHECK_SHOW_0_ERRORS("CheckShow0Errors", false),
   CHECK_LINK_ERRORS("CheckLinkErrors", false),
   CHECK_MARK_AS_FIXED("CheckMarkAsFixed", false),
