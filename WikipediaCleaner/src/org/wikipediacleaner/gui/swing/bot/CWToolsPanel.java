@@ -34,6 +34,9 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueBoolean;
+import org.wikipediacleaner.utils.ConfigurationValueInteger;
 
 
 /**
@@ -101,6 +104,9 @@ public class CWToolsPanel extends BotToolsPanel {
    */
   private void initialize() {
 
+    // Configuration
+    Configuration config = Configuration.getConfiguration();
+
     // Initialize constraints
     final int maxX = 3;
     GridBagConstraints constraints = new GridBagConstraints();
@@ -136,12 +142,14 @@ public class CWToolsPanel extends BotToolsPanel {
 
     // Check box to decide if pages should be analyzed if not fixed
     chkCWAnalyze = Utilities.createJCheckBox(
-        GT._("Analyze pages that couldn't be fixed by bot"), true);
+        GT._("Analyze pages that couldn't be fixed by bot"),
+        config.getBoolean(null, ConfigurationValueBoolean.CHECK_BOT_ANALYZE));
     add(chkCWAnalyze, constraints);
     constraints.gridy++;
 
     // Number of errors
-    modelNbPages = new SpinnerNumberModel(100, 1, 10000, 1);
+    modelNbPages = new SpinnerNumberModel(
+        config.getInt(null, ConfigurationValueInteger.CHECK_BOT_NB_PAGES), 1, 10000, 1);
     JSpinner spinNbPages = new JSpinner(modelNbPages);
     JLabel labelNbPages = Utilities.createJLabel(GT._("Number of pages:"));
     labelNbPages.setLabelFor(spinNbPages);
@@ -261,12 +269,16 @@ public class CWToolsPanel extends BotToolsPanel {
       Number number = modelNbPages.getNumber();
       max = number.intValue();
     }
+    Configuration config = Configuration.getConfiguration();
+    boolean analyze = chkCWAnalyze.isSelected();
+    config.setBoolean(null, ConfigurationValueBoolean.CHECK_BOT_ANALYZE, analyze);
+    config.setInt(null, ConfigurationValueInteger.CHECK_BOT_NB_PAGES, max);
     AutomaticCWWorker worker = new AutomaticCWWorker(
         wiki, window,
         selectedAlgorithms, max,
         modelCWAutomaticFixing.getAlgorithms(),
         txtComment.getText(),
-        saveModifications, chkCWAnalyze.isSelected());
+        saveModifications, analyze);
     worker.start();
   }
 
