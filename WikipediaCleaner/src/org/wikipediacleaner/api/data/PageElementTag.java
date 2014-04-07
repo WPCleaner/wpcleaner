@@ -105,6 +105,11 @@ public class PageElementTag extends PageElement {
   private final boolean fullTag;
 
   /**
+   * Flag indicating if there are white space characters at the end.
+   */
+  private final boolean endWithSpace;
+
+  /**
    * Matching tag.
    */
   private PageElementTag matchingTag;
@@ -179,6 +184,7 @@ public class PageElementTag extends PageElement {
     if (endIndex < 0) {
       return null;
     }
+    boolean endWithSpace = (contents.charAt(endIndex - 1) == ' ');
 
     // Possible whitespace characters
     int tmpIndex2 = endIndex - 1;
@@ -214,7 +220,7 @@ public class PageElementTag extends PageElement {
     return new PageElementTag(
         index, endIndex + 1,
         name, parameters,
-        endTag, fullTag);
+        endTag, fullTag, endWithSpace);
   }
 
   /**
@@ -389,6 +395,13 @@ public class PageElementTag extends PageElement {
   }
 
   /**
+   * @return Ends with extra space characters ?
+   */
+  public boolean endWithSpace() {
+    return endWithSpace;
+  }
+
+  /**
    * @return Beginning of the complete tag.
    */
   public int getCompleteBeginIndex() {
@@ -472,17 +485,19 @@ public class PageElementTag extends PageElement {
    * @param parameters Parameters.
    * @param endTag Is it a closing tag ?
    * @param fullTag Is it a full tag ?
+   * @param Extra white space characters at the end ?
    */
   private PageElementTag(
       int beginIndex, int endIndex,
       String name, List<PageElementTag.Parameter> parameters,
-      boolean endTag, boolean fullTag) {
+      boolean endTag, boolean fullTag, boolean endWithSpace) {
     super(beginIndex, endIndex);
     this.name = name;
     this.normalizedName = (name != null) ? name.trim().toLowerCase() : null;
     this.parameters = parameters;
     this.endTag = endTag;
     this.fullTag = fullTag;
+    this.endWithSpace = endWithSpace;
   }
 
   /**

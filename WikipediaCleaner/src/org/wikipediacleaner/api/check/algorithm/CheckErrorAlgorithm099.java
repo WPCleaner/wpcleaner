@@ -11,9 +11,9 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -56,10 +56,34 @@ public class CheckErrorAlgorithm099 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(
             pageAnalysis.getPage(),
             beginIndex, supTag.getEndIndex());
-        errorResult.addReplacement("", GT._("Delete"));
+        errorResult.addReplacement("");
+        errors.add(errorResult);
+      } else if (supTag.isEndTag() && supTag.endWithSpace()) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            pageAnalysis.getPage(),
+            beginIndex, supTag.getEndIndex(),
+            ErrorLevel.WARNING);
+        errorResult.addReplacement(
+            PageElementTag.createTag(PageElementTag.TAG_HTML_SUP, true, false),
+            true);
         errors.add(errorResult);
       }
     }
     return result;
+  }
+
+  /**
+   * Automatic fixing of some errors in the page.
+   * 
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
