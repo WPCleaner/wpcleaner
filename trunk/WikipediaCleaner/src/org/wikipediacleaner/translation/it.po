@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-05 14:20+0200\n"
+"POT-Creation-Date: 2014-04-07 07:13+0200\n"
 "PO-Revision-Date: 2013-09-30 23:13+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -169,7 +169,6 @@ msgstr "Sostituisci con {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm098.java:59
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm099.java:59
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:89
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
@@ -990,8 +989,8 @@ msgid "Save"
 msgstr "Salva"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:253
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:119
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:175
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:125
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:183
 msgid "Automatic fixing for Check Wiki"
 msgstr ""
 
@@ -2481,23 +2480,23 @@ msgstr ""
 msgid "White lists"
 msgstr "Osservati speciali"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:139
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:145
 msgid "Analyze pages that couldn't be fixed by bot"
 msgstr "Analizza pagine che non possono essere corrette dai bot"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:146
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:154
 msgid "Number of pages:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:160
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:168
 msgid "Comment:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:186
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:194
 msgid "Mark errors already fixed"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:205
 #, fuzzy
 msgid "Check whitelists"
 msgstr "Elenchi speciali"

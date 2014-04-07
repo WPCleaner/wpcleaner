@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-05 14:20+0200\n"
+"POT-Creation-Date: 2014-04-07 07:13+0200\n"
 "PO-Revision-Date: 2014-03-30 18:41+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -174,7 +174,6 @@ msgstr "Nahradit řetězcem {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm078.java:93
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm098.java:59
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm099.java:59
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:89
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:115
 msgid "Delete"
@@ -1000,8 +999,8 @@ msgid "Save"
 msgstr "Uložit"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:253
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:119
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:175
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:125
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:183
 msgid "Automatic fixing for Check Wiki"
 msgstr "Automatické opravy chyb Check Wikipedia"
 
@@ -2509,23 +2508,23 @@ msgstr "Ve whitelistu chyby {0} byly nalezeny následující problémy:"
 msgid "White lists"
 msgstr "Whitelisty"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:139
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:145
 msgid "Analyze pages that couldn't be fixed by bot"
 msgstr "Analyzovat stránky, které nemohly být botem opraveny"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:146
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:154
 msgid "Number of pages:"
 msgstr "Počet stránek:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:160
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:168
 msgid "Comment:"
 msgstr "Shrnutí"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:186
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:194
 msgid "Mark errors already fixed"
 msgstr "Označit již opravené chyby"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:205
 msgid "Check whitelists"
 msgstr ""
 
