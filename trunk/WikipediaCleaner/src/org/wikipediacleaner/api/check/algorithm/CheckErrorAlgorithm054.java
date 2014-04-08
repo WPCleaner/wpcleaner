@@ -11,6 +11,7 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -80,8 +81,12 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
         while ((currentPos >= 0) && (Character.isWhitespace(contents.charAt(currentPos)))) {
           currentPos--;
         }
-        if ((currentPos < 1) || (!contents.startsWith("br", currentPos - 1))) {
+        if (currentPos < 1) {
           found = false;
+        } else {
+          if (!PageElementTag.TAG_HTML_BR.equalsIgnoreCase(contents.substring(currentPos - 1, currentPos + 1))) {
+            found = false;
+          }
         }
         currentPos -= 2;
         while ((currentPos >= 0) && (Character.isWhitespace(contents.charAt(currentPos)))) {
