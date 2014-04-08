@@ -87,7 +87,9 @@ public class PageElementExternalLink extends PageElement {
     }
     boolean protocolOk = isPossibleProtocol(contents, tmpIndex);
     if (!protocolOk) {
-      return null;
+      if (!hasSquare || !contents.startsWith("//", tmpIndex)) {
+        return null;
+      }
     }
     int beginUrlIndex = tmpIndex;
 
@@ -267,7 +269,11 @@ public class PageElementExternalLink extends PageElement {
       boolean hasSquare, boolean hasSecondSquare) {
     super(beginIndex, endIndex);
     this.linkNotTrimmed = link;
-    this.link = (link != null) ? link.trim() : null;
+    String tmpLink = (link != null) ? link.trim() : null;
+    if ((tmpLink != null) && (tmpLink.startsWith("//"))) {
+      tmpLink = "http:" + tmpLink;
+    }
+    this.link = tmpLink;
     if ((text != null) && (text.trim().length() > 0)) {
       this.textNotTrimmed = text;
       this.text = text.trim();
