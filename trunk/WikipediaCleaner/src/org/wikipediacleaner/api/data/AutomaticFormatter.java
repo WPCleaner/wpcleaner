@@ -204,11 +204,11 @@ public class AutomaticFormatter {
     // Check configuration
     WPCConfiguration config = page.getWikipedia().getConfiguration();
     String option = config.getString(WPCConfigurationString.AUTO_CR_BEFORE_CATEGORY);
-    if (!isValidCrOption(option)) {
+    if (!isValidCountOption(option)) {
       return contents;
     }
-    int min = getMinCrOption(option);
-    int max = getMaxCrOption(option);
+    int min = getMinCountOption(option);
+    int max = getMaxCountOption(option);
     if ((min <= 0) && (max == Integer.MAX_VALUE)) {
       return contents;
     }
@@ -243,8 +243,8 @@ public class AutomaticFormatter {
       if ((nbCr == 0) || ((nbCr >= min) && (nbCr <= max))) {
         return contents;
       }
-      contents = changeCarriageReturn(
-          contents, index + 1,
+      contents = changeCharacters(
+          contents, index + 1, '\n',
           normalizeValue(nbCr, min, max), beginSort);
       return contents;
     }
@@ -273,8 +273,8 @@ public class AutomaticFormatter {
     if ((nbCr == 0) || ((nbCr >= min) && (nbCr <= max))) {
       return contents;
     }
-    contents = changeCarriageReturn(
-        contents, index + 1,
+    contents = changeCharacters(
+        contents, index + 1, '\n',
         normalizeValue(nbCr, min, max), beginCat);
 
     return contents;
@@ -292,11 +292,11 @@ public class AutomaticFormatter {
     // Check configuration
     WPCConfiguration config = page.getWikipedia().getConfiguration();
     String option = config.getString(WPCConfigurationString.AUTO_CR_DEFAULTSORT_CATEGORY);
-    if (!isValidCrOption(option)) {
+    if (!isValidCountOption(option)) {
       return contents;
     }
-    int min = getMinCrOption(option);
-    int max = getMaxCrOption(option);
+    int min = getMinCountOption(option);
+    int max = getMaxCountOption(option);
     if ((min <= 0) && (max == Integer.MAX_VALUE)) {
       return contents;
     }
@@ -326,8 +326,8 @@ public class AutomaticFormatter {
           ((nbCr < min) || (nbCr > max))) {
         PageElementCategory category = analysis.isInCategory(index);
         if (category != null) {
-          contents = changeCarriageReturn(
-              contents, function.getEndIndex(),
+          contents = changeCharacters(
+              contents, function.getEndIndex(), '\n',
               normalizeValue(nbCr, min, max), category.getBeginIndex());
         }
       }
@@ -348,11 +348,11 @@ public class AutomaticFormatter {
     // Check configuration
     WPCConfiguration config = page.getWikipedia().getConfiguration();
     String option = config.getString(WPCConfigurationString.AUTO_CR_BETWEEN_CATEGORY);
-    if (!isValidCrOption(option)) {
+    if (!isValidCountOption(option)) {
       return contents;
     }
-    int min = getMinCrOption(option);
-    int max = getMaxCrOption(option);
+    int min = getMinCountOption(option);
+    int max = getMaxCountOption(option);
     if ((min <= 0) && (max == Integer.MAX_VALUE)) {
       return contents;
     }
@@ -570,29 +570,30 @@ public class AutomaticFormatter {
   }
 
   /**
-   * Insert carriage returns.
+   * Insert characters.
    * 
    * @param contents Contents.
-   * @param begin Index where to start inserting carriage returns.
-   * @param count Number of carriage returns to insert.
-   * @param end Index where to end inserting carriage returns.
+   * @param begin Index where to start inserting characters.
+   * @param character Character to insert.
+   * @param count Number of characters to insert.
+   * @param end Index where to end inserting characters.
    * @return
    */
-  private static String changeCarriageReturn(
-      String contents, int begin, int count, int end) {
+  private static String changeCharacters(
+      String contents, int begin, char character, int count, int end) {
     StringBuilder sb = new StringBuilder(contents.substring(0, begin));
     for (int i = 0; i < count; i++) {
-      sb.append('\n');
+      sb.append(character);
     }
     sb.append(contents.substring(end));
     return sb.toString();
   }
 
   /**
-   * @param option Option for number of carriage returns.
+   * @param option Option for number of characters.
    * @return True if option is valid.
    */
-  private static boolean isValidCrOption(String option) {
+  private static boolean isValidCountOption(String option) {
     if ((option == null) || (option.length() == 0)) {
       return false;
     }
@@ -620,10 +621,10 @@ public class AutomaticFormatter {
   }
 
   /**
-   * @param option Option for number of carriage returns.
-   * @return Minimum number of carriage returns.
+   * @param option Option for number of characters.
+   * @return Minimum number of characters.
    */
-  private static int getMinCrOption(String option) {
+  private static int getMinCountOption(String option) {
     if ((option == null) || (option.length() == 0)) {
       return 0;
     }
@@ -635,10 +636,10 @@ public class AutomaticFormatter {
   }
 
   /**
-   * @param option Option for number of carriage returns.
-   * @return Maximum number of carriage returns.
+   * @param option Option for number of characters.
+   * @return Maximum number of characters.
    */
-  private static int getMaxCrOption(String option) {
+  private static int getMaxCountOption(String option) {
     if ((option == null) || (option.length() == 0)) {
       return Integer.MAX_VALUE;
     }
