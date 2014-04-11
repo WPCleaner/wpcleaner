@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-07 07:13+0200\n"
+"POT-Creation-Date: 2014-04-11 22:16+0200\n"
 "PO-Revision-Date: 2013-07-06 19:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -336,7 +336,7 @@ msgstr "Hapus semua pranala pada judul (awal huruf besar)"
 msgid "Remove all links to title"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:28
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:29
 msgid "Remove breaks in list"
 msgstr ""
 
@@ -537,7 +537,7 @@ msgstr ""
 msgid "Delete section"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:123
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:126
 msgid "A list of texts that can be added to sections without content"
 msgstr ""
 
@@ -1183,6 +1183,7 @@ msgid "Detail"
 msgstr "Rincian"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:672
+#: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:120
 #, fuzzy, java-format
 msgid "List on {0}"
 msgstr "&Pranala ke {0}"
@@ -2518,10 +2519,6 @@ msgstr ""
 msgid "Error n°{0}"
 msgstr "Galat n°{0}"
 
-#: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:120
-msgid "List on toolserver"
-msgstr "Daftar pada toolserver"
-
 #: org/wikipediacleaner/gui/swing/component/CloseTabComponent.java:79
 msgid "Close this tab"
 msgstr ""
@@ -3307,6 +3304,9 @@ msgstr ""
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr ""
+
+#~ msgid "List on toolserver"
+#~ msgstr "Daftar pada toolserver"
 
 #~ msgid "Error {0} detected: Waiting and retrying"
 #~ msgstr "Galat {0} terdeteksi: Tunggu dan coba lagi"
