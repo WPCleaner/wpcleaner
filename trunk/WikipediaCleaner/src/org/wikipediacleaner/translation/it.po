@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-07 07:13+0200\n"
+"POT-Creation-Date: 2014-04-11 22:16+0200\n"
 "PO-Revision-Date: 2013-09-30 23:13+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -334,7 +334,7 @@ msgstr "Rimuovi tutti i collegamenti al titolo (precedentemente in grassetto)"
 msgid "Remove all links to title"
 msgstr "Rimuovi tutti i link al titolo"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:28
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:29
 msgid "Remove breaks in list"
 msgstr "Rimuovi le interruzioni nella lista"
 
@@ -545,7 +545,7 @@ msgstr ""
 msgid "Delete section"
 msgstr "Cancella la sezione"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:123
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:126
 msgid "A list of texts that can be added to sections without content"
 msgstr ""
 "Una lista di testi che possono essere aggiunti alla sezione senza contenuto"
@@ -1190,6 +1190,7 @@ msgid "Detail"
 msgstr "Dettaglio"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:672
+#: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:120
 #, fuzzy, java-format
 msgid "List on {0}"
 msgstr "Collegamenti a {0}"
@@ -2521,10 +2522,6 @@ msgstr ""
 #, java-format
 msgid "Error n°{0}"
 msgstr "Errore n°{0}"
-
-#: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:120
-msgid "List on toolserver"
-msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/CloseTabComponent.java:79
 msgid "Close this tab"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-07 07:13+0200\n"
+"POT-Creation-Date: 2014-04-11 22:16+0200\n"
 "PO-Revision-Date: 2014-03-30 18:41+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -339,7 +339,7 @@ msgstr "Odstranit všechny odkazy na článek (první ztučnit)"
 msgid "Remove all links to title"
 msgstr "Odstranit všechny odkazy na článek"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:28
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:29
 msgid "Remove breaks in list"
 msgstr "Odstranit zalomení v seznamu"
 
@@ -549,7 +549,7 @@ msgstr "Přidat {0}"
 msgid "Delete section"
 msgstr "Odstranit sekci"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:123
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm084.java:126
 msgid "A list of texts that can be added to sections without content"
 msgstr "Seznam textových řetězců, které mohou být vloženy do sekcí bez obsahu"
 
@@ -1200,6 +1200,7 @@ msgid "Detail"
 msgstr "Podrobnosti"
 
 #: org/wikipediacleaner/gui/swing/CheckWikiProjectWindow.java:672
+#: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:120
 #, java-format
 msgid "List on {0}"
 msgstr "Seznam na {0}"
@@ -2549,10 +2550,6 @@ msgstr "Na které stránce chcete zahájit aktualizaci rozcestníkového varová
 msgid "Error n°{0}"
 msgstr "Chyba číslo {0}"
 
-#: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:120
-msgid "List on toolserver"
-msgstr "Seznam na toolserveru"
-
 #: org/wikipediacleaner/gui/swing/component/CloseTabComponent.java:79
 msgid "Close this tab"
 msgstr "Zavřít tuto kartu"
@@ -3366,6 +3363,9 @@ msgstr "Název reference nemůže obsahovat tyto znaky: {0}"
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "Tato hodnota nemůže obsahovat žádné ze znaků: {0}"
+
+#~ msgid "List on toolserver"
+#~ msgstr "Seznam na toolserveru"
 
 #~ msgid "The page {0} doesn't exist on Wikipedia"
 #~ msgstr "Stránka {0} na Wikipedii neexistuje"

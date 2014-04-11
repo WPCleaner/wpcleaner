@@ -31,15 +31,15 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CheckErrorPageListPopupListener extends MouseAdapter {
 
-  private final EnumWikipedia wikipedia;
+  private final EnumWikipedia wiki;
   private final MWPane textComponent;
   private final AbstractButton button;
 
   public CheckErrorPageListPopupListener(
-      EnumWikipedia wikipedia,
+      EnumWikipedia wiki,
       MWPane textComponent,
       AbstractButton button) {
-    this.wikipedia = wikipedia;
+    this.wiki = wiki;
     this.textComponent = textComponent;
     this.button = button;
   }
@@ -114,11 +114,11 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
 
     // Create sub menus
     menu.addSeparator(popup);
-    menu.addItemView(wikipedia, popup, algorithm.getLink(), GT._("Detail"));
+    menu.addItemView(wiki, popup, algorithm.getLink(), GT._("Detail"));
     CheckWiki checkWiki = APIFactory.getCheckWiki();
-    String toolserverUrl = checkWiki.getUrlDescription(wikipedia, algorithm);
-    menu.addItemView(null, popup, toolserverUrl, GT._("List on toolserver"));
-    menu.addItemView(wikipedia, popup, algorithm.getWhiteListPageName(), GT._("View or edit white list"));
+    String toolserverUrl = checkWiki.getUrlDescription(wiki, algorithm);
+    menu.addItemView(null, popup, toolserverUrl, GT._("List on {0}", CheckWiki.getServerName(wiki)));
+    menu.addItemView(wiki, popup, algorithm.getWhiteListPageName(), GT._("View or edit white list"));
 
     popup.show(e.getComponent(), e.getX(), e.getY());
   }
