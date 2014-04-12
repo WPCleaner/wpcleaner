@@ -11,6 +11,7 @@ import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
@@ -36,22 +37,22 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
     boolean result = false;
     int endLineIndex = -1;
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     while (endLineIndex + 1 < contents.length()) {
 
       // Check if the next line is a list
@@ -65,51 +66,42 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
 
       // Checking if the line ends with a <br />
       if (isList) {
+
+        // Search for <br /> at the end of the line
         boolean found = true;
-        int currentPos = endLineIndex - 1;
-        while ((currentPos >= 0) && (Character.isWhitespace(contents.charAt(currentPos)))) {
-          currentPos--;
+        int currentPos = endLineIndex;
+        boolean done = false;
+        while (!done) {
+          done = true;
+          while ((currentPos > 0) &&
+                 (Character.isWhitespace(contents.charAt(currentPos - 1)))) {
+            currentPos--;
+          }
+          if (currentPos > 0) {
+            PageElementTag tagBr = analysis.isInTag(currentPos - 1, PageElementTag.TAG_HTML_BR);
+            if (tagBr != null) {
+              done = false;
+              currentPos = tagBr.getBeginIndex();
+            }
+          }
         }
-        if ((currentPos >= 0) && (contents.charAt(currentPos) == '>')) {
-          currentPos--;
-        } else {
-          found = false;
-        }
-        if ((currentPos >= 0) && (contents.charAt(currentPos) == '/')) {
-          currentPos--;
-        }
-        while ((currentPos >= 0) && (Character.isWhitespace(contents.charAt(currentPos)))) {
-          currentPos--;
-        }
-        if (currentPos < 1) {
-          found = false;
-        } else {
-          if (!PageElementTag.TAG_HTML_BR.equalsIgnoreCase(contents.substring(currentPos - 1, currentPos + 1))) {
+
+        // Limit error
+        if (found) {
+          PageElementImage image = analysis.isInImage(currentPos);
+          if (image != null) {
             found = false;
           }
         }
-        currentPos -= 2;
-        while ((currentPos >= 0) && (Character.isWhitespace(contents.charAt(currentPos)))) {
-          currentPos--;
-        }
-        if ((currentPos >= 0) && (contents.charAt(currentPos) == '/')) {
-          currentPos--;
-        }
-        if ((currentPos >= 0) && (contents.charAt(currentPos) == '<')) {
-          currentPos--;
-        } else {
-          found = false;
-        }
-        while ((currentPos >= 0) && (Character.isWhitespace(contents.charAt(currentPos)))) {
-          currentPos--;
-        }
+
+        // Report error
         if (found) {
           if (errors == null) {
             return true;
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), currentPos + 1, endLineIndex);
+              analysis.getPage(), currentPos + 1, endLineIndex);
           errorResult.addReplacement("");
           errors.add(errorResult);
         }
