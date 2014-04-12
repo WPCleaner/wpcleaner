@@ -113,6 +113,7 @@ public class MainWindow
   private JButton buttonLogin;
   private JButton buttonDemo;
   private JButton buttonLogout;
+  private JButton buttonDisconnect;
   private JButton buttonHelp;
 
   private JButton buttonAbuseFilters;
@@ -261,6 +262,7 @@ public class MainWindow
     buttonLogin.setEnabled(!logged);
     buttonDemo.setEnabled(!logged);
     buttonLogout.setEnabled(logged);
+    buttonDisconnect.setEnabled(logged);
     buttonOptionsSystem.setEnabled(logged);
     buttonReloadOptions.setEnabled(logged);
     buttonCheckSpelling.setEnabled(logged);
@@ -462,6 +464,11 @@ public class MainWindow
     buttonLogout.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLogout"));
     buttonToolbar.add(buttonLogout);
+    buttonDisconnect = Utilities.createJButton(
+        GT._("Disconnect"), null);
+    buttonDisconnect.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionDisconnect"));
+    buttonToolbar.add(buttonDisconnect);
     constraints.fill = GridBagConstraints.NONE;
     constraints.gridwidth = 2;
     constraints.gridx = 0;
@@ -1029,6 +1036,15 @@ public class MainWindow
   public void actionLogout() {
     API api = APIFactory.getAPI();
     api.logout(getWikipedia());
+    logged = false;
+    userLogged = false;
+    updateComponentState();
+  }
+
+  /**
+   * Action called when Disconnect button is pressed.
+   */
+  public void actionDisconnect() {
     logged = false;
     userLogged = false;
     updateComponentState();
