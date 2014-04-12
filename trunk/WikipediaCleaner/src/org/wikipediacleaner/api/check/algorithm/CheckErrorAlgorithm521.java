@@ -14,6 +14,7 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
@@ -71,7 +72,9 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
             if ((value != null) && (value.trim().length() > 0)) {
               boolean formatOK = false;
               for (int i = 2; i < elements.length; i++) {
-                formatOK |= checkFormat(value, elements[i], months);
+                formatOK |= checkFormat(
+                    analysis, template.getParameterValueOffset(paramIndex),
+                    value, elements[i], months);
               }
   
               // Report error
@@ -102,12 +105,15 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
   /**
    * Check format.
    * 
+   * @param analysis Page analysis.
+   * @param offset Offset of the value in the page.
    * @param value Parameter value.
    * @param format Expected format.
    * @param months Possible values for months.
    * @return True if the value matches the format.
    */
   private boolean checkFormat(
+      PageAnalysis analysis, int offset,
       String value, String format,
       List<String> months) {
     if ((value == null) || (format == null)) {
@@ -149,6 +155,33 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
             valueIndex += length;
             formatIndex = tmpIndex + 1;
           }
+        }
+
+      // Templates
+      } else if ((formatChar == '{') &&
+                 (formatIndex + 1 < format.length()) &&
+                 (format.charAt(formatIndex + 1) == '{')) {
+
+        // Find template name
+        int tmpIndex = formatIndex + 2;
+        while ((tmpIndex < format.length()) &&
+               (format.charAt(tmpIndex) != '}')) {
+          tmpIndex++;
+        }
+        if ((tmpIndex >= format.length()) ||
+            !format.startsWith("}}", tmpIndex)) {
+          return false;
+        }
+        String templateName = format.substring(formatIndex + 2, tmpIndex).trim();
+
+        // Analyze value
+        PageElementTemplate template = analysis.isInTemplate(offset + valueIndex);
+        if ((template != null) &&
+            (template.getBeginIndex() == offset + valueIndex) &&
+            (Page.areSameTitle(templateName, template.getTemplateName()))) {
+          formatOk = true;
+          valueIndex = template.getEndIndex() - offset;
+          formatIndex = tmpIndex + 2;
         }
 
       // Formatting characters
@@ -239,7 +272,7 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
           valueIndex = nextValueIndex;
         }
 
-        // Check for identical text
+      // Check for identical text
       } else {
         if (value.charAt(valueIndex) == format.charAt(formatIndex)) {
           formatOk = true;
