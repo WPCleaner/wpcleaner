@@ -175,7 +175,19 @@ public class PageElementExternalLink extends PageElement {
             contents.substring(beginUrlIndex, endUrlIndex),
             null, -1, false, false);
       } else {
-        endTextIndex++;
+        PageElementComment comment = null;
+        PageElementTag tagNowiki = null;
+        if ((contents.charAt(endTextIndex) == '<') && (analysis != null)) {
+          comment = analysis.isInComment(endTextIndex);
+          tagNowiki = analysis.isInTag(endTextIndex, PageElementTag.TAG_WIKI_NOWIKI);
+        }
+        if (comment != null) {
+          endTextIndex = comment.getEndIndex();
+        } else if (tagNowiki != null) {
+          endTextIndex = tagNowiki.getCompleteEndIndex();
+        } else {
+          endTextIndex++;
+        }
       }
     }
 
