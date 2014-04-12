@@ -1302,6 +1302,22 @@ public class PageAnalysis {
     return null;
   }
 
+  /**
+   * @param currentIndex Current index.
+   * @param tagName Tag name.
+   * @return Tag if the current index is inside a tag.
+   */
+  public PageElementTag isInTag(int currentIndex, String tagName) {
+    List<PageElementTag> tmpTags = getTags(tagName);
+    for (PageElementTag tag : tmpTags) {
+      if ((tag.getBeginIndex() <= currentIndex) &&
+          (tag.getEndIndex() > currentIndex)) {
+        return tag;
+      }
+    }
+    return null;
+  }
+
   // ==========================================================================
   // DEFAULTSORT management
   // ==========================================================================
