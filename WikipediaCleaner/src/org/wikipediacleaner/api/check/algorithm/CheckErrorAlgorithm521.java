@@ -16,6 +16,7 @@ import org.wikipediacleaner.api.check.NullActionProvider;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.i18n.GT;
 
@@ -50,7 +51,7 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
     if (templatesProp == null) {
       return false;
     }
-    List<String> checks = WPCConfiguration.convertPropertyToStringList(templatesProp);
+    List<String> checks = WPCConfiguration.convertPropertyToStringList(templatesProp, true);
     if ((checks == null) || (checks.isEmpty())) {
       return false;
     }
@@ -126,8 +127,15 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
       char valueChar = value.charAt(valueIndex);
       boolean formatOk = false;
 
+      // If current value position is the beginning of a comment, skip it
+      if ((valueChar == '<') &&
+          (analysis.isInComment(offset + valueIndex) != null)) {
+        PageElementComment comment = analysis.isInComment(offset + valueIndex);
+        formatOk = true;
+        valueIndex = comment.getEndIndex() - offset;
+
       // If format string has a quote, it can be for quoted text or really a quote
-      if (formatChar == '\'') {
+      } else if (formatChar == '\'') {
 
         // Two quotes in format string means a single quote
         if ((formatIndex + 1 < format.length()) &&

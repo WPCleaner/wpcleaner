@@ -1249,12 +1249,22 @@ public class WPCConfiguration {
   /* ================================================================================= */
 
   /**
-   * Convert a multi-line property to a string list.
+   * Convert a property on multiple lines to a string list.
    * 
    * @param property Property.
    * @return String list.
    */
   public static List<String> convertPropertyToStringList(String property) {
+    return convertPropertyToStringList(property, false);
+  }
+
+  /**
+   * Convert a property on multiple lines to a string list.
+   * 
+   * @param property Property.
+   * @return String list.
+   */
+  public static List<String> convertPropertyToStringList(String property, boolean keepEmpty) {
     List<String> result = null;
     if ((property != null) && (property.trim().length() > 0)) {
       String[] results = property.trim().split("\n");
@@ -1262,7 +1272,7 @@ public class WPCConfiguration {
         result = new ArrayList<String>();
         for (int  i = 0; i < results.length; i++) {
           results[i] = results[i].trim();
-          if (results[i].length() > 0) {
+          if ((results[i].length() > 0) || (keepEmpty)) {
             result.add(results[i]);
           }
         }
