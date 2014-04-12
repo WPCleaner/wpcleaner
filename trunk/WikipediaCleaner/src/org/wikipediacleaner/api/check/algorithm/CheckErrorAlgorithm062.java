@@ -94,18 +94,21 @@ public class CheckErrorAlgorithm062 extends CheckErrorAlgorithmBase {
           boolean shouldCount = true;
           int currentIndex = beginIndex + index;
           if (shouldCount) {
+            // Check for external link
             PageElementExternalLink link = analysis.isInExternalLink(currentIndex);
             if (link != null) {
               shouldCount = false;
             }
           }
           if (shouldCount) {
+            // Check for comment
             PageElementComment comment = analysis.isInComment(currentIndex);
             if (comment != null) {
               shouldCount = false;
             }
           }
           if (shouldCount) {
+            // Check for template
             PageElementTemplate template = analysis.isInTemplate(currentIndex);
             if (template != null) {
               for (int numParam = 0; numParam < template.getParameterCount(); numParam++) {
@@ -113,6 +116,25 @@ public class CheckErrorAlgorithm062 extends CheckErrorAlgorithmBase {
                   shouldCount = false;
                 }
               }
+            }
+          }
+          if (shouldCount) {
+            // Check characters before
+            int tmpIndex = index - 1;
+            boolean done = false;
+            while (shouldCount && !done && (tmpIndex > 0)) {
+              char currentChar = text.charAt(tmpIndex);
+              if ((currentChar == '/') && (text.charAt(tmpIndex - 1) == '/')) {
+                done = true;
+                shouldCount = false;
+              } else {
+                if (!Character.isLetter(currentChar) &&
+                    !Character.isDigit(currentChar) &&
+                    ("/_-.".indexOf(currentChar) < 0)) {
+                  done = true;
+                }
+              }
+              tmpIndex--;
             }
           }
           if (shouldCount) {
