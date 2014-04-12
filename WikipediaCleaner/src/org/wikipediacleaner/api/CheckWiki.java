@@ -262,27 +262,30 @@ public class CheckWiki {
       EnumWikipedia wiki,
       MediaWikiListener listener) throws APIException {
     // Retrieve general configuration
+    final WPCConfiguration wpcConfiguration = wiki.getConfiguration();
+    boolean useLabs = wiki.getConfiguration().getBoolean(WPCConfigurationBoolean.CW_USE_LABS);
     final CWConfiguration cwConfiguration = wiki.getCWConfiguration();
-    String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
-    try {
-      ResponseManager manager = new ResponseManager() {
-        
-        public void manageResponse(InputStream stream) throws IOException, APIException {
-          if (stream != null) {
-            cwConfiguration.setGeneralConfiguration(
-                new InputStreamReader(stream, "UTF-8"));
+    if (!useLabs) {
+      String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
+      try {
+        ResponseManager manager = new ResponseManager() {
+          
+          public void manageResponse(InputStream stream) throws IOException, APIException {
+            if (stream != null) {
+              cwConfiguration.setGeneralConfiguration(
+                  new InputStreamReader(stream, "UTF-8"));
+            }
           }
-        }
-      };
-      toolServer.sendGet(
-          "~sk/checkwiki/" + code + "/" + code + "_translation.txt",
-          manager);
-    } catch (APIException e) {
-      System.err.println("Error retrieving Check Wiki configuration: " + e.getMessage());
+        };
+        toolServer.sendGet(
+            "~sk/checkwiki/" + code + "/" + code + "_translation.txt",
+            manager);
+      } catch (APIException e) {
+        System.err.println("Error retrieving Check Wiki configuration: " + e.getMessage());
+      }
     }
 
     // Retrieve specific configuration
-    final WPCConfiguration wpcConfiguration = wiki.getConfiguration();
     try {
       String translationPage = wpcConfiguration.getString(WPCConfigurationString.CW_TRANSLATION_PAGE);
       if (translationPage != null) {
