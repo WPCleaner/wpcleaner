@@ -33,24 +33,24 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
-    if (pageAnalysis.isInNamespace(Namespace.TEMPLATE)) {
+    if (analysis.isInNamespace(Namespace.TEMPLATE)) {
       return false;
     }
 
     // Check every position
-    Page page = pageAnalysis.getPage();
-    String contents = pageAnalysis.getContents();
+    Page page = analysis.getPage();
+    String contents = analysis.getContents();
     int maxLen = contents.length();
     boolean result = false;
     int currentIndex = 0;
@@ -62,8 +62,8 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
         // Check for templates beginning with '{{{' instead of '{{'
         if (!done &&
             contents.startsWith("{{{", currentIndex)) {
-          PageElementTemplate currentTemplate = pageAnalysis.isInTemplate(currentIndex);
-          PageElementTemplate nextTemplate = pageAnalysis.isInTemplate(currentIndex + 1);
+          PageElementTemplate currentTemplate = analysis.isInTemplate(currentIndex);
+          PageElementTemplate nextTemplate = analysis.isInTemplate(currentIndex + 1);
           if ((nextTemplate != null) &&
               (currentIndex + 1 == nextTemplate.getBeginIndex()) &&
               ((currentTemplate == null) ||
@@ -83,7 +83,7 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
 
         // Check for parameters
         if (!done) {
-          PageElementParameter parameter = pageAnalysis.isInParameter(currentIndex);
+          PageElementParameter parameter = analysis.isInParameter(currentIndex);
           if ((parameter != null) &&
               (parameter.getBeginIndex() == currentIndex)) {
             result = true;
@@ -106,7 +106,7 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
 
         // Check for functions
         if (!done) {
-          PageElementFunction function = pageAnalysis.isInFunction(currentIndex);
+          PageElementFunction function = analysis.isInFunction(currentIndex);
           if ((function != null) &&
               (function.getBeginIndex() == currentIndex)) {
             MagicWord magicWord = function.getMagicWord();
@@ -138,6 +138,13 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
                 for (int param = 1; param < function.getParameterCount(); param++) {
                   errorResult.addReplacement(function.getParameterValue(param));
                 }
+              }
+              if ((analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_GALLERY) == null) &&
+                  (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_INCLUDEONLY) == null) &&
+                  (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_REF) == null)) {
+                errorResult.addReplacement(
+                    "{{subst:" +
+                    contents.substring(function.getBeginIndex() + 2, function.getEndIndex()));
               }
               errors.add(errorResult);
               nextIndex = function.getEndIndex();
