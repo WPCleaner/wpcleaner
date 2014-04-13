@@ -78,6 +78,9 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
         categoryName = "" + Character.toUpperCase(categoryName.charAt(0)) + categoryName.substring(1);
       }
       String categorySort = category.getSort();
+      if ("".equals(categorySort)) {
+        categorySort = category.getSortNotTrimmed();
+      }
       /*boolean lowerCaseSort = false;
       if ((categorySort != null) &&
           (categorySort.length() > 0) &&
