@@ -28,21 +28,21 @@ public class CheckErrorAlgorithm062_Old extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Retrieving titles
     boolean result = false;
-    List<PageElementTitle> titles = pageAnalysis.getTitles();
+    List<PageElementTitle> titles = analysis.getTitles();
     if (titles == null) {
       return false;
     }
@@ -71,7 +71,7 @@ public class CheckErrorAlgorithm062_Old extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), title.getBeginIndex(), title.getEndIndex());
+              analysis.getPage(), title.getBeginIndex(), title.getEndIndex());
           errorResult.addEditTocAction();
           errors.add(errorResult);
         }

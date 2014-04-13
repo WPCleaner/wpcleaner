@@ -31,37 +31,37 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyze contents from the beginning
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     int maxLength = contents.length();
     int currentIndex = contents.indexOf("{{");
     boolean result = false;
     while (currentIndex >= 0) {
       boolean shouldCount = true;
-      if ((pageAnalysis.isInComment(currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null) ||
-          (pageAnalysis.isInCategory(currentIndex) != null) ||
-          (pageAnalysis.isInTag(currentIndex) != null)) {
+      if ((analysis.isInComment(currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null) ||
+          (analysis.isInCategory(currentIndex) != null) ||
+          (analysis.isInTag(currentIndex) != null)) {
         shouldCount = false;
       }
       if (shouldCount) {
-        PageElementTemplate template = pageAnalysis.isInTemplate(currentIndex + 2);
+        PageElementTemplate template = analysis.isInTemplate(currentIndex + 2);
         if ((template != null) &&
             ((template.getBeginIndex() == currentIndex) ||
              (template.getBeginIndex() == currentIndex + 1))) {
@@ -69,7 +69,7 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
         }
       }
       if (shouldCount) {
-        PageElementFunction function = pageAnalysis.isInFunction(currentIndex + 2);
+        PageElementFunction function = analysis.isInFunction(currentIndex + 2);
         if ((function != null) &&
             ((function.getBeginIndex() == currentIndex) ||
              (function.getBeginIndex() == currentIndex + 1))) {
@@ -98,7 +98,7 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
             if ((tmpIndex + 1 >= maxLength) ||
                 (contents.charAt(tmpIndex + 1) != '}')) {
               CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), currentIndex, tmpIndex + 1);
+                  analysis.getPage(), currentIndex, tmpIndex + 1);
               errorResult.addReplacement(contents.substring(currentIndex, tmpIndex + 1) + "}");
   
               // Check if the situation is something like [[http://....] (replacement: [http://....])
@@ -118,7 +118,7 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
               lastChar++;
             }
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), currentIndex, lastChar + 1);
+                analysis.getPage(), currentIndex, lastChar + 1);
             errorResult.addReplacement(contents.substring(currentIndex, tmpIndex) + "}}");
             errorResult.addReplacement("[[" + contents.substring(currentIndex + 2, tmpIndex) + "]]");
             errors.add(errorResult);
@@ -132,7 +132,7 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
         // Default
         if (!errorReported) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), currentIndex, currentIndex + 2);
+              analysis.getPage(), currentIndex, currentIndex + 2);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
           result = true;

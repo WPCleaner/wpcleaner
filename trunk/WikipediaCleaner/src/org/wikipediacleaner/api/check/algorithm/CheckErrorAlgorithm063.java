@@ -28,33 +28,33 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyze each <small> tag
     boolean result = false;
-    List<PageElementTag> smallTags = pageAnalysis.getTags(PageElementTag.TAG_HTML_SMALL);
+    List<PageElementTag> smallTags = analysis.getTags(PageElementTag.TAG_HTML_SMALL);
     for (PageElementTag smallTag : smallTags) {
       int index = smallTag.getBeginIndex();
-      PageElementTag refTag = pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, index);
-      PageElementTag subTag = pageAnalysis.getSurroundingTag(PageElementTag.TAG_HTML_SUB, index);
-      PageElementTag supTag = pageAnalysis.getSurroundingTag(PageElementTag.TAG_HTML_SUP, index);
+      PageElementTag refTag = analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, index);
+      PageElementTag subTag = analysis.getSurroundingTag(PageElementTag.TAG_HTML_SUB, index);
+      PageElementTag supTag = analysis.getSurroundingTag(PageElementTag.TAG_HTML_SUP, index);
       if ((refTag != null) || (subTag != null) || (supTag != null)) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(),
+            analysis.getPage(),
             smallTag.getBeginIndex(), smallTag.getEndIndex());
         errors.add(errorResult);
       }

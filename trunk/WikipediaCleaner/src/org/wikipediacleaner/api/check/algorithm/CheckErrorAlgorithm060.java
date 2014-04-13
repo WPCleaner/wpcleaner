@@ -30,21 +30,21 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
     boolean result = false;
-    for (PageElementTemplate template : pageAnalysis.getTemplates()) {
+    for (PageElementTemplate template : analysis.getTemplates()) {
       for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
         String paramValue = template.getParameterValue(paramNum);
         if (paramValue != null) {
@@ -54,11 +54,11 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
             switch (paramValue.charAt(currentPos)) {
             case '<':
               int tmpIndex = paramValueOffset + currentPos;
-              PageElementComment comment = pageAnalysis.isInComment(tmpIndex);
+              PageElementComment comment = analysis.isInComment(tmpIndex);
               if (comment != null) {
                 currentPos = comment.getEndIndex() - 1 - paramValueOffset;
               } else {
-                PageElementTag tag = pageAnalysis.isInTag(tmpIndex);
+                PageElementTag tag = analysis.isInTag(tmpIndex);
                 if ((tag != null) &&
                     (tag.getBeginIndex() == tmpIndex) &&
                     ((PageElementTag.TAG_WIKI_MATH.equals(tag.getNormalizedName())) ||
@@ -87,7 +87,7 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
                   currentIndex++;
                 }
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    pageAnalysis.getPage(),
+                    analysis.getPage(),
                     paramValueOffset + currentPos,
                     paramValueOffset + currentIndex);
                 errorResult.addReplacement("", GT._("Remove"));

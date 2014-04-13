@@ -42,15 +42,15 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
@@ -58,11 +58,11 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     boolean onlyTemplates = Boolean.valueOf(getSpecificProperty("only_templates", true, true, false));
 
     boolean result = false;
-    String contents = pageAnalysis.getContents();
-    Page page = pageAnalysis.getPage();
+    String contents = analysis.getContents();
+    Page page = analysis.getPage();
 
     if (onlyTemplates) {
-      Collection<PageElementTemplate> templates = pageAnalysis.getTemplates();
+      Collection<PageElementTemplate> templates = analysis.getTemplates();
       if (templates == null) {
         return false;
       }

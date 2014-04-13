@@ -28,24 +28,24 @@ public class CheckErrorAlgorithm086 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // For each external link
-    List<PageElementExternalLink> links = pageAnalysis.getExternalLinks();
+    List<PageElementExternalLink> links = analysis.getExternalLinks();
     if ((links == null) || (links.isEmpty())) {
       return false;
     }
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     int maxLength = contents.length();
     boolean result = false;
     for (PageElementExternalLink link : links) {
@@ -62,7 +62,7 @@ public class CheckErrorAlgorithm086 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), beginIndex, endIndex);
+              analysis.getPage(), beginIndex, endIndex);
           String externalLink = contents.substring(link.getBeginIndex(), link.getEndIndex());
           errorResult.addReplacement(externalLink);
           errorResult.addReplacement(externalLink.replaceAll("\\|", " "));

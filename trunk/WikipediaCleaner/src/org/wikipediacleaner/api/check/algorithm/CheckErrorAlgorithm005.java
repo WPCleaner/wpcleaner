@@ -28,22 +28,22 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyze contents from the end
     boolean result = false;
-    Page page = pageAnalysis.getPage();
-    String contents = pageAnalysis.getContents();
+    Page page = analysis.getPage();
+    String contents = analysis.getContents();
     boolean inComment = false;
     int possibleEndIndex = -1;
     int previousStartIndex = -1;

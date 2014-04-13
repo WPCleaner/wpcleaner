@@ -30,22 +30,22 @@ public class CheckErrorAlgorithm091_Old extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Checking if title contains lower case letters
     boolean lowFound = false;
     boolean firstLetter = true;
-    String title = pageAnalysis.getPage().getTitle();
+    String title = analysis.getPage().getTitle();
     for (int currentPos = 0; currentPos < title.length(); currentPos++) {
       if (Character.isLowerCase(title.charAt(currentPos))) {
         if (firstLetter) {
@@ -63,14 +63,14 @@ public class CheckErrorAlgorithm091_Old extends CheckErrorAlgorithmBase {
     }
 
     // Searching a DEFAULTSORT tag
-    List<PageElementFunction> defaultSorts = pageAnalysis.getDefaultSorts();
+    List<PageElementFunction> defaultSorts = analysis.getDefaultSorts();
     if (defaultSorts.size() > 0) {
       return false;
     }
 
     // Searching for Categories without a sort key
     boolean categoriesWithoutSort = false;
-    List<PageElementCategory> categories = pageAnalysis.getCategories();
+    List<PageElementCategory> categories = analysis.getCategories();
     if ((categories == null) || (categories.isEmpty())) {
       return false;
     }
@@ -90,10 +90,10 @@ public class CheckErrorAlgorithm091_Old extends CheckErrorAlgorithmBase {
     }
     PageElementCategory category = categories.get(0);
     CheckErrorResult errorResult = createCheckErrorResult(
-        pageAnalysis.getPage(), category.getBeginIndex(), category.getEndIndex());
+        analysis.getPage(), category.getBeginIndex(), category.getEndIndex());
     String replacement =
-        createDefaultSort(pageAnalysis) + "\n" +
-    pageAnalysis.getContents().substring(category.getBeginIndex(), category.getEndIndex());
+        createDefaultSort(analysis) + "\n" +
+    analysis.getContents().substring(category.getBeginIndex(), category.getEndIndex());
     errorResult.addReplacement(replacement, GT._("Add DEFAULTSORT"));
     errors.add(errorResult);
     return true;

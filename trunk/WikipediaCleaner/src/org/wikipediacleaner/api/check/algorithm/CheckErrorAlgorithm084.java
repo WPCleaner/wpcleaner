@@ -32,21 +32,21 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Retrieving titles
     boolean result = false;
-    List<PageElementTitle> titles = pageAnalysis.getTitles();
+    List<PageElementTitle> titles = analysis.getTitles();
     if (titles == null) {
       return false;
     }
@@ -59,7 +59,7 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
     }
 
     // Analyzing titles
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     for (int i = 0; i < titles.size(); i++) {
       PageElementTitle title = titles.get(i);
       PageElementTitle nextTitle = (i + 1 < titles.size()) ? titles.get(i + 1) : null;
@@ -74,7 +74,7 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
           if (Character.isWhitespace(currentChar)) {
             pos++;
           } else if (currentChar == '<') {
-            PageElementComment comment = pageAnalysis.isInComment(pos);
+            PageElementComment comment = analysis.isInComment(pos);
             if (comment != null) {
               pos = comment.getEndIndex();
               if (commentFound == null) {
@@ -96,7 +96,7 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
             lastPos = commentFound.getBeginIndex();
           }
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), title.getBeginIndex(), lastPos);
+              analysis.getPage(), title.getBeginIndex(), lastPos);
           if (texts != null) {
             for (String text : texts) {
               String replacement =

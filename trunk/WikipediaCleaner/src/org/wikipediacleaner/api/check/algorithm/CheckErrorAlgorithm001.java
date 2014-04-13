@@ -31,24 +31,24 @@ public class CheckErrorAlgorithm001 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Retrieve informations
-    WikiConfiguration config = pageAnalysis.getWikiConfiguration();
+    WikiConfiguration config = analysis.getWikiConfiguration();
     Namespace templateNamespace = config.getNamespace(Namespace.TEMPLATE);
 
     // Check every template to if template name contains template namespace
-    Collection<PageElementTemplate> templates = pageAnalysis.getTemplates();
+    Collection<PageElementTemplate> templates = analysis.getTemplates();
     if ((templates == null) || (templates.isEmpty())) {
       return false;
     }
@@ -79,10 +79,10 @@ public class CheckErrorAlgorithm001 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult error = createCheckErrorResult(
-              pageAnalysis.getPage(),
+              analysis.getPage(),
               template.getBeginIndex(),
               template.getEndIndex());
-          String fullTemplate = pageAnalysis.getContents().substring(
+          String fullTemplate = analysis.getContents().substring(
               template.getBeginIndex(), template.getEndIndex());
           colonIndex = fullTemplate.indexOf(':');
           error.addReplacement(

@@ -28,33 +28,33 @@ public class CheckErrorAlgorithm503 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Check every internal link
-    Collection<PageElementInternalLink> links = pageAnalysis.getInternalLinks();
+    Collection<PageElementInternalLink> links = analysis.getInternalLinks();
     if ((links == null) || (links.isEmpty())) {
       return false;
     }
     boolean result = false;
     for (PageElementInternalLink link : links) {
-      PageElementTitle title = pageAnalysis.isInTitle(link.getBeginIndex());
+      PageElementTitle title = analysis.isInTitle(link.getBeginIndex());
       if (title != null) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult error = createCheckErrorResult(
-            pageAnalysis.getPage(),
+            analysis.getPage(),
             link.getBeginIndex(), link.getEndIndex());
         error.addReplacement(link.getDisplayedText());
         errors.add(error);

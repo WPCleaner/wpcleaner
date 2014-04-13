@@ -34,20 +34,20 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Retrieve all <references> tags
-    List<PageElementTag> referencesTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REFERENCES);
+    List<PageElementTag> referencesTags = analysis.getTags(PageElementTag.TAG_WIKI_REFERENCES);
     if ((referencesTags == null) || (referencesTags.size() == 0)) {
       return false;
     }
@@ -79,7 +79,7 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
           if (!tagUsed.contains(groupName)) {
             tagUsed.add(groupName);
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(),
+                analysis.getPage(),
                 firstTag.getCompleteBeginIndex(),
                 firstTag.getCompleteEndIndex(),
                 ErrorLevel.CORRECT);
@@ -87,7 +87,7 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
             errors.add(errorResult);
           }
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
+              analysis.getPage(),
               referencesTag.getCompleteBeginIndex(),
               referencesTag.getCompleteEndIndex());
           errorResult.addReplacement("", GT._("Delete"));

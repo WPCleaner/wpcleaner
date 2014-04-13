@@ -33,23 +33,23 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Check category name space
-    if (EnumWikipedia.EN.equals(pageAnalysis.getWikipedia())) {
+    if (EnumWikipedia.EN.equals(analysis.getWikipedia())) {
       return false;
     }
-    Namespace categoryNamespace = pageAnalysis.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
+    Namespace categoryNamespace = analysis.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
     if (categoryNamespace == null) {
       return false;
     }
@@ -59,9 +59,9 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
     }
 
     // Check every category
-    List<PageElementCategory> categories = pageAnalysis.getCategories();
+    List<PageElementCategory> categories = analysis.getCategories();
     boolean result = false;
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     for (PageElementCategory category : categories) {
       if (PageElementCategory.DEFAULT_NAME.equalsIgnoreCase(category.getCategory())) {
         if (errors == null) {
@@ -69,11 +69,11 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(), category.getBeginIndex(), category.getEndIndex());
+            analysis.getPage(), category.getBeginIndex(), category.getEndIndex());
         errorResult.addPossibleAction(
             GT._("Check category"),
             new CheckCategoryLinkActionProvider(
-                EnumWikipedia.EN, pageAnalysis.getWikipedia(),
+                EnumWikipedia.EN, analysis.getWikipedia(),
                 category.getName(), category.getSort()));
         List<String> replacements = new ArrayList<String>();
         if ((preferredCategory != null) &&

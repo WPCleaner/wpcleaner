@@ -27,19 +27,19 @@ public class CheckErrorAlgorithm041 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
     boolean result = false;
-    result = addTags(result, pageAnalysis, errors, PageElementTag.TAG_HTML_BIG);
+    result = addTags(result, analysis, errors, PageElementTag.TAG_HTML_BIG);
     return result;
   }
 }

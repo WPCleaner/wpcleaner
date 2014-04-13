@@ -39,20 +39,20 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Retrieve list of <br> tags
-    List<PageElementTag> brTags = pageAnalysis.getTags(PageElementTag.TAG_HTML_BR);
+    List<PageElementTag> brTags = analysis.getTags(PageElementTag.TAG_HTML_BR);
     int brTagsSize = (brTags != null) ? brTags.size() : 0;
     int currentBrTag = 0;
     if ((brTags == null) || (brTagsSize == 0)) {
@@ -61,8 +61,8 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
 
     // Analyzing from the beginning
     boolean errorFound = false;
-    String contents = pageAnalysis.getContents();
-    for (PageElementTemplate template : pageAnalysis.getTemplates()) {
+    String contents = analysis.getContents();
+    for (PageElementTemplate template : analysis.getTemplates()) {
 
       // Find the first <br> tag after template begin
       while ((currentBrTag < brTagsSize) &&
@@ -99,7 +99,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                 if (Character.isWhitespace(contents.charAt(currentIndex))) {
                   currentIndex++;
                 } else {
-                  PageElementComment comment = pageAnalysis.isInComment(currentIndex);
+                  PageElementComment comment = analysis.isInComment(currentIndex);
                   if (comment != null) {
                     currentIndex = comment.getEndIndex();
                   } else {
@@ -120,7 +120,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                 }
                 PageElementTag firstBrTag = brTags.get(firstBrTagIndex);
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    pageAnalysis.getPage(),
+                    analysis.getPage(),
                     firstBrTag.getBeginIndex(),
                     lastBrTag.getEndIndex());
                 errorResult.addReplacement("", GT._("Delete"));

@@ -27,20 +27,20 @@ public class CheckErrorAlgorithm506 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Check every ref tag
-    Collection<PageElementTag> refTags = pageAnalysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
+    Collection<PageElementTag> refTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_REF);
     if ((refTags == null) || (refTags.isEmpty())) {
       return false;
     }
@@ -65,7 +65,7 @@ public class CheckErrorAlgorithm506 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult error = createCheckErrorResult(
-              pageAnalysis.getPage(),
+              analysis.getPage(),
               refTag.getBeginIndex(), refTag.getEndIndex());
           errors.add(error);
         }

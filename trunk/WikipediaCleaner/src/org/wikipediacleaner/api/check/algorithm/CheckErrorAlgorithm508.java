@@ -30,28 +30,28 @@ public class CheckErrorAlgorithm508 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if ((pageAnalysis == null) ||
-        (pageAnalysis.getPage() == null) ||
-        (pageAnalysis.getPage().getTemplates() == null)) {
+    if ((analysis == null) ||
+        (analysis.getPage() == null) ||
+        (analysis.getPage().getTemplates() == null)) {
       return false;
     }
 
     // Analyze each template
-    Namespace templateNS = pageAnalysis.getWikiConfiguration().getNamespace(Namespace.TEMPLATE);
-    List<PageElementTemplate> templates = pageAnalysis.getTemplates();
+    Namespace templateNS = analysis.getWikiConfiguration().getNamespace(Namespace.TEMPLATE);
+    List<PageElementTemplate> templates = analysis.getTemplates();
     boolean result = false;
     for (PageElementTemplate template : templates) {
       String templateName = templateNS.getTitle() + ":" + template.getTemplateName();
       boolean missing = false;
-      for (Page templatePage : pageAnalysis.getPage().getTemplates()) {
+      for (Page templatePage : analysis.getPage().getTemplates()) {
         if (Page.areSameTitle(templateName, templatePage.getTitle())) {
           if (Boolean.FALSE.equals(templatePage.isExisting())) {
             missing = true;
@@ -65,7 +65,7 @@ public class CheckErrorAlgorithm508 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(), template.getBeginIndex(), template.getEndIndex());
+            analysis.getPage(), template.getBeginIndex(), template.getEndIndex());
         errors.add(errorResult);
       }
     }

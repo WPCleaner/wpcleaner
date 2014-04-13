@@ -32,24 +32,24 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
-    List<PageElementTag> tags = pageAnalysis.getTags(PageElementTag.TAG_HTML_SMALL);
+    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_SMALL);
     if (tags == null) {
       return false;
     }
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     int level = 0;
     boolean result = false;
     PageElementTag level0Tag = null;
@@ -66,7 +66,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
+              analysis.getPage(),
               tag.getBeginIndex(), tag.getEndIndex());
           errorResult.addReplacement("");
           errors.add(errorResult);
@@ -81,7 +81,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
+              analysis.getPage(),
               tag.getBeginIndex(), tag.getEndIndex());
           errorResult.addReplacement("");
           errors.add(errorResult);
@@ -107,10 +107,10 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
           }
 
           if (level0Tag != null) {
-            int possibleEnd = getPossibleEnd(pageAnalysis, level0Tag);
+            int possibleEnd = getPossibleEnd(analysis, level0Tag);
             if (possibleEnd > 0) {
               CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(),
+                  analysis.getPage(),
                   level0Tag.getBeginIndex(), possibleEnd,
                   ErrorLevel.WARNING);
               errorResult.addReplacement(
@@ -119,14 +119,14 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
               errors.add(errorResult);
             } else {
               CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(),
+                  analysis.getPage(),
                   level0Tag.getBeginIndex(),
                   level0Tag.getEndIndex(),
                   ErrorLevel.CORRECT);
               errors.add(errorResult);
               if (level0Tag.getMatchingTag() != null) {
                 errorResult = createCheckErrorResult(
-                    pageAnalysis.getPage(),
+                    analysis.getPage(),
                     level0Tag.getMatchingTag().getBeginIndex(),
                     level0Tag.getMatchingTag().getEndIndex(),
                     ErrorLevel.CORRECT);
@@ -136,10 +136,10 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
             level0Tag = null;
           }
 
-          int possibleEnd = getPossibleEnd(pageAnalysis, tag);
+          int possibleEnd = getPossibleEnd(analysis, tag);
           if (possibleEnd > 0) {
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(),
+                analysis.getPage(),
                 tag.getBeginIndex(),
                 possibleEnd);
             errorResult.addReplacement(
@@ -148,7 +148,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
             errors.add(errorResult);
           } else {
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(),
+                analysis.getPage(),
                 tag.getCompleteBeginIndex(),
                 tag.getCompleteEndIndex());
             if (doubleSmall) {

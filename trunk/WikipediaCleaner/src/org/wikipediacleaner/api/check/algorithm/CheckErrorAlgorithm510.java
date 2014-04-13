@@ -29,28 +29,28 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if ((pageAnalysis == null) || (pageAnalysis.getInternalLinks() == null)) {
+    if ((analysis == null) || (analysis.getInternalLinks() == null)) {
       return false;
     }
 
     // Analyze each internal link
     boolean result = false;
-    List<PageElementInternalLink> links = pageAnalysis.getInternalLinks();
+    List<PageElementInternalLink> links = analysis.getInternalLinks();
     for (PageElementInternalLink link : links) {
       if ((link.getText() != null) &&
           (link.getText().length() == 0) &&
           (link.getFullLink() != null)) {
         boolean errorFound = false;
         String target = link.getFullLink().trim();
-        if (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, link.getBeginIndex()) != null) {
+        if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_REF, link.getBeginIndex()) != null) {
 
           // Check for namespace at the beginning
           int beginIndex = 0;
@@ -89,7 +89,7 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
               beginIndex = 0;
             }
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+                analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
             String replacement = PageElementInternalLink.createInternalLink(
                 target,
                 target.substring(beginIndex, endIndex));
@@ -110,7 +110,7 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
             result = true;
             errorFound = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+                analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
             String replacement = PageElementInternalLink.createInternalLink(
                 target + "/", null);
             errorResult.addReplacement(replacement);
@@ -130,7 +130,7 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
             result = true;
             errorFound = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+                analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
             String replacement = PageElementInternalLink.createInternalLink(
                 target, target.substring(index + 1));
             errorResult.addReplacement(replacement);

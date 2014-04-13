@@ -27,24 +27,24 @@ public class CheckErrorAlgorithm082 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
     boolean result = false;
     int startIndex = -1;
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     while (startIndex < contents.length()) {
-      PageElementInterwikiLink link = pageAnalysis.getNextInterwikiLink(startIndex);
+      PageElementInterwikiLink link = analysis.getNextInterwikiLink(startIndex);
       if ((link != null) &&
           (link.getInterwiki() != null) &&
           (link.getInterwiki().getLanguage() == null)) {
@@ -54,7 +54,7 @@ public class CheckErrorAlgorithm082 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+            analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
         if (link.getText() != null) {
           errorResult.addReplacement(link.getText());
         } else {

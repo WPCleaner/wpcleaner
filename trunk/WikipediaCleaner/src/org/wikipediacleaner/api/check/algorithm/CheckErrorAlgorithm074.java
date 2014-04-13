@@ -27,28 +27,28 @@ public class CheckErrorAlgorithm074 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
     boolean result = false;
-    for (PageElementInternalLink link : pageAnalysis.getInternalLinks()) {
+    for (PageElementInternalLink link : analysis.getInternalLinks()) {
       if (link.getFullLink().trim().length() == 0) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+            analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
         String text = link.getText();
         if ((text != null) && (text.length() > 0)) {
           errorResult.addReplacement("[[" + link.getText() + "]]");

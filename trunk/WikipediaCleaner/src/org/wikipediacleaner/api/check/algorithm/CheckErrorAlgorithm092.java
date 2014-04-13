@@ -30,18 +30,18 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
+    if ((analysis == null) || (analysis.getPage() == null)) {
       return false;
     }
-    if (!pageAnalysis.getPage().isArticle()) {
+    if (!analysis.getPage().isArticle()) {
       return false;
     }
 
@@ -49,7 +49,7 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
     int previousTitleLevel = 0;
     HashMap<Integer, HashMap<String, PageElementTitle>> titles =
         new HashMap<Integer, HashMap<String, PageElementTitle>>();
-    for (PageElementTitle title : pageAnalysis.getTitles()) {
+    for (PageElementTitle title : analysis.getTitles()) {
 
       // Clean up titles with a lower level
       int titleLevel = title.getLevel();
@@ -76,14 +76,14 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
         PageElementTitle previousTitle = knownTitles.get(titleValue);
         if (previousTitle != null) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
+              analysis.getPage(),
               previousTitle.getBeginIndex(), previousTitle.getEndIndex(),
               ErrorLevel.CORRECT);
           errors.add(errorResult);
           knownTitles.put(titleValue, null);
         }
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(),
+            analysis.getPage(),
             title.getBeginIndex(), title.getEndIndex());
         errorResult.addEditTocAction();
         errors.add(errorResult);

@@ -37,22 +37,22 @@ public class CheckErrorAlgorithm509 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if ((pageAnalysis == null) || (pageAnalysis.getInternalLinks() == null)) {
+    if ((analysis == null) || (analysis.getInternalLinks() == null)) {
       return false;
     }
 
     // Analyze each internal link
     boolean result = false;
-    List<PageElementInternalLink> links = pageAnalysis.getInternalLinks();
-    String contents = pageAnalysis.getContents();
+    List<PageElementInternalLink> links = analysis.getInternalLinks();
+    String contents = analysis.getContents();
     int maxLength = contents.length();
     for (PageElementInternalLink link : links) {
       if (link.getText() != null) {
@@ -66,7 +66,7 @@ public class CheckErrorAlgorithm509 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), link.getBeginIndex(), endIndex);
+              analysis.getPage(), link.getBeginIndex(), endIndex);
           String replacement = PageElementInternalLink.createInternalLink(
               link.getLinkNotNormalized(), link.getAnchor(),
               link.getDisplayedTextNotTrimmed() + contents.substring(link.getEndIndex(), endIndex));
