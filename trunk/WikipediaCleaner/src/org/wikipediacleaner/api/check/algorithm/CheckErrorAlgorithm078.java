@@ -18,7 +18,6 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -79,18 +78,18 @@ public class CheckErrorAlgorithm078 extends CheckErrorAlgorithmBase {
           if (!tagUsed.contains(groupName)) {
             tagUsed.add(groupName);
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(),
+                analysis,
                 firstTag.getCompleteBeginIndex(),
                 firstTag.getCompleteEndIndex(),
                 ErrorLevel.CORRECT);
-            errorResult.addReplacement("", GT._("Delete"));
+            errorResult.addReplacement("");
             errors.add(errorResult);
           }
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               referencesTag.getCompleteBeginIndex(),
               referencesTag.getCompleteEndIndex());
-          errorResult.addReplacement("", GT._("Delete"));
+          errorResult.addReplacement("");
           errors.add(errorResult);
         }
       }

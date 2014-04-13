@@ -92,7 +92,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
           } else if (tmpChar == '{') {
             if ((tmpIndex == 0) || (contents.charAt(tmpIndex - 1) != '{')) {
               CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis.getPage(), tmpIndex, currentIndex + 2);
+                  analysis, tmpIndex, currentIndex + 2);
               errorResult.addReplacement("{" + contents.substring(tmpIndex, currentIndex + 2));
               errors.add(errorResult);
               result = true;
@@ -105,7 +105,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
               firstChar--;
             }
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), firstChar, currentIndex + 2);
+                analysis, firstChar, currentIndex + 2);
             errorResult.addReplacement("{{" + contents.substring(tmpIndex + 1, currentIndex + 2));
             errorResult.addReplacement("[[" + contents.substring(tmpIndex + 1, currentIndex) + "]]");
             errors.add(errorResult);
@@ -119,7 +119,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
         // Default
         if (!errorReported) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), currentIndex, currentIndex + 2);
+              analysis, currentIndex, currentIndex + 2);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
           result = true;

@@ -88,7 +88,7 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
                 int endIndex = (paramIndex + 1 < template.getParameterCount()) ?
                     template.getParameterPipeOffset(paramIndex + 1) : template.getEndIndex() - 2;
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    analysis.getPage(), beginIndex, endIndex);
+                    analysis, beginIndex, endIndex);
                 for (int i = 2; i < elements.length; i++) {
                   errorResult.addPossibleAction(elements[i], new NullActionProvider());
                 }

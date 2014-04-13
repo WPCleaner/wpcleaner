@@ -89,7 +89,7 @@ public class CheckErrorAlgorithm027 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), ampersandIndex, tmpIndex + 1,
+              analysis, ampersandIndex, tmpIndex + 1,
               htmlCharacter != null ? ErrorLevel.ERROR : ErrorLevel.WARNING);
           if (htmlCharacter != null) {
             errorResult.addReplacement("" + htmlCharacter.getValue(), true);

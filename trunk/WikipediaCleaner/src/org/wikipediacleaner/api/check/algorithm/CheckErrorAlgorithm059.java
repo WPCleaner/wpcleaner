@@ -120,7 +120,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                 }
                 PageElementTag firstBrTag = brTags.get(firstBrTagIndex);
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    analysis.getPage(),
+                    analysis,
                     firstBrTag.getBeginIndex(),
                     lastBrTag.getEndIndex());
                 errorResult.addReplacement("", GT._("Delete"));

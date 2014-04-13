@@ -150,7 +150,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
       // Create error
       CheckErrorResult error = createCheckErrorResult(
-          analysis.getPage(), group.getBegin(), group.getEnd());
+          analysis, group.getBegin(), group.getEnd());
       String previousComment = null;
       multiples.clear();
       for (Replacement replacement : group.getReplacements()) {

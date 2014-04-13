@@ -76,14 +76,14 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
         PageElementTitle previousTitle = knownTitles.get(titleValue);
         if (previousTitle != null) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               previousTitle.getBeginIndex(), previousTitle.getEndIndex(),
               ErrorLevel.CORRECT);
           errors.add(errorResult);
           knownTitles.put(titleValue, null);
         }
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(),
+            analysis,
             title.getBeginIndex(), title.getEndIndex());
         errorResult.addEditTocAction();
         errors.add(errorResult);

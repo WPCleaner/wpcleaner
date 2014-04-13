@@ -98,7 +98,7 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
             if ((tmpIndex + 1 >= maxLength) ||
                 (contents.charAt(tmpIndex + 1) != '}')) {
               CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis.getPage(), currentIndex, tmpIndex + 1);
+                  analysis, currentIndex, tmpIndex + 1);
               errorResult.addReplacement(contents.substring(currentIndex, tmpIndex + 1) + "}");
   
               // Check if the situation is something like [[http://....] (replacement: [http://....])
@@ -118,7 +118,7 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
               lastChar++;
             }
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), currentIndex, lastChar + 1);
+                analysis, currentIndex, lastChar + 1);
             errorResult.addReplacement(contents.substring(currentIndex, tmpIndex) + "}}");
             errorResult.addReplacement("[[" + contents.substring(currentIndex + 2, tmpIndex) + "]]");
             errors.add(errorResult);
@@ -132,7 +132,7 @@ public class CheckErrorAlgorithm043 extends CheckErrorAlgorithmBase {
         // Default
         if (!errorReported) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), currentIndex, currentIndex + 2);
+              analysis, currentIndex, currentIndex + 2);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
           result = true;

@@ -89,7 +89,7 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
 
           // Create error
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), currentIndex, endLineIndex);
+              analysis, currentIndex, endLineIndex);
           errorResult.addReplacement(PageElementTitle.createTitle(
               equalsCount,
               contents.substring(currentIndex + equalsCount, endLineIndex),

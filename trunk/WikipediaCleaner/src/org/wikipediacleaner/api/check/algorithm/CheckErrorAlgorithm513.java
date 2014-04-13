@@ -60,7 +60,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), link.getBeginIndex(), internalLink.getEndIndex());
+              analysis, link.getBeginIndex(), internalLink.getEndIndex());
           errorResult.addReplacement(
               contents.substring(link.getBeginIndex(), internalLink.getBeginIndex()) +
               internalLink.getDisplayedTextNotTrimmed());

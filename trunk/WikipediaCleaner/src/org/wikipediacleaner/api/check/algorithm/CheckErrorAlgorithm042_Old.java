@@ -56,7 +56,7 @@ public class CheckErrorAlgorithm042_Old extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               tag.getBeginIndex(), tag.getEndIndex());
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
@@ -75,7 +75,7 @@ public class CheckErrorAlgorithm042_Old extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
           errors.add(errorResult);
         }

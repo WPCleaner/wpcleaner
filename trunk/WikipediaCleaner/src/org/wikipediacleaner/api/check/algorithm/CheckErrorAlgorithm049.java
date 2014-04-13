@@ -74,7 +74,7 @@ public class CheckErrorAlgorithm049 extends CheckErrorAlgorithmBase {
 
           // Create error
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+              analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
           errorResult.addReplacement(PageElementTitle.createTitle(
               level + 1, replacement, null));
           errors.add(errorResult);

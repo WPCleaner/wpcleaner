@@ -66,7 +66,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               tag.getBeginIndex(), tag.getEndIndex());
           errorResult.addReplacement("");
           errors.add(errorResult);
@@ -81,7 +81,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               tag.getBeginIndex(), tag.getEndIndex());
           errorResult.addReplacement("");
           errors.add(errorResult);
@@ -110,7 +110,7 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
             int possibleEnd = getPossibleEnd(analysis, level0Tag);
             if (possibleEnd > 0) {
               CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis.getPage(),
+                  analysis,
                   level0Tag.getBeginIndex(), possibleEnd,
                   ErrorLevel.WARNING);
               errorResult.addReplacement(
@@ -119,14 +119,14 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
               errors.add(errorResult);
             } else {
               CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis.getPage(),
+                  analysis,
                   level0Tag.getBeginIndex(),
                   level0Tag.getEndIndex(),
                   ErrorLevel.CORRECT);
               errors.add(errorResult);
               if (level0Tag.getMatchingTag() != null) {
                 errorResult = createCheckErrorResult(
-                    analysis.getPage(),
+                    analysis,
                     level0Tag.getMatchingTag().getBeginIndex(),
                     level0Tag.getMatchingTag().getEndIndex(),
                     ErrorLevel.CORRECT);
@@ -139,16 +139,14 @@ public class CheckErrorAlgorithm055 extends CheckErrorAlgorithmBase {
           int possibleEnd = getPossibleEnd(analysis, tag);
           if (possibleEnd > 0) {
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(),
-                tag.getBeginIndex(),
-                possibleEnd);
+                analysis, tag.getBeginIndex(), possibleEnd);
             errorResult.addReplacement(
                 contents.substring(tag.getBeginIndex(), possibleEnd) + "</small>",
                 "<small>...</small>");
             errors.add(errorResult);
           } else {
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(),
+                analysis,
                 tag.getCompleteBeginIndex(),
                 tag.getCompleteEndIndex());
             if (doubleSmall) {

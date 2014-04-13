@@ -87,7 +87,7 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
                   currentIndex++;
                 }
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    analysis.getPage(),
+                    analysis,
                     paramValueOffset + currentPos,
                     paramValueOffset + currentIndex);
                 errorResult.addReplacement("", GT._("Remove"));

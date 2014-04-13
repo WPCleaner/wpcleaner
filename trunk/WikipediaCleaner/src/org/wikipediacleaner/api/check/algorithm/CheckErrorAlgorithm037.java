@@ -145,7 +145,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     }
 
     CheckErrorResult errorResult = createCheckErrorResult(
-        analysis.getPage(), beginIndex, endIndex);
+        analysis, beginIndex, endIndex);
     errorResult.addReplacement(replacement, GT._("Add DEFAULTSORT"), automatic);
     errors.add(errorResult);
     return true;

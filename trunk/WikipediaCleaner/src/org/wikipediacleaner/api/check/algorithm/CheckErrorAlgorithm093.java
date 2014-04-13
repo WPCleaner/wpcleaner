@@ -110,7 +110,7 @@ public class CheckErrorAlgorithm093 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), beginIndex, link.getEndIndex());
+              analysis, beginIndex, link.getEndIndex());
           if (prefix2.endsWith("//")) {
             String newDest = prefix2 + withoutPrefix;
             if (link.hasSquare()) {

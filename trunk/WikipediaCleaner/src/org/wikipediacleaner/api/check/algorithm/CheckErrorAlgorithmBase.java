@@ -27,7 +27,6 @@ import org.wikipediacleaner.api.constants.CWConfigurationError;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.data.MagicWord;
-import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -141,15 +140,16 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * Create a CheckErrorResult object.
    * 
+   * @param analysis Page analysis
    * @param startPosition Start of the error.
    * @param endPosition End of the error.
    * @return new CheckErrorResult object.
    */
   public CheckErrorResult createCheckErrorResult(
-      Page page,
+      PageAnalysis analysis,
       int startPosition, int endPosition) {
     return createCheckErrorResult(
-        page,
+        analysis,
         startPosition, endPosition,
         ErrorLevel.ERROR);
   }
@@ -158,17 +158,20 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * Create a CheckErrorResult object.
    * 
+   * @param analysis Page analysis
    * @param startPosition Start of the error.
    * @param endPosition End of the error.
    * @param errorLevel Error level.
    * @return new CheckErrorResult object.
    */
   public CheckErrorResult createCheckErrorResult(
-      Page page,
+      PageAnalysis analysis,
       int startPosition, int endPosition,
       ErrorLevel errorLevel) {
-    if ((!ErrorLevel.CORRECT.equals(errorLevel)) && (page != null)) {
-      if (isInWhiteList(page.getTitle())) {
+    if ((!ErrorLevel.CORRECT.equals(errorLevel)) &&
+        (analysis != null) &&
+        (analysis.getPage() != null)) {
+      if (isInWhiteList(analysis.getPage().getTitle())) {
         errorLevel = ErrorLevel.CORRECT;
       }
     }
@@ -452,7 +455,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
   /**
    * Search for simple text in page.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param begin Index in text to begin search.
    * @param end Index in text to end search.
    * @param errors Errors found in the page.
@@ -461,12 +464,12 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * @return Flag indicating if the error was found.
    */
   protected boolean simpleTextSearch(
-      PageAnalysis pageAnalysis, int begin, int end,
+      PageAnalysis analysis, int begin, int end,
       Collection<CheckErrorResult> errors,
       String search, String[] replacements) {
     int startIndex = begin;
     boolean result = false;
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     while ((startIndex < contents.length()) && (startIndex < end)) {
       startIndex = contents.indexOf(search, startIndex);
       if ((startIndex >= 0) && (startIndex < end)) {
@@ -476,7 +479,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
         result = true;
         int endIndex = startIndex + search.length();
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(), startIndex, endIndex);
+            analysis, startIndex, endIndex);
         if (replacements != null) {
           for (int i = 0; i < replacements.length; i++) {
             if (replacements[i] != null) {
@@ -497,19 +500,19 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
    * Find tags.
    * 
    * @param found Flag indicating if a tag has already been found.
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors.
    * @param tagName Tag name.
    * @return Flag indicating if a tag has been found.
    */
   protected boolean addTags(
-      boolean found, PageAnalysis pageAnalysis,
+      boolean found, PageAnalysis analysis,
       Collection<CheckErrorResult> errors, String tagName) {
     if (found && (errors == null)) {
       return found;
     }
     boolean result = found;
-    Collection<PageElementTag> tags = pageAnalysis.getTags(tagName);
+    Collection<PageElementTag> tags = analysis.getTags(tagName);
     if (tags != null) {
       for (PageElementTag tag : tags) {
         if (errors == null) {
@@ -517,7 +520,7 @@ public abstract class CheckErrorAlgorithmBase implements CheckErrorAlgorithm {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(),
+            analysis,
             tag.getBeginIndex(), tag.getEndIndex());
         errors.add(errorResult);
       }

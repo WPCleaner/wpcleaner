@@ -135,7 +135,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
 
           // Check language link
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), beginIndex, endIndex);
+              analysis, beginIndex, endIndex);
           if ((fromWiki != null) && (article.length() >0)) {
             errorResult.addPossibleAction(
                 GT._("Check language links"),

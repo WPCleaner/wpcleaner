@@ -15,7 +15,6 @@ import java.util.Map;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.check.NullActionProvider;
-import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -59,7 +58,6 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
 
     boolean result = false;
     String contents = analysis.getContents();
-    Page page = analysis.getPage();
 
     if (onlyTemplates) {
       Collection<PageElementTemplate> templates = analysis.getTemplates();
@@ -71,7 +69,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         int begin = template.getBeginIndex();
         int end = template.getEndIndex();
         if (begin >= lastEnd) {
-          if (analyzeArea(page, contents, begin, end, errors)) {
+          if (analyzeArea(analysis, contents, begin, end, errors)) {
             if (errors == null) {
               return true;
             }
@@ -81,7 +79,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         }
       }
     } else {
-      result = analyzeArea(page, contents, 0, contents.length(), errors);
+      result = analyzeArea(analysis, contents, 0, contents.length(), errors);
     }
 
     return result;
@@ -90,7 +88,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page area to check if errors are present.
    * 
-   * @param page Page.
+   * @param analysis Page analysis.
    * @param contents Page contents.
    * @param beginArea Begin index of the area.
    * @param endArea End index of the area.
@@ -98,7 +96,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
    * @return Flag indicating if the error was found.
    */
   public boolean analyzeArea(
-      Page page, String contents, int beginArea, int endArea,
+      PageAnalysis analysis, String contents, int beginArea, int endArea,
       Collection<CheckErrorResult> errors) {
     boolean result = false;
 
@@ -132,7 +130,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         }
 
         // Report error
-        CheckErrorResult errorResult = createCheckErrorResult(page, begin, end);
+        CheckErrorResult errorResult = createCheckErrorResult(analysis, begin, end);
         for (Integer controlFound : controls) {
           ControlCharacter found = ControlCharacter.getControlCharacter(controlFound.intValue());
           if (found != null) {

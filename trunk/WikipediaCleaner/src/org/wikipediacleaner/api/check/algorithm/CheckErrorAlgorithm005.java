@@ -10,7 +10,6 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
 
@@ -42,7 +41,6 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
 
     // Analyze contents from the end
     boolean result = false;
-    Page page = analysis.getPage();
     String contents = analysis.getContents();
     boolean inComment = false;
     int possibleEndIndex = -1;
@@ -73,7 +71,7 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = null;
           if (possibleEndIndex > 0) {
             errorResult = createCheckErrorResult(
-                page, currentIndex, possibleEndIndex + 2);
+                analysis, currentIndex, possibleEndIndex + 2);
             errorResult.addReplacement(
                 contents.substring(currentIndex, possibleEndIndex) + "-->",
                 GT._("Properly end the comment"));
@@ -89,7 +87,7 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
             }
             int endIndex = previousStartIndex + 4;
             errorResult = createCheckErrorResult(
-                page, currentIndex, endIndex);
+                analysis, currentIndex, endIndex);
             errorResult.addReplacement(
                 contents.substring(currentIndex, tmpIndex) + "-->" + contents.substring(tmpIndex, endIndex),
                 GT._("Properly end the comment"));
@@ -101,7 +99,7 @@ public class CheckErrorAlgorithm005 extends CheckErrorAlgorithmBase {
                 GT._("Uncomment"));
           } else {
             errorResult = createCheckErrorResult(
-                page, currentIndex, nextIndex);
+                analysis, currentIndex, nextIndex);
             errorResult.addReplacement("", GT._("Uncomment"));
           }
           errors.add(errorResult);

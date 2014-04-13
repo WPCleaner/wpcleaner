@@ -96,7 +96,7 @@ public class CheckErrorAlgorithm084 extends CheckErrorAlgorithmBase {
             lastPos = commentFound.getBeginIndex();
           }
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), title.getBeginIndex(), lastPos);
+              analysis, title.getBeginIndex(), lastPos);
           if (texts != null) {
             for (String text : texts) {
               String replacement =

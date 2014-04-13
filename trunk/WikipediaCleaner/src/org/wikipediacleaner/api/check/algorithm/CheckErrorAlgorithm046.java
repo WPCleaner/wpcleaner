@@ -112,7 +112,7 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
             }
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), currentIndex, currentIndex + 2);
+                analysis, currentIndex, currentIndex + 2);
             errorResult.addReplacement("]");
             errors.add(errorResult);
           }
@@ -137,7 +137,7 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
             finished = true;
           } else if (tmpChar == '[') {
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), tmpIndex, currentIndex + 2);
+                analysis, tmpIndex, currentIndex + 2);
 
             // Check if the situation is something like [http://....]] (replacement: [http://....])
             boolean protocolFound = PageElementExternalLink.isPossibleProtocol(contents, tmpIndex + 1);
@@ -155,7 +155,7 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
               firstChar--;
             }
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), firstChar, currentIndex + 2);
+                analysis, firstChar, currentIndex + 2);
             errorResult.addReplacement("[[" + contents.substring(tmpIndex + 1, currentIndex + 2));
             errorResult.addReplacement("{{" + contents.substring(tmpIndex + 1, currentIndex) + "}}");
             errors.add(errorResult);
@@ -168,7 +168,7 @@ public class CheckErrorAlgorithm046 extends CheckErrorAlgorithmBase {
         // Default
         if (!errorReported) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), currentIndex, currentIndex + 2);
+              analysis, currentIndex, currentIndex + 2);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
         }

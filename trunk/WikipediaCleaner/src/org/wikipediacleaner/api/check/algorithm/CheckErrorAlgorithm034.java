@@ -74,7 +74,7 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
               return true;
             }
             CheckErrorResult errorResult = createCheckErrorResult(
-                page, currentIndex, currentIndex + 3);
+                analysis, currentIndex, currentIndex + 3);
             errorResult.addReplacement("{{");
             errors.add(errorResult);
             nextIndex = currentIndex + 3;
@@ -92,7 +92,7 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
               return true;
             }
             CheckErrorResult errorResult = createCheckErrorResult(
-                page, parameter.getBeginIndex(), parameter.getEndIndex());
+                analysis, parameter.getBeginIndex(), parameter.getEndIndex());
             if (parameter.getParameterCount() == 1) {
               String value = parameter.getParameterValue(0);
               if (value != null) {
@@ -130,7 +130,7 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
                 return true;
               }
               CheckErrorResult errorResult = createCheckErrorResult(
-                  page, function.getBeginIndex(), function.getEndIndex());
+                  analysis, function.getBeginIndex(), function.getEndIndex());
               if (MagicWord.PAGE_NAME.equals(magicWordName)) {
                 errorResult.addReplacement(page.getTitle());
               }

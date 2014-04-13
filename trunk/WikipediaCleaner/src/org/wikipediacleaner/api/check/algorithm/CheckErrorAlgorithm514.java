@@ -99,7 +99,7 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
             }
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+                analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
             errors.add(errorResult);
           }
         }

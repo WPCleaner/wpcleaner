@@ -69,7 +69,7 @@ public class CheckErrorAlgorithm021 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), category.getBeginIndex(), category.getEndIndex());
+            analysis, category.getBeginIndex(), category.getEndIndex());
         errorResult.addPossibleAction(
             GT._("Check category"),
             new CheckCategoryLinkActionProvider(

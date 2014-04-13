@@ -79,7 +79,7 @@ public class CheckErrorAlgorithm029 extends CheckErrorAlgorithmBase {
         // Report error
         int endIndex = (nextTag != null) ? nextTag.getEndIndex() : galleryTag.getEndIndex();
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), beginIndex, endIndex);
+            analysis, beginIndex, endIndex);
         if (nextTag == null) {
           errorResult.addReplacement("");
           index++;

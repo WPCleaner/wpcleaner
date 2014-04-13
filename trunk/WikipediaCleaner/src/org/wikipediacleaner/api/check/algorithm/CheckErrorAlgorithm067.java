@@ -165,7 +165,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
 
         // Create error
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), beginIndex, endIndex);
+            analysis, beginIndex, endIndex);
         boolean automatic = false;
         if (allPunctuations.equals(".") &&
             (!punctuationFoundAfter || punctuationAfter.equals("."))) {

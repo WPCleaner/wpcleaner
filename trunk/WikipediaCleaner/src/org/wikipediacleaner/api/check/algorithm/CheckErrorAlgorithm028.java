@@ -83,7 +83,7 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
     Collections.sort(starts);
     for (TableElement element : starts) {
       CheckErrorResult errorResult = createCheckErrorResult(
-          analysis.getPage(), element.beginIndex, element.endIndex,
+          analysis, element.beginIndex, element.endIndex,
           (element.begin && !element.hasMatch) ? ErrorLevel.ERROR : ErrorLevel.CORRECT);
       errors.add(errorResult);
     }

@@ -75,7 +75,7 @@ public class CheckErrorAlgorithm077 extends CheckErrorAlgorithmBase {
             }
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), image.getBeginIndex(), image.getEndIndex());
+                analysis, image.getBeginIndex(), image.getEndIndex());
             StringBuilder replacement = new StringBuilder();
             int lastIndex = 0;
             for (PageElementTag smallTag : smallTags) {

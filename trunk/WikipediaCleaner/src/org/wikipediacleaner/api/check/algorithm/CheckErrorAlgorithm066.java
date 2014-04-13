@@ -86,7 +86,7 @@ public class CheckErrorAlgorithm066 extends CheckErrorAlgorithmBase {
             }
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), image.getBeginIndex(), image.getEndIndex());
+                analysis, image.getBeginIndex(), image.getEndIndex());
             errorResult.addReplacement(
                 image.getDescriptionReplacement(innerText.toString()),
                 GT._("Remove <small> tag"));

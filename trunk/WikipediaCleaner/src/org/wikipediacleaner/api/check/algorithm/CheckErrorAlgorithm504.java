@@ -54,7 +54,7 @@ public class CheckErrorAlgorithm504 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult error = createCheckErrorResult(
-            analysis.getPage(),
+            analysis,
             ref.getCompleteBeginIndex(), ref.getCompleteEndIndex());
         errors.add(error);
       }

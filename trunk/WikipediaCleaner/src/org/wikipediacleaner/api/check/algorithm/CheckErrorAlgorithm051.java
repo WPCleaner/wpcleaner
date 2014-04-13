@@ -64,7 +64,7 @@ public class CheckErrorAlgorithm051 extends CheckErrorAlgorithmBase {
       }
       result = true;
       CheckErrorResult errorResult = createCheckErrorResult(
-          analysis.getPage(),
+          analysis,
           language.getBeginIndex(), language.getEndIndex());
       errorResult.addReplacement(
           "[[:" + contents.substring(language.getBeginIndex() + 2, language.getEndIndex()));

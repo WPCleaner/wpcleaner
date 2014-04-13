@@ -58,7 +58,7 @@ public class CheckErrorAlgorithm520 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), index, index + 1);
+            analysis, index, index + 1);
         errorResult.addReplacement("");
         errors.add(errorResult);
       }

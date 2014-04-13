@@ -83,7 +83,7 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
           int nextCR = getNextCR(contents, link.getEndIndex());
           nextCR = Math.min(nextCR, tagImagemap.getMatchingTag().getBeginIndex());
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), previousCR, nextCR);
+              analysis, previousCR, nextCR);
           if ((previousCR > tagImagemap.getEndIndex()) &&
               (contents.charAt(nextCR) == '\n')) {
             errorResult.addReplacement("", GT._("Delete"));
@@ -91,7 +91,7 @@ public class CheckErrorAlgorithm515 extends CheckErrorAlgorithmBase {
           errors.add(errorResult);
         } else {
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               link.getBeginIndex(),
               link.getEndIndex());
           errorResult.addReplacement(link.getDisplayedText());

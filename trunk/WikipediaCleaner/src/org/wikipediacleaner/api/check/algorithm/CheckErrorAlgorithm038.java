@@ -66,7 +66,7 @@ public class CheckErrorAlgorithm038 extends CheckErrorAlgorithmBase {
         result = true;
         if (!iTag.isFullTag() && iTag.isComplete()) {
           CheckErrorResult error = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               iTag.getCompleteBeginIndex(),
               iTag.getCompleteEndIndex());
           String text = analysis.getContents().substring(
@@ -89,7 +89,7 @@ public class CheckErrorAlgorithm038 extends CheckErrorAlgorithmBase {
           errors.add(error);
         } else {
           CheckErrorResult error = createCheckErrorResult(
-              analysis.getPage(), iTag.getBeginIndex(), iTag.getEndIndex());
+              analysis, iTag.getBeginIndex(), iTag.getEndIndex());
           error.addReplacement("", GT._("Delete"));
           errors.add(error);
         }

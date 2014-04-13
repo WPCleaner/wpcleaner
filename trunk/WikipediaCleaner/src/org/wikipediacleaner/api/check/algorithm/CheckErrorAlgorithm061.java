@@ -158,7 +158,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
 
         // Create error
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), beginIndex, endIndex);
+            analysis, beginIndex, endIndex);
         errorResult.addReplacement(
             allPunctuations + replace,
             allPunctuations + textReplace);
