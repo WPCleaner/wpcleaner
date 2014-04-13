@@ -121,7 +121,7 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
 
         // Put each category on a different line
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(),
+            analysis,
             beginIndex,
             categories.get(lastCategory).getEndIndex());
         boolean automatic = true;

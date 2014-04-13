@@ -112,7 +112,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+            analysis, link.getBeginIndex(), link.getEndIndex());
         String lgCode = link.getInterwiki().getPrefix();
         EnumWikipedia fromWiki = EnumWikipedia.getWikipedia(lgCode);
         if ((fromWiki != null) && (fromWiki.getSettings().getCode().equals(lgCode))) {

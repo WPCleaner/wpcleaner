@@ -86,7 +86,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
             }
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(),
+                analysis,
                 tag.getCompleteBeginIndex(),
                 tag.getCompleteEndIndex());
             errorResult.addReplacement("", GT._("Delete"));

@@ -99,7 +99,7 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
         PageElementCategory keepCategory = keepCategory(groupCategory, lastTitle);
         if (keepCategory == category) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               category.getBeginIndex(),
               category.getEndIndex(),
               CheckErrorResult.ErrorLevel.CORRECT);
@@ -160,8 +160,7 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
 
           // Mark the error
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(),
-              beginIndex, endIndex);
+              analysis, beginIndex, endIndex);
           errorResult.addReplacement("", GT._("Delete"), automatic);
           errors.add(errorResult);
         }

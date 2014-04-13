@@ -202,7 +202,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
             for (PageElementTag tag : listTags) {
               if (tag == mainTag) {
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    analysis.getPage(),
+                    analysis,
                     tag.getCompleteBeginIndex(), tag.getCompleteEndIndex(),
                     CheckErrorResult.ErrorLevel.CORRECT);
                 errors.add(errorResult);
@@ -213,7 +213,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
                   nameValue = nameValue.trim();
                 }
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    analysis.getPage(),
+                    analysis,
                     tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
                 errorResult.addReplacement(
                     getClosedRefTag(groupName, selectedName, null),
@@ -239,7 +239,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
 
               // Register error
               CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis.getPage(),
+                  analysis,
                   tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
 
               // Add an action for naming the reference tag

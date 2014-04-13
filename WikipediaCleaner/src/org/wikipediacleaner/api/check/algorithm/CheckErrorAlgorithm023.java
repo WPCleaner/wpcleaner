@@ -51,7 +51,7 @@ public class CheckErrorAlgorithm023 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(),
+            analysis,
             nowikiTag.getBeginIndex(), nowikiTag.getEndIndex());
         errorResult.addReplacement("", GT._("Delete"));
         errors.add(errorResult);

@@ -54,7 +54,7 @@ public class CheckErrorAlgorithm014 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(),
+            analysis,
             beginIndex, sourceTag.getEndIndex());
         errorResult.addReplacement("", GT._("Delete"));
         errors.add(errorResult);

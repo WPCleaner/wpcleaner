@@ -55,7 +55,7 @@ public class CheckErrorAlgorithm094 extends CheckErrorAlgorithmBase {
         int beginIndex = tag.getBeginIndex();
         int endIndex = tag.getEndIndex();
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), beginIndex, endIndex);
+            analysis, beginIndex, endIndex);
         errors.add(errorResult);
       }
     }

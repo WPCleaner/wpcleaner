@@ -73,7 +73,7 @@ public class CheckErrorAlgorithm065 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               image.getBeginIndex(),
               image.getEndIndex());
           errorResult.addReplacement(image.getDescriptionReplacement(description));

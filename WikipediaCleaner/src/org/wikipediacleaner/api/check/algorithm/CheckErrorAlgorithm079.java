@@ -97,7 +97,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
             }
           }
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), link.getBeginIndex(), endIndex);
+              analysis, link.getBeginIndex(), endIndex);
           errorResult.addPossibleAction(
               GT._("Add a description..."),
               new AddTextActionProvider(

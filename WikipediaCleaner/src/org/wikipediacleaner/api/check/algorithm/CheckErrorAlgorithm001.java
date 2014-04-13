@@ -79,7 +79,7 @@ public class CheckErrorAlgorithm001 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult error = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               template.getBeginIndex(),
               template.getEndIndex());
           String fullTemplate = analysis.getContents().substring(

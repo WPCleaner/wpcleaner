@@ -125,7 +125,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
             finished = true;
           } else if (tmpChar == ']') {
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), currentIndex, tmpIndex + 1);
+                analysis, currentIndex, tmpIndex + 1);
 
             // Check if the situation is something like [[http://....] (replacement: [http://....])
             boolean protocolFound = PageElementExternalLink.isPossibleProtocol(contents, currentIndex + 2);
@@ -143,7 +143,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
               lastChar++;
             }
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), currentIndex, lastChar + 1);
+                analysis, currentIndex, lastChar + 1);
             errorResult.addReplacement(contents.substring(currentIndex, tmpIndex) + "]]");
             errorResult.addReplacement("{{" + contents.substring(currentIndex + 2, tmpIndex) + "}}");
             errors.add(errorResult);
@@ -156,7 +156,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
         // Default
         if (!errorReported) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), currentIndex, currentIndex + 2);
+              analysis, currentIndex, currentIndex + 2);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
         }
@@ -175,7 +175,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+              analysis, link.getBeginIndex(), link.getEndIndex());
           errorResult.addReplacement(PageElementInternalLink.createInternalLink(
               link.getLink(), link.getAnchor(), text));
           errors.add(errorResult);
@@ -195,7 +195,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), image.getBeginIndex(), image.getEndIndex());
+            analysis, image.getBeginIndex(), image.getEndIndex());
         errorResult.addReplacement(image.getDescriptionReplacement(
             (modifiedText != null) ? modifiedText : text,
             (modifiedAlt != null) ? modifiedAlt : alt));
@@ -215,7 +215,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
             }
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), begin - 1, begin);
+                analysis, begin - 1, begin);
             errorResult.addReplacement("[");
             errors.add(errorResult);
           }

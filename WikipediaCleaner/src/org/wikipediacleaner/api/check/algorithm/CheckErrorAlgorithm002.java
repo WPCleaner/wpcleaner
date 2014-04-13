@@ -106,7 +106,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               result = true;
               tmpIndex++;
               CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis.getPage(), currentIndex, tmpIndex);
+                  analysis, currentIndex, tmpIndex);
               errorResult.addReplacement(PageElementTag.createTag(PageElementTag.TAG_HTML_BR, false, false));
               errors.add(errorResult);
               nextIndex = tmpIndex;

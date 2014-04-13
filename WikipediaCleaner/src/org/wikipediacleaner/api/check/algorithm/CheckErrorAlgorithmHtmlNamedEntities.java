@@ -125,7 +125,7 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
               }
 
               CheckErrorResult errorResult = createCheckErrorResult(
-                  analysis.getPage(), ampersandIndex, endIndex);
+                  analysis, ampersandIndex, endIndex);
               errorResult.addReplacement("" + htmlCharacter.getValue());
               if (endIndex > colonIndex + 1) {
                 errorResult.addReplacement(

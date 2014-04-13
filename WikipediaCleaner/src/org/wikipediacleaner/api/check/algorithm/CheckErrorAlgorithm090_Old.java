@@ -87,7 +87,7 @@ public class CheckErrorAlgorithm090_Old extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(),
+            analysis,
             defaultSort.getBeginIndex(), defaultSort.getEndIndex());
         errorResult.addReplacement(PageElementFunction.createFunction(
             defaultSort.getFunctionName(), newText.toString()));

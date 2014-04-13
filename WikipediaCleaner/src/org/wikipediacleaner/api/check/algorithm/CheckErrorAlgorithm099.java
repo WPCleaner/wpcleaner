@@ -54,7 +54,7 @@ public class CheckErrorAlgorithm099 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(),
+            analysis,
             beginIndex, supTag.getEndIndex());
         errorResult.addReplacement("");
         errors.add(errorResult);
@@ -64,7 +64,7 @@ public class CheckErrorAlgorithm099 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(),
+            analysis,
             beginIndex, supTag.getEndIndex(),
             ErrorLevel.WARNING);
         errorResult.addReplacement(

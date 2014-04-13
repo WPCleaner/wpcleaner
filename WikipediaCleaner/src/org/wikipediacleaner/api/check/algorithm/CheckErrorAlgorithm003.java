@@ -108,7 +108,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     if (referencesTags != null) {
       for (PageElementTag referencesTag : referencesTags) {
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), referencesTag.getBeginIndex(), referencesTag.getEndIndex());
+            analysis, referencesTag.getBeginIndex(), referencesTag.getEndIndex());
         if (referencesTags.size() == 1) {
           errorResult.addReplacement(
               PageElementTag.createTag(PageElementTag.TAG_WIKI_REFERENCES, true, true),
@@ -130,7 +130,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
                 index = tag.getCompleteEndIndex();
               } else {
                 if (contents.startsWith("</references/>", index)) {
-                  errorResult = createCheckErrorResult(analysis.getPage(), index, index + 14);
+                  errorResult = createCheckErrorResult(analysis, index, index + 14);
                   errorResult.addReplacement(PageElementTag.createTag(
                       PageElementTag.TAG_WIKI_REFERENCES, true, false), true);
                   errors.add(errorResult);

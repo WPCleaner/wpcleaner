@@ -90,7 +90,7 @@ public class CheckErrorAlgorithm091_Old extends CheckErrorAlgorithmBase {
     }
     PageElementCategory category = categories.get(0);
     CheckErrorResult errorResult = createCheckErrorResult(
-        analysis.getPage(), category.getBeginIndex(), category.getEndIndex());
+        analysis, category.getBeginIndex(), category.getEndIndex());
     String replacement =
         createDefaultSort(analysis) + "\n" +
     analysis.getContents().substring(category.getBeginIndex(), category.getEndIndex());

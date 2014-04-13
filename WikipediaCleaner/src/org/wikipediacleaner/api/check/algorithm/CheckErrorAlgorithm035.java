@@ -73,7 +73,7 @@ public class CheckErrorAlgorithm035 extends CheckErrorAlgorithmBase {
                 result = true;
 
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    analysis.getPage(), beginIndex, tmpIndex);
+                    analysis, beginIndex, tmpIndex);
                 errors.add(errorResult);
               }
             }

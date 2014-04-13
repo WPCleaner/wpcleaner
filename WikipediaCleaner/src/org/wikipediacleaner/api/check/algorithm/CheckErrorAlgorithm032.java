@@ -132,7 +132,7 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
 
           // Create error
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+              analysis, link.getBeginIndex(), link.getEndIndex());
           boolean emptyLink = false;
           if ((link.getFullLink() == null) || (link.getFullLink().trim().length() == 0)) {
             errorResult.addReplacement(PageElementInternalLink.createInternalLink(link.getText(), null));

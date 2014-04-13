@@ -67,7 +67,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
       }
     }
     CheckErrorResult result = createCheckErrorResult(
-        analysis.getPage(), isbn.getBeginIndex(), isbn.getEndIndex(), level);
+        analysis, isbn.getBeginIndex(), isbn.getEndIndex(), level);
     return result;
   }
 

@@ -56,7 +56,7 @@ public class CheckErrorAlgorithm507 extends CheckErrorAlgorithmBase {
           result = true;
 
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), galleryTag.getBeginIndex(), galleryTag.getEndIndex());
+              analysis, galleryTag.getBeginIndex(), galleryTag.getEndIndex());
           errors.add(errorResult);
         }
       }

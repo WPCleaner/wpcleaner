@@ -99,7 +99,7 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
         PageElementLanguageLink keepLink = keepLanguageLink(groupLink, lastIndex);
         if (keepLink == link) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               link.getBeginIndex(),
               link.getEndIndex(),
               CheckErrorResult.ErrorLevel.CORRECT);
@@ -125,8 +125,7 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
             endIndex = link.getEndIndex();
           }
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(),
-              beginIndex, endIndex);
+              analysis, beginIndex, endIndex);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
         }

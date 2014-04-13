@@ -66,7 +66,7 @@ public class CheckErrorAlgorithm509 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), link.getBeginIndex(), endIndex);
+              analysis, link.getBeginIndex(), endIndex);
           String replacement = PageElementInternalLink.createInternalLink(
               link.getLinkNotNormalized(), link.getAnchor(),
               link.getDisplayedTextNotTrimmed() + contents.substring(link.getEndIndex(), endIndex));

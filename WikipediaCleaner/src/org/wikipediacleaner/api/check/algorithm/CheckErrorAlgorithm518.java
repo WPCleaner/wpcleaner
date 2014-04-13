@@ -97,7 +97,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
               }
               if (index + 2 == link.getEndIndex()) {
                 errorResult = createCheckErrorResult(
-                    analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+                    analysis, link.getBeginIndex(), link.getEndIndex());
                 errorResult.addReplacement("");
               }
             }
@@ -107,7 +107,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
           String textBefore = contents.substring(beginIndex, tag.getBeginIndex());
           String textAfter = contents.substring(tag.getEndIndex(), endIndex);
           errorResult = createCheckErrorResult(
-              analysis.getPage(), beginIndex, endIndex);
+              analysis, beginIndex, endIndex);
           if (link != null) {
             errorResult.addReplacement(PageElementInternalLink.createInternalLink(
                 link.getFullLink(), link.getDisplayedText() + textAfter));
@@ -118,7 +118,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
       } else if (tag.isComplete()) {
         // Complete tag <nowiki> ... </nowiki>
         errorResult = createCheckErrorResult(
-            analysis.getPage(), tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+            analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
         String internalText = contents.substring(
             tag.getValueBeginIndex(), tag.getValueEndIndex());
 
@@ -170,7 +170,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
         errorResult.addReplacement(internalText);
       } else {
         errorResult = createCheckErrorResult(
-            analysis.getPage(), tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+            analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
         errorResult.addReplacement("");
       }
       errors.add(errorResult);

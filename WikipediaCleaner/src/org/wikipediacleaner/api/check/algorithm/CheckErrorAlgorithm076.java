@@ -59,7 +59,7 @@ public class CheckErrorAlgorithm076 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+            analysis, link.getBeginIndex(), link.getEndIndex());
         errorResult.addReplacement(
             PageElementInternalLink.createInternalLink(
                 link.getFullLink().replaceAll("\\%20", " "),
@@ -84,7 +84,7 @@ public class CheckErrorAlgorithm076 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), beginIndex - 1, endIndex + 1);
+              analysis, beginIndex - 1, endIndex + 1);
           errorResult.addReplacement(contents.substring(beginIndex, endIndex));
           errors.add(errorResult);
         }

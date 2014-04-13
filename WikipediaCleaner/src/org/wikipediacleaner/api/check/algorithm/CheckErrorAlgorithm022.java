@@ -103,7 +103,7 @@ public class CheckErrorAlgorithm022 extends CheckErrorAlgorithmBase {
         result = true;
         nameSimple = Page.getStringUcFirst(nameSimple);
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(),
+            analysis,
             category.getBeginIndex(), category.getEndIndex());
         if (sortSimple == null) {
           errorResult.addReplacement(

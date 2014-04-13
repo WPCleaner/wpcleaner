@@ -64,7 +64,7 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(),
+            analysis,
             category.getBeginIndex(),
             category.getEndIndex());
         String categoryName = category.getName();

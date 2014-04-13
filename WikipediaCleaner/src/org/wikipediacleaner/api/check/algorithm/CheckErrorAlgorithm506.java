@@ -65,7 +65,7 @@ public class CheckErrorAlgorithm506 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult error = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               refTag.getBeginIndex(), refTag.getEndIndex());
           errors.add(error);
         }

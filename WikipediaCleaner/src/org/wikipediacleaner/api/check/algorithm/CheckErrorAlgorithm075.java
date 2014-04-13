@@ -76,7 +76,7 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
             }
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), startIndex, endIndex);
+                analysis, startIndex, endIndex);
             char lastChar = newLine.charAt(newLine.length() - 1);
             if (incorrectLine == null) {
               incorrectLine = newLine;

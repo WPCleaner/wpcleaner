@@ -61,7 +61,7 @@ public class CheckErrorAlgorithm096 extends CheckErrorAlgorithmTOC {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(),
+            analysis,
             toc.getBeginIndex(), toc.getEndIndex());
         errors.add(errorResult);
       }

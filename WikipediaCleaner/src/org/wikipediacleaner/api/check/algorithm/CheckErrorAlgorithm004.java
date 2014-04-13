@@ -73,7 +73,7 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
 
       if (shouldKeep) {
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
+            analysis, tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
         if (tag.isFullTag()) {
           errorResult.addReplacement("");
         } else if (tag.isComplete()) {

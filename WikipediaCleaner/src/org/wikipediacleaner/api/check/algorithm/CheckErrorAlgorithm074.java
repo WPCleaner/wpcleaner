@@ -48,7 +48,7 @@ public class CheckErrorAlgorithm074 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+            analysis, link.getBeginIndex(), link.getEndIndex());
         String text = link.getText();
         if ((text != null) && (text.length() > 0)) {
           errorResult.addReplacement("[[" + link.getText() + "]]");

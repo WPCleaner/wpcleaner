@@ -77,7 +77,7 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
           result = true;
           text = text.replaceAll("'''", "");
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               title.getBeginIndex(), title.getEndIndex());
           errorResult.addReplacement(PageElementTitle.createTitle(
               title.getLevel(), text, title.getAfterTitle()));

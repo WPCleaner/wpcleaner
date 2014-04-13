@@ -62,7 +62,7 @@ public class CheckErrorAlgorithm086 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), beginIndex, endIndex);
+              analysis, beginIndex, endIndex);
           String externalLink = contents.substring(link.getBeginIndex(), link.getEndIndex());
           errorResult.addReplacement(externalLink);
           errorResult.addReplacement(externalLink.replaceAll("\\|", " "));

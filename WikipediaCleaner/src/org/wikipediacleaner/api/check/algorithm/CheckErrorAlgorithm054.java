@@ -101,7 +101,7 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), currentPos + 1, endLineIndex);
+              analysis, currentPos + 1, endLineIndex);
           errorResult.addReplacement("");
           errors.add(errorResult);
         }

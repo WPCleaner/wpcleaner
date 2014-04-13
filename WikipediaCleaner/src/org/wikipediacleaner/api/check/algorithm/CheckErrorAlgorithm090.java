@@ -81,7 +81,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
             endIndex++;
           }
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), beginIndex, endIndex);
+              analysis, beginIndex, endIndex);
           if (link.hasSecondSquare() && (link.getLink().indexOf('?') < 0)) {
             Page articlePage = DataManager.getPage(analysis.getWikipedia(), article, null, null, null);
             boolean needColon = false;

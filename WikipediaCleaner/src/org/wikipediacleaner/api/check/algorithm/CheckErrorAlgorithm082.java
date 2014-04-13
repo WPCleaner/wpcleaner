@@ -54,7 +54,7 @@ public class CheckErrorAlgorithm082 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+            analysis, link.getBeginIndex(), link.getEndIndex());
         if (link.getText() != null) {
           errorResult.addReplacement(link.getText());
         } else {

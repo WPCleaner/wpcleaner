@@ -70,7 +70,7 @@ public class CheckErrorAlgorithm058 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(),
+              analysis,
               title.getBeginIndex(), title.getEndIndex());
           StringBuilder sb = new StringBuilder(text);
           for (int i = 1; i < sb.length(); i++) {

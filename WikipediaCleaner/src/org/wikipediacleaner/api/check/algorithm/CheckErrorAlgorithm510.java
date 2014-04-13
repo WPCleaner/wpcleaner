@@ -89,7 +89,7 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
               beginIndex = 0;
             }
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+                analysis, link.getBeginIndex(), link.getEndIndex());
             String replacement = PageElementInternalLink.createInternalLink(
                 target,
                 target.substring(beginIndex, endIndex));
@@ -110,7 +110,7 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
             result = true;
             errorFound = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+                analysis, link.getBeginIndex(), link.getEndIndex());
             String replacement = PageElementInternalLink.createInternalLink(
                 target + "/", null);
             errorResult.addReplacement(replacement);
@@ -130,7 +130,7 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
             result = true;
             errorFound = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), link.getBeginIndex(), link.getEndIndex());
+                analysis, link.getBeginIndex(), link.getEndIndex());
             String replacement = PageElementInternalLink.createInternalLink(
                 target, target.substring(index + 1));
             errorResult.addReplacement(replacement);

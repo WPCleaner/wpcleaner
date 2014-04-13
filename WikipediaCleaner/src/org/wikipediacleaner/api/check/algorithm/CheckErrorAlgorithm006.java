@@ -92,7 +92,7 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), tag.getBeginIndex(), tag.getEndIndex());
+              analysis, tag.getBeginIndex(), tag.getEndIndex());
           if (characterReplaced) {
             errorResult.addReplacement(PageElementFunction.createFunction(tag.getFunctionName(), text));
           } else {

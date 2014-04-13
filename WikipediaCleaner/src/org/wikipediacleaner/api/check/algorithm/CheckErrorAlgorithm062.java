@@ -143,7 +143,7 @@ public class CheckErrorAlgorithm062 extends CheckErrorAlgorithmBase {
             }
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(),
+                analysis,
                 currentIndex, currentIndex + prefix.length());
             errors.add(errorResult);
           }

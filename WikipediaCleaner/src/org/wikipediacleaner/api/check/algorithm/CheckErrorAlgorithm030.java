@@ -67,7 +67,7 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis.getPage(), image.getBeginIndex(), image.getEndIndex());
+              analysis, image.getBeginIndex(), image.getEndIndex());
 
           // Action: add a description
           StringBuilder prefixFull = new StringBuilder();

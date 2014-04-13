@@ -119,7 +119,7 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
             result = true;
             int endIndex = Math.max(possibleEnd, firstCrIndex);
             CheckErrorResult errorResult = createCheckErrorResult(
-                analysis.getPage(), beginIndex, endIndex);
+                analysis, beginIndex, endIndex);
             if (possibleEnd > 0) {
               StringBuilder replacement = new StringBuilder();
               replacement.append(contents.substring(beginIndex, linkEndIndex));

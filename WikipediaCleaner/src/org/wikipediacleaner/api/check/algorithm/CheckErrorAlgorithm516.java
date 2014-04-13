@@ -55,7 +55,7 @@ public class CheckErrorAlgorithm516 extends CheckErrorAlgorithmBase {
     }
     for (PageElementTag brTag : brTags) {
       CheckErrorResult errorResult = createCheckErrorResult(
-          analysis.getPage(), brTag.getBeginIndex(), brTag.getEndIndex());
+          analysis, brTag.getBeginIndex(), brTag.getEndIndex());
       errors.add(errorResult);
     }
 
