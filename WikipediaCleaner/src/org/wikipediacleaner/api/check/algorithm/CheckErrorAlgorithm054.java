@@ -68,7 +68,7 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
       if (isList) {
 
         // Search for <br /> at the end of the line
-        boolean found = true;
+        boolean found = false;
         int currentPos = endLineIndex;
         boolean done = false;
         while (!done) {
@@ -80,6 +80,7 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
           if (currentPos > 0) {
             PageElementTag tagBr = analysis.isInTag(currentPos - 1, PageElementTag.TAG_HTML_BR);
             if (tagBr != null) {
+              found = true;
               done = false;
               currentPos = tagBr.getBeginIndex();
             }
