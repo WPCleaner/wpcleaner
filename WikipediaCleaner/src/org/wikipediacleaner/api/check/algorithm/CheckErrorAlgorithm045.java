@@ -42,24 +42,24 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
+    if ((analysis == null) || (analysis.getPage() == null)) {
       return false;
     }
-    if (!pageAnalysis.getPage().isArticle()) {
+    if (!analysis.getPage().isArticle()) {
       return false;
     }
 
 
     // Group language links by index
-    List<PageElementLanguageLink> links = pageAnalysis.getLanguageLinks();
+    List<PageElementLanguageLink> links = analysis.getLanguageLinks();
     if ((links == null) || (links.isEmpty())) {
       return false;
     }
@@ -75,19 +75,19 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
     }
 
     // Compute index of last index
-    List<PageElementTitle> titles = pageAnalysis.getTitles();
+    List<PageElementTitle> titles = analysis.getTitles();
     int lastIndex = 0;
     if ((titles != null) && (!titles.isEmpty())) {
       lastIndex = titles.get(titles.size() - 1).getEndIndex();
     }
-    List<PageElementCategory> categories = pageAnalysis.getCategories();
+    List<PageElementCategory> categories = analysis.getCategories();
     if ((categories != null) && (!categories.isEmpty())) {
       lastIndex = Math.max(lastIndex, categories.get(categories.size() - 1).getEndIndex());
     }
 
     // Check each language link
     boolean result = false;
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     for (PageElementLanguageLink link : links) {
       String index = link.getLanguage() + ":" + link.getLink();
       List<PageElementLanguageLink> groupLink = groupedLinks.get(index);
@@ -99,7 +99,7 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
         PageElementLanguageLink keepLink = keepLanguageLink(groupLink, lastIndex);
         if (keepLink == link) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
+              analysis.getPage(),
               link.getBeginIndex(),
               link.getEndIndex(),
               CheckErrorResult.ErrorLevel.CORRECT);
@@ -125,7 +125,7 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
             endIndex = link.getEndIndex();
           }
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
+              analysis.getPage(),
               beginIndex, endIndex);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);

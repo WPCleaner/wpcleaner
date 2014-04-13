@@ -29,24 +29,24 @@ public class CheckErrorAlgorithm035 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Retrieve image name space
-    Namespace imageNamespace = pageAnalysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
+    Namespace imageNamespace = analysis.getWikiConfiguration().getNamespace(Namespace.IMAGE);
 
     // Analyze each gallery tag
-    List<PageElementTag> galleryTags = pageAnalysis.getCompleteTags(PageElementTag.TAG_WIKI_GALLERY);
-    String contents = pageAnalysis.getContents();
+    List<PageElementTag> galleryTags = analysis.getCompleteTags(PageElementTag.TAG_WIKI_GALLERY);
+    String contents = analysis.getContents();
     boolean result = false;
     for (PageElementTag galleryTag : galleryTags) {
       if (galleryTag.getMatchingTag() != null) {
@@ -73,7 +73,7 @@ public class CheckErrorAlgorithm035 extends CheckErrorAlgorithmBase {
                 result = true;
 
                 CheckErrorResult errorResult = createCheckErrorResult(
-                    pageAnalysis.getPage(), beginIndex, tmpIndex);
+                    analysis.getPage(), beginIndex, tmpIndex);
                 errors.add(errorResult);
               }
             }

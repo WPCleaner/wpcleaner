@@ -36,21 +36,21 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     boolean result = false;
     int currentIndex = 0;
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     String br = PageElementTag.TAG_HTML_BR;
     int maxSize = contents.length();
     while (currentIndex < maxSize) {
@@ -59,7 +59,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
 
       // Check if we are in a comment
       if (shouldCheck) {
-        PageElementComment comment = pageAnalysis.isInComment(currentIndex);
+        PageElementComment comment = analysis.isInComment(currentIndex);
         if (comment != null) {
           shouldCheck = false;
           nextIndex = comment.getEndIndex();
@@ -106,7 +106,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               result = true;
               tmpIndex++;
               CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), currentIndex, tmpIndex);
+                  analysis.getPage(), currentIndex, tmpIndex);
               errorResult.addReplacement(PageElementTag.createTag(PageElementTag.TAG_HTML_BR, false, false));
               errors.add(errorResult);
               nextIndex = tmpIndex;

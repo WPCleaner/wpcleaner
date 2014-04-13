@@ -26,22 +26,22 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
     boolean result = false;
     int startIndex = -1;
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     String previousLine = "";
     String incorrectLine = null;
     while (startIndex < contents.length()) {
@@ -76,7 +76,7 @@ public class CheckErrorAlgorithm075 extends CheckErrorAlgorithmBase {
             }
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), startIndex, endIndex);
+                analysis.getPage(), startIndex, endIndex);
             char lastChar = newLine.charAt(newLine.length() - 1);
             if (incorrectLine == null) {
               incorrectLine = newLine;

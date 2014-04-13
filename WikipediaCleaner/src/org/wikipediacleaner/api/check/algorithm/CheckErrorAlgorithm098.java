@@ -29,32 +29,32 @@ public class CheckErrorAlgorithm098 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Check every <math> tag
-    List<PageElementTag> subTags = pageAnalysis.getTags(PageElementTag.TAG_HTML_SUB);
+    List<PageElementTag> subTags = analysis.getTags(PageElementTag.TAG_HTML_SUB);
     boolean result = false;
     for (PageElementTag subTag : subTags) {
       int beginIndex = subTag.getBeginIndex();
       if (!subTag.isEndTag() &&
           !subTag.isComplete() &&
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) == null)) {
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) == null)) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(),
+            analysis.getPage(),
             beginIndex, subTag.getEndIndex());
         errorResult.addReplacement("", GT._("Delete"));
         errors.add(errorResult);

@@ -37,21 +37,21 @@ public class CheckErrorAlgorithm027 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
     boolean result = false;
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     int ampersandIndex = contents.indexOf('&');
     int maxLength = contents.length();
     while ((ampersandIndex >= 0) && (ampersandIndex < maxLength)) {
@@ -79,7 +79,7 @@ public class CheckErrorAlgorithm027 extends CheckErrorAlgorithmBase {
         if (htmlCharacter != null) {
           shouldReplace = htmlCharacter.shouldReplaceNumeric();
           if (HtmlCharacters.SYMBOL_VERTICAL_BAR.equals(htmlCharacter) &&
-              (pageAnalysis.isInTemplate(ampersandIndex) != null)) {
+              (analysis.isInTemplate(ampersandIndex) != null)) {
             shouldReplace = false;
           }
         }
@@ -89,7 +89,7 @@ public class CheckErrorAlgorithm027 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), ampersandIndex, tmpIndex + 1,
+              analysis.getPage(), ampersandIndex, tmpIndex + 1,
               htmlCharacter != null ? ErrorLevel.ERROR : ErrorLevel.WARNING);
           if (htmlCharacter != null) {
             errorResult.addReplacement("" + htmlCharacter.getValue(), true);

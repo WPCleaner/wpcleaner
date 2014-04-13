@@ -52,22 +52,22 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
       boolean onlyAutomatic) {
     boolean result = false;
-    if ((pageAnalysis == null) || (!pageAnalysis.shouldCheckSpelling())) {
+    if ((analysis == null) || (!analysis.shouldCheckSpelling())) {
       return result;
     }
 
     // Initialize active suggestions
-    Map<String, Suggestion> suggestions = pageAnalysis.getWPCConfiguration().getSuggestions();
+    Map<String, Suggestion> suggestions = analysis.getWPCConfiguration().getSuggestions();
     if ((suggestions == null) || (suggestions.isEmpty())) {
       return result;
     }
@@ -88,22 +88,22 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     // Check spelling in templates
     List<Replacement> replacements = new ArrayList<Replacement>();
     if ((result == false) || (errors != null)) {
-      result |= analyzeTemplates(pageAnalysis, activeSuggestions, replacements);
+      result |= analyzeTemplates(analysis, activeSuggestions, replacements);
     }
 
     // Check spelling in internal links
     if ((result == false) || (errors != null)) {
-      result |= analyzeInternalLinks(pageAnalysis, activeSuggestions, replacements);
+      result |= analyzeInternalLinks(analysis, activeSuggestions, replacements);
     }
 
     // Check spelling in normal text with non native regular expressions
     if ((result == false) || (errors != null)) {
-      result |= analyzeNonNativeText(pageAnalysis, activeSuggestions, replacements, slowRegexp);
+      result |= analyzeNonNativeText(analysis, activeSuggestions, replacements, slowRegexp);
     }
 
     // Check spelling in normal text with native regular expressions
     if ((result == false) || (errors != null)) {
-      result |= analyzeNativeText(pageAnalysis, activeSuggestions, replacements, slowRegexp);
+      result |= analyzeNativeText(analysis, activeSuggestions, replacements, slowRegexp);
     }
 
     if (errors == null) {
@@ -111,7 +111,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     }
 
     // Group replacements
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     List<ReplacementGroup> groups = new ArrayList<ReplacementGroup>();
     ReplacementComparator comparator = new ReplacementComparator();
     Collections.sort(replacements);
@@ -150,7 +150,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
 
       // Create error
       CheckErrorResult error = createCheckErrorResult(
-          pageAnalysis.getPage(), group.getBegin(), group.getEnd());
+          analysis.getPage(), group.getBegin(), group.getEnd());
       String previousComment = null;
       multiples.clear();
       for (Replacement replacement : group.getReplacements()) {

@@ -30,27 +30,27 @@ public class CheckErrorAlgorithm077 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
 
     // Analyzing all images
     boolean result = false;
-    List<PageElementImage> images = pageAnalysis.getImages();
+    List<PageElementImage> images = analysis.getImages();
     for (PageElementImage image : images) {
       String description = image.getDescription();
       if (description != null) {
         description = description.trim();
-        PageAnalysis descAnalysis = pageAnalysis.getPage().getAnalysis(description, false);
+        PageAnalysis descAnalysis = analysis.getPage().getAnalysis(description, false);
         List<PageElementTag> smallTags = descAnalysis.getTags(PageElementTag.TAG_HTML_SMALL);
         if ((smallTags != null) && (!smallTags.isEmpty())) {
           int lastTest = 0;
@@ -75,7 +75,7 @@ public class CheckErrorAlgorithm077 extends CheckErrorAlgorithmBase {
             }
             result = true;
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), image.getBeginIndex(), image.getEndIndex());
+                analysis.getPage(), image.getBeginIndex(), image.getEndIndex());
             StringBuilder replacement = new StringBuilder();
             int lastIndex = 0;
             for (PageElementTag smallTag : smallTags) {

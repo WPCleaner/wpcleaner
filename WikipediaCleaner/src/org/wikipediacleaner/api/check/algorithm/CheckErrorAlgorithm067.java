@@ -33,15 +33,15 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
@@ -61,12 +61,12 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze from the beginning
-    List<PageElementTag> tags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_REF);
+    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_WIKI_REF);
     if (tags == null) {
       return false;
     }
     boolean result = false;
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     int tagIndex = 0;
     int maxTags = tags.size();
     while (tagIndex < maxTags) {
@@ -165,7 +165,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
 
         // Create error
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(), beginIndex, endIndex);
+            analysis.getPage(), beginIndex, endIndex);
         boolean automatic = false;
         if (allPunctuations.equals(".") &&
             (!punctuationFoundAfter || punctuationAfter.equals("."))) {

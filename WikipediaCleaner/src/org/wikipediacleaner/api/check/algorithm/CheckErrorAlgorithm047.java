@@ -30,43 +30,43 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyze contents from the beginning
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     int maxLength = contents.length();
     int currentIndex = contents.indexOf("}}");
     boolean result = false;
     while (currentIndex > 0) {
       boolean shouldCount = true;
-      if ((pageAnalysis.isInComment(currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
-          (pageAnalysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null) ||
-          (pageAnalysis.isInCategory(currentIndex) != null) ||
-          (pageAnalysis.isInTag(currentIndex) != null)) {
+      if ((analysis.isInComment(currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_MATH, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SCORE, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SOURCE, currentIndex) != null) ||
+          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT, currentIndex) != null) ||
+          (analysis.isInCategory(currentIndex) != null) ||
+          (analysis.isInTag(currentIndex) != null)) {
         shouldCount = false;
       }
       if (shouldCount) {
-        PageElementTemplate template = pageAnalysis.isInTemplate(currentIndex);
+        PageElementTemplate template = analysis.isInTemplate(currentIndex);
         if ((template != null) && (template.getEndIndex() == currentIndex + 2)) {
           shouldCount = false;
         }
       }
       if (shouldCount) {
-        PageElementFunction function = pageAnalysis.isInFunction(currentIndex);
+        PageElementFunction function = analysis.isInFunction(currentIndex);
         if ((function != null) && (function.getEndIndex() == currentIndex + 2)) {
           shouldCount = false;
         }
@@ -92,7 +92,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
           } else if (tmpChar == '{') {
             if ((tmpIndex == 0) || (contents.charAt(tmpIndex - 1) != '{')) {
               CheckErrorResult errorResult = createCheckErrorResult(
-                  pageAnalysis.getPage(), tmpIndex, currentIndex + 2);
+                  analysis.getPage(), tmpIndex, currentIndex + 2);
               errorResult.addReplacement("{" + contents.substring(tmpIndex, currentIndex + 2));
               errors.add(errorResult);
               result = true;
@@ -105,7 +105,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
               firstChar--;
             }
             CheckErrorResult errorResult = createCheckErrorResult(
-                pageAnalysis.getPage(), firstChar, currentIndex + 2);
+                analysis.getPage(), firstChar, currentIndex + 2);
             errorResult.addReplacement("{{" + contents.substring(tmpIndex + 1, currentIndex + 2));
             errorResult.addReplacement("[[" + contents.substring(tmpIndex + 1, currentIndex) + "]]");
             errors.add(errorResult);
@@ -119,7 +119,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
         // Default
         if (!errorReported) {
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), currentIndex, currentIndex + 2);
+              analysis.getPage(), currentIndex, currentIndex + 2);
           errorResult.addReplacement("", GT._("Delete"));
           errors.add(errorResult);
           result = true;

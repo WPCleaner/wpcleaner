@@ -37,22 +37,22 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
-    Namespace categoryNamespace = pageAnalysis.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
+    Namespace categoryNamespace = analysis.getWikiConfiguration().getNamespace(Namespace.CATEGORY);
     if (categoryNamespace == null) {
       return false;
     }
-    Collection<PageElementCategory> categories = pageAnalysis.getCategories();
+    Collection<PageElementCategory> categories = analysis.getCategories();
     if (categories == null) {
       return false;
     }
@@ -91,7 +91,7 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(), category.getBeginIndex(), category.getEndIndex());
+            analysis.getPage(), category.getBeginIndex(), category.getEndIndex());
         if (categorySort != null) {
           errorResult.addReplacement(
               "[[" + categoryNamespace.getTitle() + ":" + categoryName + "|" + categorySort + "]]");

@@ -91,22 +91,22 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Check each character from the beginning
     boolean result = false;
     int currentIndex = 0;
-    String contents = pageAnalysis.getContents();
+    String contents = analysis.getContents();
     while (currentIndex < contents.length()) {
       boolean shouldCheck = true;
       int nextIndex = currentIndex + 1;
@@ -128,7 +128,7 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
 
       // Check if inside a comment
       if (shouldCheck) {
-        PageElementComment comment = pageAnalysis.isInComment(currentIndex);
+        PageElementComment comment = analysis.isInComment(currentIndex);
         if (comment != null) {
           nextIndex = comment.getEndIndex();
           shouldCheck = false;
@@ -139,7 +139,7 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
       if (shouldCheck) {
         for (String tagName : exceptTags) {
           if (shouldCheck) {
-            PageElementTag tag = pageAnalysis.getSurroundingTag(tagName, currentIndex);
+            PageElementTag tag = analysis.getSurroundingTag(tagName, currentIndex);
             if (tag != null) {
               nextIndex = tag.getCompleteEndIndex();
               shouldCheck  = false;
@@ -154,7 +154,7 @@ public class CheckErrorAlgorithm056 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), currentIndex, currentIndex + arrowLen);
+              analysis.getPage(), currentIndex, currentIndex + arrowLen);
           for (int i = 1; i < arrows.length; i++) {
             errorResult.addReplacement(arrows[i]);
           }

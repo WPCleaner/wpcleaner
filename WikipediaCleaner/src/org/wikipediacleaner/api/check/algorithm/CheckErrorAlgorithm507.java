@@ -29,20 +29,20 @@ public class CheckErrorAlgorithm507 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyze each gallery tag
-    List<PageElementTag> galleryTags = pageAnalysis.getTags(PageElementTag.TAG_WIKI_GALLERY);
+    List<PageElementTag> galleryTags = analysis.getTags(PageElementTag.TAG_WIKI_GALLERY);
     boolean result = false;
     for (PageElementTag galleryTag : galleryTags) {
       if (!galleryTag.isFullTag() && !galleryTag.isEndTag()) {
@@ -56,7 +56,7 @@ public class CheckErrorAlgorithm507 extends CheckErrorAlgorithmBase {
           result = true;
 
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), galleryTag.getBeginIndex(), galleryTag.getEndIndex());
+              analysis.getPage(), galleryTag.getBeginIndex(), galleryTag.getEndIndex());
           errors.add(errorResult);
         }
       }

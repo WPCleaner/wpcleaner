@@ -28,20 +28,20 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Searching for last headline
-    Collection<PageElementTitle> titles = pageAnalysis.getTitles();
+    Collection<PageElementTitle> titles = analysis.getTitles();
     if ((titles == null) || (titles.isEmpty())) {
       return false;
     }
@@ -57,14 +57,14 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
 
     // Checking every category
     boolean result = false;
-    for (PageElementCategory category : pageAnalysis.getCategories()) {
+    for (PageElementCategory category : analysis.getCategories()) {
       if (category.getBeginIndex() < title.getBeginIndex()) {
         if (errors == null) {
           return true;
         }
         result = true;
         CheckErrorResult errorResult = createCheckErrorResult(
-            pageAnalysis.getPage(),
+            analysis.getPage(),
             category.getBeginIndex(),
             category.getEndIndex());
         String categoryName = category.getName();

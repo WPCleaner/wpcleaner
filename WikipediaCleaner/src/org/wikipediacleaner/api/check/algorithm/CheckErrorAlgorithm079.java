@@ -42,31 +42,31 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     boolean result = false;
-    Collection<PageElementExternalLink> links = pageAnalysis.getExternalLinks();
-    String contents = pageAnalysis.getContents();
+    Collection<PageElementExternalLink> links = analysis.getExternalLinks();
+    String contents = analysis.getContents();
     for (PageElementExternalLink link : links) {
       String text = link.getText();
       if ((text == null) || (text.trim().length() == 0)) {
         boolean hasError = false;
-        PageElementTag refTag = pageAnalysis.getSurroundingTag(
+        PageElementTag refTag = analysis.getSurroundingTag(
             PageElementTag.TAG_WIKI_REF, link.getBeginIndex());
         if (link.hasSquare()) {
           hasError = true;
         } else {
-          PageElementTemplate template = pageAnalysis.isInTemplate(link.getBeginIndex());
+          PageElementTemplate template = analysis.isInTemplate(link.getBeginIndex());
           if (template == null) {
             if (refTag != null) {
               hasError = true;
@@ -97,7 +97,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
             }
           }
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), link.getBeginIndex(), endIndex);
+              analysis.getPage(), link.getBeginIndex(), endIndex);
           errorResult.addPossibleAction(
               GT._("Add a description..."),
               new AddTextActionProvider(

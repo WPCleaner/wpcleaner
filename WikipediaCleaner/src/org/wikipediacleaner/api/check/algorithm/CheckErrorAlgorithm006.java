@@ -39,25 +39,25 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Analyzing the text from the beginning
-    List<PageElementFunction> tags = pageAnalysis.getDefaultSorts();
+    List<PageElementFunction> tags = analysis.getDefaultSorts();
     if ((tags == null) || (tags.isEmpty())) {
       return false;
     }
     boolean result = false;
-    EnumWikipedia wiki = pageAnalysis.getWikipedia();
+    EnumWikipedia wiki = analysis.getWikipedia();
     for (PageElementFunction tag : tags) {
       if (tag != null) {
         boolean characterFound = false;
@@ -92,7 +92,7 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), tag.getBeginIndex(), tag.getEndIndex());
+              analysis.getPage(), tag.getBeginIndex(), tag.getEndIndex());
           if (characterReplaced) {
             errorResult.addReplacement(PageElementFunction.createFunction(tag.getFunctionName(), text));
           } else {

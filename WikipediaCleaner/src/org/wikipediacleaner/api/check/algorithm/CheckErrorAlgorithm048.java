@@ -40,36 +40,36 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     boolean result = false;
-    Collection<PageElementInternalLink> links = pageAnalysis.getInternalLinks();
-    String pageTitle = pageAnalysis.getPage().getTitle();
-    String contents = pageAnalysis.getContents();
+    Collection<PageElementInternalLink> links = analysis.getInternalLinks();
+    String pageTitle = analysis.getPage().getTitle();
+    String contents = analysis.getContents();
     for (PageElementInternalLink link : links) {
       if (Page.areSameTitle(pageTitle, link.getFullLink())) {
         if (errors == null) {
           return true;
         }
         result = true;
-        PageElementTag tagImagemap = pageAnalysis.getSurroundingTag(
+        PageElementTag tagImagemap = analysis.getSurroundingTag(
             PageElementTag.TAG_WIKI_IMAGEMAP, link.getBeginIndex());
         if (tagImagemap != null) {
           int previousCR = getPreviousCR(contents, link.getBeginIndex());
           int nextCR = getNextCR(contents, link.getEndIndex());
           nextCR = Math.min(nextCR, tagImagemap.getMatchingTag().getBeginIndex());
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(), previousCR, nextCR);
+              analysis.getPage(), previousCR, nextCR);
           if ((previousCR > tagImagemap.getEndIndex()) &&
               (contents.charAt(nextCR) == '\n')) {
             errorResult.addReplacement("", GT._("Delete"));
@@ -77,7 +77,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
           errors.add(errorResult);
         } else {
           CheckErrorResult errorResult = createCheckErrorResult(
-              pageAnalysis.getPage(),
+              analysis.getPage(),
               link.getBeginIndex(),
               link.getEndIndex());
           errorResult.addReplacement(link.getDisplayedText());

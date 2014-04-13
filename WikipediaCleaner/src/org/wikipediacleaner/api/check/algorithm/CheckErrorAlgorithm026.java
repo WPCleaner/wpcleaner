@@ -29,20 +29,20 @@ public class CheckErrorAlgorithm026 extends CheckErrorAlgorithmBase {
   /**
    * Analyze a page to check if errors are present.
    * 
-   * @param pageAnalysis Page analysis.
+   * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   public boolean analyze(
-      PageAnalysis pageAnalysis,
+      PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (pageAnalysis == null) {
+    if (analysis == null) {
       return false;
     }
 
     // Retrieve all <b> tags
-    List<PageElementTag> bTags = pageAnalysis.getTags(PageElementTag.TAG_HTML_B);
+    List<PageElementTag> bTags = analysis.getTags(PageElementTag.TAG_HTML_B);
     boolean result = false;
     for (PageElementTag bTag : bTags) {
 
@@ -66,10 +66,10 @@ public class CheckErrorAlgorithm026 extends CheckErrorAlgorithmBase {
         result = true;
         if (!bTag.isFullTag() && bTag.isComplete()) {
           CheckErrorResult error = createCheckErrorResult(
-              pageAnalysis.getPage(),
+              analysis.getPage(),
               bTag.getCompleteBeginIndex(),
               bTag.getCompleteEndIndex());
-          String text = pageAnalysis.getContents().substring(
+          String text = analysis.getContents().substring(
               bTag.getValueBeginIndex(),
               bTag.getValueEndIndex());
           if ((text != null) && (text.trim().length() > 0)) {
@@ -89,7 +89,7 @@ public class CheckErrorAlgorithm026 extends CheckErrorAlgorithmBase {
           errors.add(error);
         } else {
           CheckErrorResult error = createCheckErrorResult(
-              pageAnalysis.getPage(), bTag.getBeginIndex(), bTag.getEndIndex());
+              analysis.getPage(), bTag.getBeginIndex(), bTag.getEndIndex());
           error.addReplacement("", GT._("Delete"));
           errors.add(error);
         }
