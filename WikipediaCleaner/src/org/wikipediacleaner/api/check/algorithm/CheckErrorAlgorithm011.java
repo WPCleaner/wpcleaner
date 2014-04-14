@@ -122,7 +122,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
     //htmlCharacters.add(HtmlCharacters.SYMBOL_EM_DASH);                      // &mdash;
     htmlCharacters.add(HtmlCharacters.SYMBOL_MICRO);                        // &micro;
     htmlCharacters.add(HtmlCharacters.SYMBOL_MIDDLE_DOT);                   // &middot;
-    htmlCharacters.add(HtmlCharacters.SYMBOL_MINUS);                        // &minus;
+    //htmlCharacters.add(HtmlCharacters.SYMBOL_MINUS);                        // &minus;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_MU);                     // &mu;
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_MU);                   // &Mu;
     //htmlCharacters.add(HtmlCharacters.SYMBOL_EN_DASH);                      // &ndash;
@@ -163,8 +163,8 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
     htmlCharacters.add(HtmlCharacters.LETTER_PI_SYMBOL);                    // &piv;
     htmlCharacters.add(HtmlCharacters.SYMBOL_PLUS_OR_MINUS);                // &plusm;
     htmlCharacters.add(HtmlCharacters.SYMBOL_POUND);                        // &pound;
-    htmlCharacters.add(HtmlCharacters.SYMBOL_MINUTES);                      // &prime;
-    htmlCharacters.add(HtmlCharacters.SYMBOL_SECONDS);                      // &Prime;
+    //htmlCharacters.add(HtmlCharacters.SYMBOL_MINUTES);                      // &prime;
+    //htmlCharacters.add(HtmlCharacters.SYMBOL_SECONDS);                      // &Prime;
     htmlCharacters.add(HtmlCharacters.SYMBOL_PROD);                         // &prod;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_PSI);                    // &psi;
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_PSI);                  // &Psi;
@@ -200,7 +200,7 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_THORN);                  // &thorn;
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_THORN);                // &THORN;
     htmlCharacters.add(HtmlCharacters.SYMBOL_SMALL_TILDE);                  // &tilde;
-    htmlCharacters.add(HtmlCharacters.SYMBOL_MULTIPLICATION);               // &times;
+    //htmlCharacters.add(HtmlCharacters.SYMBOL_MULTIPLICATION);               // &times;
     htmlCharacters.add(HtmlCharacters.SYMBOL_TRADEMARK);                    // &trade;
     htmlCharacters.add(HtmlCharacters.LETTER_SMALL_U_ACUTE_ACCENT);         // &uacute;
     htmlCharacters.add(HtmlCharacters.LETTER_CAPITAL_U_ACUTE_ACCENT);       // &Uacute;
