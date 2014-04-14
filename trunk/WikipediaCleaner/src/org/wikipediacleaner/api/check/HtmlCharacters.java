@@ -109,7 +109,7 @@ public enum HtmlCharacters {
   SYMBOL_RIGHT_CURLY_BRACE(125, null, '}', false, false),
   SYMBOL_TILDE(126, null, '~', false, false),
   SYMBOL_NON_BREAKING_SPACE(160, "nbsp", '\u00A0', false, false),
-  SYMBOL_INVERTED_EXCLAMATION_MARK(161, "iexl", '¡'),
+  SYMBOL_INVERTED_EXCLAMATION_MARK(161, "iexcl", '¡'),
   SYMBOL_CENT(162, "cent", '¢'),
   SYMBOL_POUND(163, "pound", '£'),
   SYMBOL_CURRENCY(164, "curren", '¤'),
@@ -354,7 +354,7 @@ public enum HtmlCharacters {
   SYMBOL_SPADE(9824, "spades", '♠'),
   SYMBOL_CLUB(9827, "clubs", '♣'),
   SYMBOL_HEART(9829, "hearts", '♥'),
-  SYMBOL_DIAMONG(9830, "diams", '♦');
+  SYMBOL_DIAMOND(9830, "diams", '♦');
 
   /**
    * Entity number.
