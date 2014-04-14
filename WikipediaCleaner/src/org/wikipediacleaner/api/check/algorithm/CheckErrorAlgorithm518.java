@@ -109,8 +109,13 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
           errorResult = createCheckErrorResult(
               analysis, beginIndex, endIndex);
           if (link != null) {
+            String displayed = link.getDisplayedTextNotTrimmed();
+            if (displayed.endsWith(" ")) {
+              errorResult.addReplacement(PageElementInternalLink.createInternalLink(
+                  link.getFullLink(), displayed.trim()) + " " + textAfter);
+            }
             errorResult.addReplacement(PageElementInternalLink.createInternalLink(
-                link.getFullLink(), link.getDisplayedText() + textAfter));
+                link.getFullLink(), displayed + textAfter));
           }
           errorResult.addReplacement(textBefore + " " + textAfter);
           errorResult.addReplacement(textBefore + textAfter);
