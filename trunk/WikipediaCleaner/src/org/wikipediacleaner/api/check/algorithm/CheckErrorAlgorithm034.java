@@ -141,7 +141,8 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
               }
               if ((analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_GALLERY) == null) &&
                   (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_INCLUDEONLY) == null) &&
-                  (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_REF) == null)) {
+                  (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_REF) == null) &&
+                  (analysis.isInTag(currentIndex, PageElementTag.TAG_WIKI_TIMELINE) == null)) {
                 errorResult.addReplacement(
                     "{{subst:" +
                     contents.substring(function.getBeginIndex() + 2, function.getEndIndex()));
