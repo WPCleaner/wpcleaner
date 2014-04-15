@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-13 09:58+0200\n"
+"POT-Creation-Date: 2014-04-15 17:48+0200\n"
 "PO-Revision-Date: 2013-11-20 10:51+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -166,7 +166,7 @@ msgstr "Reemplazar con {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:129
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:172
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:123
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:75
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:76
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:126
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm098.java:59
@@ -327,11 +327,11 @@ msgstr "Agregar DEFAULTSORT"
 msgid "Fix all bold headlines"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:32
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:33
 msgid "Remove all links to title (first in bold)"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:33
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:34
 msgid "Remove all links to title"
 msgstr "Eliminar todos los enlaces al artículo"
 
@@ -346,11 +346,6 @@ msgstr "Eliminar etiquetas <small>"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm057.java:30
 msgid "Fix all titles"
 msgstr "Reparar todo los títulos"
-
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm060.java:93
-#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:228
-msgid "Remove"
-msgstr "Eliminar"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm061.java:234
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm067.java:209
@@ -587,15 +582,15 @@ msgstr "Enlaces compactos"
 msgid "Compact link"
 msgstr "Enlace compacto"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:192
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:197
 msgid "A template that can be used instead of an apostrophe."
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:195
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm518.java:200
 msgid "A template that can be used instead of an asterisk."
 msgstr "Una plantilla que puede usarse en lugar de un asterisco."
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:344
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm521.java:343
 msgid "A list of templates and parameters in which format should be checked"
 msgstr ""
 
@@ -982,6 +977,10 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:110
 msgid "Add"
 msgstr "Añadir"
+
+#: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:228
+msgid "Remove"
+msgstr "Eliminar"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:234
 msgid "Modify"
