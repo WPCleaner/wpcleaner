@@ -14,7 +14,6 @@ import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -90,7 +89,7 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
                     analysis,
                     paramValueOffset + currentPos,
                     paramValueOffset + currentIndex);
-                errorResult.addReplacement("", GT._("Remove"));
+                errorResult.addReplacement("");
                 errors.add(errorResult);
               }
             }
