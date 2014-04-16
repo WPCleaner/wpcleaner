@@ -46,11 +46,21 @@ public class CheckErrorAlgorithm029 extends CheckErrorAlgorithmBase {
     boolean result = false;
     int index = 0;
     while (index < galleryTags.size()) {
+
+      // Check for error
       PageElementTag galleryTag = galleryTags.get(index);
+      boolean found = false;
+      if (galleryTag.isFullTag() || !galleryTag.isComplete()) {
+        found = true;
+      }
       int beginIndex = galleryTag.getBeginIndex();
-      if (!galleryTag.isFullTag() &&
-          !galleryTag.isComplete() &&
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) == null)) {
+      if (found) {
+        if (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) != null) {
+          found = false;
+        }
+      }
+
+      if (found) {
         if (errors == null) {
           return true;
         }
