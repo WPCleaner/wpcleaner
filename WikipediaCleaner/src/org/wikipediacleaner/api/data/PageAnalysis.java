@@ -496,6 +496,7 @@ public class PageAnalysis {
       }
       thirdLevelAnalysis();
       isbns = PageElementISBN.analyzePage(this);
+      areas.addISBN(isbns);
     }
   }
 

@@ -182,6 +182,15 @@ public class PageElementAreas {
   }
 
   /**
+   * Add ISBNs to non wiki text areas.
+   * 
+   * @param isbns List of ISBNs.
+   */
+  public void addISBN(List<PageElementISBN> isbns) {
+    addPageElements(isbns);
+  }
+
+  /**
    * Add templates to non wiki text areas.
    * 
    * @param templates List of templates.
