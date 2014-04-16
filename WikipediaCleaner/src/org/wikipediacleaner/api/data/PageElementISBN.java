@@ -236,10 +236,6 @@ public class PageElementISBN extends PageElement {
             ok = false;
           }
         }
-        if ((ignoreCase && "ISBN10".equalsIgnoreCase(paramName)) ||
-            ("ISBN10".equals(paramName))) {
-          correct = false;
-        }
         int delta = template.getParameterValueOffset(paramNum);
         beginIndex += delta;
         endIndex += delta;

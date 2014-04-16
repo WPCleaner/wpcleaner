@@ -13,6 +13,7 @@ import java.util.List;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementISBN;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 
 
 /**
@@ -59,6 +60,24 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
           }
         }
         errors.add(errorResult);
+      }
+    }
+
+    // Analyze each template parameter
+    List<PageElementTemplate> templates = analysis.getTemplates();
+    for (PageElementTemplate template : templates) {
+      for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+        if ("ISBN10".equalsIgnoreCase(template.getParameterName(paramNum))) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          int begin = template.getParameterNameOffset(paramNum);
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, begin,
+              begin + template.getParameterName(paramNum).length());
+          errors.add(errorResult);
+        }
       }
     }
 
