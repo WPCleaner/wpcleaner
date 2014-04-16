@@ -40,7 +40,7 @@ public class Contributions {
     boolean contributions = false;
     StringBuilder buffer = new StringBuilder();
     buffer.append(GT._("You have done the following contributions on \"{0}\":", wikipedia.toString()));
-    buffer.append("\n");
+    buffer.append("\n<br/>");
     if (pages > 0) {
       contributions = true;
       buffer.append("    → ");
@@ -48,7 +48,7 @@ public class Contributions {
           "You have edited {0} page.",
           "You have edited {0} pages.",
           pages, Integer.toString(pages)));
-      buffer.append("\n");
+      buffer.append("\n<br/>");
     }
     if (dabLinks > 0) {
       contributions = true;
@@ -57,7 +57,7 @@ public class Contributions {
           "You have fixed {0} link to disambiguation pages.",
           "You have fixed {0} links to disambiguation pages.",
           dabLinks, Integer.toString(dabLinks)));
-      buffer.append("\n");
+      buffer.append("\n<br/>");
     }
     for (int errorNumber = 0; errorNumber < checkWikiErrors.length; errorNumber++) {
       if (checkWikiErrors[errorNumber] > 0) {
@@ -71,8 +71,8 @@ public class Contributions {
             checkWikiErrors[errorNumber],
             new Object[] {
                 Integer.toString(checkWikiErrors[errorNumber]),
-                errorConfiguration.getShortDescriptionReplaced() } ));
-        buffer.append("\n");
+                errorConfiguration.getShortDescription() } ));
+        buffer.append("\n<br/>");
       }
     }
     if (contributions) {
