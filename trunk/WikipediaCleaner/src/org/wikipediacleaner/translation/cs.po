@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-15 17:48+0200\n"
+"POT-Creation-Date: 2014-04-18 17:31+0200\n"
 "PO-Revision-Date: 2014-04-12 09:14+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1432,13 +1432,13 @@ msgid "Demo"
 msgstr "Demo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:462
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
-msgid "Logout"
-msgstr "Odhlásit"
+msgid "Wiki logout"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:468
-msgid "Disconnect"
-msgstr ""
+#, fuzzy
+msgid "WPC logout"
+msgstr "Odhlásit"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:485
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:145
@@ -3130,6 +3130,10 @@ msgstr "Obnovit výchozí nastavení"
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:73
 msgid "Shortcut options (restart needed)"
 msgstr "Nastavení klávesových zkratek (vyžadován restart)"
+
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
+msgid "Logout"
+msgstr "Odhlásit"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:229
 msgid "Press key for shortcut or ESC to cancel"

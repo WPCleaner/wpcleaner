@@ -459,13 +459,13 @@ public class MainWindow
     buttonToolbar.add(buttonDemo);
     buttonToolbar.addSeparator();
     buttonLogout = Utilities.createJButton(
-        GT._("Logout"),
+        GT._("Wiki logout"),
         ConfigurationValueShortcut.LOGOUT);
     buttonLogout.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLogout"));
     buttonToolbar.add(buttonLogout);
     buttonDisconnect = Utilities.createJButton(
-        GT._("Disconnect"), null);
+        GT._("WPC logout"), null);
     buttonDisconnect.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionDisconnect"));
     buttonToolbar.add(buttonDisconnect);
