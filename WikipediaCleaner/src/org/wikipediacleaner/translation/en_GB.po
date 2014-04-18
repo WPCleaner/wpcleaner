@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-15 17:48+0200\n"
+"POT-Creation-Date: 2014-04-18 17:31+0200\n"
 "PO-Revision-Date: 2014-04-13 04:23+0000\n"
 "Last-Translator: Anthony Harrington <untaintableangel@ubuntu.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -1431,13 +1431,13 @@ msgid "Demo"
 msgstr "Demo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:462
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
-msgid "Logout"
-msgstr "Logout"
+msgid "Wiki logout"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:468
-msgid "Disconnect"
-msgstr "Disconnect"
+#, fuzzy
+msgid "WPC logout"
+msgstr "Logout"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:485
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:145
@@ -3111,6 +3111,10 @@ msgstr "Restore defaults"
 msgid "Shortcut options (restart needed)"
 msgstr "Shortcut options (restart needed)"
 
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
+msgid "Logout"
+msgstr "Logout"
+
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:229
 msgid "Press key for shortcut or ESC to cancel"
 msgstr "Press key for shortcut or ESC to cancel"
@@ -3338,6 +3342,9 @@ msgstr "A reference name cannot contain any of these characters: {0}"
 #, java-format
 msgid "The value can''t contain any of these characters: {0}"
 msgstr "The value cannot contain any of these characters: {0}"
+
+#~ msgid "Disconnect"
+#~ msgstr "Disconnect"
 
 #~ msgid "Error {0} detected: Waiting and retrying"
 #~ msgstr "Error {0} detected: Waiting and retrying"

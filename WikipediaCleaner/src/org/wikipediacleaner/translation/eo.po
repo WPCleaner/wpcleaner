@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-15 17:48+0200\n"
+"POT-Creation-Date: 2014-04-18 17:31+0200\n"
 "PO-Revision-Date: 2013-07-06 19:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
@@ -1384,12 +1384,11 @@ msgid "Demo"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:462
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
-msgid "Logout"
+msgid "Wiki logout"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:468
-msgid "Disconnect"
+msgid "WPC logout"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:485
@@ -3044,6 +3043,10 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:73
 msgid "Shortcut options (restart needed)"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
+msgid "Logout"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:229

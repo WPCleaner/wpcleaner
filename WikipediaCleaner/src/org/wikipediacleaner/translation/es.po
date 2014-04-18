@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-15 17:48+0200\n"
+"POT-Creation-Date: 2014-04-18 17:31+0200\n"
 "PO-Revision-Date: 2013-11-20 10:51+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -1422,13 +1422,13 @@ msgid "Demo"
 msgstr "Demostración"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:462
-#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
-msgid "Logout"
-msgstr "Cerrar sesión"
+msgid "Wiki logout"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:468
-msgid "Disconnect"
-msgstr ""
+#, fuzzy
+msgid "WPC logout"
+msgstr "Cerrar sesión"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:485
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:145
@@ -3133,6 +3133,10 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:73
 msgid "Shortcut options (restart needed)"
 msgstr ""
+
+#: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
+msgid "Logout"
+msgstr "Cerrar sesión"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:229
 msgid "Press key for shortcut or ESC to cancel"
