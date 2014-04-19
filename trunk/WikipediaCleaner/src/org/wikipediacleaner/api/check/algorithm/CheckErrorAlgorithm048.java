@@ -10,7 +10,6 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
@@ -58,7 +57,18 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     String pageTitle = analysis.getPage().getTitle();
     String contents = analysis.getContents();
     for (PageElementInternalLink link : links) {
-      if (Page.areSameTitle(pageTitle, link.getFullLink())) {
+      // Check if it is an error
+      boolean errorFound = Page.areSameTitle(pageTitle, link.getFullLink());
+      if (errorFound) {
+        PageElementTag tagIncludeOnly = analysis.getSurroundingTag(
+            PageElementTag.TAG_WIKI_INCLUDEONLY, link.getBeginIndex());
+        if (tagIncludeOnly != null) {
+          errorFound = false;
+        }
+      }
+
+      // Report error
+      if (errorFound) {
         if (errors == null) {
           return true;
         }
@@ -77,16 +87,11 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
           }
           errors.add(errorResult);
         } else {
-          PageElementTag tagIncludeOnly = analysis.getSurroundingTag(
-              PageElementTag.TAG_WIKI_INCLUDEONLY, link.getBeginIndex());
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis,
-              link.getBeginIndex(), link.getEndIndex(),
-              (tagIncludeOnly != null) ? ErrorLevel.WARNING : ErrorLevel.ERROR);
-          if (tagIncludeOnly == null) {
-            errorResult.addReplacement(link.getDisplayedText());
-            errorResult.addReplacement("'''" + link.getDisplayedText() + "'''");
-          }
+              link.getBeginIndex(), link.getEndIndex());
+          errorResult.addReplacement(link.getDisplayedText());
+          errorResult.addReplacement("'''" + link.getDisplayedText() + "'''");
           errors.add(errorResult);
         }
       }
