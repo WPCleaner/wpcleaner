@@ -112,7 +112,7 @@ public class PageElementImage extends PageElement {
         if (element.length() > 0) {
           MagicWord magicWord = wikiConfiguration.getImgMagicWord(element);
           Parameter param = new Parameter(
-              pipeIndex + 1 - beginIndex, tmpIndex - beginIndex,
+              pipeIndex + 1 - index, tmpIndex - index,
               element, magicWord);
           parameters.add(param);
         }
@@ -127,7 +127,7 @@ public class PageElementImage extends PageElement {
         if (element.length() > 0) {
           MagicWord magicWord = wikiConfiguration.getImgMagicWord(element);
           Parameter param = new Parameter(
-              pipeIndex + 1 - beginIndex, tmpIndex - beginIndex,
+              pipeIndex + 1 - index, tmpIndex - index,
               element, magicWord);
           parameters.add(param);
         }
