@@ -143,6 +143,13 @@ public class PageElementTitle extends PageElement {
   }
 
   /**
+   * @return Title not trimmed.
+   */
+  public String getTitleNotTrimmed() {
+    return titleNotTrimmed;
+  }
+
+  /**
    * @return Text after title.
    */
   public String getAfterTitle() {
@@ -183,6 +190,7 @@ public class PageElementTitle extends PageElement {
   /**
    * @param level Title level.
    * @param title Title text.
+   * @param after Extra text after title.
    * @return Textual representation of the title.
    */
   public static String createTitle(int level, String title, String after) {
@@ -194,6 +202,30 @@ public class PageElementTitle extends PageElement {
     if (title != null) {
       sb.append(title.trim());
       sb.append(' ');
+    }
+    for (int i = 0; i < level; i++) {
+      sb.append('=');
+    }
+    if ((after != null) && (after.trim().length() > 0)) {
+      sb.append(' ');
+      sb.append(after.trim());
+    }
+    return sb.toString();
+  }
+
+  /**
+   * @param level Title level.
+   * @param title Title text.
+   * @param after Extra text after title.
+   * @return Textual representation of the title.
+   */
+  public static String createUntrimmedTitle(int level, String title, String after) {
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < level; i++) {
+      sb.append('=');
+    }
+    if (title != null) {
+      sb.append(title);
     }
     for (int i = 0; i < level; i++) {
       sb.append('=');
