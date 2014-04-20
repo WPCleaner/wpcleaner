@@ -70,7 +70,7 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
         }
 
         // Register error
-        if (countBold > 1) {
+        if (countBold > 0) {
           if (errors == null) {
             return true;
           }
