@@ -249,8 +249,9 @@ public abstract class MWPaneFormatter {
         style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
       } else if (element instanceof PageElementTag) {
         PageElementTag tag = (PageElementTag) element;
-        if (PageElementTag.TAG_WIKI_REF.equals(tag.getName()) ||
-            PageElementTag.TAG_WIKI_REFERENCES.equals(tag.getName())) {
+        String name = tag.getNormalizedName();
+        if (PageElementTag.TAG_WIKI_REF.equals(name) ||
+            PageElementTag.TAG_WIKI_REFERENCES.equals(name)) {
           style = doc.getStyle(ConfigurationValueStyle.REFERENCE.getName());
           if (style != null) {
             endIndex = tag.getCompleteEndIndex();
