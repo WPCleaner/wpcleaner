@@ -66,6 +66,7 @@ public class AutomaticFormatter {
     if (!config.getBoolean(WPCConfigurationBoolean.AUTO_ACTIVE)) {
       return contents;
     }
+    contents = fixSpaceAroundTitle(page, contents);
     contents = fixLinkDefaultsortCategory(page, contents);
     contents = fixLangLinksAfterCategory(page, contents);
     contents = fixCrBeforeCategory(page, contents);
@@ -568,6 +569,88 @@ public class AutomaticFormatter {
     }
     return contents;
   }
+
+  /**
+   * Auto formatting options: number of space characters around titles.
+   * 
+   * @param page Page.
+   * @param contents Current contents.
+   * @return New contents.
+   */
+  public static String fixSpaceAroundTitle(Page page, String contents) {
+
+    // Check configuration
+    WPCConfiguration config = page.getWikipedia().getConfiguration();
+    String option = config.getString(WPCConfigurationString.AUTO_SPACE_AROUND_TITLE);
+    if (!isValidCountOption(option)) {
+      return contents;
+    }
+    int min = getMinCountOption(option);
+    int max = getMaxCountOption(option);
+    if ((min <= 0) && (max == Integer.MAX_VALUE)) {
+      return contents;
+    }
+    PageAnalysis analysis = page.getAnalysis(contents, true);
+
+    // Analyze each title
+    List<PageElementTitle> titles = analysis.getTitles();
+    if ((titles == null) || (titles.isEmpty())) {
+      return contents;
+    }
+    StringBuilder sb = new StringBuilder();
+    int lastIndex = 0;
+    for (PageElementTitle title : titles) {
+      String titleValue = title.getTitleNotTrimmed();
+      String titleAfter = title.getAfterTitle();
+      if ((titleValue != null) &&
+          ((titleAfter == null) || (titleAfter.equals(""))) &&
+          (title.getFirstLevel() == title.getSecondLevel())) {
+
+        // Count space characters
+        int nbSpaceBefore = 0;
+        while ((nbSpaceBefore < titleValue.length()) &&
+               (titleValue.charAt(nbSpaceBefore) == ' ')) {
+          nbSpaceBefore++;
+        }
+        int nbSpaceAfter = 0;
+        while ((nbSpaceAfter < titleValue.length()) &&
+               (titleValue.charAt(titleValue.length() - nbSpaceAfter - 1) == ' ')) {
+          nbSpaceAfter++;
+        }
+
+        // Update title if needed
+        if ((nbSpaceBefore < min) || (nbSpaceBefore > max) ||
+            (nbSpaceAfter < min) || (nbSpaceAfter > max)) {
+          if (lastIndex < title.getBeginIndex()) {
+            sb.append(contents.substring(lastIndex, title.getBeginIndex()));
+            lastIndex = title.getBeginIndex();
+          }
+          nbSpaceBefore = normalizeValue(nbSpaceBefore, min, max);
+          nbSpaceAfter = normalizeValue(nbSpaceAfter, min, max);
+          StringBuilder newTitle = new StringBuilder();
+          for (int i = 0; i < nbSpaceBefore; i++) {
+            newTitle.append(' ');
+          }
+          newTitle.append(titleValue.trim());
+          for (int i = 0; i < nbSpaceAfter; i++) {
+            newTitle.append(' ');
+          }
+          sb.append(PageElementTitle.createUntrimmedTitle(title.getLevel(), newTitle.toString(), titleAfter));
+          lastIndex = title.getEndIndex();
+        }
+      }
+    }
+    if (lastIndex > 0) {
+      if (lastIndex < contents.length()) {
+        sb.append(contents.substring(lastIndex));
+      }
+      contents = sb.toString();
+    }
+
+    return contents;
+  }
+
+  // Utility functions
 
   /**
    * Insert characters.

@@ -19,6 +19,8 @@ public enum WPCConfigurationString {
   AUTO_CR_BETWEEN_CATEGORY("auto_cr_between_category", null, false, true, true),
   // Automatic formatting: number of carriage returns between default sort and categories
   AUTO_CR_DEFAULTSORT_CATEGORY("auto_cr_defaultsort_category", null, false, true, true),
+  // Automatic formatting: number of space characters around titles
+  AUTO_SPACE_AROUND_TITLE("auto_space_around_title", null, false, true, true),
   // Check Wiki comment
   CW_COMMENT("check_wiki_comment", null, false, true, false),
   // Check Wiki project page
