@@ -10,8 +10,11 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
+import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementImage.Parameter;
 
 
 /**
@@ -19,8 +22,6 @@ import org.wikipediacleaner.api.data.PageElementImage;
  * Error 65: Image description with break
  */
 public class CheckErrorAlgorithm065 extends CheckErrorAlgorithmBase {
-
-  private final static String[] possibleBreaks = { "<br>", "<br/>", "</br>", "<br />" };
 
   public CheckErrorAlgorithm065() {
     super("Image description with break");
@@ -47,36 +48,61 @@ public class CheckErrorAlgorithm065 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
+    String contents = analysis.getContents();
     for (PageElementImage image : images) {
-      String description = image.getDescription();
-      if (description != null) {
+      Parameter param = image.getDescriptionParameter();
+      if (param != null) {
+
+        // Check if error is present
         boolean breakFound = false;
+        boolean tagAfter = false;
         boolean shouldStop = false;
-        while ((description.length() > 0) && (!shouldStop)) {
+        int currentIndex = image.getBeginIndex() + param.getEndOffset() - 1;
+        int beginIndex = image.getBeginIndex() + param.getBeginOffset();
+        int beginError = currentIndex + 1;
+        int endError = currentIndex + 1;
+        while ((currentIndex > beginIndex) && (!shouldStop)) {
           shouldStop = true;
-          while ((description.length() > 0) &&
-                 (Character.isWhitespace(description.charAt(description.length() - 1)))) {
-            description = description.substring(0, description.length() - 1);
+          while ((currentIndex > beginIndex) &&
+                 (Character.isWhitespace(contents.charAt(currentIndex)))) {
+            if (!breakFound) {
+              endError = currentIndex;
+            }
+            currentIndex--;
           }
-          for (String possibleBreak : possibleBreaks) {
-            if (description.endsWith(possibleBreak)) {
-              breakFound = true;
-              shouldStop = false;
-              description = description.substring(
-                  0, description.length() - possibleBreak.length());
+          if (contents.charAt(currentIndex) == '>') {
+            PageElementTag tag = analysis.isInTag(currentIndex);
+            if (tag != null) {
+              String name = tag.getNormalizedName();
+              if (PageElementTag.TAG_HTML_BR.equals(name)) {
+                breakFound = true;
+                shouldStop = false;
+                beginError = tag.getBeginIndex();
+                currentIndex = beginError - 1;
+              } else if (!breakFound) {
+                if (PageElementTag.TAG_WIKI_MATH.equals(name)) {
+                  tagAfter = true;
+                  shouldStop = false;
+                  endError = tag.getCompleteBeginIndex();
+                  currentIndex = endError - 1;
+                }
+              }
             }
           }
         }
+
+        // Report error
         if (breakFound) {
           if (errors == null) {
             return true;
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis,
-              image.getBeginIndex(),
-              image.getEndIndex());
-          errorResult.addReplacement(image.getDescriptionReplacement(description));
+              analysis, beginError, endError,
+              (tagAfter ? ErrorLevel.WARNING : ErrorLevel.ERROR));
+          if (!tagAfter) {
+            errorResult.addReplacement("");
+          }
           errors.add(errorResult);
         }
       }
