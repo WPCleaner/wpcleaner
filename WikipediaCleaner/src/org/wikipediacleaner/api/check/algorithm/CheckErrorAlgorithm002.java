@@ -8,8 +8,10 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -48,6 +50,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    // Check for incorrect br tags
     boolean result = false;
     int currentIndex = 0;
     String contents = analysis.getContents();
@@ -107,7 +110,9 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               tmpIndex++;
               CheckErrorResult errorResult = createCheckErrorResult(
                   analysis, currentIndex, tmpIndex);
-              errorResult.addReplacement(PageElementTag.createTag(PageElementTag.TAG_HTML_BR, false, false));
+              errorResult.addReplacement(
+                  PageElementTag.createTag(PageElementTag.TAG_HTML_BR, false, false),
+                  true);
               errors.add(errorResult);
               nextIndex = tmpIndex;
             }
@@ -117,6 +122,40 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
 
       currentIndex = nextIndex;
     }
+
+    // Check for br tags with extra characters
+    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_HTML_BR);
+    for (PageElementTag tag : tags) {
+
+      // Check for extra characters before the br tag
+      boolean extra = false;
+      int beginIndex = tag.getBeginIndex();
+      while ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '<')) {
+        beginIndex--;
+        extra = true;
+      }
+
+      // Check for extra characters after the br tag
+      int endIndex = tag.getEndIndex();
+      while ((endIndex < contents.length()) && (contents.charAt(endIndex) == '>')) {
+        endIndex++;
+        extra  = true;
+      }
+
+      if (extra) {
+        if (errors == null) {
+          return true;
+        }
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, beginIndex, endIndex, ErrorLevel.WARNING);
+        errorResult.addReplacement(
+            PageElementTag.createTag(PageElementTag.TAG_HTML_BR, false, false),
+            false);
+        errors.add(errorResult);
+      }
+    }
+
     return result;
   }
 
@@ -149,6 +188,6 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-    return fixUsingFirstReplacement(fixName, analysis);
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
