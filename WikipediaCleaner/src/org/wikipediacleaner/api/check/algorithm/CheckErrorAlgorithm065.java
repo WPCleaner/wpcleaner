@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
@@ -39,6 +40,12 @@ public class CheckErrorAlgorithm065 extends CheckErrorAlgorithmBase {
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
     if (analysis == null) {
+      return false;
+    }
+
+    // Check that there are <br> tags in the text
+    List<PageElementTag> brTags = analysis.getTags(PageElementTag.TAG_HTML_BR);
+    if ((brTags == null) || (brTags.isEmpty())) {
       return false;
     }
 

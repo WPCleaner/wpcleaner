@@ -11,8 +11,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
-import org.wikipediacleaner.api.data.PageElementComment;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.gui.swing.component.MWPane;
@@ -51,89 +51,77 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Retrieve list of <br> tags
+    // Check that there are <br> tags in the text
     List<PageElementTag> brTags = analysis.getTags(PageElementTag.TAG_HTML_BR);
-    int brTagsSize = (brTags != null) ? brTags.size() : 0;
-    int currentBrTag = 0;
-    if ((brTags == null) || (brTagsSize == 0)) {
+    if ((brTags == null) || (brTags.isEmpty())) {
       return false;
     }
 
-    // Analyzing from the beginning
-    boolean errorFound = false;
-    String contents = analysis.getContents();
+    // Analyzing each template
+    boolean result = false;
     for (PageElementTemplate template : analysis.getTemplates()) {
+      for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
 
-      // Find the first <br> tag after template begin
-      while ((currentBrTag < brTagsSize) &&
-             (brTags.get(currentBrTag).getBeginIndex() < template.getBeginIndex())) {
-        currentBrTag++;
-      }
-      if (currentBrTag >= brTagsSize) {
-        return errorFound;
-      }
- 
-      // Check if template has <br> tags in it
-      if (brTags.get(currentBrTag).getBeginIndex() < template.getEndIndex()) {
-
-        // Check every parameter
-        for (int i = 0; i < template.getParameterCount(); i++) {
-
-          String parameterValue = template.getParameterValue(i);
-          if (parameterValue != null) {
-
-            // Find the last <br> tag in parameter
-            int lastParamIndex = template.getParameterValueOffset(i) + parameterValue.length();
-            PageElementTag lastBrTag = null;
-            while ((currentBrTag < brTagsSize) &&
-                   (brTags.get(currentBrTag).getBeginIndex() < lastParamIndex)) {
-              lastBrTag = brTags.get(currentBrTag);
-              currentBrTag++;
-            }
-
-            // Check if a <br> tag is at the end of the parameter value
-            if (lastBrTag != null) {
-              int currentIndex = lastBrTag.getEndIndex();
-              boolean ok = true;
-              while (currentIndex < lastParamIndex) {
-                if (Character.isWhitespace(contents.charAt(currentIndex))) {
-                  currentIndex++;
-                } else {
-                  PageElementComment comment = analysis.isInComment(currentIndex);
-                  if (comment != null) {
-                    currentIndex = comment.getEndIndex();
-                  } else {
-                    currentIndex = lastParamIndex;
-                    ok = false;
-                  }
+        // Search for <br> at the end of the parameter
+        String paramValue = template.getParameterValue(paramNum);
+        boolean breakFound = false;
+        boolean tagAfter = false;
+        int currentValuePos = paramValue.length() - 1;
+        int beginError = -1;
+        int endError = -1;
+        boolean shouldStop = false;
+        while (!shouldStop) {
+          shouldStop = true;
+          while ((currentValuePos > 0) &&
+                 (Character.isWhitespace(paramValue.charAt(currentValuePos)))) {
+            currentValuePos--;
+          }
+          if ((currentValuePos > 0) &&
+              (paramValue.charAt(currentValuePos) == '>')) {
+            PageElementTag tag = analysis.isInTag(
+                template.getBeginIndex() +
+                template.getParameterValueOffset(paramNum) +
+                currentValuePos);
+            if (tag != null) {
+              String name = tag.getNormalizedName();
+              if (PageElementTag.TAG_HTML_BR.equals(name)) {
+                breakFound = true;
+                shouldStop = false;
+                beginError = tag.getBeginIndex();
+                if (endError < 0) {
+                  endError = tag.getEndIndex();
                 }
-              }
-              if (ok) {
-                if (errors == null) {
-                  return true;
+                currentValuePos -= tag.getEndIndex() - tag.getBeginIndex();
+              } else if (!breakFound) {
+                if (PageElementTag.TAG_WIKI_MATH.equals(name)) {
+                  tagAfter = true;
+                  shouldStop = false;
+                  endError = tag.getCompleteBeginIndex();
                 }
-                errorFound = true;
-                int firstBrTagIndex = currentBrTag - 1;
-                while ((firstBrTagIndex > 0) &&
-                       (PageElementTag.groupTags(brTags, firstBrTagIndex - 1, contents, null, null) >= currentBrTag - 1)) {
-                  firstBrTagIndex--;
-                }
-                PageElementTag firstBrTag = brTags.get(firstBrTagIndex);
-                CheckErrorResult errorResult = createCheckErrorResult(
-                    analysis,
-                    firstBrTag.getBeginIndex(),
-                    lastBrTag.getEndIndex());
-                errorResult.addReplacement("", GT._("Delete"));
-                errors.add(errorResult);
+                currentValuePos -= tag.getEndIndex() - tag.getCompleteBeginIndex();
               }
             }
           }
         }
+
+        // Report error
+        if (breakFound) {
+          if (errors == null) {
+            return true;
+          }
+          result = true;
+          CheckErrorResult errorResult = createCheckErrorResult(
+              analysis, beginError, endError,
+              (tagAfter ? ErrorLevel.WARNING : ErrorLevel.ERROR));
+          if (!tagAfter) {
+            errorResult.addReplacement("");
+          }
+          errors.add(errorResult);
+        }
       }
     }
 
-    // Result
-    return errorFound;
+    return result;
   }
 
   /**
