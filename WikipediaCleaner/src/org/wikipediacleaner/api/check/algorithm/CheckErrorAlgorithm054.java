@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check.algorithm;
 import java.util.Collection;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
+import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementImage;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -56,10 +57,11 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
     while (endLineIndex + 1 < contents.length()) {
 
       // Check if the next line is a list
-      boolean isList = (contents.charAt(endLineIndex + 1) == '*');
+      int beginLineIndex = endLineIndex + 1;
+      boolean isList = (contents.charAt(beginLineIndex) == '*');
 
       // Searching next end line
-      endLineIndex = contents.indexOf("\n", endLineIndex + 1);
+      endLineIndex = contents.indexOf("\n", beginLineIndex);
       if (endLineIndex < 0) {
         endLineIndex = contents.length();
       }
@@ -68,42 +70,59 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
       if (isList) {
 
         // Search for <br /> at the end of the line
-        boolean found = false;
-        int currentPos = endLineIndex;
-        boolean done = false;
-        while (!done) {
-          done = true;
-          while ((currentPos > 0) &&
-                 (Character.isWhitespace(contents.charAt(currentPos - 1)))) {
+        boolean breakFound = false;
+        boolean tagAfter = false;
+        int currentPos = endLineIndex - 1;
+        int beginError = endLineIndex;
+        int endError = endLineIndex;
+        boolean shouldStop = false;
+        while (!shouldStop) {
+          shouldStop = true;
+          while ((currentPos > beginLineIndex) &&
+                 (Character.isWhitespace(contents.charAt(currentPos)))) {
             currentPos--;
           }
-          if (currentPos > 0) {
-            PageElementTag tagBr = analysis.isInTag(currentPos - 1, PageElementTag.TAG_HTML_BR);
-            if (tagBr != null) {
-              found = true;
-              done = false;
-              currentPos = tagBr.getBeginIndex();
+          if (contents.charAt(currentPos) == '>') {
+            PageElementTag tag = analysis.isInTag(currentPos);
+            if (tag != null) {
+              String name = tag.getNormalizedName();
+              if (PageElementTag.TAG_HTML_BR.equals(name)) {
+                breakFound = true;
+                shouldStop = false;
+                beginError = tag.getBeginIndex();
+                currentPos = beginError - 1;
+              } else if (!breakFound) {
+                if (PageElementTag.TAG_WIKI_MATH.equals(name)) {
+                  tagAfter = true;
+                  shouldStop = false;
+                  endError = tag.getCompleteBeginIndex();
+                  currentPos = endError - 1;
+                }
+              }
             }
           }
         }
 
         // Limit error
-        if (found) {
+        if (breakFound) {
           PageElementImage image = analysis.isInImage(currentPos);
           if (image != null) {
-            found = false;
+            breakFound = false;
           }
         }
 
         // Report error
-        if (found) {
+        if (breakFound) {
           if (errors == null) {
             return true;
           }
           result = true;
           CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, currentPos, endLineIndex);
-          errorResult.addReplacement("");
+              analysis, beginError, endError,
+              (tagAfter ? ErrorLevel.WARNING : ErrorLevel.ERROR));
+          if (!tagAfter) {
+            errorResult.addReplacement("");
+          }
           errors.add(errorResult);
         }
       }
@@ -140,6 +159,6 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
    */
   @Override
   public String fix(String fixName, PageAnalysis analysis, MWPane textPane) {
-    return fixUsingRemove(fixName, analysis);
+    return fixUsingFirstReplacement(fixName, analysis);
   }
 }
