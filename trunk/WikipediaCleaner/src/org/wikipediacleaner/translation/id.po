@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-18 17:31+0200\n"
+"POT-Creation-Date: 2014-04-21 19:27+0200\n"
 "PO-Revision-Date: 2013-07-06 19:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -163,8 +163,7 @@ msgstr "Ganti dengan {0}"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:129
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm046.java:172
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm047.java:123
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:76
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:126
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:86
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm085.java:92
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm098.java:59
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm515.java:89
@@ -181,7 +180,7 @@ msgstr ""
 msgid "Remove {0} namespace from template name"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:29
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm002.java:31
 msgid "Fix all <br> tags"
 msgstr ""
 
@@ -326,15 +325,15 @@ msgstr "Tambahkan DEFAULTSORT"
 msgid "Fix all bold headlines"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:33
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:32
 msgid "Remove all links to title (first in bold)"
 msgstr "Hapus semua pranala pada judul (awal huruf besar)"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:34
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm048.java:33
 msgid "Remove all links to title"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:30
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm054.java:32
 msgid "Remove breaks in list"
 msgstr ""
 
