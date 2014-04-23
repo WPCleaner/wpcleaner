@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-21 19:27+0200\n"
+"POT-Creation-Date: 2014-04-23 23:37+0200\n"
 "PO-Revision-Date: 2013-09-30 23:13+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -557,6 +557,10 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm091.java:236
 msgid "To report only links to local wikis"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:106
+msgid "List of ordinal suffixes"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm501.java:172
@@ -3212,22 +3216,22 @@ msgstr "Aggiornamento contenuti pagina"
 msgid "Retrieving interwiki for {0}"
 msgstr "Recupero interwiki per {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:311
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:326
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:297
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:312
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Recupero contenuti pagina - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:483
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:609
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:842
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:466
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:592
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:819
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Aggiornamento avviso di disambiguazione - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:734
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:878
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:983
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:711
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:852
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:954
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Rimozione avviso di disambiguazione - {0}"
