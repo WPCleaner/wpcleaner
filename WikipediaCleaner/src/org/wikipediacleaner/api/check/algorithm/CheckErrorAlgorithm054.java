@@ -99,12 +99,12 @@ public class CheckErrorAlgorithm054 extends CheckErrorAlgorithmBase {
                 beginError = tag.getBeginIndex();
                 currentPos = beginError - 1;
               } else if (!breakFound) {
-                if (PageElementTag.TAG_WIKI_MATH.equals(name)) {
+                /*if (PageElementTag.TAG_WIKI_MATH.equals(name)) {
                   tagAfter = true;
                   shouldStop = false;
                   endError = tag.getCompleteBeginIndex();
                   currentPos = endError - 1;
-                }
+                }*/
               }
             }
           }
