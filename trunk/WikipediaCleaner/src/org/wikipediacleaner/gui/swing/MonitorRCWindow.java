@@ -43,7 +43,7 @@ import org.wikipediacleaner.api.data.RecentChange;
 import org.wikipediacleaner.gui.swing.action.ActionDispose;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningTools;
-import org.wikipediacleaner.gui.swing.worker.UpdateDabWarningTools.Stats;
+import org.wikipediacleaner.gui.swing.worker.UpdateWarningTools.Stats;
 import org.wikipediacleaner.i18n.GT;
 
 

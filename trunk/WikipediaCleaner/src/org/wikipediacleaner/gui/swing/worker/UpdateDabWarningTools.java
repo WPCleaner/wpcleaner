@@ -18,9 +18,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
-import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
@@ -33,7 +31,6 @@ import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
-import org.wikipediacleaner.api.data.QueryResult;
 import org.wikipediacleaner.api.data.Section;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -46,20 +43,14 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 /**
  * Tools for updating disambiguation warnings.
  */
-public class UpdateDabWarningTools {
+public class UpdateDabWarningTools extends UpdateWarningTools {
 
   private final static Log log = LogFactory.getLog(UpdateDabWarningTools.class);
 
-  private final EnumWikipedia wiki;
-  private final WPCConfiguration configuration;
-  private final BasicWorker worker;
-  private final BasicWindow window;
   private final boolean createWarning;
   private final boolean automaticEdit;
-  private final boolean section0;
   private final Map<String, Page> dabPages;
   private final Map<String, Page> nonDabPages;
-  private final API api;
 
   /**
    * @param wiki Wiki.
@@ -109,16 +100,11 @@ public class UpdateDabWarningTools {
       EnumWikipedia wiki,
       BasicWorker worker, BasicWindow window,
       boolean createWarning, boolean automaticEdit) {
-    this.wiki = wiki;
-    this.configuration = wiki.getConfiguration();
-    this.worker = worker;
-    this.window = window;
+    super(wiki, worker, window);
     this.createWarning = createWarning;
     this.automaticEdit = automaticEdit;
-    this.section0 = configuration.getBoolean(WPCConfigurationBoolean.DAB_WARNING_SECTION_0);
     this.dabPages = new HashMap<String, Page>();
     this.nonDabPages = new HashMap<String, Page>();
-    this.api = APIFactory.getAPI();
   }
 
   /**
@@ -470,10 +456,7 @@ public class UpdateDabWarningTools {
       contents = "";
     }
     PageAnalysis analysis = todoSubpage.getAnalysis(contents, true);
-    List<PageElementTemplate> templates = analysis.getTemplates(
-        configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE));
-    PageElementTemplate templateWarning = ((templates != null) && (templates.size() > 0)) ?
-        templates.get(0) : null;
+    PageElementTemplate templateWarning = getFirstWarningTemplate(analysis);
 
     // If disambiguation warning is missing, add it
     if (templateWarning == null) {
@@ -639,10 +622,7 @@ public class UpdateDabWarningTools {
     // Search disambiguation warning in the "To do" parameter
     String parameter = templateTodo.getParameterValue("1");
     PageAnalysis parameterAnalysis = talkPage.getAnalysis(parameter, false);
-    List<PageElementTemplate> templates = parameterAnalysis.getTemplates(
-        configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE));
-    PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
-        templates.get(0) : null;
+    PageElementTemplate templateWarning = getFirstWarningTemplate(parameterAnalysis);
     if (templateWarning == null) {
       StringBuilder tmp = new StringBuilder();
       int indexStart = templateTodo.getBeginIndex();
@@ -722,10 +702,7 @@ public class UpdateDabWarningTools {
     PageAnalysis analysis = todoSubpage.getAnalysis(contents, true);
 
     // Search disambiguation warning in the "To do" sub-page
-    List<PageElementTemplate> templates = analysis.getTemplates(
-        configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE));
-    PageElementTemplate template = (templates != null) && (templates.size() > 0) ?
-        templates.get(0) : null;
+    PageElementTemplate template = getFirstWarningTemplate(analysis);
     if (template == null) {
       return false;
     }
@@ -870,10 +847,7 @@ public class UpdateDabWarningTools {
     // Search disambiguation warning in the "To do" parameter
     String parameter = templateTodo.getParameterValue("1");
     PageAnalysis parameterAnalysis = talkPage.getAnalysis(parameter, false);
-    List<PageElementTemplate> templates = parameterAnalysis.getTemplates(
-        configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE));
-    PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
-        templates.get(0) : null;
+    PageElementTemplate templateWarning = getFirstWarningTemplate(parameterAnalysis);
     if (templateWarning != null) {
       setText(GT._("Removing disambiguation warning - {0}", talkPage.getTitle()));
       StringBuilder tmp = new StringBuilder();
@@ -975,10 +949,7 @@ public class UpdateDabWarningTools {
       int parameterIndex = templateTodo.getParameterIndex("1");
       String parameter = templateTodo.getParameterValue(parameterIndex);
       int parameterOffset = templateTodo.getParameterValueOffset(parameterIndex);
-      List<PageElementTemplate> templates = analysis.getTemplates(
-          configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE));
-      PageElementTemplate templateWarning = (templates != null) && (templates.size() > 0) ?
-          templates.get(0) : null;
+      PageElementTemplate templateWarning = getFirstWarningTemplate(analysis);
       if (templateWarning != null) {
         setText(GT._("Removing disambiguation warning - {0}", talkPage.getTitle()));
         StringBuilder tmp = new StringBuilder();
@@ -1163,7 +1134,7 @@ public class UpdateDabWarningTools {
         if (title != null) {
           api.addNewSection(wiki, userTalkPage, title, message, false);
         } else {
-          // TODO: No global title, no title => Should append the message add the end
+          // TODO: No global title, no title => Should append the message at the end
           log.warn("Should add " + message + " in " + userTalk);
         }
       }
@@ -1216,58 +1187,6 @@ public class UpdateDabWarningTools {
     }
     message.append("}}");
     return message.toString();
-  }
-
-  /**
-   * Update a talk page on Wiki.
-   * 
-   * @param page Page.
-   * @param newContents New contents to use.
-   * @param comment Comment.
-   * @return Result of the command.
-   * @throws APIException
-   */
-  private QueryResult updateTalkPage(
-      Page page, String newContents,
-      String comment) throws APIException {
-    if (section0) {
-      return updateSection(page, comment, 0, newContents, false);
-    }
-    return updatePage(page, newContents, comment, false);
-  }
-
-  /**
-   * Update a page on Wiki.
-   * 
-   * @param page Page.
-   * @param newContents New contents to use.
-   * @param comment Comment.
-   * @param forceWatch Force watching the page.
-   * @return Result of the command.
-   * @throws APIException
-   */
-  private QueryResult updatePage(
-      Page page,
-      String newContents, String comment,
-      boolean forceWatch) throws APIException {
-    return api.updatePage(wiki, page, newContents, comment, forceWatch);
-  }
-
-  /**
-   * Update a section in a page.
-   * 
-   * @param page Page.
-   * @param title Title of the new section.
-   * @param section Section. 
-   * @param contents Contents.
-   * @param forceWatch Force watching the page.
-   * @return Result of the command.
-   * @throws APIException
-   */
-  private QueryResult updateSection(
-      Page page, String title, int section,
-      String contents, boolean forceWatch) throws APIException {
-    return api.updateSection(wiki, page, title, section, contents, forceWatch);
   }
 
   /**
@@ -1349,186 +1268,31 @@ public class UpdateDabWarningTools {
     }
   }
 
+  // ==========================================================================
+  // Configuration
+  // ==========================================================================
+
   /**
-   * @param talkPage Talk page
-   * @param contents Talk page contents.
-   * @return Template containing a list to the todo subpage.
+   * @return Configuration parameter for the warning template.
    */
-  private PageElementTemplate getExistingTemplateTodoLink(Page talkPage, String contents) {
-    PageElementTemplate templateTodoLink = null;
-    List<String> todoLinkTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_LINK_TEMPLATES);
-    if (todoLinkTemplates != null) {
-      PageAnalysis analysis = talkPage.getAnalysis(contents, true);
-      for (String todoLink : todoLinkTemplates) {
-        List<PageElementTemplate> templates = analysis.getTemplates(todoLink);
-        if ((templates != null) && (templates.size() > 0)) {
-          templateTodoLink = templates.get(0);
-        }
-      }
-    }
-    return templateTodoLink;
+  @Override
+  protected WPCConfigurationString getWarningTemplate() {
+    return WPCConfigurationString.DAB_WARNING_TEMPLATE;
   }
 
   /**
-   * Tell if the template should be modified.
-   * 
-   * @param dabLinks Links to disambiguation pages.
-   * @param template Template.
-   * @return True if the template should be modified.
+   * @return Configuration parameter for the warning template comment.
    */
-  private boolean isModified(Collection<String> dabLinks, PageElementTemplate template) {
-    // Check that links in template are still useful
-    int paramNum = 1;
-    while (template.getParameterValue(Integer.toString(paramNum)) != null) {
-      String link = template.getParameterValue(Integer.toString(paramNum)).trim();
-      if (!dabLinks.contains(link)) {
-        return true;
-      }
-      paramNum++;
-    }
-
-    // Check that current links are already in the template
-    for (String link : dabLinks) {
-      boolean found = false;
-      paramNum = 1;
-      while ((found == false) && (template.getParameterValue(Integer.toString(paramNum)) != null)) {
-        if (link.equals(template.getParameterValue(Integer.toString(paramNum)))) {
-          found = true;
-        }
-        paramNum++;
-      }
-      if (!found) {
-        return true;
-      }
-    }
-
-    return false;
+  @Override
+  protected WPCConfigurationString getWarningTemplateComment() {
+    return WPCConfigurationString.DAB_WARNING_TEMPLATE_COMMENT;
   }
 
   /**
-   * Add a disambiguation warning in a text.
-   * 
-   * @param talkText Text in which the warning should be added.
-   * @param pageRevId Page revision id.
-   * @param dabLinks List of disambiguation links.
+   * @return True if section 0 of the talk page should be used.
    */
-  private void addWarning(
-      StringBuilder talkText,
-      Integer pageRevId, Collection<String> dabLinks) {
-    talkText.append("{{ ");
-    talkText.append(configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE));
-    if (pageRevId != null) {
-      talkText.append(" | revisionid=");
-      talkText.append(pageRevId);
-    }
-    for (String dabLink : dabLinks) {
-      talkText.append(" | ");
-      talkText.append(dabLink);
-    }
-    talkText.append(" }} -- ~~~~~");
-    String comment = configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE_COMMENT);
-    if (comment != null) {
-      talkText.append(" <!-- ");
-      talkText.append(comment);
-      talkText.append(" -->");
-    }
-  }
-
-  /**
-   * @return True if the analyze should stop.
-   */
-  private boolean shouldStop() {
-    if ((window == null) ||
-        (window.getParentComponent() == null) ||
-        (window.getParentComponent().isDisplayable() == false)) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Display text.
-   * 
-   * @param text Text to display.
-   */
-  private void setText(String text) {
-    if (worker != null) {
-      worker.setText(text);
-    }
-  }
-
-  /**
-   * Bean for holding statistics.
-   */
-  public static class Stats {
-
-    /**
-     * Count of analyzed pages.
-     */
-    private int analyzedPagesCount;
-
-    /**
-     * List of updated pages.
-     */
-    private List<Page> updatedPages;
-
-    /**
-     * Count of disambiguation warning that have been removed.
-     */
-    private int removedWarningsCount;
-
-    /**
-     * Count of links to disambiguation pages.
-     */
-    private int linksCount;
-
-    public Stats() {
-      analyzedPagesCount = 0;
-      updatedPages = new ArrayList<Page>();
-    }
-
-    void addAnalyzedPage(Page page) {
-      if (page != null) {
-        analyzedPagesCount++;
-      }
-    }
-
-    public int getAnalyedPagesCount() {
-      return analyzedPagesCount;
-    }
-
-    void addUpdatedPage(Page page) {
-      if (page != null) {
-        updatedPages.add(page);
-      }
-    }
-
-    public List<Page> getUpdatedPages() {
-      return updatedPages;
-    }
-
-    public int getUpdatedPagesCount() {
-      return (updatedPages != null) ? updatedPages.size() : 0;
-    }
-
-    public int getRemovedWarningsCount() {
-      return removedWarningsCount;
-    }
-
-    void addRemovedWarning(Page page) {
-      if (page != null) {
-        removedWarningsCount++;
-      }
-    }
-
-    public int getLinksCount() {
-      return linksCount;
-    }
-
-    void addLinks(Page page, int count) {
-      if (page != null) {
-        linksCount += count;
-      }
-    }
+  @Override
+  protected boolean useSection0() {
+    return configuration.getBoolean(WPCConfigurationBoolean.DAB_WARNING_SECTION_0);
   }
 }
