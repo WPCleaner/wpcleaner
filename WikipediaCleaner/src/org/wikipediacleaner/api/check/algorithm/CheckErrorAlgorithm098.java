@@ -41,7 +41,7 @@ public class CheckErrorAlgorithm098 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Check every <math> tag
+    // Check every <sub> tag
     List<PageElementTag> subTags = analysis.getTags(PageElementTag.TAG_HTML_SUB);
     boolean result = false;
     for (PageElementTag subTag : subTags) {
