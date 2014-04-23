@@ -8,9 +8,13 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
+import org.wikipediacleaner.api.data.PageAnalysis;
+import org.wikipediacleaner.api.data.PageElementTag;
 
 
 /**
@@ -232,5 +236,30 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
   @Override
   protected List<HtmlCharacters> getHtmlCharacters() {
     return htmlCharacters;
+  }
+
+  /**
+   * Analyze a page to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param errors Errors found in the page.
+   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
+   * @return Flag indicating if the error was found.
+   */
+  @Override
+  public boolean analyze(
+      PageAnalysis analysis,
+      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
+    if (analysis == null) {
+      return false;
+    }
+
+    // If math tags are present, don't report the error
+    List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_WIKI_MATH);
+    if ((tags != null) && (!tags.isEmpty())) {
+      return false;
+    }
+
+    return super.analyze(analysis, errors, onlyAutomatic);
   }
 }
