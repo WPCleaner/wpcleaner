@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.HtmlCharacters;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
+import org.wikipediacleaner.api.data.PageElementTemplate;
 
 
 /**
@@ -257,6 +258,12 @@ public class CheckErrorAlgorithm011 extends CheckErrorAlgorithmHtmlNamedEntities
     // If math tags are present, don't report the error
     List<PageElementTag> tags = analysis.getTags(PageElementTag.TAG_WIKI_MATH);
     if ((tags != null) && (!tags.isEmpty())) {
+      return false;
+    }
+
+    // If math templates are present, don't report the error
+    List<PageElementTemplate> templates = analysis.getTemplates("math");
+    if ((templates != null) && (!templates.isEmpty())) {
       return false;
     }
 
