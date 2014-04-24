@@ -62,7 +62,7 @@ public class CheckErrorAlgorithm100 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors) {
 
     // Check every tag
-    List<PageElementTag> tags = analysis.getCompleteTags(tagName);
+    List<PageElementTag> tags = analysis.getTags(tagName);
     if ((tags == null) || (tags.isEmpty())) {
       return false;
     }
