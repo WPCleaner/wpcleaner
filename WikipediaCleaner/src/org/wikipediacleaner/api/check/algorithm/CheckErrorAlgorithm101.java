@@ -52,9 +52,10 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
     } else {
       listSuffixes = new ArrayList<String>();
     }
+    listSuffixes.add("nd");
     listSuffixes.add("rd");
-    listSuffixes.add("th");
     listSuffixes.add("st");
+    listSuffixes.add("th");
 
     // Check every <sup> tag
     List<PageElementTag> supTags = analysis.getCompleteTags(PageElementTag.TAG_HTML_SUP);
@@ -72,9 +73,10 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
         }
 
         // Check if tag content is ordinal
+        String value = null;
         boolean ordinal = false;
         if (digitBefore) {
-          String value = contents.substring(supTag.getValueBeginIndex(), supTag.getValueEndIndex()).trim();
+          value = contents.substring(supTag.getValueBeginIndex(), supTag.getValueEndIndex()).trim();
           if (listSuffixes.contains(value)) {
             ordinal = true;
           }
@@ -89,6 +91,7 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis,
               beginIndex, supTag.getCompleteEndIndex());
+          errorResult.addReplacement(value);
           errors.add(errorResult);
         }
       }
