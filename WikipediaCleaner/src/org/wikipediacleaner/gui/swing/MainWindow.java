@@ -464,6 +464,7 @@ public class MainWindow
     buttonLogout.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLogout"));
     buttonToolbar.add(buttonLogout);
+    buttonToolbar.addSeparator();
     buttonDisconnect = Utilities.createJButton(
         GT._("WPC logout"), null);
     buttonDisconnect.addActionListener(EventHandler.create(
