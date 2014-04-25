@@ -8,10 +8,13 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.API;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
@@ -19,18 +22,25 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
+import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.QueryResult;
+import org.wikipediacleaner.api.data.Section;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
+import org.wikipediacleaner.utils.Configuration;
+import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
  * Tools for updating disambiguation warnings.
  */
 public abstract class UpdateWarningTools {
+
+  private final static Log log = LogFactory.getLog(UpdateWarningTools.class);
 
   /** Wiki. */
   protected final EnumWikipedia wiki;
@@ -197,9 +207,264 @@ public abstract class UpdateWarningTools {
   protected abstract WPCConfigurationString getWarningTemplateComment();
 
   /**
+   * @return Configuration parameter for the title for a message for a new article.
+   */
+  protected abstract WPCConfigurationString getMessageTitleNewArticle();
+
+  /**
+   * @return Configuration parameter for the title for a message for a new article.
+   */
+  protected abstract WPCConfigurationString getMessageTitleNewArticleModified();
+
+  /**
+   * @return Configuration parameter for the title for a message for a new article.
+   */
+  protected abstract WPCConfigurationString getMessageTitleNewArticleModifier();
+
+  /**
+   * @return Configuration parameter for the template for a message for a new article.
+   */
+  protected abstract WPCConfigurationString getMessageTemplateNewArticle();
+
+  /**
+   * @return Configuration parameter for the template for a message for a new article.
+   */
+  protected abstract WPCConfigurationString getMessageTemplateNewArticleModified();
+
+  /**
+   * @return Configuration parameter for the template for a message for a new article.
+   */
+  protected abstract WPCConfigurationString getMessageTemplateNewArticleModifier();
+
+  /**
    * @return True if section 0 of the talk page should be used.
    */
   protected abstract boolean useSection0();
+
+  /**
+   * @return Comment when warning is removed.
+   */
+  protected abstract String getWarningCommentDone();
+
+  /**
+   * @param elements Message elements.
+   * @return Comment when warning is added or updated.
+   */
+  protected abstract String getWarningComment(Collection<String> elements);
+
+  /**
+   * @param title Page title.
+   * @return Message displayed when removing the warning from the page.
+   */
+  protected abstract String getMessageRemoveWarning(String title);
+
+  /**
+   * @param title Page title.
+   * @return Message displayed when updating the warning from the page.
+   */
+  protected abstract String getMessageUpdateWarning(String title);
+
+  // ==========================================================================
+  // Contributors management
+  // ==========================================================================
+
+  /**
+   * Inform page contributors.
+   * 
+   * @param analysis Page analysis.
+   * @param msgElements Message elements.
+   * @param creator User who has created the page.
+   * @param modifiers Other contributors to the page.
+   */
+  // TODO: private ?
+  protected void informContributors(
+      PageAnalysis analysis,
+      Collection<String> msgElements,
+      String creator,
+      List<String> modifiers) {
+    if (analysis == null) {
+      return;
+    }
+
+    if (creator != null) {
+      if ((modifiers == null) || (modifiers.isEmpty())) {
+        addMessage(
+            analysis, msgElements, creator,
+            getMessageTitleNewArticle(),
+            getMessageTemplateNewArticle());
+      } else {
+        addMessage(
+            analysis, msgElements, creator,
+            getMessageTitleNewArticleModified(),
+            getMessageTemplateNewArticleModified());
+      }
+    }
+    if (modifiers != null) {
+      for (String modifier : modifiers) {
+        addMessage(
+            analysis, msgElements, modifier,
+            getMessageTitleNewArticleModifier(),
+            getMessageTemplateNewArticleModifier());
+      }
+    }
+  }
+
+  /**
+   * Add a message on user talk page.
+   * 
+   * @param analysis Page analysis.
+   * @param msgElements Message elements.
+   * @param user User to inform.
+   * @param titleParam Parameter for the title of the new section.
+   * @param templateParam Parameter for the template used to inform.
+   */
+  private void addMessage(
+      PageAnalysis analysis, Collection<String> msgElements,
+      String user,
+      WPCConfigurationString titleParam,
+      WPCConfigurationString templateParam) {
+    if ((analysis == null) || (user == null)) {
+      return;
+    }
+    String article = analysis.getPage().getTitle();
+    WPCConfiguration wpcConfig = analysis.getWPCConfiguration();
+
+    // Prepare elements
+    String message = createMessage(article, msgElements, wpcConfig, templateParam);
+    if ((message == null) || (message.trim().length() == 0)) {
+      return;
+    }
+    String globalListTemplate = wpcConfig.getString(WPCConfigurationString.MSG_GLOBAL_LIST_TEMPLATE);
+    String globalTemplate = wpcConfig.getString(WPCConfigurationString.MSG_GLOBAL_TEMPLATE);
+    String globalTitle = wpcConfig.getString(WPCConfigurationString.MSG_GLOBAL_TITLE);
+    String title = wpcConfig.getString(titleParam);
+    if (title != null) {
+      try {
+        title = MessageFormat.format(title, article);
+      } catch (IllegalArgumentException e) {
+        log.warn("Parameter " + titleParam.getAttributeName() + " has an incorrect format");
+      }
+    }
+    Configuration config = Configuration.getConfiguration();
+    String signature = config.getString(null, ConfigurationValueString.SIGNATURE);
+
+    // Retrieve user talk page name
+    Namespace userTalkNS = wiki.getWikiConfiguration().getNamespace(Namespace.USER_TALK);
+    String userTalk = userTalkNS.getTitle() + ":" + user;
+    Page userTalkPage = DataManager.getPage(analysis.getWikipedia(), userTalk, null, null, null);
+
+    // Add message
+    try {
+      if (globalTitle != null) {
+        // Check if global title already exists in the talk page
+        List<Section> sections = api.retrieveSections(wiki, userTalkPage);
+        Section section = null;
+        if (sections != null) {
+          for (Section tmpSection : sections) {
+            if (globalTitle.equals(tmpSection.getLine())) {
+              section = tmpSection;
+            }
+          }
+        }
+
+        if (section == null) {
+          // Add the title
+          StringBuilder fullMessage = new StringBuilder();
+          if ((globalTemplate != null) && (globalTemplate.trim().length() > 0)) {
+            fullMessage.append("{{");
+            fullMessage.append(globalTemplate.trim());
+            fullMessage.append("}}\n");
+            if ((signature != null) && (signature.trim().length() > 0)) {
+              fullMessage.append(signature.trim());
+              fullMessage.append("\n\n");
+            }
+          }
+          if ((globalListTemplate != null) && (globalListTemplate.trim().length() > 0)) {
+            fullMessage.append("{{");
+            fullMessage.append(globalListTemplate.trim());
+            fullMessage.append("}}\n");
+          }
+          if (title != null) {
+            fullMessage.append("== ");
+            fullMessage.append(title);
+            fullMessage.append(" ==\n");
+          }
+          fullMessage.append(message);
+          api.addNewSection(wiki, userTalkPage, globalTitle, fullMessage.toString(), false);
+        } else {
+          // Add the message in the existing title
+          Integer revisionId = userTalkPage.getRevisionId();
+          api.retrieveSectionContents(wiki, userTalkPage, section.getIndex());
+          if (revisionId.equals(userTalkPage.getRevisionId())) {
+            StringBuilder fullMessage = new StringBuilder();
+            fullMessage.append(userTalkPage.getContents());
+            if (fullMessage.charAt(fullMessage.length() - 1) != '\n') {
+              fullMessage.append("\n");
+            }
+            fullMessage.append(message);
+            api.updateSection(wiki, userTalkPage, globalTitle, section.getIndex(), fullMessage.toString(), false);
+          } else {
+            System.err.println("Page " + userTalk + " has been modified between two requests");
+          }
+        }
+      } else {
+        if (title != null) {
+          api.addNewSection(wiki, userTalkPage, title, message, false);
+        } else {
+          // TODO: No global title, no title => Should append the message at the end
+          log.warn("Should add " + message + " in " + userTalk);
+        }
+      }
+    } catch (APIException e) {
+      //
+    }
+  }
+
+  /**
+   * Create a message that should be added on user talk page.
+   * 
+   * @param article Article.
+   * @param msgElements Message elements.
+   * @param wpcConfig Configuration.
+   * @param templateParam Parameter for the template used to inform.
+   */
+  private String createMessage(
+      String article, Collection<String> msgElements,
+      WPCConfiguration wpcConfig,
+      WPCConfigurationString templateParam) {
+    String[] templateElements = wpcConfig.getStringArray(templateParam);
+    if ((templateElements == null) ||
+        (templateElements.length == 0) ||
+        (templateElements[0].trim().length() == 0)) {
+      return null;
+    }
+    StringBuilder message = new StringBuilder();
+    message.append("{{");
+    message.append(templateElements[0].trim());
+    if ((templateElements.length > 1) && (templateElements[1].trim().length() > 0)) {
+      message.append("|");
+      message.append(templateElements[1].trim());
+      message.append("=");
+      message.append(article);
+    }
+    if ((templateElements.length > 2) && (templateElements[2].trim().length() > 0)) {
+      String wpcUser = wpcConfig.getString(WPCConfigurationString.USER);
+      if ((wpcUser != null) && (wpcUser.trim().length() > 0)) {
+        message.append("|");
+        message.append(templateElements[2].trim());
+        message.append("=");
+        message.append(wpcUser);
+      }
+    }
+    if (msgElements != null) {
+      for (String msgElement : msgElements) {
+        message.append("|");
+        message.append(msgElement);
+      }
+    }
+    message.append("}}");
+    return message.toString();
+  }
 
   // ==========================================================================
   // Utility methods

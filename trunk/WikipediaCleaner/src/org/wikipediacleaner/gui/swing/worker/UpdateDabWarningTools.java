@@ -7,7 +7,6 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -21,23 +20,18 @@ import org.apache.commons.logging.LogFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.MediaWiki;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
-import org.wikipediacleaner.api.constants.WPCConfiguration;
 import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
-import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.InternalLinkCount;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTemplate;
-import org.wikipediacleaner.api.data.Section;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
 import org.wikipediacleaner.i18n.GT;
-import org.wikipediacleaner.utils.Configuration;
-import org.wikipediacleaner.utils.ConfigurationValueString;
 
 
 /**
@@ -443,7 +437,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
       if (!createWarning) {
         return false;
       }
-      setText(GT._("Updating disambiguation warning - {0}", todoSubpage.getTitle()));
+      setText(getMessageUpdateWarning(todoSubpage.getTitle()));
       StringBuilder tmp = new StringBuilder(contents);
       if ((tmp.length() > 0) && (tmp.charAt(tmp.length() - 1) != '\n')) {
         tmp.append('\n');
@@ -454,7 +448,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
       updatePage(
           todoSubpage, tmp.toString(),
           wiki.formatComment(
-              configuration.getDisambiguationWarningComment(dabLinks),
+              getWarningComment(dabLinks),
               automaticEdit),
           false);
 
@@ -489,7 +483,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
       api.updatePage(
           wiki, todoSubpage, tmp.toString(),
           wiki.formatComment(
-              configuration.getDisambiguationWarningComment(dabLinks),
+              getWarningComment(dabLinks),
               automaticEdit),
           false);
 
@@ -569,7 +563,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
       }
 
       // Add warning
-      setText(GT._("Updating disambiguation warning - {0}", talkPage.getTitle()));
+      setText(getMessageUpdateWarning(talkPage.getTitle()));
       StringBuilder tmp = new StringBuilder();
       if (indexStart > 0) {
         tmp.append(contents.substring(0, indexStart));
@@ -589,7 +583,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
         tmp.append(contents.substring(indexStart));
       }
       String comment = wiki.formatComment(
-          configuration.getDisambiguationWarningComment(dabLinks),
+          getWarningComment(dabLinks),
           automaticEdit);
       updateTalkPage(talkPage, tmp.toString(), comment);
 
@@ -630,7 +624,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
         tmp.append(contents.substring(indexEnd));
       }
       String comment = wiki.formatComment(
-          configuration.getDisambiguationWarningComment(dabLinks),
+          getWarningComment(dabLinks),
           automaticEdit);
       updateTalkPage(talkPage, tmp.toString(), comment);
       return true;
@@ -654,7 +648,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
         tmp.append(contents.substring(templateTodo.getEndIndex()));
       }
       String comment = wiki.formatComment(
-          configuration.getDisambiguationWarningComment(dabLinks),
+          getWarningComment(dabLinks),
           automaticEdit);
       updateTalkPage(talkPage, tmp.toString(), comment);
       return true;
@@ -688,7 +682,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
     }
 
     // Analyze text to remove the disambiguation warning
-    setText(GT._("Removing disambiguation warning - {0}", todoSubpage.getTitle()));
+    setText(getMessageRemoveWarning(todoSubpage.getTitle()));
     StringBuilder tmp = new StringBuilder();
     int index = template.getBeginIndex();
     while ((index > 0) && (contents.charAt(index) != '\n')) {
@@ -710,7 +704,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
 
     // Remove the disambiguation warning
     String newContents = tmp.toString();
-    String reason = wiki.formatComment(configuration.getDisambiguationWarningCommentDone(), automaticEdit);
+    String reason = wiki.formatComment(getWarningCommentDone(), automaticEdit);
     if ((newContents.trim().length() == 0) &&
         (wiki.getConnection().getUser() != null) &&
         (wiki.getConnection().getUser().hasRight(User.RIGHT_DELETE))) {
@@ -748,7 +742,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
     }
     if (Boolean.FALSE.equals(talkPage.isExisting())) {
       String comment = wiki.formatComment(
-          configuration.getDisambiguationWarningComment(dabLinks),
+          getWarningComment(dabLinks),
           automaticEdit);
       String newContents = "{{" + todoTemplates.get(0) + "}}";
       updateTalkPage(talkPage, newContents, comment);
@@ -796,7 +790,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
       }
 
       // Add warning
-      setText(GT._("Updating disambiguation warning - {0}", talkPage.getTitle()));
+      setText(getMessageUpdateWarning(talkPage.getTitle()));
       StringBuilder tmp = new StringBuilder();
       int indexStart = (templatePrevious != null) ? templatePrevious.getEndIndex() : 0;
       if (indexStart > 0) {
@@ -815,7 +809,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
         tmp.append(contents.substring(indexStart));
       }
       String comment = wiki.formatComment(
-          configuration.getDisambiguationWarningComment(dabLinks),
+          getWarningComment(dabLinks),
           automaticEdit);
       updateTalkPage(talkPage, tmp.toString(), comment);
       return true;
@@ -829,7 +823,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
     PageAnalysis parameterAnalysis = talkPage.getAnalysis(parameter, false);
     PageElementTemplate templateWarning = getFirstWarningTemplate(parameterAnalysis);
     if (templateWarning != null) {
-      setText(GT._("Removing disambiguation warning - {0}", talkPage.getTitle()));
+      setText(getMessageRemoveWarning(talkPage.getTitle()));
       StringBuilder tmp = new StringBuilder();
       if (templateTodo.getBeginIndex() > 0) {
         tmp.append(contents.substring(0, templateTodo.getBeginIndex()));
@@ -885,7 +879,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
         tmp.append(contents.substring(templateTodo.getEndIndex()));
       }
       String comment = wiki.formatComment(
-          configuration.getDisambiguationWarningComment(dabLinks),
+          getWarningComment(dabLinks),
           automaticEdit);
       updateTalkPage(talkPage, tmp.toString(), comment);
       return true;
@@ -931,7 +925,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
       int parameterOffset = templateTodo.getParameterValueOffset(parameterIndex);
       PageElementTemplate templateWarning = getFirstWarningTemplate(analysis);
       if (templateWarning != null) {
-        setText(GT._("Removing disambiguation warning - {0}", talkPage.getTitle()));
+        setText(getMessageRemoveWarning(talkPage.getTitle()));
         StringBuilder tmp = new StringBuilder();
         if (templateTodo.getBeginIndex() > 0) {
           tmp.append(contents.substring(0, templateTodo.getBeginIndex()));
@@ -962,211 +956,13 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
         if (templateTodo.getEndIndex() < contents.length()) {
           tmp.append(contents.substring(templateTodo.getEndIndex()));
         }
-        String comment = wiki.formatComment(
-            configuration.getDisambiguationWarningCommentDone(), automaticEdit);
+        String comment = wiki.formatComment(getWarningCommentDone(), automaticEdit);
         updateTalkPage(talkPage, tmp.toString(), comment);
         return true;
       }
     }
 
     return false;
-  }
-
-  /**
-   * Inform page contributors of links to disambiguation pages.
-   * 
-   * @param analysis Page analysis.
-   * @param dabLinks List of links to disambiguation pages.
-   * @param creator User who has created the page.
-   * @param modifiers Other contributors to the page.
-   */
-  private void informContributors(
-      PageAnalysis analysis,
-      Collection<String> dabLinks,
-      String creator,
-      List<String> modifiers) {
-    if (analysis == null) {
-      return;
-    }
-
-    if (creator != null) {
-      if ((modifiers == null) || (modifiers.isEmpty())) {
-        addMessage(
-            analysis, dabLinks, creator,
-            WPCConfigurationString.MSG_NEW_ARTICLE_WITH_DAB_TITLE,
-            WPCConfigurationString.MSG_NEW_ARTICLE_WITH_DAB_TEMPLATE);
-      } else {
-        addMessage(
-            analysis, dabLinks, creator,
-            WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIED_WITH_DAB_TITLE,
-            WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIED_WITH_DAB_TEMPLATE);
-      }
-    }
-    if (modifiers != null) {
-      for (String modifier : modifiers) {
-        addMessage(
-            analysis, dabLinks, modifier,
-            WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIER_WITH_DAB_TITLE,
-            WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIER_WITH_DAB_TEMPLATE);
-      }
-    }
-  }
-
-  /**
-   * Add a message on user talk page for disambiguation links.
-   * 
-   * @param analysis Page analysis.
-   * @param dabLinks List of disambiguation links.
-   * @param user User to inform.
-   * @param titleParam Parameter for the title of the new section.
-   * @param templateParam Parameter for the template used to inform.
-   */
-  private void addMessage(
-      PageAnalysis analysis, Collection<String> dabLinks,
-      String user,
-      WPCConfigurationString titleParam,
-      WPCConfigurationString templateParam) {
-    if ((analysis == null) || (user == null)) {
-      return;
-    }
-    String article = analysis.getPage().getTitle();
-    WPCConfiguration wpcConfig = analysis.getWPCConfiguration();
-
-    // Prepare elements
-    String message = createMessage(article, dabLinks, wpcConfig, templateParam);
-    if ((message == null) || (message.trim().length() == 0)) {
-      return;
-    }
-    String globalListTemplate = wpcConfig.getString(WPCConfigurationString.MSG_GLOBAL_LIST_TEMPLATE);
-    String globalTemplate = wpcConfig.getString(WPCConfigurationString.MSG_GLOBAL_TEMPLATE);
-    String globalTitle = wpcConfig.getString(WPCConfigurationString.MSG_GLOBAL_TITLE);
-    String title = wpcConfig.getString(titleParam);
-    if (title != null) {
-      try {
-        title = MessageFormat.format(title, article);
-      } catch (IllegalArgumentException e) {
-        log.warn("Parameter " + titleParam.getAttributeName() + " has an incorrect format");
-      }
-    }
-    Configuration config = Configuration.getConfiguration();
-    String signature = config.getString(null, ConfigurationValueString.SIGNATURE);
-
-    // Retrieve user talk page name
-    Namespace userTalkNS = wiki.getWikiConfiguration().getNamespace(Namespace.USER_TALK);
-    String userTalk = userTalkNS.getTitle() + ":" + user;
-    Page userTalkPage = DataManager.getPage(analysis.getWikipedia(), userTalk, null, null, null);
-
-    // Add message
-    try {
-      if (globalTitle != null) {
-        // Check if global title already exists in the talk page
-        List<Section> sections = api.retrieveSections(wiki, userTalkPage);
-        Section section = null;
-        if (sections != null) {
-          for (Section tmpSection : sections) {
-            if (globalTitle.equals(tmpSection.getLine())) {
-              section = tmpSection;
-            }
-          }
-        }
-
-        if (section == null) {
-          // Add the title
-          StringBuilder fullMessage = new StringBuilder();
-          if ((globalTemplate != null) && (globalTemplate.trim().length() > 0)) {
-            fullMessage.append("{{");
-            fullMessage.append(globalTemplate.trim());
-            fullMessage.append("}}\n");
-            if ((signature != null) && (signature.trim().length() > 0)) {
-              fullMessage.append(signature.trim());
-              fullMessage.append("\n\n");
-            }
-          }
-          if ((globalListTemplate != null) && (globalListTemplate.trim().length() > 0)) {
-            fullMessage.append("{{");
-            fullMessage.append(globalListTemplate.trim());
-            fullMessage.append("}}\n");
-          }
-          if (title != null) {
-            fullMessage.append("== ");
-            fullMessage.append(title);
-            fullMessage.append(" ==\n");
-          }
-          fullMessage.append(message);
-          api.addNewSection(wiki, userTalkPage, globalTitle, fullMessage.toString(), false);
-        } else {
-          // Add the message in the existing title
-          Integer revisionId = userTalkPage.getRevisionId();
-          api.retrieveSectionContents(wiki, userTalkPage, section.getIndex());
-          if (revisionId.equals(userTalkPage.getRevisionId())) {
-            StringBuilder fullMessage = new StringBuilder();
-            fullMessage.append(userTalkPage.getContents());
-            if (fullMessage.charAt(fullMessage.length() - 1) != '\n') {
-              fullMessage.append("\n");
-            }
-            fullMessage.append(message);
-            api.updateSection(wiki, userTalkPage, globalTitle, section.getIndex(), fullMessage.toString(), false);
-          } else {
-            System.err.println("Page " + userTalk + " has been modified between two requests");
-          }
-        }
-      } else {
-        if (title != null) {
-          api.addNewSection(wiki, userTalkPage, title, message, false);
-        } else {
-          // TODO: No global title, no title => Should append the message at the end
-          log.warn("Should add " + message + " in " + userTalk);
-        }
-      }
-    } catch (APIException e) {
-      //
-    }
-  }
-
-  /**
-   * Create a message that should be added on user talk page for disambiguation links.
-   * 
-   * @param article Article.
-   * @param dabLinks List of disambiguation links.
-   * @param wpcConfig Configuration.
-   * @param templateParam Parameter for the template used to inform.
-   */
-  private String createMessage(
-      String article, Collection<String> dabLinks,
-      WPCConfiguration wpcConfig,
-      WPCConfigurationString templateParam) {
-    String[] templateElements = wpcConfig.getStringArray(templateParam);
-    if ((templateElements == null) ||
-        (templateElements.length == 0) ||
-        (templateElements[0].trim().length() == 0)) {
-      return null;
-    }
-    StringBuilder message = new StringBuilder();
-    message.append("{{");
-    message.append(templateElements[0].trim());
-    if ((templateElements.length > 1) && (templateElements[1].trim().length() > 0)) {
-      message.append("|");
-      message.append(templateElements[1].trim());
-      message.append("=");
-      message.append(article);
-    }
-    if ((templateElements.length > 2) && (templateElements[2].trim().length() > 0)) {
-      String wpcUser = wpcConfig.getString(WPCConfigurationString.USER);
-      if ((wpcUser != null) && (wpcUser.trim().length() > 0)) {
-        message.append("|");
-        message.append(templateElements[2].trim());
-        message.append("=");
-        message.append(wpcUser);
-      }
-    }
-    if (dabLinks != null) {
-      for (String dabLink : dabLinks) {
-        message.append("|");
-        message.append(dabLink);
-      }
-    }
-    message.append("}}");
-    return message.toString();
   }
 
   /**
@@ -1269,10 +1065,93 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
   }
 
   /**
+   * @return Configuration parameter for the title for a message for a new article.
+   */
+  @Override
+  protected WPCConfigurationString getMessageTitleNewArticle() {
+    return WPCConfigurationString.MSG_NEW_ARTICLE_WITH_DAB_TITLE;
+  }
+
+  /**
+   * @return Configuration parameter for the title for a message for a new article.
+   */
+  @Override
+  protected WPCConfigurationString getMessageTitleNewArticleModified() {
+    return WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIED_WITH_DAB_TITLE;
+  }
+
+  /**
+   * @return Configuration parameter for the title for a message for a new article.
+   */
+  @Override
+  protected WPCConfigurationString getMessageTitleNewArticleModifier() {
+    return WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIER_WITH_DAB_TITLE;
+  }
+
+  /**
+   * @return Configuration parameter for the template for a message for a new article.
+   */
+  @Override
+  protected WPCConfigurationString getMessageTemplateNewArticle() {
+    return WPCConfigurationString.MSG_NEW_ARTICLE_WITH_DAB_TEMPLATE;
+  }
+
+  /**
+   * @return Configuration parameter for the template for a message for a new article.
+   */
+  @Override
+  protected WPCConfigurationString getMessageTemplateNewArticleModified() {
+    return WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIED_WITH_DAB_TEMPLATE;
+  }
+
+  /**
+   * @return Configuration parameter for the template for a message for a new article.
+   */
+  @Override
+  protected WPCConfigurationString getMessageTemplateNewArticleModifier() {
+    return WPCConfigurationString.MSG_NEW_ARTICLE_MODIFIER_WITH_DAB_TEMPLATE;
+  }
+
+  /**
    * @return True if section 0 of the talk page should be used.
    */
   @Override
   protected boolean useSection0() {
     return configuration.getBoolean(WPCConfigurationBoolean.DAB_WARNING_SECTION_0);
+  }
+
+  /**
+   * @return Comment when warning is removed.
+   */
+  @Override
+  protected String getWarningCommentDone() {
+    return configuration.getDisambiguationWarningCommentDone();
+  }
+
+  /**
+   * @param elements Message elements.
+   * @return Comment when warning is added or updated.
+   */
+  @Override
+  protected String getWarningComment(Collection<String> elements) {
+    return configuration.getDisambiguationWarningComment(elements);
+  }
+
+  /**
+   * @param title Page title.
+   * @return Message displayed when removing the warning from the page.
+   */
+  @Override
+  protected String getMessageRemoveWarning(String title) {
+    return GT._("Removing disambiguation warning - {0}", title);
+  }
+
+  /**
+   * @param title Page title.
+   * @return Message displayed when updating the warning from the page.
+   */
+  @Override
+  protected String getMessageUpdateWarning(String title) {
+    return GT._("Updating disambiguation warning - {0}", title);
   }
 }
