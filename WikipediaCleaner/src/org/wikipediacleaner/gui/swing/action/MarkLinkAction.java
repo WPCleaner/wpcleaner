@@ -10,7 +10,7 @@ package org.wikipediacleaner.gui.swing.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JCheckBox;
+import javax.swing.AbstractButton;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
@@ -26,13 +26,13 @@ public class MarkLinkAction implements ActionListener {
   private final Element element;
   private final String newText;
   private final JTextPane textPane;
-  private final JCheckBox checkBox;
+  private final AbstractButton checkBox;
 
   public MarkLinkAction(
       Element element,
       String newText,
       JTextPane textPane,
-      JCheckBox checkBox) {
+      AbstractButton checkBox) {
     this.newText = newText;
     this.element = element;
     this.textPane = textPane;

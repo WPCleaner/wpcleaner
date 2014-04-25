@@ -25,11 +25,13 @@ import java.util.concurrent.Callable;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
@@ -253,13 +255,16 @@ public abstract class OnePageWindow
   private JButton buttonFullAnalysis;
   private JTextField textComment;
   private JCheckBox chkAutomaticComment;
-  JCheckBox chkCloseAfterSend;
-  private JCheckBox chkEditTalkPage;
-  JCheckBox chkUpdateDabWarning;
-  JCheckBox chkCreateDabWarning;
   private JToggleButton chkSpelling;
   private JLabel lblLastModified;
   private JLabel lblEditProtectionLevel;
+
+  private JButton buttonOptions;
+  private JPopupMenu menuOptions;
+  JMenuItem chkCloseAfterSend;
+  private JMenuItem chkEditTalkPage;
+  JMenuItem chkUpdateDabWarning;
+  JMenuItem chkCreateDabWarning;
 
   private MWPane textContents;
 
@@ -284,6 +289,7 @@ public abstract class OnePageWindow
     setEnabledStatus(buttonFullAnalysis, pageLoaded);
     setEnabledStatus(buttonFullAnalysisRedirect, redirect);
     setVisibleStatus(buttonFullAnalysisRedirect, redirect);
+    setEnabledStatus(buttonOptions, pageLoaded);
     setEnabledStatus(buttonSend, pageLoaded && (textContents != null) && textContents.isModified());
 
     setEnabledStatus(chkCloseAfterSend, pageLoaded);
@@ -546,62 +552,52 @@ public abstract class OnePageWindow
   }
 
   /**
-   * Add a component for the Close after sending checkbox.
+   * Add a component for the Options button.
    * 
    * @param panel Container.
+   * @param icon Flag indicating if an icon should be used.
    */
-  protected void addChkCloseAfterSend(JPanel panel) {
+  protected void addButtonOptions(JComponent panel, boolean icon) {
+    if (icon) {
+      buttonOptions = Utilities.createJButton(
+          "gnome-preferences-other.png", EnumImageSize.NORMAL,
+          GT._("Options"), false, null);
+    } else {
+      buttonOptions = Utilities.createJButton(GT._("Options"), null);
+    }
+    buttonOptions.addActionListener(EventHandler.create(
+        ActionListener.class, this, "actionOptions"));
+    panel.add(buttonOptions);
+
     Configuration config = Configuration.getConfiguration();
-    chkCloseAfterSend = Utilities.createJCheckBox(
+    menuOptions = new JPopupMenu();
+    chkCloseAfterSend = new JCheckBoxMenuItem(
         GT._("&Close after sending"),
         config.getBoolean(
             null,
             ConfigurationValueBoolean.CLOSE_FULL));
-    panel.add(chkCloseAfterSend);
+    menuOptions.add(chkCloseAfterSend);
+    chkEditTalkPage = new JCheckBoxMenuItem(
+        GT._("&Add a note on talk page"), false);
+    getTextContents().setCheckBoxAddNote(chkEditTalkPage);
+    menuOptions.add(chkEditTalkPage);
+    chkUpdateDabWarning = new JCheckBoxMenuItem(
+        GT._("Update disambiguation warning on talk page"),
+        false);
+    getTextContents().setCheckBoxUpdateDabWarning(chkUpdateDabWarning);
+    menuOptions.add(chkUpdateDabWarning);
+    chkCreateDabWarning = new JCheckBoxMenuItem(
+        GT._("Create disambiguation warning on talk page"),
+        false);
+    getTextContents().setCheckBoxCreateDabWarning(chkCreateDabWarning);
+    menuOptions.add(chkCreateDabWarning);
   }
 
   /**
-   * Add a component for the Edit talk page checkbox.
-   * 
-   * @param panel Container.
+   * Action called when Check Spelling button is pressed.
    */
-  protected void addChkEditTalkPage(JPanel panel) {
-    if (getTextContents() != null) {
-      chkEditTalkPage = Utilities.createJCheckBox(
-          GT._("&Add a note on talk page"), false);
-      getTextContents().setCheckBoxAddNote(chkEditTalkPage);
-      panel.add(chkEditTalkPage);
-    }
-  }
-
-  /**
-   * Add a component for the Update disambiguation warning checkbox.
-   * 
-   * @param panel Container.
-   */
-  protected void addChkUpdateDabWarning(JPanel panel) {
-    if (getTextContents() != null) {
-      chkUpdateDabWarning = Utilities.createJCheckBox(
-          GT._("Update disambiguation warning on talk page"),
-          false);
-      getTextContents().setCheckBoxUpdateDabWarning(chkUpdateDabWarning);
-      panel.add(chkUpdateDabWarning);
-    }
-  }
-
-  /**
-   * Add a component for the Create disambiguation warning checkbox.
-   * 
-   * @param panel Container.
-   */
-  protected void addChkCreateDabWarning(JPanel panel) {
-    if (getTextContents() != null) {
-      chkCreateDabWarning = Utilities.createJCheckBox(
-          GT._("Create disambiguation warning on talk page"),
-          false);
-      getTextContents().setCheckBoxUpdateDabWarning(chkCreateDabWarning);
-      panel.add(chkCreateDabWarning);
-    }
+  public void actionOptions() {
+    menuOptions.show(buttonOptions, 0, buttonOptions.getHeight());
   }
 
   /**

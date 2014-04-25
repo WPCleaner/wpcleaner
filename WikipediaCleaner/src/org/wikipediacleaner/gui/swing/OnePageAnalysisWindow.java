@@ -330,16 +330,6 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     // Page name
     addTextPageName(panelInformation);
 
-    // Check box for closing after sending
-    addChkCloseAfterSend(panelInformation);
-
-    // Check box for adding a note on the talk page
-    addChkEditTalkPage(panelInformation);
-
-    // Check box for updating and creating disambiguation warning on the talk page
-    addChkUpdateDabWarning(panelInformation);
-    addChkCreateDabWarning(panelInformation);
-
     // Comment
     GridBagConstraints constraints = new GridBagConstraints();
     constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -384,6 +374,10 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     JToolBar toolbarButtons = new JToolBar(SwingConstants.HORIZONTAL);
     toolbarButtons.setFloatable(false);
     toolbarButtons.setBorderPainted(false);
+
+    addButtonOptions(toolbarButtons, true);
+    toolbarButtons.addSeparator();
+
     buttonFirst = ActionOccurrence.addButton(
         toolbarButtons, getTextContents(), ActionOccurrence.Occurrence.FIRST, true, true);
     buttonPrevious = ActionOccurrence.addButton(
@@ -393,6 +387,7 @@ public class OnePageAnalysisWindow extends OnePageWindow {
     buttonLast = ActionOccurrence.addButton(
         toolbarButtons, getTextContents(), ActionOccurrence.Occurrence.LAST, true, true);
     toolbarButtons.addSeparator();
+
     addButtonUndoRedo(toolbarButtons, true);
     buttonToc = createButtonToc(this, true);
     toolbarButtons.add(buttonToc);
