@@ -14,9 +14,9 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.AbstractButton;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
@@ -33,7 +33,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 
 
 /**
- * A text component to colorize / edit MediaWiki text.
+ * A text component to color / edit MediaWiki text.
  */
 public class MWPane
     extends JTextPane {
@@ -364,49 +364,49 @@ public class MWPane
   /* Check Box management                                                      */
   /* ========================================================================= */
 
-  private JCheckBox chkAddNote;
-  private JCheckBox chkCreateDabWarning;
-  private JCheckBox chkUpdateDabWarning;
+  private AbstractButton chkAddNote;
+  private AbstractButton chkCreateDabWarning;
+  private AbstractButton chkUpdateDabWarning;
 
   /**
-   * @return JCheckBox used for adding a note in the Talk page.
+   * @return Button used for adding a note in the Talk page.
    */
-  public JCheckBox getCheckBoxAddNote() {
+  public AbstractButton getCheckBoxAddNote() {
     return chkAddNote;
   }
 
   /**
-   * @param chk JCheckBox used for adding a note in the Talk page.
+   * @param chk Button used for adding a note in the Talk page.
    */
-  public void setCheckBoxAddNote(JCheckBox chk) {
+  public void setCheckBoxAddNote(AbstractButton chk) {
     chkAddNote = chk;
   }
 
   /**
-   * @return JCheckBox used for creating disambiguation warning in the Talk page.
+   * @return Button used for creating disambiguation warning in the Talk page.
    */
-  public JCheckBox getCheckBoxCreateDabWarning() {
+  public AbstractButton getCheckBoxCreateDabWarning() {
     return chkCreateDabWarning;
   }
 
   /**
-   * @param chk JCheckBox used for creating disambiguation warning in the Talk page.
+   * @param chk Button used for creating disambiguation warning in the Talk page.
    */
-  public void setCheckBoxCreateDabWarning(JCheckBox chk) {
+  public void setCheckBoxCreateDabWarning(AbstractButton chk) {
     chkCreateDabWarning = chk;
   }
 
   /**
-   * @return JCheckBox used for updating disambiguation warning in the Talk page.
+   * @return Button used for updating disambiguation warning in the Talk page.
    */
-  public JCheckBox getCheckBoxUpdateDabWarning() {
+  public AbstractButton getCheckBoxUpdateDabWarning() {
     return chkUpdateDabWarning;
   }
 
   /**
-   * @param chk JCheckBox used for updating disambiguation warning in the Talk page.
+   * @param chk Button used for updating disambiguation warning in the Talk page.
    */
-  public void setCheckBoxUpdateDabWarning(JCheckBox chk) {
+  public void setCheckBoxUpdateDabWarning(AbstractButton chk) {
     chkUpdateDabWarning = chk;
   }
 

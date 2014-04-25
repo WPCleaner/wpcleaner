@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JCheckBox;
+import javax.swing.AbstractButton;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextPane;
@@ -129,7 +129,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
    */
   public void addMarkAsNeedingHelp(
       EnumWikipedia wiki, JPopupMenu popup, Page page, String text,
-      Element element, JTextPane textPane, JCheckBox checkBox) {
+      Element element, JTextPane textPane, AbstractButton checkBox) {
     List<String> templates = null;
     List<List<String>> templatesAfter = null;
     int templatesCount = 0;

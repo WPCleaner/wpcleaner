@@ -7,7 +7,7 @@
 
 package org.wikipediacleaner.gui.swing.component;
 
-import javax.swing.JCheckBox;
+import javax.swing.AbstractButton;
 import javax.swing.JPopupMenu;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.Element;
@@ -106,10 +106,10 @@ public class MWPaneDisambiguationPopupListener extends MWPanePopupListener {
     JPopupMenu popup = menu.createPopupMenu(null);
 
     // Create sub menus
-    JCheckBox chk = null;
-    JCheckBox createDab = textPane.getCheckBoxCreateDabWarning();
-    JCheckBox updateDab = textPane.getCheckBoxUpdateDabWarning();
-    JCheckBox addNote = textPane.getCheckBoxAddNote();
+    AbstractButton chk = null;
+    AbstractButton createDab = textPane.getCheckBoxCreateDabWarning();
+    AbstractButton updateDab = textPane.getCheckBoxUpdateDabWarning();
+    AbstractButton addNote = textPane.getCheckBoxAddNote();
     if ((createDab != null) && (createDab.isEnabled())) {
       chk = createDab;
     } else if ((updateDab != null) && (updateDab.isEnabled())) {
