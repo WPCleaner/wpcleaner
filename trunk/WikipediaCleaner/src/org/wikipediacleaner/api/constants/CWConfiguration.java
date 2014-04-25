@@ -249,7 +249,9 @@ public class CWConfiguration {
     try {
       while ((line = reader.readLine()) != null) {
         int posEqual = line.indexOf('=');
-        if (posEqual > 0) {
+        int posSharp = line.indexOf('#');
+        if ((posEqual > 0) &&
+            ((posSharp < 0) || (posSharp > posEqual))) {
           String name = line.substring(0, posEqual);
           line = line.substring(posEqual + 1);
           int posEnd = line.indexOf(" END");
