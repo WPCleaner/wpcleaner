@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-25 19:07+0200\n"
+"POT-Creation-Date: 2014-04-25 23:46+0200\n"
 "PO-Revision-Date: 2014-04-25 15:56+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -577,7 +577,7 @@ msgstr "Pour détecter uniquement les liens vers une autre langue"
 msgid "To report only links to local wikis"
 msgstr "Pour détecter uniquement les liens vers les wikis locaux"
 
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:109
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm101.java:111
 msgid "List of ordinal suffixes"
 msgstr "Liste d’abréviations ordinales"
 
@@ -3288,25 +3288,21 @@ msgstr "Mise à jour du contenu de la page"
 msgid "Retrieving interwiki for {0}"
 msgstr "Récupération des interwikis pour {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:297
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:312
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:271
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:286
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Récupération du contenu de la page - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:466
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:592
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:819
-#, java-format
-msgid "Updating disambiguation warning - {0}"
-msgstr "Mise à jour de l’avertissement d’homonymie - {0}"
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:711
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:852
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:954
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:1146
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Suppression de l’avertissement d’homonymie - {0}"
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:1155
+#, java-format
+msgid "Updating disambiguation warning - {0}"
+msgstr "Mise à jour de l’avertissement d’homonymie - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:120
 #, java-format
