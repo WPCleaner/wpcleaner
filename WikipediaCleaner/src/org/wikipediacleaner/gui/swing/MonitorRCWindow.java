@@ -170,7 +170,7 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
 
     updateComponentState();
     monitoredPages = new HashMap<String, Long>();
-    createDabWarning = new UpdateDabWarningTools(getWikipedia(), this);
+    createDabWarning = new UpdateDabWarningTools(getWikipedia(), this, true);
     updateDabWarning = new UpdateDabWarningTools(getWikipedia(), this, false);
     API api = APIFactory.getAPI();
     api.addRecentChangesListener(getWikipedia(), this);

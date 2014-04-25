@@ -44,19 +44,35 @@ public abstract class UpdateWarningTools {
   /** Window. */
   protected final BasicWindow window;
 
+  /** True for allowing warning creation.  */
+  protected final boolean createWarning;
+
+  /** True if this is an automatic edit. */
+  protected final boolean automaticEdit;
+
   /** Force use of section 0 in the talk page. */
   protected final boolean section0;
 
   /** MediaWiki API. */
   protected final API api;
 
+  /**
+   * @param wiki Wiki.
+   * @param worker Worker.
+   * @param window Window.
+   * @param createWarning Create warning if necessary.
+   * @param automaticEdit True if the edits are automatic.
+   */
   protected UpdateWarningTools(
       EnumWikipedia wiki,
-      BasicWorker worker, BasicWindow window) {
+      BasicWorker worker, BasicWindow window,
+      boolean createWarning, boolean automaticEdit) {
     this.wiki = wiki;
     this.configuration = wiki.getConfiguration();
     this.worker = worker;
     this.window = window;
+    this.createWarning = createWarning;
+    this.automaticEdit = automaticEdit;
     this.section0 = useSection0();
     this.api = APIFactory.getAPI();
   }

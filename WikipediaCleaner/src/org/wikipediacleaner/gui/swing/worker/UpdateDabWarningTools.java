@@ -47,18 +47,8 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
 
   private final static Log log = LogFactory.getLog(UpdateDabWarningTools.class);
 
-  private final boolean createWarning;
-  private final boolean automaticEdit;
   private final Map<String, Page> dabPages;
   private final Map<String, Page> nonDabPages;
-
-  /**
-   * @param wiki Wiki.
-   * @param worker Worker.
-   */
-  public UpdateDabWarningTools(EnumWikipedia wiki, BasicWorker worker) {
-    this(wiki, worker, true, false);
-  }
 
   /**
    * @param wiki Wiki.
@@ -70,14 +60,6 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
       EnumWikipedia wiki, BasicWorker worker,
       boolean createWarning, boolean automaticEdit) {
     this(wiki, worker, (worker != null) ? worker.getWindow() : null, createWarning, automaticEdit);
-  }
-
-  /**
-   * @param wiki Wiki.
-   * @param window Window.
-   */
-  public UpdateDabWarningTools(EnumWikipedia wiki, BasicWindow window) {
-    this(wiki, null, window, true, false);
   }
 
   /**
@@ -100,9 +82,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
       EnumWikipedia wiki,
       BasicWorker worker, BasicWindow window,
       boolean createWarning, boolean automaticEdit) {
-    super(wiki, worker, window);
-    this.createWarning = createWarning;
-    this.automaticEdit = automaticEdit;
+    super(wiki, worker, window, createWarning, automaticEdit);
     this.dabPages = new HashMap<String, Page>();
     this.nonDabPages = new HashMap<String, Page>();
   }
