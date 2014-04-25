@@ -77,8 +77,10 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
         boolean ordinal = false;
         if (digitBefore) {
           value = contents.substring(supTag.getValueBeginIndex(), supTag.getValueEndIndex()).trim();
-          if (listSuffixes.contains(value)) {
-            ordinal = true;
+          for (String suffix : listSuffixes) {
+            if (suffix.equalsIgnoreCase(value)) {
+              ordinal = true;
+            }
           }
         }
 
