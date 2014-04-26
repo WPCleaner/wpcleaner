@@ -28,7 +28,7 @@ public class PageElementTemplate extends PageElement {
   /**
    * Class containing information about a template parameter.
    */
-  private static class Parameter {
+  public static class Parameter {
     final int pipeIndex;
     final String name;
     final String nameNotTrimmed;
@@ -57,9 +57,55 @@ public class PageElementTemplate extends PageElement {
       this.valueStartIndex = valueStartIndex;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
+    /**
+     * @return Parameter pipe index.
      */
+    public int getPipeIndex() {
+      return pipeIndex;
+    }
+
+    /**
+     * @return Parameter name.
+     */
+    public String getNameNotTrimmed() {
+      return nameNotTrimmed;
+    }
+
+    /**
+     * @return Parameter name.
+     */
+    public String getName() {
+      return name;
+    }
+
+    /**
+     * @return Parameter name start index.
+     */
+    public int getNameStartIndex() {
+      return nameStartIndex;
+    }
+
+    /**
+     * @return Parameter value.
+     */
+    public String getValueNotTrimmed() {
+      return valueNotTrimmed;
+    }
+
+    /**
+     * @return Parameter value.
+     */
+    public String getValue() {
+      return value;
+    }
+
+    /**
+     * @return Parameter value start index.
+     */
+    public int getValueStartIndex() {
+      return valueStartIndex;
+    }
+
     @Override
     public String toString() {
       if ((name != null) && (!name.isEmpty())) {
@@ -487,12 +533,25 @@ public class PageElementTemplate extends PageElement {
   }
 
   /**
-   * Retrieve pipe offset.
+   * Retrieve parameter.
    * 
    * @param index Parameter index.
-   * @return Pipe offset.
+   * @return Parameter.
    */
-  public int getParameterPipeOffset(int index) {
+  public Parameter getParameter(int index) {
+    if ((index >= 0) && (index < parameters.size())) {
+      return parameters.get(index);
+    }
+    return null;
+  }
+
+  /**
+   * Retrieve pipe index.
+   * 
+   * @param index Parameter index.
+   * @return Pipe index.
+   */
+  public int getParameterPipeIndex(int index) {
     if ((index >= 0) && (index < parameters.size())) {
       return parameters.get(index).pipeIndex;
     }
@@ -513,12 +572,12 @@ public class PageElementTemplate extends PageElement {
   }
 
   /**
-   * Retrieve parameter name offset.
+   * Retrieve parameter name start index.
    * 
    * @param index Parameter index.
-   * @return Parameter name offset.
+   * @return Parameter name start index.
    */
-  public int getParameterNameOffset(int index) {
+  public int getParameterNameStartIndex(int index) {
     if ((index >= 0) && (index < parameters.size())) {
       return parameters.get(index).nameStartIndex;
     }
@@ -539,12 +598,12 @@ public class PageElementTemplate extends PageElement {
   }
 
   /**
-   * Retrieve parameter value offset.
+   * Retrieve parameter value start index.
    * 
    * @param index Parameter index.
-   * @return Parameter value offset.
+   * @return Parameter value start index.
    */
-  public int getParameterValueOffset(int index) {
+  public int getParameterValueStartIndex(int index) {
     if ((index >= 0) && (index < parameters.size())) {
       return parameters.get(index).valueStartIndex;
     }

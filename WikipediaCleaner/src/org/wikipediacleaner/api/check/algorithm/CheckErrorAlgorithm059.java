@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult.ErrorLevel;
 import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
+import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.gui.swing.component.MWPane;
 import org.wikipediacleaner.i18n.GT;
 
@@ -63,7 +64,9 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
       for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
 
         // Search for <br> at the end of the parameter
-        String paramValue = template.getParameterValue(paramNum);
+        Parameter param = template.getParameter(paramNum);
+        String paramValue = param.getValue();
+        int paramValueStartIndex = param.getValueStartIndex();
         boolean breakFound = false;
         boolean tagAfter = false;
         int currentValuePos = paramValue.length() - 1;
@@ -79,8 +82,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
           if ((currentValuePos > 0) &&
               (paramValue.charAt(currentValuePos) == '>')) {
             PageElementTag tag = analysis.isInTag(
-                template.getBeginIndex() +
-                template.getParameterValueOffset(paramNum) +
+                paramValueStartIndex +
                 currentValuePos);
             if (tag != null) {
               String name = tag.getNormalizedName();

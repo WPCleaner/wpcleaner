@@ -202,19 +202,19 @@ public class PageElementAreas {
         int endIndex = template.getEndIndex();
         if (template.getParameterCount() > 0) {
           if (template.getParameterName(0) != null) {
-            addArea(beginIndex, template.getParameterNameOffset(0));
+            addArea(beginIndex, template.getParameterNameStartIndex(0));
           } else {
-            addArea(beginIndex, template.getParameterValueOffset(0));
+            addArea(beginIndex, template.getParameterValueStartIndex(0));
           }
           for (int numParam = 0; numParam < template.getParameterCount(); numParam++) {
             String paramName = template.getParameterName(numParam);
             if ((paramName != null) &&
                 (paramName.length() > 0)) {
               addArea(
-                  template.getParameterPipeOffset(numParam),
-                  template.getParameterValueOffset(numParam));
+                  template.getParameterPipeIndex(numParam),
+                  template.getParameterValueStartIndex(numParam));
             } else {
-              int pipeIndex = template.getParameterPipeOffset(numParam);
+              int pipeIndex = template.getParameterPipeIndex(numParam);
               addArea(pipeIndex, pipeIndex + 1);
             }
           }

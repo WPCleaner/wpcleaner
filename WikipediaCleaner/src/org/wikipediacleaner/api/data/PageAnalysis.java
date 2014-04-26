@@ -696,8 +696,8 @@ public class PageAnalysis {
       }
       if (template != null) {
         for (int i = 0; i < template.getParameterCount(); i++) {
-          int beginParam = template.getParameterPipeOffset(i);
-          int endParam = template.getParameterValueOffset(i);
+          int beginParam = template.getParameterPipeIndex(i);
+          int endParam = template.getParameterValueStartIndex(i);
           if ((currentIndex >= beginParam) && (currentIndex < endParam)) {
             return currentIndex + 1;
           }

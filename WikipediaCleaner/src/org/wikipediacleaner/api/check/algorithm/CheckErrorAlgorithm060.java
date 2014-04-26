@@ -48,14 +48,14 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
         String paramValue = template.getParameterValue(paramNum);
         if (paramValue != null) {
           int squareBracketsCount = 0;
-          int paramValueOffset = template.getParameterValueOffset(paramNum);
+          int paramValueStartIndex = template.getParameterValueStartIndex(paramNum);
           for (int currentPos = 0; currentPos < paramValue.length(); currentPos++) {
             switch (paramValue.charAt(currentPos)) {
             case '<':
-              int tmpIndex = paramValueOffset + currentPos;
+              int tmpIndex = paramValueStartIndex + currentPos;
               PageElementComment comment = analysis.isInComment(tmpIndex);
               if (comment != null) {
-                currentPos = comment.getEndIndex() - 1 - paramValueOffset;
+                currentPos = comment.getEndIndex() - 1 - paramValueStartIndex;
               } else {
                 PageElementTag tag = analysis.isInTag(tmpIndex);
                 if ((tag != null) &&
@@ -65,7 +65,7 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
                      (PageElementTag.TAG_WIKI_SOURCE.equals(tag.getNormalizedName())) ||
                      (PageElementTag.TAG_WIKI_SCORE.equals(tag.getNormalizedName())) ||
                      (PageElementTag.TAG_WIKI_SYNTAXHIGHLIGHT.equals(tag.getNormalizedName())))) {
-                  currentPos = tag.getCompleteEndIndex() - 1 - paramValueOffset;
+                  currentPos = tag.getCompleteEndIndex() - 1 - paramValueStartIndex;
                 }
               }
               break;
@@ -87,8 +87,8 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
                 }
                 CheckErrorResult errorResult = createCheckErrorResult(
                     analysis,
-                    paramValueOffset + currentPos,
-                    paramValueOffset + currentIndex);
+                    paramValueStartIndex + currentPos,
+                    paramValueStartIndex + currentIndex);
                 errorResult.addReplacement("");
                 errors.add(errorResult);
               }
