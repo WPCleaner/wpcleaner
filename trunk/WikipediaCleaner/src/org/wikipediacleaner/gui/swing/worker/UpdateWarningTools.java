@@ -209,32 +209,44 @@ public abstract class UpdateWarningTools {
   /**
    * @return Configuration parameter for the title for a message for a new article.
    */
-  protected abstract WPCConfigurationString getMessageTitleNewArticle();
+  protected WPCConfigurationString getMessageTitleNewArticle() {
+    return null;
+  }
 
   /**
    * @return Configuration parameter for the title for a message for a new article.
    */
-  protected abstract WPCConfigurationString getMessageTitleNewArticleModified();
+  protected WPCConfigurationString getMessageTitleNewArticleModified() {
+    return null;
+  }
 
   /**
    * @return Configuration parameter for the title for a message for a new article.
    */
-  protected abstract WPCConfigurationString getMessageTitleNewArticleModifier();
+  protected WPCConfigurationString getMessageTitleNewArticleModifier() {
+    return null;
+  }
 
   /**
    * @return Configuration parameter for the template for a message for a new article.
    */
-  protected abstract WPCConfigurationString getMessageTemplateNewArticle();
+  protected WPCConfigurationString getMessageTemplateNewArticle() {
+    return null;
+  }
 
   /**
    * @return Configuration parameter for the template for a message for a new article.
    */
-  protected abstract WPCConfigurationString getMessageTemplateNewArticleModified();
+  protected WPCConfigurationString getMessageTemplateNewArticleModified() {
+    return null;
+  }
 
   /**
    * @return Configuration parameter for the template for a message for a new article.
    */
-  protected abstract WPCConfigurationString getMessageTemplateNewArticleModifier();
+  protected WPCConfigurationString getMessageTemplateNewArticleModifier() {
+    return null;
+  }
 
   /**
    * @return True if section 0 of the talk page should be used.
