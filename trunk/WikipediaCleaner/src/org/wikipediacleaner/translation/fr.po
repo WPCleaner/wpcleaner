@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2014-04-27 00:52+0200\n"
-"PO-Revision-Date: 2014-04-26 23:34+0100\n"
+"PO-Revision-Date: 2014-04-27 01:23+0100\n"
 "Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1697,7 +1697,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PageListWindow.java:413
 msgid "Do you want to update the disambiguation warning in talk page ?"
 msgstr ""
-"Voulez-vous mettre à jour le message d’avertissement en page de discussion ?"
+"Voulez-vous mettre à jour le message d’avertissement d’homonymie en page de "
+"discussion ?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1324
 msgid "You must input a page name for retrieving the list of internal links"
@@ -1866,20 +1867,17 @@ msgid "Delete page"
 msgstr "Supprimer cette page"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:419
-#, fuzzy
 msgid "Add a warning about links to disambiguation pages"
 msgstr ""
-"Ajouter un avertissement sur la page de discussion à propos des liens vers "
-"les pages d’homonymies"
+"Ajouter un avertissement à propos des liens vers les pages d’homonymies"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:425
 msgid "Add a warning about ISBN errors"
-msgstr ""
+msgstr "Ajouter un avertissement à propos des erreurs d’ISBN"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:432
-#, fuzzy
 msgid "Add warnings on talk page"
-msgstr "&Ajouter un commentaire sur la page de discussion"
+msgstr "Ajouter des avertissements sur la page de discussion"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:456
 msgid "Mark the selected text as being in a foreign language"
@@ -1958,10 +1956,10 @@ msgid "Do you want to apply the automatic modifications?"
 msgstr "Voulez-vous effectuer les corrections automatiques ?"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1109
-#, fuzzy
 msgid "Do you want to update the ISBN warning in talk page ?"
 msgstr ""
-"Voulez-vous mettre à jour le message d’avertissement en page de discussion ?"
+"Voulez-vous mettre à jour le message d’avertissement ISBN en page de "
+"discussion ?"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1353
 msgid "You must select the text that is written in a foreign language"
