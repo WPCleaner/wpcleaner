@@ -922,7 +922,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
       // Search disambiguation warning in the "To do" parameter
       int parameterIndex = templateTodo.getParameterIndex("1");
       String parameter = templateTodo.getParameterValue(parameterIndex);
-      int parameterOffset = templateTodo.getParameterValueOffset(parameterIndex);
+      int parameterStartIndex = templateTodo.getParameterValueStartIndex(parameterIndex);
       PageElementTemplate templateWarning = getFirstWarningTemplate(analysis);
       if (templateWarning != null) {
         setText(getMessageRemoveWarning(talkPage.getTitle()));
@@ -931,14 +931,14 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
           tmp.append(contents.substring(0, templateTodo.getBeginIndex()));
         }
         String tmpParameter = "";
-        int index = templateWarning.getBeginIndex() - parameterOffset;
+        int index = templateWarning.getBeginIndex() - parameterStartIndex;
         while ((index > 0) && (parameter.charAt(index) != '\n')) {
           index--;
         }
         if (index > 0) {
           tmpParameter += parameter.substring(0, index);
         }
-        index = templateWarning.getEndIndex() - parameterOffset;
+        index = templateWarning.getEndIndex() - parameterStartIndex;
         while ((index < parameter.length()) && (parameter.charAt(index) != '\n')) {
           index++;
         }

@@ -75,7 +75,7 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
               boolean formatOK = false;
               for (int i = 2; i < elements.length; i++) {
                 formatOK |= checkFormat(
-                    analysis, template.getParameterValueOffset(paramIndex),
+                    analysis, template.getParameterValueStartIndex(paramIndex),
                     value, elements[i], months);
               }
   
@@ -85,9 +85,9 @@ public class CheckErrorAlgorithm521 extends CheckErrorAlgorithmBase {
                   return true;
                 }
                 result = true;
-                int beginIndex = template.getParameterValueOffset(paramIndex);
+                int beginIndex = template.getParameterValueStartIndex(paramIndex);
                 int endIndex = (paramIndex + 1 < template.getParameterCount()) ?
-                    template.getParameterPipeOffset(paramIndex + 1) : template.getEndIndex() - 2;
+                    template.getParameterPipeIndex(paramIndex + 1) : template.getEndIndex() - 2;
                 CheckErrorResult errorResult = createCheckErrorResult(
                     analysis, beginIndex, endIndex);
                 for (int i = 2; i < elements.length; i++) {

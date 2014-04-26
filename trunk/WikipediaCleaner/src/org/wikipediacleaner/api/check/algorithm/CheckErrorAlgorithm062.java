@@ -112,7 +112,7 @@ public class CheckErrorAlgorithm062 extends CheckErrorAlgorithmBase {
             PageElementTemplate template = analysis.isInTemplate(currentIndex);
             if (template != null) {
               for (int numParam = 0; numParam < template.getParameterCount(); numParam++) {
-                if (template.getParameterValueOffset(numParam) == currentIndex) {
+                if (template.getParameterValueStartIndex(numParam) == currentIndex) {
                   shouldCount = false;
                 }
               }

@@ -82,8 +82,8 @@ public class PageElementISBN extends PageElement {
         PageElementTemplate template = analysis.isInTemplate(index);
         if (template != null) {
           for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-            if ((template.getParameterPipeOffset(paramNum) < index) &&
-                (template.getParameterValueOffset(paramNum) > index)) {
+            if ((template.getParameterPipeIndex(paramNum) < index) &&
+                (template.getParameterValueStartIndex(paramNum) > index)) {
               parameter = true;
             }
           }
@@ -236,7 +236,7 @@ public class PageElementISBN extends PageElement {
             ok = false;
           }
         }
-        int delta = template.getParameterValueOffset(paramNum);
+        int delta = template.getParameterValueStartIndex(paramNum);
         beginIndex += delta;
         endIndex += delta;
         if (beginIndex < 0) {
