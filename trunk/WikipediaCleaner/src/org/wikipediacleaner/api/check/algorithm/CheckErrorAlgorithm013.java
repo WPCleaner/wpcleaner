@@ -7,59 +7,32 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.wikipediacleaner.api.check.CheckErrorResult;
-import org.wikipediacleaner.api.data.PageAnalysis;
 import org.wikipediacleaner.api.data.PageElementTag;
-import org.wikipediacleaner.i18n.GT;
 
 
 /**
  * Algorithm for analyzing error 13 of check wikipedia project.
  * Error 13: Math not correct end
  */
-public class CheckErrorAlgorithm013 extends CheckErrorAlgorithmBase {
+public class CheckErrorAlgorithm013 extends CheckErrorAlgorithmUnclosedTags {
+
+  /** List of tags managed by this error. */
+  private final List<String> tags;
 
   public CheckErrorAlgorithm013() {
     super("Math not correct end");
+    tags = new ArrayList<String>();
+    tags.add(PageElementTag.TAG_WIKI_MATH);
   }
 
   /**
-   * Analyze a page to check if errors are present.
-   * 
-   * @param analysis Page analysis.
-   * @param errors Errors found in the page.
-   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
-   * @return Flag indicating if the error was found.
+   * @return List of tags managed by this error.
    */
-  public boolean analyze(
-      PageAnalysis analysis,
-      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
-    if (analysis == null) {
-      return false;
-    }
-
-    // Check every <math> tag
-    List<PageElementTag> mathTags = analysis.getTags(PageElementTag.TAG_WIKI_MATH);
-    boolean result = false;
-    for (PageElementTag mathTag : mathTags) {
-      int beginIndex = mathTag.getBeginIndex();
-      if (!mathTag.isEndTag() &&
-          !mathTag.isComplete() &&
-          (analysis.getSurroundingTag(PageElementTag.TAG_WIKI_NOWIKI, beginIndex) == null)) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis,
-            beginIndex, mathTag.getEndIndex());
-        errorResult.addReplacement("", GT._("Delete"));
-        errors.add(errorResult);
-      }
-    }
-    return result;
+  @Override
+  protected List<String> getTags() {
+    return tags;
   }
 }
