@@ -73,6 +73,9 @@ public abstract class UpdateWarningTools {
   /** MediaWiki API. */
   protected final API api;
 
+  /** True if contents is already available in pages. */
+  private boolean contentsAvailable;
+
   /**
    * @param wiki Wiki.
    * @param worker Worker.
@@ -94,6 +97,19 @@ public abstract class UpdateWarningTools {
     this.api = APIFactory.getAPI();
   }
 
+  /**
+   * @param available True if contents is already available in pages.
+   */
+  public void setContentsAvailable(boolean available) {
+    this.contentsAvailable = available;
+  }
+
+  /**
+   * @return True if contents is already available in pages.
+   */
+  public boolean getContentsAvailable() {
+    return contentsAvailable;
+  }
   // ==========================================================================
   // Warning management
   // ==========================================================================

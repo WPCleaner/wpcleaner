@@ -42,9 +42,6 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
   private final Map<String, Page> dabPages;
   private final Map<String, Page> nonDabPages;
 
-  /** True if contents is already available in pages. */
-  private boolean contentsAvailable;
-
   /** True if links are already available in pages. */
   private boolean linksAvailable;
 
@@ -86,13 +83,6 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
     super(wiki, worker, window, createWarning, automaticEdit);
     this.dabPages = new HashMap<String, Page>();
     this.nonDabPages = new HashMap<String, Page>();
-  }
-
-  /**
-   * @param available True if contents is already available in pages.
-   */
-  public void setContentsAvailable(boolean available) {
-    this.contentsAvailable = available;
   }
 
   /**
@@ -193,7 +183,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
     }
 
     // Retrieving page contents
-    if (hasDisambiguationLink && !contentsAvailable) {
+    if (hasDisambiguationLink && !getContentsAvailable()) {
       List<Page> tmpPages = new ArrayList<Page>();
       for (Page page : pages) {
         boolean toAdd = false;
