@@ -42,6 +42,15 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
   private final Map<String, Page> dabPages;
   private final Map<String, Page> nonDabPages;
 
+  /** True if contents is already available in pages. */
+  private boolean contentsAvailable;
+
+  /** True if links are already available in pages. */
+  private boolean linksAvailable;
+
+  /** True if disambiguation information is already available in pages. */
+  private boolean dabInformationAvailable;
+
   /**
    * @param wiki Wiki.
    * @param worker Worker.
@@ -80,6 +89,27 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
   }
 
   /**
+   * @param available True if contents is already available in pages.
+   */
+  public void setContentsAvailable(boolean available) {
+    this.contentsAvailable = available;
+  }
+
+  /**
+   * @param available True if links are already available in pages.
+   */
+  public void setLinksAvailable(boolean available) {
+    this.linksAvailable = available;
+  }
+
+  /**
+   * @param available True if disambiguation information is already available in pages.
+   */
+  public void setDabInformationAvailable(boolean available) {
+    this.dabInformationAvailable = available;
+  }
+
+  /**
    * Load all disambiguation pages.
    */
   public void preloadDabPages() {
@@ -96,17 +126,13 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
    * Update disambiguation warning for a list of pages.
    * 
    * @param pages List of pages.
-   * @param contentsAvailable True if contents is already available in pages.
-   * @param linksAvailable True if links are already available in pages.
-   * @param dabInformationAvailable True if disambiguation information is already available in pages.
    * @param creators For each page title, user who has created the page.
    * @param modifiers For each page title, users who have modified the page.
    * @param stats Statistics.
    * @throws APIException
    */
   public void updateDabWarning(
-      List<Page> pages, boolean contentsAvailable,
-      boolean linksAvailable, boolean dabInformationAvailable,
+      List<Page> pages,
       Map<String, String> creators,
       Map<String, List<String>> modifiers,
       Stats stats) throws APIException {
