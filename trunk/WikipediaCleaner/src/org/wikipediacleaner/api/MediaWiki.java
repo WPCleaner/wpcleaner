@@ -267,7 +267,7 @@ public class MediaWiki extends MediaWikiController {
             if (save) {
               api.updatePage(wiki, page, newContents, fullComment.toString(), false);
               if (updateDabWarning) {
-                dabWarnings.updateDabWarning(
+                dabWarnings.updateWarning(
                     Collections.singletonList(page), null, null, null);
               }
             }

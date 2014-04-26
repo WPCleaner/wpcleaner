@@ -123,22 +123,14 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
   }
 
   /**
-   * Update disambiguation warning for a list of pages.
+   * Retrieve information in the pages to construct the warning.
    * 
    * @param pages List of pages.
-   * @param creators For each page title, user who has created the page.
-   * @param modifiers For each page title, users who have modified the page.
-   * @param stats Statistics.
    * @throws APIException
    */
-  public void updateDabWarning(
-      List<Page> pages,
-      Map<String, String> creators,
-      Map<String, List<String>> modifiers,
-      Stats stats) throws APIException {
-    if ((pages == null) || (pages.isEmpty())) {
-      return;
-    }
+  @Override
+  protected void retrievePageInformation(
+      List<Page> pages) throws APIException {
     MediaWiki mw = MediaWiki.getMediaWikiAccess(worker);
 
     // Retrieving links in each page
@@ -218,70 +210,18 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
         mw.retrieveContents(wiki, tmpPages, true, false, false, false);
       }
     }
-
-    // Load talk pages and "To do" sub pages
-    Map<Page, Page> mapTalkPages = new HashMap<Page, Page>();
-    Map<Page, Page> mapTodoSubpages = new HashMap<Page, Page>();
-    for (Page page : pages) {
-      Page talkPage = page.getTalkPage();
-      mapTalkPages.put(page, talkPage);
-      String todoSubpageAttr = configuration.getString(WPCConfigurationString.TODO_SUBPAGE);
-      if (todoSubpageAttr != null) {
-        Page todoSubpage = talkPage.getSubPage(todoSubpageAttr);
-        mapTodoSubpages.put(page, todoSubpage);
-      }
-    }
-    if (section0) {
-      mw.retrieveSectionContents(wiki, mapTalkPages.values(), 0, false);
-    } else {
-      mw.retrieveContents(wiki, mapTalkPages.values(), false, false, false, false);
-    }
-    mw.retrieveContents(wiki, mapTodoSubpages.values(), true, false, false, false);
-    if (mw.shouldStop()) {
-      return;
-    }
-
-    // Update disambiguation warning
-    for (Page page : pages) {
-      PageAnalysis pageAnalysis = page.getAnalysis(page.getContents(), true);
-      boolean updated = updateWarning(
-          pageAnalysis, page.getRevisionId(),
-          mapTalkPages.get(page),
-          mapTodoSubpages.get(page),
-          (creators != null) ? creators.get(page.getTitle()) : null,
-          (modifiers != null) ? modifiers.get(page.getTitle()) : null,
-          stats);
-      if (stats != null) {
-        stats.addAnalyzedPage(page);
-        if (updated) {
-          stats.addUpdatedPage(page);
-        }
-      }
-    }
-    return;
-  }
-
-  /**
-   * Construct elements for the warning.
-   * 
-   * @param analysis Page analysis.
-   * @param talkPage Talk page.
-   * @param todoSubpage to do sub-page.
-   * @return Warning elements.
-   */
-  @Override
-  protected Collection<String> constructWarningElements(
-      PageAnalysis analysis, Page talkPage, Page todoSubpage) {
-    return findDabLinks(analysis, talkPage, todoSubpage);
   }
 
   /**
    * Extract links to disambiguation pages.
    * 
    * @param analysis Page analysis (must have enough information to compute the list of disambiguation links).
+   * @param talkPage Talk page.
+   * @param todoSubpage to do sub-page.
    * @return List of links to disambiguation pages.
    */
-  private Collection<String> findDabLinks(
+  @Override
+  protected Collection<String> constructWarningElements(
       PageAnalysis analysis, Page talkPage, Page todoSubpage) {
     if ((analysis == null) || (analysis.getPage() == null)) {
       return null;
