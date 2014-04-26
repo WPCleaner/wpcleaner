@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-26 10:20+0200\n"
+"POT-Creation-Date: 2014-04-26 16:35+0200\n"
 "PO-Revision-Date: 2014-04-25 15:56+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -279,7 +279,7 @@ msgstr "Zone d’usage privé B"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:36
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:35
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:32
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:33
 msgid "Delete all"
 msgstr "Tout supprimer"
 
@@ -3282,18 +3282,12 @@ msgstr "Mise à jour du contenu de la page"
 msgid "Retrieving interwiki for {0}"
 msgstr "Récupération des interwikis pour {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:271
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:286
-#, java-format
-msgid "Retrieving page contents - {0}"
-msgstr "Récupération du contenu de la page - {0}"
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:1146
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:430
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr "Suppression de l’avertissement d’homonymie - {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:1155
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:439
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr "Mise à jour de l’avertissement d’homonymie - {0}"
@@ -3370,6 +3364,12 @@ msgid "It took {0} second"
 msgid_plural "It took {0} seconds"
 msgstr[0] "Ceci a été réalisé en {0} seconde."
 msgstr[1] "Ceci a été réalisé en {0} secondes."
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:129
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:144
+#, java-format
+msgid "Retrieving page contents - {0}"
+msgstr "Récupération du contenu de la page - {0}"
 
 #: org/wikipediacleaner/utils/Configuration.java:278
 msgid ""

@@ -11,6 +11,7 @@ package org.wikipediacleaner.gui.swing.worker;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -20,6 +21,7 @@ import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.APIFactory;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.constants.WPCConfiguration;
+import org.wikipediacleaner.api.constants.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.constants.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.DataManager;
@@ -32,6 +34,7 @@ import org.wikipediacleaner.api.data.Section;
 import org.wikipediacleaner.api.data.User;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
+import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueString;
 
@@ -93,6 +96,175 @@ public abstract class UpdateWarningTools {
   // ==========================================================================
 
   /**
+   * Update warning for a page.
+   * 
+   * @param pageAnalysis Page analysis (must have enough information to compute the elements for the warning).
+   * @param pageRevId Page revision id.
+   * @param talkPage (Optional) Talk page with contents of section 0.
+   * @param todoSubpage (Optional) To do sub-page with contents.
+   * @param creator User who has created the page.
+   * @param modifiers Users who have modified the page.
+   * @param stats Statistics.
+   * @return True if the warning has been updated.
+   * @throws APIException
+   */
+  public boolean updateWarning(
+      PageAnalysis pageAnalysis, Integer pageRevId,
+      Page talkPage, Page todoSubpage,
+      String creator, List<String> modifiers,
+      Stats stats) throws APIException {
+    if ((pageAnalysis == null) || (pageAnalysis.getPage() == null)) {
+      return false;
+    }
+    List<String> todoTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_TEMPLATES);
+    if ((todoTemplates == null) ||
+        (todoTemplates.isEmpty())) {
+      return false;
+    }
+    Page page = pageAnalysis.getPage();
+
+    // Retrieving talk page contents
+    if (talkPage == null) {
+      talkPage = page.getTalkPage();
+      setText(GT._("Retrieving page contents - {0}", talkPage.getTitle()));
+      if (section0) {
+        api.retrieveSectionContents(wiki, talkPage, 0);
+      } else {
+        api.retrieveContents(wiki, Collections.singletonList(talkPage), false, false);
+      }
+    }
+
+    // "To do" sub-page
+    String todoSubpageAttr = configuration.getString(WPCConfigurationString.TODO_SUBPAGE);
+    if (todoSubpageAttr != null) {
+
+      // Retrieving "To do" sub-page contents
+      if (todoSubpage == null) {
+        todoSubpage = talkPage.getSubPage(todoSubpageAttr);
+        setText(GT._("Retrieving page contents - {0}", todoSubpage.getTitle()));
+        api.retrieveContents(wiki, Collections.singletonList(todoSubpage), false, false);
+      }
+
+      // If we force the use of "To do" sub-page, the warning must be on it
+      if ((page.getNamespace() != null) &&
+          (page.getNamespace().intValue() == Namespace.MAIN)) {
+        if (configuration.getBoolean(WPCConfigurationBoolean.TODO_SUBPAGE_FORCE)) {
+          return manageWarningOnTodoSubpage(
+              pageAnalysis, pageRevId, todoSubpage, talkPage,
+              creator, modifiers, stats);
+        }
+      } else if (configuration.getBoolean(WPCConfigurationBoolean.TODO_SUBPAGE_FORCE_OTHER)) {
+        return manageWarningOnTodoSubpage(
+            pageAnalysis, pageRevId, todoSubpage, talkPage,
+            creator, modifiers, stats);
+      }
+
+      // If "To do" sub-page exists, the warning must be on it
+      if (Boolean.TRUE.equals(todoSubpage.isExisting())) {
+        return manageWarningOnTodoSubpage(
+            pageAnalysis, pageRevId, todoSubpage, talkPage,
+            creator, modifiers, stats);
+      }
+
+      // If talk page has a template linking to the "To do" sub-page,
+      // the warning must be on the "To do" sub-page
+      PageElementTemplate templateTodoLink = getExistingTemplateTodoLink(talkPage, talkPage.getContents());
+      if (templateTodoLink != null) {
+        return manageWarningOnTodoSubpage(
+            pageAnalysis, pageRevId, todoSubpage, talkPage,
+            creator, modifiers, stats);
+      }
+
+      // If talk page has a link to the "To do" sub-page,
+      // the warning must be on the "To do" sub-page
+      /*api.retrieveLinks(wikipedia, talkPage, talkPage.getNamespace());
+      if (talkPage.getLinks() != null) {
+        for (Page link : talkPage.getLinks()) {
+          if (Page.areSameTitle(link.getTitle(), todoSubpage.getTitle())) {
+            return manageWarningOnTodoSubpage(pageAnalysis, pageRevId, todoSubpage, talkPage);
+          }
+        }
+      }*/
+    }
+
+    return manageWarningOnTalkPage(
+        pageAnalysis, pageRevId, talkPage,
+        creator, modifiers, stats);
+  }
+
+  /**
+   * Update warning on the "To do" sub-page.
+   * 
+   * @param pageAnalysis Page analysis (must have enough information to compute the elements for the warning).
+   * @param pageRevId Page revision id.
+   * @param todoSubpage "To do" sub-page.
+   * @param talkPage Talk page.
+   * @param creator User who has created the page.
+   * @param modifiers Users who have modified the page.
+   * @param stats Statistics.
+   * @return True if the warning has been updated.
+   * @throws APIException
+   */
+  private boolean manageWarningOnTodoSubpage(
+      PageAnalysis pageAnalysis, Integer pageRevId,
+      Page todoSubpage, Page talkPage,
+      String creator, List<String> modifiers,
+      Stats stats) throws APIException {
+    Collection<String> elements = constructWarningElements(pageAnalysis, talkPage, todoSubpage);
+    boolean result = false;
+    if ((elements == null) || (elements.isEmpty())) {
+      result |= removeWarningOnTodoSubpage(todoSubpage);
+      result |= removeWarningOnTalkPage(talkPage);
+      if (stats != null) {
+        stats.addRemovedWarning(pageAnalysis.getPage());
+      }
+    } else {
+      result |= updateWarningOnTodoSubpage(
+          pageRevId, todoSubpage, elements, creator, modifiers);
+      if (createWarning) {
+        result |= cleanWarningOnTalkPage(talkPage, elements);
+      }
+      if (stats != null) {
+        stats.addLinks(pageAnalysis.getPage(), elements.size());
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Update warning on the talk page.
+   * 
+   * @param pageAnalysis Page analysis (must have enough information to compute the elements for the warning).
+   * @param pageRevId Page revision id.
+   * @param talkPage Talk page.
+   * @param creator User who has created the page.
+   * @param modifiers Users who have modified the page.
+   * @param stats Statistics.
+   * @return True if the warning has been updated.
+   * @throws APIException
+   */
+  private boolean manageWarningOnTalkPage(
+      PageAnalysis pageAnalysis, Integer pageRevId, Page talkPage,
+      String creator, List<String> modifiers,
+      Stats stats) throws APIException {
+    Collection<String> elements = constructWarningElements(pageAnalysis, talkPage, null);
+    boolean result = false;
+    if ((elements == null) || (elements.isEmpty())) {
+      result = removeWarningOnTalkPage(talkPage);
+      if (stats != null) {
+        stats.addRemovedWarning(pageAnalysis.getPage());
+      }
+    } else {
+      result |= updateWarningOnTalkPage(
+          pageAnalysis, pageRevId, talkPage, elements, creator, modifiers);
+      if (stats != null) {
+        stats.addLinks(pageAnalysis.getPage(), elements.size());
+      }
+    }
+    return result;
+  }
+
+  /**
    * Create/update warning on the "To do" sub-page.
    * 
    * @param pageRevId Page revision id.
@@ -103,8 +275,7 @@ public abstract class UpdateWarningTools {
    * @return True if the warning has been updated.
    * @throws APIException
    */
-  // TODO: private?
-  protected boolean updateWarningOnTodoSubpage(
+  private boolean updateWarningOnTodoSubpage(
       Integer pageRevId, Page todoSubpage, Collection<String> elements,
       String creator, List<String> modifiers) throws APIException {
     if ((todoSubpage == null) || (elements == null)) {
@@ -192,8 +363,7 @@ public abstract class UpdateWarningTools {
    * @return True if the warning has been updated.
    * @throws APIException
    */
-  // TODO: private ?
-  protected boolean updateWarningOnTalkPage(
+  private boolean updateWarningOnTalkPage(
       PageAnalysis analysis, Integer pageRevId,
       Page talkPage, Collection<String> elements,
       String creator, List<String> modifiers) throws APIException {
@@ -352,8 +522,7 @@ public abstract class UpdateWarningTools {
    * @return True if the warning has been updated.
    * @throws APIException
    */
-  // TODO: private ?
-  protected boolean removeWarningOnTodoSubpage(Page todoSubpage) throws APIException {
+  private boolean removeWarningOnTodoSubpage(Page todoSubpage) throws APIException {
     // Check if page is already empty
     if ((todoSubpage == null) || (Boolean.FALSE.equals(todoSubpage.isExisting()))) {
       return false;
@@ -419,8 +588,7 @@ public abstract class UpdateWarningTools {
    * @return True if the warning has been updated.
    * @throws APIException
    */
-  // TOOD: private?
-  protected boolean cleanWarningOnTalkPage(
+  private boolean cleanWarningOnTalkPage(
       Page talkPage, Collection<String> elements) throws APIException {
     // Check if page exists
     if (talkPage == null) {
@@ -585,8 +753,7 @@ public abstract class UpdateWarningTools {
    * @return True if the warning has been updated.
    * @throws APIException
    */
-  // TODO: private ?
-  protected boolean removeWarningOnTalkPage(
+  private boolean removeWarningOnTalkPage(
       Page talkPage) throws APIException {
     // Check if page is already empty
     if ((talkPage == null) || (Boolean.FALSE.equals(talkPage.isExisting()))) {
@@ -727,12 +894,22 @@ public abstract class UpdateWarningTools {
   // ==========================================================================
 
   /**
+   * Construct elements for the warning.
+   * 
+   * @param analysis Page analysis.
+   * @param talkPage Talk page.
+   * @param todoSubpage to do sub-page.
+   * @return Warning elements.
+   */
+  protected abstract Collection<String> constructWarningElements(
+      PageAnalysis analysis, Page talkPage, Page todoSubpage);
+
+  /**
    * @param talkPage Talk page
    * @param contents Talk page contents.
-   * @return Template containing a list to the todo subpage.
+   * @return Template containing a list to the to do sub-page.
    */
-  // TODO: private ?
-  protected PageElementTemplate getExistingTemplateTodoLink(Page talkPage, String contents) {
+  private PageElementTemplate getExistingTemplateTodoLink(Page talkPage, String contents) {
     PageElementTemplate templateTodoLink = null;
     List<String> todoLinkTemplates = configuration.getStringList(WPCConfigurationStringList.TODO_LINK_TEMPLATES);
     if (todoLinkTemplates != null) {

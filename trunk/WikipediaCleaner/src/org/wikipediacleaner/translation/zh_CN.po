@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
-"POT-Creation-Date: 2014-04-26 10:20+0200\n"
+"POT-Creation-Date: 2014-04-26 16:35+0200\n"
 "PO-Revision-Date: 2014-04-11 15:37+0000\n"
 "Last-Translator: Zhijie Fan <fanzhijie1998@qq.com>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -254,7 +254,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm017.java:36
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm045.java:35
-#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:32
+#: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithm059.java:33
 msgid "Delete all"
 msgstr "全部删除"
 
@@ -3145,18 +3145,12 @@ msgstr ""
 msgid "Retrieving interwiki for {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:271
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:286
-#, java-format
-msgid "Retrieving page contents - {0}"
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:1146
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:430
 #, java-format
 msgid "Removing disambiguation warning - {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:1155
+#: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningTools.java:439
 #, java-format
 msgid "Updating disambiguation warning - {0}"
 msgstr ""
@@ -3224,6 +3218,12 @@ msgid "It took {0} second"
 msgid_plural "It took {0} seconds"
 msgstr[0] ""
 msgstr[1] ""
+
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:129
+#: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:144
+#, java-format
+msgid "Retrieving page contents - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/utils/Configuration.java:278
 msgid ""
