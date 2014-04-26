@@ -25,7 +25,6 @@ import java.util.concurrent.Callable;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -571,22 +570,22 @@ public abstract class OnePageWindow
 
     Configuration config = Configuration.getConfiguration();
     menuOptions = new JPopupMenu();
-    chkCloseAfterSend = new JCheckBoxMenuItem(
+    chkCloseAfterSend = Utilities.createJCheckBoxMenuItm(
         GT._("&Close after sending"),
         config.getBoolean(
             null,
             ConfigurationValueBoolean.CLOSE_FULL));
     menuOptions.add(chkCloseAfterSend);
-    chkEditTalkPage = new JCheckBoxMenuItem(
+    chkEditTalkPage = Utilities.createJCheckBoxMenuItm(
         GT._("&Add a note on talk page"), false);
     getTextContents().setCheckBoxAddNote(chkEditTalkPage);
     menuOptions.add(chkEditTalkPage);
-    chkUpdateDabWarning = new JCheckBoxMenuItem(
+    chkUpdateDabWarning = Utilities.createJCheckBoxMenuItm(
         GT._("Update disambiguation warning on talk page"),
         false);
     getTextContents().setCheckBoxUpdateDabWarning(chkUpdateDabWarning);
     menuOptions.add(chkUpdateDabWarning);
-    chkCreateDabWarning = new JCheckBoxMenuItem(
+    chkCreateDabWarning = Utilities.createJCheckBoxMenuItm(
         GT._("Create disambiguation warning on talk page"),
         false);
     getTextContents().setCheckBoxCreateDabWarning(chkCreateDabWarning);
