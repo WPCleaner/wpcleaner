@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: wikicleaner\n"
 "Report-Msgid-Bugs-To: nicove@users.sourceforge.net\n"
 "POT-Creation-Date: 2014-04-26 23:21+0200\n"
-"PO-Revision-Date: 2014-04-25 15:56+0000\n"
-"Last-Translator: Nicolas Vervelle <Unknown>\n"
+"PO-Revision-Date: 2014-04-26 23:34+0100\n"
+"Last-Translator: Nicolas Vervelle <nvervelle@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Launchpad-Export-Date: 2014-04-25 16:00+0000\n"
-"X-Generator: Launchpad (build 16985)\n"
+"X-Generator: Poedit 1.6.4\n"
+"Language: fr\n"
 
 #: org/wikipediacleaner/Version.java:31
 msgid "Check Wiki project has evolved a lot recently."
@@ -3301,7 +3302,6 @@ msgstr "Récupération des pages de discussion incluant {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:133
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:124
-#, fuzzy
 msgid "Constructing list of articles with warning"
 msgstr "Construction de la liste des articles avec un message d’avertissement"
 
@@ -3342,30 +3342,27 @@ msgstr[1] "{0} pages ont été analysées."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:271
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:256
-#, fuzzy, java-format
+#, java-format
 msgid "Warning has been updated in {0} page."
 msgid_plural "Warnings have been updated in {0} pages."
-msgstr[0] ""
-"Le message d’avertissement d’homonymie a été mis à jour dans {0} page."
-msgstr[1] ""
-"Les messages d’avertissement d’homonymie ont été mis à jour dans {0} pages."
+msgstr[0] "Le message d’avertissement a été mis à jour dans {0} page."
+msgstr[1] "Les messages d’avertissement ont été mis à jour dans {0} pages."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:276
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:261
-#, fuzzy, java-format
+#, java-format
 msgid "Warning has been removed in {0} page."
 msgid_plural "Warnings have been removed in {0} pages."
-msgstr[0] "Le message d’avertissement d’homonymie a été retiré sur {0} page."
-msgstr[1] ""
-"Les messages d’avertissement d’homonymie ont été retirés sur {0} pages."
+msgstr[0] "Le message d’avertissement a été retiré sur {0} page."
+msgstr[1] "Les messages d’avertissement ont été retirés sur {0} pages."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:281
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:266
-#, fuzzy, java-format
+#, java-format
 msgid "{0} still needs to be fixed."
 msgid_plural "{0} still need to be fixed."
-msgstr[0] "Il reste {0} lien à corriger"
-msgstr[1] "Il reste {0} liens à corriger"
+msgstr[0] "Il reste {0} avertissement à corriger"
+msgstr[1] "Il reste {0} avertissements à corriger"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateDabWarningWorker.java:287
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:272
@@ -3376,22 +3373,22 @@ msgstr[0] "Ceci a été réalisé en {0} seconde."
 msgstr[1] "Ceci a été réalisé en {0} secondes."
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:207
-#, fuzzy, java-format
+#, java-format
 msgid "Removing ISBN warning - {0}"
-msgstr "Suppression de l’avertissement d’homonymie - {0}"
+msgstr "Suppression de l’avertissement ISBN - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningTools.java:216
-#, fuzzy, java-format
+#, java-format
 msgid "Updating ISBN warning - {0}"
-msgstr "Mise à jour de l’avertissement d’homonymie - {0}"
+msgstr "Mise à jour de l’avertissement ISBN - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateISBNWarningWorker.java:154
-#, fuzzy, java-format
+#, java-format
 msgid ""
 "Analysis found {0} articles to check for ISBN errors.\n"
 "Do you want to update the warnings ?"
 msgstr ""
-"L’analyse a trouvé {0} articles avec un avertissement d’homonymie {1}.\n"
+"L’analyse a trouvé {0} articles avec un avertissement ISBN.\n"
 "Voulez-vous mettre à jour cet avertissement ?"
 
 #: org/wikipediacleaner/gui/swing/worker/UpdateWarningTools.java:212
